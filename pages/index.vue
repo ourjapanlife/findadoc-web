@@ -1,9 +1,9 @@
 <template>
   <div class="flex flex-col h-screen">
     <TopNav />
-    <div class="flex h-full">
+    <div class="flex flex-col md:flex-row h-full">
       <Welcome />
-      <Testimonial />
+      <FeaturedNews />
     </div>
   </div>
 </template>

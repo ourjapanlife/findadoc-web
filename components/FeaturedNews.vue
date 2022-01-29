@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-indigo-500 shadow-2xl overflow-hidden w-1/2">
+  <div class="bg-indigo-500 shadow-2xl md:overflow-hidden w-full md:w-1/2">
     <div class="absolute mt-4 opacity-50 saturate-0 mix-blend-multiply">
       <img
         src="../assets/images/findadoc-testimonial-bg.jpg"
@@ -7,7 +7,7 @@
         class="w-full h-full"
       />
     </div>
-    <div class="relative mt-72 mx-12 lg:col-span-1">
+    <div class="mt-52 min-h-fit md:relative md:mt-72 mx-12 lg:col-span-1">
       <blockquote class="mt-6 text-white">
         <svg
           class="h-12 w-12 text-white opacity-25"
@@ -39,7 +39,7 @@
         <button
           type="button"
           class="
-            mt-8
+            my-8
             inline-flex
             items-center
             px-6

@@ -6,6 +6,6 @@ You can directly use them in pages and other components without the need to impo
 
 **Tip:** If a component is conditionally rendered with `v-if` and is big, it is better to use `Lazy` or `lazy-` prefix to lazy load.
 
-- `<Testimonial>` | `<testimonial>` (components/Testimonial.vue)
+- `<FeaturedNews>` | `<featured-news>` (components/FeaturedNews.vue)
 - `<TopNav>` | `<top-nav>` (components/TopNav.vue)
 - `<Welcome>` | `<welcome>` (components/Welcome.vue)

@@ -1,6 +1,6 @@
 {
-  "Testimonial": {
-    "description": "Auto imported from components/Testimonial.vue"
+  "FeaturedNews": {
+    "description": "Auto imported from components/FeaturedNews.vue"
   },
   "TopNav": {
     "description": "Auto imported from components/TopNav.vue"

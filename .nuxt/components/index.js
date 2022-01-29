@@ -1,4 +1,4 @@
-export { default as Testimonial } from '../../components/Testimonial.vue'
+export { default as FeaturedNews } from '../../components/FeaturedNews.vue'
 export { default as TopNav } from '../../components/TopNav.vue'
 export { default as Welcome } from '../../components/Welcome.vue'
 
