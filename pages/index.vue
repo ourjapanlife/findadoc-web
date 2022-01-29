@@ -1,7 +1,10 @@
 <template>
   <div class="flex flex-col h-screen">
     <TopNav />
-    <Welcome />
+    <div class="flex h-full">
+      <Welcome />
+      <Testimonial />
+    </div>
   </div>
 </template>
 

@@ -1,4 +1,7 @@
 {
+  "Testimonial": {
+    "description": "Auto imported from components/Testimonial.vue"
+  },
   "TopNav": {
     "description": "Auto imported from components/TopNav.vue"
   },

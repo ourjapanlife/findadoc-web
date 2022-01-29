@@ -1,9 +1,9 @@
 <template>
-  <div class="p-4 bg-gray-100 h-full">
-    <span class="text-4xl">
+  <div class="flex flex-col bg-gray-800 md:w-1/2">
+    <span class="m-12 text-4xl text-gray-100">
       The open-source project that's helping Japan get vaccinated
     </span>
-    <span>
+    <span class="mx-12">
       <a href="https://info.findadoc.jp">
         <button
           type="button"
