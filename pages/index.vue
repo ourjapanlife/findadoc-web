@@ -1,11 +1,14 @@
 <template>
-  <Tutorial/>
+  <div class="flex flex-col h-screen">
+    <TopNav />
+    <Welcome />
+  </div>
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import Vue from "vue";
 
 export default Vue.extend({
-  name: 'IndexPage'
-})
+  name: "IndexPage",
+});
 </script>
