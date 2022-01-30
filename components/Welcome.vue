@@ -3,6 +3,27 @@
     <span class="m-12 text-4xl text-gray-100">
       The open-source project that's helping Japan get vaccinated
     </span>
+    <div
+      class="aspect-w-10 aspect-h-6 sm:aspect-w-2 sm:aspect-h-1 lg:aspect-w-10"
+    >
+      <img
+        class="
+          w-3/4
+          ml-12
+          mb-12
+          object-cover object-center
+          rounded-2xl
+          shadow-2xl
+        "
+        src="../assets/images/findadoc-boostershot-wiki.png"
+        alt=""
+      />
+    </div>
+    <span class="mx-12 text-lg text-gray-300">
+      Members of the international community are working together to collect and
+      share booster shot information in Japan. We've created a wiki that anyone
+      in the community can edit and contribute to.✨
+    </span>
     <a href="https://info.findadoc.jp">
       <button
         type="button"
