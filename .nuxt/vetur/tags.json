@@ -1,0 +1,14 @@
+{
+  "FeaturedNews": {
+    "description": "Auto imported from components/FeaturedNews.vue"
+  },
+  "Media": {
+    "description": "Auto imported from components/Media.vue"
+  },
+  "TopNav": {
+    "description": "Auto imported from components/TopNav.vue"
+  },
+  "Welcome": {
+    "description": "Auto imported from components/Welcome.vue"
+  }
+}
