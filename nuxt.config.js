@@ -37,7 +37,7 @@ export default {
       {
         hid: "twitter:image",
         name: "twitter:image",
-        content: "https://www.findadoc.jp/twitter-card.png",
+        content: "~assets/images/social/findadoc-social.png",
       },
       {
         hid: "twitter:image:alt",
@@ -57,12 +57,12 @@ export default {
       {
         hid: "og:image",
         property: "og:image",
-        content: "https://www.findadoc.jp/social-card.jpeg",
+        content: "~assets/images/social/findadoc-social.png",
       },
       {
         hid: "og:image:secure_url",
         property: "og:image:secure_url",
-        content: "https://www.findadoc.jp/social-card.jpeg",
+        content: "~assets/images/social/findadoc-social.png",
       },
       {
         hid: "og:image:alt",
