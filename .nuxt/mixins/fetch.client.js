@@ -32,6 +32,7 @@ function beforeMount() {
 
 function created() {
   if (!isSsrHydration(this)) {
+    createdFullStatic.call(this)
     return
   }
 
@@ -43,6 +44,47 @@ function created() {
   // If fetch error
   if (data && data._error) {
     this.$fetchState.error = data._error
+    return
+  }
+
+  // Merge data
+  for (const key in data) {
+    Vue.set(this.$data, key, data[key])
+  }
+}
+
+function createdFullStatic() {
+  // Check if component has been fetched on server
+  let fetchedOnServer = this.$options.fetchOnServer !== false
+  if (typeof this.$options.fetchOnServer === 'function') {
+    fetchedOnServer = this.$options.fetchOnServer.call(this) !== false
+  }
+  if (!fetchedOnServer || this.$nuxt.isPreview || !this.$nuxt._pagePayload) {
+    return
+  }
+  this._hydrated = true
+
+  const defaultKey = this.$options._scopeId || this.$options.name || ''
+  const getCounter = createGetCounter(this.$nuxt._fetchCounters, defaultKey)
+
+  if (typeof this.$options.fetchKey === 'function') {
+    this._fetchKey = this.$options.fetchKey.call(this, getCounter)
+  } else {
+    const key = 'string' === typeof this.$options.fetchKey ? this.$options.fetchKey : defaultKey
+    this._fetchKey = key ? key + ':' + getCounter(key) : String(getCounter(key))
+  }
+
+  const data = this.$nuxt._pagePayload.fetch[this._fetchKey]
+
+  // If fetch error
+  if (data && data._error) {
+    this.$fetchState.error = data._error
+    return
+  }
+
+  // If there is a missing payload
+  if (!data) {
+    this.$fetch()
     return
   }
 
