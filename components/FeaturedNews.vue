@@ -1,6 +1,6 @@
 <template>
-  <div class="bg-indigo-500 shadow-2xl w-full md:w-1/2">
-    <div class="mt-52 min-h-fit md:relative md:mt-72 mx-12 lg:col-span-1">
+  <div class="bg-indigo-500 shadow-2xl w-full">
+    <div class="mx-12 md:w-1/2">
       <blockquote class="mt-6 text-white">
         <svg
           class="h-12 w-12 text-white opacity-25"

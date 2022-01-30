@@ -1,7 +1,7 @@
 <template>
-  <div class="">
+  <div class="+">
     <TopNav />
-    <div class="flex flex-col md:flex-row min-h-fit">
+    <div class="flex flex-col min-h-fit">
       <Welcome />
       <FeaturedNews />
     </div>

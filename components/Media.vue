@@ -3,7 +3,7 @@
     <div>
       <span class="text-4xl font-semibold">Find a Doc in the News</span>
     </div>
-    <div class="flex flex-col opacity-80">
+    <div class="flex flex-col mt-4 opacity-80">
       <div class="flex justify-center m-4">
         <a
           href="https://www.japantimes.co.jp/community/2021/06/28/our-lives/lashawn-toyoda-findadocjp/"
@@ -34,7 +34,7 @@
           />
         </a>
       </div>
-      <div class="text-gray-700 font-semibold">
+      <div class="flex justify-center mt-8 text-gray-700 font-semibold">
         <a href="https://www.netlify.com/">Deployed on Netlify</a>
       </div>
     </div>
