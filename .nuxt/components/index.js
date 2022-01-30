@@ -1,7 +1,7 @@
-export { default as FeaturedNews } from '../../components/FeaturedNews.vue'
-export { default as Media } from '../../components/Media.vue'
-export { default as TopNav } from '../../components/TopNav.vue'
-export { default as Welcome } from '../../components/Welcome.vue'
+export const FeaturedNews = () => import('../../components/FeaturedNews.vue' /* webpackChunkName: "components/featured-news" */).then(c => wrapFunctional(c.default || c))
+export const Media = () => import('../../components/Media.vue' /* webpackChunkName: "components/media" */).then(c => wrapFunctional(c.default || c))
+export const TopNav = () => import('../../components/TopNav.vue' /* webpackChunkName: "components/top-nav" */).then(c => wrapFunctional(c.default || c))
+export const Welcome = () => import('../../components/Welcome.vue' /* webpackChunkName: "components/welcome" */).then(c => wrapFunctional(c.default || c))
 
 // nuxt/nuxt.js#8607
 function wrapFunctional(options) {
