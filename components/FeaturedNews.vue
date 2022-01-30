@@ -1,11 +1,16 @@
 <template>
-  <div class="bg-indigo-500 shadow-2xl md:overflow-hidden w-full md:w-1/2">
-    <div class="absolute mt-4 opacity-50 saturate-0 mix-blend-multiply">
-      <img
-        src="../assets/images/findadoc-testimonial-bg.jpg"
-        alt=""
-        class="w-full h-full"
-      />
+  <div class="bg-indigo-500 shadow-2xl overflow-clip w-full md:w-1/2">
+    <div
+      class="
+        absolute
+        overflow-clip
+        mt-4
+        opacity-50
+        saturate-0
+        mix-blend-multiply
+      "
+    >
+      <img src="../assets/images/homepage/findadoc-testimonial-bg.jpg" alt="" />
     </div>
     <div class="mt-52 min-h-fit md:relative md:mt-72 mx-12 lg:col-span-1">
       <blockquote class="mt-6 text-white">

@@ -1,4 +1,7 @@
 {
+  "BottomNav": {
+    "description": "Auto imported from components/BottomNav.vue"
+  },
   "FeaturedNews": {
     "description": "Auto imported from components/FeaturedNews.vue"
   },

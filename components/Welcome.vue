@@ -15,7 +15,7 @@
           rounded-2xl
           shadow-2xl
         "
-        src="../assets/images/findadoc-boostershot-wiki.png"
+        src="../assets/images/homepage/findadoc-boostershot-wiki.png"
         alt=""
       />
     </div>
