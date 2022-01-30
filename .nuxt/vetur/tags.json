@@ -1,9 +1,9 @@
 {
-  "BottomNav": {
-    "description": "Auto imported from components/BottomNav.vue"
-  },
   "FeaturedNews": {
     "description": "Auto imported from components/FeaturedNews.vue"
+  },
+  "Media": {
+    "description": "Auto imported from components/Media.vue"
   },
   "TopNav": {
     "description": "Auto imported from components/TopNav.vue"
