@@ -1,11 +1,11 @@
 <template>
-  <div class="+">
+  <div class="h-full">
     <TopNav />
-    <div class="flex flex-col min-h-fit">
+    <div class="flex flex-col md:flex-row h-full">
       <Welcome />
       <FeaturedNews />
     </div>
-    <div class="w-full h-full">
+    <div class="w-full">
       <Media />
     </div>
   </div>
