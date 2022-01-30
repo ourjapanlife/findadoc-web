@@ -72,6 +72,10 @@ export default async (ssrContext) => {
 
   // Remove query from url is static target
 
+  if (ssrContext.url) {
+    ssrContext.url = ssrContext.url.split('?')[0]
+  }
+
   // Public runtime config
   ssrContext.nuxt.config = ssrContext.runtimeConfig.public
   if (ssrContext.nuxt.config._app) {
