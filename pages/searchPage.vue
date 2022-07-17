@@ -12,9 +12,18 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-
-export default Vue.extend({
-  name: "IndexPage",
-});
+import { defineComponent } from 'vue'
+export default defineComponent({
+    props: {
+        msg: {
+            type: String,
+            required: true
+        }
+    },
+    data() {
+        return {
+            name: 'LogRocket',
+        }
+    }
+})
 </script>
