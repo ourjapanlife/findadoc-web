@@ -5,6 +5,7 @@
         "module": "ESNext",
         "moduleResolution": "Node",
         "lib": ["ESNext", "ESNext.AsyncIterable", "DOM"],
+        "allowSyntheticDefaultImports": true,
         "esModuleInterop": true,
         "isolatedModules":true,
         "allowJs": false,
