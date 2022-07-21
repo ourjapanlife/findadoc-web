@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "nuxt",
+    "dev": "yarn && nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",
@@ -14,11 +14,7 @@
     "@pinia/nuxt": "^0.3.0",
     "core-js": "^3.23.4",
     "nuxt": "^2.15.8",
-    "pinia": "2.0.16",
-    "vue": "^3.2.37",
-    "vue-server-renderer": "^2.7.7",
-    "vue-template-compiler": "^2.7.7",
-    "webpack": "^5.73.0"
+    "vue": "^3.2.37"
   },
   "devDependencies": {
     "@nuxt/types": "^2.15.8",

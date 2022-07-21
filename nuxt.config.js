@@ -1,8 +1,15 @@
+import { defineNuxtConfig } from 'nuxt'
+
 const SITE_TITLE = 'Find a Doc, Japan!'
 const SITE_DESCRIPTION =
   'Health service information for the international community in Japan'
 
-export default {
+
+export default defineNuxtConfig({
+    //typescript settings
+    typescript: {
+        shim: false
+    },
     // Global page headers: https://go.nuxtjs.dev/config-head
     head: {
         titleTemplate: 'Health Services in Japan',
@@ -105,4 +112,4 @@ export default {
     googleAnalytics: {
         id: 'UA-186921459-1',
     },
-}
+})
