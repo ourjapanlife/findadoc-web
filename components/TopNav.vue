@@ -2,7 +2,7 @@
     <div class="p-4 border-b flex justify-between">
         <div class="font-semibold text-xl text-gray-800">Find a Doc</div>
         <div>
-            <NuxtLink to="/search">Home</NuxtLink>
+            <NuxtLink to="/">Home</NuxtLink>
             <NuxtLink to="/about">About</NuxtLink>
             <NuxtLink to="/news">News</NuxtLink>
             <a href="https://ko-fi.com/Z8Z14YNUR" target="_blank">
