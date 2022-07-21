@@ -3,24 +3,22 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "yarn && nuxt",
+    "dev": "yarn && nuxt dev",
     "build": "nuxt build",
     "start": "nuxt start",
-    "generate": "nuxt generate",
     "test": "jest"
   },
   "dependencies": {
     "@nuxtjs/composition-api": "^0.33.0",
     "@pinia/nuxt": "^0.3.0",
     "core-js": "^3.23.4",
-    "nuxt": "^2.15.8",
+    "nuxt": "^3.0.0-rc.6",
     "pinia": "^2.0.16",
     "vue": "^3.2.37"
   },
   "devDependencies": {
     "@nuxt/types": "^2.15.8",
     "@nuxt/typescript-build": "^2.1.0",
-    "@nuxtjs/google-analytics": "^2.4.0",
     "@nuxtjs/tailwindcss": "^5.3.0",
     "@vue/test-utils": "^2.0.2",
     "@vue/tsconfig":"0.1.3",
