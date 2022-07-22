@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "yarn && nuxi dev",
-    "build": "nuxi build",
+    "build": "nuxi generate",
     "start": "nuxi start",
     "test": "jest"
   },
