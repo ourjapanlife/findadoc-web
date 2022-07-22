@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "yarn && nuxt dev",
-    "build": "nuxt build",
-    "start": "nuxt start",
+    "dev": "yarn && nuxi dev",
+    "build": "nuxi build",
+    "start": "nuxi start",
     "test": "jest"
   },
   "dependencies": {
