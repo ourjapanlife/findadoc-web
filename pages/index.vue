@@ -1,20 +1,29 @@
 <template>
-  <div class="h-full">
-    <TopNav />
-    <div class="flex flex-col md:flex-row h-full">
-      <Welcome />
-      <FeaturedNews />
-    </div>
-    <div class="w-full">
-      <Media />
-    </div>
-  </div>
+      <div class="h-full">
+            <TopNav />
+            <div class="flex flex-col md:flex-row h-full">
+                  <Welcome />
+                  <FeaturedNews />
+            </div>
+            <div class="w-full">
+                  <Media />
+            </div>
+      </div>
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-
-export default Vue.extend({
-  name: "IndexPage",
-});
+import { defineComponent } from 'vue'
+export default defineComponent({
+    props: {
+        name: String,
+        msg: { type: String, required: true }
+    },
+    data() {
+        return {
+            count: 1
+        }
+    },
+    mounted() {
+    }
+})
 </script>
