@@ -14,6 +14,8 @@ We want to provide free, accessible, and quality healthcare information in multi
 
 This is the open-source, public repository for the [findadoc.jp](htttps://findadoc.jp) website! We welcome support and contributions :)
 
+Have a look at the [CONTRIBUTING](/CONTRIBUTING.md) file to learn more about how to get started and where we could use your help.
+
 ## Tech used
 
 - [Typescript](https://www.typescriptlang.org/)
