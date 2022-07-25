@@ -73,6 +73,6 @@ Here's more information about the usage of this directory in [the documentation]
 This directory contains our static files. Each file inside this directory is mapped to `/`.
 Example: `/static/robots.txt` is mapped as `/robots.txt`. Here's more information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/static).
 
-### `store/`
+### `stores/`
 
 Contains [Pinia](https://pinia.vuejs.org/introduction.html) store files for state management and data fetching.
