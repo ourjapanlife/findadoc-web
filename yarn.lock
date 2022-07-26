@@ -1176,9 +1176,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nuxtjs/tailwindcss@npm:^5.3.0":
-  version: 5.3.0
-  resolution: "@nuxtjs/tailwindcss@npm:5.3.0"
+"@nuxtjs/tailwindcss@npm:^5.3.1":
+  version: 5.3.1
+  resolution: "@nuxtjs/tailwindcss@npm:5.3.1"
   dependencies:
     "@nuxt/kit": ^3.0.0-rc.5
     "@nuxt/postcss8": ^1.1.3
@@ -1194,7 +1194,7 @@ __metadata:
     tailwind-config-viewer: ^1.7.1
     tailwindcss: ^3.1.6
     ufo: ^0.8.5
-  checksum: 3a4b22fea051ac32771fef5edaaf26e7776dd9c1791a2c2a21d2c900f7d25608601ca90d8f54c5e37ee11c78eb6761f5b7bdd3630d6a534c9a4a5600131962c2
+  checksum: c134f73688374081d126ae9f8c264883146f77cfd0e8293b598498a94bf22bdb053d1fc118fb84cadb2439b0f43b5058febd181b100364dd62a3a92cc7847b1d
   languageName: node
   linkType: hard
 
@@ -4599,7 +4599,7 @@ __metadata:
     "@nuxt/types": ^2.15.8
     "@nuxt/typescript-build": ^2.1.0
     "@nuxtjs/composition-api": ^0.33.0
-    "@nuxtjs/tailwindcss": ^5.3.0
+    "@nuxtjs/tailwindcss": ^5.3.1
     "@pinia/nuxt": ^0.3.0
     "@vue/test-utils": ^2.0.2
     "@vue/tsconfig": 0.1.3
