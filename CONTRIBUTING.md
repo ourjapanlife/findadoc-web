@@ -20,25 +20,3 @@ Welcome to Find a Doc, Japan! We're grateful for our volunteers 😊
 
 1. Join the `#ui-ux-design` and `#frontend-team` channels on Slack
    🎨
-
-## Helpful Info
-
-### Related Technologies
-
-- [Typescript](https://www.typescriptlang.org/)
-- [Vue 3](https://vuejs.org/)
-- [Nuxt 3](https://nuxtjs.org/)
-- [Pinia](https://pinia.vuejs.org/introduction.html)
-- [Node.js](https://nodejs.org/en/)
-- [Vue-router](https://router.vuejs.org/)
-- [ohMyFetch](https://github.com/unjs/ohmyfetch)
-- [nuxt/i18n](https://i18n.nuxtjs.org/) - nuxt wrapper for vue-i18n
-
-### Code Style
-
-- ESLint
-- Prettier
-
-### Glossary
-
-**i18n**: internationalization (because there are 18 letters)

@@ -18,13 +18,18 @@ Have a look at the [CONTRIBUTING](/CONTRIBUTING.md) file to learn more about how
 
 ## Tech used
 
-- [Typescript](https://www.typescriptlang.org/)
-- [Vue 3](https://vuejs.org/)
-- [Nuxt 3](https://nuxtjs.org/)
-- [Pinia](https://pinia.vuejs.org/introduction.html)
-- [Node.js](https://nodejs.org/en/)
-- [Vue-router](https://router.vuejs.org/)
-- [ohMyFetch](https://github.com/unjs/ohmyfetch)
+-   [Typescript](https://www.typescriptlang.org/)
+-   [Vue 3](https://vuejs.org/)
+-   [Nuxt 3](https://nuxtjs.org/)
+-   [Pinia](https://pinia.vuejs.org/introduction.html)
+-   [Node.js](https://nodejs.org/en/)
+-   [Vue-router](https://router.vuejs.org/)
+-   [ohMyFetch](https://github.com/unjs/ohmyfetch)
+
+### Code Style
+
+-   [ESLint](https://eslint.org/)
+-   [Prettier](https://prettier.io/)
 
 ## Getting started developing
 
