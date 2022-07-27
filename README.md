@@ -1,69 +1,78 @@
-# findadoc-web
+# Find a Doc, Japan
 
-## Build Setup
+## Front-end Repository
+
+# 🧭 Mission
+
+Connecting people in Japan to the healthcare services they need, in the languages they need.
+
+# 🔭 Vision
+
+We want to provide free, accessible, and quality healthcare information in multiple languages.
+
+## What is this repo?
+
+This is the open-source, public repository for the [findadoc.jp](htttps://findadoc.jp) website! We welcome support and contributions :)
+
+Have a look at the [CONTRIBUTING](/CONTRIBUTING.md) file to learn more about how to get started and where we could use your help.
+
+## Tech used
+
+- [Typescript](https://www.typescriptlang.org/)
+- [Vue 3](https://vuejs.org/)
+- [Nuxt 3](https://nuxtjs.org/)
+- [Pinia](https://pinia.vuejs.org/introduction.html)
+- [Node.js](https://nodejs.org/en/)
+- [Vue-router](https://router.vuejs.org/)
+- [ohMyFetch](https://github.com/unjs/ohmyfetch)
+
+## Getting started developing
 
 ```bash
 # install dependencies
 $ yarn install
 
-# serve with hot reload at localhost:3000
+# For Development, start a dev server with hot reloading at localhost:3000
 $ yarn dev
-
-# build for production and launch server
-$ yarn build
-$ yarn start
-
-# generate static project
-$ yarn generate
 ```
 
-For detailed explanation on how things work, check out the [documentation](https://nuxtjs.org).
+## Testing a production build
 
-## Special Directories
+```
+# Generate the production bundle
+$ yarn build
 
-You can create the following extra directories, some of which have special behaviors. Only `pages` is required; you can delete them if you don't want to use their functionality.
+# Launch production server
+$ yarn start
+```
 
-### `assets`
+# Folder Structure
 
-The assets directory contains your uncompiled assets such as Stylus or Sass files, images, or fonts.
+### `assets/`
 
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/assets).
+The assets directory contains our uncompiled assets such as Stylus or Sass files, images, or fonts.
+Here's more information about the usage of this directory in the [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/assets).
 
-### `components`
+### `components/`
 
-The components directory contains your Vue.js components. Components make up the different parts of your page and can be reused and imported into your pages, layouts and even other components.
+The components directory contains our Vue.js components. Components make up the different parts of our page and can be reused and imported into the pages, layouts and even other components.
+Here's more information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/components).
 
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/components).
+### `layouts/`
 
-### `layouts`
+Used for building the common templates of the news articles.
+Here's more information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/layouts).
 
-Layouts are a great help when you want to change the look and feel of your Nuxt app, whether you want to include a sidebar or have distinct layouts for mobile and desktop.
+### `pages/`
 
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/layouts).
+Contains all the pages of the site. Nuxt will read all the `*.vue` files inside this directory and setup Vue Router automatically.
+Here's more information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/get-started/routing).
 
+### `static/`
 
-### `pages`
+This directory contains our static files. Each file inside this directory is mapped to `/`.
+Example: `/static/robots.txt` is mapped as `/robots.txt`. Here's more information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/static).
 
-This directory contains your application views and routes. Nuxt will read all the `*.vue` files inside this directory and setup Vue Router automatically.
+### `stores/`
 
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/get-started/routing).
-
-### `plugins`
-
-The plugins directory contains JavaScript plugins that you want to run before instantiating the root Vue.js Application. This is the place to add Vue plugins and to inject functions or constants. Every time you need to use `Vue.use()`, you should create a file in `plugins/` and add its path to plugins in `nuxt.config.js`.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/plugins).
-
-### `static`
-
-This directory contains your static files. Each file inside this directory is mapped to `/`.
-
-Example: `/static/robots.txt` is mapped as `/robots.txt`.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/static).
-
-### `store`
-
-This directory contains your Vuex store files. Creating a file in this directory automatically activates Vuex.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/store).
+Contains [Pinia](https://pinia.vuejs.org/introduction.html) store files for state management and data fetching.
