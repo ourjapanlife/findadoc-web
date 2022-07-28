@@ -14,7 +14,7 @@ Welcome to Find a Doc, Japan! We're grateful for our volunteers 😊
 
 👉️ Translators 🌐
 
-1. Join the `#localization` channel on Slack.
+1. Join the `#localization` channel on Slack
 
 👉️ UI/UX Designers (and people interested in developing new features) ✨
 
