@@ -1,11 +1,9 @@
-import { defineNuxtConfig } from 'nuxt'
-
 const SITE_TITLE = 'Find a Doc, Japan!'
 const SITE_DESCRIPTION =
-  'Health service information for the international community in Japan'
+    'Health service information for the international community in Japan'
 
 
-export default defineNuxtConfig({
+export default {
     //typescript settings
     typescript: {
         shim: false
@@ -86,29 +84,30 @@ export default defineNuxtConfig({
     },
 
     // Global CSS: https://go.nuxtjs.dev/config-css
-    css: [],
+    css: ['~/assets/css/tailwind.css'],
 
     // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
     plugins: [],
 
-  // Auto import components: https://go.nuxtjs.dev/config-components
-  components: true,
+    // Auto import components: https://go.nuxtjs.dev/config-components
+    components: true,
 
-  // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
-  buildModules: [],
+    // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
+    buildModules: [],
 
-  // Modules: https://go.nuxtjs.dev/config-modules
-  modules: [],
+    // Modules: https://go.nuxtjs.dev/config-modules
+    modules: [],
 
-  // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {
-    postcss: {
-      plugins: {
-        //Add Tailwind to the build process
-        tailwindcss: {},
-        autoprefixer: {},
-      },
+    // Build Configuration: https://go.nuxtjs.dev/config-build
+    build: {
+        postcss: {
+            postcssOptions: {
+                plugins: {
+                    tailwindcss: {},
+                    autoprefixer: {},
+                },
+            },
+        },
     },
-  },
-  target: "static",
-};
+    target: 'static'
+}
