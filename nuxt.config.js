@@ -3,6 +3,9 @@ const SITE_DESCRIPTION =
   "Health service information for the international community in Japan";
 
 export default {
+  typescript: {
+    strict: true
+  },
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     titleTemplate: "Health Services in Japan",
@@ -88,21 +91,20 @@ export default {
   components: true,
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
-  buildModules: [
-    // https://go.nuxtjs.dev/typescript
-    "@nuxt/typescript-build",
-    // https://go.nuxtjs.dev/tailwindcss
-    "@nuxtjs/tailwindcss",
-    "@nuxtjs/google-analytics",
-  ],
+  buildModules: [],
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {},
-  target: "static",
-  googleAnalytics: {
-    id: "UA-186921459-1",
+  build: {
+    postcss: {
+      plugins: {
+        //Add Tailwind to the build process
+        tailwindcss: {},
+        autoprefixer: {},
+      },
+    },
   },
+  target: "static",
 };
