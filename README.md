@@ -12,7 +12,7 @@ We want to provide free, accessible, and quality healthcare information in multi
 
 ## What is this repo?
 
-This is the open-source, public repository for the [findadoc.jp](htttps://findadoc.jp) website! We welcome support and contributions :)
+This is the open-source, public repository for the [findadoc.jp](https://findadoc.jp) website! We welcome support and contributions :)
 
 Have a look at the [CONTRIBUTING](/CONTRIBUTING.md) file to learn more about how to get started and where we could use your help.
 
