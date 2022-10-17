@@ -7,7 +7,6 @@
     "dev": "yarn && nuxi dev",
     "build": "nuxi generate",
     "lint": "yarn && eslint . --ext .js,.ts,.json",
-    "lint:check": "yarn && eslint . --ext .js,.ts,.json",
     "start": "nuxi start",
     "test": "jest"
   },
