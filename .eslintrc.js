@@ -8,7 +8,7 @@ module.exports = {
         es6: true,
         jest: true
     },
-    plugins: [],
+    plugins: ['eslint-plugin-json'],
     extends: ['eslint:recommended', 'plugin:vue/vue3-essential'],
     // 'off' or 0 - turn the rule off
     // 'warn' or 1 - turn the rule on as a warning (doesn’t affect exit code)

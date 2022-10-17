@@ -3,8 +3,10 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "prepare": "husky install",
     "dev": "yarn && nuxi dev",
     "build": "nuxi generate",
+    "lint": "yarn && eslint . --ext .js,.json",
     "start": "nuxi start",
     "test": "jest"
   },
@@ -26,7 +28,9 @@
     "babel-jest": "^29.1.2",
     "cypress": "^10.9.0",
     "eslint": "^8.19.0",
+    "eslint-plugin-json": "^3.1.0",
     "eslint-plugin-vue": "^9.2.0",
+    "husky": "^8.0.1",
     "jest": "^29.1.2",
     "nuxt": "rc",
     "postcss": "^8.4.17",
