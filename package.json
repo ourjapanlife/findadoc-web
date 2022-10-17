@@ -6,7 +6,7 @@
     "prepare": "husky install",
     "dev": "yarn && nuxi dev",
     "build": "nuxi generate",
-    "lint": "yarn && eslint . --ext .js,.ts,.json",
+    "lint": "yarn && eslint . --ext .js,.json",
     "start": "nuxi start",
     "test": "jest"
   },
