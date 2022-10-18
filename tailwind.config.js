@@ -8,8 +8,8 @@ module.exports = {
         './nuxt.config.{js,ts}',
     ],
     theme: {
-        screens:{
-            'md' : {'min' : '800px'}
+        screens: {
+            md: { min: '800px' }
         },
         extend: {},
     },

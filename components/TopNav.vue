@@ -15,7 +15,7 @@
                     alt="Buy Me a Coffee at ko-fi.com" />
             </a>
             <div class="cursor-pointer md:hidden">
-                <img src="../assets/images/hamburgerMenu.svg" alt="hamburger menu">
+                <img src="../assets/images/hamburgerMenu.svg" alt="hamburger menu" />
             </div>
         </div>
     </div>
