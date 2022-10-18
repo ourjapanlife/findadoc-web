@@ -34,6 +34,9 @@ Have a look at the [CONTRIBUTING](/CONTRIBUTING.md) file to learn more about how
 ## Getting started developing
 
 ```bash
+# set up husky
+$ yarn prepare
+
 # install dependencies
 $ yarn install
 
