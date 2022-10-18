@@ -6,7 +6,7 @@
     "prepare": "husky install",
     "dev": "yarn && nuxi dev",
     "build": "nuxi generate",
-    "lint": "yarn && eslint . --ext .js,.json",
+    "lint": "yarn && eslint . --ext .js,.ts,.json",
     "start": "nuxi start",
     "test": "jest"
   },
@@ -23,6 +23,8 @@
   "devDependencies": {
     "@nuxt/types": "^2.15.8",
     "@types/jest": "^29.1.2",
+    "@typescript-eslint/eslint-plugin": "^5.40.0",
+    "@typescript-eslint/parser": "^5.40.0",
     "@vue/test-utils": "^2.1.0",
     "autoprefixer": "^10.4.12",
     "babel-jest": "^29.1.2",
