@@ -1,14 +1,16 @@
 module.exports = {
+    parser: '@typescript-eslint/parser',
     parserOptions: {
         ecmaVersion: 2022,
-        sourceType: 'module'
+        sourceType: 'module',
+        extraFileExtensions: ['.json']
     },
     env: {
         node: true,
         es6: true,
         jest: true
     },
-    plugins: ['eslint-plugin-json'],
+    plugins: ['@typescript-eslint', 'eslint-plugin-json'],
     extends: ['eslint:recommended', 'plugin:vue/vue3-essential'],
     // 'off' or 0 - turn the rule off
     // 'warn' or 1 - turn the rule on as a warning (doesn’t affect exit code)
