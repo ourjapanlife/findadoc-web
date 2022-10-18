@@ -4521,7 +4521,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint@npm:^8.19.0":
+"eslint@npm:^8.25.0":
   version: 8.25.0
   resolution: "eslint@npm:8.25.0"
   dependencies:
@@ -4956,7 +4956,7 @@ __metadata:
     autoprefixer: ^10.4.12
     babel-jest: ^29.1.2
     cypress: ^10.9.0
-    eslint: ^8.19.0
+    eslint: ^8.25.0
     eslint-plugin-json: ^3.1.0
     eslint-plugin-vue: ^9.2.0
     husky: ^8.0.1
