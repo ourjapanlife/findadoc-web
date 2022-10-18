@@ -1,5 +1,7 @@
 # Find a Doc, Japan
 
+🎃 Hacktober friends! Please check out [CONTRIBUTING](/CONTRIBUTING.md) 🎃
+
 ## Front-end Repository
 
 # 🧭 Mission
@@ -22,7 +24,8 @@ Have a look at the [CONTRIBUTING](/CONTRIBUTING.md) file to learn more about how
 -   [Vue 3](https://vuejs.org/)
 -   [Nuxt 3](https://nuxtjs.org/)
 -   [Pinia](https://pinia.vuejs.org/introduction.html)
--   [Node.js](https://nodejs.org/en/)
+-   [Node.js](https://nodejs.org/en/) version 16.18
+-   [Yarn](https://yarnpkg.com/)
 -   [Vue-router](https://router.vuejs.org/)
 -   [ohMyFetch](https://github.com/unjs/ohmyfetch)
 
@@ -34,6 +37,9 @@ Have a look at the [CONTRIBUTING](/CONTRIBUTING.md) file to learn more about how
 ## Getting started developing
 
 ```bash
+# set up husky
+$ yarn prepare
+
 # install dependencies
 $ yarn install
 
