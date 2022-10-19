@@ -32,7 +32,6 @@ Have a look at the [CONTRIBUTING](/CONTRIBUTING.md) and [CODE_OF_CONDUCT](/CODE_
 ### Code Style
 
 -   [ESLint](https://eslint.org/)
--   [Prettier](https://prettier.io/)
 
 ## Getting started developing
 
