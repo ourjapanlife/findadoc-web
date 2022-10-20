@@ -14,17 +14,7 @@
                 <img src="../assets/images/hamburgerMenu.svg" alt="hamburger menu" />
             </div>
         </div>
-        <div>
-            <select v-model="selected">
-                <option disabled value="">Languages</option>
-                <option>
-                    English
-                </option>
-                <option>
-                    Japanese
-                </option>
-            </select>
-        </div>
+        <LocaleSelector />
     </div>
 </template>
 
