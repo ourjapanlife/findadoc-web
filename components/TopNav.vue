@@ -14,6 +14,7 @@
                 <img src="../assets/images/hamburgerMenu.svg" alt="hamburger menu" />
             </div>
         </div>
+        <LocaleSelector />
     </div>
 </template>
 
