@@ -7,7 +7,7 @@
             </NuxtLink>
         </div>
         <div>
-            <NuxtLink to="/aboutPage">
+            <NuxtLink to="/about">
                 About
             </NuxtLink>
             <div class="cursor-pointer md:hidden">
