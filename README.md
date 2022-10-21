@@ -36,11 +36,11 @@ Have a look at the [CONTRIBUTING](/CONTRIBUTING.md) and [CODE_OF_CONDUCT](/CODE_
 ## Getting started developing
 
 ```bash
-# set up husky
-$ yarn prepare
-
 # install dependencies
 $ yarn install
+
+# set up husky
+$ yarn prepare
 
 # For Development, start a dev server with hot reloading at localhost:3000
 $ yarn dev
