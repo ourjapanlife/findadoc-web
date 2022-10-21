@@ -1,5 +1,6 @@
 import VueGtag from 'vue-gtag'
-// eslint-disable-next-line no-undef
+import defineNuxtPlugin from 'nuxt'
+
 export default defineNuxtPlugin(nuxtApp => {
     nuxtApp.vueApp.use(VueGtag, {
         property: {

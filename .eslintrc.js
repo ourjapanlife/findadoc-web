@@ -1,6 +1,7 @@
 module.exports = {
-    parser: '@typescript-eslint/parser',
+    parser: 'vue-eslint-parser',
     parserOptions: {
+        parser: '@typescript-eslint/parser',
         ecmaVersion: 2022,
         sourceType: 'module',
         extraFileExtensions: ['.json']
@@ -11,7 +12,8 @@ module.exports = {
         jest: true
     },
     plugins: ['@typescript-eslint', 'eslint-plugin-json'],
-    extends: ['eslint:recommended', 'plugin:vue/vue3-essential'],
+    extends: ['eslint:recommended', 'plugin:vue/vue3-strongly-recommended'],
+    root: true,
     // 'off' or 0 - turn the rule off
     // 'warn' or 1 - turn the rule on as a warning (doesn’t affect exit code)
     // 'error' or 2 - turn the rule on as an error (exit code will be 1)
@@ -109,5 +111,33 @@ module.exports = {
 
         // Variables
         'no-shadow': 2,
+
+        // Vue
+        'vue/multi-word-component-names': 1,
+        'vue/html-indent': ['error', 4, {
+            attribute: 1,
+            baseIndent: 1,
+            closeBracket: 0,
+            alignAttributesVertically: false,
+            ignores: []
+        }],
+        'vue/max-attributes-per-line': ['error', {
+            singleline: {
+                max: 4
+            },
+            multiline: {
+                max: 3
+            }
+        }],
+        'vue/html-self-closing': ['error', { html: { normal: 'never', void: 'always' } }],
+        'vue/html-closing-bracket-newline': ['error', {
+            singleline: 'never',
+            multiline: 'never'
+        }],
+        'vue/first-attribute-linebreak': ['error', {
+            singleline: 'beside',
+            multiline: 'beside'
+        }]
+
     }
 }
