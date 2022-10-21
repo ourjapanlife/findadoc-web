@@ -1,0 +1,28 @@
+# Jest is JavaScript Testing Framework 
+# More details at https://github.com/facebook/jest
+# and https://jestjs.io/
+name: unit-test
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    # The branches below must be a subset of the branches above
+    branches: [ "main" ]
+  schedule:
+    - cron: '45 15 * * 4'
+
+jobs:
+  unit-test:
+    name: Run unit tests
+    run-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install Dependencies
+        run: |
+          yarn install
+          
+      - name: Run jest
+        run: yarn test
