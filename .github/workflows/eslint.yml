@@ -3,7 +3,7 @@
 # More details at https://github.com/eslint/eslint
 # and https://eslint.org
 
-name: ESLint
+name: Linter
 
 on:
   push:
