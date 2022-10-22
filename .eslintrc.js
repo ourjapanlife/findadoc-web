@@ -113,7 +113,7 @@ module.exports = {
         'no-shadow': 2,
 
         // Vue
-        'vue/multi-word-component-names': 0,
+        'vue/multi-word-component-names': 1,
         'vue/html-indent': ['error', 4, {
             attribute: 1,
             baseIndent: 1,
