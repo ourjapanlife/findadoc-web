@@ -2,7 +2,7 @@ module.exports = {
     moduleNameMapper: {
         '^@/(.*)$': '<rootDir>/$1',
         '^~/(.*)$': '<rootDir>/$1',
-        '^vue$': 'vue/dist/vue.common.js'
+        //'^vue$': 'vue/dist/vue.common.js'
     },
     moduleFileExtensions: [
         'ts',
@@ -20,5 +20,8 @@ module.exports = {
         '<rootDir>/components/**/*.vue',
         '<rootDir>/pages/**/*.vue'
     ],
-    testEnvironment: 'jsdom'
+    testEnvironment: 'jsdom',
+    testEnvironmentOptions: {
+        customExportConditions: ["node", "node-addons"],
+    },
 }
