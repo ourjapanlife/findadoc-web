@@ -2347,9 +2347,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vue/vue3-jest@npm:^29":
-  version: 29.1.1
-  resolution: "@vue/vue3-jest@npm:29.1.1"
+"@vue/vue3-jest@npm:28":
+  version: 28.1.0
+  resolution: "@vue/vue3-jest@npm:28.1.0"
   dependencies:
     "@babel/plugin-transform-modules-commonjs": ^7.2.0
     chalk: ^2.1.0
@@ -2359,14 +2359,14 @@ __metadata:
     tsconfig: ^7.0.0
   peerDependencies:
     "@babel/core": 7.x
-    babel-jest: 29.x
-    jest: 29.x
+    babel-jest: 28.x
+    jest: 28.x
     typescript: ">= 4.3"
     vue: ^3.0.0-0
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 8f48465de2c3ddb1bd9311c779c5a3bd25fbbf2836b2afc55450d434582a76de041636534ca861e354f896804725a2e47ff82bdf2bd2a5445d06bfe1d6dd9f98
+  checksum: 008810b0d6ce2838654faa39198ea6c4d9905a4e11e1c13a8cbe34d6fc9d2e03cdb288a04a69edb57f34071fd72e1f09583d43210460d3b0df7e9817c44bb3da
   languageName: node
   linkType: hard
 
@@ -5252,7 +5252,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin": ^5.40.0
     "@typescript-eslint/parser": ^5.40.0
     "@vue/test-utils": ^2.1.0
-    "@vue/vue3-jest": ^29
+    "@vue/vue3-jest": 28
     autoprefixer: ^10.4.12
     babel-jest: ^29.1.2
     cypress: ^10.9.0
