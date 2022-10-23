@@ -10,7 +10,7 @@
             <NuxtLink to="/about">
                 About
             </NuxtLink>
-            <div  class="cursor-pointer md:hidden" >
+            <div  class="cursor-pointer md:hidden " >
                 <img @click="toggleMenu" src="../assets/images/hamburgerMenu.svg" alt="hamburger menu" />
                 <div v-if="showMenu">
                     <h1>Home</h1>
@@ -22,29 +22,17 @@
     </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
 
-export default defineComponent({
-   
-    props: {
-        msg: {
-            type: String,
-            default: '',
-            required: false
-        }
-    },
-    data() {
-        return {
-            name: '',
+<script setup>
+import { ref } from 'vue'
 
-            showMenu: false
-        }
-    },
-    methods:{
-        toggleMenu(){
-            this.showMenu = !this.showMenu
-        }
-    }
-})
+//state 
+const showMenu = ref(false)
+
+//functions 
+function toggleMenu(){
+    showMenu.value = !showMenu.value
+}
 </script>
+
+
