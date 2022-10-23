@@ -13,8 +13,11 @@
             <div  class="cursor-pointer md:hidden " >
                 <img @click="toggleMenu" src="../assets/images/hamburgerMenu.svg" alt="hamburger menu" />
                 <div v-if="showMenu">
-                    <h1>Home</h1>
-                    <h1>about</h1>
+                    <div>
+                        <span class="block">Home</span>
+                        <span class="block">About</span>
+                    </div>
+                    
                 </div>
             </div>
         </div>
