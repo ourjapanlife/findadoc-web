@@ -30,12 +30,14 @@ export default defineComponent({
     props: {
         msg: {
             type: String,
+            default: '',
             required: false
         }
     },
     data() {
         return {
             name: '',
+
             showMenu: false
         }
     },
