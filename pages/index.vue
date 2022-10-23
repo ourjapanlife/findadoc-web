@@ -15,8 +15,15 @@
 import { defineComponent } from 'vue'
 export default defineComponent({
     props: {
-        name: String,
-        msg: { type: String, required: false }
+        name: {
+            type: String,
+            default: '',
+        },
+        msg: { 
+            type: String, 
+            required: false,
+            default: '',
+        }
     },
     data() {
         return {
