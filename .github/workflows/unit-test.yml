@@ -1,7 +1,7 @@
-# Jest is JavaScript Testing Framework 
+# Jest is JavaScript Testing Framework
 # More details at https://github.com/facebook/jest
 # and https://jestjs.io/
-name: Unit test
+name: Test: Jest
 
 on:
   push:
@@ -23,6 +23,6 @@ jobs:
       - name: Install Dependencies
         run: |
           yarn install
-          
+
       - name: Run jest
         run: yarn test
