@@ -6,12 +6,16 @@
                     src="../assets/images/logo-32-px-color.svg" />Find a Doc
             </NuxtLink>
         </div>
-        <div>
+        <div >
             <NuxtLink to="/about">
                 About
             </NuxtLink>
-            <div class="cursor-pointer md:hidden">
-                <img src="../assets/images/hamburgerMenu.svg" alt="hamburger menu" />
+            <div  class="cursor-pointer md:hidden" >
+                <img @click="toggleMenu" src="../assets/images/hamburgerMenu.svg" alt="hamburger menu" />
+                <div v-if="showMenu">
+                    <h1>Home</h1>
+                    <h1>about</h1>
+                </div>
             </div>
         </div>
         <LocaleSelector />
@@ -32,6 +36,12 @@ export default defineComponent({
     data() {
         return {
             name: '',
+            showMenu: false
+        }
+    },
+    methods:{
+        toggleMenu(){
+            this.showMenu = !this.showMenu
         }
     }
 })
