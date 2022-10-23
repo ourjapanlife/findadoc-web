@@ -46,6 +46,12 @@ export default defineComponent({
     data() {
         return {
             name: '',
+            showMenu: false
+        }
+    },
+    methods:{
+        toggleMenu(){
+            this.showMenu = !this.showMenu
         }
     }
 })
