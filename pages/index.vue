@@ -12,25 +12,25 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent } from "vue";
 export default defineComponent({
     props: {
         name: {
             type: String,
-            default: '',
+            default: "",
         },
-        msg: { 
-            type: String, 
+        msg: {
+            type: String,
             required: false,
-            default: '',
-        }
+            default: "",
+            fchmvhjhkbhljxcfgvhbjknl,
+        },
     },
     data() {
         return {
-            count: 1
-        }
+            count: 1,
+        };
     },
-    mounted() {
-    }
-})
+    mounted() {},
+});
 </script>
