@@ -29,7 +29,7 @@ jobs:
         with:
           path: ${{ env.CACHE_PATH }}
           key: ${{ env.CACHE_KEY }}
-      - name: Checkout code
+      - name: Checkout Code
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
@@ -38,7 +38,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: "yarn"
-      - name: Install dependencies
+      - name: Install Dependencies
         run: yarn --frozen-lockfile
         # this is needed to generate things like tsconfig declerations
       - name: Prepare Nuxt
@@ -75,7 +75,7 @@ jobs:
       
 
   eslint:
-    name: Lint: ESLint ✨
+    name: ESLint ✨
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -87,7 +87,7 @@ jobs:
         run: yarn lint:ci
         continue-on-error: true
 
-      - name: Upload analysis results to GitHub
+      - name: Upload Results
         uses: github/codeql-action/upload-sarif@v2
         with:
           sarif_file: eslint-results.sarif
