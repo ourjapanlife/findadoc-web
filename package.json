@@ -7,6 +7,8 @@
         "dev": "yarn && nuxi dev",
         "build": "nuxi generate",
         "lint": "eslint  . -c .eslintrc.js --ext .vue,.js,.ts,.json",
+        "lint:ci": "eslint . --config .eslintrc.js --ext .js,.jsx,.ts,.tsx,.vue --format @microsoft/eslint-formatter-sarif --output-file eslint-results.sarif",
+        "setup:ci": "nuxi prepare",
         "start": "nuxi start",
         "test": "jest"
     },
@@ -21,6 +23,7 @@
         "vue-template-compiler": "^2.7.10"
     },
     "devDependencies": {
+        "@microsoft/eslint-formatter-sarif": "^3.0.0",
         "@nuxt/types": "^2.15.8",
         "@types/jest": "^29.1.2",
         "@typescript-eslint/eslint-plugin": "^5.40.0",
