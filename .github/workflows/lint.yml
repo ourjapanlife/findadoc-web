@@ -1,0 +1,94 @@
+# ESLint is a tool for identifying and reporting on patterns
+# found in ECMAScript/JavaScript code.
+# More details at https://github.com/eslint/eslint
+# and https://eslint.org
+
+name: Lint
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    # The branches below must be a subset of the branches above
+    branches: [ "main" ]
+  schedule:
+    - cron: '45 15 * * 4'
+env:
+  CACHE_PATH: ./*
+  CACHE_KEY: lint-cache-${{ github.sha }}-${{ matrix.node-version }}
+strategy:
+    matrix:
+      node-version: [16.x, 18.x]  
+
+jobs:
+  setup:
+    name: Setup 🛫
+    steps:
+      - name: Setup Cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ env.CACHE_PATH }}
+          key: ${{ env.CACHE_KEY }}
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+        name: Install Yarn/ Node ${{ matrix.node-version }}
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "yarn"
+      - name: Install dependencies
+        run: yarn --frozen-lockfile
+        # this is needed to generate things like tsconfig declerations
+      - name: Prepare Nuxt
+        run: yarn setup:ci
+
+
+  teardown:
+    name: Teardown 🛬
+    runs-on: ubuntu-latest
+    needs:
+      # list of lint jobs
+      - eslint 
+    if: always()
+    env:
+      LINT_RESULTS: ${{ toJson(needs) }}
+    steps:
+      - name: Clear Cache
+        uses: octokit/request-action@v2.x
+        with:
+          route: DELETE /repos/{repository}/actions/caches?key={cache_key}
+          repository: ${{ github.repository }}
+          cache_key: ${{ env.SRC_CACHE_KEY }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Check Lint Status
+        if: always()
+        run: |
+          # failure if one or more lint jobs exit without "success"/"skipped" status
+          if echo "$LINT_RESULTS" | jq -r '.[].result' | grep -v 'success' | grep -q -v 'skipped'; then
+            echo "lint failure"
+            exit 1
+          fi
+          exit 0
+      
+
+  eslint:
+    name: Lint: ESLint ✨
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
+      actions: read # only required for a private repository by github/codeql-action/upload-sarif to get the Action run status
+    steps:
+
+      - name: Run ESLint
+        run: yarn lint:ci
+        continue-on-error: true
+
+      - name: Upload analysis results to GitHub
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: eslint-results.sarif
+          wait-for-processing: true
