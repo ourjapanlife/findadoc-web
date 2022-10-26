@@ -1,8 +1,3 @@
-# ESLint is a tool for identifying and reporting on patterns
-# found in ECMAScript/JavaScript code.
-# More details at https://github.com/eslint/eslint
-# and https://eslint.org
-
 name: Lint
 
 on:
@@ -17,9 +12,7 @@ env:
   CACHE_PATH: ./*
   CACHE_KEY: lint-cache-${{ github.sha }}
 
- # This is needed for pull requests to delete 
-permissions:
-  actions: write
+
 jobs:
   setup:
    
@@ -48,8 +41,6 @@ jobs:
         # this is needed to generate things like tsconfig declerations
       - name: Prepare Nuxt
         run: yarn setup:ci
-
-
   teardown:
     name: Teardown 🛬
     runs-on: ubuntu-latest
@@ -60,6 +51,8 @@ jobs:
       # list of lint jobs
       - eslint 
     if: always()
+    permissions:
+      actions: write  # This is needed for pull requests to delete 
     env:
       LINT_RESULTS: ${{ toJson(needs) }}
     steps:
@@ -80,8 +73,13 @@ jobs:
             exit 1
           fi
           exit 0
-      
 
+
+
+  # ESLint is a tool for identifying and reporting on patterns
+  # found in ECMAScript/JavaScript code.
+  # More details at https://github.com/eslint/eslint
+  # and https://eslint.org
   eslint:
     name: ESLint ✨
     runs-on: ubuntu-latest
@@ -108,3 +106,5 @@ jobs:
         with:
           sarif_file: eslint-results.sarif
           wait-for-processing: true
+  # List future lints here only the linting command/uploads is needed
+  #  see eslint job above
