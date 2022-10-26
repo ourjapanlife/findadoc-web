@@ -17,7 +17,9 @@ env:
   CACHE_PATH: ./*
   CACHE_KEY: lint-cache-${{ github.sha }}
 
-
+ # This is needed for pull requests to delete 
+permissions:
+  actions: write
 jobs:
   setup:
    
