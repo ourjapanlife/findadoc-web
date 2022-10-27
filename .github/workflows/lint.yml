@@ -56,15 +56,6 @@ jobs:
     if: always()
     env:
       LINT_RESULTS: ${{ toJson(needs) }}
-    steps:
-      - name: Clear Cache
-        uses: octokit/request-action@v2.x
-        with:
-          route: DELETE /repos/{repository}/actions/caches?key={cache_key}
-          repository: ${{ github.repository }}
-          cache_key: ${{ env.CACHE_KEY }}-${{ matrix.node-version }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Check Lint Status
         if: always()
         run: |
@@ -96,10 +87,10 @@ jobs:
           key: ${{ env.CACHE_KEY }}-${{ matrix.node-version }}
       - name: Run ESLint
         run: yarn lint:ci
-        continue-on-error: true
 
       - name: Upload Results
         uses: github/codeql-action/upload-sarif@v2
+        if: always() # upload even if the lint fails
         with:
           sarif_file: eslint-results.sarif
           wait-for-processing: true
