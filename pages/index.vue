@@ -13,23 +13,25 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+
 export default defineComponent({
     props: {
         name: {
             type: String,
-            default: '',
+            default: ''
         },
         msg: {
             type: String,
             required: false,
-            default: '',
-        },
-    },
-    data() {
-        return {
-            count: 1,
+            default: ''
         }
     },
-    mounted() {},
+
+    data() {
+        return {
+            count: 1
+        }
+    },
+    mounted() { }
 })
 </script>
