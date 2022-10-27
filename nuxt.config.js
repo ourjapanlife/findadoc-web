@@ -2,7 +2,6 @@ const SITE_TITLE = 'Find a Doc, Japan!'
 const SITE_DESCRIPTION =
     'Health service information for the international community in Japan'
 
-
 export default {
     //typescript settings
     typescript: {
@@ -13,12 +12,12 @@ export default {
         titleTemplate: 'Health Services in Japan',
         title: SITE_TITLE,
         htmlAttrs: {
-            lang: 'en',
+            lang: 'en'
         },
         meta: [
             {
                 name: 'google-site-verification',
-                content: '-iHcqQwxR-wiZU6Y4BKtcn79tUZJAcyWXJt7w7iobpY',
+                content: '-iHcqQwxR-wiZU6Y4BKtcn79tUZJAcyWXJt7w7iobpY'
             },
             { charset: 'utf-8' },
             { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -27,60 +26,60 @@ export default {
             {
                 hid: 'twitter:card',
                 name: 'twitter:card',
-                content: 'summary',
+                content: 'summary'
             },
             {
                 hid: 'twitter:title',
                 name: 'twitter:title',
-                content: SITE_TITLE,
+                content: SITE_TITLE
             },
             {
                 hid: 'twitter:description',
                 name: 'twitter:description',
-                content: SITE_DESCRIPTION,
+                content: SITE_DESCRIPTION
             },
             {
                 hid: 'twitter:image',
                 name: 'twitter:image',
-                content: 'https://www.findadoc.jp/findadoc-social.png',
+                content: 'https://www.findadoc.jp/findadoc-social.png'
             },
             {
                 hid: 'twitter:image:alt',
                 name: 'twitter:image:alt',
-                content: SITE_TITLE,
+                content: SITE_TITLE
             },
             {
                 hid: 'og:title',
                 property: 'og:title',
-                content: SITE_TITLE,
+                content: SITE_TITLE
             },
             {
                 hid: 'og:description',
                 property: 'og:description',
-                content: SITE_DESCRIPTION,
+                content: SITE_DESCRIPTION
             },
             {
                 hid: 'og:image',
                 property: 'og:image',
-                content: 'https://www.findadoc.jp/findadoc-social.png',
+                content: 'https://www.findadoc.jp/findadoc-social.png'
             },
             {
                 hid: 'og:image:secure_url',
                 property: 'og:image:secure_url',
-                content: 'https://www.findadoc.jp/findadoc-social.png',
+                content: 'https://www.findadoc.jp/findadoc-social.png'
             },
             {
                 hid: 'og:image:alt',
                 property: 'og:image:alt',
-                content: SITE_TITLE,
+                content: SITE_TITLE
             },
             {
                 hid: 'og:url',
                 property: 'og:url',
-                content: 'https://www.findadoc.jp',
-            },
+                content: 'https://www.findadoc.jp'
+            }
         ],
-        link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+        link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
     },
 
     // Global CSS: https://go.nuxtjs.dev/config-css
@@ -104,10 +103,10 @@ export default {
             postcssOptions: {
                 plugins: {
                     tailwindcss: {},
-                    autoprefixer: {},
-                },
-            },
-        },
+                    autoprefixer: {}
+                }
+            }
+        }
     },
     target: 'static'
 }

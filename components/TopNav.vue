@@ -1,16 +1,17 @@
 <template>
-    <div class="p-4 border-b flex justify-between">
+    <div class="p-4 border-b flex justify-between items-center">
         <div class="font-semibold text-xl text-gray-800">
             <NuxtLink class="align-middle" to="/">
                 <img class="inline align-middle pr-2"
                     src="../assets/images/logo-32-px-color.svg" />Find a Doc
             </NuxtLink>
         </div>
-        <div>
-            <NuxtLink to="/about">
-                About
+        <div class="flex gap-4 mx-6 absolute right-20">
+            <NuxtLink to="/about" class="px-2 mx-auto">
+                About Us
             </NuxtLink>
-            <div class="cursor-pointer md:hidden">
+
+            <div class="hidden cursor-pointer md:hidden">
                 <img @click="toggleMenu"
                     src="../assets/images/hamburgerMenu.svg"
                     alt="hamburger menu" />
@@ -26,7 +27,6 @@
     </div>
 </template>
 
-
 <script setup>
 import { ref } from 'vue'
 
@@ -38,5 +38,3 @@ function toggleMenu() {
     showMenu.value = !showMenu.value
 }
 </script>
-
-
