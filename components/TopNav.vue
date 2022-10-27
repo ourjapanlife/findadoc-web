@@ -9,7 +9,7 @@
             </NuxtLink>
         </div>
         <div class="flex gap-4 mx-6 absolute right-20">
-            <NuxtLink to="/about" class="px-2 mx-auto"> About Us</NuxtLink>
+            <NuxtLink to="/about" class="px-2 mx-auto"> About Us </NuxtLink>
 
             <div class="hidden cursor-pointer md:hidden">
                 <img
