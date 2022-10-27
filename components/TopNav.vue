@@ -12,29 +12,31 @@
             </NuxtLink>
 
             <div class="hidden cursor-pointer md:hidden">
-                <img src="../assets/images/hamburgerMenu.svg"
+                <img @click="toggleMenu"
+                    src="../assets/images/hamburgerMenu.svg"
                     alt="hamburger menu" />
+                <div v-if="showMenu">
+                    <div>
+                        <span class="block">Home</span>
+                        <span class="block">About</span>
+                    </div>
+                </div>
             </div>
         </div>
         <LocaleSelector />
     </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
+<script setup>
+import { ref } from 'vue'
 
-export default defineComponent({
-    props: {
-        msg: {
-            type: String,
-            default: '',
-            required: false
-        }
-    },
-    data() {
-        return {
-            name: ''
-        }
-    }
-})
+//state
+const showMenu = ref(false)
+
+//functions
+function toggleMenu() {
+    showMenu.value = !showMenu.value
+}
 </script>
+
+

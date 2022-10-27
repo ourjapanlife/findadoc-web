@@ -15,3 +15,5 @@ yarn-error.log
 
 # jest
 coverage
+# eslint results
+eslint-results.sarif
