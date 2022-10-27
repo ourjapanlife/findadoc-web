@@ -4,12 +4,12 @@ module.exports = {
         parser: '@typescript-eslint/parser',
         ecmaVersion: 2022,
         sourceType: 'module',
-        extraFileExtensions: ['.json']
+        extraFileExtensions: ['.json'],
     },
     env: {
         node: true,
         es6: true,
-        jest: true
+        jest: true,
     },
     plugins: ['@typescript-eslint', 'eslint-plugin-json'],
     extends: ['eslint:recommended', 'plugin:vue/vue3-strongly-recommended'],
@@ -30,7 +30,10 @@ module.exports = {
         'no-multi-spaces': 2,
         'no-param-reassign': 0,
         'no-redeclare': 2,
-        'no-unused-expressions': [2, { allowShortCircuit: true, allowTernary: true }],
+        'no-unused-expressions': [
+            2,
+            { allowShortCircuit: true, allowTernary: true },
+        ],
         'vars-on-top': 0,
         yoda: [2, 'never', { exceptRange: true }],
         'no-console': 1, //For debugging, but throw warnings so logs are not commited.
@@ -59,13 +62,18 @@ module.exports = {
                 FunctionDeclaration: { parameters: 'off' },
                 VariableDeclarator: { var: 2, let: 2, const: 3 },
                 CallExpression: { arguments: 'first' },
-                ignoredNodes: ['JSXElement *']
-            }
+                ignoredNodes: ['JSXElement *'],
+            },
         ],
         'key-spacing': [2, { beforeColon: false, afterColon: true }],
         'keyword-spacing': [2, { before: true, after: true }],
         'linebreak-style': 0,
-        'max-len': [2, 200, 2, { ignoreUrls: true, ignoreRegExpLiterals: true }],
+        'max-len': [
+            2,
+            200,
+            2,
+            { ignoreUrls: true, ignoreRegExpLiterals: true },
+        ],
         'newline-after-var': 2,
         'require-atomic-updates': 0,
         'no-constant-condition': 2,
@@ -87,8 +95,12 @@ module.exports = {
         'padding-line-between-statements': [
             2,
             { blankLine: 'always', prev: ['const', 'let', 'var'], next: '*' },
-            { blankLine: 'any', prev: ['const', 'let', 'var'], next: ['const', 'let', 'var'] },
-            { blankLine: 'always', prev: '*', next: 'return' }
+            {
+                blankLine: 'any',
+                prev: ['const', 'let', 'var'],
+                next: ['const', 'let', 'var'],
+            },
+            { blankLine: 'always', prev: '*', next: 'return' },
         ],
         'prefer-arrow-callback': 2,
         'prefer-const': 2,
@@ -103,8 +115,8 @@ module.exports = {
             {
                 anonymous: 'never',
                 named: 'never',
-                asyncArrow: 'always'
-            }
+                asyncArrow: 'always',
+            },
         ],
         'space-in-parens': 2,
         'space-infix-ops': 2,
@@ -117,31 +129,51 @@ module.exports = {
         'no-shadow': 2,
 
         // Vue
-        'vue/multi-word-component-names': 1,
-        'vue/html-indent': ['error', 4, {
-            attribute: 1,
-            baseIndent: 1,
-            closeBracket: 0,
-            alignAttributesVertically: false,
-            ignores: []
-        }],
-        'vue/max-attributes-per-line': ['error', {
-            singleline: {
-                max: 4
+        'vue/multi-word-component-names': [
+            'error',
+            {
+                ignores: ['index'],
             },
-            multiline: {
-                max: 3
-            }
-        }],
-        'vue/html-self-closing': ['error', { html: { normal: 'never', void: 'always' } }],
-        'vue/html-closing-bracket-newline': ['error', {
-            singleline: 'never',
-            multiline: 'never'
-        }],
-        'vue/first-attribute-linebreak': ['error', {
-            singleline: 'beside',
-            multiline: 'beside'
-        }]
-
-    }
+        ],
+        'vue/html-indent': [
+            'error',
+            4,
+            {
+                attribute: 1,
+                baseIndent: 1,
+                closeBracket: 0,
+                alignAttributesVertically: false,
+                ignores: [],
+            },
+        ],
+        'vue/max-attributes-per-line': [
+            'error',
+            {
+                singleline: {
+                    max: 4,
+                },
+                multiline: {
+                    max: 3,
+                },
+            },
+        ],
+        'vue/html-self-closing': [
+            'error',
+            { html: { normal: 'never', void: 'always' } },
+        ],
+        'vue/html-closing-bracket-newline': [
+            'error',
+            {
+                singleline: 'never',
+                multiline: 'never',
+            },
+        ],
+        'vue/first-attribute-linebreak': [
+            'error',
+            {
+                singleline: 'beside',
+                multiline: 'beside',
+            },
+        ],
+    },
 }

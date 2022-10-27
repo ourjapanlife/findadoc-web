@@ -2,11 +2,11 @@
     <div class="h-full">
         <TopNav />
         <div class="flex flex-col md:flex-row h-full">
-            <Welcome />
+            <WelcomeSection />
             <FeaturedNews />
         </div>
         <div class="w-full">
-            <Media />
+            <MediaSection />
         </div>
     </div>
 </template>
@@ -29,7 +29,7 @@ export default defineComponent({
 
     data() {
         return {
-            count: 1
+            count: 1,
         }
     },
     mounted() { }
