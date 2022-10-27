@@ -38,5 +38,3 @@ function toggleMenu() {
     showMenu.value = !showMenu.value
 }
 </script>
-
-
