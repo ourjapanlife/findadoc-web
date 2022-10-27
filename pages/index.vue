@@ -29,7 +29,7 @@ export default defineComponent({
 
     data() {
         return {
-            count: 1,
+            count: 1
         }
     },
     mounted() { }
