@@ -1,7 +1,7 @@
 # Jest is JavaScript Testing Framework
 # More details at https://github.com/facebook/jest
 # and https://jestjs.io/
-name: Test: Jest
+name: 'Test: Jest'
 
 on:
   push:

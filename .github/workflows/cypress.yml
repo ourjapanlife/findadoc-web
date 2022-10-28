@@ -1,4 +1,4 @@
-name: Tests: Cypress e2e 
+name: 'Tests: Cypress e2e'
 
 on:
   push:
