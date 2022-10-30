@@ -24,6 +24,7 @@
     "devDependencies": {
         "@microsoft/eslint-formatter-sarif": "^3.0.0",
         "@nuxt/types": "^2.15.8",
+        "@testing-library/vue": "^6.6.1",
         "@typescript-eslint/eslint-plugin": "^5.40.0",
         "@typescript-eslint/parser": "^5.40.0",
         "@vue/test-utils": "^2.1.0",
