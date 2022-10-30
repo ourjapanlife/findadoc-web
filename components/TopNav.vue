@@ -12,10 +12,7 @@
             </NuxtLink>
 
             <HamburgerComponent />
-           
         </div>
         <LocaleSelector />
     </div>
 </template>
-
-
