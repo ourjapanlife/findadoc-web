@@ -5,8 +5,8 @@
                     alt="hamburger menu" />
                 <div v-if="showMenu">
                     <div>
-                        <span class="block">Home</span>
-                        <span class="block">About</span>
+                        <span class="block hover:-translate-y-1 hover:scale-110 duration-300">Home</span>
+                        <span class="block hover:-translate-y-1 hover:scale-110 duration-300">About</span>
                     </div>
                 </div>
             </div>
