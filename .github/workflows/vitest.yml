@@ -1,0 +1,19 @@
+name: 'Tests: vitest'
+
+on:
+  push:
+    branches: [ "main", "ragezbla/89-vitest-gh-actions" ] # TODO remove after checking it works
+  pull_request:
+    # The branches below must be a subset of the branches above
+    branches: [ "main" ]
+  schedule:
+    - cron: '45 15 * * 4'
+
+jobs:
+  cypress-run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Run ESLint
+        run: yarn run test
