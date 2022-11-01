@@ -1,21 +1,21 @@
-import { defineStore } from "pinia";
+import { defineStore } from 'pinia'
 
-export const useLocaleStore = defineStore("locale", {
+export const useLocaleStore = defineStore('locale', {
     state: () => ({
-        locale: { lable: "English", code: "en" },
+        locale: { lable: 'English', code: 'en' }
     }),
     getters: {
-        currentLocale: (state) => state.locale,
+        currentLocale: state => state.locale
     },
     actions: {
         changeLocale() {
-            if (this.currentLocale.code === "en") {
-                this.locale.lable = "日本語";
-                this.locale.code = "ja";
+            if (this.currentLocale.code === 'en') {
+                this.locale.lable = '日本語'
+                this.locale.code = 'ja'
             } else {
-                this.locale.lable = "English";
-                this.locale.lable = "en";
+                this.locale.lable = 'English'
+                this.locale.lable = 'en'
             }
-        },
-    },
-});
+        }
+    }
+})
