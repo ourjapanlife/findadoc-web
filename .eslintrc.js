@@ -44,6 +44,7 @@ module.exports = {
         'block-spacing': [2, 'always'],
         'brace-style': [2, '1tbs', { allowSingleLine: true }],
         camelcase: 2,
+        'comma-dangle': [2, 'never'],
         'comma-spacing': [2, { before: false, after: true }],
         'comma-style': [2, 'last'],
         'computed-property-spacing': [2, 'never'],
@@ -71,7 +72,10 @@ module.exports = {
         'no-constant-condition': 2,
         'no-dupe-class-members': 2,
         'no-lonely-if': 2,
-        'no-multiple-empty-lines': 2,
+        'no-multiple-empty-lines': [2, {
+            max: 1,
+            maxEOF: 0
+        }],
         'no-prototype-builtins': 0,
         'no-underscore-dangle': 2,
         'no-var': 2,
@@ -114,7 +118,9 @@ module.exports = {
         'no-shadow': 2,
 
         // Vue
-        'vue/multi-word-component-names': 1,
+        'vue/multi-word-component-names': ['error', {
+            ignores: ['index']
+        }],
         'vue/html-indent': ['error', 4, {
             attribute: 1,
             baseIndent: 1,
