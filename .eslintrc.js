@@ -9,9 +9,10 @@ module.exports = {
     env: {
         node: true,
         es6: true,
-        jest: true
+        jest: true,
+        'cypress/globals': true
     },
-    plugins: ['@typescript-eslint', 'eslint-plugin-json'],
+    plugins: ['@typescript-eslint', 'eslint-plugin-json', 'cypress'],
     extends: ['eslint:recommended', 'plugin:vue/vue3-strongly-recommended'],
     root: true,
     // 'off' or 0 - turn the rule off

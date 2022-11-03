@@ -24,6 +24,7 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 Cypress.Commands.add('catchNuxtProxyError', () => {
+    // eslint-disable-next-line consistent-return
     cy.on('uncaught:exception', err => {
         if (err.message.includes('/_nuxt/node_modules/unenv/runtime/mock/proxy.cjs')) {
             return false

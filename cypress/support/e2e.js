@@ -18,10 +18,3 @@ import './commands'
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
-
-cy.on('uncaught:exception', (err, runnable) => {
-    console.log(err)
-    if (err.message.includes('/_nuxt/node_modules/unenv/runtime/mock/proxy.cjs')) {
-        return false
-    }
-})
