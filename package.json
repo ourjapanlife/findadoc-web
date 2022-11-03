@@ -6,12 +6,13 @@
         "prepare": "husky install",
         "dev": "yarn && nuxi dev",
         "build": "nuxi generate",
-        "lint": "eslint  . -c .eslintrc.js --ext .vue,.js,.ts,.json",
-        "lint:ci": "eslint . --config .eslintrc.js --ext .js,.jsx,.ts,.tsx,.vue --format @microsoft/eslint-formatter-sarif --output-file eslint-results.sarif",
+        "lint": "eslint  . -c .eslintrc.js --ext .vue,.js,.ts,.json --ignore-path .gitignore",
+        "lint:ci": "eslint . --config .eslintrc.js --ext .js,.jsx,.ts,.tsx,.vue --format @microsoft/eslint-formatter-sarif --output-file eslint-results.sarif --ignore-path .gitignore",
         "prepare:ci": "nuxi prepare",
         "start": "nuxi start",
         "test:pinia": "vitest",
-        "test:pinia:coverage": "vitest run --coverage"
+        "test:pinia:coverage": "vitest run --coverage",
+        "test:e2e": "cypress open --e2e --browser chrome --port 9090"
     },
     "engines": {
         "node": ">=16.0.0"
@@ -34,6 +35,7 @@
         "autoprefixer": "^10.4.12",
         "cypress": "^10.9.0",
         "eslint": "^8.25.0",
+        "eslint-plugin-cypress": "^2.12.1",
         "eslint-plugin-json": "^3.1.0",
         "eslint-plugin-vue": "^9.2.0",
         "husky": "^8.0.1",

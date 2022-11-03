@@ -1,0 +1,25 @@
+name: 'Tests: Cypress e2e'
+
+on:
+  push:
+    branches: [ "main", "ragezbla/20-github-actions" ] # TODO remove after checking it works
+  pull_request:
+    # The branches below must be a subset of the branches above
+    branches: [ "main" ]
+  schedule:
+    - cron: '45 15 * * 4'
+
+jobs:
+  cypress-run:
+    name: Running Cypress tests ✨
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      # Install yarn dependencies, cache them correctly
+      # and run all Cypress tests
+      - name: Cypress run
+        uses: cypress-io/github-action@v4.2.0
+        with:
+          build: yarn build
+          start: yarn start
