@@ -16,5 +16,5 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Run ESLint
+      - name: Run Vitest
         run: yarn run test
