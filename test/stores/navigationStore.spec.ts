@@ -2,7 +2,7 @@ import { setActivePinia, createPinia } from 'pinia'
 import { useStore } from '@/stores/navigationStore.js'
 import { expect } from 'vitest'
 
-describe('Counter Store', () => {
+describe('Navigation Store', () => {
     beforeEach(() => {
         setActivePinia(createPinia())
     })
