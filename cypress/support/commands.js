@@ -29,5 +29,7 @@ Cypress.Commands.add('catchNuxtProxyError', () => {
         if (err.message.includes('/_nuxt/node_modules/unenv/runtime/mock/proxy.cjs')) {
             return false
         }
+
+        return true
     })
 })
