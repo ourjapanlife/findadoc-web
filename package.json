@@ -10,8 +10,8 @@
         "lint:ci": "eslint . --config .eslintrc.js --ext .js,.jsx,.ts,.tsx,.vue --format @microsoft/eslint-formatter-sarif --output-file eslint-results.sarif",
         "prepare:ci": "nuxi prepare",
         "start": "nuxi start",
-        "test": "vitest",
-        "coverage": "vitest run --coverage"
+        "test:pinia": "vitest",
+        "test:pinia:coverage": "vitest run --coverage"
     },
     "engines": {
         "node": ">=16.0.0"
