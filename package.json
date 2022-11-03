@@ -8,7 +8,8 @@
         "build": "nuxi generate",
         "lint": "eslint  . -c .eslintrc.js --ext .vue,.js,.ts,.json",
         "start": "nuxi start",
-        "test": "jest"
+        "test": "jest",
+        "e2e": "cypress open --e2e --browser chrome --port 9090"
     },
     "engines": {
         "node": ">=16.0.0"
