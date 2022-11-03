@@ -10,7 +10,7 @@ on:
     - cron: '45 15 * * 4'
 
 jobs:
-  cypress-run:
+  run-pinia-tests:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
