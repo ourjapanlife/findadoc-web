@@ -27,14 +27,19 @@ export const useResultsStore = defineStore('resultsStore', {
             return this.results
         },
 
-        setActiveResult(facilityID: number){
-            const result = this.results.find(result => result.facilityID === facilityID)
-            result.activeResult = true
-        },
+        // setActiveResult(facilityID: number){
+        //     const result = this.results.find(result => result.facilityID === facilityID)
+        //     result.activeResult = true
+        // },
 
-        clearResults(facilityID: number){
-            const resultToClear = this.results.find(result => result.facilityID === facilityID)
-            resultToClear.activeResult = false
+        // clearResults(facilityID: number){
+        //     const resultToClear = this.results.find(result => result.facilityID === facilityID)
+        //     resultToClear.activeResult = false
+        // }
+
+        toggleActiveResult(facilityID: number){
+            const result = this.results.find(result => result.facilityID === facilityID)
+            return result.activeResult = !result.activeResult
         }
     }
 })
