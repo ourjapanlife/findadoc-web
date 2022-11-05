@@ -39,7 +39,7 @@ export const useResultsStore = defineStore('resultsStore', {
 
         toggleActiveResult(facilityID: number){
             const result = this.results.find(result => result.facilityID === facilityID)
-            return result.activeResult = !result.activeResult
+            return result!.activeResult = !result!.activeResult
         }
     }
 })
