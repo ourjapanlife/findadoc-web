@@ -6,6 +6,8 @@ We are working on the V2 version of the site, so if you've volunteered in the pa
 
 👉️ Join us on [Slack](https://join.slack.com/t/find-a-doc/shared_invite/zt-s4744a6o-MGaGHzLN5wB9aXeha3vdsQ)! 💬
 
+👉 Is this your first Open-source project? Please check out our [beginner resources]( https://github.com/ourjapanlife/findadoc-web/wiki/Getting-Started-with-Open-Source-%F0%9F%94%B0) to learn the basics of Git and GitHub 💕
+
 👉️ Developers 💻️
 
 1. Fork the repo and build the source by following the [README](./README.md)
