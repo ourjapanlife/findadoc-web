@@ -8,6 +8,9 @@ on:
     branches: [ "main" ]
   schedule:
     - cron: '45 15 * * 4'
+env:
+  CACHE_PATH: ./*
+  CACHE_KEY: vitest-cache-${{ github.sha }}
 
 jobs:
   setup:
