@@ -10,11 +10,43 @@ on:
     - cron: '45 15 * * 4'
 
 jobs:
+  setup:
+
+    name: Setup 🛫
+    strategy:
+      matrix:
+        node-version: [16, 18]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ env.CACHE_PATH }}
+          key: ${{ env.CACHE_KEY }}-${{ matrix.node-version }}
+      - name: Checkout Code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Install Yarn/ Node ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "yarn"
+      - name: Install Dependencies
+        run: yarn install --immutable
+        # this is needed to generate things like tsconfig declerations
+
   run-pinia-tests:
     runs-on: ubuntu-latest
     name: Running Pinia Tests 🚀
+    strategy:
+      matrix:
+        node-version: [16, 18]
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+      - name: Load Cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ env.CACHE_PATH }}
+          key: ${{ env.CACHE_KEY }}-${{ matrix.node-version }}
       - name: Run Vitest
         run: yarn test:pinia
