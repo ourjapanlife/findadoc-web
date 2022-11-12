@@ -42,6 +42,7 @@ jobs:
   run-pinia-tests:
     runs-on: ubuntu-latest
     name: Running Pinia Tests 🚀
+    needs: setup
     strategy:
       matrix:
         node-version: [16, 18]
