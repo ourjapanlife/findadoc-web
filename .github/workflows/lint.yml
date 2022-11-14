@@ -101,7 +101,7 @@ jobs:
   # Stylelint is a tool for identifying and reporting on patterns
   # found in CSS code.
   # More details at https://stylelint.io/
-  eslint:
+  stylelint:
     name: Stylelint ✨
     runs-on: ubuntu-latest
     needs: setup
