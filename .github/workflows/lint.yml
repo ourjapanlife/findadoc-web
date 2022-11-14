@@ -95,8 +95,6 @@ jobs:
         with:
           sarif_file: eslint-results.sarif
           wait-for-processing: true
-  # List future lints here only the linting command/uploads is needed
-  #  see eslint job above
 
   # Stylelint is a tool for identifying and reporting on patterns
   # found in CSS code.
@@ -115,4 +113,4 @@ jobs:
           path: ${{ env.CACHE_PATH }}
           key: ${{ env.CACHE_KEY }}-${{ matrix.node-version }}
       - name: Run Styelint
-        run: yarn run stylelint "**/*.{vue,css,scss}" --ignore-path .gitignore -f verbose
+        run: yarn lint:css 
