@@ -97,3 +97,22 @@ jobs:
           wait-for-processing: true
   # List future lints here only the linting command/uploads is needed
   #  see eslint job above
+
+  # Stylelint is a tool for identifying and reporting on patterns
+  # found in CSS code.
+  # More details at https://stylelint.io/
+  eslint:
+    name: Stylelint ✨
+    runs-on: ubuntu-latest
+    needs: setup
+    strategy:
+      matrix:
+        node-version: [16, 18]  
+    steps:
+      - name: Load Cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ env.CACHE_PATH }}
+          key: ${{ env.CACHE_KEY }}-${{ matrix.node-version }}
+      - name: Run Styelint
+        run: yarn run stylelint "**/*.{vue,css,scss}" --ignore-path .gitignore -f verbose
