@@ -8,6 +8,7 @@
         "build": "nuxi generate",
         "lint": "eslint  . -c .eslintrc.js --ext .vue,.js,.ts,.json --ignore-path .gitignore && stylelint **/*.{vue,css,scss} --ignore-path .gitignore",
         "lint:ci": "eslint . --config .eslintrc.js --ext .js,.jsx,.ts,.tsx,.vue --format @microsoft/eslint-formatter-sarif --output-file eslint-results.sarif --ignore-path .gitignore",
+        "lint:css": "stylelint '**/*.{vue,css,scss}' --ignore-path .gitignore -f verbose",
         "prepare:ci": "nuxi prepare",
         "start": "nuxi start",
         "test:pinia": "vitest",
