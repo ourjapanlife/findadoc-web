@@ -1,7 +1,8 @@
 <template>
     <div class="h-full">
         <div class="flex flex-col md:flex-row h-full">
-            About us!
+            <h1>About us!</h1>
+            <p>Coming soon</p>
         </div>
     </div>
 </template>
