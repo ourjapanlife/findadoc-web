@@ -1,5 +1,5 @@
 <template>
-    <div class="p-4 border-b flex flex-row justify-between items-center bg-indigo-800">
+    <div class="p-4 border-b flex justify-between items-center bg-indigo-800">
         <HamburgerComponent />
         <div class="font-semibold text-xl text-gray-800">
             <NuxtLink class="align-middle" to="/">
