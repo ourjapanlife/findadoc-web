@@ -4,7 +4,8 @@
         <div class="font-semibold text-xl text-gray-800">
             <NuxtLink class="align-middle" to="/">
                 <img class="inline align-middle pr-2"
-                    src="../assets/images/logo-32-px-color.svg" />Find a Doc
+                    src="../assets/images/logo-32-px-color.svg" />
+                <span>Find a Doc</span>
             </NuxtLink>
         </div>
         <nav class="flex gap-4 mx-6 absolute right-20">

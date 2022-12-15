@@ -2,10 +2,6 @@
     <div class="h-full">
         <div class="flex flex-col md:flex-row h-full">
             <WelcomeSection />
-            <FeaturedNews />
-        </div>
-        <div class="w-full">
-            <MediaSection />
         </div>
     </div>
 </template>
