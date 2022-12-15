@@ -1,6 +1,5 @@
 <template>
     <div class="h-full">
-        <TopNav />
         <div class="flex flex-col md:flex-row h-full">
             About us!
         </div>

@@ -1,6 +1,5 @@
 <template>
     <div class="h-full">
-        <TopNav />
         <div class="flex flex-col md:flex-row h-full">
             <WelcomeSection />
             <FeaturedNews />
@@ -32,6 +31,6 @@ export default defineComponent({
             count: 1
         }
     },
-    mounted() { }
+    mounted() {}
 })
 </script>
