@@ -1,4 +1,4 @@
-const SITE_TITLE = 'Find a Doc, Japan!'
+const SITE_TITLE = 'Find a Doc Japan'
 const SITE_DESCRIPTION =
     'Health service information for the international community in Japan'
 
@@ -92,7 +92,9 @@ export default {
     components: true,
 
     // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
-    buildModules: [],
+    buildModules: [
+        '@nuxt/postcss8'
+    ],
 
     // Modules: https://go.nuxtjs.dev/config-modules
     modules: [],
