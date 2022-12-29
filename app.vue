@@ -1,8 +1,6 @@
 <template>
     <TopNav />
-    <container>
-        <NuxtPage />
-    </container>
+    <NuxtPage />
     <Footer />
 </template>
 
