@@ -15,7 +15,6 @@ module.exports = {
         screens: {
             md: { min: '800px' }
         },
-        extend: {},
         colors: {
             transparent: 'transparent',
             current: 'currentColor',
