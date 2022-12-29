@@ -28,7 +28,8 @@
         },
         "types": [
             "@nuxt/types",
-            "@types/node"
+            "@types/node",
+            "vue/types"
         ]
     },
     "exclude": [
