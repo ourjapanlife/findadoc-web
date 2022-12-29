@@ -133,7 +133,7 @@ module.exports = {
                 max: 4
             },
             multiline: {
-                max: 3
+                max: 4
             }
         }],
         'vue/html-self-closing': ['error', { html: { normal: 'never', void: 'always' } }],
