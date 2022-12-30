@@ -25,14 +25,12 @@ const defaultResults = [{
     specialty: 'Practitioner',
     facilityName: 'LifeSavers',
     spokenLanguages: ['japanese', 'english']
-},
-{
+}, {
     name: 'test person 2',
     specialty: 'Psychiatrist',
     facilityName: 'Rest Assured',
     spokenLanguages: ['english']
-},
-{
+}, {
     name: 'test person 3',
     specialty: 'Oncologist',
     facilityName: 'Bring me back to life',
