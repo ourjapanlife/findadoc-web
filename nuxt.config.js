@@ -97,15 +97,11 @@ export default {
     // Modules: https://go.nuxtjs.dev/config-modules
     modules: [],
 
-    // Build Configuration: https://go.nuxtjs.dev/config-build
-    build: {
-        postcss: {
-            postcssOptions: {
-                plugins: {
-                    tailwindcss: {},
-                    autoprefixer: {}
-                }
-            }
+    // Postcss configuration
+    postcss: {
+        plugins: {
+            tailwindcss: {},
+            autoprefixer: {}
         }
     },
     target: 'static'

@@ -1,6 +1,6 @@
 <template>
     <div class="flex flex-col bg-gray-800 p-12 w-full">
-        <h1 class="text-gray-100&quot;">
+        <h1 class="text-gray-100">
             Connecting people in Japan to the healthcare services they need, in the languages they need.
         </h1>
         <h2 class="text-gray-300">
