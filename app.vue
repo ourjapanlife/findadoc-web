@@ -1,7 +1,9 @@
 <template>
-    <TopNav />
-    <NuxtPage />
-    <Footer />
+    <div class="h-screen flex flex-col font-sans">
+        <TopNav />
+        <NuxtPage class="flex flex-1" />
+        <Footer />
+    </div>
 </template>
 
 <script lang="ts">
