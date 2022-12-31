@@ -11,7 +11,8 @@
             <span class="px-2"> {{ facilityName }}</span>
         </div>
         <div class="result-tags flex flex-row flex-wrap w-64 mb-2">
-            <div :key="index" v-for="(spokenLanguage, index) in spokenLanguages" class="pl-2 pr-2 py-[1px] mr-2 border border-solid border-orange/40 rounded-2xl shadow text-sm">
+            <div :key="index" v-for="(spokenLanguage, index) in spokenLanguages"
+                class="pl-2 pr-2 py-[1px] mr-2 border border-solid border-orange/40 rounded-2xl shadow text-sm">
                 {{ spokenLanguage }}
             </div>
         </div>
