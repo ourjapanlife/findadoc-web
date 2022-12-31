@@ -1,8 +1,8 @@
 <template>
     <div class="h-full">
         <div class="flex flex-col md:flex-col h-full">
-            <h1>Terms and conditions</h1>
-            <p>Coming soon</p>
+            <h1 class="h1">Privacy Policy</h1>
+            <h2>Your privacy is important to us!</h2>
             <h3 class="py-5">Licensing</h3>
             <p>BSD 3-Clause License
 

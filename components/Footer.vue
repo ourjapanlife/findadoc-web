@@ -1,37 +1,41 @@
 <template>
-    <div class="footer flex bg-orange-100 text-sm text-current py-2">
+    <div class="footer flex bg-orange-100 text-sm text-current font-semibold py-2">
         <div class="left-footer-section flex flex-0 justify-start">
-            <span class="self-center px-2">© 2023 Find a doc JP</span>
+            <NuxtLink to="/" class="self-center ml-8 mr-2">
+                © 2023 Find a doc JP
+            </NuxtLink>
+            <span class="self-center">·</span>
             <nav class="flex mx-2">
-                <NuxtLink to="/privacy" class="px-2 mx-auto self-center">
+                <NuxtLink to="/privacypolicy" class="self-center">
                     Privacy
                 </NuxtLink>
             </nav>
             <span class="self-center">·</span>
             <nav class="flex mx-2">
-                <NuxtLink to="/terms" class="px-2 mx-auto self-center">
+                <NuxtLink to="/terms" class="self-center">
                     Terms
                 </NuxtLink>
             </nav>
         </div>
         <div class="middle-footer section flex flex-1 align-middle justify-center">
+            <span class="self-center">Powered by</span>
             <nav class="flex mx-2 self-center">
-                <NuxtLink to="https://www.netlify.com/" target="_blank" class="px-2 mx-auto">
-                    Deployed on Netlify
+                <NuxtLink to="https://www.netlify.com/" target="_blank" class="underline">
+                    Netlify
                 </NuxtLink>
             </nav>
         </div>
-        <div class="right-footer-section flex flex-0 flex-col gap-1 justify-end">
-            <div class="flex flex-row flex-wrap">
+        <div class="right-footer-section flex flex-0 flex-row gap-6 justify-end px-8 text-xs">
+            <div class="flex flex-col flex-wrap mx-2">
                 <span>Contribute on </span>
-                <NuxtLink to="https://github.com/ourjapanlife/findadoc-web.com/" target="_blank" class="px-2 mx-auto">
-                    <img alt="github icon" class="github-icon" src="@/assets/images/profileIcon.svg" width="25"
-                        height="25" />
+                <NuxtLink to="https://github.com/ourjapanlife/findadoc-web/" target="_blank" class="self-center">
+                    <img alt="github icon" class="github-icon w-12" src="@/assets/images/github_logo.png" />
                 </NuxtLink>
             </div>
-            <div class="flex flex-row flex-wrap">
+            <span class="self-center">·</span>
+            <div class="flex flex-col flex-wrap">
                 <span>Got feedback?</span>
-                <NuxtLink to="https://forms.gle/4E763qfaq46kEsn99" target="_blank" class="px-2 mx-auto underline">
+                <NuxtLink to="https://forms.gle/4E763qfaq46kEsn99" target="_blank" class="px-2 mx-auto underline font-bold">
                     Click here
                 </NuxtLink>
             </div>

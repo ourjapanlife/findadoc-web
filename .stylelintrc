@@ -7,6 +7,7 @@
         "stylelint-order"
     ],
     "rules": {
+        "block-closing-brace-newline-before": "always-multi-line",
         "color-hex-length": "short",
         "color-named": "never",
         "comment-empty-line-before": null,
