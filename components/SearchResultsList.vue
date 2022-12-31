@@ -4,7 +4,7 @@
             Doctors Nearby
         </span>
         <div class="filters py-1 px-2 border border-solid border-slate-600 rounded-xl flex flex-row flex-0">
-            <img alt="hamburger menu icon" class="hamburger-icon" src="@/assets/images/hamburgerListIcon.svg" width="25"
+            <img alt="hamburger menu icon" class="hamburger-icon" src="@/assets/images/hamburger-list-icon.svg" width="25"
                 height="25" />
             <span class="pl-1 font-bold">Filters</span>
         </div>

@@ -1,7 +1,7 @@
 <template>
     <div class="cursor-pointer md:hidden">
         <img @click="toggleMenu"
-            src="../assets/images/hamburgerMenu.svg"
+            src="../assets/images/hamburger-menu.svg"
             alt="hamburger menu" />
         <div v-if="showMenu">
             <div>
