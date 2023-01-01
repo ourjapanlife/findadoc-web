@@ -1,7 +1,7 @@
 <template>
     <div class="search-result">
         <div class="result-header flex">
-            <img alt="profile icon" class="profile-icon" src="@/assets/images/profileIcon.svg" width="25"
+            <img alt="profile icon" class="profile-icon" src="@/assets/images/profile-icon.svg" width="25"
                 height="25" />
             <span class="flex-1 w-4 font-bold pl-2"> {{ name }} </span>
         </div>
