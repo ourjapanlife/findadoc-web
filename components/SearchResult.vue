@@ -1,18 +1,18 @@
 <template>
-    <div class="flex flex-col">
-        <div class="result-header flex flex-row">
+    <div class="search-result">
+        <div class="result-header flex">
             <img alt="profile icon" class="profile-icon" src="@/assets/images/profileIcon.svg" width="25"
                 height="25" />
             <span class="flex-1 w-4 font-bold pl-2"> {{ name }} </span>
         </div>
-        <div class="result-details flex flex-row my-2">
+        <div class="result-details flex my-2">
             <span class="pr-2"> {{ specialty }}</span>
             <span class="self-center">·</span>
             <span class="px-2"> {{ facilityName }}</span>
         </div>
-        <div class="result-tags flex flex-row flex-wrap w-64 mb-2">
+        <div class="result-tags flex flex-wrap w-64 mb-2">
             <div :key="index" v-for="(spokenLanguage, index) in spokenLanguages"
-                class="pl-2 pr-2 py-[1px] mr-2 border border-solid border-orange/40 rounded-2xl shadow text-sm">
+                class="pl-2 pr-2 py-[1px] mr-2 border border-orange/40 rounded-full shadow text-sm">
                 {{ spokenLanguage }}
             </div>
         </div>
