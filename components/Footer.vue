@@ -2,7 +2,7 @@
     <div class="footer flex bg-orange-100 text-sm text-current font-semibold py-2">
         <div class="left-footer-section flex flex-0 justify-start">
             <NuxtLink to="/" class="self-center ml-8 mr-2">
-                © 2023 Find a doc JP
+                © {{ new Date().getUTCFullYear() }} Find a Doc, Japan
             </NuxtLink>
             <span class="self-center">·</span>
             <nav class="flex mx-2">
