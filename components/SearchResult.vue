@@ -1,8 +1,9 @@
 <template>
     <div class="search-result">
         <div class="result-header flex">
-            <img alt="profile icon" class="profile-icon fill-primary/50" src="@/assets/images/profile-icon.svg" width="25"
-                height="25" />
+            <svg role="img" alt="profile icon" title="profile icon" class="profile-icon w-8 h-8 stroke-primary">
+                <use xlink:href="../assets/images/profile-icon.svg#profile-icon-svg" />
+            </svg>
             <span class="flex-1 w-4 font-bold pl-2"> {{ name }} </span>
         </div>
         <div class="result-details flex my-2">

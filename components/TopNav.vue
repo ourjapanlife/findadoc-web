@@ -3,8 +3,8 @@
         <HamburgerComponent />
         <div class="font-semibold text-xl">
             <NuxtLink class="flex" to="/">
-                <svg role="img" title="site icon" class="mr-1 w-10 h-10 overflow-visible align-middle">
-                    <use xlink:href="../assets/images/site-logo.svg#site-logo-svg" class="fill-primary overflow-visible" />
+                <svg role="img" title="site icon" class="mr-1 w-10 h-10 align-middle fill-primary">
+                    <use xlink:href="../assets/images/site-logo.svg#site-logo-svg" />
                 </svg>
                 <div class="title-text flex flex-col">
                     <div class="text-xs text-primary">Find a</div>

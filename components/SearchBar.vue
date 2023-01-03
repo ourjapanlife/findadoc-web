@@ -41,7 +41,9 @@
         <div id="search-button" class="flex items-center">
             <button id="searchButton"
                 class="flex flex-0 flex-row rounded-full bg-primary w-28 pl-1 pr-2 py-2 text-sm align-middle justify-center">
-                <img alt="search icon" class="search-icon w-5 mr-1" src="@/assets/images/search-icon.svg" />
+                <svg role="img" alt="search icon" title="search icon" class="search-icon w-5 h-5 mr-1 fill-primary-text-inverted">
+                    <use xlink:href="../assets/images/search-icon.svg#search-icon-svg" />
+                </svg>
                 <span class="self-center text-primary-text-inverted">Search</span>
             </button>
         </div>
