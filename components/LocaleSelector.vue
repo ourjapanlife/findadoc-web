@@ -1,6 +1,7 @@
 <template>
     <div>
-        <select v-model="selected">
+        <select v-model="selected" class="rounded-full w-full px-1
+                    border-2 border-primary/80 drop-shadow-md text-primary-text bg-secondary-bg">
             <option selected>
                 English
             </option>

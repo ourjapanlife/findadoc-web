@@ -21,41 +21,61 @@
     --color-secondary-inverted: /* #ffffff */ 255 255 255;
     --color-secondary-hover: /* #d66051 */ 214 96 81;
     /* element specific colors */
-    --color-text-base: 255 255 255;
-    --color-text-muted: 199 210 254;
-    --color-text-inverted: 79 70 229;
-    --color-fill: 67 56 202;
+    --color-text-base: /* #252525 */ 37 37 37;
+    --color-text-muted: /* #999999 */ 153 153 153;
+    --color-text-inverted: /* #000000 */ 255 255 255;
+    --color-bg-primary: /* #fcfcfc */ 252 252 252;
+    --color-bg-secondary: /* #fff1ef */ 255 241 239;
   }
 
   .theme-violet {
     /* general branding colors */
-    --color-primary: 185 28 28;
-    --color-secondary: 255 255 255;
-    --color-tertiary: 220 38 38;
+    --color-primary: /* #A45D9A */ 164 93 154;
+    --color-secondary: /* #DA5550 */ 218 85 80;
+    --color-tertiary: /* #F4F3E9 */ 244 243 233;
     --color-primary-inverted: /* #ffffff */ 255 255 255;
     --color-primary-hover: /* #d66051 */ 214 96 81;
     --color-secondary-inverted: /* #ffffff */ 255 255 255;
     --color-secondary-hover: /* #d66051 */ 214 96 81;
     /* element specific colors */
-    --color-text-base: 255 255 255;
-    --color-text-muted: 254 202 202;
-    --color-text-inverted: 220 38 38;
-    --color-fill: 185 28 28;
+    --color-text-base: /* #252525 */ 37 37 37;
+    --color-text-muted: /* #464646 */ 70 70 70;
+    --color-text-inverted: /* #000000 */ 255 255 255;
+    --color-bg-primary: /* #fcfcfc */ 252 252 252;
+    --color-bg-secondary: /* #a394a1 */ 163 148 161;
+  }
+
+  .theme-ocean {
+    /* general branding colors */
+    --color-primary: /* #A45D9A */ 164 93 154;
+    --color-secondary: /* #DA5550 */ 218 85 80;
+    --color-tertiary: /* #F4F3E9 */ 244 243 233;
+    --color-primary-inverted: /* #ffffff */ 255 255 255;
+    --color-primary-hover: /* #d66051 */ 214 96 81;
+    --color-secondary-inverted: /* #ffffff */ 255 255 255;
+    --color-secondary-hover: /* #d66051 */ 214 96 81;
+    /* element specific colors */
+    --color-text-base: /* #252525 */ 37 37 37;
+    --color-text-muted: /* #464646 */ 70 70 70;
+    --color-text-inverted: /* #000000 */ 255 255 255;
+    --color-bg-primary: /* #fcfcfc */ 252 252 252;
+    --color-bg-secondary: /* #245A7D */ 36 90 125;
   }
 
   .theme-neon {
     /* general branding colors */
-    --color-primary: 225 255 255;
+    --color-primary: /* #1bdb9b */ 27 219 155;
     --color-secondary: 225 255 223;
-    --color-tertiary: 222 222 222;
+    --color-tertiary: 179 255 23;
     --color-primary-inverted: /* #ffffff */ 255 255 255;
     --color-primary-hover: /* #d66051 */ 214 96 81;
     --color-secondary-inverted: /* #ffffff */ 255 255 255;
     --color-secondary-hover: /* #d66051 */ 214 96 81;
     /* element specific colors */
-    --color-text-base: 17 24 2;
-    --color-text-muted: 47 67 6;
-    --color-text-inverted: 235 250 204;
-    --color-fill: 179 255 23;
+    --color-text-base: /* #88eecc */ 136 238 204;
+    --color-text-muted: /* #71c5a9 */ 113 197 169;
+    --color-text-inverted: /* #252525 */ 37 37 37;
+    --color-bg-primary: /* #383434 */ 56 52 52;
+    --color-bg-secondary: /* #524c4c */ 82 76 76;
   }
 }

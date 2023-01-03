@@ -2,8 +2,9 @@
     <div class="flex flex-row flex-0 w-128">
         <div id="search-fields" class="grid-cols-3 mx-4">
             <div class="search-specialty col-span-1 inline-block w-1/3 py-4">
-                <select class="rounded-l-full rounded-r-none w-full border-2 py-1.5 drop-shadow-md">
-                    <option value="" class="color-gray" selected>
+                <select class="rounded-l-full rounded-r-none w-full px-1
+                    border-2 border-primary/80 py-1.5 drop-shadow-md text-primary-text bg-secondary-bg">
+                    <option value="" class="text-primary-text-muted" disabled selected>
                         Select a specialty...
                     </option>
                     <option value=""></option>
@@ -13,8 +14,9 @@
                 </select>
             </div>
             <div class="search-location col-span-1 inline-block w-1/3 py-4">
-                <select class="rounded-none w-full border-2 py-1.5 drop-shadow-md">
-                    <option value="" class="color-gray" selected>
+                <select class="rounded-none w-full px-1
+                    border-2 border-primary/80 py-1.5 drop-shadow-md text-primary-text bg-secondary-bg">
+                    <option value="" class="text-primary-text-muted" disabled selected>
                         Select a location...
                     </option>
                     <option value=""></option>
@@ -24,8 +26,9 @@
                 </select>
             </div>
             <div class="search-language col-span-1 inline-block w-1/3 py-4">
-                <select class="rounded-r-full rounded-l-none w-full border-2 py-1.5 drop-shadow-md">
-                    <option value="" selected>
+                <select class="rounded-r-full rounded-l-none w-full px-1
+                    border-2 border-primary/80 py-1.5 drop-shadow-md text-primary-text bg-secondary-bg">
+                    <option value="" class="text-primary-text-muted" disabled selected>
                         Select a language...
                     </option>
                     <option value=""></option>
@@ -36,9 +39,10 @@
             </div>
         </div>
         <div id="search-button" class="flex items-center">
-            <button id="searchButton" class="flex flex-0 flex-row rounded-full bg-primary w-28 pl-1 pr-2 py-2 text-sm align-middle justify-center">
+            <button id="searchButton"
+                class="flex flex-0 flex-row rounded-full bg-primary w-28 pl-1 pr-2 py-2 text-sm align-middle justify-center">
                 <img alt="search icon" class="search-icon w-5 mr-1" src="@/assets/images/search-icon.svg" />
-                <span class="self-center text-textcolor-base">Search</span>
+                <span class="self-center text-primary-text-inverted">Search</span>
             </button>
         </div>
     </div>

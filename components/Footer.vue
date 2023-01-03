@@ -1,5 +1,5 @@
 <template>
-    <div class="footer flex bg-orange-100 text-sm text-current font-semibold py-2">
+    <div class="footer flex bg-secondary-bg text-sm text-primary-text font-semibold py-2">
         <div class="left-footer-section flex flex-0 justify-start">
             <NuxtLink to="/" class="self-center ml-8 mr-2">
                 © {{ new Date().getUTCFullYear() }} Find a Doc, Japan
