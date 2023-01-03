@@ -29,7 +29,7 @@
             <div class="flex flex-col flex-wrap mx-2">
                 <span>Contribute on </span>
                 <NuxtLink to="https://github.com/ourjapanlife/findadoc-web/" target="_blank" class="self-center">
-                    <img alt="github icon" class="github-icon w-12" src="@/assets/images/github_logo.png" />
+                    <img alt="github icon" class="github-icon w-12" src="@/assets/images/github-logo.png" />
                 </NuxtLink>
             </div>
             <span class="self-center">·</span>
