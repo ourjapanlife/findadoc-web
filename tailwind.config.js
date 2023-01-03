@@ -16,21 +16,21 @@ module.exports = {
             md: { min: '800px' }
         },
         colors: {
+            ////from tailwind labs https://youtu.be/MAtaT8BZEAo. allows opacity to still work with css vars.
+            //https://tailwindcss.com/docs/customizing-colors#using-css-variables
             transparent: 'transparent',
             current: 'currentColor',
             currentColor: '#ED6C5A',
-            orange: {
-                100: '#fff7ed',
-                200: '#ffedd5',
-                300: '#fed7aa',
-                400: '#fb923c',
-                DEFAULT: '#ED6C5A',
-                500: '#ED6C5A',
-                600: '#ea580c',
-                700: '#c2410c',
-                800: '#9a3412',
-                900: '#7c2d12'
-            },
+            primary: 'rgb(var(--color-primary) / <alpha-value>)',
+            secondary: 'rgb(var(--color-secondary) / <alpha-value>)',
+            tertiary: 'rgb(var(--color-tertiary) / <alpha-value>)',
+            'primary-inverted': 'rgb(var(--color-primary-inverted) / <alpha-value>)',
+            'primary-hover': 'rgb(var(--color-primary-hover) / <alpha-value>)',
+            'secondary-inverted': 'rgb(var(--color-secondary-inverted) / <alpha-value>)',
+            'secondary-hover': 'rgb(var(--color-secondary-hover) / <alpha-value>)',
+            'textcolor-base': 'rgb(var(--color-text-base) / <alpha-value>)',
+            'textcolor-muted': 'rgb(var(--color-text-muted) / <alpha-value>)',
+            'textcolor-inverted': 'rgb(var(--color-text-inverted) / <alpha-value>)',
             blue: '#245A7D',
             neutral: colors.gray,
             black: colors.black,
