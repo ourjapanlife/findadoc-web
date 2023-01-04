@@ -1,5 +1,5 @@
 <template>
-    <div class="p-4 pl-8 border-b border-primary/40 flex justify-between items-center">
+    <div class="p-4 pl-8 border-b-2 border-secondary-bg/40 flex justify-between items-center">
         <HamburgerComponent />
         <div class="font-semibold text-xl">
             <NuxtLink class="flex" to="/">

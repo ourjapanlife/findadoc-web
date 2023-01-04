@@ -1,5 +1,5 @@
 <template>
-    <div class="h-screen flex flex-col font-sans text-primary-text bg-primary-bg theme-neon">
+    <div class="h-screen flex flex-col font-sans text-primary-text bg-primary-bg theme">
         <TopNav />
         <NuxtPage class="flex flex-1" />
         <Footer />

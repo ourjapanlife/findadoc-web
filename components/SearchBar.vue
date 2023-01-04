@@ -3,7 +3,7 @@
         <div id="search-fields" class="grid-cols-3 mx-4">
             <div class="search-specialty col-span-1 inline-block w-1/3 py-4">
                 <select class="rounded-l-full rounded-r-none w-full px-1
-                    border-2 border-primary/80 py-1.5 drop-shadow-md text-primary-text bg-secondary-bg">
+                    border-2 border-primary/80 py-1.5 drop-shadow-md text-primary-text bg-secondary-bg/5">
                     <option value="" class="text-primary-text-muted" disabled selected>
                         Select a specialty...
                     </option>
@@ -15,7 +15,7 @@
             </div>
             <div class="search-location col-span-1 inline-block w-1/3 py-4">
                 <select class="rounded-none w-full px-1
-                    border-2 border-primary/80 py-1.5 drop-shadow-md text-primary-text bg-secondary-bg">
+                    border-2 border-primary/80 py-1.5 drop-shadow-md text-primary-text bg-secondary-bg/5">
                     <option value="" class="text-primary-text-muted" disabled selected>
                         Select a location...
                     </option>
@@ -27,7 +27,7 @@
             </div>
             <div class="search-language col-span-1 inline-block w-1/3 py-4">
                 <select class="rounded-r-full rounded-l-none w-full px-1
-                    border-2 border-primary/80 py-1.5 drop-shadow-md text-primary-text bg-secondary-bg">
+                    border-2 border-primary/80 py-1.5 drop-shadow-md text-primary-text bg-secondary-bg/5">
                     <option value="" class="text-primary-text-muted" disabled selected>
                         Select a language...
                     </option>

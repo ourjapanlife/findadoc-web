@@ -47,7 +47,7 @@
 
   .theme-ocean {
     /* general branding colors */
-    --color-primary: /* #A45D9A */ 164 93 154;
+    --color-primary: /* #245A7D */ 36 90 125;
     --color-secondary: /* #DA5550 */ 218 85 80;
     --color-tertiary: /* #F4F3E9 */ 244 243 233;
     --color-primary-inverted: /* #ffffff */ 255 255 255;
@@ -59,13 +59,13 @@
     --color-text-muted: /* #464646 */ 70 70 70;
     --color-text-inverted: /* #000000 */ 255 255 255;
     --color-bg-primary: /* #fcfcfc */ 252 252 252;
-    --color-bg-secondary: /* #245A7D */ 36 90 125;
+    --color-bg-secondary: /* bde5ff */ 189 229 255;
   }
 
   .theme-neon {
     /* general branding colors */
     --color-primary: /* #1bdb9b */ 27 219 155;
-    --color-secondary: 225 255 223;
+    --color-secondary: /* #524c4c */ 82 76 76;
     --color-tertiary: 179 255 23;
     --color-primary-inverted: /* #ffffff */ 255 255 255;
     --color-primary-hover: /* #d66051 */ 214 96 81;

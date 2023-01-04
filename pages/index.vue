@@ -1,7 +1,7 @@
 <template>
-    <div class="grid grid-cols-3 grid-flow-col">
-        <LeftNavbar class="col-span-1 bg-primary-bg" />
-        <div class="col-span-2">
+    <div class="flex">
+        <LeftNavbar class="flex-0 bg-primary-bg w-[358px]" />
+        <div class="flex-1">
             <div class="flex flex-col md:flex-row h-full">
                 <WelcomeSection />
             </div>
