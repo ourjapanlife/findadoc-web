@@ -1,12 +1,14 @@
 <template>
-    <div class="results-header flex flex-row mx-5 mt-5 mb-6">
+    <div class="results-header flex flex-row ml-9 mr-5 mb-6 pt-5">
         <span class="flex-1 w-1/2 font-bold self-center">
             Doctors Nearby
         </span>
         <div class="filters py-1 px-2 border border-solid border-primary/40 rounded-xl flex flex-row flex-0">
-            <img alt="hamburger menu icon" class="hamburger-icon" src="@/assets/images/hamburger-list-icon.svg" width="25"
-                height="25" />
-            <span class="pl-1 font-bold">Filters</span>
+            <svg role="img" alt="hamburger menu icon" title="hamburger list icon"
+                class="hamburger-list-icon fill-primary h-10 w-10">
+                <use xlink:href="../assets/images/hamburger-list-icon.svg#hamburger-list-icon-svg" />
+            </svg>
+            <span class="pl-1 font-bold self-center">Filters</span>
         </div>
     </div>
     <div :key="index" v-for="(searchResult, index) in searchResults" class="results-list flex flex-col">
