@@ -1,0 +1,8 @@
+# https://docs.netlify.com/configure-builds/file-based-configuration/
+# Do not add secrets to this file
+
+[build.environment]
+  NODE_VERSION = "18.12.1"
+  NETLIFY_USE_YARN=true
+  YARN_VERION="3.2.4"
+
