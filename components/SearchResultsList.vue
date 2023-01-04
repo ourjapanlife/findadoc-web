@@ -3,7 +3,7 @@
         <span class="flex-1 w-1/2 font-bold self-center">
             Doctors Nearby
         </span>
-        <button role="button" aria="filters" class="filters py-1 px-2 border border-solid border-primary/40 rounded-xl flex flex-row flex-0 group hover:bg-primary hover:transition-all">
+        <button role="button" aria="filters" class="filters py-1 px-2 border border-primary/40 rounded-xl flex flex-row flex-0 group hover:bg-primary hover:transition-all">
             <svg role="img" alt="hamburger menu icon" title="hamburger list icon"
                 class="hamburger-list-icon fill-primary h-10 w-10 group-hover:fill-primary-text-inverted">
                 <use xlink:href="../assets/images/hamburger-list-icon.svg#hamburger-list-icon-svg" />

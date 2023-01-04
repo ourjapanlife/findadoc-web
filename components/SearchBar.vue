@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-row flex-0 w-128">
+    <div class="flex flex-0 w-128">
         <div id="search-fields" class="grid-cols-3 mx-4">
             <div class="search-specialty col-span-1 inline-block w-1/3 py-4">
                 <select class="rounded-l-full rounded-r-none w-full px-1
@@ -14,8 +14,8 @@
                 </select>
             </div>
             <div class="search-location col-span-1 inline-block w-1/3 py-4">
-                <select class="rounded-none w-full px-1
-                    border-2 border-primary/80 py-1.5 drop-shadow-md text-primary-text bg-secondary-bg/5">
+                <select class="w-full px-1
+                    border-y-2 border-primary/80 py-1.5 drop-shadow-md text-primary-text bg-secondary-bg/5">
                     <option value="" class="text-primary-text-muted" disabled selected>
                         Select a location...
                     </option>

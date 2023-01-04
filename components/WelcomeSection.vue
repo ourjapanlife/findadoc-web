@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col bg-secondary-bg/20 p-12 w-full hover:shadow-inner hover:shadow-secondary-bg/50">
+    <div class="bg-secondary-bg/20 p-12 w-full hover:shadow-inner hover:shadow-secondary-bg/50">
         <h1 class="text-primary-text">
             Connecting people in Japan to the healthcare services they need, in the languages they need.
         </h1>

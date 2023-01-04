@@ -7,8 +7,12 @@
                     <use xlink:href="../assets/images/site-logo.svg#site-logo-svg" />
                 </svg>
                 <div class="title-text flex flex-col">
-                    <div class="text-xs text-primary">Find a</div>
-                    <div class="text-xl text-primary leading-none">Doc JP</div>
+                    <div class="text-xs text-primary">
+                        Find a
+                    </div>
+                    <div class="text-xl text-primary leading-none">
+                        Doc Japan
+                    </div>
                 </div>
             </NuxtLink>
         </div>

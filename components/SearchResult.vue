@@ -4,7 +4,7 @@
             <svg role="img" alt="profile icon" title="profile icon" class="profile-icon w-8 h-8 stroke-primary inline">
                 <use xlink:href="../assets/images/profile-icon.svg#profile-icon-svg" class="w-[20px] h-[20px]" />
             </svg>
-            <span class="flex-1 w-4 font-bold pl-2 self-center"> {{ name }} </span>
+            <span class="w-4 font-bold pl-2 self-center"> {{ name }} </span>
         </div>
         <div class="result-details flex my-2 ml-4">
             <span class="pr-2"> {{ specialty }}</span>
