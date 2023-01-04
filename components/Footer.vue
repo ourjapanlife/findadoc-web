@@ -1,5 +1,5 @@
 <template>
-    <div class="footer flex bg-orange-100 text-sm text-current font-semibold py-2">
+    <div class="footer flex border-t-4 border-secondary-bg/40 bg-secondary-bg text-sm text-primary-text font-semibold py-2">
         <div class="left-footer-section flex flex-0 justify-start">
             <NuxtLink to="/" class="self-center ml-8 mr-2">
                 © {{ new Date().getUTCFullYear() }} Find a Doc, Japan
@@ -29,7 +29,7 @@
             <div class="flex flex-col flex-wrap mx-2">
                 <span>Contribute on </span>
                 <NuxtLink to="https://github.com/ourjapanlife/findadoc-web/" target="_blank" class="self-center">
-                    <img alt="github icon" class="github-icon w-12" src="@/assets/images/github_logo.png" />
+                    <img alt="github icon" class="github-icon w-12" src="@/assets/images/github-logo.png" />
                 </NuxtLink>
             </div>
             <span class="self-center">·</span>

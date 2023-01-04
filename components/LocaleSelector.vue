@@ -1,7 +1,8 @@
 <template>
     <div>
-        <select v-model="selected">
-            <option>
+        <select v-model="selected" class="rounded-full w-full px-1
+                    border-2 border-primary/80 drop-shadow-md text-primary-text bg-secondary-bg/5">
+            <option selected>
                 English
             </option>
             <option>
@@ -11,14 +12,9 @@
     </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
+<script lang="ts" setup>
+import { ref } from 'vue'
 
-export default defineComponent({
-    data() {
-        return {
-            selected: ''
-        }
-    }
-})
+const selected = ref('English')
+
 </script>
