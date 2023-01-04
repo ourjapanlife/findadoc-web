@@ -3,4 +3,4 @@
 
 [build.environment]
   NETLIFY_USE_YARN="true"
-  YARN_VERION="3.2.4"
+  YARN_VERSION="3.2.4"
