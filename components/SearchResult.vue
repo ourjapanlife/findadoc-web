@@ -13,7 +13,7 @@
         </div>
         <div class="result-tags flex flex-wrap w-64 mb-2 mt-3 ml-4">
             <div :key="index" v-for="(spokenLanguage, index) in spokenLanguages"
-                class="pl-2 pr-2 py-[1px] mr-2 border border-primary/40 rounded-full shadow text-sm">
+                class="pl-2 pr-2 py-[1px] mr-2 border border-primary/40 rounded-full shadow text-sm hover:bg-primary/20 transition-all">
                 {{ spokenLanguage }}
             </div>
         </div>
