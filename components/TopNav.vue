@@ -19,7 +19,7 @@
         <div id="searchbar" class="align-middle">
             <SearchBar />
             <div class="cursor-pointer md:hidden">
-                <img src="../assets/images/hamburgerMenu.svg" alt="hamburger menu">
+                <img src="../assets/images/hamburgerMenu.svg" alt="hamburger menu" />
             </div>
         </div>
         <nav class="flex gap-4 mx-6 absolute right-20">
@@ -49,8 +49,8 @@ export default defineComponent({
             showMenu: false
         }
     },
-    methods:{
-        toggleMenu(){
+    methods: {
+        toggleMenu() {
             this.showMenu = !this.showMenu
         }
     }
