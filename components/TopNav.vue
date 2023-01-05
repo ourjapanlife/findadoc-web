@@ -40,7 +40,8 @@ export default defineComponent({
     props: {
         msg: {
             type: String,
-            required: false
+            required: false,
+            default: ''
         }
     },
     data() {
