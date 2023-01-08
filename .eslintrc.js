@@ -144,7 +144,14 @@ module.exports = {
         'vue/first-attribute-linebreak': ['error', {
             singleline: 'beside',
             multiline: 'beside'
-        }]
+        }],
+        'vue/block-lang': ['warn',
+                           {
+                               script: {
+                                   lang: 'ts'
+                               }
+                           }
+        ]
 
     }
 }
