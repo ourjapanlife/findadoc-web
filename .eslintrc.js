@@ -26,16 +26,16 @@ module.exports = {
         curly: 'error',
         'dot-location': ['error', 'property'],
         'dot-notation': ['error', { allowPattern: '^[a-z]+(_[a-z]+)+$' }],
-        eqeqeq: 0, 
+        eqeqeq: 'off', 
         'no-alert': 'error',
         'no-multi-spaces': 'error',
-        'no-param-reassign': 0,
+        'no-param-reassign': 'off',
         'no-redeclare': 'error',
         'no-unused-expressions': ['error', { allowShortCircuit: true, allowTernary: true }],
-        'vars-on-top': 0,
+        'vars-on-top': 'off',
         yoda: ['error', 'never', { exceptRange: true }],
         'no-console': 1, //For debugging, but throw warnings so logs are not commited.
-        'no-useless-escape': 0,
+        'no-useless-escape': 'off',
         // Stylistic Issues
         'arrow-body-style': 'error',
         'array-bracket-spacing': ['error', 'never'],
@@ -65,10 +65,10 @@ module.exports = {
         ],
         'key-spacing': ['error', { beforeColon: false, afterColon: true }],
         'keyword-spacing': ['error', { before: true, after: true }],
-        'linebreak-style': 0,
+        'linebreak-style': 'off',
         'max-len': ['error', 200, 2, { ignoreUrls: true, ignoreRegExpLiterals: true }],
         'newline-after-var': 'error',
-        'require-atomic-updates': 0,
+        'require-atomic-updates': 'off',
         'no-constant-condition': 'error',
         'no-dupe-class-members': 'error',
         'no-lonely-if': 'error',
@@ -76,14 +76,14 @@ module.exports = {
             max: 1,
             maxEOF: 0
         }],
-        'no-prototype-builtins': 0,
+        'no-prototype-builtins': 'off',
         'no-underscore-dangle': 'error',
         'no-var': 'error',
         'object-curly-spacing': ['error', 'always'],
         'object-curly-newline': ['error', { consistent: true }],
         'object-property-newline': ['error', { allowAllPropertiesOnSameLine: true }],
         'object-shorthand': ['error', 'methods'],
-        'operator-linebreak': [0, 'before'],
+        'operator-linebreak': ['off', 'before'],
         'padded-blocks': ['error', 'never'],
         'padding-line-between-statements': [
             'error',
@@ -112,7 +112,7 @@ module.exports = {
         semi: ['error', 'never'],
 
         // Strict Move
-        strict: 0,
+        strict: 'off',
 
         // Variables
         'no-shadow': 'error',
