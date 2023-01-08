@@ -1,5 +1,6 @@
 <template>
-    <div class="footer flex border-t-4 border-secondary-bg/40 bg-secondary-bg text-sm text-primary-text font-semibold py-2">
+    <div class="footer flex border-t-4 border-secondary-bg/40 bg-secondary-bg text-sm 
+    text-primary-text font-semibold py-2">
         <div class="left-footer-section flex flex-0 justify-start">
             <NuxtLink to="/" class="self-center ml-8 mr-2">
                 © {{ new Date().getUTCFullYear() }} Find a Doc, Japan
@@ -35,7 +36,8 @@
             <span class="self-center">·</span>
             <div class="flex flex-col flex-wrap">
                 <span>Got feedback?</span>
-                <NuxtLink to="https://forms.gle/4E763qfaq46kEsn99" target="_blank" class="px-2 mx-auto underline font-bold">
+                <NuxtLink to="https://forms.gle/4E763qfaq46kEsn99" target="_blank" 
+                    class="px-2 mx-auto underline font-bold">
                     Click here
                 </NuxtLink>
             </div>
