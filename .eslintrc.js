@@ -26,7 +26,7 @@ module.exports = {
         curly: 'error',
         'dot-location': ['error', 'property'],
         'dot-notation': ['error', { allowPattern: '^[a-z]+(_[a-z]+)+$' }],
-        eqeqeq: 'off', 
+        eqeqeq: 'error', 
         'no-alert': 'error',
         'no-multi-spaces': 'error',
         'no-param-reassign': 'off',
@@ -34,8 +34,8 @@ module.exports = {
         'no-unused-expressions': ['error', { allowShortCircuit: true, allowTernary: true }],
         'vars-on-top': 'off',
         yoda: ['error', 'never', { exceptRange: true }],
-        'no-console': 'warn', //For debugging, but throw warnings so logs are not committed.
-        'no-useless-escape': 'off',
+        'no-console': 'warn', // For debugging, but throw warnings so logs are not committed.
+        'no-useless-escape': 'warn',
         // Stylistic Issues
         'arrow-body-style': 'error',
         'array-bracket-spacing': ['error', 'never'],
@@ -65,26 +65,24 @@ module.exports = {
         ],
         'key-spacing': ['error', { beforeColon: false, afterColon: true }],
         'keyword-spacing': ['error', { before: true, after: true }],
-        'linebreak-style': 'off',
-        'max-len': ['error', 200, 2, { ignoreUrls: true, ignoreRegExpLiterals: true }],
+        'linebreak-style': ['error', 'unix'], // no carriage returns
+        'max-len': ['error', { code: 120 }], // be friendly to laptops
         'newline-after-var': 'error',
-        'require-atomic-updates': 'off',
+        'require-atomic-updates': 'warn', // okay to warn?
         'no-constant-condition': 'error',
         'no-dupe-class-members': 'error',
         'no-lonely-if': 'error',
-        'no-multiple-empty-lines': ['error', {
-            max: 1,
-            maxEOF: 0
-        }],
-        'no-prototype-builtins': 'off',
+        'no-multiple-empty-lines': ['error', { max: 1, maxEOF: 1 }], // let my people push enter!
+        'no-prototype-builtins': 'off', // why would we need this off?
         'no-underscore-dangle': 'error',
         'no-var': 'error',
-        'object-curly-spacing': ['error', 'always'],
+        'object-curly-spacing': ['error', 'always'], // kinda wide 
         'object-curly-newline': ['error', { consistent: true }],
         'object-property-newline': ['error', { allowAllPropertiesOnSameLine: true }],
         'object-shorthand': ['error', 'methods'],
         'operator-linebreak': ['off', 'before'],
         'padded-blocks': ['error', 'never'],
+        // adds a lot of blank lines 🤔
         'padding-line-between-statements': [
             'error',
             { blankLine: 'always', prev: ['const', 'let', 'var'], next: '*' },
@@ -109,7 +107,7 @@ module.exports = {
         ],
         'space-in-parens': 'error',
         'space-infix-ops': 'error',
-        semi: ['error', 'never'],
+        semi: ['error', 'never'], // is it safe to do this? it's certainly prettier looking
 
         // Strict Move
         strict: 'off',
