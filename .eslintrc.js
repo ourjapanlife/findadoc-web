@@ -34,7 +34,7 @@ module.exports = {
         'no-unused-expressions': ['error', { allowShortCircuit: true, allowTernary: true }],
         'vars-on-top': 'off',
         yoda: ['error', 'never', { exceptRange: true }],
-        'no-console': 1, //For debugging, but throw warnings so logs are not commited.
+        'no-console': 'warn', //For debugging, but throw warnings so logs are not committed.
         'no-useless-escape': 'off',
         // Stylistic Issues
         'arrow-body-style': 'error',
