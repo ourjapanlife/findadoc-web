@@ -3,6 +3,6 @@ describe('Visits the home page', () => {
         cy.visit('/')
     })
     it('Displays the Hero Section', () => {
-        cy.get('#search-button').contains('Search')
+        cy.get('[data-testid="searchbutton"]').should('be.visible')
     })
 })
