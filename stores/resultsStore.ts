@@ -1,44 +1,115 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
 
 const defaultState = {
-    results: ref([]), 
-    error: ref(null)
+    activeResult: '',
+    results: [
+        {
+            id: '1',
+            type: 'healthcareprofessional',
+            names: [
+                {
+                    lastName: 'Ermish',
+                    firstName: 'Philip',
+                    middleName: 'Michael',
+                    locale: 'en',
+                },
+                {
+                    lastName: 'アーミッシュ',
+                    firstName: 'フィリップ',
+                    middleName: 'マイケル',
+                    locale: 'ja',
+                },
+            ],
+            degrees: ['DOCTOR_OF_PHILOSOPHY'],
+            spokenLanguages: ['JAPANESE', 'ENGLISH'],
+            specialties: [
+                {
+                    id: '1',
+                    names: [{ name: 'General Practice', locale: 'en' }, { name: '一般診療', locale: 'ja' }],
+                },
+            ],
+            acceptedInsuranceOptions: [
+                'NATIONAL_HEALTH_INSURANCE',
+            ],
+        },
+        {
+            id: '2',
+            type: 'healthcareprofessional',
+            names: [
+                {
+                    lastName: 'Kilzer',
+                    firstName: 'Ann',
+                    middleName: '',
+                    locale: 'en',
+                },
+                {
+                    lastName: 'キルザー',
+                    firstName: '杏',
+                    middleName: '',
+                    locale: 'ja',
+                },
+            ],
+            degrees: ['DOCTOR_OF_PHILOSOPHY'],
+            spokenLanguages: ['JAPANESE'],
+            specialties: [
+                {
+                    id: '2',
+                    names: [{ name: 'Internal Medicine', locale: 'en' }, { name: '内科', locale: 'ja' }],
+                },
+            ],
+            acceptedInsuranceOptions: [
+                'NATIONAL_HEALTH_INSURANCE',
+            ],
+        },
+        {
+            id: '3',
+            type: 'healthcareprofessional',
+            names: [
+                {
+                    lastName: 'Toyoda',
+                    firstName: 'LaShawn',
+                    middleName: 'T',
+                    locale: 'en',
+                },
+                {
+                    lastName: '豊田',
+                    firstName: 'ラシァン',
+                    middleName: 'ティ',
+                    locale: 'ja',
+                },
+            ],
+            degrees: ['DOCTOR_OF_PHILOSOPHY'],
+            spokenLanguages: ['ENGLISH'],
+            specialties: [
+                {
+                    id: '3',
+                    names: [{ name: 'Pediatrics', locale: 'en' }, { name: '小児科', locale: 'ja' }],
+                },
+            ],
+            acceptedInsuranceOptions: [
+                'NATIONAL_HEALTH_INSURANCE',
+            ],
+        },
+    ]
 }
 
 export const useResultsStore = defineStore('resultsStore', {
-    state: () => (defaultState),
+    state: () => Object.assign(defaultState),
     actions: {
+        fetchResults() {
+            const initialData = defaultState.results
 
-        // async fetchResults(searchParams: string) {
-        //     return this.results = await fetch.get(((`${serverBaseUrl }/results`, searchParams)))
-        // },
+            const filteredResultsByLocation = initialData.filter(location => this.results.location)
 
-        async fetchResults(searchParams: string): Promise<any> {
-            try {
-                const data = await fetch(`http://localhost:3000/dummyEndpoint/${searchParams}`)
-
-                if (!data.ok) {
-                    throw Error ('This data is not available')
-                }
-                defaultState.results = await data.json()
-            } catch (error: any) {
-                defaultState.error.value = error.message                
-            }
-
-            return defaultState.results
+            return filteredResultsByLocation
         },
+        setActiveResult() {
+            this.activeResult = this.results.filter((id: Number) => this.results.id)
 
-        // dislikeResult(resultId: any) {
-        //     this.results = this.results.filter(result => result.id !== resultId)
-        // },
-
-        resetState() {
-            defaultState.results = ref([])
+            return this.activeResult
         },
-
-        toggleActiveResults(state: any) {
-            defaultState.results.value = defaultState.results.value.filter((results: any) => state.results.value === results)
+        clearActiveResult() {
+            this.activeResult = ''
         }
     }
 })
