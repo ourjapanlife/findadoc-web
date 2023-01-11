@@ -28,6 +28,23 @@
     --color-bg-secondary: /* #fff1ef */ 255 241 239;
   }
 
+  .theme-coral {
+    /* general branding colors */
+    --color-primary: /* #ED6C5A */ 237 108 90;
+    --color-secondary: /* #245A7D */ 36 90 125;
+    --color-tertiary: /* #245A7D */ 36 90 125;
+    --color-primary-inverted: /* #ffffff */ 255 255 255;
+    --color-primary-hover: /* #d66051 */ 214 96 81;
+    --color-secondary-inverted: /* #ffffff */ 255 255 255;
+    --color-secondary-hover: /* #d66051 */ 214 96 81;
+    /* element specific colors */
+    --color-text-base: /* #252525 */ 37 37 37;
+    --color-text-muted: /* #999999 */ 153 153 153;
+    --color-text-inverted: /* #000000 */ 255 255 255;
+    --color-bg-primary: /* #fcfcfc */ 252 252 252;
+    --color-bg-secondary: /* #fff1ef */ 255 241 239;
+  }
+
   .theme-violet {
     /* general branding colors */
     --color-primary: /* #A45D9A */ 164 93 154;

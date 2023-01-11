@@ -1,5 +1,5 @@
 <template>
-    <div class="p-4 pl-8 border border-secondary-bg/20 flex justify-between items-center bg-gradient-to-t from-secondary-bg/10 via-primary-bg to-primary-bg">
+    <div class="p-4 pl-8 border border-secondary-bg/20 flex justify-between items-center bg-gradient-to-t from-secondary-bg/30 via-primary-bg to-primary-bg">
         <HamburgerComponent />
         <div class="font-semibold text-xl group transition-colors">
             <NuxtLink class="flex" to="/">
