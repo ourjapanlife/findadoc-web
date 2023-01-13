@@ -145,7 +145,7 @@ module.exports = {
             singleline: 'beside',
             multiline: 'beside'
         }],
-        'vue/block-lang': ['warn',
+        'vue/block-lang': ['error',
                            {
                                script: {
                                    lang: 'ts'
