@@ -26,10 +26,12 @@
             </nav>
         </div>
         <div class="right-footer-section flex flex-0 flex-row gap-6 justify-end px-8 text-xs">
-            <div class="flex flex-col flex-wrap mx-2 hover:text-primary-hover transition-colors">
-                <span>Contribute on </span>
-                <NuxtLink to="https://github.com/ourjapanlife/findadoc-web/" target="_blank" class="self-center">
-                    GitHub
+            <div class="mx-2 hover:text-primary-hover transition-colors">
+                <NuxtLink to="https://github.com/ourjapanlife/findadoc-web/" target="_blank" class="flex flex-col flex-wrap ">
+                    <div>Contribute on</div>
+                    <div class="self-center">
+                        GitHub
+                    </div>
                 </NuxtLink>
             </div>
             <span class="self-center">·</span>
