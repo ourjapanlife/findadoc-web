@@ -25,3 +25,7 @@ We are working on the V2 version of the site, so if you've volunteered in the pa
 
 1. Join the `#ui-ux-design` and `#frontend-team` channels on Slack
    🎨
+
+# Giving thanks to our volunteers 👏
+
+We use the [All Contributors Bot](https://allcontributors.org/) to celebrate various contributions to our project, from coding to design to research, translation, and more.! This project would not be possible without many talented folks collaborating. Read more about [how to use the bot here](https://allcontributors.org/docs/en/bot/usage).
