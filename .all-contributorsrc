@@ -7,6 +7,16 @@
   "commitConvention": "angular",
   "contributors": [
     {
+
+      "login": "theyokohamalife",
+      "name": "LaShawn Toyoda",
+      "avatar_url": "https://avatars.githubusercontent.com/u/31802656?v=4",
+      "profile": "http://theyokohamalife.com",
+      "contributions": [
+        "ideas"
+      ]
+    },
+    {
       "login": "ermish",
       "name": "Philip Ermish",
       "avatar_url": "https://avatars.githubusercontent.com/u/4411499?v=4",
