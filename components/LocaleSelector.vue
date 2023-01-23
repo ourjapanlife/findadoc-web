@@ -1,7 +1,7 @@
 <template>
     <div>
         <select v-model="selected" class="rounded-full w-full px-1
-                    border-2 border-primary/80 drop-shadow-md text-primary-text bg-secondary-bg/5">
+                    border-2 border-primary/80 drop-shadow-md text-primary-text bg-secondary-bg/5 hover:text-primary-hover transition-colors">
             <option selected>
                 English
             </option>
