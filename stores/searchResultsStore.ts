@@ -121,7 +121,7 @@ const fakeSearchResultsList : searchResult[] = [
 ]
 
 export const useSearchResultsStore = defineStore('searchResultsStore', () => {
-    const activeSearchResultIdState: Ref<String | undefined> = ref()
+    const activeResultId: Ref<String | undefined> = ref()
     const searchResultsListState: Ref<searchResult[]> = ref(fakeSearchResultsList)
 
     function search(searchLocation: string, searchSpecialty: string, searchLanguage : string) {
@@ -142,11 +142,11 @@ export const useSearchResultsStore = defineStore('searchResultsStore', () => {
     }
 
     function setActiveSearchResult(selectedResultId: String) {
-        activeSearchResultIdState.value = searchResultsListState.value.find(resultItem => resultItem.id === selectedResultId)?.id
+        activeResultId.value = searchResultsListState.value.find(resultItem => resultItem.id === selectedResultId)?.id
     }
 
     function clearActiveSearchResult() {
-        activeSearchResultIdState.value = undefined
+        activeResultId.value = undefined
     }
 
     return { search, setActiveSearchResult, clearActiveSearchResult }
