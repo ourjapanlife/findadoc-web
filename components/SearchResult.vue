@@ -38,11 +38,11 @@ defineProps({
     spokenLanguages: {
         type: Array,
         required: true,
-        validator(arrayValue) {
+        validator(arrayValue: Array<any>) {
             // must match accepted languages
             const acceptedLanguages = ['japanese', 'english']
 
-            return arrayValue.every(x => acceptedLanguages.includes(x))
+            return arrayValue.every((x: any) => { acceptedLanguages.includes(x) })
         }
     }
 })
