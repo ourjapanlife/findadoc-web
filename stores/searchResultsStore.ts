@@ -129,7 +129,6 @@ export const useSearchResultsStore = defineStore('searchResultsStore', () => {
 
         const filteredResults = healthcareProfessionalsOnly.filter(resultItem => {
             const searchLocationExistsAndMatches = (!searchLocation || resultItem.location === searchLocation)
-            // const searchSpecialtyExistsAndMatches = (!searchSpecialty || resultItem.specialties.includes(specialty => specialty.names.includes(name => name.name === searchSpecialty)))
             const searchSpecialtyExistsAndMatches = (!searchSpecialty || resultItem.specialties[0].names[0].name.includes(searchSpecialty))
             const searchLanguageExistsAndMatches = (!searchLanguage || resultItem.spokenLanguages.includes(searchLanguage))
 
