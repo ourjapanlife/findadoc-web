@@ -7,7 +7,6 @@
   "commitConvention": "angular",
   "contributors": [
     {
-
       "login": "theyokohamalife",
       "name": "LaShawn Toyoda",
       "avatar_url": "https://avatars.githubusercontent.com/u/31802656?v=4",
@@ -22,7 +21,18 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/4411499?v=4",
       "profile": "http://www.philipermish.com",
       "contributions": [
-        "ideas"
+        "ideas",
+        "review"
+      ]
+    },
+    {
+      "login": "ann-kilzer",
+      "name": "Ann Kilzer キルザー杏",
+      "avatar_url": "https://avatars.githubusercontent.com/u/4602369?v=4",
+      "profile": "http://www.annkilzer.net/",
+      "contributions": [
+        "doc",
+        "code"
       ]
     }
   ],
