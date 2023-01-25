@@ -21,7 +21,7 @@
     </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { ref } from 'vue'
 
 const defaultResults = [{

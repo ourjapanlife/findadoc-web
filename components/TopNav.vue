@@ -18,9 +18,6 @@
         </div>
         <div id="searchbar" class="align-middle">
             <SearchBar />
-            <div class="cursor-pointer md:hidden">
-                <img src="../assets/images/hamburgerMenu.svg" alt="hamburger menu" />
-            </div>
         </div>
         <nav class="flex gap-4 mx-6 absolute right-20">
             <NuxtLink to="/about" class="px-2 mx-auto hover:text-primary-hover transition-colors">
@@ -31,29 +28,3 @@
         <LocaleSelector />
     </div>
 </template>
-
-<script lang="ts">
-import { defineComponent } from 'vue'
-
-export default defineComponent({
-   
-    props: {
-        msg: {
-            type: String,
-            required: false,
-            default: ''
-        }
-    },
-    data() {
-        return {
-            name: '',
-            showMenu: false
-        }
-    },
-    methods: {
-        toggleMenu() {
-            this.showMenu = !this.showMenu
-        }
-    }
-})
-</script>
