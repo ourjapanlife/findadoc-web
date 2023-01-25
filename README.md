@@ -25,6 +25,15 @@ Have a look at the [CONTRIBUTING](/CONTRIBUTING.md) and [CODE_OF_CONDUCT](/CODE_
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
+<table>
+  <tbody>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="http://theyokohamalife.com"><img src="https://avatars.githubusercontent.com/u/31802656?v=4?s=100" width="100px;" alt="LaShawn Toyoda"/><br /><sub><b>LaShawn Toyoda</b></sub></a><br /><a href="#ideas-theyokohamalife" title="Ideas, Planning, & Feedback">🤔</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="http://www.philipermish.com"><img src="https://avatars.githubusercontent.com/u/4411499?v=4?s=100" width="100px;" alt="Philip Ermish"/><br /><sub><b>Philip Ermish</b></sub></a><br /><a href="#ideas-ermish" title="Ideas, Planning, & Feedback">🤔</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="http://www.annkilzer.net/"><img src="https://avatars.githubusercontent.com/u/4602369?v=4?s=100" width="100px;" alt="Ann Kilzer キルザー杏"/><br /><sub><b>Ann Kilzer キルザー杏</b></sub></a><br /><a href="https://github.com/ourjapanlife/findadoc-web/commits?author=ann-kilzer" title="Documentation">📖</a> <a href="https://github.com/ourjapanlife/findadoc-web/commits?author=ann-kilzer" title="Code">💻</a></td>
+    </tr>
+  </tbody>
+</table>
 
 <!-- markdownlint-restore -->
 <!-- prettier-ignore-end -->
