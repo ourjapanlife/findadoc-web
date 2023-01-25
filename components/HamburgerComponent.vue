@@ -14,8 +14,10 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+
 //state
 const showMenu = ref(false)
+
 //functions
 function toggleMenu() {
     showMenu.value = !showMenu.value
