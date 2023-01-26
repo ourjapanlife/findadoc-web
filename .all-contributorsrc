@@ -34,6 +34,15 @@
         "doc",
         "code"
       ]
+    },
+    {
+      "login": "Tch4lla",
+      "name": "Sulaymane Sillah",
+      "avatar_url": "https://avatars.githubusercontent.com/u/99618731?v=4",
+      "profile": "http://sulaymanesillah.netlify.app",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
