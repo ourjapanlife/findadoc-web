@@ -35,6 +35,7 @@ Have a look at the [CONTRIBUTING](/CONTRIBUTING.md) and [CODE_OF_CONDUCT](/CODE_
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/kei-design-jp"><img src="https://avatars.githubusercontent.com/u/72494066?v=4?s=100" width="100px;" alt="kei-design-jp"/><br /><sub><b>kei-design-jp</b></sub></a><br /><a href="#design-kei-design-jp" title="Design">🎨</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/RageZBla"><img src="https://avatars.githubusercontent.com/u/1196871?v=4?s=100" width="100px;" alt="Olivier Lechevalier"/><br /><sub><b>Olivier Lechevalier</b></sub></a><br /><a href="https://github.com/ourjapanlife/findadoc-web/commits?author=RageZBla" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/nasiranebi914"><img src="https://avatars.githubusercontent.com/u/72615859?v=4?s=100" width="100px;" alt="Nasira Nebi"/><br /><sub><b>Nasira Nebi</b></sub></a><br /><a href="https://github.com/ourjapanlife/findadoc-web/commits?author=nasiranebi914" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/deek87"><img src="https://avatars.githubusercontent.com/u/23059797?v=4?s=100" width="100px;" alt="Derek Cameron"/><br /><sub><b>Derek Cameron</b></sub></a><br /><a href="https://github.com/ourjapanlife/findadoc-web/commits?author=deek87" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
