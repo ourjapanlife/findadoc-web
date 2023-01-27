@@ -52,6 +52,15 @@
       "contributions": [
         "design"
       ]
+    },
+    {
+      "login": "RageZBla",
+      "name": "Olivier Lechevalier",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1196871?v=4",
+      "profile": "https://github.com/RageZBla",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
