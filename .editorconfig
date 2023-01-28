@@ -3,6 +3,7 @@ root = true
 
 # Unix-style newlines with a newline ending every file
 [*]
+end_of_line = lf
 insert_final_newline = true
 indent_style = space
 indent_size = 4
@@ -11,3 +12,17 @@ trim_trailing_whitespace = true
 [*.css]
 indent_size = 2
 indent_style = space
+charset = utf-8
+
+[*.{js,ts,cjs,vue}]
+charset = utf-8
+
+[*.{toml,yml,lock,json}]
+charset = utf-8
+
+[*.*rc]
+charset = utf-8
+
+[*.md]
+charset = utf-8
+
