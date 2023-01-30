@@ -6,12 +6,12 @@
                 <svg role="img" title="site icon" class="mr-1 w-10 h-10 align-middle fill-primary group-hover:fill-primary-hover">
                     <use xlink:href="../assets/images/site-logo.svg#site-logo-svg" />
                 </svg>
-                <div class="title-text flex flex-col">
-                    <div class="text-xs text-primary group-hover:text-primary-hover">
-                        Find a
+                <div class="title-text flex flex-col" data-testid="logo">
+                    <div class="text-lg text-primary group-hover:text-primary-hover">
+                        Find a Doc 
                     </div>
-                    <div class="text-xl text-primary leading-none group-hover:text-primary-hover">
-                        Doc Japan
+                    <div class="text-sm text-primary leading-none group-hover:text-primary-hover">
+                        Japan
                     </div>
                 </div>
             </NuxtLink>
