@@ -26,7 +26,7 @@ module.exports = {
         curly: 'error',
         'dot-location': ['error', 'property'],
         'dot-notation': ['error', { allowPattern: '^[a-z]+(_[a-z]+)+$' }],
-        eqeqeq: 'error', 
+        eqeqeq: 'smart', 
         'no-alert': 'error',
         'no-multi-spaces': 'error',
         'no-param-reassign': 'off',
@@ -66,17 +66,17 @@ module.exports = {
         'key-spacing': ['error', { beforeColon: false, afterColon: true }],
         'keyword-spacing': ['error', { before: true, after: true }],
         'linebreak-style': ['error', 'unix'], // no carriage returns
-        'max-len': ['error', { code: 120 }], // be friendly to laptops
+        'max-len': ['error', { code: 140 }], // be friendly to laptops
         'newline-after-var': 'error',
-        'require-atomic-updates': 'warn', // okay to warn?
+        'require-atomic-updates': 'none',
         'no-constant-condition': 'error',
         'no-dupe-class-members': 'error',
         'no-lonely-if': 'error',
-        'no-multiple-empty-lines': ['error', { max: 1, maxEOF: 1 }], // let my people push enter!
-        'no-prototype-builtins': 'off', // why would we need this off?
+        'no-multiple-empty-lines': ['error', { max: 2, maxEOF: 1 }], // let my people push enter!
+        'no-prototype-builtins': 'error',
         'no-underscore-dangle': 'error',
         'no-var': 'error',
-        'object-curly-spacing': ['error', 'always'], // kinda wide 
+        'object-curly-spacing': ['error', 'always'],
         'object-curly-newline': ['error', { consistent: true }],
         'object-property-newline': ['error', { allowAllPropertiesOnSameLine: true }],
         'object-shorthand': ['error', 'methods'],
@@ -85,7 +85,7 @@ module.exports = {
         // adds a lot of blank lines 🤔
         'padding-line-between-statements': [
             'error',
-            { blankLine: 'always', prev: ['const', 'let', 'var'], next: '*' },
+            { blankLine: 'any', prev: ['const', 'let', 'var'], next: '*' },
             { blankLine: 'any', prev: ['const', 'let', 'var'], next: ['const', 'let', 'var'] },
             { blankLine: 'always', prev: '*', next: 'return' }
         ],
@@ -107,7 +107,7 @@ module.exports = {
         ],
         'space-in-parens': 'error',
         'space-infix-ops': 'error',
-        semi: ['error', 'never'], // is it safe to do this? it's certainly prettier looking
+        semi: ['error', 'never'],
 
         // Strict Move
         strict: 'off',
