@@ -26,7 +26,7 @@ module.exports = {
         curly: ['error', 'multi'],
         'dot-location': ['error', 'property'],
         'dot-notation': ['error', { allowPattern: '^[a-z]+(_[a-z]+)+$' }],
-        eqeqeq: ['error', 'smart'], 
+        eqeqeq: ['error', 'smart'],
         'no-alert': 'error',
         'no-multi-spaces': 'error',
         'no-param-reassign': 'off',
