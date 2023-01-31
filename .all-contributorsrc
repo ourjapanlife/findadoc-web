@@ -1,0 +1,108 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "commitConvention": "angular",
+  "contributors": [
+    {
+      "login": "theyokohamalife",
+      "name": "LaShawn Toyoda",
+      "avatar_url": "https://avatars.githubusercontent.com/u/31802656?v=4",
+      "profile": "http://theyokohamalife.com",
+      "contributions": [
+        "ideas"
+      ]
+    },
+    {
+      "login": "ermish",
+      "name": "Philip Ermish",
+      "avatar_url": "https://avatars.githubusercontent.com/u/4411499?v=4",
+      "profile": "http://www.philipermish.com",
+      "contributions": [
+        "ideas",
+        "review"
+      ]
+    },
+    {
+      "login": "ann-kilzer",
+      "name": "Ann Kilzer キルザー杏",
+      "avatar_url": "https://avatars.githubusercontent.com/u/4602369?v=4",
+      "profile": "http://www.annkilzer.net/",
+      "contributions": [
+        "doc",
+        "code"
+      ]
+    },
+    {
+      "login": "Tch4lla",
+      "name": "Sulaymane Sillah",
+      "avatar_url": "https://avatars.githubusercontent.com/u/99618731?v=4",
+      "profile": "http://sulaymanesillah.netlify.app",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "kei-design-jp",
+      "name": "kei-design-jp",
+      "avatar_url": "https://avatars.githubusercontent.com/u/72494066?v=4",
+      "profile": "https://github.com/kei-design-jp",
+      "contributions": [
+        "design"
+      ]
+    },
+    {
+      "login": "nasiranebi914",
+      "name": "Nasira Nebi",
+      "avatar_url": "https://avatars.githubusercontent.com/u/72615859?v=4",
+      "profile": "https://github.com/nasiranebi914",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "RageZBla",
+      "name": "Olivier Lechevalier",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1196871?v=4",
+      "profile": "https://github.com/RageZBla",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "deek87",
+      "name": "Derek Cameron",
+      "avatar_url": "https://avatars.githubusercontent.com/u/23059797?v=4",
+      "profile": "https://github.com/deek87",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "Kumaguro3",
+      "name": "Lily",
+      "avatar_url": "https://avatars.githubusercontent.com/u/82785482?v=4",
+      "profile": "https://github.com/Kumaguro3",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "lucy-gelderloos",
+      "name": "Lucy Gelderloos",
+      "avatar_url": "https://avatars.githubusercontent.com/u/68394281?v=4",
+      "profile": "https://github.com/lucy-gelderloos",
+      "contributions": [
+        "code"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "skipCi": true,
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "projectName": "findadoc-web",
+  "projectOwner": "ourjapanlife"
+}

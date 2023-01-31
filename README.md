@@ -1,6 +1,8 @@
+[![All Contributors](https://img.shields.io/github/all-contributors/ourjapanlife/findadoc-web?color=ee8449&style=for-the-badge)](#contributors)
+
 # Find a Doc, Japan
 
-🎃 Hacktober friends! Please check out [CONTRIBUTING](/CONTRIBUTING.md) 🎃
+Hello volunteers! Please check out [CONTRIBUTING](/CONTRIBUTING.md)
 
 ## Front-end Repository
 
@@ -17,6 +19,36 @@ We want to provide free, accessible, and quality healthcare information in multi
 This is the open-source, public repository for the [findadoc.jp](https://findadoc.jp) website! We welcome support and contributions :)
 
 Have a look at the [CONTRIBUTING](/CONTRIBUTING.md) and [CODE_OF_CONDUCT](/CODE_OF_CONDUCT.md) to learn more about how to get started and where we could use your help.
+
+## Contributors
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tbody>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="http://theyokohamalife.com"><img src="https://avatars.githubusercontent.com/u/31802656?v=4?s=100" width="100px;" alt="LaShawn Toyoda"/><br /><sub><b>LaShawn Toyoda</b></sub></a><br /><a href="#ideas-theyokohamalife" title="Ideas, Planning, & Feedback">🤔</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="http://www.philipermish.com"><img src="https://avatars.githubusercontent.com/u/4411499?v=4?s=100" width="100px;" alt="Philip Ermish"/><br /><sub><b>Philip Ermish</b></sub></a><br /><a href="#ideas-ermish" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/ourjapanlife/findadoc-web/pulls?q=is%3Apr+reviewed-by%3Aermish" title="Reviewed Pull Requests">👀</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="http://www.annkilzer.net/"><img src="https://avatars.githubusercontent.com/u/4602369?v=4?s=100" width="100px;" alt="Ann Kilzer キルザー杏"/><br /><sub><b>Ann Kilzer キルザー杏</b></sub></a><br /><a href="https://github.com/ourjapanlife/findadoc-web/commits?author=ann-kilzer" title="Documentation">📖</a> <a href="https://github.com/ourjapanlife/findadoc-web/commits?author=ann-kilzer" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="http://sulaymanesillah.netlify.app"><img src="https://avatars.githubusercontent.com/u/99618731?v=4?s=100" width="100px;" alt="Sulaymane Sillah"/><br /><sub><b>Sulaymane Sillah</b></sub></a><br /><a href="https://github.com/ourjapanlife/findadoc-web/commits?author=Tch4lla" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/kei-design-jp"><img src="https://avatars.githubusercontent.com/u/72494066?v=4?s=100" width="100px;" alt="kei-design-jp"/><br /><sub><b>kei-design-jp</b></sub></a><br /><a href="#design-kei-design-jp" title="Design">🎨</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/nasiranebi914"><img src="https://avatars.githubusercontent.com/u/72615859?v=4?s=100" width="100px;" alt="Nasira Nebi"/><br /><sub><b>Nasira Nebi</b></sub></a><br /><a href="https://github.com/ourjapanlife/findadoc-web/commits?author=nasiranebi914" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/RageZBla"><img src="https://avatars.githubusercontent.com/u/1196871?v=4?s=100" width="100px;" alt="Olivier Lechevalier"/><br /><sub><b>Olivier Lechevalier</b></sub></a><br /><a href="https://github.com/ourjapanlife/findadoc-web/commits?author=RageZBla" title="Code">💻</a></td>
+    </tr>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/deek87"><img src="https://avatars.githubusercontent.com/u/23059797?v=4?s=100" width="100px;" alt="Derek Cameron"/><br /><sub><b>Derek Cameron</b></sub></a><br /><a href="https://github.com/ourjapanlife/findadoc-web/commits?author=deek87" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/Kumaguro3"><img src="https://avatars.githubusercontent.com/u/82785482?v=4?s=100" width="100px;" alt="Lily"/><br /><sub><b>Lily</b></sub></a><br /><a href="https://github.com/ourjapanlife/findadoc-web/commits?author=Kumaguro3" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/lucy-gelderloos"><img src="https://avatars.githubusercontent.com/u/68394281?v=4?s=100" width="100px;" alt="Lucy Gelderloos"/><br /><sub><b>Lucy Gelderloos</b></sub></a><br /><a href="https://github.com/ourjapanlife/findadoc-web/commits?author=lucy-gelderloos" title="Code">💻</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
 
 ## Tech used
 
