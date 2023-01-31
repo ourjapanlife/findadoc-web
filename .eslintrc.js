@@ -23,10 +23,10 @@ module.exports = {
         'block-scoped-var': 'error',
         complexity: ['error', { max: 40 }],
         'consistent-return': 'error',
-        curly: 'error',
+        curly: ['error', 'multi'],
         'dot-location': ['error', 'property'],
         'dot-notation': ['error', { allowPattern: '^[a-z]+(_[a-z]+)+$' }],
-        eqeqeq: 'smart', 
+        eqeqeq: ['error', 'smart'], 
         'no-alert': 'error',
         'no-multi-spaces': 'error',
         'no-param-reassign': 'off',
@@ -68,7 +68,7 @@ module.exports = {
         'linebreak-style': ['error', 'unix'], // no carriage returns
         'max-len': ['error', { code: 140 }], // be friendly to laptops
         'newline-after-var': 'error',
-        'require-atomic-updates': 'none',
+        'require-atomic-updates': 'off',
         'no-constant-condition': 'error',
         'no-dupe-class-members': 'error',
         'no-lonely-if': 'error',
