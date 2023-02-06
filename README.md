@@ -88,6 +88,19 @@ $ yarn build
 $ yarn start
 ```
 
+# End to End Testing
+
+We use Cypress.io for E2E testing. While the server is running on port 3001, you can run the GUI with:
+
+```sh
+yarn run test:e2e
+```
+
+TODO: https://github.com/bahmutov/start-server-and-test
+
+
+To learn how to write tests, visit the [wiki](https://github.com/ourjapanlife/findadoc-web/wiki/Writing-Tests)
+
 # Folder Structure
 
 ### `assets/`
