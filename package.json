@@ -13,7 +13,8 @@
         "start": "nuxi start",
         "test:pinia": "vitest",
         "test:pinia:coverage": "vitest run --coverage",
-        "test:e2e": "cypress open --e2e --browser chrome --port 9090"
+        "test:e2e": "cypress open --e2e --browser chrome --port 9090",
+        "test:e2e:run": "cypress run --e2e --browser chrome"
     },
     "engines": {
         "node": ">=16.0.0"

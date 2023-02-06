@@ -64,6 +64,7 @@ Have a look at the [CONTRIBUTING](/CONTRIBUTING.md) and [CODE_OF_CONDUCT](/CODE_
 ### Code Style
 
 -   [ESLint](https://eslint.org/)
+-   EditorConfig
 
 ## Getting started developing
 
@@ -90,16 +91,18 @@ $ yarn start
 
 # End to End Testing
 
-We use Cypress.io for E2E testing. While the server is running on port 3001, you can run the GUI with:
+We use [Cypress.io](https://www.cypress.io/) for E2E testing. While the server is running on port 3001, you can run the GUI with:
 
 ```sh
 yarn run test:e2e
 ```
 
-TODO: https://github.com/bahmutov/start-server-and-test
+Or headless mode:
+```sh
+yarn test:e2e:run
+```
 
-
-To learn how to write tests, visit the [wiki](https://github.com/ourjapanlife/findadoc-web/wiki/Writing-Tests)
+To learn how to write tests and use the GUI runner, visit the [wiki](https://github.com/ourjapanlife/findadoc-web/wiki/Writing-Tests)
 
 # Folder Structure
 
