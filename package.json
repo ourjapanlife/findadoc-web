@@ -55,5 +55,5 @@
         "vitest": "^0.28.0",
         "webpack": "^5.75.0"
     },
-    "packageManager": "yarn@3.2.4"
+    "packageManager": "yarn@3.4.1"
 }
