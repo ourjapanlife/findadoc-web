@@ -19,7 +19,7 @@ jobs:
       # Install yarn dependencies, cache them correctly
       # and run all Cypress tests
       - name: Cypress run
-        uses: cypress-io/github-action@v4.2.2
+        uses: cypress-io/github-action@v5.0.8
         with:
           build: yarn build
           start: yarn start
