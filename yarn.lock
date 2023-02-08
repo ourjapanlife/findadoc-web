@@ -2044,6 +2044,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@vitejs/plugin-vue@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "@vitejs/plugin-vue@npm:4.0.0"
+  peerDependencies:
+    vite: ^4.0.0
+    vue: ^3.2.25
+  checksum: 5a53414912db644ca7a663d87c8d4838841dbf794772105c9b3bc3fb10214fc86c2f1f1a47350f264370e9a5fd2475f3b6882778b2440b5085d3fe7550ced542
+  languageName: node
+  linkType: hard
+
 "@vitest/expect@npm:0.28.4":
   version: 0.28.4
   resolution: "@vitest/expect@npm:0.28.4"
@@ -5571,7 +5581,7 @@ __metadata:
     "@testing-library/vue": ^6.6.1
     "@typescript-eslint/eslint-plugin": ^5.46.1
     "@typescript-eslint/parser": ^5.46.1
-    "@vitejs/plugin-vue": ^3.2.0
+    "@vitejs/plugin-vue": ^4.0.0
     "@vue/test-utils": ^2.2.6
     all-contributors-cli: ^6.24.0
     autoprefixer: ^10.4.13
