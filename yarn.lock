@@ -5599,7 +5599,7 @@ __metadata:
     stylelint: ^14.16.0
     stylelint-config-recommended-vue: ^1.4.0
     stylelint-config-standard-scss: ^6.1.0
-    stylelint-order: ^5.0.0
+    stylelint-order: ^6.0.0
     tailwindcss: ^3.2.4
     ts-jest: ^29.0.3
     typescript: ^4.9.4
@@ -9206,12 +9206,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss-sorting@npm:^7.0.1":
-  version: 7.0.1
-  resolution: "postcss-sorting@npm:7.0.1"
+"postcss-sorting@npm:^8.0.1":
+  version: 8.0.1
+  resolution: "postcss-sorting@npm:8.0.1"
   peerDependencies:
-    postcss: ^8.3.9
-  checksum: 79cca6703ef7c60ea913c3bfb91f85bd7adce35e60b834a40cadd1c7e18f37961d63f0e641387651ee3bf1df1996e952d8fe443f93a271aa2d23f239ea3145bc
+    postcss: ^8.4.20
+  checksum: 044d1dcbe04458a3d0fbd90854d408afae3fb90474d3b70021828f7b6fc0820133ad6b8d194268847e2afee50524686b70dee930ed19039469ff828283331af1
   languageName: node
   linkType: hard
 
@@ -9269,7 +9269,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:^8.1.10, postcss@npm:^8.3.11, postcss@npm:^8.4.0, postcss@npm:^8.4.18":
+"postcss@npm:^8.1.10, postcss@npm:^8.4.0, postcss@npm:^8.4.18":
   version: 8.4.18
   resolution: "postcss@npm:8.4.18"
   dependencies:
@@ -10469,15 +10469,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"stylelint-order@npm:^5.0.0":
-  version: 5.0.0
-  resolution: "stylelint-order@npm:5.0.0"
+"stylelint-order@npm:^6.0.0":
+  version: 6.0.1
+  resolution: "stylelint-order@npm:6.0.1"
   dependencies:
-    postcss: ^8.3.11
-    postcss-sorting: ^7.0.1
+    postcss: ^8.4.20
+    postcss-sorting: ^8.0.1
   peerDependencies:
     stylelint: ^14.0.0
-  checksum: fa3ace3cc65486b9f94165603bd04983636fda5ac959cd29bf87847a95b32f366b16faf612bd49e3b9f96073f8fe28a22a5c5727cc08c8f9d7327c89084b3f30
+  checksum: f1f5d5e2ea97b426bba1becdbe06776afb12bbb47738c92b470a9f22f4ed5c920f42f8121eadedd27e493313f005273db5386320e7889dbd6d704169ee620c7d
   languageName: node
   linkType: hard
 
