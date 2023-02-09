@@ -9,7 +9,7 @@
         <div class="result-header mt-4 ml-2">
             <span class="w-4 font-bold pl-2 self-center"> {{ name }} </span>
         </div>
-        <div class="result-details flex my-1 ml-4 text-sm text-secondary/50">
+        <div class="result-details flex my-1 ml-4 text-sm">
             <span class="pr-2"> {{ specialty }}</span>
             <span class="self-center">·</span>
             <span class="px-2"> {{ facilityName }}</span>
@@ -20,22 +20,61 @@
                 {{ spokenLanguage }}
             </div>
         </div>
+        <div class="about">
+            <span>About</span>
+            <div class="address flex">
+                <svg role="img" alt="Facility Banner Image" title="banner image"
+                    class="banner-icon w-4 h-4 fill-primary-text ml-2 mr-2 self-center">
+                    <use xlink:href="../assets/images/search-icon.svg#search-icon-svg" />
+                </svg>
+                {{ address }}
+            </div>
+            <div class="hours flex">
+                <svg role="img" alt="Facility Banner Image" title="banner image"
+                    class="banner-icon w-4 h-4 fill-primary-text ml-2 mr-2 self-center">
+                    <use xlink:href="../assets/images/search-icon.svg#search-icon-svg" />
+                </svg>
+                {{ hours }}
+            </div>
+            <div class="website flex">
+                <svg role="img" alt="Facility Banner Image" title="banner image"
+                    class="banner-icon w-4 h-4 fill-primary-text ml-2 mr-2 self-center">
+                    <use xlink:href="../assets/images/search-icon.svg#search-icon-svg" />
+                </svg>
+                <a href="{website}"> {{ website }}</a>
+            </div>
+            <div class="phone flex">
+                <svg role="img" alt="Facility Banner Image" title="banner image"
+                    class="banner-icon w-4 h-4 fill-primary-text ml-2 mr-2 self-center">
+                    <use xlink:href="../assets/images/search-icon.svg#search-icon-svg" />
+                </svg>
+                {{ phone }}
+            </div>
+        </div>
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue'
 
 const dummyData = {
     name: 'test person 1',
     specialty: 'Practitioner',
     facilityName: 'LifeSavers',
-    spokenLanguages: ['japanese', 'english']
+    spokenLanguages: ['japanese', 'english'],
+    address: '1-2-3 ShinTokyo',
+    hours: '10am - 5pm',
+    website: 'findadoc.jp',
+    phone: '080-1234-4455'
 }
 
 const name = ref(dummyData.name)
 const specialty = ref(dummyData.specialty)
 const facilityName = ref(dummyData.facilityName)
 const spokenLanguages = ref(dummyData.spokenLanguages)
+const address = ref(dummyData.address)
+const hours = ref(dummyData.hours)
+const website = ref(dummyData.website)
+const phone = ref(dummyData.phone)
 
 </script>
