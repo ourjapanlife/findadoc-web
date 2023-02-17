@@ -92,7 +92,7 @@ $ yarn start
 
 # End to End Testing
 
-We use [Cypress.io](https://www.cypress.io/) for E2E testing. While the server is running on port 3001, you can run the GUI with:
+We use [Cypress.io](https://www.cypress.io/) for E2E testing. While the server is running on port 3000, you can run the GUI with:
 
 ```sh
 yarn run test:e2e
@@ -101,6 +101,11 @@ yarn run test:e2e
 Or headless mode:
 ```sh
 yarn test:e2e:run
+```
+
+If you'd like to run the server and tests in a single command, use:
+```sh
+yarn start:test
 ```
 
 To learn how to write tests and use the GUI runner, visit the [wiki](https://github.com/ourjapanlife/findadoc-web/wiki/Writing-Tests)

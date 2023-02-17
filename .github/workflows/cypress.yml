@@ -2,7 +2,7 @@ name: 'Tests: Cypress e2e'
 
 on:
   push:
-    branches: [ "main", "ragezbla/20-github-actions" ] # TODO remove after checking it works
+    branches: [ "main" ]
   pull_request:
     # The branches below must be a subset of the branches above
     branches: [ "main" ]
