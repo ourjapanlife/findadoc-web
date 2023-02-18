@@ -3,5 +3,17 @@
     "extends": [
         "config:base"
     ],
-    "schedule": ["after 10am and before 5pm every weekday"]
+    "labels": ["dependencies"],
+    "schedule": ["after 10am every monday"],
+    "stabilityDays": 14,
+    "packageRules": [
+        {
+            "matchPackagePatterns": ["^eslint"],
+            "groupName": "eslint packages"
+        },
+        {
+            "matchPackagePatterns": ["node"],
+            "allowedVersions": "/18.*/"
+        }
+    ]
 }
