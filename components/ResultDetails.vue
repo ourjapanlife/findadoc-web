@@ -2,8 +2,8 @@
     <div class="result-details landscape:min-w-[480px]">
         <div class="header flex flex-1 bg-primary bg-gradient-to-r from-primary to-secondary">
             <svg role="img" alt="Facility Banner Image" title="banner image"
-                class="banner-icon w-48 h-48 fill-primary-text-inverted ml-8 mb-4">
-                <use xlink:href="../assets/images/doctors-icon.svg#doctors-icon-svg" />
+                class="banner-icon w-48 h-48 fill-primary-text-inverted ml-8">
+                <use xlink:href="../assets/images/doctors-banner.svg#doctors-icon-svg" />
             </svg>
         </div>
         <div class="result-header mt-4 ml-2">
@@ -78,3 +78,10 @@ const website = ref(dummyData.website)
 const phone = ref(dummyData.phone)
 
 </script>
+
+<style>
+.hamburger-list-icon {
+    --background-color: transparent;
+    --second-background-color: --color-bg-secondary;
+}
+</style>
