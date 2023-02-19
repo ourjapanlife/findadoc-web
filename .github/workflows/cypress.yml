@@ -2,7 +2,7 @@ name: 'Tests: Cypress e2e'
 
 on:
   push:
-    branches: [ "main", "ragezbla/20-github-actions" ] # TODO remove after checking it works
+    branches: [ "main" ]
   pull_request:
     # The branches below must be a subset of the branches above
     branches: [ "main" ]
@@ -19,7 +19,7 @@ jobs:
       # Install yarn dependencies, cache them correctly
       # and run all Cypress tests
       - name: Cypress run
-        uses: cypress-io/github-action@v4.2.0
+        uses: cypress-io/github-action@v5.0.9
         with:
           build: yarn build
           start: yarn start

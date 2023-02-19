@@ -12,7 +12,8 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/31802656?v=4",
       "profile": "http://theyokohamalife.com",
       "contributions": [
-        "ideas"
+        "ideas",
+        "code"
       ]
     },
     {
@@ -22,7 +23,9 @@
       "profile": "http://www.philipermish.com",
       "contributions": [
         "ideas",
-        "review"
+        "review",
+        "code",
+        "mentoring"
       ]
     },
     {
@@ -32,7 +35,8 @@
       "profile": "http://www.annkilzer.net/",
       "contributions": [
         "doc",
-        "code"
+        "code",
+        "projectManagement"
       ]
     },
     {
@@ -96,6 +100,24 @@
       "profile": "https://github.com/lucy-gelderloos",
       "contributions": [
         "code"
+      ]
+    },
+    {
+      "login": "bbqbum33",
+      "name": "bbqbum33",
+      "avatar_url": "https://avatars.githubusercontent.com/u/87373820?v=4",
+      "profile": "https://github.com/bbqbum33",
+      "contributions": [
+        "business"
+      ]
+    },
+    {
+      "login": "Haruno10",
+      "name": "Haruno10",
+      "avatar_url": "https://avatars.githubusercontent.com/u/125802494?v=4",
+      "profile": "https://github.com/Haruno10",
+      "contributions": [
+        "ideas"
       ]
     }
   ],

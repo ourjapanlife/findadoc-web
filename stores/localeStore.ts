@@ -18,11 +18,10 @@ export const useLocaleStore = defineStore('locale', {
     },
     actions: {
         changeLocale() {
-            if (this.currentLocale.code === 'en') {
+            if (this.currentLocale.code === 'en')
                 this.locale = localeEn
-            } else {
+            else
                 this.locale = localeJa
-            }
         }
     }
 })

@@ -42,7 +42,7 @@
             <button id="searchButton"
                 class="flex flex-0 flex-row rounded-full bg-primary w-28 pl-1 pr-2 py-2 text-sm align-middle justify-center
                     hover:bg-primary-hover transition-all"
-                data-testid="searchbutton">
+                data-testid="search-button">
                 <svg role="img" alt="search icon" title="search icon"
                     class="search-icon w-5 h-5 mr-1 fill-primary-text-inverted">
                     <use xlink:href="../assets/images/search-icon.svg#search-icon-svg" />

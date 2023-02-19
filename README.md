@@ -28,9 +28,9 @@ Have a look at the [CONTRIBUTING](/CONTRIBUTING.md) and [CODE_OF_CONDUCT](/CODE_
 <table>
   <tbody>
     <tr>
-      <td align="center" valign="top" width="14.28%"><a href="http://theyokohamalife.com"><img src="https://avatars.githubusercontent.com/u/31802656?v=4?s=100" width="100px;" alt="LaShawn Toyoda"/><br /><sub><b>LaShawn Toyoda</b></sub></a><br /><a href="#ideas-theyokohamalife" title="Ideas, Planning, & Feedback">🤔</a></td>
-      <td align="center" valign="top" width="14.28%"><a href="http://www.philipermish.com"><img src="https://avatars.githubusercontent.com/u/4411499?v=4?s=100" width="100px;" alt="Philip Ermish"/><br /><sub><b>Philip Ermish</b></sub></a><br /><a href="#ideas-ermish" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/ourjapanlife/findadoc-web/pulls?q=is%3Apr+reviewed-by%3Aermish" title="Reviewed Pull Requests">👀</a></td>
-      <td align="center" valign="top" width="14.28%"><a href="http://www.annkilzer.net/"><img src="https://avatars.githubusercontent.com/u/4602369?v=4?s=100" width="100px;" alt="Ann Kilzer キルザー杏"/><br /><sub><b>Ann Kilzer キルザー杏</b></sub></a><br /><a href="https://github.com/ourjapanlife/findadoc-web/commits?author=ann-kilzer" title="Documentation">📖</a> <a href="https://github.com/ourjapanlife/findadoc-web/commits?author=ann-kilzer" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="http://theyokohamalife.com"><img src="https://avatars.githubusercontent.com/u/31802656?v=4?s=100" width="100px;" alt="LaShawn Toyoda"/><br /><sub><b>LaShawn Toyoda</b></sub></a><br /><a href="#ideas-theyokohamalife" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/ourjapanlife/findadoc-web/commits?author=theyokohamalife" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="http://www.philipermish.com"><img src="https://avatars.githubusercontent.com/u/4411499?v=4?s=100" width="100px;" alt="Philip Ermish"/><br /><sub><b>Philip Ermish</b></sub></a><br /><a href="#ideas-ermish" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/ourjapanlife/findadoc-web/pulls?q=is%3Apr+reviewed-by%3Aermish" title="Reviewed Pull Requests">👀</a> <a href="https://github.com/ourjapanlife/findadoc-web/commits?author=ermish" title="Code">💻</a> <a href="#mentoring-ermish" title="Mentoring">🧑‍🏫</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="http://www.annkilzer.net/"><img src="https://avatars.githubusercontent.com/u/4602369?v=4?s=100" width="100px;" alt="Ann Kilzer キルザー杏"/><br /><sub><b>Ann Kilzer キルザー杏</b></sub></a><br /><a href="https://github.com/ourjapanlife/findadoc-web/commits?author=ann-kilzer" title="Documentation">📖</a> <a href="https://github.com/ourjapanlife/findadoc-web/commits?author=ann-kilzer" title="Code">💻</a> <a href="#projectManagement-ann-kilzer" title="Project Management">📆</a></td>
       <td align="center" valign="top" width="14.28%"><a href="http://sulaymanesillah.netlify.app"><img src="https://avatars.githubusercontent.com/u/99618731?v=4?s=100" width="100px;" alt="Sulaymane Sillah"/><br /><sub><b>Sulaymane Sillah</b></sub></a><br /><a href="https://github.com/ourjapanlife/findadoc-web/commits?author=Tch4lla" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/kei-design-jp"><img src="https://avatars.githubusercontent.com/u/72494066?v=4?s=100" width="100px;" alt="kei-design-jp"/><br /><sub><b>kei-design-jp</b></sub></a><br /><a href="#design-kei-design-jp" title="Design">🎨</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/nasiranebi914"><img src="https://avatars.githubusercontent.com/u/72615859?v=4?s=100" width="100px;" alt="Nasira Nebi"/><br /><sub><b>Nasira Nebi</b></sub></a><br /><a href="https://github.com/ourjapanlife/findadoc-web/commits?author=nasiranebi914" title="Code">💻</a></td>
@@ -40,6 +40,8 @@ Have a look at the [CONTRIBUTING](/CONTRIBUTING.md) and [CODE_OF_CONDUCT](/CODE_
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/deek87"><img src="https://avatars.githubusercontent.com/u/23059797?v=4?s=100" width="100px;" alt="Derek Cameron"/><br /><sub><b>Derek Cameron</b></sub></a><br /><a href="https://github.com/ourjapanlife/findadoc-web/commits?author=deek87" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/Kumaguro3"><img src="https://avatars.githubusercontent.com/u/82785482?v=4?s=100" width="100px;" alt="Lily"/><br /><sub><b>Lily</b></sub></a><br /><a href="https://github.com/ourjapanlife/findadoc-web/commits?author=Kumaguro3" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/lucy-gelderloos"><img src="https://avatars.githubusercontent.com/u/68394281?v=4?s=100" width="100px;" alt="Lucy Gelderloos"/><br /><sub><b>Lucy Gelderloos</b></sub></a><br /><a href="https://github.com/ourjapanlife/findadoc-web/commits?author=lucy-gelderloos" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/bbqbum33"><img src="https://avatars.githubusercontent.com/u/87373820?v=4?s=100" width="100px;" alt="bbqbum33"/><br /><sub><b>bbqbum33</b></sub></a><br /><a href="#business-bbqbum33" title="Business development">💼</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/Haruno10"><img src="https://avatars.githubusercontent.com/u/125802494?v=4?s=100" width="100px;" alt="Haruno10"/><br /><sub><b>Haruno10</b></sub></a><br /><a href="#ideas-Haruno10" title="Ideas, Planning, & Feedback">🤔</a></td>
     </tr>
   </tbody>
 </table>
@@ -64,6 +66,7 @@ Have a look at the [CONTRIBUTING](/CONTRIBUTING.md) and [CODE_OF_CONDUCT](/CODE_
 ### Code Style
 
 -   [ESLint](https://eslint.org/)
+-   EditorConfig
 
 ## Getting started developing
 
@@ -87,6 +90,26 @@ $ yarn build
 # Launch production server
 $ yarn start
 ```
+
+# End to End Testing
+
+We use [Cypress.io](https://www.cypress.io/) for E2E testing. While the server is running on port 3000, you can run the GUI with:
+
+```sh
+yarn run test:e2e
+```
+
+Or headless mode:
+```sh
+yarn test:e2e:run
+```
+
+If you'd like to run the server and tests in a single command, use:
+```sh
+yarn start:test
+```
+
+To learn how to write tests and use the GUI runner, visit the [wiki](https://github.com/ourjapanlife/findadoc-web/wiki/Writing-Tests)
 
 # Folder Structure
 
