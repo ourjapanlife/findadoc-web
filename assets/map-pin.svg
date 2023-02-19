@@ -1,0 +1,6 @@
+<svg width="18" height="22" xmlns="http://www.w3.org/2000/svg">
+    <symbol id="map-pin-svg" viewBox="0 0 18 22" fill="none">
+        <title>map pin</title>
+        <path d="M16.5 8.75C16.5 15.5 9 20.75 9 20.75C9 20.75 1.5 15.5 1.5 8.75C1.5 6.76088 2.29018 4.85322 3.6967 3.4467C5.10322 2.04018 7.01088 1.25 9 1.25C10.9891 1.25 12.8968 2.04018 14.3033 3.4467C15.7098 4.85322 16.5 6.76088 16.5 8.75V8.75Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+</svg>
