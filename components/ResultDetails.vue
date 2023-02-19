@@ -81,7 +81,7 @@ const phone = ref(dummyData.phone)
 
 <style>
 .hamburger-list-icon {
-    --background-color: transparent;
-    --second-background-color: --color-bg-secondary;
+  --background-color: transparent;
+  --second-background-color: --color-bg-secondary;
 }
 </style>
