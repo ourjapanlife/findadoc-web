@@ -108,6 +108,15 @@
       "contributions": [
         "business"
       ]
+    },
+    {
+      "login": "Haruno10",
+      "name": "Haruno10",
+      "avatar_url": "https://avatars.githubusercontent.com/u/125802494?v=4",
+      "profile": "https://github.com/Haruno10",
+      "contributions": [
+        "ideas"
+      ]
     }
   ],
   "contributorsPerLine": 7,
