@@ -1,5 +1,5 @@
 <template>
-    <div class="absolute z-10 bg-secondary-bg rounded-xl overflow-hidden
+    <div class="absolute z-10 bg-primary-bg rounded-xl overflow-hidden
         hover:shadow-inner hover:shadow-secondary-bg/90">
         <div v-if="isOpen" class="modal">
             <button @click="closeModal"
