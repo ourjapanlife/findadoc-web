@@ -15,7 +15,7 @@
     <div :key="index" v-for="(searchResult, index) in searchResults" class="results-list flex flex-col">
         <div class="flex-1 h-24 w-6/8 border-b-2 border-primary/20 p-3
             hover:border-transparent hover:bg-primary/5 transition-all">
-            <SearchResult v-model:name="searchResult.name" v-model:facilityName="searchResult.facilityName"
+            <SearchResultsListItem v-model:name="searchResult.name" v-model:facilityName="searchResult.facilityName"
                 v-model:specialty="searchResult.specialty" v-model:spokenLanguages="searchResult.spokenLanguages" />
         </div>
     </div>
