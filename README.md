@@ -51,28 +51,35 @@ Have a look at the [CONTRIBUTING](/CONTRIBUTING.md) and [CODE_OF_CONDUCT](/CODE_
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
-
 ## Tech used
 
--   [Typescript](https://www.typescriptlang.org/)
--   [Vue 3](https://vuejs.org/)
--   [Nuxt 3](https://nuxtjs.org/)
--   [Pinia](https://pinia.vuejs.org/introduction.html)
--   [Node.js](https://nodejs.org/en/) version 16.18
--   [Yarn](https://yarnpkg.com/)
--   [Vue-router](https://router.vuejs.org/)
--   [ohMyFetch](https://github.com/unjs/ohmyfetch)
+- [Typescript](https://www.typescriptlang.org/)
+- [Vue 3](https://vuejs.org/)
+- [Nuxt 3](https://nuxtjs.org/)
+- [Pinia](https://pinia.vuejs.org/introduction.html)
+- [Node.js](https://nodejs.org/en/) version 16.18
+- [Yarn](https://yarnpkg.com/)
+- [Vue-router](https://router.vuejs.org/)
+- [ohMyFetch](https://github.com/unjs/ohmyfetch)
 
 ### Code Style
 
--   [ESLint](https://eslint.org/)
--   EditorConfig
+- [ESLint](https://eslint.org/)
+- [EditorConfig](https://editorconfig.org)
+- [StyleLint](https://stylelint.io)
 
-## Getting started developing
+# Getting started developing
+
+### Prerequisites
+
+- [Yarn Berry](https://yarnpkg.com/getting-started/install) (latest version)
+- Strongly recommended: IDE plugins for `eslint`, `editorconfig`, and `stylelint`.
+    - These provide automatic linting error visibility instead of having to run `yarn lint` every time
+-
 
 ```bash
 # install dependencies
-$ yarn install
+$ yarn
 
 # set up husky
 $ yarn prepare
@@ -100,11 +107,13 @@ yarn run test:e2e
 ```
 
 Or headless mode:
+
 ```sh
 yarn test:e2e:run
 ```
 
 If you'd like to run the server and tests in a single command, use:
+
 ```sh
 yarn start:test
 ```
@@ -141,3 +150,23 @@ Example: `/static/robots.txt` is mapped as `/robots.txt`. Here's more informatio
 ### `stores/`
 
 Contains [Pinia](https://pinia.vuejs.org/introduction.html) store files for state management and data fetching.
+
+# Managing our Typescript types
+
+Typescript types should ideally be located in the `./typedefs` folder.
+
+To easily sync object schemas used by our graphql api, we generate api schema types programmatically.
+By running:
+
+```bashrc
+    yarn generate
+```
+
+This will automatically generate the `gqlTypes.ts` file with any schema updates from the server/api.
+
+For any new typescript types, feel free to add them as well to the `./typedefs` folder.
+
+# Troubleshooting
+
+- If you're getting errors building, you might need to run `yarn` again to update your dependencies.
+- If you're getting a different error, feel free to reach out in our #front-end slack channel or create a new github issue!
