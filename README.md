@@ -155,8 +155,7 @@ Contains [Pinia](https://pinia.vuejs.org/introduction.html) store files for stat
 
 Typescript types should ideally be located in the `./typedefs` folder.
 
-To easily sync object schemas used by our graphql api, we generate api schema types programmatically.
-By running:
+To easily sync object schemas used by our graphql api, we generate api schema types by running:
 
 ```bashrc
     yarn generate
