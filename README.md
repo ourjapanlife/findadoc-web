@@ -168,4 +168,4 @@ For any new typescript types, feel free to add them as well to the `./typedefs` 
 # Troubleshooting
 
 - If you're getting errors building, you might need to run `yarn` again to update your dependencies.
-- If you're getting a different error, feel free to reach out in our #front-end slack channel or create a new github issue!
+- If you're getting a different error, feel free to reach out in our [#front-end](https://join.slack.com/t/find-a-doc/shared_invite/zt-s4744a6o-MGaGHzLN5wB9aXeha3vdsQ) slack channel or create a new github issue!
