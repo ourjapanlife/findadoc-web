@@ -6,16 +6,18 @@
         "prepare": "husky install",
         "dev": "yarn && nuxi dev",
         "build": "nuxi generate",
+        "generate": "graphql-codegen --config ./typesgeneratorconfig.ts",
         "lint": "eslint  . -c .eslintrc.js --ext .vue,.js,.ts,.json --ignore-path .gitignore && stylelint **/*.{vue,css,scss} --ignore-path .gitignore",
         "lint:ci": "eslint . --config .eslintrc.js --ext .js,.jsx,.ts,.tsx,.vue --format @microsoft/eslint-formatter-sarif --output-file eslint-results.sarif --ignore-path .gitignore",
         "lint:css": "stylelint '**/*.{vue,css,scss}' --ignore-path .gitignore -f verbose",
         "prepare:ci": "nuxi prepare",
         "start": "nuxi start",
+        "start:test": "start-server-and-test 'yarn start' 3000 'yarn test:e2e:run'",
         "test:pinia": "vitest",
         "test:pinia:coverage": "vitest run --coverage",
-        "test:e2e": "cypress run --e2e --browser chrome",
-        "start:test": "start-server-and-test 'yarn start' 3000 'yarn test:e2e:run'"
+        "test:e2e": "cypress run --e2e --browser chrome"
     },
+    "packageManager": "yarn@3.4.1",
     "engines": {
         "node": ">=16.0.0"
     },
@@ -27,6 +29,9 @@
         "vue-template-compiler": "^2.7.14"
     },
     "devDependencies": {
+        "@graphql-codegen/cli": "^3.0.0",
+        "@graphql-codegen/typescript": "^3.0.0",
+        "@graphql-codegen/typescript-resolvers": "^3.0.0",
         "@microsoft/eslint-formatter-sarif": "^3.0.0",
         "@nuxt/types": "^2.15.8",
         "@testing-library/vue": "^6.6.1",
@@ -56,6 +61,5 @@
         "typescript": "^4.9.4",
         "vitest": "^0.28.0",
         "webpack": "^5.75.0"
-    },
-    "packageManager": "yarn@3.4.1"
+    }
 }
