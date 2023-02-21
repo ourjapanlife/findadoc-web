@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-secondary-bg/20 w-full hover:shadow-inner hover:shadow-secondary-bg/90">
+    <div>
         <img src="@/assets/images/map-sample.png" class="w-full h-full opacity-80" />
     </div>
 </template>

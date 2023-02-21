@@ -59,7 +59,7 @@
     --color-text-muted: /* #464646 */ 70 70 70;
     --color-text-inverted: /* #000000 */ 255 255 255;
     --color-bg-primary: /* #fcfcfc */ 252 252 252;
-    --color-bg-secondary: /* #a394a1 */ 163 148 161;
+    --color-bg-secondary: /* #b49ab1 */ 180, 154, 177;
   }
 
   .theme-ocean {
