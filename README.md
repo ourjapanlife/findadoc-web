@@ -42,6 +42,7 @@ Have a look at the [CONTRIBUTING](/CONTRIBUTING.md) and [CODE_OF_CONDUCT](/CODE_
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/lucy-gelderloos"><img src="https://avatars.githubusercontent.com/u/68394281?v=4?s=100" width="100px;" alt="Lucy Gelderloos"/><br /><sub><b>Lucy Gelderloos</b></sub></a><br /><a href="https://github.com/ourjapanlife/findadoc-web/commits?author=lucy-gelderloos" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/bbqbum33"><img src="https://avatars.githubusercontent.com/u/87373820?v=4?s=100" width="100px;" alt="bbqbum33"/><br /><sub><b>bbqbum33</b></sub></a><br /><a href="#business-bbqbum33" title="Business development">💼</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/Haruno10"><img src="https://avatars.githubusercontent.com/u/125802494?v=4?s=100" width="100px;" alt="Haruno10"/><br /><sub><b>Haruno10</b></sub></a><br /><a href="#ideas-Haruno10" title="Ideas, Planning, & Feedback">🤔</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/Aya-Yumino"><img src="https://avatars.githubusercontent.com/u/126957811?v=4?s=100" width="100px;" alt="Aya-Yumino"/><br /><sub><b>Aya-Yumino</b></sub></a><br /><a href="#research-Aya-Yumino" title="Research">🔬</a> <a href="#ideas-Aya-Yumino" title="Ideas, Planning, & Feedback">🤔</a></td>
     </tr>
   </tbody>
 </table>
