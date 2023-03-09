@@ -66,7 +66,7 @@ module.exports = {
         ],
         'key-spacing': ['error', { beforeColon: false, afterColon: true }],
         'keyword-spacing': ['error', { before: true, after: true }],
-        'linebreak-style': ['error', 'unix'], // no carriage returns
+        'linebreak-style': 0, // no carriage returns
         'max-len': ['error', { code: 140 }], // be friendly to laptops
         'newline-after-var': 'error',
         'require-atomic-updates': 'off',
