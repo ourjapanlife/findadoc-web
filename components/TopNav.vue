@@ -10,7 +10,7 @@
                 </svg>
                 <div class="title-text flex flex-col" data-testid="logo">
                     <div class="text-lg text-primary group-hover:text-primary-hover">
-                        Find a Doc 
+                        Find a Doc
                     </div>
                     <div class="text-sm text-primary leading-none group-hover:text-primary-hover">
                         Japan
