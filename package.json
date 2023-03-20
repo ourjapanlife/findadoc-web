@@ -12,7 +12,7 @@
         "lint:css": "stylelint '**/*.{vue,css,scss}' --ignore-path .gitignore -f verbose",
         "prepare:ci": "nuxi prepare",
         "start": "nuxi start",
-        "start:test": "start-server-and-test 'yarn start' 3000 'yarn test:e2e:run'",
+        "start:test": "start-server-and-test 'yarn start' 3000 'yarn test:e2e'",
         "test:pinia": "vitest",
         "test:pinia:coverage": "vitest run --coverage",
         "test:e2e": "cypress run --e2e --browser chrome"
