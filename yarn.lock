@@ -12842,8 +12842,8 @@ __metadata:
   linkType: hard
 
 "stylelint-config-standard-scss@npm:^7.0.0":
-  version: 7.0.0
-  resolution: "stylelint-config-standard-scss@npm:7.0.0"
+  version: 7.0.1
+  resolution: "stylelint-config-standard-scss@npm:7.0.1"
   dependencies:
     stylelint-config-recommended-scss: ^9.0.0
     stylelint-config-standard: ^30.0.1
@@ -12853,7 +12853,7 @@ __metadata:
   peerDependenciesMeta:
     postcss:
       optional: true
-  checksum: ac386e7ef17cf6e99931e00e10f59231f656ff8a5665bb3bf8e95016a131dfde57102771f1ca00fce0de46f9b5e3ea7759f1a5d643dea6cb22506ea8c6cfb40d
+  checksum: 99aa0241c1ec07a36975489746f1eb15268df03ddcc5ec3370c72f507872135a1214360df7ad4f60162145b910700ee4e8b4604ee4a1c158f69eda2fd07eede4
   languageName: node
   linkType: hard
 
