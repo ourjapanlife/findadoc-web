@@ -10,6 +10,7 @@ describe('Visits the home page', () => {
         // TODO: clicking it should take us to '/'
     })
 
+
     it('allows setting search fields', () => {
         cy.get('[data-testid="search-button"]').should('be.visible')
         // TODO
