@@ -99,8 +99,19 @@ export default defineNuxtConfig({
     ],
 
     i18n: {
-        locales: ['en', 'ja'],
+        locales: [
+            {
+                code: 'en',
+                name: 'English'
+            },
+            {
+                code: 'ja',
+                name: '日本語'
+            }
+        ],
+        fallbackLocale: 'en',
         defaultLocal: 'en',
+        strategy: 'no_prefix',
         vueI18n: {
             legacy: false,
             locale: 'en',
