@@ -1,4 +1,5 @@
 import { defineNuxtConfig } from 'nuxt/config'
+import i18n from './i18n/index'
 
 const SITE_TITLE = 'Find a Doc, Japan!'
 const SITE_DESCRIPTION =
@@ -103,20 +104,7 @@ export default defineNuxtConfig({
         vueI18n: {
             legacy: false,
             locale: 'en',
-            messages: {
-                en: {
-                    searchResultsList: {
-                        doctorsNearby: 'Doctors Nearby'
-                    }
-
-                },
-                ja: {
-                    searchResultsList: {
-                        doctorsNearby: '近隣の医師'
-                    }
-                }
-
-            }
+            messages: i18n
         }
     },
 
