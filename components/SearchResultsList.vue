@@ -1,7 +1,7 @@
 <template>
     <div class="results-header flex flex-row ml-9 mr-5 mb-6 pt-5">
         <span class="flex-1 w-1/2 font-bold self-center">
-            Doctors Nearby
+            {{ $t('searchResultsList.doctorsNearby') }}
         </span>
         <button role="button" aria="filters" class="filters py-1 px-2 border border-primary/40 rounded-xl flex flex-row flex-0
                 group hover:bg-primary hover:transition-all">

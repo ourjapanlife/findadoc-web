@@ -93,7 +93,32 @@ export default defineNuxtConfig({
     // Auto import components: https://go.nuxtjs.dev/config-components
     components: true,
 
-    modules: [],
+    modules: [
+        '@nuxtjs/i18n'
+    ],
+
+    i18n: {
+        locales: ['en', 'ja'],
+        defaultLocal: 'en',
+        vueI18n: {
+            legacy: false,
+            locale: 'en',
+            messages: {
+                en: {
+                    searchResultsList: {
+                        doctorsNearby: 'Doctors Nearby'
+                    }
+
+                },
+                ja: {
+                    searchResultsList: {
+                        doctorsNearby: '近隣の医師'
+                    }
+                }
+
+            }
+        }
+    },
 
     // Postcss configuration
     postcss: {
