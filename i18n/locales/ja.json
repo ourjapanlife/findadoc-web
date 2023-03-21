@@ -1,5 +1,14 @@
 {
+    "searchBar": {
+        "selectSpecialty": "専門を選ぶ。。。",
+        "selectLocation": "場所を選ぶ。。。",
+        "selectLanguage": "言語を選ぶ。。。",
+        "search": "サーチ"
+    },
     "searchResultsList": {
         "doctorsNearby": "近隣の医師"
+    },
+    "topNav": {
+        "about": "について"
     }
 }

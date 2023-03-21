@@ -23,7 +23,7 @@
         </div>
         <nav class="flex gap-4 mx-6 absolute right-20">
             <NuxtLink to="/about" class="px-2 mx-auto hover:text-primary-hover transition-colors">
-                About
+                {{ $t('topNav.about')}}
             </NuxtLink>
         </nav>
         <div></div>

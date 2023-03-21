@@ -5,7 +5,7 @@
                 <select class="rounded-l-full rounded-r-none w-full px-1 border-2 border-primary/60
                     py-1.5 drop-shadow-md text-primary-text bg-primary-bg hover:bg-primary-hover/10 transition-all">
                     <option value="" class="text-primary-text-muted" disabled selected>
-                        Select a specialty...
+                        {{ $t('searchBar.selectSpecialty')}}
                     </option>
                     <option value=""></option>
                     <option :key="index" v-for="(specialty, index) in specialtyDropdownOptions">
@@ -17,7 +17,7 @@
                 <select class="w-full px-1 border-y-2 border-primary/60 py-1.5 drop-shadow-md
                         text-primary-text bg-primary-bg hover:bg-primary-hover/10 transition-all">
                     <option value="" class="text-primary-text-muted" disabled selected>
-                        Select a location...
+                        {{ $t('searchBar.selectLocation')}}
                     </option>
                     <option value=""></option>
                     <option :key="index" v-for="(location, index) in locationDropdownOptions">
@@ -29,7 +29,7 @@
                 <select class="rounded-r-full rounded-l-none w-full px-1 border-2 border-primary/60 py-1.5
                         drop-shadow-md text-primary-text bg-primary-bg hover:bg-primary-hover/10 transition-all">
                     <option value="" class="text-primary-text-muted" disabled selected>
-                        Select a language...
+                        {{ $t('searchBar.selectLocation')}}
                     </option>
                     <option value=""></option>
                     <option :key="index" v-for="(language, index) in languageDropdownOptions">
@@ -47,7 +47,7 @@
                     class="search-icon w-5 h-5 mr-1 fill-primary-text-inverted">
                     <use xlink:href="../assets/images/search-icon.svg#search-icon-svg" />
                 </svg>
-                <span class="self-center text-primary-text-inverted">Search</span>
+                <span class="self-center text-primary-text-inverted">{{ $t('searchBar.search')}}</span>
             </button>
         </div>
     </div>
