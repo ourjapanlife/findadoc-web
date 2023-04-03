@@ -22,11 +22,13 @@
         "node": ">=16.0.0"
     },
     "dependencies": {
-        "pinia": "^2.0.28",
+        "@pinia/nuxt": "^0.4.11",
+        "pinia": "^2.1.4",
         "vue": "^3.2.45",
         "vue-gtag": "^2.0.1",
         "vue-server-renderer": "^2.7.14",
-        "vue-template-compiler": "^2.7.14"
+        "vue-template-compiler": "^2.7.14",
+        "vue3-google-map": "^0.15.0"
     },
     "devDependencies": {
         "@graphql-codegen/cli": "^3.0.0",

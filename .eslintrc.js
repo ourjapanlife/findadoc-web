@@ -91,7 +91,7 @@ module.exports = {
             { blankLine: 'always', prev: '*', next: 'return' }
         ],
         'prefer-arrow-callback': 'error',
-        'prefer-const': 'error',
+        // 'prefer-const': 'error',
         'prefer-spread': 'error',
         'prefer-template': 'error',
         'quote-props': ['error', 'as-needed'],

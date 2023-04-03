@@ -61,9 +61,9 @@
 import { ref } from 'vue'
 
 const dummyData = {
-    name: 'test person 1',
-    specialty: 'Practitioner',
-    facilityName: 'LifeSavers',
+    name: 'some name',
+    specialty: 'some specialty',
+    facilityName: 'some facility',
     spokenLanguages: ['japanese', 'english'],
     address: '1-2-3 ShinTokyo',
     hours: '10am - 5pm',

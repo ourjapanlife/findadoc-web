@@ -2,6 +2,7 @@
 .nuxt
 .output
 dist
+.env
 
 #package management and yarn3
 node_modules
