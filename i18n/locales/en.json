@@ -1,0 +1,14 @@
+{
+    "searchBar": {
+        "selectSpecialty": "Select a specialty...",
+        "selectLocation": "Select a location...",
+        "selectLanguage": "Select a language...",
+        "search": "Search"
+    },
+    "searchResultsList": {
+        "doctorsNearby": "Doctors Nearby"
+    },
+    "topNav": {
+        "about": "About"
+    }
+}
