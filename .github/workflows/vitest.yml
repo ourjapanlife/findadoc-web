@@ -1,58 +1,57 @@
-name: 'Tests: vitest'
+name: "Tests: vitest"
 
 on:
-  push:
-    branches: [ "main", "ragezbla/89-vitest-gh-actions" ] # TODO remove after checking it works
-  pull_request:
-    # The branches below must be a subset of the branches above
-    branches: [ "main" ]
-  schedule:
-    - cron: '45 15 * * 4'
+    push:
+        branches: ["main", "ragezbla/89-vitest-gh-actions"] # TODO remove after checking it works
+    pull_request:
+        # The branches below must be a subset of the branches above
+        branches: ["main"]
+    schedule:
+        - cron: "45 15 * * 4"
 env:
-  CACHE_PATH: ./*
-  CACHE_KEY: vitest-cache-${{ github.sha }}
+    CACHE_PATH: ./*
+    CACHE_KEY: vitest-cache-${{ github.sha }}
 
 jobs:
-  setup:
+    setup:
+        name: Setup 🛫
+        strategy:
+            matrix:
+                node-version: [16, 18]
+        runs-on: ubuntu-latest
+        steps:
+            - name: Setup Cache
+              uses: actions/cache@v3
+              with:
+                  path: ${{ env.CACHE_PATH }}
+                  key: ${{ env.CACHE_KEY }}-${{ matrix.node-version }}
+            - name: Checkout Code
+              uses: actions/checkout@v3
+              with:
+                  fetch-depth: 0
+            - name: Install Yarn/ Node ${{ matrix.node-version }}
+              uses: actions/setup-node@v3
+              with:
+                  node-version: ${{ matrix.node-version }}
+                  cache: "yarn"
+            - name: Install Dependencies
+              run: yarn install --immutable
+              # this is needed to generate things like tsconfig declerations
+            - name: Prepare Nuxt
+              run: yarn prepare:ci
 
-    name: Setup 🛫
-    strategy:
-      matrix:
-        node-version: [16, 18]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Setup Cache
-        uses: actions/cache@v3
-        with:
-          path: ${{ env.CACHE_PATH }}
-          key: ${{ env.CACHE_KEY }}-${{ matrix.node-version }}
-      - name: Checkout Code
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - name: Install Yarn/ Node ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: "yarn"
-      - name: Install Dependencies
-        run: yarn install --immutable
-        # this is needed to generate things like tsconfig declerations
-      - name: Prepare Nuxt
-        run: yarn prepare:ci
-
-  run-pinia-tests:
-    runs-on: ubuntu-latest
-    name: Running Pinia Tests 🚀
-    needs: setup
-    strategy:
-      matrix:
-        node-version: [16, 18]
-    steps:
-      - name: Load Cache
-        uses: actions/cache@v3
-        with:
-          path: ${{ env.CACHE_PATH }}
-          key: ${{ env.CACHE_KEY }}-${{ matrix.node-version }}
-      - name: Run Vitest
-        run: yarn run test:pinia
+    run-pinia-tests:
+        runs-on: ubuntu-latest
+        name: Running Pinia Tests 🚀
+        needs: setup
+        strategy:
+            matrix:
+                node-version: [16, 18]
+        steps:
+            - name: Load Cache
+              uses: actions/cache@v3
+              with:
+                  path: ${{ env.CACHE_PATH }}
+                  key: ${{ env.CACHE_KEY }}-${{ matrix.node-version }}
+            - name: Run Vitest
+              run: yarn run test:pinia
