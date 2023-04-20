@@ -54,4 +54,4 @@ jobs:
                   path: ${{ env.CACHE_PATH }}
                   key: ${{ env.CACHE_KEY }}-${{ matrix.node-version }}
             - name: Run Vitest
-              run: yarn run test:unit
+              run: yarn run test:pinia
