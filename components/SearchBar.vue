@@ -27,7 +27,8 @@
             </div>
             <div class="search-language col-span-1 inline-block w-1/3 py-4">
                 <select class="rounded-r-full rounded-l-none w-full px-1 border-2 border-primary/60 py-1.5
-                        drop-shadow-md text-primary-text bg-primary-bg hover:bg-primary-hover/10 transition-all">
+                        drop-shadow-md text-primary-text bg-primary-bg hover:bg-primary-hover/10 transition-all"
+                    data-testid="search-bar-language">
                     <option value="" class="text-primary-text-muted" disabled selected>
                         {{ $t('searchBar.selectLocation')}}
                     </option>
