@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: "notosans";
+  src: url("../fonts/Noto_Sans/NotoSans-Regular.ttf");
+}
+
 @layer base {
   h1 { @apply text-3xl; }
   h2 { @apply text-2xl; }
