@@ -1,0 +1,19 @@
+{
+    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+    "extends": [
+        "config:base"
+    ],
+    "labels": ["dependencies"],
+    "schedule": ["after 10am every monday"],
+    "stabilityDays": 14,
+    "packageRules": [
+        {
+            "matchPackagePatterns": ["^eslint"],
+            "groupName": "eslint packages"
+        },
+        {
+            "matchPackagePatterns": ["node"],
+            "allowedVersions": "/18.*/"
+        }
+    ]
+}

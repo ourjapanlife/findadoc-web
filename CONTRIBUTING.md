@@ -1,49 +1,31 @@
-Welcome to Findadoc Japan! We're grateful for our volunteers 😊
+Welcome to Find a Doc, Japan! We're grateful for our volunteers 😊
+
+We are working on the V2 version of the site, so if you've volunteered in the past, you might notice things look a little different.
 
 # Where should I start?
 
-👉️ Join the [Slack](https://join.slack.com/t/find-a-doc/shared_invite/zt-s4744a6o-MGaGHzLN5wB9aXeha3vdsQ) 💬
+👉️ Join us on [Slack](https://join.slack.com/t/find-a-doc/shared_invite/zt-s4744a6o-MGaGHzLN5wB9aXeha3vdsQ)! 💬
+
+👉 Is this your first Open-source project? Please check out our [beginner resources]( https://github.com/ourjapanlife/findadoc-web/wiki/Getting-Started-with-Open-Source-%F0%9F%94%B0) to learn the basics of Git and GitHub 💕
 
 👉️ Developers 💻️
 
-1. Fork the repo and build the source by following the [README](https://github.com/ourjapanlife/findadoc-frontend#readme)
-2. Find a good issue by checking out the [latest Project Board](https://github.com/ourjapanlife/findadoc-frontend/projects), or looking for something tagged "Good First Issue"
-3. Submit a PR and work with the team to merge it
-   🙌🏻
+1. Fork the repo and build the source by following the [README](./README.md)
+2. Find a good issue by checking out the [Issues Section](https://github.com/ourjapanlife/findadoc-web/issues). PLEASE only take tickets with the `help wanted` label.
+3. For new developers looking for easier tickets, look for an unassigned issue tagged `Good First Issue`.
+4. Create your own branch and start writing your code!  (we recommend prefixing your branch with your username, like `coolgithubname/mychange`) 
+5. Submit a PR (Pull Request) on Github and work with the team to merge it. Make sure that all automated checks and linters pass, and please add a clear description of what you did and how you test it.
+6. Give us a shout if you need any help on the `#frontend-team` channel on [Slack](https://join.slack.com/t/find-a-doc/shared_invite/zt-s4744a6o-MGaGHzLN5wB9aXeha3vdsQ)! 
 
 👉️ Translators 🌐
 
-1. [Visit the Localization Subproject](https://github.com/ourjapanlife/findadoc-localization) for further instructions
+1. Join the `#localization` channel on Slack
 
 👉️ UI/UX Designers (and people interested in developing new features) ✨
 
-1. Check out the Wiki](https://github.com/ourjapanlife/findadoc-frontend/wiki) to learn about User stories, etc.
-2. Join the #new-features Slack Channel
+1. Join the `#ui-ux-design` and `#frontend-team` channels on Slack
    🎨
 
-## What if I get stuck?
+# Giving thanks to our volunteers 👏
 
-- Developers: Check out the [TROUBLESHOOTING Guide](https://github.com/ourjapanlife/findadoc-frontend/wiki/Troubleshooting-%F0%9F%98%AD-%F0%9F%98%AD-%F0%9F%98%AD-%F0%9F%91%89%EF%B8%8F-%F0%9F%98%8A-%F0%9F%98%8A--%F0%9F%98%8A) or ask in Slack
-- Translators: Ask in slack in the #localization channel
-- Everyone: Ask in Slack
-
-## Helpful Info
-
-### Related Technologies
-
-- [Vue](https://vuejs.org/) A JavaScript framework
-- [Nuxt.js](https://nuxtjs.org/) A Vue framework
-- [vue-18n](https://kazupon.github.io/vue-i18n/) - internationalization
-- [nuxt/i18n](https://i18n.nuxtjs.org/) - nuxt wrapper for vue-i18n
-- [Vuetify 1.5](https://v15.vuetifyjs.com/) - Material Design Framework
-- [Material Design](https://material.io/design) - A design framework created by Google based on the concept of layered paper
-- [Firebase](https://firebase.google.com/) - A platform for web applications. Hosts the data store
-
-### Code Style
-
-- ESLint
-- Prettier
-
-### Glossary
-
-**i18n**: internationalization (because there are 18 letters)
+We use the [All Contributors Bot](https://allcontributors.org/) to celebrate various contributions to our project, from coding to design to research, translation, and more! This project would not be possible without many talented folks collaborating. Read more about [how to use the bot here](https://allcontributors.org/docs/en/bot/usage).

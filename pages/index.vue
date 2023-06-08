@@ -1,20 +1,13 @@
+
+import MainContentContainer from '~/components/MainContentContainer.vue';
+
 <template>
-  <div class="h-full">
-    <TopNav />
-    <div class="flex flex-col md:flex-row h-full">
-      <Welcome />
-      <FeaturedNews />
+    <div class="flex">
+        <LeftNavbar class="flex-0 bg-primary-bg w-[358px]" />
+        <div class="flex-1">
+            <div class="flex flex-col md:flex-row h-full">
+                <MainContentContainer />
+            </div>
+        </div>
     </div>
-    <div class="w-full">
-      <Media />
-    </div>
-  </div>
 </template>
-
-<script lang="ts">
-import Vue from "vue";
-
-export default Vue.extend({
-  name: "IndexPage",
-});
-</script>

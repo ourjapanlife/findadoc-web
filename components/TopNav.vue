@@ -1,16 +1,32 @@
 <template>
-  <div class="p-4 border-b flex justify-between">
-    <div class="font-semibold text-xl text-gray-800">Find a Doc</div>
-    <div>
-      <a href="https://ko-fi.com/Z8Z14YNUR" target="_blank"
-        ><img
-          height="36"
-          style="border: 0px; height: 36px"
-          src="https://cdn.ko-fi.com/cdn/kofi1.png?v=3"
-          border="0"
-          alt="Buy Me a Coffee at ko-fi.com"
-      /></a>
+    <div class="p-4 pl-8 border border-secondary-bg/20 flex justify-between items-center
+        bg-gradient-to-t from-secondary-bg/30 via-primary-bg to-primary-bg">
+        <HamburgerComponent />
+        <div class="font-semibold text-xl group transition-colors">
+            <NuxtLink class="flex" to="/">
+                <svg role="img" title="site icon"
+                    class="mr-1 w-10 h-10 align-middle fill-primary group-hover:fill-primary-hover">
+                    <use xlink:href="../assets/images/site-logo.svg#site-logo-svg" />
+                </svg>
+                <div class="title-text flex flex-col" data-testid="logo">
+                    <div class="text-lg text-primary group-hover:text-primary-hover">
+                        Find a Doc
+                    </div>
+                    <div class="text-sm text-primary leading-none group-hover:text-primary-hover">
+                        Japan
+                    </div>
+                </div>
+            </NuxtLink>
+        </div>
+        <div id="searchbar" class="align-middle">
+            <SearchBar />
+        </div>
+        <nav class="flex gap-4 mx-6 absolute right-20">
+            <NuxtLink to="/about" class="px-2 mx-auto hover:text-primary-hover transition-colors">
+                {{ $t('topNav.about')}}
+            </NuxtLink>
+        </nav>
+        <div></div>
+        <LocaleSelector />
     </div>
-  </div>
 </template>
-
