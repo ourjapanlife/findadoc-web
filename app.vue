@@ -1,14 +1,14 @@
 <template>
     <div class="h-screen flex flex-col font-['notosans'] theme-coral">
         <div class="flex flex-col">
-            <div class="flex flex-1 flex-col items-center mt-8">
+            <div class="flex flex-1 flex-col items-center mt-14">
                 <span class="border-2 border-currentColor text-currentColor rounded-lg px-3 py-0">
                     Coming Soon
                 </span>
                 <span class="portrait:text-3xl font-extrabold text-5xl mt-8 mb-4 font-['notosans-bold']">
                     Find a Doc, Japan
                 </span>
-                <span class="text-gray-500 mt-4 mb-8 w-96">
+                <span class="text-gray-500 mt-4 mb-14 w-96">
                     Connecting people in Japan to the healthcare services they need, in the languages they need.
                 </span>
             </div>
@@ -23,7 +23,7 @@
                     class="hidden md:block h-[550px] w-[400px] relative right-[8%] left-auto top-[-480px] self-end overflow-visible" />
             </div>
 
-            <div class="flex flex-row justify-around h-[400px] mt-28 mb-8 portrait:mx-4 text-center">
+            <div class="flex flex-row justify-around h-[300px] mt-28 mb-8 portrait:mx-4 text-center">
                 <div class="flex flex-col w-96 items-center">
                     <svg role="img" alt="MagnifyingGlass" title="MagnifyingGlass"
                         class="h-20 w-20 self-center text-primary">
