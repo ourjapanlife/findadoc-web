@@ -5,7 +5,7 @@
                 <span class="border-2 border-currentColor text-currentColor rounded-lg px-3 py-0">
                     Coming Soon
                 </span>
-                <span class="font-extrabold text-5xl mt-8 mb-4 font-['notosans-bold']">
+                <span class="portrait:text-3xl font-extrabold text-5xl mt-8 mb-4 font-['notosans-bold']">
                     Find a Doc, Japan
                 </span>
                 <span class="text-gray-500 mt-4 mb-8 w-96">
@@ -18,15 +18,15 @@
             <div class="flex flex-col flex-1 max-h-12">
                 <span class="self-center text-sm text-gray-500">*Screens are for illustration purposes only</span>
                 <img src="./assets/images/iPhone-showing-map.png"
-                    class="h-[550px] w-[400px] relative right-10 left-auto top-[-450px] self-end overflow-visible" />
+                    class="portrait:hidden  h-[550px] w-[400px] relative right-10 left-auto top-[-450px] self-end overflow-visible" />
             </div>
             <div class="flex flex-row justify-between mx-12 my-12">
                 <div class="flex flex-col w-96 items-center">
                     <svg role="img" alt="MagnifyingGlass" title="MagnifyingGlass" class="h-20 w-20 self-center">
                         <use xlink:href=" ./assets/images/magnifying-glass.svg#magnifying-glass-svg" />
                     </svg>
-                    <span class="text-2xl font-extrabold py-6 font-['notosans-bold']">Search & Find</span>
-                    <span class="text-gray-700 text-center">
+                    <span class="landscape:text-2xl portrait:text-xl font-extrabold py-6 font-['notosans-bold']">Search & Find</span>
+                    <span class="portrait:text-xs text-gray-700 text-center">
                         Search and find the right doctors and healthcare professionals for your needs in Japan
                     </span>
                 </div>
@@ -34,8 +34,8 @@
                     <svg role="img" alt="translation icon" title="translation icon" class="h-20 w-20 self-center">
                         <use xlink:href=" ./assets/images/translate-icon.svg#translate-icon-svg" />
                     </svg>
-                    <span class="text-2xl font-extrabold py-6 font-['notosans-bold']">Multiple Languages</span>
-                    <span class="text-gray-700 text-center">
+                    <span class="landscape:text-2xl portrait:text-xl font-extrabold py-6 font-['notosans-bold']">Multiple Languages</span>
+                    <span class="portrait:text-xs text-gray-700 text-center">
                         We're here to connect you to the services you need, in the language you're comfortable with
                     </span>
                 </div>
@@ -43,8 +43,8 @@
                     <svg role="img" alt="vector" title="vector" class="h-20 w-20 self-center">
                         <use xlink:href=" ./assets/images/vector-icon.svg" />
                     </svg>
-                    <span class="text-2xl font-extrabold py-6 font-['notosans-bold']">Free & Reliable</span>
-                    <span class="text-gray-700 text-center">
+                    <span class="landscape:text-2xl portrait:text-xl font-extrabold py-6 font-['notosans-bold']">Free & Reliable</span>
+                    <span class="portrait:text-xs text-gray-700 text-center">
                         We're dedicated to providing free and reliable healthcare resources so you can stay informed.
                     </span>
                 </div>
