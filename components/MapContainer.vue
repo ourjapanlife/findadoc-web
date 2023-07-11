@@ -4,20 +4,8 @@
         style="height: 100%; width: 100%;"
         :center="center"
         :zoom="9">
-        <Marker @click="useModalStore().showModal()" :options="{position: location.position, icon: markerIcon}"
-            :key="index" v-for="(location, index) in searchResults">
-            <!-- <InfoWindow :options="{ position: location.position, minWidth: '400', minHeight: '300'}">
-                <SearchResultDetails :facility-name="location.facilityName"
-                    :facility-type="location.facilityType"
-                    :spoken-languages="location.spokenLanguages"
-                    :name="location.healthcareProfessionalName"
-                    :specialty="location.specialty"
-                    :address="location.address"
-                    :hours="location.hours"
-                    :website="location.website"
-                    :phone="location.phone" />
-            </InfoWindow> -->
-        </Marker>
+        <Marker @click="showLocationDetails(location)" :options="{position: location.position, icon: markerIcon}"
+            :key="index" v-for="(location, index) in searchResults" />
     </GoogleMap>
 </template>
 
@@ -28,12 +16,12 @@ import { useRuntimeConfig } from '#imports'
 import customIcon from '~/assets/images/blue-map-pin.svg'
 import mockData from '~/test/mockData/facilityMockData.json'
 import { useModalStore } from '~/stores/modalStore'
+import { useLocationStore } from '../stores/locationStore'
 
 
 export default defineComponent({
     // eslint-disable-next-line vue/no-reserved-component-names
     components: { GoogleMap, Marker },
-    emits: ['isOpen: true'],
     setup() {
         const center = { lat: 35.699615, lng: 139.545596 }
 
@@ -54,12 +42,19 @@ export default defineComponent({
 
         const runtimeConfig = useRuntimeConfig()
 
+        const showLocationDetails = async location => {
+            console.log(location)
+            await useLocationStore().setLocationDetails(location)
+            await useModalStore().showModal()
+        }
+
         return { center,
             currentMarkerIndex,
             mapRef,
             markerIcon,
             markerOptions,
             searchResults,
+            showLocationDetails,
             runtimeConfig,
             useModalStore }
     }

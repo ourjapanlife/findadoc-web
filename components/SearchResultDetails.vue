@@ -58,17 +58,17 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed } from 'vue'
 import { useLocationStore } from '~/stores/locationStore'
 
-const healthcareProfessionalName = ref(useLocationStore().$state.healthcareProfessionalName)
-const specialty = ref(useLocationStore().$state.specialty)
-const facilityName = ref(useLocationStore().$state.facilityName)
-const spokenLanguages = ref(useLocationStore().$state.spokenLanguages)
-const address = ref(useLocationStore().$state.address)
-const hours = ref(useLocationStore().$state.hours)
-const website = ref(useLocationStore().$state.website)
-const phone = ref(useLocationStore().$state.phone)
+const healthcareProfessionalName = computed(() => useLocationStore().$state.healthcareProfessionalName)
+const specialty = computed(() => useLocationStore().$state.specialty)
+const facilityName = computed(() => useLocationStore().$state.facilityName)
+const spokenLanguages = computed(() => useLocationStore().$state.spokenLanguages)
+const address = computed(() => useLocationStore().$state.address)
+const hours = computed(() => useLocationStore().$state.hours)
+const website = computed(() => useLocationStore().$state.website)
+const phone = computed(() => useLocationStore().$state.phone)
 
 </script>
 

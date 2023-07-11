@@ -2,7 +2,7 @@
     "locations": [
         {
             "facilityName": "Japanese Red Cross Musashino Hospital",
-            "healthcareProfessionalName": "test person 1",
+            "healthcareProfessionalName": "Amazing Doctor 1",
             "specialty": "Practitioner",
             "spokenLanguages": ["japanese", "english"],
             "address": "1 Chome-26-1 Kyonancho, Musashino, Tokyo 180-8610, Japan",
@@ -13,7 +13,7 @@
         },
         {
             "facilityName": "The Bluff Medical & Dental Clinic",
-            "healthcareProfessionalName": "test person 1",
+            "healthcareProfessionalName": "Amazing Doctor 2",
             "specialty": "Practitioner",
             "spokenLanguages": ["japanese", "english"],
             "address": "82 Yamatecho, Naka Ward, Yokohama, Kanagawa 231-0862, Japan",

@@ -4,17 +4,17 @@ import { List } from 'postcss/lib/list'
 export const useLocationStore = defineStore({
     id: 'location-store',
     state: () => ({
-        healthcareProfessionalName: 'some name',
-        specialty: 'some specialty',
-        facilityName: 'some facility',
-        spokenLanguages: ['japanese', 'english'],
-        address: '1-2-3 ShinTokyo',
-        hours: '10am - 5pm',
-        website: 'findadoc.jp',
-        phone: '080-1234-4455'
+        healthcareProfessionalName: null,
+        specialty: null,
+        facilityName: null,
+        spokenLanguages: null,
+        address: null,
+        hours: null,
+        website: null,
+        phone: null
     }),
     actions: {
-        showModal(location: { healthcareProfessionalName: string;
+        setLocationDetails(location: { healthcareProfessionalName: string;
             specialty: string;
             facilityName: string;
             spokenLanguages: List;
