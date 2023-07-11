@@ -19,13 +19,5 @@
 
 <script lang="ts" setup>
 import { useModalStore } from '~/stores/modalStore'
-// import { ref } from 'vue'
-
-// const isOpen = ref(true)
-
-// const closeModal = () => {
-//     isOpen.value = false
-// }
-
 </script>
 

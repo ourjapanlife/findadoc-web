@@ -11,7 +11,8 @@
             </svg>
             <span class="pl-1 font-bold self-center group-hover:text-primary-text-inverted">Filters</span>
         </button>
-        <div :key="index" v-for="(searchResult, index) in searchResults" class="results-list flex flex-col">
+        <div @click="useLocationStore().showLocationDetails(searchResult)"
+            :key="index" v-for="(searchResult, index) in searchResults" class="results-list flex flex-col">
             <div class="flex-1 h-24 w-6/8 border-b-2 border-primary/20 p-3
                 hover:border-transparent hover:bg-primary/5 transition-all">
                 <SearchResultsListItem :name="searchResult.healthcareProfessionalName"
@@ -26,6 +27,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import mockData from '~/test/mockData/facilityMockData.json'
+import { useLocationStore } from '../stores/locationStore'
 
 const defaultResults = mockData.locations
 

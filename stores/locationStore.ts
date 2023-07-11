@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { List } from 'postcss/lib/list'
+import { useModalStore } from './modalStore'
 
 export const useLocationStore = defineStore({
     id: 'location-store',
@@ -11,7 +12,8 @@ export const useLocationStore = defineStore({
         address: null,
         hours: null,
         website: null,
-        phone: null
+        phone: null,
+        position: { lat: 35.699615, lng: 139.545596 }
     }),
     actions: {
         setLocationDetails(location: { healthcareProfessionalName: string;
@@ -21,15 +23,15 @@ export const useLocationStore = defineStore({
             address: string;
             hours: string;
             website: string;
-            phone: string }) {
-            this.healthcareProfessionalName = location.healthcareProfessionalName
-            this.specialty = location.specialty
-            this.facilityName = location.facilityName
-            this.spokenLanguages = location.spokenLanguages
-            this.address = location.address
-            this.hours = location.hours
-            this.website = location.website
-            this.phone = location.phone
+            phone: string;
+            position: Map<any, any>;
+            }) {
+            for (const key in location)
+                this[key] = location[key]
+        },
+        showLocationDetails(location: any) {
+            this.setLocationDetails(location)
+            useModalStore().showModal()
         }
     }
 })
