@@ -2,7 +2,6 @@
     "locations": [
         {
             "facilityName": "Japanese Red Cross Musashino Hospital",
-            "facilityType": "Hospital",
             "healthcareProfessionalName": "test person 1",
             "specialty": "Practitioner",
             "spokenLanguages": ["japanese", "english"],
@@ -14,7 +13,6 @@
         },
         {
             "facilityName": "The Bluff Medical & Dental Clinic",
-            "facilityType": "Clinic",
             "healthcareProfessionalName": "test person 1",
             "specialty": "Practitioner",
             "spokenLanguages": ["japanese", "english"],

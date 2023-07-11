@@ -4,7 +4,7 @@
         style="height: 100%; width: 100%;"
         :center="center"
         :zoom="9">
-        <Marker @click="$emit('isOpen: true')" :options="{position: location.position, icon: markerIcon}"
+        <Marker @click="useModalStore().showModal()" :options="{position: location.position, icon: markerIcon}"
             :key="index" v-for="(location, index) in searchResults">
             <!-- <InfoWindow :options="{ position: location.position, minWidth: '400', minHeight: '300'}">
                 <SearchResultDetails :facility-name="location.facilityName"
@@ -23,28 +23,18 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
-import { GoogleMap, Marker, InfoWindow } from 'vue3-google-map'
+import { GoogleMap, Marker } from 'vue3-google-map'
 import { useRuntimeConfig } from '#imports'
 import customIcon from '~/assets/images/blue-map-pin.svg'
 import mockData from '~/test/mockData/facilityMockData.json'
+import { useModalStore } from '~/stores/modalStore'
 
 
 export default defineComponent({
     // eslint-disable-next-line vue/no-reserved-component-names
-    components: { GoogleMap, Marker, InfoWindow },
+    components: { GoogleMap, Marker },
     emits: ['isOpen: true'],
     setup() {
-        // let showModal = true
-
-
-        // function toggleModal(showModal: boolean) {
-        //     showModal = !showModal
-
-        //     console.log('showModal =', showModal)
-
-        //     return showModal
-        // }
-
         const center = { lat: 35.699615, lng: 139.545596 }
 
         const markerIcon = {
@@ -70,13 +60,12 @@ export default defineComponent({
             markerIcon,
             markerOptions,
             searchResults,
-            runtimeConfig }
+            runtimeConfig,
+            useModalStore }
     }
 })
 
 // todo:
-// set the position of the SRD to fixed
-// create open/close function SearchResultDetails (SRD)
 // clicking on a list item should center on the corresponding pin
 // tie the results to the SearchResultsStore. when a map pin is selected, set the active item state in the store.
 // Philip: when you click on a map pin, also select the item on the list. use Pinia to store the state

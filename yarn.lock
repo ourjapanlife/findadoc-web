@@ -2176,7 +2176,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nuxt/types@npm:^2.15.8":
+"@nuxt/types@npm:^2.17.0":
   version: 2.17.0
   resolution: "@nuxt/types@npm:2.17.0"
   dependencies:
@@ -6855,7 +6855,7 @@ __metadata:
     "@graphql-codegen/typescript": ^3.0.0
     "@graphql-codegen/typescript-resolvers": ^3.0.0
     "@microsoft/eslint-formatter-sarif": ^3.0.0
-    "@nuxt/types": ^2.15.8
+    "@nuxt/types": ^2.17.0
     "@nuxtjs/i18n": next
     "@pinia/nuxt": ^0.4.11
     "@testing-library/vue": ^6.6.1
@@ -6873,7 +6873,7 @@ __metadata:
     graphql: ^16.6.0
     husky: ^8.0.2
     jsdom: ^21.0.0
-    nuxt: ^3.0.0
+    nuxt: 3.6.2
     pinia: ^2.1.4
     postcss: ^8.4.20
     postcss-html: ^1.5.0
@@ -6886,7 +6886,7 @@ __metadata:
     ts-jest: ^29.0.3
     typescript: ^4.9.4
     vitest: ^0.29.0
-    vue: ^3.2.45
+    vue: ^3.3.4
     vue-gtag: ^2.0.1
     vue-server-renderer: ^2.7.14
     vue-template-compiler: ^2.7.14
@@ -10036,7 +10036,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nuxt@npm:^3.0.0":
+"nuxt@npm:3.6.2":
   version: 3.6.2
   resolution: "nuxt@npm:3.6.2"
   dependencies:
@@ -13927,7 +13927,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vue@npm:^3.2.45, vue@npm:^3.3.4":
+"vue@npm:^3.3.4":
   version: 3.3.4
   resolution: "vue@npm:3.3.4"
   dependencies:

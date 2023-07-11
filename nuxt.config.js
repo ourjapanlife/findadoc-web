@@ -128,7 +128,6 @@ i18n: {
             ['defineStore', 'definePiniaStore'] // import { defineStore as definePiniaStore } from 'pinia'
         ]
     },
-
     // Postcss configuration
     postcss: {
         plugins: {
