@@ -3,13 +3,13 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: "notosans";
-  src: url("../fonts/Noto_Sans/NotoSans-Regular.ttf");
+  font-family: notosans;
+  src: url('../fonts/Noto_Sans/NotoSans-Regular.ttf');
 }
 
 @font-face {
-  font-family: "notosans-bold";
-  src: url("../fonts/Noto_Sans/NotoSans-Bold.ttf");
+  font-family: notosans-bold;
+  src: url('../fonts/Noto_Sans/NotoSans-Bold.ttf');
 }
 
 @layer base {
