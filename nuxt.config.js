@@ -95,7 +95,8 @@ export default defineNuxtConfig({
     components: true,
 
     modules: [
-        '@nuxtjs/i18n'
+        '@nuxtjs/i18n',
+        '@pinia/nuxt'
     ],
 
     i18n: {
@@ -118,7 +119,13 @@ export default defineNuxtConfig({
             messages: i18n
         }
     },
-
+    pinia: {
+        autoImports: [
+            // automatically imports `defineStore`
+            'defineStore', // import { defineStore } from 'pinia'
+            ['defineStore', 'definePiniaStore'] // import { defineStore as definePiniaStore } from 'pinia'
+        ]
+    },
     // Postcss configuration
     postcss: {
         plugins: {
