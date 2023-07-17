@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia'
-import { List } from 'postcss/lib/list'
 import { useModalStore } from './modalStore'
 
 export const useLocationStore = defineStore({
@@ -19,7 +18,7 @@ export const useLocationStore = defineStore({
         setLocationDetails(location: { healthcareProfessionalName: string;
             specialty: string;
             facilityName: string;
-            spokenLanguages: List;
+            spokenLanguages: Array<string>;
             address: string;
             hours: string;
             website: string;
