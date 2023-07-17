@@ -133,5 +133,10 @@ export default defineNuxtConfig({
             autoprefixer: {}
         }
     },
-    target: 'static'
+    target: 'static',
+    runtimeConfig: {
+        public: {
+            googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY
+        }
+    }
 })

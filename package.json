@@ -27,7 +27,8 @@
         "vue": "^3.2.45",
         "vue-gtag": "^2.0.1",
         "vue-server-renderer": "^2.7.14",
-        "vue-template-compiler": "^2.7.14"
+        "vue-template-compiler": "^2.7.14",
+        "vue3-google-map": "^0.15.0"
     },
     "devDependencies": {
         "@graphql-codegen/cli": "^3.0.0",
