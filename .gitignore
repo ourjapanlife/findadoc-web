@@ -3,10 +3,7 @@
 .output
 dist
 
-# Environment files
-.env*
-
-# package management and yarn3
+#package management and yarn3
 node_modules
 .yarn/*
 !.yarn/patches
