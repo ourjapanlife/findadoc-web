@@ -1656,6 +1656,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@googlemaps/js-api-loader@npm:^1.12.11":
+  version: 1.16.2
+  resolution: "@googlemaps/js-api-loader@npm:1.16.2"
+  dependencies:
+    fast-deep-equal: ^3.1.3
+  checksum: 122ee57cc6a936e50358aedc4e79042353590467210e901fb42d4e7d9123c248c4db5cd5407a350cb5bea6de9e9ef1a508c08ba593475285d90bc4b93db42f51
+  languageName: node
+  linkType: hard
+
+"@googlemaps/markerclusterer@npm:^2.0.6":
+  version: 2.3.2
+  resolution: "@googlemaps/markerclusterer@npm:2.3.2"
+  dependencies:
+    fast-deep-equal: ^3.1.3
+    supercluster: ^8.0.1
+  checksum: 44a542d179c02a7c7eb03856aa700d9995ad55722c0c74271b75ed487fc06d33c98461c10972ad7a29ea833a14395379d72e6679bd244192166cd383f803d798
+  languageName: node
+  linkType: hard
+
 "@graphql-codegen/cli@npm:^3.0.0":
   version: 3.0.0
   resolution: "@graphql-codegen/cli@npm:3.0.0"
@@ -7981,6 +8000,7 @@ __metadata:
     vue-gtag: ^2.0.1
     vue-server-renderer: ^2.7.14
     vue-template-compiler: ^2.7.14
+    vue3-google-map: ^0.15.0
     webpack: ^5.75.0
   languageName: unknown
   linkType: soft
@@ -9938,6 +9958,13 @@ __metadata:
     jwa: ^1.4.1
     safe-buffer: ^5.0.1
   checksum: f0213fe5b79344c56cd443428d8f65c16bf842dc8cb8f5aed693e1e91d79c20741663ad6eff07a6d2c433d1831acc9814e8d7bada6a0471fbb91d09ceb2bf5c2
+  languageName: node
+  linkType: hard
+
+"kdbush@npm:^4.0.2":
+  version: 4.0.2
+  resolution: "kdbush@npm:4.0.2"
+  checksum: 6782ef2cdaec9322376b9955a16b0163beda0cefa2f87da76e8970ade2572d8b63bec915347aaeac609484b0c6e84d7b591f229ef353b68b460238095bacde2d
   languageName: node
   linkType: hard
 
@@ -13948,6 +13975,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"supercluster@npm:^8.0.1":
+  version: 8.0.1
+  resolution: "supercluster@npm:8.0.1"
+  dependencies:
+    kdbush: ^4.0.2
+  checksum: 39d141f768a511efa53260252f9dab9a2ce0228b334e55482c8d3019e151932f05e1a9a0252d681737651b13c741c665542a6ddb40ec27de96159ea7ad41f7f4
+  languageName: node
+  linkType: hard
+
 "supports-color@npm:^5.3.0":
   version: 5.5.0
   resolution: "supports-color@npm:5.5.0"
@@ -15439,6 +15475,19 @@ __metadata:
     de-indent: ^1.0.2
     he: ^1.2.0
   checksum: eba9d2eed6b7110c963bc356b47bdd11d4023d25148abb7e5f7826db2fefe7ad8a575787ee0d8fa47701d44a6f54bde475279b1319f44e1049271eb2419f93a7
+  languageName: node
+  linkType: hard
+
+"vue3-google-map@npm:^0.15.0":
+  version: 0.15.0
+  resolution: "vue3-google-map@npm:0.15.0"
+  dependencies:
+    "@googlemaps/js-api-loader": ^1.12.11
+    "@googlemaps/markerclusterer": ^2.0.6
+    fast-deep-equal: ^3.1.3
+  peerDependencies:
+    vue: 3
+  checksum: 063fce5b544cb6ba5a04c6b565a52a5befeb2388e8a56282bd8c412581d8c24ead45e59b86eb64d045cb0ac6530d3e55dbdac4c096d1c5e20ade12ba8a20c955
   languageName: node
   linkType: hard
 

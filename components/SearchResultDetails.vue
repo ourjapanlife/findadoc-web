@@ -8,7 +8,7 @@
         </div>
         <div class="result-content ml-2">
             <div class="result-header mt-7 ml-4">
-                <span class="w-4 text-3xl font-bold pl-2 self-center"> {{ name }} </span>
+                <span class="w-4 text-3xl font-bold pl-2 self-center"> {{ healthcareProfessionalName }} </span>
             </div>
             <div class="result-details flex mb-1 ml-4 pl-2 text-sm">
                 <span class="pr-2"> {{ specialty }}</span>
@@ -58,27 +58,19 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed } from 'vue'
+import { useLocationStore } from '~/stores/locationStore'
 
-const dummyData = {
-    name: 'test person 1',
-    specialty: 'Practitioner',
-    facilityName: 'LifeSavers',
-    spokenLanguages: ['japanese', 'english'],
-    address: '1-2-3 ShinTokyo',
-    hours: '10am - 5pm',
-    website: 'findadoc.jp',
-    phone: '080-1234-4455'
-}
+const store = useLocationStore()
 
-const name = ref(dummyData.name)
-const specialty = ref(dummyData.specialty)
-const facilityName = ref(dummyData.facilityName)
-const spokenLanguages = ref(dummyData.spokenLanguages)
-const address = ref(dummyData.address)
-const hours = ref(dummyData.hours)
-const website = ref(dummyData.website)
-const phone = ref(dummyData.phone)
+const healthcareProfessionalName = computed(() => store.$state.healthcareProfessionalName)
+const specialty = computed(() => store.$state.specialty)
+const facilityName = computed(() => store.$state.facilityName)
+const spokenLanguages = computed(() => store.$state.spokenLanguages)
+const address = computed(() => store.$state.address)
+const hours = computed(() => store.$state.hours)
+const website = computed(() => store.$state.website)
+const phone = computed(() => store.$state.phone)
 
 </script>
 
