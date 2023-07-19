@@ -4,7 +4,7 @@
         style="height: 100%; width: 100%;"
         :center="center"
         :zoom="9">
-        <GMarker @click="useLocationStore().showLocationDetails(location)" :options="{position: location.position, icon: markerIcon}"
+        <GMarker @click="store.showLocationDetails(location)" :options="{position: location.position, icon: markerIcon}"
             :key="index" v-for="(location, index) in searchResults" />
     </GoogleMap>
 </template>
@@ -15,7 +15,6 @@ import { GoogleMap, Marker as GMarker } from 'vue3-google-map'
 import { useRuntimeConfig } from '#imports'
 import customIcon from '../assets/images/blue-map-pin.svg'
 import mockData from '../test/mockData/facilityMockData.json'
-import { useModalStore } from '../stores/modalStore'
 import { useLocationStore } from '../stores/locationStore'
 
 
@@ -32,6 +31,8 @@ export default defineComponent({
             }
         }
 
+        const store = useLocationStore()
+
         const mapRef = ref(null)
 
         const searchResults = mockData.locations
@@ -41,10 +42,9 @@ export default defineComponent({
         return { center,
             mapRef,
             markerIcon,
-            searchResults,
             runtimeConfig,
-            useModalStore,
-            useLocationStore }
+            searchResults,
+            store }
     }
 })
 

@@ -13,7 +13,7 @@
                 <span class="pl-1 font-bold self-center group-hover:text-primary-text-inverted">Filters</span>
             </button>
         </div>
-        <div @click="useLocationStore().showLocationDetails(searchResult)"
+        <div @click="store.showLocationDetails(searchResult)"
             :key="index" v-for="(searchResult, index) in searchResults" class="results-list flex flex-col">
             <div class="flex-1 h-24 w-6/8 border-b-2 border-primary/20 p-3
                 hover:border-transparent hover:bg-primary/5 transition-all">
@@ -34,5 +34,7 @@ import { useLocationStore } from '../stores/locationStore'
 const defaultResults = mockData.locations
 
 const searchResults = ref(defaultResults)
+
+const store = useLocationStore()
 
 </script>

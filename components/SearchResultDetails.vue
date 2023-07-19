@@ -61,14 +61,16 @@
 import { computed } from 'vue'
 import { useLocationStore } from '~/stores/locationStore'
 
-const healthcareProfessionalName = computed(() => useLocationStore().$state.healthcareProfessionalName)
-const specialty = computed(() => useLocationStore().$state.specialty)
-const facilityName = computed(() => useLocationStore().$state.facilityName)
-const spokenLanguages = computed(() => useLocationStore().$state.spokenLanguages)
-const address = computed(() => useLocationStore().$state.address)
-const hours = computed(() => useLocationStore().$state.hours)
-const website = computed(() => useLocationStore().$state.website)
-const phone = computed(() => useLocationStore().$state.phone)
+const store = useLocationStore()
+
+const healthcareProfessionalName = computed(() => store.$state.healthcareProfessionalName)
+const specialty = computed(() => store.$state.specialty)
+const facilityName = computed(() => store.$state.facilityName)
+const spokenLanguages = computed(() => store.$state.spokenLanguages)
+const address = computed(() => store.$state.address)
+const hours = computed(() => store.$state.hours)
+const website = computed(() => store.$state.website)
+const phone = computed(() => store.$state.phone)
 
 </script>
 
