@@ -2,7 +2,7 @@
     <div class="absolute z-10 bg-primary-bg rounded-xl overflow-hidden
         hover:shadow-inner hover:shadow-secondary-bg/90">
         <div class="modal">
-            <button @click="useModalStore().hideModal()"
+            <button @click="store.hideModal()"
                 class="close-button absolute right-6 top-5 bg-primary-inverted rounded-lg px-2 py-.5
                 group hover:bg-primary-hover transition-all duration-200">
                 <span class="close-icon">
@@ -19,5 +19,8 @@
 
 <script lang="ts" setup>
 import { useModalStore } from '~/stores/modalStore'
+
+const store = useModalStore()
+
 </script>
 
