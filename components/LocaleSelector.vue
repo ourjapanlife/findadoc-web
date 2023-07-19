@@ -21,6 +21,7 @@ export default {
         const code = this.$i18n.locale
 
         this.locales = this.$i18n.locales
+        console.log(this.locales)
 
         for (let i = 0; i < this.locales.length; i += 1)
             if (this.locales[i].code === code && code !== '') {
@@ -39,6 +40,7 @@ export default {
     },
     watch: {
         localeName(newLocale: string, oldLocale: string) {
+            console.log(`Updating locale to ${newLocale} from ${oldLocale}`)
             this.$i18n.locale = this.getLocaleCodeFromName(newLocale)
         }
     }
