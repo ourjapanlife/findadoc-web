@@ -21,9 +21,14 @@
         <div id="searchbar" class="align-middle">
             <SearchBar />
         </div>
+        <div>
+            <NuxtLink to="/submission">
+                Sumbit
+            </NuxtLink>
+        </div>
         <nav class="flex gap-4 mx-6 absolute right-20">
             <NuxtLink to="/about" class="px-2 mx-auto hover:text-primary-hover transition-colors">
-                {{ $t('topNav.about')}}
+                {{ $t('topNav.about') }}
             </NuxtLink>
         </nav>
         <div></div>
