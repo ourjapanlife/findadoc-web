@@ -1656,7 +1656,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@googlemaps/js-api-loader@npm:^1.12.11":
+"@googlemaps/js-api-loader@npm:^1.12.11, @googlemaps/js-api-loader@npm:^1.16.2":
   version: 1.16.2
   resolution: "@googlemaps/js-api-loader@npm:1.16.2"
   dependencies:
@@ -3286,6 +3286,13 @@ __metadata:
   dependencies:
     "@types/webpack": ^4
   checksum: dfde296d4421b4e6f37655e44bec3827592625fffae41c54138af33da8753d338713761325161c59859d2ad810ef9284948f435bf058672869f3b6f876ccff56
+  languageName: node
+  linkType: hard
+
+"@types/google.maps@npm:^3.54.0":
+  version: 3.54.0
+  resolution: "@types/google.maps@npm:3.54.0"
+  checksum: 8df82c6ca90dade30e09c8f6eb0b0f76eec252f359014a9771a6d913f56096522805156013b7d7904d26f23b77c1a11804602e4eab27d078e39b4ec123880835
   languageName: node
   linkType: hard
 
@@ -7961,6 +7968,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "findadoc-web@workspace:."
   dependencies:
+    "@googlemaps/js-api-loader": ^1.16.2
     "@graphql-codegen/cli": ^3.0.0
     "@graphql-codegen/typescript": ^3.0.0
     "@graphql-codegen/typescript-resolvers": ^3.0.0
@@ -7969,6 +7977,7 @@ __metadata:
     "@nuxtjs/i18n": next
     "@pinia/nuxt": ^0.4.11
     "@testing-library/vue": ^6.6.1
+    "@types/google.maps": ^3.54.0
     "@typescript-eslint/eslint-plugin": ^5.46.1
     "@typescript-eslint/parser": ^5.46.1
     "@vitejs/plugin-vue": ^4.0.0

@@ -22,6 +22,7 @@
         "node": ">=16.0.0"
     },
     "dependencies": {
+        "@googlemaps/js-api-loader": "^1.16.2",
         "@pinia/nuxt": "^0.4.11",
         "pinia": "^2.0.28",
         "vue": "^3.2.45",
@@ -38,6 +39,7 @@
         "@nuxt/types": "^2.15.8",
         "@nuxtjs/i18n": "next",
         "@testing-library/vue": "^6.6.1",
+        "@types/google.maps": "^3.54.0",
         "@typescript-eslint/eslint-plugin": "^5.46.1",
         "@typescript-eslint/parser": "^5.46.1",
         "@vitejs/plugin-vue": "^4.0.0",
