@@ -15,9 +15,7 @@ describe('Visits the home page', () => {
 
     it('renders the map', () => {
         // TODO
-        cy.get('[data-testid="map-of-japan"]')
-            .should('have.attr', 'src')
-            .and('not.be.empty')
+        cy.get('[data-testid="map-of-japan"]').should('be.visible')
     })
 
     it('allows setting search fields', () => {
