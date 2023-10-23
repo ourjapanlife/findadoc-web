@@ -11370,15 +11370,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nanoid@npm:^3.3.4":
-  version: 3.3.4
-  resolution: "nanoid@npm:3.3.4"
-  bin:
-    nanoid: bin/nanoid.cjs
-  checksum: 2fddd6dee994b7676f008d3ffa4ab16035a754f4bb586c61df5a22cf8c8c94017aadd360368f47d653829e0569a92b129979152ff97af23a558331e47e37cd9c
-  languageName: node
-  linkType: hard
-
 "nanoid@npm:^3.3.6":
   version: 3.3.6
   resolution: "nanoid@npm:3.3.6"
@@ -12930,40 +12921,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:^8.1.10, postcss@npm:^8.4.0, postcss@npm:^8.4.18":
-  version: 8.4.18
-  resolution: "postcss@npm:8.4.18"
-  dependencies:
-    nanoid: ^3.3.4
-    picocolors: ^1.0.0
-    source-map-js: ^1.0.2
-  checksum: 9349fd99849b2e3d2e134ff949b7770ecb12375f352723ce2bcc06167eba3850ea7844c1b191a85cd915d6a396b4e8ee9a5267e6cc5d8d003d0cbc7a97555d39
-  languageName: node
-  linkType: hard
-
-"postcss@npm:^8.4.19":
-  version: 8.4.20
-  resolution: "postcss@npm:8.4.20"
-  dependencies:
-    nanoid: ^3.3.4
-    picocolors: ^1.0.0
-    source-map-js: ^1.0.2
-  checksum: 1a5609ea1c1b204f9c2974a0019ae9eef2d99bf645c2c9aac675166c4cb1005be7b5e2ba196160bc771f5d9ac896ed883f236f888c891e835e59d28fff6651aa
-  languageName: node
-  linkType: hard
-
-"postcss@npm:^8.4.20, postcss@npm:^8.4.21":
-  version: 8.4.21
-  resolution: "postcss@npm:8.4.21"
-  dependencies:
-    nanoid: ^3.3.4
-    picocolors: ^1.0.0
-    source-map-js: ^1.0.2
-  checksum: e39ac60ccd1542d4f9d93d894048aac0d686b3bb38e927d8386005718e6793dbbb46930f0a523fe382f1bbd843c6d980aaea791252bf5e176180e5a4336d9679
-  languageName: node
-  linkType: hard
-
-"postcss@npm:^8.4.23, postcss@npm:^8.4.28, postcss@npm:^8.4.31":
+"postcss@npm:^8.1.10, postcss@npm:^8.4.0, postcss@npm:^8.4.18, postcss@npm:^8.4.19, postcss@npm:^8.4.20, postcss@npm:^8.4.21, postcss@npm:^8.4.23, postcss@npm:^8.4.28, postcss@npm:^8.4.31":
   version: 8.4.31
   resolution: "postcss@npm:8.4.31"
   dependencies:
