@@ -1,5 +1,5 @@
 <template>
-    <GoogleMap ref="mapRef" :api-key="runtimeConfig.public.googleMapsApiKey"
+    <GoogleMap data-testid="map-of-japan" ref="mapRef" :api-key="runtimeConfig.public.googleMapsApiKey"
         map-id="153d718018a2577e"
         style="height: 100%; width: 100%;"
         :center="center"
