@@ -19,3 +19,5 @@ coverage
 eslint-results.sarif
 cypress/videos
 *.DS_Store
+
+.env
