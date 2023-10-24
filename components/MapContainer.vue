@@ -4,8 +4,8 @@
         style="height: 100%; width: 100%;"
         :center="center"
         :zoom="9">
-        <GMarker @click="store.showLocationDetails(location)" :options="{position: location.position, icon: markerIcon}"
-            :key="index" v-for="(location, index) in searchResults" />
+        <GMarker @click="store.setActiveSearchResult(location.id)" :options="{position: location.position, icon: markerIcon}"
+            :key="index" v-for="(location, index) in store.searchResultsList" />
     </GoogleMap>
 </template>
 
@@ -14,14 +14,14 @@ import { defineComponent, ref, computed } from 'vue'
 import { GoogleMap, Marker as GMarker } from 'vue3-google-map'
 import { useRuntimeConfig } from '#imports'
 import customIcon from '../assets/images/blue-map-pin.svg'
-import mockData from '../test/mockData/facilityMockData.json'
-import { useLocationStore } from '../stores/locationStore'
+import { useSearchResultsStore } from '../stores/searchResultsStore'
 
 
 export default defineComponent({
     components: { GoogleMap, GMarker },
     setup() {
-        const center = computed(() => useLocationStore().$state.position)
+        const defaultLocation = { lat: 35.6804, lng: 139.7690 }
+        const center = computed(() => useSearchResultsStore().$state.activeResult?.position || defaultLocation)
 
         const markerIcon = {
             url: customIcon,
@@ -31,11 +31,10 @@ export default defineComponent({
             }
         }
 
-        const store = useLocationStore()
+        const store = useSearchResultsStore()
 
         const mapRef = ref(null)
 
-        const searchResults = mockData.locations
 
         const runtimeConfig = useRuntimeConfig()
 
@@ -43,7 +42,6 @@ export default defineComponent({
             mapRef,
             markerIcon,
             runtimeConfig,
-            searchResults,
             store }
     }
 })

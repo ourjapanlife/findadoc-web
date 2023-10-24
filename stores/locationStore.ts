@@ -24,7 +24,7 @@ export const useLocationStore = defineStore({
             website: string;
             phone: string;
             position: Map<any, any>;
-            }) {
+        }) {
             for (const key in location)
                 this[key] = location[key]
         },

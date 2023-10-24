@@ -59,18 +59,19 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useLocationStore } from '~/stores/locationStore'
+import { useSearchResultsStore } from '~/stores/searchResultsStore'
 
-const store = useLocationStore()
+const store = useSearchResultsStore()
 
-const healthcareProfessionalName = computed(() => store.$state.healthcareProfessionalName)
-const specialty = computed(() => store.$state.specialty)
-const facilityName = computed(() => store.$state.facilityName)
-const spokenLanguages = computed(() => store.$state.spokenLanguages)
-const address = computed(() => store.$state.address)
-const hours = computed(() => store.$state.hours)
-const website = computed(() => store.$state.website)
-const phone = computed(() => store.$state.phone)
+const healthcareProfessionalName = computed(() =>
+    `${store.$state.activeResult?.names[0].firstName} ${store.$state.activeResult?.names[0].lastName}`)
+const specialty = computed(() => store.$state.activeResult?.specialties[0].names[0].name)
+const facilityName = computed(() => store.$state.activeResult?.facilityName)
+const spokenLanguages = computed(() => store.$state.activeResult?.spokenLanguages)
+const address = computed(() => store.$state.activeResult?.address)
+const hours = computed(() => store.$state.activeResult?.hours)
+const website = computed(() => store.$state.activeResult?.website)
+const phone = computed(() => store.$state.activeResult?.phone)
 
 </script>
 

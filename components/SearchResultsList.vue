@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="h-full">
         <div class="results-header flex flex-row ml-9 mr-5 mb-6 pt-5">
             <span class="flex-1 w-1/2 font-bold self-center">
                 {{ $t('searchResultsList.doctorsNearby') }}
@@ -13,28 +13,25 @@
                 <span class="pl-1 font-bold self-center group-hover:text-primary-text-inverted">Filters</span>
             </button>
         </div>
-        <div @click="store.showLocationDetails(searchResult)"
-            :key="index" v-for="(searchResult, index) in searchResults" class="results-list flex flex-col">
-            <div class="flex-1 h-24 w-6/8 border-b-2 border-primary/20 p-3
-                hover:border-transparent hover:bg-primary/5 transition-all">
-                <SearchResultsListItem :name="searchResult.healthcareProfessionalName"
-                    :facility-name="searchResult.facilityName"
-                    :specialty="searchResult.specialty"
-                    :spoken-languages="searchResult.spokenLanguages" />
+        <div id="searchResults"
+            class="flex flex-col overflow-y-scroll h-full">
+            <div @click="store.setActiveSearchResult(searchResult.id)"
+                :key="index" v-for="(searchResult, index) in store.searchResultsList" class="results-list flex flex-col">
+                <div class="flex-1 h-24 w-6/8 border-b-2 border-primary/20 p-3
+                    hover:border-transparent hover:bg-primary/5 transition-all hover:cursor-pointer">
+                    <SearchResultsListItem :name="`${searchResult.names[0].firstName}, ${searchResult.names[0].lastName }`"
+                        :facility-name="searchResult.facilityName"
+                        :specialty="searchResult.specialties[0].names[0].name"
+                        :spoken-languages="searchResult.spokenLanguages" />
+                </div>
             </div>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import mockData from '~/test/mockData/facilityMockData.json'
-import { useLocationStore } from '../stores/locationStore'
+import { useSearchResultsStore } from '../stores/searchResultsStore'
 
-const defaultResults = mockData.locations
-
-const searchResults = ref(defaultResults)
-
-const store = useLocationStore()
+const store = useSearchResultsStore()
 
 </script>
