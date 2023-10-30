@@ -14485,8 +14485,8 @@ __metadata:
   linkType: hard
 
 "stylelint-config-recommended-vue@npm:^1.4.0":
-  version: 1.4.0
-  resolution: "stylelint-config-recommended-vue@npm:1.4.0"
+  version: 1.5.0
+  resolution: "stylelint-config-recommended-vue@npm:1.5.0"
   dependencies:
     semver: ^7.3.5
     stylelint-config-html: ">=1.0.0"
@@ -14494,7 +14494,7 @@ __metadata:
   peerDependencies:
     postcss-html: ^1.0.0
     stylelint: ">=14.0.0"
-  checksum: f23f8090f676c47b8cb2c371ba0d8c749f36f85291e26f5ba0a7fb29629d4455a911f236c7bcffbe5e8a3a56c2dcf76da0de6541317e807780061a9b4b702cd6
+  checksum: 094b360ca2ec9b73fe725f3c5cebdaf7ab9f32826d8d919a933331288908c9ef5ce767e7ac8fdd50af8c320e4d6e7b51efb9c39bbf7064e4fe53c99c8017188b
   languageName: node
   linkType: hard
 
