@@ -10,7 +10,9 @@
                     class="hamburger-list-icon fill-primary h-5 w-5 self-center group-hover:fill-primary-text-inverted">
                     <use xlink:href="../assets/images/hamburger-list-icon.svg#hamburger-list-icon-svg" />
                 </svg>
-                <span class="pl-1 font-bold self-center group-hover:text-primary-text-inverted">Filters</span>
+                <span class="pl-1 font-bold self-center group-hover:text-primary-text-inverted">
+                    {{ $t('searchResultsList.filters') }}
+                </span>
             </button>
         </div>
         <div id="searchResults"

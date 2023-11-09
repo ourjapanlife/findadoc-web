@@ -6,7 +6,8 @@
         "search": "サーチ"
     },
     "searchResultsList": {
-        "doctorsNearby": "近隣の医師"
+        "doctorsNearby": "近隣の医師",
+        "filters": "フィルター"
     },
     "topNav": {
         "about": "について"
