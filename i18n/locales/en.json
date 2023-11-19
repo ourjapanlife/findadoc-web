@@ -6,7 +6,8 @@
         "search": "Search"
     },
     "searchResultsList": {
-        "doctorsNearby": "Doctors Nearby"
+        "doctorsNearby": "Doctors Nearby",
+        "filters": "Filters"
     },
     "topNav": {
         "about": "About"
