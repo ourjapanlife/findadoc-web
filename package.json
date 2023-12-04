@@ -17,10 +17,11 @@
         "test:pinia:coverage": "vitest run --coverage",
         "test:e2e": "cypress run --e2e --browser chrome"
     },
-    "packageManager": "yarn@",
+    "packageManager": "yarn@4.0.2",
     "engines": {
-        "node": ">=16.0.0"
+        "node": ">=21.3.0"
     },
+    "type": "module",
     "dependencies": {
         "@apollo/client": "^3.8.8",
         "@pinia/nuxt": "^0.5.1",
