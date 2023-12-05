@@ -7,7 +7,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { ApolloClient, InMemoryCache, ApolloProvider, gql } from '@apollo/client'
 
-export default defineComponent({})
+const client = new ApolloClient({
+    uri: 'https://findadoc-api-9brq4.ondigitalocean.app/api',
+    cache: new InMemoryCache()
+});
+
 </script>

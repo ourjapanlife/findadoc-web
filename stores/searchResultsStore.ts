@@ -1,6 +1,9 @@
+import { gql, useQuery } from '@apollo/client'
 import { defineStore } from 'pinia'
 import { Ref, ref } from 'vue'
+import { FacilitySearchFilters } from '~/typedefs/gqlTypes.js'
 import { useModalStore } from './modalStore'
+import { gqlMutation } from '~/utils/gqlTool.js'
 
 type searchResult = {
     id: string
@@ -37,7 +40,7 @@ type name = {
     locale: string
 }
 
-const fakeSearchResultsList : searchResult[] = [
+const fakeSearchResultsList: searchResult[] = [
     {
         id: '1',
         type: 'healthcareprofessional',
@@ -493,7 +496,28 @@ export const useSearchResultsStore = defineStore('searchResultsStore', () => {
     const activeResult: Ref<searchResult | undefined> = ref()
     const searchResultsList: Ref<searchResult[]> = ref(fakeSearchResultsList)
 
-    function search(searchLocation: string, searchSpecialty: string, searchLanguage : string) {
+    function search(searchLocation: string, searchSpecialty: string, searchLanguage: string) {
+        const searchFacilitiesRequest = {
+            query: searchFacilitiesQuery,
+            variables: {
+                input: {
+                    filters: {
+                        limit: 10,
+                        offset: 1
+                    } satisfies FacilitySearchFilters
+                }
+            }
+        }
+
+        const { loading, error, data } = useQuery(searchFacilitiesRequest)
+
+        if (loading) {
+            return 'Loading...'
+        };
+        if (error) {
+            return `Error! ${error.message}`
+        }
+
         const healthcareProfessionalsOnly = fakeSearchResultsList.filter(resultItem => resultItem.type === 'healthcareprofessional')
 
         const filteredResults = healthcareProfessionalsOnly.filter(resultItem => {
@@ -525,3 +549,28 @@ export const useSearchResultsStore = defineStore('searchResultsStore', () => {
 
     return { activeResultId, activeResult, searchResultsList, search, setActiveSearchResult, clearActiveSearchResult }
 })
+
+
+const searchFacilitiesQuery = gql`
+    query QueryFacilities($filters: FacilitySearchFilters!) {
+        facilities(filters: $filters) {
+        id
+        nameEn
+        nameJa
+        healthcareProfessionalIds
+        contact {
+            address {
+            addressLine1En
+            addressLine2En
+            addressLine1Ja
+            cityJa
+            cityEn
+            }
+            email
+            googleMapsUrl
+            phone
+            website
+        }
+        }
+    }
+`

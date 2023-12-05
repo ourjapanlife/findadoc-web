@@ -4,6 +4,7 @@ import SearchResultDetails from './SearchResultDetails.vue';
 <template>
     <div class="flex flex-1 bg-secondary-bg/20 hover:shadow-inner hover:shadow-secondary-bg/90">
         <!-- <WelcomeSection /> -->
+        <Loader />
         <Modal v-show="store.$state.isOpen" class="min-h-1/2 ml-8 mt-12">
             <SearchResultDetails />
         </Modal>
