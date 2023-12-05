@@ -75,7 +75,6 @@ const members = ref([
         title: 'Healthcare Content Lead',
         linkedInUrl: 'https://www.linkedin.com/in/russellmiller',
         githubUrl: 'https://github.com/ermish'
-    },
-
+    }
 ])
 </script>

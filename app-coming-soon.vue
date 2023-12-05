@@ -19,8 +19,8 @@
 
             <div class="flex flex-col flex-1 max-h-12">
                 <span class="self-center text-xs text-gray-500">*Screens are for illustration purposes only</span>
-                <img src="@/assets/images/iPhone-showing-map.png"
-                    class="hidden md:block h-[550px] w-[400px] relative right-[8%] left-auto top-[-480px] self-end overflow-visible" />
+                <img src="@/assets/images/iPhone-showing-map.png" class="hidden md:block h-[550px] w-[400px]
+                    relative right-[8%] left-auto top-[-480px] self-end overflow-visible" />
             </div>
 
             <div class="flex flex-row justify-around h-[300px] mt-28 mb-8 portrait:mx-4 text-center">

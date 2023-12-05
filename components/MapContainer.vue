@@ -16,7 +16,6 @@ import { useRuntimeConfig } from '#imports'
 import customIcon from '../assets/images/blue-map-pin.svg'
 import { useSearchResultsStore } from '../stores/searchResultsStore'
 
-
 export default defineComponent({
     components: { GoogleMap, GMarker },
     setup() {
@@ -34,7 +33,6 @@ export default defineComponent({
         const store = useSearchResultsStore()
 
         const mapRef = ref(null)
-
 
         const runtimeConfig = useRuntimeConfig()
 
