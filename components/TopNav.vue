@@ -25,6 +25,9 @@
             <NuxtLink to="/about" class="px-2 mx-auto hover:text-primary-hover transition-colors">
                 {{ $t('topNav.about')}}
             </NuxtLink>
+            <NuxtLink to="/submit" class="px-2 mx-auto hover:text-primary-hover transition-colors">
+                {{ $t('topNav.submit')}}
+            </NuxtLink>
         </nav>
         <div></div>
         <LocaleSelector />
