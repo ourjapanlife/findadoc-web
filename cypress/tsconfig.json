@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-      "target": "ES2018",
+      "target": "ESNext",
       "module": "ESNext",
       "lib": [
         "ESNext",
@@ -10,7 +10,8 @@
       "types": [
         "cypress",
         "node"
-      ]
+      ],
+      "sourceMap": false
     },
     "include": ["**/*.ts"]
   }
