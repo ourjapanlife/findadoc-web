@@ -1,4 +1,12 @@
 {
+    "footer": {
+        "terms": "Terms",
+        "privacy": "Privacy",
+        "poweredBy": "Powered by",
+        "contribute": "Contribute on",
+        "feedback": "Got feedback?",
+        "clickHere": "Click here"
+    },
     "submitPage": {
         "firstName": "First Name",
         "googleMaps": "Google Maps URL",
