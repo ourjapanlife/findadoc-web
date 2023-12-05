@@ -1,4 +1,20 @@
 {
+    "submitPage": {
+        "firstName": "First Name",
+        "googleMaps": "Google Maps URL",
+        "heading": "Submit a Doctor",
+        "healthcareProfessionalName": "Healthcare Professional Name",
+        "lastName": "Last Name",
+        "location": "Location",
+        "selectLanguage1": "Select First Language",
+        "selectLanguage2": "Select Second Language",
+        "spokenLanguage1": "Spoken Language 1",
+        "spokenLanguage2": "Spoken Language 2",
+        "subheading": "Your submission will be reviewed by Find a Doc, Japan moderators",
+        "submitButton": "Submit",
+        "optional": "optional",
+        "otherNotes": "Other notes"
+    },
     "searchBar": {
         "selectSpecialty": "Select a specialty...",
         "selectLocation": "Select a location...",
@@ -10,6 +26,7 @@
         "filters": "Filters"
     },
     "topNav": {
-        "about": "About"
+        "about": "About",
+        "submit": "Submit"
     }
 }

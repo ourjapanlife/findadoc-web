@@ -1,8 +1,24 @@
 {
+    "submitPage": {
+        "firstName": "First Name",
+        "googleMaps": "Google Maps URL",
+        "submitHeading": "医師情報の提出",
+        "healthcareProfessionalName": "Healthcare Professional Name",
+        "lastName": "Last Name",
+        "location": "Location",
+        "selectLanguage1": "Select First Language",
+        "selectLanguage2": "Select Second Language",
+        "spokenLanguage1": "Spoken Language 1",
+        "spokenLanguage2": "Spoken Language 2",
+        "subheading": "Your submission will be reviewed by Find a Doc, Japan members",
+        "submitButton": "Submit",
+        "optional": "optional",
+        "otherNotes": "Other notes"
+    },
     "searchBar": {
         "selectSpecialty": "専門を選ぶ。。。",
         "selectLocation": "場所を選ぶ。。。",
-        "selectLanguage": "言語を選ぶ。。。",
+        "selectLanguage": "対応言語を選ぶ。。。",
         "search": "サーチ"
     },
     "searchResultsList": {
@@ -10,6 +26,7 @@
         "filters": "フィルター"
     },
     "topNav": {
-        "about": "について"
+        "about": "について",
+        "submit": "提出"
     }
 }
