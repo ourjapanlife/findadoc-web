@@ -7,8 +7,7 @@
 </template>
 
 <script lang="ts">
-import { initializeApollo } from './utils/apollo.js'
+import { defineComponent } from 'vue'
 
-initializeApollo()
-
+export default defineComponent({})
 </script>
