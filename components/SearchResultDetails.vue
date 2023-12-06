@@ -76,7 +76,7 @@ import { useSearchResultsStore } from "~/stores/searchResultsStore";
 import { Locale } from "~/typedefs/gqlTypes.js";
 
 const resultsStore = useSearchResultsStore();
-const localStore = useLocaleStore();
+const localeStore = useLocaleStore();
 
 const healthcareProfessionalName = computed(() => {
   const englishName = resultsStore.$state.activeResult?.professional.names.find(
@@ -87,7 +87,7 @@ const healthcareProfessionalName = computed(() => {
   );
   const englishFullName = `${englishName?.firstName} ${englishName?.lastName}`;
   const japaneseFullName = `${japaneseName?.lastName} ${japaneseName?.firstName}`;
-  return localStore.locale.code === Locale.EnUs
+  return localeStore.locale.code === Locale.EnUs
     ? englishFullName
     : japaneseFullName;
 });
@@ -96,7 +96,7 @@ const specialties = computed(() => {
     resultsStore.$state.activeResult?.professional.specialties;
 
   const specialtiesDisplayText = specialties?.map(s => {
-    const specialtyDisplayText = localStore.localeDisplayOptions.find(
+    const specialtyDisplayText = localeStore.localeDisplayOptions.find(
       l => l.code === s
     )?.simpleText;
     return specialtyDisplayText;
@@ -107,18 +107,26 @@ const specialties = computed(() => {
 const facilityName = computed(() => {
   const englishName = resultsStore.$state.activeResult?.facilities[0].nameEn;
   const japaneseName = resultsStore.$state.activeResult?.facilities[0].nameJa;
-  return localStore.locale.code === Locale.EnUs ? englishName : japaneseName;
+  return localeStore.locale.code === Locale.EnUs ? englishName : japaneseName;
 });
 
 const spokenLanguages = computed(
-  () => resultsStore.$state.activeResult?.professional.spokenLanguages
-);
+    () => {
+        const languagesDisplayText = resultsStore.$state.activeResult?.professional.spokenLanguages?.map(s => {
+            const languageDisplayText = localeStore.localeDisplayOptions.find(l => l.code === s)?.simpleText
+            return languageDisplayText
+        })
+
+        return languagesDisplayText
+    }
+)
+
 const address = computed(() => {
   const addressObj =
     resultsStore.$state.activeResult?.facilities[0].contact.address;
   const englishAddress = `${addressObj?.addressLine1En} ${addressObj?.addressLine2En}, ${addressObj?.cityEn}, ${addressObj?.prefectureEn} ${addressObj?.postalCode}`;
   const japaneseAddress = `${addressObj?.postalCode} ${addressObj?.prefectureJa}${addressObj?.cityJa}${addressObj?.addressLine1Ja}${addressObj?.addressLine2Ja}`;
-  return localStore.locale.code === Locale.EnUs
+  return localeStore.locale.code === Locale.EnUs
     ? englishAddress
     : japaneseAddress;
 });

@@ -40,7 +40,7 @@ export const localeDisplayOptions = [
     { code: Locale.EsEs, simpleText: 'Spanish', displayText: 'Spanish (Spain)' },
     { code: Locale.EtEe, simpleText: 'Estonian', displayText: 'Estonian (Estonia)' },
     { code: Locale.FaAf, simpleText: 'Persian', displayText: 'Persian (Afghanistan)' },
-    { code: Locale.FilPh, simpleText: 'Filipino', displayText: 'Filipino (Philippines)' },
+    { code: Locale.TlPh, simpleText: 'Tagalog', displayText: 'Tagalog (Philippines)' },
     { code: Locale.FiFi, simpleText: 'Finnish', displayText: 'Finnish (Finland)' },
     { code: Locale.FrFr, simpleText: 'French', displayText: 'French (France)' },
     { code: Locale.GuzKe, simpleText: 'Gusii', displayText: 'Gusii (Kenya)' },

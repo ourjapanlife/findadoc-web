@@ -54,40 +54,14 @@
 import { ref, Ref, watchEffect } from 'vue'
 import { useSearchResultsStore } from '~/stores/searchResultsStore.js'
 import { useLocationsStore } from '~/stores/locationsStore.js'
+import { useSpecialtiesStore, SpecialtyDisplayOption } from '~/stores/specialtiesStore.js'
 import { Locale, Specialty } from "~/typedefs/gqlTypes.js"
 import { useLocaleStore, LocaleDisplay } from '~/stores/localeStore.js'
-
-const specialtyOptions = [
-    { code: '', displayText: '----Any----' },
-    { code: 'ALLERGY_AND_IMMUNOLOGY', displayText: "AllergyAndImmunology" },
-    { code: 'ANESTHESIOLOGY', displayText: "Anesthesiology" },
-    { code: 'DERMATOLOGY', displayText: "Dermatology" },
-    { code: 'DIAGNOSTIC_RADIOLOGY', displayText: "DiagnosticRadiology" },
-    { code: 'EMERGENCY_MEDICINE', displayText: "EmergencyMedicine" },
-    { code: 'FAMILY_MEDICINE', displayText: "FamilyMedicine" },
-    { code: 'INTERNAL_MEDICINE', displayText: "InternalMedicine" },
-    { code: 'MEDICAL_GENETICS', displayText: "MedicalGenetics" },
-    { code: 'NEUROLOGY', displayText: "Neurology" },
-    { code: 'NUCLEAR_MEDICINE', displayText: "NuclearMedicine" },
-    { code: 'OBSTETRICS_AND_GYNECOLOGY', displayText: "ObstetricsAndGynecology" },
-    { code: 'OPHTHALMOLOGY', displayText: "Ophthalmology" },
-    { code: 'PATHOLOGY', displayText: "Pathology" },
-    { code: 'PEDIATRICS', displayText: "Pediatrics" },
-    { code: 'PHYSICAL_MEDICINE_AND_REHABILITATION', displayText: "PhysicalMedicineAndRehabilitation" },
-    { code: 'PREVENTIVE_MEDICINE', displayText: "PreventiveMedicine" },
-    { code: 'PSYCHIATRY', displayText: "Psychiatry" },
-    { code: 'RADIATION_ONCOLOGY', displayText: "RadiationOncology" },
-    { code: 'SURGERY', displayText: "Surgery" },
-    { code: 'UROLOGY', displayText: "Urology" }] as SpecialtyDisplayOption[]
-
-interface SpecialtyDisplayOption {
-    code: Specialty
-    displayText: string
-}
 
 const localeStore = useLocaleStore()
 const locationsStore = useLocationsStore()
 const searchResultsStore = useSearchResultsStore()
+const specialtiesStore = useSpecialtiesStore()
 
 locationsStore.fetchLocations()
 
@@ -98,7 +72,7 @@ const languageOptions = [{
 }, ...localeStore.mvpLocaleDisplayOptions]
 
 const locationDropdownOptions: Ref<string[]> = ref(locationsStore.citiesDisplayOptions)
-const specialtyDropdownOptions: Ref<SpecialtyDisplayOption[]> = ref(specialtyOptions)
+const specialtyDropdownOptions: Ref<SpecialtyDisplayOption[]> = ref(specialtiesStore.specialtyDisplayOptions)
 const languageDropdownOptions: Ref<LocaleDisplay[]> = ref(languageOptions)
 
 const selectedSpecialty: Ref<Specialty | undefined> = ref(undefined)
