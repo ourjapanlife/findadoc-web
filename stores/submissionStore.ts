@@ -13,6 +13,7 @@ export const useSubmissionStore = defineStore('submissionStore', () => {
         const spokenLanguages = []
 
         if (selectLanguage1.value !== 'none') {
+            console.log('selectLanguage1 =', selectLanguage1)
             spokenLanguages.push(selectLanguage1.value)
         }
 

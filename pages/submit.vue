@@ -42,10 +42,10 @@
     >
       <option
         :key="index"
-        v-for="(locale, index) in localeStore.locales"
+        v-for="(locale, index) in localeStore.localeDisplayOptions"
         selected
-        :value="Object.keys(locale)[0]"
-      >{{ Object.values(locale)[0] }}</option>
+        :value="locale.code"
+      >{{ locale.displayText }}</option>
     </select>
     <span
       class="mb-2 text-neutral-600 text-sm font-normal font-['Noto Sans JP']"
@@ -57,10 +57,10 @@
     >
       <option
         :key="index"
-        v-for="(locale, index) in localeStore.locales"
+        v-for="(locale, index) in localeStore.localeDisplayOptions"
         selected
-        :value="Object.keys(locale)[0]"
-      >{{ Object.values(locale)[0] }}</option>
+        :value="locale.code"
+      >{{ locale.displayText }}</option>
     </select>
     <span
       class="mb-2 text-neutral-600 text-sm font-normal font-['Noto Sans JP']"
