@@ -6,9 +6,8 @@
     </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import { initializeApollo } from './utils/apollo.js'
 
 initializeApollo()
-
 </script>
