@@ -78,7 +78,6 @@
 </template>
 
 <script lang="ts" setup>
-import { defineComponent, ref } from "vue";
 import { useSubmissionStore } from "~/stores/submissionStore";
 import { useLocaleStore } from "~/stores/localeStore";
 
