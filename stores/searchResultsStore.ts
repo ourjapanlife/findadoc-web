@@ -176,6 +176,9 @@ const searchFacilitiesQuery = gql`query QueryFacilities($filters: FacilitySearch
           addressLine1Ja
           cityJa
           cityEn
+            prefectureJa
+            prefectureEn
+            postalCode
         }
         email
         googleMapsUrl

@@ -31,13 +31,13 @@ export default defineComponent({
     const defaultLocation = { lat: 35.6804, lng: 139.769 };
 
     const center = computed(() => {
-      const lon = useSearchResultsStore().activeResult?.facilities[0]
+      const lng = useSearchResultsStore().activeResult?.facilities[0]
         .mapLongitude;
       const lat = useSearchResultsStore().activeResult?.facilities[0]
         .mapLatitude;
-      const locationExists = lon && lat;
+      const locationExists = lng && lat;
 
-      return locationExists ? { lat, lon } : defaultLocation;
+      return locationExists ? { lat, lng } : defaultLocation;
     });
 
     const markerIcon = {

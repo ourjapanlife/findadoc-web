@@ -110,20 +110,24 @@ const facilityName = computed(() => {
   return localeStore.locale.code === Locale.EnUs ? englishName : japaneseName;
 });
 
-const spokenLanguages = computed(
-    () => {
-        const languagesDisplayText = resultsStore.$state.activeResult?.professional.spokenLanguages?.map(s => {
-            const languageDisplayText = localeStore.localeDisplayOptions.find(l => l.code === s)?.simpleText
-            return languageDisplayText
-        })
-
-        return languagesDisplayText
+const spokenLanguages = computed(() => {
+  const languagesDisplayText = resultsStore.$state.activeResult?.professional.spokenLanguages?.map(
+    s => {
+      const languageDisplayText = localeStore.localeDisplayOptions.find(
+        l => l.code === s
+      )?.simpleText;
+      return languageDisplayText;
     }
-)
+  );
+
+  return languagesDisplayText;
+});
 
 const address = computed(() => {
   const addressObj =
     resultsStore.$state.activeResult?.facilities[0].contact.address;
+
+  console.log("addressObj", addressObj);
   const englishAddress = `${addressObj?.addressLine1En} ${addressObj?.addressLine2En}, ${addressObj?.cityEn}, ${addressObj?.prefectureEn} ${addressObj?.postalCode}`;
   const japaneseAddress = `${addressObj?.postalCode} ${addressObj?.prefectureJa}${addressObj?.cityJa}${addressObj?.addressLine1Ja}${addressObj?.addressLine2Ja}`;
   return localeStore.locale.code === Locale.EnUs
