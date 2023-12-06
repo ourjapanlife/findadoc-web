@@ -9,7 +9,22 @@ export const useSubmissionStore = defineStore('submissionStore', () => {
     const selectLanguage2 = ref('')
     const otherNotes = ref('')
 
-    function submit() {
+    const createSubmissionMutation = gql`mutation CreateSubmission($input: CreateSubmissionInput!) {
+        createSubmission(input: $input) {
+            id
+            googleMapsUrl
+            healthcareProfessionalName
+            spokenLanguages
+            isApproved
+            isRejected
+            isUnderReview
+            createdDate
+            updatedDate
+        }
+    }`
+
+
+    async function submit() {
         const spokenLanguages = []
 
         if (selectLanguage1.value !== 'none') {
@@ -26,7 +41,29 @@ export const useSubmissionStore = defineStore('submissionStore', () => {
             "spokenLanguages": spokenLanguages,
             "notes": otherNotes.value
         }
-        console.log('submission =', submission)
+
+        const createSubmissionRequest = {
+            query: createSubmissionMutation,
+            variables: {
+                input: submission
+            }
+        }
+
+        // Write a request using createSubmissionRequest to the GraphQL API https://findadoc-api-9brq4.ondigitalocean.app/api
+
+        const response = await fetch('https://findadoc-api-9brq4.ondigitalocean.app/api', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            },
+            body: JSON.stringify(createSubmissionRequest)
+        })
+        //
+
+
+
+        console.log('response =', response)
     }
 
     return { location, firstName, lastName, selectLanguage1, selectLanguage2, otherNotes, submit }
