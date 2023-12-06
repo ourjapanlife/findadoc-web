@@ -10,6 +10,21 @@ export const useSubmissionStore = defineStore('submissionStore', () => {
     const otherNotes = ref('')
     const submissionCompleted = ref(false)
 
+    const createSubmissionMutation = gql`mutation CreateSubmission($input: CreateSubmissionInput!) {
+        createSubmission(input: $input) {
+            id
+            googleMapsUrl
+            healthcareProfessionalName
+            spokenLanguages
+            isApproved
+            isRejected
+            isUnderReview
+            createdDate
+            updatedDate
+        }
+    }`
+
+
     function submit() {
         const spokenLanguages = []
 
@@ -29,6 +44,13 @@ export const useSubmissionStore = defineStore('submissionStore', () => {
             "notes": otherNotes.value
         }
         console.log('submission =', submission)
+
+        const createSubmissionRequest = {
+            query: createSubmissionMutation,
+            variables: {
+                input: submission
+            }
+        }
 
         submissionCompleted.value = true
     }
