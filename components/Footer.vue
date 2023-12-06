@@ -43,7 +43,7 @@
           class="flex flex-col flex-wrap"
           data-testid="github-link"
         >
-          <div>Contribute on{{$t('footer.contribute')}}</div>
+          <div>{{$t('footer.contribute')}}</div>
           <div class="self-center">GitHub</div>
         </NuxtLink>
       </div>

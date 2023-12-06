@@ -5,12 +5,13 @@
                 {{ $t('searchResultsList.doctorsNearby') }}
             </span>
             <button role="button" aria="filters" class="filters py-1 px-2 border border-primary/40 rounded-xl flex flex-row flex-0
-                group hover:bg-primary hover:transition-all">
+                group hover:bg-primary/50 hover:border-primary/10 hover:transition-all">
                 <svg role="img" alt="hamburger menu icon" title="hamburger list icon"
-                    class="hamburger-list-icon fill-primary h-5 w-5 self-center group-hover:fill-primary-text-inverted">
+                    class="hamburger-list-icon fill-primary/50 h-5 w-5 self-center group-hover:fill-primary-text-inverted/50">
                     <use xlink:href="../assets/images/hamburger-list-icon.svg#hamburger-list-icon-svg" />
                 </svg>
-                <span class="pl-1 font-bold self-center group-hover:text-primary-text-inverted">{{ $t('searchResultsList.filters') }}</span>
+                <span class="text-primary-text/50 pl-1 font-bold self-center group-hover:text-primary-text-inverted/50">{{
+                    $t('searchResultsList.filters') }}</span>
             </button>
         </div>
         <div id="searchResults" class="flex flex-col overflow-y-scroll h-full">

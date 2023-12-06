@@ -23,19 +23,19 @@
     /* https://tailwindcss.com/docs/customizing-colors#using-css-variables */
 
     /* general branding colors */
-    --color-primary: /* #ED6C5A */ 237 108 90;
-    --color-secondary: /* #245A7D */ 36 90 125;
-    --color-tertiary: /* #245A7D */ 36 90 125;
-    --color-primary-inverted: /* #ffffff */ 255 255 255;
-    --color-primary-hover: /* #d66051 */ 214 96 81;
-    --color-secondary-inverted: /* #ffffff */ 255 255 255;
-    --color-secondary-hover: /* #d66051 */ 214 96 81;
+    --color-primary: /* #EB7100 */ 235 113 0;
+    --color-secondary: /* #628DEA */ 98 141 234;
+    --color-tertiary: /* #245A7D */ 37 91 126;
+    --color-primary-inverted: /* #FFFFFF */ 255 255 255;
+    --color-primary-hover: /* #D66051 */ 214 97 81;
+    --color-secondary-inverted: /* #FFFFFF */ 255 255 255;
+    --color-secondary-hover: /* #D66051 */ 214 97 81;
     /* element specific colors */
-    --color-text-base: /* #252525 */ 37 37 37;
+    --color-text-base: /* #130402 */ 18 4 2;
     --color-text-muted: /* #999999 */ 153 153 153;
-    --color-text-inverted: /* #000000 */ 255 255 255;
-    --color-bg-primary: /* #fcfcfc */ 252 252 252;
-    --color-bg-secondary: /* #fff1ef */ 255 241 239;
+    --color-text-inverted: /* #000000 */ 0 0 0;
+    --color-bg-primary: /* #FCFCFC */ 252 252 252;
+    --color-bg-secondary: /* #FFF1EF */ 255 241 240;
   }
 
   .theme-coral {
@@ -69,7 +69,7 @@
     --color-text-muted: /* #464646 */ 70 70 70;
     --color-text-inverted: /* #000000 */ 255 255 255;
     --color-bg-primary: /* #fcfcfc */ 252 252 252;
-    --color-bg-secondary: /* #b49ab1 */ 180, 154, 177;
+    --color-bg-secondary: /* #b49ab1 */ 180 154 177;
   }
 
   .theme-ocean {

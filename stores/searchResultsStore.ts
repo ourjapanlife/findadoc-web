@@ -69,14 +69,18 @@ export const useSearchResultsStore = defineStore('searchResultsStore', () => {
 
 function searchProfessionals(searchSpecialty?: Specialty, searchLanguage?: Locale): Ref<HealthcareProfessional[]> {
     const searchProfessionalsData = {
-        input: {
-            filters: {
-                limit: 100,
-                offset: 0,
-                specialties: searchSpecialty ? [searchSpecialty] : undefined,
-                spokenLanguages: searchLanguage ? [searchLanguage] : undefined,
-            } satisfies HealthcareProfessionalSearchFilters
-        }
+        filters: {
+            acceptedInsurance: [],
+            createdDate: undefined,
+            degrees: [],
+            limit: 100,
+            names: [],
+            offset: 0,
+            orderBy: [],
+            specialties: searchSpecialty ? [searchSpecialty] : undefined,
+            spokenLanguages: searchLanguage ? [searchLanguage] : undefined,
+            updatedDate: undefined
+        } satisfies HealthcareProfessionalSearchFilters
     }
 
     const { result, loading, error } = useQuery(searchProfessionalsQuery, searchProfessionalsData)
@@ -93,20 +97,17 @@ function searchProfessionals(searchSpecialty?: Specialty, searchLanguage?: Local
         alert(`Error getting data! Please contact our support team by clicking the bottom right link on the page!`)
     })
 
-
     return result
 }
 
 function searchFacilities(healthcareProfessionalIds: string[], searchLocation?: string): Ref<Facility[]> {
     //TODO: add search by location
     const searchFacilitiesData = {
-        input: {
-            filters: {
-                limit: 100,
-                offset: 0,
-                healthcareProfessionalIds: healthcareProfessionalIds
-            } satisfies FacilitySearchFilters
-        }
+        filters: {
+            limit: 100,
+            offset: 0,
+            healthcareProfessionalIds: healthcareProfessionalIds
+        } satisfies FacilitySearchFilters
     }
 
     const { result, loading, error } = useQuery(searchFacilitiesQuery, searchFacilitiesData)
@@ -136,17 +137,8 @@ const searchProfessionalsQuery = gql`query searchHealthcareProfessionals($filter
             middleName
             locale
         }
-        degrees {
-            nameJa
-            nameEn
-            abbreviation
-        }
-        specialties {
-            names {
-                name
-                locale
-            }
-        }
+        degrees
+        specialties
         facilityIds
         spokenLanguages
         acceptedInsurance
@@ -160,6 +152,8 @@ const searchFacilitiesQuery = gql`query QueryFacilities($filters: FacilitySearch
       id
       nameEn
       nameJa
+      mapLatitude
+      mapLongitude
       healthcareProfessionalIds
       contact {
         address {
