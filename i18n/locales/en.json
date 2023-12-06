@@ -10,7 +10,7 @@
     "submitPage": {
         "firstName": "First Name",
         "googleMaps": "Google Maps URL",
-        "heading": "Submit a Doctor",
+        "heading": "Add a Doctor",
         "healthcareProfessionalName": "Healthcare Professional Name",
         "lastName": "Last Name",
         "location": "Location",
@@ -18,7 +18,7 @@
         "selectLanguage2": "Select Second Language",
         "spokenLanguage1": "Spoken Language 1",
         "spokenLanguage2": "Spoken Language 2",
-        "subheading": "Your submission will be reviewed by Find a Doc, Japan moderators",
+        "subheading": "Want to add a doctor to the database? Complete the form below and it will be reviewed by our moderators.",
         "submitButton": "Submit",
         "optional": "optional",
         "otherNotes": "Other notes"
@@ -33,8 +33,14 @@
         "doctorsNearby": "Doctors Nearby",
         "filters": "Filters"
     },
+    "thankYouPage": {
+        "heading": "Thank you!",
+        "submission": "Your submission will be reviewed shortly by our moderators.",
+        "feedback": "Your feedback has been submitted and will be reviewed by our team.",
+        "home": "Return to home"
+    },
     "topNav": {
         "about": "About",
-        "submit": "Submit"
+        "submit": "Add a Doctor"
     }
 }

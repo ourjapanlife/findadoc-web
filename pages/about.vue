@@ -1,7 +1,7 @@
 <template>
     <div class="flex h-full flex-col w-full">
         <div class="flex flex-col items-center mx-32">
-            <svg role="img" alt="search icon" title="search icon"
+            <svg role="img" alt="heart icon" title="heart icon"
                 class="heart-plus-icon w-24 h-24 mr-1 fill-primary-text-inverted">
                 <use xlink:href="../assets/images/heart-plus.svg#heart-plus-svg" />
             </svg>
@@ -20,7 +20,7 @@
                 By delivering healthcare information in multiple languages, we envision a Japan that embodies inclusivity,
                 compassion, and prosperity for all.</p>
         </div>
-        <div id="members" class="flex flex-col items-center mx-32 my-14">
+        <!-- <div id="members" class="flex flex-col items-center mx-32 my-14">
             <div id="members-header" class="flex">
                 <div class="h-px w-32 border-currentColor/70 border inline-block self-center"></div>
                 <div class="text-primary/80 text-xl font-bold inline-block mx-4 whitespace-nowrap">Our Team</div>
@@ -47,7 +47,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
 </template>
 
@@ -75,6 +75,35 @@ const members = ref([
         title: 'Healthcare Content Lead',
         linkedInUrl: 'https://www.linkedin.com/in/russellmiller',
         githubUrl: 'https://github.com/ermish'
+    },
+    {
+        avatarImg: '../assets/images/avatars/russellmiller.jpg',
+        name: 'Russell Miller',
+        title: 'Healthcare Content Lead',
+        linkedInUrl: 'https://www.linkedin.com/in/russellmiller',
+        githubUrl: 'https://github.com/ermish'
+    },
+    {
+        avatarImg: '../assets/images/avatars/russellmiller.jpg',
+        name: 'Russell Miller',
+        title: 'Healthcare Content Lead',
+        linkedInUrl: 'https://www.linkedin.com/in/russellmiller',
+        githubUrl: 'https://github.com/ermish'
+    },
+    {
+        avatarImg: '../assets/images/avatars/russellmiller.jpg',
+        name: 'Russell Miller',
+        title: 'Healthcare Content Lead',
+        linkedInUrl: 'https://www.linkedin.com/in/russellmiller',
+        githubUrl: 'https://github.com/ermish'
+    },
+    {
+        avatarImg: '../assets/images/avatars/russellmiller.jpg',
+        name: 'Russell Miller',
+        title: 'Healthcare Content Lead',
+        linkedInUrl: 'https://www.linkedin.com/in/russellmiller',
+        githubUrl: 'https://github.com/ermish'
     }
+
 ])
 </script>

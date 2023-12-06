@@ -1,5 +1,4 @@
 import { defineNuxtConfig } from 'nuxt/config'
-import i18n from './i18n/index'
 
 const SITE_TITLE = 'Find a Doc, Japan!'
 const SITE_DESCRIPTION =
@@ -100,19 +99,6 @@ export default defineNuxtConfig({
     ],
 
     i18n: {
-        locales: [
-            {
-                code: 'en',
-                name: 'English'
-            },
-            {
-                code: 'ja',
-                name: '日本語'
-            }
-        ],
-        fallbackLocale: 'en',
-        defaultLocal: 'en',
-        strategy: 'no_prefix',
         vueI18n: './i18n.options.ts'
     },
     pinia: {

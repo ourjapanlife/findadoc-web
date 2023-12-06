@@ -5157,6 +5157,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@vue/apollo-composable@npm:^4.0.0-beta.12":
+  version: 4.0.0-beta.12
+  resolution: "@vue/apollo-composable@npm:4.0.0-beta.12"
+  dependencies:
+    throttle-debounce: "npm:^5.0.0"
+    ts-essentials: "npm:^9.4.0"
+    vue-demi: "npm:^0.14.6"
+  peerDependencies:
+    "@apollo/client": ^3.4.13
+    "@vue/composition-api": ^1.0.0
+    graphql: ">=15"
+    vue: ^2.6.0 || ^3.1.0
+  peerDependenciesMeta:
+    "@vue/composition-api":
+      optional: true
+  checksum: 59f3cbb77eccb863b2589363b1d74e7bb766cda69cd89e8fcea7a43a011a1941b8b7daeb2944bbeabaa3d591b5fc6d55468c06c5ab880650a0f11ea2592ada22
+  languageName: node
+  linkType: hard
+
 "@vue/babel-helper-vue-transform-on@npm:^1.1.5":
   version: 1.1.5
   resolution: "@vue/babel-helper-vue-transform-on@npm:1.1.5"
@@ -9300,6 +9319,7 @@ __metadata:
     "@typescript-eslint/parser": "npm:^6.13.2"
     "@vitejs/plugin-vue": "npm:^4.5.1"
     "@vitest/coverage-v8": "npm:^1.0.1"
+    "@vue/apollo-composable": "npm:^4.0.0-beta.12"
     "@vue/test-utils": "npm:^2.2.6"
     all-contributors-cli: "npm:^6.24.0"
     autoprefixer: "npm:^10.4.16"
@@ -16349,6 +16369,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"throttle-debounce@npm:^5.0.0":
+  version: 5.0.0
+  resolution: "throttle-debounce@npm:5.0.0"
+  checksum: bedd5a20cd226c7a6e765719c73fa8ec7a43f0c552bfb658cbe7ed51e16ab5f315dd2baed66904c004a1d16b0bb4e85e10126695a787b13516c37d4907426ec5
+  languageName: node
+  linkType: hard
+
 "throttleit@npm:^1.0.0":
   version: 1.0.0
   resolution: "throttleit@npm:1.0.0"
@@ -16496,6 +16523,18 @@ __metadata:
   peerDependencies:
     typescript: ">=4.2.0"
   checksum: 1350a5110eb1e534e9a6178f4081fb8a4fcc439749e19f4ad699baec9090fcb90fe532d5e191d91a062dc6e454a14a8d7eb2ad202f57135a30c4a44a3024f039
+  languageName: node
+  linkType: hard
+
+"ts-essentials@npm:^9.4.0":
+  version: 9.4.1
+  resolution: "ts-essentials@npm:9.4.1"
+  peerDependencies:
+    typescript: ">=4.1.0"
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  checksum: e689fb92545ea3ab70d3b6846696866b79813e20bd23ec34fdf1812b6be5aaa70eea374f7363b9f850f2e1bf864d90b6390b9f1fc3ce3c4e6207a9aa068252f0
   languageName: node
   linkType: hard
 
@@ -17611,7 +17650,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vue-demi@npm:^0.14.5":
+"vue-demi@npm:^0.14.5, vue-demi@npm:^0.14.6":
   version: 0.14.6
   resolution: "vue-demi@npm:0.14.6"
   peerDependencies:
