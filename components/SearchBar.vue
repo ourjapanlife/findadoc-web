@@ -31,7 +31,7 @@
                     <option value="" class="text-primary-text-muted hidden" disabled selected>
                         {{ $t('searchBar.selectLanguage') }}
                     </option>
-                    <option :key="index" v-for="(language, index) in languageDropdownOptions">
+                    <option :key="language.code" :value="language.code" v-for="(language, index) in languageDropdownOptions">
                         {{ language.simpleText }}
                     </option>
                 </select>

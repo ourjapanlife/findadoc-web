@@ -18,11 +18,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed } from "vue";
-import { GoogleMap, Marker as GMarker } from "vue3-google-map";
-import { useRuntimeConfig } from "#imports";
-import customIcon from "../assets/images/blue-map-pin.svg";
-import { useSearchResultsStore } from "../stores/searchResultsStore";
+import { defineComponent, ref, computed } from "vue"
+import { GoogleMap, Marker as GMarker } from "vue3-google-map"
+import { useRuntimeConfig } from "#imports"
+import customIcon from "../assets/images/blue-map-pin.svg"
+import { useSearchResultsStore } from "../stores/searchResultsStore"
 
 export default defineComponent({
   components: { GoogleMap, GMarker },
