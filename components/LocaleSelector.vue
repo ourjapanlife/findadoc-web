@@ -19,17 +19,12 @@ import { useLocaleStore } from "../stores/localeStore";
 import { Locale } from "~/typedefs/gqlTypes.js";
 import { useI18n, useLocalePath } from "#imports";
 
-// let i18n = useI18n();
 const { locale } = useI18n();
-
-// console.log("$i18n = ", i18n);
-
 const localeStore = useLocaleStore();
 const selectedLocale = ref(Locale.EnUs);
 
 watch(selectedLocale, (newLocale: any) => {
   localeStore.setLocale(newLocale);
-  //@ts-ignore-next-line
   locale.value = newLocale;
 });
 </script>

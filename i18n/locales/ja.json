@@ -10,7 +10,7 @@
     "submitPage": {
         "firstName": "名",
         "googleMaps": "Google MapsのURL",
-        "submitHeading": "医師情報の提出",
+        "heading": "医師情報の提出",
         "healthcareProfessionalName": "医師の姓名",
         "lastName": "姓",
         "location": "所在地",

@@ -97,6 +97,7 @@ function searchProfessionals(searchSpecialty?: Specialty, searchLanguage?: Local
         alert(`Error getting data! Please contact our support team by clicking the bottom right link on the page!`)
     })
 
+
     return result
 }
 
