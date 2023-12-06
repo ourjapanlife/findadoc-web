@@ -79,7 +79,6 @@ const localeDisplayOptions = [
 ] satisfies LocaleDisplay[]
 
 const mvpLocaleDisplayOptions = [
-    { code: '', simpleText: '', displayText: 'None' },
     { code: Locale.EnUs, simpleText: 'English', displayText: 'English (US)' },
     { code: Locale.JaJp, simpleText: '日本語', displayText: '日本語 (Japan)' },
 ] satisfies LocaleDisplay[]
