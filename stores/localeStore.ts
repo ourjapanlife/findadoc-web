@@ -3,120 +3,138 @@ import { ref, Ref } from 'vue'
 import { Locale } from '~/typedefs/gqlTypes.js'
 
 type LocaleDisplay = {
-    label: string,
+    displayText: string,
     code: string
 }
 
-const localeDisplayEn: { label: string, code: string } = {
-    label: 'English',
-    code: Locale.EnUs
-} satisfies LocaleDisplay
-
-const localeDisplayJa: { label: string, code: string } = {
-    label: '日本語',
-    code: Locale.JaJp
-} satisfies LocaleDisplay
-
 export const useLocaleStore = defineStore('locale', () => {
-    const locale: Ref<LocaleDisplay> = ref(localeDisplayEn)
+    const enUsLocale = localeDisplayOptions.find(o => o.code == Locale.EnUs) as LocaleDisplay
+    const locale: Ref<LocaleDisplay> = ref(enUsLocale)
 
-    function changeLocale() {
-        if (locale.value.code === Locale.EnUs)
-            locale.value = localeDisplayEn
-        else
-            locale.value = localeDisplayJa
+    function setLocale(selectedLocale: Locale) {
+        locale.value = localeDisplayOptions.find(l => l.code == selectedLocale) as LocaleDisplay
     }
 
-    return { locale, changeLocale }
-    
-    
-    import { defineStore } from 'pinia'
-
-export const useLocaleStore = defineStore('localeStore', () => {
-    const locales = ref([
-        {"none": "None"},
-        { "en_US": "English (US)"},
-        { "ja_JP": "Japanese" },
-        { "ak_GH": "Akan (Ghana)" },
-        { "am_ET": "Amharic (Ethiopia)" },
-        { "ar_AE": "Arabic (United Arab Emirates)" },
-        { "bm_ML": "Bambara (Mali)" },
-        { "bn_BD": "Bengali (Bangladesh)" },
-        { "bs_BA": "Bosnian (Bosnia and Herzegovina)" },
-        { "ca_ES": "Catalan (Spain)" },
-        { "cs_CZ": "Czech (Czech Republic)" },
-        { "chr_US": "Cherokee (United States)" },
-        { "cy_GB": "Welsh (United Kingdom)" },
-        { "da_DK": "Danish (Denmark)" },
-        { "de_DE": "German (Germany)" },
-        { "ee_GH": "Ewe (Ghana)" },
-        { "el_GR": "Greek (Greece)" },
-        { "en_US": "English (United States)" },
-        { "es_ES": "Spanish (Spain)" },
-        { "et_EE": "Estonian (Estonia)" },
-        { "fa_AF": "Persian (Afghanistan)" },
-        { "fil_PH": "Filipino (Philippines)" },
-        { "fi_FI": "Finnish (Finland)" },
-        { "fr_FR": "French (France)" },
-        { "guz_KE": "Gusii (Kenya)" },
-        { "he_IL": "Hebrew (Israel)" },
-        { "hi_IN": "Hindi (India)" },
-        { "hr_HR": "Croatian (Croatia)" },
-        { "hu_HU": "Hungarian (Hungary)" },
-        { "hy_AM": "Armenian (Armenia)" },
-        { "id_ID": "Indonesian (Indonesia)" },
-        { "ig_NG": "Igbo (Nigeria)" },
-        { "is_IS": "Icelandic (Iceland)" },
-        { "it_IT": "Italian (Italy)" },
-        { "kab_DZ": "Kabyle (Algeria)" },
-        { "km_KH": "Khmer (Cambodia)" },
-        { "kn_IN": "Kannada (India)" },
-        { "ko_KR": "Korean (South Korea)" },
-        { "lag_TZ": "Langi (Tanzania)" },
-        { "lg_UG": "Ganda (Uganda)" },
-        { "lv_LV": "Latvian (Latvia)" },
-        { "nb_NO": "Norwegian Bokmål (Norway)" },
-        { "ne_NP": "Nepali (Nepal)" },
-        { "nl_BE": "Dutch (Belgium)" },
-        { "pl_PL": "Polish (Poland)" },
-        { "pt_BR": "Portuguese (Brazil)" },
-        { "ru_RU": "Russian (Russia)" },
-        { "si_LK": "Sinhala (Sri Lanka)" },
-        { "sq_AL": "Albanian (Albania)" },
-        { "sr_Cyrl": "Serbian (Cyrillic)" },
-        { "sw_KE": "Swahili (Kenya)" },
-        { "th_TH": "Thai (Thailand)" },
-        { "tr_TR": "Turkish (Turkey)" },
-        { "vi_VN": "Vietnamese (Vietnam)" },
-        { "zh_CN": "Chinese (Simplified, China)" },
-        { "zh_HK": "Chinese (Traditional, Hong Kong SAR China)" },
-        { "zh_TW": "Chinese (Traditional, Taiwan)" },
-    ])
-    return { locales }
-type LocaleDisplay = {
-    label: string,
-    code: string
-}
-
-const localeDisplayEn: { label: string, code: string } = {
-    label: 'English',
-    code: Locale.EnUs
-} satisfies LocaleDisplay
-
-const localeDisplayJa: { label: string, code: string } = {
-    label: '日本語',
-    code: Locale.JaJp
-} satisfies LocaleDisplay
-
-export const useLocaleStore = defineStore('locale', () => {
-    const locale: Ref<LocaleDisplay> = ref(localeDisplayEn)
-
-    function changeLocale() {
-        if (locale.value.code === Locale.EnUs)
-            locale.value = localeDisplayEn
-        else
-            locale.value = localeDisplayJa
-    }
-
-    return { locale, changeLocale }
+    return { locale, localeDisplayOptions, setLocale }
 })
+
+const localeDisplayOptions = [
+    { code: '', displayText: "None"},
+    { code: Locale.EnUs, displayText: "English (US)"},
+    { code: Locale.JaJp, displayText: "Japanese" },
+    { code: Locale.AkGh, displayText: "Akan (Ghana)" },
+    { code: Locale.AmEt, displayText: "Amharic (Ethiopia)" },
+    { code: Locale.ArAe, displayText: "Arabic (United Arab Emirates)" },
+    { code: Locale.BmMl, displayText: "Bambara (Mali)" },
+    { code: Locale.BnBd, displayText: "Bengali (Bangladesh)" },
+    { code: Locale.BsBa, displayText: "Bosnian (Bosnia and Herzegovina)" },
+    { code: Locale.CaEs, displayText: "Catalan (Spain)" },
+    { code: Locale.CsCz, displayText: "Czech (Czech Republic)" },
+    { code: Locale.ChrUs, displayText: "Cherokee (United States)" },
+    { code: Locale.CyGb, displayText: "Welsh (United Kingdom)" },
+    { code: Locale.DaDk, displayText: "Danish (Denmark)" },
+    { code: Locale.DeDe, displayText: "German (Germany)" },
+    { code: Locale.EeGh, displayText: "Ewe (Ghana)" },
+    { code: Locale.ElGr, displayText: "Greek (Greece)" },
+    { code: Locale.EnUs, displayText: "English (United States)" },
+    { code: Locale.EsEs, displayText: "Spanish (Spain)" },
+    { code: Locale.EtEe, displayText: "Estonian (Estonia)" },
+    { code: Locale.FaAf, displayText: "Persian (Afghanistan)" },
+    { code: Locale.FilPh, displayText: "Filipino (Philippines)" },
+    { code: Locale.FiFi, displayText: "Finnish (Finland)" },
+    { code: Locale.FrFr, displayText: "French (France)" },
+    { code: Locale.GuzKe, displayText: "Gusii (Kenya)" },
+    { code: Locale.HeIl, displayText: "Hebrew (Israel)" },
+    { code: Locale.HiIn, displayText: "Hindi (India)" },
+    { code: Locale.HrHr, displayText: "Croatian (Croatia)" },
+    { code: Locale.HuHu, displayText: "Hungarian (Hungary)" },
+    { code: Locale.HyAm, displayText: "Armenian (Armenia)" },
+    { code: Locale.IdId, displayText: "Indonesian (Indonesia)" },
+    { code: Locale.IgNg, displayText: "Igbo (Nigeria)" },
+    { code: Locale.IsIs, displayText: "Icelandic (Iceland)" },
+    { code: Locale.ItIt, displayText: "Italian (Italy)" },
+    { code: Locale.KabDz, displayText: "Kabyle (Algeria)" },
+    { code: Locale.KmKh, displayText: "Khmer (Cambodia)" },
+    { code: Locale.KnIn, displayText: "Kannada (India)" },
+    { code: Locale.KoKr, displayText: "Korean (South Korea)" },
+    { code: Locale.LagTz, displayText: "Langi (Tanzania)" },
+    { code: Locale.LgUg, displayText: "Ganda (Uganda)" },
+    { code: Locale.LvLv, displayText: "Latvian (Latvia)" },
+    { code: Locale.NbNo, displayText: "Norwegian Bokmål (Norway)" },
+    { code: Locale.NeNp, displayText: "Nepali (Nepal)" },
+    { code: Locale.NlBe, displayText: "Dutch (Belgium)" },
+    { code: Locale.PlPl, displayText: "Polish (Poland)" },
+    { code: Locale.PtBr, displayText: "Portuguese (Brazil)" },
+    { code: Locale.RuRu, displayText: "Russian (Russia)" },
+    { code: Locale.SiLk, displayText: "Sinhala (Sri Lanka)" },
+    { code: Locale.SqAl, displayText: "Albanian (Albania)" },
+    { code: Locale.SrCyrl, displayText: "Serbian (Cyrillic)" },
+    { code: Locale.SwKe, displayText: "Swahili (Kenya)" },
+    { code: Locale.ThTh, displayText: "Thai (Thailand)" },
+    { code: Locale.TrTr, displayText: "Turkish (Turkey)" },
+    { code: Locale.ViVn, displayText: "Vietnamese (Vietnam)" },
+    { code: Locale.ZhCn, displayText: "Chinese (Simplified, China)" },
+    { code: Locale.ZhHk, displayText: "Chinese (Traditional, Hong Kong SAR China)" },
+    { code: Locale.ZhTw, displayText: "Chinese (Traditional, Taiwan)" },
+] satisfies LocaleDisplay[]
+
+
+// const localeDisplayOptions = [
+//     { "none": "None"},
+//     { "en_US": "English (US)"},
+//     { "ja_JP": "Japanese" },
+//     { "ak_GH": "Akan (Ghana)" },
+//     { "am_ET": "Amharic (Ethiopia)" },
+//     { "ar_AE": "Arabic (United Arab Emirates)" },
+//     { "bm_ML": "Bambara (Mali)" },
+//     { "bn_BD": "Bengali (Bangladesh)" },
+//     { "bs_BA": "Bosnian (Bosnia and Herzegovina)" },
+//     { "ca_ES": "Catalan (Spain)" },
+//     { "cs_CZ": "Czech (Czech Republic)" },
+//     { "chr_US": "Cherokee (United States)" },
+//     { "cy_GB": "Welsh (United Kingdom)" },
+//     { "da_DK": "Danish (Denmark)" },
+//     { "de_DE": "German (Germany)" },
+//     { "ee_GH": "Ewe (Ghana)" },
+//     { "el_GR": "Greek (Greece)" },
+//     { "en_US": "English (United States)" },
+//     { "es_ES": "Spanish (Spain)" },
+//     { "et_EE": "Estonian (Estonia)" },
+//     { "fa_AF": "Persian (Afghanistan)" },
+//     { "fil_PH": "Filipino (Philippines)" },
+//     { "fi_FI": "Finnish (Finland)" },
+//     { "fr_FR": "French (France)" },
+//     { "guz_KE": "Gusii (Kenya)" },
+//     { "he_IL": "Hebrew (Israel)" },
+//     { "hi_IN": "Hindi (India)" },
+//     { "hr_HR": "Croatian (Croatia)" },
+//     { "hu_HU": "Hungarian (Hungary)" },
+//     { "hy_AM": "Armenian (Armenia)" },
+//     { "id_ID": "Indonesian (Indonesia)" },
+//     { "ig_NG": "Igbo (Nigeria)" },
+//     { "is_IS": "Icelandic (Iceland)" },
+//     { "it_IT": "Italian (Italy)" },
+//     { "kab_DZ": "Kabyle (Algeria)" },
+//     { "km_KH": "Khmer (Cambodia)" },
+//     { "kn_IN": "Kannada (India)" },
+//     { "ko_KR": "Korean (South Korea)" },
+//     { "lag_TZ": "Langi (Tanzania)" },
+//     { "lg_UG": "Ganda (Uganda)" },
+//     { "lv_LV": "Latvian (Latvia)" },
+//     { "nb_NO": "Norwegian Bokmål (Norway)" },
+//     { "ne_NP": "Nepali (Nepal)" },
+//     { "nl_BE": "Dutch (Belgium)" },
+//     { "pl_PL": "Polish (Poland)" },
+//     { "pt_BR": "Portuguese (Brazil)" },
+//     { "ru_RU": "Russian (Russia)" },
+//     { "si_LK": "Sinhala (Sri Lanka)" },
+//     { "sq_AL": "Albanian (Albania)" },
+//     { "sr_Cyr:": "Serbian (Cyrillic)" },
+//     { "sw_KE": "Swahili (Kenya)" },
+//     { "th_TH": "Thai (Thailand)" },
+//     { "tr_TR": "Turkish (Turkey)" },
+//     { "vi_VN": "Vietnamese (Vietnam)" },
+//     { "zh_CN": "Chinese (Simplified, China)" },
+//     { "zh_HK": "Chinese (Traditional, Hong Kong SAR China)" },
+//     { "zh_TW": "Chinese (Traditional, Taiwan)" },
+// ]

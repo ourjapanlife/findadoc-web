@@ -1,5 +1,5 @@
 import { ApolloClient, InMemoryCache, NormalizedCacheObject, createHttpLink } from '@apollo/client/core'
-import { DefaultApolloClient } from '@vue/apollo-composable'
+import { DefaultApolloClient, provideApolloClient } from '@vue/apollo-composable'
 import { provide } from 'vue'
 
 
@@ -18,5 +18,5 @@ export const initializeApollo = () => {
         cache: new InMemoryCache()
     })
 
-    provideApolloClient(DefaultApolloClient, apollo)
+    provideApolloClient(apollo)
 }
