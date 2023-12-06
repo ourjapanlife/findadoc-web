@@ -75,15 +75,19 @@ const locationDropdownOptions: Ref<string[]> = ref(locationsStore.citiesDisplayO
 const specialtyDropdownOptions: Ref<SpecialtyDisplayOption[]> = ref(specialtiesStore.specialtyDisplayOptions)
 const languageDropdownOptions: Ref<LocaleDisplay[]> = ref(languageOptions)
 
-const selectedSpecialty: Ref<Specialty | undefined> = ref(undefined)
+const selectedSpecialty: Ref<Specialty | String> = ref('')
 const selectedLocation: Ref<string> = ref('')
-const selectedLanguage: Ref<Locale | undefined> = ref(undefined)
+const selectedLanguage: Ref<Locale | String> = ref('')
 
 watchEffect(() => {
     locationDropdownOptions.value = locationsStore.citiesDisplayOptions
 })
 
 function search() {
-    searchResultsStore.search(selectedLocation.value, selectedSpecialty.value, selectedLanguage.value)
+    const blankRemovedLocation = selectedLocation.value == '----Any----' ? '' : selectedLocation.value
+    const blankRemovedSpecialty = selectedSpecialty.value == '----Any----' ? undefined : selectedSpecialty.value as Specialty
+    const blankRemovedLanguage = selectedLanguage.value == '----Any----' ? undefined : selectedLanguage.value as Locale
+
+    searchResultsStore.search(blankRemovedLocation, blankRemovedSpecialty, blankRemovedLanguage)
 }
 </script>

@@ -40,7 +40,7 @@ export const useSearchResultsStore = defineStore('searchResultsStore', () => {
                 })
 
                 //filter the search results by location if a location is selected (and not the default '----Any----' value)
-                const locationFilteredSearchResults = (searchCity && searchCity !== '----Any----')
+                const locationFilteredSearchResults = searchCity
                     ? searchResults?.filter(item =>
                         item.facilities.some(facility =>
                             facility.contact?.address.cityEn === searchCity || facility.contact?.address.cityJa === searchCity))
@@ -77,9 +77,6 @@ function searchProfessionals(searchSpecialty?: Specialty, searchLanguage?: Local
             offset: 0,
             specialties: searchSpecialty ? [searchSpecialty] : undefined,
             spokenLanguages: searchLanguage ? [searchLanguage] : undefined,
-
-            // specialties: searchSpecialty ? [searchSpecialty] : undefined,
-            // spokenLanguages: searchLanguage ? [searchLanguage] : undefined,
             acceptedInsurance: undefined,
             degrees: undefined,
             names: undefined,
