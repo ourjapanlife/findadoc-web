@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { ref, Ref } from 'vue'
 import { Locale } from '~/typedefs/gqlTypes.js'
 
-type LocaleDisplay = {
+export type LocaleDisplay = {
     displayText: string,
     simpleText: string,
     code: string
@@ -19,7 +19,7 @@ export const useLocaleStore = defineStore('locale', () => {
     return { locale, localeDisplayOptions, mvpLocaleDisplayOptions, setLocale }
 })
 
-const localeDisplayOptions = [
+export const localeDisplayOptions = [
     { code: '', simpleText: '', displayText: 'None' },
     { code: Locale.EnUs, simpleText: 'English', displayText: 'English (US)' },
     { code: Locale.JaJp, simpleText: '日本語', displayText: '日本語 (Japan)' },
@@ -78,7 +78,7 @@ const localeDisplayOptions = [
     { code: Locale.ZhTw, simpleText: '國語', displayText: 'Chinese (Traditional, Taiwan)' },
 ] satisfies LocaleDisplay[]
 
-const mvpLocaleDisplayOptions = [
+export const mvpLocaleDisplayOptions = [
     { code: Locale.EnUs, simpleText: 'English', displayText: 'English (US)' },
     { code: Locale.JaJp, simpleText: '日本語', displayText: '日本語 (Japan)' },
 ] satisfies LocaleDisplay[]

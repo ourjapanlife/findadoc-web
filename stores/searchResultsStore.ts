@@ -68,13 +68,15 @@ export const useSearchResultsStore = defineStore('searchResultsStore', () => {
 })
 
 function searchProfessionals(searchSpecialty?: Specialty, searchLanguage?: Locale): Ref<{ healthcareProfessionals: HealthcareProfessional[] }> {
+    const loadingStore = useLoadingStore()
+
     const searchProfessionalsData = {
         filters: {
             limit: 100,
             offset: 0,
             specialties: searchSpecialty ? [searchSpecialty] : undefined,
             spokenLanguages: searchLanguage ? [searchLanguage] : undefined,
-            
+
             // specialties: searchSpecialty ? [searchSpecialty] : undefined,
             // spokenLanguages: searchLanguage ? [searchLanguage] : undefined,
             acceptedInsurance: undefined,
@@ -90,12 +92,12 @@ function searchProfessionals(searchSpecialty?: Specialty, searchLanguage?: Local
 
     //we want to set the app to a loading state while querying. This value is reactive
     watch(loading, (newValue) => {
-        const loadingStore = useLoadingStore()
         loadingStore.setIsLoading(newValue)
     })
 
     //we want to show an error message if the query fails. This value is reactive
     watch(error, (newValue) => {
+        loadingStore.setIsLoading(false)
         console.log(`Error getting professionals: ${JSON.stringify(error.value)}`)
         alert(`Error getting data! Please contact our support team by clicking the bottom right link on the page!`)
     })

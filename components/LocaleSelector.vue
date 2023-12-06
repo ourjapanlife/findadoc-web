@@ -17,7 +17,7 @@
 import { ref, watch } from "vue";
 import { useLocaleStore } from "../stores/localeStore";
 import { Locale } from "~/typedefs/gqlTypes.js";
-import { useI18n, useLocalePath } from "#imports";
+import { useI18n } from "#imports";
 
 const { locale } = useI18n();
 const localeStore = useLocaleStore();
