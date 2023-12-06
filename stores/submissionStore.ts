@@ -1,5 +1,9 @@
 import { defineStore } from "pinia"
 import { ref } from 'vue'
+import { useMutation } from '@vue/apollo-composable'
+import gql from 'graphql-tag'
+import { CreateSubmissionInput, Locale } from "~/typedefs/gqlTypes"
+import { as } from "vitest/dist/reporters-5f784f42.js"
 
 export const useSubmissionStore = defineStore('submissionStore', () => {
     const location = ref('')
@@ -25,16 +29,18 @@ export const useSubmissionStore = defineStore('submissionStore', () => {
     }`
 
 
+
+
     function submit() {
-        const spokenLanguages = []
+        const spokenLanguages: Locale[] = []
 
         if (selectLanguage1.value !== '') {
             console.log('selectLanguage1 =', selectLanguage1)
-            spokenLanguages.push(selectLanguage1.value)
+            spokenLanguages.push(selectLanguage1.value as Locale)
         }
 
         if (selectLanguage2.value !== '') {
-            spokenLanguages.push(selectLanguage2.value)
+            spokenLanguages.push(selectLanguage2.value as Locale)
         }
 
         const submission = {
@@ -42,15 +48,12 @@ export const useSubmissionStore = defineStore('submissionStore', () => {
             "healthcareProfessionalName": `${firstName.value} ${lastName.value}`,
             "spokenLanguages": spokenLanguages,
             "notes": otherNotes.value
-        }
+        } satisfies CreateSubmissionInput
         console.log('submission =', submission)
 
-        const createSubmissionRequest = {
-            query: createSubmissionMutation,
-            variables: {
-                input: submission
-            }
-        }
+        const createSubmissionData = {input: submission}
+
+        const { error } = useMutation(createSubmissionMutation, createSubmissionData)
 
         submissionCompleted.value = true
     }
