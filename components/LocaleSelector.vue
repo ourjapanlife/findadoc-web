@@ -8,7 +8,7 @@
         v-for="(localeOption) in localeStore.mvpLocaleDisplayOptions"
         :key="localeOption.code"
         :value="localeOption.code"
-      >{{ localeOption.displayText }}</option>
+      >{{ localeOption.simpleText }}</option>
     </select>
   </div>
 </template>
