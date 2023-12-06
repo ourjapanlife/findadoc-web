@@ -6,7 +6,7 @@ import { Facility, FacilitySearchFilters, Locale } from '~/typedefs/gqlTypes.js'
 import { useLoadingStore } from './loadingStore.js'
 import { useLocaleStore } from './localeStore.js'
 
-export const useLocationsStore = defineStore('searchResultsStore', () => {
+export const useLocationsStore = defineStore('locationsStore', () => {
     const citiesDisplayOptions: Ref<string[]> = ref([])
 
     function fetchLocations() {
@@ -27,8 +27,8 @@ export const useLocationsStore = defineStore('searchResultsStore', () => {
             const localeStore = useLocaleStore()
             //we want to have an empty display value for dropdowns, so we add an empty string to the list
             citiesDisplayOptions.value = localeStore.locale.code === Locale.EnUs
-                ? ['', ...allCitiesEnglishList]
-                : ['', ...allCitiesJapaneseList]
+                ? ['----Any----', ...allCitiesEnglishList]
+                : ['----Any----', ...allCitiesJapaneseList]
         })
     }
 

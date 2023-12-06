@@ -51,14 +51,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref, Ref } from 'vue'
-import { useSearchResultsStore } from '~/stores/searchResultsStore'
-import { useLocationsStore } from '~/stores/locationsStore'
+import { ref, Ref, watchEffect } from 'vue'
+import { useSearchResultsStore } from '~/stores/searchResultsStore.js'
+import { useLocationsStore } from '~/stores/locationsStore.js'
 import { Locale, Specialty } from "~/typedefs/gqlTypes.js"
 import { useLocaleStore, LocaleDisplay } from '~/stores/localeStore.js'
 
 const specialtyOptions = [
-    { code: 'ANY', displayText: '----Any----' },
+    { code: '', displayText: '----Any----' },
     { code: 'ALLERGY_AND_IMMUNOLOGY', displayText: "AllergyAndImmunology" },
     { code: 'ANESTHESIOLOGY', displayText: "Anesthesiology" },
     { code: 'DERMATOLOGY', displayText: "Dermatology" },
@@ -90,8 +90,9 @@ const locationsStore = useLocationsStore()
 const searchResultsStore = useSearchResultsStore()
 
 locationsStore.fetchLocations()
+
 const languageOptions = [{
-    code: 'ANY',
+    code: '',
     simpleText: '----Any----',
     displayText: '----Any----'
 }, ...localeStore.mvpLocaleDisplayOptions]
@@ -104,7 +105,11 @@ const selectedSpecialty: Ref<Specialty | undefined> = ref(undefined)
 const selectedLocation: Ref<string> = ref('')
 const selectedLanguage: Ref<Locale | undefined> = ref(undefined)
 
-const search = () => {
+watchEffect(() => {
+    locationDropdownOptions.value = locationsStore.citiesDisplayOptions
+})
+
+function search() {
     searchResultsStore.search(selectedLocation.value, selectedSpecialty.value, selectedLanguage.value)
 }
 </script>

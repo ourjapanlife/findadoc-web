@@ -39,7 +39,8 @@ export const useSearchResultsStore = defineStore('searchResultsStore', () => {
                     return { professional, facilities: matchingFacilities } satisfies searchResult
                 })
 
-                const locationFilteredSearchResults = searchCity
+                //filter the search results by location if a location is selected (and not the default '----Any----' value)
+                const locationFilteredSearchResults = (searchCity && searchCity !== '----Any----')
                     ? searchResults?.filter(item =>
                         item.facilities.some(facility =>
                             facility.contact?.address.cityEn === searchCity || facility.contact?.address.cityJa === searchCity))
@@ -112,7 +113,14 @@ function searchFacilities(healthcareProfessionalIds: string[], searchLocation?: 
         filters: {
             limit: 100,
             offset: 0,
-            healthcareProfessionalIds: healthcareProfessionalIds
+            healthcareProfessionalIds: healthcareProfessionalIds,
+            contact: undefined,
+            createdDate: undefined,
+            healthcareProfessionalName: undefined,
+            nameEn: undefined,
+            nameJa: undefined,
+            orderBy: undefined,
+            updatedDate: undefined
         } satisfies FacilitySearchFilters
     }
 
