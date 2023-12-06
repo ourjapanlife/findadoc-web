@@ -8,6 +8,7 @@ export const useSubmissionStore = defineStore('submissionStore', () => {
     const selectLanguage1 = ref('')
     const selectLanguage2 = ref('')
     const otherNotes = ref('')
+    const submissionCompleted = ref(false)
 
     function submit() {
         const spokenLanguages = []
@@ -28,7 +29,19 @@ export const useSubmissionStore = defineStore('submissionStore', () => {
             "notes": otherNotes.value
         }
         console.log('submission =', submission)
+
+        submissionCompleted.value = true
     }
 
-    return { location, firstName, lastName, selectLanguage1, selectLanguage2, otherNotes, submit }
+    function resetForm() {
+        submissionCompleted.value = false
+        location.value = ''
+        firstName.value = ''
+        lastName.value = ''
+        selectLanguage1.value = ''
+        selectLanguage2.value = ''
+        otherNotes.value = ''
+    }
+
+    return { location, firstName, lastName, selectLanguage1, selectLanguage2, otherNotes, submissionCompleted, submit, resetForm }
 })

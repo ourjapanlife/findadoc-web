@@ -33,6 +33,12 @@
         "doctorsNearby": "Doctors Nearby",
         "filters": "Filters"
     },
+    "thankYouPage": {
+        "heading": "Thank you!",
+        "submission": "Your submission will be reviewed shortly by our moderators.",
+        "feedback": "Your feedback has been submitted and will be reviewed by our team.",
+        "home": "Return to home"
+    },
     "topNav": {
         "about": "About",
         "submit": "Add a Doctor"
