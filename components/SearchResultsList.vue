@@ -13,16 +13,16 @@
                 <span class="pl-1 font-bold self-center group-hover:text-primary-text-inverted">{{ $t('searchResultsList.filters') }}</span>
             </button>
         </div>
-        <div id="searchResults"
-            class="flex flex-col overflow-y-scroll h-full">
-            <div @click="store.setActiveSearchResult(searchResult.id)"
-                :key="index" v-for="(searchResult, index) in store.searchResultsList" class="results-list flex flex-col">
+        <div id="searchResults" class="flex flex-col overflow-y-scroll h-full">
+            <div @click="store.setActiveSearchResult(searchResult.professional.id)" :key="index"
+                v-for="(searchResult, index) in store.searchResultsList" class="results-list flex flex-col">
                 <div class="flex-1 h-24 w-6/8 border-b-2 border-primary/20 p-3
                     hover:border-transparent hover:bg-primary/5 transition-all hover:cursor-pointer">
-                    <SearchResultsListItem :name="`${searchResult.names[0].firstName}, ${searchResult.names[0].lastName }`"
-                        :facility-name="searchResult.facilityName"
-                        :specialty="searchResult.specialties[0].names[0].name"
-                        :spoken-languages="searchResult.spokenLanguages" />
+                    <SearchResultsListItem
+                        :name="`${searchResult.professional.names[0].firstName}, ${searchResult.professional.names[0].lastName}`"
+                        :facility-name="localeStore.locale?.code == Locale.EnUs ? searchResult.facilities[0].nameEn : searchResult.facilities[0].nameJa"
+                        :specialties="searchResult.professional.specialties"
+                        :spoken-languages="searchResult.professional.spokenLanguages" />
                 </div>
             </div>
         </div>
@@ -31,7 +31,10 @@
 
 <script setup lang="ts">
 import { useSearchResultsStore } from '../stores/searchResultsStore'
+import { useLocaleStore } from '../stores/localeStore'
+import { Locale } from '~/typedefs/gqlTypes.js';
 
 const store = useSearchResultsStore()
+const localeStore = useLocaleStore()
 
 </script>

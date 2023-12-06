@@ -7,8 +7,11 @@
             <span class="w-4 font-bold pl-2 self-center"> {{ name }} </span>
         </div>
         <div class="result-details flex my-2 ml-4">
-            <span class="pr-2"> {{ specialty }}</span>
-            <span class="self-center">·</span>
+            <div class="flex" v-for="(specialty, index) in specialties">
+                <span class="pr-2"> {{ specialty }}</span>
+                <span class="self-center">·</span>
+            </div>
+            <div class="self-center">·</div>
             <span class="px-2"> {{ facilityName }}</span>
         </div>
         <div class="result-tags flex flex-wrap w-64 mb-2 mt-3 ml-4">
@@ -27,8 +30,8 @@ defineProps({
         type: String,
         required: true
     },
-    specialty: {
-        type: String,
+    specialties: {
+        type: Array,
         required: true
     },
     facilityName: {

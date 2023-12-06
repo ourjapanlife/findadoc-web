@@ -7,11 +7,8 @@
 </template>
 
 <script lang="ts">
-import { ApolloClient, InMemoryCache, ApolloProvider, gql } from '@apollo/client'
+import { initializeApollo } from './utils/apollo.js'
 
-const client = new ApolloClient({
-    uri: 'https://findadoc-api-9brq4.ondigitalocean.app/api',
-    cache: new InMemoryCache()
-});
+initializeApollo()
 
 </script>
