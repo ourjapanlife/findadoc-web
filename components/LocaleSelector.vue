@@ -1,48 +1,30 @@
 <template>
-    <div>
-        <select v-model="localeName" class="rounded-full w-full px-1 border-2 border-primary/80 drop-shadow-md text-primary-text
-            bg-secondary-bg/5 hover:text-primary-hover transition-colors">
-            <option v-for="(localeOption) in locales" :key="localeOption.code">
-                {{ localeOption.name }}
-            </option>
-        </select>
-    </div>
+  <div class="w-24">
+    <select
+      v-model="selectedLocale"
+      class="rounded-full w-full px-1 border-2 border-primary/80 drop-shadow-md text-primary-text bg-secondary-bg/5 hover:text-primary-hover transition-colors"
+    >
+      <option
+        v-for="(localeOption) in localeStore.mvpLocaleDisplayOptions"
+        :key="localeOption.code"
+        :value="localeOption.code"
+      >{{ localeOption.simpleText }}</option>
+    </select>
+  </div>
 </template>
 
-<script lang="ts">
-export default {
-    data() {
-        return {
-            localeName: '',
-            locales: []
-        }
-    },
-    created() {
-        const code = this.$i18n.locale
+<script setup lang="ts">
+import { ref, watch } from "vue";
+import { useLocaleStore } from "../stores/localeStore";
+import { Locale } from "~/typedefs/gqlTypes.js";
+import { useI18n } from "#imports";
 
-        this.locales = this.$i18n.locales
-        console.log(this.locales)
+const { locale } = useI18n();
+const localeStore = useLocaleStore();
+const selectedLocale = ref(Locale.EnUs);
 
-        for (let i = 0; i < this.locales.length; i += 1)
-            if (this.locales[i].code === code && code !== '') {
-                this.localeName = this.locales[i].name
-                break
-            }
-    },
-    methods: {
-        getLocaleCodeFromName(name: string) {
-            for (let i = 0; i < this.locales.length; i += 1)
-                if (this.locales[i].name === name)
-                    return this.locales[i].code
-
-            return ''
-        }
-    },
-    watch: {
-        localeName(newLocale: string, oldLocale: string) {
-            console.log(`Updating locale to ${newLocale} from ${oldLocale}`)
-            this.$i18n.locale = this.getLocaleCodeFromName(newLocale)
-        }
-    }
-}
+watch(selectedLocale, (newLocale: any) => {
+  localeStore.setLocale(newLocale);
+  locale.value = newLocale;
+});
 </script>

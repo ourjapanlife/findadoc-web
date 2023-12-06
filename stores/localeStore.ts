@@ -1,65 +1,84 @@
-import { ref } from 'vue'
-import { defineStore } from "pinia";
+import { defineStore } from 'pinia'
+import { ref, Ref } from 'vue'
+import { Locale } from '~/typedefs/gqlTypes.js'
 
-export const useLocaleStore = defineStore('localeStore', () => {
-    const locales = ref([
-        {"none": "None"},
-        { "en_US": "English (US)"},
-        { "ja_JP": "Japanese" },
-        { "ak_GH": "Akan (Ghana)" },
-        { "am_ET": "Amharic (Ethiopia)" },
-        { "ar_AE": "Arabic (United Arab Emirates)" },
-        { "bm_ML": "Bambara (Mali)" },
-        { "bn_BD": "Bengali (Bangladesh)" },
-        { "bs_BA": "Bosnian (Bosnia and Herzegovina)" },
-        { "ca_ES": "Catalan (Spain)" },
-        { "cs_CZ": "Czech (Czech Republic)" },
-        { "chr_US": "Cherokee (United States)" },
-        { "cy_GB": "Welsh (United Kingdom)" },
-        { "da_DK": "Danish (Denmark)" },
-        { "de_DE": "German (Germany)" },
-        { "ee_GH": "Ewe (Ghana)" },
-        { "el_GR": "Greek (Greece)" },
-        { "en_US": "English (United States)" },
-        { "es_ES": "Spanish (Spain)" },
-        { "et_EE": "Estonian (Estonia)" },
-        { "fa_AF": "Persian (Afghanistan)" },
-        { "fil_PH": "Filipino (Philippines)" },
-        { "fi_FI": "Finnish (Finland)" },
-        { "fr_FR": "French (France)" },
-        { "guz_KE": "Gusii (Kenya)" },
-        { "he_IL": "Hebrew (Israel)" },
-        { "hi_IN": "Hindi (India)" },
-        { "hr_HR": "Croatian (Croatia)" },
-        { "hu_HU": "Hungarian (Hungary)" },
-        { "hy_AM": "Armenian (Armenia)" },
-        { "id_ID": "Indonesian (Indonesia)" },
-        { "ig_NG": "Igbo (Nigeria)" },
-        { "is_IS": "Icelandic (Iceland)" },
-        { "it_IT": "Italian (Italy)" },
-        { "kab_DZ": "Kabyle (Algeria)" },
-        { "km_KH": "Khmer (Cambodia)" },
-        { "kn_IN": "Kannada (India)" },
-        { "ko_KR": "Korean (South Korea)" },
-        { "lag_TZ": "Langi (Tanzania)" },
-        { "lg_UG": "Ganda (Uganda)" },
-        { "lv_LV": "Latvian (Latvia)" },
-        { "nb_NO": "Norwegian Bokmål (Norway)" },
-        { "ne_NP": "Nepali (Nepal)" },
-        { "nl_BE": "Dutch (Belgium)" },
-        { "pl_PL": "Polish (Poland)" },
-        { "pt_BR": "Portuguese (Brazil)" },
-        { "ru_RU": "Russian (Russia)" },
-        { "si_LK": "Sinhala (Sri Lanka)" },
-        { "sq_AL": "Albanian (Albania)" },
-        { "sr_Cyrl": "Serbian (Cyrillic)" },
-        { "sw_KE": "Swahili (Kenya)" },
-        { "th_TH": "Thai (Thailand)" },
-        { "tr_TR": "Turkish (Turkey)" },
-        { "vi_VN": "Vietnamese (Vietnam)" },
-        { "zh_CN": "Chinese (Simplified, China)" },
-        { "zh_HK": "Chinese (Traditional, Hong Kong SAR China)" },
-        { "zh_TW": "Chinese (Traditional, Taiwan)" },
-    ])
-    return { locales }
+export type LocaleDisplay = {
+    displayText: string,
+    simpleText: string,
+    code: string
+}
+
+export const useLocaleStore = defineStore('locale', () => {
+    const enUsLocale = localeDisplayOptions.find(o => o.code == Locale.EnUs) as LocaleDisplay
+    const locale: Ref<LocaleDisplay> = ref(enUsLocale)
+
+    function setLocale(selectedLocale: Locale) {
+        locale.value = localeDisplayOptions.find(l => l.code == selectedLocale) as LocaleDisplay
+    }
+
+    return { locale, localeDisplayOptions, mvpLocaleDisplayOptions, setLocale }
 })
+
+export const localeDisplayOptions = [
+    { code: '', simpleText: '', displayText: 'None' },
+    { code: Locale.EnUs, simpleText: 'English', displayText: 'English (US)' },
+    { code: Locale.JaJp, simpleText: '日本語', displayText: '日本語 (Japan)' },
+    { code: Locale.AkGh, simpleText: 'Akan', displayText: 'Akan (Ghana)' },
+    { code: Locale.AmEt, simpleText: 'Amharic', displayText: 'Amharic (Ethiopia)' },
+    { code: Locale.ArAe, simpleText: 'اَلْعَرَبِيَّة', displayText: 'اَلْعَرَبِيَّة (United Arab Emirates)' },
+    { code: Locale.BmMl, simpleText: 'Bambara', displayText: 'Bambara (Mali)' },
+    { code: Locale.BnBd, simpleText: 'Bengali', displayText: 'Bengali (Bangladesh)' },
+    { code: Locale.BsBa, simpleText: 'Bosnian', displayText: 'Bosnian (Bosnia and Herzegovina)' },
+    { code: Locale.CaEs, simpleText: 'Catalan', displayText: 'Catalan (Spain)' },
+    { code: Locale.CsCz, simpleText: 'Czech', displayText: 'Czech (Czech Republic)' },
+    { code: Locale.ChrUs, simpleText: 'Cherokee', displayText: 'Cherokee (United States)' },
+    { code: Locale.CyGb, simpleText: 'Welsh', displayText: 'Welsh (United Kingdom)' },
+    { code: Locale.DaDk, simpleText: 'Danish', displayText: 'Danish (Denmark)' },
+    { code: Locale.DeDe, simpleText: 'German', displayText: 'German (Germany)' },
+    { code: Locale.EeGh, simpleText: 'Ewe', displayText: 'Ewe (Ghana)' },
+    { code: Locale.ElGr, simpleText: 'Greek', displayText: 'Greek (Greece)' },
+    { code: Locale.EsEs, simpleText: 'Spanish', displayText: 'Spanish (Spain)' },
+    { code: Locale.EtEe, simpleText: 'Estonian', displayText: 'Estonian (Estonia)' },
+    { code: Locale.FaAf, simpleText: 'Persian', displayText: 'Persian (Afghanistan)' },
+    { code: Locale.TlPh, simpleText: 'Tagalog', displayText: 'Tagalog (Philippines)' },
+    { code: Locale.FiFi, simpleText: 'Finnish', displayText: 'Finnish (Finland)' },
+    { code: Locale.FrFr, simpleText: 'French', displayText: 'French (France)' },
+    { code: Locale.GuzKe, simpleText: 'Gusii', displayText: 'Gusii (Kenya)' },
+    { code: Locale.HeIl, simpleText: 'עִבְרִית', displayText: 'עִבְרִית (Israel)' },
+    { code: Locale.HiIn, simpleText: 'Hindi', displayText: 'Hindi (India)' },
+    { code: Locale.HrHr, simpleText: 'Croatian', displayText: 'Croatian (Croatia)' },
+    { code: Locale.HuHu, simpleText: 'Hungarian', displayText: 'Hungarian (Hungary)' },
+    { code: Locale.HyAm, simpleText: 'Armenian', displayText: 'Armenian (Armenia)' },
+    { code: Locale.IdId, simpleText: 'Indonesian', displayText: 'Indonesian (Indonesia)' },
+    { code: Locale.IgNg, simpleText: 'Igbo', displayText: 'Igbo (Nigeria)' },
+    { code: Locale.IsIs, simpleText: 'Icelandic', displayText: 'Icelandic (Iceland)' },
+    { code: Locale.ItIt, simpleText: 'Italian', displayText: 'Italian (Italy)' },
+    { code: Locale.KabDz, simpleText: 'Kabyle', displayText: 'Kabyle (Algeria)' },
+    { code: Locale.KmKh, simpleText: 'Khmer', displayText: 'Khmer (Cambodia)' },
+    { code: Locale.KnIn, simpleText: 'Kannada', displayText: 'Kannada (India)' },
+    { code: Locale.KoKr, simpleText: '한국어', displayText: '한국어 (South Korea)' },
+    { code: Locale.LagTz, simpleText: 'Langi', displayText: 'Langi (Tanzania)' },
+    { code: Locale.LgUg, simpleText: 'Ganda', displayText: 'Ganda (Uganda)' },
+    { code: Locale.LvLv, simpleText: 'Latvian', displayText: 'Latvian (Latvia)' },
+    { code: Locale.NbNo, simpleText: 'Norwegian', displayText: 'Norwegian Bokmål (Norway)' },
+    { code: Locale.NeNp, simpleText: 'Nepali', displayText: 'Nepali (Nepal)' },
+    { code: Locale.NlBe, simpleText: 'Dutch', displayText: 'Dutch (Belgium)' },
+    { code: Locale.PlPl, simpleText: 'Polish', displayText: 'Polish (Poland)' },
+    { code: Locale.PtBr, simpleText: 'Portuguese', displayText: 'Portuguese (Brazil)' },
+    { code: Locale.RuRu, simpleText: 'Russian', displayText: 'Russian (Russia)' },
+    { code: Locale.SiLk, simpleText: 'Sinhala', displayText: 'Sinhala (Sri Lanka)' },
+    { code: Locale.SqAl, simpleText: 'Albanian', displayText: 'Albanian (Albania)' },
+    { code: Locale.SrCyrl, simpleText: 'Serbian', displayText: 'Serbian (Cyrillic)' },
+    { code: Locale.SwKe, simpleText: 'Swahili', displayText: 'Swahili (Kenya)' },
+    { code: Locale.ThTh, simpleText: 'ภาษาไทย', displayText: 'ภาษาไทย (Thailand)' },
+    { code: Locale.TrTr, simpleText: 'Turkish', displayText: 'Turkish (Turkey)' },
+    { code: Locale.ViVn, simpleText: 'tiếng', displayText: 'tiếng Việt (Vietnam)' },
+    { code: Locale.ZhCn, simpleText: '汉语', displayText: 'Chinese (Simplified, China)' },
+    { code: Locale.ZhHk, simpleText: '漢語', displayText: 'Chinese (Traditional, Hong Kong SAR China)' },
+    { code: Locale.ZhTw, simpleText: '國語', displayText: 'Chinese (Traditional, Taiwan)' },
+] satisfies LocaleDisplay[]
+
+export const mvpLocaleDisplayOptions = [
+    { code: Locale.EnUs, simpleText: 'English', displayText: 'English (US)' },
+    { code: Locale.JaJp, simpleText: '日本語', displayText: '日本語 (Japan)' },
+] satisfies LocaleDisplay[]

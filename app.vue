@@ -9,5 +9,5 @@
 <script setup lang="ts">
 import { initializeApollo } from './utils/apollo.js'
 
-export default defineComponent({})
+initializeApollo()
 </script>
