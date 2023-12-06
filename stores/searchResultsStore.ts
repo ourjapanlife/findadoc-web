@@ -17,7 +17,6 @@ export const useSearchResultsStore = defineStore('searchResultsStore', () => {
     const activeResult: Ref<searchResult | undefined> = ref()
     const searchResultsList: Ref<searchResult[]> = ref([])
 
-    let hasBeenRun = false
     let refetchProfessionalsHandle: () => void
     let refetchFacilitiesHandle: () => void
 
@@ -137,7 +136,7 @@ function searchFacilities(healthcareProfessionalIds: string[], searchLocation?: 
     }
 
     console.log('searching facilities')
-    const { result, loading, error, load, refetch } = useLazyQuery(searchFacilitiesQuery, searchFacilitiesData)
+    const { result, loading, error, refetch } = useQuery(searchFacilitiesQuery, searchFacilitiesData)
 
     //we want to set the app to a loading state while querying. This value is reactive
     watch(loading, (newValue) => {
