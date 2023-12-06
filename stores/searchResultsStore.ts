@@ -16,7 +16,11 @@ export const useSearchResultsStore = defineStore('searchResultsStore', () => {
     const activeResult: Ref<searchResult | undefined> = ref()
     const searchResultsList: Ref<searchResult[]> = ref([])
 
-    function search(searchCity: string, searchSpecialty: Specialty, searchLanguage: Locale) {
+    function search(searchCity?: string, searchSpecialty?: Specialty, searchLanguage?: Locale) {
+        //set the loading visual state
+        const loadingStore = useLoadingStore()
+        loadingStore.setIsLoading(true)
+
         const professionalsRef = searchProfessionals(searchSpecialty, searchLanguage)
 
         //this is the async callback that will be called when the query is done (no async/await)
@@ -25,7 +29,7 @@ export const useSearchResultsStore = defineStore('searchResultsStore', () => {
 
             const professionalIds = professionalsSearchResult?.map(professional => professional.id) ?? []
 
-            const facilitiesRef = searchFacilities(searchCity, professionalIds)
+            const facilitiesRef = searchFacilities(professionalIds, searchCity)
 
             watch(facilitiesRef, facilitiesSearchResults => {
                 console.log(`Fetched facilities: ${JSON.stringify(facilitiesSearchResults)}`)
@@ -35,40 +39,42 @@ export const useSearchResultsStore = defineStore('searchResultsStore', () => {
                     return { professional, facilities: matchingFacilities } satisfies searchResult
                 })
 
-                const locationFilteredSearchResults = searchResults?.filter(item =>
-                    item.facilities.some(facility =>
-                        facility.contact?.address.cityEn === searchCity || facility.contact?.address.cityJa === searchCity))
+                const locationFilteredSearchResults = searchCity
+                    ? searchResults?.filter(item =>
+                        item.facilities.some(facility =>
+                            facility.contact?.address.cityEn === searchCity || facility.contact?.address.cityJa === searchCity))
+                    : searchResults
 
-            searchResultsList.value = locationFilteredSearchResults
+                searchResultsList.value = locationFilteredSearchResults
+            })
         })
-    })
     }
 
-function setActiveSearchResult(selectedResultId: String) {
-    const newResult = searchResultsList.value.find(resultItem => resultItem.professional.id === selectedResultId)
+    function setActiveSearchResult(selectedResultId: String) {
+        const newResult = searchResultsList.value.find(resultItem => resultItem.professional.id === selectedResultId)
 
-    activeResult.value = newResult
-    activeResultId.value = newResult?.professional.id
+        activeResult.value = newResult
+        activeResultId.value = newResult?.professional.id
 
-    //show the search result details in a modal
-    useModalStore().showModal()
-}
+        //show the search result details in a modal
+        useModalStore().showModal()
+    }
 
-function clearActiveSearchResult() {
-    activeResultId.value = undefined
-}
+    function clearActiveSearchResult() {
+        activeResultId.value = undefined
+    }
 
-return { activeResultId, activeResult, searchResultsList, search, setActiveSearchResult, clearActiveSearchResult }
+    return { activeResultId, activeResult, searchResultsList, search, setActiveSearchResult, clearActiveSearchResult }
 })
 
-function searchProfessionals(searchSpecialty: Specialty, searchLanguage: Locale): Ref<HealthcareProfessional[]> {
+function searchProfessionals(searchSpecialty?: Specialty, searchLanguage?: Locale): Ref<HealthcareProfessional[]> {
     const searchProfessionalsData = {
         input: {
             filters: {
                 limit: 100,
                 offset: 0,
-                specialties: [searchSpecialty],
-                spokenLanguages: [searchLanguage],
+                specialties: searchSpecialty ? [searchSpecialty] : undefined,
+                spokenLanguages: searchLanguage ? [searchLanguage] : undefined,
             } satisfies HealthcareProfessionalSearchFilters
         }
     }
@@ -77,21 +83,22 @@ function searchProfessionals(searchSpecialty: Specialty, searchLanguage: Locale)
 
     //we want to set the app to a loading state while querying. This value is reactive
     watch(loading, (newValue) => {
-        console.log('loading changed to: ', newValue)
         const loadingStore = useLoadingStore()
         loadingStore.setIsLoading(newValue)
     })
 
     //we want to show an error message if the query fails. This value is reactive
     watch(error, (newValue) => {
-        console.log(`Error getting data: ${error.value}`)
-        return `Error getting data! Please contact our support team!`
+        console.log(`Error getting professionals: ${JSON.stringify(error.value)}`)
+        alert(`Error getting data! Please contact our support team by clicking the bottom right link on the page!`)
     })
+
 
     return result
 }
 
-function searchFacilities(searchLocation: string, healthcareProfessionalIds: string[]): Ref<Facility[]> {
+function searchFacilities(healthcareProfessionalIds: string[], searchLocation?: string): Ref<Facility[]> {
+    //TODO: add search by location
     const searchFacilitiesData = {
         input: {
             filters: {
@@ -106,15 +113,14 @@ function searchFacilities(searchLocation: string, healthcareProfessionalIds: str
 
     //we want to set the app to a loading state while querying. This value is reactive
     watch(loading, (newValue) => {
-        console.log('loading changed to: ', newValue)
         const loadingStore = useLoadingStore()
         loadingStore.setIsLoading(newValue)
     })
 
     //we want to show an error message if the query fails. This value is reactive
     watch(error, (newValue) => {
-        console.log(`Error getting data: ${error.value}`)
-        return `Error getting data! Please contact our support team!`
+        console.log(`Error getting facilities: ${JSON.stringify(error.value)}`)
+        alert(`Error getting data! Please contact our support team by clicking the bottom right link on the page!`)
     })
 
     return result
