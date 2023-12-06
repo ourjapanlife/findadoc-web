@@ -24,8 +24,12 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from "vue"
+import { useLocaleStore } from "~/stores/localeStore.js"
 
-defineProps({
+const localStore = useLocaleStore()
+
+const props = defineProps({
     name: {
         type: String,
         required: true
@@ -49,4 +53,15 @@ defineProps({
         }
     }
 })
+
+const specialties = computed(
+    () => {
+        const specialtiesDisplayText = props.specialties?.map(s => {
+            const specialtyDisplayText = localStore.localeDisplayOptions.find(l => l.code === s)?.simpleText
+            return specialtyDisplayText
+        })
+
+        return specialtiesDisplayText
+    }
+)
 </script>

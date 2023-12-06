@@ -27,15 +27,15 @@ export const useSearchResultsStore = defineStore('searchResultsStore', () => {
         watch(professionalsRef, professionalsSearchResult => {
             console.log(`Fetched professionals: ${JSON.stringify(professionalsSearchResult)}`)
 
-            const professionalIds = professionalsSearchResult?.map(professional => professional.id) ?? []
+            const professionalIds = professionalsSearchResult.healthcareProfessionals?.map(professional => professional.id) ?? []
 
             const facilitiesRef = searchFacilities(professionalIds, searchCity)
 
             watch(facilitiesRef, facilitiesSearchResults => {
                 console.log(`Fetched facilities: ${JSON.stringify(facilitiesSearchResults)}`)
 
-                const searchResults = professionalsSearchResult.map(professional => {
-                    const matchingFacilities = facilitiesSearchResults.filter(facility => facility.healthcareProfessionalIds.includes(professional.id))
+                const searchResults = professionalsSearchResult.healthcareProfessionals?.map(professional => {
+                    const matchingFacilities = facilitiesSearchResults.facilities?.filter(facility => facility.healthcareProfessionalIds.includes(professional.id))
                     return { professional, facilities: matchingFacilities } satisfies searchResult
                 })
 
@@ -67,18 +67,21 @@ export const useSearchResultsStore = defineStore('searchResultsStore', () => {
     return { activeResultId, activeResult, searchResultsList, search, setActiveSearchResult, clearActiveSearchResult }
 })
 
-function searchProfessionals(searchSpecialty?: Specialty, searchLanguage?: Locale): Ref<HealthcareProfessional[]> {
+function searchProfessionals(searchSpecialty?: Specialty, searchLanguage?: Locale): Ref<{ healthcareProfessionals: HealthcareProfessional[] }> {
     const searchProfessionalsData = {
         filters: {
-            acceptedInsurance: [],
-            createdDate: undefined,
-            degrees: [],
             limit: 100,
-            names: [],
             offset: 0,
-            orderBy: [],
             specialties: searchSpecialty ? [searchSpecialty] : undefined,
             spokenLanguages: searchLanguage ? [searchLanguage] : undefined,
+            
+            // specialties: searchSpecialty ? [searchSpecialty] : undefined,
+            // spokenLanguages: searchLanguage ? [searchLanguage] : undefined,
+            acceptedInsurance: undefined,
+            degrees: undefined,
+            names: undefined,
+            orderBy: undefined,
+            createdDate: undefined,
             updatedDate: undefined
         } satisfies HealthcareProfessionalSearchFilters
     }
@@ -98,10 +101,10 @@ function searchProfessionals(searchSpecialty?: Specialty, searchLanguage?: Local
     })
 
 
-    return result
+    return result as Ref<{ healthcareProfessionals: HealthcareProfessional[] }>
 }
 
-function searchFacilities(healthcareProfessionalIds: string[], searchLocation?: string): Ref<Facility[]> {
+function searchFacilities(healthcareProfessionalIds: string[], searchLocation?: string): Ref<{ facilities: Facility[] }> {
     //TODO: add search by location
     const searchFacilitiesData = {
         filters: {
@@ -125,7 +128,7 @@ function searchFacilities(healthcareProfessionalIds: string[], searchLocation?: 
         alert(`Error getting data! Please contact our support team by clicking the bottom right link on the page!`)
     })
 
-    return result
+    return result as Ref<{ facilities: Facility[] }>
 }
 
 
