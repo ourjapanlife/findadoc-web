@@ -10,7 +10,7 @@
     "submitPage": {
         "firstName": "名",
         "googleMaps": "Google MapsのURL",
-        "heading": "医師情報の提出",
+        "heading": "医師情報の追加",
         "healthcareProfessionalName": "医師の姓名",
         "lastName": "姓",
         "location": "所在地",
@@ -18,7 +18,7 @@
         "selectLanguage2": "対応言語２を選択",
         "spokenLanguage1": "対応可能言語 1",
         "spokenLanguage2": "対応可能言語 2",
-        "subheading": "提供ありがとうございます、情報は`Find a Doc`メンバー確認の上反映されます。",
+        "subheading": "医師の情報を追加した場合は、以下の情報の入力をお願いいたします。入力された情報は`Find a Doc`メンバー確認の上、データベースへ反映されます。",
         "submitButton": "確定",
         "optional": "オプション",
         "otherNotes": "その他情報"
@@ -35,6 +35,6 @@
     },
     "topNav": {
         "about": "私たちについて",
-        "submit": "医師情報の提供"
+        "submit": "医師情報の追加"
     }
 }
