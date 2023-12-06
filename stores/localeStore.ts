@@ -93,4 +93,30 @@ export const useLocaleStore = defineStore('localeStore', () => {
         { "zh_TW": "Chinese (Traditional, Taiwan)" },
     ])
     return { locales }
+type LocaleDisplay = {
+    label: string,
+    code: string
+}
+
+const localeDisplayEn: { label: string, code: string } = {
+    label: 'English',
+    code: Locale.EnUs
+} satisfies LocaleDisplay
+
+const localeDisplayJa: { label: string, code: string } = {
+    label: '日本語',
+    code: Locale.JaJp
+} satisfies LocaleDisplay
+
+export const useLocaleStore = defineStore('locale', () => {
+    const locale: Ref<LocaleDisplay> = ref(localeDisplayEn)
+
+    function changeLocale() {
+        if (locale.value.code === Locale.EnUs)
+            locale.value = localeDisplayEn
+        else
+            locale.value = localeDisplayJa
+    }
+
+    return { locale, changeLocale }
 })
