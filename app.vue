@@ -6,8 +6,8 @@
     </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
+<script setup lang="ts">
+import { initializeApollo } from './utils/apollo.js'
 
 export default defineComponent({})
 </script>
