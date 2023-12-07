@@ -39,6 +39,6 @@ const resultsStore = useSearchResultsStore()
 const localeStore = useLocaleStore()
 
 //let's start with some initial data
-// resultsStore.search()
+resultsStore.search()
 
 </script>
