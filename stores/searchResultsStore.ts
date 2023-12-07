@@ -1,7 +1,7 @@
 import { useQuery, useLazyQuery } from '@vue/apollo-composable'
 import gql from 'graphql-tag'
 import { defineStore } from 'pinia'
-import { Ref, ref, watch } from 'vue'
+import { Ref, reactive, ref, watch } from 'vue'
 import { Facility, FacilitySearchFilters, HealthcareProfessional, HealthcareProfessionalSearchFilters, Locale, Specialty } from '~/typedefs/gqlTypes.js'
 import { useModalStore } from './modalStore'
 import { useLoadingStore } from './loadingStore.js'
@@ -20,48 +20,64 @@ export const useSearchResultsStore = defineStore('searchResultsStore', () => {
     let refetchProfessionalsHandle: () => void
     let refetchFacilitiesHandle: () => void
 
+
     function search(searchCity?: string, searchSpecialty?: Specialty, searchLanguage?: Locale) {
         //set the loading visual state
         const loadingStore = useLoadingStore()
         loadingStore.setIsLoading(true)
 
-        const { professionalsRef, refetchProfessionals } = searchProfessionals(searchSpecialty, searchLanguage)
+        console.log('refetchProfessionalsHandle: ', refetchProfessionalsHandle)
+        if (refetchProfessionalsHandle) {
+            refetchProfessionalsHandle()
+        } else {
+            const { professionalsRef, refetchProfessionals } = searchProfessionals(searchSpecialty, searchLanguage)
+            refetchProfessionalsHandle = refetchProfessionals
 
-        refetchProfessionalsHandle = refetchProfessionals
+            //this is the async callback that will be called when the query is done (no async/await)
+            watch(professionalsRef, professionalsSearchResult => {
+                console.log(`Fetched professionals: ${JSON.stringify(professionalsSearchResult)}`)
 
-        //this is the async callback that will be called when the query is done (no async/await)
-        watch(professionalsRef, professionalsSearchResult => {
-            console.log(`Fetched professionals: ${JSON.stringify(professionalsSearchResult)}`)
+                const filteredSpecialtyProfessionals = searchSpecialty
+                    ? professionalsSearchResult.healthcareProfessionals?.filter(professional => professional.specialties.includes(searchSpecialty as Specialty))
+                    : professionalsSearchResult.healthcareProfessionals
 
-            const filteredSpecialtyProfessionals = searchSpecialty
-                ? professionalsSearchResult.healthcareProfessionals?.filter(professional => professional.specialties.includes(searchSpecialty as Specialty))
-                : professionalsSearchResult.healthcareProfessionals
+                // const filteredSpecialtyProfessionals = professionalsSearchResult.healthcareProfessionals?.filter(professional => professional.specialties.includes(searchSpecialty as Specialty))
+                // console.log('searchSpecialty =', searchSpecialty)
 
-            const professionalIds = filteredSpecialtyProfessionals?.map(professional => professional.id) ?? []
+                const professionalIds = filteredSpecialtyProfessionals?.map(professional => professional.id) ?? []
 
-            const { facilitiesRef, refetchFacilities } = searchFacilities(professionalIds, searchCity)
+                if (refetchFacilitiesHandle) {
+                    refetchFacilitiesHandle()
+                } else {
+                    const { facilitiesRef, refetchFacilities } = searchFacilities(professionalIds, searchCity)
 
-            watch(facilitiesRef, facilitiesSearchResults => {
-                console.log(`Fetched facilities: ${JSON.stringify(facilitiesSearchResults)}`)
+                    watch(facilitiesRef, facilitiesSearchResults => {
+                        console.log(`Fetched facilities: ${JSON.stringify(facilitiesSearchResults)}`)
 
-                const searchResults = filteredSpecialtyProfessionals?.map(professional => {
-                    const matchingFacilities = facilitiesSearchResults.facilities?.filter(facility => facility.healthcareProfessionalIds.includes(professional.id))
-                    return { professional, facilities: matchingFacilities } satisfies searchResult
-                })
+                        const searchResults = filteredSpecialtyProfessionals?.map(professional => {
+                            const matchingFacilities = facilitiesSearchResults.facilities?.filter(facility => facility.healthcareProfessionalIds.includes(professional.id))
+                            return { professional, facilities: matchingFacilities } satisfies searchResult
+                        })
 
-                //filter the search results by location if a location is selected (and not the default '----Any----' value)
-                const locationFilteredSearchResults = searchCity
-                    ? searchResults?.filter(item =>
-                        item.facilities.some(facility =>
-                            facility.contact?.address.cityEn === searchCity || facility.contact?.address.cityJa === searchCity))
-                    : searchResults
+                        //filter the search results by location if a location is selected (and not the default '----Any----' value)
+                        const locationFilteredSearchResults = searchCity
+                            ? searchResults?.filter(item =>
+                                item.facilities.some(facility =>
+                                    facility.contact?.address.cityEn === searchCity || facility.contact?.address.cityJa === searchCity))
+                            : searchResults
 
-                searchResultsList.value = locationFilteredSearchResults
+                        searchResultsList.value = locationFilteredSearchResults
+
+                    })
+
+                    refetchFacilitiesHandle = refetchFacilities
+
+                }
 
             })
+        }
 
-            refetchFacilitiesHandle = refetchFacilities
-        })
+
     }
 
     function setActiveSearchResult(selectedResultId: String) {
@@ -81,10 +97,10 @@ export const useSearchResultsStore = defineStore('searchResultsStore', () => {
     return { activeResultId, activeResult, searchResultsList, search, setActiveSearchResult, clearActiveSearchResult }
 })
 
- function searchProfessionals(searchSpecialty?: Specialty, searchLanguage?: Locale) {
+function searchProfessionals(searchSpecialty?: Specialty, searchLanguage?: Locale) {
     const loadingStore = useLoadingStore()
 
-    const searchProfessionalsData = {
+    const searchProfessionalsData = ref({
         filters: {
             limit: 100,
             offset: 0,
@@ -98,7 +114,7 @@ export const useSearchResultsStore = defineStore('searchResultsStore', () => {
             createdDate: undefined,
             updatedDate: undefined
         } satisfies HealthcareProfessionalSearchFilters
-    }
+    })
 
     console.log('searching professionals')
     const { result, loading, error, refetch } = useQuery(searchProfessionalsQuery, searchProfessionalsData)
@@ -120,7 +136,7 @@ export const useSearchResultsStore = defineStore('searchResultsStore', () => {
 
 function searchFacilities(healthcareProfessionalIds: string[], searchLocation?: string) {
     //TODO: add search by location
-    const searchFacilitiesData = {
+    const searchFacilitiesData = ref({
         filters: {
             limit: 100,
             offset: 0,
@@ -133,7 +149,7 @@ function searchFacilities(healthcareProfessionalIds: string[], searchLocation?: 
             orderBy: undefined,
             updatedDate: undefined
         } satisfies FacilitySearchFilters
-    }
+    })
 
     console.log('searching facilities')
     const { result, loading, error, refetch } = useQuery(searchFacilitiesQuery, searchFacilitiesData)
