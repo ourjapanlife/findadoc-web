@@ -5,12 +5,6 @@
   NETLIFY_USE_YARN="true"
   YARN_VERSION="3.4.1"
 
-[[redirects]]
-  from = "/"
-  to = "https://findadoc.jp"
-  status = 200
-  force = true
-  headers = {X-From = "Netlify"}
 [[headers]]
   for = "/*"
   [headers.values]
