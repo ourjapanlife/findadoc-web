@@ -1,83 +1,115 @@
-import { useQuery, useLazyQuery } from '@vue/apollo-composable'
+import { useQuery } from '@vue/apollo-composable'
 import gql from 'graphql-tag'
 import { defineStore } from 'pinia'
-import { Ref, reactive, ref, watch } from 'vue'
+import { Ref, ref, watch } from 'vue'
 import { Facility, FacilitySearchFilters, HealthcareProfessional, HealthcareProfessionalSearchFilters, Locale, Specialty } from '~/typedefs/gqlTypes.js'
 import { useModalStore } from './modalStore'
 import { useLoadingStore } from './loadingStore.js'
-import { useReadQuery } from '@apollo/client'
 
 type searchResult = {
     professional: HealthcareProfessional,
     facilities: Facility[]
 }
 
+let searchProfessionalsVariablesRef: Ref<{
+    filters: {
+        limit: number;
+        offset: number;
+        specialties: Specialty[] | undefined;
+        spokenLanguages: Locale[] | undefined;
+        acceptedInsurance: undefined;
+        degrees: undefined;
+        names: undefined;
+        orderBy: undefined;
+        createdDate: undefined;
+        updatedDate: undefined;
+    };
+} | undefined>
+
+let searchFacilitiesVariablesRef: Ref<{
+    filters: {
+        limit: number;
+        offset: number;
+        healthcareProfessionalIds: string[];
+        contact: undefined;
+        createdDate: undefined;
+        healthcareProfessionalName: undefined;
+        nameEn: undefined;
+        nameJa: undefined;
+        orderBy: undefined;
+        updatedDate: undefined;
+    };
+} | undefined>
+
 export const useSearchResultsStore = defineStore('searchResultsStore', () => {
     const activeResultId: Ref<String | undefined> = ref()
     const activeResult: Ref<searchResult | undefined> = ref()
     const searchResultsList: Ref<searchResult[]> = ref([])
 
-    let refetchProfessionalsHandle: () => void
-    let refetchFacilitiesHandle: () => void
+    const searchCity: Ref<string | undefined> = ref()
+    const searchSpecialty: Ref<Specialty | undefined> = ref()
+    const searchLanguage: Ref<Locale | undefined> = ref()
 
-
-    function search(searchCity?: string, searchSpecialty?: Specialty, searchLanguage?: Locale) {
+    function search(selectedSearchCity?: string, selectedSearchSpecialty?: Specialty, selectedSearchLanguage?: Locale) {
         //set the loading visual state
         const loadingStore = useLoadingStore()
         loadingStore.setIsLoading(true)
 
-        console.log('refetchProfessionalsHandle: ', refetchProfessionalsHandle)
-        if (refetchProfessionalsHandle) {
-            refetchProfessionalsHandle()
-        } else {
-            const { professionalsRef, refetchProfessionals } = searchProfessionals(searchSpecialty, searchLanguage)
-            refetchProfessionalsHandle = refetchProfessionals
+        searchCity.value = selectedSearchCity
+        searchSpecialty.value = selectedSearchSpecialty
+        searchLanguage.value = selectedSearchLanguage
 
-            //this is the async callback that will be called when the query is done (no async/await)
-            watch(professionalsRef, professionalsSearchResult => {
-                console.log(`Fetched professionals: ${JSON.stringify(professionalsSearchResult)}`)
+        //if we have already fetched data once, to trigger a new query, we can just update the query variables ref. This will trigger the watch function again
+        if (searchProfessionalsVariablesRef && searchProfessionalsVariablesRef.value) {
+            console.log('refetching professionals')
+            searchProfessionalsVariablesRef.value.filters = {
+                ...searchProfessionalsVariablesRef?.value?.filters,
+                specialties: searchSpecialty.value ? [searchSpecialty.value] : undefined,
+                spokenLanguages: searchLanguage.value ? [searchLanguage.value] : undefined
+            }
 
-                const filteredSpecialtyProfessionals = searchSpecialty
-                    ? professionalsSearchResult.healthcareProfessionals?.filter(professional => professional.specialties.includes(searchSpecialty as Specialty))
-                    : professionalsSearchResult.healthcareProfessionals
-
-                // const filteredSpecialtyProfessionals = professionalsSearchResult.healthcareProfessionals?.filter(professional => professional.specialties.includes(searchSpecialty as Specialty))
-                // console.log('searchSpecialty =', searchSpecialty)
-
-                const professionalIds = filteredSpecialtyProfessionals?.map(professional => professional.id) ?? []
-
-                if (refetchFacilitiesHandle) {
-                    refetchFacilitiesHandle()
-                } else {
-                    const { facilitiesRef, refetchFacilities } = searchFacilities(professionalIds, searchCity)
-
-                    watch(facilitiesRef, facilitiesSearchResults => {
-                        console.log(`Fetched facilities: ${JSON.stringify(facilitiesSearchResults)}`)
-
-                        const searchResults = filteredSpecialtyProfessionals?.map(professional => {
-                            const matchingFacilities = facilitiesSearchResults.facilities?.filter(facility => facility.healthcareProfessionalIds.includes(professional.id))
-                            return { professional, facilities: matchingFacilities } satisfies searchResult
-                        })
-
-                        //filter the search results by location if a location is selected (and not the default '----Any----' value)
-                        const locationFilteredSearchResults = searchCity
-                            ? searchResults?.filter(item =>
-                                item.facilities.some(facility =>
-                                    facility.contact?.address.cityEn === searchCity || facility.contact?.address.cityJa === searchCity))
-                            : searchResults
-
-                        searchResultsList.value = locationFilteredSearchResults
-
-                    })
-
-                    refetchFacilitiesHandle = refetchFacilities
-
-                }
-
-            })
+            return
         }
 
+        const professionalsRef = searchProfessionals(searchSpecialty.value, searchLanguage.value)
 
+        //this is the async callback that will be called when the query is done (no async/await)
+        watch(professionalsRef, professionalsSearchResult => {
+            console.log(`Fetched professionals: ${JSON.stringify(professionalsSearchResult)}`)
+
+            const professionalIds = professionalsSearchResult?.healthcareProfessionals?.map(professional => professional.id) ?? []
+
+            //if we have already fetched data once, to trigger a new query, we can just update the query variables ref. This will trigger the watch function again
+            if (searchFacilitiesVariablesRef && searchFacilitiesVariablesRef.value) {
+                console.log('refetching facilities')
+                searchFacilitiesVariablesRef.value.filters.healthcareProfessionalIds = professionalIds
+                return
+            }
+
+            //get the facilities that match the professionals we found
+            const facilitiesRef = searchFacilities(professionalIds)
+
+            watch(facilitiesRef, facilitiesSearchResults => {
+                console.log(`Fetched facilities: ${JSON.stringify(facilitiesSearchResults)}`)
+
+                const searchResults = professionalsSearchResult?.healthcareProfessionals?.map(professional => {
+                    const matchingFacilities = facilitiesSearchResults?.facilities?.filter(facility => facility.healthcareProfessionalIds.includes(professional.id)) ?? []
+
+                    return { professional, facilities: matchingFacilities } satisfies searchResult
+                })
+
+                //filter the search results by location if a location is selected
+                const locationFilteredSearchResults = searchCity.value
+                    ? searchResults?.filter(item =>
+                        item.facilities.some(facility =>
+                            facility.contact?.address.cityEn === searchCity.value || facility.contact?.address.cityJa === searchCity.value))
+                    : searchResults
+
+                searchResultsList.value = locationFilteredSearchResults
+
+                loadingStore.setIsLoading(false)
+            })
+        })
     }
 
     function setActiveSearchResult(selectedResultId: String) {
@@ -97,15 +129,15 @@ export const useSearchResultsStore = defineStore('searchResultsStore', () => {
     return { activeResultId, activeResult, searchResultsList, search, setActiveSearchResult, clearActiveSearchResult }
 })
 
+
 function searchProfessionals(searchSpecialty?: Specialty, searchLanguage?: Locale) {
     const loadingStore = useLoadingStore()
 
-    const searchProfessionalsData = ref({
+    const searchProfessionalsData = {
         filters: {
             limit: 100,
             offset: 0,
-            // we can't do more than 1 array contains filter in a single query, so we have to do this on the client side
-            // specialties: searchSpecialty ? [searchSpecialty] : undefined,
+            specialties: searchSpecialty ? [searchSpecialty] : undefined,
             spokenLanguages: searchLanguage ? [searchLanguage] : undefined,
             acceptedInsurance: undefined,
             degrees: undefined,
@@ -114,10 +146,12 @@ function searchProfessionals(searchSpecialty?: Specialty, searchLanguage?: Local
             createdDate: undefined,
             updatedDate: undefined
         } satisfies HealthcareProfessionalSearchFilters
-    })
+    }
 
     console.log('searching professionals')
-    const { result, loading, error, refetch } = useQuery(searchProfessionalsQuery, searchProfessionalsData)
+    const { result, loading, error, variables } = useQuery(searchProfessionalsQuery, searchProfessionalsData)
+
+    searchProfessionalsVariablesRef = variables
 
     //we want to set the app to a loading state while querying. This value is reactive
     watch(loading, (newValue) => {
@@ -131,10 +165,10 @@ function searchProfessionals(searchSpecialty?: Specialty, searchLanguage?: Local
         alert(`Error getting data! Please contact our support team by clicking the bottom right link on the page!`)
     })
 
-    return { professionalsRef: result as Ref<{ healthcareProfessionals: HealthcareProfessional[] }>, refetchProfessionals: refetch }
+    return result as Ref<{ healthcareProfessionals: HealthcareProfessional[] }>
 }
 
-function searchFacilities(healthcareProfessionalIds: string[], searchLocation?: string) {
+function searchFacilities(healthcareProfessionalIds: string[]) {
     //TODO: add search by location
     const searchFacilitiesData = ref({
         filters: {
@@ -152,7 +186,9 @@ function searchFacilities(healthcareProfessionalIds: string[], searchLocation?: 
     })
 
     console.log('searching facilities')
-    const { result, loading, error, refetch } = useQuery(searchFacilitiesQuery, searchFacilitiesData)
+    const { result, loading, error, variables } = useQuery(searchFacilitiesQuery, searchFacilitiesData)
+
+    searchFacilitiesVariablesRef = variables
 
     //we want to set the app to a loading state while querying. This value is reactive
     watch(loading, (newValue) => {
@@ -166,7 +202,7 @@ function searchFacilities(healthcareProfessionalIds: string[], searchLocation?: 
         alert(`Error getting data! Please contact our support team by clicking the bottom right link on the page!`)
     })
 
-    return { facilitiesRef: result as Ref<{ facilities: Facility[] }>, refetchFacilities: refetch }
+    return result as Ref<{ facilities: Facility[] }>
 }
 
 
