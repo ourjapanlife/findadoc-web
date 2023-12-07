@@ -149,7 +149,7 @@ function searchProfessionals(searchSpecialty?: Specialty, searchLanguage?: Local
     }
 
     console.log('searching professionals')
-    const { result, loading, error, variables } = useQuery(searchProfessionalsQuery, searchProfessionalsData)
+    const { result, loading, error, variables } = useQuery(searchProfessionalsQuery, searchProfessionalsData, { fetchPolicy: 'no-cache' })
 
     searchProfessionalsVariablesRef = variables
 
@@ -186,7 +186,7 @@ function searchFacilities(healthcareProfessionalIds: string[]) {
     })
 
     console.log('searching facilities')
-    const { result, loading, error, variables } = useQuery(searchFacilitiesQuery, searchFacilitiesData)
+    const { result, loading, error, variables } = useQuery(searchFacilitiesQuery, searchFacilitiesData, { fetchPolicy: 'no-cache' })
 
     searchFacilitiesVariablesRef = variables
 
