@@ -202,6 +202,7 @@ const searchFacilitiesQuery = gql`query QueryFacilities($filters: FacilitySearch
           addressLine1En
           addressLine2En
           addressLine1Ja
+          addressLine2Ja
           cityJa
           cityEn
             prefectureJa
