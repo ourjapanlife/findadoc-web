@@ -4,3 +4,8 @@
 [build.environment]
   NETLIFY_USE_YARN="true"
   YARN_VERSION="3.4.1"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Access-Control-Allow-Origin = "*"
