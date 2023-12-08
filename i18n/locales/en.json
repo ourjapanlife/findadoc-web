@@ -68,6 +68,7 @@
     },
     "topNav": {
         "about": "About",
+        "home": "Home",
         "submit": "Add a Doctor"
     }
 }
