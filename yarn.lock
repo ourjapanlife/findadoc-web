@@ -2189,7 +2189,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@googlemaps/js-api-loader@npm:^1.12.11":
+"@googlemaps/js-api-loader@npm:^1.16.2":
   version: 1.16.2
   resolution: "@googlemaps/js-api-loader@npm:1.16.2"
   dependencies:
@@ -2198,13 +2198,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@googlemaps/markerclusterer@npm:^2.0.6":
-  version: 2.3.2
-  resolution: "@googlemaps/markerclusterer@npm:2.3.2"
+"@googlemaps/markerclusterer@npm:^2.4.0":
+  version: 2.5.1
+  resolution: "@googlemaps/markerclusterer@npm:2.5.1"
   dependencies:
     fast-deep-equal: "npm:^3.1.3"
     supercluster: "npm:^8.0.1"
-  checksum: 63bca130a52c12a8bfd5c61e90d55a6a7f150d38a2450b92cb484089fb608e1d4862b29c742abaa75e1bf89c953605fce0b037ed1e1b66e99e11c67938b9395a
+  checksum: aea0843f9033c204f2e0cc9b8be7066360bded959aa0f41ab4de1812b03d1ebb476e6ab1c4fe372cb734b8bb94622569cc15f780521321645bf98218e4d09666
   languageName: node
   linkType: hard
 
@@ -9348,7 +9348,7 @@ __metadata:
     vue-router: "npm:^4.2.5"
     vue-server-renderer: "npm:^2.7.15"
     vue-template-compiler: "npm:^2.7.15"
-    vue3-google-map: "npm:^0.15.0"
+    vue3-google-map: "npm:^0.18.0"
     webpack: "npm:^5.89.0"
   languageName: unknown
   linkType: soft
@@ -17779,16 +17779,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vue3-google-map@npm:^0.15.0":
-  version: 0.15.0
-  resolution: "vue3-google-map@npm:0.15.0"
+"vue3-google-map@npm:^0.18.0":
+  version: 0.18.0
+  resolution: "vue3-google-map@npm:0.18.0"
   dependencies:
-    "@googlemaps/js-api-loader": "npm:^1.12.11"
-    "@googlemaps/markerclusterer": "npm:^2.0.6"
+    "@googlemaps/js-api-loader": "npm:^1.16.2"
+    "@googlemaps/markerclusterer": "npm:^2.4.0"
     fast-deep-equal: "npm:^3.1.3"
   peerDependencies:
-    vue: 3
-  checksum: db3ee83f574694bbd4f5194963b3ae4953cea64bc9b53f34615e807b3998f771448eae61fa4eb24d509e705b8e246921a90202a3fa16873b49dd661c30280fbc
+    vue: ^3
+  checksum: 880a944c5875500750d9987e1653813afa7cf9426ee146a9b08b1f5f4add892eba28a7d1ec0907bfb3f52b9ef2cf368d13c14b5107f0fc98f91258ba7db7375c
   languageName: node
   linkType: hard
 

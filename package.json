@@ -33,7 +33,7 @@
         "vue-router": "^4.2.5",
         "vue-server-renderer": "^2.7.15",
         "vue-template-compiler": "^2.7.15",
-        "vue3-google-map": "^0.15.0"
+        "vue3-google-map": "^0.18.0"
     },
     "devDependencies": {
         "@graphql-codegen/cli": "^3.0.0",
