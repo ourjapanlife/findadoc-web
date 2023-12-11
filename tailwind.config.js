@@ -46,5 +46,5 @@ module.exports = {
             zinc: colors.zinc
         }
     },
-    plugins: []
+    plugins: [require('@tailwindcss/forms')]
 }
