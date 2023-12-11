@@ -1,8 +1,8 @@
+import { gql } from 'graphql-request'
 import { defineStore } from "pinia"
-import { ref, watch } from 'vue'
-import { useMutation } from '@vue/apollo-composable'
-import gql from 'graphql-tag'
-import { CreateSubmissionInput, Locale } from "~/typedefs/gqlTypes"
+import { ref } from 'vue'
+import { CreateSubmissionInput, Locale, Submission } from "~/typedefs/gqlTypes"
+import { gqlClient } from '../utils/graphql.js'
 
 export const useSubmissionStore = defineStore('submissionStore', () => {
     const location = ref('')
@@ -13,24 +13,7 @@ export const useSubmissionStore = defineStore('submissionStore', () => {
     const otherNotes = ref('')
     const submissionCompleted = ref(false)
 
-    const createSubmissionMutation = gql`mutation CreateSubmission($input: CreateSubmissionInput!) {
-        createSubmission(input: $input) {
-            id
-            googleMapsUrl
-            healthcareProfessionalName
-            spokenLanguages
-            isApproved
-            isRejected
-            isUnderReview
-            createdDate
-            updatedDate
-        }
-    }`
-
-
-
-
-    function submit() {
+    async function submit() {
         const spokenLanguages: Locale[] = []
 
         if (selectLanguage1.value !== '') {
@@ -51,9 +34,12 @@ export const useSubmissionStore = defineStore('submissionStore', () => {
 
         console.log('submission =', submission)
 
-        const { mutate: sendSubmission } = useMutation(createSubmissionMutation, () => ({variables: {input: submission}}))
+        const result = await gqlClient.request<Submission>(createSubmissionMutation, {
+            variables: {
+                input: submission
+            }
+        })
 
-        sendSubmission()
         submissionCompleted.value = true
     }
 
@@ -69,3 +55,17 @@ export const useSubmissionStore = defineStore('submissionStore', () => {
 
     return { location, firstName, lastName, selectLanguage1, selectLanguage2, otherNotes, submissionCompleted, submit, resetForm }
 })
+
+const createSubmissionMutation = gql`mutation CreateSubmission($input: CreateSubmissionInput!) {
+    createSubmission(input: $input) {
+        id
+        googleMapsUrl
+        healthcareProfessionalName
+        spokenLanguages
+        isApproved
+        isRejected
+        isUnderReview
+        createdDate
+        updatedDate
+    }
+}`

@@ -7,7 +7,8 @@
 </template>
 
 <script setup lang="ts">
-import { initializeApollo } from './utils/apollo.js'
+import { initializeGqlClient } from './utils/graphql.js'
 
-initializeApollo()
+initializeGqlClient()
 </script>
+./utils/graphql.js
