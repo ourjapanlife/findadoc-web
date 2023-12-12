@@ -136,7 +136,7 @@ const phone = computed(
 
 <style>
 .hamburger-list-icon {
-    --background-color: transparent;
-    --second-background-color: --color-bg-secondary;
+  --background-color: transparent;
+  --second-background-color: --color-bg-secondary;
 }
 </style>

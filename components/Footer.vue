@@ -41,18 +41,15 @@
 </template>
 <style>
 @media screen and (max-width: 640px) {
+  .footer {
+    flex-flow: column wrap;
+    justify-content: flex-start;
+  }
 
-
-    .footer {
-        flex-direction: column;
-        flex-wrap: wrap;
-        justify-content: flex-start;
-    }
-
-    .left-footer-section,
-    .middle-footer-section,
-    .right-footer-section {
-        align-self: center;
-    }
+  .left-footer-section,
+  .middle-footer-section,
+  .right-footer-section {
+    align-self: center;
+  }
 }
 </style>
