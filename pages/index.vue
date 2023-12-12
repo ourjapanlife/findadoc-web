@@ -14,13 +14,13 @@ import MainContentContainer from '~/components/MainContentContainer.vue';
 
 <style>
 @media screen and (max-width: 640px) {
-    .content-container {
-        flex-direction: column;
-    }
+  .content-container {
+    flex-direction: column;
+  }
 
-    .left-container {
-        width: 100%;
+  .left-container {
+    width: 100%;
 
-    }
+  }
 }
 </style>
