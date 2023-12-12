@@ -6,18 +6,16 @@
             </svg>
             <span class="w-4 font-bold pl-2 self-center"> {{ name }} </span>
         </div>
-        <div class="result-details flex my-2 ml-4">
+        <div class="result-details flex flex-col my-2 ml-4">
+            <span class="px-2 text-primary font-medium"> {{ facilityName }}</span>
             <div class="flex" v-for="(specialty, index) in formattedSpecialties">
-                <span class="pr-2"> {{ specialty }}</span>
-                <span class="self-center">·</span>
+                <span class="ml-2 pr-2 italic"> {{ specialty }}</span>
             </div>
-            <div class="self-center">·</div>
-            <span class="px-2"> {{ facilityName }}</span>
-        </div>
-        <div class="result-tags flex flex-wrap w-64 mb-2 mt-3 ml-4">
-            <div :key="index" v-for="(spokenLanguage, index) in formattedLanguages"
-                class="px-2 py-[1px] mr-2 border border-primary/40 rounded-full shadow text-sm hover:bg-primary/20 transition-all">
-                {{ spokenLanguage }}
+            <div class="result-tags flex flex-wrap w-64 mb-2 mt-3 ml-1">
+                <div :key="index" v-for="(spokenLanguage, index) in formattedLanguages"
+                    class="px-2 py-[1px] mr-2 border border-primary/40 rounded-full shadow text-sm hover:bg-primary/20 transition-all">
+                    {{ spokenLanguage }}
+                </div>
             </div>
         </div>
     </div>
