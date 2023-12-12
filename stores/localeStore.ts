@@ -81,4 +81,5 @@ export const localeDisplayOptions = [
 export const mvpLocaleDisplayOptions = [
     { code: Locale.EnUs, simpleText: 'English', displayText: 'English (US)' },
     { code: Locale.JaJp, simpleText: '日本語', displayText: '日本語 (Japan)' },
+    { code: Locale.SwKe, simpleText: 'Swahili', displayText: 'Swahili (Kenya)' },
 ] satisfies LocaleDisplay[]

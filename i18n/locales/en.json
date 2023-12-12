@@ -60,6 +60,10 @@
         "doctorsNearby": "Doctors Nearby",
         "filters": "Filters"
     },
+    "searchResultsDetails": {
+        "speaks": "This doctor speaks",
+        "contact": "Contact"
+    },
     "thankYouPage": {
         "heading": "Thank you!",
         "submission": "Your submission will be reviewed shortly by our moderators.",
