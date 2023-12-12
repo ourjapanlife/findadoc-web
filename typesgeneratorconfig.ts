@@ -2,7 +2,7 @@ import { CodegenConfig } from '@graphql-codegen/cli'
 
 const config: CodegenConfig = {
     overwrite: true,
-    schema: 'https://findadoc-api-9brq4.ondigitalocean.app/api',
+    schema: 'https://api.findadoc.jp',
     generates: {
         './typedefs/gqlTypes.ts': {
             plugins: ['typescript', 'typescript-resolvers']
