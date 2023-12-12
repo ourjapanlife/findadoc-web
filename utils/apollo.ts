@@ -13,7 +13,7 @@ export const initializeApollo = () => {
 
     apollo = new ApolloClient({
         link: createHttpLink({
-            uri: 'https://findadoc-api-9brq4.ondigitalocean.app/api',
+            uri: 'https://api.findadoc.jp',
         }),
         cache: new InMemoryCache()
     })
