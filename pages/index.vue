@@ -1,7 +1,9 @@
 
+import BetaBanner from '~/components/BetaBanner.vue';
 import MainContentContainer from '~/components/MainContentContainer.vue';
 
 <template>
+    <BetaBanner />
     <div class="flex overflow-hidden">
         <LeftNavbar class="flex-0 bg-primary-bg w-[358px]" />
         <div class="flex-1">
