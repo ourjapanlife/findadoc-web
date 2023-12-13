@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 
-const colors = require('tailwindcss/colors');
+const colors = require('tailwindcss/colors')
 
 module.exports = {
     content: [
@@ -9,11 +9,11 @@ module.exports = {
         './pages/**/*.vue',
         './plugins/**/*.{js,ts}',
         './nuxt.config.{js,ts}',
-        './app.vue',
+        './app.vue'
     ],
     theme: {
         screens: {
-            md: { min: '800px' },
+            md: { min: '800px' }
         },
         colors: {
             ////from tailwind labs https://youtu.be/MAtaT8BZEAo. allows opacity to still work with css vars.
@@ -61,7 +61,7 @@ module.exports = {
                     '100%': { transform: 'translateX(0%)' },
                 },
             },
-        },
+        }
     },
-    plugins: [],
+    plugins: []
 };
