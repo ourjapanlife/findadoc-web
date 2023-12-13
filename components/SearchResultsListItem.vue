@@ -30,12 +30,12 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
-import { useLocaleStore } from "~/stores/localeStore.js";
-import { useSpecialtiesStore } from "~/stores/specialtiesStore.js";
+import { computed } from "vue"
+import { useLocaleStore } from "~/stores/localeStore.js"
+import { useSpecialtiesStore } from "~/stores/specialtiesStore.js"
 
-const localStore = useLocaleStore();
-const specialtiesStore = useSpecialtiesStore();
+const localStore = useLocaleStore()
+const specialtiesStore = useSpecialtiesStore()
 
 const props = defineProps({
     name: {
@@ -54,28 +54,28 @@ const props = defineProps({
         type: Array,
         required: true,
     },
-});
+})
 
 const formattedSpecialties = computed(() => {
     const specialtiesDisplayText = props.specialties?.map((s) => {
         const specialtyDisplayText =
             specialtiesStore.specialtyDisplayOptions.find(
                 (l) => l.code === s
-            )?.displayText;
-        return specialtyDisplayText;
-    });
+            )?.displayText
+        return specialtyDisplayText
+    })
 
-    return specialtiesDisplayText;
-});
+    return specialtiesDisplayText
+})
 
 const formattedLanguages = computed(() => {
     const languagesDisplayText = props.spokenLanguages?.map((s) => {
         const languageDisplayText = localStore.localeDisplayOptions.find(
             (l) => l.code === s
-        )?.simpleText;
-        return languageDisplayText;
-    });
+        )?.simpleText
+        return languageDisplayText
+    })
 
-    return languagesDisplayText;
-});
+    return languagesDisplayText
+})
 </script>

@@ -65,50 +65,50 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
-import { useLocaleStore } from "~/stores/localeStore.js";
-import { useSpecialtiesStore } from "~/stores/specialtiesStore.js";
-import { useSearchResultsStore } from "~/stores/searchResultsStore";
-import { Locale } from "~/typedefs/gqlTypes.js";
+import { computed } from "vue"
+import { useLocaleStore } from "~/stores/localeStore.js"
+import { useSpecialtiesStore } from "~/stores/specialtiesStore.js"
+import { useSearchResultsStore } from "~/stores/searchResultsStore"
+import { Locale } from "~/typedefs/gqlTypes.js"
 
-const resultsStore = useSearchResultsStore();
-const localeStore = useLocaleStore();
-const specialtiesStore = useSpecialtiesStore();
+const resultsStore = useSearchResultsStore()
+const localeStore = useLocaleStore()
+const specialtiesStore = useSpecialtiesStore()
 
 const healthcareProfessionalName = computed(() => {
     const englishName =
         resultsStore.$state.activeResult?.professional.names.find(
             (n) => n.locale === Locale.EnUs
-        );
+        )
     const japaneseName =
         resultsStore.$state.activeResult?.professional.names.find(
             (n) => n.locale === Locale.JaJp
-        );
-    const englishFullName = `${englishName?.firstName} ${englishName?.lastName}`;
-    const japaneseFullName = `${japaneseName?.lastName} ${japaneseName?.firstName}`;
+        )
+    const englishFullName = `${englishName?.firstName} ${englishName?.lastName}`
+    const japaneseFullName = `${japaneseName?.lastName} ${japaneseName?.firstName}`
     return localeStore.locale.code === Locale.EnUs
         ? englishFullName
-        : japaneseFullName;
-});
+        : japaneseFullName
+})
 const specialties = computed(() => {
     const specialties =
-        resultsStore.$state.activeResult?.professional.specialties;
+        resultsStore.$state.activeResult?.professional.specialties
 
     const specialtiesDisplayText = specialties?.map((specialty) => {
         const specialtyDisplayText =
             specialtiesStore.specialtyDisplayOptions.find(
                 (options) => options.code === specialty
-            )?.displayText;
-        return specialtyDisplayText;
-    });
+            )?.displayText
+        return specialtyDisplayText
+    })
 
-    return specialtiesDisplayText;
-});
+    return specialtiesDisplayText
+})
 const facilityName = computed(() => {
-    const englishName = resultsStore.$state.activeResult?.facilities[0].nameEn;
-    const japaneseName = resultsStore.$state.activeResult?.facilities[0].nameJa;
-    return localeStore.locale.code === Locale.EnUs ? englishName : japaneseName;
-});
+    const englishName = resultsStore.$state.activeResult?.facilities[0].nameEn
+    const japaneseName = resultsStore.$state.activeResult?.facilities[0].nameJa
+    return localeStore.locale.code === Locale.EnUs ? englishName : japaneseName
+})
 
 const spokenLanguages = computed(() => {
     const languagesDisplayText =
@@ -117,42 +117,41 @@ const spokenLanguages = computed(() => {
                 const languageDisplayText =
                     localeStore.localeDisplayOptions.find(
                         (l) => l.code === s
-                    )?.simpleText;
-                return languageDisplayText;
+                    )?.simpleText
+                return languageDisplayText
             }
-        );
+        )
 
-    return languagesDisplayText;
-});
+    return languagesDisplayText
+})
 
 const addressLine1 = computed(() => {
     const addressObj =
-        resultsStore.$state.activeResult?.facilities[0].contact.address;
+        resultsStore.$state.activeResult?.facilities[0].contact.address
 
-    const englishAddress = `${addressObj?.addressLine1En} ${addressObj?.addressLine2En}`;
-    const japaneseAddress = `${addressObj?.postalCode} ${addressObj?.prefectureJa}${addressObj?.cityJa}${addressObj?.addressLine1Ja}${addressObj?.addressLine2Ja}`;
+    const englishAddress = `${addressObj?.addressLine1En} ${addressObj?.addressLine2En}`
+    const japaneseAddress = `${addressObj?.postalCode} ${addressObj?.prefectureJa}${addressObj?.cityJa}${addressObj?.addressLine1Ja}${addressObj?.addressLine2Ja}`
     return localeStore.locale.code === Locale.EnUs
         ? englishAddress
-        : japaneseAddress;
-});
+        : japaneseAddress
+})
 const addressLine2 = computed(() => {
     const addressObj =
-        resultsStore.$state.activeResult?.facilities[0].contact.address;
+        resultsStore.$state.activeResult?.facilities[0].contact.address
 
-    const englishAddress = `${addressObj?.cityEn}, ${addressObj?.prefectureEn} ${addressObj?.postalCode}`;
-    return localeStore.locale.code === Locale.EnUs ? englishAddress : "";
-});
+    const englishAddress = `${addressObj?.cityEn}, ${addressObj?.prefectureEn} ${addressObj?.postalCode}`
+    return localeStore.locale.code === Locale.EnUs ? englishAddress : ""
+})
 const website = computed(
     () => resultsStore.$state.activeResult?.facilities[0]?.contact?.website
-);
+)
 const phone = computed(
     () => resultsStore.$state.activeResult?.facilities[0]?.contact?.phone
-);
+)
 </script>
 
 <style>
 .hamburger-list-icon {
-    --background-color: transparent;
-    --second-background-color: --color-bg-secondary;
+    --background-color: transparent --second-background-color: --color-bg-secondary
 }
 </style>
