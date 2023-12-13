@@ -1,17 +1,9 @@
 <template>
     <div class="result-details landscape:min-w-[480px]">
-        <div
-            class="header flex flex-1 bg-primary bg-gradient-to-r from-primary to-secondary"
-        >
-            <svg
-                role="img"
-                alt="Facility Banner Image"
-                title="banner image"
-                class="banner-icon w-48 h-48 fill-primary-text-inverted ml-8"
-            >
-                <use
-                    xlink:href="../assets/images/doctors-banner.svg#doctors-icon-svg"
-                />
+        <div class="header flex flex-1 bg-primary bg-gradient-to-r from-primary to-secondary">
+            <svg role="img" alt="Facility Banner Image" title="banner image"
+                class="banner-icon w-48 h-48 fill-primary-text-inverted ml-8">
+                <use xlink:href="../assets/images/doctors-banner.svg#doctors-icon-svg" />
             </svg>
         </div>
         <div class="result-content ml-2">
@@ -20,17 +12,11 @@
                     healthcareProfessionalName
                 }}</span>
             </div>
-            <div
-                class="result-details flex flex-col mb-1 ml-4 pl-2 mt-2 text-sm"
-            >
+            <div class="result-details flex flex-col mb-1 ml-4 pl-2 mt-2 text-sm">
                 <span class="px-3 text-primary/90 font-medium text-lg">{{
                     facilityName
                 }}</span>
-                <div
-                    class="flex"
-                    v-for="(specialty, index) in specialties"
-                    :key="index"
-                >
+                <div class="flex" v-for="(specialty, index) in specialties" :key="index">
                     <span class="px-3 italic">{{ specialty }}</span>
                 </div>
             </div>
@@ -38,14 +24,9 @@
                 <div class="ml-9 mt-2 font-bold text-sm">
                     <span>{{ $t("searchResultsDetails.speaks") }}:</span>
                 </div>
-                <div
-                    class="result-tags flex flex-wrap w-64 mb-6 mt-1 ml-6 pl-2"
-                >
-                    <div
-                        :key="index"
-                        v-for="(spokenLanguage, index) in spokenLanguages"
-                        class="pl-2 pr-2 py-[1px] mr-2 border-2 border-primary/40 rounded-full shadow-sm text-md text-primary hover:bg-primary/20 transition-all"
-                    >
+                <div class="result-tags flex flex-wrap w-64 mb-6 mt-1 ml-6 pl-2">
+                    <div :key="index" v-for="(spokenLanguage, index) in spokenLanguages"
+                        class="pl-2 pr-2 py-[1px] mr-2 border-2 border-primary/40 rounded-full shadow-sm text-md text-primary hover:bg-primary/20 transition-all">
                         {{ spokenLanguage }}
                     </div>
                 </div>
@@ -55,15 +36,9 @@
                     $t("searchResultsDetails.contact")
                 }}</span>
                 <div class="address flex my-4">
-                    <svg
-                        role="img"
-                        alt="Facility Banner Image"
-                        title="banner image"
-                        class="banner-icon w-6 h-6 stroke-primary mr-2 self-center"
-                    >
-                        <use
-                            xlink:href="../assets/images/map-pin-icon.svg#map-pin-icon-svg"
-                        />
+                    <svg role="img" alt="Facility Banner Image" title="banner image"
+                        class="banner-icon w-6 h-6 stroke-primary mr-2 self-center">
+                        <use xlink:href="../assets/images/map-pin-icon.svg#map-pin-icon-svg" />
                     </svg>
                     <div class="flex flex-col">
                         <div>{{ addressLine1 }}</div>
@@ -71,28 +46,16 @@
                     </div>
                 </div>
                 <div class="website flex my-4">
-                    <svg
-                        role="img"
-                        alt="Facility Banner Image"
-                        title="banner image"
-                        class="banner-icon w-6 h-6 stroke-primary mr-2 self-center"
-                    >
-                        <use
-                            xlink:href="../assets/images/globe-icon.svg#globe-icon-svg"
-                        />
+                    <svg role="img" alt="Facility Banner Image" title="banner image"
+                        class="banner-icon w-6 h-6 stroke-primary mr-2 self-center">
+                        <use xlink:href="../assets/images/globe-icon.svg#globe-icon-svg" />
                     </svg>
                     <a :href="website" v-if="website">{{ website }}</a>
                 </div>
                 <div class="phone flex my-4">
-                    <svg
-                        role="img"
-                        alt="Facility Banner Image"
-                        title="banner image"
-                        class="banner-icon w-6 h-6 stroke-primary mr-2 self-center"
-                    >
-                        <use
-                            xlink:href="../assets/images/phone-icon.svg#phone-icon-svg"
-                        />
+                    <svg role="img" alt="Facility Banner Image" title="banner image"
+                        class="banner-icon w-6 h-6 stroke-primary mr-2 self-center">
+                        <use xlink:href="../assets/images/phone-icon.svg#phone-icon-svg" />
                     </svg>
                     {{ phone }}
                 </div>
@@ -189,7 +152,7 @@ const phone = computed(
 
 <style>
 .hamburger-list-icon {
-  --background-color: transparent;
-  --second-background-color: --color-bg-secondary;
+    --background-color: transparent;
+    --second-background-color: --color-bg-secondary;
 }
 </style>
