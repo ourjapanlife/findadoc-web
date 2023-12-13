@@ -1,7 +1,3 @@
-
-import BetaBanner from '~/components/BetaBanner.vue';
-import MainContentContainer from '~/components/MainContentContainer.vue';
-
 <template>
     <BetaBanner />
     <div class="flex overflow-hidden">
