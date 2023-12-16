@@ -1,6 +1,7 @@
 <template>
-    <div class="footer flex border-t-4 border-secondary-bg/40 bg-secondary-bg text-sm text-primary-text font-semibold py-2">
-        <div class="left-footer-section flex flex-0 justify-start">
+    <div
+        class="footer flex border-t-4 border-secondary-bg/40 bg-secondary-bg text-sm text-primary-text font-semibold py-2 sm:flex-col sm:flex-wrap sm:justify-start">
+        <div class="left-footer-section flex flex-0 justify-start sm:self-center">
             <NuxtLink to="/" class="self-center ml-8 mr-2 hover:text-primary-hover transition-colors">© {{ new
                 Date().getUTCFullYear() }} Find a Doc, Japan</NuxtLink>
             <span class="self-center">·</span>
@@ -14,7 +15,7 @@
                     data-testid="terms-link">{{ $t('footer.terms') }}</NuxtLink>
             </nav>
         </div>
-        <div class="middle-footer-section flex flex-1 align-middle justify-center">
+        <div class="middle-footer-section flex flex-1 align-middle justify-center sm:self-center">
             <span class="self-center">{{ $t('footer.poweredBy') }}</span>
             <nav class="flex mx-2 self-center">
                 <NuxtLink to="https://www.netlify.com/" target="_blank"
@@ -22,7 +23,7 @@
                 </NuxtLink>
             </nav>
         </div>
-        <div class="right-footer-section flex flex-0 flex-row gap-6 justify-end px-8 text-xs">
+        <div class="right-footer-section flex flex-0 flex-row gap-6 justify-end px-8 text-xs sm:self-center">
             <div class="mx-2 hover:text-primary-hover transition-colors">
                 <NuxtLink to="https://github.com/ourjapanlife/findadoc-web/" target="_blank" class="flex flex-col flex-wrap"
                     data-testid="github-link">
@@ -39,17 +40,3 @@
         </div>
     </div>
 </template>
-<style>
-@media screen and (max-width: 640px) {
-  .footer {
-    flex-flow: column wrap;
-    justify-content: flex-start;
-  }
-
-  .left-footer-section,
-  .middle-footer-section,
-  .right-footer-section {
-    align-self: center;
-  }
-}
-</style>
