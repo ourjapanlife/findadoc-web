@@ -51,6 +51,23 @@ module.exports = {
             slate: colors.slate,
             zinc: colors.zinc,
         },
+        // this section is temporary for the beta marquee banner
+        extend: {
+            animation: {
+                marquee: 'marquee 50s linear infinite',
+                marquee2: 'marquee2 50s linear infinite',
+            },
+            keyframes: {
+                marquee: {
+                    '0%': { transform: 'translateX(0%)' },
+                    '100%': { transform: 'translateX(-100%)' },
+                },
+                marquee2: {
+                    '0%': { transform: 'translateX(100%)' },
+                    '100%': { transform: 'translateX(0%)' },
+                },
+            }
+        }
     },
     plugins: [],
 };
