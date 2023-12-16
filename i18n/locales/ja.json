@@ -39,6 +39,10 @@
         "doctorsNearby": "近隣の医師",
         "filters": "フィルター"
     },
+    "searchResultsDetails": {
+        "speaks": "この医師は話す",
+        "contact": "アクセス"
+    },
     "topNav": {
         "about": "私たちについて",
         "submit": "医師情報の追加"

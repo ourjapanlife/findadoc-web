@@ -12,6 +12,12 @@
   src: url('../fonts/Noto_Sans/NotoSans-Bold.ttf');
 }
 
+@layer utilities {
+  .pause {
+    animation-play-state: paused;
+  }
+}
+
 @layer base {
   h1 { @apply text-3xl; }
   h2 { @apply text-2xl; }
