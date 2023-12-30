@@ -24,13 +24,8 @@
 
 <script setup lang="ts">
 import { useNuxtApp } from "#app";
-import { watch } from "vue";
-const { $viewport } = useNuxtApp();
 import { useModalStore } from "~/stores/modalStore";
 
+const { $viewport } = useNuxtApp();
 const store = useModalStore();
-
-watch($viewport.breakpoint, (newBreakpoint, oldBreakpoint) => {
-    console.log("Breakpoint updated:", oldBreakpoint, "->", newBreakpoint);
-});
 </script>
