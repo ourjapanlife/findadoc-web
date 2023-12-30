@@ -96,8 +96,32 @@ export default defineNuxtConfig({
     modules: [
         '@nuxtjs/i18n',
         '@pinia/nuxt',
-        'nuxt-viewport'
+        'nuxt-viewport',
     ],
+
+    viewport: {
+        breakpoints: {
+            desktop: 1024,
+            desktopMedium: 1280,
+            desktopWide: 1600,
+
+            mobile: 320,
+            mobileMedium: 375,
+            mobileWide: 425,
+
+            tablet: 768,
+          },
+
+          cookieName: 'viewport',
+
+          defaultBreakpoints: {
+            desktop: 'desktop',
+            mobile: 'mobile',
+            tablet: 'tablet',
+          },
+
+          fallbackBreakpoint: 'desktop',
+    },
 
     i18n: {
         vueI18n: './i18n.options.ts'
