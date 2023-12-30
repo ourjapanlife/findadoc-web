@@ -2,8 +2,7 @@
     <div
         class="p-4 pl-8 border border-secondary-bg/20 flex justify-between items-center bg-gradient-to-t from-secondary-bg/30 via-primary-bg to-primary-bg"
     >
-        <HamburgerComponent />
-        <div class="hidden md:flex items-center">
+        <div v-if="$viewport.isGreaterThan('tablet')" class="flex items-center">
             <div
                 class="font-semibold text-xl group transition-colors items-start"
             >
@@ -50,12 +49,20 @@
             </nav>
             <LocaleSelector />
         </div>
+        <HamburgerComponent v-else />
     </div>
 </template>
 
 <script lang="ts" setup>
 import { useSubmissionStore } from "~/stores/submissionStore";
 import { useMenuStore } from "~/stores/menuStore";
+import { useNuxtApp } from "#app";
+import { watch } from "vue";
+const { $viewport } = useNuxtApp();
+
+watch($viewport.breakpoint, (newBreakpoint, oldBreakpoint) => {
+    console.log("Breakpoint updated:", oldBreakpoint, "->", newBreakpoint);
+});
 
 const submissionStore = useSubmissionStore();
 const menuStore = useMenuStore();

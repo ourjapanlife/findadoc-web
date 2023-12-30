@@ -1,5 +1,5 @@
 <template>
-    <div class="cursor-pointer md:hidden w-full">
+    <div class="cursor-pointer w-full">
         <div class="flex justify-between w-full">
             <div>
                 <img
