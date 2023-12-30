@@ -57,12 +57,8 @@
 import { useSubmissionStore } from "~/stores/submissionStore";
 import { useMenuStore } from "~/stores/menuStore";
 import { useNuxtApp } from "#app";
-import { watch } from "vue";
-const { $viewport } = useNuxtApp();
 
-watch($viewport.breakpoint, (newBreakpoint, oldBreakpoint) => {
-    console.log("Breakpoint updated:", oldBreakpoint, "->", newBreakpoint);
-});
+const { $viewport } = useNuxtApp();
 
 const submissionStore = useSubmissionStore();
 const menuStore = useMenuStore();
