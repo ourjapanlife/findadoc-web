@@ -95,7 +95,8 @@ export default defineNuxtConfig({
 
     modules: [
         '@nuxtjs/i18n',
-        '@pinia/nuxt'
+        '@pinia/nuxt',
+        'nuxt-viewport'
     ],
 
     i18n: {
