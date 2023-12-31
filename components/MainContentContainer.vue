@@ -2,19 +2,28 @@ import SearchResultDetails from './SearchResultDetails.vue';
 
 <template>
     <div class="h-full">
+        <div v-if="loadingStore.isLoading">
+            <Loader />
+        </div>
         <div
             v-if="$viewport.isGreaterThan('tablet')"
-            class="flex flex-1 bg-secondary-bg/20 hover:shadow-inner hover:shadow-secondary-bg/90"
+            class="flex flex-row h-full bg-secondary-bg/20 hover:shadow-inner hover:shadow-secondary-bg/90"
         >
-            <!-- <WelcomeSection /> -->
-            <Loader />
-            <Modal v-show="store.$state.isOpen" class="min-h-1/2 ml-8 mt-12">
+            <Modal
+                v-show="modalStore.$state.isOpen"
+                class="min-h-1/2 ml-8 mt-12"
+            >
                 <SearchResultDetails />
             </Modal>
-            <MapContainer />
+            <div class="flex-1 h-full">
+                <MapContainer />
+            </div>
         </div>
         <div v-else class="h-full">
-            <Modal v-show="store.$state.isOpen" class="min-h-1/2 ml-8 mt-12">
+            <Modal
+                v-show="modalStore.$state.isOpen"
+                class="min-h-1/2 ml-8 mt-12"
+            >
                 <SearchResultDetails />
             </Modal>
             <div class="h-[50vh]">
@@ -31,6 +40,8 @@ import SearchResultDetails from './SearchResultDetails.vue';
 import { useNuxtApp } from "#app";
 const { $viewport } = useNuxtApp();
 import { useModalStore } from "~/stores/modalStore";
+import { useLoadingStore } from "../stores/loadingStore.js";
 
-const store = useModalStore();
+const modalStore = useModalStore();
+const loadingStore = useLoadingStore();
 </script>
