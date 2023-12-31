@@ -5,7 +5,12 @@ import SearchResultDetails from './SearchResultDetails.vue';
         <div v-if="loadingStore.isLoading">
             <Loader />
         </div>
-        <div v-else-if="$viewport.isLessThan('desktop')" class="h-full">
+        <div
+            v-else-if="
+                !loadingStore.isLoading && $viewport.isLessThan('desktop')
+            "
+            class="h-full"
+        >
             <Modal
                 v-show="modalStore.$state.isOpen"
                 class="min-h-1/2 ml-8 mt-12"
