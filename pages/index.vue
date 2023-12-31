@@ -16,6 +16,9 @@
             <div class="flex-1">
                 <div class="flex flex-col h-full">
                     <MainContentContainer />
+                    <div class="h-[50vh]">
+                        <SearchResultsList />
+                    </div>
                 </div>
             </div>
         </div>
