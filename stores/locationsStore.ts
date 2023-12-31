@@ -66,7 +66,6 @@ function searchFacilities(citiesDisplayOptions: Ref<string[]>): Ref<{ facilities
     watch(error, (newValue) => {
         loadingStore.setIsLoading(false)
         console.log(`Error getting facilities: ${JSON.stringify(error.value)}`)
-        alert(`Error getting data! Please contact our support team by clicking the bottom right link on the page!`)
     })
 
     return result as Ref<{ facilities: Facility[] }>

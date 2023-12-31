@@ -162,7 +162,6 @@ function searchProfessionals(searchSpecialty?: Specialty, searchLanguage?: Local
     watch(error, (newValue) => {
         loadingStore.setIsLoading(false)
         console.log(`Error getting professionals: ${JSON.stringify(error.value)}`)
-        alert(`Error getting data! Please contact our support team by clicking the bottom right link on the page!`)
     })
 
     return result as Ref<{ healthcareProfessionals: HealthcareProfessional[] }>
@@ -199,7 +198,6 @@ function searchFacilities(healthcareProfessionalIds: string[]) {
     //we want to show an error message if the query fails. This value is reactive
     watch(error, (newValue) => {
         console.log(`Error getting facilities: ${JSON.stringify(error.value)}`)
-        alert(`Error getting data! Please contact our support team by clicking the bottom right link on the page!`)
     })
 
     return result as Ref<{ facilities: Facility[] }>
