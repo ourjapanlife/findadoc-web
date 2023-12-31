@@ -59,6 +59,7 @@
         "husky": "^8.0.3",
         "jsdom": "^23.0.1",
         "nuxt": "^3.8.2",
+        "nuxt-viewport": "^2.0.6",
         "postcss": "^8.4.32",
         "postcss-html": "^1.5.0",
         "start-server-and-test": "^2.0.0",
