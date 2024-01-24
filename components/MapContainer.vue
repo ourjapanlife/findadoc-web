@@ -7,40 +7,33 @@
     </GoogleMap>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import { defineComponent, ref, computed } from "vue"
 import { GoogleMap, Marker as GMarker } from "vue3-google-map"
 import { useRuntimeConfig } from "#imports"
 import customIcon from "../assets/images/blue-map-pin.svg"
 import { useSearchResultsStore } from "../stores/searchResultsStore"
 
-export default defineComponent({
-    components: { GoogleMap, GMarker },
-    setup() {
-        //tokyo is the default location
-        const defaultLocation = { lat: 35.6804, lng: 139.769 };
 
-        const center = computed(() => {
-            const lng = useSearchResultsStore().activeResult?.facilities[0]?.mapLongitude
-            const lat = useSearchResultsStore().activeResult?.facilities[0]?.mapLatitude
-            const locationExists = lng && lat;
+    const defaultLocation = { lat: 35.6804, lng: 139.769 };
 
-            return locationExists ? { lat, lng } : defaultLocation;
-        });
+    const center = computed(() => {
+        const lng = useSearchResultsStore().activeResult?.facilities[0]?.mapLongitude
+        const lat = useSearchResultsStore().activeResult?.facilities[0]?.mapLatitude
+        const locationExists = lng && lat;
 
-        const markerIcon = {
-            url: customIcon,
-            scaledSize: {
-                width: 45,
-                height: 73
-            }
-        };
+        return locationExists ? { lat, lng } : defaultLocation;
+    });
 
-        const searchResultsStore = useSearchResultsStore();
-        const mapRef = ref(null);
-        const runtimeConfig = useRuntimeConfig();
+    const markerIcon = {
+        url: customIcon,
+        scaledSize: {
+            width: 45,
+            height: 73
+        }
+    };
 
-        return { center, mapRef, markerIcon, defaultLocation, runtimeConfig, searchResultsStore };
-    }
-});
+    const searchResultsStore = useSearchResultsStore();
+    const mapRef = ref(null);
+    const runtimeConfig = useRuntimeConfig();
 </script>
