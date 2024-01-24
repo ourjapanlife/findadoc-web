@@ -7,7 +7,7 @@ import SearchResultDetails from './SearchResultDetails.vue';
             class="bg-secondary-bg/20 hover:shadow-inner hover:shadow-secondary-bg/90 h-full w-full"
         >
             <!-- <WelcomeSection /> -->
-            <!-- <Loader /> -->
+            <Loader />
             <Modal v-show="store.$state.isOpen" class="min-h-1/2 ml-8 mt-12">
                 <SearchResultDetails />
             </Modal>
