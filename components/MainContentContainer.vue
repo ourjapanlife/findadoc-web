@@ -1,17 +1,19 @@
 import SearchResultDetails from './SearchResultDetails.vue';
 
 <template>
-    <div class="h-full">
+    <div class="h-full w-full">
         <div
             v-if="$viewport.isGreaterThan('tablet')"
-            class="flex flex-1 bg-secondary-bg/20 hover:shadow-inner hover:shadow-secondary-bg/90"
+            class="bg-secondary-bg/20 hover:shadow-inner hover:shadow-secondary-bg/90 h-full w-full"
         >
             <!-- <WelcomeSection /> -->
             <Loader />
             <Modal v-show="store.$state.isOpen" class="min-h-1/2 ml-8 mt-12">
                 <SearchResultDetails />
             </Modal>
-            <MapContainer />
+            <div class="flex-1 h-full">
+                <MapContainer />
+            </div>
         </div>
         <div v-else class="h-full">
             <Modal v-show="store.$state.isOpen" class="min-h-1/2 ml-8 mt-12">
