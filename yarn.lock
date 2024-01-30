@@ -4662,15 +4662,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^18.17.5":
-  version: 18.19.1
-  resolution: "@types/node@npm:18.19.1"
-  dependencies:
-    undici-types: "npm:~5.26.4"
-  checksum: 825c5bf6f7c8f8bc413b2c45dd49b3b51d4fb18e42ed09711376b1d475d82e8c7160859544f8be04eaa3c6201053217d899573f0bf63a7419e5ea3cd7d161eaf
-  languageName: node
-  linkType: hard
-
 "@types/normalize-package-data@npm:^2.4.0":
   version: 2.4.1
   resolution: "@types/normalize-package-data@npm:2.4.1"
@@ -7541,12 +7532,11 @@ __metadata:
   linkType: hard
 
 "cypress@npm:^13.6.0":
-  version: 13.6.0
-  resolution: "cypress@npm:13.6.0"
+  version: 13.6.4
+  resolution: "cypress@npm:13.6.4"
   dependencies:
     "@cypress/request": "npm:^3.0.0"
     "@cypress/xvfb": "npm:^1.2.4"
-    "@types/node": "npm:^18.17.5"
     "@types/sinonjs__fake-timers": "npm:8.1.1"
     "@types/sizzle": "npm:^2.3.2"
     arch: "npm:^2.2.0"
@@ -7589,7 +7579,7 @@ __metadata:
     yauzl: "npm:^2.10.0"
   bin:
     cypress: bin/cypress
-  checksum: 345e295c305a9574f5de433c216c9734eab5c8594bd32b7c1a74e2d71a6c7aa5a8228f7031c3fc6bd488319c0f50c906d323d00dab5c9445c43594a41af0d23d
+  checksum: acdc246cf41bf77b95ab78a26ae7cb000c64abfd768ad7cef54830e1fa8d7e89cee64a56d00a9a389ac36ff6ec8bd704d6fa1d5d92123123c8d96ebae6328b8b
   languageName: node
   linkType: hard
 
@@ -16809,13 +16799,6 @@ __metadata:
     magic-string: "npm:^0.30.0"
     unplugin: "npm:^1.3.1"
   checksum: 893d35bb4ef8dfa49abf001a3a73c82ea1fd1e0712e949eb32665962fb076dc3f730a48e6679c54e996164e76e1a4853b87eaf9be20cb69d10f6658a8d5a2011
-  languageName: node
-  linkType: hard
-
-"undici-types@npm:~5.26.4":
-  version: 5.26.5
-  resolution: "undici-types@npm:5.26.5"
-  checksum: 0097779d94bc0fd26f0418b3a05472410408877279141ded2bd449167be1aed7ea5b76f756562cb3586a07f251b90799bab22d9019ceba49c037c76445f7cddd
   languageName: node
   linkType: hard
 
