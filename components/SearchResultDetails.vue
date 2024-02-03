@@ -64,7 +64,7 @@
                         class="banner-icon w-6 h-6 stroke-primary mr-2 self-center">
                         <use xlink:href="../assets/images/email-icon.svg#email-icon-svg" />
                     </svg>
-                    {{ email }}
+                    <a :href="`mailto:${email}`" class="email-link">{{ email }}</a>
                 </div>
             </div>
         </div>
