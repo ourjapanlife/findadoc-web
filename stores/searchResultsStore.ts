@@ -89,9 +89,10 @@ async function queryProfessionals(searchSpecialty?: Specialty, searchLanguage?: 
         }
 
         console.log('searching professionals')
-        const response = await gqlClient.request<HealthcareProfessional[]>(searchProfessionalsQuery, searchProfessionalsData)
-        const professionalsSearchResult = (response ?? []) as HealthcareProfessional[]
-        console.log(`Fetched professionals: ${JSON.stringify(professionalsSearchResult)}`)
+        const response = await gqlClient.request<{ healthcareProfessionals: HealthcareProfessional[] }>(searchProfessionalsQuery, searchProfessionalsData)
+        console.log(`Fetched professionals: ${JSON.stringify(response)}`)
+
+        const professionalsSearchResult = (response?.healthcareProfessionals ?? []) as HealthcareProfessional[]
         return professionalsSearchResult
     } catch (error) {
         console.log(`Error getting professionals: ${JSON.stringify(error)}`)
@@ -119,9 +120,9 @@ async function queryFacilities(healthcareProfessionalIds: string[], searchCity?:
         }
 
         console.log('searching facilities')
-        const response = await gqlClient.request<Facility[]>(searchFacilitiesQuery, searchFacilitiesData)
-        const facilitiesSearchResults = (response ?? []) as Facility[]
-        console.log(`Fetched facilities: ${JSON.stringify(facilitiesSearchResults)}`)
+        const response = await gqlClient.request<{ facilities: Facility[] }>(searchFacilitiesQuery, searchFacilitiesData)
+        console.log(`Fetched facilities: ${JSON.stringify(response)}`)
+        const facilitiesSearchResults = (response?.facilities ?? []) as Facility[]
 
         //filter the search results by location if a location is selected
         const locationFilteredSearchResults = searchCity

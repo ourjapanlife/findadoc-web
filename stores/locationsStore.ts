@@ -52,8 +52,8 @@ async function queryFacilities(): Promise<Facility[]> {
             } satisfies FacilitySearchFilters
         }
 
-        const result = await gqlClient.request<Facility[]>(searchFacilitiesQuery, searchFacilitiesData)
-        return result
+        const result = await gqlClient.request<{ facilities: Facility[] }>(searchFacilitiesQuery, searchFacilitiesData)
+        return result?.facilities ?? []
     } catch (error) {
         console.log(`Error getting facilities for dropdown: ${JSON.stringify(error)}`)
         alert(`Error getting data! Please contact our support team by clicking the bottom right link on the page!`)
