@@ -5203,8 +5203,8 @@ __metadata:
   linkType: hard
 
 "@vue/apollo-composable@npm:^4.0.0-beta.12":
-  version: 4.0.0-beta.12
-  resolution: "@vue/apollo-composable@npm:4.0.0-beta.12"
+  version: 4.0.1
+  resolution: "@vue/apollo-composable@npm:4.0.1"
   dependencies:
     throttle-debounce: "npm:^5.0.0"
     ts-essentials: "npm:^9.4.0"
@@ -5217,7 +5217,7 @@ __metadata:
   peerDependenciesMeta:
     "@vue/composition-api":
       optional: true
-  checksum: 59f3cbb77eccb863b2589363b1d74e7bb766cda69cd89e8fcea7a43a011a1941b8b7daeb2944bbeabaa3d591b5fc6d55468c06c5ab880650a0f11ea2592ada22
+  checksum: 59948c8ba431e4c796f564fa76ede395c5b5cda85e19c3356c723c5aae259297f916deb8d41b68188738151d11749fa257543d170551697ae01f0c3064d3b9fa
   languageName: node
   linkType: hard
 
