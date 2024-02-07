@@ -389,6 +389,7 @@ export enum Specialty {
   DiagnosticRadiology = 'DIAGNOSTIC_RADIOLOGY',
   EmergencyMedicine = 'EMERGENCY_MEDICINE',
   FamilyMedicine = 'FAMILY_MEDICINE',
+  GeneralMedicine = 'GENERAL_MEDICINE',
   InfectiousDiseases = 'INFECTIOUS_DISEASES',
   InternalMedicine = 'INTERNAL_MEDICINE',
   MedicalGenetics = 'MEDICAL_GENETICS',
