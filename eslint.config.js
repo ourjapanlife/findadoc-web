@@ -1,21 +1,23 @@
-import globals from 'globals'
-import tsPlugin from '@typescript-eslint/eslint-plugin'
-import tsParser from '@typescript-eslint/parser'
-import vuePlugin from 'vue-eslint-parser'
-import eslintJsPlugin from '@eslint/js'
+import globals from 'globals';
+import tsPlugin from '@typescript-eslint/eslint-plugin';
+import tsParser from '@typescript-eslint/parser';
+import vuePlugin from 'vue-eslint-parser';
+import eslintJsPlugin from '@eslint/js';
+import stylistic from '@stylistic/eslint-plugin';
 
-const gqlSchemaPath = '././typeDefs/schema.graphql'
+const gqlSchemaPath = '././typeDefs/schema.graphql';
 
 export default [
     // GLOBAL configuration
     {
-        ignores: ['dist/*',
+        ignores: [
+            'dist/*',
             'output/*',
             '.nuxt/*',
             'coverage/*',
             'cypress/videos/*',
             '.yarn/*'
-        ]
+        ],
     },
     // Typescript and JS Linter combined (for all the main code files)
     {
@@ -26,22 +28,17 @@ export default [
             // },
             globals: {
                 ...globals.node,
-                ...globals.es2021
+                ...globals.es2021,
             }
         },
-        files: [
-            '__tests__/**/*.ts',
-            './**/*.{js,ts,vue}',
-        ],
+        files: ['__tests__/**/*.ts', './**/*.{js,ts,vue}'],
         plugins: {
             '@typescript-eslint': tsPlugin,
             tsPlugin,
-            vuePlugin
+            vuePlugin,
+            '@stylistic': stylistic,
         },
-        ignores: [
-            './typeDefs/gqlTypes.ts',
-            './typesgeneratorconfig.ts',
-        ],
+        ignores: ['./typeDefs/gqlTypes.ts', './typesgeneratorconfig.ts'],
         // 'off' or 0 - turn the rule off
         // 'warn' or 1 - turn the rule on as a warning (doesn’t affect exit code)
         // 'error' or 2 - turn the rule on as an error (exit code will be 1)
@@ -65,25 +62,35 @@ export default [
             'no-alert': 'error',
             'no-multi-spaces': 'error',
             'no-redeclare': 'error',
-            'no-unused-expressions': ['error', { allowShortCircuit: true, allowTernary: true }],
+            'no-unused-expressions': [
+                'error',
+                { allowShortCircuit: true, allowTernary: true },
+            ],
             'vars-on-top': 'off',
             yoda: ['error', 'never', { exceptRange: true }],
             'no-console': 'error', // we should use the logger instead
 
             // Stylistic Issues and Opinions
             'arrow-body-style': 'error',
-            'array-bracket-spacing': ['error', 'never'],
-            'arrow-parens': ['error', 'as-needed'],
-            'arrow-spacing': 'error',
-            'block-spacing': ['error', 'always'],
-            'brace-style': ['error', '1tbs', { allowSingleLine: true }],
+            '@stylistic/array-bracket-spacing': ['error', 'never'],
+            '@stylistic/arrow-parens': ['error', 'as-needed'],
+            '@stylistic/arrow-spacing': 'error',
+            '@stylistic/block-spacing': ['error', 'always'],
+            '@stylistic/brace-style': [
+                'error',
+                '1tbs',
+                { allowSingleLine: true },
+            ],
             camelcase: ['error', { allow: ['639_3'] }],
-            'comma-dangle': ['error', 'never'],
-            'comma-spacing': ['error', { before: false, after: true }],
-            'comma-style': 'error',
-            'computed-property-spacing': ['error', 'never'],
-            'function-paren-newline': ['error', 'consistent'],
-            indent: [
+            '@stylistic/comma-dangle': ['error', 'never'],
+            '@stylistic/comma-spacing': [
+                'error',
+                { before: false, after: true },
+            ],
+            '@stylistic/comma-style': 'error',
+            '@stylistic/computed-property-spacing': ['error', 'never'],
+            '@stylistic/function-paren-newline': ['error', 'consistent'],
+            '@stylistic/indent': [
                 'error',
                 4,
                 {
@@ -93,46 +100,58 @@ export default [
                     ObjectExpression: 1,
                     FunctionDeclaration: { parameters: 'off' },
                     VariableDeclarator: { var: 2, let: 2, const: 3 },
-                    CallExpression: { arguments: 'first' }
-                }
+                    CallExpression: { arguments: 'first' },
+                },
             ],
-            'key-spacing': ['error', { beforeColon: false, afterColon: true }],
-            'keyword-spacing': ['error', { before: true, after: true }],
-            'linebreak-style': ['error', 'unix'], // no carriage returns
-            'max-len': ['error', {
-                code: 130,
-                ignoreComments: true,
-                ignoreTrailingComments: true,
-                ignoreUrls: true,
-                ignoreStrings: true,
-                ignoreTemplateLiterals: true,
-                ignoreRegExpLiterals: true
-            }], // be friendly to laptops
-            'padding-line-between-statements': 'off', //we can choose newlines after variable declarations
+            '@stylistic/key-spacing': [
+                'error',
+                { beforeColon: false, afterColon: true },
+            ],
+            '@stylistic/keyword-spacing': ['error', { before: true, after: true }],
+            '@stylistic/linebreak-style': ['error', 'unix'], // no carriage returns
+            '@stylistic/max-len': [
+                'error',
+                {
+                    code: 130,
+                    ignoreComments: true,
+                    ignoreTrailingComments: true,
+                    ignoreUrls: true,
+                    ignoreStrings: true,
+                    ignoreTemplateLiterals: true,
+                    ignoreRegExpLiterals: true,
+                },
+            ], // be friendly to laptops
+            '@stylistic/padding-line-between-statements': 'off', //we can choose newlines after variable declarations
             'require-atomic-updates': 'warn',
             'no-constant-condition': 'error',
             'no-dupe-class-members': 'error',
             'no-lonely-if': 'error',
-            'no-multiple-empty-lines': ['error', { max: 1, maxEOF: 1 }],
+            '@stylistic/no-multiple-empty-lines': ['error', { max: 1, maxEOF: 1 }],
             'no-underscore-dangle': 'error',
             'no-var': 'error',
-            'object-curly-newline': ['error', { consistent: true }],
-            'object-property-newline': ['error', { allowAllPropertiesOnSameLine: true }],
+            '@stylistic/object-curly-newline': ['error', { consistent: true }],
+            '@stylistic/object-property-newline': [
+                'error',
+                { allowAllPropertiesOnSameLine: true },
+            ],
             'object-shorthand': ['error', 'methods'],
-            'operator-linebreak': [0, 'before'],
-            'padded-blocks': ['error', 'never'],
+            '@stylistic/operator-linebreak': [0, 'before'],
+            '@stylistic/padded-blocks': ['error', 'never'],
             'prefer-arrow-callback': 'error',
             'prefer-const': 'error',
             'prefer-spread': 'error',
             'prefer-template': 'error',
-            'quote-props': ['error', 'as-needed'],
-            quotes: ['error', 'single', 'avoid-escape'],
-            semi: ['error', 'never'],
-            'semi-spacing': 'error',
-            'space-before-blocks': 'error',
-            'space-before-function-paren': ['error', { anonymous: 'never', named: 'never', asyncArrow: 'always' }],
-            'space-in-parens': 'error',
-            'space-infix-ops': 'error'
-        }
-    }
-]
+            '@stylistic/quote-props': ['error', 'as-needed'],
+            '@stylistic/quotes': ['error', 'single', 'avoid-escape'],
+            '@stylistic/semi': ['error', 'never'],
+            '@stylistic/semi-spacing': 'error',
+            '@stylistic/space-before-blocks': 'error',
+            '@stylistic/space-before-function-paren': [
+                'error',
+                { anonymous: 'never', named: 'never', asyncArrow: 'always' },
+            ],
+            '@stylistic/space-in-parens': 'error',
+            '@stylistic/space-infix-ops': 'error',
+        },
+    },
+];
