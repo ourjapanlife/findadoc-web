@@ -7,29 +7,14 @@
         "stylelint-order"
     ],
     "rules": {
-        "block-closing-brace-newline-before": "always-multi-line",
         "color-hex-length": "short",
         "color-named": "never",
         "comment-empty-line-before": null,
         "declaration-no-important": true,
-        "declaration-block-trailing-semicolon": "always",
-        "indentation": 2,
         "length-zero-no-unit": null,
-        "max-line-length": 100,
         "max-nesting-depth": 4,
         "no-descending-specificity": null,
-        "no-eol-whitespace": [
-            true,
-            {
-                "ignore": [
-                    "empty-lines"
-                ]
-            }
-        ],
         "shorthand-property-no-redundant-values": null,
-        "selector-list-comma-newline-after": "always-multi-line",
-        "string-quotes": "single",
-        "value-list-comma-newline-after": "always-multi-line",
         "scss/at-rule-no-unknown": [
             true,
             {
