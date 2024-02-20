@@ -1,25 +1,25 @@
-name: 'Tests: Cypress e2e'
+name: "Tests: Cypress e2e"
 
 on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    # The branches below must be a subset of the branches above
-    branches: [ "main" ]
-  schedule:
-    - cron: '45 15 * * 4'
+    push:
+        branches: ["main"]
+    pull_request:
+        # The branches below must be a subset of the branches above
+        branches: ["main"]
+    schedule:
+        - cron: "45 15 * * 4"
 
 jobs:
-  cypress-run:
-    name: Running Cypress tests ✨
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-      # Install yarn dependencies, cache them correctly
-      # and run all Cypress tests
-      - name: Cypress run
-        uses: cypress-io/github-action@v5.6.1
-        with:
-          build: yarn build
-          start: yarn start
+    cypress-run:
+        name: Running Cypress tests ✨
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v3
+            # Install yarn dependencies, cache them correctly
+            # and run all Cypress tests
+            - name: Cypress run
+              uses: cypress-io/github-action@v5.6.1
+              with:
+                  build: yarn prod:build
+                  start: yarn prod:start
