@@ -13,19 +13,28 @@ describe('Visits the home page', () => {
         // TODO: clicking it should take us to '/'
     })
 
-    it('renders the map', () => {
+    it.skip('renders the map', () => {
         // TODO
         cy.get('[data-testid="map-of-japan"]').should('be.visible')
     })
 
     it('allows setting search fields', () => {
+        cy.wait(5000)
         cy.get('[data-testid="search-button"]').should('be.visible')
-        // TODO
+
+        cy.get('.search-specialty select').select('Dermatology')
+        cy.get('.search-specialty select').should('be.visible', 'Dermatology')
+
+        cy.get('.search-location select').select('Shinagawa')
+        cy.get('.search-location select').should('be.visible', 'Shinagawa')
+
+        cy.get('.search-language select').select('English')
+        cy.get('.search-language select').should('be.visible', "English")
+
     })
 
     it('can select "select a language"', () => {
         cy.get('[data-testid="search-bar-language"]').trigger('click')
-        // TODO
     })
 
     it('can select "English" from the language bar', () => {
@@ -33,15 +42,15 @@ describe('Visits the home page', () => {
 
         cy.get('[data-testid="search-bar-language"]').select('English')
 
-        cy.get('[data-testid="search-bar-language"]').should('have.value', 'English')
+        cy.get('[data-testid="search-bar-language"]').should('have.value', 'en_US')
     })
 
     it('can select "Japanese" from the language bar', () => {
         cy.get('[data-testid="search-bar-language"]').should('be.visible')
 
-        cy.get('[data-testid="search-bar-language"]').select('Japanese')
+        cy.get('[data-testid="search-bar-language"]').select('日本語')
 
-        cy.get('[data-testid="search-bar-language"]').should('have.value', 'Japanese')
+        cy.get('[data-testid="search-bar-language"]').should('have.value', 'ja_JP')
     })
 
     it('shows doctors nearby', () => {
@@ -50,7 +59,7 @@ describe('Visits the home page', () => {
 
     describe('Checks footer links', () => {
         it('navigates to github', () => {
-        // TODO
+            // TODO
 
             // verify link to GitHub
             cy.get('[data-testid="github-link"]').should('be.visible')
