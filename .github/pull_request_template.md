@@ -1,8 +1,11 @@
 Resolves #[Issue number]
 
+## 🔧 What changed
 
-# What changed
+## 🧪 Testing instructions
 
+## 📸 Screenshots
 
-# Testing instructions
+-   ### Before
 
+-   ### After
