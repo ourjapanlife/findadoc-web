@@ -12,5 +12,16 @@ describe('LoadingStore', () => {
         const loadingStore = useLoadingStore()
         expect(loadingStore.isLoading).to.be.false;
     });
+
+    it('should update isLoading with the boolean passed to setIsLoading', () => {
+        const loadingStore = useLoadingStore()
+
+        loadingStore.setIsLoading(true);
+        expect(loadingStore.isLoading).to.be.true;
+
+        loadingStore.setIsLoading(false);
+        expect(loadingStore.isLoading).to.be.false;
+
+    });
 })
 
