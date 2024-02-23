@@ -59,7 +59,7 @@
                     </svg>
                     {{ phone }}
                 </div>
-                <div class="email flex my-4" v-if="email !== 'none' && email !== 'email@email.com'">
+                <div class="email flex my-4" v-if="!excludedEmailAddresses.includes(email)">
                     <svg role="img" alt="Facility Banner Image" title="banner image"
                         class="banner-icon w-6 h-6 stroke-primary mr-2 self-center">
                         <use xlink:href="../assets/images/email-icon.svg#email-icon-svg" />
@@ -158,6 +158,8 @@ const phone = computed(
 const email = computed(
     () => resultsStore.$state.activeResult?.facilities[0]?.contact?.email
 )
+
+const excludedEmailAddresses = ['none', 'email@email.com'];
 </script>
 
 <style>
