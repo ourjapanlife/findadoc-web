@@ -1,0 +1,6 @@
+<svg width="20" height="20" xmlns="http://www.w3.org/2000/svg">
+    <symbol id="email-icon-svg" viewBox="0 0 20 20" fill="none">
+        <path d="M2.5 4.5H17.5C17.8978 4.5 18.2794 4.65804 18.5607 4.93934C18.842 5.22064 19 5.60218 19 6V14C19 14.3978 18.842 14.7794 18.5607 15.0607C18.2794 15.342 17.8978 15.5 17.5 15.5H2.5C2.10218 15.5 1.72064 15.342 1.43934 15.0607C1.15804 14.7794 1 14.3978 1 14V6C1 5.60218 1.15804 5.22064 1.43934 4.93934C1.72064 4.65804 2.10218 4.5 2.5 4.5V4.5Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M19 6L10 11L1 6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+</svg>
