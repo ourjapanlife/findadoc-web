@@ -21,6 +21,7 @@
                     hover:border-transparent hover:bg-primary/5 transition-all hover:cursor-pointer">
                     <SearchResultsListItem
                         :name="`${searchResult.professional.names[0].firstName}, ${searchResult.professional.names[0].lastName}`"
+                        :degrees="searchResult.professional.degrees.join(', ')"
                         :facility-name="localeStore.locale?.code == Locale.EnUs ? searchResult.facilities[0]?.nameEn : searchResult.facilities[0]?.nameJa"
                         :specialties="searchResult.professional.specialties"
                         :spoken-languages="searchResult.professional.spokenLanguages" />
@@ -40,5 +41,4 @@ const localeStore = useLocaleStore()
 
 //let's start with some initial data
 resultsStore.search()
-
 </script>
