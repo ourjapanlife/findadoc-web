@@ -4,7 +4,8 @@
             <svg role="img" alt="profile icon" title="profile icon" class="profile-icon w-8 h-8 stroke-primary inline">
                 <use xlink:href="../assets/images/profile-icon.svg#profile-icon-svg" class="w-[20px] h-[20px]" />
             </svg>
-            <span class="w-4 font-bold pl-2 self-center"> {{ name }} </span>
+            <span class="w-4 font-bold pl-2 self-center"> {{ name }}, </span>
+            <span class="w-4 pl-2 font-semibold self-center">{{ degrees.length === 1 ? degrees[0] : degrees[0] + ", ... +" + (degrees.length - 1).toString() }}</span>
         </div>
         <div class="result-details flex flex-col my-2 ml-4">
             <span class="px-2 text-primary font-medium">
@@ -40,6 +41,10 @@ const specialtiesStore = useSpecialtiesStore()
 const props = defineProps({
     name: {
         type: String,
+        required: true,
+    },
+    degrees: {
+        type: Array,
         required: true,
     },
     specialties: {
