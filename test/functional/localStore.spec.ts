@@ -17,7 +17,7 @@ describe("LocalStore", () => {
         expect(localStore.locale.displayText).to.equal('English (US)')
     })
 
-    it('should update locale when new locale is passed in setLocalethe', () => {
+    it('should update locale when new locale is passed in setLocale', () => {
         const localStore = useLocaleStore()
         localStore.setLocale(Locale.JaJp)
 
