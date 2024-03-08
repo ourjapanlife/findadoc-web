@@ -10,6 +10,9 @@
             <div class="result-header mt-7 ml-4">
                 <span class="w-4 text-3xl font-bold pl-2 self-center">{{
                     healthcareProfessionalName
+                }}, </span>
+                  <span class="w-4 text-2xl font-semibold pl-2 self-center">{{
+                    healthcareProfessionalDegrees
                 }}</span>
             </div>
             <div class="result-details flex flex-col mb-1 ml-4 pl-2 mt-2 text-sm">
@@ -96,6 +99,11 @@ const healthcareProfessionalName = computed(() => {
     return localeStore.locale.code === Locale.EnUs
         ? englishFullName
         : japaneseFullName
+})
+const healthcareProfessionalDegrees = computed(() => {
+    const healthcareProfessionalDegreesText =
+        resultsStore.$state.activeResult?.professional.degrees.join(", ")
+    return healthcareProfessionalDegreesText
 })
 const specialties = computed(() => {
     const specialties =

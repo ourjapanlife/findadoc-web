@@ -20,7 +20,8 @@
                 <div class="flex-1 h-24 w-6/8 border-b-2 border-primary/20 p-3
                     hover:border-transparent hover:bg-primary/5 transition-all hover:cursor-pointer">
                     <SearchResultsListItem
-                        :name="`${searchResult.professional.names[0].firstName}, ${searchResult.professional.names[0].lastName}`"
+                        :name="`${searchResult.professional.names[0].firstName} ${searchResult.professional.names[0].lastName}`"
+                        :degrees="searchResult.professional.degrees"
                         :facility-name="localeStore.locale?.code == Locale.EnUs ? searchResult.facilities[0]?.nameEn : searchResult.facilities[0]?.nameJa"
                         :specialties="searchResult.professional.specialties"
                         :spoken-languages="searchResult.professional.spokenLanguages" />
