@@ -45,6 +45,9 @@ Have a look at the [CONTRIBUTING](/CONTRIBUTING.md) and [CODE_OF_CONDUCT](/CODE_
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/Aya-Yumino"><img src="https://avatars.githubusercontent.com/u/126957811?v=4?s=100" width="100px;" alt="Aya-Yumino"/><br /><sub><b>Aya-Yumino</b></sub></a><br /><a href="#research-Aya-Yumino" title="Research">🔬</a> <a href="#ideas-Aya-Yumino" title="Ideas, Planning, & Feedback">🤔</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/NabbeunNabi"><img src="https://avatars.githubusercontent.com/u/124335161?v=4?s=100" width="100px;" alt="William Brammer"/><br /><sub><b>William Brammer</b></sub></a><br /><a href="https://github.com/ourjapanlife/findadoc-web/commits?author=NabbeunNabi" title="Code">💻</a></td>
     </tr>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/Anissa3005"><img src="https://avatars.githubusercontent.com/u/114712265?v=4?s=100" width="100px;" alt="Anissa Chadouli"/><br /><sub><b>Anissa Chadouli</b></sub></a><br /><a href="https://github.com/ourjapanlife/findadoc-web/commits?author=Anissa3005" title="Code">💻</a></td>
+    </tr>
   </tbody>
 </table>
 
