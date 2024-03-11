@@ -143,6 +143,7 @@ export default defineNuxtConfig({
     target: 'static',
     runtimeConfig: {
         public: {
+            // eslint-disable-next-line
             GOOGLE_MAPS_API_KEY: process.env.GOOGLE_MAPS_API_KEY
         }
     }

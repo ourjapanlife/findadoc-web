@@ -12,6 +12,7 @@ export function hasLatinCharacters(name: string) {
 }
 
 export function isInvalidName(name: string) {
+    // eslint-disable-next-line no-useless-escape
     return /[~!#$%&*+=[\]\\;/{}|:<>\?0-9]+/g.test(name)
 }
 

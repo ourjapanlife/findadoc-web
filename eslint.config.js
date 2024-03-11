@@ -13,12 +13,13 @@ export default [
             '.nuxt/*',
             'coverage/*',
             'cypress/videos/*',
-            '.yarn/*'
+            '.yarn/*',
+            'typedefs/gqlTypes.ts'
         ],
     },
     eslint.configs.recommended,
     ...tseslint.configs.recommended,
-    { 
+    {
         ignores: ['./typeDefs/gqlTypes.ts', './typesgeneratorconfig.ts'],
         files: ['test**/*.ts', './**/*.{js,ts,vue}'],
         plugins: {
@@ -37,7 +38,7 @@ export default [
             '@typescript-eslint/no-unused-vars': 'error',
 
             // JS specific rules
-         
+
             // HACK: this eslint core rule is turned off so that the typescript-eslint version can be used instead
             'no-unused-vars': 'off',
             'block-scoped-var': 'error',
