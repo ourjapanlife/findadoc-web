@@ -134,6 +134,15 @@
         "research",
         "ideas"
       ]
+    },
+    {
+      "login": "NabbeunNabi",
+      "name": "William Brammer",
+      "avatar_url": "https://avatars.githubusercontent.com/u/124335161?v=4",
+      "profile": "https://github.com/NabbeunNabi",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
@@ -141,5 +150,6 @@
   "repoType": "github",
   "repoHost": "https://github.com",
   "projectName": "findadoc-web",
-  "projectOwner": "ourjapanlife"
+  "projectOwner": "ourjapanlife",
+  "commitType": "docs"
 }
