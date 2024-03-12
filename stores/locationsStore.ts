@@ -63,7 +63,7 @@ function searchFacilities(citiesDisplayOptions: Ref<string[]>): Ref<{ facilities
     })
 
     //we want to show an error message if the query fails. This value is reactive
-    watch(error, (newValue) => {
+    watch(error, () => {
         loadingStore.setIsLoading(false)
         console.log(`Error getting facilities: ${JSON.stringify(error.value)}`)
         alert(`Error getting data! Please contact our support team by clicking the bottom right link on the page!`)

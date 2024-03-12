@@ -42,7 +42,7 @@ let searchFacilitiesVariablesRef: Ref<{
 } | undefined>
 
 export const useSearchResultsStore = defineStore('searchResultsStore', () => {
-    const activeResultId: Ref<String | undefined> = ref()
+    const activeResultId: Ref<string | undefined> = ref()
     const activeResult: Ref<searchResult | undefined> = ref()
     const searchResultsList: Ref<searchResult[]> = ref([])
 
@@ -112,7 +112,7 @@ export const useSearchResultsStore = defineStore('searchResultsStore', () => {
         })
     }
 
-    function setActiveSearchResult(selectedResultId: String) {
+    function setActiveSearchResult(selectedResultId: string) {
         const newResult = searchResultsList.value.find(resultItem => resultItem.professional.id === selectedResultId)
 
         activeResult.value = newResult
@@ -159,7 +159,7 @@ function searchProfessionals(searchSpecialty?: Specialty, searchLanguage?: Local
     })
 
     //we want to show an error message if the query fails. This value is reactive
-    watch(error, (newValue) => {
+    watch(error, () => {
         loadingStore.setIsLoading(false)
         console.log(`Error getting professionals: ${JSON.stringify(error.value)}`)
         alert(`Error getting data! Please contact our support team by clicking the bottom right link on the page!`)
@@ -197,7 +197,7 @@ function searchFacilities(healthcareProfessionalIds: string[]) {
     })
 
     //we want to show an error message if the query fails. This value is reactive
-    watch(error, (newValue) => {
+    watch(error, () => {
         console.log(`Error getting facilities: ${JSON.stringify(error.value)}`)
         alert(`Error getting data! Please contact our support team by clicking the bottom right link on the page!`)
     })

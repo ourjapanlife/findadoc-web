@@ -1,7 +1,9 @@
 /** @type {import('tailwindcss').Config} */
 
+// eslint-disable-next-line
 const colors = require("tailwindcss/colors");
 
+// eslint-disable-next-line
 module.exports = {
     content: [
         "./components/**/*.{js,vue,ts}",

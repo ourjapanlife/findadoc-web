@@ -1,56 +1,42 @@
-import globals from 'globals';
-import tsPlugin from '@typescript-eslint/eslint-plugin';
-import tsParser from '@typescript-eslint/parser';
-import vuePlugin from 'vue-eslint-parser';
-import eslintJsPlugin from '@eslint/js';
-import stylistic from '@stylistic/eslint-plugin';
-
-const gqlSchemaPath = '././typeDefs/schema.graphql';
+import eslint from '@eslint/js'
+import tseslint from 'typescript-eslint'
+import stylistic from '@stylistic/eslint-plugin'
 
 export default [
-    // GLOBAL configuration
     {
+        // GLOBAL configuration
         ignores: [
             'dist/*',
-            'output/*',
+            '.output/*',
             '.nuxt/*',
             'coverage/*',
             'cypress/videos/*',
-            '.yarn/*'
+            '.yarn/*',
+            'typedefs/gqlTypes.ts'
         ],
     },
-    // Typescript and JS Linter combined (for all the main code files)
+    eslint.configs.recommended,
+    ...tseslint.configs.recommended,
     {
-        languageOptions: {
-            parser: vuePlugin.parser,
-            // parserOptions: {
-            //     parser: tsParser
-            // },
-            globals: {
-                ...globals.node,
-                ...globals.es2021,
-            }
-        },
-        files: ['__tests__/**/*.ts', './**/*.{js,ts,vue}'],
+        ignores: ['./typeDefs/gqlTypes.ts', './typesgeneratorconfig.ts'],
+        files: ['test**/*.ts', './**/*.{js,ts,vue}'],
         plugins: {
-            '@typescript-eslint': tsPlugin,
-            tsPlugin,
-            vuePlugin,
+            '@typescript-eslint': tseslint.plugin,
             '@stylistic': stylistic,
         },
-        ignores: ['./typeDefs/gqlTypes.ts', './typesgeneratorconfig.ts'],
-        // 'off' or 0 - turn the rule off
-        // 'warn' or 1 - turn the rule on as a warning (doesn’t affect exit code)
-        // 'error' or 2 - turn the rule on as an error (exit code will be 1)
+        languageOptions: {
+            parser: tseslint.parser,
+            parserOptions: {
+              project: true,
+            },
+          },
         rules: {
             // TS specific rules
-            ...tsPlugin.configs['eslint-recommended'].rules,
-            ...tsPlugin.configs.recommended.rules,
             '@typescript-eslint/no-shadow': 'error',
             '@typescript-eslint/no-unused-vars': 'error',
 
             // JS specific rules
-            ...eslintJsPlugin.configs.recommended.rules,
+
             // HACK: this eslint core rule is turned off so that the typescript-eslint version can be used instead
             'no-unused-vars': 'off',
             'block-scoped-var': 'error',
@@ -142,7 +128,7 @@ export default [
             'prefer-spread': 'error',
             'prefer-template': 'error',
             '@stylistic/quote-props': ['error', 'as-needed'],
-            '@stylistic/quotes': ['error', 'single', 'avoid-escape'],
+            '@stylistic/quotes': ['error', 'single', { "avoidEscape": true } ],
             '@stylistic/semi': ['error', 'never'],
             '@stylistic/semi-spacing': 'error',
             '@stylistic/space-before-blocks': 'error',
@@ -153,5 +139,5 @@ export default [
             '@stylistic/space-in-parens': 'error',
             '@stylistic/space-infix-ops': 'error',
         },
-    },
-];
+    }
+]
