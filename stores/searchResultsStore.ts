@@ -53,7 +53,7 @@ export const useSearchResultsStore = defineStore('searchResultsStore', () => {
         loadingStore.setIsLoading(false)
     }
 
-    function setActiveSearchResult(selectedResultId: String) {
+    function setActiveSearchResult(selectedResultId: string) {
         const newResult = searchResultsList.value.find(resultItem => resultItem.professional.id === selectedResultId)
 
         activeResult.value = newResult
