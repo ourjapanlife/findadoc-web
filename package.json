@@ -35,9 +35,9 @@
         "vue3-google-map": "^0.15.0"
     },
     "devDependencies": {
-        "@graphql-codegen/cli": "^3.0.0",
-        "@graphql-codegen/typescript": "^3.0.0",
-        "@graphql-codegen/typescript-resolvers": "^3.0.0",
+        "@graphql-codegen/cli": "^5.0.0",
+        "@graphql-codegen/typescript": "^4.0.0",
+        "@graphql-codegen/typescript-resolvers": "^4.0.0",
         "@microsoft/eslint-formatter-sarif": "^3.0.0",
         "@nuxt/types": "^2.17.2",
         "@nuxtjs/i18n": "next",
