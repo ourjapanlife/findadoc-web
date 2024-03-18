@@ -16,7 +16,7 @@
         "test:pinia:coverage": "vitest run --coverage",
         "test:e2e": "cypress run --e2e --browser chrome"
     },
-    "packageManager": "yarn@4.0.2",
+    "packageManager": "yarn@4.1.1",
     "engines": {
         "node": ">=21.3.0"
     },
