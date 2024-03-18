@@ -1,0 +1,81 @@
+{
+    "members": [
+        {
+            "avatarImg": "/_nuxt/assets/images/avatars/lashawntoyoda.jpg",
+            "name": "LaShawn Toyoda",
+            "title": "Founder & Executive Director",
+            "linkedInUrl": "https://www.linkedin.com/in/lashawn-toyoda/",
+            "githubUrl": "https://github.com/theyokohamalife/"
+        },
+        {
+            "avatarImg": "/_nuxt/assets/images/avatars/philipermish.jpg",
+            "name": "Philip Ermish",
+            "title": "Tech Lead",
+            "linkedInUrl": "https://www.linkedin.com/in/philipermish",
+            "githubUrl": "https://github.com/ermish"
+        },
+        {
+            "avatarImg": "/_nuxt/assets/images/avatars/russellmiller.jpg",
+            "name": "Russell Miller",
+            "title": "Healthcare Content Lead",
+            "linkedInUrl": "https://www.linkedin.com/in/russell-miller-51a5136b/",
+            "githubUrl": null
+        },
+        {
+            "avatarImg": "/_nuxt/assets/images/avatars/KunikoArita.png",
+            "name": "Kuniko Arita",
+            "title": "Medical & Social Welfare Expert",
+            "linkedInUrl": null,
+            "githubUrl": null
+        },
+        {
+            "avatarImg": "/_nuxt/assets/images/avatars/ayayumino.jpg",
+            "name": "Aya Yumino, MD",
+            "title": "Medical & Social Welfare Expert",
+            "linkedInUrl": null,
+            "githubUrl": null
+        },
+        {
+            "avatarImg": "/_nuxt/assets/images/avatars/NiayaHarperIgarashi.jpg",
+            "name": "Niaya Harper Igarashi",
+            "title": "Access, Community Outreach",
+            "linkedInUrl": "https://www.linkedin.com/in/niayaharper/r",
+            "githubUrl": null
+        },
+        {
+            "avatarImg": "/_nuxt/assets/images/avatars/keiyumino.jpg",
+            "name": "Kei Yumino",
+            "title": "Design Lead",
+            "linkedInUrl": "https://www.linkedin.com/in/kei-yumino-86299861/",
+            "githubUrl": null
+        },
+        {
+            "avatarImg": "/_nuxt/assets/images/avatars/EmanueleMonica.jpg",
+            "name": "Emanuele Monica",
+            "title": "Language Support",
+            "linkedInUrl": "https://www.linkedin.com/in/emanuele-monica-59b93949/",
+            "githubUrl": null
+        },
+        {
+            "avatarImg": "/_nuxt/assets/images/avatars/chunyanli.jpeg",
+            "name": "Chunyan Li",
+            "title": "Public Health Expert",
+            "linkedInUrl": "https://www.linkedin.com/in/chunyan-li-10/",
+            "githubUrl": null
+        },
+        {
+            "avatarImg": "/_nuxt/assets/images/avatars/andrewleemhuis.jpeg",
+            "name": "Andrew Leemhuis",
+            "title": "Design",
+            "linkedInUrl": "https://www.linkedin.com/in/andrew-leemhuis-01482718/",
+            "githubUrl": null
+        },
+        {
+            "avatarImg": "/_nuxt/assets/images/avatars/shingotoyoda.jpg",
+            "name": "Shingo Toyoda",
+            "title": "Language Support",
+            "linkedInUrl": null,
+            "githubUrl": null
+        }
+    ]
+}
