@@ -1,102 +1,83 @@
 <template>
-  <div class="flex h-full flex-col w-full">
-    <div class="flex flex-col items-center mx-32">
-      <!-- <svg
-        role="img"
-        alt="heart icon"
-        title="heart icon"
-        class="heart-plus-icon w-24 h-24 mr-1 fill-primary-text-inverted"
-      >
-        <use xlink:href="~/assets/images/heart-plus.svg#heart-plus-svg" />
-      </svg>-->
-      <h1 class="mb-12 font-bold text-4xl">{{ $t('about.heading') }}</h1>
-      <p class="mb-12 text-2xl">{{ $t('about.subheading') }}</p>
-      <p class="mb-6 text-md text-primary-text-muted">{{ $t('about.paragraph1') }}</p>
-      <p class="text-md text-primary-text-muted">{{ $t('about.paragraph2') }}</p>
-    </div>
-    <!-- <div id="members" class="flex flex-col items-center mx-32 my-14">
-            <div id="members-header" class="flex">
-                <div class="h-px w-32 border-currentColor/70 border inline-block self-center"></div>
-                <div class="text-primary/80 text-xl font-bold inline-block mx-4 whitespace-nowrap">Our Team</div>
-                <div class="h-px w-32 border-currentColor/70 border inline-block self-center"></div>
+    <div class="flex h-full flex-col w-full">
+        <div class="flex flex-col items-center mx-32">
+            <img
+                src="../assets/images/heart-plus.png"
+                alt="pink heart with a white plus in the middle to symbolize health"
+                class="my-4 h-20 w-30"
+            />
+            <h1 data-testid="about-heading" class="mb-12 font-bold text-4xl">
+                {{ $t("about.heading") }}
+            </h1>
+            <p data-testid="about-subheading" class="mb-12 text-2xl">
+                {{ $t("about.subheading") }}
+            </p>
+            <p
+                data-testid="about-paragraph1"
+                class="mb-6 text-md text-primary-text-muted"
+            >
+                {{ $t("about.paragraph1") }}
+            </p>
+            <p
+                data-testid="about-paragraph2"
+                class="text-md text-primary-text-muted"
+            >
+                {{ $t("about.paragraph2") }}
+            </p>
+        </div>
+        <div
+            data-testid="members-header-container"
+            id="members-header-container"
+            class="flex justify-center items-center"
+        >
+            <div
+                data-testid="members-header"
+                id="members-header"
+                class="flex w-4/5 my-14"
+            >
+                <div
+                    class="flex-1 border-currentColor/70 border self-center"
+                ></div>
+                <div
+                    class="text-primary/80 text-xl font-semibold mx-4 p-2 whitespace-nowrap"
+                >
+                    {{ $t("about.members") }}
+                </div>
+                <div
+                    class="flex-1 border-currentColor/70 border self-center"
+                ></div>
             </div>
-            <div class="members-list flex flex-row" :key="index" v-for="(member, index) in members">
-                <div class="member flex flex-col">
-                    <img :href="member.avatarImg" />
-                    <div class="member-name text-xl font-bold">{{ member.name }}</div>
-                    <div class="member-title text-md text-primary-text-muted">{{ member.title }}</div>
-                    <div class="member-social flex flex-row">
-                        <a :href="member.linkedInUrl" target="_blank" rel="noopener noreferrer">
-                            <svg role="img" alt="linkedin icon" title="linkedin icon"
-                                class="social-icon w-12 h-12 mr-1 fill-primary-text-muted">
-                                <use xlink:href="../assets/images/social-linkedin.svg#social-linkedin-svg" />
-                            </svg>
-                        </a>
-                        <a :href="member.githubUrl" target="_blank" rel="noopener noreferrer">
-                            <svg role="img" alt="github icon" title="github icon"
-                                class="social-icon w-12 h-12 mr-1 fill-primary-text-muted">
-                                <use xlink:href="../assets/images/social-github.svg#social-github-svg" />
-                            </svg>
-                        </a>
-                    </div>
+        </div>
+        <div
+            data-testid="members-container"
+            id="members-container"
+            class="flex justify-center items-center mx-4"
+        >
+            <div
+                data-testid="members"
+                id="members"
+                class="flex flex-wrap justify-between items-start w-4/5 mx-4 mb-8 md:flex-wrap md:mx-32"
+            >
+                <div
+                    data-testid="member"
+                    class="members-list flex flex-col justify-center p-4 md:flex-row basis-1/3"
+                    :key="index"
+                    v-for="(member, index) in data.members"
+                >
+                    <MemberComponent
+                        :avatarImg="member.avatarImg"
+                        :name="member.name"
+                        :title="member.title"
+                        :linkedInUrl="member.linkedInUrl"
+                        :githubUrl="member.githubUrl"
+                    />
                 </div>
             </div>
-    </div>-->
-  </div>
+        </div>
+    </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
-
-const members = ref([
-  {
-    avatarImg: "../assets/images/avatars/lashawntoyoda.jpg",
-    name: "LaShawn Toyoda",
-    title: "Founder & Executive Director",
-    linkedInUrl: "https://www.linkedin.com/in/lashawn-toyoda/",
-    githubUrl: "https://github.com/theyokohamalife/"
-  },
-  {
-    avatarImg: "../assets/images/avatars/philipermish.jpg",
-    name: "Philip Ermish",
-    title: "Tech Lead",
-    linkedInUrl: "https://www.linkedin.com/in/philipermish",
-    githubUrl: "https://github.com/ermish"
-  },
-  {
-    avatarImg: "../assets/images/avatars/russellmiller.jpg",
-    name: "Russell Miller",
-    title: "Healthcare Content Lead",
-    linkedInUrl: "https://www.linkedin.com/in/russellmiller",
-    githubUrl: "https://github.com/ermish"
-  },
-  {
-    avatarImg: "../assets/images/avatars/russellmiller.jpg",
-    name: "Russell Miller",
-    title: "Healthcare Content Lead",
-    linkedInUrl: "https://www.linkedin.com/in/russellmiller",
-    githubUrl: "https://github.com/ermish"
-  },
-  {
-    avatarImg: "../assets/images/avatars/russellmiller.jpg",
-    name: "Russell Miller",
-    title: "Healthcare Content Lead",
-    linkedInUrl: "https://www.linkedin.com/in/russellmiller",
-    githubUrl: "https://github.com/ermish"
-  },
-  {
-    avatarImg: "../assets/images/avatars/russellmiller.jpg",
-    name: "Russell Miller",
-    title: "Healthcare Content Lead",
-    linkedInUrl: "https://www.linkedin.com/in/russellmiller",
-    githubUrl: "https://github.com/ermish"
-  },
-  {
-    avatarImg: "../assets/images/avatars/russellmiller.jpg",
-    name: "Russell Miller",
-    title: "Healthcare Content Lead",
-    linkedInUrl: "https://www.linkedin.com/in/russellmiller",
-    githubUrl: "https://github.com/ermish"
-  }
-]);
+import data from "../member_directory/members.json";
+import MemberComponent from "~/components/MemberComponent.vue";
 </script>
