@@ -34,7 +34,7 @@ export const useSubmissionStore = defineStore('submissionStore', () => {
 
         console.log('submission =', submission)
 
-        const result = await gqlClient.request<Submission>(createSubmissionMutation, {
+        await gqlClient.request<Submission>(createSubmissionMutation, {
             variables: {
                 input: submission
             }

@@ -12,7 +12,7 @@ type SearchResult = {
 }
 
 export const useSearchResultsStore = defineStore('searchResultsStore', () => {
-    const activeResultId: Ref<String | undefined> = ref()
+    const activeResultId: Ref<string | undefined> = ref()
     const activeResult: Ref<SearchResult | undefined> = ref()
     const searchResultsList: Ref<SearchResult[]> = ref([])
 
