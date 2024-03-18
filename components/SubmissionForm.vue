@@ -78,9 +78,9 @@
 </template>
 
   <script lang="ts" setup>
-import { useSubmissionStore } from "~/stores/submissionStore";
-import { useLocaleStore } from "~/stores/localeStore";
+import { useSubmissionStore } from "~/stores/submissionStore"
+import { useLocaleStore } from "~/stores/localeStore"
 
-const submissionStore = useSubmissionStore();
-const localeStore = useLocaleStore();
+const submissionStore = useSubmissionStore()
+const localeStore = useLocaleStore()
 </script>

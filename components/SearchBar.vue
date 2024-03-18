@@ -63,7 +63,7 @@ const locationsStore = useLocationsStore()
 const searchResultsStore = useSearchResultsStore()
 const specialtiesStore = useSpecialtiesStore()
 
-locationsStore.fetchLocations()
+await locationsStore.fetchLocations()
 
 const languageOptions = [{
     code: '',
@@ -83,11 +83,11 @@ watchEffect(() => {
     locationDropdownOptions.value = locationsStore.citiesDisplayOptions
 })
 
-function search() {
+async function search() {
     const blankRemovedLocation = selectedLocation.value == '----Any----' ? '' : selectedLocation.value
     const blankRemovedSpecialty = selectedSpecialty.value == '----Any----' ? undefined : selectedSpecialty.value as Specialty
     const blankRemovedLanguage = selectedLanguage.value == '----Any----' ? undefined : selectedLanguage.value as Locale
 
-    searchResultsStore.search(blankRemovedLocation, blankRemovedSpecialty, blankRemovedLanguage)
+    await searchResultsStore.search(blankRemovedLocation, blankRemovedSpecialty, blankRemovedLanguage)
 }
 </script>
