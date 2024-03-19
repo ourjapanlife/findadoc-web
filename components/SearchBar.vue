@@ -19,8 +19,9 @@
                     <option value="" class="text-primary-text-muted hidden" disabled selected>
                         {{ $t('searchBar.selectLocation') }}
                     </option>
-                    <option :key="location" :value="location" v-for="(location, index) in locationDropdownOptions">
-                        {{ location }}
+                    <option>{{ placeHolderTextDisplay }}</option>
+                    <option :key="cityDetails.cityDisplayText" :value="cityDetails.cityDisplayText" v-for="(cityDetails) in citySearchBarDisplayText">
+                       {{ cityDetails.cityDisplayText }}: ({{ cityDetails.cityOccurrenceCount }})
                     </option>
                 </select>
             </div>
@@ -78,6 +79,38 @@ const languageDropdownOptions: Ref<LocaleDisplay[]> = ref(languageOptions)
 const selectedSpecialty: Ref<Specialty | String> = ref('')
 const selectedLocation: Ref<string> = ref('')
 const selectedLanguage: Ref<Locale | String> = ref('')
+
+const placeHolderTextDisplay = "----Any----"
+
+interface CityDisplayItems {
+    [cityName: string]: {
+    cityDisplayText: string,
+    cityOccurrenceCount: number
+    }
+}
+function createCityDisplayText() {
+    const cityDisplayTextObject: CityDisplayItems = {};
+
+    const cities = locationsStore.citiesDisplayOptions
+
+    cities.forEach((city) => {
+        if (city === placeHolderTextDisplay) {
+            return;
+        }
+        if (cityDisplayTextObject[city]) {
+            cityDisplayTextObject[city].cityOccurrenceCount += 1
+        } else {
+            cityDisplayTextObject[city] =  {
+            cityDisplayText: city,
+            cityOccurrenceCount: 1
+        };
+        }
+    })   
+
+    return cityDisplayTextObject
+}
+
+const citySearchBarDisplayText: CityDisplayItems = createCityDisplayText()
 
 watchEffect(() => {
     locationDropdownOptions.value = locationsStore.citiesDisplayOptions
