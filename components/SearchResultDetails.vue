@@ -94,11 +94,18 @@ const healthcareProfessionalName = computed(() => {
         resultsStore.$state.activeResult?.professional.names.find(
             (n) => n.locale === Locale.JaJp
         )
+  
     const englishFullName = `${englishName?.firstName} ${englishName?.lastName}`
     const japaneseFullName = `${japaneseName?.lastName} ${japaneseName?.firstName}`
-    return localeStore.locale.code === Locale.EnUs
-        ? englishFullName
-        : japaneseFullName
+
+    switch (localeStore.locale.code) {
+        case Locale.EnUs:
+            return englishFullName ? englishFullName : japaneseFullName
+        case Locale.JaJp:
+            return japaneseFullName ? japaneseFullName : englishFullName
+        default:
+            return englishFullName ? englishFullName : japaneseFullName
+    }
 })
 const healthcareProfessionalDegrees = computed(() => {
     const healthcareProfessionalDegreesText =
