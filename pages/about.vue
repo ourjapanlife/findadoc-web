@@ -2,7 +2,7 @@
     <div class="flex h-full flex-col w-full">
         <div class="flex flex-col items-center mx-32">
             <img
-                src="../assets/images/heart-plus.png"
+                :src="heartPlusIcon"
                 alt="pink heart with a white plus in the middle to symbolize health"
                 class="my-4 h-20 w-30"
             />
@@ -80,4 +80,7 @@
 <script setup lang="ts">
 import data from "../member_directory/members.json";
 import MemberComponent from "~/components/MemberComponent.vue";
+import heartPlusSVG from "@/assets/images/heart-plus.svg";
+
+const heartPlusIcon = heartPlusSVG;
 </script>
