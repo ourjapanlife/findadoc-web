@@ -17,7 +17,6 @@ export const useLocationsStore = defineStore('locationsStore', () => {
 
         //this is the async callback that will be called when the query is done (no async/await)
         const facilitiesSearchResults = await queryFacilities()
-        console.log(`Fetched facilities: ${JSON.stringify(facilitiesSearchResults)}`)
 
         const allCitiesEnglishList = facilitiesSearchResults.map(facility => facility.contact?.address.cityEn)
         const allCitiesJapaneseList = facilitiesSearchResults.map(facility => facility.contact?.address.cityJa)
@@ -56,7 +55,6 @@ async function queryFacilities(): Promise<Facility[]> {
         return result?.facilities ?? []
     } catch (error) {
         console.log(`Error getting facilities for dropdown: ${JSON.stringify(error)}`)
-        alert(`Error getting data! Please contact our support team by clicking the bottom right link on the page!`)
         return []
     }
 }

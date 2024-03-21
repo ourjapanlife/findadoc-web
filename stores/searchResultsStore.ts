@@ -88,15 +88,12 @@ async function queryProfessionals(searchSpecialty?: Specialty, searchLanguage?: 
             } satisfies HealthcareProfessionalSearchFilters
         }
 
-        console.log('searching professionals')
         const response = await gqlClient.request<{ healthcareProfessionals: HealthcareProfessional[] }>(searchProfessionalsQuery, searchProfessionalsData)
-        console.log(`Fetched professionals: ${JSON.stringify(response)}`)
 
         const professionalsSearchResult = (response?.healthcareProfessionals ?? []) as HealthcareProfessional[]
         return professionalsSearchResult
     } catch (error) {
         console.log(`Error getting professionals: ${JSON.stringify(error)}`)
-        alert(`Error getting data! Please contact our support team by clicking the bottom right link on the page!`)
         return []
     }
 }
@@ -119,9 +116,7 @@ async function queryFacilities(healthcareProfessionalIds: string[], searchCity?:
             } satisfies FacilitySearchFilters
         }
 
-        console.log('searching facilities')
         const response = await gqlClient.request<{ facilities: Facility[] }>(searchFacilitiesQuery, searchFacilitiesData)
-        console.log(`Fetched facilities: ${JSON.stringify(response)}`)
         const facilitiesSearchResults = (response?.facilities ?? []) as Facility[]
 
         //filter the search results by location if a location is selected
@@ -133,7 +128,6 @@ async function queryFacilities(healthcareProfessionalIds: string[], searchCity?:
         return locationFilteredSearchResults
     } catch (error) {
         console.log(`Error getting facilities: ${JSON.stringify(error)}`)
-        alert(`Error getting data! Please contact our support team by clicking the bottom right link on the page!`)
         return []
     }
 }
