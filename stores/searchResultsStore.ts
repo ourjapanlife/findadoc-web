@@ -93,7 +93,8 @@ async function queryProfessionals(searchSpecialty?: Specialty, searchLanguage?: 
         const professionalsSearchResult = (response?.healthcareProfessionals ?? []) as HealthcareProfessional[]
         return professionalsSearchResult
     } catch (error) {
-        console.log(`Error getting professionals: ${JSON.stringify(error)}`)
+        console.error(`Error getting professionals: ${JSON.stringify(error)}`)
+        alert(`Error getting data! Please contact our support team by clicking the bottom right link on the page!`)
         return []
     }
 }
@@ -127,7 +128,8 @@ async function queryFacilities(healthcareProfessionalIds: string[], searchCity?:
 
         return locationFilteredSearchResults
     } catch (error) {
-        console.log(`Error getting facilities: ${JSON.stringify(error)}`)
+        console.error(`Error getting facilities: ${JSON.stringify(error)}`)
+        alert(`Error getting data! Please contact our support team by clicking the bottom right link on the page!`)
         return []
     }
 }
