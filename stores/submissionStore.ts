@@ -17,7 +17,6 @@ export const useSubmissionStore = defineStore('submissionStore', () => {
         const spokenLanguages: Locale[] = []
 
         if (selectLanguage1.value !== '') {
-            console.log('selectLanguage1 =', selectLanguage1)
             spokenLanguages.push(selectLanguage1.value as Locale)
         }
 
@@ -31,8 +30,6 @@ export const useSubmissionStore = defineStore('submissionStore', () => {
             "spokenLanguages": spokenLanguages,
             "notes": otherNotes.value
         } satisfies CreateSubmissionInput
-
-        console.log('submission =', submission)
 
         await gqlClient.request<Submission>(createSubmissionMutation, {
             variables: {

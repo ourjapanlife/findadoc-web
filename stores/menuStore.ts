@@ -10,7 +10,6 @@ export const useMenuStore = defineStore('menuStore', () => {
     }
 
     function toggleMenu() {
-        console.log("menu= ", menuOpen.value)
         menuOpen.value = !menuOpen.value
     }
 
