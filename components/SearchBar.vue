@@ -17,11 +17,11 @@
                 <select v-model="selectedLocation" class="w-full px-1 border-y-2 border-primary/60 py-1.5 drop-shadow-md
                         text-primary-text bg-primary-bg hover:bg-primary-hover/10 transition-all">
                     <option value="" class="text-primary-text-muted hidden" disabled selected>
-                        {{ $t('searchBar.selectLocation') }}
+                        {{ $t('searchBar.selectLocation')}}
                     </option>
                     <option>{{ placeHolderTextDisplay }}</option>
                     <option :key="cityDetails.cityDisplayText" :value="cityDetails.cityDisplayText" v-for="(cityDetails) in citySearchBarDisplayText">
-                       {{ cityDetails.cityDisplayText }}: ({{ cityDetails.cityOccurrenceCount }})
+                       {{ cityDetails.cityDisplayText }}
                     </option>
                 </select>
             </div>
@@ -107,7 +107,7 @@ function createCityDisplayText() {
         }
     })   
 
-    return cityDisplayTextObject
+    return Object.values(cityDisplayTextObject)
 }
 
 const citySearchBarDisplayText: CityDisplayItems = createCityDisplayText()
