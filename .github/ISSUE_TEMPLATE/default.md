@@ -19,7 +19,3 @@ assignees: ''
 
 # Implementation notes
 [Suggest how this might be implemented.]
-
-# Discussion
-[Include links to any related Slack conversations or Figma files here.]
-
