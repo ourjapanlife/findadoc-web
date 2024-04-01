@@ -6,13 +6,20 @@ labels: ''
 assignees: ''
 ---
 
-# Requirements
+# Problem
+[Describe what the problem is we're trying to solve.]
+
+# Success
+[What this task should accomplish when it's considered completed.]
+### Requirements
 
 - [ ] Add
 - [ ] Requirements
 - [ ] here
 
-# Dependencies
+# Implementation notes
+[Suggest how this might be implemented.]
 
-- None (Add any issue dependencies here)
+# Discussion
+[Include links to any related Slack conversations or Figma files here.]
 
