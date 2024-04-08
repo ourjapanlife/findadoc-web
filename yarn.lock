@@ -5134,11 +5134,11 @@ __metadata:
   linkType: hard
 
 "autoprefixer@npm:^10.4.18":
-  version: 10.4.18
-  resolution: "autoprefixer@npm:10.4.18"
+  version: 10.4.19
+  resolution: "autoprefixer@npm:10.4.19"
   dependencies:
     browserslist: "npm:^4.23.0"
-    caniuse-lite: "npm:^1.0.30001591"
+    caniuse-lite: "npm:^1.0.30001599"
     fraction.js: "npm:^4.3.7"
     normalize-range: "npm:^0.1.2"
     picocolors: "npm:^1.0.0"
@@ -5147,7 +5147,7 @@ __metadata:
     postcss: ^8.1.0
   bin:
     autoprefixer: bin/autoprefixer
-  checksum: 10/c5bc0b539451557ac0b531bd6dad2db50499cf3d5daff9ead57d0d90d8f63ea6aa0e0556cbda3fbd3d081ec1199202f14533d54494ea47f42b239852d6bde16f
+  checksum: 10/98378eae37b8bf0f1515e4c91b4c9c1ce69ede311d4dea7e934f5afe147d23712c577f112c4019a4c40461c585d82d474d08044f8eb6cb8a063c3d5b7aca52d2
   languageName: node
   linkType: hard
 
@@ -5578,10 +5578,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"caniuse-lite@npm:^1.0.0, caniuse-lite@npm:^1.0.30001587, caniuse-lite@npm:^1.0.30001591":
+"caniuse-lite@npm:^1.0.0, caniuse-lite@npm:^1.0.30001587":
   version: 1.0.30001599
   resolution: "caniuse-lite@npm:1.0.30001599"
   checksum: 10/c9a5ad806fc0d446e4f995d551b840d8fdcbe97958b7f83ff7a255a8ef5e40ca12ca1a508c66b3ab147e19eef932d28772d205c046500dd0740ea9dfb602e2e1
+  languageName: node
+  linkType: hard
+
+"caniuse-lite@npm:^1.0.30001599":
+  version: 1.0.30001607
+  resolution: "caniuse-lite@npm:1.0.30001607"
+  checksum: 10/caab9ae1aa343e72da935c071041344c80338d8a12bd12a90b7d46eb8a97c7620dac72e95c994b94ce82d63f2f27151dab49206864620d8bfd7aa99f7fc75c83
   languageName: node
   linkType: hard
 
