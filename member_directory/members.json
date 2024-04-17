@@ -76,6 +76,14 @@
             "title": "Language Support",
             "linkedInUrl": null,
             "githubUrl": null
+        },
+        {
+            "avatarImg": "/avatars/natalja_dembek.jpg",
+            "name": "Natalja Dembek",
+            "title": "UI/UX Designer",
+            "linkedInUrl": "https://www.linkedin.com/in/nataljadembek/",
+            "githubUrl": "https://github.com/Ntlja",
+            "personalWebsite": "https://www.natalja-d.com"
         }
     ]
 }
