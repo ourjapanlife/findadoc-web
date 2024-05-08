@@ -25,7 +25,7 @@
                     >
                         {{ specialty.displayText }}
                     </option>
-                </select>
+                </select> -->
             </div>
             <div class="search-location col-span-1 inline-block w-1/3 py-4">
                 <select
