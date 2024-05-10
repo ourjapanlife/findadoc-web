@@ -1,10 +1,7 @@
 <template>
     <div class="flex flex-col h-full">
         <BetaBanner />
-        <div
-            v-if="$viewport.isGreaterThan('tablet')"
-            class="flex h-full overflow-hidden"
-        >
+        <div v-if="$viewport.isGreaterThan('tablet')" class="flex h-full overflow-hidden">
             <LeftNavbar class="bg-primary-bg w-[358px]" />
             <MainContentContainer />
         </div>
