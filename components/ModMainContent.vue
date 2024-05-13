@@ -3,8 +3,8 @@
         <div v-if="store.activeScreen === ModerationScreen.dashboard">
             <ModSubmissionListContainer />
         </div>
-        <div v-else-if="store.activeScreen === ModerationScreen.editSubmission">
-            <p class="text-xl font-bold">MAIN CONTAINER REVIEW SUBMISSION</p>
+        <div class="h-full" v-else-if="store.activeScreen === ModerationScreen.editSubmission">
+            <ModSubmissionsEditFormFacility />
         </div>
     </div>
 </template>

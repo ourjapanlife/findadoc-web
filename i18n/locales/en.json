@@ -105,5 +105,11 @@
         "status": "Status",
         "modified": "Modified",
         "submitted": "Submitted"
+    },
+    "moderateSubmissionForm": {
+        "contactInformation": "Contact Information",
+        "addresses": "Addresses",
+        "googleMapsInformation": "Google maps information",
+        "healthcareProfessionalId": "Healthcare Professional IDs"
     }
 }

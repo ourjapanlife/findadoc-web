@@ -1,5 +1,5 @@
 <template>
-    <div data-testid="moderation-page" class="flex flex-row min-h-screen">
+    <div data-testid="moderation-page" class="flex flex-row h-screen">
         <!-- This button exists solely for testing that the states work and how you can implement it on other components. -->
         <!-- <button @click="store.setActiveScreen(ModerationScreen.editSubmission)">Change state!</button> -->
         <ModLeftNavbar />
