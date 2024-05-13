@@ -32,7 +32,7 @@
         </div>
         <div v-else>
             <div class="h-full flex flex-col w-[358px]">
-                <img src="../assets/images/No-search-results-graphic.png" class="p-12" />
+                <img :src='noSearchResultsGraphic' class="p-12" />
                 <span class="text-primary-text pl-1 font-bold self-center group-hover:text-primary-text-inverted/50">{{
                     $t('searchResultsList.noResults') }}</span>
                 <span class="text-primary-text self-center">{{
@@ -46,7 +46,7 @@
 import { useSearchResultsStore } from '../stores/searchResultsStore'
 import { useLocaleStore } from '../stores/localeStore'
 import { Locale } from '~/typedefs/gqlTypes.js';
-
+import noSearchResultsGraphic from '@/assets/images/no-search-results-graphic.svg'
 const resultsStore = useSearchResultsStore()
 const localeStore = useLocaleStore()
 
