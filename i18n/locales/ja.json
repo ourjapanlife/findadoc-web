@@ -38,7 +38,9 @@
     },
     "searchResultsList": {
         "doctorsNearby": "近隣の医師",
-        "filters": "フィルター"
+        "filters": "フィルター",
+        "noResults": "もう一度お試しください",
+        "noResultsSubtext": "それぞれ別のフィルターでお試しください"
     },
     "searchResultsDetails": {
         "speaks": "この医師は話す",

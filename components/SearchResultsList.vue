@@ -10,12 +10,11 @@
                     class="hamburger-list-icon fill-primary/50 h-5 w-5 self-center group-hover:fill-primary-text-inverted/50">
                     <use xlink:href="../assets/images/hamburger-list-icon.svg#hamburger-list-icon-svg" />
                 </svg>
-                <span
-                    class="text-primary-text/50 pl-1 font-bold self-center group-hover:text-primary-text-inverted/50">{{
-                        $t('searchResultsList.filters') }}</span>
+                <span class="text-primary-text/50 pl-1 font-bold self-center group-hover:text-primary-text-inverted/50">
+                    {{ $t('searchResultsList.filters') }}</span>
             </button>
         </div>
-        <template v-if="resultsStore.searchResultsList.length > 0">
+        <div v-if="resultsStore.searchResultsList.length > 0">
             <div id="searchResults" class="flex flex-col overflow-y-scroll h-full">
                 <div @click="resultsStore.setActiveSearchResult(searchResult.professional.id)" :key="index"
                     v-for="(searchResult, index) in resultsStore.searchResultsList" class="results-list flex flex-col">
@@ -30,15 +29,16 @@
                     </div>
                 </div>
             </div>
-        </template>
-        <template v-else>
+        </div>
+        <div v-else>
             <div class="h-full flex flex-col w-[358px]">
                 <img src="../assets/images/No-search-results-graphic.png" class="p-12" />
-                <span class="text-primary-text pl-1 font-bold self-center group-hover:text-primary-text-inverted/50">No
-                    Results Found</span>
-                <span class="text-primary-text self-center">Please try a different filter comination</span>
+                <span class="text-primary-text pl-1 font-bold self-center group-hover:text-primary-text-inverted/50">{{
+                    $t('searchResultsList.noResults') }}</span>
+                <span class="text-primary-text self-center">{{
+                    $t('searchResultsList.noResultsSubtext') }}</span>
             </div>
-        </template>
+        </div>
     </div>
 </template>
 

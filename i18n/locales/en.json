@@ -59,7 +59,9 @@
     },
     "searchResultsList": {
         "doctorsNearby": "Doctors Nearby",
-        "filters": "Filters"
+        "filters": "Filters",
+        "noResults": "No Results Found",
+        "noResultsSubtext": "Please try a different filter combination."
     },
     "searchResultsDetails": {
         "speaks": "This doctor speaks",
