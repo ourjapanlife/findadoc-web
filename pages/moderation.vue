@@ -1,6 +1,8 @@
 <template>
     <div v-if="enableModerationPanel" class="flex flex-col h-full">
-       Moderation Panel
+       <ModLeftNavbar />
+       <ModTopbar />
+       <ModMainContent />
     </div>
 </template>
 
