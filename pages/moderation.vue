@@ -1,15 +1,17 @@
 <template>
-    <div v-if="enableModerationPanel" class="flex flex-col h-full">
+    <div v-if="store.enableModerationPanel" class="flex flex-row min-h-screen">
+        <!-- This button exists solely for testing that the states work and how you can implement it on other components. -->
+        <!-- <button @click="store.setActiveScreen(ModerationScreen.editSubmission)">Change state!</button> -->
        <ModLeftNavbar />
-       <ModTopbar />
-       <ModMainContent />
+       <div class="w-full flex flex-col items-stretch">
+            <ModTopbar />
+            <ModMainContent />
+       </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import { useRuntimeConfig } from "#imports"
+import { useModerationScreenStore, ModerationScreen } from "~/stores/moderationScreenStore"
 
-const runtimeConfig = useRuntimeConfig();
-const enableModerationPanel = runtimeConfig.public.ENABLE_MODERATION_PANEL || false
-
+const store = useModerationScreenStore()
 </script>
