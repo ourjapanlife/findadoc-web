@@ -14,7 +14,7 @@
                     {{ $t('searchResultsList.filters') }}</span>
             </button>
         </div>
-        <div v-if="resultsStore.searchResultsList.length > 0">
+        <div v-if="hasResults">
             <div id="searchResults" class="flex flex-col overflow-y-scroll h-full">
                 <div @click="resultsStore.setActiveSearchResult(searchResult.professional.id)" :key="index"
                     v-for="(searchResult, index) in resultsStore.searchResultsList" class="results-list flex flex-col">
@@ -43,14 +43,15 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue';
 import { useSearchResultsStore } from '../stores/searchResultsStore'
 import { useLocaleStore } from '../stores/localeStore'
 import { Locale } from '~/typedefs/gqlTypes.js';
 import noSearchResultsGraphic from '@/assets/images/no-search-results-graphic.svg'
 const resultsStore = useSearchResultsStore()
 const localeStore = useLocaleStore()
-
 //let's start with some initial data
 resultsStore.search()
+const hasResults = computed(() => resultsStore.searchResultsList.length > 0)
 
 </script>
