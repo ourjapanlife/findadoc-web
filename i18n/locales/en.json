@@ -18,10 +18,11 @@
         "about": "About Find a Doc, Japan",
         "home": "Home",
         "contact": "Contact",
-        "submit": "Submit",
+        "submit": "Add a Doctor",
         "privacy": "Privacy",
         "terms": "Terms",
         "github": "Github",
+        "languageDropdownTitle": "Language:",
         "netlify": "Powered by Netlify"
     },
     "privacyPage": {

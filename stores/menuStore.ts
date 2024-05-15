@@ -2,31 +2,7 @@ import { defineStore } from "pinia"
 import { ref } from 'vue'
 
 export const useMenuStore = defineStore('menuStore', () => {
-    const menuOpen = ref(false)
-    const hamburgerMenuItems = {
-        "about": { "displayText": "hamburgerMenu.about", "route": "/about" },
-        "home": { "displayText": "hamburgerMenu.home", "route": "/" },
-        "contact": {
-            "displayText": "hamburgerMenu.contact", "route": "https://forms.gle/4E763qfaq46kEsn99"
-        },
-        "submit": { "displayText": "hamburgerMenu.submit", "route": "/submit" },
-        "privacy": {
-            "displayText": "hamburgerMenu.privacy", "route": "/privacypolicy"
-
-        },
-        "terms": {
-            "displayText": "hamburgerMenu.terms", "route": "/terms"
-
-        },
-        "github": {
-            "displayText": "hamburgerMenu.github", "route": "https://github.com/ourjapanlife/findadoc-web/"
-
-        },
-        "netlify": {
-            "displayText": "hamburgerMenu.netlify", "route": "https://www.netlify.com/"
-
-        },
-    }
+    const isMenuOpen = ref(false)
 
     const menuItems = {
         "about": { "displayText": "topNav.about", "route": "/about" },
@@ -34,14 +10,26 @@ export const useMenuStore = defineStore('menuStore', () => {
         "submit": { "displayText": "topNav.submit", "route": "/submit" },
     }
 
+    const hamburgerMenuItems = {
+        "about": { "displayText": "hamburgerMenu.about", "route": "/about" },
+        "home": { "displayText": "hamburgerMenu.home", "route": "/" },
+        "submit": { "displayText": "hamburgerMenu.submit", "route": "/submit" },
+    }
+
     function toggleMenu() {
-        menuOpen.value = !menuOpen.value
+        isMenuOpen.value = !isMenuOpen.value
+    }
+
+    function closeMenu() {
+        isMenuOpen.value = false
     }
 
     return {
         hamburgerMenuItems,
         menuItems,
-        menuOpen,
-        toggleMenu
+        hamburgerMenuItems,
+        isMenuOpen,
+        toggleMenu,
+        closeMenu
     }
 })

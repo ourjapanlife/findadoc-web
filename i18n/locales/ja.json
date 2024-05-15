@@ -15,14 +15,14 @@
         "clickHere": "こちらをクリック"
     },
     "hamburgerMenu": {
-        "about": "About Find a Doc, Japan",
-        "home": "Home",
-        "contact": "Contact",
-        "submit": "Submit",
-        "privacy": "Privacy",
-        "terms": "Terms",
+        "about": "私たちについて",
+        "home": "ホーム",
+        "contact": "ご意見・ご質問",
+        "submit": "医師情報の追加",
+        "privacy": "プライバシーポリシー",
+        "terms": "利用規約",
         "github": "Github",
-        "netlify": "Powered by Netlify"
+        "languageDropdownTitle": "対応言語:"
     },
     "privacyPage": {
         "heading": "Privacy Policy",
@@ -90,6 +90,7 @@
     "topNav": {
         "home": "ホーム",
         "about": "私たちについて",
+        "home": "ホーム",
         "submit": "医師情報の追加"
     },
     "modDashboardLeftNav": {
