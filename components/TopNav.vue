@@ -27,6 +27,7 @@
                     </svg>
                     <div class="title-text flex flex-col flex-shrink-0" data-testid="logo">
                         <div class="text-lg text-primary group-hover:text-primary-hover">
+                   
                             Find a Doc
                         </div>
                         <div class="text-sm text-primary leading-none group-hover:text-primary-hover">
@@ -57,10 +58,12 @@
 </template>
 
 <script lang="ts" setup>
+import SVGSiteLogo from '~/assets/icons/site-logo.svg'
 import { useSubmissionStore } from "~/stores/submissionStore";
 import { useMenuStore } from "~/stores/menuStore";
 import { useNuxtApp } from "#app";
 import HamburgerMenu from "./HamburgerMenu.vue";
+
 
 const { $viewport } = useNuxtApp()
 
