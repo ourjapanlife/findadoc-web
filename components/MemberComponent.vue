@@ -23,15 +23,13 @@
                 :href="linkedInUrl"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="social-link"
-            >
-                <img
-                    role="img"
+                class="social-link">
+                <svg role="img"
                     alt="linkedin icon"
                     title="linkedin icon"
-                    :src="linkedinIcon"
-                    class="social-icon w-8 h-8"
-                />
+                    class="social-icon w-8 h-8">
+                    <use xlink:href="../assets/images/social-linkedin.svg#linkedin-svg" />
+                </svg>
             </a>
             <a
                 data-testid="member-github"
@@ -39,15 +37,13 @@
                 :href="githubUrl"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="social-link"
-            >
-                <img
-                    role="img"
+                class="social-link">
+                <svg role="img"
                     alt="github icon"
                     title="github icon"
-                    :src="githubIcon"
-                    class="social-icon w-8 h-8 ml-1"
-                />
+                    class="social-icon w-8 h-8 ml-1">
+                    <use xlink:href="../assets/images/social-github.svg#github-svg" />
+                </svg>
             </a>
         </div>
     </div>
@@ -55,11 +51,6 @@
 
 <script setup lang="ts">
 import { PropType } from "vue";
-import githugSVG from "../assets/images/social-github.svg";
-import linkedinSVG from "../assets/images/social-linkedin.svg";
-
-const githubIcon = githugSVG;
-const linkedinIcon = linkedinSVG;
 
 defineProps({
     avatarImg: {

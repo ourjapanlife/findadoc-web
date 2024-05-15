@@ -1,11 +1,12 @@
 <template>
     <div class="flex h-full flex-col w-full">
         <div class="flex flex-col items-center mx-32">
-            <img
-                :src="heartPlusIcon"
+            <svg role="img"
                 alt="pink heart with a white plus in the middle to symbolize health"
-                class="my-4 h-20 w-30"
-            />
+                title="heart icon"
+                class="my-4 h-20 w-30">
+                    <use xlink:href="../assets/images/heart-plus.svg#heart-plus-svg" />
+            </svg>
             <h1 data-testid="about-heading" class="mb-12 font-bold text-4xl">
                 {{ $t("about.heading") }}
             </h1>
@@ -80,7 +81,4 @@
 <script setup lang="ts">
 import data from "../member_directory/members.json";
 import MemberComponent from "~/components/MemberComponent.vue";
-import heartPlusSVG from "@/assets/images/heart-plus.svg";
-
-const heartPlusIcon = heartPlusSVG;
 </script>
