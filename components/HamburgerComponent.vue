@@ -2,11 +2,9 @@
     <div class="cursor-pointer w-full">
         <div class="flex justify-between w-full">
             <div>
-                <svg role="img" alt="hamburger menu icon" title="hamburger list icon"
+                <SvgHamburgerMenu role="img" alt="hamburger menu icon" title="hamburger list icon"
                     @click="menuStore.toggleMenu()"
-                    class="hamburger-list-icon fill-primary/50 group-hover:fill-primary-text-inverted/50">
-                    <use xlink:href="../assets/images/hamburger-menu.svg#hamburger-menu-svg" />
-                </svg>
+                    class="hamburger-list-icon fill-primary/50 group-hover:fill-primary-text-inverted/50 h-8" :fontControlled="false"  />
                 <div
                     v-show="menuStore.menuOpen"
                     class="z-20 absolute top-[50px] w-[200px] p-8 rounded bg-white border-2">
@@ -32,6 +30,7 @@
 </template>
 
 <script lang="ts" setup>
+import SvgHamburgerMenu from '~/assets/images/hamburger-menu.svg'
 import { useMenuStore } from "~/stores/menuStore";
 
 const menuStore = useMenuStore();

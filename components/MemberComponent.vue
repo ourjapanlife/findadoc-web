@@ -24,12 +24,10 @@
                 target="_blank"
                 rel="noopener noreferrer"
                 class="social-link">
-                <svg role="img"
+                <SVGLinkedinIcon role="img"
                     alt="linkedin icon"
                     title="linkedin icon"
-                    class="social-icon w-8 h-8">
-                    <use xlink:href="../assets/images/social-linkedin.svg#linkedin-svg" />
-                </svg>
+                    class="social-icon w-8 h-8" :fontControlled="false" />
             </a>
             <a
                 data-testid="member-github"
@@ -38,18 +36,18 @@
                 target="_blank"
                 rel="noopener noreferrer"
                 class="social-link">
-                <svg role="img"
+                <SVGGithubIcon role="img"
                     alt="github icon"
                     title="github icon"
-                    class="social-icon w-8 h-8 ml-1">
-                    <use xlink:href="../assets/images/social-github.svg#github-svg" />
-                </svg>
+                    class="social-icon w-8 h-8 ml-1" :fontControlled="false" />
             </a>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
+import SVGLinkedinIcon from '~/assets/images/social-linkedin.svg'
+import SVGGithubIcon from '~/assets/images/social-github.svg'
 import { PropType } from "vue";
 
 defineProps({
