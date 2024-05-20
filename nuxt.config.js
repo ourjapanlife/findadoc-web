@@ -97,6 +97,7 @@ export default defineNuxtConfig({
         '@nuxtjs/i18n',
         '@pinia/nuxt',
         'nuxt-viewport',
+        'nuxt-svgo'
     ],
 
     viewport: {
@@ -149,5 +150,5 @@ export default defineNuxtConfig({
             ENABLE_MODERATION_PANEL: process.env.ENABLE_MODERATION_PANEL
         }
     },
-    telemetry: false 
+    telemetry: false
 })
