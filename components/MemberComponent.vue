@@ -46,8 +46,8 @@
 </template>
 
 <script setup lang="ts">
-import SVGLinkedinIcon from '~/assets/images/social-linkedin.svg'
-import SVGGithubIcon from '~/assets/images/social-github.svg'
+import SVGLinkedinIcon from '~/assets/icons/social-linkedin.svg'
+import SVGGithubIcon from '~/assets/icons/social-github.svg'
 import { PropType } from "vue";
 
 defineProps({

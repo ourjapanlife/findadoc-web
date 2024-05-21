@@ -22,9 +22,9 @@
 
 <script setup lang="ts">
 import { ref, Ref } from 'vue'
-import noteStackAddSvg from "../assets/images/note-stack-add.svg"
-import checkBoxSvg from "../assets/images/check-box.svg"
-import disabledByDefault from "../assets/images/disabled-by-default.svg"
+import noteStackAddSvg from "../assets/icons/note-stack-add.svg"
+import checkBoxSvg from "../assets/icons/check-box.svg"
+import disabledByDefault from "../assets/icons/disabled-by-default.svg"
 
 const modDashboardViewOptions = [{
     displayText: "Facilities",

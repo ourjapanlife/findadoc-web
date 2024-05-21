@@ -65,11 +65,11 @@
 </template>
 
 <script setup lang="ts">
-import SVGDoctorsBanner from '~/assets/images/doctors-banner.svg'
-import SVGMapPinIcon from '~/assets/images/map-pin-icon.svg'
-import SVGGlobeIcon from '~/assets/images/globe-icon.svg'
-import SVGPhoneIcon from '~/assets/images/phone-icon.svg'
-import SVGEmailIcon from '~/assets/images/email-icon.svg'
+import SVGDoctorsBanner from '~/assets/icons/doctors-banner.svg'
+import SVGMapPinIcon from '~/assets/icons/map-pin-icon.svg'
+import SVGGlobeIcon from '~/assets/icons/globe-icon.svg'
+import SVGPhoneIcon from '~/assets/icons/phone-icon.svg'
+import SVGEmailIcon from '~/assets/icons/email-icon.svg'
 import { computed } from "vue"
 import { useLocaleStore } from "~/stores/localeStore.js"
 import { useSpecialtiesStore } from "~/stores/specialtiesStore.js"

@@ -27,8 +27,8 @@
 </template>
 
 <script setup lang="ts">
-import SVGProfileIcon from '~/assets/images/profile-icon.svg'
-import SVGChatBubblesIcon from '~/assets/images/chat-bubbles.svg'
+import SVGProfileIcon from '~/assets/icons/profile-icon.svg'
+import SVGChatBubblesIcon from '~/assets/icons/chat-bubbles.svg'
 import { computed } from "vue"
 import { useLocaleStore } from "~/stores/localeStore.js"
 import { useSpecialtiesStore } from "~/stores/specialtiesStore.js"

@@ -8,7 +8,7 @@
 </template>
 
 <script setup lang="ts">
-import SVGLoadingIcon from '~/assets/images/loading.svg'
+import SVGLoadingIcon from '~/assets/icons/loading.svg'
 import { useLoadingStore } from '../stores/loadingStore.js'
 
 const store = useLoadingStore()

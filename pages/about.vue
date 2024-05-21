@@ -42,5 +42,5 @@
 <script setup lang="ts">
 import data from "../member_directory/members.json"
 import MemberComponent from "~/components/MemberComponent.vue"
-import SvgHeartPlus from '~/assets/images/heart-plus.svg'
+import SvgHeartPlus from '~/assets/icons/heart-plus.svg'
 </script>

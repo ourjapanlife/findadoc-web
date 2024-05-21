@@ -15,11 +15,11 @@
 </template>
 
 <script setup lang="ts">
-import SVGSVGBlueMapPin from '~/assets/images/blue-map-pin.svg'
-import { ref, computed } from "vue"
-import { GoogleMap, CustomMarker } from "vue3-google-map"
-import { useRuntimeConfig } from "#imports"
-import { useSearchResultsStore } from "../stores/searchResultsStore"
+import SVGSVGBlueMapPin from '~/assets/icons/blue-map-pin.svg'
+import { ref, computed } from 'vue'
+import { GoogleMap, CustomMarker } from 'vue3-google-map'
+import { useRuntimeConfig } from '#imports'
+import { useSearchResultsStore } from '../stores/searchResultsStore'
 
 
 const defaultLocation = { lat: 35.6804, lng: 139.769 };

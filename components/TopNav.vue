@@ -30,7 +30,7 @@
 </template>
 
 <script lang="ts" setup>
-import SVGSiteLogo from '~/assets/images/site-logo.svg'
+import SVGSiteLogo from '~/assets/icons/site-logo.svg'
 import { useSubmissionStore } from "~/stores/submissionStore"
 import { useMenuStore } from "~/stores/menuStore"
 import { useNuxtApp } from "#app"

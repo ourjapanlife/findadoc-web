@@ -50,7 +50,7 @@
 </template>
 
 <script setup lang="ts">
-import SVGSearchIcon from '~/assets/images/search-icon.svg'
+import SVGSearchIcon from '~/assets/icons/search-icon.svg'
 import { ref, Ref, watchEffect } from 'vue'
 import { useSearchResultsStore } from '~/stores/searchResultsStore.js'
 import { useLocationsStore } from '~/stores/locationsStore.js'

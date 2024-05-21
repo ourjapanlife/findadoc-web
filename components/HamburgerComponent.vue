@@ -30,7 +30,7 @@
 </template>
 
 <script lang="ts" setup>
-import SvgHamburgerMenu from '~/assets/images/hamburger-menu.svg'
+import SvgHamburgerMenu from '~/assets/icons/hamburger-menu.svg'
 import { useMenuStore } from "~/stores/menuStore";
 
 const menuStore = useMenuStore();

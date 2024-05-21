@@ -42,15 +42,12 @@
 </template>
 
 <script setup lang="ts">
-<<<<<<< HEAD
+import SVGHamburgerListIcon from '~/assets/icons/hamburger-list-icon.svg'
 import { computed } from 'vue';
-=======
-import SVGHamburgerListIcon from '~/assets/images/hamburger-list-icon.svg'
->>>>>>> 4c24b26 (svgs are all working now! fixed loading icon and gmap pin)
 import { useSearchResultsStore } from '../stores/searchResultsStore'
 import { useLocaleStore } from '../stores/localeStore'
 import { Locale } from '~/typedefs/gqlTypes.js';
-import noSearchResultsGraphic from '@/assets/images/no-search-results-graphic.svg'
+import noSearchResultsGraphic from '@/assets/icons/no-search-results-graphic.svg'
 const resultsStore = useSearchResultsStore()
 const localeStore = useLocaleStore()
 //let's start with some initial data

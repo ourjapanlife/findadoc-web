@@ -85,9 +85,9 @@
 </template>
 
 <script lang="ts">
-import SVGMagnifyingGlass from '~/assets/images/magnifying-glass.svg'
-import SVGTranslateIcon from '~/assets/images/translate-icon.svg'
-import SVGHeartIcon from '~/assets/images/heart-icon.svg'
+import SVGMagnifyingGlass from '~/assets/icons/magnifying-glass.svg'
+import SVGTranslateIcon from '~/assets/icons/translate-icon.svg'
+import SVGHeartIcon from '~/assets/icons/heart-icon.svg'
 import { defineComponent } from 'vue'
 
 export default defineComponent({})
