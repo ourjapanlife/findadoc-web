@@ -15,7 +15,7 @@
             </button>
         </div>
         <div v-if="hasResults">
-            <div id="searchResults" class="flex flex-col overflow-y-scroll h-full">
+            <div id="searchResults" class="flex flex-col landscape:overflow-y-scroll h-full">
                 <div @click="resultsStore.setActiveSearchResult(searchResult.professional.id)" :key="index"
                     v-for="(searchResult, index) in resultsStore.searchResultsList" class="results-list flex flex-col">
                     <div class="flex-1 h-24 w-6/8 border-b-2 border-primary/20 p-3
