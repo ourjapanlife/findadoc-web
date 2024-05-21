@@ -25,10 +25,8 @@
 
             <div class="flex flex-row justify-around h-[300px] mt-28 mb-8 portrait:mx-4 text-center">
                 <div class="flex flex-col w-96 items-center">
-                    <svg role="img" alt="MagnifyingGlass" title="MagnifyingGlass"
-                        class="h-20 w-20 self-center text-primary">
-                        <use xlink:href="./assets/images/magnifying-glass.svg#magnifying-glass-svg" />
-                    </svg>
+                    <SVGMagnifyingGlass role="img" alt="MagnifyingGlass" title="MagnifyingGlass"
+                        class="h-20 w-20 self-center text-primary" />
                     <span class="landscape:text-2xl portrait:text-xl font-extrabold py-6 font-['notosans-bold']">
                         Search & Find
                     </span>
@@ -37,10 +35,8 @@
                     </span>
                 </div>
                 <div class="flex flex-col w-96 items-center mx-8">
-                    <svg role="img" alt="translation icon" title="translation icon"
-                        class="h-20 w-20 self-center text-primary">
-                        <use xlink:href="./assets/images/translate-icon.svg#translate-icon-svg" />
-                    </svg>
+                    <SVGTranslateIcon role="img" alt="translation icon" title="translation icon"
+                        class="h-20 w-20 self-center text-primary" />
                     <span class="landscape:text-2xl portrait:text-xl font-extrabold py-6 font-['notosans-bold']">
                         Multiple Languages
                     </span>
@@ -49,9 +45,8 @@
                     </span>
                 </div>
                 <div class="flex flex-col w-96 items-center">
-                    <svg role="img" alt="heart" title="heart" class="h-20 w-20 self-center text-primary pt-2">
-                        <use xlink:href="./assets/images/heart-icon.svg#heart-icon-svg" />
-                    </svg>
+                    <SVGHeartIcon role="img" alt="heart" title="heart"
+                        class="h-20 w-20 self-center text-primary pt-2" />
                     <span class="landscape:text-2xl portrait:text-xl font-extrabold py-6 font-['notosans-bold']">
                         Free & Reliable
                     </span>
@@ -71,10 +66,6 @@
             </div>
 
             <div class="my-8 flex flex-1 justify-center">
-                <!-- <svg role="img" alt="heart circle icon" title="heart circle icon"
-                    class="self-center justify-self-center h-[412px] w-[392px] fill-none">
-                    <use xlink:href="./assets/images/heart-circle.svg#heart-circle-svg" />
-                </svg> -->
                 <img src="@/assets/images/heart-circle.png" class="h-[392px] w-[412px]" />
             </div>
 
@@ -94,6 +85,9 @@
 </template>
 
 <script lang="ts">
+import SVGMagnifyingGlass from '~/assets/images/magnifying-glass.svg'
+import SVGTranslateIcon from '~/assets/images/translate-icon.svg'
+import SVGHeartIcon from '~/assets/images/heart-icon.svg'
 import { defineComponent } from 'vue'
 
 export default defineComponent({})

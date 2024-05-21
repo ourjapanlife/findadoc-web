@@ -27,7 +27,7 @@
                 <SVGLinkedinIcon role="img"
                     alt="linkedin icon"
                     title="linkedin icon"
-                    class="social-icon w-8 h-8" :fontControlled="false" />
+                    class="social-icon w-8 h-8" />
             </a>
             <a
                 data-testid="member-github"
@@ -39,7 +39,7 @@
                 <SVGGithubIcon role="img"
                     alt="github icon"
                     title="github icon"
-                    class="social-icon w-8 h-8 ml-1" :fontControlled="false" />
+                    class="social-icon w-8 h-8 ml-1" />
             </a>
         </div>
     </div>

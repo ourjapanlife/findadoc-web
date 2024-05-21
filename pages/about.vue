@@ -2,7 +2,7 @@
     <div class="flex h-full flex-col w-full">
         <div class="flex flex-col items-center mx-32">
             <SvgHeartPlus role="img" alt="pink heart with a white plus in the middle to symbolize health" title="heart icon"
-                class="my-4 h-32" filled :fontControlled="false" />
+                class="my-4 h-32" />
             <h1 data-testid="about-heading" class="mb-12 font-bold text-4xl">
                 {{ $t("about.heading") }}
             </h1>

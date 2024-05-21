@@ -4,7 +4,7 @@
             <div>
                 <SvgHamburgerMenu role="img" alt="hamburger menu icon" title="hamburger list icon"
                     @click="menuStore.toggleMenu()"
-                    class="hamburger-list-icon fill-primary/50 group-hover:fill-primary-text-inverted/50 h-8" :fontControlled="false"  />
+                    class="hamburger-list-icon fill-primary/50 group-hover:fill-primary-text-inverted/50 h-8" />
                 <div
                     v-show="menuStore.menuOpen"
                     class="z-20 absolute top-[50px] w-[200px] p-8 rounded bg-white border-2">
