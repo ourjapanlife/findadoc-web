@@ -1,6 +1,5 @@
 <template>
     <div class="flex flex-col h-full">
-        <BetaBanner />
         <div v-if="$viewport.isGreaterThan('tablet')" class="flex h-full overflow-hidden">
             <LeftNavbar class="bg-primary-bg w-[358px]" />
             <MainContentContainer />
@@ -16,9 +15,9 @@
 </template>
 
 <script setup lang="ts">
-import { useNuxtApp } from "#app";
-import { useModalStore } from "~/stores/modalStore";
+import { useNuxtApp } from "#app"
+import { useModalStore } from "~/stores/modalStore"
 
-const { $viewport } = useNuxtApp();
-const store = useModalStore();
+const { $viewport } = useNuxtApp()
+const store = useModalStore()
 </script>
