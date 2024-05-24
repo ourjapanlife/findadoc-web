@@ -16,10 +16,11 @@
             {{ $t("modPanelSubmissionList.submitted") }}
         </div>
 
-        <div v-for="(fakeDatum, index) in modScreenStore.fakeData" :key="index" class="grid grid-cols-subgrid col-span-5 bg-gray-200" >
-            <button @click="handleClickToSubmissionForm(fakeDatum.id)"
-            :data-testid='`mod-submission-list-item-${index + 1}`'
+        <div v-for="(fakeDatum, index) in modScreenStore.fakeData" :key="index"
             class="grid grid-cols-subgrid col-span-5 bg-gray-200">
+            <button @click="handleClickToSubmissionForm(fakeDatum.id)"
+                :data-testid='`mod-submission-list-item-${index + 1}`'
+                class="grid grid-cols-subgrid col-span-5 bg-gray-200">
                 <span class="text-start">{{ index + 1 }}</span>
                 <span class="text-start">{{ $t(fakeDatum.name) }}</span>
                 <span class="text-start">{{ $t(fakeDatum.status) }}</span>
@@ -35,8 +36,15 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useModerationScreenStore } from '~/stores/moderationScreenStore';
+import { useModerationSubmissionsStore } from '~/stores/moderationSubmissionsStore';
 
 const modScreenStore = useModerationScreenStore()
+
+const modSubmissionsStore = useModerationSubmissionsStore()
+
+const modSubmissions = modSubmissionsStore.getSubmissions()
+
+console.log(modSubmissions)
 
 const submissionListItemTableColumns = computed(() => {
     const numOfColumns = 5;
