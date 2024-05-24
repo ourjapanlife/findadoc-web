@@ -1,9 +1,7 @@
 <template>
     <div class="search-result">
         <div class="result-header ml-4">
-            <svg role="img" alt="profile icon" title="profile icon" class="profile-icon w-8 h-8 stroke-primary inline">
-                <use xlink:href="../assets/images/profile-icon.svg#profile-icon-svg" class="w-[20px] h-[20px]" />
-            </svg>
+            <SVGProfileIcon role="img" alt="profile icon" title="profile icon" class="profile-icon w-8 h-8 stroke-primary inline" />
             <span class="w-4 font-bold pl-2 self-center"> {{ name }}, </span>
             <span class="w-4 pl-2 font-semibold self-center">{{ degrees.length === 1 ? degrees[0] : degrees[0] + ", ... +" + (degrees.length - 1).toString() }}</span>
         </div>
@@ -15,10 +13,8 @@
             </div>
 
             <div class="flex ml-2 mt-4">
-                <svg role="img" alt="chat bubbles icon" title="chat bubbles icon"
-                    class="chat-bubbles-icon w-8 h-8 stroke-primary inline">
-                    <use xlink:href="../assets/images/chat-bubbles.svg#chat-bubbles-icon-svg" class="w-[20px] h-[20px]" />
-                </svg>
+                <SVGChatBubblesIcon role="img" alt="chat bubbles icon" title="chat bubbles icon"
+                    class="chat-bubbles-icon w-8 h-8 stroke-primary inline" />
                 <div class="result-tags flex flex-wrap w-64 mb-2 mt-1 ml-1">
                     <div :key="index" v-for="(spokenLanguage, index) in formattedLanguages"
                         class="px-2 py-[1px] mr-2 border border-primary/40 rounded-full shadow text-sm hover:bg-primary/20 transition-all">
@@ -31,6 +27,8 @@
 </template>
 
 <script setup lang="ts">
+import SVGProfileIcon from '~/assets/icons/profile-icon.svg'
+import SVGChatBubblesIcon from '~/assets/icons/chat-bubbles.svg'
 import { computed } from "vue"
 import { useLocaleStore } from "~/stores/localeStore.js"
 import { useSpecialtiesStore } from "~/stores/specialtiesStore.js"

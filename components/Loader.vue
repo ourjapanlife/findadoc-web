@@ -1,14 +1,14 @@
 <template>
-    <div class="h-full w-full flex align-middle justify-around bg-gray-200/50 z-10 absolute" v-show="store.isLoading">
-        <div class="flex w-full text-primary mx-3 text-4xl self-center">Loading...</div>
-        <svg role="img" alt="loading animation" title="loading animation"
-            class="loading-icon fill-primary h-25 w-25 self-center group-hover:fill-primary-text-inverted">
-            <use xlink:href="../assets/images/loading.svg#loading-svg" />
-        </svg>
+    <div class="h-full w-full bg-gray-200/70 z-10 absolute" v-show="store.isLoading">
+        <div class="flex justify-center align-middle">
+            <div class="flex text-primary self-center text-4xl">Loading</div>
+            <SVGLoadingIcon role="img" alt="loading animation" title="loading animation" class="flex h-28" />
+        </div>
     </div>
 </template>
 
 <script setup lang="ts">
+import SVGLoadingIcon from '~/assets/icons/loading.svg'
 import { useLoadingStore } from '../stores/loadingStore.js'
 
 const store = useLoadingStore()

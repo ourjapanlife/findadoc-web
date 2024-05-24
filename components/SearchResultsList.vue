@@ -6,12 +6,11 @@
             </span>
             <button role="button" aria="filters" class="filters py-1 px-2 border border-primary/40 rounded-xl flex flex-row flex-0
                 group hover:bg-primary/50 hover:border-primary/10 hover:transition-all">
-                <svg role="img" alt="hamburger menu icon" title="hamburger list icon"
-                    class="hamburger-list-icon fill-primary/50 h-5 w-5 self-center group-hover:fill-primary-text-inverted/50">
-                    <use xlink:href="../assets/images/hamburger-list-icon.svg#hamburger-list-icon-svg" />
-                </svg>
+                <SVGHamburgerListIcon role="img" alt="hamburger menu icon" title="hamburger list icon"
+                    class="fill-primary/50 h-5 w-5 self-center group-hover:fill-primary-text-inverted/50" />
                 <span class="text-primary-text/50 pl-1 font-bold self-center group-hover:text-primary-text-inverted/50">
-                    {{ $t('searchResultsList.filters') }}</span>
+                    {{ $t('searchResultsList.filters') }}
+                </span>
             </button>
         </div>
         <div v-if="hasResults">
@@ -43,11 +42,12 @@
 </template>
 
 <script setup lang="ts">
+import SVGHamburgerListIcon from '~/assets/icons/hamburger-list-icon.svg'
 import { computed } from 'vue';
 import { useSearchResultsStore } from '../stores/searchResultsStore'
 import { useLocaleStore } from '../stores/localeStore'
 import { Locale } from '~/typedefs/gqlTypes.js';
-import noSearchResultsGraphic from '@/assets/images/no-search-results-graphic.svg'
+import noSearchResultsGraphic from '@/assets/icons/no-search-results-graphic.svg'
 const resultsStore = useSearchResultsStore()
 const localeStore = useLocaleStore()
 //let's start with some initial data

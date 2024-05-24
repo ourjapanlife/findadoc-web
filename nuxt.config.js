@@ -97,6 +97,7 @@ export default defineNuxtConfig({
         '@nuxtjs/i18n',
         '@pinia/nuxt',
         'nuxt-viewport',
+        'nuxt-svgo'
     ],
 
     viewport: {
@@ -110,21 +111,24 @@ export default defineNuxtConfig({
             mobileWide: 425,
 
             tablet: 768,
-          },
+        },
 
-          cookieName: 'viewport',
+        cookieName: 'viewport',
 
-          defaultBreakpoints: {
+        defaultBreakpoints: {
             desktop: 'desktop',
             mobile: 'mobile',
             tablet: 'tablet',
-          },
+        },
 
-          fallbackBreakpoint: 'desktop',
+        fallbackBreakpoint: 'desktop',
     },
 
     i18n: {
         vueI18n: './i18n.options.ts'
+    },
+    svgo: {
+        defaultImport: 'component',
     },
     pinia: {
         autoImports: [
@@ -149,5 +153,5 @@ export default defineNuxtConfig({
             ENABLE_MODERATION_PANEL: process.env.ENABLE_MODERATION_PANEL
         }
     },
-    telemetry: false 
+    telemetry: false
 })

@@ -13,7 +13,8 @@ import SearchResultDetails from './SearchResultDetails.vue';
                 <MapContainer />
             </div>
         </div>
-        <div id="portrait-content" v-else class="h-full">
+        <div v-else class="h-full">
+            <Loader />
             <Modal v-show="store.$state.isOpen" class="min-h-1/2 ml-8 mt-12">
                 <SearchResultDetails />
             </Modal>

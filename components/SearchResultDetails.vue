@@ -1,24 +1,22 @@
 <template>
     <div class="result-details landscape:min-w-[480px]">
         <div class="header flex flex-1 bg-primary bg-gradient-to-r from-primary to-secondary">
-            <svg role="img" alt="Facility Banner Image" title="banner image"
-                class="banner-icon w-48 h-48 fill-primary-text-inverted ml-8">
-                <use xlink:href="../assets/images/doctors-banner.svg#doctors-icon-svg" />
-            </svg>
+            <SVGDoctorsBanner role="img" alt="Facility Banner Image" title="banner image"
+                class="w-48 h-48 fill-primary-text-inverted ml-8" />
         </div>
         <div class="result-content ml-2">
             <div class="result-header mt-7 ml-4">
                 <span class="w-4 text-3xl font-bold pl-2 self-center">{{
                     healthcareProfessionalName
                 }}, </span>
-                  <span class="w-4 text-2xl font-semibold pl-2 self-center">{{
-                    healthcareProfessionalDegrees
-                }}</span>
+                <span class="w-4 text-2xl font-semibold pl-2 self-center">{{
+                        healthcareProfessionalDegrees
+                    }}</span>
             </div>
             <div class="result-details flex flex-col mb-1 ml-4 pl-2 mt-2 text-sm">
                 <span class="px-3 text-primary/90 font-medium text-lg">{{
-                    facilityName
-                }}</span>
+                        facilityName
+                    }}</span>
                 <div class="flex" v-for="(specialty, index) in specialties" :key="index">
                     <span class="px-3 italic">{{ specialty }}</span>
                 </div>
@@ -39,34 +37,26 @@
                     $t("searchResultsDetails.contact")
                 }}</span>
                 <div class="address flex my-4">
-                    <svg role="img" alt="Facility Banner Image" title="banner image"
-                        class="banner-icon w-6 h-6 stroke-primary mr-2 self-center">
-                        <use xlink:href="../assets/images/map-pin-icon.svg#map-pin-icon-svg" />
-                    </svg>
+                    <SVGMapPinIcon role="img" alt="Facility Banner Image" title="banner image"
+                        class="w-6 h-6 stroke-primary mr-2 self-center" />
                     <div class="flex flex-col">
                         <div>{{ addressLine1 }}</div>
                         <div v-if="addressLine2">{{ addressLine2 }}</div>
                     </div>
                 </div>
                 <div class="website flex my-4">
-                    <svg role="img" alt="Facility Banner Image" title="banner image"
-                        class="banner-icon w-6 h-6 stroke-primary mr-2 self-center">
-                        <use xlink:href="../assets/images/globe-icon.svg#globe-icon-svg" />
-                    </svg>
+                    <SVGGlobeIcon role="img" alt="Facility Banner Image" title="banner image"
+                        class="banner-icon w-6 h-6 stroke-primary mr-2 self-center" />
                     <a :href="website" v-if="website">{{ website }}</a>
                 </div>
                 <div class="phone flex my-4">
-                    <svg role="img" alt="Facility Banner Image" title="banner image"
-                        class="banner-icon w-6 h-6 stroke-primary mr-2 self-center">
-                        <use xlink:href="../assets/images/phone-icon.svg#phone-icon-svg" />
-                    </svg>
+                    <SVGPhoneIcon role="img" alt="Facility Banner Image" title="banner image"
+                        class="banner-icon w-6 h-6 stroke-primary mr-2 self-center" />
                     {{ phone }}
                 </div>
                 <div class="email flex my-4" v-if="!excludedEmailAddresses.includes(email)">
-                    <svg role="img" alt="Facility Banner Image" title="banner image"
-                        class="banner-icon w-6 h-6 stroke-primary mr-2 self-center">
-                        <use xlink:href="../assets/images/email-icon.svg#email-icon-svg" />
-                    </svg>
+                    <SVGEmailIcon role="img" alt="Facility Banner Image" title="banner image"
+                        class="banner-icon w-6 h-6 stroke-primary mr-2 self-center" />
                     <a :href="`mailto:${email}`" class="email-link">{{ email }}</a>
                 </div>
             </div>
@@ -75,6 +65,11 @@
 </template>
 
 <script setup lang="ts">
+import SVGDoctorsBanner from '~/assets/icons/doctors-banner.svg'
+import SVGMapPinIcon from '~/assets/icons/map-pin-icon.svg'
+import SVGGlobeIcon from '~/assets/icons/globe-icon.svg'
+import SVGPhoneIcon from '~/assets/icons/phone-icon.svg'
+import SVGEmailIcon from '~/assets/icons/email-icon.svg'
 import { computed } from "vue"
 import { useLocaleStore } from "~/stores/localeStore.js"
 import { useSpecialtiesStore } from "~/stores/specialtiesStore.js"
@@ -94,7 +89,7 @@ const healthcareProfessionalName = computed(() => {
         resultsStore.$state.activeResult?.professional.names.find(
             (n) => n.locale === Locale.JaJp
         )
-  
+
     const englishFullName = `${englishName?.firstName} ${englishName?.lastName}`
     const japaneseFullName = `${japaneseName?.lastName} ${japaneseName?.firstName}`
 
@@ -179,7 +174,7 @@ const excludedEmailAddresses = ['none', 'email@email.com'];
 
 <style>
 .hamburger-list-icon {
-  --background-color: transparent;
-  --second-background-color: --color-bg-secondary;
+    --background-color: transparent;
+    --second-background-color: --color-bg-secondary;
 }
 </style>

@@ -11,7 +11,7 @@
 
 <script setup lang="ts">
 import { useModerationScreenStore, ModerationScreen } from '~/stores/moderationScreenStore'
-import ModSubmissionListContainer from './ModSubmissionListContainer.vue';
+import ModSubmissionListContainer from './ModSubmissionListContainer.vue'
 
 const store = useModerationScreenStore()
 

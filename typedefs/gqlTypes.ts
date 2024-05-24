@@ -19,7 +19,7 @@ export type Scalars = {
 export type Contact = {
   __typename?: 'Contact';
   address: PhysicalAddress;
-  email: Scalars['String']['output'];
+  email?: Maybe<Scalars['String']['output']>;
   googleMapsUrl: Scalars['String']['output'];
   phone: Scalars['String']['output'];
   website?: Maybe<Scalars['String']['output']>;
@@ -27,7 +27,7 @@ export type Contact = {
 
 export type ContactInput = {
   address: PhysicalAddressInput;
-  email: Scalars['String']['input'];
+  email?: InputMaybe<Scalars['String']['input']>;
   googleMapsUrl: Scalars['String']['input'];
   phone: Scalars['String']['input'];
   website?: InputMaybe<Scalars['String']['input']>;
@@ -614,7 +614,7 @@ export type ResolversParentTypes = {
 
 export type ContactResolvers<ContextType = any, ParentType extends ResolversParentTypes['Contact'] = ResolversParentTypes['Contact']> = {
   address?: Resolver<ResolversTypes['PhysicalAddress'], ParentType, ContextType>;
-  email?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  email?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   googleMapsUrl?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   phone?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   website?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;

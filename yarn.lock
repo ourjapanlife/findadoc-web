@@ -2497,7 +2497,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nuxt/kit@npm:3.11.2, @nuxt/kit@npm:^3.11.2":
+"@nuxt/kit@npm:3.11.2, @nuxt/kit@npm:^3.11.2, @nuxt/kit@npm:^3.4.0":
   version: 3.11.2
   resolution: "@nuxt/kit@npm:3.11.2"
   dependencies:
@@ -8197,6 +8197,7 @@ __metadata:
     husky: "npm:^9.0.11"
     jsdom: "npm:^24.0.0"
     nuxt: "npm:^3.11.0"
+    nuxt-svgo: "npm:^4.0.1"
     nuxt-viewport: "npm:^2.1.4"
     pinia: "npm:^2.1.7"
     postcss: "npm:^8.4.36"
@@ -8215,7 +8216,7 @@ __metadata:
     vue-router: "npm:^4.3.0"
     vue-server-renderer: "npm:^2.7.16"
     vue-template-compiler: "npm:^2.7.16"
-    vue3-google-map: "npm:^0.19.0"
+    vue3-google-map: "npm:^0.20.0"
     webpack: "npm:^5.90.3"
   languageName: unknown
   linkType: soft
@@ -10822,6 +10823,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"mini-svg-data-uri@npm:^1.4.4":
+  version: 1.4.4
+  resolution: "mini-svg-data-uri@npm:1.4.4"
+  bin:
+    mini-svg-data-uri: cli.js
+  checksum: 10/1336c2b00b6a72b0ce3cf942f7ab074faf463b941042fbe51d7a70be119c5d4223880aaa29584d5a804496ca1dda9b6fff7dd5aa284721907519b646192d8aaa
+  languageName: node
+  linkType: hard
+
 "minimatch@npm:9.0.1":
   version: 9.0.1
   resolution: "minimatch@npm:9.0.1"
@@ -11487,6 +11497,29 @@ __metadata:
     nuxt: bin/nuxi.mjs
     nuxt-cli: bin/nuxi.mjs
   checksum: 10/519af95d0749be49570f1fbaaaf9ed32899bc5972e12ea3792bd8a35fd3f7bef6ce02af4ef6e980c29dc0014ef73b9440d0b73bb148340e3e3b87afafdc659d7
+  languageName: node
+  linkType: hard
+
+"nuxt-svgo@npm:^4.0.1":
+  version: 4.0.1
+  resolution: "nuxt-svgo@npm:4.0.1"
+  dependencies:
+    "@nuxt/kit": "npm:^3.4.0"
+    mini-svg-data-uri: "npm:^1.4.4"
+    svgo: "npm:^3.0.2"
+  peerDependencies:
+    svgo-loader: ^4.0.0
+    vue: ">=3.2.13"
+    vue-loader: ^17.0.0
+    vue-svg-loader: 0.17.0-beta.2
+  peerDependenciesMeta:
+    svgo-loader:
+      optional: true
+    vue-loader:
+      optional: true
+    vue-svg-loader:
+      optional: true
+  checksum: 10/fe06ee557f1601190ed42f384fa63af290dd775a42563db10bc66732d9b6943b147815f4543e46c1255b267b04bc2c4d717aaff146c243112f2ff2449fb78112
   languageName: node
   linkType: hard
 
@@ -14394,6 +14427,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"svgo@npm:^3.0.2":
+  version: 3.3.2
+  resolution: "svgo@npm:3.3.2"
+  dependencies:
+    "@trysound/sax": "npm:0.2.0"
+    commander: "npm:^7.2.0"
+    css-select: "npm:^5.1.0"
+    css-tree: "npm:^2.3.1"
+    css-what: "npm:^6.1.0"
+    csso: "npm:^5.0.5"
+    picocolors: "npm:^1.0.0"
+  bin:
+    svgo: ./bin/svgo
+  checksum: 10/82fdea9b938884d808506104228e4d3af0050d643d5b46ff7abc903ff47a91bbf6561373394868aaf07a28f006c4057b8fbf14bbd666298abdd7cc590d4f7700
+  languageName: node
+  linkType: hard
+
 "svgo@npm:^3.2.0":
   version: 3.2.0
   resolution: "svgo@npm:3.2.0"
@@ -15847,16 +15897,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vue3-google-map@npm:^0.19.0":
-  version: 0.19.0
-  resolution: "vue3-google-map@npm:0.19.0"
+"vue3-google-map@npm:^0.20.0":
+  version: 0.20.0
+  resolution: "vue3-google-map@npm:0.20.0"
   dependencies:
     "@googlemaps/js-api-loader": "npm:^1.16.2"
     "@googlemaps/markerclusterer": "npm:^2.4.0"
     fast-deep-equal: "npm:^3.1.3"
   peerDependencies:
     vue: ^3
-  checksum: 10/8a21b7564fe2026152fe8d14e313a29a8bbf67ec8098ff4bdf1494e451811b51db4364a73dc7679b674f9ed7b2474dbb5b70bcaace92048d5e30c7175db0c012
+  checksum: 10/f15af201c5a3231f67dcdfc88102989b26d28faf68d4cda883249a787fa721b8f2d03da245b6a8bb0bbaa7d6b8a37979ae6562409bce759ad92970c29382c6ab
   languageName: node
   linkType: hard
 
