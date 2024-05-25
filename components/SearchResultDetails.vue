@@ -148,16 +148,16 @@ const addressLine1 = computed(() => {
 
     const englishAddress = `${addressObj?.addressLine1En} ${addressObj?.addressLine2En}`
     const japaneseAddress = `${addressObj?.postalCode} ${addressObj?.prefectureJa}${addressObj?.cityJa}${addressObj?.addressLine1Ja}${addressObj?.addressLine2Ja}`
-    return localeStore.locale.code === Locale.EnUs
-        ? englishAddress
-        : japaneseAddress
+    return localeStore.locale.code === Locale.JaJp
+        ? japaneseAddress
+        : englishAddress
 })
 const addressLine2 = computed(() => {
     const addressObj =
         resultsStore.$state.activeResult?.facilities[0].contact.address
 
     const englishAddress = `${addressObj?.cityEn}, ${addressObj?.prefectureEn} ${addressObj?.postalCode}`
-    return localeStore.locale.code === Locale.EnUs ? englishAddress : ""
+    return localeStore.locale.code !== Locale.JaJp ? englishAddress : ""
 })
 const website = computed(
     () => resultsStore.$state.activeResult?.facilities[0]?.contact?.website
