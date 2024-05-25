@@ -124,7 +124,7 @@ const specialties = computed(() => {
 const facilityName = computed(() => {
     const englishName = resultsStore.$state.activeResult?.facilities[0].nameEn
     const japaneseName = resultsStore.$state.activeResult?.facilities[0].nameJa
-    return localeStore.locale.code === Locale.EnUs ? englishName : japaneseName
+    return localeStore.locale.code === Locale.JaJp ? japaneseName : englishName
 })
 
 const spokenLanguages = computed(() => {

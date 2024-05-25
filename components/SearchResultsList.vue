@@ -22,7 +22,7 @@
                         <SearchResultsListItem
                             :name="`${searchResult.professional.names[0].firstName} ${searchResult.professional.names[0].lastName}`"
                             :degrees="searchResult.professional.degrees"
-                            :facility-name="localeStore.locale?.code == Locale.EnUs ? searchResult.facilities[0]?.nameEn : searchResult.facilities[0]?.nameJa"
+                            :facility-name="localeStore.locale.code == Locale.JaJp ? searchResult.facilities[0]?.nameJa : searchResult.facilities[0]?.nameEn"
                             :specialties="searchResult.professional.specialties"
                             :spoken-languages="searchResult.professional.spokenLanguages" />
                     </div>
