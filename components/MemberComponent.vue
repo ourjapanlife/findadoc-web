@@ -48,7 +48,7 @@
 <script setup lang="ts">
 import SVGLinkedinIcon from '~/assets/icons/social-linkedin.svg'
 import SVGGithubIcon from '~/assets/icons/social-github.svg'
-import { PropType } from "vue";
+import { type PropType } from "vue";
 
 defineProps({
     avatarImg: {

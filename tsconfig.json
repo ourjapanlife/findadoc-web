@@ -1,16 +1,11 @@
 {
-    "compilerOptions": {
-        "target": "ESNext",
-        "module": "ESNext",
+    "extends": "./.nuxt/tsconfig.json",
+	"compilerOptions": {
         "moduleResolution": "Bundler",
         "lib": [
             "esnext",
             "DOM"
         ],
-        "paths": {
-            "~/*": ["./*"],
-            "@/*": ["./*"]
-        },
         "strict": true,
         "outDir": "dist",
         "sourceMap": true,

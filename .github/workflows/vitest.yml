@@ -28,6 +28,8 @@ jobs:
                   cache: "yarn"
             - name: Install Dependencies
               run: yarn install --immutable
+            - name: Build Nuxt
+              run: yarn nuxi prepare
             # Run the tests!
             - name: Run Vitest 🚀
               run: yarn run test:pinia

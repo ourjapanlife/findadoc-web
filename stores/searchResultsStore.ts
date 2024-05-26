@@ -1,7 +1,14 @@
 import { gql } from 'graphql-request'
 import { defineStore } from 'pinia'
-import { Ref, ref } from 'vue'
-import { Facility, FacilitySearchFilters, HealthcareProfessional, HealthcareProfessionalSearchFilters, Locale, Specialty } from '~/typedefs/gqlTypes.js'
+import { type Ref, ref } from 'vue'
+import {
+    type Facility,
+    type FacilitySearchFilters,
+    type HealthcareProfessional,
+    type HealthcareProfessionalSearchFilters,
+    Locale,
+    Specialty
+} from '~/typedefs/gqlTypes.js'
 import { useModalStore } from './modalStore'
 import { useLoadingStore } from './loadingStore.js'
 import { gqlClient } from '../utils/graphql.js'

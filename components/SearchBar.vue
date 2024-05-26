@@ -51,12 +51,12 @@
 
 <script setup lang="ts">
 import SVGSearchIcon from '~/assets/icons/search-icon.svg'
-import { ref, Ref, watchEffect } from 'vue'
+import { ref, type Ref, watchEffect } from 'vue'
 import { useSearchResultsStore } from '~/stores/searchResultsStore.js'
 import { useLocationsStore } from '~/stores/locationsStore.js'
-import { useSpecialtiesStore, SpecialtyDisplayOption } from '~/stores/specialtiesStore.js'
+import { useSpecialtiesStore, type SpecialtyDisplayOption } from '~/stores/specialtiesStore.js'
 import { Locale, Specialty } from "~/typedefs/gqlTypes.js"
-import { useLocaleStore, LocaleDisplay } from '~/stores/localeStore.js'
+import { useLocaleStore, type LocaleDisplay } from '~/stores/localeStore'
 
 const localeStore = useLocaleStore()
 const locationsStore = useLocationsStore()

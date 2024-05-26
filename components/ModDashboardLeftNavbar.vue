@@ -21,7 +21,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, Ref } from 'vue'
+import { ref, type Ref } from 'vue'
 import noteStackAddSvg from "../assets/icons/note-stack-add.svg"
 import checkBoxSvg from "../assets/icons/check-box.svg"
 import disabledByDefault from "../assets/icons/disabled-by-default.svg"
