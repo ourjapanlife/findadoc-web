@@ -1,7 +1,7 @@
 <template>
     <div
         class="p-4 pl-8 border border-secondary-bg/20 flex justify-between items-center bg-gradient-to-t from-secondary-bg/30 via-primary-bg to-primary-bg">
-        <div v-if="$viewport.isGreaterThan('tablet')" class="flex items-center">
+        <div v-if="$viewport.isGreaterThan('desktop')" class="flex items-center">
             <div class="font-semibold text-xl group transition-colors items-start">
                 <NuxtLink class="flex" to="/">
                     <SVGSiteLogo role="img" title="site icon"
@@ -31,7 +31,6 @@
 
 <script lang="ts" setup>
 import SVGSiteLogo from '~/assets/icons/site-logo.svg'
-import { useSubmissionStore } from "~/stores/submissionStore"
 import { useMenuStore } from "~/stores/menuStore"
 import { useNuxtApp } from "#app"
 

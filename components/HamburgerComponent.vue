@@ -9,7 +9,7 @@
                     v-show="menuStore.menuOpen"
                     class="z-20 absolute top-[50px] w-[200px] p-8 rounded bg-white border-2">
                     <div
-                        v-for="(item, index) in menuStore.menuItems"
+                        v-for="(item, index) in menuStore.hamburgerMenuItems"
                         :key="index">
                         <NuxtLink :to="item.route">
                             <span
