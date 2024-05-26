@@ -1,13 +1,11 @@
 <template>
     <div class="overflow-y-auto w-full px-10 md:px-32">
         <div>
-            <h1
-                class="mb-20 text-black text-5xl font-bold font-['Noto Sans JP']"
-            >
+            <h1 data-testid="privacy-heading" class="mb-20 text-black text-5xl font-bold font-['Noto Sans JP']">
                 {{ $t("privacyPage.heading") }}
             </h1>
         </div>
-        <h2 class="mb-10 text-black text-2xl font-normal font-['Noto Sans JP']">
+        <h2 data-testid="privacy-subheading" class="mb-10 text-black text-2xl font-normal font-['Noto Sans JP']">
             {{ $t("privacyPage.subheading") }}
         </h2>
         <div class="text-gray-500 text-lg font-normal font-['Noto Sans JP']">
