@@ -1,15 +1,11 @@
 <template>
-    <div class="flex flex-col h-full">
+    <div id="index" class="h-full w-full">
         <div v-if="$viewport.isGreaterThan('tablet')" class="flex h-full overflow-hidden">
             <LeftNavbar class="bg-primary-bg w-[358px]" />
             <MainContentContainer />
         </div>
-        <div v-else>
-            <div class="flex-1">
-                <div class="flex flex-col h-full">
-                    <MainContentContainer />
-                </div>
-            </div>
+        <div v-else class="h-full w-full">
+            <MainContentContainer />
         </div>
     </div>
 </template>
