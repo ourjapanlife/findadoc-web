@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col place-self-center mb-10">
+    <div class="flex flex-col h-full place-self-center overflow-y-auto">
         <SubmissionForm v-show="!store.submissionCompleted" />
         <SubmissionCompleted v-show="store.submissionCompleted" />
     </div>
