@@ -1,5 +1,5 @@
 <template>
-    <div class="cursor-pointer w-full">
+    <div data-testid="hamburger-component" class="cursor-pointer w-full">
         <div class="flex justify-between w-full">
             <div>
                 <SvgHamburgerMenu role="img" alt="hamburger menu icon" title="hamburger list icon"

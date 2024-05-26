@@ -1,8 +1,9 @@
 <template>
     <div class="member flex flex-col items-center text-center">
         <img
+            data-testid="member-avatar"
             :src="avatarImg"
-            class="member-image object-cover rounded-full w-16 h-16"
+            class="member-image object-cover rounded-full w-32 h-32"
         />
         <div
             data-testid="member-name"
