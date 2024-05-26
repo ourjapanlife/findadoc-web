@@ -26,10 +26,10 @@
                 <div class="flex-1 border-currentColor/70 border self-center"></div>
             </div>
         </div>
-        <div data-testid="members-container" id="members-container" class="flex justify-center items-center mx-4">
+        <div data-testid="members-container" id="members-container" class="flex justify-center items-center">
             <div data-testid="members" id="members"
-                class="flex flex-wrap justify-between items-start w-4/5 mx-4 mb-8 md:flex-wrap md:mx-32">
-                <div data-testid="member" class="members-list flex flex-col justify-center p-4 md:flex-row basis-1/3"
+                class="grid grid-cols-2 md:grid-cols-3 mx-4 gap-8 pb-12 md:pb-32">
+                <div data-testid="member" class="members-list grid"
                     :key="index" v-for="(member, index) in data.members">
                     <MemberComponent :avatarImg="member.avatarImg" :name="member.name" :title="member.title"
                         :linkedInUrl="member.linkedInUrl" :githubUrl="member.githubUrl" />
