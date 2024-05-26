@@ -1,7 +1,5 @@
 {
     "compilerOptions": {
-      "target": "ESNext",
-      "module": "ESNext",
       "lib": [
         "ESNext",
         "ESNext.AsyncIterable",
@@ -11,7 +9,9 @@
         "cypress",
         "node"
       ],
-      "sourceMap": false
+      "sourceMap": false,
+      "resolveJsonModule": true,
+      "esModuleInterop": true,
     },
     "include": ["**/*.ts"]
   }
