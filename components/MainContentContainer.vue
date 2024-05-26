@@ -17,10 +17,10 @@ import SearchResultDetails from './SearchResultDetails.vue';
             <Modal v-show="store.$state.isOpen" class="min-h-1/2 ml-8 mt-12">
                 <SearchResultDetails />
             </Modal>
-            <div class="h-[50vh]">
+            <div class="h-1/2">
                 <MapContainer />
             </div>
-            <div class="min-h-[50vh]">
+            <div class="h-1/2 overflow-y-auto">
                 <SearchResultsList />
             </div>
         </div>
