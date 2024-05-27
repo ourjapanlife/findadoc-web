@@ -4576,7 +4576,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vue/devtools-api@npm:^6.5.0, @vue/devtools-api@npm:^6.5.1":
+"@vue/devtools-api@npm:^6.5.0, @vue/devtools-api@npm:^6.5.1, @vue/devtools-api@npm:^6.6.1":
   version: 6.6.1
   resolution: "@vue/devtools-api@npm:6.6.1"
   checksum: 10/040f7307904e23fd02a3f65b024ac7fe71b9e1f5f66244a5ba30d9f3d1b58a79dd5a3b46e8ed4c6a51a153688a356f776bb3260f801df39a7a3cf972c9c79505
@@ -8210,6 +8210,7 @@ __metadata:
     tailwindcss: "npm:^3.4.1"
     typescript: "npm:^5.4.2"
     typescript-eslint: "npm:^7.2.0"
+    vee-validate: "npm:^4.12.8"
     vitest: "npm:^1.4.0"
     vue: "npm:^3.4.21"
     vue-gtag: "npm:^2.0.1"
@@ -14887,6 +14888,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"type-fest@npm:^4.8.3":
+  version: 4.18.3
+  resolution: "type-fest@npm:4.18.3"
+  checksum: 10/eb750920d0ef3639177f581edd6489d972c5c5827abb602a9c9662889aad148a7d558257e36c563f1beb81a2e417faec52ecec9799b28531d8335856f91e6dff
+  languageName: node
+  linkType: hard
+
 "typescript-eslint@npm:^7.2.0":
   version: 7.2.0
   resolution: "typescript-eslint@npm:7.2.0"
@@ -15375,6 +15383,18 @@ __metadata:
   version: 1.0.12
   resolution: "value-or-promise@npm:1.0.12"
   checksum: 10/a4cc31fc9c3826b8a216ef2037b676904324c00c4acd903aaec2fe0c08516a189345261dd3cc822ec108532b2ea36b7c99bbdee1c3ddcb7f4b3d57d7e61b2064
+  languageName: node
+  linkType: hard
+
+"vee-validate@npm:^4.12.8":
+  version: 4.12.8
+  resolution: "vee-validate@npm:4.12.8"
+  dependencies:
+    "@vue/devtools-api": "npm:^6.6.1"
+    type-fest: "npm:^4.8.3"
+  peerDependencies:
+    vue: ^3.4.26
+  checksum: 10/e435b5d2029d1ba2af7c246f16fbb356cd8e1320da7b31c61b6f46bfb9353df5a6e8c7b3cdc7b387dbc0c7862c07601fb7e1d55f69c510bca7aef7542b310537
   languageName: node
   linkType: hard
 
