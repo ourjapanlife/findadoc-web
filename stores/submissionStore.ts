@@ -32,9 +32,7 @@ export const useSubmissionStore = defineStore('submissionStore', () => {
         } satisfies CreateSubmissionInput
 
         await gqlClient.request<Submission>(createSubmissionMutation, {
-            variables: {
-                input: submission
-            }
+            input: submission
         })
 
         submissionCompleted.value = true
