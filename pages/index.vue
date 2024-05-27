@@ -1,8 +1,8 @@
 <template>
-    <div id="index" class="h-full w-full">
-        <div v-if="$viewport.isGreaterThan('tablet')" class="flex h-full overflow-hidden">
-            <LeftNavbar class="bg-primary-bg w-[358px]" />
-            <MainContentContainer />
+    <div id="index" class="h-full w-full overflow-hidden">
+        <div v-if="$viewport.isGreaterThan('tablet')" class="flex h-full overflow-clip">
+            <LeftNavbar class="bg-primary-bg w-[358px] overflow-y-auto" />
+            <MainContentContainer class="overflow-clip"/>
         </div>
         <div v-else class="h-full w-full">
             <MainContentContainer />
