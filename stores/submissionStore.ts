@@ -31,11 +31,16 @@ export const useSubmissionStore = defineStore('submissionStore', () => {
             "notes": otherNotes.value
         } satisfies CreateSubmissionInput
 
-        await gqlClient.request<Submission>(createSubmissionMutation, {
-            input: submission
-        })
+        try {
+            await gqlClient.request<Submission>(createSubmissionMutation, {
+                input: submission
+            })
+            submissionCompleted.value = true
+        }
+        catch (e) {
+            console.error(`There was an error creating the submission ${e}`)
+        }
 
-        submissionCompleted.value = true
     }
 
     function resetForm() {
@@ -54,13 +59,5 @@ export const useSubmissionStore = defineStore('submissionStore', () => {
 const createSubmissionMutation = gql`mutation CreateSubmission($input: CreateSubmissionInput!) {
     createSubmission(input: $input) {
         id
-        googleMapsUrl
-        healthcareProfessionalName
-        spokenLanguages
-        isApproved
-        isRejected
-        isUnderReview
-        createdDate
-        updatedDate
     }
 }`
