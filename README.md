@@ -65,8 +65,6 @@ Have a look at the [CONTRIBUTING](/CONTRIBUTING.md) and [CODE_OF_CONDUCT](/CODE_
 - [Pinia](https://pinia.vuejs.org/introduction.html)
 - [Node.js](https://nodejs.org/en/) version 16.18
 - [Yarn](https://yarnpkg.com/)
-- [Vue-router](https://router.vuejs.org/)
-- [ohMyFetch](https://github.com/unjs/ohmyfetch)
 
 ### Code Style
 
