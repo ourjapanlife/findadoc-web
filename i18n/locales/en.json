@@ -87,5 +87,11 @@
         "terms": "Terms",
         "github": "Github",
         "netlify": "Powered by Netlify"
+    },
+    "modEditSubmissionTopNav": {
+        "saveAndExit": "Save & Exit",
+        "approve": "Approve",
+        "reject": "Reject" 
     }
+    
 }
