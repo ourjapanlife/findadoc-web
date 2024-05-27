@@ -1,17 +1,19 @@
 <template>
-    <GoogleMap data-testid="map-of-japan" ref="mapRef" :api-key="runtimeConfig.public.GOOGLE_MAPS_API_KEY"
-        map-id="153d718018a2577e" style="height: 100%; width: 100%;" :center="center" :zoom="9">
-        <CustomMarker @click="searchResultsStore.setActiveSearchResult(location.professional.id)" :options="{
-        position: {
-            lat: location.facilities[0]?.mapLatitude ?? defaultLocation.lat,
-            lng: location.facilities[0]?.mapLongitude ?? defaultLocation.lng
-        }
-    }" :key="index" v-for="(location, index) in searchResultsStore.searchResultsList">
-            <div style="text-align: center">
-                <SVGSVGBlueMapPin class="w-[45px] h-[73px]" />
-            </div>
-        </CustomMarker>
-    </GoogleMap>
+    <div class="h-full w-full">
+        <GoogleMap data-testid="map-of-japan" ref="mapRef" :api-key="runtimeConfig.public.GOOGLE_MAPS_API_KEY"
+            map-id="153d718018a2577e" class="h-full w-full" :center="center" :zoom="9">
+            <CustomMarker @click="searchResultsStore.setActiveSearchResult(location.professional.id)" :options="{
+            position: {
+                lat: location.facilities[0]?.mapLatitude ?? defaultLocation.lat,
+                lng: location.facilities[0]?.mapLongitude ?? defaultLocation.lng
+            }
+        }" :key="index" v-for="(location, index) in searchResultsStore.searchResultsList">
+                <div style="text-align: center">
+                    <SVGSVGBlueMapPin class="w-[45px] h-[73px]" />
+                </div>
+            </CustomMarker>
+        </GoogleMap>
+    </div>
 </template>
 
 <script setup lang="ts">

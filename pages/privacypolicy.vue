@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col place-items-center mx-10">
+    <div class="overflow-y-auto w-full px-10 md:px-32">
         <div>
             <h1
                 class="mb-20 text-black text-5xl font-bold font-['Noto Sans JP']"

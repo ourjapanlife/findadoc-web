@@ -4,12 +4,11 @@ import SearchResultDetails from './SearchResultDetails.vue';
     <div class="h-full w-full">
         <div id="landscape-content" v-if="$viewport.isGreaterThan('tablet')"
             class="bg-secondary-bg/20 hover:shadow-inner hover:shadow-secondary-bg/90 h-full w-full">
-            <!-- <WelcomeSection /> -->
             <Loader />
             <Modal v-show="store.$state.isOpen" class="min-h-1/2 ml-8 mt-12">
                 <SearchResultDetails />
             </Modal>
-            <div class="flex-1 h-screen">
+            <div class="flex-1 h-full">
                 <MapContainer />
             </div>
         </div>
@@ -18,10 +17,10 @@ import SearchResultDetails from './SearchResultDetails.vue';
             <Modal v-show="store.$state.isOpen" class="min-h-1/2 ml-8 mt-12">
                 <SearchResultDetails />
             </Modal>
-            <div class="h-[50vh]">
+            <div class="h-1/2">
                 <MapContainer />
             </div>
-            <div class="min-h-[50vh]">
+            <div class="h-1/2 overflow-y-auto">
                 <SearchResultsList />
             </div>
         </div>

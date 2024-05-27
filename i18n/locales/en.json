@@ -77,5 +77,15 @@
         "about": "About",
         "home": "Home",
         "submit": "Add a Doctor"
+    },
+    "hamburgerMenu": {
+        "about": "About Find a Doc, Japan",
+        "home": "Home",
+        "contact": "Contact",
+        "submit": "Submit",
+        "privacy": "Privacy",
+        "terms": "Terms",
+        "github": "Github",
+        "netlify": "Powered by Netlify"
     }
 }
