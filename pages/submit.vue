@@ -14,6 +14,6 @@ const store = useSubmissionStore();
 onMounted(async () => {
     await nextTick();
 
-    await store.resetForm();
+    store.resetForm();
 });
 </script>
