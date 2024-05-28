@@ -1,6 +1,6 @@
 describe('Privacy Policy page', () => {
     context('Desktop resolution', () => {
-        beforeEach(() => {
+        before(() => {
             cy.viewport(1920, 1080)
             cy.visit('/privacypolicy')
         })
@@ -29,7 +29,7 @@ describe('Privacy Policy page', () => {
     })
 
     context('iphone-5 resolution', () => {
-        beforeEach(() => {
+        before(() => {
             cy.viewport('iphone-5')
             cy.visit('/privacypolicy')
         })

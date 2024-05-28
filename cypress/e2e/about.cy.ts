@@ -2,7 +2,7 @@ import enUS from '../../i18n/locales/en.json'
 
 describe('About page', () => {
     context('Desktop resolution', () => {
-        beforeEach(() => {
+        before(() => {
             cy.viewport(1920, 1080)
             cy.visit('/about')
         })
@@ -51,7 +51,7 @@ describe('About page', () => {
     })
 
     context('iphone-5 resolution', () => {
-        beforeEach(() => {
+        before(() => {
             cy.viewport('iphone-5')
             cy.visit('/about')
         })
