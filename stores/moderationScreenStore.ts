@@ -14,7 +14,7 @@ export const useModerationScreenStore = defineStore('moderationScreenStore', () 
         { "id": "252ewwe", "name": "Name 2", "status": "accepted", "modified": "Modified 2", "submitted": "Submitted 2" },
         { "id": "3dfdanns", "name": "Name 3", "status": "rejected", "modified": "Modified 3", "submitted": "Submitted 3" }
     ]
-    const selectedSubmissionId = ''
+    const selectedSubmissionId = ref('')
 
     function setActiveScreen(newValue: ModerationScreen) {
         activeScreen.value = newValue
