@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia'
 import { Ref, ref } from 'vue'
-import { useRuntimeConfig } from "#imports"
 
 export enum ModerationScreen {
     'dashboard',
@@ -8,13 +7,16 @@ export enum ModerationScreen {
 }
 
 export const useModerationScreenStore = defineStore('moderationScreenStore', () => {
-    const runtimeConfig = useRuntimeConfig();
     const activeScreen: Ref<ModerationScreen> = ref(ModerationScreen.dashboard)
-    const enableModerationPanel: Ref<boolean> = ref(runtimeConfig.public.ENABLE_MODERATION_PANEL || false)
+    const enableModerationPanel: Ref<boolean> = ref(false)
 
     function setActiveScreen(newValue: ModerationScreen) {
         activeScreen.value = newValue
     }
 
-    return { activeScreen, enableModerationPanel, setActiveScreen }
+    function setEnableModerationPanelToTrue ( currentPath:string){  
+        process.env.ENABLE_MODERATION_PANEL && currentPath.includes("moderation") ? enableModerationPanel.value = true : null
+    }
+
+    return { activeScreen, enableModerationPanel, setActiveScreen, setEnableModerationPanelToTrue }
 })
