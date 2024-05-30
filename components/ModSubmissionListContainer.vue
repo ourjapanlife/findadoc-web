@@ -5,16 +5,11 @@
             {{ $t(submissionListItemHeader) }}
         </div>
 
-        <div v-for="(fakeDatum, index) in fakeData" :key="index" class="grid grid-cols-subgrid col-span-5 bg-gray-200" >
-           <ModSubmissionListItemComponent
-           :accessSubmissionForm="accessSubmissionForm"
-           :submissionId="fakeDatum.id"
-           :submissionNumber="index + 1"
-           :submissionName="fakeDatum.Name"
-           :submissionStatus="fakeDatum.Status"
-           :submissionModifiedDate="fakeDatum.Modified"
-           :submissionSubmittedDate="fakeDatum.Submitted"
-           />
+        <div v-for="(fakeDatum, index) in fakeData" data-testid="submission-item-container" :key="index"
+            class="grid grid-cols-subgrid col-span-5 bg-gray-200">
+            <ModSubmissionListItemComponent :accessSubmissionForm="accessSubmissionForm" :submissionId="fakeDatum.id"
+                :submissionNumber="index + 1" :submissionName="fakeDatum.Name" :submissionStatus="fakeDatum.Status"
+                :submissionModifiedDate="fakeDatum.Modified" :submissionSubmittedDate="fakeDatum.Submitted" />
         </div>
 
     </div>
@@ -37,7 +32,7 @@ const submissionListItemTableColumns = computed(() => {
     return `grid-template-columns: ${defaultColumnWidth}% repeat(${numColumns - 1}, ${columnWidth}%);`;
 });
 
-const accessSubmissionForm = (id:String) => {
+const accessSubmissionForm = (id: String) => {
     // logic on how to pass the data to the submission form that is being edited
 }
 
