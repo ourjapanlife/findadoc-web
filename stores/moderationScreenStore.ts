@@ -18,6 +18,7 @@ export const useModerationScreenStore = defineStore('moderationScreenStore', () 
 
     function setActiveScreen(newValue: ModerationScreen) {
         activeScreen.value = newValue
+        console.log(`activeScreen set to: ${activeScreen.value}`)
     }
 
     function setEnableModerationPanelToTrue(currentPath: string) {
