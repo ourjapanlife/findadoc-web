@@ -12,7 +12,7 @@
                 :class="{ 'border-b border-gray-300': index !== submissionListViewOptions.length - 1 }"
                 v-for="(submissionListEntry, index) in submissionListViewOptions ">
                 <div class="flex items-center justify-center w-1/5">
-                    <img :src="submissionListEntry.svgIcon" />
+                    <component :is="submissionListEntry.svgIcon" class="h-5" />
                 </div>
                 {{ $t(submissionListEntry.displayText) }} ({{ submissionListEntry.count }})
             </button>
@@ -22,9 +22,9 @@
 
 <script setup lang="ts">
 import { ref, Ref } from 'vue'
-import noteStackAddSvg from "../assets/icons/note-stack-add.svg"
-import checkBoxSvg from "../assets/icons/check-box.svg"
-import disabledByDefault from "../assets/icons/disabled-by-default.svg"
+import NoteStackAddSvg from "../assets/icons/note-stack-add.svg"
+import CheckBoxSvg from "../assets/icons/check-box.svg"
+import DisabledByDefault from "../assets/icons/disabled-by-default.svg"
 
 const modDashboardViewOptions = [{
     displayText: "Facilities",
@@ -38,19 +38,19 @@ const modDashboardViewOptions = [{
 const submissionListViewOptions = [{
     displayText: "For Review",
     value: "forReview",
-    svgIcon: noteStackAddSvg,
+    svgIcon: NoteStackAddSvg,
     count: 0,
 },
 {
     displayText: "Approved",
     value: "approved",
-    svgIcon: checkBoxSvg,
+    svgIcon: CheckBoxSvg,
     count: 0,
 },
 {
     displayText: "Rejected",
     value: "rejected",
-    svgIcon: disabledByDefault,
+    svgIcon: DisabledByDefault,
     count: 0,
 }]
 
