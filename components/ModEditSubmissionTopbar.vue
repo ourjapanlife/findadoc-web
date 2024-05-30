@@ -2,6 +2,7 @@
     <div class="flex flex-row justify-between w-full">
         <div>
             <button @click="copySubmissionId"
+                data-testid="mod-edit-submission-copy-submission-id"
                 class="flex flex-row w-90 bg-neutral p-2 m-2 border-2 border-slate-400 rounded hover">
                 ID: {{ selectedSubmissionId }}
                 <SVGSuccessCheckMark v-if="showCopySuccessIcon" role="img" title="clipboard copy" class="ml-2 w-6" />
@@ -34,15 +35,16 @@ const selectedSubmissionId  = modScreenStore.selectedSubmissionId
 
 let showCopySuccessIcon: Ref<boolean> = ref(false)
 
-const copySubmissionId = () => {
-    navigator.clipboard.writeText(selectedSubmissionId).then(() => {
+const copySubmissionId = async () => {
+    try {
+        await navigator.clipboard.writeText(selectedSubmissionId)
         showCopySuccessIcon.value = true
         setTimeout(() => {
             showCopySuccessIcon.value = false
         }, 2000)
-    }).catch(err => {
-        console.error(`Failed to copy submission ID ${selectedSubmissionId}: ${err}` )
-    });
+    } catch (err: any) {
+        console.error(`Failed to copy submission ID ${selectedSubmissionId}: ${err}`)
+    }
 }
 
 const acceptSubmission = () => {

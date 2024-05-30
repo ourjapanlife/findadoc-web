@@ -6765,6 +6765,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"cypress-real-events@npm:^1.12.0":
+  version: 1.12.0
+  resolution: "cypress-real-events@npm:1.12.0"
+  peerDependencies:
+    cypress: ^4.x || ^5.x || ^6.x || ^7.x || ^8.x || ^9.x || ^10.x || ^11.x || ^12.x || ^13.x
+  checksum: 10/d7b7af876925ee4a8c1f19a99659a1265b2a64980504b3b947c93c95d27b5c7a94b2c38b19b64863daef9e01aab207a63644cb0a7d2adc7c30c4e8aec8a4a6f9
+  languageName: node
+  linkType: hard
+
 "cypress@npm:^13.10.0":
   version: 13.10.0
   resolution: "cypress@npm:13.10.0"
@@ -8319,6 +8328,7 @@ __metadata:
     all-contributors-cli: "npm:^6.26.1"
     autoprefixer: "npm:^10.4.18"
     cypress: "npm:^13.10.0"
+    cypress-real-events: "npm:^1.12.0"
     eslint: "npm:^9.3.0"
     eslint-plugin-cypress: "npm:^3.2.0"
     eslint-plugin-json: "npm:^3.1.0"

@@ -17,7 +17,9 @@
         </div>
 
         <div v-for="(fakeDatum, index) in modScreenStore.fakeData" :key="index" class="grid grid-cols-subgrid col-span-5 bg-gray-200" >
-            <button @click="handleClickToSubmissionForm(fakeDatum.id)" class="grid grid-cols-subgrid col-span-5 bg-gray-200">
+            <button @click="handleClickToSubmissionForm(fakeDatum.id)"
+            :data-testid='`mod-submission-list-item-${index + 1}`'
+            class="grid grid-cols-subgrid col-span-5 bg-gray-200">
                 <span class="text-start">{{ index + 1 }}</span>
                 <span class="text-start">{{ $t(fakeDatum.name) }}</span>
                 <span class="text-start">{{ $t(fakeDatum.status) }}</span>
@@ -45,6 +47,7 @@ const submissionListItemTableColumns = computed(() => {
 });
 
 const handleClickToSubmissionForm = (id: string) => {
+    console.log("WE CLICKED THE THING!!")
     useModerationScreenStore().setActiveScreen(1)
     modScreenStore.selectedSubmissionId = id
 };
