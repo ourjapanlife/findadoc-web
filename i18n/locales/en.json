@@ -88,6 +88,13 @@
         "home": "Home",
         "submit": "Add a Doctor"
     },
+    "modDashboardLeftNav":{
+        "facilities": "Facilities",
+        "healthcareProfessionals": "Healthcare Professionals",
+        "forReview": "For Review",
+        "approved": "Approved",
+        "rejected": "Rejected"
+    },
     "modEditSubmissionTopNav": {
         "saveAndExit": "Save & Exit",
         "approve": "Approve",
