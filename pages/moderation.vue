@@ -12,11 +12,11 @@
 
 <script setup lang="ts">
 import { useModerationScreenStore, ModerationScreen } from "~/stores/moderationScreenStore"
-// import { useRoute } from 'vue-router'
+import { useRoute } from 'vue-router'
 
 const store = useModerationScreenStore()
-// const route = useRoute()
-// const currentPath = route.path.replace("/", "")
+const route = useRoute()
+const currentPath = route.path.replace("/", "")
 
-// store.setEnableModerationPanelToTrue(currentPath)
+store.setEnableModerationPanelToTrue(currentPath)
 </script>
