@@ -14,6 +14,16 @@
         "feedback": "Got feedback?",
         "clickHere": "Click here"
     },
+    "hamburgerMenu": {
+        "about": "About Find a Doc, Japan",
+        "home": "Home",
+        "contact": "Contact",
+        "submit": "Submit",
+        "privacy": "Privacy",
+        "terms": "Terms",
+        "github": "Github",
+        "netlify": "Powered by Netlify"
+    },
     "privacyPage": {
         "heading": "Privacy Policy",
         "subheading": "This Privacy Policy is meant to help you understand what information we collect, why we collect it, and how you canupdate, manage, export, and delete your information.",
@@ -78,14 +88,16 @@
         "home": "Home",
         "submit": "Add a Doctor"
     },
-    "hamburgerMenu": {
-        "about": "About Find a Doc, Japan",
-        "home": "Home",
-        "contact": "Contact",
-        "submit": "Submit",
-        "privacy": "Privacy",
-        "terms": "Terms",
-        "github": "Github",
-        "netlify": "Powered by Netlify"
+    "modEditSubmissionTopNav": {
+        "saveAndExit": "Save & Exit",
+        "approve": "Approve",
+        "reject": "Reject"
+    },
+    "modSubmissionListContainer": {
+        "name": "Name",
+        "status": "Status",
+        "modified": "Modified",
+        "submitted": "Submitted"
     }
+
 }

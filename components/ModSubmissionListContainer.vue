@@ -1,49 +1,56 @@
 <template>
-    <div :style="submissionListItemTableColumns" :class="`grid grid-cols-${submissionListItemHeaders.length} p-2`">
-        <div v-for="(submissionListItemHeader, index) in submissionListItemHeaders" :key="index"
-            class="font-bold text-left p-1">
-            {{ $t(submissionListItemHeader) }}
+    <div :style="submissionListItemTableColumns" :class="`grid grid-cols-5 p-2`">
+        <div class="font-bold text-left p-1">
+            #
+        </div>
+        <div class="font-bold text-left p-1">
+            {{ $t("modPanelSubmissionList.name") }}
+        </div>
+        <div class="font-bold text-left p-1">
+            {{ $t("modPanelSubmissionList.status") }}
+        </div>
+        <div class="font-bold text-left p-1">
+            {{ $t("modPanelSubmissionList.modified") }}
+        </div>
+        <div class="font-bold text-left p-1">
+            {{ $t("modPanelSubmissionList.submitted") }}
         </div>
 
-        <div v-for="(fakeDatum, index) in fakeData" :key="index" class="grid grid-cols-subgrid col-span-5 bg-gray-200" >
-           <ModSubmissionListItemComponent
-           :accessSubmissionForm="accessSubmissionForm"
-           :submissionId="fakeDatum.id"
-           :submissionNumber="index + 1"
-           :submissionName="fakeDatum.Name"
-           :submissionStatus="fakeDatum.Status"
-           :submissionModifiedDate="fakeDatum.Modified"
-           :submissionSubmittedDate="fakeDatum.Submitted"
-           />
+        <div v-for="(fakeDatum, index) in modScreenStore.fakeData" :key="index" class="grid grid-cols-subgrid col-span-5 bg-gray-200" >
+            <button @click="handleClickToSubmissionForm(fakeDatum.id)"
+            :data-testid='`mod-submission-list-item-${index + 1}`'
+            class="grid grid-cols-subgrid col-span-5 bg-gray-200">
+                <span class="text-start">{{ index + 1 }}</span>
+                <span class="text-start">{{ $t(fakeDatum.name) }}</span>
+                <span class="text-start">{{ $t(fakeDatum.status) }}</span>
+                <span class="text-start">{{ $t(fakeDatum.modified) }}</span>
+                <span class="text-start">{{ $t(fakeDatum.submitted) }}</span>
+            </button>
         </div>
-
     </div>
-
 </template>
 
 
 
 <script setup lang="ts">
-import ModSubmissionListItemComponent from './ModSubmissionListItemComponent.vue'
-import { ref, Ref, computed } from 'vue'
+import { computed } from 'vue'
+import { useModerationScreenStore } from '~/stores/moderationScreenStore';
 
-const submissionListItemHeaders: Ref<String[]> = ref(["#", "Name", "Status", "Modified", "Submitted"]);
+const modScreenStore = useModerationScreenStore()
 
 const submissionListItemTableColumns = computed(() => {
-    const numColumns = submissionListItemHeaders.value.length;
+    const numOfColumns = 5;
     const defaultColumnWidth = 10;
     const remainingWidth = 100 - defaultColumnWidth;
-    const columnWidth = remainingWidth / (numColumns - 1);
-    return `grid-template-columns: ${defaultColumnWidth}% repeat(${numColumns - 1}, ${columnWidth}%);`;
+    const columnWidth = remainingWidth / (numOfColumns - 1);
+    return `grid-template-columns: ${defaultColumnWidth}% repeat(${numOfColumns - 1}, ${columnWidth}%);`;
 });
 
-const accessSubmissionForm = (id:String) => {
-    // logic on how to pass the data to the submission form that is being edited
-}
+const handleClickToSubmissionForm = (id: string) => {
+    console.log("WE CLICKED THE THING!!")
+    useModerationScreenStore().setActiveScreen(1)
+    modScreenStore.selectedSubmissionId = id
+};
 
-const fakeData = [
-    { "id": "13243214", "Name": "Name 1", "Status": "forReview", "Modified": "Modified 1", "Submitted": "Submitted 1" },
-    { "id": "252ewwe", "Name": "Name 2", "Status": "accepted", "Modified": "Modified 2", "Submitted": "Submitted 2" },
-    { "id": "3dfdanns", "Name": "Name 3", "Status": "rejected", "Modified": "Modified 3", "Submitted": "Submitted 3" }
-];
+
 </script>
