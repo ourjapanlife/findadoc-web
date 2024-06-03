@@ -2261,14 +2261,14 @@ __metadata:
   linkType: hard
 
 "@microsoft/eslint-formatter-sarif@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "@microsoft/eslint-formatter-sarif@npm:3.0.0"
+  version: 3.1.0
+  resolution: "@microsoft/eslint-formatter-sarif@npm:3.1.0"
   dependencies:
     eslint: "npm:^8.9.0"
     jschardet: "npm:latest"
     lodash: "npm:^4.17.14"
     utf8: "npm:^3.0.0"
-  checksum: 10/4545b323690a21ee6a87a5c89868c33356592f4ef60321afea03f78a585aad784ae8ae673a09c3caa32a9b54b6d80183aaf093b7737b47a3acd8debd94f2322d
+  checksum: 10/f7b6af2fa279feb120be21532b31613847ed44142aaed5c192596a8a0876182c531d787f3b57f2edc6e3d6f3647c0206bc863986deac3a20e56d197c18ffb446
   languageName: node
   linkType: hard
 
