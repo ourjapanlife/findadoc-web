@@ -4,7 +4,7 @@
     "private": true,
     "scripts": {
         "prepare": "husky",
-        "dev": "yarn && nuxi dev",
+        "dev": "NODE_ENV=development yarn && nuxi dev",
         "generate": "graphql-codegen --config ./typesgeneratorconfig.ts",
         "lint": "ESLINT_USE_FLAT_CONFIG=true eslint . -c eslint.config.js && stylelint **/*.{vue,css,scss} --ignore-path .gitignore",
         "lint:ci": "eslint . --config eslint.config.js --format @microsoft/eslint-formatter-sarif --output-file eslint-results.sarif",
