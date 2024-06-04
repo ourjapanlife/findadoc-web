@@ -13,6 +13,11 @@ describe("Visits the home page", () => {
         // TODO: clicking it should take us to '/'
     });
 
+
+    it("Displays loading SVG on visit", () => {
+        cy.get('[data-testid="svg-loading-icon"]').should("be.visible");
+    })
+
     it.skip("renders the map", () => {
         // TODO
         cy.get('[data-testid="map-of-japan"]').should("be.visible");

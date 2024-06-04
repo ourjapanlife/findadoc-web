@@ -15,15 +15,11 @@
         </div>
         <div v-if="loadingStore.isLoading">
             <div class="h-full flex flex-col justify-center items-center w-full">
-<<<<<<< HEAD
-                <SVGLoading class="w-4/5 p-12" />
-=======
                 <div class="flex justify-center align-middle">
                     <div class="flex text-primary self-center text-4xl">Loading</div>
                     <SVGLoadingIcon data-testid='svg-loading-icon' role="img" alt="loading animation"
                         title="loading animation" class="flex h-28" />
                 </div>
->>>>>>> 9052b2b (fixup! fix: implement loading animation when looking for results)
             </div>
         </div>
         <div v-else-if="hasResults">
