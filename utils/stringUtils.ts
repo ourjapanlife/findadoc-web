@@ -28,6 +28,14 @@ export function isValidWebsite(website: string) {
     return /^((https?|ftp|smtp):\/\/)?(www.)?[a-z0-9-]+\.[a-zA-Z0-9-_#/]+$/g.test(website)
 }
 
+export function isFloat(float: string) {
+    return /[0-9]+[.][0-9]+/g.test(float)
+}
+
+export function isValidPostalCode(postalCode: string) {
+    return /^\d{3}-\d{4}$/.test(postalCode)
+}
+
 export function hasScriptTags(input: string) {
     const tagPattern = /<script.*?>.*?<\/script>/gi
     return tagPattern.test(input)
