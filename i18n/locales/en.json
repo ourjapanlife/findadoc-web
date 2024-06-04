@@ -106,7 +106,7 @@
         "modified": "Modified",
         "submitted": "Submitted"
     },
-    "moderateSubmissionForm": {
+    "modSubmissionForm": {
         "contactInformation": "Contact Information",
         "addresses": "Addresses",
         "googleMapsInformation": "Google maps information",
