@@ -150,7 +150,9 @@ export default defineNuxtConfig({
             // eslint-disable-next-line
             GOOGLE_MAPS_API_KEY: process.env.GOOGLE_MAPS_API_KEY,
             // eslint-disable-next-line
-            ENABLE_MODERATION_PANEL: process.env.ENABLE_MODERATION_PANEL
+            ENABLE_MODERATION_PANEL: process.env.ENABLE_MODERATION_PANEL,
+            // eslint-disable-next-line
+            NUXT_USE_LOCAL_API: process.env.NUXT_USE_LOCAL_API
         }
     },
     telemetry: false

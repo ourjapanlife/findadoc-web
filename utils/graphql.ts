@@ -2,14 +2,14 @@ import { GraphQLClient } from "graphql-request";
 
 export let gqlClient: GraphQLClient
 
-export const initializeGqlClient = () => {
+export const initializeGqlClient = (useLocalApi: string | undefined) => {
     if (gqlClient) {
         return gqlClient
     }
 
     let apiURL
 
-    if (process.env.NUXT_USE_LOCAL_API === "development") {
+    if (useLocalApi === "development") {
         apiURL = "http://127.0.0.1:4000"
 
     } else {
