@@ -16,6 +16,31 @@ export const useModerationScreenStore = defineStore('moderationScreenStore', () 
     ]
     const selectedSubmissionId = ref('')
 
+    const forReviewCount = ref(0);
+    const acceptedCount = ref(0);
+    const rejectedCount = ref(0);
+
+    function updateCounts () {
+        let forReview = 0;
+        let accepted = 0;
+        let rejected = 0;
+        fakeData.forEach((item) => {
+            console.log(item.status)
+            if (item.status === 'forReview') {
+                forReview = forReview + 1;
+            } else if (item.status === 'accepted') {
+                accepted = accepted + 1;
+            } else if (item.status === 'rejected') {
+                rejected = rejected + 1;
+            } else {
+                return;
+            }
+        })
+        forReviewCount.value = forReview;
+        acceptedCount.value = accepted;
+        rejectedCount.value = rejected;
+    }
+
     function setActiveScreen(newValue: ModerationScreen) {
         activeScreen.value = newValue
         console.log(`activeScreen set to: ${activeScreen.value}`)
@@ -25,5 +50,5 @@ export const useModerationScreenStore = defineStore('moderationScreenStore', () 
         process.env.ENABLE_MODERATION_PANEL && currentPath.includes("moderation") ? enableModerationPanel.value = true : null
     }
 
-    return { activeScreen, enableModerationPanel, fakeData, ModerationScreen, selectedSubmissionId, setActiveScreen, setEnableModerationPanelToTrue }
+    return { activeScreen, enableModerationPanel, fakeData, ModerationScreen, selectedSubmissionId, setActiveScreen, setEnableModerationPanelToTrue, updateCounts, forReviewCount, acceptedCount, rejectedCount }
 })
