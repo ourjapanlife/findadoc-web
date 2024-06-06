@@ -4,11 +4,11 @@
     -->
     <div data-testid="app" class="h-screen w-full">
         <div v-if="store.enableModerationPanel" data-testid="moderation-content"
-            class="h-full w-full flex flex-col font-sans text-primary-text bg-primary-bg">
+            class="portrait:hidden h-full w-full flex flex-col font-sans text-primary-text bg-primary-bg">
             <NuxtPage class="flex flex-1" />
         </div>
         <div v-else-if="!store.enableModerationPanel"
-            class=" portrait:hidden h-full w-full flex flex-col font-sans text-primary-text bg-primary-bg">
+            class="h-full w-full flex flex-col font-sans text-primary-text bg-primary-bg">
             <TopNav />
             <NuxtPage />
             <Footer />
