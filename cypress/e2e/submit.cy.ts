@@ -106,12 +106,12 @@ describe('Submit page', () => {
             cy.contains(enUS.submitPage.googleMapsValidation).should('be.visible')
         });
 
-        it.only('requires a last name of 75 characters or less', () => {
+        it('requires a last name of 30 characters or less', () => {
             cy.get('[data-testid="submit-input-lastname"]').type(' ')
             cy.contains(enUS.submitPage.lastNameValidation).should('be.visible')
-            cy.get('[data-testid="submit-input-lastname"]').type('some last name under 75 characters')
+            cy.get('[data-testid="submit-input-lastname"]').type('some last name under 30 characters')
             cy.contains(enUS.submitPage.lastNameValidation).should('not.be.visible')
-            cy.get('[data-testid="submit-input-lastname"]').type('a'.repeat(80), { delay: 0 }).invoke('val').should('have.length', 75)
+            cy.get('[data-testid="submit-input-lastname"]').type('a'.repeat(80), { delay: 0 }).invoke('val').should('have.length', 30)
         });
 
         it('requires Spoken Language 1 to be selected', () => {

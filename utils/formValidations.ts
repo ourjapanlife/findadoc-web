@@ -1,4 +1,4 @@
-import { hasJapaneseCharacters, hasLatinCharacters, isValidEmail, isValidPhoneNumber, isValidWebsite, isFloat, isValidPostalCode } from './stringUtils'
+import { hasJapaneseCharacters, hasLatinCharacters, isValidEmail, isValidPhoneNumber, isValidWebsite, isFloat, isValidPostalCode, isValidUrl } from './stringUtils'
 import { Locale } from "~/typedefs/gqlTypes"
 
 export function validateNameEn(nameEn: string): boolean {
@@ -166,7 +166,7 @@ export function validateUserSubmittedLastName(name: string): boolean {
     // The last name cannot be an empty space like " "
     name = name.trim()
 
-    if (name.length > 75 || name === "") {
+    if (name.length > 30 || name === '') {
         return false
     }
     return true
@@ -174,14 +174,16 @@ export function validateUserSubmittedLastName(name: string): boolean {
 
 export function validateUserSubmittedFirstName(name: string): boolean {
     // The first name is optional and may be an empty string.
-    if (name.length > 75) {
+    name = name.trim()
+    if (name.length > 30) {
         return false
     }
     return true
 }
 
 export function validateGoogleMapsUrlInput(url: string): boolean {
-    if (url.startsWith('https://') && isValidWebsite(url)) {
+    url = url.trim()
+    if (url.startsWith('https://') && isValidUrl(url)) {
         return true
     }
     return false
