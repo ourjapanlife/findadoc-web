@@ -13,7 +13,16 @@
                 </span>
             </button>
         </div>
-        <div v-if="hasResults">
+        <div v-if="loadingStore.isLoading">
+            <div class="h-full flex flex-col justify-center items-center w-full">
+                <div class="flex justify-center align-middle">
+                    <div class="flex text-primary self-center text-4xl">Loading</div>
+                    <SVGLoadingIcon data-testid='svg-loading-icon' role="img" alt="loading animation"
+                        title="loading animation" class="flex h-28" />
+                </div>
+            </div>
+        </div>
+        <div v-else-if="hasResults">
             <div id="searchResults" class="flex flex-col landscape:overflow-y-scroll h-full">
                 <div @click="resultsStore.setActiveSearchResult(searchResult.professional.id)" :key="index"
                     v-for="(searchResult, index) in resultsStore.searchResultsList" class="results-list flex flex-col">
@@ -29,9 +38,10 @@
                 </div>
             </div>
         </div>
+
         <div v-else>
-            <div class="h-full flex flex-col w-[358px]">
-                <img :src='noSearchResultsGraphic' class="p-12" />
+            <div class="h-full flex flex-col">
+                <SVGNoSearchResults class="p-12" />
                 <span class="text-primary-text pl-1 font-bold self-center group-hover:text-primary-text-inverted/50">{{
                     $t('searchResultsList.noResults') }}</span>
                 <span class="text-primary-text self-center">{{
@@ -43,15 +53,22 @@
 
 <script setup lang="ts">
 import SVGHamburgerListIcon from '~/assets/icons/hamburger-list-icon.svg'
-import { computed } from 'vue';
+import SVGLoadingIcon from '~/assets/icons/loading.svg'
+import SVGNoSearchResults from '~/assets/icons/no-search-results-graphic.svg'
+import { computed, onMounted } from 'vue';
 import { useSearchResultsStore } from '../stores/searchResultsStore'
 import { useLocaleStore } from '../stores/localeStore'
+import { useLoadingStore } from '../stores/loadingStore'
 import { Locale } from '~/typedefs/gqlTypes.js';
 import noSearchResultsGraphic from '@/assets/icons/no-search-results-graphic.svg'
 const resultsStore = useSearchResultsStore()
 const localeStore = useLocaleStore()
-//let's start with some initial data
-resultsStore.search()
+const loadingStore = useLoadingStore()
+
+onMounted(() => {
+    resultsStore.search()
+})
+
 const hasResults = computed(() => resultsStore.searchResultsList.length > 0)
 
 </script>
