@@ -7,8 +7,8 @@
             class="h-full w-full flex flex-col font-sans text-primary-text bg-primary-bg">
             <NuxtPage class="flex flex-1" />
         </div>
-        <div v-else-if="!store.enableModerationPanel && $viewport.isGreaterThan('desktop')"
-            class="h-full w-full flex flex-col font-sans text-primary-text bg-primary-bg">
+        <div v-else-if="!store.enableModerationPanel"
+            class=" portrait:hidden h-full w-full flex flex-col font-sans text-primary-text bg-primary-bg">
             <TopNav />
             <NuxtPage />
             <Footer />

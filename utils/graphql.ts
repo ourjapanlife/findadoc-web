@@ -9,7 +9,7 @@ export const initializeGqlClient = (useLocalApi: string | undefined) => {
 
     let apiURL
 
-    if (useLocalApi === "development") {
+    if (useLocalApi) {
         apiURL = "http://127.0.0.1:4000"
 
     } else {
