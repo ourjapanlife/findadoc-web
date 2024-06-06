@@ -1,6 +1,6 @@
 <template>
     <div data-testid="hamburger-menu-container" class="cursor-pointer w-full flex" v-close-on-outside-click>
-        <SVGHamburgerMenuIcon data-testid="hamburger-menu-icon" @click="toggleMenu()" alt="hamburger menu" class="h-8 w-8" />
+        <SVGHamburgerMenuIcon data-testid="hamburger-menu-icon" @click="openMenu()" alt="hamburger menu" class="h-8 w-8" />
         <Transition enter-active-class="transition ease-in-out duration-300 transform: translate(100%, 0)"
             leave-active-class="transition ease-in-out duration-100 transform: translate(-100%, 0)"
             enter-from-class="opacity-0 translate-x-2.5" enter-to-class="opacity-100 translate-x-0"
@@ -30,22 +30,22 @@
                     </div>
                     <div data-testid="hamburger-menu-items" class="mt-10 px-5 flex flex-col gap-6">
                         <NuxtLink :to="'/'">
-                            <div @click="toggleMenu()">
+                            <div @click="closeMenu()">
                                 {{ $t('hamburgerMenu.home') }}
                             </div>
                         </NuxtLink>
                         <NuxtLink :to="'/about'">
-                            <div @click="toggleMenu()">
+                            <div @click="closeMenu()">
                                 {{ $t('hamburgerMenu.about') }}
                             </div>
                         </NuxtLink>
                         <NuxtLink :to="'https://forms.gle/4E763qfaq46kEsn99'" target="_blank">
-                            <div @click="toggleMenu()">
+                            <div @click="closeMenu()">
                                 {{ $t('hamburgerMenu.contact') }}
                             </div>
                         </NuxtLink>
                         <NuxtLink :to="'/submit'">
-                            <div @click="toggleMenu()">
+                            <div @click="closeMenu()">
                                 {{ $t('hamburgerMenu.submit') }}
                             </div>
                         </NuxtLink>
@@ -54,13 +54,13 @@
 
                 <div data-testid="hamburger-menu-footer-section" class="flex flex-col gap-5 px-5">
                     <div data-testid="hamburger-menu-footer-legal" class="flex gap-4">
-                        <NuxtLink :to="'/terms'">
-                            <span @click="toggleMenu()">
+                        <NuxtLink :to="'/terms'" data-testid="hamburger-menu-footer-legal-terms">
+                            <span @click="closeMenu()">
                                 {{ $t('footer.terms') }}
                             </span>
                         </NuxtLink>
-                        <NuxtLink :to="'/privacypolicy'">
-                            <span @click="toggleMenu()">
+                        <NuxtLink :to="'/privacypolicy'" data-testid="hamburger-menu-footer-legal-privacy">
+                            <span @click="closeMenu()">
                                 {{ $t('footer.privacy') }}
                             </span>
                         </NuxtLink>
@@ -70,7 +70,7 @@
                             <SVGGithubIcon data-testid="hamburger-menu-github-icon" alt="hamburger menu" class="h-10 w-8" />
                         </NuxtLink>
                         <!-- Netlify Icons are available here: https://www.netlify.com/press/#badges -->
-                        <NuxtLink :to="'https://www.netlify.com'" target="_blank">
+                        <NuxtLink :to="'https://www.netlify.com'" target="_blank" data-testid="hamburger-menu-footer-dev-links-netlify">
                             <img src="https://www.netlify.com/v3/img/components/netlify-light.svg"
                                 alt="Deploys by Netlify" class=" h-10 w-20" />
                         </NuxtLink>
@@ -94,8 +94,8 @@ import { ref } from 'vue'
 
 const isMenuOpen = ref(false)
 
-function toggleMenu() {
-    isMenuOpen.value = !isMenuOpen.value
+function openMenu() {
+    isMenuOpen.value = true
 }
 
 function closeMenu() {
