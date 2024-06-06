@@ -10,7 +10,7 @@ describe(
     },
     () => {
         beforeEach(() => {}),
-        context("Desktop resolution", () => {
+        context("Landscape mode", () => {
             before(() => {
                 cy.viewport(1920, 1080);
                 cy.visit("/moderation");
@@ -61,7 +61,7 @@ describe(
 )
 
 describe('Moderation Facility Submission Form', () => {
-    context('Desktop resolution', () => {
+    context('Landscape mode', () => {
         beforeEach(() => {
             cy.viewport(1920, 1080)
             cy.visit('/moderation')
@@ -123,10 +123,10 @@ describe('Moderation Facility Submission Form', () => {
 
             cy.get('[data-testid="submission-form-nameEn"]').find('input').type('立川中央病院').blur()
             cy.get('[data-testid="submission-form-nameEn"]').find('p').should('exist').contains('Invalid English Name')
-            
+
             cy.get('[data-testid="submission-form-nameJp"]').find('input').type('Tachikawa Hospital').blur()
             cy.get('[data-testid="submission-form-nameJp"]').find('p').should('exist').contains('Invalid Japanese Name')
-            
+
             cy.get('[data-testid="submission-form-phone"]').find('input').type('Hello').blur()
             cy.get('[data-testid="submission-form-phone"]').find('p').should('exist').contains('Invalid Phone Number')
 
@@ -138,10 +138,10 @@ describe('Moderation Facility Submission Form', () => {
 
             cy.get('[data-testid="submission-form-postalCode"]').find('input').type('180-0').blur()
             cy.get('[data-testid="submission-form-postalCode"]').find('p').should('exist').contains('Invalid Zip Code')
-            
+
             cy.get('[data-testid="submission-form-cityEn"]').find('input').type('渋谷区').blur()
             cy.get('[data-testid="submission-form-cityEn"]').find('p').should('exist').contains('Invalid English City Name')
-        
+
             cy.get('[data-testid="submission-form-addressLine1En"]').find('input').type('道の駅').blur()
             cy.get('[data-testid="submission-form-addressLine1En"]').find('p').should('exist').contains('Invalid English Address')
 
@@ -150,14 +150,14 @@ describe('Moderation Facility Submission Form', () => {
 
             cy.get('[data-testid=submission-form-cityJp]').find('input').type('Shibuya').blur()
             cy.get('[data-testid=submission-form-cityJp]').find('p').should('exist').contains('Invalid Japanese City Name')
-            
-            
+
+
             cy.get('[data-testid="submission-form-addressLine1Jp"]').find('input').type('Peanutbutter street').blur()
             cy.get('[data-testid="submission-form-addressLine1Jp"]').should('exist').contains('Invalid Japanese Address')
-            
+
             cy.get('[data-testid="submission-form-addressLine2Jp"]').find('input').type('Jelly street').blur()
             cy.get('[data-testid="submission-form-addressLine2Jp"]').should('exist').contains('Invalid Japanese Address')
-            
+
             cy.get('[data-testid="submission-form-mapLatitude"]').find('input').type('Not Number Latitude').blur()
              cy.get('[data-testid="submission-form-mapLatitude"]').find('p').should('exist').contains('Invalid Latitude')
 

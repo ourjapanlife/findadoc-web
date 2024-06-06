@@ -5,7 +5,7 @@
             class="landscape:hidden font-semibold text-xl group transition-colors flex justify-between items-start">
             <SVGSiteLogo role="img" title="site icon"
                 class="mt-1 mr-1 w-10 h-10 flex-shrink-0 align-middle fill-primary group-hover:fill-primary-hover" />
-            <div class="title-text flex flex-col flex-shrink-0" data-testid="logo">
+            <div class="title-text flex flex-col flex-shrink-0" data-testid="portrait-logo">
                 <div class="text-lg text-primary group-hover:text-primary-hover">
                     Find a Doc,
                 </div>
@@ -18,7 +18,7 @@
             <NuxtLink class="flex" to="/">
                 <SVGSiteLogo role="img" title="site icon"
                     class="mr-1 w-10 h-10 flex-shrink-0 align-middle fill-primary group-hover:fill-primary-hover" />
-                <div class="title-text flex flex-col flex-shrink-0" data-testid="logo">
+                <div class="title-text flex flex-col flex-shrink-0" data-testid="landscape-logo">
                     <div class="text-lg text-primary group-hover:text-primary-hover">
                         Find a Doc
                     </div>
@@ -28,7 +28,7 @@
                 </div>
             </NuxtLink>
         </div>
-        <div id="desktop-searchbar" class="portrait:hidden flex align-middle mr-32">
+        <div data-testid="landscape-searchbar" class="portrait:hidden flex align-middle mr-32">
             <SearchBar />
         </div>
         <div id="right-section" class="flex">
