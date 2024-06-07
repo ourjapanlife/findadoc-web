@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col place-items-center">
+  <div data-testid="submit-completed" class="flex flex-col place-items-center">
     <img class="mb-10" src="../assets/images/heart-circle.png" alt />
     <p
       class="mb-3.5 text-zinc-900 text-2xl font-bold font-['Noto Sans JP'] leading-normal"

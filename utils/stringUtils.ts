@@ -40,3 +40,13 @@ export function hasScriptTags(input: string) {
     const tagPattern = /<script.*?>.*?<\/script>/gi
     return tagPattern.test(input)
 }
+
+export function isValidUrl(url: string | URL) {
+    try {
+        url = new URL(url)
+    }
+    catch (e) {
+        return false
+    }
+    return url.protocol === 'https:'
+}

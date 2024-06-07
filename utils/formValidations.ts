@@ -1,4 +1,5 @@
-import {hasJapaneseCharacters, hasLatinCharacters, isValidEmail, isValidPhoneNumber, isValidWebsite, isFloat, isValidPostalCode } from './stringUtils'
+import { hasJapaneseCharacters, hasLatinCharacters, isValidEmail, isValidPhoneNumber, isValidWebsite, isFloat, isValidPostalCode, isValidUrl } from './stringUtils'
+import { Locale } from "~/typedefs/gqlTypes"
 
 export function validateNameEn(nameEn: string): boolean {
     if (nameEn.length < 1 || nameEn.length > 128) {
@@ -148,7 +149,7 @@ export function validatePostalCode(postalCode: string): boolean {
 }
 
 export function validateFloat(float: string): boolean {
-    if (float.length < 1 ) {
+    if (float.length < 1) {
         return false
     }
 
@@ -160,3 +161,46 @@ export function validateFloat(float: string): boolean {
 
     return true
 }
+
+export function validateUserSubmittedLastName(name: string): boolean {
+    // The last name cannot be an empty space like " "
+    name = name.trim()
+
+    if (name.length > 30 || name === '') {
+        return false
+    }
+    return true
+}
+
+export function validateUserSubmittedFirstName(name: string): boolean {
+    // The first name is optional and may be an empty string.
+    name = name.trim()
+    if (name.length > 30) {
+        return false
+    }
+    return true
+}
+
+export function validateGoogleMapsUrlInput(url: string): boolean {
+    url = url.trim()
+    if (url.startsWith('https://') && isValidUrl(url)) {
+        return true
+    }
+    return false
+}
+
+export function validateFirstSpokenLanguage(localeCode: string): boolean {
+    if (Object.values<string>(Locale).includes(localeCode) && localeCode !== '') {
+        return true
+    }
+    return false
+}
+
+export function validateSecondSpokenLanguage(localeCode: string): boolean {
+    // The second spoken language is optional and may be an empty string.
+    if (Object.values<string>(Locale).includes(localeCode) || localeCode === '') {
+        return true
+    }
+    return false
+}
+
