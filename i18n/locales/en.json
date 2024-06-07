@@ -12,17 +12,20 @@
         "poweredBy": "Powered by",
         "contribute": "Contribute on",
         "feedback": "Got feedback?",
-        "clickHere": "Click here"
+        "clickHere": "Click here",
+        "copyright": "Find a Doc, Japan"
     },
     "hamburgerMenu": {
         "about": "About Find a Doc, Japan",
         "home": "Home",
         "contact": "Contact",
-        "submit": "Submit",
+        "submit": "Add a Doctor",
         "privacy": "Privacy",
         "terms": "Terms",
         "github": "Github",
-        "netlify": "Powered by Netlify"
+        "languageDropdownTitle": "Language:",
+        "netlify": "Powered by Netlify",
+        "copyright": "Find a Doc, Japan"
     },
     "privacyPage": {
         "heading": "Privacy Policy",

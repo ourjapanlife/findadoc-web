@@ -3,7 +3,7 @@
     data-testid="footer" class="footer flex border-t-4 border-secondary-bg/40 bg-secondary-bg text-sm text-primary-text font-semibold py-2 sm:flex-col sm:flex-wrap sm:justify-start">
         <div class="left-footer-section flex flex-0 justify-start sm:self-center">
             <NuxtLink to="/" class="self-center ml-8 mr-2 hover:text-primary-hover transition-colors">© {{ new
-                Date().getUTCFullYear() }} Find a Doc, Japan</NuxtLink>
+                Date().getUTCFullYear() }} {{ $t('footer.copyright') }}</NuxtLink>
             <span class="self-center">·</span>
             <nav class="flex mx-2">
                 <NuxtLink to="/privacypolicy" class="self-center hover:text-primary-hover transition-colors"
