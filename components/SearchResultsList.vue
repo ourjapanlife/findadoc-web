@@ -22,22 +22,22 @@
                 </div>
             </div>
         </div>
-            <div v-else-if="hasResults">
-                <div id="searchResults" class="flex flex-col landscape:overflow-y-scroll h-full mb-40 landscape:mb-0">
-                    <div @click="resultsStore.setActiveSearchResult(searchResult.professional.id)" :key="index"
-                        v-for="(searchResult, index) in resultsStore.searchResultsList" class="results-list flex flex-col">
-                        <div class="flex-1 h-24 w-6/8 border-b-2 border-primary/20 p-3
-                            hover:border-transparent hover:bg-primary/5 transition-all hover:cursor-pointer">
-                            <SearchResultsListItem
-                                :name="`${searchResult.professional.names[0].firstName} ${searchResult.professional.names[0].lastName}`"
-                                :degrees="searchResult.professional.degrees"
-                                :facility-name="localeStore.locale.code == Locale.JaJp ? searchResult.facilities[0]?.nameJa : searchResult.facilities[0]?.nameEn"
-                                :specialties="searchResult.professional.specialties"
-                                :spoken-languages="searchResult.professional.spokenLanguages" />
-                        </div>
+        <div v-else-if="hasResults">
+            <div id="searchResults" class="flex flex-col landscape:overflow-y-scroll h-full mb-40 landscape:mb-0">
+                <div @click="resultsStore.setActiveSearchResult(searchResult.professional.id)" :key="index"
+                    v-for="(searchResult, index) in resultsStore.searchResultsList" class="results-list flex flex-col">
+                    <div class="flex-1 h-24 w-6/8 border-b-2 border-primary/20 p-3
+                        hover:border-transparent hover:bg-primary/5 transition-all hover:cursor-pointer">
+                        <SearchResultsListItem
+                            :name="`${searchResult.professional.names[0].firstName} ${searchResult.professional.names[0].lastName}`"
+                            :degrees="searchResult.professional.degrees"
+                            :facility-name="localeStore.locale.code == Locale.JaJp ? searchResult.facilities[0]?.nameJa : searchResult.facilities[0]?.nameEn"
+                            :specialties="searchResult.professional.specialties"
+                            :spoken-languages="searchResult.professional.spokenLanguages" />
                     </div>
                 </div>
             </div>
+        </div>
         <div v-else>
             <div class="flex flex-col">
                 <SVGNoSearchResults class="portrait:px-4 h-12" />
