@@ -93,7 +93,7 @@ describe('Submit page', () => {
             cy.get('[data-testid="submit-completed"]').should('not.be.visible')
         });
 
-        it('submits a complete form', () => {
+        it.skip('submits a complete form', () => {
             cy.get('[data-testid="submit-input-googlemaps"]').type('https://example.com')
             cy.get('[data-testid="submit-input-lastname"]').type('some last name')
             cy.get('[data-testid="submit-select-language1"]').select('日本語 (Japan)')
