@@ -94,6 +94,15 @@
         "about": "私たちについて",
         "submit": "医師情報の追加"
     },
+    "login": {
+        "heading": "あなたのアカウントにログイン",
+        "usernamelabel": "ユーザー名",
+        "passwordlabel": "パスワード",
+        "loginButton": "ログイン",
+        "invalidUsernameValidation": "有効なユーザー名を入力してください",
+        "invalidPasswordValidation": "有効なパスワードを入力して下さい",
+        "invalidLoginValidation": "ユーザー名またはパスワードが間違っています"
+    },
     "modDashboardLeftNav": {
         "facilities": "Facilities",
         "healthcareProfessionals": "Healthcare Professionals",

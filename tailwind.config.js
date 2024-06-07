@@ -41,6 +41,8 @@ module.exports = {
                 "rgb(var(--color-secondary-inverted) / <alpha-value>)",
             "secondary-hover":
                 "rgb(var(--color-secondary-hover) / <alpha-value>)",
+            "error":
+                "rgb(var(--color-secondary-hover) / <alpha-value>)",
             blue: "#245A7D",
             neutral: colors.gray,
             black: colors.black,
