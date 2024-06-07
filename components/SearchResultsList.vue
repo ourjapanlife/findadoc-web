@@ -22,18 +22,10 @@
             </button>
         </div>
         <div v-if="loadingStore.isLoading">
-            <div class="h-full flex flex-col justify-center items-center w-full">
-                <div class="flex justify-center align-middle">
-                    <div class="flex text-primary self-center text-4xl">
-                        Loading
-                    </div>
-                    <SVGLoadingIcon
-                        data-testid="svg-loading-icon"
-                        role="img"
-                        alt="loading animation"
-                        title="loading animation"
-                        class="flex h-28"
-                    />
+            <div class="h-full flex justify-center items-center w-full">
+                <div class="flex flex-col justify-center align-middle">
+                    <SVGLoadingIcon data-testid='svg-loading-icon' role="img" alt="loading animation"
+                        title="loading animation" class="flex h-12" />
                 </div>
             </div>
         </div>

@@ -95,6 +95,15 @@
         "home": "Home",
         "submit": "Add a Doctor"
     },
+    "login": {
+        "heading": "Log in to your account",
+        "usernamelabel": "username",
+        "passwordlabel": "password",
+        "loginButton": "Log in",
+        "invalidUsernameValidation": "PLease enter a valid username",
+        "invalidPasswordValidation": "Please enter a valid password",
+        "invalidLoginValidation": "Your username or password is incorrect"
+    },
     "modDashboardLeftNav": {
         "facilities": "Facilities",
         "healthcareProfessionals": "Healthcare Professionals",

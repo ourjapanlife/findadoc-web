@@ -1,18 +1,8 @@
 <template>
-    <div
-        v-show="store.isLoading"
-        class="h-full w-full bg-gray-200/70 z-10 absolute"
-    >
-        <div class="flex justify-center align-middle">
-            <div class="flex text-primary self-center text-4xl">
-                Loading
-            </div>
-            <SVGLoadingIcon
-                role="img"
-                alt="loading animation"
-                title="loading animation"
-                class="flex h-28"
-            />
+    <div class="h-full w-full bg-gray-200/70 z-10 absolute" v-show="store.isLoading">
+        <div class="flex justify-center align-middle mt-12">
+            <div class="flex text-primary self-center text-4xl">Loading</div>
+            <SVGLoadingIcon role="img" alt="loading animation" title="loading animation" class="flex h-12" />
         </div>
     </div>
 </template>
