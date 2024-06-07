@@ -1,5 +1,5 @@
 <template>
-    <div class="overflow-y-auto w-full px-10 md:px-32">
+    <div class="w-full px-10 md:px-32">
         <div>
             <h1 data-testid="privacy-heading" class="mb-20 text-black text-5xl font-bold font-['Noto Sans JP']">
                 {{ $t("privacyPage.heading") }}

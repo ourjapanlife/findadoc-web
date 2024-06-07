@@ -1,5 +1,5 @@
 <template>
-    <div class="overflow-y-auto w-full">
+    <div class="w-full">
         <div class="flex flex-col items-center px-10 md:px-32">
             <SvgHeartPlus role="img" alt="pink heart with a white plus in the middle to symbolize health" title="heart icon"
                 class="my-4 h-32" />

@@ -83,7 +83,7 @@
     <button
     data-testid="submit-submitbutton"
     type="submit"
-      class="px-20 py-3 rounded-full bg-currentColor w-[350px] text-center text-white text-base font-medium font-['Noto Sans JP']"
+      class="mb-5 px-20 py-3 rounded-full bg-currentColor w-[350px] text-center text-white text-base font-medium font-['Noto Sans JP']"
       @click="validateFields"
     >{{ $t('submitPage.submitButton')}}</button>
 </form>
