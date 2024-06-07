@@ -66,7 +66,7 @@ describe('Moderation Facility Submission Form', () => {
         beforeEach(() => {
             cy.viewport(1920, 1080)
             cy.visit('/moderation')
-            cy.wait(500)
+            cy.wait(700)
             cy.get('[data-testid="mod-submission-list-item-1"]').click()
         })
 
