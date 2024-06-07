@@ -12,7 +12,7 @@
                         <div class="flex">
                             <div class="title-text flex flex-col flex-shrink-0" data-testid="logo">
                                 <div class="text-lg text-primary-text group-hover:text-primary-hover font-semibold">
-                                    Find a Doc, Japan
+                                    {{ $t('hamburgerMenu.copyright') }}
                                 </div>
                             </div>
                         </div>
@@ -76,7 +76,7 @@
                         </NuxtLink>
                     </div>
                     <div data-testid="hamburger-menu-footer-copyright" class="text-primary-text-muted text-xs">
-                        © {{ new Date().getUTCFullYear() }} Find a Doc, Japan
+                        © {{ new Date().getUTCFullYear() }} {{ $t('hamburgerMenu.copyright') }}
                         <div class="mt-0.5">NPO
                             <NuxtLink :to="'https://www.npo-hiroba.or.jp/search/zoom.php?pk=121289'" target="_blank" class="underline">#9011005010215</NuxtLink>
                         </div>

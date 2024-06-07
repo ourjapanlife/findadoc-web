@@ -12,7 +12,8 @@
         "poweredBy": "Powered by",
         "contribute": "Contribute on",
         "feedback": "Got feedback?",
-        "clickHere": "Click here"
+        "clickHere": "Click here",
+        "copyright": "Find a Doc, Japan"
     },
     "hamburgerMenu": {
         "about": "About Find a Doc, Japan",
@@ -23,7 +24,8 @@
         "terms": "Terms",
         "github": "Github",
         "languageDropdownTitle": "Language:",
-        "netlify": "Powered by Netlify"
+        "netlify": "Powered by Netlify",
+        "copyright": "Find a Doc, Japan"
     },
     "privacyPage": {
         "heading": "Privacy Policy",

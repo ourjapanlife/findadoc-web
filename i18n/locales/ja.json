@@ -12,7 +12,8 @@
         "poweredBy": "Powered by",
         "contribute": "本活動に寄与する",
         "feedback": "ご意見・ご質問",
-        "clickHere": "こちらをクリック"
+        "clickHere": "こちらをクリック",
+        "copyright": "Find a Doc, Japan"
     },
     "hamburgerMenu": {
         "about": "私たちについて",
@@ -22,7 +23,8 @@
         "privacy": "プライバシーポリシー",
         "terms": "利用規約",
         "github": "Github",
-        "languageDropdownTitle": "対応言語:"
+        "languageDropdownTitle": "対応言語:",
+        "copyright": "Find a Doc, Japan"
     },
     "privacyPage": {
         "heading": "Privacy Policy",
