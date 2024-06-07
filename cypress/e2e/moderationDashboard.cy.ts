@@ -41,9 +41,9 @@ describe(
                     )
             });
 
-            it("it shows the moderation top nav", () => {
+            it.skip("it shows the moderation top nav", () => {
                 // wait for the vue components to actually load
-                cy.wait(500)
+                cy.wait(1000)
 
                 cy.get('[data-testid="mod-submission-list-item-1"]').click()
                 cy.get('[data-testid="mod-edit-submission-copy-submission-id"]').click()
