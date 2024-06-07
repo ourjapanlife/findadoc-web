@@ -76,14 +76,14 @@
     >{{ $t('submitPage.otherNotes')}}({{ $t('submitPage.optional')}})</span>
     <textarea
     data-testid="submit-input-notes"
-      class="mb-5 md:mb-[71px] px-3 py-3.5 w-[350px] h-[100px] bg-white rounded-lg border border-zinc-400"
+      class="mb-5 landscape:mb-[71px] px-3 py-3.5 w-[350px] h-[100px] bg-white rounded-lg border border-zinc-400"
       v-model="submissionStore.otherNotes"
       maxlength="300"
     />
     <button
     data-testid="submit-submitbutton"
     type="submit"
-      class="px-20 py-3 mb-40 md:mb-0 rounded-full bg-currentColor w-[350px] text-center text-white text-base font-medium font-['Noto Sans JP']"
+      class="px-20 py-3 mb-40 landscape:mb-0 rounded-full bg-currentColor w-[350px] text-center text-white text-base font-medium font-['Noto Sans JP']"
       @click="validateFields"
     >{{ $t('submitPage.submitButton')}}</button>
 </form>
