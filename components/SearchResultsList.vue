@@ -1,5 +1,5 @@
 <template>
-    <div class="h-full flex flex-col">
+    <div class="h-full flex flex-col overflow-y-auto">
         <div class="results-header flex flex-row ml-9 mr-5 mb-6 pt-5">
             <span class="flex-1 w-1/2 font-bold self-center">
                 {{ $t('searchResultsList.doctorsNearby') }}
@@ -22,29 +22,28 @@
                 </div>
             </div>
         </div>
-        <div v-else-if="hasResults">
-            <div id="searchResults" class="flex flex-col landscape:overflow-y-scroll h-full">
-                <div @click="resultsStore.setActiveSearchResult(searchResult.professional.id)" :key="index"
-                    v-for="(searchResult, index) in resultsStore.searchResultsList" class="results-list flex flex-col">
-                    <div class="flex-1 h-24 w-6/8 border-b-2 border-primary/20 p-3
-                        hover:border-transparent hover:bg-primary/5 transition-all hover:cursor-pointer">
-                        <SearchResultsListItem
-                            :name="`${searchResult.professional.names[0].firstName} ${searchResult.professional.names[0].lastName}`"
-                            :degrees="searchResult.professional.degrees"
-                            :facility-name="localeStore.locale.code == Locale.JaJp ? searchResult.facilities[0]?.nameJa : searchResult.facilities[0]?.nameEn"
-                            :specialties="searchResult.professional.specialties"
-                            :spoken-languages="searchResult.professional.spokenLanguages" />
+            <div v-else-if="hasResults">
+                <div id="searchResults" class="flex flex-col landscape:overflow-y-scroll h-full mb-40 landscape:mb-0">
+                    <div @click="resultsStore.setActiveSearchResult(searchResult.professional.id)" :key="index"
+                        v-for="(searchResult, index) in resultsStore.searchResultsList" class="results-list flex flex-col">
+                        <div class="flex-1 h-24 w-6/8 border-b-2 border-primary/20 p-3
+                            hover:border-transparent hover:bg-primary/5 transition-all hover:cursor-pointer">
+                            <SearchResultsListItem
+                                :name="`${searchResult.professional.names[0].firstName} ${searchResult.professional.names[0].lastName}`"
+                                :degrees="searchResult.professional.degrees"
+                                :facility-name="localeStore.locale.code == Locale.JaJp ? searchResult.facilities[0]?.nameJa : searchResult.facilities[0]?.nameEn"
+                                :specialties="searchResult.professional.specialties"
+                                :spoken-languages="searchResult.professional.spokenLanguages" />
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-
         <div v-else>
-            <div class="h-full flex flex-col">
-                <SVGNoSearchResults class="p-12" />
-                <span class="text-primary-text pl-1 font-bold self-center group-hover:text-primary-text-inverted/50">{{
+            <div class="flex flex-col">
+                <SVGNoSearchResults class="portrait:px-4 h-12" />
+                <span class="text-primary-text px-1 font-bold self-center group-hover:text-primary-text-inverted/50">{{
                     $t('searchResultsList.noResults') }}</span>
-                <span class="text-primary-text self-center">{{
+                <span class="text-primary-text self-center text-center">{{
                     $t('searchResultsList.noResultsSubtext') }}</span>
             </div>
         </div>
