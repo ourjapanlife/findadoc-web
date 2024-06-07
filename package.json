@@ -46,7 +46,7 @@
         "@microsoft/eslint-formatter-sarif": "^3.0.0",
         "@nuxt/types": "^2.17.3",
         "@nuxtjs/i18n": "next",
-        "@stylistic/eslint-plugin": "^1.7.0",
+        "@stylistic/eslint-plugin": "^2.1.0",
         "@swc/core": "^1.4.8",
         "@testing-library/vue": "^8.0.3",
         "@vitejs/plugin-vue": "^5.0.4",

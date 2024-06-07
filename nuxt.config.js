@@ -100,9 +100,14 @@ export default defineNuxtConfig({
         '@nuxtjs/i18n',
         '@pinia/nuxt',
         'nuxt-viewport',
-        'nuxt-svgo'
+        'nuxt-svgo',
+        '@nuxt/eslint'
     ],
-
+    eslint: {
+        config: {
+          stylistic: true
+        }
+    },
     viewport: {
         breakpoints: {
             desktop: 1024,

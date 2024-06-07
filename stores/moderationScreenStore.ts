@@ -2,8 +2,8 @@ import { defineStore } from 'pinia'
 import { ref, type Ref } from 'vue'
 
 export enum ModerationScreen {
-    'dashboard',
-    'editSubmission'
+    dashboard = 'dashboard',
+    editSubmission = 'editSubmission'
 }
 
 export const useModerationScreenStore = defineStore('moderationScreenStore', () => {
