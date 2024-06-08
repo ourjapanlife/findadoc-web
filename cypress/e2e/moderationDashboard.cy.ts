@@ -1,5 +1,4 @@
 import "cypress-real-events";
-import "cypress-plugin-tab"
 import enUS from "../../i18n/locales/en.json";
 
 describe(
@@ -42,20 +41,24 @@ describe(
                         )
                 });
 
-                it.skip("it shows the moderation top nav", () => {
+                it("it shows the moderation top nav", () => {
                     // wait for the vue components to actually load
                     cy.wait(1000)
 
                     cy.get('[data-testid="mod-submission-list-item-1"]').click()
+                    cy.wait(700)
                     cy.get('[data-testid="mod-edit-submission-copy-submission-id"]').click()
+                    cy.wait(700)
 
                     // check that the value copied to the clipboard is the same that's displayed
-                    const clipboardResult = cy.window().then((win) => {
-                        return win.navigator.clipboard.readText();
-                    })
+                    cy.window().then((win) => {
+                        win.navigator.clipboard.readText().then((text) => {
+                            expect(text).to.eq('13243214');
+                        });
+                    });
 
                     // the timeout is to give time for the clipboard to be read
-                    clipboardResult.should("exist", 10000);
+                    // clipboardResult.should("exist", 10000);
                 })
             })
     }
@@ -68,6 +71,7 @@ describe('Moderation Facility Submission Form', () => {
             cy.visit('/moderation')
             cy.wait(700)
             cy.get('[data-testid="mod-submission-list-item-1"]').click()
+            cy.wait(700)
         })
 
         it('contains the following input fields', () => {
@@ -121,48 +125,62 @@ describe('Moderation Facility Submission Form', () => {
         })
 
         it('should be display error messages', () => {
-
-            cy.get('[data-testid="submission-form-nameEn"]').find('input').type('立川中央病院').tab()
+            //there is no cy.tab(), so manually need to shift focus from one input to another
+            cy.get('[data-testid="submission-form-nameEn"]').find('input').type('立川中央病院')
+            cy.get('[data-testid="submission-form-nameJp"]').find('input').focus()
             cy.get('[data-testid="submission-form-nameEn"]').find('p').should('exist').contains('Invalid English Name')
 
-            cy.get('[data-testid="submission-form-nameJp"]').find('input').type('Tachikawa Hospital').tab()
+            cy.get('[data-testid="submission-form-nameJp"]').find('input').type('Tachikawa Hospital')
+            cy.get('[data-testid="submission-form-phone"]').find('input').focus()
             cy.get('[data-testid="submission-form-nameJp"]').find('p').should('exist').contains('Invalid Japanese Name')
 
-            cy.get('[data-testid="submission-form-phone"]').find('input').type('Hello').tab()
+            cy.get('[data-testid="submission-form-phone"]').find('input').type('Hello')
+            cy.get('[data-testid="submission-form-email"]').find('input').focus()
             cy.get('[data-testid="submission-form-phone"]').find('p').should('exist').contains('Invalid Phone Number')
 
-            cy.get('[data-testid="submission-form-email"]').find('input').type('example').tab()
+            cy.get('[data-testid="submission-form-email"]').find('input').type('example')
+            cy.get('[data-testid="submission-form-website"]').find('input').focus()
             cy.get('[data-testid="submission-form-email"]').find('p').should('exist').contains('Invalid Email Address')
 
-            cy.get('[data-testid="submission-form-website"]').find('input').type('example').tab()
+            cy.get('[data-testid="submission-form-website"]').find('input').type('example')
+            cy.get('[data-testid="submission-form-postalCode"]').find('input').focus()
             cy.get('[data-testid="submission-form-website"]').find('p').should('exist').contains('Invalid Website URL')
 
-            cy.get('[data-testid="submission-form-postalCode"]').find('input').type('180-0').tab()
+            cy.get('[data-testid="submission-form-postalCode"]').find('input').type('180-0')
+            cy.get('[data-testid="submission-form-cityEn"]').find('input').focus()
             cy.get('[data-testid="submission-form-postalCode"]').find('p').should('exist').contains('Invalid Zip Code')
 
-            cy.get('[data-testid="submission-form-cityEn"]').find('input').type('渋谷区').tab()
+            cy.get('[data-testid="submission-form-cityEn"]').find('input').type('渋谷区')
+            cy.get('[data-testid="submission-form-addressLine1En"]').find('input').focus()
             cy.get('[data-testid="submission-form-cityEn"]').find('p').should('exist').contains('Invalid English City Name')
 
-            cy.get('[data-testid="submission-form-addressLine1En"]').find('input').type('道の駅').tab()
+            cy.get('[data-testid="submission-form-addressLine1En"]').find('input').type('道の駅')
+            cy.get('[data-testid="submission-form-addressLine2En"]').find('input').focus()
             cy.get('[data-testid="submission-form-addressLine1En"]').find('p').should('exist').contains('Invalid English Address')
 
-            cy.get('[data-testid="submission-form-addressLine2En"]').find('input').type('道の駅').tab()
+            cy.get('[data-testid="submission-form-addressLine2En"]').find('input').type('道の駅')
+            cy.get('[data-testid="submission-form-cityJp"]').find('input').focus()
             cy.get('[data-testid="submission-form-addressLine2En"]').find('p').should('exist').contains('Invalid English Address')
 
-            cy.get('[data-testid=submission-form-cityJp]').find('input').type('Shibuya').tab()
+            cy.get('[data-testid=submission-form-cityJp]').find('input').type('Shibuya')
+            cy.get('[data-testid="submission-form-addressLine1Jp"]').find('input').focus()
             cy.get('[data-testid=submission-form-cityJp]').find('p').should('exist').contains('Invalid Japanese City Name')
 
 
-            cy.get('[data-testid="submission-form-addressLine1Jp"]').find('input').type('Peanutbutter street').tab()
+            cy.get('[data-testid="submission-form-addressLine1Jp"]').find('input').type('Peanutbutter street')
+            cy.get('[data-testid="submission-form-addressLine2Jp"]').find('input').focus()
             cy.get('[data-testid="submission-form-addressLine1Jp"]').should('exist').contains('Invalid Japanese Address')
 
-            cy.get('[data-testid="submission-form-addressLine2Jp"]').find('input').type('Jelly street').tab()
+            cy.get('[data-testid="submission-form-addressLine2Jp"]').find('input').type('Jelly street')
+            cy.get('[data-testid="submission-form-mapLatitude"]').find('input').focus()
             cy.get('[data-testid="submission-form-addressLine2Jp"]').should('exist').contains('Invalid Japanese Address')
 
-            cy.get('[data-testid="submission-form-mapLatitude"]').find('input').type('Not Number Latitude').tab()
+            cy.get('[data-testid="submission-form-mapLatitude"]').find('input').type('Not Number Latitude')
+            cy.get('[data-testid="submission-form-mapLongitude"]').find('input').focus()
             cy.get('[data-testid="submission-form-mapLatitude"]').find('p').should('exist').contains('Invalid Latitude')
 
-            cy.get('[data-testid="submission-form-mapLongitude"]').find('input').type('Not Number Longitude').tab()
+            cy.get('[data-testid="submission-form-mapLongitude"]').find('input').type('Not Number Longitude')
+            cy.get('[data-testid="submission-form-mapLatitude"]').find('input').focus()
             cy.get('[data-testid="submission-form-mapLongitude"]').find('p').should('exist').contains('Invalid Longitude')
         })
     })
