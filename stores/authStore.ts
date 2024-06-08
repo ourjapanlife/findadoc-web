@@ -66,20 +66,20 @@ export const useAuthStore = defineStore('authStore', () => {
 
             const response = await gqlClient.request<{ loginResult: LoginResult }>(loginQuery, loginData)
 
-            // const loginResult = response?.loginResult as LoginResult
+            const loginResult = response?.loginResult as LoginResult
 
-            //update the state with the new results
-            // if (loginResult.success) {
-            //     isLoggedIn.value = true
-            // }
-
-            //update the state with the new results
-            if (isAuthenticated.value === true) {
+            // update the state with the new results
+            if (loginResult.success) {
                 isLoggedIn.value = true
             }
 
-            //TODO store the credentials
+            //update the state with the new results
+            // if (isAuthenticated.value === true) {
+            //     isLoggedIn.value = true
+            // }
 
+            // TEMPORARY: set to admin
+            isAdmin.value = true
             // if (user.roles.includes(Role.Admin)) {
             //     isAdmin.value = true
             // }
@@ -108,3 +108,9 @@ export const useAuthStore = defineStore('authStore', () => {
 
     return { userId, isLoggedIn, isAdmin, isModerator, login, logout }
 })
+
+const loginQuery = gql`query login($credentials: LoginInput!) {
+    loginResult(credentials: $credentials) {
+        success
+    }
+}`
