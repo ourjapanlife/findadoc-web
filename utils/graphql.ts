@@ -1,15 +1,17 @@
-import { GraphQLClient } from 'graphql-request'
+import { GraphQLClient } from "graphql-request"
+import { useRuntimeConfig } from '#imports'
 
 // eslint-disable-next-line
 export let gqlClient: GraphQLClient
 
-export const initializeGqlClient = (useLocalApi: string | undefined) => {
+export const initializeGqlClient = () => {
     if (gqlClient) {
         return gqlClient
     }
 
     let apiURL
 
+    const useLocalApi = useRuntimeConfig().public.NUXT_USE_LOCAL_API as boolean | undefined
     if (useLocalApi) {
         apiURL = 'http://127.0.0.1:4000'
     } else {

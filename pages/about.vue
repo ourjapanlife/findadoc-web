@@ -1,16 +1,9 @@
 <template>
     <div class="overflow-y-auto w-full">
         <div class="flex flex-col items-center px-10 md:px-32">
-            <SvgHeartPlus
-                role="img"
-                alt="pink heart with a white plus in the middle to symbolize health"
-                title="heart icon"
-                class="my-4 h-32"
-            />
-            <h1
-                data-testid="about-heading"
-                class="mb-12 font-bold text-4xl"
-            >
+            <SvgHeartPlus role="img" alt="pink heart with a white plus in the middle to symbolize health"
+                title="heart icon" class="my-4 h-32" />
+            <h1 data-testid="about-heading" class="mb-12 font-bold text-4xl">
                 {{ $t("about.heading") }}
             </h1>
             <p
@@ -49,29 +42,12 @@
                 <div class="flex-1 border-currentColor/70 border self-center" />
             </div>
         </div>
-        <div
-            id="members-container"
-            data-testid="members-container"
-            class="flex justify-center items-center"
-        >
-            <div
-                id="members"
-                data-testid="members"
-                class="grid grid-cols-2 md:grid-cols-3 mx-4 gap-8 pb-12 md:pb-32"
-            >
-                <div
-                    v-for="(member, index) in data.members"
-                    :key="index"
-                    data-testid="member"
-                    class="members-list grid"
-                >
-                    <MemberComponent
-                        :avatar-img="member.avatarImg"
-                        :name="member.name"
-                        :title="member.title"
-                        :linked-in-url="member.linkedInUrl"
-                        :github-url="member.githubUrl"
-                    />
+        <div data-testid="members-container" id="members-container" class="flex justify-center items-center">
+            <div data-testid="members" id="members" class="grid grid-cols-2 md:grid-cols-3 mx-4 gap-8 pb-12 md:pb-32">
+                <div data-testid="member" class="members-list grid" :key="index"
+                    v-for="(member, index) in data.members">
+                    <MemberComponent :avatarImg="member.avatarImg" :name="member.name" :title="member.title"
+                        :linkedInUrl="member.linkedInUrl" :githubUrl="member.githubUrl" />
                 </div>
             </div>
         </div>

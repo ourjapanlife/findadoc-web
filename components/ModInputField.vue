@@ -29,13 +29,13 @@ import { useModerationFormInputStore } from '~/stores/moderationFormInputStore'
 const inputValue: Ref<string> = ref('')
 const isTheInputValueValid: Ref<boolean> = ref(true)
 const props = defineProps<{
-    label: string
-    type: string
-    placeholder: string
-    required: boolean
-    invalidInputErrorMessage: string
-    inputValidationCheck: (inputValue: string) => boolean
-}>()
+    label: string,
+    type: string,
+    placeholder: string,
+    required: boolean,
+    invalidInputErrorMessage:string ,
+    inputValidationCheck: (inputValue:string) => boolean
+    }>()
 
 const store = useModerationFormInputStore()
 
@@ -48,4 +48,6 @@ const handleInput = (event: Event) => {
     inputValue.value = target.value
     store.setInputField(props.label, inputValue.value)
 }
+</script>
+
 </script>

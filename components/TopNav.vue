@@ -79,6 +79,11 @@
                     class="hover:text-primary-hover transition-colors"
                 >{{ $t('topNav.submit') }}
                 </NuxtLink>
+                <NuxtLink :to="'/'" v-if="isLoggedIn">
+                    <div @click="logout()">
+                        {{ $t('topNav.logout') }}
+                    </div>
+                </NuxtLink>
             </nav>
             <LocaleSelector class="portrait:hidden" />
             <HamburgerMenu class="landscape:hidden justify-end" />
@@ -88,4 +93,15 @@
 
 <script lang="ts" setup>
 import SVGSiteLogo from '~/assets/icons/site-logo.svg'
+import HamburgerMenu from "./HamburgerMenu.vue"
+import { useAuthStore } from '~/stores/authStore'
+
+const authStore = useAuthStore()
+
+const isLoggedIn = authStore.isLoggedIn
+
+function logout() {
+    authStore.logout()
+}
+
 </script>

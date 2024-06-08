@@ -75,9 +75,6 @@ import { computed, onMounted } from 'vue'
 import { useSearchResultsStore } from '../stores/searchResultsStore'
 import { useLocaleStore } from '../stores/localeStore'
 import { useLoadingStore } from '../stores/loadingStore'
-import SVGNoSearchResults from '~/assets/icons/no-search-results-graphic.svg'
-import SVGLoadingIcon from '~/assets/icons/loading.svg'
-import SVGHamburgerListIcon from '~/assets/icons/hamburger-list-icon.svg'
 import { Locale } from '~/typedefs/gqlTypes.js'
 
 const resultsStore = useSearchResultsStore()

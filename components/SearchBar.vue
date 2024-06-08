@@ -105,7 +105,7 @@ import SVGSearchIcon from '~/assets/icons/search-icon.svg'
 import { useSearchResultsStore } from '~/stores/searchResultsStore.js'
 import { useLocationsStore } from '~/stores/locationsStore.js'
 import { useSpecialtiesStore, type SpecialtyDisplayOption } from '~/stores/specialtiesStore.js'
-import type { Locale, Specialty } from '~/typedefs/gqlTypes.js'
+import { Locale, Specialty } from "~/typedefs/gqlTypes.js"
 import { useLocaleStore, type LocaleDisplay } from '~/stores/localeStore.js'
 
 const localeStore = useLocaleStore()

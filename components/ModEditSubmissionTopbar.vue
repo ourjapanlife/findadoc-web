@@ -50,6 +50,7 @@
 import { ref, type Ref } from 'vue'
 import SVGCopyContent from '~/assets/icons/content-copy.svg'
 import SVGSuccessCheckMark from '~/assets/icons/checkmark-square.svg'
+import { ref, type Ref } from 'vue'
 import { useModerationScreenStore } from '~/stores/moderationScreenStore'
 
 const modScreenStore = useModerationScreenStore()
