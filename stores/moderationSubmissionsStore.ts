@@ -2,16 +2,16 @@ import { gql } from "graphql-request";
 import { defineStore } from "pinia";
 import { Locale, Submission } from "~/typedefs/gqlTypes.js";
 import { gqlClient } from "../utils/graphql.js";
+import { Ref, ref } from "vue";
 
 export const useModerationSubmissionsStore = defineStore(
     "submissionsStore",
     () => {
-        let submissionsData;
+        const submissionsData: Ref<Submission[]> = ref([]);
 
         async function getSubmissions() {
             const submissionsSearchResults = await querySubmissions();
-
-            submissionsData = submissionsSearchResults;
+            submissionsData.value = submissionsSearchResults;
         }
 
         return { getSubmissions, submissionsData };
@@ -22,17 +22,7 @@ async function querySubmissions() {
     try {
         const submissionsFilters = {
             filters: {
-                createdDate: "",
-                healthcareProfessionalName: "",
-                id: "",
-                isApproved: false,
-                isRejected: false,
-                isUnderReview: false,
-                updatedDate: "",
-                spokenLanguages: [],
-                facility: {
-                    nameEn: "",
-                },
+                id: undefined,
             },
         };
 
