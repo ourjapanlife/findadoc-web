@@ -54,7 +54,7 @@ import SVGSearchIcon from '~/assets/icons/search-icon.svg'
 import { ref, watchEffect, type Ref } from 'vue'
 import { useSearchResultsStore } from '~/stores/searchResultsStore.js'
 import { useLocationsStore } from '~/stores/locationsStore.js'
-import { useSpecialtiesStore, type  SpecialtyDisplayOption } from '~/stores/specialtiesStore.js'
+import { useSpecialtiesStore, type SpecialtyDisplayOption } from '~/stores/specialtiesStore.js'
 import { Locale, Specialty } from "~/typedefs/gqlTypes.js"
 import { useLocaleStore, type LocaleDisplay } from '~/stores/localeStore.js'
 

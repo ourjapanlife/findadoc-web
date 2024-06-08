@@ -24,10 +24,10 @@ import { useModerationFormInputStore } from '~/stores/moderationFormInputStore'
 const inputValue: Ref<string> = ref('')
 const isTheInputValueValid: Ref<boolean> = ref(true)
 const props = defineProps<{
-    label: string, 
-    type: string, 
-    placeholder: string, 
-    required: boolean, 
+    label: string,
+    type: string,
+    placeholder: string,
+    required: boolean,
     invalidInputErrorMessage:string ,
     inputValidationCheck: (inputValue:string) => boolean
     }>()

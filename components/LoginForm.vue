@@ -46,9 +46,8 @@ import { useAuthStore } from "~/stores/authStore"
 import { useLoadingStore } from "~/stores/loadingStore"
 import { useModerationScreenStore } from "~/stores/moderationScreenStore"
 import { useRouter } from 'vue-router'
-
 import * as validations from '../utils/formValidations'
-import { ref, Ref } from 'vue'
+import { ref, type Ref } from 'vue'
 
 const authStore = useAuthStore()
 const loadingStore = useLoadingStore()
@@ -104,9 +103,6 @@ const login = async (e: Event) => {
 
     // let's redirect the user to the moderation dashboard
     router.push({ path: '/moderation' })
-
-    // Enable the moderation dashboard
-    store.setEnableModerationPanelToTrue('moderation')
 }
 
 </script>

@@ -4,7 +4,7 @@
             <span class="mb-3.5 text-center text-zinc-900 text-2xl font-bold font-['Noto Sans JP'] leading-normal">
                 {{ $t('modSubmissionForm.contactInformation')}}
             </span>
-            <ModInputField  
+            <ModInputField
                 data-testid="submission-form-nameEn"
                 label="Name En"
                 type="text"
@@ -14,7 +14,7 @@
                 invalidInputErrorMessage="Invalid English Name"
             />
             <ModInputField
-                data-testid="submission-form-nameJp"  
+                data-testid="submission-form-nameJp"
                 label="Name Jp"
                 type="text"
                 placeholder="e.g. 立川中央病院"
@@ -22,7 +22,7 @@
                 :inputValidationCheck="validateNameJp"
                 invalidInputErrorMessage="Invalid Japanese Name"
             />
-            <ModInputField  
+            <ModInputField
                 data-testid="submission-form-phone"
                 label="Phone"
                 type="text"
@@ -32,7 +32,7 @@
                 invalidInputErrorMessage="Invalid Phone Number"
             />
             <ModInputField
-                data-testid="submission-form-email"  
+                data-testid="submission-form-email"
                 label="Email"
                 type="email"
                 placeholder="e.g example@mail.com"
@@ -41,7 +41,7 @@
                 invalidInputErrorMessage="Invalid Email Address"
             />
             <ModInputField
-                data-testid="submission-form-website"  
+                data-testid="submission-form-website"
                 label="Website"
                 type="url"
                 placeholder="e.g. http://www.example.com/"
@@ -56,7 +56,7 @@
                 {{ $t('modSubmissionForm.addresses') }}
             </span>
             <ModInputField
-                data-testid="submission-form-postalCode"  
+                data-testid="submission-form-postalCode"
                 label="Postal Code"
                 type="text"
                 placeholder="e.g. 186-0000"
@@ -66,7 +66,7 @@
             />
             <div class="flex flex-col mt-4">
                 <label for="Prefecture Japan" class="mb-2 text-zinc-900 text-sm font-bold font-['Noto Sans JP']">Prefecture En</label>
-                <select 
+                <select
                 data-testid="submission-form-prefectureEn"
                 name="Prefecture Japan" id="1" class="mb-5 px-3 py-3.5 w-[350px] h-[50px] bg-white rounded-lg border border-zinc-400 text-neutral-600 text-sm font-normal font-['Noto Sans JP'] placeholder-gray-300"
                 v-model="store.prefectureEn"
@@ -75,7 +75,7 @@
                 </select>
             </div>
             <ModInputField
-                data-testid="submission-form-cityEn"  
+                data-testid="submission-form-cityEn"
                 label="City En"
                 type="text"
                 placeholder="e.g. Shibuya"
@@ -84,7 +84,7 @@
                 invalidInputErrorMessage="Invalid English City Name"
             />
             <ModInputField
-                data-testid="submission-form-addressLine1En"  
+                data-testid="submission-form-addressLine1En"
                 label="Address Line 1 En"
                 type="text"
                 placeholder="Street address"
@@ -93,7 +93,7 @@
                 invalidInputErrorMessage="Invalid English Address"
             />
             <ModInputField
-                data-testid="submission-form-addressLine2En"  
+                data-testid="submission-form-addressLine2En"
                 label="Address Line 2 En"
                 type="text"
                 placeholder="Apartment, building, room..."
@@ -103,20 +103,20 @@
             />
             <div class="flex flex-col mt-4">
                 <label for="Prefecture Japan" class="mb-2 text-zinc-900 text-sm font-bold font-['Noto Sans JP']">Prefecture Jp</label>
-                <select 
+                <select
                 data-testid="submission-form-prefectureJp"
                 name="Prefecture Japan" id="1" class="mb-5 px-3 py-3.5 w-[350px] h-[50px] bg-white rounded-lg border border-zinc-400 text-neutral-600 text-sm font-normal font-['Noto Sans JP'] placeholder-gray-300"
                 v-model="store.prefectureJp"
                 >
-                    <option 
-                    v-for="(prefecture, index) in store.listPrefectureJapanJp" 
+                    <option
+                    v-for="(prefecture, index) in store.listPrefectureJapanJp"
                     :key="index"
                     >
                     {{ prefecture }}
                     </option>
                 </select>
             </div>
-            <ModInputField  
+            <ModInputField
                 data-testid="submission-form-cityJp"
                 label="City Jp"
                 type="text"
@@ -125,7 +125,7 @@
                 :inputValidationCheck="validateCityJp"
                 invalidInputErrorMessage="Invalid Japanese City Name"
             />
-            <ModInputField  
+            <ModInputField
                 data-testid="submission-form-addressLine1Jp"
                 label="Address Line 1 Jp"
                 type="text"
@@ -134,7 +134,7 @@
                 :inputValidationCheck="validateAddressLineJp"
                 invalidInputErrorMessage="Invalid Japanese Address"
             />
-            <ModInputField  
+            <ModInputField
                 data-testid="submission-form-addressLine2Jp"
                 label="Address Line 2 Jp"
                 type="text"
@@ -144,13 +144,13 @@
                 invalidInputErrorMessage="Invalid Japanese Address"
             />
         </div>
-        
+
         <div>
             <span class="mb-3.5 text-center text-zinc-900 text-2xl font-bold font-['Noto Sans JP'] leading-normal">
                 {{ $t('modSubmissionForm.googleMapsInformation') }}
             </span>
             <ModInputField
-                data-testid="submission-form-google-maps"  
+                data-testid="submission-form-google-maps"
                 label="Google maps URL"
                 type="url"
                 placeholder="e.g. https://www.google.co.jp/maps/"
@@ -158,7 +158,7 @@
                 :inputValidationCheck="validateWebsite"
                 invalidInputErrorMessage="Invalid Google Maps URL"
             />
-            <ModInputField  
+            <ModInputField
                 data-testid="submission-form-mapLatitude"
                 label="Map latitude"
                 type="text"
@@ -167,7 +167,7 @@
                 :inputValidationCheck="validateFloat"
                 invalidInputErrorMessage="Invalid Latitude"
             />
-            <ModInputField  
+            <ModInputField
                 data-testid="submission-form-mapLongitude"
                 label="Map longitude"
                 type="text"
@@ -193,7 +193,7 @@ const store = useModerationFormInputStore()
 
 const validateFields = (e: Event) => {
     e.preventDefault()
-    
+
     const isNameEnValid: boolean = validateNameEn(store.nameEn)
     const isNameJpValid: boolean = validateNameJp(store.nameJp)
     const isPhoneValid: boolean = validatePhoneNumber(store.phone)
@@ -208,7 +208,7 @@ const validateFields = (e: Event) => {
     const isPostalCodeValid: boolean = validatePostalCode(store.postalCode)
     const isLatitudeValid: boolean = validateFloat(store.mapLatitude)
     const isLongitudeValid: boolean = validateFloat(store.mapLongitude)
-    
+
     if (
         !isNameEnValid ||
         !isNameJpValid ||
@@ -228,7 +228,7 @@ const validateFields = (e: Event) => {
         e.preventDefault()
         return
     }
-    
+
     store.resetForm()
     console.log('Fetching data')
 }

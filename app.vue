@@ -3,11 +3,11 @@
         always visible on desktop screens without scrolling.
     -->
     <div data-testid="app" class="h-screen w-full">
-        <div v-if="store.enableModerationPanel" data-testid="moderation-content"
+        <div v-if="authStore.isLoggedIn" data-testid="moderation-content"
             class="h-full w-full flex flex-col font-sans text-primary-text bg-primary-bg">
             <NuxtPage class="flex flex-1" />
         </div>
-        <div v-else-if="!store.enableModerationPanel && $viewport.isGreaterThan('desktop')"
+        <div v-else-if="!authStore.isLoggedIn"
             class="portrait:hidden h-full w-full flex flex-col font-sans text-primary-text bg-primary-bg">
             <TopNav />
             <NuxtPage />
@@ -22,20 +22,12 @@
 
 <script setup lang="ts">
 import { initializeGqlClient } from './utils/graphql.js'
-import { useNuxtApp } from "#app";
-import { useRuntimeConfig } from '#imports'
-import { useModerationScreenStore } from "~/stores/moderationScreenStore"
-import { useRoute } from 'vue-router'
-const { $viewport } = useNuxtApp()
+import { initializeAuth0 } from '~/utils/auth0'
+import { useAuthStore } from "~/stores/authStore"
 
-const store = useModerationScreenStore()
-const route = useRoute()
-const currentPath = route.path.replace("/", "")
+initializeAuth0()
+initializeGqlClient()
 
-store.setEnableModerationPanelToTrue(currentPath)
-
-const useLocalAPI = useRuntimeConfig().public.NUXT_USE_LOCAL_API as string | undefined
-initializeGqlClient(useLocalAPI)
-
+const authStore = useAuthStore()
 
 </script>

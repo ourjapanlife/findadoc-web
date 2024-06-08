@@ -49,6 +49,11 @@
                                 {{ $t('hamburgerMenu.submit') }}
                             </div>
                         </NuxtLink>
+                        <NuxtLink :to="'/'" v-if="authStore.isLoggedIn">
+                            <div @click="logout()">
+                                {{ $t('hamburgerMenu.logout') }}
+                            </div>
+                        </NuxtLink>
                     </div>
                 </div>
 
@@ -91,6 +96,9 @@
 import SVGHamburgerMenuIcon from '~/assets/icons/hamburger-menu.svg'
 import SVGGithubIcon from '~/assets/icons/social-github.svg'
 import { ref } from 'vue'
+import { useAuthStore } from '~/stores/authStore'
+
+const authStore = useAuthStore()
 
 const isMenuOpen = ref(false)
 
@@ -101,6 +109,12 @@ function openMenu() {
 function closeMenu() {
     isMenuOpen.value = false
 }
+
+function logout() {
+    authStore.logout()
+    closeMenu()
+}
+
 
 //this is a custom directive to close the menu when clicking outside of the menu
 const vCloseOnOutsideClick = {

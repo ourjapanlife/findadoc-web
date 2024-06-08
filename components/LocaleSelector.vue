@@ -14,10 +14,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from "vue";
-import { useLocaleStore } from "../stores/localeStore";
-import { Locale } from "~/typedefs/gqlTypes.js";
-import { useI18n } from "#imports";
+import { ref, watch } from "vue"
+import { useLocaleStore } from "../stores/localeStore"
+import { Locale } from "~/typedefs/gqlTypes.js"
+import { useI18n } from "#imports"
 
 const { locale } = useI18n();
 const localeStore = useLocaleStore();
