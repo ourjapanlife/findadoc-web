@@ -113,9 +113,10 @@
         "submitted": "Submitted"
     },
     "modSubmissionForm": {
-        "contactInformation": "Contact Information",
         "addresses": "Addresses",
+        "contactInformation": "Contact Information",
         "googleMapsInformation": "Google maps information",
-        "healthcareProfessionalId": "Healthcare Professional IDs"
+        "healthcareProfessionalId": "Healthcare Professional IDs",
+        "placeholderTextHealthcareProfessionalSearchbar": "Search by name or ID to add a doctor"
     }
 }
