@@ -20,6 +20,7 @@
         "home": "Home",
         "contact": "Contact",
         "submit": "Add a Doctor",
+        "moderation": "Moderation",
         "login": "Log in",
         "logout": "Log out",
         "privacy": "Privacy",
@@ -95,6 +96,7 @@
     "topNav": {
         "about": "About",
         "home": "Home",
+        "moderation": "Moderation",
         "submit": "Add a Doctor",
         "login": "Log in",
         "logout": "Log out"
@@ -108,7 +110,7 @@
         "invalidPasswordValidation": "Please enter a valid password",
         "invalidLoginValidation": "Your username or password is incorrect",
         "checkingauth": "Checking Authentication...",
-        "unauthorizedline1": "It looks like you don't have the necessary permissions to access this page...",
+        "unauthorizedline1": "It looks like you don't have the necessary permissions to access this page. Redirecting in 10 seconds...",
         "unauthorizedline2": "If you want to become a moderator or have any questions, please contact us ",
         "unauthorizedline3": "here"
     },

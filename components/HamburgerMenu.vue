@@ -1,6 +1,7 @@
 <template>
     <div data-testid="hamburger-menu-container" class="cursor-pointer w-full flex" v-close-on-outside-click>
-        <SVGHamburgerMenuIcon data-testid="hamburger-menu-icon" @click="openMenu()" alt="hamburger menu" class="h-8 w-8" />
+        <SVGHamburgerMenuIcon data-testid="hamburger-menu-icon" @click="openMenu()" alt="hamburger menu"
+            class="h-8 w-8" />
         <Transition enter-active-class="transition ease-in-out duration-300 transform: translate(100%, 0)"
             leave-active-class="transition ease-in-out duration-100 transform: translate(-100%, 0)"
             enter-from-class="opacity-0 translate-x-2.5" enter-to-class="opacity-100 translate-x-0"
@@ -49,11 +50,23 @@
                                 {{ $t('hamburgerMenu.submit') }}
                             </div>
                         </NuxtLink>
-                        <NuxtLink :to="'/'" v-if="authStore.isLoggedIn">
-                            <div @click="logout()">
-                                {{ $t('hamburgerMenu.logout') }}
+                        <div v-if="authStore.isLoggedIn" class="text-primary">
+                            <div class="flex">
+                                <SVGProfileIcon role="img" alt="profile icon" title="profile icon"
+                                    class="profile-icon w-7 stroke-primary stroke-2 inline" />
+                                <div class="text-primary font-bold"> {{ authStore.userId }}</div>
                             </div>
-                        </NuxtLink>
+                            <NuxtLink :to="'/moderation'">
+                                <div @click="closeMenu()">
+                                    {{ $t('hamburgerMenu.moderation') }}
+                                </div>
+                            </NuxtLink>
+                            <NuxtLink :to="'/'">
+                                <div @click="logout()">
+                                    {{ $t('hamburgerMenu.logout') }}
+                                </div>
+                            </NuxtLink>
+                        </div>
                     </div>
                 </div>
 
@@ -72,10 +85,12 @@
                     </div>
                     <div data-testid="hamburger-menu-footer-dev-links" class="flex gap-6">
                         <NuxtLink :to="'https://github.com/ourjapanlife'" target="_blank">
-                            <SVGGithubIcon data-testid="hamburger-menu-github-icon" alt="hamburger menu" class="h-10 w-8" />
+                            <SVGGithubIcon data-testid="hamburger-menu-github-icon" alt="hamburger menu"
+                                class="h-10 w-8" />
                         </NuxtLink>
                         <!-- Netlify Icons are available here: https://www.netlify.com/press/#badges -->
-                        <NuxtLink :to="'https://www.netlify.com'" target="_blank" data-testid="hamburger-menu-footer-dev-links-netlify">
+                        <NuxtLink :to="'https://www.netlify.com'" target="_blank"
+                            data-testid="hamburger-menu-footer-dev-links-netlify">
                             <img src="https://www.netlify.com/v3/img/components/netlify-light.svg"
                                 alt="Deploys by Netlify" class=" h-10 w-20" />
                         </NuxtLink>
@@ -83,7 +98,8 @@
                     <div data-testid="hamburger-menu-footer-copyright" class="text-primary-text-muted text-xs">
                         © {{ new Date().getUTCFullYear() }} {{ $t('hamburgerMenu.copyright') }}
                         <div class="mt-0.5">NPO
-                            <NuxtLink :to="'https://www.npo-hiroba.or.jp/search/zoom.php?pk=121289'" target="_blank" class="underline">#9011005010215</NuxtLink>
+                            <NuxtLink :to="'https://www.npo-hiroba.or.jp/search/zoom.php?pk=121289'" target="_blank"
+                                class="underline">#9011005010215</NuxtLink>
                         </div>
                     </div>
                 </div>
@@ -93,6 +109,7 @@
 </template>
 
 <script lang="ts" setup>
+import SVGProfileIcon from '~/assets/icons/profile-icon.svg'
 import SVGHamburgerMenuIcon from '~/assets/icons/hamburger-menu.svg'
 import SVGGithubIcon from '~/assets/icons/social-github.svg'
 import { ref } from 'vue'

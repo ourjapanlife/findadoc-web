@@ -16314,11 +16314,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
 "vue@npm:^3.2.41, vue@npm:^3.4.27":
-=======
-"vue@npm:^3.2.41":
->>>>>>> 6f1670c (migrated to auth0)
   version: 3.4.27
   resolution: "vue@npm:3.4.27"
   dependencies:

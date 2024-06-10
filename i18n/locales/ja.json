@@ -20,6 +20,7 @@
         "home": "ホーム",
         "contact": "お問い合わせ",
         "submit": "医師情報の追加",
+        "moderation": "モデレータ",
         "login": "ログイン",
         "logout": "ログアウト",
         "privacy": "プライバシーポリシー",
@@ -94,6 +95,7 @@
     "topNav": {
         "home": "ホーム",
         "about": "私たちについて",
+        "moderation": "モデレータ",
         "submit": "医師情報の追加",
         "login": "ログイン",
         "logout": "ログアウト"
@@ -107,7 +109,7 @@
         "invalidPasswordValidation": "有効なパスワードを入力して下さい",
         "invalidLoginValidation": "ユーザー名またはパスワードが間違っています",
         "checkingauth": "認証の確認...",
-        "unauthorizedline1": "このページにアクセスするために必要な権限がないようです...",
+        "unauthorizedline1": "このページにアクセスするために必要な権限がないようです. 10秒後にリダイレクトします...",
         "unauthorizedline2": "モデレーターになりたい場合やご質問がある場合は、お問い合わせください",
         "unauthorizedline3": "こちらからお問い合わせ"
     },
