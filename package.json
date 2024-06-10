@@ -5,7 +5,7 @@
     "scripts": {
         "prepare": "husky",
         "dev": "yarn && nuxi dev",
-        "dev:localserver": "NODE_ENV=development yarn && nuxi dev",
+        "dev:localserver": "NUXT_USE_LOCAL_API=true; yarn && nuxi dev",
         "generate": "graphql-codegen --config ./typesgeneratorconfig.ts",
         "lint": "ESLINT_USE_FLAT_CONFIG=true eslint . -c eslint.config.js && stylelint **/*.{vue,css,scss} --ignore-path .gitignore",
         "lint:ci": "eslint . --config eslint.config.js --format @microsoft/eslint-formatter-sarif --output-file eslint-results.sarif",
@@ -13,9 +13,10 @@
         "prod:build": "yarn && yarn generate && nuxi generate",
         "prod:start": "nuxi start",
         "prepare:ci": "nuxi prepare",
+        "test": "yarn test:pinia --run && yarn test:e2e",
         "test:pinia": "vitest",
         "test:pinia:coverage": "vitest run --coverage",
-        "test:e2e": "cypress run --e2e --browser chrome"
+        "test:e2e": "cypress run --e2e --browser chrome --record --key 04a1fe54-0011-407b-b7d7-fcb9b2daf1e6"
     },
     "packageManager": "yarn@4.2.2",
     "engines": {
@@ -53,6 +54,7 @@
         "all-contributors-cli": "^6.26.1",
         "autoprefixer": "^10.4.18",
         "cypress": "^13.10.0",
+        "cypress-plugin-tab": "^1.0.5",
         "eslint": "^9.3.0",
         "eslint-plugin-cypress": "^3.2.0",
         "eslint-plugin-json": "^3.1.0",

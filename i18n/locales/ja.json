@@ -12,17 +12,19 @@
         "poweredBy": "Powered by",
         "contribute": "本活動に寄与する",
         "feedback": "ご意見・ご質問",
-        "clickHere": "こちらをクリック"
+        "clickHere": "こちらをクリック",
+        "copyright": "Find a Doc, Japan"
     },
     "hamburgerMenu": {
-        "about": "About Find a Doc, Japan",
-        "home": "Home",
-        "contact": "Contact",
-        "submit": "Submit",
-        "privacy": "Privacy",
-        "terms": "Terms",
+        "about": "私たちについて",
+        "home": "ホーム",
+        "contact": "お問い合わせ",
+        "submit": "医師情報の追加",
+        "privacy": "プライバシーポリシー",
+        "terms": "利用規約",
         "github": "Github",
-        "netlify": "Powered by Netlify"
+        "languageDropdownTitle": "対応言語:",
+        "copyright": "Find a Doc, Japan"
     },
     "privacyPage": {
         "heading": "Privacy Policy",
@@ -48,14 +50,18 @@
     "submitPage": {
         "firstName": "名",
         "googleMaps": "Google MapsのURL",
+        "googleMapsValidation": "https://を含む、アドレスを入れてください",
         "heading": "医師情報の追加",
         "healthcareProfessionalName": "医師の姓名",
+        "invalidOption": "選択外の項目を選んでいます",
         "lastName": "姓",
+        "lastNameValidation": "姓は必須です",
         "location": "所在地",
         "selectLanguage1": "対応言語１を選択",
         "selectLanguage2": "対応言語２を選択",
         "spokenLanguage1": "対応可能言語 1",
         "spokenLanguage2": "対応可能言語 2",
+        "spokenLanguageValidation": "対応可能な言語を最低１つ選んでください",
         "subheading": "医師の情報を追加した場合は、以下の情報の入力をお願いいたします。入力された情報は`Find a Doc`メンバー確認の上、データベースへ反映されます。",
         "submitButton": "確定",
         "optional": "オプション",

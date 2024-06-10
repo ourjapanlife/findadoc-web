@@ -12,17 +12,20 @@
         "poweredBy": "Powered by",
         "contribute": "Contribute on",
         "feedback": "Got feedback?",
-        "clickHere": "Click here"
+        "clickHere": "Click here",
+        "copyright": "Find a Doc, Japan"
     },
     "hamburgerMenu": {
         "about": "About Find a Doc, Japan",
         "home": "Home",
         "contact": "Contact",
-        "submit": "Submit",
+        "submit": "Add a Doctor",
         "privacy": "Privacy",
         "terms": "Terms",
         "github": "Github",
-        "netlify": "Powered by Netlify"
+        "languageDropdownTitle": "Language:",
+        "netlify": "Powered by Netlify",
+        "copyright": "Find a Doc, Japan"
     },
     "privacyPage": {
         "heading": "Privacy Policy",
@@ -48,14 +51,18 @@
     "submitPage": {
         "firstName": "First Name",
         "googleMaps": "Google Maps URL",
+        "googleMapsValidation": "Enter a URL starting with https://",
         "heading": "Add a Doctor",
         "healthcareProfessionalName": "Healthcare Professional Name",
+        "invalidOption": "Invalid option",
         "lastName": "Last Name",
+        "lastNameValidation": "Enter a last name",
         "location": "Location",
         "selectLanguage1": "Select First Language",
         "selectLanguage2": "Select Second Language",
         "spokenLanguage1": "Spoken Language 1",
         "spokenLanguage2": "Spoken Language 2",
+        "spokenLanguageValidation": "Select one language",
         "subheading": "Want to add a doctor to the database? Complete the form below and it will be reviewed by our moderators.",
         "submitButton": "Submit",
         "optional": "optional",

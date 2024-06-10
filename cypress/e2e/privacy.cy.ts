@@ -1,50 +1,50 @@
 describe('Privacy Policy page', () => {
-    context('Desktop resolution', () => {
+    context('Landscape resolution', () => {
         beforeEach(() => {
             cy.viewport(1920, 1080)
             cy.visit('/privacypolicy')
         })
 
-        it('shows the desktop nav', () => {
-            cy.get('[data-testid="desktop-nav"]').should('exist')
-        });
+        it('shows the landscape top nav', () => {
+            cy.get('[data-testid="landscape-searchbar"]').should('exist').should('be.visible')
+        })
 
         it('does not show the hamburger component', () => {
-            cy.get('[data-testid="hamburger-component"]').should('not.exist')
-        });
+            cy.get('[data-testid="hamburger-menu-icon"]').should("not.be.visible")
+        })
 
         it('has a heading', () => {
             cy.get('[data-testid="privacy-heading"]').should('exist')
-        });
+        })
 
         it('has a subheading', () => {
             cy.get('[data-testid="privacy-subheading"]').should('exist')
-        });
+        })
 
         it('shows the footer without scrolling', () => {
             cy.isInViewport('[data-testid="footer"]')
-        });
+        })
 
 
     })
 
-    context('iphone-5 resolution', () => {
+    context('Portrait mode', () => {
         beforeEach(() => {
             cy.viewport('iphone-5')
             cy.visit('/privacypolicy')
         })
 
         it('shows the hamburger component', () => {
-            cy.get('[data-testid="hamburger-component"]').should('exist')
-        });
+            cy.get('[data-testid="hamburger-menu-icon"]').should('exist').should('be.visible')
+        })
 
-        it('does not show the desktop nav', () => {
-            cy.get('[data-testid="desktop-nav"]').should('not.exist')
-        });
+        it('does not show the landscape searchbar', () => {
+            cy.get('[data-testid="landscape-searchbar"]').should("not.be.visible")
+        })
 
         it('does not show the footer', () => {
             cy.get('[data-testid="footer"]').should('not.exist')
-        });
+        })
 
     })
 })
