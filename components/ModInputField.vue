@@ -1,9 +1,9 @@
 <template>
         <div class="flex flex-col mt-4">
-            <label class="mb-2 text-zinc-900 text-sm font-bold font-['Noto Sans JP']">
+            <label class="mb-2 text-primary-text text-sm font-bold font-sans">
                 {{ label }}
             </label>
-            <p v-if="!isTheInputValueValid" class="text-currentColor text-xs font-['Noto Sans JP']">{{ invalidInputErrorMessage }}</p>
+            <p v-if="!isTheInputValueValid" class="text-currentColor text-xs font-sans">{{ invalidInputErrorMessage }}</p>
             <input
                 @blur="() => checkValidationOfInputField(inputValue)"
                 :type='type'
