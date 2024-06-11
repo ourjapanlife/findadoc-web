@@ -22,9 +22,9 @@
 
 <script setup lang="ts">
 import { initializeGqlClient } from './utils/graphql.js'
-import { useNuxtApp } from "#app";
+import { useNuxtApp } from "#app"
 import { useRuntimeConfig } from '#imports'
-const { $viewport } = useNuxtApp();
+const { $viewport } = useNuxtApp()
 import { useModerationScreenStore } from "~/stores/moderationScreenStore"
 import { useRoute } from 'vue-router'
 
