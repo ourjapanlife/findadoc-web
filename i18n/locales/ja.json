@@ -106,11 +106,16 @@
         "approve": "Approve",
         "reject": "Reject"
     },
-    "modSubmissionListContainer": {
-        "name": "Name",
-        "status": "Status",
+    "modPanelSubmissionList": {
+        "approved": "Approved",
         "modified": "Modified",
-        "submitted": "Submitted"
+        "name": "Name",
+        "new": "New",
+        "noSubmissions": "There are no pending submissions",
+        "rejected": "Rejected",
+        "status": "Status",
+        "submitted": "Submitted",
+        "underReview": "Under Review"
     },
     "modSubmissionForm": {
         "addresses": "Addresses",
