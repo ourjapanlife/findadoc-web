@@ -8545,9 +8545,9 @@ __metadata:
     typescript: "npm:^5.4.2"
     typescript-eslint: "npm:^7.2.0"
     vitest: "npm:^1.4.0"
-    vue: "npm:^3.4.21"
+    vue: "npm:^3.4.27"
     vue-gtag: "npm:^2.0.1"
-    vue-router: "npm:^4.3.0"
+    vue-router: "npm:^4.3.3"
     vue-server-renderer: "npm:^2.7.16"
     vue-template-compiler: "npm:^2.7.16"
     vue3-google-map: "npm:^0.20.0"
@@ -16251,6 +16251,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"vue-router@npm:^4.3.3":
+  version: 4.3.3
+  resolution: "vue-router@npm:4.3.3"
+  dependencies:
+    "@vue/devtools-api": "npm:^6.5.1"
+  peerDependencies:
+    vue: ^3.2.0
+  checksum: 10/03a404608af00175f148db885a831ed560741502f49d97381e53aae534aca355404e0549b85d8704020ddca1cc5d2a4c7431c4cf7190cda428b6e93ecd373d49
+  languageName: node
+  linkType: hard
+
 "vue-server-renderer@npm:^2.7.16":
   version: 2.7.16
   resolution: "vue-server-renderer@npm:2.7.16"
@@ -16303,7 +16314,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vue@npm:^3.2.41":
+"vue@npm:^3.2.41, vue@npm:^3.4.27":
   version: 3.4.27
   resolution: "vue@npm:3.4.27"
   dependencies:
