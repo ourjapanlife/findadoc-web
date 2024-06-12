@@ -20,7 +20,7 @@
             class="grid grid-cols-subgrid col-span-5 bg-gray-200">
             <div @click="handleClickToSubmissionForm(submission.id)"
                 :data-testid='`mod-submission-list-item-${index + 1}`'
-                class="grid grid-cols-subgrid col-span-5 bg-gray-200 cursor-pointer">
+                class="grid grid-cols-subgrid col-span-5 bg-gray-200 cursor-pointer hover:bg-primary">
                 <span class="text-start">{{ index + 1 }}</span>
                 <span class="text-start">{{ submission.healthcareProfessionalName }}</span>
                 <span class="text-start">{{ getSubmissionStatus(submission) }}</span>
@@ -55,7 +55,7 @@ onMounted(async () => {
 const hasSubmissions = computed(() => modSubmissionsStore.submissionsData.length > 0)
 
 const getSubmissionStatus = (submission: Submission) => {
-    switch(true) {
+    switch (true) {
         case submission.isUnderReview:
             return $i18n.t("modPanelSubmissionList.underReview")
         case submission.isApproved:
