@@ -1,6 +1,6 @@
 import { gql } from "graphql-request"
 import { defineStore } from "pinia"
-import { Locale, Submission } from "~/typedefs/gqlTypes.js"
+import { Submission } from "~/typedefs/gqlTypes.js"
 import { gqlClient } from "../utils/graphql.js"
 import { Ref, ref } from "vue"
 
