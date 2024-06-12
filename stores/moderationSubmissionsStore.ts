@@ -1,8 +1,8 @@
 import { gql } from "graphql-request"
 import { defineStore } from "pinia"
-import { Submission } from "~/typedefs/gqlTypes.js"
 import { gqlClient } from "../utils/graphql.js"
-import { Ref, ref } from "vue"
+import { type Submission } from "~/typedefs/gqlTypes.js"
+import { ref, type Ref } from 'vue'
 
 export const useModerationSubmissionsStore = defineStore(
     "submissionsStore",

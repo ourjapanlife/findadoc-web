@@ -7,7 +7,8 @@ const SITE_DESCRIPTION =
 export default defineNuxtConfig({
     //typescript settings
     typescript: {
-        shim: false
+        shim: false,
+        tsConfig: { compilerOptions: { baseUrl: ".", }, }
     },
     // Global page headers: https://go.nuxtjs.dev/config-head
     head: {
@@ -83,6 +84,8 @@ export default defineNuxtConfig({
         ],
         link: [{ rel: 'icon', type: 'image/x-icon', href: '/assets/favicon.ico' }]
     },
+
+    
 
     // Global CSS: https://go.nuxtjs.dev/config-css
     css: ['~/assets/css/tailwind.css'],

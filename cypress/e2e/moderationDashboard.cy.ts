@@ -58,6 +58,28 @@ describe(
                     // the timeout is to give time for the clipboard to be read
                     clipboardResult.should("exist", 10000)
                 })
+
+                 // Test the top bar
+                it("Testing the top bar in the dashboard.", () => {
+
+                    cy.get('[data-testid="mod-dashboard-top-bar-title"]')
+                        .should("exist")
+                        .should(
+                            "include.text",
+                            enUS.modDashboardTopBar.forReview
+                        )
+
+
+                    cy.get('[data-testid="mod-dashboard-top-bar-input"]')
+                        .should('exist')
+                        .should("have.value", "")
+                        .type('Submission_id')
+                        .should('have.value', 'Submission_id')
+
+
+                    cy.get('[data-testid="mod-dashboard-top-bar-glass"]')
+                        .should('exist')
+                })
             })
     }
 )
@@ -67,11 +89,11 @@ describe('Moderation Facility Submission Form', () => {
         beforeEach(() => {
             cy.viewport(1920, 1080)
             cy.visit('/moderation')
-           
-            
+
+
             const findADocJapanAPIEndpoint = 'https://api.findadoc.jp/'
 
-                   
+
             const mockedSubmissionResponse = {
               data: {
                 submissions: [
