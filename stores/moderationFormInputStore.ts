@@ -1,5 +1,8 @@
 import { defineStore } from 'pinia'
 import { ref, type Ref } from 'vue'
+import type { Submission } from '~/typedefs/gqlTypes'
+
+type KeysInSubmission = 'createdDate' | 'facility' | 'googleMapsUrl' | 'healthcareProfessionalName' | 'healthcareProfessionals' | 'id'| 'isApproved' | 'isRejected' | 'isUnderReview' | 'notes' | 'spokenLanguages' | 'updatedDate'
 
 export const useModerationFormInputStore = defineStore('moderationFormInputStore', () => {
     // contactFields
@@ -85,6 +88,22 @@ export const useModerationFormInputStore = defineStore('moderationFormInputStore
         }
     }
 
+    function autofillEditSubmissionForm(submissionData: Submission | undefined) {
+        
+        for(const key in submissionData) {
+            
+            if(submissionData.hasOwnProperty(key) && submissionData[key as KeysInSubmission]) {
+                switch (key){
+                    case 'facility':
+                        nameEn.value = submissionData["facility"]?.nameEn || ''
+                        break
+                    case 'googleMapsUrl':
+                        googlemapsURL.value = submissionData["googleMapsUrl"]
+                }
+            }
+        }
+    }
+
     function resetForm() {
         nameEn.value = ''
         nameJp.value = ''
@@ -105,27 +124,28 @@ export const useModerationFormInputStore = defineStore('moderationFormInputStore
         mapLongitude.value = ''
     }
 
-    return {
-        nameEn,
-        nameJp,
-        phone,
-        website,
-        email,
-        postalCode,
-        prefectureEn,
-        cityEn,
-        addressLine1En,
-        addressLine2En,
-        prefectureJp,
-        cityJp,
-        addressLine1Jp,
-        addressLine2Jp,
-        googlemapsURL,
-        mapLatitude,
-        mapLongitude,
-        listPrefectureJapanEn,
-        listPrefectureJapanJp,
-        setInputField,
-        resetForm
+    return { 
+    nameEn, 
+    nameJp, 
+    phone, 
+    website, 
+    email, 
+    postalCode, 
+    prefectureEn, 
+    cityEn, 
+    addressLine1En, 
+    addressLine2En, 
+    prefectureJp, 
+    cityJp, 
+    addressLine1Jp, 
+    addressLine2Jp,
+    googlemapsURL, 
+    mapLatitude,
+    mapLongitude,
+    listPrefectureJapanEn, 
+    listPrefectureJapanJp,
+    autofillEditSubmissionForm,
+    setInputField,
+    resetForm
     }
 })

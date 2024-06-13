@@ -68,24 +68,13 @@
                 :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityPostalCode')"
             />
             <div class="flex flex-col mt-4">
-                <label
-                    for="Prefecture Japan"
-                    class="mb-2 text-primary-text text-sm font-bold font-sans"
-                >{{ $t('modSubmissionForm.labelFacilityPrefectureEn') }}</label>
-                <select
-                    id="1"
-                    v-model="store.prefectureEn"
-                    data-testid="submission-form-prefectureEn"
-                    name="Prefecture Japan"
-                    class="mb-5 px-3 py-3.5 w-96 h-12 bg-white rounded-lg border border-primary-text-muted
-                text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
+                <label for="Prefecture Japan" class="mb-2 text-primary-text text-sm font-bold font-sans">{{$t('modSubmissionForm.labelFacilityPrefectureEn')}}</label>
+                <select 
+                data-testid="submission-form-prefectureEn"
+                name="Prefecture Japan" id="1" class="mb-5 px-3 py-3.5 w-96 h-12 bg-white rounded-lg border border-primary-text-muted text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
+                v-model="moderationInputStore.prefectureEn"
                 >
-                    <option
-                        v-for="(prefecture, index) in store.listPrefectureJapanEn"
-                        :key="index"
-                    >
-                        {{ prefecture }}
-                    </option>
+                    <option v-for="(prefecture, index) in moderationInputStore.listPrefectureJapanEn" :key="index">{{ prefecture }}</option>
                 </select>
             </div>
             <ModInputField
@@ -116,21 +105,15 @@
                 :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityAddressLine2En')"
             />
             <div class="flex flex-col mt-4">
-                <label
-                    for="Prefecture Japan"
-                    class="mb-2 text-primary-text text-sm font-bold font-sans"
-                >{{ $t('modSubmissionForm.labelFacilityPrefectureJp') }}</label>
-                <select
-                    id="1"
-                    v-model="store.prefectureJp"
-                    data-testid="submission-form-prefectureJp"
-                    name="Prefecture Japan"
-                    class="mb-5 px-3 py-3.5 w-96 h-12 bg-white rounded-lg border border-primary-text-muted
-                text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
+                <label for="Prefecture Japan" class="mb-2 text-primary-text text-sm font-bold font-sans">{{ $t('modSubmissionForm.labelFacilityPrefectureJp') }}</label>
+                <select 
+                data-testid="submission-form-prefectureJp"
+                name="Prefecture Japan" id="1" class="mb-5 px-3 py-3.5 w-96 h-12 bg-white rounded-lg border border-primary-text-muted text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
+                v-model="moderationInputStore.prefectureJp"
                 >
-                    <option
-                        v-for="(prefecture, index) in store.listPrefectureJapanJp"
-                        :key="index"
+                    <option 
+                    v-for="(prefecture, index) in moderationInputStore.listPrefectureJapanJp" 
+                    :key="index"
                     >
                         {{ prefecture }}
                     </option>
@@ -212,28 +195,37 @@
 
 <script lang="ts" setup>
 import { useModerationFormInputStore } from '~/stores/moderationFormInputStore'
+import { useModerationSubmissionsStore } from '~/stores/moderationSubmissionsStore';
 import { validateAddressLineEn, validateAddressLineJp, validateNameEn, validateNameJp, validatePhoneNumber, validateCityEn, validateEmail, validateFloat, validatePostalCode, validateWebsite, validateCityJp } from '~/utils/formValidations'
 
-const store = useModerationFormInputStore()
+const moderationInputStore = useModerationFormInputStore()
+const moderationSubmissionStore = useModerationSubmissionsStore()
+
+const formSubmissionId = moderationSubmissionStore.selectedSubmissionId
+moderationSubmissionStore.filterSelectedSubmission(formSubmissionId)
+
+const formSubmissionData = moderationSubmissionStore.selectedSubmissionData
+
+moderationInputStore.autofillEditSubmissionForm(formSubmissionData)
 
 const validateFields = (e: Event) => {
     e.preventDefault()
-
-    const isNameEnValid: boolean = validateNameEn(store.nameEn)
-    const isNameJpValid: boolean = validateNameJp(store.nameJp)
-    const isPhoneValid: boolean = validatePhoneNumber(store.phone)
-    const isEmailValid: boolean = validateEmail(store.email)
-    const isWebsiteValid: boolean = validateWebsite(store.website)
-    const isAddressLine1EnValid: boolean = validateAddressLineEn(store.addressLine1En)
-    const isAddressLine2EnValid: boolean = validateAddressLineEn(store.addressLine2En)
-    const isAddressLine1JpValid: boolean = validateAddressLineJp(store.addressLine1Jp)
-    const isAddressLine2JpValid: boolean = validateAddressLineJp(store.addressLine2Jp)
-    const isCityEnValid: boolean = validateCityEn(store.cityEn)
-    const isCityJpValid: boolean = validateCityJp(store.cityJp)
-    const isPostalCodeValid: boolean = validatePostalCode(store.postalCode)
-    const isLatitudeValid: boolean = validateFloat(store.mapLatitude)
-    const isLongitudeValid: boolean = validateFloat(store.mapLongitude)
-
+    
+    const isNameEnValid: boolean = validateNameEn(moderationInputStore.nameEn)
+    const isNameJpValid: boolean = validateNameJp(moderationInputStore.nameJp)
+    const isPhoneValid: boolean = validatePhoneNumber(moderationInputStore.phone)
+    const isEmailValid: boolean = validateEmail(moderationInputStore.email)
+    const isWebsiteValid: boolean = validateWebsite(moderationInputStore.website)
+    const isAddressLine1EnValid: boolean = validateAddressLineEn(moderationInputStore.addressLine1En)
+    const isAddressLine2EnValid: boolean = validateAddressLineEn(moderationInputStore.addressLine2En)
+    const isAddressLine1JpValid: boolean = validateAddressLineJp(moderationInputStore.addressLine1Jp)
+    const isAddressLine2JpValid: boolean = validateAddressLineJp(moderationInputStore.addressLine2Jp)
+    const isCityEnValid: boolean = validateCityEn(moderationInputStore.cityEn)
+    const isCityJpValid: boolean = validateCityJp(moderationInputStore.cityJp)
+    const isPostalCodeValid: boolean = validatePostalCode(moderationInputStore.postalCode)
+    const isLatitudeValid: boolean = validateFloat(moderationInputStore.mapLatitude)
+    const isLongitudeValid: boolean = validateFloat(moderationInputStore.mapLongitude)
+    
     if (
         !isNameEnValid ||
         !isNameJpValid ||
@@ -253,8 +245,8 @@ const validateFields = (e: Event) => {
         e.preventDefault()
         return
     }
-
-    store.resetForm()
+    
+    moderationInputStore.resetForm()
     console.log('Fetching data')
 }
 </script>
