@@ -1,180 +1,190 @@
 <template>
     <form @submit="validateFields" class="p-4 h-full overflow-y-auto">
         <div>
-            <span class="mb-3.5 text-center text-zinc-900 text-2xl font-bold font-['Noto Sans JP'] leading-normal">
+            <span class="mb-3.5 text-center text-primary-text text-2xl font-bold font-sans leading-normal">
                 {{ $t('modSubmissionForm.contactInformation')}}
             </span>
             <ModInputField  
                 data-testid="submission-form-nameEn"
-                label="Name En"
+                :label="$t('modSubmissionForm.labelFacilityNameEn')"
                 type="text"
-                placeholder="e.g. Tachikawa Central Hospital"
+                :placeholder="$t('modSubmissionForm.placeholderTextFacilityNameEn')"
                 :required="true"
                 :inputValidationCheck="validateNameEn"
-                invalidInputErrorMessage="Invalid English Name"
+                :invalidInputErrorMessage="$t('modSubmissionForm.inputErrorMessageFacilityNameEn')"
             />
             <ModInputField
                 data-testid="submission-form-nameJp"  
-                label="Name Jp"
+                :label="$t('modSubmissionForm.labelFacilityNameJp')"
                 type="text"
-                placeholder="e.g. 立川中央病院"
+                :placeholder="$t('modSubmissionForm.placeholderTextFacilityNameJp')"
                 :required="true"
                 :inputValidationCheck="validateNameJp"
-                invalidInputErrorMessage="Invalid Japanese Name"
+                :invalidInputErrorMessage="$t('modSubmissionForm.inputErrorMessageFacilityNameJp')"
             />
             <ModInputField  
                 data-testid="submission-form-phone"
-                label="Phone"
+                :label="$t('modSubmissionForm.labelFacilityPhoneNumber')"
                 type="text"
-                placeholder="e.g. 08xxxxxxxxx"
+                :placeholder="$t('modSubmissionForm.placeholderTextFacilityPhoneNumber')"
                 :required="true"
                 :inputValidationCheck="validatePhoneNumber"
-                invalidInputErrorMessage="Invalid Phone Number"
+                :invalidInputErrorMessage="$t('modSubmissionForm.inputErrorMessageFacilityPhoneNumber')"
             />
             <ModInputField
                 data-testid="submission-form-email"  
-                label="Email"
+                :label="$t('modSubmissionForm.labelFacilityEmail')"
                 type="email"
-                placeholder="e.g example@mail.com"
+                :placeholder="$t('modSubmissionForm.placeholderTextFacilityEmail')"
                 :required="false"
                 :inputValidationCheck="validateEmail"
-                invalidInputErrorMessage="Invalid Email Address"
+                :invalidInputErrorMessage="$t('modSubmissionForm.inputErrorMessageFacilityEmail')"
             />
             <ModInputField
                 data-testid="submission-form-website"  
-                label="Website"
+                :label="$t('modSubmissionForm.labelFacilityWebsite')"
                 type="url"
-                placeholder="e.g. http://www.example.com/"
+                :placeholder="$t('modSubmissionForm.placeholderTextFacilityWebsite')"
                 :required="false"
                 :inputValidationCheck="validateWebsite"
-                invalidInputErrorMessage="Invalid Website URL"
+                :invalidInputErrorMessage="$t('modSubmissionForm.inputErrorMessageFacilityWebsite')"
             />
         </div>
 
         <div>
-            <span class="mb-3.5 text-center text-zinc-900 text-2xl font-bold font-['Noto Sans JP'] leading-normal">
+            <span class="mb-3.5 text-center text-primary-text text-2xl font-bold font-sans leading-normal">
                 {{ $t('modSubmissionForm.addresses') }}
             </span>
             <ModInputField
                 data-testid="submission-form-postalCode"  
-                label="Postal Code"
+                :label="$t('modSubmissionForm.labelFacilityPostalCode')"
                 type="text"
-                placeholder="e.g. 186-0000"
+                :placeholder="$t('modSubmissionForm.placeholderTextFacilityPostalCode')"
                 :required="true"
                 :inputValidationCheck="validatePostalCode"
-                invalidInputErrorMessage="Invalid Zip Code"
+                :invalidInputErrorMessage="$t('modSubmissionForm.inputErrorMessageFacilityPostalCode')"
             />
             <div class="flex flex-col mt-4">
-                <label for="Prefecture Japan" class="mb-2 text-zinc-900 text-sm font-bold font-['Noto Sans JP']">Prefecture En</label>
-                <select 
-                data-testid="submission-form-prefectureEn"
-                name="Prefecture Japan" id="1" class="mb-5 px-3 py-3.5 w-[350px] h-[50px] bg-white rounded-lg border border-zinc-400 text-neutral-600 text-sm font-normal font-['Noto Sans JP'] placeholder-gray-300"
-                v-model="store.prefectureEn"
+                <label 
+                    for="Prefecture Japan" 
+                    class="mb-2 text-primary-text text-sm font-bold font-sans"
                 >
-                    <option v-for="(prefecture, index) in store.listPrefectureJapanEn" :key="index">{{ prefecture }}</option>
+                    {{$t('modSubmissionForm.labelFacilityPrefectureEn')}}
+                </label>
+                <select 
+                    data-testid="submission-form-prefectureEn"
+                    name="Prefecture Japan" id="1" class="mb-5 px-3 py-3.5 w-96 h-12 bg-white rounded-lg border border-primary-text-muted text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
+                    v-model="store.prefectureEn"
+                >
+                    <option 
+                        v-for="(prefecture, index) in store.listPrefectureJapanEn" 
+                        :key="index"
+                    >
+                        {{ prefecture }}
+                    </option>
                 </select>
             </div>
             <ModInputField
                 data-testid="submission-form-cityEn"  
-                label="City En"
+                :label="$t('modSubmissionForm.labelFacilityCityEn')"
                 type="text"
-                placeholder="e.g. Shibuya"
+                :placeholder="$t('modSubmissionForm.placeholderTextFacilityCityEn')"
                 :required="true"
                 :inputValidationCheck="validateCityEn"
-                invalidInputErrorMessage="Invalid English City Name"
+                :invalidInputErrorMessage="$t('modSubmissionForm.inputErrorMessageFacilityCityEn')"
             />
             <ModInputField
                 data-testid="submission-form-addressLine1En"  
-                label="Address Line 1 En"
+                :label="$t('modSubmissionForm.labelFacilityAddressLine1En')"
                 type="text"
-                placeholder="Street address"
+                :placeholder="$t('modSubmissionForm.placeholderTextFacilityAddressLine1En')"
                 :required="true"
                 :inputValidationCheck="validateAddressLineEn"
-                invalidInputErrorMessage="Invalid English Address"
+                :invalidInputErrorMessage="$t('modSubmissionForm.inputErrorMessageFacilityAddressLine1En')"
             />
             <ModInputField
                 data-testid="submission-form-addressLine2En"  
-                label="Address Line 2 En"
+                :label="$t('modSubmissionForm.labelFacilityAddressLine2En')"
                 type="text"
-                placeholder="Apartment, building, room..."
+                :placeholder="$t('modSubmissionForm.placeholderTextFacilityAddressLine2En')"
                 :required="true"
                 :inputValidationCheck="validateAddressLineEn"
-                invalidInputErrorMessage="Invalid English Address"
+                :invalidInputErrorMessage="$t('modSubmissionForm.inputErrorMessageFacilityAddressLine2En')"
             />
             <div class="flex flex-col mt-4">
-                <label for="Prefecture Japan" class="mb-2 text-zinc-900 text-sm font-bold font-['Noto Sans JP']">Prefecture Jp</label>
+                <label for="Prefecture Japan" class="mb-2 text-primary-text text-sm font-bold font-sans">{{ $t('modSubmissionForm.labelFacilityPrefectureJp') }}</label>
                 <select 
                 data-testid="submission-form-prefectureJp"
-                name="Prefecture Japan" id="1" class="mb-5 px-3 py-3.5 w-[350px] h-[50px] bg-white rounded-lg border border-zinc-400 text-neutral-600 text-sm font-normal font-['Noto Sans JP'] placeholder-gray-300"
+                name="Prefecture Japan" id="1" class="mb-5 px-3 py-3.5 w-96 h-12 bg-white rounded-lg border border-primary-text-muted text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
                 v-model="store.prefectureJp"
                 >
                     <option 
-                    v-for="(prefecture, index) in store.listPrefectureJapanJp" 
-                    :key="index"
+                        v-for="(prefecture, index) in store.listPrefectureJapanJp" 
+                        :key="index"
                     >
-                    {{ prefecture }}
+                        {{ prefecture }}
                     </option>
                 </select>
             </div>
             <ModInputField  
                 data-testid="submission-form-cityJp"
-                label="City Jp"
+                :label="$t('modSubmissionForm.labelFacilityCityJp')"
                 type="text"
-                placeholder="e.g. 渋谷区"
+                :placeholder="$t('modSubmissionForm.placeholderTextFacilityCityJp')"
                 :required="true"
                 :inputValidationCheck="validateCityJp"
-                invalidInputErrorMessage="Invalid Japanese City Name"
+                :invalidInputErrorMessage="$t('modSubmissionForm.inputErrorMessageFacilityCityJp')"
             />
             <ModInputField  
                 data-testid="submission-form-addressLine1Jp"
-                label="Address Line 1 Jp"
+                :label="$t('modSubmissionForm.labelFacilityAddressLine1Jp')"
                 type="text"
-                placeholder="Street address"
+                :placeholder="$t('modSubmissionForm.placeholderTextFacilityAddressLine1Jp')"
                 :required="true"
                 :inputValidationCheck="validateAddressLineJp"
-                invalidInputErrorMessage="Invalid Japanese Address"
+                :invalidInputErrorMessage="$t('modSubmissionForm.inputErrorMessageFacilityAddressLine1Jp')"
             />
             <ModInputField  
                 data-testid="submission-form-addressLine2Jp"
-                label="Address Line 2 Jp"
+                :label="$t('modSubmissionForm.labelFacilityAddressLine2Jp')"
                 type="text"
-                placeholder="Apartment, building, room..."
+                :placeholder="$t('modSubmissionForm.placeholderTextFacilityAddressLine2Jp')"
                 :required="true"
                 :inputValidationCheck="validateAddressLineJp"
-                invalidInputErrorMessage="Invalid Japanese Address"
+                :invalidInputErrorMessage="$t('modSubmissionForm.inputErrorMessageFacilityAddressLine2Jp')"
             />
         </div>
-        
+
         <div>
-            <span class="mb-3.5 text-center text-zinc-900 text-2xl font-bold font-['Noto Sans JP'] leading-normal">
+            <span class="mb-3.5 text-center text-primary-text text-2xl font-bold font-sans leading-normal">
                 {{ $t('modSubmissionForm.googleMapsInformation') }}
             </span>
             <ModInputField
                 data-testid="submission-form-google-maps"  
-                label="Google maps URL"
+                :label="$t('modSubmissionForm.labelFacilityGoogleMapsUrl')"
                 type="url"
-                placeholder="e.g. https://www.google.co.jp/maps/"
+                :placeholder="$t('modSubmissionForm.placeholderTextFacilityGoogleMapsUrl')"
                 :required="true"
                 :inputValidationCheck="validateWebsite"
-                invalidInputErrorMessage="Invalid Google Maps URL"
+                :invalidInputErrorMessage="$t('modSubmissionForm.inputErrorMessageFacilityGoogleMapsUrl')"
             />
             <ModInputField  
                 data-testid="submission-form-mapLatitude"
-                label="Map latitude"
+                :label="$t('modSubmissionForm.labelFacilityMapLatitude')"
                 type="text"
-                placeholder="e.g. 5.76137"
+                :placeholder="$t('modSubmissionForm.placeholderTextFacilityMapLatitude')"
                 :required="true"
                 :inputValidationCheck="validateFloat"
-                invalidInputErrorMessage="Invalid Latitude"
+                :invalidInputErrorMessage="$t('modSubmissionForm.inputErrorMessageFacilityMapLatitude')"            
             />
             <ModInputField  
                 data-testid="submission-form-mapLongitude"
-                label="Map longitude"
+                :label="$t('modSubmissionForm.labelFacilityMapLongitude')"
                 type="text"
-                placeholder="e.g 178.45229"
+                :placeholder="$t('modSubmissionForm.placeholderTextFacilityMapLongitude')"
                 :required="true"
                 :inputValidationCheck="validateFloat"
-                invalidInputErrorMessage="Invalid Longitude"
+                :invalidInputErrorMessage="$t('modSubmissionForm.inputErrorMessageFacilityMapLongitude')"
             />
         </div>
         <ModHealthcareProfessionalSearchbar 
