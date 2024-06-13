@@ -101,6 +101,9 @@
         "approved": "Approved",
         "rejected": "Rejected"
     },
+    "modDashboardTopBar": {
+        "forReview": "For Review in japanese"
+    },
     "modEditSubmissionTopNav": {
         "saveAndExit": "Save & Exit",
         "approve": "Approve",
