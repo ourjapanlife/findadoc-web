@@ -1,12 +1,18 @@
 <template>
-    <h1 class="text-lg font-bold flex items-center">{{ $t('modDashboardTopBar.forReview')}}</h1>
+    <h1 data-testid="mod-dashboard-top-bar-title" class="text-lg font-bold flex items-center">{{ $t('modDashboardTopBar.forReview')}}</h1>
             <div class="relative">
                 <form @submit.prevent="submitSearch">
                 <input @input="event => searchInput = event.target.value"
                     type="text"
                     class="rounded-lg border  border-slate-400 px-3 py-4 placeholder:text-black placeholder:text-sm placeholder:font-normal w-96 items-center"
-                    :placeholder="$t('searchBar.search')" />
-                <MagnifyingGlass @click="submitSearch" class="absolute right-3 top-1/2 -translate-y-1/2 w-6 h-6" />
+                    :placeholder="$t('searchBar.search')"
+                    data-testid="mod-dashboard-top-bar-input"
+                    />
+                <MagnifyingGlass
+                @click="submitSearch"
+                class="absolute right-3 top-1/2 -translate-y-1/2 w-6 h-6"
+                data-testid="mod-dashboard-top-bar-glass"
+                />
                 </form>
             </div>
 </template>
