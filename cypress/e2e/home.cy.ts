@@ -156,7 +156,7 @@ describe("Visits the home page", () => {
             cy.visit('/')
 
             //need to wait for the page+data to load so the menu will open properly
-            cy.wait(700)
+            cy.wait(500)
         })
 
         it('shows the logo', () => {
@@ -182,9 +182,7 @@ describe("Visits the home page", () => {
             })
 
             it('can open the hamburger component', () => {
-                cy.get('[data-testid="hamburger-menu-icon"]').should('exist')
-                cy.wait(700)
-                cy.get('[data-testid="hamburger-menu-icon"]').trigger("click")
+                cy.get('[data-testid="hamburger-menu-icon"]').should('exist').click()
                 cy.get('[data-testid="hamburger-menu"]').should('exist').should('be.visible')
             })
 
@@ -193,8 +191,8 @@ describe("Visits the home page", () => {
                 // This link is required by netlify for our open source license. make sure it shows
 
                 //open the hamburger menu
-                cy.get('[data-testid="hamburger-menu-icon"]').trigger("click")
-                cy.wait(700)
+                cy.get('[data-testid="hamburger-menu-icon"]').click()
+
                 // verify link shows and has the right url generated
                 cy.get('[data-testid="hamburger-menu-footer-dev-links-netlify"]').should("be.visible")
                 cy.get('[data-testid="hamburger-menu-footer-dev-links-netlify"]').should(
@@ -206,11 +204,9 @@ describe("Visits the home page", () => {
 
             // privacy
             it("navigates to privacy policy", () => {
-                cy.get('[data-testid="hamburger-menu-icon"]').should('exist')
-                cy.wait(700)
                 //open the hamburger menu
-                cy.get('[data-testid="hamburger-menu-icon"]').trigger("click")
-                cy.wait(700)
+                cy.get('[data-testid="hamburger-menu-icon"]').click()
+
                 cy.get('[data-testid="hamburger-menu-footer-legal-privacy"]').should("be.visible")
                 cy.get('[data-testid="hamburger-menu-footer-legal-privacy').click()
                 // verify navigation
@@ -219,11 +215,9 @@ describe("Visits the home page", () => {
 
             // terms
             it("navigates to the terms page", () => {
-                cy.get('[data-testid="hamburger-menu-icon"]').should('exist')
-                cy.wait(700)
                 //open the hamburger menu
-                cy.get('[data-testid="hamburger-menu-icon"]').trigger("click")
-                cy.wait(700)
+                cy.get('[data-testid="hamburger-menu-icon"]').click()
+
                 cy.get('[data-testid="hamburger-menu-footer-legal-terms"]').should("be.visible")
                 cy.get('[data-testid="hamburger-menu-footer-legal-terms').click()
                 // verify navigation
@@ -232,11 +226,9 @@ describe("Visits the home page", () => {
 
             // copyright
             it('copyright is visible', () => {
-                cy.get('[data-testid="hamburger-menu-icon"]').should('exist')
-                cy.wait(700)
                 //open the hamburger menu
-                cy.get('[data-testid="hamburger-menu-icon"]').trigger("click")
-                cy.wait(700)
+                cy.get('[data-testid="hamburger-menu-icon"]').click()
+
                 cy.get('[data-testid="hamburger-menu-footer-copyright"]').should('exist').should('be.visible')
             })
         })
