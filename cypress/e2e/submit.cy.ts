@@ -2,9 +2,18 @@ import enUS from '../../i18n/locales/en.json'
 
 describe('Submit page', () => {
     context('Desktop resolution', () => {
-        beforeEach(() => {
-            cy.viewport(1920, 1080)
+        before(() => {
             cy.visit('/submit')
+            // This wait time is to give the page time to load from Prod when ran in CI.
+            cy.wait(3000)
+        })
+
+        beforeEach(() => {
+            // The resolution is in the beforeEach() instead of before() to
+            // prevent Cypress from defaulting to other screen sizes between tests.
+            cy.viewport(1920, 1080)
+            cy.wait(500)
+
         })
 
         it('shows the desktop top nav', () => {
@@ -55,39 +64,6 @@ describe('Submit page', () => {
             cy.isInViewport('[data-testid="footer"]')
         })
 
-        it('shows the footer without scrolling', () => {
-            cy.isInViewport('[data-testid="footer"]')
-        });
-
-
-    })
-
-    context('Portrait mode', () => {
-        beforeEach(() => {
-            cy.viewport('iphone-5')
-            cy.visit('/submit')
-        })
-
-        it('shows the hamburger component', () => {
-            cy.get('[data-testid="hamburger-menu-icon"]').should('exist').should('be.visible')
-        })
-
-        it('does not show the landscape searchbar', () => {
-            cy.get('[data-testid="landscape-searchbar"]').should("not.be.visible")
-        })
-
-        it('does not show the footer', () => {
-            cy.get('[data-testid="footer"]').should('not.exist')
-        })
-
-    })
-
-    context('form validation', () => {
-        beforeEach(() => {
-            cy.visit('/submit')
-            cy.wait(1000) // wait for the vue components to actually load
-        })
-
         it('does not submit an incomplete form', () => {
             cy.get('[data-testid="submit-submitbutton"]').click()
             cy.get('[data-testid="submit-completed"]').should('not.be.visible')
@@ -119,6 +95,33 @@ describe('Submit page', () => {
             cy.get('[data-testid="submit-select-language1"]').select('日本語 (Japan)')
             cy.contains(enUS.submitPage.spokenLanguageValidation).should('not.be.visible')
         });
+
+    })
+
+    context('Portrait mode', () => {
+        before(() => {
+            cy.visit('/submit')
+            // This wait time is to give the page time to load from Prod when ran in CI.
+            cy.wait(3000)
+        })
+
+        beforeEach(() => {
+            // The resolution is in the beforeEach() instead of before() to
+            // prevent Cypress from defaulting to other screen sizes between tests.
+            cy.viewport(640, 1136)
+        })
+
+        it('shows the hamburger component', () => {
+            cy.get('[data-testid="hamburger-menu-icon"]').should('exist').should('be.visible')
+        })
+
+        it('does not show the landscape searchbar', () => {
+            cy.get('[data-testid="landscape-searchbar"]').should("not.be.visible")
+        })
+
+        it('does not show the footer', () => {
+            cy.get('[data-testid="footer"]').should('not.exist')
+        })
 
     })
 })
