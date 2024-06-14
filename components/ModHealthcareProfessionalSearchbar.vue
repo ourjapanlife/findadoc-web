@@ -17,7 +17,6 @@
 </template>
 
 <script lang="ts" setup>
-import {ref, Ref} from 'vue'
 
 import SVGLookingGlass from '~/assets/icons/looking-glass.svg'
 </script>
