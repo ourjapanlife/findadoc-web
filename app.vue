@@ -26,7 +26,7 @@ import { useNuxtApp } from "#app";
 import { useRuntimeConfig } from '#imports'
 import { useModerationScreenStore } from "~/stores/moderationScreenStore"
 import { useRoute } from 'vue-router'
-const { $viewport } = useNuxtApp();
+const { $viewport } = useNuxtApp()
 
 const store = useModerationScreenStore()
 const route = useRoute()
