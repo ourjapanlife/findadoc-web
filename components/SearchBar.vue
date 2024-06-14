@@ -51,7 +51,7 @@
 
 <script setup lang="ts">
 import SVGSearchIcon from '~/assets/icons/search-icon.svg'
-import { ref, watchEffect. type Ref } from 'vue'
+import { ref, watchEffect, type Ref } from 'vue'
 import { useSearchResultsStore } from '~/stores/searchResultsStore.js'
 import { useLocationsStore } from '~/stores/locationsStore.js'
 import { useSpecialtiesStore, type  SpecialtyDisplayOption } from '~/stores/specialtiesStore.js'
