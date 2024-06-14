@@ -24,9 +24,9 @@
 import { initializeGqlClient } from './utils/graphql.js'
 import { useNuxtApp } from "#app";
 import { useRuntimeConfig } from '#imports'
-const { $viewport } = useNuxtApp();
 import { useModerationScreenStore } from "~/stores/moderationScreenStore"
 import { useRoute } from 'vue-router'
+const { $viewport } = useNuxtApp();
 
 const store = useModerationScreenStore()
 const route = useRoute()
@@ -34,9 +34,8 @@ const currentPath = route.path.replace("/", "")
 
 store.setEnableModerationPanelToTrue(currentPath)
 
-const useLocalAPI = useRuntimeConfig().public.NUXT_USE_LOCAL_API
-
-initializeGqlClient(useLocalAPI as string | undefined)
+const useLocalAPI = useRuntimeConfig().public.NUXT_USE_LOCAL_API as string | undefined
+initializeGqlClient(useLocalAPI)
 
 
 </script>

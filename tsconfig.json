@@ -1,5 +1,6 @@
 {
     "compilerOptions": {
+        "extends": "./.nuxt/tsconfig.json",
         "target": "ESNext",
         "module": "ESNext",
         "moduleResolution": "Bundler",
@@ -26,7 +27,5 @@
     ],
     "exclude": [
         "node_modules"
-    ],
-    
-    "extends": "./.nuxt/tsconfig.json"
+    ]
 }

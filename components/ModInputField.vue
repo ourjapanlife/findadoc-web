@@ -18,8 +18,7 @@
 
 
 <script setup lang="ts">
-import { defineProps, ref } from 'vue'
-import type { Ref } from 'vue'
+import { defineProps, ref, type Ref } from 'vue'
 import { useModerationFormInputStore } from '~/stores/moderationFormInputStore'
 
 const inputValue: Ref<string> = ref('')

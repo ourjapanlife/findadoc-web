@@ -93,8 +93,7 @@
 import { useSubmissionStore } from "~/stores/submissionStore"
 import { useLocaleStore } from "~/stores/localeStore"
 import * as validations from '../utils/formValidations'
-import { computed } from 'vue'
-import type { ComputedRef } from "vue"
+import { computed, type ComputedRef } from 'vue'
 
 const submissionStore = useSubmissionStore()
 const localeStore = useLocaleStore()

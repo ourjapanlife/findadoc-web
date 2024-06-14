@@ -26,9 +26,8 @@
 <script setup lang="ts">
 import SVGCopyContent from '~/assets/icons/content-copy.svg'
 import SVGSuccessCheckMark from '~/assets/icons/checkmark-square.svg'
-import {  ref } from 'vue';
-import type { Ref } from 'vue'
-import { useModerationScreenStore } from '~/stores/moderationScreenStore';
+import {  ref, type Ref } from 'vue'
+import { useModerationScreenStore } from '~/stores/moderationScreenStore'
 
 const modScreenStore = useModerationScreenStore()
 
