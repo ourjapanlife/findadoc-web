@@ -12,7 +12,7 @@
         "sourceMap": true,
         "resolveJsonModule": true,
         "esModuleInterop": true,
-        "skipLibCheck": false
+        "skipLibCheck": true
     },
     "ts-node": {
         "esm": true,
