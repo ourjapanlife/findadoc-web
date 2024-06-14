@@ -12,9 +12,8 @@
         "sourceMap": true,
         "resolveJsonModule": true,
         "esModuleInterop": true,
-        "skipLibCheck": true
+        "skipLibCheck": false
     },
-    "extends": "./.nuxt/tsconfig.json",
     "ts-node": {
         "esm": true,
         "swc": true
@@ -27,5 +26,7 @@
     ],
     "exclude": [
         "node_modules"
-    ]
+    ],
+    
+    "extends": "./.nuxt/tsconfig.json"
 }

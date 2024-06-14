@@ -38,7 +38,7 @@
 
 
 <script setup lang="ts">
-import { computed, onMounted,inject } from 'vue'
+import { computed, onMounted } from 'vue'
 import { useModerationScreenStore } from '~/stores/moderationScreenStore'
 import { useModerationSubmissionsStore } from '~/stores/moderationSubmissionsStore'
 import type { Submission } from '~/typedefs/gqlTypes'
