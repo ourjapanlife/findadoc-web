@@ -36,7 +36,7 @@ store.setEnableModerationPanelToTrue(currentPath)
 
 const useLocalAPI = useRuntimeConfig().public.NUXT_USE_LOCAL_API
 
-initializeGqlClient(useLocalAPI)
+initializeGqlClient(useLocalAPI as string | undefined)
 
 
 </script>

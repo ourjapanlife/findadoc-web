@@ -36,7 +36,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, Ref } from 'vue'
+import { ref} from 'vue'
+import type { Ref } from 'vue'
 import SVGNoteStackAddSvg from "../assets/icons/note-stack-add.svg"
 import SVGCheckBoxSvg from "../assets/icons/check-box.svg"
 import SVGDisabledByDefault from "../assets/icons/disabled-by-default.svg"

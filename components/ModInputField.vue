@@ -10,10 +10,7 @@
                 :placeholder='placeholder'
                 :required='required'
                 :value="inputValue"
-                @input="event => {
-                    inputValue = event.target.value
-                    store.setInputField(label, inputValue)
-                }"
+                @input="handleInput"
                 class="mb-5 px-3 py-3.5 w-[350px] h-[50px] bg-white rounded-lg border border-zinc-400 text-neutral-600 text-sm font-normal font-['Noto Sans JP'] placeholder-gray-300"
             />
         </div>
@@ -21,7 +18,8 @@
 
 
 <script setup lang="ts">
-import { defineProps, ref, Ref } from 'vue'
+import { defineProps, ref } from 'vue'
+import type { Ref } from 'vue'
 import { useModerationFormInputStore } from '~/stores/moderationFormInputStore'
 
 const inputValue: Ref<string> = ref('')
@@ -40,5 +38,11 @@ const store = useModerationFormInputStore()
 const checkValidationOfInputField =(inputValue:string) => {
     isTheInputValueValid.value = props.inputValidationCheck(inputValue)
 }
+
+const handleInput = (event: Event) => {
+  const target = event.target as HTMLInputElement;
+  inputValue.value = target.value;
+  store.setInputField(props.label, inputValue.value);
+};
 
 </script>

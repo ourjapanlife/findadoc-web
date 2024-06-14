@@ -38,12 +38,13 @@
 
 
 <script setup lang="ts">
-import { computed, onMounted } from 'vue'
+import { computed, onMounted,inject } from 'vue'
 import { useModerationScreenStore } from '~/stores/moderationScreenStore'
 import { useModerationSubmissionsStore } from '~/stores/moderationSubmissionsStore'
-import { Submission } from '~/typedefs/gqlTypes'
-import { useNuxtApp } from "#app"
-const { $i18n } = useNuxtApp()
+import type { Submission } from '~/typedefs/gqlTypes'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
 const modScreenStore = useModerationScreenStore()
 const modSubmissionsStore = useModerationSubmissionsStore()
@@ -57,13 +58,13 @@ const hasSubmissions = computed(() => modSubmissionsStore.submissionsData.length
 const getSubmissionStatus = (submission: Submission) => {
     switch (true) {
         case submission.isUnderReview:
-            return $i18n.t("modPanelSubmissionList.underReview")
+            return t("modPanelSubmissionList.underReview")
         case submission.isApproved:
-            return $i18n.t("modPanelSubmissionList.approved")
+            return t("modPanelSubmissionList.approved")
         case submission.isRejected:
-            return $i18n.t("modPanelSubmissionList.rejected")
+            return t("modPanelSubmissionList.rejected")
         default:
-            return $i18n.t("modPanelSubmissionList.new")
+            return t("modPanelSubmissionList.new")
     }
 }
 

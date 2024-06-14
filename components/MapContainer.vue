@@ -1,6 +1,6 @@
 <template>
     <div class="h-full w-full">
-        <GoogleMap data-testid="map-of-japan" ref="mapRef" :api-key="runtimeConfig.public.GOOGLE_MAPS_API_KEY"
+        <GoogleMap data-testid="map-of-japan" ref="mapRef" :api-key="runtimeConfig.public.GOOGLE_MAPS_API_KEY as string | undefined"
             map-id="153d718018a2577e" class="h-full w-full" :center="center" :zoom="9">
             <CustomMarker @click="searchResultsStore.setActiveSearchResult(location.professional.id)" :options="{
             position: {

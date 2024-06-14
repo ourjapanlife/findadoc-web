@@ -7,10 +7,6 @@
             "esnext",
             "DOM"
         ],
-        "paths": {
-            "~/*": ["./*"],
-            "@/*": ["./*"]
-        },
         "strict": true,
         "outDir": "dist",
         "sourceMap": true,
@@ -18,6 +14,7 @@
         "esModuleInterop": true,
         "skipLibCheck": true
     },
+    "extends": "./.nuxt/tsconfig.json",
     "ts-node": {
         "esm": true,
         "swc": true

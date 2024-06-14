@@ -1,6 +1,6 @@
 <template>
   <div data-testid="submit-completed" class="flex flex-col place-items-center">
-    <img class="mb-10" src="../assets/images/heart-circle.png" alt />
+    <img class="mb-10" src="../assets/images/heart-circle.png" alt="heart circle icon" />
     <p
       class="mb-3.5 text-zinc-900 text-2xl font-bold font-['Noto Sans JP'] leading-normal"
     >{{ $t('thankYouPage.heading')}}</p>
