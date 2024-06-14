@@ -10,11 +10,11 @@
         "lint": "ESLINT_USE_FLAT_CONFIG=true eslint . -c eslint.config.js && stylelint **/*.{vue,css,scss} --ignore-path .gitignore",
         "lint:ci": "eslint . --config eslint.config.js --format @microsoft/eslint-formatter-sarif --output-file eslint-results.sarif",
         "lint:css": "stylelint '**/*.{vue,css,scss}' --ignore-path .gitignore -f verbose",
-        "prod:build": "yarn && yarn generate && nuxi prepare && nuxi generate",
+        "prod:build": "yarn && yarn generate && nuxi generate",
         "prod:start": "nuxi start",
         "prepare:ci": "nuxi prepare",
         "test": "yarn test:pinia --run && yarn test:e2e",
-        "test:pinia": "vitest",
+        "test:pinia": "nuxi prepare && nuxi generate && vitest",
         "test:pinia:coverage": "vitest run --coverage",
         "test:e2e": "cypress run --e2e --browser chrome --record --key 04a1fe54-0011-407b-b7d7-fcb9b2daf1e6"
     },
