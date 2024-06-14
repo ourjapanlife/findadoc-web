@@ -16,41 +16,73 @@
             {{ $t("modPanelSubmissionList.submitted") }}
         </div>
 
-        <div v-for="(fakeDatum, index) in modScreenStore.fakeData" :key="index" class="grid grid-cols-subgrid col-span-5 bg-gray-200" >
-            <button @click="handleClickToSubmissionForm(fakeDatum.id)"
-            :data-testid='`mod-submission-list-item-${index + 1}`'
+        <div v-if="hasSubmissions" v-for="(submission, index) in modSubmissionsStore.submissionsData" :key="index"
             class="grid grid-cols-subgrid col-span-5 bg-gray-200">
+            <div @click="handleClickToSubmissionForm(submission.id)"
+                :data-testid='`mod-submission-list-item-${index + 1}`'
+                class="grid grid-cols-subgrid col-span-5 bg-gray-200 cursor-pointer hover:bg-primary">
                 <span class="text-start">{{ index + 1 }}</span>
-                <span class="text-start">{{ $t(fakeDatum.name) }}</span>
-                <span class="text-start">{{ $t(fakeDatum.status) }}</span>
-                <span class="text-start">{{ $t(fakeDatum.modified) }}</span>
-                <span class="text-start">{{ $t(fakeDatum.submitted) }}</span>
-            </button>
+                <span class="text-start">{{ submission.healthcareProfessionalName }}</span>
+                <span class="text-start">{{ getSubmissionStatus(submission) }}</span>
+                <span class="text-start">{{ convertDateToLocalTime(submission.updatedDate) }}</span>
+                <span class="text-start">{{ convertDateToLocalTime(submission.createdDate) }}</span>
+            </div>
         </div>
+        <div v-else>
+            {{ $t("modPanelSubmissionList.noSubmissions") }}
+        </div>
+
     </div>
 </template>
 
 
 
 <script setup lang="ts">
-import { computed } from 'vue'
-import { useModerationScreenStore } from '~/stores/moderationScreenStore';
+import { computed, onMounted } from 'vue'
+import { useModerationScreenStore } from '~/stores/moderationScreenStore'
+import { useModerationSubmissionsStore } from '~/stores/moderationSubmissionsStore'
+import { Submission } from '~/typedefs/gqlTypes'
+import { useNuxtApp } from "#app"
+const { $i18n } = useNuxtApp()
 
 const modScreenStore = useModerationScreenStore()
+const modSubmissionsStore = useModerationSubmissionsStore()
+
+onMounted(async () => {
+    await modSubmissionsStore.getSubmissions()
+})
+
+const hasSubmissions = computed(() => modSubmissionsStore.submissionsData.length > 0)
+
+const getSubmissionStatus = (submission: Submission) => {
+    switch (true) {
+        case submission.isUnderReview:
+            return $i18n.t("modPanelSubmissionList.underReview")
+        case submission.isApproved:
+            return $i18n.t("modPanelSubmissionList.approved")
+        case submission.isRejected:
+            return $i18n.t("modPanelSubmissionList.rejected")
+        default:
+            return $i18n.t("modPanelSubmissionList.new")
+    }
+}
+
+const convertDateToLocalTime = (isoString: string) => {
+    return new Date(isoString).toLocaleString()
+}
 
 const submissionListItemTableColumns = computed(() => {
-    const numOfColumns = 5;
-    const defaultColumnWidth = 10;
-    const remainingWidth = 100 - defaultColumnWidth;
-    const columnWidth = remainingWidth / (numOfColumns - 1);
-    return `grid-template-columns: ${defaultColumnWidth}% repeat(${numOfColumns - 1}, ${columnWidth}%);`;
-});
+    const numOfColumns = 5
+    const defaultColumnWidth = 10
+    const remainingWidth = 100 - defaultColumnWidth
+    const columnWidth = remainingWidth / (numOfColumns - 1)
+    return `grid-template-columns: ${defaultColumnWidth}% repeat(${numOfColumns - 1}, ${columnWidth}%);`
+})
 
 const handleClickToSubmissionForm = (id: string) => {
-    console.log("WE CLICKED THE THING!!")
     useModerationScreenStore().setActiveScreen(1)
     modScreenStore.selectedSubmissionId = id
-};
+}
 
 
 </script>

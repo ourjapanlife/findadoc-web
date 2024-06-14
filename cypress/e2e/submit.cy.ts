@@ -85,7 +85,7 @@ describe('Submit page', () => {
     context('form validation', () => {
         beforeEach(() => {
             cy.visit('/submit')
-            cy.wait(500) // wait for the vue components to actually load
+            cy.wait(1000) // wait for the vue components to actually load
         })
 
         it('does not submit an incomplete form', () => {

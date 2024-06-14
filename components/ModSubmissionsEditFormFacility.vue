@@ -2,7 +2,7 @@
     <form @submit="validateFields" class="p-4 h-full overflow-y-auto">
         <div>
             <span class="mb-3.5 text-center text-zinc-900 text-2xl font-bold font-['Noto Sans JP'] leading-normal">
-                {{ $t('moderateSubmissionForm.contactInformation')}}
+                {{ $t('modSubmissionForm.contactInformation')}}
             </span>
             <ModInputField  
                 data-testid="submission-form-nameEn"
@@ -53,7 +53,7 @@
 
         <div>
             <span class="mb-3.5 text-center text-zinc-900 text-2xl font-bold font-['Noto Sans JP'] leading-normal">
-                {{ $t('moderateSubmissionForm.addresses') }}
+                {{ $t('modSubmissionForm.addresses') }}
             </span>
             <ModInputField
                 data-testid="submission-form-postalCode"  
@@ -147,7 +147,7 @@
         
         <div>
             <span class="mb-3.5 text-center text-zinc-900 text-2xl font-bold font-['Noto Sans JP'] leading-normal">
-                {{ $t('moderateSubmissionForm.googleMapsInformation') }}
+                {{ $t('modSubmissionForm.googleMapsInformation') }}
             </span>
             <ModInputField
                 data-testid="submission-form-google-maps"  
@@ -177,31 +177,15 @@
                 invalidInputErrorMessage="Invalid Longitude"
             />
         </div>
-        <div>
-            <span class="mb-3.5 text-center text-zinc-900 text-2xl font-bold font-['Noto Sans JP'] leading-normal">
-                {{ $t('moderateSubmissionForm.healthcareProfessionalId') }}
-            </span>
-            <div class="flex flex-col mt-4">
-                <div class="justify-start items-start flex">
-                    <input 
-                        data-testid="submission-form-doctor-search"
-                        type='text'
-                        placeholder='Search by name or ID to add a doctor'
-                        class="mb-5 px-3 py-3.5 w-[350px] h-[50px] bg-white rounded-lg border border-zinc-400 text-neutral-600 text-sm font-normal font-['Noto Sans JP'] placeholder-gray-300"
-                    />
-                    <SVGLookingGlass role="img" title="searching icon" class="relative right-8 top-3 w-6 h-6"/>
-                </div>
-            </div>
-        </div>
+        <ModHealthcareProfessionalSearchbar 
+            data-testid="submission-form-doctor-search"
+        />
         <!-- This button is pure for testing -->
         <button type="submit" class="bg-currentColor text-white font-bold py-2 px-4 rounded">submit</button>
     </form>
 </template>
 
 <script lang="ts" setup>
-import { Result } from 'postcss';
-import {ref, Ref} from 'vue'
-import SVGLookingGlass from '~/assets/icons/looking-glass.svg'
 import { useModerationFormInputStore } from '~/stores/moderationFormInputStore'
 import { validateAddressLineEn, validateAddressLineJp, validateNameEn, validateNameJp, validatePhoneNumber, validateCityEn, validateEmail, validateFloat, validatePostalCode, validateWebsite, validateCityJp } from '~/utils/formValidations'
 
