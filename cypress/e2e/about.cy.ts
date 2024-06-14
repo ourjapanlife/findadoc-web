@@ -2,9 +2,17 @@ import enUS from '../../i18n/locales/en.json'
 
 describe('About page', () => {
     context('Desktop resolution', () => {
+        before(() => {
+            cy.visit("/about")
+            // This wait time is to give the page time to load from Prod when ran in CI.
+            cy.wait(3000)
+        })
+
         beforeEach(() => {
+            // The resolution is in the beforeEach() instead of before() to
+            // prevent Cypress from defaulting to other screen sizes between tests.
             cy.viewport(1920, 1080)
-            cy.visit('/about')
+            cy.wait(500)
         })
 
         it('shows the desktop top nav', () => {
@@ -51,9 +59,19 @@ describe('About page', () => {
     })
 
     context('Portrait mode', () => {
-        beforeEach(() => {
-            cy.viewport('iphone-5')
+        before(() => {
             cy.visit('/about')
+            // This wait time is to give the page time to load from Prod when ran in CI.
+            cy.wait(3000)
+        })
+
+        beforeEach(() => {
+            // The resolution is in the beforeEach() instead of before() to
+            // prevent Cypress from defaulting to other screen sizes between tests.
+
+            // An iPhone 5 screen resolution is used to test portrait mode.
+            cy.viewport(640, 1136)
+            cy.wait(500)
         })
 
         it('shows the hamburger component', () => {
@@ -74,6 +92,17 @@ describe('About page', () => {
             cy.get('[data-testid="member-title"]').should('exist')
             cy.get('[data-testid="member-linkedin"]').should('exist')
             cy.get('[data-testid="member-github"').should('exist')
+        })
+
+        it("Allows navigating to external links", () => {
+            cy.get('[data-testid="member-linkedin"]')
+                .first()
+                .should("have.attr", "href")
+                .and("include", "linkedin.com")
+            cy.get('[data-testid="member-github"]')
+                .first()
+                .should("have.attr", "href")
+                .and("include", "github.com")
         })
     })
 })
