@@ -103,7 +103,9 @@
         "rejected": "Rejected"
     },
     "modDashboardTopBar": {
-        "forReview": "For Review"
+        "approved": "Approved",
+        "forReview": "For Review",
+        "rejected":  "Rejected"
     },
     "modEditSubmissionTopNav": {
         "saveAndExit": "Save & Exit",

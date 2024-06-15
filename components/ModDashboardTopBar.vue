@@ -8,7 +8,7 @@
                     :placeholder="$t('searchBar.search')"
                     data-testid="mod-dashboard-top-bar-input"
                     />
-                <MagnifyingGlass
+                <SVGMagnifyingGlass
                 @click="submitSearch"
                 class="absolute right-3 top-1/2 -translate-y-1/2 w-6 h-6"
                 data-testid="mod-dashboard-top-bar-glass"
@@ -19,7 +19,7 @@
 
 <script setup lang="ts">
 import { Ref, ref } from 'vue';
-import MagnifyingGlass from '../assets/icons/magnifying-glass.svg';
+import SVGMagnifyingGlass from '../assets/icons/magnifying-glass.svg';
 const searchInput: Ref<string> = ref("")
 
 const submitSearch = () => {
