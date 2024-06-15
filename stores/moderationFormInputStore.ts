@@ -95,14 +95,28 @@ export const useModerationFormInputStore = defineStore('moderationFormInputStore
             if(submissionData.hasOwnProperty(key) && submissionData[key as KeysInSubmission]) {
                 switch (key){
                     case 'facility':
-                        nameEn.value = submissionData["facility"]?.nameEn || ''
+                        nameEn.value = submissionData['facility']?.nameEn || ''
+                        nameJp.value = submissionData['facility']?.nameJa || ''
+                        phone.value = submissionData['facility']?.contact?.phone || ''
+                        email.value = submissionData['facility']?.contact?.email || ''
+                        website.value = submissionData['facility']?.contact?.website || ''
+                        postalCode.value = submissionData['facility']?.contact?.address.postalCode || ''
+                        prefectureEn.value = submissionData['facility']?.contact?.address.prefectureEn || ''
+                        cityEn.value = submissionData['facility']?.contact?.address.cityEn || ''
+                        addressLine1En.value = submissionData['facility']?.contact?.address.addressLine1En || ''
+                        addressLine2En.value = submissionData['facility']?.contact?.address.addressLine2En || ''
+                        prefectureJp.value = submissionData['facility']?.contact?.address.prefectureJa || ''
+                        cityJp.value = submissionData['facility']?.contact?.address.cityJa || ''
+                        addressLine1Jp.value = submissionData['facility']?.contact?.address.addressLine1Ja || ''
+                        addressLine2Jp.value = submissionData['facility']?.contact?.address.addressLine2Ja || ''
                         break
                     case 'googleMapsUrl':
-                        googlemapsURL.value = submissionData["googleMapsUrl"]
+                        googlemapsURL.value = submissionData['facility']?.contact?.googleMapsUrl || submissionData['googleMapsUrl']
                 }
             }
         }
     }
+
 
     function resetForm() {
         nameEn.value = ''

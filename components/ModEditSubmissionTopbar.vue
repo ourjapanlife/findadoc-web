@@ -49,7 +49,7 @@
 import { ref, type Ref } from 'vue'
 import SVGCopyContent from '~/assets/icons/content-copy.svg'
 import SVGSuccessCheckMark from '~/assets/icons/checkmark-square.svg'
-import { useModerationScreenStore } from '~/stores/moderationScreenStore'
+import { useModerationSubmissionsStore } from '#imports';
 
 const modScreenStore = useModerationSubmissionsStore()
 
