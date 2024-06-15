@@ -18,8 +18,8 @@
 </template>
 
 <script setup lang="ts">
-import { Ref, ref } from 'vue';
-import SVGMagnifyingGlass from '../assets/icons/magnifying-glass.svg';
+import { type Ref, ref } from 'vue'
+import SVGMagnifyingGlass from '../assets/icons/magnifying-glass.svg'
 const searchInput: Ref<string> = ref("")
 
 const submitSearch = () => {
