@@ -1,17 +1,17 @@
 import { gql } from 'graphql-request'
 import { defineStore } from "pinia"
-import { ref } from 'vue'
-import { CreateSubmissionInput, Locale, Submission } from "~/typedefs/gqlTypes"
+import { ref, type Ref } from 'vue'
+import { Locale, type CreateSubmissionInput, type Submission } from "~/typedefs/gqlTypes"
 import { gqlClient } from '../utils/graphql.js'
 
 export const useSubmissionStore = defineStore('submissionStore', () => {
-    const location = ref('')
-    const firstName = ref('')
-    const lastName = ref('')
-    const selectLanguage1 = ref('')
-    const selectLanguage2 = ref('')
-    const otherNotes = ref('')
-    const submissionCompleted = ref(false)
+    const location: Ref = ref('')
+    const firstName: Ref = ref('')
+    const lastName: Ref = ref('')
+    const selectLanguage1: Ref = ref('')
+    const selectLanguage2: Ref = ref('')
+    const otherNotes: Ref = ref('')
+    const submissionCompleted: Ref = ref(false)
 
     async function submit() {
         const spokenLanguages: Locale[] = []
