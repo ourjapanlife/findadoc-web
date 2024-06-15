@@ -84,8 +84,6 @@ export default defineNuxtConfig({
         ],
         link: [{ rel: 'icon', type: 'image/x-icon', href: '/assets/favicon.ico' }]
     },
-    // this helps the aliases like ~ or @ to start at '/' instead of '/src'.
-    srcDir: '',
 
     
 
