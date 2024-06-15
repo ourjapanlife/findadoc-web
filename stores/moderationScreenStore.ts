@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { Ref, ref } from 'vue'
+import { ref, type Ref } from 'vue'
 
 export enum ModerationScreen {
     'dashboard',
