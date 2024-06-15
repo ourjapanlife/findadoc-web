@@ -166,7 +166,7 @@ const phone = computed(
     () => resultsStore.$state.activeResult?.facilities[0]?.contact?.phone
 )
 const email = computed(
-    () => resultsStore.$state.activeResult?.facilities[0]?.contact?.email
+    () => resultsStore.$state.activeResult?.facilities[0]?.contact?.email ?? ''
 )
 
 const excludedEmailAddresses = ['none', 'email@email.com'];
