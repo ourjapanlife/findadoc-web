@@ -56,18 +56,16 @@ const router = useRouter()
 const checkIfUserIsLoggedIn = async () => {
     // This promise is here to make the Suspense component work.
     // It doesn't do anything, but <Suspense> requires an awaited setup method
-    await new Promise((resolve) => {
-        //ignore if route change is unrelated to moderation
-        if (route.path === "/moderation" && !authStore.isLoggedIn && !authStore.isLoadingAuth) {
-            // give the user a bit of time to read the message before redirecting
-            setTimeout(() => {
-                // Redirect to login page if user is not logged in
-                router.push("/")
-            }, 10000)
-        }
+    await authStore.refreshUserCredentials()
 
-        resolve(true)
-    })
+    //ignore if route change is unrelated to moderation
+    if (route.path === "/moderation" && !authStore.isLoggedIn && !authStore.isLoadingAuth) {
+        // give the user a bit of time to read the message before redirecting
+        setTimeout(() => {
+            // Redirect to login page if user is not logged in
+            router.push("/")
+        }, 10000)
+    }
 }
 
 watch(route, async () => {

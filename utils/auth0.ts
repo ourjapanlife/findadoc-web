@@ -21,7 +21,8 @@ export const initializeAuth0 = () => {
                 appState: {
                     target: useRoute().path,
                 },
-                redirect_uri: isProduction ? 'https://www.findadoc.jp' : 'http://localhost:3000'
+                redirect_uri: isProduction ? 'https://www.findadoc.jp' : 'http://localhost:3000',
+                audience: 'https://findadoc.jp.auth0.com/api/v2/',
             }
         })
 
