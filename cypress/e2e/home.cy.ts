@@ -132,6 +132,8 @@ describe("Visits the home page", () => {
         beforeEach(() => {
             // The resolution is in the beforeEach() instead of before() to
             // prevent Cypress from defaulting to other screen sizes between tests.
+
+            // An iPhone 5 screen resolution is used to test portrait mode.
             cy.viewport(640, 1136)
             cy.wait(500)
         })
