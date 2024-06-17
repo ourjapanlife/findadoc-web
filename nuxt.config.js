@@ -94,12 +94,7 @@ export default defineNuxtConfig({
     plugins: [],
 
     // Auto import components: https://go.nuxtjs.dev/config-components
-    components: [
-        {
-          path: '~/components',
-          extensions: ['.vue'],
-        }
-      ],
+    components: true,
 
     modules: [
         '@nuxtjs/i18n',
