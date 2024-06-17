@@ -116,6 +116,8 @@ export type FacilitySubmission = {
   contact?: Maybe<Contact>;
   healthcareProfessionalIds: Array<Scalars['ID']['output']>;
   id?: Maybe<Scalars['ID']['output']>;
+  mapLatitude?: Maybe<Scalars['Float']['output']>;
+  mapLongitude?: Maybe<Scalars['Float']['output']>;
   nameEn?: Maybe<Scalars['String']['output']>;
   nameJa?: Maybe<Scalars['String']['output']>;
 };
@@ -643,6 +645,8 @@ export type FacilitySubmissionResolvers<ContextType = any, ParentType extends Re
   contact?: Resolver<Maybe<ResolversTypes['Contact']>, ParentType, ContextType>;
   healthcareProfessionalIds?: Resolver<Array<ResolversTypes['ID']>, ParentType, ContextType>;
   id?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
+  mapLatitude?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  mapLongitude?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
   nameEn?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   nameJa?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
