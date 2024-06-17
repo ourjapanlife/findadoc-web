@@ -3,7 +3,7 @@ import enUS from '../../i18n/locales/en.json'
 describe('About page', () => {
     context('Desktop resolution', () => {
         before(() => {
-            cy.visit("/about")
+            cy.visit('/about')
             // This wait time is to give the page time to load from Prod when ran in CI.
             cy.wait(3000)
         })
@@ -20,7 +20,7 @@ describe('About page', () => {
         })
 
         it('does not show the hamburger component', () => {
-            cy.get('[data-testid="hamburger-menu-icon"]').should("not.be.visible")
+            cy.get('[data-testid="hamburger-menu-icon"]').should('not.be.visible')
         })
 
         it('has a heading', () => {
@@ -34,7 +34,6 @@ describe('About page', () => {
         it('has an about paragraph', () => {
             cy.get('[data-testid="about-paragraph1"]').should('exist')
         })
-
 
         it('has members header container', () => {
             cy.get('[data-testid="members-header-container"]').should('have.class', 'justify-center items-center')
@@ -55,7 +54,6 @@ describe('About page', () => {
         it('shows the footer without scrolling', () => {
             cy.get('[data-testid="footer"]').should('be.visible')
         })
-
     })
 
     context('Portrait mode', () => {
@@ -79,7 +77,7 @@ describe('About page', () => {
         })
 
         it('does not show the landscape searchbar', () => {
-            cy.get('[data-testid="landscape-searchbar"]').should("not.be.visible")
+            cy.get('[data-testid="landscape-searchbar"]').should('not.be.visible')
         })
 
         it('does not show the footer', () => {
@@ -94,15 +92,15 @@ describe('About page', () => {
             cy.get('[data-testid="member-github"').should('exist')
         })
 
-        it("Allows navigating to external links", () => {
+        it('Allows navigating to external links', () => {
             cy.get('[data-testid="member-linkedin"]')
                 .first()
-                .should("have.attr", "href")
-                .and("include", "linkedin.com")
+                .should('have.attr', 'href')
+                .and('include', 'linkedin.com')
             cy.get('[data-testid="member-github"]')
                 .first()
-                .should("have.attr", "href")
-                .and("include", "github.com")
+                .should('have.attr', 'href')
+                .and('include', 'github.com')
         })
     })
 })

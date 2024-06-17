@@ -6,5 +6,5 @@ export default defineConfig({
         setupNodeEvents() { },
         baseUrl: 'http://localhost:3000',
         testIsolation: false
-    },
+    }
 })

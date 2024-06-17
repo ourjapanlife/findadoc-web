@@ -1,8 +1,8 @@
 import { gql } from 'graphql-request'
-import { defineStore } from "pinia"
+import { defineStore } from 'pinia'
 import { ref, type Ref } from 'vue'
-import { Locale, type CreateSubmissionInput, type Submission } from "~/typedefs/gqlTypes"
 import { gqlClient } from '../utils/graphql.js'
+import { type Locale, type CreateSubmissionInput, type Submission } from '~/typedefs/gqlTypes'
 
 export const useSubmissionStore = defineStore('submissionStore', () => {
     const location: Ref = ref('')
@@ -25,10 +25,10 @@ export const useSubmissionStore = defineStore('submissionStore', () => {
         }
 
         const submission = {
-            "googleMapsUrl": location.value,
-            "healthcareProfessionalName": `${firstName.value} ${lastName.value}`,
-            "spokenLanguages": spokenLanguages,
-            "notes": otherNotes.value
+            googleMapsUrl: location.value,
+            healthcareProfessionalName: `${firstName.value} ${lastName.value}`,
+            spokenLanguages: spokenLanguages,
+            notes: otherNotes.value
         } satisfies CreateSubmissionInput
 
         try {
@@ -36,11 +36,9 @@ export const useSubmissionStore = defineStore('submissionStore', () => {
                 input: submission
             })
             submissionCompleted.value = true
-        }
-        catch (e) {
+        } catch (e) {
             console.error(`There was an error creating the submission ${e}`)
         }
-
     }
 
     function resetForm() {

@@ -1,5 +1,6 @@
-import { GraphQLClient } from "graphql-request";
+import { GraphQLClient } from 'graphql-request'
 
+// eslint-disable-next-line
 export let gqlClient: GraphQLClient
 
 export const initializeGqlClient = (useLocalApi: string | undefined) => {
@@ -10,23 +11,22 @@ export const initializeGqlClient = (useLocalApi: string | undefined) => {
     let apiURL
 
     if (useLocalApi) {
-        apiURL = "http://127.0.0.1:4000"
-
+        apiURL = 'http://127.0.0.1:4000'
     } else {
-        apiURL = "https://api.findadoc.jp"
+        apiURL = 'https://api.findadoc.jp'
     }
 
     const client = new GraphQLClient(apiURL)
     gqlClient = client
-};
+}
 
 export interface gqlMutation<T> extends gqlRequest {
     variables: {
         input: T
-    };
+    }
 }
 
 export interface gqlRequest {
-    query: string;
+    query: string
     variables: unknown
 }

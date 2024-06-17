@@ -1,20 +1,30 @@
-import SearchResultDetails from './SearchResultDetails.vue';
-
 <template>
     <div class="h-full w-full">
-        <div id="landscape-content" v-if="$viewport.isGreaterThan('tablet')"
-            class="bg-secondary-bg/20 hover:shadow-inner hover:shadow-secondary-bg/90 h-full w-full">
+        <div
+            v-if="$viewport.isGreaterThan('tablet')"
+            id="landscape-content"
+            class="bg-secondary-bg/20 hover:shadow-inner hover:shadow-secondary-bg/90 h-full w-full"
+        >
             <Loader />
-            <Modal v-show="store.$state.isOpen" class="min-h-1/2 ml-8 mt-12">
+            <Modal
+                v-show="store.$state.isOpen"
+                class="min-h-1/2 ml-8 mt-12"
+            >
                 <SearchResultDetails />
             </Modal>
             <div class="flex-1 h-full">
                 <MapContainer />
             </div>
         </div>
-        <div v-else class="h-full">
+        <div
+            v-else
+            class="h-full"
+        >
             <Loader />
-            <Modal v-show="store.$state.isOpen" class="min-h-1/2 ml-8 mt-12">
+            <Modal
+                v-show="store.$state.isOpen"
+                class="min-h-1/2 ml-8 mt-12"
+            >
                 <SearchResultDetails />
             </Modal>
             <div class="h-1/4">
@@ -28,9 +38,9 @@ import SearchResultDetails from './SearchResultDetails.vue';
 </template>
 
 <script lang="ts" setup>
-import { useNuxtApp } from "#app";
-const { $viewport } = useNuxtApp();
-import { useModalStore } from "~/stores/modalStore";
+import { useNuxtApp } from '#app'
+import { useModalStore } from '~/stores/modalStore'
 
-const store = useModalStore();
+const { $viewport } = useNuxtApp()
+const store = useModalStore()
 </script>

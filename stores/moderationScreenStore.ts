@@ -14,12 +14,18 @@ export const useModerationScreenStore = defineStore('moderationScreenStore', () 
 
     function setActiveScreen(newValue: ModerationScreen) {
         activeScreen.value = newValue
-        console.log(`activeScreen set to: ${activeScreen.value}`)
     }
 
     function setEnableModerationPanelToTrue(currentPath: string) {
-        process.env.ENABLE_MODERATION_PANEL && currentPath.includes("moderation") ? enableModerationPanel.value = true : null
+        process.env.ENABLE_MODERATION_PANEL && currentPath.includes('moderation') ? enableModerationPanel.value = true : null
     }
 
-    return { activeScreen, enableModerationPanel, ModerationScreen, selectedSubmissionId, setActiveScreen, setEnableModerationPanelToTrue }
+    return {
+        activeScreen,
+        enableModerationPanel,
+        ModerationScreen,
+        selectedSubmissionId,
+        setActiveScreen,
+        setEnableModerationPanelToTrue
+    }
 })

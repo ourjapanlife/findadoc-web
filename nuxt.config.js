@@ -8,7 +8,7 @@ export default defineNuxtConfig({
     //typescript settings
     typescript: {
         shim: false,
-        tsConfig: { compilerOptions: { baseUrl: ".", }, }
+        tsConfig: { compilerOptions: { baseUrl: '.' } }
     },
     // Global page headers: https://go.nuxtjs.dev/config-head
     head: {
@@ -85,8 +85,6 @@ export default defineNuxtConfig({
         link: [{ rel: 'icon', type: 'image/x-icon', href: '/assets/favicon.ico' }]
     },
 
-    
-
     // Global CSS: https://go.nuxtjs.dev/config-css
     css: ['~/assets/css/tailwind.css'],
 
@@ -105,7 +103,7 @@ export default defineNuxtConfig({
     ],
     eslint: {
         config: {
-          stylistic: true
+            stylistic: true
         }
     },
     viewport: {
@@ -118,7 +116,7 @@ export default defineNuxtConfig({
             mobileMedium: 375,
             mobileWide: 425,
 
-            tablet: 768,
+            tablet: 768
         },
 
         cookieName: 'viewport',
@@ -126,17 +124,17 @@ export default defineNuxtConfig({
         defaultBreakpoints: {
             desktop: 'desktop',
             mobile: 'mobile',
-            tablet: 'tablet',
+            tablet: 'tablet'
         },
 
-        fallbackBreakpoint: 'desktop',
+        fallbackBreakpoint: 'desktop'
     },
 
     i18n: {
         vueI18n: './i18n.options.ts'
     },
     svgo: {
-        defaultImport: 'component',
+        defaultImport: 'component'
     },
     pinia: {
         autoImports: [
@@ -155,11 +153,11 @@ export default defineNuxtConfig({
     target: 'static',
     runtimeConfig: {
         public: {
-            // eslint-disable-next-line
+
             GOOGLE_MAPS_API_KEY: process.env.GOOGLE_MAPS_API_KEY,
-            // eslint-disable-next-line
+
             ENABLE_MODERATION_PANEL: process.env.ENABLE_MODERATION_PANEL,
-            // eslint-disable-next-line
+
             NUXT_USE_LOCAL_API: process.env.NUXT_USE_LOCAL_API
         }
     },

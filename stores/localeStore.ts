@@ -3,8 +3,8 @@ import { ref, type Ref } from 'vue'
 import { Locale } from '~/typedefs/gqlTypes.js'
 
 export type LocaleDisplay = {
-    displayText: string,
-    simpleText: string,
+    displayText: string
+    simpleText: string
     code: string
 }
 
@@ -75,7 +75,7 @@ export const localeDisplayOptions = [
     { code: Locale.ViVn, simpleText: 'tiếng', displayText: 'tiếng Việt (Vietnam)' },
     { code: Locale.ZhCn, simpleText: '汉语', displayText: 'Chinese (Simplified, China)' },
     { code: Locale.ZhHk, simpleText: '漢語', displayText: 'Chinese (Traditional, Hong Kong SAR China)' },
-    { code: Locale.ZhTw, simpleText: '國語', displayText: 'Chinese (Traditional, Taiwan)' },
+    { code: Locale.ZhTw, simpleText: '國語', displayText: 'Chinese (Traditional, Taiwan)' }
 ] satisfies LocaleDisplay[]
 
 export const mvpLocaleDisplayOptions = [

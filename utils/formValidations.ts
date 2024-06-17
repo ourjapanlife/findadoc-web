@@ -1,5 +1,5 @@
 import { hasJapaneseCharacters, hasLatinCharacters, isValidEmail, isValidPhoneNumber, isValidWebsite, isFloat, isValidPostalCode, isValidUrl } from './stringUtils'
-import { Locale } from "~/typedefs/gqlTypes"
+import { Locale } from '~/typedefs/gqlTypes'
 
 export function validateNameEn(nameEn: string): boolean {
     if (nameEn.length < 1 || nameEn.length > 128) {
@@ -104,7 +104,6 @@ export function validateAddressLineJp(addressLineJp: string): boolean {
     return true
 }
 
-
 export function validateCityEn(cityEn: string): boolean {
     if (cityEn.length < 1 || cityEn.length > 64) {
         return false
@@ -137,7 +136,6 @@ export function validatePostalCode(postalCode: string): boolean {
     if (postalCode.length > 18) {
         return false
     }
-
 
     const isPostalCodeValid = isValidPostalCode(postalCode)
 

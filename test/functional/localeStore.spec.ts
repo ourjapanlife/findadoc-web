@@ -1,13 +1,12 @@
 import { setActivePinia, createPinia } from 'pinia'
+import { expect } from 'chai'
 import { useLocaleStore } from '@/stores/localeStore'
 import { Locale } from '~/typedefs/gqlTypes.js'
-import { expect } from 'chai'
 
-describe("LocalStore", () => {
-
+describe('LocalStore', () => {
     beforeEach(() => {
         setActivePinia(createPinia())
-    });
+    })
 
     it('should initialize with default values', () => {
         const localStore = useLocaleStore()

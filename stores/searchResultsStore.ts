@@ -1,13 +1,13 @@
 import { gql } from 'graphql-request'
 import { defineStore } from 'pinia'
 import { ref, type Ref } from 'vue'
-import { Locale, Specialty, type Facility, type FacilitySearchFilters, type HealthcareProfessional, type HealthcareProfessionalSearchFilters } from '~/typedefs/gqlTypes.js'
+import { gqlClient } from '../utils/graphql.js'
 import { useModalStore } from './modalStore'
 import { useLoadingStore } from './loadingStore.js'
-import { gqlClient } from '../utils/graphql.js'
+import type { Locale, Specialty, Facility, FacilitySearchFilters, HealthcareProfessional, HealthcareProfessionalSearchFilters } from '~/typedefs/gqlTypes.js'
 
 type SearchResult = {
-    professional: HealthcareProfessional,
+    professional: HealthcareProfessional
     facilities: Facility[]
 }
 
@@ -70,7 +70,6 @@ export const useSearchResultsStore = defineStore('searchResultsStore', () => {
     return { activeResultId, activeResult, searchResultsList, search, setActiveSearchResult, clearActiveSearchResult }
 })
 
-
 async function queryProfessionals(searchSpecialty?: Specialty, searchLanguage?: Locale): Promise<HealthcareProfessional[]> {
     try {
         const searchProfessionalsData = {
@@ -88,13 +87,15 @@ async function queryProfessionals(searchSpecialty?: Specialty, searchLanguage?: 
             } satisfies HealthcareProfessionalSearchFilters
         }
 
-        const response = await gqlClient.request<{ healthcareProfessionals: HealthcareProfessional[] }>(searchProfessionalsQuery, searchProfessionalsData)
+        const response = await gqlClient.request<{ healthcareProfessionals: HealthcareProfessional[] }>(
+            searchProfessionalsQuery, searchProfessionalsData
+        )
 
         const professionalsSearchResult = (response?.healthcareProfessionals ?? []) as HealthcareProfessional[]
         return professionalsSearchResult
     } catch (error) {
         console.error(`Error getting professionals: ${JSON.stringify(error)}`)
-        alert(`Error getting data! Please contact our support team by clicking the bottom right link on the page!`)
+        alert('Error getting data! Please contact our support team by clicking the bottom right link on the page!')
         return []
     }
 }
@@ -129,11 +130,10 @@ async function queryFacilities(healthcareProfessionalIds: string[], searchCity?:
         return locationFilteredSearchResults
     } catch (error) {
         console.error(`Error getting facilities: ${JSON.stringify(error)}`)
-        alert(`Error getting data! Please contact our support team by clicking the bottom right link on the page!`)
+        alert('Error getting data! Please contact our support team by clicking the bottom right link on the page!')
         return []
     }
 }
-
 
 const searchProfessionalsQuery = gql`query searchHealthcareProfessionals($filters: HealthcareProfessionalSearchFilters!) {
     healthcareProfessionals(filters: $filters) {

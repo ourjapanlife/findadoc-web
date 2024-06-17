@@ -44,8 +44,8 @@ export function hasScriptTags(input: string) {
 export function isValidUrl(url: string | URL) {
     try {
         url = new URL(url)
-    }
-    catch (e) {
+    } catch (e) {
+        console.log(`Error: ${e}`)
         return false
     }
     return url.protocol === 'https:'
