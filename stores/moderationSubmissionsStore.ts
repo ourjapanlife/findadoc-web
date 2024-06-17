@@ -46,6 +46,8 @@ const getSubmissionsGqlQuery = gql`
     spokenLanguages
     facility {
       id
+      mapLatitude
+      mapLongitude
       nameEn
       nameJa
       contact {
