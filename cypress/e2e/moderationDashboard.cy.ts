@@ -215,7 +215,7 @@ describe('Moderation Facility Submission Form', () => {
             cy.get('[data-testid="submission-form-website"]').find('p').should('exist').contains('Invalid Website URL')
 
             cy.get('[data-testid="submission-form-postalCode"]').find('input').type('180-0').tab()
-            cy.get('[data-testid="submission-form-postalCode"]').find('p').should('exist').contains('Invalid Zip Code')
+            cy.get('[data-testid="submission-form-postalCode"]').find('p').should('exist').contains('Invalid Postal Code')
 
             cy.get('[data-testid="submission-form-cityEn"]').find('input').type('渋谷区').tab()
             cy.get('[data-testid="submission-form-cityEn"]').find('p').should('exist').contains('Invalid English City Name')

@@ -1,9 +1,9 @@
 <template>
         <div class="flex flex-col mt-4">
-            <label class="mb-2 text-zinc-900 text-sm font-bold font-['Noto Sans JP']">
+            <label class="mb-2 text-primary-text text-sm font-bold font-sans">
                 {{ label }}
             </label>
-            <p v-if="!isTheInputValueValid" class="text-currentColor text-xs font-['Noto Sans JP']">{{ invalidInputErrorMessage }}</p>
+            <p v-if="!isTheInputValueValid" class="text-currentColor text-xs font-sans">{{ invalidInputErrorMessage }}</p>
             <input
                 @blur="() => checkValidationOfInputField(inputValue)"
                 :type='type'
@@ -11,7 +11,7 @@
                 :required='required'
                 :value="inputValue"
                 @input="handleInput"
-                class="mb-5 px-3 py-3.5 w-[350px] h-[50px] bg-white rounded-lg border border-zinc-400 text-neutral-600 text-sm font-normal font-['Noto Sans JP'] placeholder-gray-300"
+                class="mb-5 px-3 py-3.5 w-96 h-12 bg-white rounded-lg border border-primary-text-muted text-primary-text text-sm font-normal font-sans placeholder-primar"
             />
         </div>
 </template>
@@ -42,6 +42,6 @@ const handleInput = (event: Event) => {
   const target = event.target as HTMLInputElement;
   inputValue.value = target.value;
   store.setInputField(props.label, inputValue.value);
-};
+}
 
 </script>
