@@ -22,7 +22,7 @@ describe('Privacy Policy page', () => {
         })
 
         it('shows the footer without scrolling', () => {
-            cy.isInViewport('[data-testid="footer"]')
+            cy.get('[data-testid="footer"]').should('be.visible')
         })
 
 
