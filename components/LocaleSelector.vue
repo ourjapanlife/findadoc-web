@@ -2,7 +2,7 @@
   <div class="w-24">
     <select
       v-model="selectedLocale"
-      class="rounded-full  w-full px-1 border-2 border-primary/60 py-1.5 drop-shadow-md text-primary-text bg-primary-bg hover:bg-primary-hover/10 transition-all"
+      class="rounded-full md:w-full px-2 py-1 md:px-1 md:py-1.5 border-2 border-primary/80 md:border-primary/60  drop-shadow-md text-primary-text bg-secondary-bg/5 md:bg-primary-bg hover:bg-primary-hover/10 transition-colors"
     >
       <option
         v-for="(localeOption) in localeStore.mvpLocaleDisplayOptions"
@@ -28,3 +28,6 @@ watch(selectedLocale, (newLocale: any) => {
   locale.value = newLocale;
 });
 </script>
+
+
+rounded-full px-2 py-1 border-2 border-primary/80 drop-shadow-md text-primary-text bg-secondary-bg/5 hover:text-primary-hover transition-colors
