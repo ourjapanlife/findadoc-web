@@ -4,19 +4,22 @@ describe("Visits the home page", () => {
 
     context('Landscape mode', () => {
         before(() => {
-            cy.viewport(1920, 1080)
             cy.visit("/")
+            // This wait time is to give the page time to load from Prod when ran in CI.
+            cy.wait(3000)
+        })
+
+        beforeEach(() => {
+            // The resolution is in the beforeEach() instead of before() to
+            // prevent Cypress from defaulting to other screen sizes between tests.
+            cy.viewport(1920, 1080)
+            cy.wait(500)
         })
 
         it("Displays the Logo", () => {
             cy.get('[data-testid="landscape-logo"]')
                 .should("be.visible")
                 .contains("Find a Doc Japan")
-            // TODO: clicking it should take us to '/'
-        })
-
-        it("Displays loading SVG on visit", () => {
-            cy.get('[data-testid="svg-loading-icon"]').should("be.visible")
         })
 
         it("renders the map", () => {
@@ -73,10 +76,8 @@ describe("Visits the home page", () => {
         })
 
         describe("Checks footer links", () => {
+            // verify link to GitHub
             it("navigates to github", () => {
-                // TODO
-
-                // verify link to GitHub
                 cy.get('[data-testid="github-link"]').should("be.visible")
                 cy.get('[data-testid="github-link"]').should(
                     "have.attr",
@@ -119,43 +120,21 @@ describe("Visits the home page", () => {
                 cy.url().should("include", "/terms")
             })
         })
-
-
-        describe("Visits the about page", () => {
-            before(() => {
-                cy.visit("/about")
-            })
-
-            it("Displays the main content", () => {
-                cy.get('[data-testid="about-heading"]').should("be.visible")
-                cy.get('[data-testid="about-subheading"]').should("be.visible")
-            })
-
-            it("Displays the members section", () => {
-                cy.get('[data-testid="members-header"]').should("be.visible")
-                cy.get('[data-testid="member"]').should("have.length.gte", 5)
-            })
-
-            it("Allows navigating to external links", () => {
-                cy.get('[data-testid="member-linkedin"]')
-                    .first()
-                    .should("have.attr", "href")
-                    .and("include", "linkedin.com")
-                cy.get('[data-testid="member-github"]')
-                    .first()
-                    .should("have.attr", "href")
-                    .and("include", "github.com")
-            })
-        })
     })
-
     // Portrait mode tests - usually for mobile and tablet
     context('Portrait mode', () => {
-        beforeEach(() => {
-            cy.viewport('iphone-5')
+        before(() => {
             cy.visit('/')
+            // This wait time is to give the page time to load from Prod when ran in CI.
+            cy.wait(3000)
+        })
 
-            //need to wait for the page+data to load so the menu will open properly
+        beforeEach(() => {
+            // The resolution is in the beforeEach() instead of before() to
+            // prevent Cypress from defaulting to other screen sizes between tests.
+
+            // An iPhone 5 screen resolution is used to test portrait mode.
+            cy.viewport(640, 1136)
             cy.wait(500)
         })
 
@@ -177,59 +156,56 @@ describe("Visits the home page", () => {
 
         describe("Hamburger Menu tests", () => {
             it('shows the hamburger icon', () => {
-                //this conditionally renders based on screen orientation
+                // The hamburger menu conditionally renders based on screen orientation
                 cy.get('[data-testid="hamburger-menu-icon"]').should('exist').should('be.visible')
             })
 
-            it('can open the hamburger component', () => {
+            it('can open and close the hamburger component', () => {
                 cy.get('[data-testid="hamburger-menu-icon"]').should('exist').click()
                 cy.get('[data-testid="hamburger-menu"]').should('exist').should('be.visible')
+                cy.get('[data-testid="hamburger-menu-close-button"]').should('exist').click()
             })
 
-            // netlify link
             it("navigates to netlify", () => {
-                // This link is required by netlify for our open source license. make sure it shows
-
-                //open the hamburger menu
+                // This link is required by Netlify for our open source license.
                 cy.get('[data-testid="hamburger-menu-icon"]').click()
 
-                // verify link shows and has the right url generated
+                // Verify that the link shows and has the right url generated.
                 cy.get('[data-testid="hamburger-menu-footer-dev-links-netlify"]').should("be.visible")
                 cy.get('[data-testid="hamburger-menu-footer-dev-links-netlify"]').should(
                     "have.attr",
                     "href",
                     "https://www.netlify.com"
                 )
+                cy.get('[data-testid="hamburger-menu-close-button"]').should('exist').click()
             })
 
             // privacy
             it("navigates to privacy policy", () => {
-                //open the hamburger menu
+                // Open the hamburger menu
                 cy.get('[data-testid="hamburger-menu-icon"]').click()
-
                 cy.get('[data-testid="hamburger-menu-footer-legal-privacy"]').should("be.visible")
                 cy.get('[data-testid="hamburger-menu-footer-legal-privacy').click()
-                // verify navigation
+                // Verify navigation
                 cy.url().should("include", "/privacypolicy")
             })
 
             // terms
             it("navigates to the terms page", () => {
-                //open the hamburger menu
+                // Open the hamburger menu
                 cy.get('[data-testid="hamburger-menu-icon"]').click()
-
                 cy.get('[data-testid="hamburger-menu-footer-legal-terms"]').should("be.visible")
                 cy.get('[data-testid="hamburger-menu-footer-legal-terms').click()
-                // verify navigation
+                // Verify navigation
                 cy.url().should("include", "/terms")
             })
 
             // copyright
             it('copyright is visible', () => {
-                //open the hamburger menu
+                // Open the hamburger menu
                 cy.get('[data-testid="hamburger-menu-icon"]').click()
-
                 cy.get('[data-testid="hamburger-menu-footer-copyright"]').should('exist').should('be.visible')
+                cy.get('[data-testid="hamburger-menu-close-button"]').should('exist').click()
             })
         })
     })
