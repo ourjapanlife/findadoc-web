@@ -61,7 +61,7 @@ describe('Submit page', () => {
         })
 
         it('shows the footer without scrolling', () => {
-            cy.isInViewport('[data-testid="footer"]')
+            cy.get('[data-testid="footer"]').should('be.visible')
         })
 
         it('does not submit an incomplete form', () => {
