@@ -43,8 +43,6 @@
     </div>
 </template>
 
-
-
 <script setup lang="ts">
 import { computed, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
@@ -87,9 +85,7 @@ const submissionListItemTableColumns = computed(() => {
 })
 
 const handleClickToSubmissionForm = (id: string) => {
-    useModerationScreenStore().setActiveScreen(1)
+    useModerationScreenStore().setActiveScreen(ModerationScreen.editSubmission)
     modScreenStore.selectedSubmissionId = id
 }
-
-
 </script>
