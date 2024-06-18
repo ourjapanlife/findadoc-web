@@ -2,7 +2,7 @@
   <div class="w-24">
     <select
       v-model="selectedLocale"
-      class="rounded-full px-2 py-1 border-2 border-primary/80 drop-shadow-md text-primary-text bg-secondary-bg/5 hover:text-primary-hover transition-colors"
+      class="rounded-full  w-full px-1 border-2 border-primary/60 py-1.5 drop-shadow-md text-primary-text bg-primary-bg hover:bg-primary-hover/10 transition-all"
     >
       <option
         v-for="(localeOption) in localeStore.mvpLocaleDisplayOptions"
