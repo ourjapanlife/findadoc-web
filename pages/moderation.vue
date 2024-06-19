@@ -10,7 +10,7 @@
                 <div data-testid="unauthorized-message"
                     v-if="!authStore.isLoadingAuth && !authStore.isAdmin && !authStore.isModerator">
                     <div class="flex flex-col w-full h-full mt-16 mb-16 text-primary-text text-2xl font-bold
-                flex self-center justify-items-center justify-center text-center">
+                    self-center justify-items-center justify-center text-center">
                         <span>{{ $t('login.unauthorizedline1') }}</span>
                         <span>{{ $t('login.unauthorizedline2') }}</span>
                         <NuxtLink :to="'https://forms.gle/4E763qfaq46kEsn99'" target="_blank"

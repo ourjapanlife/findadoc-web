@@ -12,7 +12,7 @@ export const initializeAuth0 = () => {
             return auth0
         }
 
-        const isProduction = process.env.NODE_ENV === 'production'
+        const isProduction = process.env.NODE_ENV === 'production' && window.location.origin !== 'http://localhost:3000'
 
         const auth0Plugin = createAuth0({
             domain: "findadoc.jp.auth0.com",

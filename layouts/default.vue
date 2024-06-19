@@ -5,7 +5,7 @@
     <div data-testid="app" class="h-screen w-full flex flex-col font-sans text-primary-text bg-primary-bg">
         <TopNav />
         <NuxtPage />
-        <Footer class="portait:hidden" />
+        <Footer />
     </div>
 </template>
 

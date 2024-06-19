@@ -5,22 +5,59 @@ import enUS from '../../i18n/locales/en.json'
 describe(
     'Moderation dashboard',
     () => {
-        context('Landscape mode', () => {
-            before(() => {
+        context("Landscape mode", () => 
+            {  
+                before(() => {
                 cy.visit('/moderation')
                 // This wait time is to give the page time to load from Prod when ran in CI.
                 cy.wait(3000)
             })
-            beforeEach(() => {
-                // The resolution is in the beforeEach() instead of before() to
-                // prevent Cypress from defaulting to other screen sizes between tests.
-                cy.viewport(1920, 1080)
+                beforeEach(() => {
+                     // The resolution is in the beforeEach() instead of before() to
+                     // prevent Cypress from defaulting to other screen sizes between tests.
+                     cy.viewport(1920, 1080) 
                 cy.wait(500)
-            })
+                    cy.visit('/login')      
+                    Cypress.session.clearCurrentSessionData() 
+        
+                    // Wait for redirect to login form
+                    cy.wait(3000)
+        
+                    cy.origin('https://findadoc.jp.auth0.com/', () => {
+                        cy.get('input#username').should('be.visible').type('findadoctest@proton.me')
+                        cy.get('[data-action-button-primary]').should('be.visible').click()
+                        cy.get('input#password').should('be.visible').type('vCnL5J8agHg6m2f')
+                        cy.get('[data-action-button-primary]').should('be.visible').click()
+                    })
+                    
+                    cy.wait(3000)
+                    
+                    cy.url().should('include', '')
+                    
+                    cy.get("[data-testid=top-nav-mod-link]").click()
+                      
+                })
 
-            it('shows mod dashboard left navbar buttons', () => {
-                cy.get('[data-testid=mod-dashboard-leftnav-for-review]')
-                    .should('exist')
+                it.skip("it shows the moderation top nav", () => {
+                    cy.get('[data-testid="mod-submission-list-item-1"]').click()
+                    cy.get('[data-testid="mod-edit-submission-copy-submission-id"]').click()
+    
+                    // check that the value copied to the clipboard is the same that's displayed
+                    const clipboardResult = cy.window().then((win) => {
+                        return win.navigator.clipboard.readText()
+                    })
+    
+                    // the timeout is to give time for the clipboard to be read
+                    clipboardResult.should("exist", 10000)
+                })
+
+                after(() => {
+                    Cypress.session.clearCurrentSessionData() 
+                })
+
+            it("shows mod dashboard left navbar buttons", () => {
+                cy.get("[data-testid=mod-dashboard-leftnav-for-review]")
+                    .should("exist")
                     .should(
                         'include.text',
                         enUS.modDashboardLeftNav.forReview
@@ -41,22 +78,14 @@ describe(
                     )
             })
 
-            it.skip('it shows the moderation top nav', () => {
-                cy.get('[data-testid="mod-submission-list-item-1"]').click()
-                cy.get('[data-testid="mod-edit-submission-copy-submission-id"]').click()
-
-                // check that the value copied to the clipboard is the same that's displayed
-                const clipboardResult = cy.window().then(win => win.navigator.clipboard.readText())
-
-                // the timeout is to give time for the clipboard to be read
-                clipboardResult.should('exist', 10000)
-            })
+        
         })
     }
 )
 
 describe('Moderation Facility Submission Form', () => {
-    const findADocJapanAPIEndpoint = 'https://api.findadoc.jp/'
+       
+    context('Landscape mode', () => {
     const mockedSubmissionResponse = {
         data: {
             submissions: [
@@ -116,25 +145,54 @@ describe('Moderation Facility Submission Form', () => {
             ]
         }
     }
-    context('Landscape mode', () => {
-        beforeEach(() => {
-            // The resolution is in the beforeEach() instead of before() to
+        before(() => {
+                           // The resolution is in the beforeEach() instead of before() to
             // prevent Cypress from defaulting to other screen sizes between tests.
-            cy.viewport(1920, 1080)
-            cy.visit('/moderation')
-            cy.intercept('POST', findADocJapanAPIEndpoint, req => {
-                if (req.body.query && req.body.query.includes('query Submissions')) {
-                    req.reply({
-                        statusCode: 200,
-                        body: mockedSubmissionResponse
-                    })
-                }
-            }).as('getSubmissions')
-            cy.wait('@getSubmissions')
-            // This wait time is to give the page elements time to load.
-            cy.wait(2000)
-            cy.get('[data-testid="mod-submission-list-item-1"]').click()
-            cy.wait(2000)
+             cy.viewport(1920, 1080)
+
+                
+
+                cy.visit('/login')      
+                Cypress.session.clearCurrentSessionData() 
+
+                // Wait for redirect to login form
+                cy.wait(3000)
+
+                cy.origin('https://findadoc.jp.auth0.com/', () => {
+                    cy.get('input#username').should('be.visible').type('findadoctest@proton.me')
+                    cy.get('[data-action-button-primary]').should('be.visible').click()
+                    cy.get('input#password').should('be.visible').type('vCnL5J8agHg6m2f')
+                    cy.get('[data-action-button-primary]').should('be.visible').click()
+                })
+                cy.wait(3000)
+                
+                cy.intercept('POST', '**/', (req) => {
+                    req.continue((res) => {
+                        console.log(req.body.query);
+                        if (req.body.query && req.body.query.includes('query Submissions')) {
+                            res.send({
+                                statusCode: 200,
+                                body: mockedSubmissionResponse
+                            });
+                        }
+                    });
+                }).as('getSubmissions')
+                
+                cy.url().should('include', '')
+                
+                cy.get("[data-testid=top-nav-mod-link]").click()
+                
+                cy.wait('@getSubmissions', {timeout: 10000})
+                // This wait time is to give the page elements time to load.
+                cy.wait(2000)
+                cy.get('[data-testid="mod-submission-list-item-1"]').click()
+                cy.wait(2000)
+                      
+
+        })
+
+        after(() => {
+            Cypress.session.clearCurrentSessionData() 
         })
 
         it('contains the following input fields', () => {
@@ -186,46 +244,46 @@ describe('Moderation Facility Submission Form', () => {
         })
 
         it('should be display error messages', () => {
-            cy.get('[data-testid="submission-form-nameEn"]').find('input').type('立川中央病院').tab()
+            cy.get('[data-testid="submission-form-nameEn"]').find('input').clear().type('立川中央病院').realPress('Tab')
             cy.get('[data-testid="submission-form-nameEn"]').find('p').should('exist').contains('Invalid English Name')
 
-            cy.get('[data-testid="submission-form-nameJp"]').find('input').type('Tachikawa Hospital').tab()
+            cy.get('[data-testid="submission-form-nameJp"]').find('input').clear().type('Tachikawa Hospital').realPress('Tab')
             cy.get('[data-testid="submission-form-nameJp"]').find('p').should('exist').contains('Invalid Japanese Name')
 
-            cy.get('[data-testid="submission-form-phone"]').find('input').type('Hello').tab()
+            cy.get('[data-testid="submission-form-phone"]').find('input').clear().type('Hello').realPress('Tab')
             cy.get('[data-testid="submission-form-phone"]').find('p').should('exist').contains('Invalid Phone Number')
 
-            cy.get('[data-testid="submission-form-email"]').find('input').type('example').tab()
+            cy.get('[data-testid="submission-form-email"]').find('input').clear().type('example').realPress('Tab')
             cy.get('[data-testid="submission-form-email"]').find('p').should('exist').contains('Invalid Email Address')
 
-            cy.get('[data-testid="submission-form-website"]').find('input').type('example').tab()
+            cy.get('[data-testid="submission-form-website"]').find('input').clear().type('example').realPress('Tab')
             cy.get('[data-testid="submission-form-website"]').find('p').should('exist').contains('Invalid Website URL')
 
-            cy.get('[data-testid="submission-form-postalCode"]').find('input').type('180-0').tab()
+            cy.get('[data-testid="submission-form-postalCode"]').find('input').clear().type('180-0').realPress('Tab')
             cy.get('[data-testid="submission-form-postalCode"]').find('p').should('exist').contains('Invalid Postal Code')
 
-            cy.get('[data-testid="submission-form-cityEn"]').find('input').type('渋谷区').tab()
+            cy.get('[data-testid="submission-form-cityEn"]').find('input').clear().type('渋谷区').realPress('Tab')
             cy.get('[data-testid="submission-form-cityEn"]').find('p').should('exist').contains('Invalid English City Name')
 
-            cy.get('[data-testid="submission-form-addressLine1En"]').find('input').type('道の駅').tab()
+            cy.get('[data-testid="submission-form-addressLine1En"]').find('input').clear().type('道の駅').realPress('Tab')
             cy.get('[data-testid="submission-form-addressLine1En"]').find('p').should('exist').contains('Invalid English Address')
 
-            cy.get('[data-testid="submission-form-addressLine2En"]').find('input').type('道の駅').tab()
+            cy.get('[data-testid="submission-form-addressLine2En"]').find('input').clear().type('道の駅').realPress('Tab')
             cy.get('[data-testid="submission-form-addressLine2En"]').find('p').should('exist').contains('Invalid English Address')
 
-            cy.get('[data-testid=submission-form-cityJp]').find('input').type('Shibuya').tab()
+            cy.get('[data-testid=submission-form-cityJp]').find('input').clear().type('Shibuya').realPress('Tab')
             cy.get('[data-testid=submission-form-cityJp]').find('p').should('exist').contains('Invalid Japanese City Name')
 
-            cy.get('[data-testid="submission-form-addressLine1Jp"]').find('input').type('Peanutbutter street').tab()
+            cy.get('[data-testid="submission-form-addressLine1Jp"]').find('input').clear().type('Peanutbutter street').realPress('Tab')
             cy.get('[data-testid="submission-form-addressLine1Jp"]').should('exist').contains('Invalid Japanese Address')
 
-            cy.get('[data-testid="submission-form-addressLine2Jp"]').find('input').type('Jelly street').tab()
+            cy.get('[data-testid="submission-form-addressLine2Jp"]').find('input').clear().type('Jelly street').realPress('Tab')
             cy.get('[data-testid="submission-form-addressLine2Jp"]').should('exist').contains('Invalid Japanese Address')
 
-            cy.get('[data-testid="submission-form-mapLatitude"]').find('input').type('Not Number Latitude').tab()
+            cy.get('[data-testid="submission-form-mapLatitude"]').find('input').clear().type('Not Number Latitude').realPress('Tab')
             cy.get('[data-testid="submission-form-mapLatitude"]').find('p').should('exist').contains('Invalid Latitude')
 
-            cy.get('[data-testid="submission-form-mapLongitude"]').find('input').type('Not Number Longitude').tab()
+            cy.get('[data-testid="submission-form-mapLongitude"]').find('input').clear().type('Not Number Longitude').realPress('Tab')
             cy.get('[data-testid="submission-form-mapLongitude"]').find('p').should('exist').contains('Invalid Longitude')
         })
     })

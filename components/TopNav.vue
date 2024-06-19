@@ -57,7 +57,9 @@
                 >{{ $t('topNav.submit') }}
                 </NuxtLink>
                 <div data-testid="topnav-profile-section" v-if="authStore.isLoggedIn" class="flex text-primary">
-                    <NuxtLink :to="'/moderation'" class="hover:text-primary-hover transition-colors text-wrap mr-4">{{
+                    <NuxtLink :to="'/moderation'" class="hover:text-primary-hover transition-colors text-wrap mr-4"
+                    data-testid='top-nav-mod-link'
+                    >{{
                     $t('topNav.moderation') }}
                     </NuxtLink>
                     <NuxtLink :to="'/'" class="mr-4">
