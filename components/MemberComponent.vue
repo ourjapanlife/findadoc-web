@@ -54,7 +54,6 @@
 import SVGLinkedinIcon from '~/assets/icons/social-linkedin.svg'
 import SVGGithubIcon from '~/assets/icons/social-github.svg'
 import type { PropType } from "vue"
-import SmoothLoadingImage from './SmoothLoadingImage.vue';
 
 defineProps({
     avatarImg: {
