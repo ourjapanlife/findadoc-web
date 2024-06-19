@@ -1,5 +1,5 @@
 <template>
-    <div class="w-full">
+    <div class="overflow-y-auto w-full">
         <div class="flex flex-col items-center px-10 md:px-32">
             <SvgHeartPlus role="img" alt="pink heart with a white plus in the middle to symbolize health" title="heart icon"
                 class="my-4 h-32" />
@@ -30,9 +30,9 @@
             <div data-testid="members" id="members"
                 class="grid grid-cols-2 md:grid-cols-3 mx-4 gap-8 pb-12 md:pb-32">
                 <div data-testid="member" class="members-list grid"
-                    :key="index" v-for="(member, index) in data.members">
+                    :key="member.avatarImg" v-for="(member, index) in data.members">
                     <MemberComponent :avatarImg="member.avatarImg" :name="member.name" :title="member.title"
-                        :index=index :linkedInUrl="member.linkedInUrl" :githubUrl="member.githubUrl" />
+                        :indexForTests=index :linkedInUrl="member.linkedInUrl" :githubUrl="member.githubUrl" />
                 </div>
             </div>
         </div>

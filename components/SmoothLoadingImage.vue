@@ -1,7 +1,7 @@
 <template>
   
-    <SmoothLoadingImageFadeTransition><div v-show="!show.showing"><SVGLoadingIcon /></div></SmoothLoadingImageFadeTransition>
-   <SmoothLoadingImageFadeTransition><img v-show="show.showing" :data-testid=testId :class="`object-${objectStyling} rounded-${borderRadius} w-${width} h-${height}`" :src="src" @load="showImg()"/></SmoothLoadingImageFadeTransition>
+    <SmoothLoadingImageFadeTransition><div v-show="!isVisible"><SVGLoadingIcon /></div></SmoothLoadingImageFadeTransition>
+   <SmoothLoadingImageFadeTransition><img v-show="isVisible" :data-testid=testId :class="`object-${objectStyling} rounded-${borderRadius} w-${width} h-${height}`" :src="src" @load="showImg()"/></SmoothLoadingImageFadeTransition>
 
 </template>
 
@@ -41,16 +41,16 @@
   })
   
   const src:Ref<string | undefined> = ref()
-  const show = reactive({showing: false});
+  const isVisible:Ref<boolean> = ref(false)
   const showImg = function () {
-    show.showing = true
+    isVisible.value = true
   }
   
   watch(
     () => props.imgSrc,
     () => {
     src.value = props.imgSrc
-    show.showing = false
+    isVisible.value = false
   }, {immediate: true})
   
 
