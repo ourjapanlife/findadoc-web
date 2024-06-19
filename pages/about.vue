@@ -1,5 +1,5 @@
 <template>
-    <div class="overflow-y-auto w-full">
+    <div class="w-full">
         <div class="flex flex-col items-center px-10 md:px-32">
             <SvgHeartPlus role="img" alt="pink heart with a white plus in the middle to symbolize health" title="heart icon"
                 class="my-4 h-32" />
@@ -32,7 +32,7 @@
                 <div data-testid="member" class="members-list grid"
                     :key="index" v-for="(member, index) in data.members">
                     <MemberComponent :avatarImg="member.avatarImg" :name="member.name" :title="member.title"
-                        :linkedInUrl="member.linkedInUrl" :githubUrl="member.githubUrl" />
+                        :index=index :linkedInUrl="member.linkedInUrl" :githubUrl="member.githubUrl" />
                 </div>
             </div>
         </div>
@@ -41,6 +41,5 @@
 
 <script setup lang="ts">
 import data from "../member_directory/members.json"
-import MemberComponent from "~/components/MemberComponent.vue"
 import SvgHeartPlus from '~/assets/icons/heart-plus.svg'
 </script>

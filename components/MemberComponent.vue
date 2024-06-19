@@ -1,9 +1,13 @@
 <template>
     <div class="member flex flex-col items-center text-center">
-        <img
-            data-testid="member-avatar"
-            :src="avatarImg"
-            class="member-image object-cover rounded-full w-32 h-32"
+        <SmoothLoadingImage
+            :imgSrc="avatarImg"
+            :testId="`member-avatar-${index}`"
+            :alt="name"
+            object-styling="cover"
+            height="32"
+            width="32"
+            borderRadius="full"
         />
         <div
             data-testid="member-name"
@@ -50,11 +54,16 @@
 import SVGLinkedinIcon from '~/assets/icons/social-linkedin.svg'
 import SVGGithubIcon from '~/assets/icons/social-github.svg'
 import type { PropType } from "vue"
+import SmoothLoadingImage from './SmoothLoadingImage.vue';
 
 defineProps({
     avatarImg: {
         type: String,
         required: true,
+    },
+    index: {
+        type: Number,
+        require: true
     },
     name: {
         type: String,
@@ -71,6 +80,6 @@ defineProps({
     githubUrl: {
         type: [String, null] as PropType<string | null>,
         required: false,
-    },
+    }
 })
 </script>
