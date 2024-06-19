@@ -1,7 +1,7 @@
 <template>
   
     <SmoothLoadingImageFadeTransition><div v-show="!show.showing"><SVGLoadingIcon /></div></SmoothLoadingImageFadeTransition>
-   <SmoothLoadingImageFadeTransition><img v-show="show.showing" :class="`object-${objectStyling} rounded-${borderRadius} w-${width} h-${height}`" :src="src" @load="showImg()"/></SmoothLoadingImageFadeTransition>
+   <SmoothLoadingImageFadeTransition><img v-show="show.showing" :data-testid=testId :class="`object-${objectStyling} rounded-${borderRadius} w-${width} h-${height}`" :src="src" @load="showImg()"/></SmoothLoadingImageFadeTransition>
 
 </template>
 

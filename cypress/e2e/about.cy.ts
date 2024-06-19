@@ -45,7 +45,7 @@ describe('About page', () => {
         })
 
         it('shows member details', () => {
-            cy.get('[data-testid="member-avatar"]').should('exist')
+            cy.get('[data-testid="member-avatar-0"]').should('exist')
             cy.get('[data-testid="member-name"]').should('exist')
             cy.get('[data-testid="member-title"]').should('exist')
             cy.get('[data-testid="member-linkedin"]').should('exist')
@@ -87,7 +87,7 @@ describe('About page', () => {
         })
 
         it('shows member details', () => {
-            cy.get('[data-testid="member-avatar"]').should('exist')
+            cy.get('[data-testid="member-avatar-0"]').should('exist')
             cy.get('[data-testid="member-name"]').should('exist')
             cy.get('[data-testid="member-title"]').should('exist')
             cy.get('[data-testid="member-linkedin"]').should('exist')
