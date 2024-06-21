@@ -18,7 +18,7 @@
         "test:pinia:coverage": "vitest run --coverage",
         "test:e2e": "cypress run --e2e --browser chrome --record --key 04a1fe54-0011-407b-b7d7-fcb9b2daf1e6"
     },
-    "packageManager": "yarn@4.2.2",
+    "packageManager": "yarn@4.3.0",
     "engines": {
         "node": ">=21.3.0"
     },
