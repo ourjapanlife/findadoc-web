@@ -23,7 +23,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, type Ref } from 'vue'
+import { onMounted, ref, type Ref } from 'vue'
 import { useModerationFormInputStore } from '~/stores/moderationFormInputStore'
 
 const inputValue: Ref<string> = ref('')
@@ -35,6 +35,7 @@ const props = defineProps<{
     required: boolean
     invalidInputErrorMessage: string
     inputValidationCheck: (inputValue: string) => boolean
+    autofillValue: string
 }>()
 
 const store = useModerationFormInputStore()
@@ -48,4 +49,13 @@ const handleInput = (event: Event) => {
     inputValue.value = target.value
     store.setInputField(props.label, inputValue.value)
 }
+
+const setInitialValue = () => {
+    if (props.autofillValue) {
+        inputValue.value = props.autofillValue
+    }
+}
+onMounted(() => [
+    setInitialValue()
+])
 </script>

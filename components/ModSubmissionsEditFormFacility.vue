@@ -13,8 +13,9 @@
                 type="text"
                 :placeholder="$t('modSubmissionForm.placeholderTextFacilityNameEn')"
                 :required="true"
-                :input-validation-check="validateNameEn"
-                :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityNameEn')"
+                :inputValidationCheck="validateNameEn"
+                :invalidInputErrorMessage="$t('modSubmissionForm.inputErrorMessageFacilityNameEn')"
+                :autofillValue="moderationInputStore.nameEn"
             />
             <ModInputField
                 data-testid="submission-form-nameJp"
@@ -22,8 +23,9 @@
                 type="text"
                 :placeholder="$t('modSubmissionForm.placeholderTextFacilityNameJp')"
                 :required="true"
-                :input-validation-check="validateNameJp"
-                :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityNameJp')"
+                :inputValidationCheck="validateNameJp"
+                :invalidInputErrorMessage="$t('modSubmissionForm.inputErrorMessageFacilityNameJp')"
+                :autofillValue="moderationInputStore.nameJp"
             />
             <ModInputField
                 data-testid="submission-form-phone"
@@ -31,8 +33,9 @@
                 type="text"
                 :placeholder="$t('modSubmissionForm.placeholderTextFacilityPhoneNumber')"
                 :required="true"
-                :input-validation-check="validatePhoneNumber"
-                :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityPhoneNumber')"
+                :inputValidationCheck="validatePhoneNumber"
+                :invalidInputErrorMessage="$t('modSubmissionForm.inputErrorMessageFacilityPhoneNumber')"
+                :autofillValue="moderationInputStore.phone"
             />
             <ModInputField
                 data-testid="submission-form-email"
@@ -40,8 +43,9 @@
                 type="email"
                 :placeholder="$t('modSubmissionForm.placeholderTextFacilityEmail')"
                 :required="false"
-                :input-validation-check="validateEmail"
-                :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityEmail')"
+                :inputValidationCheck="validateEmail"
+                :invalidInputErrorMessage="$t('modSubmissionForm.inputErrorMessageFacilityEmail')"
+                :autofillValue="moderationInputStore.email"
             />
             <ModInputField
                 data-testid="submission-form-website"
@@ -49,8 +53,9 @@
                 type="url"
                 :placeholder="$t('modSubmissionForm.placeholderTextFacilityWebsite')"
                 :required="false"
-                :input-validation-check="validateWebsite"
-                :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityWebsite')"
+                :inputValidationCheck="validateWebsite"
+                :invalidInputErrorMessage="$t('modSubmissionForm.inputErrorMessageFacilityWebsite')"
+                :autofillValue="moderationInputStore.website"
             />
         </div>
 
@@ -64,17 +69,28 @@
                 type="text"
                 :placeholder="$t('modSubmissionForm.placeholderTextFacilityPostalCode')"
                 :required="true"
-                :input-validation-check="validatePostalCode"
-                :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityPostalCode')"
+                :inputValidationCheck="validatePostalCode"
+                :invalidInputErrorMessage="$t('modSubmissionForm.inputErrorMessageFacilityPostalCode')"
+                :autofillValue="moderationInputStore.postalCode"
             />
             <div class="flex flex-col mt-4">
-                <label for="Prefecture Japan" class="mb-2 text-primary-text text-sm font-bold font-sans">{{$t('modSubmissionForm.labelFacilityPrefectureEn')}}</label>
-                <select 
-                data-testid="submission-form-prefectureEn"
-                name="Prefecture Japan" id="1" class="mb-5 px-3 py-3.5 w-96 h-12 bg-white rounded-lg border border-primary-text-muted text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
-                v-model="moderationInputStore.prefectureEn"
+                <label for="Prefecture Japan" class="mb-2 text-primary-text text-sm font-bold font-sans">
+                    {{$t('modSubmissionForm.labelFacilityPrefectureEn')}}
+                </label>
+                <select
+                    id="1"
+                    v-model="moderationInputStore.prefectureEn"
+                    data-testid="submission-form-prefectureEn"
+                    name="Prefecture Japan"
+                    class="mb-5 px-3 py-3.5 w-96 h-12 bg-white rounded-lg border border-primary-text-muted
+                    text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
                 >
-                    <option v-for="(prefecture, index) in moderationInputStore.listPrefectureJapanEn" :key="index">{{ prefecture }}</option>
+                    <option
+                        v-for="(prefecture, index) in moderationInputStore.listPrefectureJapanEn"
+                        :key="index"
+                    >
+                        {{ prefecture }}
+                    </option>
                 </select>
             </div>
             <ModInputField
@@ -83,8 +99,9 @@
                 type="text"
                 :placeholder="$t('modSubmissionForm.placeholderTextFacilityCityEn')"
                 :required="true"
-                :input-validation-check="validateCityEn"
-                :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityCityEn')"
+                :inputValidationCheck="validateCityEn"
+                :invalidInputErrorMessage="$t('modSubmissionForm.inputErrorMessageFacilityCityEn')"
+                :autofillValue="moderationInputStore.cityEn"
             />
             <ModInputField
                 data-testid="submission-form-addressLine1En"
@@ -92,8 +109,9 @@
                 type="text"
                 :placeholder="$t('modSubmissionForm.placeholderTextFacilityAddressLine1En')"
                 :required="true"
-                :input-validation-check="validateAddressLineEn"
-                :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityAddressLine1En')"
+                :inputValidationCheck="validateAddressLineEn"
+                :invalidInputErrorMessage="$t('modSubmissionForm.inputErrorMessageFacilityAddressLine1En')"
+                :autofillValue="moderationInputStore.addressLine1En"
             />
             <ModInputField
                 data-testid="submission-form-addressLine2En"
@@ -101,19 +119,28 @@
                 type="text"
                 :placeholder="$t('modSubmissionForm.placeholderTextFacilityAddressLine2En')"
                 :required="true"
-                :input-validation-check="validateAddressLineEn"
-                :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityAddressLine2En')"
+                :inputValidationCheck="validateAddressLineEn"
+                :invalidInputErrorMessage="$t('modSubmissionForm.inputErrorMessageFacilityAddressLine2En')"
+                :autofillValue="moderationInputStore.addressLine2En"
             />
             <div class="flex flex-col mt-4">
-                <label for="Prefecture Japan" class="mb-2 text-primary-text text-sm font-bold font-sans">{{ $t('modSubmissionForm.labelFacilityPrefectureJp') }}</label>
-                <select 
-                data-testid="submission-form-prefectureJp"
-                name="Prefecture Japan" id="1" class="mb-5 px-3 py-3.5 w-96 h-12 bg-white rounded-lg border border-primary-text-muted text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
-                v-model="moderationInputStore.prefectureJp"
+                <label
+                    for="Prefecture Japan"
+                    class="mb-2 text-primary-text text-sm font-bold font-sans"
                 >
-                    <option 
-                    v-for="(prefecture, index) in moderationInputStore.listPrefectureJapanJp" 
-                    :key="index"
+                    {{ $t('modSubmissionForm.labelFacilityPrefectureJp') }}
+                </label>
+                <select
+                    id="1"
+                    v-model="moderationInputStore.prefectureJp"
+                    data-testid="submission-form-prefectureJp"
+                    name="Prefecture Japan"
+                    class="mb-5 px-3 py-3.5 w-96 h-12 bg-white rounded-lg border border-primary-text-muted
+                    text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
+                >
+                    <option
+                        v-for="(prefecture, index) in moderationInputStore.listPrefectureJapanJp"
+                        :key="index"
                     >
                         {{ prefecture }}
                     </option>
@@ -125,8 +152,9 @@
                 type="text"
                 :placeholder="$t('modSubmissionForm.placeholderTextFacilityCityJp')"
                 :required="true"
-                :input-validation-check="validateCityJp"
-                :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityCityJp')"
+                :inputValidationCheck="validateCityJp"
+                :invalidInputErrorMessage="$t('modSubmissionForm.inputErrorMessageFacilityCityJp')"
+                :autofillValue="moderationInputStore.cityJp"
             />
             <ModInputField
                 data-testid="submission-form-addressLine1Jp"
@@ -134,8 +162,9 @@
                 type="text"
                 :placeholder="$t('modSubmissionForm.placeholderTextFacilityAddressLine1Jp')"
                 :required="true"
-                :input-validation-check="validateAddressLineJp"
-                :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityAddressLine1Jp')"
+                :inputValidationCheck="validateAddressLineJp"
+                :invalidInputErrorMessage="$t('modSubmissionForm.inputErrorMessageFacilityAddressLine1Jp')"
+                :autofillValue="moderationInputStore.addressLine1Jp"
             />
             <ModInputField
                 data-testid="submission-form-addressLine2Jp"
@@ -143,8 +172,9 @@
                 type="text"
                 :placeholder="$t('modSubmissionForm.placeholderTextFacilityAddressLine2Jp')"
                 :required="true"
-                :input-validation-check="validateAddressLineJp"
-                :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityAddressLine2Jp')"
+                :inputValidationCheck="validateAddressLineJp"
+                :invalidInputErrorMessage="$t('modSubmissionForm.inputErrorMessageFacilityAddressLine2Jp')"
+                :autofillValue="moderationInputStore.addressLine2Jp"
             />
         </div>
 
@@ -158,8 +188,9 @@
                 type="url"
                 :placeholder="$t('modSubmissionForm.placeholderTextFacilityGoogleMapsUrl')"
                 :required="true"
-                :input-validation-check="validateWebsite"
-                :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityGoogleMapsUrl')"
+                :inputValidationCheck="validateWebsite"
+                :invalidInputErrorMessage="$t('modSubmissionForm.inputErrorMessageFacilityGoogleMapsUrl')"
+                :autofillValue="moderationInputStore.googlemapsURL"
             />
             <ModInputField
                 data-testid="submission-form-mapLatitude"
@@ -167,8 +198,9 @@
                 type="text"
                 :placeholder="$t('modSubmissionForm.placeholderTextFacilityMapLatitude')"
                 :required="true"
-                :input-validation-check="validateFloat"
-                :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityMapLatitude')"
+                :inputValidationCheck="validateFloat"
+                :invalidInputErrorMessage="$t('modSubmissionForm.inputErrorMessageFacilityMapLatitude')"
+                :autofillValue="moderationInputStore.mapLatitude"
             />
             <ModInputField
                 data-testid="submission-form-mapLongitude"
@@ -176,8 +208,9 @@
                 type="text"
                 :placeholder="$t('modSubmissionForm.placeholderTextFacilityMapLongitude')"
                 :required="true"
-                :input-validation-check="validateFloat"
-                :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityMapLongitude')"
+                :inputValidationCheck="validateFloat"
+                :invalidInputErrorMessage="$t('modSubmissionForm.inputErrorMessageFacilityMapLongitude')"
+                :autofillValue="moderationInputStore.mapLongitude"
             />
         </div>
         <ModHealthcareProfessionalSearchbar
@@ -195,7 +228,8 @@
 
 <script lang="ts" setup>
 import { useModerationFormInputStore } from '~/stores/moderationFormInputStore'
-import { useModerationSubmissionsStore } from '~/stores/moderationSubmissionsStore';
+import { useModerationSubmissionsStore } from '~/stores/moderationSubmissionsStore'
+import type { Submission } from '~/typedefs/gqlTypes'
 import { validateAddressLineEn, validateAddressLineJp, validateNameEn, validateNameJp, validatePhoneNumber, validateCityEn, validateEmail, validateFloat, validatePostalCode, validateWebsite, validateCityJp } from '~/utils/formValidations'
 
 const moderationInputStore = useModerationFormInputStore()
@@ -206,11 +240,10 @@ moderationSubmissionStore.filterSelectedSubmission(formSubmissionId)
 
 const formSubmissionData = moderationSubmissionStore.selectedSubmissionData
 
-moderationInputStore.autofillEditSubmissionForm(formSubmissionData)
+autofillEditSubmissionForm(formSubmissionData)
 
 const validateFields = (e: Event) => {
     e.preventDefault()
-    
     const isNameEnValid: boolean = validateNameEn(moderationInputStore.nameEn)
     const isNameJpValid: boolean = validateNameJp(moderationInputStore.nameJp)
     const isPhoneValid: boolean = validatePhoneNumber(moderationInputStore.phone)
@@ -225,7 +258,6 @@ const validateFields = (e: Event) => {
     const isPostalCodeValid: boolean = validatePostalCode(moderationInputStore.postalCode)
     const isLatitudeValid: boolean = validateFloat(moderationInputStore.mapLatitude)
     const isLongitudeValid: boolean = validateFloat(moderationInputStore.mapLongitude)
-    
     if (
         !isNameEnValid ||
         !isNameJpValid ||
@@ -245,8 +277,36 @@ const validateFields = (e: Event) => {
         e.preventDefault()
         return
     }
-    
     moderationInputStore.resetForm()
     console.log('Fetching data')
+}
+
+function autofillEditSubmissionForm(submissionData: Submission | undefined) {
+    for (const key in submissionData) {
+        if (submissionData[key as keyof Submission]) {
+            switch (key) {
+                case 'facility':
+                    moderationInputStore.nameEn = submissionData['facility']?.nameEn || ''
+                    moderationInputStore.nameJp = submissionData['facility']?.nameJa || ''
+                    moderationInputStore.phone = submissionData['facility']?.contact?.phone || ''
+                    moderationInputStore.email = submissionData['facility']?.contact?.email || ''
+                    moderationInputStore.website = submissionData['facility']?.contact?.website || ''
+                    moderationInputStore.postalCode = submissionData['facility']?.contact?.address.postalCode || ''
+                    moderationInputStore.prefectureEn = submissionData['facility']?.contact?.address.prefectureEn || ''
+                    moderationInputStore.cityEn = submissionData['facility']?.contact?.address.cityEn || ''
+                    moderationInputStore.addressLine1En = submissionData['facility']?.contact?.address.addressLine1En || ''
+                    moderationInputStore.addressLine2En = submissionData['facility']?.contact?.address.addressLine2En || ''
+                    moderationInputStore.prefectureJp = submissionData['facility']?.contact?.address.prefectureJa || ''
+                    moderationInputStore.cityJp = submissionData['facility']?.contact?.address.cityJa || ''
+                    moderationInputStore.addressLine1Jp = submissionData['facility']?.contact?.address.addressLine1Ja || ''
+                    moderationInputStore.addressLine2Jp = submissionData['facility']?.contact?.address.addressLine2Ja || ''
+                    moderationInputStore.mapLatitude = submissionData['facility']?.mapLatitude?.toString() || ''
+                    moderationInputStore.mapLongitude = submissionData['facility']?.mapLongitude?.toString() || ''
+                    break
+                case 'googleMapsUrl':
+                    moderationInputStore.googlemapsURL = submissionData['facility']?.contact?.googleMapsUrl || submissionData['googleMapsUrl']
+            }
+        }
+    }
 }
 </script>
