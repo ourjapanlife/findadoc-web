@@ -10,7 +10,7 @@ describe('Privacy Policy page', () => {
         })
 
         it('does not show the hamburger component', () => {
-            cy.get('[data-testid="hamburger-menu-icon"]').should("not.be.visible")
+            cy.get('[data-testid="hamburger-menu-icon"]').should('not.be.visible')
         })
 
         it('has a heading', () => {
@@ -24,8 +24,6 @@ describe('Privacy Policy page', () => {
         it('shows the footer without scrolling', () => {
             cy.get('[data-testid="footer"]').should('be.visible')
         })
-
-
     })
 
     context('Portrait mode', () => {
@@ -39,12 +37,11 @@ describe('Privacy Policy page', () => {
         })
 
         it('does not show the landscape searchbar', () => {
-            cy.get('[data-testid="landscape-searchbar"]').should("not.be.visible")
+            cy.get('[data-testid="landscape-searchbar"]').should('not.be.visible')
         })
 
         it('does not show the footer', () => {
             cy.get('[data-testid="footer"]').should('not.exist')
         })
-
     })
 })

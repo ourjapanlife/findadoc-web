@@ -1,48 +1,98 @@
 <template>
     <div class="flex flex-0 max-w-4xl">
-        <div id="search-fields" class="grid-cols-3 mx-4">
+        <div
+            id="search-fields"
+            class="grid-cols-3 mx-4"
+        >
             <div class="search-specialty col-span-1 inline-block w-1/3 py-4">
-                <select v-model="selectedSpecialty" class="rounded-l-full rounded-r-none w-full px-1 border-2 border-primary/60
-                    py-1.5 drop-shadow-md text-primary-text bg-primary-bg hover:bg-primary-hover/10 transition-all">
-                    <option value="" class="text-primary-text-muted hidden" disabled selected>
+                <select
+                    v-model="selectedSpecialty"
+                    class="rounded-l-full rounded-r-none w-full px-1 border-2 border-primary/60
+                    py-1.5 drop-shadow-md text-primary-text bg-primary-bg hover:bg-primary-hover/10 transition-all"
+                >
+                    <option
+                        value=""
+                        class="text-primary-text-muted hidden"
+                        disabled
+                        selected
+                    >
                         {{ $t('searchBar.selectSpecialty') }}
                     </option>
-                    <option :key="specialty.code" :value="specialty.code"
-                        v-for="(specialty, index) in specialtyDropdownOptions">
+                    <option
+                        v-for="(specialty) in specialtyDropdownOptions"
+                        :key="specialty.code"
+                        :value="specialty.code"
+                    >
                         {{ specialty.displayText }}
                     </option>
                 </select>
             </div>
             <div class="search-location col-span-1 inline-block w-1/3 py-4">
-                <select v-model="selectedLocation" class="w-full px-1 border-y-2 border-primary/60 py-1.5 drop-shadow-md
-                        text-primary-text bg-primary-bg hover:bg-primary-hover/10 transition-all">
-                    <option value="" class="text-primary-text-muted hidden" disabled selected>
+                <select
+                    v-model="selectedLocation"
+                    class="w-full px-1 border-y-2 border-primary/60 py-1.5 drop-shadow-md
+                        text-primary-text bg-primary-bg hover:bg-primary-hover/10 transition-all"
+                >
+                    <option
+                        value=""
+                        class="text-primary-text-muted hidden"
+                        disabled
+                        selected
+                    >
                         {{ $t('searchBar.selectLocation') }}
                     </option>
                     <option>{{ placeHolderTextDisplay }}</option>
-                    <option :key="cityDetails.cityDisplayText" :value="cityDetails.cityDisplayText" v-for="(cityDetails) in citySearchBarDisplayText">
-                       {{ cityDetails.cityDisplayText }}: ({{ cityDetails.cityOccurrenceCount }})
+                    <option
+                        v-for="(cityDetails) in citySearchBarDisplayText"
+                        :key="cityDetails.cityDisplayText"
+                        :value="cityDetails.cityDisplayText"
+                    >
+                        {{ cityDetails.cityDisplayText }}: ({{ cityDetails.cityOccurrenceCount }})
                     </option>
                 </select>
             </div>
             <div class="search-language col-span-1 inline-block w-1/3 py-4">
-                <select v-model="selectedLanguage" class="rounded-r-full rounded-l-none w-full px-1 border-2 border-primary/60 py-1.5
+                <select
+                    v-model="selectedLanguage"
+                    class="rounded-r-full rounded-l-none w-full px-1 border-2 border-primary/60 py-1.5
                         drop-shadow-md text-primary-text bg-primary-bg hover:bg-primary-hover/10 transition-all"
-                    data-testid="search-bar-language">
-                    <option value="" class="text-primary-text-muted hidden" disabled selected>
+                    data-testid="search-bar-language"
+                >
+                    <option
+                        value=""
+                        class="text-primary-text-muted hidden"
+                        disabled
+                        selected
+                    >
                         {{ $t('searchBar.selectLanguage') }}
                     </option>
-                    <option :key="language.code" :value="language.code" v-for="(language, index) in languageDropdownOptions">
+                    <option
+                        v-for="(language) in languageDropdownOptions"
+                        :key="language.code"
+                        :value="language.code"
+                    >
                         {{ language.simpleText }}
                     </option>
                 </select>
             </div>
         </div>
-        <div id="search-button" class="flex items-center">
-            <button id="searchButton" class="flex flex-0 flex-row rounded-full bg-primary w-28 pl-1 pr-2 py-2 text-sm align-middle justify-center
-                    hover:bg-primary-hover transition-all" @click="search" data-testid="search-button">
-                <SVGSearchIcon role="img" alt="search icon" title="search icon"
-                    class="search-icon w-5 h-5 mr-1 fill-primary-text-inverted" />
+        <div
+            id="search-button"
+            class="flex items-center"
+        >
+            <button
+                id="searchButton"
+                class="flex flex-0 flex-row rounded-full bg-primary w-28 pl-1 pr-2 py-2 text-sm align-middle justify-center
+                    hover:bg-primary-hover transition-all"
+                data-testid="search-button"
+                @click="search"
+            >
+                <SVGSearchIcon
+                    role="img"
+                    alt="search icon"
+                    title="search icon"
+                    class="search-icon w-5 h-5 mr-1 fill-primary-text-inverted"
+                />
                 <span class="self-center text-primary-text-inverted">{{ $t('searchBar.search') }}</span>
             </button>
         </div>
@@ -50,12 +100,12 @@
 </template>
 
 <script setup lang="ts">
-import SVGSearchIcon from '~/assets/icons/search-icon.svg'
 import { ref, watchEffect, type Ref } from 'vue'
+import SVGSearchIcon from '~/assets/icons/search-icon.svg'
 import { useSearchResultsStore } from '~/stores/searchResultsStore.js'
 import { useLocationsStore } from '~/stores/locationsStore.js'
-import { useSpecialtiesStore, type  SpecialtyDisplayOption } from '~/stores/specialtiesStore.js'
-import { Locale, Specialty } from "~/typedefs/gqlTypes.js"
+import { useSpecialtiesStore, type SpecialtyDisplayOption } from '~/stores/specialtiesStore.js'
+import type { Locale, Specialty } from '~/typedefs/gqlTypes.js'
 import { useLocaleStore, type LocaleDisplay } from '~/stores/localeStore.js'
 
 const localeStore = useLocaleStore()
@@ -75,34 +125,34 @@ const locationDropdownOptions: Ref<string[]> = ref(locationsStore.citiesDisplayO
 const specialtyDropdownOptions: Ref<SpecialtyDisplayOption[]> = ref(specialtiesStore.specialtyDisplayOptions)
 const languageDropdownOptions: Ref<LocaleDisplay[]> = ref(languageOptions)
 
-const selectedSpecialty: Ref<Specialty | String> = ref('')
+const selectedSpecialty: Ref<Specialty | string> = ref('')
 const selectedLocation: Ref<string> = ref('')
-const selectedLanguage: Ref<Locale | String> = ref('')
+const selectedLanguage: Ref<Locale | string> = ref('')
 
-const placeHolderTextDisplay = "----Any----"
+const placeHolderTextDisplay = '----Any----'
 
 interface CityDisplayItems {
     [cityName: string]: {
-    cityDisplayText: string,
-    cityOccurrenceCount: number
+        cityDisplayText: string
+        cityOccurrenceCount: number
     }
 }
 function createCityDisplayText() {
-    const cityDisplayTextObject: CityDisplayItems = {};
+    const cityDisplayTextObject: CityDisplayItems = {}
 
     const cities = locationsStore.citiesDisplayOptions
 
-    cities.forEach((city) => {
+    cities.forEach(city => {
         if (city === placeHolderTextDisplay) {
-            return;
+            return
         }
         if (cityDisplayTextObject[city]) {
             cityDisplayTextObject[city].cityOccurrenceCount += 1
         } else {
-            cityDisplayTextObject[city] =  {
-            cityDisplayText: city,
-            cityOccurrenceCount: 1
-        };
+            cityDisplayTextObject[city] = {
+                cityDisplayText: city,
+                cityOccurrenceCount: 1
+            }
         }
     })
 

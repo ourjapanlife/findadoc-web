@@ -116,8 +116,7 @@
                     to="/privacypolicy"
                     class=""
                     data-testid="privacy-link"
-                    >here</NuxtLink
-                >. Please review the Privacy Policy to understand our practices.
+                >here</NuxtLink>. Please review the Privacy Policy to understand our practices.
             </p>
             <p
                 class="mb-10 text-rose-400 text-3xl font-bold font-['Noto Sans JP']"

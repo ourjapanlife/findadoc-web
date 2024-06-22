@@ -13,7 +13,6 @@ describe('Submit page', () => {
             // prevent Cypress from defaulting to other screen sizes between tests.
             cy.viewport(1920, 1080)
             cy.wait(500)
-
         })
 
         it('shows the desktop top nav', () => {
@@ -21,7 +20,7 @@ describe('Submit page', () => {
         })
 
         it('does not show the hamburger component', () => {
-            cy.get('[data-testid="hamburger-menu-icon"]').should("not.be.visible")
+            cy.get('[data-testid="hamburger-menu-icon"]').should('not.be.visible')
         })
 
         it('has a heading', () => {
@@ -54,7 +53,7 @@ describe('Submit page', () => {
 
         it('has a textarea for notes', () => {
             cy.get('[data-testid="submit-input-notes"]').should('have.match', 'textarea')
-        });
+        })
 
         it('has a submit button', () => {
             cy.get('[data-testid="submit-submitbutton"]').should('have.match', 'button')
@@ -67,7 +66,7 @@ describe('Submit page', () => {
         it('does not submit an incomplete form', () => {
             cy.get('[data-testid="submit-submitbutton"]').click()
             cy.get('[data-testid="submit-completed"]').should('not.be.visible')
-        });
+        })
 
         it.skip('submits a complete form', () => {
             cy.get('[data-testid="submit-input-googlemaps"]').type('https://example.com')
@@ -75,12 +74,12 @@ describe('Submit page', () => {
             cy.get('[data-testid="submit-select-language1"]').select('日本語 (Japan)')
             cy.get('[data-testid="submit-submitbutton"]').click()
             cy.get('[data-testid="submit-completed"]').should('be.visible')
-        });
+        })
 
         it('requires a URL starting with https://', () => {
             cy.get('[data-testid="submit-input-googlemaps"]').type('http://example.com')
             cy.contains(enUS.submitPage.googleMapsValidation).should('be.visible')
-        });
+        })
 
         it('requires a last name of 30 characters or less', () => {
             cy.get('[data-testid="submit-input-lastname"]').type(' ')
@@ -88,14 +87,13 @@ describe('Submit page', () => {
             cy.get('[data-testid="submit-input-lastname"]').type('some last name under 30 characters')
             cy.contains(enUS.submitPage.lastNameValidation).should('not.be.visible')
             cy.get('[data-testid="submit-input-lastname"]').type('a'.repeat(80), { delay: 0 }).invoke('val').should('have.length', 30)
-        });
+        })
 
         it('requires Spoken Language 1 to be selected', () => {
             cy.contains(enUS.submitPage.spokenLanguageValidation).should('be.visible')
             cy.get('[data-testid="submit-select-language1"]').select('日本語 (Japan)')
             cy.contains(enUS.submitPage.spokenLanguageValidation).should('not.be.visible')
-        });
-
+        })
     })
 
     context('Portrait mode', () => {
@@ -118,12 +116,11 @@ describe('Submit page', () => {
         })
 
         it('does not show the landscape searchbar', () => {
-            cy.get('[data-testid="landscape-searchbar"]').should("not.be.visible")
+            cy.get('[data-testid="landscape-searchbar"]').should('not.be.visible')
         })
 
         it('does not show the footer', () => {
             cy.get('[data-testid="footer"]').should('not.exist')
         })
-
     })
 })

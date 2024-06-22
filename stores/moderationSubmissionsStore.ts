@@ -1,11 +1,11 @@
-import { gql } from "graphql-request"
-import { defineStore } from "pinia"
-import { gqlClient } from "../utils/graphql.js"
-import { type Submission } from "~/typedefs/gqlTypes.js"
+import { gql } from 'graphql-request'
+import { defineStore } from 'pinia'
 import { ref, type Ref } from 'vue'
+import { gqlClient } from '../utils/graphql.js'
+import { type Submission } from '~/typedefs/gqlTypes.js'
 
 export const useModerationSubmissionsStore = defineStore(
-    "submissionsStore",
+    'submissionsStore',
     () => {
         const submissionsData: Ref<Submission[]> = ref([])
 
@@ -22,8 +22,8 @@ async function querySubmissions() {
     try {
         const submissionsFilters = {
             filters: {
-                id: undefined,
-            },
+                id: undefined
+            }
         }
 
         const result = await gqlClient.request<{ submissions: Submission[] }>(

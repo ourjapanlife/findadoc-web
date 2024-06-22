@@ -6,14 +6,14 @@
 </template>
 
 <script lang="ts" setup>
-import { useSubmissionStore } from "~/stores/submissionStore";
-import { nextTick, onMounted } from "vue";
+import { nextTick, onMounted } from 'vue'
+import { useSubmissionStore } from '~/stores/submissionStore'
 
-const store = useSubmissionStore();
+const store = useSubmissionStore()
 
 onMounted(async () => {
-    await nextTick();
+    await nextTick()
 
-    store.resetForm();
-});
+    store.resetForm()
+})
 </script>

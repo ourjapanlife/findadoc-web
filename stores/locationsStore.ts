@@ -1,10 +1,10 @@
 import { gql } from 'graphql-request'
 import { defineStore } from 'pinia'
 import { ref, type Ref } from 'vue'
-import { Locale, type Facility, type FacilitySearchFilters } from '~/typedefs/gqlTypes.js'
+import { gqlClient } from '../utils/graphql.js'
 import { useLoadingStore } from './loadingStore.js'
 import { useLocaleStore } from './localeStore.js'
-import { gqlClient } from '../utils/graphql.js'
+import { Locale, type Facility, type FacilitySearchFilters } from '~/typedefs/gqlTypes.js'
 
 export const useLocationsStore = defineStore('locationsStore', () => {
     const citiesDisplayOptions: Ref<string[]> = ref([])
@@ -47,7 +47,7 @@ async function queryFacilities(): Promise<Facility[]> {
                 nameEn: undefined,
                 nameJa: undefined,
                 orderBy: undefined,
-                updatedDate: undefined,
+                updatedDate: undefined
             } satisfies FacilitySearchFilters
         }
 
@@ -55,7 +55,7 @@ async function queryFacilities(): Promise<Facility[]> {
         return result?.facilities ?? []
     } catch (error) {
         console.error(`Error getting facilities for dropdown: ${JSON.stringify(error)}`)
-        alert(`Error getting data! Please contact our support team by clicking the bottom right link on the page!`)
+        alert('Error getting data! Please contact our support team by clicking the bottom right link on the page!')
         return []
     }
 }

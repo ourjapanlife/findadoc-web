@@ -3,7 +3,10 @@
         <div v-if="store.activeScreen === ModerationScreen.dashboard">
             <ModSubmissionListContainer />
         </div>
-        <div class="h-full" v-else-if="store.activeScreen === ModerationScreen.editSubmission">
+        <div
+            v-else-if="store.activeScreen === ModerationScreen.editSubmission"
+            class="h-full"
+        >
             <ModSubmissionsEditFormFacility />
         </div>
     </div>
@@ -11,8 +14,6 @@
 
 <script setup lang="ts">
 import { useModerationScreenStore, ModerationScreen } from '~/stores/moderationScreenStore'
-import ModSubmissionListContainer from './ModSubmissionListContainer.vue'
 
 const store = useModerationScreenStore()
-
 </script>

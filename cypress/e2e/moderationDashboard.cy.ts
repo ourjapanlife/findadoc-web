@@ -1,11 +1,11 @@
-import "cypress-real-events"
-import "cypress-plugin-tab"
-import enUS from "../../i18n/locales/en.json"
+import 'cypress-real-events'
+import 'cypress-plugin-tab'
+import enUS from '../../i18n/locales/en.json'
 
 describe(
-    "Moderation dashboard",
+    'Moderation dashboard',
     () => {
-        context("Landscape mode", () => {
+        context('Landscape mode', () => {
             before(() => {
                 cy.visit('/moderation')
                 // This wait time is to give the page time to load from Prod when ran in CI.
@@ -18,40 +18,38 @@ describe(
                 cy.wait(500)
             })
 
-            it("shows mod dashboard left navbar buttons", () => {
-                cy.get("[data-testid=mod-dashboard-leftnav-for-review]")
-                    .should("exist")
+            it('shows mod dashboard left navbar buttons', () => {
+                cy.get('[data-testid=mod-dashboard-leftnav-for-review]')
+                    .should('exist')
                     .should(
-                        "include.text",
+                        'include.text',
                         enUS.modDashboardLeftNav.forReview
                     )
 
-                cy.get("[data-testid=mod-dashboard-leftnav-approved]")
-                    .should("exist")
+                cy.get('[data-testid=mod-dashboard-leftnav-approved]')
+                    .should('exist')
                     .should(
-                        "include.text",
+                        'include.text',
                         enUS.modDashboardLeftNav.approved
                     )
 
-                cy.get("[data-testid=mod-dashboard-leftnav-rejected]")
-                    .should("exist")
+                cy.get('[data-testid=mod-dashboard-leftnav-rejected]')
+                    .should('exist')
                     .should(
-                        "include.text",
+                        'include.text',
                         enUS.modDashboardLeftNav.rejected
                     )
             })
 
-            it.skip("it shows the moderation top nav", () => {
+            it.skip('it shows the moderation top nav', () => {
                 cy.get('[data-testid="mod-submission-list-item-1"]').click()
                 cy.get('[data-testid="mod-edit-submission-copy-submission-id"]').click()
 
                 // check that the value copied to the clipboard is the same that's displayed
-                const clipboardResult = cy.window().then((win) => {
-                    return win.navigator.clipboard.readText()
-                })
+                const clipboardResult = cy.window().then(win => win.navigator.clipboard.readText())
 
                 // the timeout is to give time for the clipboard to be read
-                clipboardResult.should("exist", 10000)
+                clipboardResult.should('exist', 10000)
             })
         })
     }
@@ -124,14 +122,14 @@ describe('Moderation Facility Submission Form', () => {
             // prevent Cypress from defaulting to other screen sizes between tests.
             cy.viewport(1920, 1080)
             cy.visit('/moderation')
-            cy.intercept('POST', findADocJapanAPIEndpoint, (req) => {
+            cy.intercept('POST', findADocJapanAPIEndpoint, req => {
                 if (req.body.query && req.body.query.includes('query Submissions')) {
                     req.reply({
                         statusCode: 200,
                         body: mockedSubmissionResponse
-                    });
+                    })
                 }
-            }).as('getSubmissions');
+            }).as('getSubmissions')
             cy.wait('@getSubmissions')
             // This wait time is to give the page elements time to load.
             cy.wait(2000)

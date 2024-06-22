@@ -4,16 +4,16 @@
             <ModDashboardLeftNavbar />
         </div>
         <div v-else-if="store.activeScreen === ModerationScreen.editSubmission">
-            <p class="text-xl font-bold">NAVBAR REVIEW SUBMISSION</p>
+            <p class="text-xl font-bold">
+                NAVBAR REVIEW SUBMISSION
+            </p>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
 import { useModerationScreenStore, ModerationScreen } from '~/stores/moderationScreenStore'
-import ModDashboardLeftNavbar from './ModDashboardLeftNavbar.vue';
 
 const store = useModerationScreenStore()
-
 </script>
 
