@@ -96,10 +96,10 @@ $ yarn dev
 
 ```
 # Generate the production bundle
-$ yarn build
+$ yarn prod:build
 
 # Launch production server
-$ yarn start
+$ yarn prod:start
 ```
 
 # End to End Testing

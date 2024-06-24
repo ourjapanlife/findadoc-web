@@ -160,6 +160,39 @@ export function validateFloat(float: string): boolean {
     return true
 }
 
+export function validateUsername(name: string): boolean {
+    if (name.length < 1)
+        return false
+
+    // Cannot have white space " "
+    if (name.indexOf(' ') >= 0)
+        return false
+
+    if (name.length > 32)
+        return false
+
+    return true
+}
+
+export function validatePassword(password: string): boolean {
+    if (password.length < 1)
+        return false
+
+    // Cannot have white space " "
+    if (password.indexOf(' ') >= 0)
+        return false
+
+    // Password must be under 128 characters long
+    if (password.length > 128)
+        return false
+
+    // Password must contain at a minimum of 12 characters, at least one letter, one number and one special character
+    if (!/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{12,}$/g.test(password))
+        return false
+
+    return true
+}
+
 export function validateUserSubmittedLastName(name: string): boolean {
     // The last name cannot be an empty space like " "
     name = name.trim()

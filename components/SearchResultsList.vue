@@ -22,17 +22,14 @@
             </button>
         </div>
         <div v-if="loadingStore.isLoading">
-            <div class="h-full flex flex-col justify-center items-center w-full">
-                <div class="flex justify-center align-middle">
-                    <div class="flex text-primary self-center text-4xl">
-                        Loading
-                    </div>
+            <div class="h-full flex justify-center items-center w-full">
+                <div class="flex flex-col justify-center align-middle">
                     <SVGLoadingIcon
                         data-testid="svg-loading-icon"
                         role="img"
                         alt="loading animation"
                         title="loading animation"
-                        class="flex h-28"
+                        class="flex h-12"
                     />
                 </div>
             </div>
@@ -83,10 +80,10 @@ import { computed, onMounted } from 'vue'
 import { useSearchResultsStore } from '../stores/searchResultsStore'
 import { useLocaleStore } from '../stores/localeStore'
 import { useLoadingStore } from '../stores/loadingStore'
-import SVGNoSearchResults from '~/assets/icons/no-search-results-graphic.svg'
-import SVGLoadingIcon from '~/assets/icons/loading.svg'
-import SVGHamburgerListIcon from '~/assets/icons/hamburger-list-icon.svg'
 import { Locale } from '~/typedefs/gqlTypes.js'
+import SVGLoadingIcon from '~/assets/icons/loading.svg'
+import SVGNoSearchResults from '~/assets/icons/no-search-results-graphic.svg'
+import SVGHamburgerListIcon from '~/assets/icons/hamburger-list-icon.svg'
 
 const resultsStore = useSearchResultsStore()
 const localeStore = useLocaleStore()

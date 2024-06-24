@@ -1,8 +1,8 @@
 <template>
     <div
         data-testid="footer"
-        class="footer flex border-t-4 border-secondary-bg/40 bg-secondary-bg text-sm text-primary-text
-          font-semibold py-2 sm:flex-col sm:flex-wrap sm:justify-start"
+        class="footer portrait:hidden flex border-t-4 border-secondary-bg/40 bg-secondary-bg
+        text-sm text-primary-text font-semibold py-2 sm:flex-col sm:flex-wrap sm:justify-start"
     >
         <div class="left-footer-section flex flex-0 justify-start sm:self-center">
             <NuxtLink
