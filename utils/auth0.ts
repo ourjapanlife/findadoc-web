@@ -24,6 +24,7 @@ export const initializeAuth0 = () => {
                 },
                 //eslint-disable-next-line
                 redirect_uri: isProduction ? 'https://www.findadoc.jp' : 'http://localhost:3000'
+                audience: 'https://findadoc.jp.auth0.com/api/v2/'
             }
         })
 
