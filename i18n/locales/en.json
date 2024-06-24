@@ -20,6 +20,9 @@
         "home": "Home",
         "contact": "Contact",
         "submit": "Add a Doctor",
+        "moderation": "Moderation",
+        "login": "Log in",
+        "logout": "Log out",
         "privacy": "Privacy",
         "terms": "Terms",
         "github": "Github",
@@ -93,7 +96,24 @@
     "topNav": {
         "about": "About",
         "home": "Home",
-        "submit": "Add a Doctor"
+        "moderation": "Moderation",
+        "submit": "Add a Doctor",
+        "login": "Log in",
+        "logout": "Log out"
+    },
+    "login": {
+        "heading": "Log in to your account",
+        "usernamelabel": "username",
+        "passwordlabel": "password",
+        "loginButton": "Log in",
+        "invalidUsernameValidation": "PLease enter a valid username",
+        "invalidPasswordValidation": "Please enter a valid password",
+        "invalidLoginValidation": "Your username or password is incorrect",
+        "checkingauth": "Checking Authentication...",
+        "redirectingtoauth0": "Redirecting you to Auth0 for authentication",
+        "unauthorizedline1": "It looks like you don't have the necessary permissions to access this page. Redirecting in 10 seconds...",
+        "unauthorizedline2": "If you want to become a moderator or have any questions, please contact us ",
+        "unauthorizedline3": "here"
     },
     "modDashboardLeftNav": {
         "facilities": "Facilities",

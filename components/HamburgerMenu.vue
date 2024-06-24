@@ -98,6 +98,32 @@
                                 {{ $t('hamburgerMenu.submit') }}
                             </div>
                         </NuxtLink>
+                        <div
+                            v-if="authStore.isLoggedIn"
+                            class="text-primary"
+                        >
+                            <div class="flex">
+                                <SVGProfileIcon
+                                    role="img"
+                                    alt="profile icon"
+                                    title="profile icon"
+                                    class="profile-icon w-7 stroke-primary stroke-2 inline"
+                                />
+                                <div class="text-primary font-bold">
+                                    {{ authStore.userId }}
+                                </div>
+                            </div>
+                            <NuxtLink :to="'/moderation'">
+                                <div @click="closeMenu()">
+                                    {{ $t('hamburgerMenu.moderation') }}
+                                </div>
+                            </NuxtLink>
+                            <NuxtLink :to="'/'">
+                                <div @click="logout()">
+                                    {{ $t('hamburgerMenu.logout') }}
+                                </div>
+                            </NuxtLink>
+                        </div>
                     </div>
                 </div>
 
@@ -164,9 +190,7 @@
                                 :to="'https://www.npo-hiroba.or.jp/search/zoom.php?pk=121289'"
                                 target="_blank"
                                 class="underline"
-                            >
-                                #9011005010215
-                            </NuxtLink>
+                            >#9011005010215</NuxtLink>
                         </div>
                     </div>
                 </div>
@@ -177,8 +201,12 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue'
+import SVGProfileIcon from '~/assets/icons/profile-icon.svg'
 import SVGHamburgerMenuIcon from '~/assets/icons/hamburger-menu.svg'
 import SVGGithubIcon from '~/assets/icons/social-github.svg'
+import { useAuthStore } from '~/stores/authStore'
+
+const authStore = useAuthStore()
 
 const isMenuOpen = ref(false)
 
@@ -189,10 +217,12 @@ function openMenu() {
 function closeMenu() {
     isMenuOpen.value = false
 }
-interface ExtendedHTMLElement extends HTMLElement {
-    clickOutsideEvent: (event: Event) => void
-    contains: (element: EventTarget | null) => boolean
+
+function logout() {
+    authStore.logout()
+    closeMenu()
 }
+
 //this is a custom directive to close the menu when clicking outside of the menu
 const vCloseOnOutsideClick = {
     mounted: (el: ExtendedHTMLElement) => {

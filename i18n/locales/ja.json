@@ -20,6 +20,9 @@
         "home": "ホーム",
         "contact": "お問い合わせ",
         "submit": "医師情報の追加",
+        "moderation": "モデレータ",
+        "login": "ログイン",
+        "logout": "ログアウト",
         "privacy": "プライバシーポリシー",
         "terms": "利用規約",
         "github": "Github",
@@ -92,7 +95,24 @@
     "topNav": {
         "home": "ホーム",
         "about": "私たちについて",
-        "submit": "医師情報の追加"
+        "moderation": "モデレータ",
+        "submit": "医師情報の追加",
+        "login": "ログイン",
+        "logout": "ログアウト"
+    },
+    "login": {
+        "heading": "あなたのアカウントにログイン",
+        "usernamelabel": "ユーザー名",
+        "passwordlabel": "パスワード",
+        "loginButton": "ログイン",
+        "invalidUsernameValidation": "有効なユーザー名を入力してください",
+        "invalidPasswordValidation": "有効なパスワードを入力して下さい",
+        "invalidLoginValidation": "ユーザー名またはパスワードが間違っています",
+        "checkingauth": "認証の確認...",
+        "redirectingtoauth0": "Auth0ログインページにリダイレクトします",
+        "unauthorizedline1": "このページにアクセスするために必要な権限がないようです. 10秒後にリダイレクトします...",
+        "unauthorizedline2": "モデレーターになりたい場合やご質問がある場合は、お問い合わせください",
+        "unauthorizedline3": "こちらからお問い合わせ"
     },
     "modDashboardLeftNav": {
         "facilities": "Facilities",

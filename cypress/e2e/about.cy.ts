@@ -81,7 +81,7 @@ describe('About page', () => {
         })
 
         it('does not show the footer', () => {
-            cy.get('[data-testid="footer"]').should('not.exist')
+            cy.get('[data-testid="footer"]').should('exist').should('not.be.visible')
         })
 
         it('shows member details', () => {
