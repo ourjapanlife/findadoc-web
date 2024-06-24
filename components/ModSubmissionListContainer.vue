@@ -18,7 +18,10 @@
         <div class="font-bold text-left p-1">
             {{ $t("modPanelSubmissionList.submitted") }}
         </div>
-        <div v-if="hasSubmissions">
+        <div
+            v-if="hasSubmissions"
+            class="grid grid-cols-subgrid col-span-5"
+        >
             <div
                 v-for="(submission, index) in modSubmissionsStore.submissionsData"
                 :key="index"
