@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { type Ref, ref, computed } from 'vue'
-import { useLoadingStore } from './loadingStore.js'
 import { auth0 } from '../utils/auth0.js'
+import { useLoadingStore } from './loadingStore.js'
 
 export const useAuthStore = defineStore('authStore', () => {
     const userId = computed(() => auth0?.user.value?.nickname ?? 'unknown user')

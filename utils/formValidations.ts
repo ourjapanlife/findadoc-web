@@ -161,7 +161,7 @@ export function validateFloat(float: string): boolean {
 }
 
 export function validateUsername(name: string): boolean {
-    if(name.length < 1)
+    if (name.length < 1)
         return false
 
     // Cannot have white space " "
@@ -175,7 +175,7 @@ export function validateUsername(name: string): boolean {
 }
 
 export function validatePassword(password: string): boolean {
-    if(password.length < 1)
+    if (password.length < 1)
         return false
 
     // Cannot have white space " "

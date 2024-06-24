@@ -120,7 +120,7 @@ describe('Submit page', () => {
         })
 
         it('does not show the footer', () => {
-            cy.get('[data-testid="footer"]').should('exist').should("not.be.visible")
+            cy.get('[data-testid="footer"]').should('exist').should('not.be.visible')
         })
     })
 })

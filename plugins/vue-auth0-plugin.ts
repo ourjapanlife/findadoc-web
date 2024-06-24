@@ -1,9 +1,8 @@
 import { defineNuxtPlugin } from '#app'
 import { auth0, initializeAuth0 } from '~/utils/auth0'
 
-
 export default defineNuxtPlugin(async nuxtApp => {
-    if (process.client) {
+    if (import.meta.client) {
         initializeAuth0()
         nuxtApp.vueApp.use(auth0)
 

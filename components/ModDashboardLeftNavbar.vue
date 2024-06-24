@@ -48,9 +48,9 @@
 
 <script setup lang="ts">
 import { ref, type Ref } from 'vue'
-import SVGNoteStackAddSvg from "../assets/icons/note-stack-add.svg"
-import SVGCheckBoxSvg from "../assets/icons/check-box.svg"
-import SVGDisabledByDefault from "../assets/icons/disabled-by-default.svg"
+import SVGNoteStackAddSvg from '../assets/icons/note-stack-add.svg'
+import SVGCheckBoxSvg from '../assets/icons/check-box.svg'
+import SVGDisabledByDefault from '../assets/icons/disabled-by-default.svg'
 
 const selectedSubmissionListView: Ref<string> = ref('forReview')
 const selectedDashboardView: Ref<string> = ref('facilities')

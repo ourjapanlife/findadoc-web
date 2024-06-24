@@ -5,59 +5,55 @@ import enUS from '../../i18n/locales/en.json'
 describe(
     'Moderation dashboard',
     () => {
-        context("Landscape mode", () => 
-            {  
-                before(() => {
+        context('Landscape mode', () => {
+            before(() => {
                 cy.visit('/moderation')
                 // This wait time is to give the page time to load from Prod when ran in CI.
                 cy.wait(3000)
             })
-                beforeEach(() => {
-                     // The resolution is in the beforeEach() instead of before() to
-                     // prevent Cypress from defaulting to other screen sizes between tests.
-                     cy.viewport(1920, 1080) 
+            beforeEach(() => {
+                // The resolution is in the beforeEach() instead of before() to
+                // prevent Cypress from defaulting to other screen sizes between tests.
+                cy.viewport(1920, 1080)
                 cy.wait(500)
-                    cy.visit('/login')      
-                    Cypress.session.clearCurrentSessionData() 
-        
-                    // Wait for redirect to login form
-                    cy.wait(3000)
-        
-                    cy.origin('https://findadoc.jp.auth0.com/', () => {
-                        cy.get('input#username').should('be.visible').type('findadoctest@proton.me')
-                        cy.get('[data-action-button-primary]').should('be.visible').click()
-                        cy.get('input#password').should('be.visible').type('vCnL5J8agHg6m2f')
-                        cy.get('[data-action-button-primary]').should('be.visible').click()
-                    })
-                    
-                    cy.wait(3000)
-                    
-                    cy.url().should('include', '')
-                    
-                    cy.get("[data-testid=top-nav-mod-link]").click()
-                      
+                cy.visit('/login')
+                Cypress.session.clearCurrentSessionData()
+
+                // Wait for redirect to login form
+                cy.wait(3000)
+
+                cy.origin('https://findadoc.jp.auth0.com/', () => {
+                    cy.get('input#username').should('be.visible').type('findadoctest@proton.me')
+                    cy.get('[data-action-button-primary]').should('be.visible').click()
+                    cy.get('input#password').should('be.visible').type('vCnL5J8agHg6m2f')
+                    cy.get('[data-action-button-primary]').should('be.visible').click()
                 })
 
-                it.skip("it shows the moderation top nav", () => {
-                    cy.get('[data-testid="mod-submission-list-item-1"]').click()
-                    cy.get('[data-testid="mod-edit-submission-copy-submission-id"]').click()
-    
-                    // check that the value copied to the clipboard is the same that's displayed
-                    const clipboardResult = cy.window().then((win) => {
-                        return win.navigator.clipboard.readText()
-                    })
-    
-                    // the timeout is to give time for the clipboard to be read
-                    clipboardResult.should("exist", 10000)
-                })
+                cy.wait(3000)
 
-                after(() => {
-                    Cypress.session.clearCurrentSessionData() 
-                })
+                cy.url().should('include', '')
 
-            it("shows mod dashboard left navbar buttons", () => {
-                cy.get("[data-testid=mod-dashboard-leftnav-for-review]")
-                    .should("exist")
+                cy.get('[data-testid=top-nav-mod-link]').click()
+            })
+
+            it.skip('it shows the moderation top nav', () => {
+                cy.get('[data-testid="mod-submission-list-item-1"]').click()
+                cy.get('[data-testid="mod-edit-submission-copy-submission-id"]').click()
+
+                // check that the value copied to the clipboard is the same that's displayed
+                const clipboardResult = cy.window().then(win => win.navigator.clipboard.readText())
+
+                // the timeout is to give time for the clipboard to be read
+                clipboardResult.should('exist', 10000)
+            })
+
+            after(() => {
+                Cypress.session.clearCurrentSessionData()
+            })
+
+            it('shows mod dashboard left navbar buttons', () => {
+                cy.get('[data-testid=mod-dashboard-leftnav-for-review]')
+                    .should('exist')
                     .should(
                         'include.text',
                         enUS.modDashboardLeftNav.forReview
@@ -77,122 +73,115 @@ describe(
                         enUS.modDashboardLeftNav.rejected
                     )
             })
-
-        
         })
     }
 )
 
 describe('Moderation Facility Submission Form', () => {
-       
     context('Landscape mode', () => {
-    const mockedSubmissionResponse = {
-        data: {
-            submissions: [
-                {
-                    id: '1',
-                    googleMapsUrl: 'https://maps.google.com/?q=custom1',
-                    healthcareProfessionalName: 'Dr. John Doe',
-                    spokenLanguages: ['English', 'Japanese'],
-                    facility: {
+        const mockedSubmissionResponse = {
+            data: {
+                submissions: [
+                    {
                         id: '1',
-                        nameEn: 'Custom Facility EN',
-                        nameJa: 'カスタム施設 JA',
-                        contact: {
-                            googleMapsUrl: 'https://maps.google.com/?q=facility1',
-                            email: 'contact@facility.com',
-                            phone: '123-456-7890',
-                            website: 'https://facility.com',
-                            address: {
-                                postalCode: '123-4567',
-                                prefectureEn: 'Tokyo',
-                                cityEn: 'Shibuya',
-                                addressLine1En: '1-2-3 Custom St',
-                                addressLine2En: 'Apt 456',
-                                prefectureJa: '東京都',
-                                cityJa: '渋谷区',
-                                addressLine1Ja: 'カスタム通り1-2-3',
-                                addressLine2Ja: '456号室'
-                            }
-                        },
-                        healthcareProfessionalIds: ['1']
-                    },
-                    healthcareProfessionals: [
-                        {
+                        googleMapsUrl: 'https://maps.google.com/?q=custom1',
+                        healthcareProfessionalName: 'Dr. John Doe',
+                        spokenLanguages: ['English', 'Japanese'],
+                        facility: {
                             id: '1',
-                            names: [
-                                {
-                                    firstName: 'John',
-                                    middleName: '',
-                                    lastName: 'Doe',
-                                    locale: 'en'
+                            nameEn: 'Custom Facility EN',
+                            nameJa: 'カスタム施設 JA',
+                            contact: {
+                                googleMapsUrl: 'https://maps.google.com/?q=facility1',
+                                email: 'contact@facility.com',
+                                phone: '123-456-7890',
+                                website: 'https://facility.com',
+                                address: {
+                                    postalCode: '123-4567',
+                                    prefectureEn: 'Tokyo',
+                                    cityEn: 'Shibuya',
+                                    addressLine1En: '1-2-3 Custom St',
+                                    addressLine2En: 'Apt 456',
+                                    prefectureJa: '東京都',
+                                    cityJa: '渋谷区',
+                                    addressLine1Ja: 'カスタム通り1-2-3',
+                                    addressLine2Ja: '456号室'
                                 }
-                            ],
-                            spokenLanguages: ['English'],
-                            degrees: ['MD'],
-                            specialties: ['General Practice'],
-                            acceptedInsurance: ['Insurance1'],
-                            facilityIds: ['1']
-                        }
-                    ],
-                    isUnderReview: false,
-                    isApproved: true,
-                    isRejected: false,
-                    createdDate: '2023-01-01T00:00:00Z',
-                    updatedDate: '2023-01-02T00:00:00Z',
-                    notes: 'This is a custom note.'
-                }
-            ]
+                            },
+                            healthcareProfessionalIds: ['1']
+                        },
+                        healthcareProfessionals: [
+                            {
+                                id: '1',
+                                names: [
+                                    {
+                                        firstName: 'John',
+                                        middleName: '',
+                                        lastName: 'Doe',
+                                        locale: 'en'
+                                    }
+                                ],
+                                spokenLanguages: ['English'],
+                                degrees: ['MD'],
+                                specialties: ['General Practice'],
+                                acceptedInsurance: ['Insurance1'],
+                                facilityIds: ['1']
+                            }
+                        ],
+                        isUnderReview: false,
+                        isApproved: true,
+                        isRejected: false,
+                        createdDate: '2023-01-01T00:00:00Z',
+                        updatedDate: '2023-01-02T00:00:00Z',
+                        notes: 'This is a custom note.'
+                    }
+                ]
+            }
         }
-    }
         before(() => {
-                           // The resolution is in the beforeEach() instead of before() to
+            // The resolution is in the beforeEach() instead of before() to
             // prevent Cypress from defaulting to other screen sizes between tests.
-             cy.viewport(1920, 1080)
+            cy.viewport(1920, 1080)
 
-                
+            cy.visit('/login')
+            Cypress.session.clearCurrentSessionData()
 
-                cy.visit('/login')      
-                Cypress.session.clearCurrentSessionData() 
+            // Wait for redirect to login form
+            cy.wait(3000)
 
-                // Wait for redirect to login form
-                cy.wait(3000)
+            cy.origin('https://findadoc.jp.auth0.com/', () => {
+                cy.get('input#username').should('be.visible').type('findadoctest@proton.me')
+                cy.get('[data-action-button-primary]').should('be.visible').click()
+                cy.get('input#password').should('be.visible').type('vCnL5J8agHg6m2f')
+                cy.get('[data-action-button-primary]').should('be.visible').click()
+            })
+            cy.wait(3000)
 
-                cy.origin('https://findadoc.jp.auth0.com/', () => {
-                    cy.get('input#username').should('be.visible').type('findadoctest@proton.me')
-                    cy.get('[data-action-button-primary]').should('be.visible').click()
-                    cy.get('input#password').should('be.visible').type('vCnL5J8agHg6m2f')
-                    cy.get('[data-action-button-primary]').should('be.visible').click()
+            cy.intercept('POST', '**/', req => {
+                req.continue(res => {
+                    console.log(req.body.query)
+                    if (req.body.query && req.body.query.includes('query Submissions')) {
+                        res.send({
+                            statusCode: 200,
+                            body: mockedSubmissionResponse
+                        })
+                    }
                 })
-                cy.wait(3000)
-                
-                cy.intercept('POST', '**/', (req) => {
-                    req.continue((res) => {
-                        console.log(req.body.query);
-                        if (req.body.query && req.body.query.includes('query Submissions')) {
-                            res.send({
-                                statusCode: 200,
-                                body: mockedSubmissionResponse
-                            });
-                        }
-                    });
-                }).as('getSubmissions')
-                
-                cy.url().should('include', '')
-                
-                cy.get("[data-testid=top-nav-mod-link]").click()
-                
-                cy.wait('@getSubmissions', {timeout: 10000})
-                // This wait time is to give the page elements time to load.
-                cy.wait(2000)
-                cy.get('[data-testid="mod-submission-list-item-1"]').click()
-                cy.wait(2000)
-                      
+            }).as('getSubmissions')
 
+            cy.url().should('include', '')
+
+            cy.get('[data-testid=top-nav-mod-link]').click()
+
+            cy.wait('@getSubmissions', { timeout: 10000 })
+            // This wait time is to give the page elements time to load.
+            cy.wait(2000)
+            cy.get('[data-testid="mod-submission-list-item-1"]').click()
+            cy.wait(2000)
         })
 
         after(() => {
-            Cypress.session.clearCurrentSessionData() 
+            Cypress.session.clearCurrentSessionData()
         })
 
         it('contains the following input fields', () => {
