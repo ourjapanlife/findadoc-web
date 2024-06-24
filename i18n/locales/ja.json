@@ -114,6 +114,15 @@
         "unauthorizedline2": "モデレーターになりたい場合やご質問がある場合は、お問い合わせください",
         "unauthorizedline3": "こちらからお問い合わせ"
     },
+    "login": {
+        "heading": "あなたのアカウントにログイン",
+        "usernamelabel": "ユーザー名",
+        "passwordlabel": "パスワード",
+        "loginButton": "ログイン",
+        "invalidUsernameValidation": "有効なユーザー名を入力してください",
+        "invalidPasswordValidation": "有効なパスワードを入力して下さい",
+        "invalidLoginValidation": "ユーザー名またはパスワードが間違っています"
+    },
     "modDashboardLeftNav": {
         "facilities": "Facilities",
         "healthcareProfessionals": "Healthcare Professionals",
