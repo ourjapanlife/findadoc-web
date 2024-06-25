@@ -19,7 +19,7 @@
                     class="flex flex-row items-center text-start p-1"
                     @click="updateSubmissionListViewState('forReview')"
                 >
-                    {{ $t("modDashboardLeftNav.forReview") }} ({{ 0 }})
+                    {{ $t("modDashboardLeftNav.forReview") }} ({{ autofillStatusCount.forReviewCount }})
                 </button>
             </div>
             <div class="flex w-4/5 justify-start items-center border-b-2 border-slate-200">
@@ -29,7 +29,7 @@
                     class="flex flex-row items-center text-start p-1 "
                     @click=" updateSubmissionListViewState('approved')"
                 >
-                    {{ $t("modDashboardLeftNav.approved") }} ({{ 0 }})
+                    {{ $t("modDashboardLeftNav.approved") }} ({{ autofillStatusCount.approvedCount }})
                 </button>
             </div>
             <div class="flex flex-row w-4/5 justify-start items-center ">
@@ -39,7 +39,7 @@
                     class="flex flex-row items-center text-start p-1"
                     @click="updateSubmissionListViewState('rejected')"
                 >
-                    {{ $t("modDashboardLeftNav.rejected") }} ({{ 0 }})
+                    {{ $t("modDashboardLeftNav.rejected") }} ({{ autofillStatusCount.rejectedCount }})
                 </button>
             </div>
         </div>
@@ -47,10 +47,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref, type Ref } from 'vue'
+import { ref, computed, type Ref } from 'vue'
 import SVGNoteStackAddSvg from '../assets/icons/note-stack-add.svg'
 import SVGCheckBoxSvg from '../assets/icons/check-box.svg'
 import SVGDisabledByDefault from '../assets/icons/disabled-by-default.svg'
+import { useModerationSubmissionsStore } from '~/stores/moderationSubmissionsStore'
+import type { Submission } from '~/typedefs/gqlTypes'
+
+const moderationSubmissionsStore = useModerationSubmissionsStore ()
 
 const selectedSubmissionListView: Ref<string> = ref('forReview')
 const selectedDashboardView: Ref<string> = ref('facilities')
@@ -63,4 +67,34 @@ const updateSelectedDashboardView = (event: Event) => {
     const selectedValue = (event.target as HTMLSelectElement).value
     selectedDashboardView.value = selectedValue
 }
+
+interface SubmissionStatusDisplayCount {
+    forReviewCount: number
+    approvedCount: number
+    rejectedCount: number
+}
+
+function createCountsForSubmissionListView(submissions: Submission[]) {
+    const statusCountObject: SubmissionStatusDisplayCount = {
+        forReviewCount: 0,
+        approvedCount: 0,
+        rejectedCount: 0
+    }
+
+    submissions.forEach((submission: Submission) => {
+        if (submission.isUnderReview) {
+            statusCountObject.forReviewCount += 1
+        }
+        if (submission.isApproved) {
+            statusCountObject.approvedCount += 1
+        }
+        if (submission.isRejected) {
+            statusCountObject.rejectedCount += 1
+        }
+    })
+
+    return statusCountObject
+}
+
+const autofillStatusCount = computed(() => createCountsForSubmissionListView(moderationSubmissionsStore.submissionsData))
 </script>
