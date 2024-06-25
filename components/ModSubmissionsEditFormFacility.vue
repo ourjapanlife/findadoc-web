@@ -13,9 +13,9 @@
                 type="text"
                 :placeholder="$t('modSubmissionForm.placeholderTextFacilityNameEn')"
                 :required="true"
-                :inputValidationCheck="validateNameEn"
-                :invalidInputErrorMessage="$t('modSubmissionForm.inputErrorMessageFacilityNameEn')"
-                :autofillValue="moderationInputStore.nameEn"
+                :input-validation-check="validateNameEn"
+                :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityNameEn')"
+                :autofill-value="moderationInputStore.nameEn"
             />
             <ModInputField
                 data-testid="submission-form-nameJp"
@@ -23,9 +23,9 @@
                 type="text"
                 :placeholder="$t('modSubmissionForm.placeholderTextFacilityNameJp')"
                 :required="true"
-                :inputValidationCheck="validateNameJp"
-                :invalidInputErrorMessage="$t('modSubmissionForm.inputErrorMessageFacilityNameJp')"
-                :autofillValue="moderationInputStore.nameJp"
+                :input-validation-check="validateNameJp"
+                :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityNameJp')"
+                :autofill-value="moderationInputStore.nameJp"
             />
             <ModInputField
                 data-testid="submission-form-phone"
@@ -33,9 +33,9 @@
                 type="text"
                 :placeholder="$t('modSubmissionForm.placeholderTextFacilityPhoneNumber')"
                 :required="true"
-                :inputValidationCheck="validatePhoneNumber"
-                :invalidInputErrorMessage="$t('modSubmissionForm.inputErrorMessageFacilityPhoneNumber')"
-                :autofillValue="moderationInputStore.phone"
+                :input-validation-check="validatePhoneNumber"
+                :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityPhoneNumber')"
+                :autofill-value="moderationInputStore.phone"
             />
             <ModInputField
                 data-testid="submission-form-email"
@@ -43,9 +43,9 @@
                 type="email"
                 :placeholder="$t('modSubmissionForm.placeholderTextFacilityEmail')"
                 :required="false"
-                :inputValidationCheck="validateEmail"
-                :invalidInputErrorMessage="$t('modSubmissionForm.inputErrorMessageFacilityEmail')"
-                :autofillValue="moderationInputStore.email"
+                :input-validation-check="validateEmail"
+                :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityEmail')"
+                :autofill-value="moderationInputStore.email"
             />
             <ModInputField
                 data-testid="submission-form-website"
@@ -53,9 +53,9 @@
                 type="url"
                 :placeholder="$t('modSubmissionForm.placeholderTextFacilityWebsite')"
                 :required="false"
-                :inputValidationCheck="validateWebsite"
-                :invalidInputErrorMessage="$t('modSubmissionForm.inputErrorMessageFacilityWebsite')"
-                :autofillValue="moderationInputStore.website"
+                :input-validation-check="validateWebsite"
+                :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityWebsite')"
+                :autofill-value="moderationInputStore.website"
             />
         </div>
 
@@ -69,13 +69,16 @@
                 type="text"
                 :placeholder="$t('modSubmissionForm.placeholderTextFacilityPostalCode')"
                 :required="true"
-                :inputValidationCheck="validatePostalCode"
-                :invalidInputErrorMessage="$t('modSubmissionForm.inputErrorMessageFacilityPostalCode')"
-                :autofillValue="moderationInputStore.postalCode"
+                :input-validation-check="validatePostalCode"
+                :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityPostalCode')"
+                :autofill-value="moderationInputStore.postalCode"
             />
             <div class="flex flex-col mt-4">
-                <label for="Prefecture Japan" class="mb-2 text-primary-text text-sm font-bold font-sans">
-                    {{$t('modSubmissionForm.labelFacilityPrefectureEn')}}
+                <label
+                    for="Prefecture Japan"
+                    class="mb-2 text-primary-text text-sm font-bold font-sans"
+                >
+                    {{ $t('modSubmissionForm.labelFacilityPrefectureEn') }}
                 </label>
                 <select
                     id="1"
@@ -99,9 +102,9 @@
                 type="text"
                 :placeholder="$t('modSubmissionForm.placeholderTextFacilityCityEn')"
                 :required="true"
-                :inputValidationCheck="validateCityEn"
-                :invalidInputErrorMessage="$t('modSubmissionForm.inputErrorMessageFacilityCityEn')"
-                :autofillValue="moderationInputStore.cityEn"
+                :input-validation-check="validateCityEn"
+                :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityCityEn')"
+                :autofill-value="moderationInputStore.cityEn"
             />
             <ModInputField
                 data-testid="submission-form-addressLine1En"
@@ -109,9 +112,9 @@
                 type="text"
                 :placeholder="$t('modSubmissionForm.placeholderTextFacilityAddressLine1En')"
                 :required="true"
-                :inputValidationCheck="validateAddressLineEn"
-                :invalidInputErrorMessage="$t('modSubmissionForm.inputErrorMessageFacilityAddressLine1En')"
-                :autofillValue="moderationInputStore.addressLine1En"
+                :input-validation-check="validateAddressLineEn"
+                :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityAddressLine1En')"
+                :autofill-value="moderationInputStore.addressLine1En"
             />
             <ModInputField
                 data-testid="submission-form-addressLine2En"
@@ -119,9 +122,9 @@
                 type="text"
                 :placeholder="$t('modSubmissionForm.placeholderTextFacilityAddressLine2En')"
                 :required="true"
-                :inputValidationCheck="validateAddressLineEn"
-                :invalidInputErrorMessage="$t('modSubmissionForm.inputErrorMessageFacilityAddressLine2En')"
-                :autofillValue="moderationInputStore.addressLine2En"
+                :input-validation-check="validateAddressLineEn"
+                :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityAddressLine2En')"
+                :autofill-value="moderationInputStore.addressLine2En"
             />
             <div class="flex flex-col mt-4">
                 <label
@@ -152,9 +155,9 @@
                 type="text"
                 :placeholder="$t('modSubmissionForm.placeholderTextFacilityCityJp')"
                 :required="true"
-                :inputValidationCheck="validateCityJp"
-                :invalidInputErrorMessage="$t('modSubmissionForm.inputErrorMessageFacilityCityJp')"
-                :autofillValue="moderationInputStore.cityJp"
+                :input-validation-check="validateCityJp"
+                :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityCityJp')"
+                :autofill-value="moderationInputStore.cityJp"
             />
             <ModInputField
                 data-testid="submission-form-addressLine1Jp"
@@ -162,9 +165,9 @@
                 type="text"
                 :placeholder="$t('modSubmissionForm.placeholderTextFacilityAddressLine1Jp')"
                 :required="true"
-                :inputValidationCheck="validateAddressLineJp"
-                :invalidInputErrorMessage="$t('modSubmissionForm.inputErrorMessageFacilityAddressLine1Jp')"
-                :autofillValue="moderationInputStore.addressLine1Jp"
+                :input-validation-check="validateAddressLineJp"
+                :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityAddressLine1Jp')"
+                :autofill-value="moderationInputStore.addressLine1Jp"
             />
             <ModInputField
                 data-testid="submission-form-addressLine2Jp"
@@ -172,9 +175,9 @@
                 type="text"
                 :placeholder="$t('modSubmissionForm.placeholderTextFacilityAddressLine2Jp')"
                 :required="true"
-                :inputValidationCheck="validateAddressLineJp"
-                :invalidInputErrorMessage="$t('modSubmissionForm.inputErrorMessageFacilityAddressLine2Jp')"
-                :autofillValue="moderationInputStore.addressLine2Jp"
+                :input-validation-check="validateAddressLineJp"
+                :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityAddressLine2Jp')"
+                :autofill-value="moderationInputStore.addressLine2Jp"
             />
         </div>
 
@@ -188,9 +191,9 @@
                 type="url"
                 :placeholder="$t('modSubmissionForm.placeholderTextFacilityGoogleMapsUrl')"
                 :required="true"
-                :inputValidationCheck="validateWebsite"
-                :invalidInputErrorMessage="$t('modSubmissionForm.inputErrorMessageFacilityGoogleMapsUrl')"
-                :autofillValue="moderationInputStore.googlemapsURL"
+                :input-validation-check="validateWebsite"
+                :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityGoogleMapsUrl')"
+                :autofill-value="moderationInputStore.googlemapsURL"
             />
             <ModInputField
                 data-testid="submission-form-mapLatitude"
@@ -198,9 +201,9 @@
                 type="text"
                 :placeholder="$t('modSubmissionForm.placeholderTextFacilityMapLatitude')"
                 :required="true"
-                :inputValidationCheck="validateFloat"
-                :invalidInputErrorMessage="$t('modSubmissionForm.inputErrorMessageFacilityMapLatitude')"
-                :autofillValue="moderationInputStore.mapLatitude"
+                :input-validation-check="validateFloat"
+                :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityMapLatitude')"
+                :autofill-value="moderationInputStore.mapLatitude"
             />
             <ModInputField
                 data-testid="submission-form-mapLongitude"
@@ -208,9 +211,9 @@
                 type="text"
                 :placeholder="$t('modSubmissionForm.placeholderTextFacilityMapLongitude')"
                 :required="true"
-                :inputValidationCheck="validateFloat"
-                :invalidInputErrorMessage="$t('modSubmissionForm.inputErrorMessageFacilityMapLongitude')"
-                :autofillValue="moderationInputStore.mapLongitude"
+                :input-validation-check="validateFloat"
+                :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityMapLongitude')"
+                :autofill-value="moderationInputStore.mapLongitude"
             />
         </div>
         <ModHealthcareProfessionalSearchbar

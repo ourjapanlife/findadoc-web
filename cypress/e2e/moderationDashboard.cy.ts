@@ -289,6 +289,19 @@ describe('Moderation Facility Submission Form', () => {
             cy.get('[data-testid="submission-form-prefectureJp"]').should('exist')
         })
 
+        it('should autofill the form', () => {
+            const submission = mockedSubmissionResponse.data.submissions[0].facility
+
+            cy.get('[data-testid="submission-form-nameEn"]').find('input', { timeout: 10000 })
+                .should('have.value', submission.nameEn)
+
+            cy.get('[data-testid="submission-form-nameJp"]').find('input', { timeout: 10000 })
+                .should('have.value', submission.nameJa)
+
+            cy.get('[data-testid="submission-form-phone"]').find('input', { timeout: 10000 })
+                .should('have.value', submission.contact.phone)
+        })
+
         it('should be able to type in all input fields', () => {
             cy.get('[data-testid="submission-form-nameEn"]').find('input').type('Hospital')
             cy.get('[data-testid="submission-form-nameJp"]').find('input').type('立川中央病院')
