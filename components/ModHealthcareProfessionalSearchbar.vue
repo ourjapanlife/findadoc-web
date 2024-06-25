@@ -23,4 +23,8 @@
 
 <script lang="ts" setup>
 import SVGLookingGlass from '~/assets/icons/looking-glass.svg'
+import { useModerationSearchHealthcareProfessionalsStore } from '~/stores/moderationSearchHealthcareProfessionalsStore'
+
+const store = useModerationSearchHealthcareProfessionalsStore()
+console.log('results of fetching healthcare professionals', store)
 </script>
