@@ -22,5 +22,13 @@
 </template>
 
 <script lang="ts" setup>
+import { onMounted } from 'vue'
 import SVGLookingGlass from '~/assets/icons/looking-glass.svg'
+import { useModerationSearchHealthcareProfessionalsStore } from '~/stores/moderationSearchHealthcareProfessionalsStore'
+
+const modSearchHealthcareProfessionalStore = useModerationSearchHealthcareProfessionalsStore()
+
+onMounted(async () => {
+    await modSearchHealthcareProfessionalStore.getHealthcareProfessionals()
+})
 </script>
