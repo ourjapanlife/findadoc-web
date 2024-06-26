@@ -68,20 +68,8 @@ const updateSelectedDashboardView = (event: Event) => {
     selectedDashboardView.value = selectedValue
 }
 
-interface SubmissionStatusDisplayCount {
-    forReviewCount: number
-    approvedCount: number
-    rejectedCount: number
-}
-
 function createCountsForSubmissionListView(submissions: Submission[]) {
-    const statusCountObject: SubmissionStatusDisplayCount = {
-        forReviewCount: 0,
-        approvedCount: 0,
-        rejectedCount: 0
-    }
-
-    submissions.forEach((submission: Submission) => {
+    return submissions.reduce((statusCountObject, submission) => {
         if (submission.isUnderReview) {
             statusCountObject.forReviewCount += 1
         }
@@ -91,9 +79,12 @@ function createCountsForSubmissionListView(submissions: Submission[]) {
         if (submission.isRejected) {
             statusCountObject.rejectedCount += 1
         }
+        return statusCountObject
+    }, {
+        forReviewCount: 0,
+        approvedCount: 0,
+        rejectedCount: 0
     })
-
-    return statusCountObject
 }
 
 const autofillStatusCount = computed(() => createCountsForSubmissionListView(moderationSubmissionsStore.submissionsData))
