@@ -2,6 +2,119 @@ import 'cypress-real-events'
 import 'cypress-plugin-tab'
 import enUS from '../../i18n/locales/en.json'
 
+const mockedSubmissionResponse = {
+    data: {
+        submissions: [
+            {
+                id: '1',
+                googleMapsUrl: 'https://maps.google.com/?q=custom1',
+                healthcareProfessionalName: 'Dr. John Doe',
+                spokenLanguages: ['English', 'Japanese'],
+                facility: {
+                    id: '1',
+                    nameEn: 'Custom Facility EN',
+                    nameJa: 'カスタム施設 JA',
+                    contact: {
+                        googleMapsUrl: 'https://maps.google.com/?q=facility1',
+                        email: 'contact@facility.com',
+                        phone: '123-456-7890',
+                        website: 'https://facility.com',
+                        address: {
+                            postalCode: '123-4567',
+                            prefectureEn: 'Tokyo',
+                            cityEn: 'Shibuya',
+                            addressLine1En: '1-2-3 Custom St',
+                            addressLine2En: 'Apt 456',
+                            prefectureJa: '東京都',
+                            cityJa: '渋谷区',
+                            addressLine1Ja: 'カスタム通り1-2-3',
+                            addressLine2Ja: '456号室'
+                        }
+                    },
+                    healthcareProfessionalIds: ['1']
+                },
+                healthcareProfessionals: [
+                    {
+                        id: '1',
+                        names: [
+                            {
+                                firstName: 'John',
+                                middleName: '',
+                                lastName: 'Doe',
+                                locale: 'en'
+                            }
+                        ],
+                        spokenLanguages: ['English'],
+                        degrees: ['MD'],
+                        specialties: ['General Practice'],
+                        acceptedInsurance: ['Insurance1'],
+                        facilityIds: ['1']
+                    }
+                ],
+                isUnderReview: false,
+                isApproved: true,
+                isRejected: false,
+                createdDate: '2023-01-01T00:00:00Z',
+                updatedDate: '2023-01-02T00:00:00Z',
+                notes: 'This is a custom note.'
+            },
+            {
+                id: '2',
+                googleMapsUrl: 'https://maps.google.com/?q=flannigan2',
+                healthcareProfessionalName: 'Dr. Farnsworth McFlannigan',
+                spokenLanguages: ['English', 'Japanese'],
+                facility: {
+                    id: '1',
+                    nameEn: 'Cork EN',
+                    nameJa: 'カスタム JA2',
+                    contact: {
+                        googleMapsUrl: 'https://maps.google.com/?q=mcflannigan2',
+                        email: 'mcFlannigan@mcflannigan.com',
+                        phone: '243-867-5309',
+                        website: 'https://mcflannigan.com',
+                        address: {
+                            postalCode: '123-4567',
+                            prefectureEn: 'Tokyo',
+                            cityEn: 'Shibuya',
+                            addressLine1En: '1-2-3 Flannigan St',
+                            addressLine2En: 'Apt 456',
+                            prefectureJa: '東京都',
+                            cityJa: '渋谷区',
+                            addressLine1Ja: 'カスタム通り1-2-3',
+                            addressLine2Ja: '456号室'
+                        }
+                    },
+                    healthcareProfessionalIds: ['2']
+                },
+                healthcareProfessionals: [
+                    {
+                        id: '2',
+                        names: [
+                            {
+                                firstName: 'Farnsworth',
+                                middleName: '',
+                                lastName: 'McFlannigan',
+                                locale: 'en'
+                            }
+                        ],
+                        spokenLanguages: ['English', 'Japanese'],
+                        degrees: ['MD'],
+                        specialties: ['Radiology'],
+                        acceptedInsurance: ['Insurance2'],
+                        facilityIds: ['2']
+                    }
+                ],
+                isUnderReview: true,
+                isApproved: false,
+                isRejected: false,
+                createdDate: '2023-01-01T00:00:00Z',
+                updatedDate: '2023-01-02T00:00:00Z',
+                notes: 'This is a custom note.'
+            }
+        ]
+    }
+}
+
 describe(
     'Moderation dashboard',
     () => {
@@ -29,11 +142,61 @@ describe(
                     cy.get('[data-action-button-primary]').should('be.visible').click()
                 })
 
+                cy.intercept('POST', '**/', req => {
+                    req.continue(res => {
+                        console.log(req.body.query)
+                        if (req.body.query && req.body.query.includes('query Submissions')) {
+                            res.send({
+                                statusCode: 200,
+                                body: mockedSubmissionResponse
+                            })
+                        }
+                    })
+                }).as('getSubmissions')
+
                 cy.wait(3000)
 
                 cy.url().should('include', '')
 
                 cy.get('[data-testid=top-nav-mod-link]').click()
+
+                cy.wait('@getSubmissions', { timeout: 10000 })
+            })
+
+            it('shows mod dashboard left navbar buttons with correct counts', () => {
+                //The number for include text is for the status in the mock data
+                cy.get('[data-testid=mod-dashboard-leftnav-for-review]')
+                    .should('exist')
+                    .should(
+                        'include.text',
+                        enUS.modDashboardLeftNav.forReview
+                    )
+                    .should(
+                        'include.text',
+                        '1'
+                    )
+
+                cy.get('[data-testid=mod-dashboard-leftnav-approved]')
+                    .should('exist')
+                    .should(
+                        'include.text',
+                        enUS.modDashboardLeftNav.approved
+                    )
+                    .should(
+                        'include.text',
+                        '1'
+                    )
+
+                cy.get('[data-testid=mod-dashboard-leftnav-rejected]')
+                    .should('exist')
+                    .should(
+                        'include.text',
+                        enUS.modDashboardLeftNav.rejected
+                    )
+                    .should(
+                        'include.text',
+                        '0'
+                    )
             })
 
             it.skip('it shows the moderation top nav', () => {
@@ -50,94 +213,12 @@ describe(
             after(() => {
                 Cypress.session.clearCurrentSessionData()
             })
-
-            it('shows mod dashboard left navbar buttons', () => {
-                cy.get('[data-testid=mod-dashboard-leftnav-for-review]')
-                    .should('exist')
-                    .should(
-                        'include.text',
-                        enUS.modDashboardLeftNav.forReview
-                    )
-
-                cy.get('[data-testid=mod-dashboard-leftnav-approved]')
-                    .should('exist')
-                    .should(
-                        'include.text',
-                        enUS.modDashboardLeftNav.approved
-                    )
-
-                cy.get('[data-testid=mod-dashboard-leftnav-rejected]')
-                    .should('exist')
-                    .should(
-                        'include.text',
-                        enUS.modDashboardLeftNav.rejected
-                    )
-            })
         })
     }
 )
 
 describe('Moderation Facility Submission Form', () => {
     context('Landscape mode', () => {
-        const mockedSubmissionResponse = {
-            data: {
-                submissions: [
-                    {
-                        id: '1',
-                        googleMapsUrl: 'https://maps.google.com/?q=custom1',
-                        healthcareProfessionalName: 'Dr. John Doe',
-                        spokenLanguages: ['English', 'Japanese'],
-                        facility: {
-                            id: '1',
-                            nameEn: 'Custom Facility EN',
-                            nameJa: 'カスタム施設 JA',
-                            contact: {
-                                googleMapsUrl: 'https://maps.google.com/?q=facility1',
-                                email: 'contact@facility.com',
-                                phone: '123-456-7890',
-                                website: 'https://facility.com',
-                                address: {
-                                    postalCode: '123-4567',
-                                    prefectureEn: 'Tokyo',
-                                    cityEn: 'Shibuya',
-                                    addressLine1En: '1-2-3 Custom St',
-                                    addressLine2En: 'Apt 456',
-                                    prefectureJa: '東京都',
-                                    cityJa: '渋谷区',
-                                    addressLine1Ja: 'カスタム通り1-2-3',
-                                    addressLine2Ja: '456号室'
-                                }
-                            },
-                            healthcareProfessionalIds: ['1']
-                        },
-                        healthcareProfessionals: [
-                            {
-                                id: '1',
-                                names: [
-                                    {
-                                        firstName: 'John',
-                                        middleName: '',
-                                        lastName: 'Doe',
-                                        locale: 'en'
-                                    }
-                                ],
-                                spokenLanguages: ['English'],
-                                degrees: ['MD'],
-                                specialties: ['General Practice'],
-                                acceptedInsurance: ['Insurance1'],
-                                facilityIds: ['1']
-                            }
-                        ],
-                        isUnderReview: false,
-                        isApproved: true,
-                        isRejected: false,
-                        createdDate: '2023-01-01T00:00:00Z',
-                        updatedDate: '2023-01-02T00:00:00Z',
-                        notes: 'This is a custom note.'
-                    }
-                ]
-            }
-        }
         before(() => {
             // The resolution is in the beforeEach() instead of before() to
             // prevent Cypress from defaulting to other screen sizes between tests.
