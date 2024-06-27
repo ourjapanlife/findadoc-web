@@ -17,7 +17,7 @@
                 <button
                     data-testid="mod-dashboard-leftnav-for-review"
                     class="flex flex-row items-center text-start p-1"
-                    @click="updateSubmissionListViewState('forReview')"
+                    @click="updateSubmissionListViewState(SelectedSubmissionListViewTab.forReview)"
                 >
                     {{ $t("modDashboardLeftNav.forReview") }} ({{ autofillStatusCount.forReviewCount }})
                 </button>
@@ -27,7 +27,7 @@
                 <button
                     data-testid="mod-dashboard-leftnav-approved"
                     class="flex flex-row items-center text-start p-1 "
-                    @click=" updateSubmissionListViewState('approved')"
+                    @click=" updateSubmissionListViewState(SelectedSubmissionListViewTab.approved)"
                 >
                     {{ $t("modDashboardLeftNav.approved") }} ({{ autofillStatusCount.approvedCount }})
                 </button>
@@ -37,7 +37,7 @@
                 <button
                     data-testid="mod-dashboard-leftnav-rejected"
                     class="flex flex-row items-center text-start p-1"
-                    @click="updateSubmissionListViewState('rejected')"
+                    @click="updateSubmissionListViewState(SelectedSubmissionListViewTab.rejected)"
                 >
                     {{ $t("modDashboardLeftNav.rejected") }} ({{ autofillStatusCount.rejectedCount }})
                 </button>
@@ -47,20 +47,19 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, type Ref } from 'vue'
+import { ref, computed, type Ref, watchEffect } from 'vue'
 import SVGNoteStackAddSvg from '../assets/icons/note-stack-add.svg'
 import SVGCheckBoxSvg from '../assets/icons/check-box.svg'
 import SVGDisabledByDefault from '../assets/icons/disabled-by-default.svg'
-import { useModerationSubmissionsStore } from '~/stores/moderationSubmissionsStore'
+import { useModerationSubmissionsStore, SelectedSubmissionListViewTab } from '~/stores/moderationSubmissionsStore'
 import type { Submission } from '~/typedefs/gqlTypes'
 
 const moderationSubmissionsStore = useModerationSubmissionsStore ()
 
-const selectedSubmissionListView: Ref<string> = ref('forReview')
 const selectedDashboardView: Ref<string> = ref('facilities')
 
-const updateSubmissionListViewState = (submissionListViewOptionValue: string) => {
-    selectedSubmissionListView.value = submissionListViewOptionValue
+const updateSubmissionListViewState = (submissionListViewOptionValue: SelectedSubmissionListViewTab) => {
+    moderationSubmissionsStore.filterSubmissionsBySelectedTab(submissionListViewOptionValue)
 }
 
 const updateSelectedDashboardView = (event: Event) => {
@@ -79,6 +78,9 @@ function createCountsForSubmissionListView(submissions: Submission[]) {
         if (submission.isRejected) {
             statusCountObject.rejectedCount += 1
         }
+        if (!submission.isRejected && !submission.isApproved && !submission.isUnderReview) {
+            statusCountObject.forReviewCount += 1
+        }
         return statusCountObject
     }, {
         forReviewCount: 0,
@@ -88,4 +90,10 @@ function createCountsForSubmissionListView(submissions: Submission[]) {
 }
 
 const autofillStatusCount = computed(() => createCountsForSubmissionListView(moderationSubmissionsStore.submissionsData))
+
+watchEffect(() => {
+    if (moderationSubmissionsStore.submissionsData.length > 0) {
+        moderationSubmissionsStore.filterSubmissionsBySelectedTab(SelectedSubmissionListViewTab.forReview)
+    }
+})
 </script>

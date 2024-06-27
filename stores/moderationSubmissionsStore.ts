@@ -4,12 +4,19 @@ import { ref, type Ref } from 'vue'
 import { gqlClient } from '../utils/graphql.js'
 import { type Submission } from '~/typedefs/gqlTypes.js'
 
+export enum SelectedSubmissionListViewTab {
+    forReview = 'forReview',
+    approved = 'approved',
+    rejected = 'rejected'
+}
+
 export const useModerationSubmissionsStore = defineStore(
     'submissionsStore',
     () => {
         const submissionsData: Ref<Submission[]> = ref([])
         const selectedSubmissionId: Ref<string> = ref('')
         const selectedSubmissionData: Ref<Submission | undefined> = ref()
+        const filteredSubmissionDataForListComponent: Ref<Submission[]> = ref([])
 
         async function getSubmissions() {
             const submissionsSearchResults = await querySubmissions()
@@ -20,7 +27,24 @@ export const useModerationSubmissionsStore = defineStore(
             selectedSubmissionData.value = submissionsData.value.find(submission => submission.id === submissionId)
         }
 
-        return { getSubmissions, submissionsData, selectedSubmissionId, filterSelectedSubmission, selectedSubmissionData }
+        function filterSubmissionsBySelectedTab(tabValue: SelectedSubmissionListViewTab) {
+            switch (tabValue) {
+                case 'forReview':
+                    filteredSubmissionDataForListComponent.value = submissionsData.value
+                        .filter((submission: Submission) => submission.isUnderReview ||
+                        (!submission.isApproved && !submission.isRejected && !submission.isUnderReview))
+                    break
+                case 'approved':
+                    filteredSubmissionDataForListComponent.value = submissionsData.value
+                        .filter((submission: Submission) => submission.isApproved)
+                    break
+                case 'rejected':
+                    filteredSubmissionDataForListComponent.value = submissionsData.value
+                        .filter((submission: Submission) => submission.isRejected)
+                    break
+            }
+        }
+        return { getSubmissions, submissionsData, filterSubmissionsBySelectedTab, filteredSubmissionDataForListComponent, selectedSubmissionId, filterSelectedSubmission, selectedSubmissionData }
     }
 )
 
