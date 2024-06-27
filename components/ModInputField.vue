@@ -10,52 +10,40 @@
             {{ invalidInputErrorMessage }}
         </p>
         <input
+            v-model="model"
             :type="type"
             :placeholder="placeholder"
             :required="required"
-            :value="inputValue"
             class="mb-5 px-3 py-3.5 w-96 h-12 bg-white rounded-lg border border-primary-text-muted
             text-primary-text text-sm font-normal font-sans placeholder-primar"
-            @blur="() => checkValidationOfInputField(inputValue)"
-            @input="handleInput"
+            @blur="() => checkValidationOfInputField(model as string)"
         >
     </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, type Ref } from 'vue'
-import { useModerationFormInputStore } from '~/stores/moderationFormInputStore'
+import { ref, type Ref, defineModel } from 'vue'
 
-const inputValue: Ref<string> = ref('')
 const isTheInputValueValid: Ref<boolean> = ref(true)
-const props = defineProps<{
-    label: string
-    type: string
-    placeholder: string
-    required: boolean
-    invalidInputErrorMessage: string
-    inputValidationCheck: (inputValue: string) => boolean
-    autofillValue: string
-}>()
 
-const store = useModerationFormInputStore()
+const model = defineModel<string>()
+
+const props = defineProps({
+    label: {
+        type: String,
+        required: true
+    },
+    type: String,
+    placeholder: String,
+    required: Boolean,
+    invalidInputErrorMessage: String,
+    inputValidationCheck: {
+        type: Function,
+        required: true
+    }
+})
 
 const checkValidationOfInputField = (inputValue: string) => {
     isTheInputValueValid.value = props.inputValidationCheck(inputValue)
 }
-
-const handleInput = (event: Event) => {
-    const target = event.target as HTMLInputElement
-    inputValue.value = target.value
-    store.setInputField(props.label, inputValue.value)
-}
-
-const setInitialValue = () => {
-    if (props.autofillValue) {
-        inputValue.value = props.autofillValue
-    }
-}
-onMounted(() => [
-    setInitialValue()
-])
 </script>

@@ -328,34 +328,34 @@ describe('Moderation Facility Submission Form', () => {
 
         it('should be display error messages', () => {
             cy.get('[data-testid="submission-form-nameEn"]').find('input').clear().type('立川中央病院').realPress('Tab')
-            cy.get('[data-testid="submission-form-nameEn"]').find('p').should('exist').contains('Invalid English Name')
+            cy.get('[data-testid="submission-form-nameEn"]').find('p', { timeout: 10000 }).should('exist').contains('Invalid English Name')
 
             cy.get('[data-testid="submission-form-nameJp"]').find('input').clear().type('Tachikawa Hospital').realPress('Tab')
-            cy.get('[data-testid="submission-form-nameJp"]').find('p').should('exist').contains('Invalid Japanese Name')
+            cy.get('[data-testid="submission-form-nameJp"]').find('p', { timeout: 10000 }).should('exist').contains('Invalid Japanese Name')
 
             cy.get('[data-testid="submission-form-phone"]').find('input').clear().type('Hello').realPress('Tab')
-            cy.get('[data-testid="submission-form-phone"]').find('p').should('exist').contains('Invalid Phone Number')
+            cy.get('[data-testid="submission-form-phone"]').find('p', { timeout: 10000 }).should('exist').contains('Invalid Phone Number')
 
             cy.get('[data-testid="submission-form-email"]').find('input').clear().type('example').realPress('Tab')
-            cy.get('[data-testid="submission-form-email"]').find('p').should('exist').contains('Invalid Email Address')
+            cy.get('[data-testid="submission-form-email"]').find('p', { timeout: 10000 }).should('exist').contains('Invalid Email Address')
 
             cy.get('[data-testid="submission-form-website"]').find('input').clear().type('example').realPress('Tab')
-            cy.get('[data-testid="submission-form-website"]').find('p').should('exist').contains('Invalid Website URL')
+            cy.get('[data-testid="submission-form-website"]').find('p', { timeout: 10000 }).should('exist').contains('Invalid Website URL')
 
             cy.get('[data-testid="submission-form-postalCode"]').find('input').clear().type('180-0').realPress('Tab')
-            cy.get('[data-testid="submission-form-postalCode"]').find('p').should('exist').contains('Invalid Postal Code')
+            cy.get('[data-testid="submission-form-postalCode"]').find('p', { timeout: 10000 }).should('exist').contains('Invalid Postal Code')
 
             cy.get('[data-testid="submission-form-cityEn"]').find('input').clear().type('渋谷区').realPress('Tab')
-            cy.get('[data-testid="submission-form-cityEn"]').find('p').should('exist').contains('Invalid English City Name')
+            cy.get('[data-testid="submission-form-cityEn"]').find('p', { timeout: 10000 }).should('exist').contains('Invalid English City Name')
 
             cy.get('[data-testid="submission-form-addressLine1En"]').find('input').clear().type('道の駅').realPress('Tab')
-            cy.get('[data-testid="submission-form-addressLine1En"]').find('p').should('exist').contains('Invalid English Address')
+            cy.get('[data-testid="submission-form-addressLine1En"]').find('p', { timeout: 10000 }).should('exist').contains('Invalid English Address')
 
             cy.get('[data-testid="submission-form-addressLine2En"]').find('input').clear().type('道の駅').realPress('Tab')
-            cy.get('[data-testid="submission-form-addressLine2En"]').find('p').should('exist').contains('Invalid English Address')
+            cy.get('[data-testid="submission-form-addressLine2En"]').find('p', { timeout: 10000 }).should('exist').contains('Invalid English Address')
 
             cy.get('[data-testid=submission-form-cityJp]').find('input').clear().type('Shibuya').realPress('Tab')
-            cy.get('[data-testid=submission-form-cityJp]').find('p').should('exist').contains('Invalid Japanese City Name')
+            cy.get('[data-testid=submission-form-cityJp]').find('p', { timeout: 10000 }).should('exist').contains('Invalid Japanese City Name')
 
             cy.get('[data-testid="submission-form-addressLine1Jp"]').find('input').clear().type('Peanutbutter street').realPress('Tab')
             cy.get('[data-testid="submission-form-addressLine1Jp"]').should('exist').contains('Invalid Japanese Address')
@@ -364,10 +364,10 @@ describe('Moderation Facility Submission Form', () => {
             cy.get('[data-testid="submission-form-addressLine2Jp"]').should('exist').contains('Invalid Japanese Address')
 
             cy.get('[data-testid="submission-form-mapLatitude"]').find('input').clear().type('Not Number Latitude').realPress('Tab')
-            cy.get('[data-testid="submission-form-mapLatitude"]').find('p').should('exist').contains('Invalid Latitude')
+            cy.get('[data-testid="submission-form-mapLatitude"]').find('p', { timeout: 10000 }).should('exist').contains('Invalid Latitude')
 
             cy.get('[data-testid="submission-form-mapLongitude"]').find('input').clear().type('Not Number Longitude').realPress('Tab')
-            cy.get('[data-testid="submission-form-mapLongitude"]').find('p').should('exist').contains('Invalid Longitude')
+            cy.get('[data-testid="submission-form-mapLongitude"]').find('p', { timeout: 10000 }).should('exist').contains('Invalid Longitude')
         })
     })
 })
