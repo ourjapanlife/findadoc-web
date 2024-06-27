@@ -17,7 +17,7 @@
                 <button
                     data-testid="mod-dashboard-leftnav-for-review"
                     class="flex flex-row items-center text-start p-1"
-                    @click="updateSubmissionListViewState(SelectedSubmissionListViewTab.forReview)"
+                    @click="updateSubmissionListViewState(SelectedSubmissionListViewTab.ForReview)"
                 >
                     {{ $t("modDashboardLeftNav.forReview") }} ({{ autofillStatusCount.forReviewCount }})
                 </button>
@@ -27,7 +27,7 @@
                 <button
                     data-testid="mod-dashboard-leftnav-approved"
                     class="flex flex-row items-center text-start p-1 "
-                    @click=" updateSubmissionListViewState(SelectedSubmissionListViewTab.approved)"
+                    @click=" updateSubmissionListViewState(SelectedSubmissionListViewTab.Approved)"
                 >
                     {{ $t("modDashboardLeftNav.approved") }} ({{ autofillStatusCount.approvedCount }})
                 </button>
@@ -37,7 +37,7 @@
                 <button
                     data-testid="mod-dashboard-leftnav-rejected"
                     class="flex flex-row items-center text-start p-1"
-                    @click="updateSubmissionListViewState(SelectedSubmissionListViewTab.rejected)"
+                    @click="updateSubmissionListViewState(SelectedSubmissionListViewTab.Rejected)"
                 >
                     {{ $t("modDashboardLeftNav.rejected") }} ({{ autofillStatusCount.rejectedCount }})
                 </button>
@@ -69,6 +69,7 @@ const updateSelectedDashboardView = (event: Event) => {
 
 function createCountsForSubmissionListView(submissions: Submission[]) {
     return submissions.reduce((statusCountObject, submission) => {
+        const isNewSubmission = !submission.isRejected && !submission.isApproved && !submission.isUnderReview
         if (submission.isUnderReview) {
             statusCountObject.forReviewCount += 1
         }
@@ -78,7 +79,7 @@ function createCountsForSubmissionListView(submissions: Submission[]) {
         if (submission.isRejected) {
             statusCountObject.rejectedCount += 1
         }
-        if (!submission.isRejected && !submission.isApproved && !submission.isUnderReview) {
+        if (isNewSubmission) {
             statusCountObject.forReviewCount += 1
         }
         return statusCountObject
@@ -92,8 +93,8 @@ function createCountsForSubmissionListView(submissions: Submission[]) {
 const autofillStatusCount = computed(() => createCountsForSubmissionListView(moderationSubmissionsStore.submissionsData))
 
 watchEffect(() => {
-    if (moderationSubmissionsStore.submissionsData.length > 0) {
-        moderationSubmissionsStore.filterSubmissionsBySelectedTab(SelectedSubmissionListViewTab.forReview)
+    if (moderationSubmissionsStore.submissionsData.length) {
+        moderationSubmissionsStore.filterSubmissionsBySelectedTab(SelectedSubmissionListViewTab.ForReview)
     }
 })
 </script>

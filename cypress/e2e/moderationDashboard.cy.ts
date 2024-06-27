@@ -144,7 +144,6 @@ describe(
 
                 cy.intercept('POST', '**/', req => {
                     req.continue(res => {
-                        console.log(req.body.query)
                         if (req.body.query && req.body.query.includes('query Submissions')) {
                             res.send({
                                 statusCode: 200,
@@ -197,6 +196,25 @@ describe(
                         'include.text',
                         '0'
                     )
+            })
+
+            it('updates the submission list based on selected tab', () => {
+                cy.get('[data-testid="mod-submission-list-item-1"]').should('exist')
+
+                cy.get('[data-testid=mod-dashboard-leftnav-approved]')
+                    .click()
+
+                cy.get('[data-testid="mod-submission-list-item-1"]').should('exist')
+
+                cy.get('[data-testid=mod-dashboard-leftnav-rejected]')
+                    .click()
+
+                cy.get('[data-testid="mod-submission-list-item-1"]').should('not.exist')
+
+                cy.get('[data-testid=mod-dashboard-leftnav-for-review]')
+                    .click()
+
+                cy.get('[data-testid="mod-submission-list-item-1"]').should('exist')
             })
 
             it.skip('it shows the moderation top nav', () => {
@@ -290,7 +308,7 @@ describe('Moderation Facility Submission Form', () => {
         })
 
         it('should autofill the form', () => {
-            const submission = mockedSubmissionResponse.data.submissions[0].facility
+            const submission = mockedSubmissionResponse.data.submissions[1].facility
 
             cy.get('[data-testid="submission-form-nameEn"]').find('input', { timeout: 10000 })
                 .should('have.value', submission.nameEn)
