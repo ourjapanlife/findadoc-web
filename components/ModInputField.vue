@@ -16,15 +16,16 @@
             :required="required"
             class="mb-5 px-3 py-3.5 w-96 h-12 bg-white rounded-lg border border-primary-text-muted
             text-primary-text text-sm font-normal font-sans placeholder-primar"
-            @blur="() => checkValidationOfInputField(model as string)"
+            @blur="initialValidationCheck"
         >
     </div>
 </template>
 
 <script setup lang="ts">
-import { ref, type Ref, defineModel } from 'vue'
+import { ref, type Ref, defineModel, watch, nextTick } from 'vue'
 
 const isTheInputValueValid: Ref<boolean> = ref(true)
+const validationCheckedPreviously: Ref<boolean> = ref(false)
 
 const model = defineModel<string>()
 
@@ -43,7 +44,18 @@ const props = defineProps({
     }
 })
 
-const checkValidationOfInputField = (inputValue: string) => {
-    isTheInputValueValid.value = props.inputValidationCheck(inputValue)
+const initialValidationCheck = async () => {
+    validationCheckedPreviously.value = true
+    await nextTick()
+    isTheInputValueValid.value = props.inputValidationCheck(model.value)
 }
+
+watch(
+    () => model.value,
+    () => {
+        if (validationCheckedPreviously.value) {
+            isTheInputValueValid.value = props.inputValidationCheck(model.value)
+        }
+    }
+)
 </script>
