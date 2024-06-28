@@ -10,42 +10,52 @@
             {{ invalidInputErrorMessage }}
         </p>
         <input
+            v-model="model"
             :type="type"
             :placeholder="placeholder"
             :required="required"
-            :value="inputValue"
             class="mb-5 px-3 py-3.5 w-96 h-12 bg-white rounded-lg border border-primary-text-muted
             text-primary-text text-sm font-normal font-sans placeholder-primar"
-            @blur="() => checkValidationOfInputField(inputValue)"
-            @input="handleInput"
+            @blur="initialValidationCheck"
         >
     </div>
 </template>
 
 <script setup lang="ts">
-import { ref, type Ref } from 'vue'
-import { useModerationFormInputStore } from '~/stores/moderationFormInputStore'
+import { ref, type Ref, defineModel, watch, nextTick } from 'vue'
 
-const inputValue: Ref<string> = ref('')
 const isTheInputValueValid: Ref<boolean> = ref(true)
-const props = defineProps<{
-    label: string
-    type: string
-    placeholder: string
-    required: boolean
-    invalidInputErrorMessage: string
-    inputValidationCheck: (inputValue: string) => boolean
-}>()
+const validationCheckedPreviously: Ref<boolean> = ref(false)
 
-const store = useModerationFormInputStore()
+const model = defineModel<string>()
 
-const checkValidationOfInputField = (inputValue: string) => {
-    isTheInputValueValid.value = props.inputValidationCheck(inputValue)
+const props = defineProps({
+    label: {
+        type: String,
+        required: true
+    },
+    type: String,
+    placeholder: String,
+    required: Boolean,
+    invalidInputErrorMessage: String,
+    inputValidationCheck: {
+        type: Function,
+        required: true
+    }
+})
+
+const initialValidationCheck = async () => {
+    validationCheckedPreviously.value = true
+    await nextTick()
+    isTheInputValueValid.value = props.inputValidationCheck(model.value)
 }
 
-const handleInput = (event: Event) => {
-    const target = event.target as HTMLInputElement
-    inputValue.value = target.value
-    store.setInputField(props.label, inputValue.value)
-}
+watch(
+    () => model.value,
+    () => {
+        if (validationCheckedPreviously.value) {
+            isTheInputValueValid.value = props.inputValidationCheck(model.value)
+        }
+    }
+)
 </script>
