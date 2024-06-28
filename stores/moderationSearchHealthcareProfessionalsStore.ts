@@ -8,10 +8,12 @@ export const useModerationSearchHealthcareProfessionalsStore = defineStore(
     'moderationSearchHealthcareProfessionalsStore',
     () => {
         const healthcareProfessionals: Ref<HealthcareProfessional[]> = ref([])
+
         async function getHealthcareProfessionals() {
             const healthcareProfessionalsResult = await queryHealthcareProfessional()
             healthcareProfessionals.value = healthcareProfessionalsResult
         }
+
         return { getHealthcareProfessionals, healthcareProfessionals }
     }
 )
