@@ -8958,6 +8958,7 @@ __metadata:
     vue: "npm:^3.4.27"
     vue-gtag: "npm:^2.0.1"
     vue-router: "npm:^4.3.3"
+    vue-select: "npm:^4.0.0-beta.6"
     vue-server-renderer: "npm:^2.7.16"
     vue-template-compiler: "npm:^2.7.16"
     vue3-google-map: "npm:^0.20.0"
@@ -16892,6 +16893,15 @@ __metadata:
   peerDependencies:
     vue: ^3.2.0
   checksum: 10/03a404608af00175f148db885a831ed560741502f49d97381e53aae534aca355404e0549b85d8704020ddca1cc5d2a4c7431c4cf7190cda428b6e93ecd373d49
+  languageName: node
+  linkType: hard
+
+"vue-select@npm:^4.0.0-beta.6":
+  version: 4.0.0-beta.6
+  resolution: "vue-select@npm:4.0.0-beta.6"
+  peerDependencies:
+    vue: 3.x
+  checksum: 10/c778b8613fa4929628c7de02ade25c465caf44b8665ab11e6e874f22f25542e88c4399845d35036522e4a4fcfcaead207103eefee6f1a5349ab278ec11d36a6f
   languageName: node
   linkType: hard
 

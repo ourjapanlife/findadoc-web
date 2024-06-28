@@ -5,7 +5,17 @@
             class="grid-cols-3 mx-4"
         >
             <div class="search-specialty col-span-1 inline-block w-1/3 py-4">
-                <select
+                <v-select
+                    v-model="selectedSpecialty"
+                    :options="specialtyDropdownOptions.map(specialty => ({
+                        label: specialty.displayText,
+                        value: specialty.code,
+                    }))"
+                    class="w-full px-1 border-2 border-primary/60 py-1.5 drop-shadow-md
+                    text-primary-text bg-primary-bg hover:bg-primary-hover/10 transition-all"
+                    @input="setSelected"
+                />
+                <!-- <select
                     v-model="selectedSpecialty"
                     class="rounded-l-full rounded-r-none w-full px-1 border-2 border-primary/60
                     py-1.5 drop-shadow-md text-primary-text bg-primary-bg hover:bg-primary-hover/10 transition-all"
@@ -157,6 +167,11 @@ function createCityDisplayText() {
     })
 
     return cityDisplayTextObject
+}
+
+function setSelected(value: string) {
+    console.log('😍', selectedSpecialty.value)
+    selectedSpecialty.value = value
 }
 
 const citySearchBarDisplayText: CityDisplayItems = createCityDisplayText()
