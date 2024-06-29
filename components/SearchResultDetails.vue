@@ -120,12 +120,12 @@ const localeStore = useLocaleStore()
 const specialtiesStore = useSpecialtiesStore()
 
 const healthcareProfessionalName = computed(() => {
-    const englishName =
-        resultsStore.$state.activeResult?.professional.names.find(
+    const englishName
+        = resultsStore.$state.activeResult?.professional.names.find(
             n => n.locale === Locale.EnUs
         )
-    const japaneseName =
-        resultsStore.$state.activeResult?.professional.names.find(
+    const japaneseName
+        = resultsStore.$state.activeResult?.professional.names.find(
             n => n.locale === Locale.JaJp
         )
 
@@ -142,17 +142,17 @@ const healthcareProfessionalName = computed(() => {
     }
 })
 const healthcareProfessionalDegrees = computed(() => {
-    const healthcareProfessionalDegreesText =
-        resultsStore.$state.activeResult?.professional.degrees.join(', ')
+    const healthcareProfessionalDegreesText
+        = resultsStore.$state.activeResult?.professional.degrees.join(', ')
     return healthcareProfessionalDegreesText
 })
 const specialties = computed(() => {
-    const specialties =
-        resultsStore.$state.activeResult?.professional.specialties
+    const specialties
+        = resultsStore.$state.activeResult?.professional.specialties
 
     const specialtiesDisplayText = specialties?.map(specialty => {
-        const specialtyDisplayText =
-            specialtiesStore.specialtyDisplayOptions.find(
+        const specialtyDisplayText
+            = specialtiesStore.specialtyDisplayOptions.find(
                 options => options.code === specialty
             )?.displayText
         return specialtyDisplayText
@@ -167,11 +167,11 @@ const facilityName = computed(() => {
 })
 
 const spokenLanguages = computed(() => {
-    const languagesDisplayText =
-        resultsStore.$state.activeResult?.professional.spokenLanguages?.map(
+    const languagesDisplayText
+        = resultsStore.$state.activeResult?.professional.spokenLanguages?.map(
             s => {
-                const languageDisplayText =
-                    localeStore.localeDisplayOptions.find(
+                const languageDisplayText
+                    = localeStore.localeDisplayOptions.find(
                         l => l.code === s
                     )?.simpleText
                 return languageDisplayText
@@ -182,8 +182,8 @@ const spokenLanguages = computed(() => {
 })
 
 const addressLine1 = computed(() => {
-    const addressObj =
-        resultsStore.$state.activeResult?.facilities[0].contact.address
+    const addressObj
+        = resultsStore.$state.activeResult?.facilities[0].contact.address
 
     const englishAddress = `${addressObj?.addressLine1En} ${addressObj?.addressLine2En}`
     const japaneseAddress = `${addressObj?.postalCode} ${addressObj?.prefectureJa}${addressObj?.cityJa}${addressObj?.addressLine1Ja}${addressObj?.addressLine2Ja}`
@@ -192,8 +192,8 @@ const addressLine1 = computed(() => {
         : englishAddress
 })
 const addressLine2 = computed(() => {
-    const addressObj =
-        resultsStore.$state.activeResult?.facilities[0].contact.address
+    const addressObj
+        = resultsStore.$state.activeResult?.facilities[0].contact.address
 
     const englishAddress = `${addressObj?.cityEn}, ${addressObj?.prefectureEn} ${addressObj?.postalCode}`
     return localeStore.locale.code !== Locale.JaJp ? englishAddress : ''

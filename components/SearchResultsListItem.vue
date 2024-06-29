@@ -82,8 +82,8 @@ const props = defineProps({
 
 const formattedSpecialties = computed(() => {
     const specialtiesDisplayText = props.specialties?.map(s => {
-        const specialtyDisplayText =
-            specialtiesStore.specialtyDisplayOptions.find(
+        const specialtyDisplayText
+            = specialtiesStore.specialtyDisplayOptions.find(
                 l => l.code === s
             )?.displayText
         return specialtyDisplayText
