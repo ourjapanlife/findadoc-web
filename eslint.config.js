@@ -6,7 +6,7 @@ import pluginCypress from 'eslint-plugin-cypress'
 import pluginVue from 'eslint-plugin-vue'
 import withNuxt from './.nuxt/eslint.config.mjs'
 
-export default withNuxt (
+export default withNuxt(
     {
         // GLOBAL configuration
         ignores: [
@@ -88,7 +88,7 @@ export default withNuxt (
     },
     // Vue rules
     {
-        ...pluginVue.configs['flat/recommended'],
+        ...pluginVue.configs['flat/vue3-recommended'],
         rules: {
             'vue/multi-word-component-names': 'off',
             'vue/html-indent': ['error', 4]
@@ -125,7 +125,7 @@ export default withNuxt (
     .override('nuxt/stylistic', {
         ignores: ['./i18n/index.ts'],
         rules: {
-        // Stylistic Issues and Opinions
+            // Stylistic Issues and Opinions
             'arrow-body-style': 'error',
             '@stylistic/array-bracket-spacing': ['error', 'never'],
             '@stylistic/arrow-parens': ['error', 'as-needed'],
@@ -184,7 +184,7 @@ export default withNuxt (
                 { allowAllPropertiesOnSameLine: true }
             ],
             'object-shorthand': ['error', 'methods'],
-            '@stylistic/operator-linebreak': [0, 'before'],
+            '@stylistic/operator-linebreak': ['error', 'before'],
             '@stylistic/padded-blocks': ['error', 'never'],
             '@stylistic/quote-props': ['error', 'as-needed'],
             '@stylistic/quotes': ['error', 'single', { avoidEscape: true }],
