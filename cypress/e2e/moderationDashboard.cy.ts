@@ -2,6 +2,119 @@ import 'cypress-real-events'
 import 'cypress-plugin-tab'
 import enUS from '../../i18n/locales/en.json'
 
+const mockedSubmissionResponse = {
+    data: {
+        submissions: [
+            {
+                id: '1',
+                googleMapsUrl: 'https://maps.google.com/?q=custom1',
+                healthcareProfessionalName: 'Dr. John Doe',
+                spokenLanguages: ['English', 'Japanese'],
+                facility: {
+                    id: '1',
+                    nameEn: 'Custom Facility EN',
+                    nameJa: 'カスタム施設 JA',
+                    contact: {
+                        googleMapsUrl: 'https://maps.google.com/?q=facility1',
+                        email: 'contact@facility.com',
+                        phone: '123-456-7890',
+                        website: 'https://facility.com',
+                        address: {
+                            postalCode: '123-4567',
+                            prefectureEn: 'Tokyo',
+                            cityEn: 'Shibuya',
+                            addressLine1En: '1-2-3 Custom St',
+                            addressLine2En: 'Apt 456',
+                            prefectureJa: '東京都',
+                            cityJa: '渋谷区',
+                            addressLine1Ja: 'カスタム通り1-2-3',
+                            addressLine2Ja: '456号室'
+                        }
+                    },
+                    healthcareProfessionalIds: ['1']
+                },
+                healthcareProfessionals: [
+                    {
+                        id: '1',
+                        names: [
+                            {
+                                firstName: 'John',
+                                middleName: '',
+                                lastName: 'Doe',
+                                locale: 'en'
+                            }
+                        ],
+                        spokenLanguages: ['English'],
+                        degrees: ['MD'],
+                        specialties: ['General Practice'],
+                        acceptedInsurance: ['Insurance1'],
+                        facilityIds: ['1']
+                    }
+                ],
+                isUnderReview: false,
+                isApproved: true,
+                isRejected: false,
+                createdDate: '2023-01-01T00:00:00Z',
+                updatedDate: '2023-01-02T00:00:00Z',
+                notes: 'This is a custom note.'
+            },
+            {
+                id: '2',
+                googleMapsUrl: 'https://maps.google.com/?q=flannigan2',
+                healthcareProfessionalName: 'Dr. Farnsworth McFlannigan',
+                spokenLanguages: ['English', 'Japanese'],
+                facility: {
+                    id: '1',
+                    nameEn: 'Cork EN',
+                    nameJa: 'カスタム JA2',
+                    contact: {
+                        googleMapsUrl: 'https://maps.google.com/?q=mcflannigan2',
+                        email: 'mcFlannigan@mcflannigan.com',
+                        phone: '243-867-5309',
+                        website: 'https://mcflannigan.com',
+                        address: {
+                            postalCode: '123-4567',
+                            prefectureEn: 'Tokyo',
+                            cityEn: 'Shibuya',
+                            addressLine1En: '1-2-3 Flannigan St',
+                            addressLine2En: 'Apt 456',
+                            prefectureJa: '東京都',
+                            cityJa: '渋谷区',
+                            addressLine1Ja: 'カスタム通り1-2-3',
+                            addressLine2Ja: '456号室'
+                        }
+                    },
+                    healthcareProfessionalIds: ['2']
+                },
+                healthcareProfessionals: [
+                    {
+                        id: '2',
+                        names: [
+                            {
+                                firstName: 'Farnsworth',
+                                middleName: '',
+                                lastName: 'McFlannigan',
+                                locale: 'en'
+                            }
+                        ],
+                        spokenLanguages: ['English', 'Japanese'],
+                        degrees: ['MD'],
+                        specialties: ['Radiology'],
+                        acceptedInsurance: ['Insurance2'],
+                        facilityIds: ['2']
+                    }
+                ],
+                isUnderReview: true,
+                isApproved: false,
+                isRejected: false,
+                createdDate: '2023-01-01T00:00:00Z',
+                updatedDate: '2023-01-02T00:00:00Z',
+                notes: 'This is a custom note.'
+            }
+        ]
+    }
+}
+
 describe(
     'Moderation dashboard',
     () => {
@@ -29,11 +142,61 @@ describe(
                     cy.get('[data-action-button-primary]').should('be.visible').click()
                 })
 
+                cy.intercept('POST', '**/', req => {
+                    req.continue(res => {
+                        console.log(req.body.query)
+                        if (req.body.query && req.body.query.includes('query Submissions')) {
+                            res.send({
+                                statusCode: 200,
+                                body: mockedSubmissionResponse
+                            })
+                        }
+                    })
+                }).as('getSubmissions')
+
                 cy.wait(3000)
 
                 cy.url().should('include', '')
 
                 cy.get('[data-testid=top-nav-mod-link]').click()
+
+                cy.wait('@getSubmissions', { timeout: 10000 })
+            })
+
+            it('shows mod dashboard left navbar buttons with correct counts', () => {
+                //The number for include text is for the status in the mock data
+                cy.get('[data-testid=mod-dashboard-leftnav-for-review]')
+                    .should('exist')
+                    .should(
+                        'include.text',
+                        enUS.modDashboardLeftNav.forReview
+                    )
+                    .should(
+                        'include.text',
+                        '1'
+                    )
+
+                cy.get('[data-testid=mod-dashboard-leftnav-approved]')
+                    .should('exist')
+                    .should(
+                        'include.text',
+                        enUS.modDashboardLeftNav.approved
+                    )
+                    .should(
+                        'include.text',
+                        '1'
+                    )
+
+                cy.get('[data-testid=mod-dashboard-leftnav-rejected]')
+                    .should('exist')
+                    .should(
+                        'include.text',
+                        enUS.modDashboardLeftNav.rejected
+                    )
+                    .should(
+                        'include.text',
+                        '0'
+                    )
             })
 
             it.skip('it shows the moderation top nav', () => {
@@ -50,94 +213,12 @@ describe(
             after(() => {
                 Cypress.session.clearCurrentSessionData()
             })
-
-            it('shows mod dashboard left navbar buttons', () => {
-                cy.get('[data-testid=mod-dashboard-leftnav-for-review]')
-                    .should('exist')
-                    .should(
-                        'include.text',
-                        enUS.modDashboardLeftNav.forReview
-                    )
-
-                cy.get('[data-testid=mod-dashboard-leftnav-approved]')
-                    .should('exist')
-                    .should(
-                        'include.text',
-                        enUS.modDashboardLeftNav.approved
-                    )
-
-                cy.get('[data-testid=mod-dashboard-leftnav-rejected]')
-                    .should('exist')
-                    .should(
-                        'include.text',
-                        enUS.modDashboardLeftNav.rejected
-                    )
-            })
         })
     }
 )
 
 describe('Moderation Facility Submission Form', () => {
     context('Landscape mode', () => {
-        const mockedSubmissionResponse = {
-            data: {
-                submissions: [
-                    {
-                        id: '1',
-                        googleMapsUrl: 'https://maps.google.com/?q=custom1',
-                        healthcareProfessionalName: 'Dr. John Doe',
-                        spokenLanguages: ['English', 'Japanese'],
-                        facility: {
-                            id: '1',
-                            nameEn: 'Custom Facility EN',
-                            nameJa: 'カスタム施設 JA',
-                            contact: {
-                                googleMapsUrl: 'https://maps.google.com/?q=facility1',
-                                email: 'contact@facility.com',
-                                phone: '123-456-7890',
-                                website: 'https://facility.com',
-                                address: {
-                                    postalCode: '123-4567',
-                                    prefectureEn: 'Tokyo',
-                                    cityEn: 'Shibuya',
-                                    addressLine1En: '1-2-3 Custom St',
-                                    addressLine2En: 'Apt 456',
-                                    prefectureJa: '東京都',
-                                    cityJa: '渋谷区',
-                                    addressLine1Ja: 'カスタム通り1-2-3',
-                                    addressLine2Ja: '456号室'
-                                }
-                            },
-                            healthcareProfessionalIds: ['1']
-                        },
-                        healthcareProfessionals: [
-                            {
-                                id: '1',
-                                names: [
-                                    {
-                                        firstName: 'John',
-                                        middleName: '',
-                                        lastName: 'Doe',
-                                        locale: 'en'
-                                    }
-                                ],
-                                spokenLanguages: ['English'],
-                                degrees: ['MD'],
-                                specialties: ['General Practice'],
-                                acceptedInsurance: ['Insurance1'],
-                                facilityIds: ['1']
-                            }
-                        ],
-                        isUnderReview: false,
-                        isApproved: true,
-                        isRejected: false,
-                        createdDate: '2023-01-01T00:00:00Z',
-                        updatedDate: '2023-01-02T00:00:00Z',
-                        notes: 'This is a custom note.'
-                    }
-                ]
-            }
-        }
         before(() => {
             // The resolution is in the beforeEach() instead of before() to
             // prevent Cypress from defaulting to other screen sizes between tests.
@@ -208,6 +289,19 @@ describe('Moderation Facility Submission Form', () => {
             cy.get('[data-testid="submission-form-prefectureJp"]').should('exist')
         })
 
+        it('should autofill the form', () => {
+            const submission = mockedSubmissionResponse.data.submissions[0].facility
+
+            cy.get('[data-testid="submission-form-nameEn"]').find('input', { timeout: 10000 })
+                .should('have.value', submission.nameEn)
+
+            cy.get('[data-testid="submission-form-nameJp"]').find('input', { timeout: 10000 })
+                .should('have.value', submission.nameJa)
+
+            cy.get('[data-testid="submission-form-phone"]').find('input', { timeout: 10000 })
+                .should('have.value', submission.contact.phone)
+        })
+
         it('should be able to type in all input fields', () => {
             cy.get('[data-testid="submission-form-nameEn"]').find('input').type('Hospital')
             cy.get('[data-testid="submission-form-nameJp"]').find('input').type('立川中央病院')
@@ -234,34 +328,34 @@ describe('Moderation Facility Submission Form', () => {
 
         it('should be display error messages', () => {
             cy.get('[data-testid="submission-form-nameEn"]').find('input').clear().type('立川中央病院').realPress('Tab')
-            cy.get('[data-testid="submission-form-nameEn"]').find('p').should('exist').contains('Invalid English Name')
+            cy.get('[data-testid="submission-form-nameEn"]').find('p', { timeout: 10000 }).should('exist').contains('Invalid English Name')
 
             cy.get('[data-testid="submission-form-nameJp"]').find('input').clear().type('Tachikawa Hospital').realPress('Tab')
-            cy.get('[data-testid="submission-form-nameJp"]').find('p').should('exist').contains('Invalid Japanese Name')
+            cy.get('[data-testid="submission-form-nameJp"]').find('p', { timeout: 10000 }).should('exist').contains('Invalid Japanese Name')
 
             cy.get('[data-testid="submission-form-phone"]').find('input').clear().type('Hello').realPress('Tab')
-            cy.get('[data-testid="submission-form-phone"]').find('p').should('exist').contains('Invalid Phone Number')
+            cy.get('[data-testid="submission-form-phone"]').find('p', { timeout: 10000 }).should('exist').contains('Invalid Phone Number')
 
             cy.get('[data-testid="submission-form-email"]').find('input').clear().type('example').realPress('Tab')
-            cy.get('[data-testid="submission-form-email"]').find('p').should('exist').contains('Invalid Email Address')
+            cy.get('[data-testid="submission-form-email"]').find('p', { timeout: 10000 }).should('exist').contains('Invalid Email Address')
 
             cy.get('[data-testid="submission-form-website"]').find('input').clear().type('example').realPress('Tab')
-            cy.get('[data-testid="submission-form-website"]').find('p').should('exist').contains('Invalid Website URL')
+            cy.get('[data-testid="submission-form-website"]').find('p', { timeout: 10000 }).should('exist').contains('Invalid Website URL')
 
             cy.get('[data-testid="submission-form-postalCode"]').find('input').clear().type('180-0').realPress('Tab')
-            cy.get('[data-testid="submission-form-postalCode"]').find('p').should('exist').contains('Invalid Postal Code')
+            cy.get('[data-testid="submission-form-postalCode"]').find('p', { timeout: 10000 }).should('exist').contains('Invalid Postal Code')
 
             cy.get('[data-testid="submission-form-cityEn"]').find('input').clear().type('渋谷区').realPress('Tab')
-            cy.get('[data-testid="submission-form-cityEn"]').find('p').should('exist').contains('Invalid English City Name')
+            cy.get('[data-testid="submission-form-cityEn"]').find('p', { timeout: 10000 }).should('exist').contains('Invalid English City Name')
 
             cy.get('[data-testid="submission-form-addressLine1En"]').find('input').clear().type('道の駅').realPress('Tab')
-            cy.get('[data-testid="submission-form-addressLine1En"]').find('p').should('exist').contains('Invalid English Address')
+            cy.get('[data-testid="submission-form-addressLine1En"]').find('p', { timeout: 10000 }).should('exist').contains('Invalid English Address')
 
             cy.get('[data-testid="submission-form-addressLine2En"]').find('input').clear().type('道の駅').realPress('Tab')
-            cy.get('[data-testid="submission-form-addressLine2En"]').find('p').should('exist').contains('Invalid English Address')
+            cy.get('[data-testid="submission-form-addressLine2En"]').find('p', { timeout: 10000 }).should('exist').contains('Invalid English Address')
 
             cy.get('[data-testid=submission-form-cityJp]').find('input').clear().type('Shibuya').realPress('Tab')
-            cy.get('[data-testid=submission-form-cityJp]').find('p').should('exist').contains('Invalid Japanese City Name')
+            cy.get('[data-testid=submission-form-cityJp]').find('p', { timeout: 10000 }).should('exist').contains('Invalid Japanese City Name')
 
             cy.get('[data-testid="submission-form-addressLine1Jp"]').find('input').clear().type('Peanutbutter street').realPress('Tab')
             cy.get('[data-testid="submission-form-addressLine1Jp"]').should('exist').contains('Invalid Japanese Address')
@@ -270,10 +364,10 @@ describe('Moderation Facility Submission Form', () => {
             cy.get('[data-testid="submission-form-addressLine2Jp"]').should('exist').contains('Invalid Japanese Address')
 
             cy.get('[data-testid="submission-form-mapLatitude"]').find('input').clear().type('Not Number Latitude').realPress('Tab')
-            cy.get('[data-testid="submission-form-mapLatitude"]').find('p').should('exist').contains('Invalid Latitude')
+            cy.get('[data-testid="submission-form-mapLatitude"]').find('p', { timeout: 10000 }).should('exist').contains('Invalid Latitude')
 
             cy.get('[data-testid="submission-form-mapLongitude"]').find('input').clear().type('Not Number Longitude').realPress('Tab')
-            cy.get('[data-testid="submission-form-mapLongitude"]').find('p').should('exist').contains('Invalid Longitude')
+            cy.get('[data-testid="submission-form-mapLongitude"]').find('p', { timeout: 10000 }).should('exist').contains('Invalid Longitude')
         })
     })
 })

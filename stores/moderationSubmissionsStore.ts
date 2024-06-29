@@ -8,13 +8,19 @@ export const useModerationSubmissionsStore = defineStore(
     'submissionsStore',
     () => {
         const submissionsData: Ref<Submission[]> = ref([])
+        const selectedSubmissionId: Ref<string> = ref('')
+        const selectedSubmissionData: Ref<Submission | undefined> = ref()
 
         async function getSubmissions() {
             const submissionsSearchResults = await querySubmissions()
             submissionsData.value = submissionsSearchResults
         }
 
-        return { getSubmissions, submissionsData }
+        function filterSelectedSubmission(submissionId: string | undefined) {
+            selectedSubmissionData.value = submissionsData.value.find(submission => submission.id === submissionId)
+        }
+
+        return { getSubmissions, submissionsData, selectedSubmissionId, filterSelectedSubmission, selectedSubmissionData }
     }
 )
 

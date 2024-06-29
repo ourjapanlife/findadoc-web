@@ -55,7 +55,6 @@ import type { Submission } from '~/typedefs/gqlTypes'
 
 const { t } = useI18n()
 
-const modScreenStore = useModerationScreenStore()
 const modSubmissionsStore = useModerationSubmissionsStore()
 
 onMounted(async () => {
@@ -89,6 +88,6 @@ const submissionListItemTableColumns = computed(() => {
 
 const handleClickToSubmissionForm = (id: string) => {
     useModerationScreenStore().setActiveScreen(ModerationScreen.editSubmission)
-    modScreenStore.selectedSubmissionId = id
+    modSubmissionsStore.selectedSubmissionId = id
 }
 </script>
