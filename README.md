@@ -70,14 +70,13 @@ Have a look at the [CONTRIBUTING](/CONTRIBUTING.md) and [CODE_OF_CONDUCT](/CODE_
 
 - [ESLint](https://eslint.org/)
 - [EditorConfig](https://editorconfig.org)
-- [StyleLint](https://stylelint.io)
 
 # Getting started developing
 
 ### Prerequisites
 
 - [Yarn Berry](https://yarnpkg.com/getting-started/install) (latest version)
-- Strongly recommended: IDE plugins for `eslint`, `editorconfig`, and `stylelint`.
+- Strongly recommended: IDE plugins for `vue`, `eslint` and `editorconfig`
     - These provide automatic linting error visibility instead of having to run `yarn lint` every time
 -
 
