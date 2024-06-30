@@ -61,16 +61,17 @@
             >
                 <div
                     v-for="(member, index) in data.members"
-                    :key="index"
+                    :key="member.avatarImg"
                     data-testid="member"
                     class="members-list grid"
                 >
                     <MemberComponent
                         :avatar-img="member.avatarImg"
-                        :name="member.name"
-                        :title="member.title"
-                        :linked-in-url="member.linkedInUrl"
                         :github-url="member.githubUrl"
+                        :linked-in-url="member.linkedInUrl"
+                        :name="member.name"
+                        :data-test-id="index"
+                        :title="member.title"
                     />
                 </div>
             </div>
