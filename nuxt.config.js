@@ -1,8 +1,8 @@
 import { defineNuxtConfig } from 'nuxt/config'
 
 const SITE_TITLE = 'Find a Doc, Japan!'
-const SITE_DESCRIPTION =
-    'Health service information for the international community in Japan'
+const SITE_DESCRIPTION
+    = 'Health service information for the international community in Japan'
 
 export default defineNuxtConfig({
     //typescript settings

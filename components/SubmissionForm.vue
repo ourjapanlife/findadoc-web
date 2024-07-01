@@ -157,11 +157,11 @@ const validateFields = (e: Event) => {
     e.preventDefault()
 
     if (
-        !isValidGoogleMapsUrl.value ||
-        !isValidLastName.value ||
-        !isValidFirstName.value ||
-        !isValidPrimarySpokenLanguage.value ||
-        !isValidSecondarySpokenLanguage.value
+        !isValidGoogleMapsUrl.value
+        || !isValidLastName.value
+        || !isValidFirstName.value
+        || !isValidPrimarySpokenLanguage.value
+        || !isValidSecondarySpokenLanguage.value
     ) {
         e.preventDefault()
         return
