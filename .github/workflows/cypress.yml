@@ -23,3 +23,9 @@ jobs:
               with:
                   build: yarn prod:build
                   start: yarn prod:start
+            - name: Upload screenshots
+              uses: actions/upload-artifact@v3
+              if: failure()
+              with:
+                name: cypress-screenshots
+                path: cypress/screenshots
