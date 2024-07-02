@@ -18,7 +18,7 @@
                 :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityNameEn')"
             />
             <ModInputField
-                v-model="nameJp"
+                v-model="nameJa"
                 data-testid="submission-form-nameJp"
                 :label="$t('modSubmissionForm.labelFacilityNameJp')"
                 type="text"
@@ -233,13 +233,15 @@
 
 <script lang="ts" setup>
 import { type Ref, ref } from 'vue'
+import { gql } from 'graphql-request'
+import { gqlClient } from '~/utils/graphql.js'
 import { useModerationSubmissionsStore } from '~/stores/moderationSubmissionsStore'
 import type { Submission } from '~/typedefs/gqlTypes'
 import { validateAddressLineEn, validateAddressLineJp, validateNameEn, validateNameJp, validatePhoneNumber, validateCityEn, validateEmail, validateFloat, validatePostalCode, validateWebsite, validateCityJp } from '~/utils/formValidations'
 
 // contactFields
 const nameEn: Ref<string> = ref('')
-const nameJp: Ref<string> = ref('')
+const nameJa: Ref<string> = ref('')
 const phone: Ref<string> = ref('')
 const website: Ref<string> = ref('')
 const email: Ref<string> = ref('')
@@ -271,7 +273,7 @@ autofillEditSubmissionForm(formSubmissionData)
 
 const validateFields = () => {
     const isNameEnValid: boolean = validateNameEn(nameEn.value)
-    const isNameJpValid: boolean = validateNameJp(nameJp.value)
+    const isNameJpValid: boolean = validateNameJp(nameJa.value)
     const isPhoneValid: boolean = validatePhoneNumber(phone.value)
     const isEmailValid: boolean = validateEmail(email.value)
     const isWebsiteValid: boolean = validateWebsite(website.value)
@@ -309,7 +311,7 @@ function autofillEditSubmissionForm(submissionData: Submission | undefined) {
             switch (key) {
                 case 'facility':
                     nameEn.value = submissionData['facility']?.nameEn || ''
-                    nameJp.value = submissionData['facility']?.nameJa || ''
+                    nameJa.value = submissionData['facility']?.nameJa || ''
                     phone.value = submissionData['facility']?.contact?.phone || ''
                     email.value = submissionData['facility']?.contact?.email || ''
                     website.value = submissionData['facility']?.contact?.website || ''
@@ -332,7 +334,7 @@ function autofillEditSubmissionForm(submissionData: Submission | undefined) {
     }
 }
 
-function submitForm(e: Event) {
+async function submitForm(e: Event) {
     // stop the form submitting before we validate
     e.preventDefault()
 
@@ -341,7 +343,67 @@ function submitForm(e: Event) {
         return
     }
 
-    //submitthedatahere(googlemapsURL, mapLatitude, mapLongitude)
-    console.log('Form submitted!!! woohoo')
+    const updateFacilitySubmission = gql`
+        mutation Mutation($input: CreateFacilityInput!) {
+        createFacility(input: $input) {
+          id
+          nameEn
+          nameJa
+          contact {
+            googleMapsUrl
+            email
+            phone
+            website
+            address {
+              postalCode
+              prefectureEn
+              cityEn
+              addressLine1En
+              addressLine2En
+              prefectureJa
+              cityJa
+              addressLine1Ja
+              addressLine2Ja
+            }
+          }
+          mapLatitude
+          mapLongitude
+          healthcareProfessionalIds
+          createdDate
+          updatedDate
+        }
+      }`
+
+    const facilityInputVariables = {
+        input: {
+            nameEn: nameEn.value || '',
+            nameJa: nameJa.value || '',
+            contact: {
+                googleMapsUrl: googlemapsURL.value || '',
+                email: email.value || '',
+                phone: phone.value || '',
+                website: website.value || '',
+                address: {
+                    postalCode: postalCode.value || '',
+                    prefectureEn: prefectureEn.value || '',
+                    cityEn: cityEn.value || '',
+                    addressLine1En: addressLine1En.value || '',
+                    addressLine2En: addressLine2En.value || '',
+                    prefectureJa: prefectureJp.value || '',
+                    cityJa: cityJp.value || '',
+                    addressLine1Ja: addressLine1Jp.value || '',
+                    addressLine2Ja: addressLine2Jp.value || ''
+                }
+            },
+            mapLatitude: parseFloat(mapLatitude.value) || 0,
+            mapLongitude: parseFloat(mapLongitude.value) || 0
+        }
+    }
+    try {
+        const response = await gqlClient.request(updateFacilitySubmission, facilityInputVariables)
+        console.log('Facility created:', response)
+    } catch (error) {
+        console.error('Error creating facility:', error)
+    }
 }
 </script>

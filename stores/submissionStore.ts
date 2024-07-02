@@ -1,7 +1,7 @@
 import { gql } from 'graphql-request'
 import { defineStore } from 'pinia'
 import { ref, type Ref } from 'vue'
-import { gqlClient } from '../utils/graphql.js'
+import { gqlClient } from '~/utils/graphql.js'
 import { type Locale, type CreateSubmissionInput, type Submission } from '~/typedefs/gqlTypes'
 
 export const useSubmissionStore = defineStore('submissionStore', () => {
