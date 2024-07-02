@@ -206,7 +206,7 @@ export function validateUserSubmittedLastName(name: string): boolean {
 export function validateUserSubmittedFirstName(name: string): boolean {
     // The first name is optional and may be an empty string.
     name = name.trim()
-    if (name.length > 30) {
+    if (name.length > 30 || !name.length) {
         return false
     }
     return true

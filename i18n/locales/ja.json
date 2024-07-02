@@ -52,6 +52,7 @@
     },
     "submitPage": {
         "firstName": "名",
+        "firstNameValidation": "Enter a first name",
         "googleMaps": "Google MapsのURL",
         "googleMapsValidation": "https://を含む、アドレスを入れてください",
         "heading": "医師情報の追加",
