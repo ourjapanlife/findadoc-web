@@ -3,18 +3,18 @@
         <div>
             <h1
                 data-testid="privacy-heading"
-                class="mb-20 text-black text-5xl font-bold font-['Noto Sans JP']"
+                class="mb-20 text-black text-5xl font-bold font-sans"
             >
                 {{ $t("privacyPage.heading") }}
             </h1>
         </div>
         <h2
             data-testid="privacy-subheading"
-            class="mb-10 text-black text-2xl font-normal font-['Noto Sans JP']"
+            class="mb-10 text-black text-2xl font-normal font-sans"
         >
             {{ $t("privacyPage.subheading") }}
         </h2>
-        <div class="text-gray-500 text-lg font-normal font-['Noto Sans JP']">
+        <div class="text-gray-500 text-lg font-normal font-sans">
             <p class="mb-10">
                 {{ $t("privacyPage.date") }}
             </p>
