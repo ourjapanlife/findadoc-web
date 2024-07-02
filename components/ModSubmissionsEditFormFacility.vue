@@ -85,7 +85,7 @@
                     v-model="prefectureEn"
                     data-testid="submission-form-prefectureEn"
                     name="Prefecture Japan"
-                    class="mb-5 px-3 py-3.5 w-96 h-12 bg-white rounded-lg border border-primary-text-muted
+                    class="mb-5 px-3 py-3.5 w-96 h-12 bg-secondary-bg rounded-lg border border-primary-text-muted
                     text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
                 >
                     <option
@@ -138,7 +138,7 @@
                     v-model="prefectureJp"
                     data-testid="submission-form-prefectureJp"
                     name="Prefecture Japan"
-                    class="mb-5 px-3 py-3.5 w-96 h-12 bg-white rounded-lg border border-primary-text-muted
+                    class="mb-5 px-3 py-3.5 w-96 h-12 bg-secondary-bg rounded-lg border border-primary-text-muted
                     text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
                 >
                     <option
@@ -220,7 +220,7 @@
         <ModHealthcareProfessionalSearchbar
             data-testid="submission-form-doctor-search"
         />
-        <!-- This button is pure for testing -->
+        <!-- This button is purely for testing -->
         <button
             type="submit"
             class="bg-currentColor text-white font-bold py-2 px-4 rounded"

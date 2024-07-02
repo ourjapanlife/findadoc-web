@@ -5,7 +5,7 @@
         </label>
         <p
             v-if="!isTheInputValueValid"
-            class="text-currentColor text-xs font-sans"
+            class="text-error text-xs font-sans"
         >
             {{ invalidInputErrorMessage }}
         </p>
@@ -14,8 +14,8 @@
             :type="type"
             :placeholder="placeholder"
             :required="required"
-            class="mb-5 px-3 py-3.5 w-96 h-12 bg-white rounded-lg border border-primary-text-muted
-            text-primary-text text-sm font-normal font-sans placeholder-primar"
+            class="mb-5 px-3 py-3.5 w-96 h-12 bg-secondary-bg rounded-lg border border-primary-text-muted
+            text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
             @blur="initialValidationCheck"
         >
     </div>

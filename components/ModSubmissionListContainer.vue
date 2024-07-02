@@ -25,11 +25,11 @@
             <div
                 v-for="(submission, index) in modSubmissionsStore.filteredSubmissionDataForListComponent"
                 :key="index"
-                class="grid grid-cols-subgrid col-span-5 bg-gray-200"
+                class="grid grid-cols-subgrid col-span-5 bg-tertiary-bg"
             >
                 <div
                     :data-testid="`mod-submission-list-item-${index + 1}`"
-                    class="grid grid-cols-subgrid col-span-5 bg-gray-200 cursor-pointer hover:bg-primary"
+                    class="grid grid-cols-subgrid col-span-5 bg-tertiary-bg cursor-pointer hover:bg-primary"
                     @click="handleClickToSubmissionForm(submission.id)"
                 >
                     <span class="text-start">{{ index + 1 }}</span>

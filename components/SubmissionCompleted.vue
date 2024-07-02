@@ -9,12 +9,12 @@
             alt="heart circle icon"
         >
         <p
-            class="mb-3.5 text-zinc-900 text-2xl font-bold font-['Noto Sans JP'] leading-normal"
+            class="mb-3.5 text-primary-text text-2xl font-bold font-sans leading-normal"
         >
             {{ $t('thankYouPage.heading') }}
         </p>
         <p
-            class="mb-40 text-neutral-600 text-sm font-bold font-['Noto Sans JP']"
+            class="mb-40 text-neutral-600 text-sm font-bold font-sans"
         >
             {{ $t('thankYouPage.submission') }}
         </p>
@@ -23,8 +23,8 @@
             to="/"
         >
             <button
-                class="px-20 py-3 rounded-full bg-currentColor w-[350px] text-center
-        text-white text-base font-medium font-['Noto Sans JP']"
+                class="px-20 py-3 rounded-full bg-currentColor w-96 text-center
+        text-white text-base font-medium font-sans"
             >{{ $t('thankYouPage.home') }}</button>
         </NuxtLink>
     </div>

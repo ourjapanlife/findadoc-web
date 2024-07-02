@@ -7,7 +7,7 @@
             v-if="$viewport.isGreaterThan('tablet')"
             class="flex h-full overflow-clip"
         >
-            <LeftNavbar class="bg-primary-bg w-[358px] overflow-y-auto" />
+            <LeftNavbar class="bg-primary-bg w-96 overflow-y-auto" />
             <MainContentContainer class="overflow-clip" />
         </div>
         <div

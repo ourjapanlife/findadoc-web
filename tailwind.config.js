@@ -31,6 +31,7 @@ module.exports = {
             'primary-hover': 'rgb(var(--color-primary-hover) / <alpha-value>)',
             'primary-bg': 'rgb(var(--color-bg-primary) / <alpha-value>)',
             'secondary-bg': 'rgb(var(--color-bg-secondary) / <alpha-value>)',
+            'tertiary-bg': 'rgb(var(--color-bg-tertiary) / <alpha-value>)',
             'primary-text': 'rgb(var(--color-text-base) / <alpha-value>)',
             'primary-text-muted':
                 'rgb(var(--color-text-muted) / <alpha-value>)',
