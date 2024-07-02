@@ -58,18 +58,22 @@
 
 <script setup lang="ts">
 import { useRoute, useRouter } from 'vue-router'
-import { watch } from 'vue'
+import { onMounted, watch } from 'vue'
 import { useAuthStore } from '~/stores/authStore'
 import { definePageMeta } from '#imports'
+import { ModerationScreen, useModerationScreenStore } from '~/stores/moderationScreenStore'
 
 // tell nuxt to our moderation layout
 definePageMeta({
     layout: 'moderationlayout'
 })
 
+const moderationScreenStore = useModerationScreenStore()
 const authStore = useAuthStore()
 const route = useRoute()
 const router = useRouter()
+
+// const idForTheForwardButton: Ref<string> = ref(moderationSubmissionsStore.selectedSubmissionId)
 
 const checkIfUserIsLoggedIn = async () => {
     // This promise is here to make the Suspense component work.
@@ -93,4 +97,30 @@ watch(route, async () => {
 })
 
 await checkIfUserIsLoggedIn()
+
+function disableBackButton() {
+    if (typeof window !== 'undefined' && typeof window.history.pushState === 'function') {
+        if (moderationScreenStore.activeScreen === ModerationScreen.editSubmission) {
+            window.history.pushState({ path: '/moderation' }, '', window.location.href)
+        } else {
+            window.history.pushState({ path: '/' }, '', window.location.href)
+        }
+
+        window.onpopstate = function() {
+            if (moderationScreenStore.activeScreen === ModerationScreen.editSubmission) {
+                moderationScreenStore.setActiveScreen(ModerationScreen.dashboard)
+            }
+        }
+    } else {
+        console.error('window.history.pushState is not a function')
+    }
+}
+
+onMounted (() => {
+    disableBackButton()
+})
+
+watch(() => moderationScreenStore.activeScreen, () => {
+    disableBackButton()
+})
 </script>
