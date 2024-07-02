@@ -59,7 +59,7 @@
         "healthcareProfessionalName": "Healthcare Professional Name",
         "invalidOption": "Invalid option",
         "lastName": "Last Name",
-        "lastNameValidation": "Enter a last name",
+        "nameValidation": "Enter a first and last name",
         "location": "Location",
         "selectLanguage1": "Select First Language",
         "selectLanguage2": "Select Second Language",
