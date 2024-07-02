@@ -23,7 +23,7 @@
             class="grid grid-cols-subgrid col-span-5"
         >
             <div
-                v-for="(submission, index) in modSubmissionsStore.submissionsData"
+                v-for="(submission, index) in modSubmissionsStore.filteredSubmissionDataForListComponent"
                 :key="index"
                 class="grid grid-cols-subgrid col-span-5 bg-gray-200"
             >
