@@ -2,7 +2,7 @@ import { gql } from 'graphql-request'
 import { defineStore } from 'pinia'
 import { ref, type Ref } from 'vue'
 import { gqlClient } from '../utils/graphql.js'
-import { type Submission } from '~/typedefs/gqlTypes.js'
+import type { Maybe, HealthcareProfessionalSubmission, Submission } from '~/typedefs/gqlTypes.js'
 
 export enum SelectedSubmissionListViewTab {
     ForReview = 'FOR_REVIEW',
@@ -10,10 +10,17 @@ export enum SelectedSubmissionListViewTab {
     Rejected = 'REJECTED'
 }
 
+export enum SelectedSubmissionType {
+    Facilities = 'FACILITIES',
+    HealthcareProfessionals = 'HEALTHCARE_PROFESSIONALS'
+}
+
 export const useModerationSubmissionsStore = defineStore(
     'submissionsStore',
     () => {
         const submissionsData: Ref<Submission[]> = ref([])
+        const submissionHealtchareProfessionalsData: Ref< (Maybe<HealthcareProfessionalSubmission[]> | undefined)[]>
+        = ref([])
         const selectedSubmissionId: Ref<string> = ref('')
         const selectedSubmissionData: Ref<Submission | undefined> = ref()
         const filteredSubmissionDataForListComponent: Ref<Submission[]> = ref([])
@@ -25,6 +32,15 @@ export const useModerationSubmissionsStore = defineStore(
 
         function filterSelectedSubmission(submissionId: string | undefined) {
             selectedSubmissionData.value = submissionsData.value.find(submission => submission.id === submissionId)
+        }
+
+        function displayFacilitiesOrHealthcareProfessionalsForList(selectValue: SelectedSubmissionType) {
+            if (selectValue === SelectedSubmissionType.HealthcareProfessionals) {
+                submissionHealtchareProfessionalsData.value
+                = submissionsData.value.map((submission: Submission) => submission.healthcareProfessionals)
+            } else {
+                submissionHealtchareProfessionalsData.value = []
+            }
         }
 
         function filterSubmissionsBySelectedTab(tabValue: SelectedSubmissionListViewTab) {
@@ -52,7 +68,9 @@ export const useModerationSubmissionsStore = defineStore(
             filteredSubmissionDataForListComponent,
             selectedSubmissionId,
             filterSelectedSubmission,
-            selectedSubmissionData }
+            selectedSubmissionData,
+            displayFacilitiesOrHealthcareProfessionalsForList,
+            submissionHealtchareProfessionalsData }
     }
 )
 

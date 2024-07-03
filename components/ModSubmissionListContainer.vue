@@ -19,7 +19,41 @@
             {{ $t("modPanelSubmissionList.submitted") }}
         </div>
         <div
-            v-if="hasSubmissions"
+            v-if="healthCareProfessionalsChosen"
+            class="col-span-5"
+        >
+            <div
+                v-for="(submission, index) in modSubmissionsStore.filteredSubmissionDataForListComponent"
+                :key="index"
+                class="col-span-5 bg-tertiary-bg"
+            >
+                <div v-if="submission.healthcareProfessionals">
+                    <div
+                        v-for="(professional, professionalIndex) in submission.healthcareProfessionals"
+                        :key="professionalIndex"
+                        class="grid grid-cols-5 col-span-5 bg-tertiary-bg cursor-pointer hover:bg-primary"
+                    >
+                        <nuxt-link
+                            :to="`/moderation/editsubmission/${submission.id}`"
+                            class="grid grid-cols-5 col-span-5 bg-primary-text-muted p-1 hover:bg-primary"
+                            :style="submissionListItemTableColumns"
+                        >
+                            <span class="text-start">{{ index }} - {{ professionalIndex + 1 }}</span>
+                            <span
+                                :data-testid="`mod-submission-name-${professionalIndex + 1}`"
+                                class="text-start"
+                            >{{
+                                professional.names[0].firstName }} {{ professional.names[0].lastName }}</span>
+                            <span class="text-start">{{ getSubmissionStatus(submission) }}</span>
+                            <span class="text-start">{{ convertDateToLocalTime(submission.updatedDate) }}</span>
+                            <span class="text-start">{{ convertDateToLocalTime(submission.createdDate) }}</span>
+                        </nuxt-link>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div
+            v-else-if="hasSubmissions"
             class="grid grid-cols-subgrid col-span-5"
         >
             <div
@@ -37,7 +71,7 @@
                         class="grid grid-cols-subgrid col-span-5 bg-primary-text-muted p-1 hover:bg-primary"
                     >
                         <span class="text-start">{{ index + 1 }}</span>
-                        <span class="text-start">{{ submission.healthcareProfessionalName }}</span>
+                        <span class="text-start">{{ "blaaaaaa" }}</span>
                         <span class="text-start">{{ getSubmissionStatus(submission) }}</span>
                         <span class="text-start">{{ convertDateToLocalTime(submission.updatedDate) }}</span>
                         <span class="text-start">{{ convertDateToLocalTime(submission.createdDate) }}</span>
@@ -66,6 +100,7 @@ onMounted(async () => {
     await modSubmissionsStore.getSubmissions()
 })
 
+const healthCareProfessionalsChosen = computed(() => modSubmissionsStore.submissionHealtchareProfessionalsData.length)
 const hasSubmissions = computed(() => modSubmissionsStore.submissionsData.length)
 
 const getSubmissionStatus = (submission: Submission) => {

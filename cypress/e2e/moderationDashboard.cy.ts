@@ -219,7 +219,18 @@ describe(
                 clipboardResult.should('exist', 10000)
             })
 
-            afterEach(() => {
+            it('toggle between submissions and healthcare professionals submissions', () => {
+                //currently I am using the dummy data to verify the toggle functionality
+                cy.get('[data-testid="mod-submission-name-Jhon Smith"]').should('not.exist')
+                cy.get('[data-testid="submission-type-select"]').select('healthcareProfessionals')
+                cy.wait(1000)
+                cy.get('[data-testid="mod-submission-list-item-1"]').should('exist')
+                cy.get('[data-testid="submission-type-select"]').select('facilities')
+                cy.wait(2000)
+                cy.get('[data-testid="mod-submission-name-Jhon Smith"]').should('not.exist')
+            })
+
+            after(() => {
                 Cypress.session.clearCurrentSessionData()
             })
         })

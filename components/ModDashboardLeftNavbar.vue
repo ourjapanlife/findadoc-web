@@ -1,13 +1,15 @@
 <template>
     <div>
         <select
+            v-model="selectedDashboardView"
             class="font-semibold p-1 border-b border-black mb-2"
+            data-testid="submission-type-select"
             @change="updateSelectedDashboardView"
         >
-            <option value="facilities">
+            <option :value="SelectedSubmissionType.Facilities">
                 {{ $t("modDashboardLeftNav.facilities") }}
             </option>
-            <option value="healthcareProfessionals">
+            <option :value="SelectedSubmissionType.HealthcareProfessionals">
                 {{ $t("modDashboardLeftNav.healthcareProfessionals") }}
             </option>
         </select>
@@ -51,20 +53,20 @@ import { ref, computed, type Ref, watchEffect } from 'vue'
 import SVGNoteStackAddSvg from '../assets/icons/note-stack-add.svg'
 import SVGCheckBoxSvg from '../assets/icons/check-box.svg'
 import SVGDisabledByDefault from '../assets/icons/disabled-by-default.svg'
-import { useModerationSubmissionsStore, SelectedSubmissionListViewTab } from '~/stores/moderationSubmissionsStore'
+import { useModerationSubmissionsStore, SelectedSubmissionListViewTab, SelectedSubmissionType } from '~/stores/moderationSubmissionsStore'
 import type { Submission } from '~/typedefs/gqlTypes'
 
-const moderationSubmissionsStore = useModerationSubmissionsStore ()
+const moderationSubmissionsStore = useModerationSubmissionsStore()
 
-const selectedDashboardView: Ref<string> = ref('facilities')
+const selectedDashboardView: Ref<SelectedSubmissionType> = ref(SelectedSubmissionType.Facilities)
 
 const updateSubmissionListViewState = (submissionListViewOptionValue: SelectedSubmissionListViewTab) => {
     moderationSubmissionsStore.filterSubmissionsBySelectedTab(submissionListViewOptionValue)
 }
 
 const updateSelectedDashboardView = (event: Event) => {
-    const selectedValue = (event.target as HTMLSelectElement).value
-    selectedDashboardView.value = selectedValue
+    const selectedValue = (event.target as HTMLSelectElement).value as SelectedSubmissionType
+    moderationSubmissionsStore.displayFacilitiesOrHealthcareProfessionalsForList(selectedValue)
 }
 
 function createCountsForSubmissionListView(submissions: Submission[]) {
