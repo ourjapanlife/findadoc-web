@@ -53,7 +53,6 @@ import SVGSuccessCheckMark from '~/assets/icons/checkmark-square.svg'
 import { useModerationSubmissionsStore } from '~/stores/moderationSubmissionsStore'
 
 const modScreenStore = useModerationSubmissionsStore()
-
 const selectedSubmissionId = modScreenStore.selectedSubmissionId
 
 const showCopySuccessIcon: Ref<boolean> = ref(false)

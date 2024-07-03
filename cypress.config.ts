@@ -5,6 +5,7 @@ export default defineConfig({
     e2e: {
         setupNodeEvents() { },
         baseUrl: 'http://localhost:3000',
-        testIsolation: false
+        testIsolation: false,
+        experimentalRunAllSpecs: true
     }
 })

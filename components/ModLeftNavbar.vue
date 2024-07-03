@@ -16,4 +16,3 @@ import { useModerationScreenStore, ModerationScreen } from '~/stores/moderationS
 
 const store = useModerationScreenStore()
 </script>
-
