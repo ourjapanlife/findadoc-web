@@ -286,20 +286,20 @@ const validateFields = () => {
     const isLongitudeValid: boolean = validateFloat(mapLongitude.value)
 
     return (
-        !isNameEnValid ||
-        !isNameJpValid ||
-        !isPhoneValid ||
-        !isEmailValid ||
-        !isWebsiteValid ||
-        !isAddressLine1EnValid ||
-        !isAddressLine2EnValid ||
-        !isAddressLine1JpValid ||
-        !isAddressLine2JpValid ||
-        !isCityEnValid ||
-        !isCityJpValid ||
-        !isPostalCodeValid ||
-        !isLatitudeValid ||
-        !isLongitudeValid
+        !isNameEnValid
+        || !isNameJpValid
+        || !isPhoneValid
+        || !isEmailValid
+        || !isWebsiteValid
+        || !isAddressLine1EnValid
+        || !isAddressLine2EnValid
+        || !isAddressLine1JpValid
+        || !isAddressLine2JpValid
+        || !isCityEnValid
+        || !isCityJpValid
+        || !isPostalCodeValid
+        || !isLatitudeValid
+        || !isLongitudeValid
     )
 }
 
