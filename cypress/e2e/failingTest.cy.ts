@@ -1,5 +1,4 @@
 describe('Visits the home page', () => {
-
     context('Landscape mode', () => {
         before(() => {
             cy.visit('/')
