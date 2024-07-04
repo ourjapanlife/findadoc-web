@@ -1,6 +1,4 @@
 describe('Visits the home page', () => {
-    const googleForm = 'https://forms.gle/4E763qfaq46kEsn99'
-    const netlify = 'https://www.netlify.com/'
 
     context('Landscape mode', () => {
         before(() => {
