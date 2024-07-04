@@ -1,10 +1,14 @@
 <template>
     <div class="member flex flex-col items-center text-center">
-        <img
-            data-testid="member-avatar"
-            :src="avatarImg"
-            class="member-image object-cover rounded-full w-32 h-32"
-        >
+        <FadeInTransitionImage
+            :data-test-id="`member-avatar-${dataTestId}`"
+            :alt="name"
+            border-radius="rounded-full"
+            height="h-32"
+            :img-src="avatarImg"
+            object-styling="object-cover"
+            width="w-32"
+        />
         <div
             data-testid="member-name"
             class="member-name mt-1 text-xl font-bold"
@@ -62,21 +66,25 @@ defineProps({
         type: String,
         required: true
     },
-    name: {
-        type: String,
-        required: true
-    },
-    title: {
-        type: String,
-        required: true
+    githubUrl: {
+        type: [String, null] as PropType<string | null>,
+        required: false
     },
     linkedInUrl: {
         type: [String, null] as PropType<string | null>,
         required: false
     },
-    githubUrl: {
-        type: [String, null] as PropType<string | null>,
-        required: false
+    name: {
+        type: String,
+        required: true
+    },
+    dataTestId: {
+        type: Number,
+        required: true
+    },
+    title: {
+        type: String,
+        required: true
     }
 })
 </script>
