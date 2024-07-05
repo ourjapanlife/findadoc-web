@@ -34,7 +34,7 @@
                 >
                     <nuxt-link
                         :to="`/moderation/editsubmission/${submission.id}`"
-                        class="grid grid-cols-subgrid col-span-5 bg-gray-200 p-1 hover:bg-primary"
+                        class="grid grid-cols-subgrid col-span-5 bg-primary-text-muted p-1 hover:bg-primary"
                     >
                         <span class="text-start">{{ index + 1 }}</span>
                         <span class="text-start">{{ submission.healthcareProfessionalName }}</span>

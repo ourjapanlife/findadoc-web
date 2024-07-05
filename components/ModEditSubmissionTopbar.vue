@@ -47,7 +47,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, type Ref } from 'vue'
+import { ref, type Ref } from 'vue'
 import SVGCopyContent from '~/assets/icons/content-copy.svg'
 import SVGSuccessCheckMark from '~/assets/icons/checkmark-square.svg'
 import { useModerationSubmissionsStore } from '~/stores/moderationSubmissionsStore'
@@ -76,8 +76,4 @@ const acceptSubmission = () => {
 const rejectSubmission = () => {
     console.log('You are rejected')
 }
-
-watch(selectedSubmissionId, newSelectedId => {
-    selectedSubmissionId.value = newSelectedId
-})
 </script>

@@ -13,7 +13,7 @@
                     {{ $t('login.checkingauth') }}
                 </div>
                 <div
-                    v-if="!authStore.isLoadingAuth && !authStore.isAdmin && !authStore.isModerator"
+                    v-if="!doesTheUserHaveAccess && !authStore.isAdmin && !authStore.isModerator"
                     data-testid="unauthorized-message"
                 >
                     <div
@@ -58,7 +58,7 @@
 
 <script setup lang="ts">
 import { useRoute, useRouter } from 'vue-router'
-import { watch } from 'vue'
+import { watch, ref, type Ref, onMounted } from 'vue'
 import { useAuthStore } from '~/stores/authStore'
 import { definePageMeta } from '#imports'
 
@@ -71,13 +71,17 @@ const authStore = useAuthStore()
 const route = useRoute()
 const router = useRouter()
 
+const doesTheUserHaveAccess: Ref<boolean> = ref(true)
+
 const checkIfUserIsLoggedIn = async () => {
     // This promise is here to make the Suspense component work.
     // It doesn't do anything, but <Suspense> requires an awaited setup method
     await new Promise(resolve => {
         //ignore if route change is unrelated to moderation
-        if (route.path === '/moderation' && !authStore.isLoggedIn && !authStore.isLoadingAuth) {
+        const needsRedirectDueToAccess = route.path.startsWith('/moderation') && !authStore.isLoggedIn && !authStore.isLoadingAuth
+        if (needsRedirectDueToAccess) {
             // give the user a bit of time to read the message before redirecting
+            doesTheUserHaveAccess.value = false
             setTimeout(() => {
                 // Redirect to login page if user is not logged in
                 router.push('/')
@@ -88,9 +92,7 @@ const checkIfUserIsLoggedIn = async () => {
     })
 }
 
-watch(route, async () => {
-    await checkIfUserIsLoggedIn()
-})
+watch(route, checkIfUserIsLoggedIn)
 
-await checkIfUserIsLoggedIn()
+onMounted(checkIfUserIsLoggedIn)
 </script>
