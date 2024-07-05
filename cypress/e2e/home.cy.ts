@@ -12,7 +12,7 @@ describe('Visits the home page', () => {
         beforeEach(() => {
             // The resolution is in the beforeEach() instead of before() to
             // prevent Cypress from defaulting to other screen sizes between tests.
-            cy.viewport(1920, 1080)
+            cy.viewport('macbook-13')
             cy.wait(500)
         })
 

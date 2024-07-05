@@ -4,7 +4,7 @@
         class="h-full w-full overflow-hidden"
     >
         <div
-            v-if="$viewport.isGreaterThan('tablet')"
+            v-if="screenOrientation?.includes('landscape')"
             class="flex h-full overflow-clip"
         >
             <LeftNavbar class="bg-primary-bg w-[358px] overflow-y-auto" />
@@ -20,9 +20,19 @@
 </template>
 
 <script setup lang="ts">
-import { useNuxtApp } from '#app'
+import { useScreenOrientation } from '@vueuse/core'
+import { onMounted, watch, ref, type Ref } from 'vue'
 import { useModalStore } from '~/stores/modalStore'
 
-const { $viewport } = useNuxtApp()
+const screenOrientation: Ref<OrientationType | undefined> = ref('landscape-primary')
+
 useModalStore()
+
+watch(screenOrientation, newScreenOrientation => {
+    screenOrientation.value = newScreenOrientation
+})
+
+onMounted(() => {
+    screenOrientation.value = useScreenOrientation().orientation.value
+})
 </script>

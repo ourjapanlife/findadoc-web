@@ -23,8 +23,15 @@ export default defineNuxtConfig({
                 content: '-iHcqQwxR-wiZU6Y4BKtcn79tUZJAcyWXJt7w7iobpY'
             },
             { charset: 'utf-8' },
-            { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-            { hid: 'description', name: 'description', content: SITE_DESCRIPTION },
+            {
+                name: 'viewport',
+                content: 'width=device-width, initial-scale=1'
+            },
+            {
+                hid: 'description',
+                name: 'description',
+                content: SITE_DESCRIPTION
+            },
             { name: 'format-detection', content: 'telephone=no' },
             {
                 hid: 'twitter:card',
@@ -82,7 +89,9 @@ export default defineNuxtConfig({
                 content: 'https://www.findadoc.jp'
             }
         ],
-        link: [{ rel: 'icon', type: 'image/x-icon', href: '/assets/favicon.ico' }]
+        link: [
+            { rel: 'icon', type: 'image/x-icon', href: '/assets/favicon.ico' }
+        ]
     },
 
     // Global CSS: https://go.nuxtjs.dev/config-css
@@ -99,7 +108,8 @@ export default defineNuxtConfig({
         '@pinia/nuxt',
         'nuxt-viewport',
         'nuxt-svgo',
-        '@nuxt/eslint'
+        '@nuxt/eslint',
+        '@vueuse/nuxt'
     ],
     eslint: {
         config: {
@@ -153,7 +163,6 @@ export default defineNuxtConfig({
     target: 'static',
     runtimeConfig: {
         public: {
-
             GOOGLE_MAPS_API_KEY: process.env.GOOGLE_MAPS_API_KEY,
 
             ENABLE_MODERATION_PANEL: process.env.ENABLE_MODERATION_PANEL,

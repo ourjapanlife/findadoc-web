@@ -52,6 +52,8 @@
         "@vitejs/plugin-vue": "^5.0.5",
         "@vitest/coverage-v8": "^1.6.0",
         "@vue/test-utils": "^2.4.5",
+        "@vueuse/core": "^10.11.0",
+        "@vueuse/nuxt": "^10.11.0",
         "all-contributors-cli": "^6.26.1",
         "autoprefixer": "^10.4.18",
         "cypress": "^13.12.0",
