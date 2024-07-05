@@ -12,6 +12,7 @@
                 >
                     {{ $t('login.checkingauth') }}
                 </div>
+
                 <div
                     v-if="!authStore.isLoadingAuth && !authStore.isAdmin && !authStore.isModerator"
                     data-testid="unauthorized-message"
@@ -58,7 +59,7 @@
 
 <script setup lang="ts">
 import { useRoute, useRouter } from 'vue-router'
-import { watch } from 'vue'
+import { onMounted, watch } from 'vue'
 import { useAuthStore } from '~/stores/authStore'
 import { definePageMeta } from '#imports'
 
@@ -76,12 +77,16 @@ const checkIfUserIsLoggedIn = async () => {
     // It doesn't do anything, but <Suspense> requires an awaited setup method
     await authStore.refreshUserCredentials()
 
+    const doesTheUserHaveAccess = route.path.startsWith('/moderation')
+      && !authStore.isLoggedIn
+      && !authStore.isLoadingAuth
+
     //ignore if route change is unrelated to moderation
-    if (route.path === "/moderation" && !authStore.isLoggedIn && !authStore.isLoadingAuth) {
+    if (doesTheUserHaveAccess) {
         // give the user a bit of time to read the message before redirecting
         setTimeout(() => {
             // Redirect to login page if user is not logged in
-            router.push("/")
+            router.push('/')
         }, 10000)
     }
 }
@@ -90,5 +95,7 @@ watch(route, async () => {
     await checkIfUserIsLoggedIn()
 })
 
-await checkIfUserIsLoggedIn()
+onMounted(async () => {
+    await checkIfUserIsLoggedIn()
+})
 </script>

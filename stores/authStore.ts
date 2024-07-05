@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia'
 import { type Ref, ref, computed, watch } from 'vue'
-import { useLoadingStore } from './loadingStore.js'
 import { auth0 } from '../utils/auth0.js'
 import { useLoadingStore } from './loadingStore.js'
 
@@ -10,10 +9,11 @@ export const useAuthStore = defineStore('authStore', () => {
     const isLoggedIn = computed(() => !auth0?.isLoading.value && auth0?.isAuthenticated.value)
     // const isAdmin = computed(() => !auth0?.isLoading.value && auth0?.isAuthenticated.value)
     const isAdmin: Ref<boolean> = ref(false)
+
     const isModerator: Ref<boolean> = ref(false)
     const authToken: Ref<string | null> = ref(null)
 
-    watch(auth0.isAuthenticated, async (isLoggedIn) => {
+    watch(() => auth0.isAuthenticated, async isLoggedIn => {
         if (isLoggedIn) {
             await refreshUserCredentials()
         } else {
@@ -53,7 +53,6 @@ export const useAuthStore = defineStore('authStore', () => {
         await auth0.logout({ logoutParams: { returnTo: window.location.origin } })
     }
 
-
     async function refreshUserCredentials() {
         //if the user is not logged in, we don't need to do anything
         if (!auth0.isAuthenticated.value)
@@ -64,7 +63,7 @@ export const useAuthStore = defineStore('authStore', () => {
         authToken.value = newToken
 
         //fetch the user's permissions from the auth0 management API
-        const userId = auth0.user.value?.sub
+        const userId = auth0.user.value?.name
         const response = await fetch(`https://findadoc.jp.auth0.com/api/v2/users/${userId}/permissions`, {
             headers: {
                 Authorization: 'Bearer ' + newToken
