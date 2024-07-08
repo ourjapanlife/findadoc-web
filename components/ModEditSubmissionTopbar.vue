@@ -52,21 +52,20 @@ import SVGCopyContent from '~/assets/icons/content-copy.svg'
 import SVGSuccessCheckMark from '~/assets/icons/checkmark-square.svg'
 import { useModerationSubmissionsStore } from '~/stores/moderationSubmissionsStore'
 
-const modScreenStore = useModerationSubmissionsStore()
-
-const selectedSubmissionId = modScreenStore.selectedSubmissionId
+const modSubmissionStore = useModerationSubmissionsStore()
+const selectedSubmissionId: Ref<string> = ref(modSubmissionStore.selectedSubmissionId)
 
 const showCopySuccessIcon: Ref<boolean> = ref(false)
 
 const copySubmissionId = async () => {
     try {
-        await navigator.clipboard.writeText(selectedSubmissionId)
+        await navigator.clipboard.writeText(selectedSubmissionId.value)
         showCopySuccessIcon.value = true
         setTimeout(() => {
             showCopySuccessIcon.value = false
         }, 2000)
     } catch (err: unknown) {
-        console.error(`Failed to copy submission ID ${selectedSubmissionId}: ${err}`)
+        console.error(`Failed to copy submission ID ${selectedSubmissionId.value}: ${err}`)
     }
 }
 
