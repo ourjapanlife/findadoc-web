@@ -34,7 +34,7 @@
         <span
             class="mb-2 text-primary-text text-sm font-normal font-sans"
         >{{ $t('submitPage.healthcareProfessionalName') }}</span>
-        <p class="flex text-currentColor text-xs font-['Noto Sans JP']">
+        <p class="flex text-error text-xs font-sans">
             <span
                 :class="[
                     !isValidInput.lastName.value ? 'visible' : 'invisible',
