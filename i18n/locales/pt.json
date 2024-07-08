@@ -50,6 +50,7 @@
     },
     "submitPage": {
         "firstName": "Nome",
+        "firstNameValidation": "Enter a first name",
         "googleMaps": "Endereço no Google Maps",
         "googleMapsValidation": "Insira uma endereço começando com https://",
         "heading": "Adicionar um profissional de saúde",

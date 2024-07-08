@@ -53,6 +53,7 @@
     },
     "submitPage": {
         "firstName": "First Name",
+        "firstNameValidation": "Enter a first name",
         "googleMaps": "Google Maps URL",
         "googleMapsValidation": "Enter a URL starting with https://",
         "heading": "Add a Doctor",
