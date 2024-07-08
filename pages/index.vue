@@ -4,7 +4,7 @@
         class="h-full w-full overflow-hidden"
     >
         <div
-            v-if="$viewport.isGreaterThan('tablet')"
+            v-if="!isPortrait"
             class="flex h-full overflow-clip"
         >
             <LeftNavbar class="bg-primary-bg w-96 overflow-y-auto" />
@@ -20,9 +20,10 @@
 </template>
 
 <script setup lang="ts">
-import { useNuxtApp } from '#app'
+import { useScreenOrientation } from '~/utils/useScreenOrientation'
 import { useModalStore } from '~/stores/modalStore'
 
-const { $viewport } = useNuxtApp()
 useModalStore()
+
+const { isPortrait } = useScreenOrientation()
 </script>
