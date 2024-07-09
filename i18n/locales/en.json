@@ -135,6 +135,8 @@
     },
     "modEditSubmissionTopNav": {
         "saveAndExit": "Save & Exit",
+        "saving": "Saving...",
+        "retryMessage": "Something’s not right. Retrying in {seconds}s...",
         "approve": "Approve",
         "reject": "Reject"
     },

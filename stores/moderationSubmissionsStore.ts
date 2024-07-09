@@ -70,7 +70,8 @@ export const useModerationSubmissionsStore = defineStore(
                     break
             }
         }
-        return { getSubmissions,
+        return {
+            getSubmissions,
             submissionsData,
             filterSubmissionByStatus,
             filteredSubmissionDataForListComponent,

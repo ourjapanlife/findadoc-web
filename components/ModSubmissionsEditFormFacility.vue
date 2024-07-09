@@ -243,7 +243,7 @@
 </template>
 
 <script lang="ts" setup>
-import { type Ref, ref } from 'vue'
+import { type Ref, ref, watch } from 'vue'
 import { gql } from 'graphql-request'
 import { gqlClient } from '~/utils/graphql.js'
 import { useModerationSubmissionsStore } from '~/stores/moderationSubmissionsStore'
@@ -278,10 +278,9 @@ const listPrefectureJapanJp: Ref<string[]> = ref(['北海道', '青森県', '岩
 const moderationSubmissionStore = useModerationSubmissionsStore()
 
 const formSubmissionId = moderationSubmissionStore.selectedSubmissionId
+
 moderationSubmissionStore.filterSelectedSubmission(formSubmissionId)
-
 const formSubmissionData = moderationSubmissionStore.selectedSubmissionData
-
 autofillEditSubmissionForm(formSubmissionData)
 
 const validateFields = () => {
@@ -394,13 +393,50 @@ async function submitForm(e: Event) {
         }
     }
 
-    try {
-        const response = await gqlClient.request(updateFacilitySubmissionGqlQuery, facilityInputVariables)
-        console.log('Facility updated:', response)
-    } catch (error) {
-        console.error('Error updating facility:', error)
+    const maxAttempts = 3
+    let mutationAttempts = 0
+    let mutationSuccess = false
+
+    function delay(milliseconds: number) {
+        return new Promise(resolve => setTimeout(resolve, milliseconds))
+    }
+
+    while (mutationAttempts < maxAttempts && !mutationSuccess) {
+        try {
+            moderationSubmissionStore.handleUpdateIsSendingUpdatedForm(true)
+            await gqlClient.request(updateFacilitySubmissionGqlQuery, facilityInputVariables)
+            moderationSubmissionStore.handleUpdateSubmissionFromTopNav(false)
+            moderationSubmissionStore.handleUpdateIsSendingUpdatedForm(false)
+            moderationSubmissionStore.handleDidMutationFail(false)
+            mutationSuccess = true
+        } catch (error) {
+            console.error(`Attempt ${mutationAttempts + 1} failed:`, error)
+            if (mutationAttempts < maxAttempts) {
+                moderationSubmissionStore.handleDidMutationFail(true)
+                await delay(60000) // 60 seconds delay
+                mutationAttempts++
+            }
+        }
+        if (mutationAttempts === maxAttempts) {
+            moderationSubmissionStore.handleUpdateIsSendingUpdatedForm(false)
+            moderationSubmissionStore.handleUpdateSubmissionFromTopNav(false)
+            moderationSubmissionStore.handleDidMutationFail(false)
+        }
     }
 }
+
+const syntheticEvent = new Event('submit', { bubbles: true, cancelable: true })
+
+watch(moderationSubmissionStore, newValue => {
+    if (newValue.updateSubmissionFromTopNav) {
+        submitForm(syntheticEvent)
+    }
+})
+
+watch(moderationSubmissionStore, newValue => {
+    moderationSubmissionStore.filterSelectedSubmission(newValue.selectedSubmissionId)
+    autofillEditSubmissionForm(newValue.selectedSubmissionData)
+})
 
 const updateFacilitySubmissionGqlQuery = gql`
 mutation Mutation($updateSubmissionId: ID!, $input: UpdateSubmissionInput!) {
