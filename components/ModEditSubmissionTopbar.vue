@@ -25,12 +25,14 @@
             <p
                 v-show="showRetryMessage"
                 class="flex flex-row justify-center items-center whitespace-nowrap text-error text-xs mr-2"
+                data-testid="submission-topNav-retryMessage"
             >
                 <SVGCautionSign class="w-3 h-3 mr-1" /> {{ retryMessage }}
             </p>
             <button
                 class="flex justify-center items-center rounded-full bg-secondary-bg border-primary-text-muted
                 border-2 w-28 text-sm mr-2"
+                data-testid="submission-topNav-saveAndExit"
                 @click="saveAndExit"
             >
                 <span
