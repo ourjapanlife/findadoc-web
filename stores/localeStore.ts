@@ -65,7 +65,7 @@ export const localeDisplayOptions = [
     { code: Locale.NlBe, simpleText: 'Dutch', displayText: 'Dutch (Belgium)' },
     { code: Locale.PlPl, simpleText: 'Polish', displayText: 'Polish (Poland)' },
     { code: Locale.PtBr, simpleText: 'Português', displayText: 'Português (Brasil)' },
-    { code: Locale.RuRu, simpleText: 'Russian', displayText: 'Russian (Russia)' },
+    { code: Locale.RuRu, simpleText: 'русский', displayText: 'Russian (Russia)' },
     { code: Locale.SiLk, simpleText: 'Sinhala', displayText: 'Sinhala (Sri Lanka)' },
     { code: Locale.SqAl, simpleText: 'Albanian', displayText: 'Albanian (Albania)' },
     { code: Locale.SrCyrl, simpleText: 'Serbian', displayText: 'Serbian (Cyrillic)' },
@@ -82,5 +82,6 @@ export const mvpLocaleDisplayOptions = [
     { code: Locale.EnUs, simpleText: 'English', displayText: 'English (US)' },
     { code: Locale.JaJp, simpleText: '日本語', displayText: '日本語 (Japan)' },
     { code: Locale.SwKe, simpleText: 'Swahili', displayText: 'Swahili (Kenya)' },
-    { code: Locale.PtBr, simpleText: 'Português', displayText: 'Português (Brasil)' }
+    { code: Locale.PtBr, simpleText: 'Português', displayText: 'Português (Brasil)' },
+    { code: Locale.RuRu, simpleText: 'русский', displayText: 'Russian (Russia)' }
 ] satisfies LocaleDisplay[]
