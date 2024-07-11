@@ -32,11 +32,16 @@
                     class="grid grid-cols-subgrid col-span-5 bg-tertiary-bg cursor-pointer hover:bg-primary"
                     @click="handleClickToSubmissionForm(submission.id)"
                 >
-                    <span class="text-start">{{ index + 1 }}</span>
-                    <span class="text-start">{{ submission.healthcareProfessionalName }}</span>
-                    <span class="text-start">{{ getSubmissionStatus(submission) }}</span>
-                    <span class="text-start">{{ convertDateToLocalTime(submission.updatedDate) }}</span>
-                    <span class="text-start">{{ convertDateToLocalTime(submission.createdDate) }}</span>
+                    <nuxt-link
+                        :to="`/moderation/editsubmission/${submission.id}`"
+                        class="grid grid-cols-subgrid col-span-5 bg-primary-text-muted p-1 hover:bg-primary"
+                    >
+                        <span class="text-start">{{ index + 1 }}</span>
+                        <span class="text-start">{{ submission.healthcareProfessionalName }}</span>
+                        <span class="text-start">{{ getSubmissionStatus(submission) }}</span>
+                        <span class="text-start">{{ convertDateToLocalTime(submission.updatedDate) }}</span>
+                        <span class="text-start">{{ convertDateToLocalTime(submission.createdDate) }}</span>
+                    </nuxt-link>
                 </div>
             </div>
         </div>
@@ -61,7 +66,7 @@ onMounted(async () => {
     await modSubmissionsStore.getSubmissions()
 })
 
-const hasSubmissions = computed(() => modSubmissionsStore.submissionsData.length > 0)
+const hasSubmissions = computed(() => modSubmissionsStore.submissionsData.length)
 
 const getSubmissionStatus = (submission: Submission) => {
     switch (true) {
