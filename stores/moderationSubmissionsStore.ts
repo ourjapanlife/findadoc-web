@@ -33,6 +33,11 @@ export const useModerationSubmissionsStore = defineStore(
         const selectedSubmissionData: Ref<Submission | undefined> = ref()
         const filteredSubmissionDataForListComponent: Ref<Submission[]> = ref([])
         const didMutationFail: Ref<boolean> = ref(false)
+        const updatingMutationFromTopBar = ref(false)
+
+        function setUpdatingMutationFromTopBar(newValue: boolean) {
+            updatingMutationFromTopBar.value = newValue
+        }
 
         function setDidMutationFail(newValue: boolean) {
             didMutationFail.value = newValue
@@ -70,8 +75,7 @@ export const useModerationSubmissionsStore = defineStore(
                     break
             }
         }
-        return {
-            getSubmissions,
+        return { getSubmissions,
             submissionsData,
             filterSubmissionByStatus,
             filteredSubmissionDataForListComponent,
@@ -83,7 +87,9 @@ export const useModerationSubmissionsStore = defineStore(
             selectedModerationListViewChosen,
             setSelectedModerationListViewChosen,
             selectedFacilityId,
-            selectedHealthcareProfessionalId }
+            selectedHealthcareProfessionalId,
+            updatingMutationFromTopBar,
+            setUpdatingMutationFromTopBar }
     }
 )
 

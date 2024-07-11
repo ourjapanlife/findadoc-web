@@ -22,28 +22,13 @@
             </button>
         </div>
         <div class="flex flex-row justify p-2 font-bold ">
-            <p
-                v-show="showRetryMessage"
-                class="flex flex-row justify-center items-center whitespace-nowrap text-error text-xs mr-2"
-                data-testid="submission-topNav-retryMessage"
-            >
-                <SVGCautionSign class="w-3 h-3 mr-1" /> {{ retryMessage }}
-            </p>
             <button
                 class="flex justify-center items-center rounded-full bg-secondary-bg border-primary-text-muted
                 border-2 w-28 text-sm mr-2"
                 data-testid="submission-topNav-saveAndExit"
                 @click="saveAndExit"
             >
-                <span
-                    v-show="updatedFormBeingSentForMutation"
-                    class="text-primary-text-muted"
-                >
-                    {{ $t('modEditSubmissionTopNav.saving') }}
-                </span>
-                <span
-                    v-show="!updatedFormBeingSentForMutation"
-                >
+                <span>
                     {{ $t('modEditSubmissionTopNav.saveAndExit') }}
                 </span>
             </button>
@@ -70,7 +55,6 @@ import { ref, type Ref } from 'vue'
 import { gql } from 'graphql-request'
 import SVGCopyContent from '~/assets/icons/content-copy.svg'
 import SVGSuccessCheckMark from '~/assets/icons/checkmark-square.svg'
-import SVGCautionSign from '~/assets/icons/caution-sign.svg'
 import { useModerationSubmissionsStore } from '~/stores/moderationSubmissionsStore'
 import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql'
 
@@ -91,18 +75,8 @@ const copySubmissionId = async () => {
     }
 }
 
-const retryMessage = computed(() =>
-    t('modEditSubmissionTopNav.retryMessage', { seconds: retryMutationCountdown.value }))
-
-const countdownCallback: CountdownCallback = (remainingSeconds, isFinished) => {
-    retryMutationCountdown.value = remainingSeconds
-    showRetryMessage.value = !isFinished
-}
-
-let stopCountdownTimer: () => void
-
-const saveAndExit = () => {
-    moderationSubmissionStore.handleUpdateSubmissionFromTopNav(true)
+const saveAndExit = async () => {
+    console.log('Saving')
 }
 
 const acceptSubmission = () => {

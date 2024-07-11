@@ -244,12 +244,15 @@
 
 <script lang="ts" setup>
 import { type Ref, ref, watch } from 'vue'
+import { useRouter } from 'vue-router'
 import { gql } from 'graphql-request'
 import { gqlClient } from '~/utils/graphql.js'
 import { useModerationSubmissionsStore } from '~/stores/moderationSubmissionsStore'
 import type { Submission } from '~/typedefs/gqlTypes'
 import { validateAddressLineEn, validateAddressLineJp, validateNameEn, validateNameJp, validatePhoneNumber, validateCityEn, validateEmail, validateFloat, validatePostalCode, validateWebsite, validateCityJp } from '~/utils/formValidations'
 import { ModSubmissionLeftNavbarSectionIDs } from '~/stores/moderationScreenStore'
+
+const router = useRouter()
 
 // contactFields
 const nameEn: Ref<string> = ref('')
@@ -405,10 +408,13 @@ async function submitForm(e: Event) {
         try {
             moderationSubmissionStore.handleUpdateIsSendingUpdatedForm(true)
             await gqlClient.request(updateFacilitySubmissionGqlQuery, facilityInputVariables)
-            moderationSubmissionStore.handleUpdateSubmissionFromTopNav(false)
             moderationSubmissionStore.handleUpdateIsSendingUpdatedForm(false)
             moderationSubmissionStore.handleDidMutationFail(false)
             mutationSuccess = true
+            if (moderationSubmissionStore.updateSubmissionFromTopNav) {
+                moderationSubmissionStore.handleUpdateSubmissionFromTopNav(false)
+                router.push('/moderation')
+            }
         } catch (error) {
             console.error(`Attempt ${mutationAttempts + 1} failed:`, error)
             if (mutationAttempts < maxAttempts) {

@@ -122,7 +122,9 @@
   "modEditSubmissionTopNav": {
     "saveAndExit": "Salvar e sair",
     "approve": "Aprovar",
-    "reject": "Rejeitar"
+    "reject": "Rejeitar",
+    "saving": "Saving...",
+    "retryMessage": "Something’s not right. Retrying in {seconds}s..."
   },
   "modPanelSubmissionList": {
     "approved": "Aprovado",
