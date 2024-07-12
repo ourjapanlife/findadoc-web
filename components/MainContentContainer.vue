@@ -3,12 +3,12 @@
         <div
             v-if="$viewport.isGreaterThan('tablet')"
             id="landscape-content"
-            class="bg-secondary-bg/20 hover:shadow-inner hover:shadow-secondary-bg/90 h-full w-full"
+            class="bg-secondary-bg/20 hover:shadow-inner hover:shadow-secondary-bg/90 h-full w-full relative"
         >
             <Loader />
             <Modal
                 v-show="store.$state.isOpen"
-                class="min-h-1/2 ml-8 mt-12"
+                class="max-h-[calc(100vh-12rem)] ml-8 mt-12 overflow-y-auto"
             >
                 <SearchResultDetails />
             </Modal>
