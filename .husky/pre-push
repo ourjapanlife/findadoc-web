@@ -3,4 +3,4 @@ yarn lint
 
 # Run the locale keys check script
 echo "😎checking locale file keys match😎"
-yarn check-locales
+yarn lint:locales
