@@ -3,8 +3,10 @@
         class="p-4 h-full overflow-y-auto"
         @submit="submitForm"
     >
-        <div>
-            <span class="mb-3.5 text-center text-primary-text text-2xl font-bold font-sans leading-normal">
+        <div id="contact-information">
+            <span
+                class="mb-3.5 text-center text-primary-text text-2xl font-bold font-sans leading-normal"
+            >
                 {{ $t('modSubmissionForm.contactInformation') }}
             </span>
             <ModInputField
@@ -59,7 +61,7 @@
             />
         </div>
 
-        <div>
+        <div id="addresses">
             <span class="mb-3.5 text-center text-primary-text text-2xl font-bold font-sans leading-normal">
                 {{ $t('modSubmissionForm.addresses') }}
             </span>
@@ -181,7 +183,7 @@
             />
         </div>
 
-        <div>
+        <div id="google-maps-information">
             <span class="mb-3.5 text-center text-primary-text text-2xl font-bold font-sans leading-normal">
                 {{ $t('modSubmissionForm.googleMapsInformation') }}
             </span>
@@ -218,9 +220,9 @@
             />
         </div>
         <ModHealthcareProfessionalSearchbar
+            id="healthcare-professional-ids"
             data-testid="submission-form-doctor-search"
         />
-        <!-- This button is purely for testing -->
         <button
             type="submit"
             class="bg-currentColor text-white font-bold py-2 px-4 rounded"
