@@ -3,7 +3,10 @@
         class="p-4 h-full overflow-y-auto"
         @submit="submitForm"
     >
-        <div id="contact-information">
+        <div
+            id="contact-information"
+            class="facility-form-section"
+        >
             <span
                 class="mb-3.5 text-center text-primary-text text-2xl font-bold font-sans leading-normal"
             >
@@ -61,7 +64,10 @@
             />
         </div>
 
-        <div id="addresses">
+        <div
+            id="addresses"
+            class="facility-form-section"
+        >
             <span class="mb-3.5 text-center text-primary-text text-2xl font-bold font-sans leading-normal">
                 {{ $t('modSubmissionForm.addresses') }}
             </span>
@@ -183,7 +189,10 @@
             />
         </div>
 
-        <div id="google-maps-information">
+        <div
+            id="google-maps-information"
+            class="facility-form-section"
+        >
             <span class="mb-3.5 text-center text-primary-text text-2xl font-bold font-sans leading-normal">
                 {{ $t('modSubmissionForm.googleMapsInformation') }}
             </span>
@@ -221,6 +230,7 @@
         </div>
         <ModHealthcareProfessionalSearchbar
             id="healthcare-professional-ids"
+            class="facility-form-section"
             data-testid="submission-form-doctor-search"
         />
         <button
