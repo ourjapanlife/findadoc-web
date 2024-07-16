@@ -4,7 +4,7 @@
             <ModDashboardLeftNavbar />
         </div>
         <div v-else-if="store.activeScreen === ModerationScreen.editSubmission">
-            <ModFacilitySubmissionLeftNavbar />
+            <ModSubmissionLeftNavbar />
         </div>
         <div v-else-if="store.activeScreen === ModerationScreen.EditHealthcareProfessional">
             <p class="text-xl font-bold">

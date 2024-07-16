@@ -44,7 +44,6 @@ module.exports = {
             error:
                 'rgb(var(--color-secondary-hover) / <alpha-value>)',
             blue: '#245A7D',
-            lightBlue: '#EBF3FE',
             neutral: colors.gray,
             black: colors.black,
             white: colors.white,
