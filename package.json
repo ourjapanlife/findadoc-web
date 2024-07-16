@@ -4,6 +4,8 @@
     "private": true,
     "scripts": {
         "prepare": "husky",
+        "check-locales": "node i18n/checkLocaleKeys.js",
+        "insert-missing-locale-keys": "node i18n/insertMissingLocaleKeys.js",
         "dev": "yarn && nuxi dev",
         "dev:localserver": "NUXT_USE_LOCAL_API=true; yarn && nuxi dev",
         "generate": "graphql-codegen --config ./typesgeneratorconfig.ts",
