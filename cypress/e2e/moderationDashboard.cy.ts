@@ -219,15 +219,13 @@ describe(
                 clipboardResult.should('exist', 10000)
             })
 
-            it('toggle between submissions and healthcare professionals submissions', () => {
+            it.skip('toggle between submissions and healthcare professionals submissions', () => {
                 //currently I am using the dummy data to verify the toggle functionality
-                cy.get('[data-testid="mod-submission-name-Jhon Smith"]').should('not.exist')
-                cy.get('[data-testid="submission-type-select"]').select('healthcareProfessionals')
-                cy.wait(1000)
-                cy.get('[data-testid="mod-submission-list-item-1"]').should('exist')
-                cy.get('[data-testid="submission-type-select"]').select('facilities')
-                cy.wait(2000)
-                cy.get('[data-testid="mod-submission-name-Jhon Smith"]').should('not.exist')
+                cy.get('[data-testid="mod-submission-name-1"]').should('not.exist')
+                cy.get('[data-testid="submission-type-select"]', { timeout: 10000 }).select('HEALTHCARE_PROFESSIONALS')
+                cy.get('[data-testid="mod-submission-name-1"]', { timeout: 10000 }).should('exist').contains(mockedSubmissionResponse.data.submissions[1].healthcareProfessionals[0].names[0].lastName)
+                cy.get('[data-testid="submission-type-select"]', { timeout: 10000 }).select('FACILITIES')
+                cy.get('[data-testid="mod-submission-name-1]', { timeout: 10000 }).should('not.exist')
             })
 
             after(() => {

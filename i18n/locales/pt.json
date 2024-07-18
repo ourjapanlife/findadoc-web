@@ -110,6 +110,7 @@
     },
     "modPanelSubmissionList": {
         "approved": "Aprovado",
+        "facilityNameUnknown": "Facility Name Unknown",
         "modified": "Alterado",
         "name": "Nome",
         "new": "Novo",

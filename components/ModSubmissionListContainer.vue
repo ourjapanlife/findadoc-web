@@ -71,7 +71,9 @@
                         class="grid grid-cols-subgrid col-span-5 bg-primary-text-muted p-1 hover:bg-primary"
                     >
                         <span class="text-start">{{ index + 1 }}</span>
-                        <span class="text-start">{{ "blaaaaaa" }}</span>
+                        <span class="text-start">
+                            {{ submission.facility?.nameEn || $t("modPanelSubmissionList.facilityNameUnknown") }}
+                        </span>
                         <span class="text-start">{{ getSubmissionStatus(submission) }}</span>
                         <span class="text-start">{{ convertDateToLocalTime(submission.updatedDate) }}</span>
                         <span class="text-start">{{ convertDateToLocalTime(submission.createdDate) }}</span>
