@@ -48,12 +48,14 @@
 
 <script setup lang="ts">
 import { ref, type Ref } from 'vue'
+import { gql } from 'graphql-request'
 import SVGCopyContent from '~/assets/icons/content-copy.svg'
 import SVGSuccessCheckMark from '~/assets/icons/checkmark-square.svg'
 import { useModerationSubmissionsStore } from '~/stores/moderationSubmissionsStore'
+import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql'
 
-const modSubmissionStore = useModerationSubmissionsStore()
-const selectedSubmissionId: Ref<string> = ref(modSubmissionStore.selectedSubmissionId)
+const moderationSubmissionStore = useModerationSubmissionsStore()
+const selectedSubmissionId: Ref<string> = ref(moderationSubmissionStore.selectedSubmissionId)
 
 const showCopySuccessIcon: Ref<boolean> = ref(false)
 
@@ -73,7 +75,31 @@ const acceptSubmission = () => {
     console.log('You are accepted')
 }
 
-const rejectSubmission = () => {
-    console.log('You are rejected')
+const rejectSubmission = async () => {
+    const facilityInputVariables = {
+        updateSubmissionId: selectedSubmissionId.value,
+        input: {
+            isRejected: true
+        }
+    }
+
+    try {
+        await graphQLClientRequestWithRetry(
+            gqlClient.request.bind(gqlClient),
+            rejectFacilitySubmissionGqlMutation,
+            facilityInputVariables
+        )
+        moderationSubmissionStore.setDidMutationFail(false)
+    } catch (error) {
+        console.error('Failed to reject submission:', error)
+        moderationSubmissionStore.setDidMutationFail(true)
+    }
 }
+
+const rejectFacilitySubmissionGqlMutation = gql`
+mutation Mutation($updateSubmissionId: ID!, $input: UpdateSubmissionInput!) {
+  updateSubmission(id: $updateSubmissionId, input: $input) {
+    isRejected
+  }
+}`
 </script>
