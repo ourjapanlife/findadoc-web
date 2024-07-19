@@ -3,16 +3,14 @@ import enUS from '../../i18n/locales/en.json'
 describe('Submit page', () => {
     context('Desktop resolution', () => {
         before(() => {
-            cy.visit('/submit')
-            // This wait time is to give the page time to load from Prod when ran in CI.
-            cy.wait(3000)
+            cy.visit('/submit', { timeout: 10000 })
         })
 
         beforeEach(() => {
             // The resolution is in the beforeEach() instead of before() to
             // prevent Cypress from defaulting to other screen sizes between tests.
-            cy.viewport(1920, 1080)
-            cy.wait(500)
+
+            cy.viewport('macbook-16')
         })
 
         it('shows the desktop top nav', () => {
@@ -86,7 +84,7 @@ describe('Submit page', () => {
             cy.contains(enUS.submitPage.lastNameValidation).should('be.visible')
             cy.get('[data-testid="submit-input-lastname"]').type('The Frog')
             cy.get('[data-testid="submit-input-firstname"]').type('Kermy')
-            cy.contains(enUS.submitPage.lastNameValidation).should('not.be.visible')
+            cy.contains(enUS.submitPage.lastNameValidation, { timeout: 10000 }).should('not.be.visible')
             cy.get('[data-testid="submit-input-lastname"]').type('a'.repeat(80), { delay: 0 }).invoke('val').should('have.length', 30)
         })
 
@@ -99,17 +97,11 @@ describe('Submit page', () => {
 
     context('Portrait mode', () => {
         before(() => {
-            cy.visit('/submit')
-            // This wait time is to give the page time to load from Prod when ran in CI.
-            cy.wait(3000)
+            cy.visit('/submit', { timeout: 10000 })
         })
 
         beforeEach(() => {
-            // The resolution is in the beforeEach() instead of before() to
-            // prevent Cypress from defaulting to other screen sizes between tests.
-
-            // An iPhone 5 screen resolution is used to test portrait mode.
-            cy.viewport(640, 1136)
+            cy.viewport('iphone-5')
         })
 
         it('shows the hamburger component', () => {

@@ -119,21 +119,12 @@ describe(
     'Moderation dashboard',
     () => {
         context('Landscape mode', () => {
-            before(() => {
-                cy.visit('/moderation')
-                // This wait time is to give the page time to load from Prod when ran in CI.
-                cy.wait(3000)
-            })
             beforeEach(() => {
                 // The resolution is in the beforeEach() instead of before() to
                 // prevent Cypress from defaulting to other screen sizes between tests.
-                cy.viewport(1920, 1080)
-                cy.wait(500)
-                cy.visit('/login')
+                cy.viewport('macbook-16')
+                cy.visit('/login', { timeout: 10000 })
                 Cypress.session.clearCurrentSessionData()
-
-                // Wait for redirect to login form
-                cy.wait(3000)
 
                 cy.origin('https://findadoc.jp.auth0.com/', () => {
                     cy.get('input#username').should('be.visible').type('findadoctest@proton.me')
@@ -153,18 +144,18 @@ describe(
                     })
                 }).as('getSubmissions')
 
-                cy.wait(3000)
+                cy.url().as('initialUrl')
 
-                cy.url().should('include', '')
+                cy.get('[data-testid=top-nav-mod-link]', { timeout: 10000 }).click()
 
-                cy.get('[data-testid=top-nav-mod-link]').click()
+                cy.url().should('not.eq', '@initialUrl')
 
                 cy.wait('@getSubmissions', { timeout: 10000 })
             })
 
-            it('shows mod dashboard left navbar buttons with correct counts', () => {
+            it('shows mod dashboard left navbar buttons with correct counts and functionality', () => {
                 //The number for include text is for the status in the mock data
-                cy.get('[data-testid=mod-dashboard-leftnav-for-review]')
+                cy.get('[data-testid=mod-dashboard-leftnav-for-review]', { timeout: 10000 })
                     .should('exist')
                     .should(
                         'include.text',
@@ -196,25 +187,23 @@ describe(
                         'include.text',
                         '0'
                     )
-            })
 
-            it('updates the submission list based on selected tab', () => {
-                cy.get('[data-testid="mod-submission-list-item-1"]').should('exist')
+                cy.get('[data-testid="mod-submission-list-item-1"]', { timeout: 10000 }).should('exist')
 
                 cy.get('[data-testid=mod-dashboard-leftnav-approved]')
                     .click()
 
-                cy.get('[data-testid="mod-submission-list-item-1"]').should('exist')
+                cy.get('[data-testid="mod-submission-list-item-1"]', { timeout: 10000 }).should('exist')
 
                 cy.get('[data-testid=mod-dashboard-leftnav-rejected]')
                     .click()
 
-                cy.get('[data-testid="mod-submission-list-item-1"]').should('not.exist')
+                cy.get('[data-testid="mod-submission-list-item-1"]', { timeout: 10000 }).should('not.exist')
 
                 cy.get('[data-testid=mod-dashboard-leftnav-for-review]')
                     .click()
 
-                cy.get('[data-testid="mod-submission-list-item-1"]').should('exist')
+                cy.get('[data-testid="mod-submission-list-item-1"]', { timeout: 10000 }).should('exist')
             })
 
             it.skip('it shows the moderation top nav', () => {
@@ -228,7 +217,7 @@ describe(
                 clipboardResult.should('exist', 10000)
             })
 
-            after(() => {
+            afterEach(() => {
                 Cypress.session.clearCurrentSessionData()
             })
         })
@@ -240,13 +229,10 @@ describe('Moderation Facility Submission Form', () => {
         before(() => {
             // The resolution is in the beforeEach() instead of before() to
             // prevent Cypress from defaulting to other screen sizes between tests.
-            cy.viewport(1920, 1080)
+            cy.viewport('macbook-16')
 
-            cy.visit('/login')
+            cy.visit('/login', { timeout: 10000 })
             Cypress.session.clearCurrentSessionData()
-
-            // Wait for redirect to login form
-            cy.wait(3000)
 
             cy.origin('https://findadoc.jp.auth0.com/', () => {
                 cy.get('input#username').should('be.visible').type('findadoctest@proton.me')
@@ -254,7 +240,6 @@ describe('Moderation Facility Submission Form', () => {
                 cy.get('input#password').should('be.visible').type('vCnL5J8agHg6m2f')
                 cy.get('[data-action-button-primary]').should('be.visible').click()
             })
-            cy.wait(3000)
 
             cy.intercept('POST', '**/', req => {
                 req.continue(res => {
@@ -268,15 +253,15 @@ describe('Moderation Facility Submission Form', () => {
                 })
             }).as('getSubmissions')
 
-            cy.url().should('include', '')
+            cy.url().as('initialUrl')
 
-            cy.get('[data-testid=top-nav-mod-link]').click()
+            cy.get('[data-testid=top-nav-mod-link]', { timeout: 10000 }).click()
+
+            cy.url().should('not.eq', '@initialUrl')
 
             cy.wait('@getSubmissions', { timeout: 10000 })
-            // This wait time is to give the page elements time to load.
-            cy.wait(2000)
-            cy.get('[data-testid="mod-submission-list-item-1"]').click()
-            cy.wait(2000)
+
+            cy.get('[data-testid="mod-submission-list-item-1"]', { timeout: 10000 }).click()
         })
 
         after(() => {

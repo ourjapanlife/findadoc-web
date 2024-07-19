@@ -3,16 +3,13 @@ import enUS from '../../i18n/locales/en.json'
 describe('About page', () => {
     context('Desktop resolution', () => {
         before(() => {
-            cy.visit('/about')
-            // This wait time is to give the page time to load from Prod when ran in CI.
-            cy.wait(3000)
+            cy.visit('/about', { timeout: 10000 })
         })
 
         beforeEach(() => {
             // The resolution is in the beforeEach() instead of before() to
             // prevent Cypress from defaulting to other screen sizes between tests.
-            cy.viewport(1920, 1080)
-            cy.wait(500)
+            cy.viewport('macbook-16')
         })
 
         it('shows the desktop top nav', () => {
@@ -58,9 +55,7 @@ describe('About page', () => {
 
     context('Portrait mode', () => {
         before(() => {
-            cy.visit('/about')
-            // This wait time is to give the page time to load from Prod when ran in CI.
-            cy.wait(3000)
+            cy.visit('/about', { timeout: 10000 })
         })
 
         beforeEach(() => {
@@ -68,8 +63,7 @@ describe('About page', () => {
             // prevent Cypress from defaulting to other screen sizes between tests.
 
             // An iPhone 5 screen resolution is used to test portrait mode.
-            cy.viewport(640, 1136)
-            cy.wait(500)
+            cy.viewport('iphone-5')
         })
 
         it('shows the hamburger component', () => {
