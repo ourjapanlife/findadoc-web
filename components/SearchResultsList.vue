@@ -1,5 +1,5 @@
 <template>
-    <div class="h-full flex flex-col overflow-y-auto">
+    <div class="h-full flex flex-col">
         <div class="results-header flex flex-row ml-9 mr-5 mb-6 pt-5">
             <span class="flex-1 w-1/2 font-bold self-center">
                 {{ $t('searchResultsList.doctorsNearby') }}
@@ -34,10 +34,13 @@
                 </div>
             </div>
         </div>
-        <div v-else-if="hasResults">
+        <div
+            v-else-if="hasResults"
+            class="landscape:overflow-y-scroll"
+        >
             <div
                 id="searchResults"
-                class="flex flex-col landscape:overflow-y-scroll h-full mb-40 landscape:mb-0"
+                class="flex flex-col h-full mb-40 landscape:mb-0"
             >
                 <div
                     v-for="(searchResult, index) in resultsStore.searchResultsList"
