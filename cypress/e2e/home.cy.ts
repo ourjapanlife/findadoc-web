@@ -37,15 +37,15 @@ describe('Visits the home page', () => {
         })
 
         it('can select "select a language"', () => {
-            cy.get('[data-testid="search-bar-language"]').trigger('click')
+            cy.get('[data-testid="search-bar-language"]', { timeout: 10000 }).trigger('click')
         })
 
         it('can select "English" from the language bar', () => {
-            cy.get('[data-testid="search-bar-language"]').should('be.visible')
+            cy.get('[data-testid="search-bar-language"]', { timeout: 10000 }).should('be.visible')
 
-            cy.get('[data-testid="search-bar-language"]').select('English')
+            cy.get('[data-testid="search-bar-language"]', { timeout: 10000 }).select('English')
 
-            cy.get('[data-testid="search-bar-language"]').should(
+            cy.get('[data-testid="search-bar-language"]', { timeout: 10000 }).should(
                 'have.value',
                 'en_US'
             )

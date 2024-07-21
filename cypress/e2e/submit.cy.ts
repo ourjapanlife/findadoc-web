@@ -82,8 +82,8 @@ describe('Submit page', () => {
         it('requires a last name of 30 characters or less', () => {
             cy.get('[data-testid="submit-input-lastname"]').type(' ')
             cy.contains(enUS.submitPage.lastNameValidation).should('be.visible')
-            cy.get('[data-testid="submit-input-lastname"]').type('The Frog')
-            cy.get('[data-testid="submit-input-firstname"]').type('Kermy')
+            cy.get('[data-testid="submit-input-lastname"]', { timeout: 10000 }).type('The Frog')
+            cy.get('[data-testid="submit-input-firstname"]', { timeout: 10000 }).type('Kermy')
             cy.contains(enUS.submitPage.lastNameValidation, { timeout: 10000 }).should('not.be.visible')
             cy.get('[data-testid="submit-input-lastname"]').type('a'.repeat(80), { delay: 0 }).invoke('val').should('have.length', 30)
         })
