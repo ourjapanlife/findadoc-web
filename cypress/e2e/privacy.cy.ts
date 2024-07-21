@@ -1,7 +1,7 @@
 describe('Privacy Policy page', () => {
     context('Landscape resolution', () => {
         beforeEach(() => {
-            cy.viewport(1920, 1080)
+            cy.viewport('macbook-16')
             cy.visit('/privacypolicy')
         })
 

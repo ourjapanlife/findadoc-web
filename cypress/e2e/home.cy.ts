@@ -4,16 +4,13 @@ describe('Visits the home page', () => {
 
     context('Landscape mode', () => {
         before(() => {
-            cy.visit('/')
-            // This wait time is to give the page time to load from Prod when ran in CI.
-            cy.wait(3000)
+            cy.visit('/', { timeout: 10000 })
         })
 
         beforeEach(() => {
             // The resolution is in the beforeEach() instead of before() to
             // prevent Cypress from defaulting to other screen sizes between tests.
-            cy.viewport(1920, 1080)
-            cy.wait(500)
+            cy.viewport('macbook-16')
         })
 
         it('Displays the Logo', () => {
@@ -27,8 +24,7 @@ describe('Visits the home page', () => {
         })
 
         it('allows setting search fields', () => {
-            cy.wait(5000)
-            cy.get('[data-testid="search-button"]').should('be.visible')
+            cy.get('[data-testid="search-button"]', { timeout: 10000 }).should('be.visible')
 
             cy.get('.search-specialty select').select('Dermatology')
             cy.get('.search-specialty select').should('be.visible', 'Dermatology')
@@ -123,18 +119,14 @@ describe('Visits the home page', () => {
     // Portrait mode tests - usually for mobile and tablet
     context('Portrait mode', () => {
         before(() => {
-            cy.visit('/')
-            // This wait time is to give the page time to load from Prod when ran in CI.
-            cy.wait(3000)
+            cy.visit('/', { timeout: 10000 })
         })
 
         beforeEach(() => {
             // The resolution is in the beforeEach() instead of before() to
             // prevent Cypress from defaulting to other screen sizes between tests.
 
-            // An iPhone 5 screen resolution is used to test portrait mode.
-            cy.viewport(640, 1136)
-            cy.wait(500)
+            cy.viewport('iphone-5')
         })
 
         it('shows the logo', () => {
