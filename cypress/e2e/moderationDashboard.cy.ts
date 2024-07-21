@@ -133,6 +133,8 @@ describe(
                     cy.get('[data-action-button-primary]').should('be.visible').click()
                 })
 
+                cy.url({ timeout: 10000 }).should('equal', 'http://localhost:3000/')
+
                 cy.intercept('POST', '**/', req => {
                     req.continue(res => {
                         if (req.body.query && req.body.query.includes('query Submissions')) {
@@ -240,6 +242,8 @@ describe('Moderation Facility Submission Form', () => {
                 cy.get('input#password').should('be.visible').type('vCnL5J8agHg6m2f')
                 cy.get('[data-action-button-primary]').should('be.visible').click()
             })
+
+            cy.url({ timeout: 10000 }).should('equal', 'http://localhost:3000/')
 
             cy.intercept('POST', '**/', req => {
                 req.continue(res => {
