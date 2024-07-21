@@ -7,7 +7,7 @@
             v-if="!isPortrait"
             class="flex h-full overflow-clip"
         >
-            <LeftNavbar class="bg-primary-bg w-96 overflow-y-auto" />
+            <LeftNavbar class="bg-primary-bg w-96" />
             <MainContentContainer class="overflow-clip" />
         </div>
         <div
