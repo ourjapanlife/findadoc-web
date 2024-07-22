@@ -55,7 +55,7 @@
                 class="grid grid-cols-subgrid col-span-4 bg-tertiary-bg"
             >
                 <div
-                    :data-testid="`mod-submission-list-item-${index + 1}`"
+                    :data-testid="`mod-facility-list-item-${index + 1}`"
                     class="grid grid-cols-subgrid col-span-4 bg-tertiary-bg cursor-pointer hover:bg-primary"
                     @click="handleClickToFacilityForm(facility.id)"
                 >
@@ -65,7 +65,7 @@
                     >
                         <span class="text-start">{{ index + 1 }}</span>
                         <span class="text-start">
-                            {{ facility?.nameEn || $t("modPanelSubmissionList.facilityNameUnknown") }}
+                            {{ facility?.nameEn }}
                         </span>
                         <span class="text-start">{{ convertDateToLocalTime(facility.updatedDate) }}</span>
                         <span class="text-start">{{ convertDateToLocalTime(facility.createdDate) }}</span>
@@ -85,7 +85,7 @@
                 class="grid grid-cols-subgrid col-span-4 bg-tertiary-bg"
             >
                 <div
-                    :data-testid="`mod-submission-list-item-${index + 1}`"
+                    :data-testid="`mod-healthcare-professional-list-item-${index + 1}`"
                     class="grid grid-cols-subgrid col-span-4 bg-tertiary-bg cursor-pointer hover:bg-primary"
                     @click="handleClickToHealthcareProfessionalForm(healthcareProfessional.id)"
                 >
