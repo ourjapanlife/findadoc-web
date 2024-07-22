@@ -68,7 +68,7 @@
         "postcss-html": "^1.7.0",
         "start-server-and-test": "^2.0.4",
         "tailwindcss": "^3.4.4",
-        "typescript": "5.5.2",
+        "typescript": "5.5.3",
         "typescript-eslint": "^7.14.1",
         "vite": "^5.3.2",
         "vitest": "^1.6.0",
