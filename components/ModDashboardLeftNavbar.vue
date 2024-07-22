@@ -6,14 +6,20 @@
             data-testid="submission-type-select"
             @change="updateSelectedDashboardView"
         >
-            <option :value="SelectedSubmissionType.Facilities">
+            <option :value="SelectedModerationListView.Submissions">
+                {{ $t("modDashboardLeftNav.submissions") }}
+            </option>
+            <option :value="SelectedModerationListView.Facilities">
                 {{ $t("modDashboardLeftNav.facilities") }}
             </option>
-            <option :value="SelectedSubmissionType.HealthcareProfessionals">
+            <option :value="SelectedModerationListView.HealthcareProfessionals">
                 {{ $t("modDashboardLeftNav.healthcareProfessionals") }}
             </option>
         </select>
-        <div class="flex flex-col">
+        <div
+            v-show="moderationSubmissionsStore.selectedModerationListViewChosen === SelectedModerationListView.Submissions"
+            class="flex flex-col"
+        >
             <div class="flex w-4/5 justify-start items-center border-b-2 border-slate-200">
                 <SVGNoteStackAddSvg class="h-4" />
                 <button
@@ -53,20 +59,20 @@ import { ref, computed, type Ref, watchEffect } from 'vue'
 import SVGNoteStackAddSvg from '../assets/icons/note-stack-add.svg'
 import SVGCheckBoxSvg from '../assets/icons/check-box.svg'
 import SVGDisabledByDefault from '../assets/icons/disabled-by-default.svg'
-import { useModerationSubmissionsStore, SelectedSubmissionListViewTab, SelectedSubmissionType } from '~/stores/moderationSubmissionsStore'
+import { useModerationSubmissionsListStore, SelectedSubmissionListViewTab, SelectedModerationListView } from '~/stores/moderationSubmissionsListStore'
 import type { Submission } from '~/typedefs/gqlTypes'
 
-const moderationSubmissionsStore = useModerationSubmissionsStore()
+const moderationSubmissionsStore = useModerationSubmissionsListStore()
 
-const selectedDashboardView: Ref<SelectedSubmissionType> = ref(SelectedSubmissionType.Facilities)
+const selectedDashboardView: Ref<SelectedModerationListView> = ref(SelectedModerationListView.Submissions)
 
 const updateSubmissionListViewState = (submissionListViewOptionValue: SelectedSubmissionListViewTab) => {
     moderationSubmissionsStore.filterSubmissionsBySelectedTab(submissionListViewOptionValue)
 }
 
 const updateSelectedDashboardView = (event: Event) => {
-    const selectedValue = (event.target as HTMLSelectElement).value as SelectedSubmissionType
-    moderationSubmissionsStore.displayFacilitiesOrHealthcareProfessionalsForList(selectedValue)
+    const selectedOption = (event.target as HTMLSelectElement).value as SelectedModerationListView
+    moderationSubmissionsStore.setSelectedModerationListViewChosen(selectedOption)
 }
 
 function createCountsForSubmissionListView(submissions: Submission[]) {

@@ -101,7 +101,8 @@
         "healthcareProfessionals": "Profissionais de saúde",
         "forReview": "Para Revisão",
         "approved": "Aprovado",
-        "rejected": "Rejeitado"
+        "rejected": "Rejeitado",
+        "submissions": "Submissions"
     },
     "modEditSubmissionTopNav": {
         "saveAndExit": "Salvar e sair",

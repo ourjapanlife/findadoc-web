@@ -50,9 +50,9 @@
 import { ref, type Ref } from 'vue'
 import SVGCopyContent from '~/assets/icons/content-copy.svg'
 import SVGSuccessCheckMark from '~/assets/icons/checkmark-square.svg'
-import { useModerationSubmissionsStore } from '~/stores/moderationSubmissionsStore'
+import { useModerationSubmissionsListStore } from '~/stores/moderationSubmissionsListStore'
 
-const modSubmissionStore = useModerationSubmissionsStore()
+const modSubmissionStore = useModerationSubmissionsListStore()
 const selectedSubmissionId: Ref<string> = ref(modSubmissionStore.selectedSubmissionId)
 
 const showCopySuccessIcon: Ref<boolean> = ref(false)

@@ -121,7 +121,8 @@
         "healthcareProfessionals": "Gesundheitsfachkräfte",
         "forReview": "Zur Überprüfung",
         "approved": "Genehmigt",
-        "rejected": "Abgelehnt"
+        "rejected": "Abgelehnt",
+        "submissions": "Submissions"
     },
     "modEditSubmissionTopNav": {
         "saveAndExit": "Sichern & Beenden",
