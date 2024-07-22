@@ -50,25 +50,25 @@
             class="grid grid-cols-subgrid col-span-4"
         >
             <div
-                v-for="(submission, index) in modSubmissionsListStore.filteredSubmissionDataForListComponent"
+                v-for="(facility, index) in modSubmissionsListStore.facilityData"
                 :key="index"
                 class="grid grid-cols-subgrid col-span-4 bg-tertiary-bg"
             >
                 <div
                     :data-testid="`mod-submission-list-item-${index + 1}`"
                     class="grid grid-cols-subgrid col-span-4 bg-tertiary-bg cursor-pointer hover:bg-primary"
-                    @click="handleClickToFacilityForm(submission.id)"
+                    @click="handleClickToFacilityForm(facility.id)"
                 >
                     <nuxt-link
-                        :to="`/moderation/edit-facility/${submission.id}`"
+                        :to="`/moderation/edit-facility/${facility.id}`"
                         class="grid grid-cols-subgrid col-span-4 bg-primary-text-muted p-1 hover:bg-primary"
                     >
                         <span class="text-start">{{ index + 1 }}</span>
                         <span class="text-start">
-                            {{ submission.facility?.nameEn || $t("modPanelSubmissionList.facilityNameUnknown") }}
+                            {{ facility?.nameEn || $t("modPanelSubmissionList.facilityNameUnknown") }}
                         </span>
-                        <span class="text-start">{{ convertDateToLocalTime(submission.updatedDate) }}</span>
-                        <span class="text-start">{{ convertDateToLocalTime(submission.createdDate) }}</span>
+                        <span class="text-start">{{ convertDateToLocalTime(facility.updatedDate) }}</span>
+                        <span class="text-start">{{ convertDateToLocalTime(facility.createdDate) }}</span>
                     </nuxt-link>
                 </div>
             </div>
@@ -80,25 +80,25 @@
             class="grid grid-cols-subgrid col-span-4"
         >
             <div
-                v-for="(submission, index) in modSubmissionsListStore.filteredSubmissionDataForListComponent"
+                v-for="(healthcareProfessional, index) in modSubmissionsListStore.healthcareProfessionalsData"
                 :key="index"
                 class="grid grid-cols-subgrid col-span-4 bg-tertiary-bg"
             >
                 <div
                     :data-testid="`mod-submission-list-item-${index + 1}`"
                     class="grid grid-cols-subgrid col-span-4 bg-tertiary-bg cursor-pointer hover:bg-primary"
-                    @click="handleClickToHealthcareProfessionalForm(submission.id)"
+                    @click="handleClickToHealthcareProfessionalForm(healthcareProfessional.id)"
                 >
                     <nuxt-link
-                        :to="`/moderation/edit-healthcare-professional/${submission.id}`"
+                        :to="`/moderation/edit-healthcare-professional/${healthcareProfessional.id}`"
                         class="grid grid-cols-subgrid col-span-4 bg-primary-text-muted p-1 hover:bg-primary"
                     >
                         <span class="text-start">{{ index + 1 }}</span>
                         <span class="text-start">
-                            {{ submission.facility?.nameEn || $t("modPanelSubmissionList.facilityNameUnknown") }}
+                            {{ healthcareProfessional.names[0].firstName }} {{ healthcareProfessional.names[0].lastName }}
                         </span>
-                        <span class="text-start">{{ convertDateToLocalTime(submission.updatedDate) }}</span>
-                        <span class="text-start">{{ convertDateToLocalTime(submission.createdDate) }}</span>
+                        <span class="text-start">{{ convertDateToLocalTime(healthcareProfessional.updatedDate) }}</span>
+                        <span class="text-start">{{ convertDateToLocalTime(healthcareProfessional.createdDate) }}</span>
                     </nuxt-link>
                 </div>
             </div>

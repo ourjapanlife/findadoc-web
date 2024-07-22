@@ -8,6 +8,16 @@
                 NAVBAR REVIEW SUBMISSION
             </p>
         </div>
+        <div v-else-if="store.activeScreen === ModerationScreen.EditHealthcareProfessional">
+            <p class="text-xl font-bold">
+                NAVBAR REVIEW HEALTHCARE PROFESSIONAL
+            </p>
+        </div>
+        <div v-else-if="store.activeScreen === ModerationScreen.EditFacility">
+            <p class="text-xl font-bold">
+                NAVBAR REVIEW FACILITY
+            </p>
+        </div>
     </div>
 </template>
 

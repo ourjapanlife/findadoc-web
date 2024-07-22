@@ -64,7 +64,7 @@ import type { Submission } from '~/typedefs/gqlTypes'
 
 const moderationSubmissionsStore = useModerationSubmissionsListStore()
 
-const selectedDashboardView: Ref<SelectedModerationListView> = ref(SelectedModerationListView.Submissions)
+const selectedDashboardView: Ref<SelectedModerationListView> = ref(moderationSubmissionsStore.selectedModerationListViewChosen)
 
 const updateSubmissionListViewState = (submissionListViewOptionValue: SelectedSubmissionListViewTab) => {
     moderationSubmissionsStore.filterSubmissionsBySelectedTab(submissionListViewOptionValue)
