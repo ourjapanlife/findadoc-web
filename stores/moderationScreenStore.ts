@@ -8,6 +8,14 @@ export enum ModerationScreen {
     EditFacility = 'EDIT_FACILITIY'
 }
 
+export enum ModSubmissionLeftNavbarSectionIDs {
+    Addresses = 'ADDRESSES',
+    ChangeLog = 'CHANGE_LOG',
+    ContactInformation = 'CONTACT_INFORMATION',
+    GoogleMapsInformation = 'GOOGLE_MAPS_INFORMATION',
+    HealthcareProfessionalIds = 'HEALTHCARE_PROFESSIONAL_IDS'
+}
+
 export const useModerationScreenStore = defineStore(
     'moderationScreenStore',
     () => {

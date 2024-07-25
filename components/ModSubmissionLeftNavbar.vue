@@ -7,46 +7,46 @@
         <div class="flex flex-col items-start">
             <button
                 data-testid="submission-form-leftnav-contactInformation"
-                :class="{ 'bg-secondary': activeSection === ModSubmissionLeftNavbarSections.ContactInformation,
-                          'bg-primary-inverted': activeSection !== ModSubmissionLeftNavbarSections.ContactInformation }"
+                :class="{ 'bg-secondary': activeSection === ModSubmissionLeftNavbarSectionIDs.ContactInformation,
+                          'bg-primary-inverted': activeSection !== ModSubmissionLeftNavbarSectionIDs.ContactInformation }"
                 class="w-full py-4 my-2 text-sm text-start pl-2 rounded border-b-2 border-tertiary-bg"
-                @click="scrollToSectionOfFacilityForm(ModSubmissionLeftNavbarSections.ContactInformation)"
+                @click="scrollToSectionOfFacilityForm(ModSubmissionLeftNavbarSectionIDs.ContactInformation)"
             >
                 {{ $t("modPanelFacilitySubmissionLeftNavbar.contactInformation") }}
             </button>
             <button
                 data-testid="submission-form-leftnav-addresses"
-                :class="{ 'bg-secondary': activeSection === ModSubmissionLeftNavbarSections.Addresses,
-                          'bg-primary-inverted': activeSection !== ModSubmissionLeftNavbarSections.Addresses }"
+                :class="{ 'bg-secondary': activeSection === ModSubmissionLeftNavbarSectionIDs.Addresses,
+                          'bg-primary-inverted': activeSection !== ModSubmissionLeftNavbarSectionIDs.Addresses }"
                 class="w-full py-4 my-2 text-sm text-start pl-2 rounded border-b-2 border-tertiary-bg"
-                @click="scrollToSectionOfFacilityForm(ModSubmissionLeftNavbarSections.Addresses)"
+                @click="scrollToSectionOfFacilityForm(ModSubmissionLeftNavbarSectionIDs.Addresses)"
             >
                 {{ $t("modPanelFacilitySubmissionLeftNavbar.addresses") }}
             </button>
             <button
                 data-testid="submission-form-leftnav-googleMapsInformation"
-                :class="{ 'bg-secondary': activeSection === ModSubmissionLeftNavbarSections.GoogleMapsInformation,
-                          'bg-primary-inverted': activeSection !== ModSubmissionLeftNavbarSections.GoogleMapsInformation }"
+                :class="{ 'bg-secondary': activeSection === ModSubmissionLeftNavbarSectionIDs.GoogleMapsInformation,
+                          'bg-primary-inverted': activeSection !== ModSubmissionLeftNavbarSectionIDs.GoogleMapsInformation }"
                 class="w-full py-4 my-2 text-sm text-start pl-2 rounded border-b-2 border-tertiary-bg"
-                @click="scrollToSectionOfFacilityForm(ModSubmissionLeftNavbarSections.GoogleMapsInformation)"
+                @click="scrollToSectionOfFacilityForm(ModSubmissionLeftNavbarSectionIDs.GoogleMapsInformation)"
             >
                 {{ $t("modPanelFacilitySubmissionLeftNavbar.googleMapsInformation") }}
             </button>
             <button
                 data-testid="submission-form-leftnav-healthcareProfessionalIds"
-                :class="{ 'bg-secondary': activeSection === ModSubmissionLeftNavbarSections.HealthcareProfessionalIds,
-                          'bg-primary-inverted': activeSection !== ModSubmissionLeftNavbarSections.HealthcareProfessionalIds }"
+                :class="{ 'bg-secondary': activeSection === ModSubmissionLeftNavbarSectionIDs.HealthcareProfessionalIds,
+                          'bg-primary-inverted': activeSection !== ModSubmissionLeftNavbarSectionIDs.HealthcareProfessionalIds }"
                 class="w-full py-4 my-2 text-sm text-start pl-2 rounded border-b-2 border-tertiary-bg"
-                @click="scrollToSectionOfFacilityForm(ModSubmissionLeftNavbarSections.HealthcareProfessionalIds)"
+                @click="scrollToSectionOfFacilityForm(ModSubmissionLeftNavbarSectionIDs.HealthcareProfessionalIds)"
             >
                 {{ $t("modPanelFacilitySubmissionLeftNavbar.healthcareProfessionalIds") }}
             </button>
             <button
                 data-testid="submission-form-leftnav-changeLog"
-                :class="{ 'bg-secondary': activeSection === ModSubmissionLeftNavbarSections.ChangeLog,
-                          'bg-primary-inverted': activeSection !== ModSubmissionLeftNavbarSections.ChangeLog }"
+                :class="{ 'bg-secondary': activeSection === ModSubmissionLeftNavbarSectionIDs.ChangeLog,
+                          'bg-primary-inverted': activeSection !== ModSubmissionLeftNavbarSectionIDs.ChangeLog }"
                 class="w-full py-4 my-2 text-sm text-start pl-2 rounded border-b-2 border-tertiary-bg"
-                @click="scrollToSectionOfFacilityForm(ModSubmissionLeftNavbarSections.ChangeLog)"
+                @click="scrollToSectionOfFacilityForm(ModSubmissionLeftNavbarSectionIDs.ChangeLog)"
             >
                 {{ $t("modPanelFacilitySubmissionLeftNavbar.changeLog") }}
             </button>
@@ -57,20 +57,13 @@
 <script setup lang="ts">
 import { ref, type Ref, onMounted, onUnmounted } from 'vue'
 import { useModerationSubmissionsStore } from '~/stores/moderationSubmissionsStore'
-
-enum ModSubmissionLeftNavbarSections {
-    Addresses = 'ADDRESSES',
-    ChangeLog = 'CHANGE_LOG',
-    ContactInformation = 'CONTACT_INFORMATION',
-    GoogleMapsInformation = 'GOOGLE_MAPS_INFORMATION',
-    HealthcareProfessionalIds = 'HEALTHCARE_PROFESSIONAL_IDS'
-}
+import { ModSubmissionLeftNavbarSectionIDs } from '~/stores/moderationScreenStore'
 
 const moderationSubmissionsStore = useModerationSubmissionsStore()
-const activeSection: Ref<string> = ref(ModSubmissionLeftNavbarSections.ContactInformation)
+const activeSection: Ref<string> = ref(ModSubmissionLeftNavbarSectionIDs.ContactInformation)
 const isScrolling: Ref<boolean> = ref(false)
 
-const scrollToSectionOfFacilityForm = (sectionId: ModSubmissionLeftNavbarSections) => {
+const scrollToSectionOfFacilityForm = (sectionId: ModSubmissionLeftNavbarSectionIDs) => {
     document.getElementById(sectionId)?.scrollIntoView({
         behavior: 'smooth'
     })
@@ -94,7 +87,7 @@ const observeFormSections = () => {
                 if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
                     const sectionId = entry.target.id
 
-                    const threshold = sectionId === ModSubmissionLeftNavbarSections.Addresses ? 0.5 : 1.0
+                    const threshold = sectionId === ModSubmissionLeftNavbarSectionIDs.Addresses ? 0.5 : 1.0
 
                     if (entry.intersectionRatio >= threshold && !isScrolling.value) {
                         currentSection = sectionId
@@ -131,7 +124,7 @@ const observeFormSections = () => {
 
     sections.forEach(section => {
         const sectionId = section.id
-        if (sectionId === ModSubmissionLeftNavbarSections.Addresses) {
+        if (sectionId === ModSubmissionLeftNavbarSectionIDs.Addresses) {
             addressObserver.observe(section)
         } else {
             otherSectionsObserver.observe(section)

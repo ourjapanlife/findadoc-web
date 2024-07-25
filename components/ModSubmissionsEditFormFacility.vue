@@ -4,7 +4,7 @@
         @submit="submitForm"
     >
         <div
-            id="contact-information"
+            :id="ModSubmissionLeftNavbarSectionIDs.ContactInformation"
             class="facility-form-section"
         >
             <span
@@ -65,7 +65,7 @@
         </div>
 
         <div
-            id="addresses"
+            :id="ModSubmissionLeftNavbarSectionIDs.Addresses"
             class="facility-form-section"
         >
             <span class="mb-3.5 text-center text-primary-text text-2xl font-bold font-sans leading-normal">
@@ -190,7 +190,7 @@
         </div>
 
         <div
-            id="google-maps-information"
+            :id="ModSubmissionLeftNavbarSectionIDs.GoogleMapsInformation"
             class="facility-form-section"
         >
             <span class="mb-3.5 text-center text-primary-text text-2xl font-bold font-sans leading-normal">
@@ -229,7 +229,7 @@
             />
         </div>
         <ModHealthcareProfessionalSearchbar
-            id="healthcare-professional-ids"
+            :id="ModSubmissionLeftNavbarSectionIDs.HealthcareProfessionalIds"
             class="facility-form-section"
             data-testid="submission-form-doctor-search"
         />
@@ -248,6 +248,7 @@ import { type Ref, ref } from 'vue'
 import { useModerationSubmissionsStore } from '~/stores/moderationSubmissionsStore'
 import type { Submission } from '~/typedefs/gqlTypes'
 import { validateAddressLineEn, validateAddressLineJp, validateNameEn, validateNameJp, validatePhoneNumber, validateCityEn, validateEmail, validateFloat, validatePostalCode, validateWebsite, validateCityJp } from '~/utils/formValidations'
+import { ModSubmissionLeftNavbarSectionIDs } from '~/stores/moderationScreenStore'
 
 // contactFields
 const nameEn: Ref<string> = ref('')
