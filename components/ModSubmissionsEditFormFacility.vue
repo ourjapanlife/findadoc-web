@@ -229,7 +229,6 @@
             />
         </div>
         <ModHealthcareProfessionalSearchbar
-            :id="ModSubmissionLeftNavbarSectionIDs.HealthcareProfessionalIds"
             class="facility-form-section"
             data-testid="submission-form-doctor-search"
         />

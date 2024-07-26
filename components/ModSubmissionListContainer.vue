@@ -38,7 +38,6 @@
                         <span class="text-start">
                             {{ submission.facility?.nameEn || $t("modPanelSubmissionList.facilityNameUnknown") }}
                         </span>
-                        <span class="text-start">{{ getSubmissionStatus(submission) }}</span>
                         <span class="text-start">{{ convertDateToLocalTime(submission.updatedDate) }}</span>
                         <span class="text-start">{{ convertDateToLocalTime(submission.createdDate) }}</span>
                     </nuxt-link>

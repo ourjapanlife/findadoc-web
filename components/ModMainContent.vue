@@ -1,23 +1,23 @@
 <template>
-    <div class="h-full">
+    <div class="h-full overflow-hidden">
         <div v-if="screenStore.activeScreen === ModerationScreen.Dashboard">
             <ModSubmissionListContainer />
         </div>
         <div
             v-else-if="screenStore.activeScreen === ModerationScreen.EditSubmission"
-            class="h-full"
+            class="h-full overflow-hidden"
         >
             <ModSubmissionsEditFormFacility />
         </div>
         <div
             v-else-if="screenStore.activeScreen === ModerationScreen.EditFacility"
-            class="h-full"
+            class="h-full overflow-hidden"
         >
             Edit Facility
         </div>
         <div
             v-else-if="screenStore.activeScreen === ModerationScreen.EditHealthcareProfessional"
-            class="h-full"
+            class="h-full overflow-hidden"
         >
             Edit Healthcare Professional
         </div>

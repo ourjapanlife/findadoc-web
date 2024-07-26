@@ -3,7 +3,7 @@
         <div v-if="store.activeScreen === ModerationScreen.Dashboard ">
             <ModDashboardLeftNavbar />
         </div>
-        <div v-else-if="store.activeScreen === ModerationScreen.editSubmission">
+        <div v-else-if="store.activeScreen === ModerationScreen.EditSubmission">
             <ModSubmissionLeftNavbar />
         </div>
         <div v-else-if="store.activeScreen === ModerationScreen.EditHealthcareProfessional">
