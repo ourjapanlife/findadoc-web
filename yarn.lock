@@ -12634,8 +12634,8 @@ __metadata:
   linkType: hard
 
 "nuxt-svgo@npm:^4.0.1":
-  version: 4.0.1
-  resolution: "nuxt-svgo@npm:4.0.1"
+  version: 4.0.2
+  resolution: "nuxt-svgo@npm:4.0.2"
   dependencies:
     "@nuxt/kit": "npm:^3.4.0"
     mini-svg-data-uri: "npm:^1.4.4"
@@ -12652,7 +12652,7 @@ __metadata:
       optional: true
     vue-svg-loader:
       optional: true
-  checksum: 10/fe06ee557f1601190ed42f384fa63af290dd775a42563db10bc66732d9b6943b147815f4543e46c1255b267b04bc2c4d717aaff146c243112f2ff2449fb78112
+  checksum: 10/d437d988d7fa2ec2214ebf9d96b84d03106347740a3fdee8e6e53ee59bd746ee33a951dbff12a60b4b8b95bda4e08d4f43ca74e5982d9e69b0b39779f36d33ba
   languageName: node
   linkType: hard
 
