@@ -107,7 +107,8 @@
     "healthcareProfessionals": "Profissionais de saúde",
     "forReview": "Para Revisão",
     "approved": "Aprovado",
-    "rejected": "Rejeitado"
+    "rejected": "Rejeitado",
+    "submissions": "Submissions"
   },
   "modEditSubmissionTopNav": {
     "saveAndExit": "Salvar e sair",
@@ -123,7 +124,8 @@
     "rejected": "Rejeitado",
     "status": "Situação",
     "submitted": "Enviado",
-    "underReview": "Em revisão"
+    "underReview": "Em revisão",
+    "facilityNameUnknown": "Facility Name Unknown"
   },
   "modSubmissionForm": {
     "addresses": "Endereços",

@@ -107,7 +107,8 @@
     "healthcareProfessionals": " Медицинские специалисты ",
     "forReview": " Для рассмотрения ",
     "approved": "Одобрено",
-    "rejected": "Отклонено"
+    "rejected": "Отклонено",
+    "submissions": "Submissions"
   },
   "modEditSubmissionTopNav": {
     "saveAndExit": "Сохранить и выцйи",
@@ -123,7 +124,8 @@
     "rejected": "Отклонено",
     "status": "Статус",
     "submitted": " Представлено на рассмотрение",
-    "underReview": "На рассмотрении"
+    "underReview": "На рассмотрении",
+    "facilityNameUnknown": "Facility Name Unknown"
   },
   "modSubmissionForm": {
     "addresses": "Адреса",

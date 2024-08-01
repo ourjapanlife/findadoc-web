@@ -19,46 +19,63 @@ const checkLocaleKeys = () => {
     const enFilePath = path.join(localesI18nDirectory, enFileName)
     const enFileContent = JSON.parse(fs.readFileSync(enFilePath, 'utf-8'))
 
-    // Function to create a full key path
-    const createFullKey = (prefix, key) => prefix ? `${prefix}.${key}` : key
-
-    // Function to check if value is an object
-    const isNestedObject = value => typeof value === 'object' && value !== null
-
-    // Extract all keys from a locale file
-    const extractAllKeys = (jsonObject, prefix = '') => {
-        const keys = []
-        Object.keys(jsonObject).forEach(key => {
-            const fullKey = createFullKey(prefix, key)
-            if (isNestedObject(jsonObject[key])) {
-                keys.push(...extractAllKeys(jsonObject[key], fullKey))
-            } else {
-                keys.push(fullKey)
-            }
-        })
-        return keys
-    }
-
-    // Function to insert a key-value pair into a nested object
-    const insertMissingKey = (targetObject, keyPath, value) => {
-        const keyParts = keyPath.split('.')
-        let currentLevel = targetObject
-        keyParts.forEach((part, index) => {
-            if (index === keyParts.length - 1) {
-                // Last part: set the value
-                currentLevel[part] = value
-            } else {
-                // Intermediate parts: ensure the object exists
-                if (!currentLevel[part]) {
-                    currentLevel[part] = {}
-                }
-                currentLevel = currentLevel[part]
-            }
-        })
-    }
-
     const referenceKeys = extractAllKeys(enFileContent)
 
+    findAndInsertMissingKeysAndValuesInNonEnFiles(
+        localeFilesWithoutEnFileName, enFileContent, referenceKeys, insertMissingKeysAndValues
+    )
+}
+
+// Extract all keys from a locale file
+const extractAllKeys = (jsonObject, prefix = '') => {
+    const keys = []
+    Object.keys(jsonObject).forEach(key => {
+        const fullKey = createFullKey(prefix, key)
+        if (isNestedObject(jsonObject[key])) {
+            keys.push(...extractAllKeys(jsonObject[key], fullKey))
+        } else {
+            keys.push(fullKey)
+        }
+    })
+    return keys
+}
+
+// Function to create a full key path
+const createFullKey = (prefix, key) => prefix ? `${prefix}.${key}` : key
+
+// Function to check if value is an object
+const isNestedObject = value => typeof value === 'object' && value !== null
+
+// Function to insert a key-value pair into a nested object
+const insertMissingKeysAndValues = (targetObject, keyPath, value) => {
+    const keyPathParts = keyPath.split('.')
+    let currentLevel = targetObject
+    keyPathParts.forEach((part, index) => {
+        const lastIndexOfTheKeyPathParts = keyPathParts.length - 1
+        if (index === lastIndexOfTheKeyPathParts) {
+            // Last part: set the value
+            currentLevel[part] = value
+        } else {
+            // Intermediate parts: ensure the object exists
+            if (!currentLevel[part]) {
+                currentLevel[part] = {}
+            }
+            currentLevel = currentLevel[part]
+        }
+    })
+}
+
+/**
+The following function is used to combine the previous functions to insert keys value pairs from the English file if they are not
+currently present in the other translation files. This will set the other files to have English translations unless the translations
+are later updated into their native language by a contributor.
+* @param {Array} localeFilesWithoutEnFileName - All the files that are not the english file
+* @param {Record<string>} enFileContent - The content from the en.json file
+* @param {string[]} referenceKeys - keys in the en.json file
+* @param {() => void} insertMissingKeysAndValues  - function to insert a key-value pair into a nested object
+*/
+const findAndInsertMissingKeysAndValuesInNonEnFiles
+= (localeFilesWithoutEnFileName, enFileContent, referenceKeys, insertMissingKeysAndValues) => {
     localeFilesWithoutEnFileName.forEach(file => {
         const localeFilePath = path.join(localesI18nDirectory, file)
         const jsonContent = JSON.parse(fs.readFileSync(localeFilePath, 'utf-8'))
@@ -71,7 +88,7 @@ const checkLocaleKeys = () => {
             if (!existingKeys.has(key)) {
                 const value = key.split('.').reduce((obj, part) => obj?.[part], enFileContent)
                 if (value !== undefined) {
-                    insertMissingKey(jsonContent, key, value)
+                    insertMissingKeysAndValues (jsonContent, key, value)
                     missingKeys.push(key)
                     fileUpdated = true
                 }
