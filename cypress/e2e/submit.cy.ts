@@ -1,3 +1,4 @@
+import 'cypress-real-events'
 import enUS from '../../i18n/locales/en.json'
 
 describe('Submit page', () => {
@@ -82,8 +83,8 @@ describe('Submit page', () => {
         it('requires a last name of 30 characters or less', () => {
             cy.get('[data-testid="submit-input-lastname"]').type(' ')
             cy.contains(enUS.submitPage.lastNameValidation).should('be.visible')
-            cy.get('[data-testid="submit-input-lastname"]', { timeout: 10000 }).type('The Frog')
-            cy.get('[data-testid="submit-input-firstname"]', { timeout: 10000 }).type('Kermy')
+            cy.get('[data-testid="submit-input-lastname"]', { timeout: 10000 }).type('The Frog').realPress('Tab')
+            cy.get('[data-testid="submit-input-firstname"]', { timeout: 10000 }).type('Kermy').realPress('Tab')
             cy.contains(enUS.submitPage.lastNameValidation, { timeout: 10000 }).should('not.be.visible')
             cy.get('[data-testid="submit-input-lastname"]').type('a'.repeat(80), { delay: 0 }).invoke('val').should('have.length', 30)
         })
