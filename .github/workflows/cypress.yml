@@ -16,8 +16,14 @@ jobs:
         steps:
             - name: Checkout code
               uses: actions/checkout@v4
-            # Install yarn dependencies, cache them correctly
-            # and run all Cypress tests
+            - name: Install dependencies
+              run: yarn install
+            - name: Build application
+              run: yarn prod:build
+            - name: Start server
+              run: yarn prod:start &
+            - name: Wait for server to be ready
+              run: npx wait-on http://localhost:3000
             - name: Cypress run
               uses: cypress-io/github-action@v6
               with:
