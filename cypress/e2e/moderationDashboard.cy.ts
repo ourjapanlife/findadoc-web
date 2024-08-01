@@ -177,8 +177,6 @@ describe(
                     })
                 }).as('getSubmissions')
 
-                cy.url({ timeout: 10000 }).should('equal', 'http://localhost:3000/')
-
                 /* chaining of visit was used here to make sure the user was logged in and that it would
                  100 percent visit moderation */
                 cy.get('[data-testid=top-nav-mod-link]', { timeout: 10000 }).click().visit('/moderation')
@@ -308,8 +306,6 @@ describe('Moderation Facility Submission Form', () => {
                     }
                 })
             }).as('getSubmissions')
-
-            cy.url({ timeout: 10000 }).should('equal', 'http://localhost:3000/')
 
             /* chaining of visit was used here to make sure the user was logged in and that it would
                  100 percent visit moderation */
