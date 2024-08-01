@@ -31,9 +31,9 @@
 </template>
 
 <script setup lang="ts">
-import { useModerationSubmissionsListStore } from '~/stores/moderationSubmissionsListStore'
+import { useModerationSubmissionsStore } from '~/stores/moderationSubmissionsStore'
 import { useModerationScreenStore, ModerationScreen } from '~/stores/moderationScreenStore'
 
 const moderationScreenStore = useModerationScreenStore()
-const modSubmissionsListStore = useModerationSubmissionsListStore()
+const modSubmissionsListStore = useModerationSubmissionsStore()
 </script>

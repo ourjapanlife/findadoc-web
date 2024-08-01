@@ -59,15 +59,25 @@ import { ref, computed, type Ref, watchEffect } from 'vue'
 import SVGNoteStackAddSvg from '../assets/icons/note-stack-add.svg'
 import SVGCheckBoxSvg from '../assets/icons/check-box.svg'
 import SVGDisabledByDefault from '../assets/icons/disabled-by-default.svg'
-import { useModerationSubmissionsListStore, SelectedSubmissionListViewTab, SelectedModerationListView } from '~/stores/moderationSubmissionsListStore'
+import { useModerationSubmissionsStore, SelectedSubmissionListViewTab, SubmissionStatus, SelectedModerationListView } from '~/stores/moderationSubmissionsStore'
 import type { Submission } from '~/typedefs/gqlTypes'
 
-const moderationSubmissionsStore = useModerationSubmissionsListStore()
+const moderationSubmissionsStore = useModerationSubmissionsStore()
 
 const selectedDashboardView: Ref<SelectedModerationListView> = ref(moderationSubmissionsStore.selectedModerationListViewChosen)
 
 const updateSubmissionListViewState = (submissionListViewOptionValue: SelectedSubmissionListViewTab) => {
-    moderationSubmissionsStore.filterSubmissionsBySelectedTab(submissionListViewOptionValue)
+    switch (submissionListViewOptionValue) {
+        case SelectedSubmissionListViewTab.Approved:
+            moderationSubmissionsStore.filterSubmissionByStatus(SubmissionStatus.Approved)
+            break
+        case SelectedSubmissionListViewTab.ForReview:
+            moderationSubmissionsStore.filterSubmissionByStatus(SubmissionStatus.InReview)
+            break
+        case SelectedSubmissionListViewTab.Rejected:
+            moderationSubmissionsStore.filterSubmissionByStatus(SubmissionStatus.Rejected)
+            break
+    }
 }
 
 const updateSelectedDashboardView = (event: Event) => {
@@ -102,7 +112,7 @@ const autofillStatusCount = computed(() => createCountsForSubmissionListView(mod
 
 watchEffect(() => {
     if (moderationSubmissionsStore.submissionsData.length) {
-        moderationSubmissionsStore.filterSubmissionsBySelectedTab(SelectedSubmissionListViewTab.ForReview)
+        moderationSubmissionsStore.filterSubmissionByStatus(SubmissionStatus.InReview)
     }
 })
 </script>

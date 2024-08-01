@@ -2,10 +2,16 @@ import { gql } from 'graphql-request'
 import { defineStore } from 'pinia'
 import { ref, type Ref } from 'vue'
 import { gqlClient } from '../utils/graphql.js'
-import type { Submission, Facility, HealthcareProfessional } from '~/typedefs/gqlTypes.js'
+import type { Submission } from '~/typedefs/gqlTypes.js'
 
 export enum SelectedSubmissionListViewTab {
     ForReview = 'FOR_REVIEW',
+    Approved = 'APPROVED',
+    Rejected = 'REJECTED'
+}
+
+export enum SubmissionStatus {
+    InReview = 'IN_REVIEW',
     Approved = 'APPROVED',
     Rejected = 'REJECTED'
 }
@@ -16,13 +22,10 @@ export enum SelectedModerationListView {
     Submissions = 'SUBMISSIONS'
 }
 
-export const useModerationSubmissionsListStore = defineStore(
-    'submissionsListStore',
+export const useModerationSubmissionsStore = defineStore(
+    'modSubmissionsStore',
     () => {
         const submissionsData: Ref<Submission[]> = ref([])
-        const healthcareProfessionalsData: Ref<HealthcareProfessional[]>
-        = ref([])
-        const facilityData: Ref<Facility[]> = ref([])
         const selectedModerationListViewChosen: Ref<SelectedModerationListView> = ref(SelectedModerationListView.Submissions)
         const selectedSubmissionId: Ref<string> = ref('')
         const selectedFacilityId: Ref<string> = ref('')
@@ -35,16 +38,6 @@ export const useModerationSubmissionsListStore = defineStore(
             submissionsData.value = submissionsSearchResults
         }
 
-        async function getFacilities() {
-            const facilityResults = await queryFacilities()
-            facilityData.value = facilityResults
-        }
-
-        async function getHealthcareProfessionals() {
-            const healthcareProfessionalResults = await queryHealthcareProfessionals()
-            healthcareProfessionalsData.value = healthcareProfessionalResults
-        }
-
         function setSelectedModerationListViewChosen(selectedOption: SelectedModerationListView) {
             selectedModerationListViewChosen.value = selectedOption
         }
@@ -53,20 +46,20 @@ export const useModerationSubmissionsListStore = defineStore(
             selectedSubmissionData.value = submissionsData.value.find(submission => submission.id === submissionId)
         }
 
-        function filterSubmissionsBySelectedTab(tabValue: SelectedSubmissionListViewTab) {
-            switch (tabValue) {
-                case SelectedSubmissionListViewTab.ForReview:
+        function filterSubmissionByStatus(submissionStatus: SubmissionStatus) {
+            switch (submissionStatus) {
+                case SubmissionStatus.InReview:
                     filteredSubmissionDataForListComponent.value = submissionsData.value
                         .filter((submission: Submission) => {
                             const isNewSubmission = !submission.isRejected && !submission.isApproved && !submission.isUnderReview
                             return submission.isUnderReview || isNewSubmission
                         })
                     break
-                case SelectedSubmissionListViewTab.Approved:
+                case SubmissionStatus.Approved:
                     filteredSubmissionDataForListComponent.value = submissionsData.value
                         .filter((submission: Submission) => submission.isApproved)
                     break
-                case SelectedSubmissionListViewTab.Rejected:
+                case SubmissionStatus.Rejected:
                     filteredSubmissionDataForListComponent.value = submissionsData.value
                         .filter((submission: Submission) => submission.isRejected)
                     break
@@ -74,15 +67,11 @@ export const useModerationSubmissionsListStore = defineStore(
         }
         return { getSubmissions,
             submissionsData,
-            filterSubmissionsBySelectedTab,
+            filterSubmissionByStatus,
             filteredSubmissionDataForListComponent,
             selectedSubmissionId,
             filterSelectedSubmission,
             selectedSubmissionData,
-            getFacilities,
-            facilityData,
-            getHealthcareProfessionals,
-            healthcareProfessionalsData,
             selectedModerationListViewChosen,
             setSelectedModerationListViewChosen,
             selectedFacilityId,
@@ -103,38 +92,6 @@ async function querySubmissions() {
             submissionsFilters
         )
         return result?.submissions ?? []
-    } catch (error) {
-        console.log(`Error querying the submissions: ${JSON.stringify(error)}`)
-        return []
-    }
-}
-
-async function queryFacilities() {
-    const searchFacilitiesData = {
-        filters: {
-            limit: 400
-        }
-    }
-    try {
-        const response = await gqlClient.request<{ facilities: Facility[] }>(getAllFacilitiesForModeration, searchFacilitiesData)
-        return response?.facilities ?? []
-    } catch (error) {
-        console.log(`Error querying the submissions: ${JSON.stringify(error)}`)
-        return []
-    }
-}
-
-async function queryHealthcareProfessionals() {
-    const searchHealthcareProfessionalsData = {
-        filters: {
-            limit: 400
-        }
-    }
-    try {
-        const response = await gqlClient
-            .request<{ healthcareProfessionals: HealthcareProfessional[] }>
-            (getAllHealthcareProfessionalsData, searchHealthcareProfessionalsData)
-        return response?.healthcareProfessionals ?? []
     } catch (error) {
         console.log(`Error querying the submissions: ${JSON.stringify(error)}`)
         return []
@@ -196,54 +153,3 @@ const getSubmissionsGqlQuery = gql`
   }
 }`
 
-const getAllFacilitiesForModeration = gql`
-    query Facilities($filters: FacilitySearchFilters!) {
-        facilities(filters: $filters) {
-            id
-            nameEn
-            nameJa
-            contact {
-                googleMapsUrl
-                email
-                phone
-                website
-                address {
-                    postalCode
-                    prefectureEn
-                    cityEn
-                    addressLine1En
-                    addressLine2En
-                    prefectureJa
-                    cityJa
-                    addressLine1Ja
-                    addressLine2Ja
-                }
-            }
-            mapLatitude
-            mapLongitude
-            healthcareProfessionalIds
-            createdDate
-            updatedDate
-        }
-    }
-`
-
-const getAllHealthcareProfessionalsData = gql`
-query Query($filters: HealthcareProfessionalSearchFilters!) {
-  healthcareProfessionals(filters: $filters) {
-    id
-    names {
-      firstName
-      middleName
-      lastName
-      locale
-    }
-    spokenLanguages
-    degrees
-    specialties
-    acceptedInsurance
-    facilityIds
-    createdDate
-    updatedDate
-  }
-}`

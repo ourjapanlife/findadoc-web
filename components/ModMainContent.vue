@@ -28,12 +28,12 @@
 import { useRoute } from 'vue-router'
 import { computed, nextTick, onMounted, watch } from 'vue'
 import { useModerationScreenStore, ModerationScreen } from '~/stores/moderationScreenStore'
-import { useModerationSubmissionsListStore } from '~/stores/moderationSubmissionsListStore'
+import { useModerationSubmissionsStore } from '~/stores/moderationSubmissionsStore'
 
 const route = useRoute()
 
 const screenStore = useModerationScreenStore()
-const moderationSubmissionsStore = useModerationSubmissionsListStore()
+const moderationSubmissionsStore = useModerationSubmissionsStore()
 
 const routePathForModerationScreen = computed(() => route.path as string)
 const selectedIdFromModSubmissionList = computed(() => route.params.id as string)

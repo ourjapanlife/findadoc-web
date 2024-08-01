@@ -50,7 +50,7 @@
             class="grid grid-cols-subgrid col-span-4"
         >
             <div
-                v-for="(facility, index) in modSubmissionsListStore.facilityData"
+                v-for="(facility, index) in facilitiesStore.facilityData"
                 :key="index"
                 class="grid grid-cols-subgrid col-span-4 bg-tertiary-bg"
             >
@@ -80,7 +80,7 @@
             class="grid grid-cols-subgrid col-span-4"
         >
             <div
-                v-for="(healthcareProfessional, index) in modSubmissionsListStore.healthcareProfessionalsData"
+                v-for="(healthcareProfessional, index) in healthcareProfessionalsStore.healthcareProfessionalsData"
                 :key="index"
                 class="grid grid-cols-subgrid col-span-4 bg-tertiary-bg"
             >
@@ -112,19 +112,23 @@
 <script setup lang="ts">
 import { computed, onMounted } from 'vue'
 import { ModerationScreen, useModerationScreenStore } from '~/stores/moderationScreenStore'
-import { SelectedModerationListView, useModerationSubmissionsListStore } from '~/stores/moderationSubmissionsListStore'
+import { SelectedModerationListView, useModerationSubmissionsStore } from '~/stores/moderationSubmissionsStore'
+import { useHealthcareProfessionalsStore } from '~/stores/healthcareProfessionalsStore'
+import { useFacilitiesStore } from '~/stores/facilitiesStore'
 
-const modSubmissionsListStore = useModerationSubmissionsListStore()
+const modSubmissionsListStore = useModerationSubmissionsStore()
+const healthcareProfessionalsStore = useHealthcareProfessionalsStore()
+const facilitiesStore = useFacilitiesStore()
 
 onMounted(async () => {
     await modSubmissionsListStore.getSubmissions()
-    await modSubmissionsListStore.getFacilities()
-    await modSubmissionsListStore.getHealthcareProfessionals()
+    await facilitiesStore.getFacilities()
+    await healthcareProfessionalsStore.getHealthcareProfessionals()
 })
 
 const hasSubmissions = computed(() => modSubmissionsListStore.submissionsData.length)
-const hasFacilities = computed(() => modSubmissionsListStore.facilityData.length)
-const hasHealthcareProfessionals = computed(() => modSubmissionsListStore.healthcareProfessionalsData.length)
+const hasFacilities = computed(() => facilitiesStore.facilityData.length)
+const hasHealthcareProfessionals = computed(() => healthcareProfessionalsStore.healthcareProfessionalsData.length)
 
 const convertDateToLocalTime = (isoString: string) => new Date(isoString).toLocaleString()
 
