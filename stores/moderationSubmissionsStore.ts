@@ -2,7 +2,7 @@ import { gql } from 'graphql-request'
 import { defineStore } from 'pinia'
 import { ref, type Ref } from 'vue'
 import { gqlClient } from '../utils/graphql.js'
-import { type Submission } from '~/typedefs/gqlTypes.js'
+import type { Submission } from '~/typedefs/gqlTypes.js'
 
 export enum SelectedSubmissionListViewTab {
     ForReview = 'FOR_REVIEW',
@@ -10,11 +10,26 @@ export enum SelectedSubmissionListViewTab {
     Rejected = 'REJECTED'
 }
 
+export enum SubmissionStatus {
+    InReview = 'IN_REVIEW',
+    Approved = 'APPROVED',
+    Rejected = 'REJECTED'
+}
+
+export enum SelectedModerationListView {
+    Facilities = 'FACILITIES',
+    HealthcareProfessionals = 'HEALTHCARE_PROFESSIONALS',
+    Submissions = 'SUBMISSIONS'
+}
+
 export const useModerationSubmissionsStore = defineStore(
-    'submissionsStore',
+    'modSubmissionsStore',
     () => {
         const submissionsData: Ref<Submission[]> = ref([])
+        const selectedModerationListViewChosen: Ref<SelectedModerationListView> = ref(SelectedModerationListView.Submissions)
         const selectedSubmissionId: Ref<string> = ref('')
+        const selectedFacilityId: Ref<string> = ref('')
+        const selectedHealthcareProfessionalId: Ref<string> = ref('')
         const selectedSubmissionData: Ref<Submission | undefined> = ref()
         const filteredSubmissionDataForListComponent: Ref<Submission[]> = ref([])
 
@@ -23,24 +38,28 @@ export const useModerationSubmissionsStore = defineStore(
             submissionsData.value = submissionsSearchResults
         }
 
+        function setSelectedModerationListViewChosen(selectedOption: SelectedModerationListView) {
+            selectedModerationListViewChosen.value = selectedOption
+        }
+
         function filterSelectedSubmission(submissionId: string | undefined) {
             selectedSubmissionData.value = submissionsData.value.find(submission => submission.id === submissionId)
         }
 
-        function filterSubmissionsBySelectedTab(tabValue: SelectedSubmissionListViewTab) {
-            switch (tabValue) {
-                case SelectedSubmissionListViewTab.ForReview:
+        function filterSubmissionByStatus(submissionStatus: SubmissionStatus) {
+            switch (submissionStatus) {
+                case SubmissionStatus.InReview:
                     filteredSubmissionDataForListComponent.value = submissionsData.value
                         .filter((submission: Submission) => {
                             const isNewSubmission = !submission.isRejected && !submission.isApproved && !submission.isUnderReview
                             return submission.isUnderReview || isNewSubmission
                         })
                     break
-                case SelectedSubmissionListViewTab.Approved:
+                case SubmissionStatus.Approved:
                     filteredSubmissionDataForListComponent.value = submissionsData.value
                         .filter((submission: Submission) => submission.isApproved)
                     break
-                case SelectedSubmissionListViewTab.Rejected:
+                case SubmissionStatus.Rejected:
                     filteredSubmissionDataForListComponent.value = submissionsData.value
                         .filter((submission: Submission) => submission.isRejected)
                     break
@@ -48,11 +67,15 @@ export const useModerationSubmissionsStore = defineStore(
         }
         return { getSubmissions,
             submissionsData,
-            filterSubmissionsBySelectedTab,
+            filterSubmissionByStatus,
             filteredSubmissionDataForListComponent,
             selectedSubmissionId,
             filterSelectedSubmission,
-            selectedSubmissionData }
+            selectedSubmissionData,
+            selectedModerationListViewChosen,
+            setSelectedModerationListViewChosen,
+            selectedFacilityId,
+            selectedHealthcareProfessionalId }
     }
 )
 
@@ -129,3 +152,4 @@ const getSubmissionsGqlQuery = gql`
     notes
   }
 }`
+
