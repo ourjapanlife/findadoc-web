@@ -1,4 +1,4 @@
-import { GraphQLClient } from 'graphql-request'
+import { GraphQLClient, type RequestDocument } from 'graphql-request'
 import { useRuntimeConfig } from '#imports'
 
 // eslint-disable-next-line
@@ -22,6 +22,41 @@ export const initializeGqlClient = () => {
     gqlClient = client
 }
 
+export const graphQLClientRequestWithRetry = async <T>(
+    gqlClientRequestFunction: (
+        queryOrMutation: RequestDocument, variables?: unknown) => Promise<T>,
+    queryOrMutation: RequestDocument,
+    variables: unknown,
+    retryOptions?: graphQLClientRequestWithRetryOptions
+): Promise<T> => {
+    let attempts = 0
+    // These are optional variables that we set to defaults of 3 retries and after 5 seconds
+    const retryAmount = retryOptions?.retryAmount || 3
+    const requestTimeoutInMilliseconds = retryOptions?.requestTimeoutInMilliseconds || 5000
+
+    const executeGQLClientRequest = async (): Promise<T> => {
+        try {
+            return await gqlClientRequestFunction(queryOrMutation, variables)
+        } catch (error) {
+            if (attempts < retryAmount) {
+                attempts++
+                if (attempts > 1) {
+                    await new Promise(resolve =>
+                        setTimeout(resolve, requestTimeoutInMilliseconds))
+                }
+                return executeGQLClientRequest()
+            }
+            throw error
+        }
+    }
+
+    return executeGQLClientRequest()
+}
+
+export interface graphQLClientRequestWithRetryOptions {
+    requestTimeoutInMilliseconds?: number
+    retryAmount?: number
+}
 export interface gqlMutation<T> extends gqlRequest {
     variables: {
         input: T

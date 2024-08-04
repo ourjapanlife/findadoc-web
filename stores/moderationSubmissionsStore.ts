@@ -32,6 +32,11 @@ export const useModerationSubmissionsStore = defineStore(
         const selectedHealthcareProfessionalId: Ref<string> = ref('')
         const selectedSubmissionData: Ref<Submission | undefined> = ref()
         const filteredSubmissionDataForListComponent: Ref<Submission[]> = ref([])
+        const didMutationFail: Ref<boolean> = ref(false)
+
+        function setDidMutationFail(newValue: boolean) {
+            didMutationFail.value = newValue
+        }
 
         async function getSubmissions() {
             const submissionsSearchResults = await querySubmissions()
@@ -72,6 +77,8 @@ export const useModerationSubmissionsStore = defineStore(
             selectedSubmissionId,
             filterSelectedSubmission,
             selectedSubmissionData,
+            didMutationFail,
+            setDidMutationFail,
             selectedModerationListViewChosen,
             setSelectedModerationListViewChosen,
             selectedFacilityId,
