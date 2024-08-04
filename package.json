@@ -9,6 +9,7 @@
         "generate": "graphql-codegen --config ./typesgeneratorconfig.ts",
         "lint": "ESLINT_USE_FLAT_CONFIG=true eslint . -c eslint.config.js",
         "lint:fix": "ESLINT_USE_FLAT_CONFIG=true eslint . -c eslint.config.js --fix",
+        "lint:locales": "node i18n/checkLocaleKeys.js",
         "lint:ci": "yarn prepare:ci && eslint . --config eslint.config.js --format @microsoft/eslint-formatter-sarif --output-file eslint-results.sarif",
         "prod:build": "yarn && yarn generate && nuxi generate",
         "prod:start": "nuxi start",
