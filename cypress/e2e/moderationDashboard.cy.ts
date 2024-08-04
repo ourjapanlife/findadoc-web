@@ -68,7 +68,8 @@ const mockedSubmissionResponse = {
                     nameEn: 'Cork EN',
                     nameJa: 'カスタム JA2',
                     contact: {
-                        googleMapsUrl: 'https://maps.google.com/?q=mcflannigan2',
+                        googleMapsUrl:
+                            'https://maps.google.com/?q=mcflannigan2',
                         email: 'mcFlannigan@mcflannigan.com',
                         phone: '243-867-5309',
                         website: 'https://mcflannigan.com',
@@ -112,7 +113,37 @@ const mockedSubmissionResponse = {
                 notes: 'This is a custom note.'
             }
         ]
-    }
+    },
+    facilities: [
+        {
+            id: '1',
+            nameEn: 'Tokyo Medical Center',
+            nameJa: '東京医療センター',
+            contact: {
+                googleMapsUrl:
+                    'https://maps.google.com/?q=Tokyo+Medical+Center',
+                email: 'contact@tokyomedicalcenter.jp',
+                phone: '+81-3-1234-5678',
+                website: 'https://www.tokyomedicalcenter.jp',
+                address: {
+                    postalCode: '100-0001',
+                    prefectureEn: 'Tokyo',
+                    cityEn: 'Chiyoda',
+                    addressLine1En: '1-1-1 Chiyoda',
+                    addressLine2En: 'Building A',
+                    prefectureJa: '東京都',
+                    cityJa: '千代田区',
+                    addressLine1Ja: '千代田1-1-1',
+                    addressLine2Ja: 'Aビル'
+                }
+            },
+            mapLatitude: 35.6895,
+            mapLongitude: 139.6917,
+            healthcareProfessionalIds: ['101', '102', '103'],
+            createdDate: '2023-01-01T12:00:00Z',
+            updatedDate: '2024-01-01T12:00:00Z'
+        }
+    ]
 }
 
 describe(
@@ -219,7 +250,28 @@ describe(
                 clipboardResult.should('exist', 10000)
             })
 
-            afterEach(() => {
+            it('toggle between submissions and healthcare professionals submissions', () => {
+                cy.get('[data-testid="mod-healthcare-professional-list-item-1"]').should('not.exist')
+                cy.get('[data-testid="mod-facility-list-item-1"]').should('not.exist')
+                cy.get('[data-testid="mod-submission-list-item-1').should('exist')
+
+                cy.get('[data-testid="submission-type-select"]', { timeout: 10000 }).select('FACILITIES')
+                cy.get('[data-testid="mod-healthcare-professional-list-item-1"]').should('not.exist')
+                cy.get('[data-testid="mod-facility-list-item-1"]').should('exist')
+                cy.get('[data-testid="mod-submission-list-item-1').should('not.exist')
+
+                cy.get('[data-testid="submission-type-select"]', { timeout: 10000 }).select('HEALTHCARE_PROFESSIONALS')
+                cy.get('[data-testid="mod-healthcare-professional-list-item-1"]').should('exist')
+                cy.get('[data-testid="mod-facility-list-item-1"]').should('not.exist')
+                cy.get('[data-testid="mod-submission-list-item-1').should('not.exist')
+
+                cy.get('[data-testid="submission-type-select"]', { timeout: 10000 }).select('SUBMISSIONS')
+                cy.get('[data-testid="mod-healthcare-professional-list-item-1"]').should('not.exist')
+                cy.get('[data-testid="mod-facility-list-item-1"]').should('not.exist')
+                cy.get('[data-testid="mod-submission-list-item-1').should('exist')
+            })
+
+            after(() => {
                 Cypress.session.clearCurrentSessionData()
             })
         })

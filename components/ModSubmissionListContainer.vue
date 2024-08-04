@@ -1,7 +1,7 @@
 <template>
     <div
         :style="submissionListItemTableColumns"
-        :class="`grid grid-cols-5 p-2`"
+        :class="`grid grid-cols-4 p-2`"
     >
         <div class="font-bold text-left p-1">
             #
@@ -10,37 +10,95 @@
             {{ $t("modPanelSubmissionList.name") }}
         </div>
         <div class="font-bold text-left p-1">
-            {{ $t("modPanelSubmissionList.status") }}
-        </div>
-        <div class="font-bold text-left p-1">
             {{ $t("modPanelSubmissionList.modified") }}
         </div>
         <div class="font-bold text-left p-1">
             {{ $t("modPanelSubmissionList.submitted") }}
         </div>
         <div
-            v-if="hasSubmissions"
-            class="grid grid-cols-subgrid col-span-5"
+            v-if="hasSubmissions
+                && modSubmissionsListStore.selectedModerationListViewChosen === SelectedModerationListView.Submissions"
+            class="grid grid-cols-subgrid col-span-4"
         >
             <div
-                v-for="(submission, index) in modSubmissionsStore.filteredSubmissionDataForListComponent"
+                v-for="(submission, index) in modSubmissionsListStore.filteredSubmissionDataForListComponent"
                 :key="index"
-                class="grid grid-cols-subgrid col-span-5 bg-tertiary-bg"
+                class="grid grid-cols-subgrid col-span-4 bg-tertiary-bg"
             >
                 <div
                     :data-testid="`mod-submission-list-item-${index + 1}`"
-                    class="grid grid-cols-subgrid col-span-5 bg-tertiary-bg cursor-pointer hover:bg-primary"
+                    class="grid grid-cols-subgrid col-span-4 bg-tertiary-bg cursor-pointer hover:bg-primary"
                     @click="handleClickToSubmissionForm(submission.id)"
                 >
                     <nuxt-link
-                        :to="`/moderation/editsubmission/${submission.id}`"
-                        class="grid grid-cols-subgrid col-span-5 bg-primary-text-muted p-1 hover:bg-primary"
+                        :to="`/moderation/edit-submission/${submission.id}`"
+                        class="grid grid-cols-subgrid col-span-4 bg-primary-text-muted p-1 hover:bg-primary"
                     >
                         <span class="text-start">{{ index + 1 }}</span>
-                        <span class="text-start">{{ submission.healthcareProfessionalName }}</span>
-                        <span class="text-start">{{ getSubmissionStatus(submission) }}</span>
+                        <span class="text-start">
+                            {{ submission.facility?.nameEn || $t("modPanelSubmissionList.facilityNameUnknown") }}
+                        </span>
                         <span class="text-start">{{ convertDateToLocalTime(submission.updatedDate) }}</span>
                         <span class="text-start">{{ convertDateToLocalTime(submission.createdDate) }}</span>
+                    </nuxt-link>
+                </div>
+            </div>
+        </div>
+        <div
+            v-else-if="hasFacilities
+                && modSubmissionsListStore.selectedModerationListViewChosen === SelectedModerationListView.Facilities"
+            class="grid grid-cols-subgrid col-span-4"
+        >
+            <div
+                v-for="(facility, index) in facilitiesStore.facilityData"
+                :key="index"
+                class="grid grid-cols-subgrid col-span-4 bg-tertiary-bg"
+            >
+                <div
+                    :data-testid="`mod-facility-list-item-${index + 1}`"
+                    class="grid grid-cols-subgrid col-span-4 bg-tertiary-bg cursor-pointer hover:bg-primary"
+                    @click="handleClickToFacilityForm(facility.id)"
+                >
+                    <nuxt-link
+                        :to="`/moderation/edit-facility/${facility.id}`"
+                        class="grid grid-cols-subgrid col-span-4 bg-primary-text-muted p-1 hover:bg-primary"
+                    >
+                        <span class="text-start">{{ index + 1 }}</span>
+                        <span class="text-start">
+                            {{ facility?.nameEn }}
+                        </span>
+                        <span class="text-start">{{ convertDateToLocalTime(facility.updatedDate) }}</span>
+                        <span class="text-start">{{ convertDateToLocalTime(facility.createdDate) }}</span>
+                    </nuxt-link>
+                </div>
+            </div>
+        </div>
+        <div
+            v-else-if="hasHealthcareProfessionals
+                && modSubmissionsListStore.selectedModerationListViewChosen
+                    === SelectedModerationListView.HealthcareProfessionals"
+            class="grid grid-cols-subgrid col-span-4"
+        >
+            <div
+                v-for="(healthcareProfessional, index) in healthcareProfessionalsStore.healthcareProfessionalsData"
+                :key="index"
+                class="grid grid-cols-subgrid col-span-4 bg-tertiary-bg"
+            >
+                <div
+                    :data-testid="`mod-healthcare-professional-list-item-${index + 1}`"
+                    class="grid grid-cols-subgrid col-span-4 bg-tertiary-bg cursor-pointer hover:bg-primary"
+                    @click="handleClickToHealthcareProfessionalForm(healthcareProfessional.id)"
+                >
+                    <nuxt-link
+                        :to="`/moderation/edit-healthcare-professional/${healthcareProfessional.id}`"
+                        class="grid grid-cols-subgrid col-span-4 bg-primary-text-muted p-1 hover:bg-primary"
+                    >
+                        <span class="text-start">{{ index + 1 }}</span>
+                        <span class="text-start">
+                            {{ healthcareProfessional.names[0].firstName }} {{ healthcareProfessional.names[0].lastName }}
+                        </span>
+                        <span class="text-start">{{ convertDateToLocalTime(healthcareProfessional.updatedDate) }}</span>
+                        <span class="text-start">{{ convertDateToLocalTime(healthcareProfessional.createdDate) }}</span>
                     </nuxt-link>
                 </div>
             </div>
@@ -53,38 +111,29 @@
 
 <script setup lang="ts">
 import { computed, onMounted } from 'vue'
-import { useI18n } from 'vue-i18n'
 import { ModerationScreen, useModerationScreenStore } from '~/stores/moderationScreenStore'
-import { useModerationSubmissionsStore } from '~/stores/moderationSubmissionsStore'
-import type { Submission } from '~/typedefs/gqlTypes'
+import { SelectedModerationListView, useModerationSubmissionsStore } from '~/stores/moderationSubmissionsStore'
+import { useHealthcareProfessionalsStore } from '~/stores/healthcareProfessionalsStore'
+import { useFacilitiesStore } from '~/stores/facilitiesStore'
 
-const { t } = useI18n()
-
-const modSubmissionsStore = useModerationSubmissionsStore()
+const modSubmissionsListStore = useModerationSubmissionsStore()
+const healthcareProfessionalsStore = useHealthcareProfessionalsStore()
+const facilitiesStore = useFacilitiesStore()
 
 onMounted(async () => {
-    await modSubmissionsStore.getSubmissions()
+    await modSubmissionsListStore.getSubmissions()
+    await facilitiesStore.getFacilities()
+    await healthcareProfessionalsStore.getHealthcareProfessionals()
 })
 
-const hasSubmissions = computed(() => modSubmissionsStore.submissionsData.length)
-
-const getSubmissionStatus = (submission: Submission) => {
-    switch (true) {
-        case submission.isUnderReview:
-            return t('modPanelSubmissionList.underReview')
-        case submission.isApproved:
-            return t('modPanelSubmissionList.approved')
-        case submission.isRejected:
-            return t('modPanelSubmissionList.rejected')
-        default:
-            return t('modPanelSubmissionList.new')
-    }
-}
+const hasSubmissions = computed(() => modSubmissionsListStore.submissionsData.length)
+const hasFacilities = computed(() => facilitiesStore.facilityData.length)
+const hasHealthcareProfessionals = computed(() => healthcareProfessionalsStore.healthcareProfessionalsData.length)
 
 const convertDateToLocalTime = (isoString: string) => new Date(isoString).toLocaleString()
 
 const submissionListItemTableColumns = computed(() => {
-    const numOfColumns = 5
+    const numOfColumns = 4
     const defaultColumnWidth = 10
     const remainingWidth = 100 - defaultColumnWidth
     const columnWidth = remainingWidth / (numOfColumns - 1)
@@ -92,7 +141,17 @@ const submissionListItemTableColumns = computed(() => {
 })
 
 const handleClickToSubmissionForm = (id: string) => {
-    useModerationScreenStore().setActiveScreen(ModerationScreen.editSubmission)
-    modSubmissionsStore.selectedSubmissionId = id
+    useModerationScreenStore().setActiveScreen(ModerationScreen.EditSubmission)
+    modSubmissionsListStore.selectedSubmissionId = id
+}
+
+const handleClickToHealthcareProfessionalForm = (id: string) => {
+    useModerationScreenStore().setActiveScreen(ModerationScreen.EditHealthcareProfessional)
+    modSubmissionsListStore.selectedHealthcareProfessionalId = id
+}
+
+const handleClickToFacilityForm = (id: string) => {
+    useModerationScreenStore().setActiveScreen(ModerationScreen.EditFacility)
+    modSubmissionsListStore.selectedFacilityId = id
 }
 </script>

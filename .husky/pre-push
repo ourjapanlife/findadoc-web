@@ -1,2 +1,6 @@
 echo "linting ✨"
 yarn lint
+
+# Run the locale keys check script
+echo "😎checking locale file keys match😎"
+yarn lint:locales

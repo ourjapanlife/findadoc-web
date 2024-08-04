@@ -1,17 +1,25 @@
 <template>
     <div>
         <select
+            v-model="selectedDashboardView"
             class="font-semibold p-1 border-b border-black mb-2"
+            data-testid="submission-type-select"
             @change="updateSelectedDashboardView"
         >
-            <option value="facilities">
+            <option :value="SelectedModerationListView.Submissions">
+                {{ $t("modDashboardLeftNav.submissions") }}
+            </option>
+            <option :value="SelectedModerationListView.Facilities">
                 {{ $t("modDashboardLeftNav.facilities") }}
             </option>
-            <option value="healthcareProfessionals">
+            <option :value="SelectedModerationListView.HealthcareProfessionals">
                 {{ $t("modDashboardLeftNav.healthcareProfessionals") }}
             </option>
         </select>
-        <div class="flex flex-col">
+        <div
+            v-show="moderationSubmissionsStore.selectedModerationListViewChosen === SelectedModerationListView.Submissions"
+            class="flex flex-col"
+        >
             <div class="flex w-4/5 justify-start items-center border-b-2 border-slate-200">
                 <SVGNoteStackAddSvg class="h-4" />
                 <button
@@ -51,20 +59,30 @@ import { ref, computed, type Ref, watchEffect } from 'vue'
 import SVGNoteStackAddSvg from '../assets/icons/note-stack-add.svg'
 import SVGCheckBoxSvg from '../assets/icons/check-box.svg'
 import SVGDisabledByDefault from '../assets/icons/disabled-by-default.svg'
-import { useModerationSubmissionsStore, SelectedSubmissionListViewTab } from '~/stores/moderationSubmissionsStore'
+import { useModerationSubmissionsStore, SelectedSubmissionListViewTab, SubmissionStatus, SelectedModerationListView } from '~/stores/moderationSubmissionsStore'
 import type { Submission } from '~/typedefs/gqlTypes'
 
-const moderationSubmissionsStore = useModerationSubmissionsStore ()
+const moderationSubmissionsStore = useModerationSubmissionsStore()
 
-const selectedDashboardView: Ref<string> = ref('facilities')
+const selectedDashboardView: Ref<SelectedModerationListView> = ref(moderationSubmissionsStore.selectedModerationListViewChosen)
 
 const updateSubmissionListViewState = (submissionListViewOptionValue: SelectedSubmissionListViewTab) => {
-    moderationSubmissionsStore.filterSubmissionsBySelectedTab(submissionListViewOptionValue)
+    switch (submissionListViewOptionValue) {
+        case SelectedSubmissionListViewTab.Approved:
+            moderationSubmissionsStore.filterSubmissionByStatus(SubmissionStatus.Approved)
+            break
+        case SelectedSubmissionListViewTab.ForReview:
+            moderationSubmissionsStore.filterSubmissionByStatus(SubmissionStatus.InReview)
+            break
+        case SelectedSubmissionListViewTab.Rejected:
+            moderationSubmissionsStore.filterSubmissionByStatus(SubmissionStatus.Rejected)
+            break
+    }
 }
 
 const updateSelectedDashboardView = (event: Event) => {
-    const selectedValue = (event.target as HTMLSelectElement).value
-    selectedDashboardView.value = selectedValue
+    const selectedOption = (event.target as HTMLSelectElement).value as SelectedModerationListView
+    moderationSubmissionsStore.setSelectedModerationListViewChosen(selectedOption)
 }
 
 function createCountsForSubmissionListView(submissions: Submission[]) {
@@ -94,7 +112,7 @@ const autofillStatusCount = computed(() => createCountsForSubmissionListView(mod
 
 watchEffect(() => {
     if (moderationSubmissionsStore.submissionsData.length) {
-        moderationSubmissionsStore.filterSubmissionsBySelectedTab(SelectedSubmissionListViewTab.ForReview)
+        moderationSubmissionsStore.filterSubmissionByStatus(SubmissionStatus.InReview)
     }
 })
 </script>

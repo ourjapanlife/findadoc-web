@@ -121,7 +121,8 @@
         "healthcareProfessionals": "Gesundheitsfachkräfte",
         "forReview": "Zur Überprüfung",
         "approved": "Genehmigt",
-        "rejected": "Abgelehnt"
+        "rejected": "Abgelehnt",
+        "submissions": "Submissions"
     },
     "modEditSubmissionTopNav": {
         "saveAndExit": "Sichern & Beenden",
@@ -130,6 +131,7 @@
     },
     "modPanelSubmissionList": {
         "approved": "Genehmigt",
+        "facilityNameUnknown": "Facility Name Unknown",
         "modified": "Geändert",
         "name": "Name",
         "new": "Neu",
