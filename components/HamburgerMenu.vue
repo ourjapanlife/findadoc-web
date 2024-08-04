@@ -190,20 +190,28 @@
                             data-testid="hamburger-menu-footer-legal"
                             class="flex"
                         >
-                            <span class="mt-0.5">
+                            <span
+                                data-testid="npo-link"
+                                class="mt-0.5"
+                            >
                                 NPO
                                 <NuxtLink
                                     :to="'https://www.npo-hiroba.or.jp/search/zoom.php?pk=121289'"
                                     target="_blank"
                                     class="underline"
-                                >#9011005010215</NuxtLink>
+                                >#9011005010215
+                                </NuxtLink>
                             </span>
-                            <span class="ml-2 mt-0.5">
+                            <span
+                                data-testid="npo-balance-sheet-link"
+                                class="ml-2 mt-0.5"
+                            >
                                 <NuxtLink
-                                    :to="'https://www.npo-hiroba.or.jp/search/zoom.php?pk=121289'"
+                                    :to="'https://drive.google.com/drive/folders/1BBLV4wIH-PvFYo6cTZrIwZhr885jXTSt'"
                                     target="_blank"
                                     class="underline"
-                                >{{ $t('hamburgerMenu.balancesheet') }}</NuxtLink>
+                                >{{ $t('hamburgerMenu.balancesheet') }}
+                                </NuxtLink>
                             </span>
                         </div>
                     </div>
