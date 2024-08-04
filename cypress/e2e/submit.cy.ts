@@ -81,12 +81,18 @@ describe('Submit page', () => {
         })
 
         it('requires a last name of 30 characters or less', () => {
-            cy.get('[data-testid="submit-input-lastname"]', { timeout: 10000 }).type(' ').blur()
+            const lastNameField = cy.get('[data-testid="submit-input-lastname"]', { timeout: 10000 })
+            const firstNameField = cy.get('[data-testid="submit-input-firstname"]', { timeout: 10000 })
+
+            lastNameField.type(' ').blur()
             cy.contains(enUS.submitPage.lastNameValidation, { timeout: 10000 }).should('be.visible')
-            cy.get('[data-testid="submit-input-lastname"]', { timeout: 10000 }).type('The Frog').blur()
-            cy.get('[data-testid="submit-input-firstname"]', { timeout: 10000 }).type('Kermy').blur()
+
+            lastNameField.clear().type('The Frog').blur()
+            firstNameField.type('Kermy').blur()
             cy.contains(enUS.submitPage.firstNameValidation, { timeout: 10000 }).should('not.be.visible')
-            cy.get('[data-testid="submit-input-lastname"]', { timeout: 10000 }).type('a'.repeat(80), { delay: 0 }).invoke('val').should('have.length', 30)
+
+            lastNameField.clear().type('a'.repeat(80), { delay: 0 })
+            lastNameField.invoke('val').should('have.length', 30)
         })
 
         it('requires Spoken Language 1 to be selected', () => {

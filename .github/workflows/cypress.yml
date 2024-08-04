@@ -4,7 +4,6 @@ on:
     push:
         branches: ["main"]
     pull_request:
-        # The branches below must be a subset of the branches above
         branches: ["main"]
     schedule:
         - cron: "45 15 * * 4"
@@ -16,19 +15,28 @@ jobs:
         steps:
             - name: Checkout code
               uses: actions/checkout@v4
-            - name: Install dependencies
-              run: yarn install
-            - name: Build application
-              run: yarn prod:build
-            - name: Start server
-              run: yarn prod:start &
-            - name: Wait for server to be ready
-              run: npx wait-on http://localhost:3000
-            - name: Cypress run
-              uses: cypress-io/github-action@v6
+
+            - name: Cache yarn dependencies
+              uses: actions/cache@v3
               with:
-                  build: yarn prod:build
-                  start: yarn prod:start
+                path: ~/.cache/yarn
+                key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+                restore-keys: |
+                  ${{ runner.os }}-yarn-
+
+            - name: Install dependencies and build
+              run: |
+                yarn install
+                yarn prod:build
+
+            - name: Start server and wait
+              run: |
+                yarn prod:start &
+                npx wait-on http://localhost:3000
+
+            - name: Run Cypress tests
+              uses: cypress-io/github-action@v6
+
             - name: Upload screenshots
               uses: actions/upload-artifact@v3
               if: failure()
