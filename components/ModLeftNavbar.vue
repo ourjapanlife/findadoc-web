@@ -1,11 +1,21 @@
 <template>
     <div class="w-64 p-4 border-r border-slate-300">
-        <div v-if="store.activeScreen === ModerationScreen.dashboard ">
+        <div v-if="store.activeScreen === ModerationScreen.Dashboard ">
             <ModDashboardLeftNavbar />
         </div>
-        <div v-else-if="store.activeScreen === ModerationScreen.editSubmission">
+        <div v-else-if="store.activeScreen === ModerationScreen.EditSubmission">
             <p class="text-xl font-bold">
                 NAVBAR REVIEW SUBMISSION
+            </p>
+        </div>
+        <div v-else-if="store.activeScreen === ModerationScreen.EditHealthcareProfessional">
+            <p class="text-xl font-bold">
+                NAVBAR REVIEW HEALTHCARE PROFESSIONAL
+            </p>
+        </div>
+        <div v-else-if="store.activeScreen === ModerationScreen.EditFacility">
+            <p class="text-xl font-bold">
+                NAVBAR REVIEW FACILITY
             </p>
         </div>
     </div>
