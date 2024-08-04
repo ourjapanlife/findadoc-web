@@ -183,14 +183,36 @@
                         data-testid="hamburger-menu-footer-copyright"
                         class="text-primary-text-muted text-xs"
                     >
-                        © {{ new Date().getUTCFullYear() }} {{ $t('hamburgerMenu.copyright') }}
-                        <div class="mt-0.5">
-                            NPO
-                            <NuxtLink
-                                :to="'https://www.npo-hiroba.or.jp/search/zoom.php?pk=121289'"
-                                target="_blank"
-                                class="underline"
-                            >#9011005010215</NuxtLink>
+                        <div>
+                            © {{ new Date().getUTCFullYear() }} {{ $t('hamburgerMenu.copyright') }}
+                        </div>
+                        <div
+                            data-testid="hamburger-menu-footer-legal"
+                            class="flex"
+                        >
+                            <span
+                                data-testid="npo-link"
+                                class="mt-0.5"
+                            >
+                                NPO
+                                <NuxtLink
+                                    :to="'https://www.npo-hiroba.or.jp/search/zoom.php?pk=121289'"
+                                    target="_blank"
+                                    class="underline"
+                                >#9011005010215
+                                </NuxtLink>
+                            </span>
+                            <span
+                                data-testid="npo-balance-sheet-link"
+                                class="ml-2 mt-0.5"
+                            >
+                                <NuxtLink
+                                    :to="'https://docs.google.com/spreadsheets/d/1CafQoHn1NNNoRy35QSt_nUZcgKL8QN2M'"
+                                    target="_blank"
+                                    class="underline"
+                                >{{ $t('hamburgerMenu.balancesheet') }}
+                                </NuxtLink>
+                            </span>
                         </div>
                     </div>
                 </div>
