@@ -207,7 +207,7 @@
                                 class="ml-2 mt-0.5"
                             >
                                 <NuxtLink
-                                    :to="'https://drive.google.com/drive/folders/1BBLV4wIH-PvFYo6cTZrIwZhr885jXTSt'"
+                                    :to="'https://docs.google.com/spreadsheets/d/1CafQoHn1NNNoRy35QSt_nUZcgKL8QN2M'"
                                     target="_blank"
                                     class="underline"
                                 >{{ $t('hamburgerMenu.balancesheet') }}
