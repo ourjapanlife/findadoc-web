@@ -21,6 +21,12 @@ const checkLocaleKeys = () => {
 
     const referenceKeys = extractAllKeys(enFileContent)
 
+    //check if in CI/CD
+    if (process.env.NODE_ENV === 'production') {
+        runCICDChecksForLocaleFiles(localeFilesWithoutEnFileName, referenceKeys)
+    }
+
+    //insert in development
     findAndInsertMissingKeysAndValuesInNonEnFiles(
         localeFilesWithoutEnFileName, enFileContent, referenceKeys, insertMissingKeysAndValues
     )
@@ -102,6 +108,52 @@ const findAndInsertMissingKeysAndValuesInNonEnFiles
             missingKeys.forEach(key => console.log(`- ${key}`))
         }
     })
+}
+
+//To run in CI/CD just to report the keys
+const findAndReportMissingKeysInNonEnFiles = (localeFilesWithoutEnFileName, referenceKeys) => {
+    const missingKeysSummary = []
+
+    localeFilesWithoutEnFileName.forEach(file => {
+        const localeFilePath = path.join(localesI18nDirectory, file)
+        const jsonContent = JSON.parse(fs.readFileSync(localeFilePath, 'utf-8'))
+
+        const existingKeys = new Set(extractAllKeys(jsonContent))
+        const missingKeys = []
+
+        referenceKeys.forEach(key => {
+            if (!existingKeys.has(key)) {
+                missingKeys.push(key)
+            }
+        })
+
+        if (missingKeys.length) {
+            missingKeysSummary.push({ file, keys: missingKeys })
+        }
+    })
+
+    return missingKeysSummary
+}
+
+const runCICDChecksForLocaleFiles = (localeFilesWithoutEnFileName, referenceKeys) => {
+    const missingKeysSummary = findAndReportMissingKeysInNonEnFiles(
+        localeFilesWithoutEnFileName, referenceKeys
+    )
+    if (missingKeysSummary.length) {
+        console.error('\x1b[31mMissing keys found:\x1b[0m')
+        missingKeysSummary.forEach(({ file, keys }) => {
+            console.error(`\x1b[33m${file}:\x1b[0m`)
+            keys.forEach(key => console.error(`- ${key}`))
+        })
+
+        console.log('\x1b[93m\x1b[1mTo fix this error\x1b[0m\n\x1b[35m1) Run the command:\x1b[0m\n   yarn lint:locales\n\x1b[35m2) Push the updates\x1b[0m')
+        process.exitCode = 1 // Exit with error code
+        process.exit()
+    }
+
+    console.log('✅ \x1b[32mAll locale files are up to date.\x1b[0m')
+    process.exitCode = 0
+    process.exit()
 }
 
 checkLocaleKeys()

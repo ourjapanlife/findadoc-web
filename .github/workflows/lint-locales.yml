@@ -1,0 +1,36 @@
+name: Lint-Locales
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    # The branches below must be a subset of the branches above
+    branches: [ "main" ]
+  schedule:
+    - cron: '45 15 * * 4'
+permissions:
+  contents: read
+  security-events: write
+  actions: write  # This is needed for pull requests to delete
+
+jobs:
+  locale-lint:
+    name: Linting Locales 😎
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [21.3.0]
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Install Yarn/ Node ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "yarn"
+      - name: Install Dependencies
+        run: yarn install --immutable
+      - name: Run Locales Lint
+        run: NODE_ENV=production yarn lint:locales
