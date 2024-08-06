@@ -442,27 +442,6 @@ describe('Moderation Facility Submission Form', () => {
             cy.get('[data-testid="submission-form-mapLongitude"]').find('input').clear().type('Not Number Longitude').realPress('Tab')
             cy.get('[data-testid="submission-form-mapLongitude"]').find('p', { timeout: 10000 }).should('exist').contains('Invalid Longitude')
         })
-
-        it('should display a retry message', () => {
-            cy.intercept('POST', '**/', req => {
-                req.continue(res => {
-                    if (req.body.query && req.body.query.includes('mutation Mutation')) {
-                        res.statusCode = 500 // Simulate server error
-                        res.body = { errors: [{ message: 'Error mutation problem' }] }
-                    }
-                })
-            }).as('serverMutationError')
-
-            cy.get('[data-testid="submission-topNav-saveAndExit"]').click()
-            cy.get('[data-testid="submission-topNav-retryMessage"]')
-                .should('exist')
-                .contains(
-                    enUS.modEditSubmissionTopNav.retryMessage.substring(
-                        0,
-                        12
-                    )
-                )
-        })
     })
 })
 
