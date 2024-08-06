@@ -9,7 +9,7 @@ on:
   schedule:
     - cron: '45 15 * * 4'
 permissions:
-  contents: read
+  contents: write
   security-events: write
   actions: write  # This is needed for pull requests to delete
 

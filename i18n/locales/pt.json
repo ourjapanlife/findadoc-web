@@ -111,14 +111,14 @@
     "rejected": "Rejeitado",
     "submissions": "Submissions"
   },
-    "modPanelFacilitySubmissionLeftNavbar": {
-        "addresses": "Addresses",
-        "changeLog": "Change log",
-        "contactInformation": "Contact Information",
-        "facilityNameUnknown": "Facility Name Unknown",
-        "googleMapsInformation": "Google maps information",
-        "healthcareProfessionalIds": "Healthcare Professional IDs"
-    },
+  "modPanelFacilitySubmissionLeftNavbar": {
+    "addresses": "Addresses",
+    "changeLog": "Change log",
+    "contactInformation": "Contact Information",
+    "facilityNameUnknown": "Facility Name Unknown",
+    "googleMapsInformation": "Google maps information",
+    "healthcareProfessionalIds": "Healthcare Professional IDs"
+  },
   "modEditSubmissionTopNav": {
     "saveAndExit": "Salvar e sair",
     "approve": "Aprovar",
@@ -205,5 +205,8 @@
     "unauthorizedline1": "It looks like you don't have the necessary permissions to access this page. Redirecting in 10 seconds...",
     "unauthorizedline2": "If you want to become a moderator or have any questions, please contact us ",
     "unauthorizedline3": "here"
+  },
+  "testForBranhc": {
+    "hi": "Betcha can't find me!"
   }
 }
