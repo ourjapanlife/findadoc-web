@@ -3,8 +3,13 @@
         class="p-4 h-full overflow-y-auto"
         @submit="submitForm"
     >
-        <div>
-            <span class="mb-3.5 text-center text-primary-text text-2xl font-bold font-sans leading-normal">
+        <div
+            :id="ModSubmissionLeftNavbarSectionIDs.ContactInformation"
+            class="facility-form-section"
+        >
+            <span
+                class="mb-3.5 text-center text-primary-text text-2xl font-bold font-sans leading-normal"
+            >
                 {{ $t('modSubmissionForm.contactInformation') }}
             </span>
             <ModInputField
@@ -59,7 +64,10 @@
             />
         </div>
 
-        <div>
+        <div
+            :id="ModSubmissionLeftNavbarSectionIDs.Addresses"
+            class="facility-form-section"
+        >
             <span class="mb-3.5 text-center text-primary-text text-2xl font-bold font-sans leading-normal">
                 {{ $t('modSubmissionForm.addresses') }}
             </span>
@@ -181,7 +189,10 @@
             />
         </div>
 
-        <div>
+        <div
+            :id="ModSubmissionLeftNavbarSectionIDs.GoogleMapsInformation"
+            class="facility-form-section"
+        >
             <span class="mb-3.5 text-center text-primary-text text-2xl font-bold font-sans leading-normal">
                 {{ $t('modSubmissionForm.googleMapsInformation') }}
             </span>
@@ -218,9 +229,9 @@
             />
         </div>
         <ModHealthcareProfessionalSearchbar
+            class="facility-form-section"
             data-testid="submission-form-doctor-search"
         />
-        <!-- This button is purely for testing -->
         <button
             type="submit"
             class="bg-currentColor text-white font-bold py-2 px-4 rounded"
@@ -236,6 +247,7 @@ import { type Ref, ref } from 'vue'
 import { useModerationSubmissionsStore } from '~/stores/moderationSubmissionsStore'
 import type { Submission } from '~/typedefs/gqlTypes'
 import { validateAddressLineEn, validateAddressLineJp, validateNameEn, validateNameJp, validatePhoneNumber, validateCityEn, validateEmail, validateFloat, validatePostalCode, validateWebsite, validateCityJp } from '~/utils/formValidations'
+import { ModSubmissionLeftNavbarSectionIDs } from '~/stores/moderationScreenStore'
 
 // contactFields
 const nameEn: Ref<string> = ref('')
