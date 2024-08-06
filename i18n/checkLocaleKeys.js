@@ -1,6 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 import { fileURLToPath } from 'url'
+import { execSync } from 'child_process'
 
 // Convert import.meta.url to __dirname equivalent
 const __filename = fileURLToPath(import.meta.url)
@@ -21,12 +22,25 @@ const checkLocaleKeys = () => {
 
     const referenceKeys = extractAllKeys(enFileContent)
 
-    //check if in CI/CD
+    let missingKeysSummary = []
+
+    // Check if in CI/CD and auto update and push
     if (process.env.NODE_ENV === 'production') {
-        runCICDChecksForLocaleFiles(localeFilesWithoutEnFileName, referenceKeys)
+        missingKeysSummary = runCICDChecksForLocaleFiles(localeFilesWithoutEnFileName, referenceKeys)
+        writeErrorMessageForMissingKeysToDeveloper(missingKeysSummary)
     }
 
-    //insert in development
+    if (process.env.NODE_ENV === 'key-update') {
+        missingKeysSummary = runCICDChecksForLocaleFiles(localeFilesWithoutEnFileName, referenceKeys)
+        if (missingKeysSummary.length) {
+            findAndInsertMissingKeysAndValuesInNonEnFiles(
+                localeFilesWithoutEnFileName, enFileContent, referenceKeys, insertMissingKeysAndValues
+            )
+            // Commit and push changes if any files were updated
+            commitAndPushChangesForLocaleFiles()
+        }
+    }
+    // Insert in development
     findAndInsertMissingKeysAndValuesInNonEnFiles(
         localeFilesWithoutEnFileName, enFileContent, referenceKeys, insertMissingKeysAndValues
     )
@@ -94,7 +108,7 @@ const findAndInsertMissingKeysAndValuesInNonEnFiles
             if (!existingKeys.has(key)) {
                 const value = key.split('.').reduce((obj, part) => obj?.[part], enFileContent)
                 if (value !== undefined) {
-                    insertMissingKeysAndValues (jsonContent, key, value)
+                    insertMissingKeysAndValues(jsonContent, key, value)
                     missingKeys.push(key)
                     fileUpdated = true
                 }
@@ -110,7 +124,7 @@ const findAndInsertMissingKeysAndValuesInNonEnFiles
     })
 }
 
-//To run in CI/CD just to report the keys
+// To run in CI/CD just to report the keys
 const findAndReportMissingKeysInNonEnFiles = (localeFilesWithoutEnFileName, referenceKeys) => {
     const missingKeysSummary = []
 
@@ -146,16 +160,33 @@ const runCICDChecksForLocaleFiles = (localeFilesWithoutEnFileName, referenceKeys
             keys.forEach(key => console.error(`- ${key}`))
         })
 
-        console.log('\x1b[93m\x1b[1mTo fix this error\x1b[0m')
-        console.log('\x1b[35m1)Run the command:\x1b[0m')
-        console.log('yarn lint:locales\n\x1b[35m2Push the updates\x1b[0m')
-        process.exitCode = 1 // Exit with error code
-        process.exit()
+        return missingKeysSummary
     }
 
-    console.log('✅ \x1b[32mAll locale files are up to date.\x1b[0m')
-    process.exitCode = 0
-    process.exit()
+    return []
+}
+
+const writeErrorMessageForMissingKeysToDeveloper = missingKeysSummary => {
+    if (missingKeysSummary.length) {
+        fs.writeFileSync('missing_keys.txt', missingKeysSummary.map(({ file, keys }) => `${file}:\n${keys.join('\n')}`).join('\n\n'))
+        console.error('❌ \x1b[31mLocale linting failed due to missing keys.\x1b[0m')
+        process.exit(1)
+    }
+}
+
+// Function to commit and push changes
+const commitAndPushChangesForLocaleFiles = () => {
+    try {
+        const branchName = process.env.GITHUB_HEAD_REF || 'main'
+        execSync('git config --global user.name "github-actions[bot]"')
+        execSync('git config --global user.email "github-actions[bot]@users.noreply.github.com"')
+        execSync('git add .')
+        execSync('git commit -m "Fix locale linting errors"')
+        execSync(`git push origin HEAD:${branchName}`)
+        console.log('✅ \x1b[32mCommitted and pushed changes.\x1b[0m')
+    } catch (error) {
+        console.error('Failed to commit and push changes:', error.message)
+    }
 }
 
 checkLocaleKeys()
