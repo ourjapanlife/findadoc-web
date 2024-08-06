@@ -344,6 +344,19 @@ describe('Moderation Facility Submission Form', () => {
             cy.get('[data-testid="submission-form-doctor-search"]').should('exist')
         })
 
+        it('contains the following left nav buttons for navigation', () => {
+            cy.get('[data-testid="submission-form-leftnav-contactInformation"]').should('exist')
+                .should('contain', enUS.modPanelFacilitySubmissionLeftNavbar.contactInformation)
+            cy.get('[data-testid="submission-form-leftnav-addresses"]').should('exist')
+                .should('contain', enUS.modPanelFacilitySubmissionLeftNavbar.addresses)
+            cy.get('[data-testid="submission-form-leftnav-googleMapsInformation"]').should('exist')
+                .should('contain', enUS.modPanelFacilitySubmissionLeftNavbar.googleMapsInformation)
+            cy.get('[data-testid="submission-form-leftnav-healthcareProfessionalIds"]').should('exist')
+                .should('contain', enUS.modPanelFacilitySubmissionLeftNavbar.healthcareProfessionalIds)
+            cy.get('[data-testid="submission-form-leftnav-changeLog"]').should('exist')
+                .should('contain', enUS.modPanelFacilitySubmissionLeftNavbar.changeLog)
+        })
+
         it('should contain the following select field', () => {
             cy.get('[data-testid="submission-form-prefectureEn"]').should('exist')
             cy.get('[data-testid="submission-form-prefectureJp"]').should('exist')

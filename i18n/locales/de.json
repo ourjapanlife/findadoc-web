@@ -125,6 +125,14 @@
     "rejected": "Abgelehnt",
     "submissions": "Submissions"
   },
+    "modPanelFacilitySubmissionLeftNavbar": {
+        "addresses": "Addresses",
+        "changeLog": "Change log",
+        "contactInformation": "Contact Information",
+        "facilityNameUnknown": "Facility Name Unknown",
+        "googleMapsInformation": "Google maps information",
+        "healthcareProfessionalIds": "Healthcare Professional IDs"
+    },
   "modEditSubmissionTopNav": {
     "saveAndExit": "Sichern & Beenden",
     "approve": "Genehmigen",
