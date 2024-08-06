@@ -125,14 +125,14 @@
     "rejected": "Abgelehnt",
     "submissions": "Submissions"
   },
-    "modPanelFacilitySubmissionLeftNavbar": {
-        "addresses": "Addresses",
-        "changeLog": "Change log",
-        "contactInformation": "Contact Information",
-        "facilityNameUnknown": "Facility Name Unknown",
-        "googleMapsInformation": "Google maps information",
-        "healthcareProfessionalIds": "Healthcare Professional IDs"
-    },
+  "modPanelFacilitySubmissionLeftNavbar": {
+    "addresses": "Addresses",
+    "changeLog": "Change log",
+    "contactInformation": "Contact Information",
+    "facilityNameUnknown": "Facility Name Unknown",
+    "googleMapsInformation": "Google maps information",
+    "healthcareProfessionalIds": "Healthcare Professional IDs"
+  },
   "modEditSubmissionTopNav": {
     "saveAndExit": "Sichern & Beenden",
     "approve": "Genehmigen",
@@ -205,5 +205,8 @@
     "placeholderTextFacilityPhoneNumber": "z.B. 08xxxxxxxxx",
     "placeholderTextFacilityPostalCode": "z.B. 186-0000",
     "placeholderTextFacilityWebsite": "z.B. http://www.beispiel.com/"
+  },
+  "testForBranhc": {
+    "hi": "Betcha can't find me!"
   }
 }
