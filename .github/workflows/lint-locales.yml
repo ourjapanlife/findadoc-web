@@ -49,17 +49,19 @@ jobs:
             const formattedKeys = missingKeys.map(key => `- ${key}`).join('\n');
           
             // Construct the URL for the workflow dispatch
-            const repo = '${{ github.repository }}';
-            const branch = '${{ github.ref }}'.replace('refs/heads/', '');
-            const workflowUrl = `https://api.github.com/repos/${repo}/actions/workflows/trigger-fix-locales.yml/dispatches`;
+            const repo = process.env.GITHUB_REPOSITORY;
+            const workflowId = 'trigger-fix-locales.yml';
           
-            // Create the comment body with the workflow dispatch URL
-            const commentBody = `### Missing Locale Keys Found:\n${formattedKeys}\n\n[![Fix Missing Keys](https://img.shields.io/badge/-Fix%20Missing%20Keys-blue?style=for-the-badge&logo=github)](${workflowUrl}?ref=${branch})`;
+            // Construct the button URL for the workflow dispatch
+            const buttonUrl = `https://github.com/${repo}/actions/workflows/${workflowId}/dispatches`;
+
+            // Create the comment body with the workflow dispatch button
+            const commentBody = `### Missing Locale Keys Found:\n${formattedKeys}\n\n[![Fix Missing Keys](https://img.shields.io/badge/-Fix%20Missing%20Keys-blue?style=for-the-badge&logo=github)](${buttonUrl})`;
           
             // Create the comment on the issue
             github.rest.issues.createComment({
-            issue_number: context.issue.number,
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            body: commentBody
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: commentBody
             });
