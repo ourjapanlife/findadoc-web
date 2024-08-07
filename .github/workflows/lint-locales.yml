@@ -11,26 +11,27 @@ on:
 permissions:
   contents: read
   pull-requests: write
+  actions: write  # Ensure actions permissions are set to write
 
 jobs:
   locale-lint:
     name: Linting Locales 😎
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [21.3.0]
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
       - name: Install Node.js and Yarn
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
-          cache: "yarn"
+          node-version: '21.3.0'
+          cache: 'yarn'
+
       - name: Install Dependencies
         run: yarn install --immutable
+
       - name: Run Locales Lint
         id: lint
         run: |
@@ -39,34 +40,40 @@ jobs:
             cat missing_keys.txt
             exit 1
           fi
+
       - name: Create Comment with Fix Button
         if: failure()
         uses: actions/github-script@v6
         with:
-            script: |
-              const fs = require('fs');
-              const missingKeys = fs.readFileSync('missing_keys.txt', 'utf8').trim().split('\n');
-              const formattedKeys = missingKeys.map(key => `- ${key}`).join('\n');
-            
-              // Construct the URL for the workflow dispatch API
-              const repo = process.env.GITHUB_REPOSITORY;
-              const workflowId = 'fix-locales-keys.yml';
-              const ref = process.env.GITHUB_REF_NAME || 'main';
-              const token = process.env.GITHUB_TOKEN;
-  
-              // Create the curl command
-              const curlCommand = `curl -X POST -H "Accept: application/vnd.github+json" \\ -H "Authorization: Bearer ${token}" https://api.github.com/repos/${repo}/actions/workflows/${workflowId}/dispatches \\ -d '{"ref":"${ref}"}'`;
-  
-              // Create a link with a badge style and instructions
-              const fixButtonMarkdown = `[![Fix Missing Keys](https://img.shields.io/badge/-Fix%20Missing%20Keys-blue?style=for-the-badge&logo=github)]`;
-              const commentBody = `### Missing Locale Keys Found:\n${formattedKeys}\n\n${fixButtonMarkdown}(Instructions below)\n\nTo fix the missing keys, run the following command in your terminal:\n\n\`\`\`bash\n${curlCommand}\n\`\`\``;
-            
-              // Post the comment on the pull request
-              github.rest.issues.createComment({
-                issue_number: context.issue.number,
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                body: commentBody
-              });
-  
-  
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const fs = require('fs');
+
+            // Read missing keys from the file
+            const missingKeysContent = fs.readFileSync('missing_keys.txt', 'utf8').trim();
+            const missingKeys = missingKeysContent ? missingKeysContent.split('\n') : [];
+
+            if (missingKeys.length === 0) {
+              console.log('No missing keys found.');
+              return;
+            }
+
+            const formattedKeys = missingKeys.map(key => `- ${key}`).join('\n');
+
+            const repo = context.repo.repo;
+            const owner = context.repo.owner;
+            const workflowId = 'fix-locales-keys.yml'; // Adjust to match your target workflow file name
+            const eventType = 'button_clicked'; // Custom event type
+            const ref = process.env.GITHUB_REF_NAME || 'main';
+
+            // Generate the link to trigger the repository_dispatch event
+            const fixButtonMarkdown = `[![Fix Missing Keys](https://img.shields.io/badge/-Fix%20Missing%20Keys-blue?style=for-the-badge&logo=github)](https://github.com/${owner}/${repo}/actions/workflows/${workflowId}/dispatches?ref=${ref}&event_type=${eventType})`;
+
+            const commentBody = `### Missing Locale Keys Found: ${formattedKeys}\n\n${fixButtonMarkdown}\n\nTo fix the missing keys, click the button above or run the following command in your terminal:\n\`\`\`bash\nyarn lint:locales\n\`\`\``;
+
+            await github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner,
+              repo,
+              body: commentBody
+            });
