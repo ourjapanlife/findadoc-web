@@ -243,11 +243,16 @@
 </template>
 
 <script lang="ts" setup>
-import { type Ref, ref } from 'vue'
+import { type Ref, ref, watch } from 'vue'
+import { useRouter } from 'vue-router'
+import { gql } from 'graphql-request'
+import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql.js'
 import { useModerationSubmissionsStore } from '~/stores/moderationSubmissionsStore'
-import type { Submission } from '~/typedefs/gqlTypes'
+import type { Submission, MutationUpdateSubmissionArgs } from '~/typedefs/gqlTypes'
 import { validateAddressLineEn, validateAddressLineJp, validateNameEn, validateNameJp, validatePhoneNumber, validateCityEn, validateEmail, validateFloat, validatePostalCode, validateWebsite, validateCityJp } from '~/utils/formValidations'
 import { ModSubmissionLeftNavbarSectionIDs } from '~/stores/moderationScreenStore'
+
+const router = useRouter()
 
 // contactFields
 const nameEn: Ref<string> = ref('')
@@ -269,16 +274,16 @@ const addressLine2Jp: Ref<string> = ref('')
 const googlemapsURL: Ref<string> = ref('')
 const mapLatitude: Ref<string> = ref('')
 const mapLongitude: Ref<string> = ref('')
+
 const listPrefectureJapanEn: Ref<string[]> = ref(['Hokkaido', 'Aomori', 'Iwate', 'Miyagi', 'Akita', 'Yamagata', 'Fukushima', 'Ibaraki', 'Tochigi', 'Gumma', 'Saitama', 'Chiba', 'Tokyo', 'Kanagawa', 'Niigata', 'Toyama', 'Ishikawa', 'Fukui', 'Yamanashi', 'Nagano', 'Gifu', 'Shizuoka', 'Aichi', 'Mie', 'Shiga', 'Kyoto', 'Osaka', 'Hyogo', 'Nara', 'Wakayama', 'Tottori', 'Shimane', 'Okayama', 'Hiroshima', 'Yamaguchi', 'Tokushima', 'Kagawa', 'Ehime', 'Kochi', 'Fukuoka', 'Saga', 'Nagasaki', 'Kumamoto', 'Oita', 'Miyazaki', 'Kagoshima', 'Okinawa'])
 const listPrefectureJapanJp: Ref<string[]> = ref(['北海道', '青森県', '岩手県', '宮城県', '秋田県', '山形県', '福島県', '茨城県', '栃木県', '群馬県', '埼玉県', '千葉県', '東京都', '神奈川県', '新潟県', '富山県', '石川県', '福井県', '山梨県', '長野県', '岐阜県', '静岡県', '愛知県', '三重県', '滋賀県', '京都府', '大阪府', '兵庫県', '奈良県', '和歌山県', '鳥取県', '島根県', '岡山県', '広島県', '山口県', '徳島県', '香川県', '愛媛県', '高知県', '福岡県', '佐賀県', '長崎県', '熊本県', '大分県', '宮崎県', '鹿児島県', '沖縄県'])
 
 const moderationSubmissionStore = useModerationSubmissionsStore()
 
 const formSubmissionId = moderationSubmissionStore.selectedSubmissionId
+
 moderationSubmissionStore.filterSelectedSubmission(formSubmissionId)
-
 const formSubmissionData = moderationSubmissionStore.selectedSubmissionData
-
 autofillEditSubmissionForm(formSubmissionData)
 
 const validateFields = () => {
@@ -344,7 +349,7 @@ function autofillEditSubmissionForm(submissionData: Submission | undefined) {
     }
 }
 
-function submitForm(e: Event) {
+async function submitForm(e: Event) {
     // stop the form submitting before we validate
     e.preventDefault()
 
@@ -353,7 +358,99 @@ function submitForm(e: Event) {
         return
     }
 
-    //submitthedatahere(googlemapsURL, mapLatitude, mapLongitude)
-    console.log('Form submitted!!! woohoo')
+    const id = formSubmissionId || ''
+
+    if (!id) {
+        console.error('Facility ID is required for updating the facility')
+        return
+    }
+
+    const submissionInputVariables: MutationUpdateSubmissionArgs = {
+        id,
+        input: {
+            isUnderReview: true,
+            facility: {
+                nameEn: nameEn.value || '',
+                nameJa: nameJp.value || '',
+                contact: {
+                    googleMapsUrl: googlemapsURL.value || '',
+                    email: email.value || '',
+                    phone: phone.value || '',
+                    website: website.value || '',
+                    address: {
+                        postalCode: postalCode.value || '',
+                        prefectureEn: prefectureEn.value || '',
+                        cityEn: cityEn.value || '',
+                        addressLine1En: addressLine1En.value || '',
+                        addressLine2En: addressLine2En.value || '',
+                        prefectureJa: prefectureJp.value || '',
+                        cityJa: cityJp.value || '',
+                        addressLine1Ja: addressLine1Jp.value || '',
+                        addressLine2Ja: addressLine2Jp.value || ''
+                    }
+                },
+                healthcareProfessionalIds: [],
+                mapLatitude: parseFloat(mapLatitude.value) || 0,
+                mapLongitude: parseFloat(mapLongitude.value) || 0
+            }
+        }
+    }
+
+    try {
+        await graphQLClientRequestWithRetry(
+            gqlClient.request.bind(gqlClient),
+            updateFacilitySubmissionGqlMutation,
+            submissionInputVariables
+        )
+        router.push('/moderation')
+    } catch (error) {
+        console.error('Failed to update submission:', error)
+        moderationSubmissionStore.setDidMutationFail(true)
+    }
 }
+
+const syntheticEvent = new Event('submit', { bubbles: true, cancelable: true })
+
+watch(moderationSubmissionStore, newValue => {
+    if (newValue.updatingMutationFromTopBar) {
+        submitForm(syntheticEvent)
+    }
+})
+
+watch(moderationSubmissionStore, newValue => {
+    moderationSubmissionStore.filterSelectedSubmission(newValue.selectedSubmissionId)
+    autofillEditSubmissionForm(newValue.selectedSubmissionData)
+})
+
+const updateFacilitySubmissionGqlMutation = gql`
+mutation Mutation($updateSubmissionId: ID!, $input: UpdateSubmissionInput!) {
+  updateSubmission(id: $updateSubmissionId, input: $input) {
+    isUnderReview
+    facility {
+      id
+      nameEn
+      nameJa
+      contact {
+        googleMapsUrl
+        email
+        phone
+        website
+        address {
+          postalCode
+          prefectureEn
+          cityEn
+          addressLine1En
+          addressLine2En
+          prefectureJa
+          cityJa
+          addressLine1Ja
+          addressLine2Ja
+        }
+      }
+      healthcareProfessionalIds
+      mapLatitude
+      mapLongitude
+    }
+  }
+}`
 </script>
