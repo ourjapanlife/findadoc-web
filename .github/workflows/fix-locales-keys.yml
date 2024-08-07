@@ -1,0 +1,32 @@
+name: Fix Locales
+
+on:
+    workflow_dispatch: {}
+    push:
+
+permissions:
+  contents: write
+
+jobs:
+  fix-locales:
+    name: Fix Missing Locale Keys
+    runs-on: ubuntu-latest
+    strategy:
+        matrix:
+          node-version: [21.3.0]
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Install Yarn/ Node ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "yarn"
+      - name: Install Dependencies
+        run: yarn install --immutable
+
+      - name: Fix Missing Locale Keys
+        run: |
+          NODE_ENV=key-update node i18n/checkLocaleKeys.js

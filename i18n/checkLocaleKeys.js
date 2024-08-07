@@ -22,19 +22,25 @@ const checkLocaleKeys = () => {
 
     const referenceKeys = extractAllKeys(enFileContent)
 
-    //check if in CI/CD and auto update and push
+    let missingKeysSummary = []
+
+    // Check if in CI/CD and auto update and push
     if (process.env.NODE_ENV === 'production') {
-        const missingKeysSummary = runCICDChecksForLocaleFiles(localeFilesWithoutEnFileName, referenceKeys)
+        missingKeysSummary = runCICDChecksForLocaleFiles(localeFilesWithoutEnFileName, referenceKeys)
+        writeErrorMessageForMissingKeysToDeveloper(missingKeysSummary)
+    }
+
+    if (process.env.NODE_ENV === 'key-update') {
+        missingKeysSummary = runCICDChecksForLocaleFiles(localeFilesWithoutEnFileName, referenceKeys)
         if (missingKeysSummary.length) {
             findAndInsertMissingKeysAndValuesInNonEnFiles(
                 localeFilesWithoutEnFileName, enFileContent, referenceKeys, insertMissingKeysAndValues
             )
             // Commit and push changes if any files were updated
             commitAndPushChangesForLocaleFiles()
-            return
         }
     }
-    //insert in development
+    // Insert in development
     findAndInsertMissingKeysAndValuesInNonEnFiles(
         localeFilesWithoutEnFileName, enFileContent, referenceKeys, insertMissingKeysAndValues
     )
@@ -80,14 +86,12 @@ const insertMissingKeysAndValues = (targetObject, keyPath, value) => {
 }
 
 /**
-The following function is used to combine the previous functions to insert keys value pairs from the English file if they are not
-currently present in the other translation files. This will set the other files to have English translations unless the translations
-are later updated into their native language by a contributor.
-* @param {Array} localeFilesWithoutEnFileName - All the files that are not the english file
-* @param {Record<string>} enFileContent - The content from the en.json file
-* @param {string[]} referenceKeys - keys in the en.json file
-* @param {() => void} insertMissingKeysAndValues  - function to insert a key-value pair into a nested object
-*/
+ * Finds and inserts missing keys and values from the English file into other translation files.
+ * @param {Array} localeFilesWithoutEnFileName - All the files that are not the English file
+ * @param {Record<string>} enFileContent - The content from the en.json file
+ * @param {string[]} referenceKeys - Keys in the en.json file
+ * @param {Function} insertMissingKeysAndValues - Function to insert a key-value pair into a nested object
+ */
 const findAndInsertMissingKeysAndValuesInNonEnFiles
 = (localeFilesWithoutEnFileName, enFileContent, referenceKeys, insertMissingKeysAndValues) => {
     localeFilesWithoutEnFileName.forEach(file => {
@@ -102,7 +106,7 @@ const findAndInsertMissingKeysAndValuesInNonEnFiles
             if (!existingKeys.has(key)) {
                 const value = key.split('.').reduce((obj, part) => obj?.[part], enFileContent)
                 if (value !== undefined) {
-                    insertMissingKeysAndValues (jsonContent, key, value)
+                    insertMissingKeysAndValues(jsonContent, key, value)
                     missingKeys.push(key)
                     fileUpdated = true
                 }
@@ -118,7 +122,7 @@ const findAndInsertMissingKeysAndValuesInNonEnFiles
     })
 }
 
-//To run in CI/CD just to report the keys
+// To run in CI/CD just to report the keys
 const findAndReportMissingKeysInNonEnFiles = (localeFilesWithoutEnFileName, referenceKeys) => {
     const missingKeysSummary = []
 
@@ -158,6 +162,14 @@ const runCICDChecksForLocaleFiles = (localeFilesWithoutEnFileName, referenceKeys
     }
 
     return []
+}
+
+const writeErrorMessageForMissingKeysToDeveloper = missingKeysSummary => {
+    if (missingKeysSummary.length) {
+        fs.writeFileSync('missing_keys.txt', missingKeysSummary.map(({ file, keys }) => `${file}:\n${keys.join('\n')}`).join('\n\n'))
+        console.error('❌ \x1b[31mLocale linting failed due to missing keys.\x1b[0m')
+        process.exit(1)
+    }
 }
 
 // Function to commit and push changes

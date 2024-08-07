@@ -1,17 +1,16 @@
-name: Lint-Locales
+name: Lint Locales
 
 on:
   push:
     branches: [ "main" ]
   pull_request:
-    # The branches below must be a subset of the branches above
     branches: [ "main" ]
   schedule:
     - cron: '45 15 * * 4'
+
 permissions:
-  contents: write
-  security-events: write
-  actions: write  # This is needed for pull requests to delete
+  contents: read
+  pull-requests: write
 
 jobs:
   locale-lint:
@@ -25,7 +24,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Install Yarn/ Node ${{ matrix.node-version }}
+      - name: Install Node.js and Yarn
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
@@ -33,4 +32,25 @@ jobs:
       - name: Install Dependencies
         run: yarn install --immutable
       - name: Run Locales Lint
-        run: NODE_ENV=production yarn lint:locales
+        id: lint
+        run: |
+          NODE_ENV=production node i18n/checkLocaleKeys.js --report-only > missing_keys.txt
+          if [ -s missing_keys.txt ]; then
+            cat missing_keys.txt
+            exit 1
+          fi
+      - name: Create Comment with Fix Button
+        if: failure()
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const fs = require('fs')
+            const missingKeys = fs.readFileSync('missing_keys.txt', 'utf8').trim().split('\n')
+            const formattedKeys = missingKeys.map(key => `- ${key}`).join('\n')
+            const commentBody = `### Missing Locale Keys Found:\n${formattedKeys}\n\n[![Fix Missing Keys](https://img.shields.io/badge/-Fix%20Missing%20Keys-blue?style=for-the-badge&logo=github)](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}/fix-locales-keys)`
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: commentBody
+            })
