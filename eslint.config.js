@@ -94,7 +94,7 @@ export default withNuxt(
             'vue/html-indent': ['error', 4]
         }
     },
-    // Linting for tests
+    // Linting for tests (cypress + pinia)
     {
         languageOptions: {
             globals: {
@@ -109,19 +109,20 @@ export default withNuxt(
         files: ['cypress/e2e/*.ts', 'test/**/*'],
         plugins: {
             cypress: pluginCypress
-        }
-        // rules: {
-        //     "cypress/no-assigning-return-values": "error",
+        },
+        rules: {
+            //this is to support chai chaining syntax
+            '@typescript-eslint/no-unused-expressions': 'off'
+        //     'cypress/no-assigning-return-values": "error",
         //     "cypress/no-unnecessary-waiting": "error",
         //     "cypress/assertion-before-screenshot": "warn",
         //     "cypress/no-force": "warn",
         //     "cypress/no-async-tests": "error",
         //     "cypress/no-async-before": "error",
         //     "cypress/no-pause": "error"
-        // }
+        }
     }
 )
-
     .override('nuxt/stylistic', {
         ignores: ['./i18n/index.ts'],
         rules: {

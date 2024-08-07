@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { type Specialty } from '~/typedefs/gqlTypes.js'
+import type { Specialty } from '~/typedefs/gqlTypes.js'
 
 export const useSpecialtiesStore = defineStore('specialtiesStore', () => ({ specialtyDisplayOptions }))
 
