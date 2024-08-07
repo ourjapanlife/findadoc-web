@@ -1,8 +1,8 @@
 name: Fix Locales
 
 on:
-    workflow_dispatch: {}
-    push:
+  workflow_dispatch: {}
+  push:
 
 permissions:
   contents: write
@@ -12,21 +12,34 @@ jobs:
     name: Fix Missing Locale Keys
     runs-on: ubuntu-latest
     strategy:
-        matrix:
-          node-version: [21.3.0]
+      matrix:
+        node-version: [21.3.0]
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
       - name: Install Yarn/ Node ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
           cache: "yarn"
+
       - name: Install Dependencies
         run: yarn install --immutable
 
-      - name: Fix Missing Locale Keys
+      - name: Get Current Branch
+        id: get-branch
+        run: echo "CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)" >> $GITHUB_ENV
+
+      - name: Fix Missing Locale Keys Commit and Push Changes
         run: |
-          NODE_ENV=key-update node i18n/checkLocaleKeys.js
+          node i18n/checkLocaleKeys.js
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "Fix missing locale keys" || echo "No changes to commit"
+          git push origin ${{ env.CURRENT_BRANCH }}
+        env:
+          CURRENT_BRANCH: ${{ steps.get-branch.outputs.branch }}
