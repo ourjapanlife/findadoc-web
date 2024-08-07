@@ -1,0 +1,27 @@
+name: Trigger Fix Locales
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch to update'
+        required: true
+        default: 'main'
+        type: string
+  push:
+
+jobs:
+  trigger:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Fix Locales Workflow
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const { data } = await github.rest.actions.createWorkflowDispatch({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: 'fix-locales-keys.yml',
+              ref: '${{ github.event.inputs.branch }}'
+            });
+            console.log('Workflow triggered:', data);
