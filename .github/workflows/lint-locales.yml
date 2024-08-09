@@ -39,34 +39,33 @@ jobs:
             cat missing_keys.txt
             exit 1
           fi
-          - name: Create Comment with Fix Button
-          if: failure()
-          uses: actions/github-script@v6
-          with:
-            script: |
-              const fs = require('fs');
-              const missingKeys = fs.readFileSync('missing_keys.txt', 'utf8').trim().split('\n');
-              const formattedKeys = missingKeys.map(key => `- ${key}`).join('\n');
-        
-              // Construct the URL for the workflow dispatch API
-              const repo = process.env.GITHUB_REPOSITORY;
-              const workflowId = 'fix-locales-keys.yml';
-              const ref = process.env.GITHUB_REF_NAME || 'main';
-              const token = process.env.PAT_TOKEN;
-        
-              // Create the curl command
-              const curlCommand = `curl -X POST -H "Accept: application/vnd.github+json" \\\n-H "Authorization: Bearer ${token}" \\\nhttps://api.github.com/repos/${repo}/actions/workflows/${workflowId}/dispatches \\\n-d '{"ref":"${ref}"}'`;
-        
-              // Generate a GitHub Action link using the curl command
-              const fixButtonMarkdown = `[![Fix Missing Keys](https://img.shields.io/badge/-Fix%20Missing%20Keys-blue?style=for-the-badge&logo=github)](https://api.github.com/repos/${repo}/actions/workflows/${workflowId}/dispatches')`;
-        
-              const commentBody = `### Missing Locale Keys Found:\n${formattedKeys}\n\n${fixButtonMarkdown}(Instructions below)\n\nTo fix the missing keys, click the button above or run the following command in your terminal:\n\n\`\`\`bash\n${yarn lint:locales}\n\`\`\``;
-        
-              // Post the comment on the pull request
-              github.rest.issues.createComment({
-                issue_number: context.issue.number,
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                body: commentBody
-              });
-        
+      - name: Create Comment with Fix Button
+        if: failure()
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const fs = require('fs');
+            const missingKeys = fs.readFileSync('missing_keys.txt', 'utf8').trim().split('\n');
+            const formattedKeys = missingKeys.map(key => `- ${key}`).join('\n');
+      
+            // Construct the URL for the workflow dispatch API
+            const repo = process.env.GITHUB_REPOSITORY;
+            const workflowId = 'fix-locales-keys.yml';
+            const ref = process.env.GITHUB_REF_NAME || 'main';
+      
+            // Create the curl command
+            const curlCommand = `curl -X POST -H "Accept: application/vnd.github+json" \\\n-H "Authorization: Bearer ${token}" \\\nhttps://api.github.com/repos/${repo}/actions/workflows/{workflowId}/dispatches \\\n-d '{"ref":"${ref}"}'`;
+      
+            // Generate a GitHub Action link using the curl command
+            const fixButtonMarkdown = `[![Fix Missing Keys](https://img.shields.io/badge/-Fix%20Missing%20Keys-blue?style=for-the-badge&logo=github)](https://api.github.com/repos/${repo}actions/workflows/${workflowId}/dispatches')`;
+      
+            const commentBody = `### Missing Locale Keys Found:\n${formattedKeys}\n\n${fixButtonMarkdown}(Instructions below)\n\nTo fix the missing keys, click the button above or run thefollowing command in your terminal:\n\n\`\`\`bash\n${yarn lint:locales}\n\`\`\``;
+      
+            // Post the comment on the pull request
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: commentBody
+            });
+      
