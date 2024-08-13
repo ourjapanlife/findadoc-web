@@ -3,7 +3,6 @@ name: Fix Locales
 on:
   repository_dispatch:
     types: [button_clicked]
-  push:
 
 permissions:
   contents: write
