@@ -3,6 +3,7 @@ import ja from './locales/ja.json'
 import pt from './locales/pt.json'
 import ru from './locales/ru.json'
 import de from './locales/de.json'
+import cn from './locales/cn.json'
 
 const i18n = {
     //eslint-disable-next-line
@@ -14,7 +15,9 @@ const i18n = {
     //eslint-disable-next-line
     ru_RU: ru,
     //eslint-disable-next-line
-    de_DE: de
+    de_DE: de,
+    //eslint-disable-next-line
+    zh_CN: cn
 }
 
 export default i18n
