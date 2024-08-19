@@ -80,6 +80,8 @@ Have a look at the [CONTRIBUTING](/CONTRIBUTING.md) and [CODE_OF_CONDUCT](/CODE_
     - These provide automatic linting error visibility instead of having to run `yarn lint` every time
 -
 
+## Running development (not for moderation panel) 
+
 ```bash
 # install dependencies
 $ yarn
@@ -91,16 +93,44 @@ $ yarn prepare
 $ yarn dev
 ```
 
-## Testing a production build
+## Running development (moderation panel with our local db) 
+ - You need to clone and setup the backend following its [README](https://github.com/ourjapanlife/findadoc-server).
 
+ Then for the backend run:
+
+```bash
+# install dependencies
+$ npm install
+
+# start the local db
+$ npm run dev:startlocaldb
+
+# For Development, start a dev server backend
+$ yarn dev
 ```
-# Generate the production bundle
+
+Once this is up and running you can start the frontend server with:
+
+```bash
+#Starting the local server connected to local database
+yarn dev:localserver
+```
+
+To login you will want to go to `/login` and use the following username and password.
+
+- Username = ```findadoctest@proton.me```
+- Password = ```vCnL5J8agHg6m2f```
+
+Now you can go to `/moderation` and see any changes to moderation components you may be working on with fake data.
+
+# Testing a production build
+
+## Generate the production bundle
 $ yarn prod:build
 
-# Launch production server
+## Launch production server
 $ yarn prod:start
 ```
-
 # End to End Testing
 
 We use [Cypress.io](https://www.cypress.io/) for E2E testing. While the server is running on port 3000, you can run the GUI with:
