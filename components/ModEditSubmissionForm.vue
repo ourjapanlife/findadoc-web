@@ -709,8 +709,8 @@ onMounted(() => {
 })
 
 const updateFacilitySubmissionGqlMutation = gql`
-mutation Mutation($updateSubmissionId: ID!, $input: UpdateSubmissionInput!) {
-  updateSubmission(id: $updateSubmissionId, input: $input) {
+mutation Mutation($id: ID!, $input: UpdateSubmissionInput!) {
+  updateSubmission(id: $id, input: $input) {
     isUnderReview
     facility {
       id
