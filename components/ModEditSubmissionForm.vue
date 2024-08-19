@@ -662,10 +662,14 @@ async function submitForm(e: Event) {
             updateFacilitySubmissionGqlMutation,
             submissionInputVariables
         )
-        router.push('/moderation')
+        if (moderationSubmissionStore.updatingMutationFromTopBar) {
+            moderationSubmissionStore.setUpdatingMutationFromTopBar(false)
+            router.push('/moderation')
+        }
     } catch (error) {
         console.error('Failed to update submission:', error)
         moderationSubmissionStore.setDidMutationFail(true)
+        moderationSubmissionStore.setUpdatingMutationFromTopBar(false)
     }
 }
 

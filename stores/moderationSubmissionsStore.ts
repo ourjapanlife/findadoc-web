@@ -33,7 +33,7 @@ export const useModerationSubmissionsStore = defineStore(
         const selectedSubmissionData: Ref<Submission | undefined> = ref()
         const filteredSubmissionDataForListComponent: Ref<Submission[]> = ref([])
         const didMutationFail: Ref<boolean> = ref(false)
-        const updatingMutationFromTopBar = ref(false)
+        const updatingMutationFromTopBar: Ref<boolean> = ref(false)
 
         function setUpdatingMutationFromTopBar(newValue: boolean) {
             updatingMutationFromTopBar.value = newValue
