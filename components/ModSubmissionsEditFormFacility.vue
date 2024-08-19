@@ -7,6 +7,11 @@
             :id="ModSubmissionLeftNavbarSectionIDs.ContactInformation"
             class="facility-form-section"
         >
+            <h1
+                class="mb-3.5 text-start text-primary-text text-3xl font-bold font-sans leading-normal"
+            >
+                {{ $t('modSubmissionForm.facilityHeading') }}
+            </h1>
             <span
                 class="mb-3.5 text-center text-primary-text text-2xl font-bold font-sans leading-normal"
             >
@@ -232,13 +237,130 @@
             class="facility-form-section"
             data-testid="submission-form-doctor-search"
         />
-        <button
-            type="submit"
-            class="bg-currentColor text-white font-bold py-2 px-4 rounded"
-            @click="submitForm"
+        <h1
+            class="mb-3.5 text-start text-primary-text text-3xl font-bold font-sans leading-normal"
         >
-            submit
-        </button>
+            {{ $t('modSubmissionForm.healthcareProfessionalHeading') }}
+        </h1>
+        <h1
+            class="mb-3.5 text-start text-primary-text text-2xl font-bold font-sans leading-normal"
+        >
+            {{ $t('modSubmissionForm.healthcareProfessionalNameHeading') }}
+        </h1>
+        <div class="flex flex-col my-4">
+            <ModInputField
+                v-model="localizedLastName"
+                data-testid="submission-form-lastName"
+                :label="$t('modSubmissionForm.labelHealthcareProfessionalLastName')"
+                type="text"
+                :placeholder="$t('modSubmissionForm.placeholderTextHealthcareProfessionalLastName')"
+                :required="true"
+                :input-validation-check="validateUserSubmittedLastName"
+                :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageHealthcareProfessionalLastName')"
+            />
+            <ModInputField
+                v-model="localizedFirstName"
+                data-testid="submission-form-FirstName"
+                :label="$t('modSubmissionForm.labelHealthcareProfessionalFirstName')"
+                type="text"
+                :placeholder="$t('modSubmissionForm.placeholderTextHealthcareProfessionalFirstName')"
+                :required="true"
+                :input-validation-check="validateUserSubmittedFirstName"
+                :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageHealthcareProfessionalFirstName')"
+            />
+            <ModInputField
+                v-model="localizedMiddleName"
+                data-testid="submission-form-middleName"
+                :label="$t('modSubmissionForm.labelHealthcareProfessionalMiddleName')"
+                type="text"
+                :placeholder="$t('modSubmissionForm.placeholderTextHealthcareProfessionalMiddleName')"
+                :required="false"
+            />
+            <label
+                for="Name Locales"
+                class="my-2 text-primary-text text-sm font-bold font-sans"
+            >
+                {{ $t('modSubmissionForm.labelHealthcareProfessionalNameLocale') }}
+            </label>
+            <select
+                v-model="nameLocale"
+                data-testid="submission-form-locale"
+                name="Name Locales"
+                class="mb-5 px-3 py-3.5 w-96 h-12 bg-secondary-bg rounded-lg border border-primary-text-muted
+                        text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
+            >
+                <option
+                    v-for="(locale, index) in Locale"
+                    :key="`${locale}-${index}`"
+                >
+                    {{ locale }}
+                </option>
+            </select>
+            <button
+                type="button"
+                class="bg-tertiary text-white font-bold py-2 px-4 my-2 rounded w-56"
+                @click="handleLocalizedNameToSubmission"
+            >
+                {{ $t('modSubmissionForm.addHealthCareProfessionalLocaleName') }}
+            </button>
+            <span
+                class="mb-3.5 text-start text-primary-text text-3xl font-bold font-sans leading-normal"
+            >
+                {{ $t("modSubmissionForm.clickToRemoveHealthCareProfessionalName") }}
+            </span>
+            <div
+                v-show="healthCareProfessionalNameArray.length"
+                :class="`grid grid-cols-4 p-2`"
+            >
+                <div class="font-bold text-left p-1">
+                    {{ $t("modSubmissionForm.labelHealthcareProfessionalLastName") }}
+                </div>
+                <div class="font-bold text-left p-1">
+                    {{ $t("modSubmissionForm.labelHealthcareProfessionalFirstName") }}
+                </div>
+                <div class="font-bold text-left p-1">
+                    {{ $t("modSubmissionForm.labelHealthcareProfessionalMiddleName") }}
+                </div>
+                <div class="font-bold text-left p-1">
+                    {{ $t("modSubmissionForm.labelHealthcareProfessionalNameLocale") }}
+                </div>
+                <div
+                    v-if="healthCareProfessionalNameArray.length"
+                    class="grid grid-cols-subgrid col-span-4"
+                >
+                    <div
+                        v-for="(healthcareProfessionalName, index) in healthCareProfessionalNameArray"
+                        :key="`${healthcareProfessionalName.firstName}-${index}`"
+                        class="grid grid-cols-subgrid col-span-4 bg-tertiary-bg"
+                    >
+                        <div
+                            :data-testid="`mod-submission-list-item-${index + 1}`"
+                            class="grid grid-cols-subgrid col-span-4 bg-tertiary-bg cursor-pointer hover:bg-primary"
+                        >
+                            <span class="text-start">{{ healthcareProfessionalName.lastName }}</span>
+                            <span class="text-start">{{ healthcareProfessionalName.firstName }}</span>
+                            <span class="text-start">
+                                {{ healthcareProfessionalName.middleName }}
+                            </span>
+                            <span class="text-start">{{ healthcareProfessionalName.locale }}</span>
+                        </div>
+                    </div>
+                </div>
+                <p
+                    v-if="healthCareProfessionalNameArray.length"
+                    class="mb-3.5 text-start text- text-3xl font-bold font-sans leading-normal"
+                >
+                    {{ $t("modSubmissionForm.clickToRemoveHealthCareProfessionalName") }}
+                </p>
+            </div>
+            <button
+                type="submit"
+                class="bg-currentColor text-white font-bold py-2 px-4 my-2 rounded w-56"
+                @click="submitForm"
+            >
+                {{ $t('modSubmissionForm.submitButtonText') }}
+            </button>
+        </div>
     </form>
 </template>
 
@@ -248,8 +370,8 @@ import { useRouter } from 'vue-router'
 import { gql } from 'graphql-request'
 import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql.js'
 import { useModerationSubmissionsStore } from '~/stores/moderationSubmissionsStore'
-import type { Submission, MutationUpdateSubmissionArgs } from '~/typedefs/gqlTypes'
-import { validateAddressLineEn, validateAddressLineJp, validateNameEn, validateNameJp, validatePhoneNumber, validateCityEn, validateEmail, validateFloat, validatePostalCode, validateWebsite, validateCityJp } from '~/utils/formValidations'
+import { Locale, type Submission, type MutationUpdateSubmissionArgs, type LocalizedNameInput } from '~/typedefs/gqlTypes'
+import { validateAddressLineEn, validateAddressLineJp, validateNameEn, validateNameJp, validatePhoneNumber, validateCityEn, validateEmail, validateFloat, validatePostalCode, validateWebsite, validateCityJp, validateUserSubmittedFirstName, validateUserSubmittedLastName } from '~/utils/formValidations'
 import { ModSubmissionLeftNavbarSectionIDs } from '~/stores/moderationScreenStore'
 
 const router = useRouter()
@@ -274,6 +396,12 @@ const addressLine2Jp: Ref<string> = ref('')
 const googlemapsURL: Ref<string> = ref('')
 const mapLatitude: Ref<string> = ref('')
 const mapLongitude: Ref<string> = ref('')
+//healthcareProfessionalFields
+const healthCareProfessionalNameArray: Ref<Array<LocalizedNameInput>> = ref([])
+const localizedFirstName: Ref<string> = ref('')
+const localizedLastName: Ref<string> = ref('')
+const localizedMiddleName: Ref<string> = ref('')
+const nameLocale: Ref<Locale> = ref(Locale.EnUs)
 
 const listPrefectureJapanEn: Ref<string[]> = ref(['Hokkaido', 'Aomori', 'Iwate', 'Miyagi', 'Akita', 'Yamagata', 'Fukushima', 'Ibaraki', 'Tochigi', 'Gumma', 'Saitama', 'Chiba', 'Tokyo', 'Kanagawa', 'Niigata', 'Toyama', 'Ishikawa', 'Fukui', 'Yamanashi', 'Nagano', 'Gifu', 'Shizuoka', 'Aichi', 'Mie', 'Shiga', 'Kyoto', 'Osaka', 'Hyogo', 'Nara', 'Wakayama', 'Tottori', 'Shimane', 'Okayama', 'Hiroshima', 'Yamaguchi', 'Tokushima', 'Kagawa', 'Ehime', 'Kochi', 'Fukuoka', 'Saga', 'Nagasaki', 'Kumamoto', 'Oita', 'Miyazaki', 'Kagoshima', 'Okinawa'])
 const listPrefectureJapanJp: Ref<string[]> = ref(['北海道', '青森県', '岩手県', '宮城県', '秋田県', '山形県', '福島県', '茨城県', '栃木県', '群馬県', '埼玉県', '千葉県', '東京都', '神奈川県', '新潟県', '富山県', '石川県', '福井県', '山梨県', '長野県', '岐阜県', '静岡県', '愛知県', '三重県', '滋賀県', '京都府', '大阪府', '兵庫県', '奈良県', '和歌山県', '鳥取県', '島根県', '岡山県', '広島県', '山口県', '徳島県', '香川県', '愛媛県', '高知県', '福岡県', '佐賀県', '長崎県', '熊本県', '大分県', '宮崎県', '鹿児島県', '沖縄県'])
@@ -285,6 +413,23 @@ const formSubmissionId = moderationSubmissionStore.selectedSubmissionId
 moderationSubmissionStore.filterSelectedSubmission(formSubmissionId)
 const formSubmissionData = moderationSubmissionStore.selectedSubmissionData
 autofillEditSubmissionForm(formSubmissionData)
+
+const handleLocalizedNameToSubmission = () => {
+    const localizedNameToAdd: LocalizedNameInput = {
+        firstName: localizedFirstName.value,
+        lastName: localizedLastName.value,
+        locale: nameLocale.value || Locale.EnUs,
+        middleName: localizedMiddleName.value
+    }
+
+    if (localizedNameToAdd.firstName && localizedNameToAdd.lastName) {
+        healthCareProfessionalNameArray.value.push(localizedNameToAdd)
+        localizedFirstName.value = ''
+        localizedLastName.value = ''
+        localizedMiddleName.value = ''
+        nameLocale.value = Locale.EnUs
+    }
+}
 
 const validateFields = () => {
     const isNameEnValid: boolean = validateNameEn(nameEn.value)
