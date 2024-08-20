@@ -125,13 +125,15 @@
         "rejected": "Rejected",
         "submissions": "Submissions"
     },
-    "modPanelFacilitySubmissionLeftNavbar": {
+    "modPanelSubmissionLeftNavbar": {
         "addresses": "Addresses",
         "changeLog": "Change log",
         "contactInformation":"Contact Information",
         "facilityNameUnknown": "Facility Name Unknown",
         "googleMapsInformation": "Google maps information",
-        "healthcareProfessionalIds": "Healthcare Professional IDs"
+        "healthcareProfessionalIds": "Healthcare Professional IDs",
+        "healthcareProfessionalName": "Healthcare Professional Name",
+        "healthcareProfessionalMedicalInfo": "Healthcare Professional Medical Info"
     },
     "modEditSubmissionTopNav": {
         "saveAndExit": "Save & Exit",
@@ -221,7 +223,9 @@
         "placeholderTextFacilityPhoneNumber": "e.g. 08xxxxxxxxx",
         "placeholderTextFacilityPostalCode": "e.g. 186-0000",
         "placeholderTextFacilityWebsite": "e.g. http://www.example.com/",
-        "selectAnInsuranceDefault": "Accepted Insurances",
+        "selectInsurances": "Accepted Insurances",
+        "selectSpecialties": "Specialties",
+        "selectDegrees": "Degrees",
         "submitButtonText": "Submit"
     }
 }

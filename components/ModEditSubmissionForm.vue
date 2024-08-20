@@ -5,7 +5,7 @@
     >
         <div
             :id="ModSubmissionLeftNavbarSectionIDs.ContactInformation"
-            class="facility-form-section"
+            class="submission-form-section"
         >
             <h1
                 class="mb-3.5 text-start text-primary-text text-3xl font-bold font-sans leading-normal"
@@ -71,7 +71,7 @@
 
         <div
             :id="ModSubmissionLeftNavbarSectionIDs.Addresses"
-            class="facility-form-section"
+            class="submission-form-section"
         >
             <span class="mb-3.5 text-center text-primary-text text-2xl font-bold font-sans leading-normal">
                 {{ $t('modSubmissionForm.addresses') }}
@@ -196,7 +196,7 @@
 
         <div
             :id="ModSubmissionLeftNavbarSectionIDs.GoogleMapsInformation"
-            class="facility-form-section"
+            class="submission-form-section"
         >
             <span class="mb-3.5 text-center text-primary-text text-2xl font-bold font-sans leading-normal">
                 {{ $t('modSubmissionForm.googleMapsInformation') }}
@@ -234,7 +234,6 @@
             />
         </div>
         <ModHealthcareProfessionalSearchbar
-            class="facility-form-section"
             data-testid="submission-form-doctor-search"
         />
         <h1
@@ -243,7 +242,8 @@
             {{ $t('modSubmissionForm.healthcareProfessionalHeading') }}
         </h1>
         <h2
-            class="mb-3.5 text-start text-primary-text text-2xl font-bold font-sans leading-normal"
+            :id="ModSubmissionLeftNavbarSectionIDs.HealthcareProfessionalName"
+            class="submission-form-section mb-3.5 text-start text-primary-text text-2xl font-bold font-sans leading-normal"
         >
             {{ $t('modSubmissionForm.healthcareProfessionalNameHeading') }}
         </h2>
@@ -350,7 +350,8 @@
                 </div>
             </div>
             <h2
-                class="my-3.5 text-start text-primary-text text-2xl font-bold font-sans leading-normal"
+                :id="ModSubmissionLeftNavbarSectionIDs.HealthcareProfessionalMedicalInfo"
+                class="submission-form-section my-3.5 text-start text-primary-text text-2xl font-bold font-sans leading-normal"
             >
                 {{ $t('modSubmissionForm.healthcareProfessionalMedicalInfoHeading') }}
             </h2>
@@ -358,7 +359,7 @@
                 for="Accepted Insurances"
                 class="my-2 text-primary-text text-sm font-bold font-sans"
             >
-                {{ $t("modSubmissionForm.selectAnInsuranceDefault") }}
+                {{ $t("modSubmissionForm.selectInsurances") }}
             </label>
             <select
                 id="healthcare-professional-accepted-insurances"
@@ -375,6 +376,52 @@
                     :value="insuranceType"
                 >
                     {{ insuranceType }}
+                </option>
+            </select>
+            <label
+                for="Degrees"
+                class="my-2 text-primary-text text-sm font-bold font-sans"
+            >
+                {{ $t("modSubmissionForm.selectDegrees") }}
+            </label>
+            <select
+                id="healthcare-professional-degrees"
+                v-model="healthcareProfessionalDegrees"
+                data-testid="submission-form-degrees"
+                name="Degrees"
+                multiple
+                class="mb-5 px-3 py-3.5 w-96 h-32 bg-secondary-bg rounded-lg border border-primary-text-muted
+                        text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
+            >
+                <option
+                    v-for="(degree, index) in degreeOptions"
+                    :key="`${degree}-${index}`"
+                    :value="degree"
+                >
+                    {{ degree }}
+                </option>
+            </select>
+            <label
+                for="Specialties"
+                class="my-2 text-primary-text text-sm font-bold font-sans"
+            >
+                {{ $t("modSubmissionForm.selectSpecialties") }}
+            </label>
+            <select
+                id="healthcare-professional-specialties"
+                v-model="healthcareProfessionalSpecialties"
+                data-testid="submission-form-specialties"
+                name="Specialties"
+                multiple
+                class="mb-5 px-3 py-3.5 w-96 h-32 bg-secondary-bg rounded-lg border border-primary-text-muted
+                        text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
+            >
+                <option
+                    v-for="(specialty, index) in specialtyOptions"
+                    :key="`${specialty}-${index}`"
+                    :value="specialty"
+                >
+                    {{ specialty }}
                 </option>
             </select>
             <button
@@ -394,7 +441,7 @@ import { useRouter } from 'vue-router'
 import { gql } from 'graphql-request'
 import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql.js'
 import { useModerationSubmissionsStore } from '~/stores/moderationSubmissionsStore'
-import { Locale, type Submission, type MutationUpdateSubmissionArgs, type LocalizedNameInput, Insurance } from '~/typedefs/gqlTypes'
+import { Locale, type Submission, type MutationUpdateSubmissionArgs, type LocalizedNameInput, Insurance, Degree, Specialty } from '~/typedefs/gqlTypes'
 import { validateAddressLineEn, validateAddressLineJp, validateNameEn, validateNameJp, validatePhoneNumber, validateCityEn, validateEmail, validateFloat, validatePostalCode, validateWebsite, validateCityJp, validateUserSubmittedFirstName, validateUserSubmittedLastName } from '~/utils/formValidations'
 import { ModSubmissionLeftNavbarSectionIDs } from '~/stores/moderationScreenStore'
 import { multiSelectWithoutKeyboard } from '~/utils/multiSelectWithoutKeyboard'
@@ -428,10 +475,16 @@ const localizedLastName: Ref<string> = ref('')
 const localizedMiddleName: Ref<string> = ref('')
 const nameLocale: Ref<Locale> = ref(Locale.EnUs)
 const healthcareProfessionalAcceptedInsurances: Ref<Array<Insurance>> = ref([])
+const healthcareProfessionalDegrees: Ref<Array<Degree>> = ref([])
+const healthcareProfessionalSpecialties: Ref<Array<Specialty>> = ref([])
 
 // Creating the necessary parts for the multi-select
 const insuranceOptions = Object.values(Insurance) as Insurance[]
 const extractInsuranceOptions = (option: HTMLOptionElement): Insurance => option.value as Insurance
+const degreeOptions = Object.values(Degree) as Degree[]
+const extractDegreeOptions = (option: HTMLOptionElement): Degree => option.value as Degree
+const specialtyOptions = Object.values(Specialty) as Specialty[]
+const extractSpecialtyOptions = (option: HTMLOptionElement): Specialty => option.value as Specialty
 
 const listPrefectureJapanEn: Ref<string[]> = ref(['Hokkaido', 'Aomori', 'Iwate', 'Miyagi', 'Akita', 'Yamagata', 'Fukushima', 'Ibaraki', 'Tochigi', 'Gumma', 'Saitama', 'Chiba', 'Tokyo', 'Kanagawa', 'Niigata', 'Toyama', 'Ishikawa', 'Fukui', 'Yamanashi', 'Nagano', 'Gifu', 'Shizuoka', 'Aichi', 'Mie', 'Shiga', 'Kyoto', 'Osaka', 'Hyogo', 'Nara', 'Wakayama', 'Tottori', 'Shimane', 'Okayama', 'Hiroshima', 'Yamaguchi', 'Tokushima', 'Kagawa', 'Ehime', 'Kochi', 'Fukuoka', 'Saga', 'Nagasaki', 'Kumamoto', 'Oita', 'Miyazaki', 'Kagoshima', 'Okinawa'])
 const listPrefectureJapanJp: Ref<string[]> = ref(['北海道', '青森県', '岩手県', '宮城県', '秋田県', '山形県', '福島県', '茨城県', '栃木県', '群馬県', '埼玉県', '千葉県', '東京都', '神奈川県', '新潟県', '富山県', '石川県', '福井県', '山梨県', '長野県', '岐阜県', '静岡県', '愛知県', '三重県', '滋賀県', '京都府', '大阪府', '兵庫県', '奈良県', '和歌山県', '鳥取県', '島根県', '岡山県', '広島県', '山口県', '徳島県', '香川県', '愛媛県', '高知県', '福岡県', '佐賀県', '長崎県', '熊本県', '大分県', '宮崎県', '鹿児島県', '沖縄県'])
@@ -523,6 +576,7 @@ function autofillEditSubmissionForm(submissionData: Submission | undefined) {
                     break
                 case 'googleMapsUrl':
                     googlemapsURL.value = submissionData['facility']?.contact?.googleMapsUrl || submissionData['googleMapsUrl']
+                    break
             }
         }
     }
@@ -606,6 +660,18 @@ onMounted(() => {
         '#healthcare-professional-accepted-insurances',
         healthcareProfessionalAcceptedInsurances,
         extractInsuranceOptions
+    )
+
+    multiSelectWithoutKeyboard(
+        '#healthcare-professional-degrees',
+        healthcareProfessionalDegrees,
+        extractDegreeOptions
+    )
+
+    multiSelectWithoutKeyboard(
+        '#healthcare-professional-specialties',
+        healthcareProfessionalSpecialties,
+        extractSpecialtyOptions
     )
 })
 
