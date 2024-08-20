@@ -242,15 +242,15 @@
         >
             {{ $t('modSubmissionForm.healthcareProfessionalHeading') }}
         </h1>
-        <h1
+        <h2
             class="mb-3.5 text-start text-primary-text text-2xl font-bold font-sans leading-normal"
         >
             {{ $t('modSubmissionForm.healthcareProfessionalNameHeading') }}
-        </h1>
+        </h2>
         <div class="flex flex-col my-4">
             <ModInputField
                 v-model="localizedLastName"
-                data-testid="submission-form-lastName"
+                data-testid="submission-form-last-name"
                 :label="$t('modSubmissionForm.labelHealthcareProfessionalLastName')"
                 type="text"
                 :placeholder="$t('modSubmissionForm.placeholderTextHealthcareProfessionalLastName')"
@@ -260,7 +260,7 @@
             />
             <ModInputField
                 v-model="localizedFirstName"
-                data-testid="submission-form-FirstName"
+                data-testid="submission-form-first-name"
                 :label="$t('modSubmissionForm.labelHealthcareProfessionalFirstName')"
                 type="text"
                 :placeholder="$t('modSubmissionForm.placeholderTextHealthcareProfessionalFirstName')"
@@ -270,7 +270,7 @@
             />
             <ModInputField
                 v-model="localizedMiddleName"
-                data-testid="submission-form-middleName"
+                data-testid="submission-form-middle-name"
                 :label="$t('modSubmissionForm.labelHealthcareProfessionalMiddleName')"
                 type="text"
                 :placeholder="$t('modSubmissionForm.placeholderTextHealthcareProfessionalMiddleName')"
@@ -303,11 +303,12 @@
             >
                 {{ $t('modSubmissionForm.addHealthCareProfessionalLocaleName') }}
             </button>
-            <span
-                class="mb-3.5 text-start text-primary-text text-3xl font-bold font-sans leading-normal"
+            <p
+                v-show="healthCareProfessionalNameArray.length"
+                class="mt-3.5 text-start text-nowrap text-xl font-bold font-sans leading-normal"
             >
                 {{ $t("modSubmissionForm.clickToRemoveHealthCareProfessionalName") }}
-            </span>
+            </p>
             <div
                 v-show="healthCareProfessionalNameArray.length"
                 :class="`grid grid-cols-4 p-2`"
@@ -336,6 +337,7 @@
                         <div
                             :data-testid="`mod-submission-list-item-${index + 1}`"
                             class="grid grid-cols-subgrid col-span-4 bg-tertiary-bg cursor-pointer hover:bg-primary"
+                            @click="() => handleRemoveHealthcareProfessionalName(index)"
                         >
                             <span class="text-start">{{ healthcareProfessionalName.lastName }}</span>
                             <span class="text-start">{{ healthcareProfessionalName.firstName }}</span>
@@ -346,13 +348,35 @@
                         </div>
                     </div>
                 </div>
-                <p
-                    v-if="healthCareProfessionalNameArray.length"
-                    class="mb-3.5 text-start text- text-3xl font-bold font-sans leading-normal"
-                >
-                    {{ $t("modSubmissionForm.clickToRemoveHealthCareProfessionalName") }}
-                </p>
             </div>
+            <h2
+                class="my-3.5 text-start text-primary-text text-2xl font-bold font-sans leading-normal"
+            >
+                {{ $t('modSubmissionForm.healthcareProfessionalMedicalInfoHeading') }}
+            </h2>
+            <label
+                for="Accepted Insurances"
+                class="my-2 text-primary-text text-sm font-bold font-sans"
+            >
+                {{ $t("modSubmissionForm.selectAnInsuranceDefault") }}
+            </label>
+            <select
+                id="healthcare-professional-accepted-insurances"
+                v-model="healthcareProfessionalAcceptedInsurances"
+                data-testid="submission-form-accepted-insurance"
+                name="Accepted Insurances"
+                multiple
+                class="mb-5 px-3 py-3.5 w-96 h-32 bg-secondary-bg rounded-lg border border-primary-text-muted
+                        text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
+            >
+                <option
+                    v-for="(insuranceType, index) in insuranceOptions"
+                    :key="`${insuranceType}-${index}`"
+                    :value="insuranceType"
+                >
+                    {{ insuranceType }}
+                </option>
+            </select>
             <button
                 type="submit"
                 class="bg-currentColor text-white font-bold py-2 px-4 my-2 rounded w-56"
@@ -365,14 +389,15 @@
 </template>
 
 <script lang="ts" setup>
-import { type Ref, ref, watch } from 'vue'
+import { onMounted, type Ref, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { gql } from 'graphql-request'
 import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql.js'
 import { useModerationSubmissionsStore } from '~/stores/moderationSubmissionsStore'
-import { Locale, type Submission, type MutationUpdateSubmissionArgs, type LocalizedNameInput } from '~/typedefs/gqlTypes'
+import { Locale, type Submission, type MutationUpdateSubmissionArgs, type LocalizedNameInput, Insurance } from '~/typedefs/gqlTypes'
 import { validateAddressLineEn, validateAddressLineJp, validateNameEn, validateNameJp, validatePhoneNumber, validateCityEn, validateEmail, validateFloat, validatePostalCode, validateWebsite, validateCityJp, validateUserSubmittedFirstName, validateUserSubmittedLastName } from '~/utils/formValidations'
 import { ModSubmissionLeftNavbarSectionIDs } from '~/stores/moderationScreenStore'
+import { multiSelectWithoutKeyboard } from '~/utils/multiSelectWithoutKeyboard'
 
 const router = useRouter()
 
@@ -402,6 +427,11 @@ const localizedFirstName: Ref<string> = ref('')
 const localizedLastName: Ref<string> = ref('')
 const localizedMiddleName: Ref<string> = ref('')
 const nameLocale: Ref<Locale> = ref(Locale.EnUs)
+const healthcareProfessionalAcceptedInsurances: Ref<Array<Insurance>> = ref([])
+
+// Creating the necessary parts for the multi-select
+const insuranceOptions = Object.values(Insurance) as Insurance[]
+const extractInsuranceOptions = (option: HTMLOptionElement): Insurance => option.value as Insurance
 
 const listPrefectureJapanEn: Ref<string[]> = ref(['Hokkaido', 'Aomori', 'Iwate', 'Miyagi', 'Akita', 'Yamagata', 'Fukushima', 'Ibaraki', 'Tochigi', 'Gumma', 'Saitama', 'Chiba', 'Tokyo', 'Kanagawa', 'Niigata', 'Toyama', 'Ishikawa', 'Fukui', 'Yamanashi', 'Nagano', 'Gifu', 'Shizuoka', 'Aichi', 'Mie', 'Shiga', 'Kyoto', 'Osaka', 'Hyogo', 'Nara', 'Wakayama', 'Tottori', 'Shimane', 'Okayama', 'Hiroshima', 'Yamaguchi', 'Tokushima', 'Kagawa', 'Ehime', 'Kochi', 'Fukuoka', 'Saga', 'Nagasaki', 'Kumamoto', 'Oita', 'Miyazaki', 'Kagoshima', 'Okinawa'])
 const listPrefectureJapanJp: Ref<string[]> = ref(['北海道', '青森県', '岩手県', '宮城県', '秋田県', '山形県', '福島県', '茨城県', '栃木県', '群馬県', '埼玉県', '千葉県', '東京都', '神奈川県', '新潟県', '富山県', '石川県', '福井県', '山梨県', '長野県', '岐阜県', '静岡県', '愛知県', '三重県', '滋賀県', '京都府', '大阪府', '兵庫県', '奈良県', '和歌山県', '鳥取県', '島根県', '岡山県', '広島県', '山口県', '徳島県', '香川県', '愛媛県', '高知県', '福岡県', '佐賀県', '長崎県', '熊本県', '大分県', '宮崎県', '鹿児島県', '沖縄県'])
@@ -429,6 +459,10 @@ const handleLocalizedNameToSubmission = () => {
         localizedMiddleName.value = ''
         nameLocale.value = Locale.EnUs
     }
+}
+
+const handleRemoveHealthcareProfessionalName = (index: number) => {
+    healthCareProfessionalNameArray.value.splice(index, 1)
 }
 
 const validateFields = () => {
@@ -565,6 +599,14 @@ watch(moderationSubmissionStore, newValue => {
 watch(moderationSubmissionStore, newValue => {
     moderationSubmissionStore.filterSelectedSubmission(newValue.selectedSubmissionId)
     autofillEditSubmissionForm(newValue.selectedSubmissionData)
+})
+
+onMounted(() => {
+    multiSelectWithoutKeyboard(
+        '#healthcare-professional-accepted-insurances',
+        healthcareProfessionalAcceptedInsurances,
+        extractInsuranceOptions
+    )
 })
 
 const updateFacilitySubmissionGqlMutation = gql`

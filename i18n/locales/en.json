@@ -160,6 +160,7 @@
         "facilityHeading": "Facility Submission Information",
         "googleMapsInformation": "Google maps information",
         "healthcareProfessionalHeading": "Healthcare Professional Submission",
+        "healthcareProfessionalMedicalInfoHeading": "Healthcare Professional Medical Info",
         "healthcareProfessionalNameHeading": "Healthcare Professional Name",
         "healthcareProfessionalId": "Healthcare Professional IDs",
         "inputErrorMessageHealthcareProfessionalFirstName": "Invalid First Name",
@@ -220,6 +221,7 @@
         "placeholderTextFacilityPhoneNumber": "e.g. 08xxxxxxxxx",
         "placeholderTextFacilityPostalCode": "e.g. 186-0000",
         "placeholderTextFacilityWebsite": "e.g. http://www.example.com/",
+        "selectAnInsuranceDefault": "Accepted Insurances",
         "submitButtonText": "Submit"
     }
 }
