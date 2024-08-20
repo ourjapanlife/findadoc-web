@@ -6,7 +6,7 @@
         </h1>
         <div class="flex flex-col items-start">
             <button
-                data-testid="submission-form-leftnav-contactInformation"
+                data-testid="submission-form-leftnav-contact-information"
                 :class="{ 'bg-secondary': activeSection === ModSubmissionLeftNavbarSectionIDs.ContactInformation,
                           'bg-primary-inverted': activeSection !== ModSubmissionLeftNavbarSectionIDs.ContactInformation }"
                 class="w-full py-4 my-2 text-sm text-start pl-2 rounded border-b-2 border-tertiary-bg"
@@ -24,7 +24,7 @@
                 {{ $t("modPanelSubmissionLeftNavbar.addresses") }}
             </button>
             <button
-                data-testid="submission-form-leftnav-googleMapsInformation"
+                data-testid="submission-form-leftnav-google-maps-information"
                 :class="{ 'bg-secondary': activeSection === ModSubmissionLeftNavbarSectionIDs.GoogleMapsInformation,
                           'bg-primary-inverted': activeSection !== ModSubmissionLeftNavbarSectionIDs.GoogleMapsInformation }"
                 class="w-full py-4 my-2 text-sm text-start pl-2 rounded border-b-2 border-tertiary-bg"
@@ -33,7 +33,7 @@
                 {{ $t("modPanelSubmissionLeftNavbar.googleMapsInformation") }}
             </button>
             <button
-                data-testid="submission-form-leftnav-healthcareProfessionalIds"
+                data-testid="submission-form-leftnav-healthcare-professional-ids"
                 :class="{ 'bg-secondary': activeSection === ModSubmissionLeftNavbarSectionIDs.HealthcareProfessionalIds,
                           'bg-primary-inverted': activeSection !== ModSubmissionLeftNavbarSectionIDs.HealthcareProfessionalIds }"
                 class="w-full py-4 my-2 text-sm text-start pl-2 rounded border-b-2 border-tertiary-bg"
@@ -42,7 +42,7 @@
                 {{ $t("modPanelSubmissionLeftNavbar.healthcareProfessionalIds") }}
             </button>
             <button
-                data-testid="submission-form-leftnav-changeLog"
+                data-testid="submission-form-leftnav-change-log"
                 :class="{ 'bg-secondary': activeSection === ModSubmissionLeftNavbarSectionIDs.ChangeLog,
                           'bg-primary-inverted': activeSection !== ModSubmissionLeftNavbarSectionIDs.ChangeLog }"
                 class="w-full py-4 my-2 text-sm text-start pl-2 rounded border-b-2 border-tertiary-bg"
@@ -60,7 +60,7 @@
                 {{ $t("modPanelSubmissionLeftNavbar.healthcareProfessionalName") }}
             </button>
             <button
-                data-testid="submission-form-leftnav-healthcare-professional-info"
+                data-testid="submission-form-leftnav-healthcare-professional-medical-info"
                 :class="{ 'bg-secondary': activeSection === ModSubmissionLeftNavbarSectionIDs.HealthcareProfessionalMedicalInfo,
                           'bg-primary-inverted': activeSection
                               !== ModSubmissionLeftNavbarSectionIDs.HealthcareProfessionalMedicalInfo }"

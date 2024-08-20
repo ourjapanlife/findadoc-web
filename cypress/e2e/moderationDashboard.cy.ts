@@ -345,21 +345,29 @@ describe('Moderation Facility Submission Form', () => {
         })
 
         it('contains the following left nav buttons for navigation', () => {
-            cy.get('[data-testid="submission-form-leftnav-contactInformation"]').should('exist')
-                .should('contain', enUS.modPanelFacilitySubmissionLeftNavbar.contactInformation)
+            cy.get('[data-testid="submission-form-leftnav-contact-information"]').should('exist')
+                .should('contain', enUS.modPanelSubmissionLeftNavbar.contactInformation)
             cy.get('[data-testid="submission-form-leftnav-addresses"]').should('exist')
-                .should('contain', enUS.modPanelFacilitySubmissionLeftNavbar.addresses)
-            cy.get('[data-testid="submission-form-leftnav-googleMapsInformation"]').should('exist')
-                .should('contain', enUS.modPanelFacilitySubmissionLeftNavbar.googleMapsInformation)
-            cy.get('[data-testid="submission-form-leftnav-healthcareProfessionalIds"]').should('exist')
-                .should('contain', enUS.modPanelFacilitySubmissionLeftNavbar.healthcareProfessionalIds)
-            cy.get('[data-testid="submission-form-leftnav-changeLog"]').should('exist')
-                .should('contain', enUS.modPanelFacilitySubmissionLeftNavbar.changeLog)
+                .should('contain', enUS.modPanelSubmissionLeftNavbar.addresses)
+            cy.get('[data-testid="submission-form-leftnav-google-maps-information"]').should('exist')
+                .should('contain', enUS.modPanelSubmissionLeftNavbar.googleMapsInformation)
+            cy.get('[data-testid="submission-form-leftnav-healthcare-professional-ids"]').should('exist')
+                .should('contain', enUS.modPanelSubmissionLeftNavbar.healthcareProfessionalIds)
+            cy.get('[data-testid="submission-form-leftnav-change-log"]').should('exist')
+                .should('contain', enUS.modPanelSubmissionLeftNavbar.changeLog)
+            cy.get('[data-testid="submission-form-leftnav-healthcare-professional-name"]').should('exist')
+                .should('contain', enUS.modPanelSubmissionLeftNavbar.healthcareProfessionalName)
+            cy.get('[data-testid="submission-form-leftnav-healthcare-professional-medical-info"]').should('exist')
+                .should('contain', enUS.modPanelSubmissionLeftNavbar.healthcareProfessionalMedicalInfo)
         })
 
         it('should contain the following select field', () => {
             cy.get('[data-testid="submission-form-prefectureEn"]').should('exist')
             cy.get('[data-testid="submission-form-prefectureJp"]').should('exist')
+            cy.get('[data-testid="submission-form-accepted-insurances"]').should('exist')
+            cy.get('[data-testid="submission-form-degrees"]').should('exist')
+            cy.get('[data-testid="submission-form-specialties"]').should('exist')
+            cy.get('[data-testid="submission-form-locales"]').should('exist')
         })
 
         it('should autofill the form', () => {

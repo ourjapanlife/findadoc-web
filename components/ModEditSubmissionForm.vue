@@ -364,7 +364,7 @@
             <select
                 id="healthcare-professional-accepted-insurances"
                 v-model="healthcareProfessionalAcceptedInsurances"
-                data-testid="submission-form-accepted-insurance"
+                data-testid="submission-form-accepted-insurances"
                 name="Accepted Insurances"
                 multiple
                 class="mb-5 px-3 py-3.5 w-96 h-32 bg-secondary-bg rounded-lg border border-primary-text-muted
