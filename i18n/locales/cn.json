@@ -225,7 +225,8 @@
     "submitButtonText": "Submit",
     "selectInsurances": "Accepted Insurances",
     "selectSpecialties": "Specialties",
-    "selectDegrees": "Degrees"
+    "selectDegrees": "Degrees",
+    "selectLocales": "Select Locales Spoken"
   },
   "modPanelSubmissionLeftNavbar": {
     "addresses": "Addresses",

@@ -211,7 +211,8 @@
     "submitButtonText": "Submit",
     "selectInsurances": "Accepted Insurances",
     "selectSpecialties": "Specialties",
-    "selectDegrees": "Degrees"
+    "selectDegrees": "Degrees",
+    "selectLocales": "Select Locales Spoken"
   },
   "login": {
     "heading": "Log in to your account",
