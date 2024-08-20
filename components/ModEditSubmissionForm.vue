@@ -424,6 +424,30 @@
                     {{ specialty }}
                 </option>
             </select>
+
+            <label
+                for="Locales"
+                class="my-2 text-primary-text text-sm font-bold font-sans"
+            >
+                {{ $t("modSubmissionForm.selectLocales") }}
+            </label>
+            <select
+                id="healthcare-professional-locales"
+                v-model="healthcareProfessionalLocales"
+                data-testid="submission-form-locales"
+                name="Locales"
+                multiple
+                class="mb-5 px-3 py-3.5 w-96 h-32 bg-secondary-bg rounded-lg border border-primary-text-muted
+                        text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
+            >
+                <option
+                    v-for="(locale, index) in localeOptions"
+                    :key="`${locale}-${index}`"
+                    :value="locale"
+                >
+                    {{ locale }}
+                </option>
+            </select>
             <button
                 type="submit"
                 class="bg-currentColor text-white font-bold py-2 px-4 my-2 rounded w-56"
@@ -477,6 +501,7 @@ const nameLocale: Ref<Locale> = ref(Locale.EnUs)
 const healthcareProfessionalAcceptedInsurances: Ref<Array<Insurance>> = ref([])
 const healthcareProfessionalDegrees: Ref<Array<Degree>> = ref([])
 const healthcareProfessionalSpecialties: Ref<Array<Specialty>> = ref([])
+const healthcareProfessionalLocales: Ref<Array<Locale>> = ref([])
 
 // Creating the necessary parts for the multi-select
 const insuranceOptions = Object.values(Insurance) as Insurance[]
@@ -485,6 +510,8 @@ const degreeOptions = Object.values(Degree) as Degree[]
 const extractDegreeOptions = (option: HTMLOptionElement): Degree => option.value as Degree
 const specialtyOptions = Object.values(Specialty) as Specialty[]
 const extractSpecialtyOptions = (option: HTMLOptionElement): Specialty => option.value as Specialty
+const localeOptions = Object.values(Locale) as Locale[]
+const extractLocaleOptions = (option: HTMLOptionElement): Locale => option.value as Locale
 
 const listPrefectureJapanEn: Ref<string[]> = ref(['Hokkaido', 'Aomori', 'Iwate', 'Miyagi', 'Akita', 'Yamagata', 'Fukushima', 'Ibaraki', 'Tochigi', 'Gumma', 'Saitama', 'Chiba', 'Tokyo', 'Kanagawa', 'Niigata', 'Toyama', 'Ishikawa', 'Fukui', 'Yamanashi', 'Nagano', 'Gifu', 'Shizuoka', 'Aichi', 'Mie', 'Shiga', 'Kyoto', 'Osaka', 'Hyogo', 'Nara', 'Wakayama', 'Tottori', 'Shimane', 'Okayama', 'Hiroshima', 'Yamaguchi', 'Tokushima', 'Kagawa', 'Ehime', 'Kochi', 'Fukuoka', 'Saga', 'Nagasaki', 'Kumamoto', 'Oita', 'Miyazaki', 'Kagoshima', 'Okinawa'])
 const listPrefectureJapanJp: Ref<string[]> = ref(['北海道', '青森県', '岩手県', '宮城県', '秋田県', '山形県', '福島県', '茨城県', '栃木県', '群馬県', '埼玉県', '千葉県', '東京都', '神奈川県', '新潟県', '富山県', '石川県', '福井県', '山梨県', '長野県', '岐阜県', '静岡県', '愛知県', '三重県', '滋賀県', '京都府', '大阪府', '兵庫県', '奈良県', '和歌山県', '鳥取県', '島根県', '岡山県', '広島県', '山口県', '徳島県', '香川県', '愛媛県', '高知県', '福岡県', '佐賀県', '長崎県', '熊本県', '大分県', '宮崎県', '鹿児島県', '沖縄県'])
@@ -672,6 +699,12 @@ onMounted(() => {
         '#healthcare-professional-specialties',
         healthcareProfessionalSpecialties,
         extractSpecialtyOptions
+    )
+
+    multiSelectWithoutKeyboard(
+        '#healthcare-professional-locales',
+        healthcareProfessionalLocales,
+        extractLocaleOptions
     )
 })
 

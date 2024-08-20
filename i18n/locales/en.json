@@ -223,9 +223,10 @@
         "placeholderTextFacilityPhoneNumber": "e.g. 08xxxxxxxxx",
         "placeholderTextFacilityPostalCode": "e.g. 186-0000",
         "placeholderTextFacilityWebsite": "e.g. http://www.example.com/",
-        "selectInsurances": "Accepted Insurances",
-        "selectSpecialties": "Specialties",
         "selectDegrees": "Degrees",
+        "selectInsurances": "Accepted Insurances",
+        "selectLocales": "Select Locales Spoken",
+        "selectSpecialties": "Specialties",
         "submitButtonText": "Submit"
     }
 }
