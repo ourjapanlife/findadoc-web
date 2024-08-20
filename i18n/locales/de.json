@@ -222,6 +222,19 @@
     "placeholderTextHealthcareProfessionalLastName": "e.g. Doe",
     "placeholderTextHealthcareProfessionalMiddleName": "e.g. Bronson",
     "selectAnInsuranceDefault": "Accepted Insurances",
-    "submitButtonText": "Submit"
+    "submitButtonText": "Submit",
+    "selectInsurances": "Accepted Insurances",
+    "selectSpecialties": "Specialties",
+    "selectDegrees": "Degrees"
+  },
+  "modPanelSubmissionLeftNavbar": {
+    "addresses": "Addresses",
+    "changeLog": "Change log",
+    "contactInformation": "Contact Information",
+    "facilityNameUnknown": "Facility Name Unknown",
+    "googleMapsInformation": "Google maps information",
+    "healthcareProfessionalIds": "Healthcare Professional IDs",
+    "healthcareProfessionalName": "Healthcare Professional Name",
+    "healthcareProfessionalMedicalInfo": "Healthcare Professional Medical Info"
   }
 }

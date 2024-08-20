@@ -208,7 +208,10 @@
     "placeholderTextHealthcareProfessionalLastName": "e.g. Doe",
     "placeholderTextHealthcareProfessionalMiddleName": "e.g. Bronson",
     "selectAnInsuranceDefault": "Accepted Insurances",
-    "submitButtonText": "Submit"
+    "submitButtonText": "Submit",
+    "selectInsurances": "Accepted Insurances",
+    "selectSpecialties": "Specialties",
+    "selectDegrees": "Degrees"
   },
   "login": {
     "heading": "Log in to your account",
@@ -223,5 +226,15 @@
     "unauthorizedline1": "It looks like you don't have the necessary permissions to access this page. Redirecting in 10 seconds...",
     "unauthorizedline2": "If you want to become a moderator or have any questions, please contact us ",
     "unauthorizedline3": "here"
+  },
+  "modPanelSubmissionLeftNavbar": {
+    "addresses": "Addresses",
+    "changeLog": "Change log",
+    "contactInformation": "Contact Information",
+    "facilityNameUnknown": "Facility Name Unknown",
+    "googleMapsInformation": "Google maps information",
+    "healthcareProfessionalIds": "Healthcare Professional IDs",
+    "healthcareProfessionalName": "Healthcare Professional Name",
+    "healthcareProfessionalMedicalInfo": "Healthcare Professional Medical Info"
   }
 }
