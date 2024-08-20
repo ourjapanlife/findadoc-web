@@ -111,14 +111,14 @@
     "rejected": "Отклонено",
     "submissions": "Submissions"
   },
-    "modPanelFacilitySubmissionLeftNavbar": {
-        "addresses": "Addresses",
-        "changeLog": "Change log",
-        "contactInformation": "Contact Information",
-        "facilityNameUnknown": "Facility Name Unknown",
-        "googleMapsInformation": "Google maps information",
-        "healthcareProfessionalIds": "Healthcare Professional IDs"
-    },
+  "modPanelFacilitySubmissionLeftNavbar": {
+    "addresses": "Addresses",
+    "changeLog": "Change log",
+    "contactInformation": "Contact Information",
+    "facilityNameUnknown": "Facility Name Unknown",
+    "googleMapsInformation": "Google maps information",
+    "healthcareProfessionalIds": "Healthcare Professional IDs"
+  },
   "modEditSubmissionTopNav": {
     "saveAndExit": "Сохранить и выцйи",
     "approve": "Одобрить",
@@ -190,7 +190,25 @@
     "placeholderTextFacilityNameJp": "напр. 立川中央病院",
     "placeholderTextFacilityPhoneNumber": "напр. 08xxxxxxxxx",
     "placeholderTextFacilityPostalCode": "напр. 186-0000",
-    "placeholderTextFacilityWebsite": "напр. http://www.example.com/"
+    "placeholderTextFacilityWebsite": "напр. http://www.example.com/",
+    "addHealthCareProfessionalLocaleName": "Add Name by Locale",
+    "clickToRemoveHealthCareProfessionalName": "Click on a row to remove a name",
+    "facilityHeading": "Facility Submission Information",
+    "healthcareProfessionalHeading": "Healthcare Professional Submission",
+    "healthcareProfessionalMedicalInfoHeading": "Healthcare Professional Medical Info",
+    "healthcareProfessionalNameHeading": "Healthcare Professional Name",
+    "inputErrorMessageHealthcareProfessionalFirstName": "Invalid First Name",
+    "inputErrorMessageHealthcareProfessionalLastName": "Invalid Last Name",
+    "inputErrorMessageHealthcareProfessionalMiddleName": "Invalid Middle Name",
+    "labelHealthcareProfessionalFirstName": "First Name",
+    "labelHealthcareProfessionalLastName": "Last Name",
+    "labelHealthcareProfessionalMiddleName": "Middle Name",
+    "labelHealthcareProfessionalNameLocale": "Name Locale",
+    "placeholderTextHealthcareProfessionalFirstName": "e.g. John",
+    "placeholderTextHealthcareProfessionalLastName": "e.g. Doe",
+    "placeholderTextHealthcareProfessionalMiddleName": "e.g. Bronson",
+    "selectAnInsuranceDefault": "Accepted Insurances",
+    "submitButtonText": "Submit"
   },
   "login": {
     "heading": "Log in to your account",
