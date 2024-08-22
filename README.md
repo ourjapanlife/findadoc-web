@@ -80,7 +80,7 @@ Have a look at the [CONTRIBUTING](/CONTRIBUTING.md) and [CODE_OF_CONDUCT](/CODE_
     - These provide automatic linting error visibility instead of having to run `yarn lint` every time
 -
 
-## Running development (not for moderation panel) 
+## Running the code locally
 
 ```bash
 # install dependencies
@@ -93,7 +93,9 @@ $ yarn prepare
 $ yarn dev
 ```
 
-## Running development (moderation panel with our local db) 
+## Running the moderation panel locally
+<details>
+<summary>Click to for instructions on running moderation panel locally</summary>
  - You need to clone and setup the backend following its [README](https://github.com/ourjapanlife/findadoc-server).
 
  Then for the backend run:
@@ -106,7 +108,7 @@ $ npm install
 $ npm run dev:startlocaldb
 
 # For Development, start a dev server backend
-$ yarn dev
+$ npm run dev
 ```
 
 Once this is up and running you can start the frontend server with:
@@ -122,8 +124,13 @@ To login you will want to go to `/login` and use the following username and pass
 - Password = ```vCnL5J8agHg6m2f```
 
 Now you can go to `/moderation` and see any changes to moderation components you may be working on with fake data.
+</details>
+<br/>
 
 # Testing a production build
+<details>
+<summary>Click to for instructions on testing a production build</summary>
+<br/>
 
 ## Generate the production bundle
 $ yarn prod:build
@@ -152,6 +159,8 @@ yarn start:test
 ```
 
 To learn how to write tests and use the GUI runner, visit the [wiki](https://github.com/ourjapanlife/findadoc-web/wiki/Writing-Tests)
+</details>
+<br/>
 
 # Folder Structure
 
