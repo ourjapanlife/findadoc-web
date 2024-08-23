@@ -36,7 +36,7 @@
                     >
                         <span class="text-start">{{ index + 1 }}</span>
                         <span class="text-start">
-                            {{ submission.facility?.nameEn || $t("modPanelSubmissionList.facilityNameUnknown") }}
+                            {{ submission.healthcareProfessionalName || $t("modPanelSubmissionList.facilityNameUnknown") }}
                         </span>
                         <span class="text-start">{{ convertDateToLocalTime(submission.updatedDate) }}</span>
                         <span class="text-start">{{ convertDateToLocalTime(submission.createdDate) }}</span>
