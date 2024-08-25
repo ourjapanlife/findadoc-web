@@ -13,7 +13,9 @@ export enum ModSubmissionLeftNavbarSectionIDs {
     ChangeLog = 'CHANGE_LOG',
     ContactInformation = 'CONTACT_INFORMATION',
     GoogleMapsInformation = 'GOOGLE_MAPS_INFORMATION',
-    HealthcareProfessionalIds = 'HEALTHCARE_PROFESSIONAL_IDS'
+    HealthcareProfessionalIds = 'HEALTHCARE_PROFESSIONAL_IDS',
+    HealthcareProfessionalMedicalInfo = 'HEALTHCARE_PROFESSIONAL_MEDICAL_INFO',
+    HealthcareProfessionalName = 'HEALTHCARE_PROFESSIONAL_NAME'
 }
 
 export const useModerationScreenStore = defineStore(

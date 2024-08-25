@@ -7,7 +7,7 @@
             v-else-if="screenStore.activeScreen === ModerationScreen.EditSubmission"
             class="h-full overflow-hidden"
         >
-            <ModSubmissionsEditFormFacility />
+            <ModEditSubmissionForm />
         </div>
         <div
             v-else-if="screenStore.activeScreen === ModerationScreen.EditFacility"
