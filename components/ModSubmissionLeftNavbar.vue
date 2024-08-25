@@ -2,17 +2,17 @@
     <div class="flex flex-col">
         <h1 class="font-bold text-lg p-1 mb-2 text-ellipsis">
             {{ moderationSubmissionsStore.selectedSubmissionData?.facility?.nameEn
-                || $t("modPanelFacilitySubmissionLeftNavbar.facilityNameUnknown") }}
+                || $t("modPanelSubmissionLeftNavbar.facilityNameUnknown") }}
         </h1>
         <div class="flex flex-col items-start">
             <button
-                data-testid="submission-form-leftnav-contactInformation"
+                data-testid="submission-form-leftnav-contact-information"
                 :class="{ 'bg-secondary': activeSection === ModSubmissionLeftNavbarSectionIDs.ContactInformation,
                           'bg-primary-inverted': activeSection !== ModSubmissionLeftNavbarSectionIDs.ContactInformation }"
                 class="w-full py-4 my-2 text-sm text-start pl-2 rounded border-b-2 border-tertiary-bg"
                 @click="scrollToSectionOfForm(ModSubmissionLeftNavbarSectionIDs.ContactInformation)"
             >
-                {{ $t("modPanelFacilitySubmissionLeftNavbar.contactInformation") }}
+                {{ $t("modPanelSubmissionLeftNavbar.contactInformation") }}
             </button>
             <button
                 data-testid="submission-form-leftnav-addresses"
@@ -21,34 +21,53 @@
                 class="w-full py-4 my-2 text-sm text-start pl-2 rounded border-b-2 border-tertiary-bg"
                 @click="scrollToSectionOfForm(ModSubmissionLeftNavbarSectionIDs.Addresses)"
             >
-                {{ $t("modPanelFacilitySubmissionLeftNavbar.addresses") }}
+                {{ $t("modPanelSubmissionLeftNavbar.addresses") }}
             </button>
             <button
-                data-testid="submission-form-leftnav-googleMapsInformation"
+                data-testid="submission-form-leftnav-google-maps-information"
                 :class="{ 'bg-secondary': activeSection === ModSubmissionLeftNavbarSectionIDs.GoogleMapsInformation,
                           'bg-primary-inverted': activeSection !== ModSubmissionLeftNavbarSectionIDs.GoogleMapsInformation }"
                 class="w-full py-4 my-2 text-sm text-start pl-2 rounded border-b-2 border-tertiary-bg"
                 @click="scrollToSectionOfForm(ModSubmissionLeftNavbarSectionIDs.GoogleMapsInformation)"
             >
-                {{ $t("modPanelFacilitySubmissionLeftNavbar.googleMapsInformation") }}
+                {{ $t("modPanelSubmissionLeftNavbar.googleMapsInformation") }}
             </button>
             <button
-                data-testid="submission-form-leftnav-healthcareProfessionalIds"
+                data-testid="submission-form-leftnav-healthcare-professional-ids"
                 :class="{ 'bg-secondary': activeSection === ModSubmissionLeftNavbarSectionIDs.HealthcareProfessionalIds,
                           'bg-primary-inverted': activeSection !== ModSubmissionLeftNavbarSectionIDs.HealthcareProfessionalIds }"
                 class="w-full py-4 my-2 text-sm text-start pl-2 rounded border-b-2 border-tertiary-bg"
                 @click="scrollToSectionOfForm(ModSubmissionLeftNavbarSectionIDs.HealthcareProfessionalIds)"
             >
-                {{ $t("modPanelFacilitySubmissionLeftNavbar.healthcareProfessionalIds") }}
+                {{ $t("modPanelSubmissionLeftNavbar.healthcareProfessionalIds") }}
             </button>
             <button
-                data-testid="submission-form-leftnav-changeLog"
+                data-testid="submission-form-leftnav-change-log"
                 :class="{ 'bg-secondary': activeSection === ModSubmissionLeftNavbarSectionIDs.ChangeLog,
                           'bg-primary-inverted': activeSection !== ModSubmissionLeftNavbarSectionIDs.ChangeLog }"
                 class="w-full py-4 my-2 text-sm text-start pl-2 rounded border-b-2 border-tertiary-bg"
                 @click="scrollToSectionOfForm(ModSubmissionLeftNavbarSectionIDs.ChangeLog)"
             >
-                {{ $t("modPanelFacilitySubmissionLeftNavbar.changeLog") }}
+                {{ $t("modPanelSubmissionLeftNavbar.changeLog") }}
+            </button>
+            <button
+                data-testid="submission-form-leftnav-healthcare-professional-name"
+                :class="{ 'bg-secondary': activeSection === ModSubmissionLeftNavbarSectionIDs.HealthcareProfessionalName,
+                          'bg-primary-inverted': activeSection !== ModSubmissionLeftNavbarSectionIDs.HealthcareProfessionalName }"
+                class="w-full py-4 my-2 text-sm text-start pl-2 rounded border-b-2 border-tertiary-bg"
+                @click="scrollToSectionOfForm(ModSubmissionLeftNavbarSectionIDs.HealthcareProfessionalName)"
+            >
+                {{ $t("modPanelSubmissionLeftNavbar.healthcareProfessionalName") }}
+            </button>
+            <button
+                data-testid="submission-form-leftnav-healthcare-professional-medical-info"
+                :class="{ 'bg-secondary': activeSection === ModSubmissionLeftNavbarSectionIDs.HealthcareProfessionalMedicalInfo,
+                          'bg-primary-inverted': activeSection
+                              !== ModSubmissionLeftNavbarSectionIDs.HealthcareProfessionalMedicalInfo }"
+                class="w-full py-4 my-2 text-sm text-start pl-2 rounded border-b-2 border-tertiary-bg"
+                @click="scrollToSectionOfForm(ModSubmissionLeftNavbarSectionIDs.HealthcareProfessionalMedicalInfo)"
+            >
+                {{ $t("modPanelSubmissionLeftNavbar.healthcareProfessionalMedicalInfo") }}
             </button>
         </div>
     </div>
@@ -84,6 +103,14 @@ const modLeftNavElementIdArray: SectionInformation[]
        {
            sectionTitle: 'change-log',
            sectionElementIdToScrollTo: ModSubmissionLeftNavbarSectionIDs.ChangeLog
+       },
+       {
+           sectionTitle: 'healthcare-professional-name',
+           sectionElementIdToScrollTo: ModSubmissionLeftNavbarSectionIDs.HealthcareProfessionalName
+       },
+       {
+           sectionTitle: 'healthcare-professional-medical-info',
+           sectionElementIdToScrollTo: ModSubmissionLeftNavbarSectionIDs.HealthcareProfessionalMedicalInfo
        }]
 
 onMounted(() => {

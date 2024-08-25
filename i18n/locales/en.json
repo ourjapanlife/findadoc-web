@@ -125,16 +125,20 @@
         "rejected": "Rejected",
         "submissions": "Submissions"
     },
-    "modPanelFacilitySubmissionLeftNavbar": {
+    "modPanelSubmissionLeftNavbar": {
         "addresses": "Addresses",
         "changeLog": "Change log",
         "contactInformation":"Contact Information",
         "facilityNameUnknown": "Facility Name Unknown",
         "googleMapsInformation": "Google maps information",
-        "healthcareProfessionalIds": "Healthcare Professional IDs"
+        "healthcareProfessionalIds": "Healthcare Professional IDs",
+        "healthcareProfessionalName": "Healthcare Professional Name",
+        "healthcareProfessionalMedicalInfo": "Healthcare Professional Medical Info"
     },
     "modEditSubmissionTopNav": {
         "saveAndExit": "Save & Exit",
+        "saving": "Saving...",
+        "retryMessage": "Something’s not right. Retrying in {seconds}s...",
         "approve": "Approve",
         "reject": "Reject"
     },
@@ -151,10 +155,19 @@
         "underReview": "Under Review"
     },
     "modSubmissionForm": {
+        "addHealthCareProfessionalLocaleName": "Add Name by Locale",
         "addresses": "Addresses",
+        "clickToRemoveHealthCareProfessionalName": "Click on a row to remove a name",
         "contactInformation": "Contact Information",
+        "facilityHeading": "Facility Information",
         "googleMapsInformation": "Google maps information",
+        "healthcareProfessionalHeading": "Healthcare Professional Information",
+        "healthcareProfessionalMedicalInfoHeading": "Healthcare Professional Medical Info",
+        "healthcareProfessionalNameHeading": "Healthcare Professional Name",
         "healthcareProfessionalId": "Healthcare Professional IDs",
+        "inputErrorMessageHealthcareProfessionalFirstName": "Invalid First Name",
+        "inputErrorMessageHealthcareProfessionalLastName": "Invalid Last Name",
+        "inputErrorMessageHealthcareProfessionalMiddleName": "Invalid Middle Name",
         "inputErrorMessageFacilityAddressLine1Jp": "Invalid Japanese Address",
         "inputErrorMessageFacilityAddressLine2Jp": "Invalid Japanese Address",
         "inputErrorMessageFacilityAddressLine1En": "Invalid English Address",
@@ -187,6 +200,13 @@
         "labelFacilityGoogleMapsUrl": "Google maps URL",
         "labelFacilityMapLatitude": "Map latitude",
         "labelFacilityMapLongitude": "Map longitude",
+        "labelHealthcareProfessionalFirstName": "First Name",
+        "labelHealthcareProfessionalLastName": "Last Name",
+        "labelHealthcareProfessionalMiddleName": "Middle Name",
+        "labelHealthcareProfessionalNameLocale": "Name Locale",
+        "placeholderTextHealthcareProfessionalFirstName": "e.g. John",
+        "placeholderTextHealthcareProfessionalLastName": "e.g. Doe",
+        "placeholderTextHealthcareProfessionalMiddleName": "e.g. Bronson",
         "placeholderTextFacilityAddressLine1En": "Street address",
         "placeholderTextFacilityAddressLine2En": "Apartment, building, room...",
         "placeholderTextFacilityAddressLine1Jp": "Street address",
@@ -202,6 +222,11 @@
         "placeholderTextFacilityNameJp": "e.g. 立川中央病院",
         "placeholderTextFacilityPhoneNumber": "e.g. 08xxxxxxxxx",
         "placeholderTextFacilityPostalCode": "e.g. 186-0000",
-        "placeholderTextFacilityWebsite": "e.g. http://www.example.com/"
+        "placeholderTextFacilityWebsite": "e.g. http://www.example.com/",
+        "selectDegrees": "Degrees",
+        "selectInsurances": "Accepted Insurances",
+        "selectLocales": "Select Locales Spoken",
+        "selectSpecialties": "Specialties",
+        "submitButtonText": "Submit"
     }
 }

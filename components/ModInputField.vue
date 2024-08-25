@@ -23,6 +23,9 @@
 
 <script setup lang="ts">
 import { ref, type Ref, defineModel, watch, nextTick } from 'vue'
+import { useI18n } from '#imports'
+
+const { t } = useI18n()
 
 const isTheInputValueValid: Ref<boolean> = ref(true)
 const validationCheckedPreviously: Ref<boolean> = ref(false)
@@ -44,8 +47,12 @@ const props = defineProps({
     }
 })
 
+const labelsToOnlyValidateOnBlur = [t('modSubmissionForm.labelHealthcareProfessionalLastName'), t('modSubmissionForm.labelHealthcareProfessionalFirstName'), t('modSubmissionForm.labelHealthcareProfessionalMiddleName')]
+
 const initialValidationCheck = async () => {
-    validationCheckedPreviously.value = true
+    if (!labelsToOnlyValidateOnBlur.includes(props.label)) {
+        validationCheckedPreviously.value = true
+    }
     await nextTick()
     isTheInputValueValid.value = props.inputValidationCheck(model.value)
 }

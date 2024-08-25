@@ -24,9 +24,13 @@
         <div class="flex flex-row justify p-2 font-bold ">
             <button
                 class="flex justify-center items-center rounded-full bg-secondary-bg border-primary-text-muted
-                border-2 w-28 text-sm mr-2 "
+                border-2 w-28 text-sm mr-2"
+                data-testid="submission-topNav-saveAndExit"
+                @click="saveAndExit"
             >
-                {{ $t('modEditSubmissionTopNav.saveAndExit') }}
+                <span>
+                    {{ $t('modEditSubmissionTopNav.saveAndExit') }}
+                </span>
             </button>
             <button
                 class="flex justify-center items-center rounded-full bg-secondary-bg border-primary border-2 w-28 text-sm mr-2 "
@@ -69,6 +73,10 @@ const copySubmissionId = async () => {
     } catch (err: unknown) {
         console.error(`Failed to copy submission ID ${selectedSubmissionId.value}: ${err}`)
     }
+}
+
+const saveAndExit = () => {
+    moderationSubmissionStore.setUpdatingMutationFromTopBar(true)
 }
 
 const acceptSubmission = () => {
