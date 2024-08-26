@@ -662,10 +662,14 @@ async function submitForm(e: Event) {
             updateFacilitySubmissionGqlMutation,
             submissionInputVariables
         )
-        router.push('/moderation')
+        if (moderationSubmissionStore.updatingMutationFromTopBar) {
+            moderationSubmissionStore.setUpdatingMutationFromTopBar(false)
+            router.push('/moderation')
+        }
     } catch (error) {
         console.error('Failed to update submission:', error)
         moderationSubmissionStore.setDidMutationFail(true)
+        moderationSubmissionStore.setUpdatingMutationFromTopBar(false)
     }
 }
 
@@ -709,8 +713,8 @@ onMounted(() => {
 })
 
 const updateFacilitySubmissionGqlMutation = gql`
-mutation Mutation($updateSubmissionId: ID!, $input: UpdateSubmissionInput!) {
-  updateSubmission(id: $updateSubmissionId, input: $input) {
+mutation Mutation($id: ID!, $input: UpdateSubmissionInput!) {
+  updateSubmission(id: $id, input: $input) {
     isUnderReview
     facility {
       id
