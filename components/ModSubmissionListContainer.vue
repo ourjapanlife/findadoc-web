@@ -30,7 +30,7 @@
                     class="grid grid-cols-subgrid col-span-4 bg-tertiary-bg cursor-pointer hover:bg-primary"
                     @click="handleClickToSubmissionForm(submission.id)"
                 >
-                    <nuxt-link
+                    <NuxtLink
                         :to="`/moderation/edit-submission/${submission.id}`"
                         class="grid grid-cols-subgrid col-span-4 bg-primary-text-muted p-1 hover:bg-primary"
                     >
@@ -40,7 +40,7 @@
                         </span>
                         <span class="text-start">{{ convertDateToLocalTime(submission.updatedDate) }}</span>
                         <span class="text-start">{{ convertDateToLocalTime(submission.createdDate) }}</span>
-                    </nuxt-link>
+                    </NuxtLink>
                 </div>
             </div>
         </div>
@@ -59,7 +59,7 @@
                     class="grid grid-cols-subgrid col-span-4 bg-tertiary-bg cursor-pointer hover:bg-primary"
                     @click="handleClickToFacilityForm(facility.id)"
                 >
-                    <nuxt-link
+                    <NuxtLink
                         :to="`/moderation/edit-facility/${facility.id}`"
                         class="grid grid-cols-subgrid col-span-4 bg-primary-text-muted p-1 hover:bg-primary"
                     >
@@ -69,7 +69,7 @@
                         </span>
                         <span class="text-start">{{ convertDateToLocalTime(facility.updatedDate) }}</span>
                         <span class="text-start">{{ convertDateToLocalTime(facility.createdDate) }}</span>
-                    </nuxt-link>
+                    </NuxtLink>
                 </div>
             </div>
         </div>
@@ -89,7 +89,7 @@
                     class="grid grid-cols-subgrid col-span-4 bg-tertiary-bg cursor-pointer hover:bg-primary"
                     @click="handleClickToHealthcareProfessionalForm(healthcareProfessional.id)"
                 >
-                    <nuxt-link
+                    <NuxtLink
                         :to="`/moderation/edit-healthcare-professional/${healthcareProfessional.id}`"
                         class="grid grid-cols-subgrid col-span-4 bg-primary-text-muted p-1 hover:bg-primary"
                     >
@@ -99,7 +99,7 @@
                         </span>
                         <span class="text-start">{{ convertDateToLocalTime(healthcareProfessional.updatedDate) }}</span>
                         <span class="text-start">{{ convertDateToLocalTime(healthcareProfessional.createdDate) }}</span>
-                    </nuxt-link>
+                    </NuxtLink>
                 </div>
             </div>
         </div>
