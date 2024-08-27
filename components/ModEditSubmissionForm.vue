@@ -14,7 +14,7 @@
             <button
                 type="button"
                 class="bg-primary p-4 rounded-full my-8 font-semibold text-xl"
-                @click="submitForm"
+                @click="submitCompletedForm"
             >
                 {{ $t('modSubmissionForm.submissionConfirmationAcceptanceButton') }}
             </button>
@@ -36,7 +36,6 @@
 
     <form
         class="p-4 h-full overflow-y-auto"
-        @submit="submitForm"
     >
         <div
             :id="ModSubmissionLeftNavbarSectionIDs.ContactInformation"
@@ -47,9 +46,7 @@
             >
                 {{ $t('modSubmissionForm.facilityHeading') }}
             </h1>
-            <span
-                class="mb-3.5 text-center text-primary-text text-2xl font-bold font-sans leading-normal"
-            >
+            <span class="mb-3.5 text-center text-primary-text text-2xl font-bold font-sans leading-normal">
                 {{ $t('modSubmissionForm.contactInformation') }}
             </span>
             <ModInputField
@@ -228,7 +225,6 @@
                 :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityAddressLine2Ja')"
             />
         </div>
-
         <div
             :id="ModSubmissionLeftNavbarSectionIDs.GoogleMapsInformation"
             class="submission-form-section"
@@ -268,14 +264,7 @@
                 :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityMapLongitude')"
             />
         </div>
-        <ModHealthcareProfessionalSearchbar
-            data-testid="submission-form-doctor-search"
-        />
-        <h1
-            class="mb-3.5 text-start text-primary-text text-3xl font-bold font-sans leading-normal"
-        >
-            {{ $t('modSubmissionForm.healthcareProfessionalHeading') }}
-        </h1>
+        <ModHealthcareProfessionalSearchbar data-testid="submission-form-doctor-search" />
         <h2
             :id="ModSubmissionLeftNavbarSectionIDs.HealthcareProfessionalName"
             class="submission-form-section mb-3.5 text-start text-primary-text text-2xl font-bold font-sans leading-normal"
@@ -289,9 +278,7 @@
                 :label="$t('modSubmissionForm.labelHealthcareProfessionalLastName')"
                 type="text"
                 :placeholder="$t('modSubmissionForm.placeholderTextHealthcareProfessionalLastName')"
-                :required="true"
-                :input-validation-check="validateUserSubmittedLastName"
-                :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageHealthcareProfessionalLastName')"
+                :required="false"
             />
             <ModInputField
                 v-model="submissionFormFields.localizedFirstName.value"
@@ -299,9 +286,7 @@
                 :label="$t('modSubmissionForm.labelHealthcareProfessionalFirstName')"
                 type="text"
                 :placeholder="$t('modSubmissionForm.placeholderTextHealthcareProfessionalFirstName')"
-                :required="true"
-                :input-validation-check="validateUserSubmittedFirstName"
-                :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageHealthcareProfessionalFirstName')"
+                :required="false"
             />
             <ModInputField
                 v-model="submissionFormFields.localizedMiddleName.value"
@@ -338,49 +323,48 @@
             >
                 {{ $t('modSubmissionForm.addHealthCareProfessionalLocaleName') }}
             </button>
-            <p
-                v-show="submissionFormFields.healthCareProfessionalNameArray.value.length"
-                class="mt-3.5 text-start text-nowrap text-xl font-bold font-sans leading-normal"
-            >
-                {{ $t("modSubmissionForm.clickToRemoveHealthCareProfessionalName") }}
-            </p>
             <div
-                v-show="submissionFormFields.healthCareProfessionalNameArray.value.length"
-                :class="`grid grid-cols-4 p-2`"
+                v-if="submissionFormFields.healthCareProfessionalNameArray.value.length"
+                class="flex flex-wrap"
             >
-                <div class="font-bold text-left p-1">
-                    {{ $t("modSubmissionForm.labelHealthcareProfessionalLastName") }}
-                </div>
-                <div class="font-bold text-left p-1">
-                    {{ $t("modSubmissionForm.labelHealthcareProfessionalFirstName") }}
-                </div>
-                <div class="font-bold text-left p-1">
-                    {{ $t("modSubmissionForm.labelHealthcareProfessionalMiddleName") }}
-                </div>
-                <div class="font-bold text-left p-1">
-                    {{ $t("modSubmissionForm.labelHealthcareProfessionalNameLocale") }}
-                </div>
                 <div
-                    v-if="submissionFormFields.healthCareProfessionalNameArray.value.length"
-                    class="grid grid-cols-subgrid col-span-4"
+                    v-for="(healthcareProfessionalName, index) in submissionFormFields.healthCareProfessionalNameArray.value"
+                    :key="`${healthcareProfessionalName.firstName}-${index}`"
+                    class="flex basis-1/3 justify-start items-center"
                 >
                     <div
-                        v-for="(healthcareProfessionalName, index) in submissionFormFields.healthCareProfessionalNameArray.value"
-                        :key="`${healthcareProfessionalName.firstName}-${index}`"
-                        class="grid grid-cols-subgrid col-span-4 bg-tertiary-bg"
+                        class="flex justify-center items-center rounded-lg p-3 border-2 border-primary"
+                        :data-testid="`mod-submission-list-item-${index + 1}`"
                     >
-                        <div
-                            :data-testid="`mod-submission-list-item-${index + 1}`"
-                            class="grid grid-cols-subgrid col-span-4 bg-tertiary-bg cursor-pointer hover:bg-primary"
+                        <div>
+                            <div class="flex font-bold">
+                                <SVGProfileIcon
+                                    role="img"
+                                    alt="profile icon"
+                                    title="profile icon"
+                                    class="profile-icon w-6 h-6 stroke-primary stroke-1 inline mx-1"
+                                />
+                                <span>{{ healthcareProfessionalName.lastName }}</span>
+                                <span class="mx-2">{{ healthcareProfessionalName.firstName }}</span>
+                                <span v-show="healthcareProfessionalName.middleName">
+                                    {{ healthcareProfessionalName.middleName }}
+                                </span>
+                            </div>
+                            <div
+                                class="w-fit px-2 py-[1px] my-2 border border-primary/40 rounded-full
+                                shadow text-sm text-center hover:bg-primary/20 transition-all"
+                            >
+                                {{ healthcareProfessionalName.locale }}
+                            </div>
+                        </div>
+                        <span
+                            class="flex items-center justify-center
+                            cursor-pointer font-bold text-secondary text-sm"
                             @click="() => handleRemoveHealthcareProfessionalName(index)"
                         >
-                            <span class="text-start">{{ healthcareProfessionalName.lastName }}</span>
-                            <span class="text-start">{{ healthcareProfessionalName.firstName }}</span>
-                            <span class="text-start">
-                                {{ healthcareProfessionalName.middleName }}
-                            </span>
-                            <span class="text-start">{{ healthcareProfessionalName.locale }}</span>
-                        </div>
+                            <SVGTrashCan class="flex items-center justify-center w-6 h-6" /> {{
+                                $t('modSubmissionForm.delete') }}
+                        </span>
                     </div>
                 </div>
             </div>
@@ -483,20 +467,40 @@
                     {{ locale }}
                 </option>
             </select>
-            <button
-                type="submit"
-                class="bg-currentColor text-white font-bold py-2 px-4 my-2 rounded w-56"
-                @click="submitForm"
-            >
-                {{ $t('modSubmissionForm.submitButtonText') }}
-            </button>
+        </div>
+        <button
+            type="submit"
+            class="bg-currentColor text-white font-bold py-2 px-4 my-2 rounded w-56"
+            @click="submitUpdatedSubmission"
+        >
+            {{ $t('modSubmissionForm.updateButtonText') }}
+        </button>
+        <div
+            v-show="modalStore.isOpen && moderationSubmissionStore.approvingSubmissionFromTopBar"
+            class="fixed top-0 left-0 flex items-center justify-center h-full w-full z-10 bg-secondary bg-opacity-40"
+        >
+            <Modal>
+                <div class="flex flex-col aspect-square h-96 items-center justify-around bg-primary-inverted p-10 rounded">
+                    <span class="font-bold text-3xl">
+                        {{ $t('modSubmissionForm.submissionConfirmationMessage') }}
+                    </span>
+                    <button
+                        type="button"
+                        class="bg-primary p-4 rounded-full my-8 font-semibold text-xl"
+                        @click="submitCompletedForm"
+                    >
+                        {{ $t('modSubmissionForm.submissionConfirmationAcceptanceButton') }}
+                    </button>
+                </div>
+            </Modal>
         </div>
     </form>
 </template>
 
 <script lang="ts" setup>
-import { onMounted, type Ref, ref, watch } from 'vue'
+import { type Ref, ref, watch, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { useToast, type ToastInterface } from 'vue-toastification'
 import { useModerationSubmissionsStore } from '~/stores/moderationSubmissionsStore'
 import { Locale,
     type Submission,
@@ -515,15 +519,22 @@ import { validateAddressLineEn,
     validateFloat,
     validatePostalCode,
     validateWebsite,
-    validateCityJa,
-    validateUserSubmittedFirstName,
-    validateUserSubmittedLastName } from '~/utils/formValidations'
+    validateCityJa } from '~/utils/formValidations'
 import { ModSubmissionLeftNavbarSectionIDs, useModerationScreenStore, ModerationScreen } from '~/stores/moderationScreenStore'
+import { onBeforeRouteLeave } from '#app'
+import { useI18n } from '#imports'
 import { multiSelectWithoutKeyboard } from '~/utils/multiSelectWithoutKeyboard'
 import { useModalStore } from '~/stores/modalStore'
-import { onBeforeRouteLeave } from '#app'
+import SVGTrashCan from '~/assets/icons/trash-can.svg'
+import SVGProfileIcon from '~/assets/icons/profile-icon.svg'
+import { triggerFormValidationErrorMessages } from '~/utils/triggerFormValidationErrorMessages'
 
+let toast: ToastInterface
+
+const { t } = useI18n()
 const router = useRouter()
+
+const moderationSubmissionStore = useModerationSubmissionsStore()
 const modalStore = useModalStore()
 const screenStore = useModerationScreenStore()
 
@@ -557,7 +568,9 @@ const submissionFormFields = {
     healthcareProfessionalAcceptedInsurances: ref([]) as Ref<Array<Insurance>>,
     healthcareProfessionalDegrees: ref([]) as Ref<Array<Degree>>,
     healthcareProfessionalSpecialties: ref([]) as Ref<Array<Specialty>>,
-    healthcareProfessionalLocales: ref([]) as Ref<Array<Locale>>
+    healthcareProfessionalLocales: ref([]) as Ref<Array<Locale>>,
+    isApproved: ref(false) as Ref<boolean>,
+    isUnderReview: ref(false) as Ref<boolean>
 } as { [key: string]: Ref }
 
 const submissionBeforeChanges: { [key: string]: (string | []) } = {}
@@ -586,8 +599,6 @@ const listPrefectureJapanJa: Ref<string[]> = ref([
     '兵庫県', '奈良県', '和歌山県', '鳥取県', '島根県', '岡山県', '広島県', '山口県', '徳島県', '香川県', '愛媛県',
     '高知県', '福岡県', '佐賀県', '長崎県', '熊本県', '大分県', '宮崎県', '鹿児島県', '沖縄県'])
 
-const moderationSubmissionStore = useModerationSubmissionsStore()
-
 const formSubmissionId = moderationSubmissionStore.selectedSubmissionId
 
 moderationSubmissionStore.filterSelectedSubmission(formSubmissionId)
@@ -615,7 +626,7 @@ const handleRemoveHealthcareProfessionalName = (index: number) => {
     submissionFormFields.healthCareProfessionalNameArray.value.splice(index, 1)
 }
 
-const validateFields = () => {
+const validateFacilityFields = () => {
     const isNameEnValid: boolean = validateNameEn(submissionFormFields.nameEn.value)
     const isNameJaValid: boolean = validateNameJa(submissionFormFields.nameJa.value)
     const isPhoneValid: boolean = validatePhoneNumber(submissionFormFields.phone.value)
@@ -631,22 +642,34 @@ const validateFields = () => {
     const isLatitudeValid: boolean = validateFloat(submissionFormFields.mapLatitude.value)
     const isLongitudeValid: boolean = validateFloat(submissionFormFields.mapLongitude.value)
 
-    return (
-        !isNameEnValid
-        || !isNameJaValid
-        || !isPhoneValid
-        || !isEmailValid
-        || !isWebsiteValid
-        || !isAddressLine1EnValid
-        || !isAddressLine2EnValid
-        || !isAddressLine1JaValid
-        || !isAddressLine2JaValid
-        || !isCityEnValid
-        || !isCityJaValid
-        || !isPostalCodeValid
-        || !isLatitudeValid
-        || !isLongitudeValid
-    )
+    //this will populate error messages if a field is not valid
+    triggerFormValidationErrorMessages('mod-input-field')
+
+    //This checks to make sure all the facility fields are valid.
+    // If they are we can return true and manipulate other parts of the code based on this value
+    const areAllTheFacilityFieldsValid = isNameEnValid && isNameJaValid && isPhoneValid && isEmailValid && isWebsiteValid
+      && isAddressLine1EnValid && isAddressLine2EnValid && isAddressLine1JaValid && isAddressLine2JaValid && isCityEnValid
+      && isCityJaValid && isPostalCodeValid && isLatitudeValid && isLongitudeValid
+        ? true
+        : false
+
+    return areAllTheFacilityFieldsValid
+}
+
+const validateHealthcareProfessionalFields = () => {
+    const areNamesSelectedToFacility: boolean
+        = submissionFormFields.healthCareProfessionalNameArray.value.length > 0
+        || submissionFormFields.healthcareProfessionalIDs.value.length > 0
+    const areInsurancesSelected: boolean = submissionFormFields.healthcareProfessionalAcceptedInsurances.value.length > 0
+    const areDegreesSelected: boolean = submissionFormFields.healthcareProfessionalDegrees.value.length > 0
+    const areSpecialtiesSelected: boolean = submissionFormFields.healthcareProfessionalSpecialties.value.length > 0
+    const areLocalesSelected: boolean = submissionFormFields.healthcareProfessionalLocales.value.length > 0
+
+    const areAllFieldsValid = areNamesSelectedToFacility
+      && areInsurancesSelected && areDegreesSelected
+      && areSpecialtiesSelected && areLocalesSelected
+
+    return areAllFieldsValid
 }
 
 function initializeSubmissionFormValues(submissionData: Submission | undefined) {
@@ -675,6 +698,36 @@ function initializeSubmissionFormValues(submissionData: Submission | undefined) 
                     submissionFormFields.googlemapsURL.value
                     = submissionData['facility']?.contact?.googleMapsUrl || submissionData['googleMapsUrl']
                     break
+                case 'healthcareProfessionals':
+                    submissionFormFields.healthCareProfessionalNameArray.value
+                    = submissionData?.healthcareProfessionals?.[0]?.names
+                    ?? [{
+                        firstName: submissionData?.healthcareProfessionalName?.split(' ')[0] || '',
+                        lastName: submissionData?.healthcareProfessionalName?.split(' ')[1] || '',
+                        locale: Locale.Und
+                    }]
+                    submissionFormFields.healthcareProfessionalAcceptedInsurances.value
+                        = submissionData?.healthcareProfessionals?.[0]?.acceptedInsurance
+                        ?? []
+                    submissionFormFields.healthcareProfessionalDegrees.value
+                        = submissionData?.healthcareProfessionals?.[0]?.degrees
+                        ?? []
+                    submissionFormFields.healthcareProfessionalSpecialties.value
+                        = submissionData?.healthcareProfessionals?.[0]?.specialties
+                        ?? []
+                    submissionFormFields.healthcareProfessionalLocales.value
+                        = submissionData?.healthcareProfessionals?.[0]?.spokenLanguages
+                        ?? []
+                    break
+                case 'healthcareProfessionalIDs':
+                    submissionFormFields.healthcareProfessionalIDs.value
+                    = submissionData.facility?.healthcareProfessionalIds ?? []
+                    break
+                case 'isApproved':
+                    submissionFormFields.isApproved.value = submissionData.isApproved
+                    break
+                case 'isUnderReview':
+                    submissionFormFields.isUnderReview.value = submissionData.isUnderReview
             }
         }
     }
@@ -692,61 +745,130 @@ const submissionHasUnsavedChanges = () => {
     return false
 }
 
-async function submitForm(e: Event) {
+async function submitUpdatedSubmission(e: Event) {
     // Prevent form submission before validation is completed.
     e.preventDefault()
 
-    const isValid = validateFields()
-    if (!isValid) {
+    const isValidFacility = validateFacilityFields()
+    const isValidHealthcareProfessional = validateHealthcareProfessionalFields()
+
+    //This shows a toast and returns if the facility fields arent valid
+    if (!isValidFacility) {
+        toast.error(t('modSubmissionForm.errorMessageFacilityInputsInvalid'))
+        return
+    }
+
+    if (!isValidHealthcareProfessional) {
+        toast.error(t('modSubmissionForm.errorMessageHealthcareInputsInvalid'))
         return
     }
 
     const id = formSubmissionId || ''
 
     if (!id) {
-        console.error('Facility ID is required for updating the facility')
+        console.error(t('modSubmissionForm.errorMessageFacilityId'))
         return
     }
 
     const submissionInputVariables: MutationUpdateSubmissionArgs = {
-        id,
+        id: formSubmissionId,
         input: {
             isUnderReview: true,
             facility: {
-                nameEn: submissionFormFields.nameEn.value || '',
-                nameJa: submissionFormFields.nameJa.value || '',
+                nameEn: submissionFormFields.nameEn.value,
+                nameJa: submissionFormFields.nameJa.value,
                 contact: {
-                    googleMapsUrl: submissionFormFields.googlemapsURL.value || '',
-                    email: submissionFormFields.email.value || '',
-                    phone: submissionFormFields.phone.value || '',
-                    website: submissionFormFields.website.value || '',
+                    googleMapsUrl: submissionFormFields.googlemapsURL.value,
+                    email: submissionFormFields.email.value,
+                    phone: submissionFormFields.phone.value,
+                    website: submissionFormFields.website.value,
                     address: {
-                        postalCode: submissionFormFields.postalCode.value || '',
-                        prefectureEn: submissionFormFields.prefectureEn.value || '',
-                        cityEn: submissionFormFields.cityEn.value || '',
-                        addressLine1En: submissionFormFields.addressLine1En.value || '',
-                        addressLine2En: submissionFormFields.addressLine2En.value || '',
-                        prefectureJa: submissionFormFields.prefectureJa.value || '',
-                        cityJa: submissionFormFields.cityJa.value || '',
-                        addressLine1Ja: submissionFormFields.addressLine1Ja.value || '',
-                        addressLine2Ja: submissionFormFields.addressLine2Ja.value || ''
+                        postalCode: submissionFormFields.postalCode.value,
+                        prefectureEn: submissionFormFields.prefectureEn.value,
+                        cityEn: submissionFormFields.cityEn.value,
+                        addressLine1En: submissionFormFields.addressLine1En.value,
+                        addressLine2En: submissionFormFields.addressLine2En.value,
+                        prefectureJa: submissionFormFields.prefectureJa.value,
+                        cityJa: submissionFormFields.cityJa.value,
+                        addressLine1Ja: submissionFormFields.addressLine1Ja.value,
+                        addressLine2Ja: submissionFormFields.addressLine2Ja.value
                     }
                 },
                 healthcareProfessionalIds: [],
                 mapLatitude: parseFloat(submissionFormFields.mapLatitude.value) || 0,
                 mapLongitude: parseFloat(submissionFormFields.mapLongitude.value) || 0
-            }
+            },
+            healthcareProfessionals: [
+                {
+                    acceptedInsurance: submissionFormFields.healthcareProfessionalAcceptedInsurances.value,
+                    degrees: submissionFormFields.healthcareProfessionalDegrees.value,
+                    specialties: submissionFormFields.healthcareProfessionalSpecialties.value,
+                    spokenLanguages: submissionFormFields.healthcareProfessionalLocales.value,
+                    names: submissionFormFields.healthCareProfessionalNameArray.value,
+                    facilityIds: []
+                }
+            ]
         }
     }
+    try {
+        await moderationSubmissionStore.updateSubmission(submissionInputVariables)
+        toast.success(t('modSubmissionForm.successMessageUpdated'))
+    } catch (error) {
+        console.error('Failed to update submission:', error)
+        toast.error(t('modSubmissionForm.errorMessageUpdated'))
+        moderationSubmissionStore.setDidMutationFail(true)
+        moderationSubmissionStore.setUpdatingSubmissionFromTopBar(false)
+    }
+}
 
-    moderationSubmissionStore.updateSubmission(submissionInputVariables)
+async function submitCompletedForm(e: Event) {
+    // stop the form submitting before we validate
+    e.preventDefault()
+
+    //This prevents submission of an already approved submission the backend does this but as an extra visual and check
+    if (submissionFormFields.isApproved.value) {
+        toast.info(t('modSubmissionForm.infoMessageAlreadyApproved'))
+        return
+    }
+
+    if (!submissionFormFields.isUnderReview.value) {
+        toast.info(t('modSubmissionForm.infoMessageUpdateNeeded'))
+        return
+    }
+
+    const isValidFacility = validateFacilityFields()
+    const isValidHealthcareProfessional = validateHealthcareProfessionalFields()
+
+    //This shows a toast and returns if the facility fields arent valid
+    if (!isValidFacility) {
+        toast.error(t('modSubmissionForm.errorMessageFacilityInputsInvalid'))
+        return
+    }
+
+    if (!isValidHealthcareProfessional) {
+        toast.error(t('modSubmissionForm.errorMessageHealthcareInputsInvalid'))
+        return
+    }
+
+    try {
+        await moderationSubmissionStore.approveSubmission()
+        modalStore.hideModal()
+        toast.success(t('modSubmissionForm.successMessageApproved'))
+        router.push('/moderation')
+    } catch (error) {
+        console.error(t('modSubmissionForm.errorMessageCompletedForm'), error)
+        toast.error(t('modSubmissionForm.errorMessageCompletedForm'))
+        moderationSubmissionStore.setDidMutationFail(true)
+        moderationSubmissionStore.setApprovingSubmissionFromTopBar(false)
+    }
 }
 
 const syntheticEvent = new Event('submit', { bubbles: true, cancelable: true })
 
 watch(moderationSubmissionStore, newValue => {
+    //saves the submission by updating it and then going to the main
     if (newValue.updatingSubmissionFromTopBar) {
-        submitForm(syntheticEvent)
+        submitUpdatedSubmission(syntheticEvent)
     }
 })
 
@@ -779,6 +901,8 @@ onMounted(() => {
         submissionFormFields.healthcareProfessionalLocales,
         extractLocaleOptions
     )
+
+    toast = useToast()
 })
 
 const handleNavigateToModerationScreen = () => {
