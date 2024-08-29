@@ -1,5 +1,7 @@
 <template>
-    <div class="h-full flex flex-col">
+    <div
+        class="h-full flex flex-col"
+    >
         <div class="results-header flex flex-row ml-9 mr-5 mb-6 pt-5">
             <span class="flex-1 w-1/2 font-bold self-center">
                 {{ $t('searchResultsList.doctorsNearby') }}
@@ -36,7 +38,8 @@
         </div>
         <div
             v-else-if="hasResults"
-            class="landscape:overflow-y-scroll"
+            class="overflow-y-auto"
+            data-testid="search-results-list-container"
         >
             <div
                 id="searchResults"
@@ -46,6 +49,7 @@
                     v-for="(searchResult, index) in resultsStore.searchResultsList"
                     :key="index"
                     class="results-list flex flex-col"
+                    data-testid="search-results-list"
                     @click="resultsStore.setActiveSearchResult(searchResult.professional.id)"
                 >
                     <div
@@ -61,6 +65,7 @@
                                 : searchResult.facilities[0]?.nameEn"
                             :specialties="searchResult.professional.specialties"
                             :spoken-languages="searchResult.professional.spokenLanguages"
+                            :data-testid="`search-result-list-item-${index}`"
                         />
                     </div>
                 </div>
