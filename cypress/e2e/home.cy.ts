@@ -71,6 +71,7 @@ describe('Visits the home page', () => {
         })
 
         it('shows the last doctor of the search results', () => {
+            // ensure scrollable is set to false in case the list isn't long enough where the container needs to scroll
             cy.get('[data-testid="search-results-list-container"]').scrollTo('bottom', { ensureScrollable: false })
             //This finds the lenght of the div so that we know it is showing the final doctor in the search
             cy.get('[data-testid="search-results-list"]').its('length').then(length => {
@@ -154,6 +155,7 @@ describe('Visits the home page', () => {
         })
 
         it('shows the last doctor of the search results', () => {
+            // ensure scrollable is set to false in case the list isn't long enough where the container needs to scroll
             cy.get('[data-testid="search-results-list-container"]').scrollTo('bottom', { ensureScrollable: false })
             //This finds the lenght of the div so that we know it is showing the final doctor in the search
             cy.get('[data-testid="search-results-list"]').its('length').then(length => {
