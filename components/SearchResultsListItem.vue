@@ -53,8 +53,9 @@ import SVGProfileIcon from '~/assets/icons/profile-icon.svg'
 import SVGChatBubblesIcon from '~/assets/icons/chat-bubbles.svg'
 import { useLocaleStore } from '~/stores/localeStore.js'
 import { useSpecialtiesStore } from '~/stores/specialtiesStore.js'
+import type { Locale } from '~/typedefs/gqlTypes'
 
-const localStore = useLocaleStore()
+const localeStore = useLocaleStore()
 const specialtiesStore = useSpecialtiesStore()
 
 const props = defineProps({
@@ -75,7 +76,7 @@ const props = defineProps({
         required: true
     },
     spokenLanguages: {
-        type: Array,
+        type: Array<Locale>,
         required: true
     }
 })
@@ -92,14 +93,5 @@ const formattedSpecialties = computed(() => {
     return specialtiesDisplayText
 })
 
-const formattedLanguages = computed(() => {
-    const languagesDisplayText = props.spokenLanguages?.map(s => {
-        const languageDisplayText = localStore.localeDisplayOptions.find(
-            l => l.code === s
-        )?.simpleText
-        return languageDisplayText
-    })
-
-    return languagesDisplayText
-})
+const formattedLanguages = computed(() => localeStore.formatLanguages(props.spokenLanguages, localeStore.localeDisplayOptions))
 </script>
