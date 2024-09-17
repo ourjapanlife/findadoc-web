@@ -237,5 +237,13 @@
     "healthcareProfessionalIds": "Healthcare Professional IDs",
     "healthcareProfessionalName": "Healthcare Professional Name",
     "healthcareProfessionalMedicalInfo": "Healthcare Professional Medical Info"
+  },
+  "modDashboardTopbar": {
+    "placeholderText": "Enter name or ID to search",
+    "approved": "Approved",
+    "rejected": "Rejected",
+    "forReview": "For Review",
+    "healthcareProfessionals": "Healthcare Professionals",
+    "facilities": "Facilities"
   }
 }
