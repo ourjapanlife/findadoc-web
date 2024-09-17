@@ -1,25 +1,11 @@
 <template>
-    <div class="flex flex-row items-center justify-between">
+    <div class="flex items-center justify-between">
         <h1
-            v-if="moderationSubmissionsStore.selectedModerationListViewChosen === SelectedModerationListView.Submissions"
-            class="font-semibold text-xl mx-1"
+            class="displayed-section-header font-semibold text-xl mx-1"
         >
-            {{ updateTextForSubmissionDashboard(moderationSubmissionsStore.selectedModerationListViewTabChosen) }}
+            {{ updateTextForModerationDashboard(moderationSubmissionsStore.selectedModerationListViewChosen) }}
         </h1>
-        <h1
-            v-else-if="moderationSubmissionsStore.selectedModerationListViewChosen === SelectedModerationListView.Facilities"
-            class="font-semibold text-xl mx-1"
-        >
-            {{ $t("modDashboardTopbar.facilities") }}
-        </h1>
-        <h1
-            v-else-if="moderationSubmissionsStore.selectedModerationListViewChosen
-                === SelectedModerationListView.HealthcareProfessionals"
-            class="font-semibold text-xl mx-1"
-        >
-            {{ $t("modDashboardTopbar.healthcareProfessionals") }}
-        </h1>
-        <div class="flex flex-col mt-4">
+        <div class="dashboard-search flex flex-col mt-4">
             <div class="justify-start items-start flex">
                 <input
                     type="text"
@@ -44,6 +30,22 @@ import SVGLookingGlass from '~/assets/icons/looking-glass.svg'
 
 const { t } = useI18n()
 const moderationSubmissionsStore = useModerationSubmissionsStore()
+
+const updateTextForModerationDashboard = (
+    selectedView: SelectedModerationListView,
+    selectedTab = moderationSubmissionsStore.selectedModerationListViewTabChosen
+) => {
+    switch (selectedView) {
+        case SelectedModerationListView.Submissions:
+            return updateTextForSubmissionDashboard(selectedTab)
+        case SelectedModerationListView.Facilities:
+            return t('modDashboardTopbar.facilities')
+        case SelectedModerationListView.HealthcareProfessionals:
+            return t('modDashboardTopbar.healthcareProfessionals')
+        default:
+            return ''
+    }
+}
 
 const updateTextForSubmissionDashboard = (selectedTab: SelectedSubmissionListViewTab) => {
     switch (selectedTab) {
