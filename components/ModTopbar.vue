@@ -2,9 +2,7 @@
     <!-- styling will change from px to rm -->
     <div class="h-[76px] w-full">
         <div v-if="moderationScreenStore.activeScreen === ModerationScreen.Dashboard">
-            <p class="text-xl font-bold">
-                TOPBAR MODERATION DASHBOARD
-            </p>
+            <ModDashboardTopbar />
         </div>
         <div
             v-else-if="moderationScreenStore.activeScreen === ModerationScreen.EditSubmission"

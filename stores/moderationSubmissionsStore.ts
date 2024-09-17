@@ -34,6 +34,8 @@ export const useModerationSubmissionsStore = defineStore(
         const filteredSubmissionDataForListComponent: Ref<Submission[]> = ref([])
         const didMutationFail: Ref<boolean> = ref(false)
         const updatingMutationFromTopBar: Ref<boolean> = ref(false)
+        const selectedModerationListViewTabChosen: Ref<SelectedSubmissionListViewTab>
+        = ref(SelectedSubmissionListViewTab.ForReview)
 
         function setUpdatingMutationFromTopBar(newValue: boolean) {
             updatingMutationFromTopBar.value = newValue
@@ -50,6 +52,10 @@ export const useModerationSubmissionsStore = defineStore(
 
         function setSelectedModerationListViewChosen(selectedOption: SelectedModerationListView) {
             selectedModerationListViewChosen.value = selectedOption
+        }
+
+        function setSelectedModerationListViewTabChosen(selectedOption: SelectedSubmissionListViewTab) {
+            selectedModerationListViewTabChosen.value = selectedOption
         }
 
         function filterSelectedSubmission(submissionId: string | undefined) {
@@ -89,7 +95,9 @@ export const useModerationSubmissionsStore = defineStore(
             selectedFacilityId,
             selectedHealthcareProfessionalId,
             updatingMutationFromTopBar,
-            setUpdatingMutationFromTopBar }
+            setUpdatingMutationFromTopBar,
+            selectedModerationListViewTabChosen,
+            setSelectedModerationListViewTabChosen }
     }
 )
 

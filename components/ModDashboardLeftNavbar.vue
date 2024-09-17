@@ -70,12 +70,15 @@ const updateSubmissionListViewState = (submissionListViewOptionValue: SelectedSu
     switch (submissionListViewOptionValue) {
         case SelectedSubmissionListViewTab.Approved:
             moderationSubmissionsStore.filterSubmissionByStatus(SubmissionStatus.Approved)
+            moderationSubmissionsStore.setSelectedModerationListViewTabChosen(SelectedSubmissionListViewTab.Approved)
             break
         case SelectedSubmissionListViewTab.ForReview:
             moderationSubmissionsStore.filterSubmissionByStatus(SubmissionStatus.InReview)
+            moderationSubmissionsStore.setSelectedModerationListViewTabChosen(SelectedSubmissionListViewTab.ForReview)
             break
         case SelectedSubmissionListViewTab.Rejected:
             moderationSubmissionsStore.filterSubmissionByStatus(SubmissionStatus.Rejected)
+            moderationSubmissionsStore.setSelectedModerationListViewTabChosen(SelectedSubmissionListViewTab.Rejected)
             break
     }
 }
