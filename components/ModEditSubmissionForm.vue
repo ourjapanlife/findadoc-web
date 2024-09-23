@@ -1,4 +1,23 @@
 <template>
+    <div
+        v-show="modalStore.isOpen"
+        class="fixed top-0 left-0 flex items-center justify-center h-full w-full z-10 bg-secondary bg-opacity-40"
+    >
+        <Modal
+
+            class=" min-h-20 min-w-20"
+        >
+            <div class="flex flex-col aspect-square h-96 items-center justify-around bg-primary-inverted p-10 rounded">
+                <span class="font-bold text-3xl">{{ $t('modSubmissionForm.confirmationModal') }}</span>
+                <button
+                    class="bg-secondary p-4 rounded-full my-8 font-semibold text-xl hover:bg-primary"
+                    @click="handleConfirmationOfBack"
+                >
+                    {{ $t('modSubmissionForm.confirmationButton') }}
+                </button>
+            </div>
+        </Modal>
+    </div>
     <form
         class="p-4 h-full overflow-y-auto"
         @submit="submitForm"
@@ -463,14 +482,19 @@
 import { onMounted, type Ref, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { gql } from 'graphql-request'
+import Modal from './Modal.vue'
 import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql.js'
 import { useModerationSubmissionsStore } from '~/stores/moderationSubmissionsStore'
 import { Locale, type Submission, type MutationUpdateSubmissionArgs, type LocalizedNameInput, Insurance, Degree, Specialty } from '~/typedefs/gqlTypes'
 import { validateAddressLineEn, validateAddressLineJp, validateNameEn, validateNameJp, validatePhoneNumber, validateCityEn, validateEmail, validateFloat, validatePostalCode, validateWebsite, validateCityJp, validateUserSubmittedFirstName, validateUserSubmittedLastName } from '~/utils/formValidations'
-import { ModSubmissionLeftNavbarSectionIDs } from '~/stores/moderationScreenStore'
+import { ModSubmissionLeftNavbarSectionIDs, useModerationScreenStore, ModerationScreen } from '~/stores/moderationScreenStore'
 import { multiSelectWithoutKeyboard } from '~/utils/multiSelectWithoutKeyboard'
+import { useModalStore } from '~/stores/modalStore'
+import { onBeforeRouteLeave } from '#app'
 
 const router = useRouter()
+const modalStore = useModalStore()
+const screenStore = useModerationScreenStore()
 
 // contactFields
 const nameEn: Ref<string> = ref('')
@@ -663,7 +687,6 @@ async function submitForm(e: Event) {
             submissionInputVariables
         )
         if (moderationSubmissionStore.updatingMutationFromTopBar) {
-            moderationSubmissionStore.setUpdatingMutationFromTopBar(false)
             router.push('/moderation')
         }
     } catch (error) {
@@ -710,6 +733,27 @@ onMounted(() => {
         healthcareProfessionalLocales,
         extractLocaleOptions
     )
+})
+
+// This handler function confirms that the user wants to return to the mod page, updates the modal state, updates the active screen and the visible url and router path so that the onBeforeRouteLeave function works as intended. If you don't update the route using push, the logic for the leave handler breaks.
+const handleConfirmationOfBack = () => {
+    modalStore.hideModal()
+    screenStore.setActiveScreen(ModerationScreen.Dashboard)
+    router.push('/moderation')
+}
+// Checks to see whether the save and exit button is clicked, if it has not been clicked the second if block runs and opens the modal.
+onBeforeRouteLeave(async (to, _, next) => {
+    if (moderationSubmissionStore.updatingMutationFromTopBar) {
+        moderationSubmissionStore.setUpdatingMutationFromTopBar(false)
+        next()
+        return
+    }
+    if (to.path === '/moderation' && !moderationSubmissionStore.updatingMutationFromTopBar) {
+        modalStore.showModal()
+        next(false)
+        return
+    }
+    next()
 })
 
 const updateFacilitySubmissionGqlMutation = gql`
