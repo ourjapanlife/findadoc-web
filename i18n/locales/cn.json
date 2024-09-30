@@ -226,7 +226,9 @@
     "selectInsurances": "Accepted Insurances",
     "selectSpecialties": "Specialties",
     "selectDegrees": "Degrees",
-    "selectLocales": "Select Locales Spoken"
+    "selectLocales": "Select Locales Spoken",
+    "confirmationButton": "Leave Page",
+    "confirmationModal": "Are you sure you want to leave?"
   },
   "modPanelSubmissionLeftNavbar": {
     "addresses": "Addresses",
