@@ -76,11 +76,11 @@ const copySubmissionId = async () => {
 }
 
 const saveAndExit = () => {
-    moderationSubmissionStore.setUpdatingMutationFromTopBar(true)
+    moderationSubmissionStore.setUpdatingSubmissionFromTopBar(true)
 }
 
 const acceptSubmission = () => {
-    console.log('You are accepted')
+    moderationSubmissionStore.setApprovingSubmissionFromTopBar(true)
 }
 
 const rejectSubmission = async () => {

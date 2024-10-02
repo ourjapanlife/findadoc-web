@@ -686,20 +686,20 @@ async function submitForm(e: Event) {
             updateFacilitySubmissionGqlMutation,
             submissionInputVariables
         )
-        if (moderationSubmissionStore.updatingMutationFromTopBar) {
+        if (moderationSubmissionStore.updatingSubmissionFromTopBar) {
             router.push('/moderation')
         }
     } catch (error) {
         console.error('Failed to update submission:', error)
         moderationSubmissionStore.setDidMutationFail(true)
-        moderationSubmissionStore.setUpdatingMutationFromTopBar(false)
+        moderationSubmissionStore.setUpdatingSubmissionFromTopBar(false)
     }
 }
 
 const syntheticEvent = new Event('submit', { bubbles: true, cancelable: true })
 
 watch(moderationSubmissionStore, newValue => {
-    if (newValue.updatingMutationFromTopBar) {
+    if (newValue.updatingSubmissionFromTopBar) {
         submitForm(syntheticEvent)
     }
 })
@@ -743,12 +743,12 @@ const handleConfirmationOfBack = () => {
 }
 // Checks to see whether the save and exit button is clicked, if it has not been clicked the second if block runs and opens the modal.
 onBeforeRouteLeave(async (to, _, next) => {
-    if (moderationSubmissionStore.updatingMutationFromTopBar) {
-        moderationSubmissionStore.setUpdatingMutationFromTopBar(false)
+    if (moderationSubmissionStore.updatingSubmissionFromTopBar) {
+        moderationSubmissionStore.setUpdatingSubmissionFromTopBar(false)
         next()
         return
     }
-    if (to.path === '/moderation' && !moderationSubmissionStore.updatingMutationFromTopBar) {
+    if (to.path === '/moderation' && !moderationSubmissionStore.updatingSubmissionFromTopBar) {
         modalStore.showModal()
         next(false)
         return
