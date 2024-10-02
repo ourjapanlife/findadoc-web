@@ -85,11 +85,6 @@ export default defineNuxtConfig({
         link: [{ rel: 'icon', type: 'image/x-icon', href: '/assets/favicon.ico' }]
     },
 
-    //On build this will transpile the module to be available in deployment
-    build: {
-        transpile: ['vue-toastification']
-    },
-
     // Global CSS: https://go.nuxtjs.dev/config-css
     css: ['~/assets/css/tailwind.css'],
 
@@ -104,7 +99,8 @@ export default defineNuxtConfig({
         '@pinia/nuxt',
         'nuxt-viewport',
         'nuxt-svgo',
-        '@nuxt/eslint'
+        '@nuxt/eslint',
+        '@/modules/vue-toastification-module'
     ],
     eslint: {
         config: {
