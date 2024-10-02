@@ -14,7 +14,7 @@
             :type="type"
             :placeholder="placeholder"
             :required="required"
-            class="mb-5 px-3 py-3.5 w-96 h-12 bg-secondary-bg rounded-lg border border-primary-text-muted
+            class="mod-input-field mb-5 px-3 py-3.5 w-96 h-12 bg-secondary-bg rounded-lg border border-primary-text-muted
             text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
             @blur="initialValidationCheck"
         >
@@ -22,7 +22,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, type Ref, defineModel, watch, nextTick } from 'vue'
+import { ref, type Ref, watch, nextTick } from 'vue'
 import { useI18n } from '#imports'
 
 const { t } = useI18n()
@@ -41,10 +41,7 @@ const props = defineProps({
     placeholder: String,
     required: Boolean,
     invalidInputErrorMessage: String,
-    inputValidationCheck: {
-        type: Function,
-        required: true
-    }
+    inputValidationCheck: Function
 })
 
 const labelsToOnlyValidateOnBlur = [t('modSubmissionForm.labelHealthcareProfessionalLastName'), t('modSubmissionForm.labelHealthcareProfessionalFirstName'), t('modSubmissionForm.labelHealthcareProfessionalMiddleName')]
@@ -54,13 +51,15 @@ const initialValidationCheck = async () => {
         validationCheckedPreviously.value = true
     }
     await nextTick()
-    isTheInputValueValid.value = props.inputValidationCheck(model.value)
+    if (props.inputValidationCheck) {
+        isTheInputValueValid.value = props.inputValidationCheck(model.value)
+    }
 }
 
 watch(
     () => model.value,
     () => {
-        if (validationCheckedPreviously.value) {
+        if (validationCheckedPreviously.value && props.inputValidationCheck) {
             isTheInputValueValid.value = props.inputValidationCheck(model.value)
         }
     }
