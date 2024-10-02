@@ -23,6 +23,7 @@
         </div>
         <div class="flex flex-row justify p-2 font-bold ">
             <button
+                type="button"
                 class="flex justify-center items-center rounded-full bg-secondary-bg border-primary-text-muted
                 border-2 w-28 text-sm mr-2"
                 data-testid="submission-topNav-saveAndExit"
@@ -33,6 +34,7 @@
                 </span>
             </button>
             <button
+                type="button"
                 class="flex justify-center items-center rounded-full bg-secondary-bg border-primary border-2 w-28 text-sm mr-2 "
                 @click="rejectSubmission"
             >
@@ -40,6 +42,7 @@
                     $t('modEditSubmissionTopNav.reject') }}
             </button>
             <button
+                type="button"
                 class="flex justify-center items-center rounded-full bg-primary w-28 text-primary-inverted text-sm mr-2 "
                 @click="acceptSubmission"
             >
