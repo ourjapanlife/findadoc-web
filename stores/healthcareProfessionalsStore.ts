@@ -41,12 +41,12 @@ async function queryHealthcareProfessionals() {
 
 export async function getHealthcareProfessionalById(id: string) {
     try {
-        const healthcareProfessionalId = {
+        const queryData = {
             healthcareProfessionalId: id
         }
         const result = await gqlClient.request<{ healthcareProfessional: HealthcareProfessional[] }>(
             getHealthcareProfessionalByIdGqlQuery,
-            healthcareProfessionalId
+            queryData
         )
 
         if (!result.healthcareProfessional) {
