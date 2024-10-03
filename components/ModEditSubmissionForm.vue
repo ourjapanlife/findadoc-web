@@ -7,7 +7,25 @@
 
             class=" min-h-20 min-w-20"
         >
-            <div class="flex flex-col aspect-square h-96 items-center justify-around bg-primary-inverted p-10 rounded">
+            <div
+                v-if="moderationSubmissionStore.approvingSubmissionFromTopBar"
+                class="flex flex-col aspect-square h-96 items-center justify-around bg-primary-inverted p-10 rounded"
+            >
+                <span class="font-bold text-3xl">
+                    {{ $t('modSubmissionForm.submissionConfirmationMessage') }}
+                </span>
+                <button
+                    type="button"
+                    class="bg-primary p-4 rounded-full my-8 font-semibold text-xl"
+                    @click="submitForm"
+                >
+                    {{ $t('modSubmissionForm.submissionConfirmationAcceptanceButton') }}
+                </button>
+            </div>
+            <div
+                v-else
+                class="flex flex-col aspect-square h-96 items-center justify-around bg-primary-inverted p-10 rounded"
+            >
                 <span class="font-bold text-3xl">{{ $t('modSubmissionForm.confirmationModal') }}</span>
                 <button
                     class="bg-secondary p-4 rounded-full my-8 font-semibold text-xl hover:bg-primary"
@@ -482,7 +500,6 @@
 import { onMounted, type Ref, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { gql } from 'graphql-request'
-import Modal from './Modal.vue'
 import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql.js'
 import { useModerationSubmissionsStore } from '~/stores/moderationSubmissionsStore'
 import { Locale, type Submission, type MutationUpdateSubmissionArgs, type LocalizedNameInput, Insurance, Degree, Specialty } from '~/typedefs/gqlTypes'
