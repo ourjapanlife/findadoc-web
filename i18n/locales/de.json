@@ -138,7 +138,9 @@
     "approve": "Genehmigen",
     "reject": "Ablehnen",
     "saving": "Saving...",
-    "retryMessage": "Something’s not right. Retrying in {seconds}s..."
+    "retryMessage": "Something’s not right. Retrying in {seconds}s...",
+    "confirmSubmissionRejection": "Yes, reject submission",
+    "rejectSubmission": "Are you sure you want to reject this submission?"
   },
   "modPanelSubmissionList": {
     "approved": "Genehmigt",
