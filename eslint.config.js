@@ -170,7 +170,6 @@ export default withNuxt(
                 {
                     code: 130,
                     comments: 130,
-                    // ignoreComments: true,
                     ignoreTrailingComments: true,
                     ignoreUrls: true,
                     ignoreStrings: true,
