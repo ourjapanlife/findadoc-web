@@ -752,13 +752,18 @@ onMounted(() => {
     )
 })
 
-// This handler function confirms that the user wants to return to the mod page, updates the modal state, updates the active screen and the visible url and router path so that the onBeforeRouteLeave function works as intended. If you don't update the route using push, the logic for the leave handler breaks.
+/* This handler function confirms that the user wants to return to the mod page, updates the modal state, updates the active
+screen and the visible url and router path so that the onBeforeRouteLeave function works as intended.
+If you don't update the route using push, the logic for the leave handler breaks.
+*/
 const handleConfirmationOfBack = () => {
     modalStore.hideModal()
     screenStore.setActiveScreen(ModerationScreen.Dashboard)
     router.push('/moderation')
 }
-// Checks to see whether the save and exit button is clicked, if it has not been clicked the second if block runs and opens the modal.
+/* Checks to see whether the save and exit button is clicked,if it has not been clickedthe second if block runs
+and opens the modal.
+*/
 onBeforeRouteLeave(async (to, _, next) => {
     if (moderationSubmissionStore.updatingSubmissionFromTopBar) {
         moderationSubmissionStore.setUpdatingSubmissionFromTopBar(false)

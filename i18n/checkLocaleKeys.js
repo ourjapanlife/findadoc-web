@@ -73,8 +73,8 @@ const insertMissingKeysAndValues = (targetObject, keyPath, value) => {
 
 /**
 The following function is used to combine the previous functions to insert keys value pairs from the English file if they are not
-currently present in the other translation files. This will set the other files to have English translations unless the translations
-are later updated into their native language by a contributor.
+currently present in the other translation files. This will set the other files to have English translations unless
+the translations are later updated into their native language by a contributor.
 * @param {Array} localeFilesWithoutEnFileName - All the files that are not the english file
 * @param {Record<string>} enFileContent - The content from the en.json file
 * @param {string[]} referenceKeys - keys in the en.json file

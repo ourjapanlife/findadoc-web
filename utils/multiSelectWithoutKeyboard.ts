@@ -2,7 +2,8 @@ import { type Ref, ref } from 'vue'
 /**
  * @param {string} elementOrClassSelector This uses # or . before the string in order to extract the options
  * @param {Ref<Array<T>> }arrayToUpdate defaults to an empty ref if one isn't provided as one to update from the component
- * @param {(option: HTMLOptionElement) => T} extractOption - This is a provided function to extract the value from the option element. This function should return a value of type T in order to be flexible with typing.
+ * @param {(option: HTMLOptionElement) => T} extractOption - This is a provided function to extractthe value from the
+ * option element.This function should return a value of type T in order to be flexible with typing.
  * @returns {void} This function is being used to update a Ref so returns void
  */
 export const multiSelectWithoutKeyboard = <T extends string>(
