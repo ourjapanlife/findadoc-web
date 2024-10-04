@@ -68,6 +68,7 @@ Have a look at the [CONTRIBUTING](/CONTRIBUTING.md) and [CODE_OF_CONDUCT](/CODE_
 
 ### Code Style
 
+- [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/#summary)
 - [ESLint](https://eslint.org/)
 - [EditorConfig](https://editorconfig.org)
 
