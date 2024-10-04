@@ -169,7 +169,7 @@ export default withNuxt(
                 'error',
                 {
                     code: 130,
-                    ignoreComments: true,
+                    comments: 130,
                     ignoreTrailingComments: true,
                     ignoreUrls: true,
                     ignoreStrings: true,
