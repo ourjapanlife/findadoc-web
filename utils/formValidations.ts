@@ -15,12 +15,12 @@ export function validateNameEn(nameEn: string): boolean {
     return true
 }
 
-export function validateNameJp(nameJp: string): boolean {
-    if (nameJp.length < 1 || nameJp.length > 128) {
+export function validateNameJa(nameJa: string): boolean {
+    if (nameJa.length < 1 || nameJa.length > 128) {
         return false
     }
 
-    const containsLatinCharacters: boolean = hasLatinCharacters(nameJp)
+    const containsLatinCharacters: boolean = hasLatinCharacters(nameJa)
 
     if (containsLatinCharacters) {
         return false
@@ -90,12 +90,12 @@ export function validateAddressLineEn(addressLineEn: string): boolean {
     return true
 }
 
-export function validateAddressLineJp(addressLineJp: string): boolean {
-    if (addressLineJp.length < 1 || addressLineJp.length > 128) {
+export function validateAddressLineJa(addressLineJa: string): boolean {
+    if (addressLineJa.length < 1 || addressLineJa.length > 128) {
         return false
     }
 
-    const containsLatinCharacters: boolean = hasLatinCharacters(addressLineJp)
+    const containsLatinCharacters: boolean = hasLatinCharacters(addressLineJa)
 
     if (containsLatinCharacters) {
         return false
@@ -118,12 +118,12 @@ export function validateCityEn(cityEn: string): boolean {
     return true
 }
 
-export function validateCityJp(cityJp: string): boolean {
-    if (cityJp.length < 1 || cityJp.length > 64) {
+export function validateCityJa(cityJa: string): boolean {
+    if (cityJa.length < 1 || cityJa.length > 64) {
         return false
     }
 
-    const containsLatinCharacters: boolean = hasLatinCharacters(cityJp)
+    const containsLatinCharacters: boolean = hasLatinCharacters(cityJa)
 
     if (containsLatinCharacters) {
         return false

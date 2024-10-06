@@ -65,14 +65,14 @@
                 :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityNameEn')"
             />
             <ModInputField
-                v-model="nameJp"
-                data-testid="submission-form-nameJp"
-                :label="$t('modSubmissionForm.labelFacilityNameJp')"
+                v-model="nameJa"
+                data-testid="submission-form-nameJa"
+                :label="$t('modSubmissionForm.labelFacilityNameJa')"
                 type="text"
-                :placeholder="$t('modSubmissionForm.placeholderTextFacilityNameJp')"
+                :placeholder="$t('modSubmissionForm.placeholderTextFacilityNameJa')"
                 :required="true"
-                :input-validation-check="validateNameJp"
-                :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityNameJp')"
+                :input-validation-check="validateNameJa"
+                :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityNameJa')"
             />
             <ModInputField
                 v-model="phone"
@@ -181,18 +181,18 @@
                     for="Prefecture Japan"
                     class="mb-2 text-primary-text text-sm font-bold font-sans"
                 >
-                    {{ $t('modSubmissionForm.labelFacilityPrefectureJp') }}
+                    {{ $t('modSubmissionForm.labelFacilityPrefectureJa') }}
                 </label>
                 <select
                     id="1"
-                    v-model="prefectureJp"
-                    data-testid="submission-form-prefectureJp"
+                    v-model="prefectureJa"
+                    data-testid="submission-form-prefectureJa"
                     name="Prefecture Japan"
                     class="mb-5 px-3 py-3.5 w-96 h-12 bg-secondary-bg rounded-lg border border-primary-text-muted
                     text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
                 >
                     <option
-                        v-for="(prefecture, index) in listPrefectureJapanJp"
+                        v-for="(prefecture, index) in listPrefectureJapanJa"
                         :key="index"
                     >
                         {{ prefecture }}
@@ -200,34 +200,34 @@
                 </select>
             </div>
             <ModInputField
-                v-model="cityJp"
-                data-testid="submission-form-cityJp"
-                :label="$t('modSubmissionForm.labelFacilityCityJp')"
+                v-model="cityJa"
+                data-testid="submission-form-cityJa"
+                :label="$t('modSubmissionForm.labelFacilityCityJa')"
                 type="text"
-                :placeholder="$t('modSubmissionForm.placeholderTextFacilityCityJp')"
+                :placeholder="$t('modSubmissionForm.placeholderTextFacilityCityJa')"
                 :required="true"
-                :input-validation-check="validateCityJp"
-                :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityCityJp')"
+                :input-validation-check="validateCityJa"
+                :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityCityJa')"
             />
             <ModInputField
-                v-model="addressLine1Jp"
-                data-testid="submission-form-addressLine1Jp"
-                :label="$t('modSubmissionForm.labelFacilityAddressLine1Jp')"
+                v-model="addressLine1Ja"
+                data-testid="submission-form-addressLine1Ja"
+                :label="$t('modSubmissionForm.labelFacilityAddressLine1Ja')"
                 type="text"
-                :placeholder="$t('modSubmissionForm.placeholderTextFacilityAddressLine1Jp')"
+                :placeholder="$t('modSubmissionForm.placeholderTextFacilityAddressLine1Ja')"
                 :required="true"
-                :input-validation-check="validateAddressLineJp"
-                :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityAddressLine1Jp')"
+                :input-validation-check="validateAddressLineJa"
+                :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityAddressLine1Ja')"
             />
             <ModInputField
-                v-model="addressLine2Jp"
-                data-testid="submission-form-addressLine2Jp"
-                :label="$t('modSubmissionForm.labelFacilityAddressLine2Jp')"
+                v-model="addressLine2Ja"
+                data-testid="submission-form-addressLine2Ja"
+                :label="$t('modSubmissionForm.labelFacilityAddressLine2Ja')"
                 type="text"
-                :placeholder="$t('modSubmissionForm.placeholderTextFacilityAddressLine2Jp')"
+                :placeholder="$t('modSubmissionForm.placeholderTextFacilityAddressLine2Ja')"
                 :required="true"
-                :input-validation-check="validateAddressLineJp"
-                :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityAddressLine2Jp')"
+                :input-validation-check="validateAddressLineJa"
+                :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityAddressLine2Ja')"
             />
         </div>
 
@@ -503,7 +503,7 @@ import { gql } from 'graphql-request'
 import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql.js'
 import { useModerationSubmissionsStore } from '~/stores/moderationSubmissionsStore'
 import { Locale, type Submission, type MutationUpdateSubmissionArgs, type LocalizedNameInput, Insurance, Degree, Specialty } from '~/typedefs/gqlTypes'
-import { validateAddressLineEn, validateAddressLineJp, validateNameEn, validateNameJp, validatePhoneNumber, validateCityEn, validateEmail, validateFloat, validatePostalCode, validateWebsite, validateCityJp, validateUserSubmittedFirstName, validateUserSubmittedLastName } from '~/utils/formValidations'
+import { validateAddressLineEn, validateAddressLineJa, validateNameEn, validateNameJa, validatePhoneNumber, validateCityEn, validateEmail, validateFloat, validatePostalCode, validateWebsite, validateCityJa, validateUserSubmittedFirstName, validateUserSubmittedLastName } from '~/utils/formValidations'
 import { ModSubmissionLeftNavbarSectionIDs, useModerationScreenStore, ModerationScreen } from '~/stores/moderationScreenStore'
 import { multiSelectWithoutKeyboard } from '~/utils/multiSelectWithoutKeyboard'
 import { useModalStore } from '~/stores/modalStore'
@@ -515,7 +515,7 @@ const screenStore = useModerationScreenStore()
 
 // contactFields
 const nameEn: Ref<string> = ref('')
-const nameJp: Ref<string> = ref('')
+const nameJa: Ref<string> = ref('')
 const phone: Ref<string> = ref('')
 const website: Ref<string> = ref('')
 const email: Ref<string> = ref('')
@@ -525,10 +525,10 @@ const prefectureEn: Ref<string> = ref('')
 const cityEn: Ref<string> = ref('')
 const addressLine1En: Ref<string> = ref('')
 const addressLine2En: Ref<string> = ref('')
-const prefectureJp: Ref<string> = ref('')
-const cityJp: Ref<string> = ref('')
-const addressLine1Jp: Ref<string> = ref('')
-const addressLine2Jp: Ref<string> = ref('')
+const prefectureJa: Ref<string> = ref('')
+const cityJa: Ref<string> = ref('')
+const addressLine1Ja: Ref<string> = ref('')
+const addressLine2Ja: Ref<string> = ref('')
 // googleMapsFields
 const googlemapsURL: Ref<string> = ref('')
 const mapLatitude: Ref<string> = ref('')
@@ -555,7 +555,7 @@ const localeOptions = Object.values(Locale) as Locale[]
 const extractLocaleOptions = (option: HTMLOptionElement): Locale => option.value as Locale
 
 const listPrefectureJapanEn: Ref<string[]> = ref(['Hokkaido', 'Aomori', 'Iwate', 'Miyagi', 'Akita', 'Yamagata', 'Fukushima', 'Ibaraki', 'Tochigi', 'Gumma', 'Saitama', 'Chiba', 'Tokyo', 'Kanagawa', 'Niigata', 'Toyama', 'Ishikawa', 'Fukui', 'Yamanashi', 'Nagano', 'Gifu', 'Shizuoka', 'Aichi', 'Mie', 'Shiga', 'Kyoto', 'Osaka', 'Hyogo', 'Nara', 'Wakayama', 'Tottori', 'Shimane', 'Okayama', 'Hiroshima', 'Yamaguchi', 'Tokushima', 'Kagawa', 'Ehime', 'Kochi', 'Fukuoka', 'Saga', 'Nagasaki', 'Kumamoto', 'Oita', 'Miyazaki', 'Kagoshima', 'Okinawa'])
-const listPrefectureJapanJp: Ref<string[]> = ref(['北海道', '青森県', '岩手県', '宮城県', '秋田県', '山形県', '福島県', '茨城県', '栃木県', '群馬県', '埼玉県', '千葉県', '東京都', '神奈川県', '新潟県', '富山県', '石川県', '福井県', '山梨県', '長野県', '岐阜県', '静岡県', '愛知県', '三重県', '滋賀県', '京都府', '大阪府', '兵庫県', '奈良県', '和歌山県', '鳥取県', '島根県', '岡山県', '広島県', '山口県', '徳島県', '香川県', '愛媛県', '高知県', '福岡県', '佐賀県', '長崎県', '熊本県', '大分県', '宮崎県', '鹿児島県', '沖縄県'])
+const listPrefectureJapanJa: Ref<string[]> = ref(['北海道', '青森県', '岩手県', '宮城県', '秋田県', '山形県', '福島県', '茨城県', '栃木県', '群馬県', '埼玉県', '千葉県', '東京都', '神奈川県', '新潟県', '富山県', '石川県', '福井県', '山梨県', '長野県', '岐阜県', '静岡県', '愛知県', '三重県', '滋賀県', '京都府', '大阪府', '兵庫県', '奈良県', '和歌山県', '鳥取県', '島根県', '岡山県', '広島県', '山口県', '徳島県', '香川県', '愛媛県', '高知県', '福岡県', '佐賀県', '長崎県', '熊本県', '大分県', '宮崎県', '鹿児島県', '沖縄県'])
 
 const moderationSubmissionStore = useModerationSubmissionsStore()
 
@@ -588,32 +588,32 @@ const handleRemoveHealthcareProfessionalName = (index: number) => {
 
 const validateFields = () => {
     const isNameEnValid: boolean = validateNameEn(nameEn.value)
-    const isNameJpValid: boolean = validateNameJp(nameJp.value)
+    const isNameJaValid: boolean = validateNameJa(nameJa.value)
     const isPhoneValid: boolean = validatePhoneNumber(phone.value)
     const isEmailValid: boolean = validateEmail(email.value)
     const isWebsiteValid: boolean = validateWebsite(website.value)
     const isAddressLine1EnValid: boolean = validateAddressLineEn(addressLine1En.value)
     const isAddressLine2EnValid: boolean = validateAddressLineEn(addressLine2En.value)
-    const isAddressLine1JpValid: boolean = validateAddressLineJp(addressLine1Jp.value)
-    const isAddressLine2JpValid: boolean = validateAddressLineJp(addressLine2Jp.value)
+    const isAddressLine1JaValid: boolean = validateAddressLineJa(addressLine1Ja.value)
+    const isAddressLine2JaValid: boolean = validateAddressLineJa(addressLine2Ja.value)
     const isCityEnValid: boolean = validateCityEn(cityEn.value)
-    const isCityJpValid: boolean = validateCityJp(cityJp.value)
+    const isCityJaValid: boolean = validateCityJa(cityJa.value)
     const isPostalCodeValid: boolean = validatePostalCode(postalCode.value)
     const isLatitudeValid: boolean = validateFloat(mapLatitude.value)
     const isLongitudeValid: boolean = validateFloat(mapLongitude.value)
 
     return (
         !isNameEnValid
-        || !isNameJpValid
+        || !isNameJaValid
         || !isPhoneValid
         || !isEmailValid
         || !isWebsiteValid
         || !isAddressLine1EnValid
         || !isAddressLine2EnValid
-        || !isAddressLine1JpValid
-        || !isAddressLine2JpValid
+        || !isAddressLine1JaValid
+        || !isAddressLine2JaValid
         || !isCityEnValid
-        || !isCityJpValid
+        || !isCityJaValid
         || !isPostalCodeValid
         || !isLatitudeValid
         || !isLongitudeValid
@@ -626,7 +626,7 @@ function autofillEditSubmissionForm(submissionData: Submission | undefined) {
             switch (key) {
                 case 'facility':
                     nameEn.value = submissionData['facility']?.nameEn || ''
-                    nameJp.value = submissionData['facility']?.nameJa || ''
+                    nameJa.value = submissionData['facility']?.nameJa || ''
                     phone.value = submissionData['facility']?.contact?.phone || ''
                     email.value = submissionData['facility']?.contact?.email || ''
                     website.value = submissionData['facility']?.contact?.website || ''
@@ -635,10 +635,10 @@ function autofillEditSubmissionForm(submissionData: Submission | undefined) {
                     cityEn.value = submissionData['facility']?.contact?.address.cityEn || ''
                     addressLine1En.value = submissionData['facility']?.contact?.address.addressLine1En || ''
                     addressLine2En.value = submissionData['facility']?.contact?.address.addressLine2En || ''
-                    prefectureJp.value = submissionData['facility']?.contact?.address.prefectureJa || ''
-                    cityJp.value = submissionData['facility']?.contact?.address.cityJa || ''
-                    addressLine1Jp.value = submissionData['facility']?.contact?.address.addressLine1Ja || ''
-                    addressLine2Jp.value = submissionData['facility']?.contact?.address.addressLine2Ja || ''
+                    prefectureJa.value = submissionData['facility']?.contact?.address.prefectureJa || ''
+                    cityJa.value = submissionData['facility']?.contact?.address.cityJa || ''
+                    addressLine1Ja.value = submissionData['facility']?.contact?.address.addressLine1Ja || ''
+                    addressLine2Ja.value = submissionData['facility']?.contact?.address.addressLine2Ja || ''
                     mapLatitude.value = submissionData['facility']?.mapLatitude?.toString() || ''
                     mapLongitude.value = submissionData['facility']?.mapLongitude?.toString() || ''
                     break
@@ -672,7 +672,7 @@ async function submitForm(e: Event) {
             isUnderReview: true,
             facility: {
                 nameEn: nameEn.value || '',
-                nameJa: nameJp.value || '',
+                nameJa: nameJa.value || '',
                 contact: {
                     googleMapsUrl: googlemapsURL.value || '',
                     email: email.value || '',
@@ -684,10 +684,10 @@ async function submitForm(e: Event) {
                         cityEn: cityEn.value || '',
                         addressLine1En: addressLine1En.value || '',
                         addressLine2En: addressLine2En.value || '',
-                        prefectureJa: prefectureJp.value || '',
-                        cityJa: cityJp.value || '',
-                        addressLine1Ja: addressLine1Jp.value || '',
-                        addressLine2Ja: addressLine2Jp.value || ''
+                        prefectureJa: prefectureJa.value || '',
+                        cityJa: cityJa.value || '',
+                        addressLine1Ja: addressLine1Ja.value || '',
+                        addressLine2Ja: addressLine2Ja.value || ''
                     }
                 },
                 healthcareProfessionalIds: [],
