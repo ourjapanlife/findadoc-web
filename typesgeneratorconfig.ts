@@ -5,7 +5,10 @@ const config: CodegenConfig = {
     schema: 'https://api.findadoc.jp',
     generates: {
         './typedefs/gqlTypes.ts': {
-            plugins: ['typescript', 'typescript-resolvers']
+            plugins: ['typescript', 'typescript-resolvers'],
+            config: {
+                useTypeImports: true
+            }
         }
     },
     debug: true
