@@ -54,7 +54,8 @@ export const observeFormSections = (
 
             //This will go through each entry in order to set the current section to the ID of the intersecting section
             entries.forEach((entry: IntersectionObserverEntry) => {
-                //  This returns early if the entry is not intersecting or if the intersection ratio is below the threshold we give as a parameter
+                /*  This returns early if the entry is not intersecting or if the intersection ratio is below the
+                threshold we give as a parameter */
                 if (!entry.isIntersecting || entry.intersectionRatio < thresholdValue) {
                     return
                 }

@@ -59,8 +59,10 @@ import { gql } from 'graphql-request'
 import SVGCopyContent from '~/assets/icons/content-copy.svg'
 import SVGSuccessCheckMark from '~/assets/icons/checkmark-square.svg'
 import { useModerationSubmissionsStore } from '~/stores/moderationSubmissionsStore'
+import { useModalStore } from '~/stores/modalStore'
 import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql'
 
+const modalStore = useModalStore()
 const moderationSubmissionStore = useModerationSubmissionsStore()
 const selectedSubmissionId: Ref<string> = ref(moderationSubmissionStore.selectedSubmissionId)
 
@@ -84,6 +86,7 @@ const saveAndExit = () => {
 
 const acceptSubmission = () => {
     moderationSubmissionStore.setApprovingSubmissionFromTopBar(true)
+    modalStore.showModal()
 }
 
 const rejectSubmission = async () => {
