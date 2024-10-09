@@ -1,41 +1,40 @@
 <template>
-    <div
+    <Modal
         v-show="modalStore.isOpen"
-        class="fixed top-0 left-0 flex items-center justify-center h-full w-full z-10 bg-secondary bg-opacity-40"
+        data-testid="submission-form-modal"
+        class=" min-h-20 min-w-20 fixed top-0 left-0 flex items-center justify-center h-full w-full z-10
+         bg-secondary bg-opacity-40"
     >
-        <Modal
-
-            class=" min-h-20 min-w-20"
+        <div
+            v-if="moderationSubmissionStore.approvingSubmissionFromTopBar"
+            class="flex flex-col aspect-square h-96 items-center justify-around bg-primary-inverted p-10 rounded"
         >
-            <div
-                v-if="moderationSubmissionStore.approvingSubmissionFromTopBar"
-                class="flex flex-col aspect-square h-96 items-center justify-around bg-primary-inverted p-10 rounded"
+            <span class="font-bold text-3xl">
+                {{ $t('modSubmissionForm.submissionConfirmationMessage') }}
+            </span>
+            <button
+                type="button"
+                class="bg-primary p-4 rounded-full my-8 font-semibold text-xl"
+                @click="submitForm"
             >
-                <span class="font-bold text-3xl">
-                    {{ $t('modSubmissionForm.submissionConfirmationMessage') }}
-                </span>
-                <button
-                    type="button"
-                    class="bg-primary p-4 rounded-full my-8 font-semibold text-xl"
-                    @click="submitForm"
-                >
-                    {{ $t('modSubmissionForm.submissionConfirmationAcceptanceButton') }}
-                </button>
-            </div>
-            <div
-                v-else
-                class="flex flex-col aspect-square h-96 items-center justify-around bg-primary-inverted p-10 rounded"
+                {{ $t('modSubmissionForm.submissionConfirmationAcceptanceButton') }}
+            </button>
+        </div>
+        <div
+            v-else
+            class="flex flex-col aspect-square h-96 items-center justify-around bg-primary-inverted p-10 rounded"
+        >
+            <span class="font-bold text-3xl">{{ $t('modSubmissionForm.hasUnsavedChanges') }}</span>
+            <button
+                data-testid="submission-form-modal-confirmation-btn"
+                class="bg-secondary p-4 rounded-full my-8 font-semibold text-xl hover:bg-primary"
+                @click="handleNavigateToModerationScreen"
             >
-                <span class="font-bold text-3xl">{{ $t('modSubmissionForm.confirmationModal') }}</span>
-                <button
-                    class="bg-secondary p-4 rounded-full my-8 font-semibold text-xl hover:bg-primary"
-                    @click="handleConfirmationOfBack"
-                >
-                    {{ $t('modSubmissionForm.confirmationButton') }}
-                </button>
-            </div>
-        </Modal>
-    </div>
+                {{ $t('modSubmissionForm.confirmationButton') }}
+            </button>
+        </div>
+    </Modal>
+
     <form
         class="p-4 h-full overflow-y-auto"
         @submit="submitForm"
@@ -55,7 +54,7 @@
                 {{ $t('modSubmissionForm.contactInformation') }}
             </span>
             <ModInputField
-                v-model="nameEn"
+                v-model="submissionFormFields.nameEn.value"
                 data-testid="submission-form-nameEn"
                 :label="$t('modSubmissionForm.labelFacilityNameEn')"
                 type="text"
@@ -65,7 +64,7 @@
                 :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityNameEn')"
             />
             <ModInputField
-                v-model="nameJa"
+                v-model="submissionFormFields.nameJa.value"
                 data-testid="submission-form-nameJa"
                 :label="$t('modSubmissionForm.labelFacilityNameJa')"
                 type="text"
@@ -75,7 +74,7 @@
                 :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityNameJa')"
             />
             <ModInputField
-                v-model="phone"
+                v-model="submissionFormFields.phone.value"
                 data-testid="submission-form-phone"
                 :label="$t('modSubmissionForm.labelFacilityPhoneNumber')"
                 type="text"
@@ -85,7 +84,7 @@
                 :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityPhoneNumber')"
             />
             <ModInputField
-                v-model="email"
+                v-model="submissionFormFields.email.value"
                 data-testid="submission-form-email"
                 :label="$t('modSubmissionForm.labelFacilityEmail')"
                 type="email"
@@ -95,7 +94,7 @@
                 :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityEmail')"
             />
             <ModInputField
-                v-model="website"
+                v-model="submissionFormFields.website.value"
                 data-testid="submission-form-website"
                 :label="$t('modSubmissionForm.labelFacilityWebsite')"
                 type="url"
@@ -114,7 +113,7 @@
                 {{ $t('modSubmissionForm.addresses') }}
             </span>
             <ModInputField
-                v-model="postalCode"
+                v-model="submissionFormFields.postalCode.value"
                 data-testid="submission-form-postalCode"
                 :label="$t('modSubmissionForm.labelFacilityPostalCode')"
                 type="text"
@@ -132,7 +131,7 @@
                 </label>
                 <select
                     id="1"
-                    v-model="prefectureEn"
+                    v-model="submissionFormFields.prefectureEn.value"
                     data-testid="submission-form-prefectureEn"
                     name="Prefecture Japan"
                     class="mb-5 px-3 py-3.5 w-96 h-12 bg-secondary-bg rounded-lg border border-primary-text-muted
@@ -147,7 +146,7 @@
                 </select>
             </div>
             <ModInputField
-                v-model="cityEn"
+                v-model="submissionFormFields.cityEn.value"
                 data-testid="submission-form-cityEn"
                 :label="$t('modSubmissionForm.labelFacilityCityEn')"
                 type="text"
@@ -157,7 +156,7 @@
                 :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityCityEn')"
             />
             <ModInputField
-                v-model="addressLine1En"
+                v-model="submissionFormFields.addressLine1En.value"
                 data-testid="submission-form-addressLine1En"
                 :label="$t('modSubmissionForm.labelFacilityAddressLine1En')"
                 type="text"
@@ -167,7 +166,7 @@
                 :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityAddressLine1En')"
             />
             <ModInputField
-                v-model="addressLine2En"
+                v-model="submissionFormFields.addressLine2En.value"
                 data-testid="submission-form-addressLine2En"
                 :label="$t('modSubmissionForm.labelFacilityAddressLine2En')"
                 type="text"
@@ -185,7 +184,7 @@
                 </label>
                 <select
                     id="1"
-                    v-model="prefectureJa"
+                    v-model="submissionFormFields.prefectureJa.value"
                     data-testid="submission-form-prefectureJa"
                     name="Prefecture Japan"
                     class="mb-5 px-3 py-3.5 w-96 h-12 bg-secondary-bg rounded-lg border border-primary-text-muted
@@ -200,7 +199,7 @@
                 </select>
             </div>
             <ModInputField
-                v-model="cityJa"
+                v-model="submissionFormFields.cityJa.value"
                 data-testid="submission-form-cityJa"
                 :label="$t('modSubmissionForm.labelFacilityCityJa')"
                 type="text"
@@ -210,7 +209,7 @@
                 :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityCityJa')"
             />
             <ModInputField
-                v-model="addressLine1Ja"
+                v-model="submissionFormFields.addressLine1Ja.value"
                 data-testid="submission-form-addressLine1Ja"
                 :label="$t('modSubmissionForm.labelFacilityAddressLine1Ja')"
                 type="text"
@@ -220,7 +219,7 @@
                 :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityAddressLine1Ja')"
             />
             <ModInputField
-                v-model="addressLine2Ja"
+                v-model="submissionFormFields.addressLine2Ja.value"
                 data-testid="submission-form-addressLine2Ja"
                 :label="$t('modSubmissionForm.labelFacilityAddressLine2Ja')"
                 type="text"
@@ -239,7 +238,7 @@
                 {{ $t('modSubmissionForm.googleMapsInformation') }}
             </span>
             <ModInputField
-                v-model="googlemapsURL"
+                v-model="submissionFormFields.googlemapsURL.value"
                 data-testid="submission-form-google-maps"
                 :label="$t('modSubmissionForm.labelFacilityGoogleMapsUrl')"
                 type="url"
@@ -247,10 +246,10 @@
                 :required="true"
                 :input-validation-check="validateWebsite"
                 :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityGoogleMapsUrl')"
-                :autofill-value="googlemapsURL"
+                :autofill-value="submissionFormFields.googlemapsURL.value"
             />
             <ModInputField
-                v-model="mapLatitude"
+                v-model="submissionFormFields.mapLatitude.value"
                 data-testid="submission-form-mapLatitude"
                 :label="$t('modSubmissionForm.labelFacilityMapLatitude')"
                 type="text"
@@ -260,7 +259,7 @@
                 :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityMapLatitude')"
             />
             <ModInputField
-                v-model="mapLongitude"
+                v-model="submissionFormFields.mapLongitude.value"
                 data-testid="submission-form-mapLongitude"
                 :label="$t('modSubmissionForm.labelFacilityMapLongitude')"
                 type="text"
@@ -286,7 +285,7 @@
         </h2>
         <div class="flex flex-col my-4">
             <ModInputField
-                v-model="localizedLastName"
+                v-model="submissionFormFields.localizedLastName.value"
                 data-testid="submission-form-last-name"
                 :label="$t('modSubmissionForm.labelHealthcareProfessionalLastName')"
                 type="text"
@@ -296,7 +295,7 @@
                 :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageHealthcareProfessionalLastName')"
             />
             <ModInputField
-                v-model="localizedFirstName"
+                v-model="submissionFormFields.localizedFirstName.value"
                 data-testid="submission-form-first-name"
                 :label="$t('modSubmissionForm.labelHealthcareProfessionalFirstName')"
                 type="text"
@@ -306,7 +305,7 @@
                 :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageHealthcareProfessionalFirstName')"
             />
             <ModInputField
-                v-model="localizedMiddleName"
+                v-model="submissionFormFields.localizedMiddleName.value"
                 data-testid="submission-form-middle-name"
                 :label="$t('modSubmissionForm.labelHealthcareProfessionalMiddleName')"
                 type="text"
@@ -320,7 +319,7 @@
                 {{ $t('modSubmissionForm.labelHealthcareProfessionalNameLocale') }}
             </label>
             <select
-                v-model="nameLocale"
+                v-model="submissionFormFields.nameLocale.value"
                 data-testid="submission-form-locale"
                 name="Name Locales"
                 class="mb-5 px-3 py-3.5 w-96 h-12 bg-secondary-bg rounded-lg border border-primary-text-muted
@@ -341,13 +340,13 @@
                 {{ $t('modSubmissionForm.addHealthCareProfessionalLocaleName') }}
             </button>
             <p
-                v-show="healthCareProfessionalNameArray.length"
+                v-show="submissionFormFields.healthCareProfessionalNameArray.value.length"
                 class="mt-3.5 text-start text-nowrap text-xl font-bold font-sans leading-normal"
             >
                 {{ $t("modSubmissionForm.clickToRemoveHealthCareProfessionalName") }}
             </p>
             <div
-                v-show="healthCareProfessionalNameArray.length"
+                v-show="submissionFormFields.healthCareProfessionalNameArray.value.length"
                 :class="`grid grid-cols-4 p-2`"
             >
                 <div class="font-bold text-left p-1">
@@ -363,11 +362,11 @@
                     {{ $t("modSubmissionForm.labelHealthcareProfessionalNameLocale") }}
                 </div>
                 <div
-                    v-if="healthCareProfessionalNameArray.length"
+                    v-if="submissionFormFields.healthCareProfessionalNameArray.value.length"
                     class="grid grid-cols-subgrid col-span-4"
                 >
                     <div
-                        v-for="(healthcareProfessionalName, index) in healthCareProfessionalNameArray"
+                        v-for="(healthcareProfessionalName, index) in submissionFormFields.healthCareProfessionalNameArray.value"
                         :key="`${healthcareProfessionalName.firstName}-${index}`"
                         class="grid grid-cols-subgrid col-span-4 bg-tertiary-bg"
                     >
@@ -400,7 +399,7 @@
             </label>
             <select
                 id="healthcare-professional-accepted-insurances"
-                v-model="healthcareProfessionalAcceptedInsurances"
+                v-model="submissionFormFields.healthcareProfessionalAcceptedInsurances.value"
                 data-testid="submission-form-accepted-insurances"
                 name="Accepted Insurances"
                 multiple
@@ -423,7 +422,7 @@
             </label>
             <select
                 id="healthcare-professional-degrees"
-                v-model="healthcareProfessionalDegrees"
+                v-model="submissionFormFields.healthcareProfessionalDegrees.value"
                 data-testid="submission-form-degrees"
                 name="Degrees"
                 multiple
@@ -446,7 +445,7 @@
             </label>
             <select
                 id="healthcare-professional-specialties"
-                v-model="healthcareProfessionalSpecialties"
+                v-model="submissionFormFields.healthcareProfessionalSpecialties.value"
                 data-testid="submission-form-specialties"
                 name="Specialties"
                 multiple
@@ -470,7 +469,7 @@
             </label>
             <select
                 id="healthcare-professional-locales"
-                v-model="healthcareProfessionalLocales"
+                v-model="submissionFormFields.healthcareProfessionalLocales.value"
                 data-testid="submission-form-locales"
                 name="Locales"
                 multiple
@@ -531,38 +530,40 @@ const router = useRouter()
 const modalStore = useModalStore()
 const screenStore = useModerationScreenStore()
 
-// Move all these values to the store
-// contactFields
+const submissionFormFields = {
+    // contactFields
+    nameEn: ref('') as Ref<string>,
+    nameJa: ref('') as Ref<string>,
+    phone: ref('') as Ref<string>,
+    website: ref('') as Ref<string>,
+    email: ref('') as Ref<string>,
+    // addressesFields
+    postalCode: ref('') as Ref<string>,
+    prefectureEn: ref('') as Ref<string>,
+    cityEn: ref('') as Ref<string>,
+    addressLine1En: ref('') as Ref<string>,
+    addressLine2En: ref('') as Ref<string>,
+    prefectureJa: ref('') as Ref<string>,
+    cityJa: ref('') as Ref<string>,
+    addressLine1Ja: ref('') as Ref<string>,
+    addressLine2Ja: ref('') as Ref<string>,
+    // googleMapsFields
+    googlemapsURL: ref('') as Ref<string>,
+    mapLatitude: ref('') as Ref<string>,
+    mapLongitude: ref('') as Ref<string>,
+    //healthcareProfessionalFields
+    healthCareProfessionalNameArray: ref([]) as Ref<Array<LocalizedNameInput>>,
+    localizedFirstName: ref('') as Ref<string>,
+    localizedLastName: ref('') as Ref<string>,
+    localizedMiddleName: ref('') as Ref<string>,
+    nameLocale: ref(Locale.EnUs) as Ref<Locale>,
+    healthcareProfessionalAcceptedInsurances: ref([]) as Ref<Array<Insurance>>,
+    healthcareProfessionalDegrees: ref([]) as Ref<Array<Degree>>,
+    healthcareProfessionalSpecialties: ref([]) as Ref<Array<Specialty>>,
+    healthcareProfessionalLocales: ref([]) as Ref<Array<Locale>>
+} as { [key: string]: Ref }
 
-const nameEn: Ref<string> = ref('')
-const nameJa: Ref<string> = ref('')
-const phone: Ref<string> = ref('')
-const website: Ref<string> = ref('')
-const email: Ref<string> = ref('')
-// addressesFields
-const postalCode: Ref<string> = ref('')
-const prefectureEn: Ref<string> = ref('')
-const cityEn: Ref<string> = ref('')
-const addressLine1En: Ref<string> = ref('')
-const addressLine2En: Ref<string> = ref('')
-const prefectureJa: Ref<string> = ref('')
-const cityJa: Ref<string> = ref('')
-const addressLine1Ja: Ref<string> = ref('')
-const addressLine2Ja: Ref<string> = ref('')
-// googleMapsFields
-const googlemapsURL: Ref<string> = ref('')
-const mapLatitude: Ref<string> = ref('')
-const mapLongitude: Ref<string> = ref('')
-//healthcareProfessionalFields
-const healthCareProfessionalNameArray: Ref<Array<LocalizedNameInput>> = ref([])
-const localizedFirstName: Ref<string> = ref('')
-const localizedLastName: Ref<string> = ref('')
-const localizedMiddleName: Ref<string> = ref('')
-const nameLocale: Ref<Locale> = ref(Locale.EnUs)
-const healthcareProfessionalAcceptedInsurances: Ref<Array<Insurance>> = ref([])
-const healthcareProfessionalDegrees: Ref<Array<Degree>> = ref([])
-const healthcareProfessionalSpecialties: Ref<Array<Specialty>> = ref([])
-const healthcareProfessionalLocales: Ref<Array<Locale>> = ref([])
+const submissionBeforeChanges: { [key: string]: (string | []) } = {}
 
 // Creating the necessary parts for the multi-select
 const insuranceOptions = Object.values(Insurance) as Insurance[]
@@ -594,44 +595,44 @@ const formSubmissionId = moderationSubmissionStore.selectedSubmissionId
 
 moderationSubmissionStore.filterSelectedSubmission(formSubmissionId)
 const formSubmissionData = moderationSubmissionStore.selectedSubmissionData
-autofillEditSubmissionForm(formSubmissionData)
+initializeSubmissionFormValues(formSubmissionData)
 
 const handleLocalizedNameToSubmission = () => {
     const localizedNameToAdd: LocalizedNameInput = {
-        firstName: localizedFirstName.value,
-        lastName: localizedLastName.value,
-        locale: nameLocale.value || Locale.EnUs,
-        middleName: localizedMiddleName.value
+        firstName: submissionFormFields.localizedFirstName.value,
+        lastName: submissionFormFields.localizedLastName.value,
+        locale: submissionFormFields.nameLocale.value || Locale.EnUs,
+        middleName: submissionFormFields.localizedMiddleName.value
     }
 
     if (localizedNameToAdd.firstName && localizedNameToAdd.lastName) {
-        healthCareProfessionalNameArray.value.push(localizedNameToAdd)
-        localizedFirstName.value = ''
-        localizedLastName.value = ''
-        localizedMiddleName.value = ''
-        nameLocale.value = Locale.EnUs
+        submissionFormFields.healthCareProfessionalNameArray.value.push(localizedNameToAdd)
+        submissionFormFields.localizedFirstName.value = ''
+        submissionFormFields.localizedLastName.value = ''
+        submissionFormFields.localizedMiddleName.value = ''
+        submissionFormFields.nameLocale.value = Locale.EnUs
     }
 }
 
 const handleRemoveHealthcareProfessionalName = (index: number) => {
-    healthCareProfessionalNameArray.value.splice(index, 1)
+    submissionFormFields.healthCareProfessionalNameArray.value.splice(index, 1)
 }
 
 const validateFields = () => {
-    const isNameEnValid: boolean = validateNameEn(nameEn.value)
-    const isNameJaValid: boolean = validateNameJa(nameJa.value)
-    const isPhoneValid: boolean = validatePhoneNumber(phone.value)
-    const isEmailValid: boolean = validateEmail(email.value)
-    const isWebsiteValid: boolean = validateWebsite(website.value)
-    const isAddressLine1EnValid: boolean = validateAddressLineEn(addressLine1En.value)
-    const isAddressLine2EnValid: boolean = validateAddressLineEn(addressLine2En.value)
-    const isAddressLine1JaValid: boolean = validateAddressLineJa(addressLine1Ja.value)
-    const isAddressLine2JaValid: boolean = validateAddressLineJa(addressLine2Ja.value)
-    const isCityEnValid: boolean = validateCityEn(cityEn.value)
-    const isCityJaValid: boolean = validateCityJa(cityJa.value)
-    const isPostalCodeValid: boolean = validatePostalCode(postalCode.value)
-    const isLatitudeValid: boolean = validateFloat(mapLatitude.value)
-    const isLongitudeValid: boolean = validateFloat(mapLongitude.value)
+    const isNameEnValid: boolean = validateNameEn(submissionFormFields.nameEn.value)
+    const isNameJaValid: boolean = validateNameJa(submissionFormFields.nameJa.value)
+    const isPhoneValid: boolean = validatePhoneNumber(submissionFormFields.phone.value)
+    const isEmailValid: boolean = validateEmail(submissionFormFields.email.value)
+    const isWebsiteValid: boolean = validateWebsite(submissionFormFields.website.value)
+    const isAddressLine1EnValid: boolean = validateAddressLineEn(submissionFormFields.addressLine1En.value)
+    const isAddressLine2EnValid: boolean = validateAddressLineEn(submissionFormFields.addressLine2En.value)
+    const isAddressLine1JaValid: boolean = validateAddressLineJa(submissionFormFields.addressLine1Ja.value)
+    const isAddressLine2JaValid: boolean = validateAddressLineJa(submissionFormFields.addressLine2Ja.value)
+    const isCityEnValid: boolean = validateCityEn(submissionFormFields.cityEn.value)
+    const isCityJaValid: boolean = validateCityJa(submissionFormFields.cityJa.value)
+    const isPostalCodeValid: boolean = validatePostalCode(submissionFormFields.postalCode.value)
+    const isLatitudeValid: boolean = validateFloat(submissionFormFields.mapLatitude.value)
+    const isLongitudeValid: boolean = validateFloat(submissionFormFields.mapLongitude.value)
 
     return (
         !isNameEnValid
@@ -651,34 +652,47 @@ const validateFields = () => {
     )
 }
 
-function autofillEditSubmissionForm(submissionData: Submission | undefined) {
+function initializeSubmissionFormValues(submissionData: Submission | undefined) {
     for (const key in submissionData) {
         if (submissionData[key as keyof Submission]) {
             switch (key) {
                 case 'facility':
-                    nameEn.value = submissionData['facility']?.nameEn || ''
-                    nameJa.value = submissionData['facility']?.nameJa || ''
-                    phone.value = submissionData['facility']?.contact?.phone || ''
-                    email.value = submissionData['facility']?.contact?.email || ''
-                    website.value = submissionData['facility']?.contact?.website || ''
-                    postalCode.value = submissionData['facility']?.contact?.address.postalCode || ''
-                    prefectureEn.value = submissionData['facility']?.contact?.address.prefectureEn || ''
-                    cityEn.value = submissionData['facility']?.contact?.address.cityEn || ''
-                    addressLine1En.value = submissionData['facility']?.contact?.address.addressLine1En || ''
-                    addressLine2En.value = submissionData['facility']?.contact?.address.addressLine2En || ''
-                    prefectureJa.value = submissionData['facility']?.contact?.address.prefectureJa || ''
-                    cityJa.value = submissionData['facility']?.contact?.address.cityJa || ''
-                    addressLine1Ja.value = submissionData['facility']?.contact?.address.addressLine1Ja || ''
-                    addressLine2Ja.value = submissionData['facility']?.contact?.address.addressLine2Ja || ''
-                    mapLatitude.value = submissionData['facility']?.mapLatitude?.toString() || ''
-                    mapLongitude.value = submissionData['facility']?.mapLongitude?.toString() || ''
+                    submissionFormFields.nameEn.value = submissionData['facility']?.nameEn || ''
+                    submissionFormFields.nameJa.value = submissionData['facility']?.nameJa || ''
+                    submissionFormFields.phone.value = submissionData['facility']?.contact?.phone || ''
+                    submissionFormFields.email.value = submissionData['facility']?.contact?.email || ''
+                    submissionFormFields.website.value = submissionData['facility']?.contact?.website || ''
+                    submissionFormFields.postalCode.value = submissionData['facility']?.contact?.address.postalCode || ''
+                    submissionFormFields.prefectureEn.value = submissionData['facility']?.contact?.address.prefectureEn || ''
+                    submissionFormFields.cityEn.value = submissionData['facility']?.contact?.address.cityEn || ''
+                    submissionFormFields.addressLine1En.value = submissionData['facility']?.contact?.address.addressLine1En || ''
+                    submissionFormFields.addressLine2En.value = submissionData['facility']?.contact?.address.addressLine2En || ''
+                    submissionFormFields.prefectureJa.value = submissionData['facility']?.contact?.address.prefectureJa || ''
+                    submissionFormFields.cityJa.value = submissionData['facility']?.contact?.address.cityJa || ''
+                    submissionFormFields.addressLine1Ja.value = submissionData['facility']?.contact?.address.addressLine1Ja || ''
+                    submissionFormFields.addressLine2Ja.value = submissionData['facility']?.contact?.address.addressLine2Ja || ''
+                    submissionFormFields.mapLatitude.value = submissionData['facility']?.mapLatitude?.toString() || ''
+                    submissionFormFields.mapLongitude.value = submissionData['facility']?.mapLongitude?.toString() || ''
                     break
                 case 'googleMapsUrl':
-                    googlemapsURL.value = submissionData['facility']?.contact?.googleMapsUrl || submissionData['googleMapsUrl']
+                    submissionFormFields.googlemapsURL.value
+                    = submissionData['facility']?.contact?.googleMapsUrl || submissionData['googleMapsUrl']
                     break
             }
         }
     }
+    for (const key in submissionFormFields) {
+        submissionBeforeChanges[key] = submissionFormFields[key].value
+    }
+}
+
+const submissionHasUnsavedChanges = () => {
+    for (const key in submissionFormFields) {
+        if (submissionBeforeChanges[key] !== submissionFormFields[key].value) {
+            return true
+        }
+    }
+    return false
 }
 
 async function submitForm(e: Event) {
@@ -702,28 +716,28 @@ async function submitForm(e: Event) {
         input: {
             isUnderReview: true,
             facility: {
-                nameEn: nameEn.value || '',
-                nameJa: nameJa.value || '',
+                nameEn: submissionFormFields.nameEn.value || '',
+                nameJa: submissionFormFields.nameJa.value || '',
                 contact: {
-                    googleMapsUrl: googlemapsURL.value || '',
-                    email: email.value || '',
-                    phone: phone.value || '',
-                    website: website.value || '',
+                    googleMapsUrl: submissionFormFields.googlemapsURL.value || '',
+                    email: submissionFormFields.email.value || '',
+                    phone: submissionFormFields.phone.value || '',
+                    website: submissionFormFields.website.value || '',
                     address: {
-                        postalCode: postalCode.value || '',
-                        prefectureEn: prefectureEn.value || '',
-                        cityEn: cityEn.value || '',
-                        addressLine1En: addressLine1En.value || '',
-                        addressLine2En: addressLine2En.value || '',
-                        prefectureJa: prefectureJa.value || '',
-                        cityJa: cityJa.value || '',
-                        addressLine1Ja: addressLine1Ja.value || '',
-                        addressLine2Ja: addressLine2Ja.value || ''
+                        postalCode: submissionFormFields.postalCode.value || '',
+                        prefectureEn: submissionFormFields.prefectureEn.value || '',
+                        cityEn: submissionFormFields.cityEn.value || '',
+                        addressLine1En: submissionFormFields.addressLine1En.value || '',
+                        addressLine2En: submissionFormFields.addressLine2En.value || '',
+                        prefectureJa: submissionFormFields.prefectureJa.value || '',
+                        cityJa: submissionFormFields.cityJa.value || '',
+                        addressLine1Ja: submissionFormFields.addressLine1Ja.value || '',
+                        addressLine2Ja: submissionFormFields.addressLine2Ja.value || ''
                     }
                 },
                 healthcareProfessionalIds: [],
-                mapLatitude: parseFloat(mapLatitude.value) || 0,
-                mapLongitude: parseFloat(mapLongitude.value) || 0
+                mapLatitude: parseFloat(submissionFormFields.mapLatitude.value) || 0,
+                mapLongitude: parseFloat(submissionFormFields.mapLongitude.value) || 0
             }
         }
     }
@@ -754,54 +768,43 @@ watch(moderationSubmissionStore, newValue => {
 
 watch(moderationSubmissionStore, newValue => {
     moderationSubmissionStore.filterSelectedSubmission(newValue.selectedSubmissionId)
-    autofillEditSubmissionForm(newValue.selectedSubmissionData)
+    initializeSubmissionFormValues(newValue.selectedSubmissionData)
 })
 
 onMounted(() => {
     multiSelectWithoutKeyboard(
         '#healthcare-professional-accepted-insurances',
-        healthcareProfessionalAcceptedInsurances,
+        submissionFormFields.healthcareProfessionalAcceptedInsurances,
         extractInsuranceOptions
     )
 
     multiSelectWithoutKeyboard(
         '#healthcare-professional-degrees',
-        healthcareProfessionalDegrees,
+        submissionFormFields.healthcareProfessionalDegrees,
         extractDegreeOptions
     )
 
     multiSelectWithoutKeyboard(
         '#healthcare-professional-specialties',
-        healthcareProfessionalSpecialties,
+        submissionFormFields.healthcareProfessionalSpecialties,
         extractSpecialtyOptions
     )
 
     multiSelectWithoutKeyboard(
         '#healthcare-professional-locales',
-        healthcareProfessionalLocales,
+        submissionFormFields.healthcareProfessionalLocales,
         extractLocaleOptions
     )
 })
 
-/* This handler function confirms that the user wants to return to the mod page, updates the modal state, updates the active
-screen and the visible url and router path so that the onBeforeRouteLeave function works as intended.
-If you don't update the route using push, the logic for the leave handler breaks.
-*/
-const handleConfirmationOfBack = () => {
+const handleNavigateToModerationScreen = () => {
     modalStore.hideModal()
     screenStore.setActiveScreen(ModerationScreen.Dashboard)
     router.push('/moderation')
 }
-/* Checks to see whether the save and exit button is clicked,if it has not been clickedthe second if block runs
-and opens the modal.
-*/
-onBeforeRouteLeave(async (to, _, next) => {
-    if (moderationSubmissionStore.updatingSubmissionFromTopBar) {
-        moderationSubmissionStore.setUpdatingSubmissionFromTopBar(false)
-        next()
-        return
-    }
-    if (to.path === '/moderation' && !moderationSubmissionStore.updatingSubmissionFromTopBar) {
+
+onBeforeRouteLeave(async (to, from, next) => {
+    if (!moderationSubmissionStore.updatingSubmissionFromTopBar && submissionHasUnsavedChanges()) {
         modalStore.showModal()
         next(false)
         return
