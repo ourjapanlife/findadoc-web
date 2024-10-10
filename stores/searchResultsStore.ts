@@ -3,7 +3,7 @@ import { defineStore } from 'pinia'
 import { ref, type Ref } from 'vue'
 import { useModalStore } from './modalStore'
 import { useLoadingStore } from './loadingStore.js'
-import type { Locale, Specialty, Facility, FacilitySearchFilters, HealthcareProfessional, HealthcareProfessionalSearchFilters, type Facility, type FacilitySearchFilters, type HealthcareProfessional, type HealthcareProfessionalSearchFilters } from '~/typedefs/gqlTypes.js'
+import type { Locale, Specialty, Facility, FacilitySearchFilters, HealthcareProfessional, HealthcareProfessionalSearchFilters } from '~/typedefs/gqlTypes.js'
 
 type SearchResult = {
     professional: HealthcareProfessional
