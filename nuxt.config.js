@@ -99,8 +99,7 @@ export default defineNuxtConfig({
         '@pinia/nuxt',
         'nuxt-viewport',
         'nuxt-svgo',
-        '@nuxt/eslint',
-        '@/modules/vue-toastification-module'
+        '@nuxt/eslint'
     ],
     eslint: {
         config: {
