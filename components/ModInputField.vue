@@ -44,7 +44,10 @@ const props = defineProps({
     inputValidationCheck: Function
 })
 
-const labelsToOnlyValidateOnBlur = [t('modSubmissionForm.labelHealthcareProfessionalLastName'), t('modSubmissionForm.labelHealthcareProfessionalFirstName'), t('modSubmissionForm.labelHealthcareProfessionalMiddleName')]
+const labelsToOnlyValidateOnBlur = [
+    t('modSubmissionForm.labelHealthcareProfessionalLastName'),
+    t('modSubmissionForm.labelHealthcareProfessionalFirstName'),
+    t('modSubmissionForm.labelHealthcareProfessionalMiddleName')]
 
 const initialValidationCheck = async () => {
     if (!labelsToOnlyValidateOnBlur.includes(props.label)) {

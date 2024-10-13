@@ -14,7 +14,7 @@ export default withNuxt(
             '.output/*',
             '.nuxt/*',
             'coverage/*',
-            'cypress/support/*',
+            'cypress/*',
             '.yarn/*',
             'typedefs/gqlTypes.ts'
         ]
@@ -172,7 +172,7 @@ export default withNuxt(
                     comments: 130,
                     ignoreTrailingComments: true,
                     ignoreUrls: true,
-                    ignoreStrings: true,
+                    ignoreStrings: false,
                     ignoreTemplateLiterals: true,
                     ignoreRegExpLiterals: true
                 }

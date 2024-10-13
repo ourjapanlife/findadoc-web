@@ -146,7 +146,9 @@ const runCICDChecksForLocaleFiles = (localeFilesWithoutEnFileName, referenceKeys
             keys.forEach(key => console.error(`- ${key}`))
         })
 
-        console.log('\x1b[93m\x1b[1mTo fix this error\x1b[0m\n\x1b[35m1) Run the command:\x1b[0m\n   yarn lint:locales\n\x1b[35m2) Push the updates\x1b[0m')
+        console.log('\x1b[93m\x1b[1mTo fix this error\x1b[0m')
+        console.log('\x1b[35m1)Run the command:\x1b[0m')
+        console.log('yarn lint:locales\n\x1b[35m2Push the updates\x1b[0m')
         process.exitCode = 1 // Exit with error code
         process.exit()
     }

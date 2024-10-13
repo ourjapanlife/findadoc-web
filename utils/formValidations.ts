@@ -1,4 +1,11 @@
-import { hasJapaneseCharacters, hasLatinCharacters, isValidEmail, isValidPhoneNumber, isValidWebsite, isFloat, isValidPostalCode, isValidUrl } from './stringUtils'
+import { hasJapaneseCharacters,
+    hasLatinCharacters,
+    isValidEmail,
+    isValidPhoneNumber,
+    isValidWebsite,
+    isFloat,
+    isValidPostalCode,
+    isValidUrl } from './stringUtils'
 import { Locale } from '~/typedefs/gqlTypes'
 
 export function validateNameEn(nameEn: string): boolean {
