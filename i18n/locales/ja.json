@@ -228,7 +228,7 @@
     "selectDegrees": "Degrees",
     "selectLocales": "Select Locales Spoken",
     "confirmationButton": "Leave Page",
-    "confirmationModal": "Are you sure you want to leave?"
+    "hasUnsavedChanges": "You have unsaved changes. Are you sure you want to leave?"
   },
   "modPanelSubmissionLeftNavbar": {
     "addresses": "Addresses",
