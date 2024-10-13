@@ -7,7 +7,6 @@
         >
             <Loader />
             <Modal
-                v-show="store.$state.isOpen"
                 class="max-h-[calc(100vh-12rem)] ml-8 mt-12 overflow-y-auto"
             >
                 <SearchResultDetails />
@@ -22,7 +21,6 @@
         >
             <Loader />
             <Modal
-                v-show="store.$state.isOpen"
                 class="min-h-1/2 ml-8 mt-12"
             >
                 <SearchResultDetails />
@@ -39,8 +37,6 @@
 
 <script lang="ts" setup>
 import { useNuxtApp } from '#app'
-import { useModalStore } from '~/stores/modalStore'
 
 const { $viewport } = useNuxtApp()
-const store = useModalStore()
 </script>

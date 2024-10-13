@@ -1,43 +1,8 @@
 <template>
-    <Modal
-        v-show="modalStore.isOpen"
-        data-testid="submission-form-modal"
-        class=" min-h-20 min-w-20 fixed top-0 left-0 flex items-center justify-center h-full w-full z-10
-         bg-secondary bg-opacity-40"
-    >
-        <div
-            v-if="moderationSubmissionStore.approvingSubmissionFromTopBar"
-            class="flex flex-col aspect-square h-96 items-center justify-around bg-primary-inverted p-10 rounded"
-        >
-            <span class="font-bold text-3xl">
-                {{ $t('modSubmissionForm.submissionConfirmationMessage') }}
-            </span>
-            <button
-                type="button"
-                class="bg-primary p-4 rounded-full my-8 font-semibold text-xl"
-                @click="submitForm"
-            >
-                {{ $t('modSubmissionForm.submissionConfirmationAcceptanceButton') }}
-            </button>
-        </div>
-        <div
-            v-else
-            class="flex flex-col aspect-square h-96 items-center justify-around bg-primary-inverted p-10 rounded"
-        >
-            <span class="font-bold text-3xl">{{ $t('modSubmissionForm.hasUnsavedChanges') }}</span>
-            <button
-                data-testid="submission-form-modal-confirmation-btn"
-                class="bg-secondary p-4 rounded-full my-8 font-semibold text-xl hover:bg-primary"
-                @click="handleNavigateToModerationScreen"
-            >
-                {{ $t('modSubmissionForm.confirmationButton') }}
-            </button>
-        </div>
-    </Modal>
-
     <form
         class="p-4 h-full overflow-y-auto"
-        @submit="submitForm"
+        @submit="validateAndUpdateSubmission"
+        @approve-changes-confirmation="validateAndUpdateSubmission"
     >
         <div
             :id="ModSubmissionLeftNavbarSectionIDs.ContactInformation"
@@ -487,7 +452,7 @@
             <button
                 type="submit"
                 class="bg-currentColor text-white font-bold py-2 px-4 my-2 rounded w-56"
-                @click="submitForm"
+                @click="validateAndUpdateSubmission"
             >
                 {{ $t('modSubmissionForm.submitButtonText') }}
             </button>
@@ -498,8 +463,7 @@
 <script lang="ts" setup>
 import { onMounted, type Ref, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
-import { gql } from 'graphql-request'
-import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql.js'
+
 import { useModerationSubmissionsStore } from '~/stores/moderationSubmissionsStore'
 import { Locale,
     type Submission,
@@ -521,14 +485,13 @@ import { validateAddressLineEn,
     validateCityJa,
     validateUserSubmittedFirstName,
     validateUserSubmittedLastName } from '~/utils/formValidations'
-import { ModSubmissionLeftNavbarSectionIDs, useModerationScreenStore, ModerationScreen } from '~/stores/moderationScreenStore'
+import { ModSubmissionLeftNavbarSectionIDs } from '~/stores/moderationScreenStore'
 import { multiSelectWithoutKeyboard } from '~/utils/multiSelectWithoutKeyboard'
 import { useModalStore } from '~/stores/modalStore'
 import { onBeforeRouteLeave } from '#app'
 
 const router = useRouter()
 const modalStore = useModalStore()
-const screenStore = useModerationScreenStore()
 
 const submissionFormFields = {
     // contactFields
@@ -695,7 +658,8 @@ const submissionHasUnsavedChanges = () => {
     return false
 }
 
-async function submitForm(e: Event) {
+async function validateAndUpdateSubmission(e: Event) {
+    console.log('VALIDATING AND APPROVING')
     // stop the form submitting before we validate
     e.preventDefault()
 
@@ -742,19 +706,9 @@ async function submitForm(e: Event) {
         }
     }
 
-    try {
-        await graphQLClientRequestWithRetry(
-            gqlClient.request.bind(gqlClient),
-            updateFacilitySubmissionGqlMutation,
-            submissionInputVariables
-        )
-        if (moderationSubmissionStore.updatingSubmissionFromTopBar) {
-            router.push('/moderation')
-        }
-    } catch (error) {
-        console.error('Failed to update submission:', error)
-        moderationSubmissionStore.setDidMutationFail(true)
-        moderationSubmissionStore.setUpdatingSubmissionFromTopBar(false)
+    moderationSubmissionStore.updateSubmission(submissionInputVariables)
+    if (moderationSubmissionStore.updatingSubmissionFromTopBar) {
+        router.push('/moderation')
     }
 }
 
@@ -762,7 +716,7 @@ const syntheticEvent = new Event('submit', { bubbles: true, cancelable: true })
 
 watch(moderationSubmissionStore, newValue => {
     if (newValue.updatingSubmissionFromTopBar) {
-        submitForm(syntheticEvent)
+        validateAndUpdateSubmission(syntheticEvent)
     }
 })
 
@@ -797,12 +751,6 @@ onMounted(() => {
     )
 })
 
-const handleNavigateToModerationScreen = () => {
-    modalStore.hideModal()
-    screenStore.setActiveScreen(ModerationScreen.Dashboard)
-    router.push('/moderation')
-}
-
 onBeforeRouteLeave(async (to, from, next) => {
     if (!moderationSubmissionStore.updatingSubmissionFromTopBar && submissionHasUnsavedChanges()) {
         modalStore.showModal()
@@ -811,36 +759,4 @@ onBeforeRouteLeave(async (to, from, next) => {
     }
     next()
 })
-
-const updateFacilitySubmissionGqlMutation = gql`
-mutation Mutation($id: ID!, $input: UpdateSubmissionInput!) {
-  updateSubmission(id: $id, input: $input) {
-    isUnderReview
-    facility {
-      id
-      nameEn
-      nameJa
-      contact {
-        googleMapsUrl
-        email
-        phone
-        website
-        address {
-          postalCode
-          prefectureEn
-          cityEn
-          addressLine1En
-          addressLine2En
-          prefectureJa
-          cityJa
-          addressLine1Ja
-          addressLine2Ja
-        }
-      }
-      healthcareProfessionalIds
-      mapLatitude
-      mapLongitude
-    }
-  }
-}`
 </script>

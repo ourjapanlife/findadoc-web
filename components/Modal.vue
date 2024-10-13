@@ -1,5 +1,6 @@
 <template>
     <div
+        v-show="store.isOpen"
         class="absolute z-10 bg-primary-bg rounded-xl overflow-hidden
         hover:shadow-inner hover:shadow-secondary-bg/90"
     >
