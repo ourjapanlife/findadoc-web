@@ -84,7 +84,6 @@ const saveAndExit = () => {
     moderationSubmissionStore.setUpdatingSubmissionFromTopBar(true)
 }
 
-// Move all API calls to the store
 const acceptSubmission = () => {
     moderationSubmissionStore.setApprovingSubmissionFromTopBar(true)
     modalStore.showModal()

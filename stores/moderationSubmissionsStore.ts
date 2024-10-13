@@ -1,8 +1,8 @@
 import { gql } from 'graphql-request'
 import { defineStore } from 'pinia'
 import { ref, type Ref } from 'vue'
-import { gqlClient } from '../utils/graphql.js'
-import type { Submission } from '~/typedefs/gqlTypes.js'
+import type { Submission, MutationUpdateSubmissionArgs } from '~/typedefs/gqlTypes.js'
+import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql.js'
 
 export enum SelectedSubmissionListViewTab {
     ForReview = 'FOR_REVIEW',
@@ -86,6 +86,21 @@ export const useModerationSubmissionsStore = defineStore(
                     break
             }
         }
+
+        async function updateSubmission(submission: MutationUpdateSubmissionArgs) {
+            try {
+                await graphQLClientRequestWithRetry(
+                    gqlClient.request.bind(gqlClient),
+                    updateFacilitySubmissionGqlMutation,
+                    submission
+                )
+            } catch (error) {
+                console.error('Failed to update submission:', error)
+                setDidMutationFail(true)
+                setUpdatingSubmissionFromTopBar(false)
+            }
+        }
+
         return { getSubmissions,
             submissionsData,
             filterSubmissionByStatus,
@@ -104,7 +119,8 @@ export const useModerationSubmissionsStore = defineStore(
             approvingSubmissionFromTopBar,
             setApprovingSubmissionFromTopBar,
             selectedModerationListViewTabChosen,
-            setSelectedModerationListViewTabChosen }
+            setSelectedModerationListViewTabChosen,
+            updateSubmission }
     }
 )
 
@@ -179,6 +195,38 @@ const getSubmissionsGqlQuery = gql`
     createdDate
     updatedDate
     notes
+  }
+}`
+
+const updateFacilitySubmissionGqlMutation = gql`
+mutation Mutation($id: ID!, $input: UpdateSubmissionInput!) {
+  updateSubmission(id: $id, input: $input) {
+    isUnderReview
+    facility {
+      id
+      nameEn
+      nameJa
+      contact {
+        googleMapsUrl
+        email
+        phone
+        website
+        address {
+          postalCode
+          prefectureEn
+          cityEn
+          addressLine1En
+          addressLine2En
+          prefectureJa
+          cityJa
+          addressLine1Ja
+          addressLine2Ja
+        }
+      }
+      healthcareProfessionalIds
+      mapLatitude
+      mapLongitude
+    }
   }
 }`
 

@@ -227,7 +227,7 @@
     "selectSpecialties": "Specialties",
     "selectDegrees": "Degrees",
     "selectLocales": "Select Locales Spoken",
-    "confirmationButton": "Leave Page",
+    "confirmLeavePageButton": "Yes, leave page",
     "hasUnsavedChanges": "You have unsaved changes. Are you sure you want to leave?"
   },
   "modPanelSubmissionLeftNavbar": {
