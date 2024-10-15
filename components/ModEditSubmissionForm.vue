@@ -498,8 +498,6 @@
 <script lang="ts" setup>
 import { onMounted, type Ref, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
-import { gql } from 'graphql-request'
-import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql.js'
 import { useModerationSubmissionsStore } from '~/stores/moderationSubmissionsStore'
 import { Locale,
     type Submission,
@@ -696,7 +694,7 @@ const submissionHasUnsavedChanges = () => {
 }
 
 async function submitForm(e: Event) {
-    // stop the form submitting before we validate
+    // Prevent form submission before validation is completed.
     e.preventDefault()
 
     const isValid = validateFields()
@@ -742,20 +740,7 @@ async function submitForm(e: Event) {
         }
     }
 
-    try {
-        await graphQLClientRequestWithRetry(
-            gqlClient.request.bind(gqlClient),
-            updateFacilitySubmissionGqlMutation,
-            submissionInputVariables
-        )
-        if (moderationSubmissionStore.updatingSubmissionFromTopBar) {
-            router.push('/moderation')
-        }
-    } catch (error) {
-        console.error('Failed to update submission:', error)
-        moderationSubmissionStore.setDidMutationFail(true)
-        moderationSubmissionStore.setUpdatingSubmissionFromTopBar(false)
-    }
+    moderationSubmissionStore.updateSubmission(submissionInputVariables)
 }
 
 const syntheticEvent = new Event('submit', { bubbles: true, cancelable: true })
@@ -811,36 +796,4 @@ onBeforeRouteLeave(async (to, from, next) => {
     }
     next()
 })
-
-const updateFacilitySubmissionGqlMutation = gql`
-mutation Mutation($id: ID!, $input: UpdateSubmissionInput!) {
-  updateSubmission(id: $id, input: $input) {
-    isUnderReview
-    facility {
-      id
-      nameEn
-      nameJa
-      contact {
-        googleMapsUrl
-        email
-        phone
-        website
-        address {
-          postalCode
-          prefectureEn
-          cityEn
-          addressLine1En
-          addressLine2En
-          prefectureJa
-          cityJa
-          addressLine1Ja
-          addressLine2Ja
-        }
-      }
-      healthcareProfessionalIds
-      mapLatitude
-      mapLongitude
-    }
-  }
-}`
 </script>
