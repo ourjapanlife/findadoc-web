@@ -24,7 +24,11 @@
 </template>
 
 <script setup lang="ts">
-import { SelectedModerationListView, SelectedSubmissionListViewTab, useModerationSubmissionsStore } from '~/stores/moderationSubmissionsStore'
+import {
+    SelectedModerationListView,
+    SelectedSubmissionListViewTab,
+    useModerationSubmissionsStore
+} from '~/stores/moderationSubmissionsStore'
 import { useI18n } from '#imports'
 import SVGLookingGlass from '~/assets/icons/looking-glass.svg'
 

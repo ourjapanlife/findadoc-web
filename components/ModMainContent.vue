@@ -46,7 +46,8 @@ const setActiveScreenBasedOnRoute = async () => {
     } else if (routePathForModerationScreen.value.includes('edit-facility') && selectedIdFromModSubmissionList.value) {
         screenStore.setActiveScreen(ModerationScreen.EditFacility)
         moderationSubmissionsStore.selectedFacilityId = selectedIdFromModSubmissionList.value
-    } else if (routePathForModerationScreen.value.includes('edit-healthcare-professional') && selectedIdFromModSubmissionList.value) {
+    } else if (
+        routePathForModerationScreen.value.includes('edit-healthcare-professional') && selectedIdFromModSubmissionList.value) {
         screenStore.setActiveScreen(ModerationScreen.EditHealthcareProfessional)
         moderationSubmissionsStore.selectedHealthcareProfessionalId = selectedIdFromModSubmissionList.value
     } else {

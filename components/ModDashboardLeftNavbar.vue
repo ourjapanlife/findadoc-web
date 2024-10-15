@@ -59,7 +59,12 @@ import { ref, computed, type Ref, watchEffect } from 'vue'
 import SVGNoteStackAddSvg from '../assets/icons/note-stack-add.svg'
 import SVGCheckBoxSvg from '../assets/icons/check-box.svg'
 import SVGDisabledByDefault from '../assets/icons/disabled-by-default.svg'
-import { useModerationSubmissionsStore, SelectedSubmissionListViewTab, SubmissionStatus, SelectedModerationListView } from '~/stores/moderationSubmissionsStore'
+import {
+    useModerationSubmissionsStore,
+    SelectedSubmissionListViewTab,
+    SubmissionStatus,
+    SelectedModerationListView
+} from '~/stores/moderationSubmissionsStore'
 import type { Submission } from '~/typedefs/gqlTypes'
 
 const moderationSubmissionsStore = useModerationSubmissionsStore()
