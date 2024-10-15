@@ -3091,12 +3091,12 @@ __metadata:
   linkType: hard
 
 "@pinia/nuxt@npm:^0.5.2":
-  version: 0.5.2
-  resolution: "@pinia/nuxt@npm:0.5.2"
+  version: 0.5.5
+  resolution: "@pinia/nuxt@npm:0.5.5"
   dependencies:
     "@nuxt/kit": "npm:^3.9.0"
-    pinia: "npm:>=2.2.0"
-  checksum: 10/eaa806390735c29bfee5697616fed36bb485c29993dcdb7699ab107f86e70642e0d51c579c935cf14b0b9e74d98823b8f95c14683b509c03810a0c9a4f9dbad8
+    pinia: "npm:^2.2.3"
+  checksum: 10/653ed853c860a7b2115f7fe3f4686dcd0d1ce2bddd79affff6f9df8208a1914cdd623445777b6c6252bd46c05a5102990b8c4f2a1074d4b88084a0cae1a750ff
   languageName: node
   linkType: hard
 
@@ -12252,7 +12252,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pinia@npm:>=2.2.0, pinia@npm:^2.2.0":
+"pinia@npm:^2.2.0":
   version: 2.2.0
   resolution: "pinia@npm:2.2.0"
   dependencies:
@@ -12268,6 +12268,25 @@ __metadata:
     typescript:
       optional: true
   checksum: 10/e34ef54c9315f6948128c33e6dcd3fcb755d2b4c26ec0e4b2c6755535fb6627bbe0e06743fc396295c3516befcdb9c4825014e5127ed76ef5b5e47ce6f0e7692
+  languageName: node
+  linkType: hard
+
+"pinia@npm:^2.2.3":
+  version: 2.2.4
+  resolution: "pinia@npm:2.2.4"
+  dependencies:
+    "@vue/devtools-api": "npm:^6.6.3"
+    vue-demi: "npm:^0.14.10"
+  peerDependencies:
+    "@vue/composition-api": ^1.4.0
+    typescript: ">=4.4.4"
+    vue: ^2.6.14 || ^3.3.0
+  peerDependenciesMeta:
+    "@vue/composition-api":
+      optional: true
+    typescript:
+      optional: true
+  checksum: 10/0496358bab0b66d31bbff788dbb1f45238d49ac3cfd12323f1092d32d2311a3ea75bad012aff45ba552544051afd91cc3c6573f7a290b6c605acc96d95f3b684
   languageName: node
   linkType: hard
 
@@ -15521,7 +15540,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vue-demi@npm:^0.14.6, vue-demi@npm:^0.14.8":
+"vue-demi@npm:^0.14.10, vue-demi@npm:^0.14.6, vue-demi@npm:^0.14.8":
   version: 0.14.10
   resolution: "vue-demi@npm:0.14.10"
   peerDependencies:
