@@ -6,6 +6,7 @@
     "stabilityDays": 14,
     "prConcurrentLimit": 3,
     "reviewers": ["team:admins"],
+    "rangeStrategy": "bump",
     "packageRules": [
         {
             "matchPackagePatterns": ["^eslint"],
