@@ -144,11 +144,13 @@
         "facilities": "Facilities"
     },
     "modEditSubmissionTopNav": {
-        "saveAndExit": "Save & Exit",
-        "saving": "Saving...",
-        "retryMessage": "Something’s not right. Retrying in {seconds}s...",
         "approve": "Approve",
-        "reject": "Reject"
+        "confirmSubmissionRejection": "Yes, reject submission",
+        "reject": "Reject",
+        "rejectSubmission": "Are you sure you want to reject this submission?",
+        "retryMessage": "Something's not right. Retrying in {seconds}s...",
+        "saveAndExit": "Save & Exit",
+        "saving": "Saving..."
     },
     "modPanelSubmissionList": {
         "approved": "Approved",
