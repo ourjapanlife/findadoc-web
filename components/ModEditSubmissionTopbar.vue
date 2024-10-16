@@ -36,7 +36,7 @@
             <button
                 type="button"
                 class="flex justify-center items-center rounded-full bg-secondary-bg border-primary border-2 w-28 text-sm mr-2 "
-                @click="rejectSubmission"
+                @click="moderationSubmissionStore.rejectSubmission"
             >
                 {{
                     $t('modEditSubmissionTopNav.reject') }}
@@ -55,12 +55,10 @@
 
 <script setup lang="ts">
 import { ref, type Ref } from 'vue'
-import { gql } from 'graphql-request'
 import SVGCopyContent from '~/assets/icons/content-copy.svg'
 import SVGSuccessCheckMark from '~/assets/icons/checkmark-square.svg'
 import { useModerationSubmissionsStore } from '~/stores/moderationSubmissionsStore'
 import { useModalStore } from '~/stores/modalStore'
-import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql'
 
 const modalStore = useModalStore()
 const moderationSubmissionStore = useModerationSubmissionsStore()
@@ -89,32 +87,4 @@ const acceptSubmission = () => {
     moderationSubmissionStore.setApprovingSubmissionFromTopBar(true)
     modalStore.showModal()
 }
-
-const rejectSubmission = async () => {
-    const facilityInputVariables = {
-        updateSubmissionId: selectedSubmissionId.value,
-        input: {
-            isRejected: true
-        }
-    }
-
-    try {
-        await graphQLClientRequestWithRetry(
-            gqlClient.request.bind(gqlClient),
-            rejectFacilitySubmissionGqlMutation,
-            facilityInputVariables
-        )
-        moderationSubmissionStore.setDidMutationFail(false)
-    } catch (error) {
-        console.error('Failed to reject submission:', error)
-        moderationSubmissionStore.setDidMutationFail(true)
-    }
-}
-
-const rejectFacilitySubmissionGqlMutation = gql`
-mutation Mutation($updateSubmissionId: ID!, $input: UpdateSubmissionInput!) {
-  updateSubmission(id: $updateSubmissionId, input: $input) {
-    isRejected
-  }
-}`
 </script>
