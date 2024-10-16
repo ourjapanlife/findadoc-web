@@ -6,14 +6,22 @@
     "stabilityDays": 14,
     "prConcurrentLimit": 3,
     "reviewers": ["team:admins"],
+    "rangeStrategy": "bump",
     "packageRules": [
         {
             "matchPackagePatterns": ["^eslint"],
             "groupName": "eslint packages"
         },
         {
-            "matchPackagePatterns": ["node"],
-            "allowedVersions": "/18.*/"
+            "matchUpdateTypes": ["minor"],
+            "groupName": "Minor Updates"
         }
-    ]
+    ],
+    "vulnerabilityAlerts": {
+        "groupName": "Security Updates",
+        "prCreation": "immediate",
+        "commitMessageSuffix": "[SECURITY]",
+        "branchTopic": "{{{datasource}}}-{{{depNameSanitized}}}-vulnerability",
+        "vulnerabilityFixStrategy": "lowest"
+    }
 }
