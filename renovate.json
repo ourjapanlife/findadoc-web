@@ -12,8 +12,15 @@
             "groupName": "eslint packages"
         },
         {
-            "matchPackagePatterns": ["node"],
-            "allowedVersions": "/18.*/"
+            "matchUpdateTypes": ["minor"],
+            "groupName": "Minor Updates"
         }
-    ]
+    ],
+    "vulnerabilityAlerts": {
+        "groupName": "Security Updates",
+        "prCreation": "immediate",
+        "commitMessageSuffix": "[SECURITY]",
+        "branchTopic": "{{{datasource}}}-{{{depNameSanitized}}}-vulnerability",
+        "vulnerabilityFixStrategy": "lowest"
+    }
 }
