@@ -754,6 +754,7 @@ async function submitUpdatedSubmission(e: Event) {
     const id = formSubmissionId || ''
 
     if (!id) {
+        toast.error(t('modSubmissionForm.errorMessageFacilityId'))
         console.error(t('modSubmissionForm.errorMessageFacilityId'))
         return
     }
