@@ -89,7 +89,7 @@ export const useModerationSubmissionsStore = defineStore(
 
         async function updateSubmission(submission: MutationUpdateSubmissionArgs) {
             try {
-                await graphQLClientRequestWithRetry(
+                return await graphQLClientRequestWithRetry(
                     gqlClient.request.bind(gqlClient),
                     updateFacilitySubmissionGqlMutation,
                     submission
@@ -113,7 +113,7 @@ export const useModerationSubmissionsStore = defineStore(
                     isApproved: true
                 }
             }
-            updateSubmission(approveSubmissionInput)
+            return updateSubmission(approveSubmissionInput)
         }
 
         return { getSubmissions,
