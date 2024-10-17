@@ -811,7 +811,9 @@ async function submitUpdatedSubmission(e: Event) {
         }
     }
     try {
-        await moderationSubmissionStore.updateSubmission(submissionInputVariables)
+        const result = await moderationSubmissionStore.updateSubmission(submissionInputVariables)
+        const submissionResult = result as { updateSubmission: Submission }
+        initializeSubmissionFormValues(submissionResult.updateSubmission as Submission)
         toast.success(t('modSubmissionForm.successMessageUpdated'))
     } catch (error) {
         console.error('Failed to update submission:', error)
