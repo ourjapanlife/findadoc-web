@@ -101,6 +101,21 @@ export const useModerationSubmissionsStore = defineStore(
             }
         }
 
+        async function approveSubmission() {
+            if (!selectedSubmissionId.value) {
+                console.error('Submission Id is required')
+                return
+            }
+
+            const approveSubmissionInput: MutationUpdateSubmissionArgs = {
+                id: selectedSubmissionId.value,
+                input: {
+                    isApproved: true
+                }
+            }
+            updateSubmission(approveSubmissionInput)
+        }
+
         return { getSubmissions,
             submissionsData,
             filterSubmissionByStatus,
@@ -120,7 +135,8 @@ export const useModerationSubmissionsStore = defineStore(
             setApprovingSubmissionFromTopBar,
             selectedModerationListViewTabChosen,
             setSelectedModerationListViewTabChosen,
-            updateSubmission }
+            updateSubmission,
+            approveSubmission }
     }
 )
 
