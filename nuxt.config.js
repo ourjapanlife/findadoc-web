@@ -99,7 +99,8 @@ export default defineNuxtConfig({
         '@pinia/nuxt',
         'nuxt-viewport',
         'nuxt-svgo',
-        '@nuxt/eslint'
+        '@nuxt/eslint',
+        '@nuxt/test-utils/module'
     ],
     eslint: {
         config: {
