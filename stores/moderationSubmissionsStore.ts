@@ -103,7 +103,7 @@ export const useModerationSubmissionsStore = defineStore(
 
         async function approveSubmission() {
             if (!selectedSubmissionId.value) {
-                console.error('Submission Id is required')
+                console.error('Unable to approve submission. Submission ID is required.')
                 return
             }
 
@@ -114,6 +114,32 @@ export const useModerationSubmissionsStore = defineStore(
                 }
             }
             updateSubmission(approveSubmissionInput)
+        }
+
+        async function rejectSubmission() {
+            if (!selectedSubmissionId.value) {
+                console.error('Unable to reject submission. Submission ID is required.')
+                return
+            }
+
+            const facilityInputVariables = {
+                updateSubmissionId: selectedSubmissionId.value,
+                input: {
+                    isRejected: true
+                }
+            }
+
+            try {
+                await graphQLClientRequestWithRetry(
+                    gqlClient.request.bind(gqlClient),
+                    rejectFacilitySubmissionGqlMutation,
+                    facilityInputVariables
+                )
+                setDidMutationFail(false)
+            } catch (error) {
+                console.error('Failed to reject submission:', error)
+                setDidMutationFail(true)
+            }
         }
 
         return { getSubmissions,
@@ -136,7 +162,8 @@ export const useModerationSubmissionsStore = defineStore(
             selectedModerationListViewTabChosen,
             setSelectedModerationListViewTabChosen,
             updateSubmission,
-            approveSubmission }
+            approveSubmission,
+            rejectSubmission }
     }
 )
 
@@ -243,5 +270,12 @@ mutation Mutation($id: ID!, $input: UpdateSubmissionInput!) {
       mapLatitude
       mapLongitude
     }
+  }
+}`
+
+const rejectFacilitySubmissionGqlMutation = gql`
+mutation Mutation($updateSubmissionId: ID!, $input: UpdateSubmissionInput!) {
+  updateSubmission(id: $updateSubmissionId, input: $input) {
+    isRejected
   }
 }`
