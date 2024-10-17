@@ -102,11 +102,6 @@ export const useModerationSubmissionsStore = defineStore(
         }
 
         async function approveSubmission() {
-            if (!selectedSubmissionId.value) {
-                console.error('Submission Id is required')
-                return
-            }
-
             const approveSubmissionInput: MutationUpdateSubmissionArgs = {
                 id: selectedSubmissionId.value,
                 input: {
