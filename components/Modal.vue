@@ -1,5 +1,6 @@
 <template>
     <div
+        v-show="store.isOpen"
         class="absolute z-10 bg-primary-bg rounded-xl overflow-hidden
         hover:shadow-inner hover:shadow-secondary-bg/90"
     >
@@ -8,7 +9,7 @@
                 type="button"
                 class="close-button absolute right-6 top-5 bg-primary-inverted rounded-lg px-2 py-.5
                 group hover:bg-primary-hover transition-all duration-200"
-                @click="store.hideModal()"
+                @click="hideModalAndEmitClosedEvent"
             >
                 <span class="close-icon">
                     <svg
@@ -39,5 +40,10 @@
 import { useModalStore } from '~/stores/modalStore'
 
 const store = useModalStore()
+const emit = defineEmits(['modal-closed'])
+const hideModalAndEmitClosedEvent = () => {
+    emit('modal-closed')
+    store.hideModal()
+}
 </script>
 

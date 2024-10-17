@@ -1,6 +1,5 @@
 <template>
     <Modal
-        v-show="modalStore.isOpen"
         data-testid="submission-form-modal"
         class=" min-h-20 min-w-20 fixed top-0 left-0 flex items-center justify-center h-full w-full z-10
          bg-secondary bg-opacity-40"
