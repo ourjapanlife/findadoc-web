@@ -11,7 +11,7 @@
             {{ $t('modFacilitySection.contactInformation') }}
         </span>
         <ModInputField
-            v-model="submissionFormFields.nameEn.value"
+            v-model="facilityStore.facilitySectionFields.nameEn"
             data-testid="mod-facility-section-nameEn"
             :label="$t('modFacilitySection.labelFacilityNameEn')"
             type="text"
@@ -21,7 +21,7 @@
             :invalid-input-error-message="$t('modFacilitySection.inputErrorMessageFacilityNameEn')"
         />
         <ModInputField
-            v-model="submissionFormFields.nameJa.value"
+            v-model="facilityStore.facilitySectionFields.nameJa"
             data-testid="mod-facility-section-nameJa"
             :label="$t('modFacilitySection.labelFacilityNameJa')"
             type="text"
@@ -31,7 +31,7 @@
             :invalid-input-error-message="$t('modFacilitySection.inputErrorMessageFacilityNameJa')"
         />
         <ModInputField
-            v-model="submissionFormFields.phone.value"
+            v-model="facilityStore.facilitySectionFields.phone"
             data-testid="mod-facility-section-phone"
             :label="$t('modFacilitySection.labelFacilityPhoneNumber')"
             type="text"
@@ -41,7 +41,7 @@
             :invalid-input-error-message="$t('modFacilitySection.inputErrorMessageFacilityPhoneNumber')"
         />
         <ModInputField
-            v-model="submissionFormFields.email.value"
+            v-model="facilityStore.facilitySectionFields.email"
             data-testid="mod-facility-section-email"
             :label="$t('modFacilitySection.labelFacilityEmail')"
             type="email"
@@ -51,7 +51,7 @@
             :invalid-input-error-message="$t('modFacilitySection.inputErrorMessageFacilityEmail')"
         />
         <ModInputField
-            v-model="submissionFormFields.website.value"
+            v-model="facilityStore.facilitySectionFields.website"
             data-testid="mod-facility-section-website"
             :label="$t('modFacilitySection.labelFacilityWebsite')"
             type="url"
@@ -69,7 +69,7 @@
             {{ $t('modFacilitySection.addresses') }}
         </span>
         <ModInputField
-            v-model="submissionFormFields.postalCode.value"
+            v-model="facilityStore.facilitySectionFields.postalCode"
             data-testid="mod-facility-section-postalCode"
             :label="$t('modFacilitySection.labelFacilityPostalCode')"
             type="text"
@@ -87,7 +87,7 @@
             </label>
             <select
                 id="1"
-                v-model="submissionFormFields.prefectureEn.value"
+                v-model="facilityStore.facilitySectionFields.prefectureEn"
                 data-testid="mod-facility-section-prefectureEn"
                 name="Prefecture Japan"
                 class="mb-5 px-3 py-3.5 w-96 h-12 bg-secondary-bg rounded-lg border border-primary-text-muted
@@ -102,7 +102,7 @@
             </select>
         </div>
         <ModInputField
-            v-model="submissionFormFields.cityEn.value"
+            v-model="facilityStore.facilitySectionFields.cityEn"
             data-testid="mod-facility-section-cityEn"
             :label="$t('modFacilitySection.labelFacilityCityEn')"
             type="text"
@@ -112,7 +112,7 @@
             :invalid-input-error-message="$t('modFacilitySection.inputErrorMessageFacilityCityEn')"
         />
         <ModInputField
-            v-model="submissionFormFields.addressLine1En.value"
+            v-model="facilityStore.facilitySectionFields.addressLine1En"
             data-testid="mod-facility-section-addressLine1En"
             :label="$t('modFacilitySection.labelFacilityAddressLine1En')"
             type="text"
@@ -122,7 +122,7 @@
             :invalid-input-error-message="$t('modFacilitySection.inputErrorMessageFacilityAddressLine1En')"
         />
         <ModInputField
-            v-model="submissionFormFields.addressLine2En.value"
+            v-model="facilityStore.facilitySectionFields.addressLine2En"
             data-testid="mod-facility-section-addressLine2En"
             :label="$t('modFacilitySection.labelFacilityAddressLine2En')"
             type="text"
@@ -140,7 +140,7 @@
             </label>
             <select
                 id="1"
-                v-model="submissionFormFields.prefectureJa.value"
+                v-model="facilityStore.facilitySectionFields.prefectureJa"
                 data-testid="mod-facility-section-prefectureJa"
                 name="Prefecture Japan"
                 class="mb-5 px-3 py-3.5 w-96 h-12 bg-secondary-bg rounded-lg border border-primary-text-muted
@@ -155,7 +155,7 @@
             </select>
         </div>
         <ModInputField
-            v-model="submissionFormFields.cityJa.value"
+            v-model="facilityStore.facilitySectionFields.cityJa"
             data-testid="mod-facility-section-cityJa"
             :label="$t('modFacilitySection.labelFacilityCityJa')"
             type="text"
@@ -165,7 +165,7 @@
             :invalid-input-error-message="$t('modFacilitySection.inputErrorMessageFacilityCityJa')"
         />
         <ModInputField
-            v-model="submissionFormFields.addressLine1Ja.value"
+            v-model="facilityStore.facilitySectionFields.addressLine1Ja"
             data-testid="mod-facility-section-addressLine1Ja"
             :label="$t('modFacilitySection.labelFacilityAddressLine1Ja')"
             type="text"
@@ -175,7 +175,7 @@
             :invalid-input-error-message="$t('modFacilitySection.inputErrorMessageFacilityAddressLine1Ja')"
         />
         <ModInputField
-            v-model="submissionFormFields.addressLine2Ja.value"
+            v-model="facilityStore.facilitySectionFields.addressLine2Ja"
             data-testid="mod-facility-section-addressLine2Ja"
             :label="$t('modFacilitySection.labelFacilityAddressLine2Ja')"
             type="text"
@@ -193,7 +193,7 @@
             {{ $t('modFacilitySection.googleMapsInformation') }}
         </span>
         <ModInputField
-            v-model="submissionFormFields.googlemapsURL.value"
+            v-model="facilityStore.facilitySectionFields.googlemapsURL"
             data-testid="mod-facility-section-google-maps"
             :label="$t('modFacilitySection.labelFacilityGoogleMapsUrl')"
             type="url"
@@ -201,10 +201,10 @@
             :required="true"
             :input-validation-check="validateWebsite"
             :invalid-input-error-message="$t('modFacilitySection.inputErrorMessageFacilityGoogleMapsUrl')"
-            :autofill-value="submissionFormFields.googlemapsURL.value"
+            :autofill="facilityStore.facilitySectionFields.googlemapsURL"
         />
         <ModInputField
-            v-model="submissionFormFields.mapLatitude.value"
+            v-model="facilityStore.facilitySectionFields.mapLatitude"
             data-testid="mod-facility-section-mapLatitude"
             :label="$t('modFacilitySection.labelFacilityMapLatitude')"
             type="text"
@@ -214,7 +214,7 @@
             :invalid-input-error-message="$t('modFacilitySection.inputErrorMessageFacilityMapLatitude')"
         />
         <ModInputField
-            v-model="submissionFormFields.mapLongitude.value"
+            v-model="facilityStore.facilitySectionFields.mapLongitude"
             data-testid="mod-facility-section-mapLongitude"
             :label="$t('modFacilitySection.labelFacilityMapLongitude')"
             type="text"
@@ -237,8 +237,21 @@
 <script lang="ts" setup>
 import { type Ref, ref } from 'vue'
 import { useModerationScreenStore, ModerationScreen } from '~/stores/moderationScreenStore'
+import { useFacilitiesStore } from '~/stores/facilitiesStore'
+import { validateAddressLineEn,
+    validateAddressLineJa,
+    validateNameEn,
+    validateNameJa,
+    validatePhoneNumber,
+    validateCityEn,
+    validateEmail,
+    validateFloat,
+    validatePostalCode,
+    validateWebsite,
+    validateCityJa } from '~/utils/formValidations'
 
 const screenStore = useModerationScreenStore()
+const facilityStore = useFacilitiesStore()
 
 const listPrefectureJapanEn: Ref<string[]> = ref([
     'Hokkaido', 'Aomori', 'Iwate', 'Miyagi', 'Akita',
