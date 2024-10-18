@@ -17,6 +17,8 @@
             type="text"
             :placeholder="$t('modSubmissionForm.placeholderTextFacilityNameEn')"
             :required="true"
+            :input-validation-check="validateNameEn"
+            :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityNameEn')"
         />
         <ModInputField
             v-model="submissionFormFields.nameJa.value"
@@ -25,6 +27,8 @@
             type="text"
             :placeholder="$t('modSubmissionForm.placeholderTextFacilityNameJa')"
             :required="true"
+            :input-validation-check="validateNameJa"
+            :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityNameJa')"
         />
         <ModInputField
             v-model="submissionFormFields.phone.value"
@@ -33,6 +37,8 @@
             type="text"
             :placeholder="$t('modSubmissionForm.placeholderTextFacilityPhoneNumber')"
             :required="true"
+            :input-validation-check="validatePhoneNumber"
+            :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityPhoneNumber')"
         />
         <ModInputField
             v-model="submissionFormFields.email.value"
@@ -41,6 +47,8 @@
             type="email"
             :placeholder="$t('modSubmissionForm.placeholderTextFacilityEmail')"
             :required="false"
+            :input-validation-check="validateEmail"
+            :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityEmail')"
         />
         <ModInputField
             v-model="submissionFormFields.website.value"
@@ -49,6 +57,8 @@
             type="url"
             :placeholder="$t('modSubmissionForm.placeholderTextFacilityWebsite')"
             :required="false"
+            :input-validation-check="validateWebsite"
+            :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityWebsite')"
         />
     </div>
 
@@ -65,6 +75,8 @@
             type="text"
             :placeholder="$t('modSubmissionForm.placeholderTextFacilityPostalCode')"
             :required="true"
+            :input-validation-check="validatePostalCode"
+            :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityPostalCode')"
         />
         <div class="flex flex-col mt-4">
             <label
@@ -96,6 +108,8 @@
             type="text"
             :placeholder="$t('modSubmissionForm.placeholderTextFacilityCityEn')"
             :required="true"
+            :input-validation-check="validateCityEn"
+            :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityCityEn')"
         />
         <ModInputField
             v-model="submissionFormFields.addressLine1En.value"
@@ -104,6 +118,8 @@
             type="text"
             :placeholder="$t('modSubmissionForm.placeholderTextFacilityAddressLine1En')"
             :required="true"
+            :input-validation-check="validateAddressLineEn"
+            :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityAddressLine1En')"
         />
         <ModInputField
             v-model="submissionFormFields.addressLine2En.value"
@@ -112,6 +128,8 @@
             type="text"
             :placeholder="$t('modSubmissionForm.placeholderTextFacilityAddressLine2En')"
             :required="true"
+            :input-validation-check="validateAddressLineEn"
+            :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityAddressLine2En')"
         />
         <div class="flex flex-col mt-4">
             <label
@@ -143,6 +161,8 @@
             type="text"
             :placeholder="$t('modSubmissionForm.placeholderTextFacilityCityJa')"
             :required="true"
+            :input-validation-check="validateCityJa"
+            :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityCityJa')"
         />
         <ModInputField
             v-model="submissionFormFields.addressLine1Ja.value"
@@ -151,6 +171,8 @@
             type="text"
             :placeholder="$t('modSubmissionForm.placeholderTextFacilityAddressLine1Ja')"
             :required="true"
+            :input-validation-check="validateAddressLineJa"
+            :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityAddressLine1Ja')"
         />
         <ModInputField
             v-model="submissionFormFields.addressLine2Ja.value"
@@ -159,6 +181,8 @@
             type="text"
             :placeholder="$t('modSubmissionForm.placeholderTextFacilityAddressLine2Ja')"
             :required="true"
+            :input-validation-check="validateAddressLineJa"
+            :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityAddressLine2Ja')"
         />
     </div>
 
@@ -175,6 +199,8 @@
             type="url"
             :placeholder="$t('modSubmissionForm.placeholderTextFacilityGoogleMapsUrl')"
             :required="true"
+            :input-validation-check="validateWebsite"
+            :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityGoogleMapsUrl')"
             :autofill-value="submissionFormFields.googlemapsURL.value"
         />
         <ModInputField
@@ -184,6 +210,8 @@
             type="text"
             :placeholder="$t('modSubmissionForm.placeholderTextFacilityMapLatitude')"
             :required="true"
+            :input-validation-check="validateFloat"
+            :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityMapLatitude')"
         />
         <ModInputField
             v-model="submissionFormFields.mapLongitude.value"
@@ -192,6 +220,8 @@
             type="text"
             :placeholder="$t('modSubmissionForm.placeholderTextFacilityMapLongitude')"
             :required="true"
+            :input-validation-check="validateFloat"
+            :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityMapLongitude')"
         />
     </div>
     <ModHealthcareProfessionalSearchbar data-testid="submission-form-doctor-search" />
@@ -207,6 +237,17 @@
 <script lang="ts" setup>
 import { type Ref, ref } from 'vue'
 import { useModerationScreenStore, ModerationScreen } from '~/stores/moderationScreenStore'
+import { validateAddressLineEn,
+    validateAddressLineJa,
+    validateNameEn,
+    validateNameJa,
+    validatePhoneNumber,
+    validateCityEn,
+    validateEmail,
+    validateFloat,
+    validatePostalCode,
+    validateWebsite,
+    validateCityJa } from '~/utils/formValidations'
 
 const screenStore = useModerationScreenStore()
 
