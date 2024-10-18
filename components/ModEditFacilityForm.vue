@@ -11,6 +11,7 @@
             {{ $t('modSubmissionForm.contactInformation') }}
         </span>
         <ModInputField
+            v-model="submissionFormFields.nameEn.value"
             data-testid="submission-form-nameEn"
             :label="$t('modSubmissionForm.labelFacilityNameEn')"
             type="text"
@@ -18,6 +19,7 @@
             :required="true"
         />
         <ModInputField
+            v-model="submissionFormFields.nameJa.value"
             data-testid="submission-form-nameJa"
             :label="$t('modSubmissionForm.labelFacilityNameJa')"
             type="text"
@@ -25,6 +27,7 @@
             :required="true"
         />
         <ModInputField
+            v-model="submissionFormFields.phone.value"
             data-testid="submission-form-phone"
             :label="$t('modSubmissionForm.labelFacilityPhoneNumber')"
             type="text"
@@ -32,6 +35,7 @@
             :required="true"
         />
         <ModInputField
+            v-model="submissionFormFields.email.value"
             data-testid="submission-form-email"
             :label="$t('modSubmissionForm.labelFacilityEmail')"
             type="email"
@@ -39,6 +43,7 @@
             :required="false"
         />
         <ModInputField
+            v-model="submissionFormFields.website.value"
             data-testid="submission-form-website"
             :label="$t('modSubmissionForm.labelFacilityWebsite')"
             type="url"
@@ -54,6 +59,7 @@
             {{ $t('modSubmissionForm.addresses') }}
         </span>
         <ModInputField
+            v-model="submissionFormFields.postalCode.value"
             data-testid="submission-form-postalCode"
             :label="$t('modSubmissionForm.labelFacilityPostalCode')"
             type="text"
@@ -69,6 +75,7 @@
             </label>
             <select
                 id="1"
+                v-model="submissionFormFields.prefectureEn.value"
                 data-testid="submission-form-prefectureEn"
                 name="Prefecture Japan"
                 class="mb-5 px-3 py-3.5 w-96 h-12 bg-secondary-bg rounded-lg border border-primary-text-muted
@@ -83,6 +90,7 @@
             </select>
         </div>
         <ModInputField
+            v-model="submissionFormFields.cityEn.value"
             data-testid="submission-form-cityEn"
             :label="$t('modSubmissionForm.labelFacilityCityEn')"
             type="text"
@@ -90,6 +98,7 @@
             :required="true"
         />
         <ModInputField
+            v-model="submissionFormFields.addressLine1En.value"
             data-testid="submission-form-addressLine1En"
             :label="$t('modSubmissionForm.labelFacilityAddressLine1En')"
             type="text"
@@ -97,6 +106,7 @@
             :required="true"
         />
         <ModInputField
+            v-model="submissionFormFields.addressLine2En.value"
             data-testid="submission-form-addressLine2En"
             :label="$t('modSubmissionForm.labelFacilityAddressLine2En')"
             type="text"
@@ -112,6 +122,7 @@
             </label>
             <select
                 id="1"
+                v-model="submissionFormFields.prefectureJa.value"
                 data-testid="submission-form-prefectureJa"
                 name="Prefecture Japan"
                 class="mb-5 px-3 py-3.5 w-96 h-12 bg-secondary-bg rounded-lg border border-primary-text-muted
@@ -126,6 +137,7 @@
             </select>
         </div>
         <ModInputField
+            v-model="submissionFormFields.cityJa.value"
             data-testid="submission-form-cityJa"
             :label="$t('modSubmissionForm.labelFacilityCityJa')"
             type="text"
@@ -133,6 +145,7 @@
             :required="true"
         />
         <ModInputField
+            v-model="submissionFormFields.addressLine1Ja.value"
             data-testid="submission-form-addressLine1Ja"
             :label="$t('modSubmissionForm.labelFacilityAddressLine1Ja')"
             type="text"
@@ -140,6 +153,7 @@
             :required="true"
         />
         <ModInputField
+            v-model="submissionFormFields.addressLine2Ja.value"
             data-testid="submission-form-addressLine2Ja"
             :label="$t('modSubmissionForm.labelFacilityAddressLine2Ja')"
             type="text"
@@ -155,13 +169,16 @@
             {{ $t('modSubmissionForm.googleMapsInformation') }}
         </span>
         <ModInputField
+            v-model="submissionFormFields.googlemapsURL.value"
             data-testid="submission-form-google-maps"
             :label="$t('modSubmissionForm.labelFacilityGoogleMapsUrl')"
             type="url"
             :placeholder="$t('modSubmissionForm.placeholderTextFacilityGoogleMapsUrl')"
             :required="true"
+            :autofill-value="submissionFormFields.googlemapsURL.value"
         />
         <ModInputField
+            v-model="submissionFormFields.mapLatitude.value"
             data-testid="submission-form-mapLatitude"
             :label="$t('modSubmissionForm.labelFacilityMapLatitude')"
             type="text"
@@ -169,6 +186,7 @@
             :required="true"
         />
         <ModInputField
+            v-model="submissionFormFields.mapLongitude.value"
             data-testid="submission-form-mapLongitude"
             :label="$t('modSubmissionForm.labelFacilityMapLongitude')"
             type="text"
@@ -191,6 +209,29 @@ import { type Ref, ref } from 'vue'
 import { useModerationScreenStore, ModerationScreen } from '~/stores/moderationScreenStore'
 
 const screenStore = useModerationScreenStore()
+
+const submissionFormFields = {
+    // contactFields
+    nameEn: ref('') as Ref<string>,
+    nameJa: ref('') as Ref<string>,
+    phone: ref('') as Ref<string>,
+    website: ref('') as Ref<string>,
+    email: ref('') as Ref<string>,
+    // addressesFields
+    postalCode: ref('') as Ref<string>,
+    prefectureEn: ref('') as Ref<string>,
+    cityEn: ref('') as Ref<string>,
+    addressLine1En: ref('') as Ref<string>,
+    addressLine2En: ref('') as Ref<string>,
+    prefectureJa: ref('') as Ref<string>,
+    cityJa: ref('') as Ref<string>,
+    addressLine1Ja: ref('') as Ref<string>,
+    addressLine2Ja: ref('') as Ref<string>,
+    // googleMapsFields
+    googlemapsURL: ref('') as Ref<string>,
+    mapLatitude: ref('') as Ref<string>,
+    mapLongitude: ref('') as Ref<string>
+} as { [key: string]: Ref }
 
 const listPrefectureJapanEn: Ref<string[]> = ref([
     'Hokkaido', 'Aomori', 'Iwate', 'Miyagi', 'Akita',
