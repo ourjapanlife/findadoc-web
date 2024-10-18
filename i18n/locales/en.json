@@ -237,6 +237,6 @@
         "selectInsurances": "Accepted Insurances",
         "selectLocales": "Select Locales Spoken",
         "selectSpecialties": "Specialties",
-        "submitButtonText": "Submit"
+        "updateButtonText": "Update"
     }
 }
