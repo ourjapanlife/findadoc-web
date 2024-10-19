@@ -222,13 +222,13 @@
     "placeholderTextHealthcareProfessionalLastName": "e.g. Doe",
     "placeholderTextHealthcareProfessionalMiddleName": "e.g. Bronson",
     "selectAnInsuranceDefault": "Accepted Insurances",
-    "submitButtonText": "Submit",
     "selectInsurances": "Accepted Insurances",
     "selectSpecialties": "Specialties",
     "selectDegrees": "Degrees",
     "selectLocales": "Select Locales Spoken",
     "confirmationButton": "Leave Page",
-    "hasUnsavedChanges": "You have unsaved changes. Are you sure you want to leave?"
+    "hasUnsavedChanges": "You have unsaved changes. Are you sure you want to leave?",
+    "updateButtonText": "Update"
   },
   "modPanelSubmissionLeftNavbar": {
     "addresses": "Addresses",
