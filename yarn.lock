@@ -8767,7 +8767,7 @@ __metadata:
     nuxt-svgo: "npm:^4.0.2"
     nuxt-viewport: "npm:^2.1.5"
     pinia: "npm:^2.2.0"
-    postcss: "npm:^8.4.41"
+    postcss: "npm:^8.4.47"
     postcss-html: "npm:^1.7.0"
     start-server-and-test: "npm:^2.0.5"
     tailwindcss: "npm:^3.4.7"
@@ -13141,7 +13141,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:^8.4.0, postcss@npm:^8.4.23, postcss@npm:^8.4.39, postcss@npm:^8.4.40, postcss@npm:^8.4.41":
+"postcss@npm:^8.4.0, postcss@npm:^8.4.23, postcss@npm:^8.4.39, postcss@npm:^8.4.40":
   version: 8.4.41
   resolution: "postcss@npm:8.4.41"
   dependencies:
@@ -13152,7 +13152,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:^8.4.43":
+"postcss@npm:^8.4.43, postcss@npm:^8.4.47":
   version: 8.4.47
   resolution: "postcss@npm:8.4.47"
   dependencies:
