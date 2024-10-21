@@ -22,7 +22,7 @@ export const useFacilitiesStore = defineStore(
                     facility
                 )
             } catch (error) {
-                console.error('Failed to update Facility:', error)
+                console.error('Failed to update facility:', error)
             }
         }
 
@@ -44,7 +44,7 @@ async function queryFacilities() {
         const response = await gqlClient.request<{ facilities: Facility[] }>(getAllFacilitiesForModeration, searchFacilitiesData)
         return response?.facilities ?? []
     } catch (error) {
-        console.log(`Error querying the submissions: ${JSON.stringify(error)}`)
+        console.log(`Error querying the facilities: ${JSON.stringify(error)}`)
         return []
     }
 }
