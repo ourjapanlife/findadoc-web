@@ -1,8 +1,8 @@
 import { defineStore } from 'pinia'
 import { ref, type Ref } from 'vue'
 import { gql } from 'graphql-request'
-import type { Facility } from '~/typedefs/gqlTypes'
-import { gqlClient } from '~/utils/graphql'
+import type { Facility, MutationUpdateFacilityArgs } from '~/typedefs/gqlTypes'
+import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql'
 
 export const useFacilitiesStore = defineStore(
     'facilitiesStore',
@@ -14,9 +14,22 @@ export const useFacilitiesStore = defineStore(
             facilityData.value = facilityResults
         }
 
+        async function updateFacility(facility: MutationUpdateFacilityArgs) {
+            try {
+                return await graphQLClientRequestWithRetry(
+                    gqlClient.request.bind(gqlClient),
+                    updateExistingFacilityGqlMutation,
+                    facility
+                )
+            } catch (error) {
+                console.error('Failed to update Facility:', error)
+            }
+        }
+
         return {
             getFacilities,
-            facilityData
+            facilityData,
+            updateFacility
         }
     }
 )
@@ -65,5 +78,37 @@ query Facilities($filters: FacilitySearchFilters!) {
         createdDate
         updatedDate
     }
+}
+`
+
+const updateExistingFacilityGqlMutation = gql`
+mutation Mutation($updateFacilityId: ID!, $input: UpdateFacilityInput!) {
+  updateFacility(id: $updateFacilityId, input: $input) {
+    id
+    nameEn
+    nameJa
+    contact {
+      googleMapsUrl
+      email
+      phone
+      website
+      address {
+        postalCode
+        prefectureEn
+        cityEn
+        addressLine1En
+        addressLine2En
+        prefectureJa
+        cityJa
+        addressLine1Ja
+        addressLine2Ja
+      }
+    }
+    mapLatitude
+    mapLongitude
+    healthcareProfessionalIds
+    createdDate
+    updatedDate
+  }
 }
 `
