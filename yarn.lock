@@ -8018,13 +8018,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-json@npm:^4.0.0":
-  version: 4.0.0
-  resolution: "eslint-plugin-json@npm:4.0.0"
+"eslint-plugin-json@npm:^4.0.1":
+  version: 4.0.1
+  resolution: "eslint-plugin-json@npm:4.0.1"
   dependencies:
     lodash: "npm:^4.17.21"
     vscode-json-languageservice: "npm:^4.1.6"
-  checksum: 10/963cbba4754e58c6c436236c516c26d61867f8b8e371e7db24ddfa238d0b4edcb1c234b86c1740df8ac96aeeb127b1f35771d17de9cd0a4629ce01767070999d
+  checksum: 10/d891eb5326cca9af5d4a2ebdef5e04761d9a2fca56841d533f755dd475539818d9f43cc7f1e19952276fca8493ea58b4e143ee68f75b2971e2ea8e5e244e0929
   languageName: node
   linkType: hard
 
@@ -8757,7 +8757,7 @@ __metadata:
     cypress-real-events: "npm:^1.13.0"
     eslint: "npm:^9.8.0"
     eslint-plugin-cypress: "npm:^3.4.0"
-    eslint-plugin-json: "npm:^4.0.0"
+    eslint-plugin-json: "npm:^4.0.1"
     eslint-plugin-vue: "npm:^9.27.0"
     graphql: "npm:^16.9.0"
     graphql-request: "npm:^7.1.0"
