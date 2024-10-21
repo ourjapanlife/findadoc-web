@@ -47,7 +47,7 @@ async function queryHealthcareProfessionals() {
             (getAllHealthcareProfessionalsData, searchHealthcareProfessionalsData)
         return response?.healthcareProfessionals ?? []
     } catch (error) {
-        console.log(`Error querying the submissions: ${JSON.stringify(error)}`)
+        console.log(`Error querying the healthcare professionals: ${JSON.stringify(error)}`)
         return []
     }
 }
