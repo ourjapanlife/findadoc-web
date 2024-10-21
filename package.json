@@ -63,7 +63,7 @@
         "eslint-plugin-cypress": "^3.4.0",
         "eslint-plugin-json": "^4.0.1",
         "eslint-plugin-vue": "^9.27.0",
-        "husky": "^9.1.4",
+        "husky": "^9.1.6",
         "jsdom": "^24.1.1",
         "nuxt": "^3.12.4",
         "nuxt-viewport": "^2.1.5",

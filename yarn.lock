@@ -8761,7 +8761,7 @@ __metadata:
     eslint-plugin-vue: "npm:^9.27.0"
     graphql: "npm:^16.9.0"
     graphql-request: "npm:^7.1.0"
-    husky: "npm:^9.1.4"
+    husky: "npm:^9.1.6"
     jsdom: "npm:^24.1.1"
     nuxt: "npm:^3.12.4"
     nuxt-svgo: "npm:^4.0.2"
@@ -9669,7 +9669,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"husky@npm:^9.1.4":
+"husky@npm:^9.1.6":
   version: 9.1.6
   resolution: "husky@npm:9.1.6"
   bin:
