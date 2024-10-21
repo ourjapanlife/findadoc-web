@@ -89,7 +89,7 @@ export const useModerationSubmissionsStore = defineStore(
 
         async function updateSubmission(submission: MutationUpdateSubmissionArgs) {
             try {
-                await graphQLClientRequestWithRetry(
+                return await graphQLClientRequestWithRetry(
                     gqlClient.request.bind(gqlClient),
                     updateFacilitySubmissionGqlMutation,
                     submission
@@ -102,18 +102,13 @@ export const useModerationSubmissionsStore = defineStore(
         }
 
         async function approveSubmission() {
-            if (!selectedSubmissionId.value) {
-                console.error('Submission Id is required')
-                return
-            }
-
             const approveSubmissionInput: MutationUpdateSubmissionArgs = {
                 id: selectedSubmissionId.value,
                 input: {
                     isApproved: true
                 }
             }
-            updateSubmission(approveSubmissionInput)
+            return updateSubmission(approveSubmissionInput)
         }
 
         return { getSubmissions,
