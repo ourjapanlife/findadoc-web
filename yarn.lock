@@ -5632,7 +5632,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:^1.6.1":
+"axios@npm:^1.7.7":
   version: 1.7.7
   resolution: "axios@npm:1.7.7"
   dependencies:
@@ -7043,7 +7043,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"debug@npm:4, debug@npm:4.3.6, debug@npm:^4.1.0, debug@npm:^4.1.1, debug@npm:^4.3.1, debug@npm:^4.3.2, debug@npm:^4.3.3, debug@npm:^4.3.4, debug@npm:^4.3.5":
+"debug@npm:4, debug@npm:^4.1.0, debug@npm:^4.1.1, debug@npm:^4.3.1, debug@npm:^4.3.2, debug@npm:^4.3.3, debug@npm:^4.3.4, debug@npm:^4.3.5":
   version: 4.3.6
   resolution: "debug@npm:4.3.6"
   dependencies:
@@ -7055,16 +7055,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"debug@npm:^3.1.0, debug@npm:^3.2.7":
-  version: 3.2.7
-  resolution: "debug@npm:3.2.7"
-  dependencies:
-    ms: "npm:^2.1.1"
-  checksum: 10/d86fd7be2b85462297ea16f1934dc219335e802f629ca9a69b63ed8ed041dda492389bb2ee039217c02e5b54792b1c51aa96ae954cf28634d363a2360c7a1639
-  languageName: node
-  linkType: hard
-
-"debug@npm:^4.3.6":
+"debug@npm:4.3.7, debug@npm:^4.3.6":
   version: 4.3.7
   resolution: "debug@npm:4.3.7"
   dependencies:
@@ -7073,6 +7064,15 @@ __metadata:
     supports-color:
       optional: true
   checksum: 10/71168908b9a78227ab29d5d25fe03c5867750e31ce24bf2c44a86efc5af041758bb56569b0a3d48a9b5344c00a24a777e6f4100ed6dfd9534a42c1dde285125a
+  languageName: node
+  linkType: hard
+
+"debug@npm:^3.1.0, debug@npm:^3.2.7":
+  version: 3.2.7
+  resolution: "debug@npm:3.2.7"
+  dependencies:
+    ms: "npm:^2.1.1"
+  checksum: 10/d86fd7be2b85462297ea16f1934dc219335e802f629ca9a69b63ed8ed041dda492389bb2ee039217c02e5b54792b1c51aa96ae954cf28634d363a2360c7a1639
   languageName: node
   linkType: hard
 
@@ -8740,7 +8740,7 @@ __metadata:
     pinia: "npm:^2.2.0"
     postcss: "npm:^8.4.41"
     postcss-html: "npm:^1.7.0"
-    start-server-and-test: "npm:^2.0.5"
+    start-server-and-test: "npm:^2.0.8"
     tailwindcss: "npm:^3.4.7"
     typescript: "npm:5.5.4"
     typescript-eslint: "npm:^8.0.1"
@@ -10432,7 +10432,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"joi@npm:^17.11.0":
+"joi@npm:^17.13.3":
   version: 17.13.3
   resolution: "joi@npm:17.13.3"
   dependencies:
@@ -14452,23 +14452,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"start-server-and-test@npm:^2.0.5":
-  version: 2.0.5
-  resolution: "start-server-and-test@npm:2.0.5"
+"start-server-and-test@npm:^2.0.8":
+  version: 2.0.8
+  resolution: "start-server-and-test@npm:2.0.8"
   dependencies:
     arg: "npm:^5.0.2"
     bluebird: "npm:3.7.2"
     check-more-types: "npm:2.24.0"
-    debug: "npm:4.3.6"
+    debug: "npm:4.3.7"
     execa: "npm:5.1.1"
     lazy-ass: "npm:1.6.0"
     ps-tree: "npm:1.2.0"
-    wait-on: "npm:7.2.0"
+    wait-on: "npm:8.0.1"
   bin:
     server-test: src/bin/start.js
     start-server-and-test: src/bin/start.js
     start-test: src/bin/start.js
-  checksum: 10/a0776beb813ccbae8b1e20dd6b92c53f28085c84bd176d39e2dcc51caf0c6b0358160fbbc536a6463f9d51bd9488f98e79ca802bcfac046b835ee810df98711c
+  checksum: 10/4067c3dd120e1e515e4d087f2a60faebaae512517374dc30d14b29492a6761e2ab72f82c8bcb72f0eefc060fd7345674821e1255bb58a6ceaa5a1fac4257790a
   languageName: node
   linkType: hard
 
@@ -16189,18 +16189,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"wait-on@npm:7.2.0":
-  version: 7.2.0
-  resolution: "wait-on@npm:7.2.0"
+"wait-on@npm:8.0.1":
+  version: 8.0.1
+  resolution: "wait-on@npm:8.0.1"
   dependencies:
-    axios: "npm:^1.6.1"
-    joi: "npm:^17.11.0"
+    axios: "npm:^1.7.7"
+    joi: "npm:^17.13.3"
     lodash: "npm:^4.17.21"
     minimist: "npm:^1.2.8"
     rxjs: "npm:^7.8.1"
   bin:
     wait-on: bin/wait-on
-  checksum: 10/00299e3b651c70d7082d02b93d9d4784cbe851914f1674d795d578d4826876193fdc7bee7e9491264b7c2d242ac9fe6e1fd09e1143409f730f13a7ee2da67fff
+  checksum: 10/41f933031b994718dfb50af35bb843f7f7017d601ef22927e92c211736fadd21808fdbf7ae367e998bcaf995cb9c05cf6160552dc655db9082aeecc346bc926d
   languageName: node
   linkType: hard
 
