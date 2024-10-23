@@ -2,155 +2,23 @@ import 'cypress-real-events'
 import 'cypress-plugin-tab'
 import enUS from '../../i18n/locales/en.json'
 
-const mockedSubmissionResponse = {
-    data: {
-        submissions: [
-            {
-                id: '1',
-                googleMapsUrl: 'https://maps.google.com/?q=custom1',
-                healthcareProfessionalName: 'Dr. John Doe',
-                spokenLanguages: ['English', 'Japanese'],
-                facility: {
-                    id: '1',
-                    nameEn: 'Custom Facility EN',
-                    nameJa: 'カスタム施設 JA',
-                    contact: {
-                        googleMapsUrl: 'https://maps.google.com/?q=facility1',
-                        email: 'contact@facility.com',
-                        phone: '123-456-7890',
-                        website: 'https://facility.com',
-                        address: {
-                            postalCode: '123-4567',
-                            prefectureEn: 'Tokyo',
-                            cityEn: 'Shibuya',
-                            addressLine1En: '1-2-3 Custom St',
-                            addressLine2En: 'Apt 456',
-                            prefectureJa: '東京都',
-                            cityJa: '渋谷区',
-                            addressLine1Ja: 'カスタム通り1-2-3',
-                            addressLine2Ja: '456号室'
-                        }
-                    },
-                    healthcareProfessionalIds: ['1']
-                },
-                healthcareProfessionals: [
-                    {
-                        id: '1',
-                        names: [
-                            {
-                                firstName: 'John',
-                                middleName: '',
-                                lastName: 'Doe',
-                                locale: 'en'
-                            }
-                        ],
-                        spokenLanguages: ['English'],
-                        degrees: ['MD'],
-                        specialties: ['General Practice'],
-                        acceptedInsurance: ['Insurance1'],
-                        facilityIds: ['1']
-                    }
-                ],
-                isUnderReview: false,
-                isApproved: true,
-                isRejected: false,
-                createdDate: '2023-01-01T00:00:00Z',
-                updatedDate: '2023-01-02T00:00:00Z',
-                notes: 'This is a custom note.'
-            },
-            {
-                id: '2',
-                googleMapsUrl: 'https://maps.google.com/?q=flannigan2',
-                healthcareProfessionalName: 'Dr. Farnsworth McFlannigan',
-                spokenLanguages: ['English', 'Japanese'],
-                facility: {
-                    id: '1',
-                    nameEn: 'Cork EN',
-                    nameJa: 'カスタム JA2',
-                    contact: {
-                        googleMapsUrl:
-                            'https://maps.google.com/?q=mcflannigan2',
-                        email: 'mcFlannigan@mcflannigan.com',
-                        phone: '243-867-5309',
-                        website: 'https://mcflannigan.com',
-                        address: {
-                            postalCode: '123-4567',
-                            prefectureEn: 'Tokyo',
-                            cityEn: 'Shibuya',
-                            addressLine1En: '1-2-3 Flannigan St',
-                            addressLine2En: 'Apt 456',
-                            prefectureJa: '東京都',
-                            cityJa: '渋谷区',
-                            addressLine1Ja: 'カスタム通り1-2-3',
-                            addressLine2Ja: '456号室'
-                        }
-                    },
-                    healthcareProfessionalIds: ['2']
-                },
-                healthcareProfessionals: [
-                    {
-                        id: '2',
-                        names: [
-                            {
-                                firstName: 'Farnsworth',
-                                middleName: '',
-                                lastName: 'McFlannigan',
-                                locale: 'en'
-                            }
-                        ],
-                        spokenLanguages: ['English', 'Japanese'],
-                        degrees: ['MD'],
-                        specialties: ['Radiology'],
-                        acceptedInsurance: ['Insurance2'],
-                        facilityIds: ['2']
-                    }
-                ],
-                isUnderReview: true,
-                isApproved: false,
-                isRejected: false,
-                createdDate: '2023-01-01T00:00:00Z',
-                updatedDate: '2023-01-02T00:00:00Z',
-                notes: 'This is a custom note.'
-            }
-        ]
-    },
-    facilities: [
-        {
-            id: '1',
-            nameEn: 'Tokyo Medical Center',
-            nameJa: '東京医療センター',
-            contact: {
-                googleMapsUrl:
-                    'https://maps.google.com/?q=Tokyo+Medical+Center',
-                email: 'contact@tokyomedicalcenter.jp',
-                phone: '+81-3-1234-5678',
-                website: 'https://www.tokyomedicalcenter.jp',
-                address: {
-                    postalCode: '100-0001',
-                    prefectureEn: 'Tokyo',
-                    cityEn: 'Chiyoda',
-                    addressLine1En: '1-1-1 Chiyoda',
-                    addressLine2En: 'Building A',
-                    prefectureJa: '東京都',
-                    cityJa: '千代田区',
-                    addressLine1Ja: '千代田1-1-1',
-                    addressLine2Ja: 'Aビル'
-                }
-            },
-            mapLatitude: 35.6895,
-            mapLongitude: 139.6917,
-            healthcareProfessionalIds: ['101', '102', '103'],
-            createdDate: '2023-01-01T12:00:00Z',
-            updatedDate: '2024-01-01T12:00:00Z'
-        }
-    ]
-}
+const MOCKED_SUBMISSION_RESPONSE_PATH = "moderation_dashboard/mockedSubmissionResponse.json"
 
 describe(
     'Moderation dashboard',
     () => {
+        // Before starting the execution, we need to load the fixture data using "this" context of the
+        // test object. We need to use regular function() callbacks instead of arrow functions when
+        // we need to access the "this" context.
+        before(function () {
+            cy.fixture(MOCKED_SUBMISSION_RESPONSE_PATH).then(mockedSubmissionResponse => {
+                console.log(mockedSubmissionResponse)
+                this.mockedSubmissionResponse = mockedSubmissionResponse
+            })
+        })
+
         context('Landscape mode', () => {
-            beforeEach(() => {
+            beforeEach(function () {
                 // The resolution is in the beforeEach() instead of before() to
                 // prevent Cypress from defaulting to other screen sizes between tests.
                 cy.viewport('macbook-16')
@@ -162,7 +30,7 @@ describe(
                     if (req.body.query && req.body.query.includes('query Submissions')) {
                         req.reply({
                             statusCode: 200,
-                            body: mockedSubmissionResponse
+                            body: this.mockedSubmissionResponse
                         })
                     } else {
                         req.continue()
@@ -280,8 +148,15 @@ describe(
 )
 
 describe('Moderation Edit Submission Form', () => {
+    before(function () {
+        cy.fixture(MOCKED_SUBMISSION_RESPONSE_PATH).then(mockedSubmissionResponse => {
+            console.log(mockedSubmissionResponse)
+            this.mockedSubmissionResponse = mockedSubmissionResponse
+        })
+    })
+
     context('Landscape mode', () => {
-        before(() => {
+        before(function () {
             cy.viewport('macbook-16')
 
             cy.visit('/login', { timeout: 10000 })
@@ -293,7 +168,7 @@ describe('Moderation Edit Submission Form', () => {
                 if (req.body.query && req.body.query.includes('query Submissions')) {
                     req.reply({
                         statusCode: 200,
-                        body: mockedSubmissionResponse
+                        body: this.mockedSubmissionResponse
                     })
                 } else {
                     req.continue()
@@ -368,8 +243,8 @@ describe('Moderation Edit Submission Form', () => {
             cy.get('[data-testid="submission-form-locales"]').should('exist')
         })
 
-        it('should autofill the form', () => {
-            const submission = mockedSubmissionResponse.data.submissions[1].facility
+        it('should autofill the form', function () {
+            const submission = this.mockedSubmissionResponse.data.submissions[1].facility
 
             cy.get('[data-testid="submission-form-nameEn"]').find('input', { timeout: 10000 })
                 .should('have.value', submission.nameEn)
@@ -451,8 +326,15 @@ describe('Moderation Edit Submission Form', () => {
 })
 
 describe('Moderation Edit Submission Modal', () => {
+    before(function () {
+        cy.fixture(MOCKED_SUBMISSION_RESPONSE_PATH).then(mockedSubmissionResponse => {
+            console.log(mockedSubmissionResponse)
+            this.mockedSubmissionResponse = mockedSubmissionResponse
+        })
+    })
+
     context('Landscape mode', () => {
-        before(() => {
+        before(function() {
             cy.viewport('macbook-16')
 
             cy.visit('/login', { timeout: 10000 })
@@ -464,7 +346,7 @@ describe('Moderation Edit Submission Modal', () => {
                 if (req.body.query && req.body.query.includes('query Submissions')) {
                     req.reply({
                         statusCode: 200,
-                        body: mockedSubmissionResponse
+                        body: this.mockedSubmissionResponse
                     })
                 } else {
                     req.continue()
