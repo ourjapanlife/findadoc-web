@@ -1,8 +1,5 @@
 <template>
-    <div
-        v-show="modalStore.isOpen"
-        class="fixed top-0 left-0 flex items-center justify-center h-full w-full z-10 bg-secondary bg-opacity-40"
-    >
+    <div>
         <Modal
             data-testid="submission-form-modal"
             @modal-closed="resetModalRefs"
