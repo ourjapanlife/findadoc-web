@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref, type Ref } from 'vue'
 import { gql } from 'graphql-request'
-import type { Facility, MutationUpdateFacilityArgs } from '~/typedefs/gqlTypes'
+import type { Facility, MutationDeleteFacilityArgs, MutationUpdateFacilityArgs } from '~/typedefs/gqlTypes'
 import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql'
 
 export const useFacilitiesStore = defineStore(
@@ -26,10 +26,23 @@ export const useFacilitiesStore = defineStore(
             }
         }
 
+        async function deleteFacility(facilityId: MutationDeleteFacilityArgs) {
+            try {
+                return await graphQLClientRequestWithRetry(
+                    gqlClient.request.bind(gqlClient),
+                    deleteExistingFacilityGqlMutation,
+                    facilityId
+                )
+            } catch (error) {
+                console.error('Failed to delete facility:', error)
+            }
+        }
+
         return {
             getFacilities,
             facilityData,
-            updateFacility
+            updateFacility,
+            deleteFacility
         }
     }
 )
@@ -109,6 +122,14 @@ mutation Mutation($updateFacilityId: ID!, $input: UpdateFacilityInput!) {
     healthcareProfessionalIds
     createdDate
     updatedDate
+  }
+}
+`
+
+const deleteExistingFacilityGqlMutation = gql`
+mutation Mutation($deleteFacilityId: ID!) {
+  deleteFacility(id: $deleteFacilityId) {
+    isSuccessful
   }
 }
 `
