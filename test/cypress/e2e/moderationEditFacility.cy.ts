@@ -109,46 +109,64 @@ describe('Moderation edit facility form', () => {
 
         it('should be display error messages', () => {
             cy.get('[data-testid="mod-facility-section-nameEn"]').find('input').clear().type('立川中央病院').realPress('Tab')
-            cy.get('[data-testid="mod-facility-section-nameEn"]').find('p', { timeout: 10000 }).should('exist').contains('Invalid English Name')
-    
-            cy.get('[data-testid="mod-facility-section-nameJa"]').find('input').clear().type('Tachikawa Hospital').realPress('Tab')
-            cy.get('[data-testid="mod-facility-section-nameJa"]').find('p', { timeout: 10000 }).should('exist').contains('Invalid Japanese Name')
-    
+            cy.get('[data-testid="mod-facility-section-nameEn"]').find('p', { timeout: 10000 })
+                .should('exist')
+                .contains('Invalid English Name')
+
+            cy.get('[data-testid="mod-facility-section-nameJa"]')
+                .find('input').clear().type('Tachikawa Hospital').realPress('Tab')
+            cy.get('[data-testid="mod-facility-section-nameJa"]')
+                .find('p', { timeout: 10000 }).should('exist').contains('Invalid Japanese Name')
+
             cy.get('[data-testid="mod-facility-section-phone"]').find('input').clear().type('Hello').realPress('Tab')
-            cy.get('[data-testid="mod-facility-section-phone"]').find('p', { timeout: 10000 }).should('exist').contains('Invalid Phone Number')
-    
+            cy.get('[data-testid="mod-facility-section-phone"]')
+                .find('p', { timeout: 10000 }).should('exist').contains('Invalid Phone Number')
+
             cy.get('[data-testid="mod-facility-section-email"]').find('input').clear().type('example').realPress('Tab')
-            cy.get('[data-testid="mod-facility-section-email"]').find('p', { timeout: 10000 }).should('exist').contains('Invalid Email Address')
-    
+            cy.get('[data-testid="mod-facility-section-email"]')
+                .find('p', { timeout: 10000 }).should('exist').contains('Invalid Email Address')
+
             cy.get('[data-testid="mod-facility-section-website"]').find('input').clear().type('example').realPress('Tab')
-            cy.get('[data-testid="mod-facility-section-website"]').find('p', { timeout: 10000 }).should('exist').contains('Invalid Website URL')
-    
+            cy.get('[data-testid="mod-facility-section-website"]')
+                .find('p', { timeout: 10000 }).should('exist').contains('Invalid Website URL')
+
             cy.get('[data-testid="mod-facility-section-postalCode"]').find('input').clear().type('180-0').realPress('Tab')
-            cy.get('[data-testid="mod-facility-section-postalCode"]').find('p', { timeout: 10000 }).should('exist').contains('Invalid Postal Code')
-    
+            cy.get('[data-testid="mod-facility-section-postalCode"]')
+                .find('p', { timeout: 10000 }).should('exist').contains('Invalid Postal Code')
+
             cy.get('[data-testid="mod-facility-section-cityEn"]').find('input').clear().type('渋谷区').realPress('Tab')
-            cy.get('[data-testid="mod-facility-section-cityEn"]').find('p', { timeout: 10000 }).should('exist').contains('Invalid English City Name')
-    
+            cy.get('[data-testid="mod-facility-section-cityEn"]')
+                .find('p', { timeout: 10000 }).should('exist').contains('Invalid English City Name')
+
             cy.get('[data-testid="mod-facility-section-addressLine1En"]').find('input').clear().type('道の駅').realPress('Tab')
-            cy.get('[data-testid="mod-facility-section-addressLine1En"]').find('p', { timeout: 10000 }).should('exist').contains('Invalid English Address')
-    
+            cy.get('[data-testid="mod-facility-section-addressLine1En"]')
+                .find('p', { timeout: 10000 }).should('exist').contains('Invalid English Address')
+
             cy.get('[data-testid="mod-facility-section-addressLine2En"]').find('input').clear().type('道の駅').realPress('Tab')
-            cy.get('[data-testid="mod-facility-section-addressLine2En"]').find('p', { timeout: 10000 }).should('exist').contains('Invalid English Address')
-    
+            cy.get('[data-testid="mod-facility-section-addressLine2En"]')
+                .find('p', { timeout: 10000 }).should('exist').contains('Invalid English Address')
+
             cy.get('[data-testid=mod-facility-section-cityJa]').find('input').clear().type('Shibuya').realPress('Tab')
-            cy.get('[data-testid=mod-facility-section-cityJa]').find('p', { timeout: 10000 }).should('exist').contains('Invalid Japanese City Name')
-    
-            cy.get('[data-testid="mod-facility-section-addressLine1Ja"]').find('input').clear().type('Peanutbutter street').realPress('Tab')
+            cy.get('[data-testid=mod-facility-section-cityJa]')
+                .find('p', { timeout: 10000 }).should('exist').contains('Invalid Japanese City Name')
+
+            cy.get('[data-testid="mod-facility-section-addressLine1Ja"]')
+                .find('input').clear().type('Peanutbutter street').realPress('Tab')
             cy.get('[data-testid="mod-facility-section-addressLine1Ja"]').should('exist').contains('Invalid Japanese Address')
-    
-            cy.get('[data-testid="mod-facility-section-addressLine2Ja"]').find('input').clear().type('Jelly street').realPress('Tab')
+
+            cy.get('[data-testid="mod-facility-section-addressLine2Ja"]')
+                .find('input').clear().type('Jelly street').realPress('Tab')
             cy.get('[data-testid="mod-facility-section-addressLine2Ja"]').should('exist').contains('Invalid Japanese Address')
-    
-            cy.get('[data-testid="mod-facility-section-mapLatitude"]').find('input').clear().type('Not Number Latitude').realPress('Tab')
-            cy.get('[data-testid="mod-facility-section-mapLatitude"]').find('p', { timeout: 10000 }).should('exist').contains('Invalid Latitude')
-    
-            cy.get('[data-testid="mod-facility-section-mapLongitude"]').find('input').clear().type('Not Number Longitude').realPress('Tab')
-            cy.get('[data-testid="mod-facility-section-mapLongitude"]').find('p', { timeout: 10000 }).should('exist').contains('Invalid Longitude')
+
+            cy.get('[data-testid="mod-facility-section-mapLatitude"]')
+                .find('input').clear().type('Not Number Latitude').realPress('Tab')
+            cy.get('[data-testid="mod-facility-section-mapLatitude"]')
+                .find('p', { timeout: 10000 }).should('exist').contains('Invalid Latitude')
+
+            cy.get('[data-testid="mod-facility-section-mapLongitude"]')
+                .find('input').clear().type('Not Number Longitude').realPress('Tab')
+            cy.get('[data-testid="mod-facility-section-mapLongitude"]')
+                .find('p', { timeout: 10000 }).should('exist').contains('Invalid Longitude')
         })
     })
 })
