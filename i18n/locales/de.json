@@ -152,6 +152,27 @@
     "submitted": "Eingereicht",
     "underReview": "Wird überprüft"
   },
+  "modHealthcareProfessionalSection": {
+    "addHealthCareProfessionalLocaleName": "Add Name by Locale",
+    "healthcareProfessionalHeading": "Healthcare Professional Submission",
+    "healthcareProfessionalId": "Gesundheitsfachkraft-IDs",
+    "healthcareProfessionalMedicalInfoHeading": "Healthcare Professional Medical Info",
+    "healthcareProfessionalNameHeading": "Healthcare Professional Name",
+    "inputErrorMessageHealthcareProfessionalFirstName": "Invalid First Name",
+    "inputErrorMessageHealthcareProfessionalLastName": "Invalid Last Name",
+    "inputErrorMessageHealthcareProfessionalMiddleName": "Invalid Middle Name",
+    "labelHealthcareProfessionalFirstName": "First Name",
+    "labelHealthcareProfessionalLastName": "Last Name",
+    "labelHealthcareProfessionalMiddleName": "Middle Name",
+    "labelHealthcareProfessionalNameLocale": "Name Locale",
+    "placeholderTextHealthcareProfessionalFirstName": "e.g. John",
+    "placeholderTextHealthcareProfessionalLastName": "e.g. Doe",
+    "placeholderTextHealthcareProfessionalMiddleName": "e.g. Bronson",
+    "selectInsurances": "Accepted Insurances",
+    "selectSpecialties": "Specialties",
+    "selectDegrees": "Degrees",
+    "selectLocales": "Select Locales Spoken"
+  },
   "modSubmissionForm": {
     "addresses": "Adressen",
     "contactInformation": "Kontaktinformationen",
