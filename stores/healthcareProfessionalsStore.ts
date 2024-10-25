@@ -52,6 +52,26 @@ async function queryHealthcareProfessionals() {
     }
 }
 
+export async function getHealthcareProfessionalById(id: string) {
+    try {
+        const queryData = {
+            healthcareProfessionalId: id
+        }
+        const result = await gqlClient.request<{ healthcareProfessional: HealthcareProfessional[] }>(
+            getHealthcareProfessionalByIdGqlQuery,
+            queryData
+        )
+
+        if (!result.healthcareProfessional) {
+            throw new Error(`The Healthcare Professional ID doesn't exist`)
+        }
+        return result.healthcareProfessional
+    } catch (error: unknown) {
+        console.log(`Error retrieving healthcare professional by id: ${id}: ${JSON.stringify(error)}`)
+        return []
+    }
+}
+
 const getAllHealthcareProfessionalsData = gql`
 query Query($filters: HealthcareProfessionalSearchFilters!) {
   healthcareProfessionals(filters: $filters) {
@@ -70,6 +90,18 @@ query Query($filters: HealthcareProfessionalSearchFilters!) {
     createdDate
     updatedDate
   }
+}`
+
+const getHealthcareProfessionalByIdGqlQuery = gql`
+    query HealthcareProfessionals($healthcareProfessionalId: ID!) {
+        healthcareProfessional(id: $healthcareProfessionalId) {
+        names {
+            firstName
+            lastName
+        }
+        id
+        specialties
+    }
 }`
 
 const updateHealthcareProfessionalGqlMutation = gql`
