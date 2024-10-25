@@ -48,6 +48,7 @@ Have a look at the [CONTRIBUTING](/CONTRIBUTING.md) and [CODE_OF_CONDUCT](/CODE_
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/Anissa3005"><img src="https://avatars.githubusercontent.com/u/114712265?v=4?s=100" width="100px;" alt="Anissa Chadouli"/><br /><sub><b>Anissa Chadouli</b></sub></a><br /><a href="https://github.com/ourjapanlife/findadoc-web/commits?author=Anissa3005" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/evan-desu"><img src="https://avatars.githubusercontent.com/u/86333067?v=4?s=100" width="100px;" alt="Evan Peterson"/><br /><sub><b>Evan Peterson</b></sub></a><br /><a href="https://github.com/ourjapanlife/findadoc-web/commits?author=evan-desu" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="http://www.squareonejapan.com"><img src="https://avatars.githubusercontent.com/u/151515133?v=4?s=100" width="100px;" alt="Matt Keighley"/><br /><sub><b>Matt Keighley</b></sub></a><br /><a href="https://github.com/ourjapanlife/findadoc-web/commits?author=ShizuokaTerrier" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
