@@ -161,10 +161,19 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "gminetoma",
+      "name": "Gustavo Minoru",
+      "avatar_url": "https://avatars.githubusercontent.com/u/73707876?v=4",
+      "profile": "https://github.com/gminetoma",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
-  "skipCi": true,
+  "skipCi": false,
   "repoType": "github",
   "repoHost": "https://github.com",
   "projectName": "findadoc-web",
