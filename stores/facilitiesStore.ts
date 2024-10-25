@@ -8,6 +8,28 @@ export const useFacilitiesStore = defineStore(
     'facilitiesStore',
     () => {
         const facilityData: Ref<Facility[]> = ref([])
+        const facilitySectionFields = {
+            // contactFields
+            nameEn: ref('') as Ref<string>,
+            nameJa: ref('') as Ref<string>,
+            phone: ref('') as Ref<string>,
+            website: ref('') as Ref<string>,
+            email: ref('') as Ref<string>,
+            // addressesFields
+            postalCode: ref('') as Ref<string>,
+            prefectureEn: ref('') as Ref<string>,
+            cityEn: ref('') as Ref<string>,
+            addressLine1En: ref('') as Ref<string>,
+            addressLine2En: ref('') as Ref<string>,
+            prefectureJa: ref('') as Ref<string>,
+            cityJa: ref('') as Ref<string>,
+            addressLine1Ja: ref('') as Ref<string>,
+            addressLine2Ja: ref('') as Ref<string>,
+            // googleMapsFields
+            googlemapsURL: ref('') as Ref<string>,
+            mapLatitude: ref('') as Ref<string>,
+            mapLongitude: ref('') as Ref<string>
+        } as { [key: string]: Ref }
 
         async function getFacilities() {
             const facilityResults = await queryFacilities()
@@ -29,7 +51,8 @@ export const useFacilitiesStore = defineStore(
         return {
             getFacilities,
             facilityData,
-            updateFacility
+            updateFacility,
+            facilitySectionFields
         }
     }
 )
