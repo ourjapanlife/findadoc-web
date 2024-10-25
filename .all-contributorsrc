@@ -161,6 +161,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "ShizuokaTerrier",
+      "name": "Matt Keighley",
+      "avatar_url": "https://avatars.githubusercontent.com/u/151515133?v=4",
+      "profile": "http://www.squareonejapan.com",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
