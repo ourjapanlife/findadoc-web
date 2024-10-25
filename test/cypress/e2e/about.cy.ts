@@ -1,4 +1,4 @@
-import enUS from '../../i18n/locales/en.json'
+import enUS from '../../../i18n/locales/en.json'
 
 describe('About page', () => {
     context('Desktop resolution', () => {

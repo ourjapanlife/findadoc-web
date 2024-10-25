@@ -1,5 +1,5 @@
 import 'cypress-real-events'
-import enUS from '../../i18n/locales/en.json'
+import enUS from '../../../i18n/locales/en.json'
 
 describe('Submit page', () => {
     context('Desktop resolution', () => {
@@ -23,7 +23,8 @@ describe('Submit page', () => {
         })
 
         it('has a heading', () => {
-            cy.get('h1', { timeout: 10000 }).should('have.attr', 'data-testid', 'submit-heading').contains(enUS.submitPage.heading)
+            cy.get('h1', { timeout: 10000 })
+                .should('have.attr', 'data-testid', 'submit-heading').contains(enUS.submitPage.heading)
         })
 
         it('has a subheading', () => {
