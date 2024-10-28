@@ -4,7 +4,7 @@ describe('Visits the home page', () => {
 
     context('Landscape mode', () => {
         before(() => {
-            cy.visit('/', { timeout: 10000 })
+            cy.visit('/')
         })
 
         beforeEach(() => {
@@ -24,7 +24,7 @@ describe('Visits the home page', () => {
         })
 
         it('allows setting search fields', () => {
-            cy.get('[data-testid="search-button"]', { timeout: 10000 }).should('be.visible')
+            cy.get('[data-testid="search-button"]').should('be.visible')
 
             cy.get('.search-specialty select').select('Dermatology')
             cy.get('.search-specialty select').should('be.visible', 'Dermatology')
@@ -37,15 +37,15 @@ describe('Visits the home page', () => {
         })
 
         it('can select "select a language"', () => {
-            cy.get('[data-testid="search-bar-language"]', { timeout: 10000 }).trigger('click')
+            cy.get('[data-testid="search-bar-language"]').trigger('click')
         })
 
         it('can select "English" from the language bar', () => {
-            cy.get('[data-testid="search-bar-language"]', { timeout: 10000 }).should('be.visible')
+            cy.get('[data-testid="search-bar-language"]').should('be.visible')
 
-            cy.get('[data-testid="search-bar-language"]', { timeout: 10000 }).select('English')
+            cy.get('[data-testid="search-bar-language"]').select('English')
 
-            cy.get('[data-testid="search-bar-language"]', { timeout: 10000 }).should(
+            cy.get('[data-testid="search-bar-language"]').should(
                 'have.value',
                 'en_US'
             )
@@ -128,7 +128,7 @@ describe('Visits the home page', () => {
     // Portrait mode tests - usually for mobile and tablet
     context('Portrait mode', () => {
         before(() => {
-            cy.visit('/', { timeout: 10000 })
+            cy.visit('/')
         })
 
         beforeEach(() => {

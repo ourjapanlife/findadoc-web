@@ -3,7 +3,7 @@ import enUS from '../../../i18n/locales/en.json'
 describe('About page', () => {
     context('Desktop resolution', () => {
         before(() => {
-            cy.visit('/about', { timeout: 10000 })
+            cy.visit('/about')
         })
 
         beforeEach(() => {
@@ -55,7 +55,7 @@ describe('About page', () => {
 
     context('Portrait mode', () => {
         before(() => {
-            cy.visit('/about', { timeout: 10000 })
+            cy.visit('/about')
         })
 
         beforeEach(() => {
