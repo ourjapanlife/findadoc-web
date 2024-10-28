@@ -9,6 +9,7 @@ export const useHealthcareProfessionalsStore = defineStore(
     () => {
         const healthcareProfessionalsData: Ref<HealthcareProfessional[]>
         = ref([])
+        const selectedHealthcareProfessionalId: Ref<string> = ref('')
 
         async function getHealthcareProfessionals() {
             const healthcareProfessionalResults = await queryHealthcareProfessionals()
@@ -30,7 +31,8 @@ export const useHealthcareProfessionalsStore = defineStore(
         return {
             getHealthcareProfessionals,
             healthcareProfessionalsData,
-            updateHealthcareProfessional
+            updateHealthcareProfessional,
+            selectedHealthcareProfessionalId
         }
     }
 )
