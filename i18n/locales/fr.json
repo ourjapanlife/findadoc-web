@@ -317,5 +317,10 @@
     "placeholderTextFacilityPostalCode": "e.g. 186-0000",
     "placeholderTextFacilityWebsite": "e.g. http://www.example.com/",
     "updateButtonText": "Update"
+  },
+  "modEditFacilityOrHPTopbar": {
+    "updateAndExit": "Update & Exit",
+    "delete": "Delete",
+    "copyFailure": "Failed to copy ID"
   }
 }
