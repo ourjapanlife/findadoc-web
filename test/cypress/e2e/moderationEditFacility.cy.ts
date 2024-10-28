@@ -1,5 +1,6 @@
 import 'cypress-real-events'
 import 'cypress-plugin-tab'
+import enUS from '../../../i18n/locales/en.json'
 
 const FAKE_FACILITY_RESPONSE_PATH = 'moderation_dashboard/fakeModFacilityData.json'
 
@@ -52,6 +53,24 @@ describe('Moderation edit facility form', () => {
 
         after(() => {
             Cypress.session.clearCurrentSessionData()
+        })
+
+        it('contains the following fields and buttons in the topbar'), () => {
+            cy.get('[data-testid="mod-edit-facility-hp-topbar-update"]').should('exist')
+                .contains(enUS.modEditFacilityOrHPTopbar.updateAndExit)
+            cy.get('[data-testid="mod-edit-facility-hp-topbar-delete"]').should('exist')
+                .contains(enUS.modEditFacilityOrHPTopbar.delete)
+            cy.get('[data-testid="mod-edit-facility-hp-topbar-copy-id"]').should('exist')
+        }
+
+        it('it copies the selected id', () => {
+            cy.get('[data-testid="mod-edit-facility-hp-topbar-copy-id"]').click()
+
+            // Check that the value copied to the clipboard is the same that's displayed.
+            const clipboardResult = cy.window().then(win => win.navigator.clipboard.readText())
+
+            // The timeout is to give time for the clipboard to be read.
+            clipboardResult.should('exist', 10000)
         })
 
         it('contains the following input fields', () => {
