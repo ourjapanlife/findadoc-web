@@ -17,13 +17,13 @@
             v-else-if="moderationScreenStore.activeScreen === ModerationScreen.EditFacility"
             class="h-[76px] w-full"
         >
-            Facility Topbar
+            <ModEditFacilityOrProfessionalTopbar />
         </div>
         <div
             v-else-if="moderationScreenStore.activeScreen === ModerationScreen.EditHealthcareProfessional"
             class="h-[76px] w-full"
         >
-            Healthcare Professional Topbar
+            <ModEditFacilityOrProfessionalTopbar />
         </div>
     </div>
 </template>

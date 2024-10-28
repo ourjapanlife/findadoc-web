@@ -143,6 +143,11 @@
         "healthcareProfessionals": "Healthcare Professionals",
         "facilities": "Facilities"
     },
+    "modEditFacilityOrHPTopbar": {
+        "copyFailure": "Failed to copy ID",
+        "delete": "Delete",
+        "updateAndExit": "Update & Exit"
+    },
     "modEditSubmissionTopNav": {
         "saveAndExit": "Save & Exit",
         "saving": "Saving...",
