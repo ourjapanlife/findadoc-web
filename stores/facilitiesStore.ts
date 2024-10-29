@@ -8,6 +8,7 @@ export const useFacilitiesStore = defineStore(
     'facilitiesStore',
     () => {
         const facilityData: Ref<Facility[]> = ref([])
+        const selectedFacilityId: Ref<string> = ref('')
         const facilitySectionFields = {
             // contactFields
             nameEn: ref('') as Ref<string>,
@@ -52,7 +53,8 @@ export const useFacilitiesStore = defineStore(
             getFacilities,
             facilityData,
             updateFacility,
-            facilitySectionFields
+            facilitySectionFields,
+            selectedFacilityId
         }
     }
 )

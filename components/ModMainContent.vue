@@ -31,11 +31,15 @@ import { useRoute } from 'vue-router'
 import { computed, nextTick, onMounted, watch } from 'vue'
 import { useModerationScreenStore, ModerationScreen } from '~/stores/moderationScreenStore'
 import { useModerationSubmissionsStore } from '~/stores/moderationSubmissionsStore'
+import { useFacilitiesStore } from '~/stores/facilitiesStore'
+import { useHealthcareProfessionalsStore } from '~/stores/healthcareProfessionalsStore'
 
 const route = useRoute()
 
 const screenStore = useModerationScreenStore()
 const moderationSubmissionsStore = useModerationSubmissionsStore()
+const facilitiesStore = useFacilitiesStore()
+const healthcareProfessionalStore = useHealthcareProfessionalsStore()
 
 const routePathForModerationScreen = computed(() => route.path as string)
 const selectedIdFromModSubmissionList = computed(() => route.params.id as string)
@@ -47,16 +51,16 @@ const setActiveScreenBasedOnRoute = async () => {
         moderationSubmissionsStore.selectedSubmissionId = selectedIdFromModSubmissionList.value
     } else if (routePathForModerationScreen.value.includes('edit-facility') && selectedIdFromModSubmissionList.value) {
         screenStore.setActiveScreen(ModerationScreen.EditFacility)
-        moderationSubmissionsStore.selectedFacilityId = selectedIdFromModSubmissionList.value
+        facilitiesStore.selectedFacilityId = selectedIdFromModSubmissionList.value
     } else if (
         routePathForModerationScreen.value.includes('edit-healthcare-professional') && selectedIdFromModSubmissionList.value) {
         screenStore.setActiveScreen(ModerationScreen.EditHealthcareProfessional)
-        moderationSubmissionsStore.selectedHealthcareProfessionalId = selectedIdFromModSubmissionList.value
+        healthcareProfessionalStore.selectedHealthcareProfessionalId = selectedIdFromModSubmissionList.value
     } else {
         screenStore.setActiveScreen(ModerationScreen.Dashboard)
         moderationSubmissionsStore.selectedSubmissionId = ''
-        moderationSubmissionsStore.selectedFacilityId = ''
-        moderationSubmissionsStore.selectedHealthcareProfessionalId = ''
+        facilitiesStore.selectedFacilityId = ''
+        healthcareProfessionalStore.selectedHealthcareProfessionalId = ''
     }
 }
 
