@@ -68,15 +68,19 @@ describe('Submit page', () => {
             cy.get('[data-testid="submit-completed"]').should('not.be.visible')
         })
 
-        it.skip('submits a complete form', () => {
+        it('submits a complete form', () => {
             cy.get('[data-testid="submit-input-googlemaps"]').type('https://example.com')
+            cy.get('[data-testid="submit-input-firstname"]').type('some first name')
             cy.get('[data-testid="submit-input-lastname"]').type('some last name')
             cy.get('[data-testid="submit-select-language1"]').select('日本語 (Japan)')
+            cy.get('[data-testid="submit-select-language2"]').select('English (US)')
             cy.get('[data-testid="submit-submitbutton"]').click()
             cy.get('[data-testid="submit-completed"]').should('be.visible')
         })
 
         it('requires a URL starting with https://', () => {
+            // Reload the page to reset the form
+            cy.reload()
             cy.get('[data-testid="submit-input-googlemaps"]').type('http://example.com').blur()
             cy.contains(enUS.submitPage.googleMapsValidation).should('be.visible')
         })
@@ -97,6 +101,8 @@ describe('Submit page', () => {
         })
 
         it('requires Spoken Language 1 to be selected', () => {
+            cy.get('[data-testid="submit-select-language1"]').select('日本語 (Japan)')
+            cy.get('[data-testid="submit-select-language1"]').select('None').blur()
             cy.contains(enUS.submitPage.spokenLanguageValidation).should('be.visible')
             cy.get('[data-testid="submit-select-language1"]').select('日本語 (Japan)')
             cy.contains(enUS.submitPage.spokenLanguageValidation).should('not.be.visible')
