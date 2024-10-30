@@ -28,8 +28,6 @@ export const useModerationSubmissionsStore = defineStore(
         const submissionsData: Ref<Submission[]> = ref([])
         const selectedModerationListViewChosen: Ref<SelectedModerationListView> = ref(SelectedModerationListView.Submissions)
         const selectedSubmissionId: Ref<string> = ref('')
-        const selectedFacilityId: Ref<string> = ref('')
-        const selectedHealthcareProfessionalId: Ref<string> = ref('')
         const selectedSubmissionData: Ref<Submission | undefined> = ref()
         const filteredSubmissionDataForListComponent: Ref<Submission[]> = ref([])
         const didMutationFail: Ref<boolean> = ref(false)
@@ -153,8 +151,6 @@ export const useModerationSubmissionsStore = defineStore(
             setDidMutationFail,
             selectedModerationListViewChosen,
             setSelectedModerationListViewChosen,
-            selectedFacilityId,
-            selectedHealthcareProfessionalId,
             updatingSubmissionFromTopBar,
             setUpdatingSubmissionFromTopBar,
             approvingSubmissionFromTopBar,

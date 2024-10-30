@@ -15,7 +15,8 @@ const config = defineConfig({
         experimentalRunAllSpecs: true,
         requestTimeout: 10000,
         responseTimeout: 30000,
-        pageLoadTimeout: 60000
+        pageLoadTimeout: 60000,
+        defaultCommandTimeout: 10000
     }
 })
 

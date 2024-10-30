@@ -21,7 +21,7 @@ describe(
                 // The resolution is in the beforeEach() instead of before() to
                 // prevent Cypress from defaulting to other screen sizes between tests.
                 cy.viewport('macbook-16')
-                cy.visit('/login', { timeout: 10000 })
+                cy.visit('/login')
                 Cypress.session.clearCurrentSessionData()
 
                 // This intercepts the call to the GraphQL API in order to use fake data in the tests to protect the real data.
@@ -47,16 +47,16 @@ describe(
 
                 /* Chaining of visit was used here to make sure the user was logged in and that it would
                  100 percent visit moderation */
-                cy.get('[data-testid=top-nav-mod-link]', { timeout: 10000 }).click().visit('/moderation')
+                cy.get('[data-testid=top-nav-mod-link]').click().visit('/moderation')
 
                 cy.url({ timeout: 10000 }).should('include', '/moderation')
 
-                cy.wait('@getSubmissions', { timeout: 10000 })
+                cy.wait('@getSubmissions')
             })
 
             it('shows mod dashboard left navbar buttons with correct counts and functionality', () => {
                 // The number for include text is for the status in the fake data.
-                cy.get('[data-testid=mod-dashboard-leftnav-for-review]', { timeout: 10000 })
+                cy.get('[data-testid=mod-dashboard-leftnav-for-review]')
                     .should('exist')
                     .should(
                         'include.text',
@@ -89,22 +89,22 @@ describe(
                         '0'
                     )
 
-                cy.get('[data-testid="mod-submission-list-item-1"]', { timeout: 10000 }).should('exist')
+                cy.get('[data-testid="mod-submission-list-item-1"]').should('exist')
 
                 cy.get('[data-testid=mod-dashboard-leftnav-approved]')
                     .click()
 
-                cy.get('[data-testid="mod-submission-list-item-1"]', { timeout: 10000 }).should('exist')
+                cy.get('[data-testid="mod-submission-list-item-1"]').should('exist')
 
                 cy.get('[data-testid=mod-dashboard-leftnav-rejected]')
                     .click()
 
-                cy.get('[data-testid="mod-submission-list-item-1"]', { timeout: 10000 }).should('not.exist')
+                cy.get('[data-testid="mod-submission-list-item-1"]').should('not.exist')
 
                 cy.get('[data-testid=mod-dashboard-leftnav-for-review]')
                     .click()
 
-                cy.get('[data-testid="mod-submission-list-item-1"]', { timeout: 10000 }).should('exist')
+                cy.get('[data-testid="mod-submission-list-item-1"]').should('exist')
             })
 
             it.skip('it shows the moderation top nav', () => {
@@ -123,17 +123,17 @@ describe(
                 cy.get('[data-testid="mod-facility-list-item-1"]').should('not.exist')
                 cy.get('[data-testid="mod-submission-list-item-1').should('exist')
 
-                cy.get('[data-testid="submission-type-select"]', { timeout: 10000 }).select('FACILITIES')
+                cy.get('[data-testid="submission-type-select"]').select('FACILITIES')
                 cy.get('[data-testid="mod-healthcare-professional-list-item-1"]').should('not.exist')
                 cy.get('[data-testid="mod-facility-list-item-1"]').should('exist')
                 cy.get('[data-testid="mod-submission-list-item-1').should('not.exist')
 
-                cy.get('[data-testid="submission-type-select"]', { timeout: 10000 }).select('HEALTHCARE_PROFESSIONALS')
+                cy.get('[data-testid="submission-type-select"]').select('HEALTHCARE_PROFESSIONALS')
                 cy.get('[data-testid="mod-healthcare-professional-list-item-1"]').should('exist')
                 cy.get('[data-testid="mod-facility-list-item-1"]').should('not.exist')
                 cy.get('[data-testid="mod-submission-list-item-1').should('not.exist')
 
-                cy.get('[data-testid="submission-type-select"]', { timeout: 10000 }).select('SUBMISSIONS')
+                cy.get('[data-testid="submission-type-select"]').select('SUBMISSIONS')
                 cy.get('[data-testid="mod-healthcare-professional-list-item-1"]').should('not.exist')
                 cy.get('[data-testid="mod-facility-list-item-1"]').should('not.exist')
                 cy.get('[data-testid="mod-submission-list-item-1').should('exist')
@@ -157,7 +157,7 @@ describe('Moderation Edit Submission Form', () => {
         before(function() {
             cy.viewport('macbook-16')
 
-            cy.visit('/login', { timeout: 10000 })
+            cy.visit('/login')
             Cypress.session.clearCurrentSessionData()
 
             // This intercepts the call to the graphQL api in order to use fake data in the tests to protect
@@ -184,13 +184,13 @@ describe('Moderation Edit Submission Form', () => {
 
             /* Chaining of visit was used here to make sure the user was logged in and that it would
                  100 percent visit moderation */
-            cy.get('[data-testid=top-nav-mod-link]', { timeout: 10000 }).click().visit('/moderation')
+            cy.get('[data-testid=top-nav-mod-link]').click().visit('/moderation')
 
             cy.url({ timeout: 10000 }).should('include', '/moderation')
 
-            cy.wait('@getSubmissions', { timeout: 10000 })
+            cy.wait('@getSubmissions')
 
-            cy.get('[data-testid="mod-submission-list-item-1"]', { timeout: 10000 }).click()
+            cy.get('[data-testid="mod-submission-list-item-1"]').click()
         })
 
         after(() => {
@@ -244,13 +244,13 @@ describe('Moderation Edit Submission Form', () => {
         it('should autofill the form', function() {
             const submission = this.fakeSubmissionResponse.data.submissions[1].facility
 
-            cy.get('[data-testid="submission-form-nameEn"]').find('input', { timeout: 10000 })
+            cy.get('[data-testid="submission-form-nameEn"]').find('input')
                 .should('have.value', submission.nameEn)
 
-            cy.get('[data-testid="submission-form-nameJa"]').find('input', { timeout: 10000 })
+            cy.get('[data-testid="submission-form-nameJa"]').find('input')
                 .should('have.value', submission.nameJa)
 
-            cy.get('[data-testid="submission-form-phone"]').find('input', { timeout: 10000 })
+            cy.get('[data-testid="submission-form-phone"]').find('input')
                 .should('have.value', submission.contact.phone)
         })
 
@@ -284,43 +284,43 @@ describe('Moderation Edit Submission Form', () => {
         it('should be display error messages', () => {
             cy.get('[data-testid="submission-form-nameEn"]').find('input').clear().type('立川中央病院').realPress('Tab')
             cy.get('[data-testid="submission-form-nameEn"]')
-                .find('p', { timeout: 10000 }).should('exist').contains('Invalid English Name')
+                .find('p').should('exist').contains('Invalid English Name')
 
             cy.get('[data-testid="submission-form-nameJa"]').find('input').clear().type('Tachikawa Hospital').realPress('Tab')
             cy.get('[data-testid="submission-form-nameJa"]')
-                .find('p', { timeout: 10000 }).should('exist').contains('Invalid Japanese Name')
+                .find('p').should('exist').contains('Invalid Japanese Name')
 
             cy.get('[data-testid="submission-form-phone"]').find('input').clear().type('Hello').realPress('Tab')
             cy.get('[data-testid="submission-form-phone"]')
-                .find('p', { timeout: 10000 }).should('exist').contains('Invalid Phone Number')
+                .find('p').should('exist').contains('Invalid Phone Number')
 
             cy.get('[data-testid="submission-form-email"]').find('input').clear().type('example').realPress('Tab')
             cy.get('[data-testid="submission-form-email"]')
-                .find('p', { timeout: 10000 }).should('exist').contains('Invalid Email Address')
+                .find('p').should('exist').contains('Invalid Email Address')
 
             cy.get('[data-testid="submission-form-website"]').find('input').clear().type('example').realPress('Tab')
             cy.get('[data-testid="submission-form-website"]')
-                .find('p', { timeout: 10000 }).should('exist').contains('Invalid Website URL')
+                .find('p').should('exist').contains('Invalid Website URL')
 
             cy.get('[data-testid="submission-form-postalCode"]').find('input').clear().type('180-0').realPress('Tab')
             cy.get('[data-testid="submission-form-postalCode"]')
-                .find('p', { timeout: 10000 }).should('exist').contains('Invalid Postal Code')
+                .find('p').should('exist').contains('Invalid Postal Code')
 
             cy.get('[data-testid="submission-form-cityEn"]').find('input').clear().type('渋谷区').realPress('Tab')
             cy.get('[data-testid="submission-form-cityEn"]')
-                .find('p', { timeout: 10000 }).should('exist').contains('Invalid English City Name')
+                .find('p').should('exist').contains('Invalid English City Name')
 
             cy.get('[data-testid="submission-form-addressLine1En"]').find('input').clear().type('道の駅').realPress('Tab')
             cy.get('[data-testid="submission-form-addressLine1En"]')
-                .find('p', { timeout: 10000 }).should('exist').contains('Invalid English Address')
+                .find('p').should('exist').contains('Invalid English Address')
 
             cy.get('[data-testid="submission-form-addressLine2En"]').find('input').clear().type('道の駅').realPress('Tab')
             cy.get('[data-testid="submission-form-addressLine2En"]')
-                .find('p', { timeout: 10000 }).should('exist').contains('Invalid English Address')
+                .find('p').should('exist').contains('Invalid English Address')
 
             cy.get('[data-testid=submission-form-cityJa]').find('input').clear().type('Shibuya').realPress('Tab')
             cy.get('[data-testid=submission-form-cityJa]')
-                .find('p', { timeout: 10000 }).should('exist').contains('Invalid Japanese City Name')
+                .find('p').should('exist').contains('Invalid Japanese City Name')
 
             cy.get('[data-testid="submission-form-addressLine1Ja"]')
                 .find('input').clear().type('Peanutbutter street').realPress('Tab')
@@ -332,12 +332,12 @@ describe('Moderation Edit Submission Form', () => {
             cy.get('[data-testid="submission-form-mapLatitude"]')
                 .find('input').clear().type('Not Number Latitude').realPress('Tab')
             cy.get('[data-testid="submission-form-mapLatitude"]')
-                .find('p', { timeout: 10000 }).should('exist').contains('Invalid Latitude')
+                .find('p').should('exist').contains('Invalid Latitude')
 
             cy.get('[data-testid="submission-form-mapLongitude"]')
                 .find('input').clear().type('Not Number Longitude').realPress('Tab')
             cy.get('[data-testid="submission-form-mapLongitude"]')
-                .find('p', { timeout: 10000 }).should('exist').contains('Invalid Longitude')
+                .find('p').should('exist').contains('Invalid Longitude')
         })
     })
 })
@@ -354,7 +354,7 @@ describe('Moderation Edit Submission Modal', () => {
         before(function() {
             cy.viewport('macbook-16')
 
-            cy.visit('/login', { timeout: 10000 })
+            cy.visit('/login')
             Cypress.session.clearCurrentSessionData()
 
             // This intercepts the call to the graphQL api in order to use fake data in the tests to protect
@@ -379,13 +379,13 @@ describe('Moderation Edit Submission Modal', () => {
 
             cy.url({ timeout: 10000 }).should('equal', 'http://localhost:3000/')
 
-            cy.get('[data-testid=top-nav-mod-link]', { timeout: 10000 }).click().visit('/moderation')
+            cy.get('[data-testid=top-nav-mod-link]').click().visit('/moderation')
 
             cy.url({ timeout: 10000 }).should('include', '/moderation')
 
-            cy.wait('@getSubmissions', { timeout: 10000 })
+            cy.wait('@getSubmissions')
 
-            cy.get('[data-testid="mod-submission-list-item-1"]', { timeout: 10000 }).click()
+            cy.get('[data-testid="mod-submission-list-item-1"]').click()
         })
 
         after(() => {
@@ -405,7 +405,7 @@ describe('Moderation Edit Submission Modal', () => {
         })
 
         it('should not display modal if user navigates back without making changes', () => {
-            cy.get('[data-testid="mod-submission-list-item-1"]', { timeout: 10000 }).click()
+            cy.get('[data-testid="mod-submission-list-item-1"]').click()
             // When the user clicks the back button on their browser without making changes...
             cy.go('back')
             // ...the modal with the confirmation button should not be visible...

@@ -1,5 +1,6 @@
 import 'cypress-real-events'
 import 'cypress-plugin-tab'
+import enUS from '../../../i18n/locales/en.json'
 
 const FAKE_FACILITY_RESPONSE_PATH = 'moderation_dashboard/fakeModFacilityData.json'
 
@@ -14,7 +15,7 @@ describe('Moderation edit facility form', () => {
             })
 
             cy.viewport('macbook-16')
-            cy.visit('/login', { timeout: 10000 })
+            cy.visit('/login')
             Cypress.session.clearCurrentSessionData()
 
             // This intercepts the call to the GraphQL API in order to use fake data in the tests to protect the real data.
@@ -40,18 +41,36 @@ describe('Moderation edit facility form', () => {
 
             /* Chaining of visit was used here to make sure the user was logged in and that it would
                 100 percent visit moderation */
-            cy.get('[data-testid=top-nav-mod-link]', { timeout: 10000 }).click().visit('/moderation')
+            cy.get('[data-testid=top-nav-mod-link]').click().visit('/moderation')
 
             cy.url({ timeout: 10000 }).should('include', '/moderation')
 
-            cy.wait('@getFacilities', { timeout: 10000 })
-            cy.get('[data-testid="submission-type-select"]', { timeout: 10000 }).select('FACILITIES')
+            cy.wait('@getFacilities')
+            cy.get('[data-testid="submission-type-select"]').select('FACILITIES')
 
-            cy.get('[data-testid="mod-facility-list-item-1"]', { timeout: 10000 }).click()
+            cy.get('[data-testid="mod-facility-list-item-1"]').click()
         })
 
         after(() => {
             Cypress.session.clearCurrentSessionData()
+        })
+
+        it('contains the following fields and buttons in the topbar'), () => {
+            cy.get('[data-testid="mod-edit-facility-hp-topbar-update"]').should('exist')
+                .contains(enUS.modEditFacilityOrHPTopbar.updateAndExit)
+            cy.get('[data-testid="mod-edit-facility-hp-topbar-delete"]').should('exist')
+                .contains(enUS.modEditFacilityOrHPTopbar.delete)
+            cy.get('[data-testid="mod-edit-facility-hp-topbar-copy-id"]').should('exist')
+        }
+
+        it('it copies the selected id', () => {
+            cy.get('[data-testid="mod-edit-facility-hp-topbar-copy-id"]').click()
+
+            // Check that the value copied to the clipboard is the same that's displayed.
+            const clipboardResult = cy.window().then(win => win.navigator.clipboard.readText())
+
+            // The timeout is to give time for the clipboard to be read.
+            clipboardResult.should('exist', 10000)
         })
 
         it('contains the following input fields', () => {
@@ -109,46 +128,46 @@ describe('Moderation edit facility form', () => {
 
         it('should be display error messages', () => {
             cy.get('[data-testid="mod-facility-section-nameEn"]').find('input').clear().type('立川中央病院').realPress('Tab')
-            cy.get('[data-testid="mod-facility-section-nameEn"]').find('p', { timeout: 10000 })
+            cy.get('[data-testid="mod-facility-section-nameEn"]').find('p')
                 .should('exist')
                 .contains('Invalid English Name')
 
             cy.get('[data-testid="mod-facility-section-nameJa"]')
                 .find('input').clear().type('Tachikawa Hospital').realPress('Tab')
             cy.get('[data-testid="mod-facility-section-nameJa"]')
-                .find('p', { timeout: 10000 }).should('exist').contains('Invalid Japanese Name')
+                .find('p').should('exist').contains('Invalid Japanese Name')
 
             cy.get('[data-testid="mod-facility-section-phone"]').find('input').clear().type('Hello').realPress('Tab')
             cy.get('[data-testid="mod-facility-section-phone"]')
-                .find('p', { timeout: 10000 }).should('exist').contains('Invalid Phone Number')
+                .find('p').should('exist').contains('Invalid Phone Number')
 
             cy.get('[data-testid="mod-facility-section-email"]').find('input').clear().type('example').realPress('Tab')
             cy.get('[data-testid="mod-facility-section-email"]')
-                .find('p', { timeout: 10000 }).should('exist').contains('Invalid Email Address')
+                .find('p').should('exist').contains('Invalid Email Address')
 
             cy.get('[data-testid="mod-facility-section-website"]').find('input').clear().type('example').realPress('Tab')
             cy.get('[data-testid="mod-facility-section-website"]')
-                .find('p', { timeout: 10000 }).should('exist').contains('Invalid Website URL')
+                .find('p').should('exist').contains('Invalid Website URL')
 
             cy.get('[data-testid="mod-facility-section-postalCode"]').find('input').clear().type('180-0').realPress('Tab')
             cy.get('[data-testid="mod-facility-section-postalCode"]')
-                .find('p', { timeout: 10000 }).should('exist').contains('Invalid Postal Code')
+                .find('p').should('exist').contains('Invalid Postal Code')
 
             cy.get('[data-testid="mod-facility-section-cityEn"]').find('input').clear().type('渋谷区').realPress('Tab')
             cy.get('[data-testid="mod-facility-section-cityEn"]')
-                .find('p', { timeout: 10000 }).should('exist').contains('Invalid English City Name')
+                .find('p').should('exist').contains('Invalid English City Name')
 
             cy.get('[data-testid="mod-facility-section-addressLine1En"]').find('input').clear().type('道の駅').realPress('Tab')
             cy.get('[data-testid="mod-facility-section-addressLine1En"]')
-                .find('p', { timeout: 10000 }).should('exist').contains('Invalid English Address')
+                .find('p').should('exist').contains('Invalid English Address')
 
             cy.get('[data-testid="mod-facility-section-addressLine2En"]').find('input').clear().type('道の駅').realPress('Tab')
             cy.get('[data-testid="mod-facility-section-addressLine2En"]')
-                .find('p', { timeout: 10000 }).should('exist').contains('Invalid English Address')
+                .find('p').should('exist').contains('Invalid English Address')
 
             cy.get('[data-testid=mod-facility-section-cityJa]').find('input').clear().type('Shibuya').realPress('Tab')
             cy.get('[data-testid=mod-facility-section-cityJa]')
-                .find('p', { timeout: 10000 }).should('exist').contains('Invalid Japanese City Name')
+                .find('p').should('exist').contains('Invalid Japanese City Name')
 
             cy.get('[data-testid="mod-facility-section-addressLine1Ja"]')
                 .find('input').clear().type('Peanutbutter street').realPress('Tab')
@@ -161,12 +180,12 @@ describe('Moderation edit facility form', () => {
             cy.get('[data-testid="mod-facility-section-mapLatitude"]')
                 .find('input').clear().type('Not Number Latitude').realPress('Tab')
             cy.get('[data-testid="mod-facility-section-mapLatitude"]')
-                .find('p', { timeout: 10000 }).should('exist').contains('Invalid Latitude')
+                .find('p').should('exist').contains('Invalid Latitude')
 
             cy.get('[data-testid="mod-facility-section-mapLongitude"]')
                 .find('input').clear().type('Not Number Longitude').realPress('Tab')
             cy.get('[data-testid="mod-facility-section-mapLongitude"]')
-                .find('p', { timeout: 10000 }).should('exist').contains('Invalid Longitude')
+                .find('p').should('exist').contains('Invalid Longitude')
         })
     })
 })
