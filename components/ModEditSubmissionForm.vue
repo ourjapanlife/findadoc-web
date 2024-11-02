@@ -313,7 +313,7 @@
                         text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
             >
                 <option
-                    v-for="(locale, index) in Locale"
+                    v-for="(locale, index) in formattedLanguages"
                     :key="`${locale}-${index}`"
                 >
                     {{ locale }}
@@ -357,7 +357,8 @@
                                 class="w-fit px-2 py-[1px] my-2 border border-primary/40 rounded-full
                                 shadow text-sm text-center hover:bg-primary/20 transition-all"
                             >
-                                {{ healthcareProfessionalName.locale }}
+                                {{ localeStore.formatLanguages(
+                                    [healthcareProfessionalName.locale], localeStore.localeDisplayOptions)[0] }}
                             </div>
                         </div>
                         <span
@@ -463,7 +464,7 @@
                         text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
             >
                 <option
-                    v-for="(locale, index) in localeOptions"
+                    v-for="(locale, index) in formattedLanguages"
                     :key="`${locale}-${index}`"
                     :value="locale"
                 >
@@ -482,7 +483,7 @@
 </template>
 
 <script lang="ts" setup>
-import { type Ref, ref, watch, onMounted } from 'vue'
+import { type Ref, ref, watch, onMounted, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useToast, type ToastInterface } from 'vue-toastification'
 import { useModerationSubmissionsStore } from '~/stores/moderationSubmissionsStore'
@@ -512,7 +513,7 @@ import { useModalStore } from '~/stores/modalStore'
 import SVGTrashCan from '~/assets/icons/trash-can.svg'
 import SVGProfileIcon from '~/assets/icons/profile-icon.svg'
 import { triggerFormValidationErrorMessages } from '~/utils/triggerFormValidationErrorMessages'
-
+import { useLocaleStore } from '~/stores/localeStore'
 /**
 This initalizes the variable that needs to be set on mount.
 If this is set as a const the build will fail since the plugin
@@ -527,6 +528,7 @@ const router = useRouter()
 const moderationSubmissionStore = useModerationSubmissionsStore()
 const modalStore = useModalStore()
 const screenStore = useModerationScreenStore()
+const localeStore = useLocaleStore()
 
 const submissionFormFields = {
     // contactFields
@@ -914,4 +916,6 @@ onBeforeRouteLeave(async (to, from, next) => {
     }
     next()
 })
+
+const formattedLanguages = computed(() => localeStore.formatLanguages(localeOptions, localeStore.localeDisplayOptions))
 </script>
