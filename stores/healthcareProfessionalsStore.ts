@@ -1,7 +1,9 @@
 import { defineStore } from 'pinia'
 import { ref, type Ref } from 'vue'
 import { gql } from 'graphql-request'
-import type { HealthcareProfessional, MutationUpdateHealthcareProfessionalArgs } from '~/typedefs/gqlTypes'
+import type { HealthcareProfessional,
+    MutationDeleteHealthcareProfessionalArgs,
+    MutationUpdateHealthcareProfessionalArgs } from '~/typedefs/gqlTypes'
 import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql'
 
 export const useHealthcareProfessionalsStore = defineStore(
@@ -28,11 +30,24 @@ export const useHealthcareProfessionalsStore = defineStore(
             }
         }
 
+        async function deleteHealthcareProfessional(healthcareProfessionalId: MutationDeleteHealthcareProfessionalArgs) {
+            try {
+                return await graphQLClientRequestWithRetry(
+                    gqlClient.request.bind(gqlClient),
+                    deleteHealthcareProfessionalGqlMutation,
+                    healthcareProfessionalId
+                )
+            } catch (error) {
+                console.error('Failed to delete healthcare professional:', error)
+            }
+        }
+
         return {
             getHealthcareProfessionals,
             healthcareProfessionalsData,
             updateHealthcareProfessional,
-            selectedHealthcareProfessionalId
+            selectedHealthcareProfessionalId,
+            deleteHealthcareProfessional
         }
     }
 )
@@ -126,3 +141,12 @@ mutation Mutation($updateHealthcareProfessionalId: ID!, $input: UpdateHealthcare
   }
 }
 `
+
+const deleteHealthcareProfessionalGqlMutation = gql`
+mutation Mutation($deleteHealthcareProfessionalId: ID!) {
+  deleteHealthcareProfessional(id: $deleteHealthcareProfessionalId) {
+    isSuccessful
+  }
+}
+`
+
