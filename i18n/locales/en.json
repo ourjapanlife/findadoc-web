@@ -204,6 +204,7 @@
         "labelFacilityGoogleMapsUrl": "Google maps URL",
         "labelFacilityMapLatitude": "Map latitude",
         "labelFacilityMapLongitude": "Map longitude",
+        "placeholderTextFacilityAddressLine1En": "Street address",
         "placeholderTextFacilityAddressLine2En": "Apartment, building, room...",
         "placeholderTextFacilityAddressLine1Ja": "Street address",
         "placeholderTextFacilityAddressLine2Ja": "Apartment, building, room...",
