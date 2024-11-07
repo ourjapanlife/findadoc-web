@@ -1,13 +1,21 @@
+import type { GraphQLError, SourceLocation } from 'graphql'
+
 export type ServerResponse<T> = {
-    data: T
+    data: T | undefined
     hasErrors: boolean
-    errors?: Error[]
+    errors?: ServerError[]
 }
 
-export type Error = {
-    field: string
-    errorCode: ErrorCode
-    httpStatus?: number
+export type ServerError = {
+    message: string
+    fieldWithError: readonly SourceLocation[] | undefined
+    code: ErrorCode
+}
+
+export type ServerErrorResponse = {
+    response: {
+        errors: GraphQLError[]
+    }
 }
 
 export enum ErrorCode {
@@ -36,5 +44,7 @@ export enum ErrorCode {
     ORDERBY_OPTION_MAX_LIMIT = 'ORDERBY_OPTION_MAX_LIMIT',
     ORDERBY_FIELD_SELECTED_TWICE = 'ORDERBY_FIELD_SELECTED_TWICE',
     INVALID_LANGUAGE_INPUT = 'INVALID_LANGUAGE_INPUT',
-    INVALID_INPUT = 'INVALID_INPUT'
+    INVALID_INPUT = 'INVALID_INPUT',
+    BAD_USER_INPUT = 'BAD_USER_INPUT',
+    UNAUTHENTICATED = 'UNAUTHENTICATED'
 }
