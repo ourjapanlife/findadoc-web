@@ -100,7 +100,8 @@
         "heading": "Thank you!",
         "submission": "Your submission will be reviewed shortly by our moderators.",
         "feedback": "Your feedback has been submitted and will be reviewed by our team.",
-        "home": "Return to home"
+        "home": "Return to home",
+        "submitAnotherDoctor": "Add another doctor"
     },
     "topNav": {
         "about": "About",
