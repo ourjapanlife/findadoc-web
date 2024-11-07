@@ -71,7 +71,8 @@
     "subheading": "Möchten Sie einen Arzt zur Datenbank hinzufügen? Füllen Sie das untenstehende Formular aus und es wird von unseren Moderatoren überprüft.",
     "submitButton": "Einreichen",
     "optional": "optional",
-    "otherNotes": "Andere Anmerkungen"
+    "otherNotes": "Andere Anmerkungen",
+    "submissionSuccessful": "Thank you for contributing! Your submission about the doctor has been successfully recorded. We’re grateful for your support!"
   },
   "searchBar": {
     "selectSpecialty": "Wählen Sie eine Fachrichtung...",
@@ -93,7 +94,8 @@
     "heading": "Vielen Dank!",
     "submission": "Ihre Einreichung wird in Kürze von unseren Moderatoren überprüft.",
     "feedback": "Ihr Feedback wurde eingereicht und wird von unserem Team überprüft.",
-    "home": "Zurück zur Startseite"
+    "home": "Zurück zur Startseite",
+    "submitAnotherDoctor": "Add another doctor"
   },
   "topNav": {
     "about": "Über uns",
@@ -320,5 +322,11 @@
     "updateAndExit": "Update & Exit",
     "delete": "Delete",
     "copyFailure": "Failed to copy ID"
+  },
+  "serverErrorMessages": {
+    "UNAUTHENTICATED": "You do not have the authentication to do this action",
+    "BAD_USER_INPUT": "One or more of the inputs entered is invalid, please try again",
+    "genericErrorMessage": "There was an error submitting your form, please try again",
+    "errorCodeMessagingNeeded": "The server error code does not have a message for the user. Please add one."
   }
 }
