@@ -313,10 +313,11 @@
                         text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
             >
                 <option
-                    v-for="(locale, index) in formattedLanguages"
+                    v-for="(locale, index) in localeDisplayOptions"
                     :key="`${locale}-${index}`"
+                    :value="locale.code"
                 >
-                    {{ locale }}
+                    {{ locale.simpleText }}
                 </option>
             </select>
             <button
@@ -354,11 +355,17 @@
                                 </span>
                             </div>
                             <div
-                                class="w-fit px-2 py-[1px] my-2 border border-primary/40 rounded-full
-                                shadow text-sm text-center hover:bg-primary/20 transition-all"
+                                v-for="(healthcareProfessionalLocale, indexOfLocale)
+                                    in submissionFormFields.healthcareProfessionalLocales.value"
+                                :key="`${healthcareProfessionalLocale}-${indexOfLocale}`"
                             >
-                                {{ localeStore.formatLanguages(
-                                    [healthcareProfessionalName.locale], localeStore.localeDisplayOptions)[0] }}
+                                <span
+                                    class="w-fit px-2 py-[1px] my-2 border border-primary/40 rounded-full
+                                shadow text-sm text-center hover:bg-primary/20 transition-all"
+                                >
+                                    {{ localeStore.formatLanguageCodeToSimpleText(
+                                        healthcareProfessionalLocale) }}
+                                </span>
                             </div>
                         </div>
                         <span
@@ -464,11 +471,11 @@
                         text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
             >
                 <option
-                    v-for="(locale, index) in formattedLanguages"
-                    :key="`${locale}-${index}`"
-                    :value="locale"
+                    v-for="(locale, index) in localeOptions"
+                    :key="`hp-${locale}-${index}`"
+                    :value="locale.code"
                 >
-                    {{ locale }}
+                    {{ locale.simpleText }}
                 </option>
             </select>
         </div>
@@ -483,7 +490,7 @@
 </template>
 
 <script lang="ts" setup>
-import { type Ref, ref, watch, onMounted, computed } from 'vue'
+import { type Ref, ref, watch, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useToast, type ToastInterface } from 'vue-toastification'
 import { useModerationSubmissionsStore } from '~/stores/moderationSubmissionsStore'
@@ -513,7 +520,7 @@ import { useModalStore } from '~/stores/modalStore'
 import SVGTrashCan from '~/assets/icons/trash-can.svg'
 import SVGProfileIcon from '~/assets/icons/profile-icon.svg'
 import { triggerFormValidationErrorMessages } from '~/utils/triggerFormValidationErrorMessages'
-import { useLocaleStore } from '~/stores/localeStore'
+import { useLocaleStore, localeDisplayOptions, type LocaleDisplay } from '~/stores/localeStore'
 /**
 This initalizes the variable that needs to be set on mount.
 If this is set as a const the build will fail since the plugin
@@ -574,7 +581,7 @@ const degreeOptions = Object.values(Degree) as Degree[]
 const extractDegreeOptions = (option: HTMLOptionElement): Degree => option.value as Degree
 const specialtyOptions = Object.values(Specialty) as Specialty[]
 const extractSpecialtyOptions = (option: HTMLOptionElement): Specialty => option.value as Specialty
-const localeOptions = Object.values(Locale) as Locale[]
+const localeOptions: LocaleDisplay[] = localeDisplayOptions
 const extractLocaleOptions = (option: HTMLOptionElement): Locale => option.value as Locale
 
 const listPrefectureJapanEn: Ref<string[]> = ref([
@@ -592,10 +599,8 @@ const listPrefectureJapanJa: Ref<string[]> = ref([
     '高知県', '福岡県', '佐賀県', '長崎県', '熊本県', '大分県', '宮崎県', '鹿児島県', '沖縄県'])
 
 const formSubmissionId = moderationSubmissionStore.selectedSubmissionId
-
 moderationSubmissionStore.filterSelectedSubmission(formSubmissionId)
 const formSubmissionData = moderationSubmissionStore.selectedSubmissionData
-initializeSubmissionFormValues(formSubmissionData)
 
 const handleLocalizedNameToSubmission = () => {
     const localizedNameToAdd: LocalizedNameInput = {
@@ -698,7 +703,7 @@ function initializeSubmissionFormValues(submissionData: Submission | undefined) 
                             = submissionData?.healthcareProfessionals?.[0]?.names ?? [{
                                 firstName: submittedHealthcareProfessionalName[0] || '',
                                 lastName: submittedHealthcareProfessionalName[1] || '',
-                                locale: Locale.Und
+                                locale: submissionData.spokenLanguages[0] || Locale.Und
                             }]
                     }
                     if (submittedHealthcareProfessionalName && submittedHealthcareProfessionalName.length === 3) {
@@ -707,7 +712,7 @@ function initializeSubmissionFormValues(submissionData: Submission | undefined) 
                                 firstName: submittedHealthcareProfessionalName[0] || '',
                                 middleName: submittedHealthcareProfessionalName[1] || '',
                                 lastName: submittedHealthcareProfessionalName[2] || '',
-                                locale: Locale.Und
+                                locale: submissionData.spokenLanguages[0] || Locale.Und
                             }]
                     }
                     submissionFormFields.healthcareProfessionalAcceptedInsurances.value
@@ -720,8 +725,7 @@ function initializeSubmissionFormValues(submissionData: Submission | undefined) 
                         = submissionData?.healthcareProfessionals?.[0]?.specialties
                         ?? []
                     submissionFormFields.healthcareProfessionalLocales.value
-                        = submissionData?.healthcareProfessionals?.[0]?.spokenLanguages
-                        ?? []
+                        = submissionData.spokenLanguages
                     break
                 case 'healthcareProfessionalIDs':
                     submissionFormFields.healthcareProfessionalIDs.value
@@ -894,6 +898,8 @@ onMounted(() => {
         extractLocaleOptions
     )
 
+    initializeSubmissionFormValues(formSubmissionData)
+
     /**
     Set the variable to useToast when the compoenet mounts
     since vue-taostification is only available on the client.
@@ -916,6 +922,4 @@ onBeforeRouteLeave(async (to, from, next) => {
     }
     next()
 })
-
-const formattedLanguages = computed(() => localeStore.formatLanguages(localeOptions, localeStore.localeDisplayOptions))
 </script>
