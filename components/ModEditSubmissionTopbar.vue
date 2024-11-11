@@ -2,6 +2,7 @@
     <div class="flex flex-row justify-between w-full">
         <div>
             <button
+                type="button"
                 data-testid="mod-edit-submission-copy-submission-id"
                 class="flex flex-row w-90 bg-neutral p-2 m-2 border-2 border-slate-400 rounded hover"
                 @click="copySubmissionId"
