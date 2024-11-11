@@ -163,6 +163,7 @@ import { useSubmissionStore } from '~/stores/submissionStore'
 import type { Locale, MutationCreateSubmissionArgs } from '~/typedefs/gqlTypes'
 import { useLocaleStore } from '~/stores/localeStore'
 import { useI18n } from '#imports'
+import { handleServerErrorMessaging } from '~/utils/handleServerErrorMessaging'
 
 /**
 This initalizes the variable that needs to be set on mount.
@@ -250,15 +251,9 @@ async function submitNewSubmission(e: Event) {
     } }
 
     const response = await submissionStore.createNewSubmission(newSubmission)
+    // This is used in the component and not graphQL call as it is user messaging and needs the mounted toast library
     if (response?.errors?.length) {
-        response.errors.map(error => {
-            if (t(`serverErrorMessages.${error.extensions.code}`)) {
-                toast.error((t(`serverErrorMessages.${error.extensions.code}`)))
-                return
-            }
-            toast.error((t('serverErrorMessages.genericErrorMessage')))
-            console.info(t('serverErrorMessages.errorCodeMessagingNeeded'))
-        })
+        handleServerErrorMessaging(response.errors, toast, t)
         return
     }
 
