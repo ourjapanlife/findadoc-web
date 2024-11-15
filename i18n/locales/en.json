@@ -170,6 +170,7 @@
     "modFacilitySection": {
         "addresses": "Addresses",  
         "contactInformation": "Contact Information",
+        "errorMessageFacilityId": "Facility Id was not found",
         "facilityHeading": "Facility Information",
         "googleMapsInformation": "Google maps information",
         "inputErrorMessageFacilityAddressLine1Ja": "Invalid Japanese Address",
