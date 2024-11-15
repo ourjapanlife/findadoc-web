@@ -316,7 +316,9 @@
     "placeholderTextFacilityPhoneNumber": "e.g. 08xxxxxxxxx",
     "placeholderTextFacilityPostalCode": "e.g. 186-0000",
     "placeholderTextFacilityWebsite": "e.g. http://www.example.com/",
-    "updateButtonText": "Update"
+    "updateButtonText": "Update",
+    "placeholderTextFacilityAddressLine1En": "Street address",
+    "errorMessageFacilityId": "Facility Id was not found"
   },
   "modEditFacilityOrHPTopbar": {
     "updateAndExit": "Update & Exit",

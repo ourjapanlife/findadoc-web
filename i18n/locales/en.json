@@ -170,6 +170,7 @@
     "modFacilitySection": {
         "addresses": "Addresses",  
         "contactInformation": "Contact Information",
+        "errorMessageFacilityId": "Facility Id was not found",
         "facilityHeading": "Facility Information",
         "googleMapsInformation": "Google maps information",
         "inputErrorMessageFacilityAddressLine1Ja": "Invalid Japanese Address",
@@ -204,6 +205,7 @@
         "labelFacilityGoogleMapsUrl": "Google maps URL",
         "labelFacilityMapLatitude": "Map latitude",
         "labelFacilityMapLongitude": "Map longitude",
+        "placeholderTextFacilityAddressLine1En": "Street address",
         "placeholderTextFacilityAddressLine2En": "Apartment, building, room...",
         "placeholderTextFacilityAddressLine1Ja": "Street address",
         "placeholderTextFacilityAddressLine2Ja": "Apartment, building, room...",

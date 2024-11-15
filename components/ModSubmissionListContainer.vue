@@ -57,7 +57,6 @@
                 <div
                     :data-testid="`mod-facility-list-item-${index + 1}`"
                     class="grid grid-cols-subgrid col-span-4 bg-tertiary-bg cursor-pointer hover:bg-primary"
-                    @click="handleClickToFacilityForm(facility.id)"
                 >
                     <NuxtLink
                         :to="`/moderation/edit-facility/${facility.id}`"
@@ -119,6 +118,7 @@ import { useFacilitiesStore } from '~/stores/facilitiesStore'
 const modSubmissionsListStore = useModerationSubmissionsStore()
 const healthcareProfessionalsStore = useHealthcareProfessionalsStore()
 const facilitiesStore = useFacilitiesStore()
+const moderationScreenStore = useModerationScreenStore()
 
 onMounted(async () => {
     await modSubmissionsListStore.getSubmissions()
@@ -141,17 +141,12 @@ const submissionListItemTableColumns = computed(() => {
 })
 
 const handleClickToSubmissionForm = (id: string) => {
-    useModerationScreenStore().setActiveScreen(ModerationScreen.EditSubmission)
     modSubmissionsListStore.selectedSubmissionId = id
+    moderationScreenStore.setActiveScreen(ModerationScreen.EditSubmission)
 }
 
 const handleClickToHealthcareProfessionalForm = (id: string) => {
-    useModerationScreenStore().setActiveScreen(ModerationScreen.EditHealthcareProfessional)
-    modSubmissionsListStore.selectedHealthcareProfessionalId = id
-}
-
-const handleClickToFacilityForm = (id: string) => {
-    useModerationScreenStore().setActiveScreen(ModerationScreen.EditFacility)
-    modSubmissionsListStore.selectedFacilityId = id
+    healthcareProfessionalsStore.selectedHealthcareProfessionalId = id
+    moderationScreenStore.setActiveScreen(ModerationScreen.EditHealthcareProfessional)
 }
 </script>
