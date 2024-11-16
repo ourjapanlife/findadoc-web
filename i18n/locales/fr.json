@@ -232,7 +232,8 @@
     "submissionConfirmationMessage": "Are you sure you want to submit this form?",
     "successMessageUpdated": "Submission updated successfully",
     "successMessageApproved": "Submission approved and created successfully",
-    "updateButtonText": "Update"
+    "updateButtonText": "Update",
+    "facilitySuccessfullyRejected": "Facility rejected successfully"
   },
   "login": {
     "heading": "Log in to your account",
