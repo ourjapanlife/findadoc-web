@@ -244,6 +244,7 @@
         "errorMessageHealthcareInputsInvalid": "Some of the Healthcare Professional Fields were not filled in correctly",
         "errorMessageUpdated": "Failed to update submission form",
         "facilityHeading": "Facility Information",
+        "facilitySuccessfullyRejected": "Facility rejected successfully",
         "googleMapsInformation": "Google maps information",
         "healthcareProfessionalHeading": "Healthcare Professional Information",
         "healthcareProfessionalMedicalInfoHeading": "Healthcare Professional Medical Info",
