@@ -6,12 +6,12 @@
         <div class="flex flex-col mt-4">
             <div class="justify-start items-start flex">
                 <input
-                    v-model="requestedHealthcareProfessionalId"
+                    v-model="searchValue"
                     type="text"
                     :placeholder="$t('modSubmissionForm.placeholderTextHealthcareProfessionalSearchbar')"
                     class="mb-5 px-3 py-3.5 w-96 h-12 bg-secondary-bg rounded-lg border border-primary-text-muted
                     text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
-                    @input="searchHealthcareProfessionalById"
+                    @input="searchHealthcareProfessionalByIdOrName"
                 >
                 <SVGLookingGlass
                     role="img"
@@ -27,16 +27,78 @@
 import { ref, type Ref } from 'vue'
 import SVGLookingGlass from '~/assets/icons/looking-glass.svg'
 import type { HealthcareProfessional } from '~/typedefs/gqlTypes'
-import { getHealthcareProfessionalById } from '~/stores/healthcareProfessionalsStore'
+import { useHealthcareProfessionalsStore } from '~/stores/healthcareProfessionalsStore'
 
-const requestedHealthcareProfessionalId: Ref<string> = ref('')
+const healthcareProfessionalsStore = useHealthcareProfessionalsStore()
+
+const searchValue: Ref<string> = ref('')
 // `healthcareProfessionalById` will be used in the UI component in an upcoming PR
-const healthcareProfessionalById: Ref<HealthcareProfessional[] | []> = ref([])
+const healthcareProfessionalByIdOrName: Ref<HealthcareProfessional[] | []> = ref([])
 
-async function searchHealthcareProfessionalById() {
-    if (!requestedHealthcareProfessionalId.value || requestedHealthcareProfessionalId.value.trim().length < 1) {
-        return
+const addHealthcareProfessional = (id: string) => {
+    if (moderationScreenStore.activeScreen === ModerationScreen.EditFacility) {
+        //Check if the healthcareProfessional has already been added
+        const foundProfessionalAlreadyPartOfFacility
+        = facilitiesStore.facilitySectionFields.healthProfessionalsRelations
+            .find(relation => relation.otherEntityId === id)
+            || facilitiesStore.selectedFacilityData?.healthcareProfessionalIds.includes(id)
+
+        // Return out of the function if already added
+        if (foundProfessionalAlreadyPartOfFacility) return
+
+        // Add a relationship to the facility with selected healthcare professional
+        facilitiesStore.facilitySectionFields.healthProfessionalsRelations.push({
+            action: RelationshipAction.Create,
+            otherEntityId: id
+        })
+
+        // Find the healthcare professional by ID
+        const foundProfessional = healthcareProfessionalsStore.healthcareProfessionalsData
+            .find(healthcareProfessional => healthcareProfessional.id === id)
+
+        // Only push to healthProfessionalsRelationsForDisplay if the professional exists
+        if (foundProfessional) {
+            facilitiesStore.healthProfessionalsRelationsForDisplay.push(foundProfessional)
+            searchValue.value = ''
+            healthcareProfessionalByIdOrName.value = []
+        }
     }
-    healthcareProfessionalById.value = await getHealthcareProfessionalById(requestedHealthcareProfessionalId.value)
+}
+
+function searchHealthcareProfessionalByIdOrName() {
+    if (!searchValue.value || searchValue.value.trim().length < 1) {
+        return healthcareProfessionalByIdOrName.value = []
+    }
+
+    //Search for Ids or names of existing Healthcare professional
+    const healthcareProfessionalByIdOrNamesFound = healthcareProfessionalsStore.healthcareProfessionalsData
+        .filter(healthcareProfessional => {
+            const caseInsensitiveIdMatch = healthcareProfessional.id
+                .toLowerCase()
+                .startsWith(searchValue.value.toLowerCase().trim())
+
+            const nameMatches = healthcareProfessional.names.some(name => {
+                const firstNameMatch = name.firstName
+                    .toLowerCase()
+                    .includes(searchValue.value.toLowerCase())
+                const middleNameMatch = name.middleName
+                  && name.middleName
+                      .toLowerCase()
+                      .includes(searchValue.value.toLowerCase())
+                const lastNameMatch = name.lastName
+                    .toLowerCase()
+                    .includes(searchValue.value.toLowerCase())
+                return firstNameMatch || middleNameMatch || lastNameMatch
+            })
+
+            return caseInsensitiveIdMatch || nameMatches
+        })
+
+    // Filter out IDs already included in `selectedFacilityData.healthcareProfessionalIds`
+    const selectedIds = facilitiesStore.selectedFacilityData?.healthcareProfessionalIds || []
+    const filteredHealthcareProfessionalIds = healthcareProfessionalByIdOrNamesFound
+        .filter(healthcareProfessional => !selectedIds.includes(healthcareProfessional.id))
+
+    healthcareProfessionalByIdOrName.value = filteredHealthcareProfessionalIds
 }
 </script>
