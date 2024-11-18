@@ -201,8 +201,8 @@ query Facilities($filters: FacilitySearchFilters!) {
 `
 
 const updateExistingFacilityGqlMutation = gql`
-mutation Mutation($updateFacilityId: ID!, $input: UpdateFacilityInput!) {
-  updateFacility(id: $updateFacilityId, input: $input) {
+mutation Mutation($id: ID!, $input: UpdateFacilityInput!) {
+  updateFacility(id: $id, input: $input) {
     id
     nameEn
     nameJa
