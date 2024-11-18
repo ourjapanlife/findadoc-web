@@ -327,7 +327,8 @@
     "updateAndExit": "Update & Exit",
     "delete": "Delete",
     "copyFailure": "Failed to copy ID",
-    "update": "Update"
+    "update": "Update",
+    "facilityUpdatedSuccessfully": "Facility updated successfully"
   },
   "serverErrorMessages": {
     "UNAUTHENTICATED": "You do not have the authentication to do this action",
