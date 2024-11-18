@@ -155,7 +155,8 @@
         "copyFailure": "Failed to copy ID",
         "delete": "Delete",
         "update": "Update",
-        "updateAndExit": "Update & Exit"
+        "updateAndExit": "Update & Exit",
+        "facilityUpdatedSuccessfully": "Facility updated successfully"
     },
     "modEditSubmissionTopNav": {
         "saveAndExit": "Save & Exit",
