@@ -37,7 +37,7 @@
             <button
                 type="button"
                 class="flex justify-center items-center rounded-full bg-secondary-bg border-primary border-2 w-28 text-sm mr-2 "
-                @click="moderationSubmissionStore.rejectSubmission"
+                @click="rejectSubmission"
             >
                 {{
                     $t('modEditSubmissionTopNav.reject') }}
@@ -55,14 +55,24 @@
 </template>
 
 <script setup lang="ts">
-import { ref, type Ref } from 'vue'
+import { onMounted, ref, type Ref } from 'vue'
+import { type ToastInterface, useToast } from 'vue-toastification'
+import { useRouter } from 'vue-router'
+import { useI18n } from '#imports'
 import SVGCopyContent from '~/assets/icons/content-copy.svg'
 import SVGSuccessCheckMark from '~/assets/icons/checkmark-square.svg'
 import { useModerationSubmissionsStore } from '~/stores/moderationSubmissionsStore'
+import { ModerationScreen, useModerationScreenStore } from '~/stores/moderationScreenStore'
 import { useModalStore } from '~/stores/modalStore'
+import { handleServerErrorMessaging } from '~/utils/handleServerErrorMessaging'
 
+let toast: ToastInterface
+const router = useRouter()
+
+const { t } = useI18n()
 const modalStore = useModalStore()
 const moderationSubmissionStore = useModerationSubmissionsStore()
+const moderationScreenStore = useModerationScreenStore()
 const selectedSubmissionId: Ref<string> = ref(moderationSubmissionStore.selectedSubmissionId)
 
 const showCopySuccessIcon: Ref<boolean> = ref(false)
@@ -88,4 +98,25 @@ const acceptSubmission = () => {
     moderationSubmissionStore.setApprovingSubmissionFromTopBar(true)
     modalStore.showModal()
 }
+
+const rejectSubmission = async () => {
+    const response = await moderationSubmissionStore.rejectSubmission()
+
+    if (response?.errors?.length) {
+        handleServerErrorMessaging(response.errors, toast, t)
+        return
+    }
+    router.push('/moderation')
+    toast.success(t('modSubmissionForm.facilitySuccessfullyRejected'))
+    moderationScreenStore.setActiveScreen(ModerationScreen.Dashboard)
+}
+
+onMounted(() => {
+    /**
+    Set the variable to useToast when the compoenet mounts
+    since vue-taostification is only available on the client.
+    If not done this way the build fails
+     */
+    toast = useToast()
+})
 </script>

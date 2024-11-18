@@ -65,7 +65,7 @@ describe('Submit page', () => {
 
         it('does not submit an incomplete form', () => {
             cy.get('[data-testid="submit-submitbutton"]').click()
-            cy.get('[data-testid="submit-completed"]').should('not.be.visible')
+            cy.get('[data-testid="submit-completed"]').should('not.exist')
         })
 
         it.skip('submits a complete form', () => {

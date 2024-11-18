@@ -1,5 +1,6 @@
 import { GraphQLClient, type RequestDocument } from 'graphql-request'
 import { useRuntimeConfig } from '#imports'
+import type { ErrorCode, ServerErrorResponse, ServerResponse } from '~/typedefs/serverResponse'
 
 // eslint-disable-next-line
 export let gqlClient: GraphQLClient
@@ -24,29 +25,42 @@ export const initializeGqlClient = () => {
 
 export const graphQLClientRequestWithRetry = async <T>(
     gqlClientRequestFunction: (
-        queryOrMutation: RequestDocument, variables?: unknown) => Promise<T>,
+        queryOrMutation: RequestDocument,
+        variables?: unknown
+    ) => Promise<T>,
     queryOrMutation: RequestDocument,
     variables: unknown,
     retryOptions?: graphQLClientRequestWithRetryOptions
-): Promise<T> => {
+): Promise<ServerResponse<T>> => {
     let attempts = 0
-    // These are optional variables that we set to defaults of 3 retries and after 5 seconds
     const retryAmount = retryOptions?.retryAmount || 3
     const requestTimeoutInMilliseconds = retryOptions?.requestTimeoutInMilliseconds || 5000
 
-    const executeGQLClientRequest = async (): Promise<T> => {
+    const executeGQLClientRequest = async (): Promise<ServerResponse<T>> => {
         try {
-            return await gqlClientRequestFunction(queryOrMutation, variables)
+            const data = await gqlClientRequestFunction(queryOrMutation, variables)
+            return { data, errors: [], hasErrors: false }
         } catch (error) {
             if (attempts < retryAmount) {
                 attempts++
                 if (attempts > 1) {
-                    await new Promise(resolve =>
-                        setTimeout(resolve, requestTimeoutInMilliseconds))
+                    await new Promise(resolve => setTimeout(resolve, requestTimeoutInMilliseconds))
                 }
-                return executeGQLClientRequest()
+                return executeGQLClientRequest() // retry request
             }
-            throw error
+
+            // This is a consistent error messaging no matter the type of query or mutation
+            console.error(`There was an error executing the request: ${error}`)
+            const serverError = error as ServerErrorResponse
+
+            // This map transforms errors if they exist
+            const errors = serverError.response?.errors?.map(errorResponse => ({
+                message: errorResponse.message,
+                fieldWithError: errorResponse.locations,
+                code: errorResponse.extensions.code as ErrorCode
+            })) || []
+
+            return { data: {} as T, errors, hasErrors: true }
         }
     }
 
