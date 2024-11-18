@@ -115,21 +115,28 @@ const specialtiesStore = useSpecialtiesStore()
 
 await locationsStore.fetchLocations()
 
-const languageOptions = [{
-    code: '',
-    simpleText: '----Any----',
-    displayText: '----Any----'
-}, ...localeStore.mvpLocaleDisplayOptions]
+const languageOptions = localeStore.localeDisplayOptions
+const languageOptionsWithPlaceHolder = setSearchBarLanguageDropdownOptions()
 
 const locationDropdownOptions: Ref<string[]> = ref(locationsStore.citiesDisplayOptions)
 const specialtyDropdownOptions: Ref<SpecialtyDisplayOption[]> = ref(specialtiesStore.specialtyDisplayOptions)
-const languageDropdownOptions: Ref<LocaleDisplay[]> = ref(languageOptions)
+const languageDropdownOptions: Ref<LocaleDisplay[]> = ref(languageOptionsWithPlaceHolder)
 
 const selectedSpecialty: Ref<Specialty | string> = ref('')
 const selectedLocation: Ref<string> = ref('')
 const selectedLanguage: Ref<Locale | string> = ref('')
 
 const placeHolderTextDisplay = '----Any----'
+
+function setSearchBarLanguageDropdownOptions() {
+    // This will remove any codes code that is falsy
+    const localeOptionsWithLocaleCodes = languageOptions.filter(locale => locale.code)
+    // This will add the placeholder text
+    localeOptionsWithLocaleCodes
+        .unshift({ code: '', simpleText: placeHolderTextDisplay, displayText: placeHolderTextDisplay })
+
+    return localeOptionsWithLocaleCodes
+}
 
 interface CityDisplayItems {
     [cityName: string]: {
