@@ -154,6 +154,7 @@
     "modEditFacilityOrHPTopbar": {
         "copyFailure": "Failed to copy ID",
         "delete": "Delete",
+        "update": "Update",
         "updateAndExit": "Update & Exit"
     },
     "modEditSubmissionTopNav": {
