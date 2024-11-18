@@ -29,6 +29,16 @@
                 data-testid="mod-edit-facility-hp-topbar-update"
             >
                 <span>
+                    {{ $t('modEditFacilityOrHPTopbar.update') }}
+                </span>
+            </button>
+            <button
+                type="button"
+                class="flex justify-center items-center rounded-full bg-secondary-bg border-primary-text-muted
+                border-2 w-28 text-sm mr-2"
+                data-testid="mod-edit-facility-hp-topbar-update"
+            >
+                <span>
                     {{ $t('modEditFacilityOrHPTopbar.updateAndExit') }}
                 </span>
             </button>
