@@ -225,22 +225,79 @@
             />
         </div>
         <ModHealthcareProfessionalSearchbar data-testid="mod-facility-section-doctor-search" />
-        <button
-            v-show="screenStore.activeScreen === ModerationScreen.EditFacility"
-            type="submit"
-            class="bg-currentColor text-white font-bold py-2 px-4 my-2 rounded w-56"
+        <div
+            v-if="moderationScreenStore.activeScreen === ModerationScreen.EditFacility"
         >
-            {{ $t('modFacilitySection.updateButtonText') }}
-        </button>
+            <div
+                v-for="(healthcareProfessional, index) in healthcareProfessionalRelatedToFacilityFiltered"
+                :key="`${healthcareProfessional.id}-${index}`"
+                class="relative w-96 my-1"
+            >
+                <div
+                    class="flex justify-start min-h-24 items-center rounded-lg p-1 border-2 border-primary"
+                >
+                    <span class="h-24 w-16">
+                        <SVGProfileIcon
+                            role="img"
+                            alt="profile icon"
+                            title="profile icon"
+                            class="profile-icon stroke-primary w-16 h-16 stroke-1 inline mx-1 self-start"
+                        />
+                    </span>
+                    <div class="flex flex-col h-24 w-64 pl-1 mb-1">
+                        <div class="flex font-bold pt-2">
+                            <span>{{ healthcareProfessional.names[0].lastName }}</span>
+                            <span class="mx-2">{{ healthcareProfessional.names[0].firstName }}</span>
+                            <span v-show="healthcareProfessional.names[0].middleName">
+                                {{ healthcareProfessional.names[0].middleName }}
+                            </span>
+                        </div>
+                        <span class="text-primary-text-muted">
+                            ID:  {{ healthcareProfessional.id }}
+                        </span>
+                        <div>
+                            <div
+                                class="flex flex-wrap justify-start items-start self-end pt-2"
+                            >
+                                <div
+                                    v-for="(spokenLanguage, indexOfLocale)
+                                        in healthcareProfessional.spokenLanguages"
+                                    :key="`${spokenLanguage}-${indexOfLocale}`"
+                                    class="w-24 px-2 py-[1px] mr-1 bg-primary-text-muted text-nowrap rounded-full
+                                 text-sm text-center"
+                                >
+                                    <span>
+                                        {{ localeStore.formatLanguageCodeToSimpleText(
+                                            spokenLanguage) }}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="self-start mx-2">
+                        <span
+                            class="flex items-center justify-center
+                    cursor-pointer font-bold text-secondary text-sm absolute top-1 right-1"
+                        >
+                            <SVGTrashCan
+                                class="flex items-center justify-center w-6 h-6"
+                            />
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
 <script lang="ts" setup>
-import { type Ref, ref, onBeforeMount, nextTick } from 'vue'
+import { type Ref, ref, onBeforeMount, nextTick, watch } from 'vue'
 import { type ToastInterface, useToast } from 'vue-toastification'
 import { useRoute } from 'vue-router'
 import { useModerationScreenStore, ModerationScreen } from '~/stores/moderationScreenStore'
 import { useFacilitiesStore } from '~/stores/facilitiesStore'
+import { useHealthcareProfessionalsStore } from '~/stores/healthcareProfessionalsStore'
+import { useLocaleStore } from '~/stores/localeStore'
 import { useI18n } from '#imports'
 import { validateAddressLineEn,
     validateAddressLineJa,
@@ -253,16 +310,33 @@ import { validateAddressLineEn,
     validatePostalCode,
     validateWebsite,
     validateCityJa } from '~/utils/formValidations'
+import type { HealthcareProfessional } from '~/typedefs/gqlTypes'
+import SVGTrashCan from '~/assets/icons/trash-can.svg'
+import SVGProfileIcon from '~/assets/icons/profile-icon.svg'
 
 // Initialize the variable that will be used to mount the toast library
 let toast: ToastInterface
 
 const { t } = useI18n()
 
-const screenStore = useModerationScreenStore()
+const moderationScreenStore = useModerationScreenStore()
 const facilityStore = useFacilitiesStore()
+const healthcareProfessionalsStore = useHealthcareProfessionalsStore()
+const localeStore = useLocaleStore()
 
 const isFacilitySectionInitialized: Ref<boolean> = ref(false)
+const healthcareProfessionalsRelatedToFacility: Ref<string[]>
+= ref([])
+const healthcareProfessionalRelatedToFacilityFiltered: Ref<HealthcareProfessional[]> = ref([])
+
+const setHealthcareProfessionalsRelatedToFacility = () => {
+    healthcareProfessionalRelatedToFacilityFiltered.value = healthcareProfessionalsRelatedToFacility.value.flatMap(
+        healthcareProfessionalId =>
+            healthcareProfessionalsStore.healthcareProfessionalsData.find(
+                healthcareProfessional => healthcareProfessional.id === healthcareProfessionalId
+            ) || []
+    )
+}
 
 const listPrefectureJapanEn: Ref<string[]> = ref([
     'Hokkaido', 'Aomori', 'Iwate', 'Miyagi', 'Akita',
@@ -304,10 +378,14 @@ onBeforeMount(async () => {
         await facilityStore.getFacilities()
     }
 
+    if (!healthcareProfessionalsStore.healthcareProfessionalsData) {
+        await healthcareProfessionalsStore.getHealthcareProfessionals()
+    }
+
     facilityStore.selectedFacilityId = id as string
 
     // Set the active screen and ensure the UI state is consistent
-    screenStore.setActiveScreen(ModerationScreen.EditFacility)
+    moderationScreenStore.setActiveScreen(ModerationScreen.EditFacility)
 
     facilityStore.setSelectedFacilityData(facilityStore.selectedFacilityId)
 
@@ -318,4 +396,25 @@ onBeforeMount(async () => {
     // Ensure UI updates are reflected
     await nextTick()
 })
+
+/** This is making sure all the data is loaded in the component before running the function to set
+    the healthcare professionals related to the facility. This loads the data correctly whether sent the
+    link or navigating from the moderator dashboard **/
+watch(
+    () => [
+        healthcareProfessionalsStore.healthcareProfessionalsData,
+        facilityStore.facilityData,
+        facilityStore.selectedFacilityData
+    ],
+    ([healthcareData, relatedFacilityIds]) => {
+        if (healthcareData && relatedFacilityIds) {
+            setHealthcareProfessionalsRelatedToFacility()
+        }
+        if (facilityStore.selectedFacilityData) {
+            healthcareProfessionalsRelatedToFacility.value
+                = facilityStore.facilitySectionFields.healthcareProfessionalIds as unknown as string[]
+        }
+    },
+    { immediate: true }
+)
 </script>
