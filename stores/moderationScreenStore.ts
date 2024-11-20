@@ -5,7 +5,7 @@ export enum ModerationScreen {
     Dashboard = 'DASHBOARD',
     EditSubmission = 'EDIT_SUBMISSION',
     EditHealthcareProfessional = 'EDIT_HEALTHCARE_PROFESSIONAL',
-    EditFacility = 'EDIT_FACILITIY'
+    EditFacility = 'EDIT_FACILITY'
 }
 
 export enum ModSubmissionLeftNavbarSectionIDs {
