@@ -1,5 +1,6 @@
 import 'cypress-real-events'
 import 'cypress-plugin-tab'
+import facilityData from '../../fake_data/moderation_dashboard/fakeModFacilityData.json'
 import enUS from '../../../i18n/locales/en.json'
 
 const FAKE_FACILITY_RESPONSE_PATH = 'moderation_dashboard/fakeModFacilityData.json'
@@ -97,6 +98,39 @@ describe('Moderation edit facility form', () => {
             cy.get('[data-testid="mod-facility-section-prefectureJa"]').should('exist')
         })
 
+        it('should autofill all the form fields for an existing facility', () => {
+            cy.get('[data-testid="mod-facility-section-nameEn"]')
+                .find('input').should('have.value', facilityData.data.facilities[0].nameEn)
+            cy.get('[data-testid="mod-facility-section-nameJa"]')
+                .find('input').should('have.value', facilityData.data.facilities[0].nameJa)
+            cy.get('[data-testid="mod-facility-section-phone"]').find('input')
+                .should('have.value', facilityData.data.facilities[0].contact.phone)
+            cy.get('[data-testid="mod-facility-section-email"]').find('input')
+                .should('have.value', facilityData.data.facilities[0].contact.email)
+            cy.get('[data-testid="mod-facility-section-website"]').find('input')
+                .should('have.value', facilityData.data.facilities[0].contact.website)
+            cy.get('[data-testid="mod-facility-section-postalCode"]').find('input')
+                .should('have.value', facilityData.data.facilities[0].contact.address.postalCode)
+            cy.get('[data-testid="mod-facility-section-cityEn"]').find('input')
+                .should('have.value', facilityData.data.facilities[0].contact.address.cityEn)
+            cy.get('[data-testid="mod-facility-section-addressLine1En"]').find('input')
+                .should('have.value', facilityData.data.facilities[0].contact.address.addressLine1En)
+            cy.get('[data-testid="mod-facility-section-addressLine2En"]').find('input')
+                .should('have.value', facilityData.data.facilities[0].contact.address.addressLine2En)
+            cy.get('[data-testid="mod-facility-section-cityJa"]').find('input')
+                .should('have.value', facilityData.data.facilities[0].contact.address.cityJa)
+            cy.get('[data-testid="mod-facility-section-addressLine1Ja"]').find('input')
+                .should('have.value', facilityData.data.facilities[0].contact.address.addressLine1Ja)
+            cy.get('[data-testid="mod-facility-section-addressLine2Ja"]').find('input')
+                .should('have.value', facilityData.data.facilities[0].contact.address.addressLine2Ja)
+            cy.get('[data-testid="mod-facility-section-google-maps"]').find('input')
+                .should('have.value', facilityData.data.facilities[0].contact.googleMapsUrl)
+            cy.get('[data-testid="mod-facility-section-mapLatitude"]').find('input')
+                .should('have.value', facilityData.data.facilities[0].mapLatitude)
+            cy.get('[data-testid="mod-facility-section-mapLongitude"]').find('input')
+                .should('have.value', facilityData.data.facilities[0].mapLongitude)
+        })
+
         it('should be able to type in all input fields', () => {
             cy.get('[data-testid="mod-facility-section-nameEn"]').find('input').type('Hospital')
             cy.get('[data-testid="mod-facility-section-nameJa"]').find('input').type('立川中央病院')
@@ -116,8 +150,6 @@ describe('Moderation edit facility form', () => {
                 .type('www.google.com/maps/place/82+Yamatech%C5%8D,+Naka+Ward,+Yokohama,+Kanagawa+231-0862,')
                 .type('+Japan/@35.437123,139.651471,16z/data=!4m6!3m5!1s0x60185d201648e7c1:0x8f37d37bb381e29!8m2!3d35')
                 .type('.4371228!4d139.6514712!16s%2Fg%2F11clpxxvx5?hl=en-US&entry=ttu')
-            cy.get('[data-testid="mod-facility-section-mapLatitude"]').find('input').type('35.437123')
-            cy.get('[data-testid="mod-facility-section-mapLongitude"]').find('input').type('139.651471')
             cy.get('[data-testid="mod-facility-section-doctor-search"]').find('input').type('Aya Yumino')
         })
 

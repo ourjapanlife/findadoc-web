@@ -1,8 +1,10 @@
 import { gql } from 'graphql-request'
 import { defineStore } from 'pinia'
 import { ref, type Ref } from 'vue'
-import type { Submission, MutationUpdateSubmissionArgs } from '~/typedefs/gqlTypes.js'
+import type { Maybe } from 'graphql/jsutils/Maybe'
+import type { Submission, MutationUpdateSubmissionArgs, Mutation } from '~/typedefs/gqlTypes.js'
 import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql.js'
+import type { ServerError, ServerResponse } from '~/typedefs/serverResponse'
 
 export enum SelectedSubmissionListViewTab {
     ForReview = 'FOR_REVIEW',
@@ -85,18 +87,25 @@ export const useModerationSubmissionsStore = defineStore(
             }
         }
 
-        async function updateSubmission(submission: MutationUpdateSubmissionArgs) {
-            try {
-                return await graphQLClientRequestWithRetry(
-                    gqlClient.request.bind(gqlClient),
-                    updateFacilitySubmissionGqlMutation,
-                    submission
-                )
-            } catch (error) {
-                console.error('Failed to update submission:', error)
+        async function updateSubmission(submission: MutationUpdateSubmissionArgs):
+        Promise<ServerResponse<Maybe<Submission>>> {
+            const serverResponse = { data: {} as Maybe<Submission>, errors: [] as ServerError[], hasErrors: false }
+            const response = await graphQLClientRequestWithRetry<Mutation>(
+                gqlClient.request.bind(gqlClient),
+                updateFacilitySubmissionGqlMutation,
+                submission
+            )
+
+            if (response.errors?.length) {
                 setDidMutationFail(true)
                 setUpdatingSubmissionFromTopBar(false)
             }
+
+            serverResponse.data = response.data?.updateSubmission
+            serverResponse.errors = response.errors ? response.errors : []
+            serverResponse.hasErrors = response.hasErrors
+
+            return serverResponse
         }
 
         async function approveSubmission() {
@@ -121,23 +130,14 @@ export const useModerationSubmissionsStore = defineStore(
             }
 
             const facilityInputVariables = {
-                updateSubmissionId: selectedSubmissionId.value,
+                id: selectedSubmissionId.value,
                 input: {
-                    isRejected: true
+                    isRejected: true,
+                    isUnderReview: false
                 }
             }
 
-            try {
-                await graphQLClientRequestWithRetry(
-                    gqlClient.request.bind(gqlClient),
-                    rejectFacilitySubmissionGqlMutation,
-                    facilityInputVariables
-                )
-                setDidMutationFail(false)
-            } catch (error) {
-                console.error('Failed to reject submission:', error)
-                setDidMutationFail(true)
-            }
+            return updateSubmission(facilityInputVariables)
         }
 
         return { getSubmissions,
@@ -240,7 +240,10 @@ const getSubmissionsGqlQuery = gql`
 const updateFacilitySubmissionGqlMutation = gql`
 mutation Mutation($id: ID!, $input: UpdateSubmissionInput!) {
   updateSubmission(id: $id, input: $input) {
-    isUnderReview
+    id
+    googleMapsUrl
+    healthcareProfessionalName
+    spokenLanguages
     facility {
       id
       nameEn
@@ -266,12 +269,25 @@ mutation Mutation($id: ID!, $input: UpdateSubmissionInput!) {
       mapLatitude
       mapLongitude
     }
-  }
-}`
-
-const rejectFacilitySubmissionGqlMutation = gql`
-mutation Mutation($updateSubmissionId: ID!, $input: UpdateSubmissionInput!) {
-  updateSubmission(id: $updateSubmissionId, input: $input) {
+    healthcareProfessionals {
+      id
+      names {
+        firstName
+        middleName
+        lastName
+        locale
+      }
+      spokenLanguages
+      degrees
+      specialties
+      acceptedInsurance
+      facilityIds
+    }
+    isUnderReview
+    isApproved
     isRejected
+    createdDate
+    updatedDate
+    notes
   }
 }`

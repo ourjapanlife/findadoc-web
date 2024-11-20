@@ -2,21 +2,23 @@
     "data": {
       "facilities": [
         {
-          "address": {
-            "addressLine1En": "1649 Octavia Parkways",
-            "addressLine1Ja": "3581 蒼空Route",
-            "addressLine2En": "Suite 869",
-            "addressLine2Ja": "Apt. 110",
-            "cityEn": "East Linnea",
-            "cityJa": "南菜摘市",
-            "postalCode": "27629",
-            "prefectureEn": "Kentucky",
-            "prefectureJa": "秋田県"
-          },
-          "email": "KarelleKoss22@hotmail.com",
-          "googleMapsUrl": "https://usable-flung.net",
-          "phone": "920.452.4490 x40878",
-          "website": "https://amused-appetite.com",
+          "contact": {
+              "address": {
+                "addressLine1En": "1649 Octavia Parkways",
+                "addressLine1Ja": "3581 蒼空Route",
+                "addressLine2En": "Suite 869",
+                "addressLine2Ja": "Apt. 110",
+                "cityEn": "East Linnea",
+                "cityJa": "南菜摘市",
+                "postalCode": "27629",
+                "prefectureEn": "Akita",
+                "prefectureJa": "秋田県"
+              },
+              "email": "KarelleKoss22@hotmail.com",
+              "googleMapsUrl": "https://usable-flung.net",
+              "phone": "920.452.4490 x40878",
+              "website": "https://amused-appetite.com"
+        },
           "createdDate": "2024-10-18T05:45:37.282Z",
           "healthcareProfessionalIds": [
             "FUVTHAW5azp3q29J6H2X",

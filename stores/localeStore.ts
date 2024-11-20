@@ -9,11 +9,16 @@ export type LocaleDisplay = {
 }
 
 export const useLocaleStore = defineStore('locale', () => {
-    const enUsLocale = localeDisplayOptions.find(o => o.code == Locale.EnUs) as LocaleDisplay
+    const enUsLocale = localeDisplayOptions.find(o => o.code === Locale.EnUs) as LocaleDisplay
     const locale: Ref<LocaleDisplay> = ref(enUsLocale)
 
     function setLocale(selectedLocale: Locale) {
-        locale.value = localeDisplayOptions.find(l => l.code == selectedLocale) as LocaleDisplay
+        locale.value = localeDisplayOptions.find(l => l.code === selectedLocale) as LocaleDisplay
+    }
+
+    function formatLanguageCodeToSimpleText(selectedLocale: string) {
+        const language = localeDisplayOptions.find(locale => locale.code === selectedLocale)
+        return language?.simpleText || 'Language not found'
     }
 
     function formatLanguages(
@@ -25,7 +30,7 @@ export const useLocaleStore = defineStore('locale', () => {
                 ?? []
     }
 
-    return { locale, localeDisplayOptions, mvpLocaleDisplayOptions, setLocale, formatLanguages }
+    return { locale, localeDisplayOptions, mvpLocaleDisplayOptions, setLocale, formatLanguages, formatLanguageCodeToSimpleText }
 })
 
 export const localeDisplayOptions = [
@@ -95,5 +100,6 @@ export const mvpLocaleDisplayOptions = [
     { code: Locale.RuRu, simpleText: 'русский', displayText: 'Russian (Russia)' },
     { code: Locale.DeDe, simpleText: 'Deutsch', displayText: 'Deutsch(Deutschland)' },
     { code: Locale.ZhCn, simpleText: '简体中文', displayText: 'Chinese (Simplified, China)' },
-    { code: Locale.FrFr, simpleText: 'Français', displayText: 'Français (France)' }
+    { code: Locale.FrFr, simpleText: 'Français', displayText: 'Français (France)' },
+    { code: Locale.TlPh, simpleText: 'Tagalog', displayText: 'Tagalog (Philippines)' }
 ] satisfies LocaleDisplay[]

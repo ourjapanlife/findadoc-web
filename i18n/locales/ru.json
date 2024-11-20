@@ -71,7 +71,8 @@
     "submitButton": "Подтвердить",
     "optional": " Необязательно ",
     "otherNotes": " Другие заметки ",
-    "firstNameValidation": "Enter a first name"
+    "firstNameValidation": "Enter a first name",
+    "submissionSuccessful": "Thank you for contributing! Your submission about the doctor has been successfully recorded. We’re grateful for your support!"
   },
   "searchBar": {
     "selectSpecialty": " Выбрать специальность...",
@@ -93,7 +94,8 @@
     "heading": "Спасибо!",
     "submission": " Ваше заявление будет рассмотрено в ближайшее время нашими модераторами.",
     "feedback": " Ваш отзыв был представлен и будет рассмотрен нашей командой.",
-    "home": "Вернуться на Главную страницу"
+    "home": "Вернуться на Главную страницу",
+    "submitAnotherDoctor": "Add another doctor"
   },
   "topNav": {
     "about": "О нас",
@@ -226,7 +228,8 @@
     "infoMessageAlreadyApproved": "This submission has already been approved",
     "infoMessageUpdateNeeded": "This needs to be updated before approval",
     "successMessageUpdated": "Submission updated successfully",
-    "successMessageApproved": "Submission approved and created successfully"
+    "successMessageApproved": "Submission approved and created successfully",
+    "facilitySuccessfullyRejected": "Facility rejected successfully"
   },
   "login": {
     "heading": "Log in to your account",
@@ -312,11 +315,19 @@
     "placeholderTextFacilityPhoneNumber": "e.g. 08xxxxxxxxx",
     "placeholderTextFacilityPostalCode": "e.g. 186-0000",
     "placeholderTextFacilityWebsite": "e.g. http://www.example.com/",
-    "updateButtonText": "Update"
+    "updateButtonText": "Update",
+    "placeholderTextFacilityAddressLine1En": "Street address",
+    "errorMessageFacilityId": "Facility Id was not found"
   },
   "modEditFacilityOrHPTopbar": {
     "updateAndExit": "Update & Exit",
     "delete": "Delete",
     "copyFailure": "Failed to copy ID"
+  },
+  "serverErrorMessages": {
+    "UNAUTHENTICATED": "You do not have the authentication to do this action",
+    "BAD_USER_INPUT": "One or more of the inputs entered is invalid, please try again",
+    "genericErrorMessage": "There was an error submitting your form, please try again",
+    "errorCodeMessagingNeeded": "The server error code does not have a message for the user. Please add one."
   }
 }
