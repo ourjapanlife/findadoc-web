@@ -863,7 +863,7 @@ async function submitCompletedForm(e: Event) {
     }
 }
 
-const syntheticEvent = new Event('submit', { bubbles: true, cancelable: true })
+const syntheticEvent = new Event('submit', { bubbles: false, cancelable: true })
 
 watch(moderationSubmissionStore, newValue => {
     //saves the submission by updating it and then going to the main
