@@ -225,79 +225,53 @@
             />
         </div>
         <ModHealthcareProfessionalSearchbar data-testid="mod-facility-section-doctor-search" />
+        <div class="flex flex-col">
+            <span
+                v-if="moderationScreenStore.activeScreen === ModerationScreen.EditFacility"
+                class="mb-1 text-primary-text text-2xl font-bold font-sans leading-normal"
+            >
+                {{ $t('modFacilitySection.healthcareProfessionalToAdd') }}
+            </span>
+            <span
+                v-show="!healthcareProfessionalsToAddToFacility"
+                class="font-semibold"
+            >- {{ $t('modFacilitySection.noHPSelected') }}
+            </span>
+        </div>
         <div
             v-if="moderationScreenStore.activeScreen === ModerationScreen.EditFacility"
         >
             <div
+                v-for="(healthcareProfessional) in facilityStore.facilitySectionFields.healthProfessionalsRelations"
+                :key="`${healthcareProfessional.otherEntityId}-${healthcareProfessional.action}`"
+            >
+                <ModDashboardHealthProfessionalCard
+                    :healthcare-professional="healthcareProfessional"
+                />
+            </div>
+            <span class="mb-3.5 text-center text-primary-text text-2xl font-bold font-sans leading-normal">
+                {{ $t('modFacilitySection.existingHPHeading') }}
+            </span>
+            <div
                 v-for="(healthcareProfessional, index) in healthcareProfessionalRelatedToFacilityFiltered"
                 :key="`${healthcareProfessional.id}-${index}`"
-                class="relative w-96 my-1"
             >
-                <div
-                    class="flex justify-start min-h-24 items-center rounded-lg p-1 border-2 border-primary"
-                >
-                    <span class="h-24 w-16">
-                        <SVGProfileIcon
-                            role="img"
-                            alt="profile icon"
-                            title="profile icon"
-                            class="profile-icon stroke-primary w-16 h-16 stroke-1 inline mx-1 self-start"
-                        />
-                    </span>
-                    <div class="flex flex-col h-24 w-64 pl-1 mb-1">
-                        <div class="flex font-bold pt-2">
-                            <span>{{ healthcareProfessional.names[0].lastName }}</span>
-                            <span class="mx-2">{{ healthcareProfessional.names[0].firstName }}</span>
-                            <span v-show="healthcareProfessional.names[0].middleName">
-                                {{ healthcareProfessional.names[0].middleName }}
-                            </span>
-                        </div>
-                        <span class="text-primary-text-muted">
-                            ID:  {{ healthcareProfessional.id }}
-                        </span>
-                        <div>
-                            <div
-                                class="flex flex-wrap justify-start items-start self-end pt-2"
-                            >
-                                <div
-                                    v-for="(spokenLanguage, indexOfLocale)
-                                        in healthcareProfessional.spokenLanguages"
-                                    :key="`${spokenLanguage}-${indexOfLocale}`"
-                                    class="w-24 px-2 py-[1px] mr-1 bg-primary-text-muted text-nowrap rounded-full
-                                 text-sm text-center"
-                                >
-                                    <span>
-                                        {{ localeStore.formatLanguageCodeToSimpleText(
-                                            spokenLanguage) }}
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="self-start mx-2">
-                        <span
-                            class="flex items-center justify-center
-                    cursor-pointer font-bold text-secondary text-sm absolute top-1 right-1"
-                        >
-                            <SVGTrashCan
-                                class="flex items-center justify-center w-6 h-6"
-                            />
-                        </span>
-                    </div>
-                </div>
+                <ModDashboardHealthProfessionalCard
+                    :healthcare-professional="healthcareProfessional"
+                    :healthcare-professionals-related-to-facility="healthcareProfessionalsRelatedToFacility"
+                />
             </div>
         </div>
     </div>
 </template>
 
 <script lang="ts" setup>
-import { type Ref, ref, onBeforeMount, nextTick, watch } from 'vue'
+import { type Ref, ref, onBeforeMount, nextTick, watch, computed, type ComputedRef } from 'vue'
 import { type ToastInterface, useToast } from 'vue-toastification'
 import { useRoute } from 'vue-router'
 import { useModerationScreenStore, ModerationScreen } from '~/stores/moderationScreenStore'
 import { useFacilitiesStore } from '~/stores/facilitiesStore'
 import { useHealthcareProfessionalsStore } from '~/stores/healthcareProfessionalsStore'
-import { useLocaleStore } from '~/stores/localeStore'
 import { useI18n } from '#imports'
 import { validateAddressLineEn,
     validateAddressLineJa,
@@ -310,9 +284,7 @@ import { validateAddressLineEn,
     validatePostalCode,
     validateWebsite,
     validateCityJa } from '~/utils/formValidations'
-import type { HealthcareProfessional } from '~/typedefs/gqlTypes'
-import SVGTrashCan from '~/assets/icons/trash-can.svg'
-import SVGProfileIcon from '~/assets/icons/profile-icon.svg'
+import { RelationshipAction, type HealthcareProfessional, type Relationship } from '~/typedefs/gqlTypes'
 
 // Initialize the variable that will be used to mount the toast library
 let toast: ToastInterface
@@ -322,12 +294,14 @@ const { t } = useI18n()
 const moderationScreenStore = useModerationScreenStore()
 const facilityStore = useFacilitiesStore()
 const healthcareProfessionalsStore = useHealthcareProfessionalsStore()
-const localeStore = useLocaleStore()
 
 const isFacilitySectionInitialized: Ref<boolean> = ref(false)
 const healthcareProfessionalsRelatedToFacility: Ref<string[]>
 = ref([])
 const healthcareProfessionalRelatedToFacilityFiltered: Ref<HealthcareProfessional[]> = ref([])
+const healthcareProfessionalsToAddToFacility: ComputedRef<Relationship | undefined>
+= computed(() => (facilityStore.facilitySectionFields.healthProfessionalsRelations as unknown as Relationship[])
+    .find(relationship => relationship.action === RelationshipAction.Create))
 
 const setHealthcareProfessionalsRelatedToFacility = () => {
     healthcareProfessionalRelatedToFacilityFiltered.value = healthcareProfessionalsRelatedToFacility.value.flatMap(
