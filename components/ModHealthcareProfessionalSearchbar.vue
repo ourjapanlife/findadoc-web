@@ -19,6 +19,18 @@
                     class="relative right-8 top-3 w-6 h-6"
                 />
             </div>
+            <div v-show="healthcareProfessionalByIdOrName.length">
+                <div
+                    v-for="(healthcareProfessional, index) in healthcareProfessionalByIdOrName"
+                    :key="`${healthcareProfessional.id}-${healthcareProfessional.createdDate}-${index}`"
+                >
+                    <span
+                        @click="() => addHealthcareProfessional(healthcareProfessional.id)"
+                    >
+                        {{ healthcareProfessional.id }}
+                    </span>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -26,10 +38,14 @@
 <script lang="ts" setup>
 import { ref, type Ref } from 'vue'
 import SVGLookingGlass from '~/assets/icons/looking-glass.svg'
-import type { HealthcareProfessional } from '~/typedefs/gqlTypes'
+import { RelationshipAction, type HealthcareProfessional } from '~/typedefs/gqlTypes'
 import { useHealthcareProfessionalsStore } from '~/stores/healthcareProfessionalsStore'
+import { useFacilitiesStore } from '~/stores/facilitiesStore'
+import { ModerationScreen, useModerationScreenStore } from '~/stores/moderationScreenStore'
 
 const healthcareProfessionalsStore = useHealthcareProfessionalsStore()
+const moderationScreenStore = useModerationScreenStore()
+const facilitiesStore = useFacilitiesStore()
 
 const searchValue: Ref<string> = ref('')
 // `healthcareProfessionalById` will be used in the UI component in an upcoming PR

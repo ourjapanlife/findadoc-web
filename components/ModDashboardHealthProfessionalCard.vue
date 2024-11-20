@@ -1,7 +1,7 @@
 <template>
     <div class="relative w-96 my-1">
         <div
-            class="flex justify-start h-36 items-center rounded-lg p-1 border-2 border-primary"
+            class="flex justify-start items-center rounded-lg p-1 border-2 border-primary"
         >
             <span class="h-24 w-16">
                 <SVGProfileIcon
@@ -64,7 +64,8 @@
                     </span>
                 </div>
             </div>
-            <span
+            <div
+                v-if="!isHealthcareProfessionalReadyForRemoval(healthcareProfessional.id)"
                 class="flex items-center justify-center
                     cursor-pointer font-bold text-secondary text-sm absolute top-3 right-3"
                 @click="() => removeHealthcareProfessional(healthcareProfessional.id)"
@@ -72,7 +73,17 @@
                 <SVGTrashCan
                     class="flex items-center justify-center w-6 h-6"
                 />
-            </span>
+            </div>
+            <div
+                v-if="isHealthcareProfessionalReadyForRemoval(healthcareProfessional.id)"
+                class="flex items-center justify-center
+                    cursor-pointer font-bold text-secondary text-sm absolute top-3 right-3"
+                @click="() => undoRemovalOfHealthcareProfessional(healthcareProfessional.id)"
+            >
+                <SVGUndoIcon
+                    class="flex items-center justify-center w-6 h-6"
+                />
+            </div>
         </div>
     </div>
 </template>
@@ -80,6 +91,7 @@
 <script setup lang="ts">
 import SVGTrashCan from '~/assets/icons/trash-can.svg'
 import SVGProfileIcon from '~/assets/icons/profile-icon.svg'
+import SVGUndoIcon from '~/assets/icons/undo-icon.svg'
 import { useLocaleStore } from '~/stores/localeStore'
 import { useFacilitiesStore } from '~/stores/facilitiesStore'
 import { ModerationScreen, useModerationScreenStore } from '~/stores/moderationScreenStore'
@@ -89,17 +101,33 @@ const localeStore = useLocaleStore()
 const facilitiesStore = useFacilitiesStore()
 const moderationScreenStore = useModerationScreenStore()
 
+// This checks whether an existing healthcare professional has been added for removal
+const isHealthcareProfessionalReadyForRemoval = (id: string) =>
+    facilitiesStore.facilitySectionFields.healthProfessionalsRelations
+        .find(healthcareProfessionalRelation => healthcareProfessionalRelation.otherEntityId === id
+        && healthcareProfessionalRelation.action === RelationshipAction.Delete)
+
 const removeHealthcareProfessional = (id: string) => {
     switch (moderationScreenStore.activeScreen) {
         case ModerationScreen.EditFacility:
             if (props.healthcareProfessionalsRelatedToFacility && props.healthcareProfessionalsRelatedToFacility.includes(id)) {
-                facilitiesStore.facilitySectionFields.healthProfessionalsRelations.value
-                    .push({ id: id, action: RelationshipAction.Delete })
+                facilitiesStore.facilitySectionFields.healthProfessionalsRelations
+                    .push({ otherEntityId: id, action: RelationshipAction.Delete })
                 return
             }
-            facilitiesStore.facilitySectionFields.healthProfessionalsRelations.value
-                .filter((healthcareProfessionalRelation: Relationship) => healthcareProfessionalRelation.otherEntityId !== id)
+            facilitiesStore.facilitySectionFields.healthProfessionalsRelations
+            = facilitiesStore.facilitySectionFields.healthProfessionalsRelations
+                    .filter((healthcareProfessionalRelation: Relationship) => healthcareProfessionalRelation.otherEntityId !== id)
+            facilitiesStore.healthProfessionalsRelationsForDisplay
+            = facilitiesStore.healthProfessionalsRelationsForDisplay
+                    .filter(healthcareProfessional => healthcareProfessional.id !== id)
     }
+}
+
+const undoRemovalOfHealthcareProfessional = (id: string) => {
+    facilitiesStore.facilitySectionFields.healthProfessionalsRelations
+        = facilitiesStore.facilitySectionFields.healthProfessionalsRelations
+            .filter((healthcareProfessionalRelation: Relationship) => healthcareProfessionalRelation.otherEntityId !== id)
 }
 
 const props = defineProps<{

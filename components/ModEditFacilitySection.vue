@@ -233,22 +233,24 @@
                 {{ $t('modFacilitySection.healthcareProfessionalToAdd') }}
             </span>
             <span
-                v-show="!healthcareProfessionalsToAddToFacility"
+                v-show="!facilityStore.healthProfessionalsRelationsForDisplay"
                 class="font-semibold"
             >- {{ $t('modFacilitySection.noHPSelected') }}
+            </span>
+            <span v-show="facilityStore.healthProfessionalsRelationsForDisplay.length">
+                <div
+                    v-for="(healthcareProfessional) in facilityStore.healthProfessionalsRelationsForDisplay"
+                    :key="`${healthcareProfessional.id}-${healthcareProfessional.names[0].firstName}`"
+                >
+                    <ModDashboardHealthProfessionalCard
+                        :healthcare-professional="healthcareProfessional"
+                    />
+                </div>
             </span>
         </div>
         <div
             v-if="moderationScreenStore.activeScreen === ModerationScreen.EditFacility"
         >
-            <div
-                v-for="(healthcareProfessional) in facilityStore.facilitySectionFields.healthProfessionalsRelations"
-                :key="`${healthcareProfessional.otherEntityId}-${healthcareProfessional.action}`"
-            >
-                <ModDashboardHealthProfessionalCard
-                    :healthcare-professional="healthcareProfessional"
-                />
-            </div>
             <span class="mb-3.5 text-center text-primary-text text-2xl font-bold font-sans leading-normal">
                 {{ $t('modFacilitySection.existingHPHeading') }}
             </span>
@@ -266,7 +268,7 @@
 </template>
 
 <script lang="ts" setup>
-import { type Ref, ref, onBeforeMount, nextTick, watch, computed, type ComputedRef } from 'vue'
+import { type Ref, ref, onBeforeMount, nextTick, watch } from 'vue'
 import { type ToastInterface, useToast } from 'vue-toastification'
 import { useRoute } from 'vue-router'
 import { useModerationScreenStore, ModerationScreen } from '~/stores/moderationScreenStore'
@@ -284,7 +286,7 @@ import { validateAddressLineEn,
     validatePostalCode,
     validateWebsite,
     validateCityJa } from '~/utils/formValidations'
-import { RelationshipAction, type HealthcareProfessional, type Relationship } from '~/typedefs/gqlTypes'
+import type { HealthcareProfessional } from '~/typedefs/gqlTypes'
 
 // Initialize the variable that will be used to mount the toast library
 let toast: ToastInterface
@@ -299,9 +301,6 @@ const isFacilitySectionInitialized: Ref<boolean> = ref(false)
 const healthcareProfessionalsRelatedToFacility: Ref<string[]>
 = ref([])
 const healthcareProfessionalRelatedToFacilityFiltered: Ref<HealthcareProfessional[]> = ref([])
-const healthcareProfessionalsToAddToFacility: ComputedRef<Relationship | undefined>
-= computed(() => (facilityStore.facilitySectionFields.healthProfessionalsRelations as unknown as Relationship[])
-    .find(relationship => relationship.action === RelationshipAction.Create))
 
 const setHealthcareProfessionalsRelatedToFacility = () => {
     healthcareProfessionalRelatedToFacilityFiltered.value = healthcareProfessionalsRelatedToFacility.value.flatMap(
@@ -365,6 +364,12 @@ onBeforeMount(async () => {
 
     facilityStore.initializeFacilitySectionValues(facilityStore.selectedFacilityData)
 
+    await nextTick()
+    if (healthcareProfessionalsStore.healthcareProfessionalsData
+      && !healthcareProfessionalRelatedToFacilityFiltered.value.length) {
+        setHealthcareProfessionalsRelatedToFacility()
+    }
+
     isFacilitySectionInitialized.value = true
 
     // Ensure UI updates are reflected
@@ -386,9 +391,9 @@ watch(
         }
         if (facilityStore.selectedFacilityData) {
             healthcareProfessionalsRelatedToFacility.value
-                = facilityStore.facilitySectionFields.healthcareProfessionalIds as unknown as string[]
+                = facilityStore.facilitySectionFields.healthcareProfessionalIds
         }
     },
-    { immediate: true }
+    { immediate: false }
 )
 </script>
