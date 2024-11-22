@@ -396,4 +396,9 @@ watch(
     },
     { immediate: false }
 )
+
+watch(() => facilityStore.facilitySectionFields.healthcareProfessionalIds, newValue => {
+    healthcareProfessionalsRelatedToFacility.value = newValue
+    setHealthcareProfessionalsRelatedToFacility()
+})
 </script>
