@@ -1,18 +1,18 @@
 <template>
-    <div class="relative w-96 my-1">
+    <div class="w-96 my-1">
         <div
-            class="flex justify-start items-center rounded-lg p-1 border-2 border-primary"
+            class="flex justify-between items-center rounded-lg p-1 border-2 border-primary"
         >
-            <span class="h-24 w-16">
+            <div class="w-16 self-start">
                 <SVGProfileIcon
                     role="img"
                     alt="profile icon"
                     title="profile icon"
                     class="profile-icon stroke-primary w-16 h-16 stroke-1 inline mx-1 self-start"
                 />
-            </span>
+            </div>
             <div v-if="moderationScreenStore.activeScreen === ModerationScreen.EditFacility">
-                <div class="flex flex-col h-24 w-64 pl-1 mb-1">
+                <div class="flex flex-col h-full w-64 pl-1 mb-1">
                     <div class="flex font-bold pt-2">
                         <span>{{ healthcareProfessional.names[0].lastName }}</span>
                         <span class="mx-2">{{ healthcareProfessional.names[0].firstName }}</span>
@@ -20,7 +20,7 @@
                             {{ healthcareProfessional.names[0].middleName }}
                         </span>
                     </div>
-                    <span class="text-primary-text-muted">
+                    <span>
                         ID:  {{ healthcareProfessional.id }}
                     </span>
                     <div>
@@ -31,7 +31,7 @@
                                 v-for="(spokenLanguage, indexOfLocale)
                                     in healthcareProfessional.spokenLanguages"
                                 :key="`${spokenLanguage}-${indexOfLocale}`"
-                                class="w-24 px-2 py-[1px] mr-1 mb-1 bg-primary-text-muted text-nowrap rounded-full
+                                class="w-24 px-2 py-[1px] mr-1 mb-1 bg-primary-text-muted/30 text-nowrap rounded-full
                                  text-sm text-center"
                             >
                                 <span>
@@ -66,8 +66,8 @@
             </div>
             <div
                 v-if="!isHealthcareProfessionalReadyForRemoval(healthcareProfessional.id)"
-                class="flex items-center justify-center
-                    cursor-pointer font-bold text-secondary text-sm absolute top-3 right-3"
+                class="flex w-8 items-center justify-center
+                    cursor-pointer font-bold text-secondary text-sm self-start p-1"
                 @click="() => removeHealthcareProfessional(healthcareProfessional.id)"
             >
                 <SVGTrashCan
@@ -76,8 +76,8 @@
             </div>
             <div
                 v-if="isHealthcareProfessionalReadyForRemoval(healthcareProfessional.id)"
-                class="flex items-center justify-center
-                    cursor-pointer font-bold text-secondary text-sm absolute top-3 right-3"
+                class="flex w-8 items-center justify-center
+                    cursor-pointer font-bold text-secondary text-sm self-start p-1"
                 @click="() => undoRemovalOfHealthcareProfessional(healthcareProfessional.id)"
             >
                 <SVGUndoIcon
