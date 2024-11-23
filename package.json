@@ -17,7 +17,10 @@
         "test": "yarn test:pinia --run && yarn test:e2e",
         "test:pinia": "nuxi prepare && nuxi generate && vitest",
         "test:pinia:coverage": "vitest run --coverage",
-        "test:e2e": "cypress run --e2e --browser chrome --record --key 04a1fe54-0011-407b-b7d7-fcb9b2daf1e6"
+        "test:e2e:prod": "cypress run --e2e --record --key 04a1fe54-0011-407b-b7d7-fcb9b2daf1e6 --env FAKE_DATA=false",
+        "test:e2e:open:prod": "cypress open --env FAKE_DATA=false",
+        "test:e2e": "cypress run --e2e --record --key 04a1fe54-0011-407b-b7d7-fcb9b2daf1e6",
+        "test:e2e:open": "cypress open"
     },
     "packageManager": "yarn@4.4.0",
     "engines": {
@@ -41,6 +44,7 @@
         "vue3-google-map": "^0.21.0"
     },
     "devDependencies": {
+        "@faker-js/faker": "^9.2.0",
         "@graphql-codegen/cli": "^5.0.3",
         "@graphql-codegen/typescript": "^4.0.9",
         "@graphql-codegen/typescript-resolvers": "^4.2.1",
@@ -52,6 +56,7 @@
         "@stylistic/eslint-plugin": "^2.6.1",
         "@swc/core": "^1.7.6",
         "@testing-library/vue": "^8.1.0",
+        "@types/cypress": "^1.1.6",
         "@vitejs/plugin-vue": "^5.1.2",
         "@vitest/coverage-v8": "^2.1.3",
         "@vue/test-utils": "^2.4.6",
