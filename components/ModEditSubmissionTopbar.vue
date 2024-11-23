@@ -45,6 +45,7 @@
             <button
                 type="button"
                 class="flex justify-center items-center rounded-full bg-primary w-28 text-primary-inverted text-sm mr-2 "
+                data-testid="btn-approve-submission"
                 @click="acceptSubmission"
             >
                 {{

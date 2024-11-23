@@ -16,6 +16,7 @@
                 <button
                     type="button"
                     class="bg-primary p-4 rounded-full my-8 font-semibold text-xl"
+                    data-testid="btn-submit-submission"
                     @click="submitCompletedForm"
                 >
                     {{ $t('modSubmissionForm.submissionConfirmationAcceptanceButton') }}
@@ -481,6 +482,7 @@
         </div>
         <button
             type="button"
+            data-testid="btn-update-submission"
             class="bg-currentColor text-white font-bold py-2 px-4 my-2 rounded w-56"
             @click="submitUpdatedSubmission"
         >
