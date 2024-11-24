@@ -1,19 +1,4 @@
 {
-  "extends": "../.././.nuxt/tsconfig.json",
-    "compilerOptions": {
-      "lib": [
-        "ESNext",
-        "ESNext.AsyncIterable",
-        "DOM"
-      ],
-      "types": [
-        "cypress",
-        "node"
-      ],
-      "sourceMap": false,
-      "resolveJsonModule": true,
-      "esModuleInterop": true,
-    },
-    "include": ["**/*.ts"]
-  }
+  "extends": "../../.nuxt/tsconfig.json",
+}
 
