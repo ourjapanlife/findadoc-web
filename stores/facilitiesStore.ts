@@ -1,8 +1,8 @@
 import { defineStore } from 'pinia'
 import { ref, type Ref } from 'vue'
-import { gql } from 'graphql-request'
 import type { Facility, MutationDeleteFacilityArgs, MutationUpdateFacilityArgs } from '~/typedefs/gqlTypes'
 import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql'
+import { graphql } from '~/typedefs/client'
 
 export const useFacilitiesStore = defineStore(
     'facilitiesStore',
@@ -120,8 +120,8 @@ async function queryFacilities() {
     }
 }
 
-const getAllFacilitiesForModeration = gql`
-query Facilities($filters: FacilitySearchFilters!) {
+const getAllFacilitiesForModeration = graphql(`
+query GetAllFacilities($filters: FacilitySearchFilters!) {
     facilities(filters: $filters) {
         id
         nameEn
@@ -149,45 +149,42 @@ query Facilities($filters: FacilitySearchFilters!) {
         createdDate
         updatedDate
     }
-}
-`
+}`)
 
-const updateExistingFacilityGqlMutation = gql`
-mutation Mutation($updateFacilityId: ID!, $input: UpdateFacilityInput!) {
-  updateFacility(id: $updateFacilityId, input: $input) {
-    id
-    nameEn
-    nameJa
-    contact {
-      googleMapsUrl
-      email
-      phone
-      website
-      address {
-        postalCode
-        prefectureEn
-        cityEn
-        addressLine1En
-        addressLine2En
-        prefectureJa
-        cityJa
-        addressLine1Ja
-        addressLine2Ja
-      }
+const updateExistingFacilityGqlMutation = graphql(`
+mutation UpdateFacility($updateFacilityId: ID!, $input: UpdateFacilityInput!) {
+    updateFacility(id: $updateFacilityId, input: $input) {
+        id
+        nameEn
+        nameJa
+        contact {
+            googleMapsUrl
+            email
+            phone
+            website
+            address {
+                postalCode
+                prefectureEn
+                cityEn
+                addressLine1En
+                addressLine2En
+                prefectureJa
+                cityJa
+                addressLine1Ja
+                addressLine2Ja
+            }
+        }
+        mapLatitude
+        mapLongitude
+        healthcareProfessionalIds
+        createdDate
+        updatedDate
     }
-    mapLatitude
-    mapLongitude
-    healthcareProfessionalIds
-    createdDate
-    updatedDate
-  }
-}
-`
+}`)
 
-const deleteExistingFacilityGqlMutation = gql`
-mutation Mutation($deleteFacilityId: ID!) {
-  deleteFacility(id: $deleteFacilityId) {
-    isSuccessful
-  }
-}
-`
+const deleteExistingFacilityGqlMutation = graphql(`
+mutation DeleteFacility($deleteFacilityId: ID!) {
+    deleteFacility(id: $deleteFacilityId) {
+        isSuccessful
+    }
+}`)

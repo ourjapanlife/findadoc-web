@@ -1,9 +1,9 @@
-import { gql } from 'graphql-request'
 import { defineStore } from 'pinia'
 import { ref, type Ref } from 'vue'
 import { gqlClient } from '../utils/graphql.js'
 import { useLoadingStore } from './loadingStore.js'
 import { useLocaleStore } from './localeStore.js'
+import { graphql } from '~/typedefs/client'
 import { Locale, type Facility, type FacilitySearchFilters } from '~/typedefs/gqlTypes.js'
 
 export const useLocationsStore = defineStore('locationsStore', () => {
@@ -60,15 +60,15 @@ async function queryFacilities(): Promise<Facility[]> {
     }
 }
 
-const searchFacilitiesQuery = gql`query QueryFacilities($filters: FacilitySearchFilters!) {
+const searchFacilitiesQuery = graphql(`
+query SearchFacilitiesDropdown($filters: FacilitySearchFilters!) {
     facilities(filters: $filters) {
-      id
-      contact {
-        address {
-          cityJa
-          cityEn
+        id
+        contact {
+            address {
+                cityJa
+                cityEn
+            }
         }
-      }
     }
-  }
-  `
+}`)

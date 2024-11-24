@@ -1,16 +1,18 @@
 import { defineStore } from 'pinia'
 import { ref, type Ref } from 'vue'
-import { gql } from 'graphql-request'
-import type { HealthcareProfessional,
+import { graphql } from '~/typedefs/client'
+import type {
+    HealthcareProfessional,
     MutationDeleteHealthcareProfessionalArgs,
-    MutationUpdateHealthcareProfessionalArgs } from '~/typedefs/gqlTypes'
+    MutationUpdateHealthcareProfessionalArgs
+} from '~/typedefs/gqlTypes'
 import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql'
 
 export const useHealthcareProfessionalsStore = defineStore(
     'healthcareProfessionalsStore',
     () => {
         const healthcareProfessionalsData: Ref<HealthcareProfessional[]>
-        = ref([])
+            = ref([])
         const selectedHealthcareProfessionalId: Ref<string> = ref('')
 
         async function getHealthcareProfessionals() {
@@ -80,7 +82,7 @@ export async function getHealthcareProfessionalById(id: string) {
         )
 
         if (!result.healthcareProfessional) {
-            throw new Error(`The Healthcare Professional ID doesn't exist`)
+            throw new Error('The Healthcare Professional ID doesn\'t exist')
         }
         return result.healthcareProfessional
     } catch (error: unknown) {
@@ -89,29 +91,29 @@ export async function getHealthcareProfessionalById(id: string) {
     }
 }
 
-const getAllHealthcareProfessionalsData = gql`
-query Query($filters: HealthcareProfessionalSearchFilters!) {
-  healthcareProfessionals(filters: $filters) {
-    id
-    names {
-      firstName
-      middleName
-      lastName
-      locale
+const getAllHealthcareProfessionalsData = graphql(`
+query GetAllHealthcareProfessionals($filters: HealthcareProfessionalSearchFilters!) {
+    healthcareProfessionals(filters: $filters) {
+        id
+        names {
+            firstName
+            middleName
+            lastName
+            locale
+        }
+        spokenLanguages
+        degrees
+        specialties
+        acceptedInsurance
+        facilityIds
+        createdDate
+        updatedDate
     }
-    spokenLanguages
-    degrees
-    specialties
-    acceptedInsurance
-    facilityIds
-    createdDate
-    updatedDate
-  }
-}`
+}`)
 
-const getHealthcareProfessionalByIdGqlQuery = gql`
-    query HealthcareProfessionals($healthcareProfessionalId: ID!) {
-        healthcareProfessional(id: $healthcareProfessionalId) {
+const getHealthcareProfessionalByIdGqlQuery = graphql(`
+query GetHealthcareProfessional($healthcareProfessionalId: ID!) {
+    healthcareProfessional(id: $healthcareProfessionalId) {
         names {
             firstName
             lastName
@@ -119,34 +121,32 @@ const getHealthcareProfessionalByIdGqlQuery = gql`
         id
         specialties
     }
-}`
+}`)
 
-const updateHealthcareProfessionalGqlMutation = gql`
-mutation Mutation($updateHealthcareProfessionalId: ID!, $input: UpdateHealthcareProfessionalInput!) {
-  updateHealthcareProfessional(id: $updateHealthcareProfessionalId, input: $input) {
-    id
-    names {
-      firstName
-      middleName
-      lastName
-      locale
+const updateHealthcareProfessionalGqlMutation = graphql(`
+mutation UpdatedHealthcareProfessional($updateHealthcareProfessionalId: ID!, $input: UpdateHealthcareProfessionalInput!) {
+    updateHealthcareProfessional(id: $updateHealthcareProfessionalId, input: $input) {
+        id
+        names {
+            firstName
+            middleName
+            lastName
+            locale
+        }
+        spokenLanguages
+        degrees
+        specialties
+        acceptedInsurance
+        facilityIds
+        createdDate
+        updatedDate
     }
-    spokenLanguages
-    degrees
-    specialties
-    acceptedInsurance
-    facilityIds
-    createdDate
-    updatedDate
-  }
-}
-`
+}`)
 
-const deleteHealthcareProfessionalGqlMutation = gql`
-mutation Mutation($deleteHealthcareProfessionalId: ID!) {
-  deleteHealthcareProfessional(id: $deleteHealthcareProfessionalId) {
-    isSuccessful
-  }
-}
-`
+const deleteHealthcareProfessionalGqlMutation = graphql(`
+mutation DeleteHealthcareProfessional($deleteHealthcareProfessionalId: ID!) {
+    deleteHealthcareProfessional(id: $deleteHealthcareProfessionalId) {
+        isSuccessful
+    }
+}`)
 

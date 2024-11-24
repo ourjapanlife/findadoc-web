@@ -2996,7 +2996,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@parcel/watcher@npm:^2.4.1":
+"@parcel/watcher@npm:^2.4.1, @parcel/watcher@npm:^2.5.0":
   version: 2.5.0
   resolution: "@parcel/watcher@npm:2.5.0"
   dependencies:
@@ -8177,6 +8177,7 @@ __metadata:
     "@nuxt/test-utils": "npm:^3.14.3"
     "@nuxt/types": "npm:^2.18.1"
     "@nuxtjs/i18n": "npm:^8.3.3"
+    "@parcel/watcher": "npm:^2.5.0"
     "@pinia/nuxt": "npm:^0.5.2"
     "@stylistic/eslint-plugin": "npm:^2.6.1"
     "@swc/core": "npm:^1.7.6"

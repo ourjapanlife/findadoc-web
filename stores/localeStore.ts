@@ -27,7 +27,7 @@ export const useLocaleStore = defineStore('locale', () => {
         return spokenLanguages?.map(languageCode =>
             localeDisplayOptions.find(option =>
                 option.code === languageCode)?.simpleText || 'Not Specified')
-                ?? []
+              ?? []
     }
 
     return { locale, localeDisplayOptions, mvpLocaleDisplayOptions, setLocale, formatLanguages, formatLanguageCodeToSimpleText }

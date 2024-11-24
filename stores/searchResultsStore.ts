@@ -1,9 +1,9 @@
-import { gql } from 'graphql-request'
 import { defineStore } from 'pinia'
 import { ref, type Ref } from 'vue'
 import { gqlClient } from '../utils/graphql.js'
 import { useModalStore } from './modalStore'
 import { useLoadingStore } from './loadingStore.js'
+import { graphql } from '~/typedefs/client/'
 import type { Locale,
     Specialty,
     Facility,
@@ -140,7 +140,8 @@ async function queryFacilities(healthcareProfessionalIds: string[], searchCity?:
     }
 }
 
-const searchProfessionalsQuery = gql`query searchHealthcareProfessionals($filters: HealthcareProfessionalSearchFilters!) {
+const searchProfessionalsQuery = graphql(`
+query SearchHealthcareProfessionals($filters: HealthcareProfessionalSearchFilters!) {
     healthcareProfessionals(filters: $filters) {
         id
         names {
@@ -157,33 +158,33 @@ const searchProfessionalsQuery = gql`query searchHealthcareProfessionals($filter
         createdDate
         updatedDate
     }
-}`
+}`)
 
-const searchFacilitiesQuery = gql`query QueryFacilities($filters: FacilitySearchFilters!) {
+const searchFacilitiesQuery = graphql(`
+query SearchFacilities($filters: FacilitySearchFilters!) {
     facilities(filters: $filters) {
-      id
-      nameEn
-      nameJa
-      mapLatitude
-      mapLongitude
-      healthcareProfessionalIds
-      contact {
-        address {
-          addressLine1En
-          addressLine2En
-          addressLine1Ja
-          addressLine2Ja
-          cityJa
-          cityEn
-            prefectureJa
-            prefectureEn
-            postalCode
+        id
+        nameEn
+        nameJa
+        mapLatitude
+        mapLongitude
+        healthcareProfessionalIds
+        contact {
+            address {
+                addressLine1En
+                addressLine2En
+                addressLine1Ja
+                addressLine2Ja
+                cityJa
+                cityEn
+                prefectureJa
+                prefectureEn
+                postalCode
+            }
+            email
+            googleMapsUrl
+            phone
+            website
         }
-        email
-        googleMapsUrl
-        phone
-        website
-      }
     }
-  }
-  `
+}`)

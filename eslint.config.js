@@ -16,7 +16,7 @@ export default withNuxt(
             'coverage/*',
             'cypress/*',
             '.yarn/*',
-            'typedefs/gqlTypes.ts'
+            'typedefs/**'
         ]
     },
     // TypeScript files linting
@@ -113,13 +113,13 @@ export default withNuxt(
         rules: {
             //this is to support chai chaining syntax
             '@typescript-eslint/no-unused-expressions': 'off'
-        //     'cypress/no-assigning-return-values": "error",
-        //     "cypress/no-unnecessary-waiting": "error",
-        //     "cypress/assertion-before-screenshot": "warn",
-        //     "cypress/no-force": "warn",
-        //     "cypress/no-async-tests": "error",
-        //     "cypress/no-async-before": "error",
-        //     "cypress/no-pause": "error"
+            //     'cypress/no-assigning-return-values": "error",
+            //     "cypress/no-unnecessary-waiting": "error",
+            //     "cypress/assertion-before-screenshot": "warn",
+            //     "cypress/no-force": "warn",
+            //     "cypress/no-async-tests": "error",
+            //     "cypress/no-async-before": "error",
+            //     "cypress/no-pause": "error"
         }
     }
 )

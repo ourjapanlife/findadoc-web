@@ -1,7 +1,7 @@
-import { gql } from 'graphql-request'
 import { defineStore } from 'pinia'
 import { type Ref, ref } from 'vue'
 import { gqlClient, graphQLClientRequestWithRetry } from '../utils/graphql.js'
+import { graphql } from '~/typedefs/client/'
 import type { ServerResponse } from '~/typedefs/serverResponse.js'
 import type { Mutation, MutationCreateSubmissionArgs } from '~/typedefs/gqlTypes'
 
@@ -23,8 +23,9 @@ export const useSubmissionStore = defineStore('submissionStore', () => {
         submissionCompleted }
 })
 
-const createSubmissionMutation = gql`mutation CreateSubmission($input: CreateSubmissionInput!) {
+const createSubmissionMutation = graphql(`
+mutation CreateSubmission($input: CreateSubmissionInput!) {
     createSubmission(input: $input) {
         id
     }
-}`
+}`)

@@ -1,7 +1,7 @@
-import { gql } from 'graphql-request'
 import { defineStore } from 'pinia'
 import { ref, type Ref } from 'vue'
 import type { Maybe } from 'graphql/jsutils/Maybe'
+import { graphql } from '~/typedefs/client'
 import type { Submission, MutationUpdateSubmissionArgs, Mutation } from '~/typedefs/gqlTypes.js'
 import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql.js'
 import type { ServerError, ServerResponse } from '~/typedefs/serverResponse'
@@ -182,112 +182,112 @@ async function querySubmissions() {
     }
 }
 
-const getSubmissionsGqlQuery = gql`
-   query Submissions($filters: SubmissionSearchFilters!) {
-  submissions(filters: $filters) {
-    id
-    googleMapsUrl
-    healthcareProfessionalName
-    spokenLanguages
-    facility {
-      id
-      mapLatitude
-      mapLongitude
-      nameEn
-      nameJa
-      contact {
+const getSubmissionsGqlQuery = graphql(`
+query GetAllSubmissions($filters: SubmissionSearchFilters!) {
+    submissions(filters: $filters) {
+        id
         googleMapsUrl
-        email
-        phone
-        website
-        address {
-          postalCode
-          prefectureEn
-          cityEn
-          addressLine1En
-          addressLine2En
-          prefectureJa
-          cityJa
-          addressLine1Ja
-          addressLine2Ja
+        healthcareProfessionalName
+        spokenLanguages
+        facility {
+            id
+            mapLatitude
+            mapLongitude
+            nameEn
+            nameJa
+            contact {
+                googleMapsUrl
+                email
+                phone
+                website
+                address {
+                    postalCode
+                    prefectureEn
+                    cityEn
+                    addressLine1En
+                    addressLine2En
+                    prefectureJa
+                    cityJa
+                    addressLine1Ja
+                    addressLine2Ja
+                }
+            }
+            healthcareProfessionalIds
         }
-      }
-      healthcareProfessionalIds
+        healthcareProfessionals {
+            id
+            names {
+                firstName
+                middleName
+                lastName
+                locale
+            }
+            spokenLanguages
+            degrees
+            specialties
+            acceptedInsurance
+            facilityIds
+        }
+        isUnderReview
+        isApproved
+        isRejected
+        createdDate
+        updatedDate
+        notes
     }
-    healthcareProfessionals {
-      id
-      names {
-        firstName
-        middleName
-        lastName
-        locale
-      }
-      spokenLanguages
-      degrees
-      specialties
-      acceptedInsurance
-      facilityIds
-    }
-    isUnderReview
-    isApproved
-    isRejected
-    createdDate
-    updatedDate
-    notes
-  }
-}`
+}`)
 
-const updateFacilitySubmissionGqlMutation = gql`
-mutation Mutation($id: ID!, $input: UpdateSubmissionInput!) {
-  updateSubmission(id: $id, input: $input) {
-    id
-    googleMapsUrl
-    healthcareProfessionalName
-    spokenLanguages
-    facility {
-      id
-      nameEn
-      nameJa
-      contact {
+const updateFacilitySubmissionGqlMutation = graphql(`
+mutation UpdatedFacilitySubmission($id: ID!, $input: UpdateSubmissionInput!) {
+    updateSubmission(id: $id, input: $input) {
+        id
         googleMapsUrl
-        email
-        phone
-        website
-        address {
-          postalCode
-          prefectureEn
-          cityEn
-          addressLine1En
-          addressLine2En
-          prefectureJa
-          cityJa
-          addressLine1Ja
-          addressLine2Ja
+        healthcareProfessionalName
+        spokenLanguages
+        facility {
+            id
+            nameEn
+            nameJa
+            contact {
+                googleMapsUrl
+                email
+                phone
+                website
+                address {
+                    postalCode
+                    prefectureEn
+                    cityEn
+                    addressLine1En
+                    addressLine2En
+                    prefectureJa
+                    cityJa
+                    addressLine1Ja
+                    addressLine2Ja
+                }
+            }
+            healthcareProfessionalIds
+            mapLatitude
+            mapLongitude
         }
-      }
-      healthcareProfessionalIds
-      mapLatitude
-      mapLongitude
+        healthcareProfessionals {
+            id
+            names {
+                firstName
+                middleName
+                lastName
+                locale
+            }
+            spokenLanguages
+            degrees
+            specialties
+            acceptedInsurance
+            facilityIds
+        }
+        isUnderReview
+        isApproved
+        isRejected
+        createdDate
+        updatedDate
+        notes
     }
-    healthcareProfessionals {
-      id
-      names {
-        firstName
-        middleName
-        lastName
-        locale
-      }
-      spokenLanguages
-      degrees
-      specialties
-      acceptedInsurance
-      facilityIds
-    }
-    isUnderReview
-    isApproved
-    isRejected
-    createdDate
-    updatedDate
-    notes
-  }
-}`
+}`)
