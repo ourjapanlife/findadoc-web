@@ -1,10 +1,11 @@
-export { }
-
-declare global {
-    namespace Cypress {
-        interface Chainable {
-            isInViewport(args?: string): Chainable<JQuery<HTMLElement>>
-            isNotInViewport(args?: string): Chainable<JQuery<HTMLElement>>
-        }
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/*
+Reference:
+https://github.com/cypress-io/cypress-example-todomvc#cypress-intellisense
+*/
+declare namespace Cypress {
+    interface Chainable<Subject> {
+        moderationLogin(): Chainable<unknown>
+        getElement(testId: string): Chainable<unknown>
     }
 }
