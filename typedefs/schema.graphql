@@ -1,0 +1,394 @@
+enum ActionType {
+  CREATE
+  DELETE
+  UPDATE
+}
+
+type AuditLog {
+  actionType: ActionType!
+  id: ID!
+  newValue: String!
+  objectType: ObjectType!
+  oldValue: String
+  schemaVersion: SchemaVersion!
+  updatedBy: String!
+  updatedDate: String!
+}
+
+type Contact {
+  address: PhysicalAddress!
+  email: String
+  googleMapsUrl: String!
+  phone: String!
+  website: String
+}
+
+input ContactInput {
+  address: PhysicalAddressInput!
+  email: String
+  googleMapsUrl: String!
+  phone: String!
+  website: String
+}
+
+input CreateFacilityInput {
+  contact: ContactInput!
+  healthcareProfessionalIds: [ID!]
+  mapLatitude: Float!
+  mapLongitude: Float!
+  nameEn: String!
+  nameJa: String!
+}
+
+input CreateHealthcareProfessionalInput {
+  acceptedInsurance: [Insurance!]
+  degrees: [Degree!]
+  facilityIds: [ID!]!
+  names: [LocalizedNameInput!]!
+  specialties: [Specialty!]
+  spokenLanguages: [Locale!]
+}
+
+input CreateSubmissionInput {
+  googleMapsUrl: String
+  healthcareProfessionalName: String
+  notes: String
+  spokenLanguages: [Locale!]
+}
+
+enum Degree {
+  CNM
+  DC
+  DDS
+  DMD
+  DNP
+  DO
+  DPM
+  DPT
+  DSW
+  DSc
+  DVM
+  EdD
+  MD
+  MPH
+  NP
+  PA
+  PhD
+  PharmD
+  PsyD
+}
+
+type DeleteResult {
+  isSuccessful: Boolean!
+}
+
+type Facility {
+  contact: Contact!
+  createdDate: String!
+  healthcareProfessionalIds: [ID!]!
+  id: ID!
+  mapLatitude: Float!
+  mapLongitude: Float!
+  nameEn: String!
+  nameJa: String!
+  updatedDate: String!
+}
+
+input FacilitySearchFilters {
+  contact: ContactInput
+  createdDate: String
+  healthcareProfessionalIds: [String!]
+  healthcareProfessionalName: String
+  limit: Int
+  nameEn: String
+  nameJa: String
+  offset: Int
+  orderBy: [OrderBy!]
+  updatedDate: String
+}
+
+type FacilitySubmission {
+  contact: Contact
+  healthcareProfessionalIds: [ID!]!
+  id: ID
+  mapLatitude: Float
+  mapLongitude: Float
+  nameEn: String
+  nameJa: String
+}
+
+type HealthcareProfessional {
+  acceptedInsurance: [Insurance!]!
+  createdDate: String!
+  degrees: [Degree!]!
+  facilityIds: [ID!]!
+  id: ID!
+  names: [LocalizedName!]!
+  specialties: [Specialty!]!
+  spokenLanguages: [Locale!]!
+  updatedDate: String!
+}
+
+input HealthcareProfessionalSearchFilters {
+  acceptedInsurance: [Insurance!]
+  createdDate: String
+  degrees: [Degree!]
+  limit: Int
+  names: [LocalizedNameInput!]
+  offset: Int
+  orderBy: [OrderBy!]
+  specialties: [Specialty!]
+  spokenLanguages: [Locale!]
+  updatedDate: String
+}
+
+type HealthcareProfessionalSubmission {
+  acceptedInsurance: [Insurance!]
+  degrees: [Degree!]
+  facilityIds: [ID!]!
+  id: ID
+  names: [LocalizedName!]!
+  specialties: [Specialty!]
+  spokenLanguages: [Locale!]!
+}
+
+enum Insurance {
+  INSURANCE_NOT_ACCEPTED
+  INTERNATIONAL_HEALTH_INSURANCE
+  JAPANESE_HEALTH_INSURANCE
+  UNINSURED
+}
+
+enum Locale {
+  ak_GH
+  am_ET
+  ar_AE
+  bm_ML
+  bn_BD
+  bs_BA
+  ca_ES
+  chr_US
+  cs_CZ
+  cy_GB
+  da_DK
+  de_DE
+  ee_GH
+  el_GR
+  en_US
+  es_ES
+  et_EE
+  fa_AF
+  fi_FI
+  fr_FR
+  guz_KE
+  he_IL
+  hi_IN
+  hr_HR
+  hu_HU
+  hy_AM
+  id_ID
+  ig_NG
+  is_IS
+  it_IT
+  ja_JP
+  kab_DZ
+  km_KH
+  kn_IN
+  ko_KR
+  lag_TZ
+  lg_UG
+  lv_LV
+  nb_NO
+  ne_NP
+  nl_BE
+  pl_PL
+  pt_BR
+  ru_RU
+  si_LK
+  sq_AL
+  sr_Cyrl
+  sw_KE
+  th_TH
+  tl_PH
+  tr_TR
+  und
+  vi_VN
+  zh_CN
+  zh_HK
+  zh_TW
+}
+
+type LocalizedName {
+  firstName: String!
+  lastName: String!
+  locale: Locale!
+  middleName: String
+}
+
+input LocalizedNameInput {
+  firstName: String!
+  lastName: String!
+  locale: Locale!
+  middleName: String
+}
+
+type Mutation {
+  createFacility(input: CreateFacilityInput!): Facility
+  createHealthcareProfessional(input: CreateHealthcareProfessionalInput!): HealthcareProfessional
+  createSubmission(input: CreateSubmissionInput!): Submission
+  deleteFacility(id: ID!): DeleteResult
+  deleteHealthcareProfessional(id: ID!): DeleteResult
+  deleteSubmission(id: ID!): DeleteResult
+  updateFacility(id: ID!, input: UpdateFacilityInput!): Facility
+  updateHealthcareProfessional(id: ID!, input: UpdateHealthcareProfessionalInput!): HealthcareProfessional
+  updateSubmission(id: ID!, input: UpdateSubmissionInput!): Submission
+}
+
+enum ObjectType {
+  Facility
+  HealthcareProfessional
+  Submission
+}
+
+input OrderBy {
+  fieldToOrder: String!
+  orderDirection: OrderDirection!
+}
+
+enum OrderDirection {
+  asc
+  desc
+}
+
+type PhysicalAddress {
+  addressLine1En: String!
+  addressLine1Ja: String!
+  addressLine2En: String!
+  addressLine2Ja: String!
+  cityEn: String!
+  cityJa: String!
+  postalCode: String!
+  prefectureEn: String!
+  prefectureJa: String!
+}
+
+input PhysicalAddressInput {
+  addressLine1En: String!
+  addressLine1Ja: String!
+  addressLine2En: String!
+  addressLine2Ja: String!
+  cityEn: String!
+  cityJa: String!
+  postalCode: String!
+  prefectureEn: String!
+  prefectureJa: String!
+}
+
+type Query {
+  auditLog(id: ID): AuditLog
+  facilities(filters: FacilitySearchFilters!): [Facility]
+  facility(id: ID!): Facility
+  healthcareProfessional(id: ID!): HealthcareProfessional
+  healthcareProfessionals(filters: HealthcareProfessionalSearchFilters!): [HealthcareProfessional]
+  submission(id: ID!): Submission
+  submissions(filters: SubmissionSearchFilters!): [Submission]
+}
+
+input Relationship {
+  action: RelationshipAction!
+  otherEntityId: ID!
+}
+
+enum RelationshipAction {
+  CREATE
+  DELETE
+  UPDATE
+}
+
+enum SchemaVersion {
+  V1
+}
+
+enum Specialty {
+  ALLERGY_AND_IMMUNOLOGY
+  ANESTHESIOLOGY
+  DERMATOLOGY
+  DIAGNOSTIC_RADIOLOGY
+  EMERGENCY_MEDICINE
+  FAMILY_MEDICINE
+  GENERAL_MEDICINE
+  INFECTIOUS_DISEASES
+  INTERNAL_MEDICINE
+  MEDICAL_GENETICS
+  NEUROLOGY
+  NUCLEAR_MEDICINE
+  OBSTETRICS_AND_GYNECOLOGY
+  OPHTHALMOLOGY
+  PATHOLOGY
+  PEDIATRICS
+  PHYSICAL_MEDICINE_AND_REHABILITATION
+  PREVENTIVE_MEDICINE
+  PSYCHIATRY
+  RADIATION_ONCOLOGY
+  SURGERY
+  UROLOGY
+}
+
+type Submission {
+  createdDate: String!
+  facility: FacilitySubmission
+  googleMapsUrl: String!
+  healthcareProfessionalName: String!
+  healthcareProfessionals: [HealthcareProfessionalSubmission!]
+  id: ID!
+  isApproved: Boolean!
+  isRejected: Boolean!
+  isUnderReview: Boolean!
+  notes: String
+  spokenLanguages: [Locale!]!
+  updatedDate: String!
+}
+
+input SubmissionSearchFilters {
+  createdDate: String
+  googleMapsUrl: String
+  healthcareProfessionalName: String
+  isApproved: Boolean
+  isRejected: Boolean
+  isUnderReview: Boolean
+  limit: Int
+  offset: Int
+  orderBy: [OrderBy!]
+  spokenLanguages: [Locale!]
+  updatedDate: String
+}
+
+input UpdateFacilityInput {
+  contact: ContactInput
+  healthcareProfessionalIds: [Relationship!]
+  mapLatitude: Float
+  mapLongitude: Float
+  nameEn: String
+  nameJa: String
+}
+
+input UpdateHealthcareProfessionalInput {
+  acceptedInsurance: [Insurance!]
+  degrees: [Degree!]
+  facilityIds: [Relationship!]
+  names: [LocalizedNameInput!]
+  specialties: [Specialty!]
+  spokenLanguages: [Locale!]
+}
+
+input UpdateSubmissionInput {
+  facility: CreateFacilityInput
+  googleMapsUrl: String
+  healthcareProfessionalName: String
+  healthcareProfessionals: [CreateHealthcareProfessionalInput!]
+  isApproved: Boolean
+  isRejected: Boolean
+  isUnderReview: Boolean
+  notes: String
+  spokenLanguages: [Locale!]
+}

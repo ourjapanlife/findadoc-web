@@ -45,6 +45,7 @@
         "vue3-google-map": "^0.21.0"
     },
     "devDependencies": {
+        "@0no-co/graphqlsp": "^1.12.16",
         "@faker-js/faker": "^9.2.0",
         "@graphql-codegen/cli": "^5.0.3",
         "@graphql-codegen/typescript": "^4.0.9",
@@ -66,7 +67,7 @@
         "autoprefixer": "^10.4.20",
         "cypress": "13.16.0",
         "cypress-plugin-tab": "^1.0.5",
-        "eslint": "^9.8.0",
+        "eslint": "^9.15.0",
         "eslint-plugin-cypress": "^3.4.0",
         "eslint-plugin-json": "^4.0.1",
         "eslint-plugin-vue": "^9.27.0",
@@ -79,8 +80,8 @@
         "postcss-html": "^1.7.0",
         "start-server-and-test": "^2.0.8",
         "tailwindcss": "^3.4.7",
-        "typescript": "5.5.4",
-        "typescript-eslint": "^8.0.1",
+        "typescript": "^5.7.2",
+        "typescript-eslint": "^8.15.0",
         "vite": "^5.3.5",
         "vitest": "^2.1.3",
         "webpack": "^5.93.0"

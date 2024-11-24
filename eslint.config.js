@@ -10,13 +10,12 @@ export default withNuxt(
     {
         // GLOBAL configuration
         ignores: [
-            'dist/*',
-            '.output/*',
-            '.nuxt/*',
-            'coverage/*',
-            'cypress/*',
-            '.yarn/*',
-            'typedefs/**'
+            './dist/*',
+            './.output/*',
+            './.nuxt/*',
+            './coverage/*',
+            './.yarn/*',
+            './typedefs/*'
         ]
     },
     // TypeScript files linting
@@ -31,12 +30,12 @@ export default withNuxt(
                 }
             }
         },
-        files: ['test**/*.ts', './**/*.ts', './**/*.js'],
+        files: ['./test/**/*.ts', './**/*.ts', './**/*.js'],
         plugins: {
             '@typescript-eslint': tseslint.plugin,
             '@stylistic': stylistic
         },
-        ignores: ['./typeDefs/gqlTypes.ts', './typesgeneratorconfig.ts', 'cypress/**/*'],
+        ignores: ['./typedefs/gqlTypes.ts', './typesgeneratorconfig.ts'],
         rules: {
             ...tseslint.configs.recommended,
             // TS specific rules
@@ -106,7 +105,7 @@ export default withNuxt(
                 before: true
             }
         },
-        files: ['cypress/e2e/*.ts', 'test/**/*'],
+        files: ['./test/**/*'],
         plugins: {
             cypress: pluginCypress
         },

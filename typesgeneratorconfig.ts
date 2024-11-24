@@ -4,17 +4,21 @@ const config: CodegenConfig = {
     overwrite: true,
     schema: 'https://api.findadoc.jp',
     // Add paths where GraphQL operations are
-    documents: ['components/*.vue', 'stores/*.ts'],
+    documents: ['./components/*.vue', './stores/*.ts'],
     ignoreNoDocuments: true,
     generates: {
-        'typedefs/gqlTypes.ts': {
+        './typedefs/gqlTypes.ts': {
             plugins: ['typescript', 'typescript-resolvers'],
             config: {
                 useTypeImports: true
             }
         },
+        // Generate Graphql Schema from api.findadoc
+        './typedefs/schema.graphql': {
+            plugins: ['schema-ast']
+        },
         // Generate GraphQL documents based on operations from the provided paths
-        'typedefs/client/': {
+        './typedefs/client/': {
             preset: 'client',
             config: {
                 useTypeImports: true
