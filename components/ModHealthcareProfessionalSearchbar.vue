@@ -9,7 +9,7 @@
                     v-model="searchValue"
                     type="text"
                     :placeholder="$t('modSubmissionForm.placeholderTextHealthcareProfessionalSearchbar')"
-                    class="mb-5 px-3 py-3.5 w-96 h-12 bg-secondary-bg rounded-lg border border-primary-text-muted
+                    class="px-3 py-3.5 w-96 h-12 bg-secondary-bg rounded-lg border border-primary-text-muted
                     text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
                     @input="searchHealthcareProfessionalByIdOrName"
                 >
@@ -19,16 +19,42 @@
                     class="relative right-8 top-3 w-6 h-6"
                 />
             </div>
-            <div v-show="healthcareProfessionalByIdOrName.length">
+            <div class="relative">
                 <div
-                    v-for="(healthcareProfessional, index) in healthcareProfessionalByIdOrName"
-                    :key="`${healthcareProfessional.id}-${healthcareProfessional.createdDate}-${index}`"
+                    v-show="healthcareProfessionalByIdOrName.length"
+                    class="absolute z-30"
                 >
-                    <span
-                        @click="() => addHealthcareProfessional(healthcareProfessional.id)"
+                    <div
+                        v-for="(healthcareProfessional, index) in healthcareProfessionalByIdOrName"
+                        :key="`${healthcareProfessional.id}-${healthcareProfessional.createdDate}-${index}`"
+                        :class="[
+                            'w-96 border-b border-primary-gray-bg p-4',
+                            index === healthcareProfessionalByIdOrName.length - 1 ? 'rounded-b-lg' : '',
+                        ]"
+                        class="bg-white shadow-md"
                     >
-                        {{ healthcareProfessional.id }}
-                    </span>
+                        <div
+                            class="cursor-pointer"
+                            @click="() => addHealthcareProfessional(healthcareProfessional.id)"
+                        >
+                            <div class="font-bold">
+                                <span
+                                    class="mr-1"
+                                >
+                                    {{ healthcareProfessional.names[0].lastName }}
+                                </span>
+                                <span v-show="healthcareProfessional.names[0].middleName">
+                                    {{ healthcareProfessional.names[0].lastName }}
+                                </span>
+                                <span>
+                                    {{ healthcareProfessional.names[0].firstName }}
+                                </span>
+                            </div>
+                            <span>
+                                ID: {{ healthcareProfessional.id }}
+                            </span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

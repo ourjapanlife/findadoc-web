@@ -364,6 +364,7 @@ onBeforeMount(async () => {
 
     facilityStore.initializeFacilitySectionValues(facilityStore.selectedFacilityData)
 
+    // Ensure UI updates are reflected with the autofill values
     await nextTick()
     if (healthcareProfessionalsStore.healthcareProfessionalsData
       && !healthcareProfessionalRelatedToFacilityFiltered.value.length) {
