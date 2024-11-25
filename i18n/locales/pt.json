@@ -348,7 +348,10 @@
     "delete": "Delete",
     "copyFailure": "Failed to copy ID",
     "update": "Update",
-    "facilityUpdatedSuccessfully": "Facility updated successfully"
+    "facilityUpdatedSuccessfully": "Facility updated successfully",
+    "deleteButtonText": "DELETE FOREVER",
+    "deleteConfirmationFacility": "Are you sure you want to delete the facility: {facility} , with ID: {id}?",
+    "facilityDeletedSuccessfully": "Facility deleted successfully"
   },
   "serverErrorMessages": {
     "UNAUTHENTICATED": "You do not have the authentication to do this action",
