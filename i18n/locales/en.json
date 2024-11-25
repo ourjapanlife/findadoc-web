@@ -154,8 +154,11 @@
     "modEditFacilityOrHPTopbar": {
         "copyFailure": "Failed to copy ID",
         "delete": "Delete",
+        "deleteButtonText": "DELETE FOREVER",
+        "deleteConfirmationFacility": "Are you sure you want to delete the facility: {facility} , with ID: {id}?",
         "update": "Update",
         "updateAndExit": "Update & Exit",
+        "facilityDeletedSuccessfully": "Facility deleted successfully",
         "facilityUpdatedSuccessfully": "Facility updated successfully"
     },
     "modEditSubmissionTopNav": {
