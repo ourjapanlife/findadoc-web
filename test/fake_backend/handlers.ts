@@ -1,8 +1,9 @@
 import { graphql, http, HttpResponse, passthrough } from 'msw'
+import view from './view'
 import {
-    GetAllFacilitiesDocument,
     GetAllSubmissionsDocument,
-    GetAllHealthcareProfessionalsDocument
+    CreateSubmissionDocument,
+    type CreateSubmissionMutation
 } from '~/typedefs/client/graphql'
 
 /*
@@ -21,31 +22,22 @@ HTTP: https://mswjs.io/docs/api/http
 
 const authHandler = http.post('https://findadoc.jp.auth0.com/*', async () => passthrough())
 
-const findADocApiHandler = http.post('https://api.findadoc.jp/*', async () => HttpResponse.json({ message: 'blocked' }, { status: 422 }))
+const findADocApiHandler = http.post('https://api.findadoc.jp/*', async () => HttpResponse.json({ message: 'blocked by MSW' }, { status: 422 }))
 
-const getAllSubmissionsHandler = graphql.query(GetAllSubmissionsDocument, () => HttpResponse.json({
-    data: {
-        submissions: []
-    }
-}))
+const getAllSubmissionsHandler = graphql.query(GetAllSubmissionsDocument, async ({ variables }) => {
+    const out = await view.submission.search(variables)
+    return HttpResponse.json({ data: out })
+})
 
-const getAllFacilities = graphql.query(GetAllFacilitiesDocument, () => HttpResponse.json({
-    data: {
-        facilities: []
-    }
-}))
-
-const getAllHealthcareProfessionals = graphql.query(GetAllHealthcareProfessionalsDocument, () => HttpResponse.json({
-    data: {
-        healthcareProfessionals: []
-    }
-}))
+const createSubmission = graphql.mutation(CreateSubmissionDocument, async ({ variables }) => {
+    const out: CreateSubmissionMutation = await view.submission.create(variables)
+    return HttpResponse.json({ data: out })
+})
 
 export const handlers = [
     authHandler,
     getAllSubmissionsHandler,
-    getAllFacilities,
-    getAllHealthcareProfessionals,
+    createSubmission,
     // findADocApiHandler should be last to avoid interfering with GraphQL queries
     findADocApiHandler
 ]

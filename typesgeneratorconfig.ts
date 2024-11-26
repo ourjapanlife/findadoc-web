@@ -20,6 +20,7 @@ const config: CodegenConfig = {
         // Generate GraphQL documents based on operations from the provided paths
         './typedefs/client/': {
             preset: 'client',
+            plugins: ['typescript-resolvers'],
             config: {
                 useTypeImports: true
             }

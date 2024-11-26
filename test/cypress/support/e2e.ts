@@ -36,6 +36,7 @@ import './commands'
 
 import type { StartOptions } from 'msw/browser'
 import { worker } from '~/test/fake_backend/browser'
+import routines from '~/test/fake_backend/routines'
 
 const startWorker = () => {
     Cypress.on('test:before:run', () => {
@@ -50,6 +51,7 @@ const startWorker = () => {
             }
         }
         worker.start(options)
+        routines.submission.populate.underReview(5)
     })
 
     // Disable get fetch logging for the spec run
@@ -58,5 +60,5 @@ const startWorker = () => {
     })
 }
 
-Cypress.env('FAKE_DATA') && startWorker()
+if (Cypress.env('FAKE_DATA')) startWorker()
 

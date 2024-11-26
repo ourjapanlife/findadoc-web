@@ -10,12 +10,12 @@ export default withNuxt(
     {
         // GLOBAL configuration
         ignores: [
-            './dist/*',
-            './.output/*',
-            './.nuxt/*',
-            './coverage/*',
-            './.yarn/*',
-            './typedefs/*'
+            'dist/*',
+            '.output/*',
+            '.nuxt/*',
+            'coverage/*',
+            '.yarn/*',
+            'typedefs/*'
         ]
     },
     // TypeScript files linting

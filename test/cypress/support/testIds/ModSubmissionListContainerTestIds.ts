@@ -1,0 +1,2 @@
+export type ModSubmissionListContainerTestIds =
+            'mod-submission-list-item-' | 'mod-facility-list-item-' | 'mod-healthcare-professional-list-item-' | `mod-submission-list-item-${number}` | `mod-facility-list-item-${number}` | `mod-healthcare-professional-list-item-${number}`

@@ -1,0 +1,2 @@
+export type SearchResultsListTestIds =
+            'svg-loading-icon' | 'search-results-list-container' | 'search-results-list' | 'search-result-list-item-${index}' | `search-result-list-item-${index}`

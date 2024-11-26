@@ -1,0 +1,2 @@
+export type FadeInTransitionImageTestIds =
+            'dataTestId'

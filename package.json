@@ -8,6 +8,7 @@
         "dev:localserver": "NUXT_USE_LOCAL_API=true; yarn && nuxi dev",
         "generate": "graphql-codegen --config ./typesgeneratorconfig.ts",
         "generate:watch": "yarn generate --watch",
+        "generate:cypress": "node test/cypress/support/generateTypes.js",
         "lint": "ESLINT_USE_FLAT_CONFIG=true eslint . -c eslint.config.js",
         "lint:fix": "ESLINT_USE_FLAT_CONFIG=true eslint . -c eslint.config.js --fix",
         "lint:locales": "node i18n/checkLocaleKeys.js",

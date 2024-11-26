@@ -1,0 +1,2 @@
+export type SubmissionFormTestIds =
+            'submit-heading' | 'submit-subheading' | 'submit-input-googlemaps' | 'submit-input-lastname' | 'submit-input-firstname' | 'submit-select-language1' | 'submit-select-language2' | 'submit-input-notes' | 'submit-submitbutton'

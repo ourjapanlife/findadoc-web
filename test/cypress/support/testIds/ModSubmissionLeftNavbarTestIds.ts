@@ -1,0 +1,2 @@
+export type ModSubmissionLeftNavbarTestIds =
+            'submission-form-leftnav-contact-information' | 'submission-form-leftnav-addresses' | 'submission-form-leftnav-google-maps-information' | 'submission-form-leftnav-healthcare-professional-ids' | 'submission-form-leftnav-change-log' | 'submission-form-leftnav-healthcare-professional-name' | 'submission-form-leftnav-healthcare-professional-medical-info'
