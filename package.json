@@ -52,7 +52,7 @@
         "@stylistic/eslint-plugin": "^2.6.1",
         "@swc/core": "^1.7.6",
         "@testing-library/vue": "^8.1.0",
-        "@vitejs/plugin-vue": "^5.1.2",
+        "@vitejs/plugin-vue": "^5.1.5",
         "@vitest/coverage-v8": "^2.1.3",
         "@vue/test-utils": "^2.4.6",
         "all-contributors-cli": "^6.26.1",
