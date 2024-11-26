@@ -872,9 +872,9 @@ watch(moderationSubmissionStore, newValue => {
     }
 })
 
-watch(moderationSubmissionStore, newValue => {
-    moderationSubmissionStore.filterSelectedSubmission(newValue.selectedSubmissionId)
-    initializeSubmissionFormValues(newValue.selectedSubmissionData)
+watch(() => moderationSubmissionStore.selectedSubmissionId, newValue => {
+    moderationSubmissionStore.filterSelectedSubmission(newValue)
+    initializeSubmissionFormValues(moderationSubmissionStore.selectedSubmissionData)
 })
 
 onMounted(() => {
