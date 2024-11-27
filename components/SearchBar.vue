@@ -3,6 +3,7 @@
         <div
             id="search-fields"
             class="grid-cols-3 mx-4"
+            :class="{ hidden: route.path !== '/' }"
         >
             <div class="search-specialty col-span-1 inline-block w-1/3 py-4">
                 <select
@@ -79,6 +80,7 @@
         <div
             id="search-button"
             class="flex items-center"
+            :class="{ hidden: route.path !== '/' }"
         >
             <button
                 id="searchButton"
@@ -101,6 +103,7 @@
 
 <script setup lang="ts">
 import { ref, watchEffect, type Ref } from 'vue'
+import { useRoute } from 'vue-router'
 import SVGSearchIcon from '~/assets/icons/search-icon.svg'
 import { useSearchResultsStore } from '~/stores/searchResultsStore.js'
 import { useLocationsStore } from '~/stores/locationsStore.js'
@@ -112,6 +115,7 @@ const localeStore = useLocaleStore()
 const locationsStore = useLocationsStore()
 const searchResultsStore = useSearchResultsStore()
 const specialtiesStore = useSpecialtiesStore()
+const route = useRoute()
 
 await locationsStore.fetchLocations()
 
