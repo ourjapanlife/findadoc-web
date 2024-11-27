@@ -1,9 +1,9 @@
 <template>
     <div class="flex flex-0 max-w-4xl">
         <div
+            v-show="route.path === '/'"
             id="search-fields"
             class="grid-cols-3 mx-4"
-            :class="{ hidden: route.path !== '/' }"
         >
             <div class="search-specialty col-span-1 inline-block w-1/3 py-4">
                 <select
@@ -78,9 +78,9 @@
             </div>
         </div>
         <div
+            v-show="route.path === '/'"
             id="search-button"
             class="flex items-center"
-            :class="{ hidden: route.path !== '/' }"
         >
             <button
                 id="searchButton"
