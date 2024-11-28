@@ -8,7 +8,7 @@ import { type Ref, ref } from 'vue'
  */
 export const multiSelectWithoutKeyboard = <T extends string>(
     elementOrClassSelector: string,
-    arrayToUpdate: Ref<Array<T>> = ref([]),
+    arrayToUpdate: Ref<Array<T>> | Array<T> = ref([]),
     extractOption: (option: HTMLOptionElement) => T
 ) => {
     const selectElement = document.querySelector<HTMLSelectElement>(elementOrClassSelector)
@@ -28,13 +28,14 @@ export const multiSelectWithoutKeyboard = <T extends string>(
         target.selected = !target.selected
 
         const value = extractOption(target)
-        const index = arrayToUpdate.value.indexOf(value)
+        if (arrayToUpdate.value) {
+            const index = arrayToUpdate.value.indexOf(value)
+            if (index === -1) {
+                arrayToUpdate.value.push(value)
+                return
+            }
 
-        if (index === -1) {
-            arrayToUpdate.value.push(value)
-            return
+            arrayToUpdate.value.splice(index, 1)
         }
-
-        arrayToUpdate.value.splice(index, 1)
     }, false)
 }
