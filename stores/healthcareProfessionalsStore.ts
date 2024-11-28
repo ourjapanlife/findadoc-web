@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { ref, type Ref } from 'vue'
+import { reactive, ref, type Ref } from 'vue'
 import { gql } from 'graphql-request'
 import type { HealthcareProfessional,
     MutationDeleteHealthcareProfessionalArgs,
@@ -20,17 +20,17 @@ export const useHealthcareProfessionalsStore = defineStore(
         const healthcareProfessionalsData: Ref<HealthcareProfessional[]>
         = ref([])
         const selectedHealthcareProfessionalId: Ref<string> = ref('')
-        const healthcareProfessionalSectionFields = {
-            healthcareProfessionalNameArray: ref([]) as Ref<Array<LocalizedNameInput>>,
-            localizedFirstName: ref('') as Ref<string>,
-            localizedLastName: ref('') as Ref<string>,
-            localizedMiddleName: ref('') as Ref<string>,
-            nameLocale: ref(Locale.EnUs) as Ref<Locale>,
-            healthcareProfessionalAcceptedInsurances: ref([]) as Ref<Array<Insurance>>,
-            healthcareProfessionalDegrees: ref([]) as Ref<Array<Degree>>,
-            healthcareProfessionalSpecialties: ref([]) as Ref<Array<Specialty>>,
-            healthcareProfessionalLocales: ref([]) as Ref<Array<Locale>>
-        } as { [key: string]: Ref }
+        const healthcareProfessionalSectionFields = reactive({
+            healthcareProfessionalNameArray: [] as Array<LocalizedNameInput>,
+            localizedFirstName: '' as string,
+            localizedLastName: '' as string,
+            localizedMiddleName: '' as string,
+            nameLocale: Locale.EnUs as Locale,
+            healthcareProfessionalAcceptedInsurances: [] as Array<Insurance>,
+            healthcareProfessionalDegrees: [] as Array<Degree>,
+            healthcareProfessionalSpecialties: [] as Array<Specialty>,
+            healthcareProfessionalLocales: [] as Array<Locale>
+        })
 
         async function getHealthcareProfessionals() {
             const healthcareProfessionalResults = await queryHealthcareProfessionals()

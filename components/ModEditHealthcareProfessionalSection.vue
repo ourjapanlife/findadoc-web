@@ -38,7 +38,7 @@
             </label>
             <select
                 id="name_locales"
-                v-model="healthcareProfessionalsStore.healthcareProfessionalSectionFields.locale"
+                v-model="healthcareProfessionalsStore.healthcareProfessionalSectionFields.nameLocale"
                 data-testid="mod-healthcare-professional-section-name-locale"
                 name="Name Locales"
                 class="mb-5 px-3 py-3.5 w-96 h-12 bg-secondary-bg rounded-lg border border-primary-text-muted
@@ -221,6 +221,8 @@ const sectionFields = healthcareProfessionalsStore.healthcareProfessionalSection
 const professionalNameArray = sectionFields.healthcareProfessionalNameArray
 const isEditSubmissionScreen = moderationScreenStore.activeScreen === ModerationScreen.EditSubmission
 
+console.log()
+
 const insuranceList = Object.values(Insurance) as Insurance[]
 const selectedInsurance = (option: HTMLOptionElement): Insurance => option.value as Insurance
 const degreeList = Object.values(Degree) as Degree[]
@@ -232,26 +234,26 @@ const selectedLocale = (option: HTMLOptionElement): Locale => option.value as Lo
 
 const handleLocalizedName = () => {
     const localizedNameToAdd: LocalizedNameInput = {
-        firstName: sectionFields.localizedFirstName.value,
-        lastName: sectionFields.localizedLastName.value,
-        locale: sectionFields.nameLocale.value || Locale.EnUs,
-        middleName: sectionFields.localizedMiddleName.value
+        firstName: sectionFields.localizedFirstName,
+        lastName: sectionFields.localizedLastName,
+        locale: sectionFields.nameLocale || Locale.EnUs,
+        middleName: sectionFields.localizedMiddleName
     }
 
     if (localizedNameToAdd.firstName
       && localizedNameToAdd.lastName
       && localizedNameToAdd.firstName.length > 1
       && localizedNameToAdd.lastName.length > 1) {
-        professionalNameArray.value.push(localizedNameToAdd)
-        sectionFields.localizedFirstName.value = ''
-        sectionFields.localizedLastName.value = ''
-        sectionFields.localizedMiddleName.value = ''
-        sectionFields.nameLocale.value = Locale.EnUs
+        professionalNameArray.push(localizedNameToAdd)
+        sectionFields.localizedFirstName = ''
+        sectionFields.localizedLastName = ''
+        sectionFields.localizedMiddleName = ''
+        sectionFields.nameLocale = Locale.EnUs
     }
 }
 
 const handleRemoveHealthcareProfessionalName = (index: number) => {
-    professionalNameArray.value.splice(index, 1)
+    professionalNameArray.splice(index, 1)
 }
 
 onMounted(() => {
