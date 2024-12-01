@@ -202,12 +202,20 @@
                     {{ locale }}
                 </option>
             </select>
+            <h2
+                class="mod-healthcare-professional-section
+                 my-3.5 text-start text-primary-text text-2xl font-bold font-sans leading-normal"
+            >
+                {{ $t("modHealthcareProfessionalSection.facilities") }}
+            </h2>
+            <ModFacilitySearchbar />
         </div>
     </div>
 </template>
 
 <script lang="ts" setup>
 import { onMounted, reactive, ref } from 'vue'
+import ModFacilitySearchbar from './ModFacilitySearchbar.vue'
 import { ModerationScreen, useModerationScreenStore } from '~/stores/moderationScreenStore'
 import { Locale, type LocalizedNameInput, Insurance, Degree, Specialty } from '~/typedefs/gqlTypes'
 import { multiSelectWithoutKeyboard } from '~/utils/multiSelectWithoutKeyboard'
