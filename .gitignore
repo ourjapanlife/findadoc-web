@@ -21,3 +21,4 @@ cypress/videos
 *.DS_Store
 
 .env
+.vscode
