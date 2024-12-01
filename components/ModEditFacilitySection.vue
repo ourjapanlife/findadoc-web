@@ -233,7 +233,7 @@
                 {{ $t('modFacilitySection.healthcareProfessionalToAdd') }}
             </span>
             <span
-                v-show="!facilityStore.healthProfessionalsRelationsForDisplay"
+                v-show="!facilityStore.healthProfessionalsRelationsForDisplay.length"
                 class="font-semibold"
             >- {{ $t('modFacilitySection.noHPSelected') }}
             </span>
@@ -302,13 +302,17 @@ const healthcareProfessionalsRelatedToFacility: Ref<string[]>
 = ref([])
 const healthcareProfessionalRelatedToFacilityFiltered: Ref<HealthcareProfessional[]> = ref([])
 
-const setHealthcareProfessionalsRelatedToFacility = () => {
-    healthcareProfessionalRelatedToFacilityFiltered.value = healthcareProfessionalsRelatedToFacility.value.flatMap(
-        healthcareProfessionalId =>
-            healthcareProfessionalsStore.healthcareProfessionalsData.find(
-                healthcareProfessional => healthcareProfessional.id === healthcareProfessionalId
-            ) || []
-    )
+const syncHealthcareProfessionalsRelatedToFacility = () => {
+    if (healthcareProfessionalsStore.healthcareProfessionalsData
+      && !healthcareProfessionalRelatedToFacilityFiltered.value.length) {
+        healthcareProfessionalRelatedToFacilityFiltered.value = healthcareProfessionalsRelatedToFacility.value.flatMap(
+            healthcareProfessionalId =>
+                healthcareProfessionalsStore.healthcareProfessionalsData.find(
+                    healthcareProfessional => healthcareProfessional.id === healthcareProfessionalId
+
+                ) || []
+        )
+    }
 }
 
 const listPrefectureJapanEn: Ref<string[]> = ref([
@@ -347,10 +351,12 @@ onBeforeMount(async () => {
         return
     }
 
+    // This will fetch the facilities if sent here by link or a page is refreshed
     if (!facilityStore.facilityData.length) {
         await facilityStore.getFacilities()
     }
 
+    // This will fetch the healthcare professionals if sent here by link or a page is refreshed
     if (!healthcareProfessionalsStore.healthcareProfessionalsData) {
         await healthcareProfessionalsStore.getHealthcareProfessionals()
     }
@@ -366,10 +372,8 @@ onBeforeMount(async () => {
 
     // Ensure UI updates are reflected with the autofill values
     await nextTick()
-    if (healthcareProfessionalsStore.healthcareProfessionalsData
-      && !healthcareProfessionalRelatedToFacilityFiltered.value.length) {
-        setHealthcareProfessionalsRelatedToFacility()
-    }
+
+    syncHealthcareProfessionalsRelatedToFacility()
 
     isFacilitySectionInitialized.value = true
 
@@ -388,7 +392,7 @@ watch(
     ],
     ([healthcareData, relatedFacilityIds]) => {
         if (healthcareData && relatedFacilityIds) {
-            setHealthcareProfessionalsRelatedToFacility()
+            syncHealthcareProfessionalsRelatedToFacility()
         }
         if (facilityStore.selectedFacilityData) {
             healthcareProfessionalsRelatedToFacility.value
@@ -400,6 +404,6 @@ watch(
 
 watch(() => facilityStore.facilitySectionFields.healthcareProfessionalIds, newValue => {
     healthcareProfessionalsRelatedToFacility.value = newValue
-    setHealthcareProfessionalsRelatedToFacility()
+    syncHealthcareProfessionalsRelatedToFacility()
 })
 </script>

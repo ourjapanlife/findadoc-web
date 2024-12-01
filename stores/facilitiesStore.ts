@@ -100,7 +100,7 @@ export const useFacilitiesStore = defineStore(
                     },
                     healthcareProfessionalIds: facilitySectionFields.healthProfessionalsRelations.length > 0
                         ? facilitySectionFields.healthProfessionalsRelations
-                        : [],
+                        : undefined,
                     mapLatitude: parseFloat(facilitySectionFields.mapLatitude),
                     mapLongitude: parseFloat(facilitySectionFields.mapLongitude),
                     nameEn: facilitySectionFields.nameEn,

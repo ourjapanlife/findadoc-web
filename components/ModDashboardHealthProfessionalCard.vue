@@ -14,10 +14,18 @@
             <div v-if="moderationScreenStore.activeScreen === ModerationScreen.EditFacility">
                 <div class="flex flex-col h-full w-64 pl-1 mb-1">
                     <div class="flex font-bold pt-2">
-                        <span>{{ healthcareProfessional.names[0].lastName }}</span>
-                        <span class="mx-2">{{ healthcareProfessional.names[0].firstName }}</span>
-                        <span v-show="healthcareProfessional.names[0].middleName">
-                            {{ healthcareProfessional.names[0].middleName }}
+                        <span>{{ healthcareProfessionalsStore
+                            .displayChosenLocaleForHealthcareProfessional(healthcareProfessional).lastName }}</span>
+                        <span class="mx-2">
+                            {{ healthcareProfessionalsStore
+                                .displayChosenLocaleForHealthcareProfessional(healthcareProfessional).firstName }}
+                        </span>
+                        <span
+                            v-show="healthcareProfessionalsStore
+                                .displayChosenLocaleForHealthcareProfessional(healthcareProfessional).middleName"
+                        >
+                            {{ healthcareProfessionalsStore
+                                .displayChosenLocaleForHealthcareProfessional(healthcareProfessional).middleName }}
                         </span>
                     </div>
                     <span>
@@ -94,12 +102,14 @@ import SVGProfileIcon from '~/assets/icons/profile-icon.svg'
 import SVGUndoIcon from '~/assets/icons/undo-icon.svg'
 import { useLocaleStore } from '~/stores/localeStore'
 import { useFacilitiesStore } from '~/stores/facilitiesStore'
+import { useHealthcareProfessionalsStore } from '~/stores/healthcareProfessionalsStore'
 import { ModerationScreen, useModerationScreenStore } from '~/stores/moderationScreenStore'
 import { RelationshipAction, type HealthcareProfessional, type Relationship } from '~/typedefs/gqlTypes'
 
 const localeStore = useLocaleStore()
 const facilitiesStore = useFacilitiesStore()
 const moderationScreenStore = useModerationScreenStore()
+const healthcareProfessionalsStore = useHealthcareProfessionalsStore()
 
 // This checks whether an existing healthcare professional has been added for removal
 const isHealthcareProfessionalReadyForRemoval = (id: string) =>

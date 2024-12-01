@@ -5,10 +5,13 @@ import type { HealthcareProfessional,
     MutationDeleteHealthcareProfessionalArgs,
     MutationUpdateHealthcareProfessionalArgs } from '~/typedefs/gqlTypes'
 import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql'
+import { useLocaleStore } from '~/stores/localeStore'
 
 export const useHealthcareProfessionalsStore = defineStore(
     'healthcareProfessionalsStore',
     () => {
+        const localeStore = useLocaleStore()
+
         const healthcareProfessionalsData: Ref<HealthcareProfessional[]>
         = ref([])
         const selectedHealthcareProfessionalId: Ref<string> = ref('')
@@ -42,12 +45,20 @@ export const useHealthcareProfessionalsStore = defineStore(
             }
         }
 
+        const displayChosenLocaleForHealthcareProfessional = (healthcareProfessional: HealthcareProfessional) => {
+            // find the name of the healthcare professional from the chosen display locale
+            const nameFromChosenLocaleDisplay = healthcareProfessional.names.find(name => name.locale === localeStore.locale.code)
+            // return the name of the healthcare professional of chosen locale or default to the 0 indexed recorded name
+            return nameFromChosenLocaleDisplay ? nameFromChosenLocaleDisplay : healthcareProfessional.names[0]
+        }
+
         return {
             getHealthcareProfessionals,
             healthcareProfessionalsData,
             updateHealthcareProfessional,
             selectedHealthcareProfessionalId,
-            deleteHealthcareProfessional
+            deleteHealthcareProfessional,
+            displayChosenLocaleForHealthcareProfessional
         }
     }
 )

@@ -167,6 +167,7 @@ const updateFacilityOrHealthcareProfessional = async () => {
             return response
         }
 
+        // This updates the facility section values with the data saved in our db
         facilitiesStore.initializeFacilitySectionValues(response.data as Facility)
         toast.success(t('modEditFacilityOrHPTopbar.facilityUpdatedSuccessfully'))
         return response
@@ -177,7 +178,8 @@ const updateFacilityOrHealthcareProfessionalAndExit = async () => {
     const response = await updateFacilityOrHealthcareProfessional()
 
     if (response && response.errors?.length) {
-        return
+        handleServerErrorMessaging(response.errors, toast, t)
+        return response
     }
 
     router.push('/moderation')

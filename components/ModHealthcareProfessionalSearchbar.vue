@@ -31,7 +31,7 @@
                             'w-96 border-b border-primary-gray-bg p-4',
                             index === healthcareProfessionalByIdOrName.length - 1 ? 'rounded-b-lg' : '',
                         ]"
-                        class="bg-white shadow-md"
+                        class="bg-white shadow-md  hover:bg-currentColor"
                     >
                         <div
                             class="cursor-pointer"
@@ -41,13 +41,20 @@
                                 <span
                                     class="mr-1"
                                 >
-                                    {{ healthcareProfessional.names[0].lastName }}
+                                    {{ healthcareProfessionalsStore
+                                        .displayChosenLocaleForHealthcareProfessional(healthcareProfessional).lastName }}
                                 </span>
-                                <span v-show="healthcareProfessional.names[0].middleName">
-                                    {{ healthcareProfessional.names[0].lastName }}
+                                <span
+                                    v-show="healthcareProfessionalsStore
+                                        .displayChosenLocaleForHealthcareProfessional(healthcareProfessional).middleName"
+                                    class="mr-1"
+                                >
+                                    {{ healthcareProfessionalsStore
+                                        .displayChosenLocaleForHealthcareProfessional(healthcareProfessional).middleName }}
                                 </span>
                                 <span>
-                                    {{ healthcareProfessional.names[0].firstName }}
+                                    {{ healthcareProfessionalsStore
+                                        .displayChosenLocaleForHealthcareProfessional(healthcareProfessional).firstName }}
                                 </span>
                             </div>
                             <span>
