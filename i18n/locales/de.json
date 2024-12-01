@@ -173,7 +173,8 @@
     "selectInsurances": "Accepted Insurances",
     "selectSpecialties": "Specialties",
     "selectDegrees": "Degrees",
-    "selectLocales": "Select Locales Spoken"
+    "selectLocales": "Select Locales Spoken",
+    "facilities": "Facilities"
   },
   "modSubmissionForm": {
     "addresses": "Adressen",
@@ -358,5 +359,9 @@
     "BAD_USER_INPUT": "One or more of the inputs entered is invalid, please try again",
     "genericErrorMessage": "There was an error submitting your form, please try again",
     "errorCodeMessagingNeeded": "The server error code does not have a message for the user. Please add one."
+  },
+  "modFacilitySearchbar": {
+    "placeholderTextFacilitySearchbar": "Search by name or Id add a facility",
+    "noFacilitiesWereFound": "No facilities were found"
   }
 }

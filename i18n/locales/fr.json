@@ -342,6 +342,10 @@
     "genericErrorMessage": "There was an error submitting your form, please try again",
     "errorCodeMessagingNeeded": "The server error code does not have a message for the user. Please add one."
   },
+  "modFacilitySearchbar": {
+    "placeholderTextFacilitySearchbar": "Search by name or Id add a facility",
+    "noFacilitiesWereFound": "No facilities were found"
+  },
   "modHealthcareProfessionalSection": {
     "addHealthCareProfessionalLocaleName": "Add Name by Locale",
     "healthcareProfessionalHeading": "Healthcare Professional Information",
@@ -361,6 +365,7 @@
     "selectDegrees": "Degrees",
     "selectInsurances": "Accepted Insurances",
     "selectLocales": "Select Locales Spoken",
-    "selectSpecialties": "Specialties"
+    "selectSpecialties": "Specialties",
+    "facilities": "Facilities"
   }
 }
