@@ -14,6 +14,7 @@ export const useFacilitiesStore = defineStore(
         const facilityData: Ref<Facility[]> = ref([])
         const selectedFacilityId: Ref<string> = ref('')
         const selectedFacilityData: Ref<Facility | undefined> = ref()
+        // This reactive object is used to share data changes of the updated facility or submission across the components
         const facilitySectionFields = reactive({
             // contactFields
             nameEn: '',
