@@ -70,7 +70,7 @@
         "postcss": "^8.4.41",
         "postcss-html": "^1.7.0",
         "start-server-and-test": "^2.0.8",
-        "tailwindcss": "^3.4.7",
+        "tailwindcss": "^3.4.15",
         "typescript": "5.5.4",
         "typescript-eslint": "^8.0.1",
         "vite": "^5.3.5",
