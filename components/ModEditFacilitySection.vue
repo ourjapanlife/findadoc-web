@@ -403,7 +403,11 @@ watch(
 )
 
 watch(() => facilityStore.facilitySectionFields.healthcareProfessionalIds, newValue => {
+    // Set the filtered related ones back to an empty array to sync upon update
+    healthcareProfessionalRelatedToFacilityFiltered.value = []
+    // Set the professionals related to the facility based on the updated value
     healthcareProfessionalsRelatedToFacility.value = newValue
+    // Sync the list to the updated values
     syncHealthcareProfessionalsRelatedToFacility()
 })
 </script>

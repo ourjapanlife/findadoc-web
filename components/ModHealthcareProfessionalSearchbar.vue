@@ -69,7 +69,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, type Ref } from 'vue'
+import { ref, watch, type Ref } from 'vue'
 import SVGLookingGlass from '~/assets/icons/looking-glass.svg'
 import { RelationshipAction, type HealthcareProfessional } from '~/typedefs/gqlTypes'
 import { useHealthcareProfessionalsStore } from '~/stores/healthcareProfessionalsStore'
@@ -90,7 +90,7 @@ const addHealthcareProfessional = (id: string) => {
         const foundProfessionalAlreadyPartOfFacility
         = facilitiesStore.facilitySectionFields.healthProfessionalsRelations
             .find(relation => relation.otherEntityId === id)
-            || facilitiesStore.selectedFacilityData?.healthcareProfessionalIds.includes(id)
+            || facilitiesStore.facilitySectionFields.healthcareProfessionalIds.includes(id)
 
         // Return out of the function if already added
         if (foundProfessionalAlreadyPartOfFacility) return
@@ -150,4 +150,10 @@ function searchHealthcareProfessionalByIdOrName() {
 
     healthcareProfessionalByIdOrName.value = filteredHealthcareProfessionalIds
 }
+
+watch(() => facilitiesStore.facilitySectionFields.healthcareProfessionalIds, newValue => {
+    if (newValue) {
+        facilitiesStore.healthProfessionalsRelationsForDisplay = []
+    }
+})
 </script>
