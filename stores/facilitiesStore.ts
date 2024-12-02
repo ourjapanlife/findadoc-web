@@ -9,6 +9,7 @@ export const useFacilitiesStore = defineStore(
     () => {
         const facilityData: Ref<Facility[]> = ref([])
         const selectedFacilityId: Ref<string> = ref('')
+        const selectedFacilityData: Ref<Facility | undefined> = ref()
         const facilitySectionFields = {
             // contactFields
             nameEn: ref('') as Ref<string>,
@@ -29,8 +30,37 @@ export const useFacilitiesStore = defineStore(
             // googleMapsFields
             googlemapsURL: ref('') as Ref<string>,
             mapLatitude: ref('') as Ref<string>,
-            mapLongitude: ref('') as Ref<string>
+            mapLongitude: ref('') as Ref<string>,
+            healthcareProfessionalIds: ref([]) as Ref<string[]>
         } as { [key: string]: Ref }
+
+        function setSelectedFacilityData(facilityId: string) {
+            selectedFacilityData.value = facilityData.value
+                .find((facility: Facility) => facility.id === facilityId)
+        }
+
+        function initializeFacilitySectionValues(facilityData: Facility | undefined) {
+            if (!facilityData) return
+
+            facilitySectionFields.nameEn.value = facilityData.nameEn
+            facilitySectionFields.nameJa.value = facilityData.nameJa
+            facilitySectionFields.phone.value = facilityData?.contact?.phone
+            facilitySectionFields.email.value = facilityData?.contact?.email
+            facilitySectionFields.website.value = facilityData?.contact?.website
+            facilitySectionFields.postalCode.value = facilityData.contact?.address.postalCode
+            facilitySectionFields.prefectureEn.value = facilityData?.contact?.address?.prefectureEn
+            facilitySectionFields.cityEn.value = facilityData?.contact?.address?.cityEn
+            facilitySectionFields.addressLine1En.value = facilityData?.contact?.address?.addressLine1En
+            facilitySectionFields.addressLine2En.value = facilityData?.contact?.address?.addressLine2En
+            facilitySectionFields.prefectureJa.value = facilityData?.contact?.address?.prefectureJa
+            facilitySectionFields.cityJa.value = facilityData?.contact?.address?.cityJa
+            facilitySectionFields.addressLine1Ja.value = facilityData?.contact?.address?.addressLine1Ja
+            facilitySectionFields.addressLine2Ja.value = facilityData?.contact?.address?.addressLine2Ja
+            facilitySectionFields.googlemapsURL.value = facilityData?.contact?.googleMapsUrl
+            facilitySectionFields.healthcareProfessionalIds.value = facilityData.healthcareProfessionalIds
+            facilitySectionFields.mapLatitude.value = facilityData.mapLatitude.toString()
+            facilitySectionFields.mapLongitude.value = facilityData.mapLongitude.toString()
+        }
 
         async function getFacilities() {
             const facilityResults = await queryFacilities()
@@ -67,7 +97,10 @@ export const useFacilitiesStore = defineStore(
             updateFacility,
             facilitySectionFields,
             selectedFacilityId,
-            deleteFacility
+            deleteFacility,
+            selectedFacilityData,
+            setSelectedFacilityData,
+            initializeFacilitySectionValues
         }
     }
 )
@@ -82,7 +115,7 @@ async function queryFacilities() {
         const response = await gqlClient.request<{ facilities: Facility[] }>(getAllFacilitiesForModeration, searchFacilitiesData)
         return response?.facilities ?? []
     } catch (error) {
-        console.log(`Error querying the facilities: ${JSON.stringify(error)}`)
+        console.error(`Error querying the facilities: ${JSON.stringify(error)}`)
         return []
     }
 }

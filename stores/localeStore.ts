@@ -100,5 +100,6 @@ export const mvpLocaleDisplayOptions = [
     { code: Locale.RuRu, simpleText: 'русский', displayText: 'Russian (Russia)' },
     { code: Locale.DeDe, simpleText: 'Deutsch', displayText: 'Deutsch(Deutschland)' },
     { code: Locale.ZhCn, simpleText: '简体中文', displayText: 'Chinese (Simplified, China)' },
-    { code: Locale.FrFr, simpleText: 'Français', displayText: 'Français (France)' }
+    { code: Locale.FrFr, simpleText: 'Français', displayText: 'Français (France)' },
+    { code: Locale.TlPh, simpleText: 'Tagalog', displayText: 'Tagalog (Philippines)' }
 ] satisfies LocaleDisplay[]

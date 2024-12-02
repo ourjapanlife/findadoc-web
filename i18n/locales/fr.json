@@ -71,7 +71,8 @@
     "submitButton": "Soumettre",
     "optional": "optionnel",
     "otherNotes": "Autres remarques",
-    "firstNameValidation": "Enter a first name"
+    "firstNameValidation": "Enter a first name",
+    "submissionSuccessful": "Thank you for contributing! Your submission about the doctor has been successfully recorded. We’re grateful for your support!"
   },
   "searchBar": {
     "selectSpecialty": "Sélectionnez une spécialité...",
@@ -93,7 +94,8 @@
     "heading": "Merci !",
     "submission": "Votre soumission sera bientôt examinée par nos modérateurs.",
     "feedback": "Vos commentaires ont été soumis et seront examinés par notre équipe.",
-    "home": "Retour à l'accueil"
+    "home": "Retour à l'accueil",
+    "submitAnotherDoctor": "Add another doctor"
   },
   "topNav": {
     "about": "À propos",
@@ -230,7 +232,8 @@
     "submissionConfirmationMessage": "Are you sure you want to submit this form?",
     "successMessageUpdated": "Submission updated successfully",
     "successMessageApproved": "Submission approved and created successfully",
-    "updateButtonText": "Update"
+    "updateButtonText": "Update",
+    "facilitySuccessfullyRejected": "Facility rejected successfully"
   },
   "login": {
     "heading": "Log in to your account",
@@ -316,12 +319,20 @@
     "placeholderTextFacilityPhoneNumber": "e.g. 08xxxxxxxxx",
     "placeholderTextFacilityPostalCode": "e.g. 186-0000",
     "placeholderTextFacilityWebsite": "e.g. http://www.example.com/",
-    "updateButtonText": "Update"
+    "updateButtonText": "Update",
+    "placeholderTextFacilityAddressLine1En": "Street address",
+    "errorMessageFacilityId": "Facility Id was not found"
   },
   "modEditFacilityOrHPTopbar": {
     "updateAndExit": "Update & Exit",
     "delete": "Delete",
     "copyFailure": "Failed to copy ID"
+  },
+  "serverErrorMessages": {
+    "UNAUTHENTICATED": "You do not have the authentication to do this action",
+    "BAD_USER_INPUT": "One or more of the inputs entered is invalid, please try again",
+    "genericErrorMessage": "There was an error submitting your form, please try again",
+    "errorCodeMessagingNeeded": "The server error code does not have a message for the user. Please add one."
   },
   "modHealthcareProfessionalSection": {
     "addHealthCareProfessionalLocaleName": "Add Name by Locale",

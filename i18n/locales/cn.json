@@ -71,7 +71,8 @@
     "subheading": "您想在我们的数据库中添加一位医师吗？请填写以下表格以完成添加。我们的后台人员将会对您提交的信息进行人工审核。",
     "submitButton": "提交",
     "optional": "可选",
-    "otherNotes": "其他建议或注释"
+    "otherNotes": "其他建议或注释",
+    "submissionSuccessful": "Thank you for contributing! Your submission about the doctor has been successfully recorded. We’re grateful for your support!"
   },
   "searchBar": {
     "selectSpecialty": "请选择一个专科...",
@@ -93,7 +94,8 @@
     "heading": "谢谢！",
     "submission": "您提交的信息将由我们的后台团队进行人工审核。",
     "feedback": "您的反馈已提交，我们的团队将进行审核。",
-    "home": "返回主页"
+    "home": "返回主页",
+    "submitAnotherDoctor": "Add another doctor"
   },
   "topNav": {
     "about": "关于",
@@ -261,7 +263,8 @@
     "infoMessageAlreadyApproved": "This submission has already been approved",
     "infoMessageUpdateNeeded": "This needs to be updated before approval",
     "successMessageUpdated": "Submission updated successfully",
-    "successMessageApproved": "Submission approved and created successfully"
+    "successMessageApproved": "Submission approved and created successfully",
+    "facilitySuccessfullyRejected": "Facility rejected successfully"
   },
   "modPanelSubmissionLeftNavbar": {
     "addresses": "Addresses",
@@ -333,11 +336,19 @@
     "placeholderTextFacilityPhoneNumber": "e.g. 08xxxxxxxxx",
     "placeholderTextFacilityPostalCode": "e.g. 186-0000",
     "placeholderTextFacilityWebsite": "e.g. http://www.example.com/",
-    "updateButtonText": "Update"
+    "updateButtonText": "Update",
+    "placeholderTextFacilityAddressLine1En": "Street address",
+    "errorMessageFacilityId": "Facility Id was not found"
   },
   "modEditFacilityOrHPTopbar": {
     "updateAndExit": "Update & Exit",
     "delete": "Delete",
     "copyFailure": "Failed to copy ID"
+  },
+  "serverErrorMessages": {
+    "UNAUTHENTICATED": "You do not have the authentication to do this action",
+    "BAD_USER_INPUT": "One or more of the inputs entered is invalid, please try again",
+    "genericErrorMessage": "There was an error submitting your form, please try again",
+    "errorCodeMessagingNeeded": "The server error code does not have a message for the user. Please add one."
   }
 }

@@ -480,7 +480,7 @@
             </select>
         </div>
         <button
-            type="submit"
+            type="button"
             class="bg-currentColor text-white font-bold py-2 px-4 my-2 rounded w-56"
             @click="submitUpdatedSubmission"
         >
@@ -521,6 +521,7 @@ import SVGTrashCan from '~/assets/icons/trash-can.svg'
 import SVGProfileIcon from '~/assets/icons/profile-icon.svg'
 import { triggerFormValidationErrorMessages } from '~/utils/triggerFormValidationErrorMessages'
 import { useLocaleStore, localeDisplayOptions, type LocaleDisplay } from '~/stores/localeStore'
+import { handleServerErrorMessaging } from '~/utils/handleServerErrorMessaging'
 /**
 This initalizes the variable that needs to be set on mount.
 If this is set as a const the build will fail since the plugin
@@ -805,18 +806,21 @@ async function submitUpdatedSubmission(e: Event) {
             ]
         }
     }
-    try {
-        const result = await moderationSubmissionStore.updateSubmission(submissionInputVariables)
-        const submissionResult = result as { updateSubmission: Submission }
-        // This updates the submission in the form with the values stored in the db on success
-        initializeSubmissionFormValues(submissionResult.updateSubmission as Submission)
-        toast.success(t('modSubmissionForm.successMessageUpdated'))
-        if (moderationSubmissionStore.updatingSubmissionFromTopBar) {
-            router.push('/moderation')
-            moderationSubmissionStore.setUpdatingSubmissionFromTopBar(false)
-        }
-    } catch {
-        toast.error(t('modSubmissionForm.errorMessageUpdated'))
+
+    const result = await moderationSubmissionStore.updateSubmission(submissionInputVariables)
+    // This is used in the component and not graphQL call as it is user messaging and needs the mounted toast library
+    if (result?.errors?.length) {
+        handleServerErrorMessaging(result.errors, toast, t)
+        return
+    }
+
+    const submissionResult = result.data
+    // This updates the submission in the form with the values stored in the db on success
+    if (submissionResult) initializeSubmissionFormValues(submissionResult)
+    toast.success(t('modSubmissionForm.successMessageUpdated'))
+    if (moderationSubmissionStore.updatingSubmissionFromTopBar) {
+        router.push('/moderation')
+        moderationSubmissionStore.setUpdatingSubmissionFromTopBar(false)
     }
 }
 
@@ -859,7 +863,7 @@ async function submitCompletedForm(e: Event) {
     }
 }
 
-const syntheticEvent = new Event('submit', { bubbles: true, cancelable: true })
+const syntheticEvent = new Event('submit', { bubbles: false, cancelable: true })
 
 watch(moderationSubmissionStore, newValue => {
     //saves the submission by updating it and then going to the main
@@ -868,9 +872,9 @@ watch(moderationSubmissionStore, newValue => {
     }
 })
 
-watch(moderationSubmissionStore, newValue => {
-    moderationSubmissionStore.filterSelectedSubmission(newValue.selectedSubmissionId)
-    initializeSubmissionFormValues(newValue.selectedSubmissionData)
+watch(() => moderationSubmissionStore.selectedSubmissionId, newValue => {
+    moderationSubmissionStore.filterSelectedSubmission(newValue)
+    initializeSubmissionFormValues(moderationSubmissionStore.selectedSubmissionData)
 })
 
 onMounted(() => {

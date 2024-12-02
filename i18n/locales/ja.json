@@ -71,7 +71,8 @@
     "subheading": "医師の情報を追加した場合は、以下の情報の入力をお願いいたします。入力された情報は`Find a Doc`メンバー確認の上、データベースへ反映されます。",
     "submitButton": "確定",
     "optional": "オプション",
-    "otherNotes": "その他情報"
+    "otherNotes": "その他情報",
+    "submissionSuccessful": "Thank you for contributing! Your submission about the doctor has been successfully recorded. We’re grateful for your support!"
   },
   "searchBar": {
     "selectSpecialty": "専門を選択",
@@ -93,7 +94,8 @@
     "heading": "Thank you!",
     "submission": "Your submission will be reviewed shortly by our moderators.",
     "feedback": "Your feedback has been submitted and will be reviewed by our team.",
-    "home": "Return to home"
+    "home": "Return to home",
+    "submitAnotherDoctor": "Add another doctor"
   },
   "topNav": {
     "home": "ホーム",
@@ -262,7 +264,8 @@
     "infoMessageAlreadyApproved": "This submission has already been approved",
     "infoMessageUpdateNeeded": "This needs to be updated before approval",
     "successMessageUpdated": "Submission updated successfully",
-    "successMessageApproved": "Submission approved and created successfully"
+    "successMessageApproved": "Submission approved and created successfully",
+    "facilitySuccessfullyRejected": "Facility rejected successfully"
   },
   "modPanelSubmissionLeftNavbar": {
     "addresses": "Addresses",
@@ -334,11 +337,19 @@
     "placeholderTextFacilityPhoneNumber": "e.g. 08xxxxxxxxx",
     "placeholderTextFacilityPostalCode": "e.g. 186-0000",
     "placeholderTextFacilityWebsite": "e.g. http://www.example.com/",
-    "updateButtonText": "Update"
+    "updateButtonText": "Update",
+    "placeholderTextFacilityAddressLine1En": "Street address",
+    "errorMessageFacilityId": "Facility Id was not found"
   },
   "modEditFacilityOrHPTopbar": {
     "updateAndExit": "Update & Exit",
     "delete": "Delete",
     "copyFailure": "Failed to copy ID"
+  },
+  "serverErrorMessages": {
+    "UNAUTHENTICATED": "You do not have the authentication to do this action",
+    "BAD_USER_INPUT": "One or more of the inputs entered is invalid, please try again",
+    "genericErrorMessage": "There was an error submitting your form, please try again",
+    "errorCodeMessagingNeeded": "The server error code does not have a message for the user. Please add one."
   }
 }
