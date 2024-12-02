@@ -3,12 +3,7 @@ import { ref, type Ref } from 'vue'
 import { gql } from 'graphql-request'
 import type { HealthcareProfessional,
     MutationDeleteHealthcareProfessionalArgs,
-    MutationUpdateHealthcareProfessionalArgs,
-    Insurance,
-    Degree,
-    Specialty,
-    LocalizedNameInput } from '~/typedefs/gqlTypes'
-import { Locale } from '~/typedefs/gqlTypes'
+    MutationUpdateHealthcareProfessionalArgs } from '~/typedefs/gqlTypes'
 import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql'
 
 export const useHealthcareProfessionalsStore = defineStore(
@@ -17,17 +12,6 @@ export const useHealthcareProfessionalsStore = defineStore(
         const healthcareProfessionalsData: Ref<HealthcareProfessional[]>
         = ref([])
         const selectedHealthcareProfessionalId: Ref<string> = ref('')
-        const healthcareProfessionalSectionFields = {
-            healthcareProfessionalNameArray: ref([]) as Ref<Array<LocalizedNameInput>>,
-            localizedFirstName: ref('') as Ref<string>,
-            localizedLastName: ref('') as Ref<string>,
-            localizedMiddleName: ref('') as Ref<string>,
-            nameLocale: ref(Locale.EnUs) as Ref<Locale>,
-            healthcareProfessionalAcceptedInsurances: ref([]) as Ref<Array<Insurance>>,
-            healthcareProfessionalDegrees: ref([]) as Ref<Array<Degree>>,
-            healthcareProfessionalSpecialties: ref([]) as Ref<Array<Specialty>>,
-            healthcareProfessionalLocales: ref([]) as Ref<Array<Locale>>
-        } as { [key: string]: Ref }
 
         async function getHealthcareProfessionals() {
             const healthcareProfessionalResults = await queryHealthcareProfessionals()
@@ -63,8 +47,7 @@ export const useHealthcareProfessionalsStore = defineStore(
             healthcareProfessionalsData,
             updateHealthcareProfessional,
             selectedHealthcareProfessionalId,
-            deleteHealthcareProfessional,
-            healthcareProfessionalSectionFields
+            deleteHealthcareProfessional
         }
     }
 )

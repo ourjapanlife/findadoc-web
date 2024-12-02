@@ -7,7 +7,7 @@
         </h2>
         <div class="input-fields flex flex-col my-4">
             <ModInputField
-                v-model="healthcareProfessionalsStore.healthcareProfessionalSectionFields.localizedLastName"
+                v-model="healthcareProfessionalSectionFields.localizedLastName"
                 data-testid="mod-healthcare-professional-section-lastName"
                 :label="$t('modHealthcareProfessionalSection.labelHealthcareProfessionalLastName')"
                 type="text"
@@ -15,7 +15,7 @@
                 :required="true"
             />
             <ModInputField
-                v-model="healthcareProfessionalsStore.healthcareProfessionalSectionFields.localizedFirstName"
+                v-model="healthcareProfessionalSectionFields.localizedFirstName"
                 data-testid="mod-healthcare-professional-section-firstName"
                 :label="$t('modHealthcareProfessionalSection.labelHealthcareProfessionalFirstName')"
                 type="text"
@@ -23,7 +23,7 @@
                 :required="true"
             />
             <ModInputField
-                v-model="healthcareProfessionalsStore.healthcareProfessionalSectionFields.localizedMiddleName"
+                v-model="healthcareProfessionalSectionFields.localizedMiddleName"
                 data-testid="mod-healthcare-professional-section-middleName"
                 :label="$t('modHealthcareProfessionalSection.labelHealthcareProfessionalMiddleName')"
                 type="text"
@@ -38,7 +38,7 @@
             </label>
             <select
                 id="name_locales"
-                v-model="healthcareProfessionalsStore.healthcareProfessionalSectionFields.locale"
+                v-model="healthcareProfessionalSectionFields.nameLocale"
                 data-testid="mod-healthcare-professional-section-name-locale"
                 name="Name Locales"
                 class="mb-5 px-3 py-3.5 w-96 h-12 bg-secondary-bg rounded-lg border border-primary-text-muted
@@ -118,7 +118,7 @@
             </label>
             <select
                 id="accepted-insurances"
-                v-model="sectionFields.healthcareProfessionalAcceptedInsurances"
+                v-model="healthcareProfessionalSectionFields.healthcareProfessionalAcceptedInsurances"
                 data-testid="mod-healthcare-professional-section-accepted-insurances"
                 name="Accepted Insurances"
                 multiple
@@ -141,7 +141,7 @@
             </label>
             <select
                 id="degrees"
-                v-model="sectionFields.healthcareProfessionalDegrees"
+                v-model="healthcareProfessionalSectionFields.healthcareProfessionalDegrees"
                 data-testid="mod-healthcare-professional-section-degrees"
                 name="Degrees"
                 multiple
@@ -164,7 +164,7 @@
             </label>
             <select
                 id="specialties"
-                v-model="sectionFields.healthcareProfessionalSpecialties"
+                v-model="healthcareProfessionalSectionFields.healthcareProfessionalSpecialties"
                 data-testid="mod-healthcare-professional-section-specialties"
                 name="Specialties"
                 multiple
@@ -187,7 +187,7 @@
             </label>
             <select
                 id="locales"
-                v-model="sectionFields.healthcareProfessionalLocales"
+                v-model="healthcareProfessionalSectionFields.healthcareProfessionalLocales"
                 data-testid="mod-healthcare-professional-section-spoken-locales"
                 name="Locales"
                 multiple
@@ -207,18 +207,27 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted } from 'vue'
+import { onMounted, reactive, ref } from 'vue'
 import { ModerationScreen, useModerationScreenStore } from '~/stores/moderationScreenStore'
-import { useHealthcareProfessionalsStore } from '~/stores/healthcareProfessionalsStore'
 import { Locale, type LocalizedNameInput, Insurance, Degree, Specialty } from '~/typedefs/gqlTypes'
 import { multiSelectWithoutKeyboard } from '~/utils/multiSelectWithoutKeyboard'
 import SVGTrashCan from '~/assets/icons/trash-can.svg'
 import SVGProfileIcon from '~/assets/icons/profile-icon.svg'
 
+const healthcareProfessionalSectionFields = reactive({
+    healthcareProfessionalNameArray: [] as Array<LocalizedNameInput>,
+    localizedFirstName: '',
+    localizedLastName: '',
+    localizedMiddleName: '',
+    nameLocale: Locale.EnUs,
+    healthcareProfessionalAcceptedInsurances: [] as Array<Insurance>,
+    healthcareProfessionalDegrees: [] as Array<Degree>,
+    healthcareProfessionalSpecialties: [] as Array<Specialty>,
+    healthcareProfessionalLocales: [] as Array<Locale>
+})
+
 const moderationScreenStore = useModerationScreenStore()
-const healthcareProfessionalsStore = useHealthcareProfessionalsStore()
-const sectionFields = healthcareProfessionalsStore.healthcareProfessionalSectionFields
-const professionalNameArray = sectionFields.healthcareProfessionalNameArray
+const professionalNameArray = healthcareProfessionalSectionFields.healthcareProfessionalNameArray
 const isEditSubmissionScreen = moderationScreenStore.activeScreen === ModerationScreen.EditSubmission
 
 const insuranceList = Object.values(Insurance) as Insurance[]
@@ -232,50 +241,48 @@ const selectedLocale = (option: HTMLOptionElement): Locale => option.value as Lo
 
 const handleLocalizedName = () => {
     const localizedNameToAdd: LocalizedNameInput = {
-        firstName: sectionFields.localizedFirstName.value,
-        lastName: sectionFields.localizedLastName.value,
-        locale: sectionFields.nameLocale.value || Locale.EnUs,
-        middleName: sectionFields.localizedMiddleName.value
+        firstName: healthcareProfessionalSectionFields.localizedFirstName,
+        lastName: healthcareProfessionalSectionFields.localizedLastName,
+        locale: healthcareProfessionalSectionFields.nameLocale || Locale.EnUs,
+        middleName: healthcareProfessionalSectionFields.localizedMiddleName
     }
 
     if (localizedNameToAdd.firstName
-      && localizedNameToAdd.lastName
-      && localizedNameToAdd.firstName.length > 1
-      && localizedNameToAdd.lastName.length > 1) {
-        professionalNameArray.value.push(localizedNameToAdd)
-        sectionFields.localizedFirstName.value = ''
-        sectionFields.localizedLastName.value = ''
-        sectionFields.localizedMiddleName.value = ''
-        sectionFields.nameLocale.value = Locale.EnUs
+      && localizedNameToAdd.lastName) {
+        professionalNameArray.push(localizedNameToAdd)
+        healthcareProfessionalSectionFields.localizedFirstName = ''
+        healthcareProfessionalSectionFields.localizedLastName = ''
+        healthcareProfessionalSectionFields.localizedMiddleName = ''
+        healthcareProfessionalSectionFields.nameLocale = Locale.EnUs
     }
 }
 
 const handleRemoveHealthcareProfessionalName = (index: number) => {
-    professionalNameArray.value.splice(index, 1)
+    professionalNameArray.splice(index, 1)
 }
 
 onMounted(() => {
     multiSelectWithoutKeyboard(
         '#healthcare-professional-accepted-insurances',
-        sectionFields.healthcareProfessionalAcceptedInsurances,
+        ref(healthcareProfessionalSectionFields.healthcareProfessionalAcceptedInsurances),
         selectedInsurance
     )
 
     multiSelectWithoutKeyboard(
         '#healthcare-professional-degrees',
-        sectionFields.healthcareProfessionalDegrees,
+        ref(healthcareProfessionalSectionFields.healthcareProfessionalDegrees),
         selectedDegree
     )
 
     multiSelectWithoutKeyboard(
         '#healthcare-professional-specialties',
-        sectionFields.healthcareProfessionalSpecialties,
+        ref(healthcareProfessionalSectionFields.healthcareProfessionalSpecialties),
         selectedSpecialty
     )
 
     multiSelectWithoutKeyboard(
         '#healthcare-professional-locales',
-        sectionFields.healthcareProfessionalLocales,
+        ref(healthcareProfessionalSectionFields.healthcareProfessionalLocales),
         selectedLocale
     )
 })
