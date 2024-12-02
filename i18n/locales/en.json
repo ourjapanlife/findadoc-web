@@ -154,7 +154,9 @@
     "modEditFacilityOrHPTopbar": {
         "copyFailure": "Failed to copy ID",
         "delete": "Delete",
-        "updateAndExit": "Update & Exit"
+        "update": "Update",
+        "updateAndExit": "Update & Exit",
+        "facilityUpdatedSuccessfully": "Facility updated successfully"
     },
     "modEditSubmissionTopNav": {
         "saveAndExit": "Save & Exit",
@@ -179,8 +181,10 @@
         "addresses": "Addresses",  
         "contactInformation": "Contact Information",
         "errorMessageFacilityId": "Facility Id was not found",
+        "existingHPHeading": "Current Healthcare Professionals at Facility",
         "facilityHeading": "Facility Information",
         "googleMapsInformation": "Google maps information",
+        "healthcareProfessionalToAdd": "Healthcare Professional to Add",
         "inputErrorMessageFacilityAddressLine1Ja": "Invalid Japanese Address",
         "inputErrorMessageFacilityAddressLine2Ja": "Invalid Japanese Address",
         "inputErrorMessageFacilityAddressLine1En": "Invalid English Address",
@@ -213,6 +217,7 @@
         "labelFacilityGoogleMapsUrl": "Google maps URL",
         "labelFacilityMapLatitude": "Map latitude",
         "labelFacilityMapLongitude": "Map longitude",
+        "noHPSelected": "No healthcare professionals selected",
         "placeholderTextFacilityAddressLine1En": "Street address",
         "placeholderTextFacilityAddressLine2En": "Apartment, building, room...",
         "placeholderTextFacilityAddressLine1Ja": "Street address",

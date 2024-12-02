@@ -24,9 +24,23 @@
         <div class="facility-hp-topbar-actions flex justify p-2 font-bold ">
             <button
                 type="button"
+                :disabled="!unsavedChanges"
                 class="flex justify-center items-center rounded-full bg-secondary-bg border-primary-text-muted
                 border-2 w-28 text-sm mr-2"
                 data-testid="mod-edit-facility-hp-topbar-update"
+                @click="updateFacilityOrHealthcareProfessional"
+            >
+                <span>
+                    {{ $t('modEditFacilityOrHPTopbar.update') }}
+                </span>
+            </button>
+            <button
+                type="button"
+                :disabled="!unsavedChanges"
+                class="flex justify-center items-center rounded-full bg-secondary-bg border-primary-text-muted
+                border-2 w-28 text-sm mr-2"
+                data-testid="mod-edit-facility-hp-topbar-update"
+                @click="updateFacilityOrHealthcareProfessionalAndExit"
             >
                 <span>
                     {{ $t('modEditFacilityOrHPTopbar.updateAndExit') }}
@@ -45,14 +59,19 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref, type ComputedRef, type Ref } from 'vue'
+import { computed, onMounted, ref, watch, type ComputedRef, type Ref } from 'vue'
 import { type ToastInterface, useToast } from 'vue-toastification'
+import { useRouter } from 'vue-router'
 import { useI18n } from '#imports'
 import SVGCopyContent from '~/assets/icons/content-copy.svg'
 import SVGSuccessCheckMark from '~/assets/icons/checkmark-square.svg'
 import { useFacilitiesStore } from '~/stores/facilitiesStore'
 import { useHealthcareProfessionalsStore } from '~/stores/healthcareProfessionalsStore'
 import { useModerationScreenStore, ModerationScreen } from '~/stores/moderationScreenStore'
+import { handleServerErrorMessaging } from '~/utils/handleServerErrorMessaging'
+import type { Facility } from '~/typedefs/gqlTypes'
+
+const router = useRouter()
 
 // Initialize the stores in use
 const facilitiesStore = useFacilitiesStore()
@@ -61,6 +80,10 @@ const moderationScreenStore = useModerationScreenStore()
 
 // Initialize the value of the selected Id based off of Moderation Screen
 const selectedId: ComputedRef<string> = computed(() => setSelectedId())
+const originalFacilityRefsValue: Ref<Facility | undefined> = ref()
+
+// Disable the buttons if there are no changes
+const unsavedChanges = computed(() => facilityHasUnsavedChanges())
 
 // Initialize the variable that will be used to mount the toast library
 let toast: ToastInterface
@@ -93,7 +116,81 @@ function setSelectedId() {
     }
 }
 
+const facilityHasUnsavedChanges = () => {
+    if (!originalFacilityRefsValue.value) return false
+
+    const facilityBeforeChange = originalFacilityRefsValue.value
+
+    /** This needs to be converted because to access the values of this object we do not need value.
+    But to keep their reactivity in the store we keep them as Refs **/
+    const facilitySections = facilitiesStore.facilitySectionFields as unknown as {
+        [key: string]: string
+    }
+
+    const areThereUnsavedChanges
+        = facilityBeforeChange.nameEn !== facilitySections.nameEn
+        || facilityBeforeChange.nameJa !== facilitySections.nameJa
+        || facilityBeforeChange.contact.phone !== facilitySections.phone
+        || facilityBeforeChange.contact.website !== facilitySections.website
+        || facilityBeforeChange.contact.email !== facilitySections.email
+        || facilityBeforeChange.contact.address.postalCode !== facilitySections.postalCode
+        || facilityBeforeChange.contact.address.prefectureEn !== facilitySections.prefectureEn
+        || facilityBeforeChange.contact.address.cityEn !== facilitySections.cityEn
+        || facilityBeforeChange.contact.address.addressLine1En !== facilitySections.addressLine1En
+        || facilityBeforeChange.contact.address.addressLine2En !== facilitySections.addressLine2En
+        || facilityBeforeChange.contact.address.prefectureJa !== facilitySections.prefectureJa
+        || facilityBeforeChange.contact.address.cityJa !== facilitySections.cityJa
+        || facilityBeforeChange.contact.address.addressLine1Ja !== facilitySections.addressLine1Ja
+        || facilityBeforeChange.contact.address.addressLine2Ja !== facilitySections.addressLine2Ja
+        || facilityBeforeChange.contact.googleMapsUrl !== facilitySections.googlemapsURL
+        || facilityBeforeChange.mapLatitude.toString() !== facilitySections.mapLatitude
+        || facilityBeforeChange.mapLongitude.toString() !== facilitySections.mapLongitude
+        || JSON.stringify(facilityBeforeChange.healthcareProfessionalIds)
+        !== JSON.stringify(facilitySections.healthcareProfessionalIds)
+        || facilitySections.healthProfessionalsRelations.length
+
+    return areThereUnsavedChanges
+}
+
+const updateFacilityOrHealthcareProfessional = async () => {
+    // This makes the on click update the facility if the screen is EditFacility
+    if (moderationScreenStore.activeScreen === ModerationScreen.EditFacility) {
+        const checkForUnsavedChanges = facilityHasUnsavedChanges()
+
+        // This prevents us from sending a requested unnecessarily if the user has not made changes
+        if (!checkForUnsavedChanges) return
+
+        const response = await facilitiesStore.updateFacility()
+
+        if (response.errors?.length) {
+            handleServerErrorMessaging(response.errors, toast, t)
+            return response
+        }
+
+        // This updates the facility section values with the data saved in our db
+        facilitiesStore.initializeFacilitySectionValues(response.data as Facility)
+        toast.success(t('modEditFacilityOrHPTopbar.facilityUpdatedSuccessfully'))
+        return response
+    }
+}
+
+const updateFacilityOrHealthcareProfessionalAndExit = async () => {
+    const response = await updateFacilityOrHealthcareProfessional()
+
+    if (response && response.errors?.length) {
+        handleServerErrorMessaging(response.errors, toast, t)
+        return response
+    }
+
+    router.push('/moderation')
+    moderationScreenStore.setActiveScreen(ModerationScreen.Dashboard)
+}
+
 onMounted(() => {
     toast = useToast()
+})
+
+watch(() => facilitiesStore.selectedFacilityData, newValue => {
+    originalFacilityRefsValue.value = newValue
 })
 </script>

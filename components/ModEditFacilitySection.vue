@@ -225,22 +225,55 @@
             />
         </div>
         <ModHealthcareProfessionalSearchbar data-testid="mod-facility-section-doctor-search" />
-        <button
-            v-show="screenStore.activeScreen === ModerationScreen.EditFacility"
-            type="submit"
-            class="bg-currentColor text-white font-bold py-2 px-4 my-2 rounded w-56"
+        <div class="flex flex-col">
+            <span
+                v-if="moderationScreenStore.activeScreen === ModerationScreen.EditFacility"
+                class="mb-1 text-primary-text text-2xl font-bold font-sans leading-normal"
+            >
+                {{ $t('modFacilitySection.healthcareProfessionalToAdd') }}
+            </span>
+            <span
+                v-show="!facilityStore.healthProfessionalsRelationsForDisplay.length"
+                class="font-semibold"
+            >- {{ $t('modFacilitySection.noHPSelected') }}
+            </span>
+            <span v-show="facilityStore.healthProfessionalsRelationsForDisplay.length">
+                <div
+                    v-for="(healthcareProfessional) in facilityStore.healthProfessionalsRelationsForDisplay"
+                    :key="`${healthcareProfessional.id}-${healthcareProfessional.names[0].firstName}`"
+                >
+                    <ModDashboardHealthProfessionalCard
+                        :healthcare-professional="healthcareProfessional"
+                    />
+                </div>
+            </span>
+        </div>
+        <div
+            v-if="moderationScreenStore.activeScreen === ModerationScreen.EditFacility"
         >
-            {{ $t('modFacilitySection.updateButtonText') }}
-        </button>
+            <span class="mb-3.5 text-center text-primary-text text-2xl font-bold font-sans leading-normal">
+                {{ $t('modFacilitySection.existingHPHeading') }}
+            </span>
+            <div
+                v-for="(healthcareProfessional, index) in healthcareProfessionalRelatedToFacilityFiltered"
+                :key="`${healthcareProfessional.id}-${index}`"
+            >
+                <ModDashboardHealthProfessionalCard
+                    :healthcare-professional="healthcareProfessional"
+                    :healthcare-professionals-related-to-facility="healthcareProfessionalsRelatedToFacility"
+                />
+            </div>
+        </div>
     </div>
 </template>
 
 <script lang="ts" setup>
-import { type Ref, ref, onBeforeMount, nextTick } from 'vue'
+import { type Ref, ref, onBeforeMount, nextTick, watch } from 'vue'
 import { type ToastInterface, useToast } from 'vue-toastification'
 import { useRoute } from 'vue-router'
 import { useModerationScreenStore, ModerationScreen } from '~/stores/moderationScreenStore'
 import { useFacilitiesStore } from '~/stores/facilitiesStore'
+import { useHealthcareProfessionalsStore } from '~/stores/healthcareProfessionalsStore'
 import { useI18n } from '#imports'
 import { validateAddressLineEn,
     validateAddressLineJa,
@@ -253,16 +286,34 @@ import { validateAddressLineEn,
     validatePostalCode,
     validateWebsite,
     validateCityJa } from '~/utils/formValidations'
+import type { HealthcareProfessional } from '~/typedefs/gqlTypes'
 
 // Initialize the variable that will be used to mount the toast library
 let toast: ToastInterface
 
 const { t } = useI18n()
 
-const screenStore = useModerationScreenStore()
+const moderationScreenStore = useModerationScreenStore()
 const facilityStore = useFacilitiesStore()
+const healthcareProfessionalsStore = useHealthcareProfessionalsStore()
 
 const isFacilitySectionInitialized: Ref<boolean> = ref(false)
+const healthcareProfessionalsRelatedToFacility: Ref<string[]>
+= ref([])
+const healthcareProfessionalRelatedToFacilityFiltered: Ref<HealthcareProfessional[]> = ref([])
+
+const syncHealthcareProfessionalsRelatedToFacility = () => {
+    if (healthcareProfessionalsStore.healthcareProfessionalsData
+      && !healthcareProfessionalRelatedToFacilityFiltered.value.length) {
+        healthcareProfessionalRelatedToFacilityFiltered.value = healthcareProfessionalsRelatedToFacility.value.flatMap(
+            healthcareProfessionalId =>
+                healthcareProfessionalsStore.healthcareProfessionalsData.find(
+                    healthcareProfessional => healthcareProfessional.id === healthcareProfessionalId
+
+                ) || []
+        )
+    }
+}
 
 const listPrefectureJapanEn: Ref<string[]> = ref([
     'Hokkaido', 'Aomori', 'Iwate', 'Miyagi', 'Akita',
@@ -300,22 +351,63 @@ onBeforeMount(async () => {
         return
     }
 
+    // This will fetch the facilities if sent here by link or a page is refreshed
     if (!facilityStore.facilityData.length) {
         await facilityStore.getFacilities()
+    }
+
+    // This will fetch the healthcare professionals if sent here by link or a page is refreshed
+    if (!healthcareProfessionalsStore.healthcareProfessionalsData) {
+        await healthcareProfessionalsStore.getHealthcareProfessionals()
     }
 
     facilityStore.selectedFacilityId = id as string
 
     // Set the active screen and ensure the UI state is consistent
-    screenStore.setActiveScreen(ModerationScreen.EditFacility)
+    moderationScreenStore.setActiveScreen(ModerationScreen.EditFacility)
 
     facilityStore.setSelectedFacilityData(facilityStore.selectedFacilityId)
 
     facilityStore.initializeFacilitySectionValues(facilityStore.selectedFacilityData)
 
+    // Ensure UI updates are reflected with the autofill values
+    await nextTick()
+
+    syncHealthcareProfessionalsRelatedToFacility()
+
     isFacilitySectionInitialized.value = true
 
     // Ensure UI updates are reflected
     await nextTick()
+})
+
+/** This is making sure all the data is loaded in the component before running the function to set
+    the healthcare professionals related to the facility. This loads the data correctly whether sent the
+    link or navigating from the moderator dashboard **/
+watch(
+    () => [
+        healthcareProfessionalsStore.healthcareProfessionalsData,
+        facilityStore.facilityData,
+        facilityStore.selectedFacilityData
+    ],
+    ([healthcareData, relatedFacilityIds]) => {
+        if (healthcareData && relatedFacilityIds) {
+            syncHealthcareProfessionalsRelatedToFacility()
+        }
+        if (facilityStore.selectedFacilityData) {
+            healthcareProfessionalsRelatedToFacility.value
+                = facilityStore.facilitySectionFields.healthcareProfessionalIds
+        }
+    },
+    { immediate: false }
+)
+
+watch(() => facilityStore.facilitySectionFields.healthcareProfessionalIds, newValue => {
+    // Set the filtered related ones back to an empty array to sync upon update
+    healthcareProfessionalRelatedToFacilityFiltered.value = []
+    // Set the professionals related to the facility based on the updated value
+    healthcareProfessionalsRelatedToFacility.value = newValue
+    // Sync the list to the updated values
+    syncHealthcareProfessionalsRelatedToFacility()
 })
 </script>
