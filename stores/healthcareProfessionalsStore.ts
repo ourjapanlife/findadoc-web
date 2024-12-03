@@ -160,4 +160,3 @@ mutation Mutation($deleteHealthcareProfessionalId: ID!) {
   }
 }
 `
-
