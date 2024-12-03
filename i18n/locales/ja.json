@@ -339,12 +339,17 @@
     "placeholderTextFacilityWebsite": "e.g. http://www.example.com/",
     "updateButtonText": "Update",
     "placeholderTextFacilityAddressLine1En": "Street address",
-    "errorMessageFacilityId": "Facility Id was not found"
+    "errorMessageFacilityId": "Facility Id was not found",
+    "existingHPHeading": "Current Healthcare Professionals at Facility",
+    "healthcareProfessionalToAdd": "Healthcare Professional to Add",
+    "noHPSelected": "No healthcare professionals selected"
   },
   "modEditFacilityOrHPTopbar": {
     "updateAndExit": "Update & Exit",
     "delete": "Delete",
-    "copyFailure": "Failed to copy ID"
+    "copyFailure": "Failed to copy ID",
+    "update": "Update",
+    "facilityUpdatedSuccessfully": "Facility updated successfully"
   },
   "serverErrorMessages": {
     "UNAUTHENTICATED": "You do not have the authentication to do this action",
