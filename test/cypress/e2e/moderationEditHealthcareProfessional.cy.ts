@@ -2,6 +2,8 @@ import 'cypress-real-events'
 import 'cypress-plugin-tab'
 
 const FAKE_HEALTHCARE_PROFESSIONAL_RESPONSE_PATH = 'moderation_dashboard/fakeModHealthcareprofessionalData.json'
+const AUTH_URL = 'https://findadoc.jp.auth0.com/'
+const SITE_URL = 'http://localhost:3000/'
 
 describe('Moderation edit professional healthcare form', () => {
     context('Landscape mode', () => {
@@ -29,14 +31,14 @@ describe('Moderation edit professional healthcare form', () => {
                 }
             }).as('getHealthcareProfessionals')
 
-            cy.origin('https://findadoc.jp.auth0.com/', () => {
+            cy.origin(AUTH_URL, () => {
                 cy.get('input#username').should('be.visible').type('findadoctest@proton.me')
                 cy.get('[data-action-button-primary]').should('be.visible').click()
                 cy.get('input#password').should('be.visible').type('vCnL5J8agHg6m2f')
                 cy.get('[data-action-button-primary]').should('be.visible').click()
             })
 
-            cy.url({ timeout: 10000 }).should('equal', 'http://localhost:3000/')
+            cy.url({ timeout: 10000 }).should('equal', SITE_URL)
 
             /* Chaining of visit was used here to make sure the user was logged in and that it would
             100 percent visit moderation */
