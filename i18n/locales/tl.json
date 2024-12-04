@@ -150,7 +150,10 @@
     "delete": "Burahin",
     "updateAndExit": "I-update at I-Exit",
     "update": "Update",
-    "facilityUpdatedSuccessfully": "Facility updated successfully"
+    "facilityUpdatedSuccessfully": "Facility updated successfully",
+    "deleteButtonText": "DELETE FOREVER",
+    "deleteConfirmationFacility": "Are you sure you want to delete the facility: {facility} , with ID: {id}?",
+    "facilityDeletedSuccessfully": "Facility deleted successfully"
   },
   "modEditSubmissionTopNav": {
     "saveAndExit": "I-Save at I-Exit",
