@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { ref, type Ref, reactive } from 'vue'
 import { gql } from 'graphql-request'
 import type { Maybe } from 'graphql/jsutils/Maybe'
-import type { Facility,
+import type { DeleteResult, Facility,
     HealthcareProfessional,
     Mutation, MutationDeleteFacilityArgs, MutationUpdateFacilityArgs, Relationship } from '~/typedefs/gqlTypes'
 import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql'
@@ -127,16 +127,21 @@ export const useFacilitiesStore = defineStore(
             return serverResponse
         }
 
-        async function deleteFacility(facilityId: MutationDeleteFacilityArgs) {
-            try {
-                return await graphQLClientRequestWithRetry(
-                    gqlClient.request.bind(gqlClient),
-                    deleteExistingFacilityGqlMutation,
-                    facilityId
-                )
-            } catch (error) {
-                console.error('Failed to delete facility:', error)
-            }
+        async function deleteFacility(facilityId: MutationDeleteFacilityArgs):
+        Promise<ServerResponse<Maybe<DeleteResult>>> {
+            const serverResponse = { data: {} as Maybe<DeleteResult>, errors: [] as ServerError[], hasErrors: false }
+
+            const response = await graphQLClientRequestWithRetry<Mutation>(
+                gqlClient.request.bind(gqlClient),
+                deleteExistingFacilityGqlMutation,
+                facilityId
+            )
+
+            serverResponse.data = response.data?.deleteFacility
+            serverResponse.errors = response.errors ? response.errors : []
+            serverResponse.hasErrors = response.hasErrors
+
+            return serverResponse
         }
 
         return {
@@ -234,8 +239,8 @@ mutation Mutation($id: ID!, $input: UpdateFacilityInput!) {
 `
 
 const deleteExistingFacilityGqlMutation = gql`
-mutation Mutation($deleteFacilityId: ID!) {
-  deleteFacility(id: $deleteFacilityId) {
+mutation Mutation($id: ID!) {
+  deleteFacility(id: $id) {
     isSuccessful
   }
 }

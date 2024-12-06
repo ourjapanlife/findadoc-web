@@ -50,10 +50,37 @@
                 type="button"
                 class="flex justify-center items-center rounded-full bg-secondary-bg border-primary border-2 w-28 text-sm mr-2 "
                 data-testid="mod-edit-facility-hp-topbar-delete"
+                @click="openDeletionConfirmation"
             >
                 {{
                     $t('modEditFacilityOrHPTopbar.delete') }}
             </button>
+        </div>
+        <div
+            v-show="modalStore.isOpen"
+            class="fixed top-0 left-0 flex items-center justify-center h-full w-full z-10 bg-secondary/40"
+        >
+            <Modal>
+                <div
+                    class="flex flex-col aspect-square h-96 items-center justify-around bg-primary-inverted p-10 rounded"
+                >
+                    <span
+                        v-show="moderationScreenStore.activeScreen === ModerationScreen.EditFacility"
+                        class="font-bold text-3xl"
+                    >
+                        {{ $t('modEditFacilityOrHPTopbar.deleteConfirmationFacility',
+                              { id: selectedId, facility: facilitiesStore.selectedFacilityData?.nameEn }) }}
+                    </span>
+                    <button
+                        class="bg-primary p-4 rounded-full my-8 font-semibold text-xl"
+                        type="button"
+                        @click="deleteFacilityOrHealthcareProfessional"
+                    >
+                        {{
+                            $t('modEditFacilityOrHPTopbar.deleteButtonText') }}
+                    </button>
+                </div>
+            </Modal>
         </div>
     </div>
 </template>
@@ -68,6 +95,7 @@ import SVGSuccessCheckMark from '~/assets/icons/checkmark-square.svg'
 import { useFacilitiesStore } from '~/stores/facilitiesStore'
 import { useHealthcareProfessionalsStore } from '~/stores/healthcareProfessionalsStore'
 import { useModerationScreenStore, ModerationScreen } from '~/stores/moderationScreenStore'
+import { useModalStore } from '~/stores/modalStore'
 import { handleServerErrorMessaging } from '~/utils/handleServerErrorMessaging'
 import type { Facility } from '~/typedefs/gqlTypes'
 
@@ -77,6 +105,7 @@ const router = useRouter()
 const facilitiesStore = useFacilitiesStore()
 const healthcareProfessionalsStore = useHealthcareProfessionalsStore()
 const moderationScreenStore = useModerationScreenStore()
+const modalStore = useModalStore()
 
 // Initialize the value of the selected Id based off of Moderation Screen
 const selectedId: ComputedRef<string> = computed(() => setSelectedId())
@@ -184,6 +213,31 @@ const updateFacilityOrHealthcareProfessionalAndExit = async () => {
 
     router.push('/moderation')
     moderationScreenStore.setActiveScreen(ModerationScreen.Dashboard)
+}
+
+const openDeletionConfirmation = () => {
+    modalStore.showModal()
+}
+
+const deleteFacilityOrHealthcareProfessional = async () => {
+    // This makes the on click update the facility if the screen is EditFacility
+    if (moderationScreenStore.activeScreen === ModerationScreen.EditFacility) {
+        const deleteFacilityArgs = {
+            id: selectedId.value
+        }
+        const response = await facilitiesStore.deleteFacility(deleteFacilityArgs)
+
+        if (response.errors?.length) {
+            handleServerErrorMessaging(response.errors, toast, t)
+            return response
+        }
+
+        toast.success(t('modEditFacilityOrHPTopbar.facilityDeletedSuccessfully'))
+        // We are redirecting the moderator to the dashboard as there is no more facility to edit
+        router.push('/moderation')
+        modalStore.hideModal()
+        return response
+    }
 }
 
 onMounted(() => {
