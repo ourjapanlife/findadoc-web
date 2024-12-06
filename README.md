@@ -10,9 +10,9 @@
 👉 **[Check out our GitBook here!](https://documentation.findadoc.jp/development)**
 
 ### The Gitbook Contains:
-- 🚀 **Getting Started** : Quick Installation and setup guides.
-- 🔧 **Developer Tools** : Learn how to run , test and contribute effectively.
-- 📒 **Complete Documentation** : Explore the project structure and features in detail.
+- 🚀 **Getting Started** : [Quick Installation and setup guides](https://documentation.findadoc.jp/development/start-coding/overview) .
+- 🔧 **Developer Tools** : [Learn how to run , test and contribute effectively](https://documentation.findadoc.jp/development/start-coding/getting-the-code-running).
+- 📒 **Complete Documentation** : [Explore the project structure and features in detail](https://documentation.findadoc.jp/development).
 
 
 ## 🚀 Quick Start
@@ -27,18 +27,7 @@ These plugins provide automatic linting error visibility instead of requiring ma
 
 ## Running the code locally
 
-```bash
-# install dependencies
-$ yarn
-
-# set up husky
-$ yarn prepare
-
-# For Development, start a dev server with hot reloading at localhost:3000
-$ yarn dev
-```
-
-For full setup instructions , see the **[Gitbook Documentaions]("https://documentation.findadoc.jp/development")**
+👉see the **[Gitbook Documentaions]("https://documentation.findadoc.jp/development/start-coding/getting-the-code-running/starting-the-web-app-locally")**
 
 
 ## 🤝 Contributing
