@@ -1,7 +1,6 @@
 <template>
     <div class="flex flex-0 max-w-4xl">
         <div
-            v-show="isHomepage"
             id="search-fields"
             class="grid-cols-3 mx-4"
         >
@@ -78,7 +77,6 @@
             </div>
         </div>
         <div
-            v-show="isHomepage"
             id="search-button"
             class="flex items-center"
         >
@@ -102,8 +100,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watchEffect, type Ref } from 'vue'
-import { useRoute } from 'vue-router'
+import { ref, watchEffect, type Ref } from 'vue'
 import SVGSearchIcon from '~/assets/icons/search-icon.svg'
 import { useSearchResultsStore } from '~/stores/searchResultsStore.js'
 import { useLocationsStore } from '~/stores/locationsStore.js'
@@ -115,8 +112,6 @@ const localeStore = useLocaleStore()
 const locationsStore = useLocationsStore()
 const searchResultsStore = useSearchResultsStore()
 const specialtiesStore = useSpecialtiesStore()
-const route = useRoute()
-const isHomepage = computed(() => route.path === '/')
 
 await locationsStore.fetchLocations()
 
