@@ -6770,7 +6770,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"css-tree@npm:^2.3.1":
+"css-tree@npm:^2.2.1, css-tree@npm:^2.3.1":
   version: 2.3.1
   resolution: "css-tree@npm:2.3.1"
   dependencies:
@@ -8735,7 +8735,7 @@ __metadata:
     husky: "npm:^9.1.4"
     jsdom: "npm:^24.1.1"
     nuxt: "npm:^3.12.4"
-    nuxt-svgo: "npm:^4.0.2"
+    nuxt-svgo: "npm:^4.0.9"
     nuxt-viewport: "npm:^2.1.5"
     pinia: "npm:^2.2.0"
     postcss: "npm:^8.4.41"
@@ -11908,13 +11908,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nuxt-svgo@npm:^4.0.2":
-  version: 4.0.2
-  resolution: "nuxt-svgo@npm:4.0.2"
+"nuxt-svgo@npm:^4.0.9":
+  version: 4.0.9
+  resolution: "nuxt-svgo@npm:4.0.9"
   dependencies:
     "@nuxt/kit": "npm:^3.4.0"
     mini-svg-data-uri: "npm:^1.4.4"
-    svgo: "npm:^3.0.2"
+    svgo: "npm:3.0.2"
   peerDependencies:
     svgo-loader: ^4.0.0
     vue: ">=3.2.13"
@@ -11927,7 +11927,7 @@ __metadata:
       optional: true
     vue-svg-loader:
       optional: true
-  checksum: 10/d437d988d7fa2ec2214ebf9d96b84d03106347740a3fdee8e6e53ee59bd746ee33a951dbff12a60b4b8b95bda4e08d4f43ca74e5982d9e69b0b39779f36d33ba
+  checksum: 10/abbd696464acf196242e8ef611476dcb407472e85c68893ee88ef2645068942331a6e111b2667486c36a978055a63f4847c8df8f9350c7844c9fbdcdc454a80e
   languageName: node
   linkType: hard
 
@@ -14735,7 +14735,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"svgo@npm:^3.0.2, svgo@npm:^3.3.2":
+"svgo@npm:3.0.2":
+  version: 3.0.2
+  resolution: "svgo@npm:3.0.2"
+  dependencies:
+    "@trysound/sax": "npm:0.2.0"
+    commander: "npm:^7.2.0"
+    css-select: "npm:^5.1.0"
+    css-tree: "npm:^2.2.1"
+    csso: "npm:^5.0.5"
+    picocolors: "npm:^1.0.0"
+  bin:
+    svgo: bin/svgo
+  checksum: 10/e2c72b166881ef697c1de85628d87e8d41d5e175b3063eab0025760aafe79356507b409fcfa74afffec44a334e59ebe71154909851a72ccb4eb3a5e5217f2e84
+  languageName: node
+  linkType: hard
+
+"svgo@npm:^3.3.2":
   version: 3.3.2
   resolution: "svgo@npm:3.3.2"
   dependencies:
