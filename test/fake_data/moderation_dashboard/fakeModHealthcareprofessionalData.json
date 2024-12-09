@@ -1,0 +1,36 @@
+{
+  "data": {
+    "healthcareprofessionals": [
+      {
+          "acceptedInsurance": [
+            "UNINSURED"
+          ],
+          "createdDate": "2024-10-24T06:37:45.288Z",
+          "degrees": [
+            "MPH",
+            "DVM"
+          ],
+          "facilityIds": [
+            "1"
+          ],
+          "id": "1",
+          "names": [
+            {
+              "firstName": "Isabella",
+              "lastName": "Martinez",
+              "locale": "en_US"
+            }
+          ],
+          "specialties": [
+            "ANESTHESIOLOGY",
+            "DIAGNOSTIC_RADIOLOGY"
+          ],
+          "spokenLanguages": [
+            "tl_PH",
+            "en_US"
+          ],
+          "updatedDate": "2024-10-24T06:37:45.288Z"
+        }
+    ]
+  }
+}

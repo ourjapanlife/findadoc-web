@@ -154,7 +154,12 @@
     "modEditFacilityOrHPTopbar": {
         "copyFailure": "Failed to copy ID",
         "delete": "Delete",
-        "updateAndExit": "Update & Exit"
+        "deleteButtonText": "DELETE FOREVER",
+        "deleteConfirmationFacility": "Are you sure you want to delete the facility: {facility} , with ID: {id}?",
+        "update": "Update",
+        "updateAndExit": "Update & Exit",
+        "facilityDeletedSuccessfully": "Facility deleted successfully",
+        "facilityUpdatedSuccessfully": "Facility updated successfully"
     },
     "modEditSubmissionTopNav": {
         "saveAndExit": "Save & Exit",
@@ -175,12 +180,35 @@
         "submitted": "Submitted",
         "underReview": "Under Review"
     },
+    "modHealthcareProfessionalSection": {
+        "addHealthCareProfessionalLocaleName": "Add Name by Locale",
+        "healthcareProfessionalHeading": "Healthcare Professional Information",
+        "healthcareProfessionalId": "Healthcare Professional IDs",
+        "healthcareProfessionalMedicalInfoHeading": "Healthcare Professional Medical Info",
+        "healthcareProfessionalNameHeading": "Healthcare Professional Name",
+        "inputErrorMessageHealthcareProfessionalFirstName": "Invalid First Name",
+        "inputErrorMessageHealthcareProfessionalLastName": "Invalid Last Name",
+        "inputErrorMessageHealthcareProfessionalMiddleName": "Invalid Middle Name",
+        "labelHealthcareProfessionalFirstName": "First Name",
+        "labelHealthcareProfessionalLastName": "Last Name",
+        "labelHealthcareProfessionalMiddleName": "Middle Name",
+        "labelHealthcareProfessionalNameLocale": "Name Locale",
+        "placeholderTextHealthcareProfessionalFirstName": "e.g. John",
+        "placeholderTextHealthcareProfessionalLastName": "e.g. Doe",
+        "placeholderTextHealthcareProfessionalMiddleName": "e.g. Bronson",
+        "selectDegrees": "Degrees",
+        "selectInsurances": "Accepted Insurances",
+        "selectLocales": "Select Locales Spoken",
+        "selectSpecialties": "Specialties"
+    },
     "modFacilitySection": {
-        "addresses": "Addresses",  
+        "addresses": "Addresses",
         "contactInformation": "Contact Information",
         "errorMessageFacilityId": "Facility Id was not found",
+        "existingHPHeading": "Current Healthcare Professionals at Facility",
         "facilityHeading": "Facility Information",
         "googleMapsInformation": "Google maps information",
+        "healthcareProfessionalToAdd": "Healthcare Professional to Add",
         "inputErrorMessageFacilityAddressLine1Ja": "Invalid Japanese Address",
         "inputErrorMessageFacilityAddressLine2Ja": "Invalid Japanese Address",
         "inputErrorMessageFacilityAddressLine1En": "Invalid English Address",
@@ -213,6 +241,7 @@
         "labelFacilityGoogleMapsUrl": "Google maps URL",
         "labelFacilityMapLatitude": "Map latitude",
         "labelFacilityMapLongitude": "Map longitude",
+        "noHPSelected": "No healthcare professionals selected",
         "placeholderTextFacilityAddressLine1En": "Street address",
         "placeholderTextFacilityAddressLine2En": "Apartment, building, room...",
         "placeholderTextFacilityAddressLine1Ja": "Street address",
@@ -233,7 +262,7 @@
     },
     "modSubmissionForm": {
         "addHealthCareProfessionalLocaleName": "Add Name by Locale",
-        "addresses": "Addresses",   
+        "addresses": "Addresses",
         "confirmationButton": "Leave Page",
         "hasUnsavedChanges": "You have unsaved changes. Are you sure you want to leave?",
         "contactInformation": "Contact Information",

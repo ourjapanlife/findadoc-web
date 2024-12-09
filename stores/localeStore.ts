@@ -95,7 +95,6 @@ export const localeDisplayOptions = [
 export const mvpLocaleDisplayOptions = [
     { code: Locale.EnUs, simpleText: 'English', displayText: 'English (US)' },
     { code: Locale.JaJp, simpleText: '日本語', displayText: '日本語 (Japan)' },
-    { code: Locale.SwKe, simpleText: 'Swahili', displayText: 'Swahili (Kenya)' },
     { code: Locale.PtBr, simpleText: 'Português', displayText: 'Português (Brasil)' },
     { code: Locale.RuRu, simpleText: 'русский', displayText: 'Russian (Russia)' },
     { code: Locale.DeDe, simpleText: 'Deutsch', displayText: 'Deutsch(Deutschland)' },

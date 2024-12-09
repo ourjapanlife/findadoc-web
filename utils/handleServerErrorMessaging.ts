@@ -8,9 +8,11 @@ export function handleServerErrorMessaging(
     serverErrors.map(error => {
         if (t(`serverErrorMessages.${error.code}`)) {
             toast.error((t(`serverErrorMessages.${error.code}`)))
+            console.error(error.code)
             return
         }
         toast.error((t('serverErrorMessages.genericErrorMessage')))
+        console.error((t('serverErrorMessages.genericErrorMessage')))
         console.info(t('serverErrorMessages.errorCodeMessagingNeeded'))
     })
     return

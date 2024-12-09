@@ -21,7 +21,11 @@
             v-else-if="screenStore.activeScreen === ModerationScreen.EditHealthcareProfessional"
             class="h-full overflow-hidden"
         >
-            Edit Healthcare Professional
+            <form
+                class="p-4 h-full overflow-y-auto"
+            >
+                <ModEditHealthcareProfessionalSection />
+            </form>
         </div>
     </div>
 </template>
