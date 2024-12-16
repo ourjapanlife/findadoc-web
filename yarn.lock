@@ -9277,7 +9277,7 @@ __metadata:
     nuxt: "npm:^3.12.4"
     nuxt-svgo: "npm:^4.0.2"
     nuxt-viewport: "npm:^2.1.5"
-    pinia: "npm:^2.2.0"
+    pinia: "npm:^2.2.8"
     postcss: "npm:^8.4.41"
     postcss-html: "npm:^1.7.0"
     start-server-and-test: "npm:^2.0.8"
@@ -13228,7 +13228,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pinia@npm:>=2.2.0, pinia@npm:^2.2.0":
+"pinia@npm:>=2.2.0":
   version: 2.2.0
   resolution: "pinia@npm:2.2.0"
   dependencies:
@@ -13244,6 +13244,22 @@ __metadata:
     typescript:
       optional: true
   checksum: 10/e34ef54c9315f6948128c33e6dcd3fcb755d2b4c26ec0e4b2c6755535fb6627bbe0e06743fc396295c3516befcdb9c4825014e5127ed76ef5b5e47ce6f0e7692
+  languageName: node
+  linkType: hard
+
+"pinia@npm:^2.2.8":
+  version: 2.3.0
+  resolution: "pinia@npm:2.3.0"
+  dependencies:
+    "@vue/devtools-api": "npm:^6.6.3"
+    vue-demi: "npm:^0.14.10"
+  peerDependencies:
+    typescript: ">=4.4.4"
+    vue: ^2.7.0 || ^3.5.11
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  checksum: 10/16c219c6249330065e0b32adaccfccfbd94a9ec794630c6747c3bff662e03f6ebb4fbb6c01a28a7e79ecb20a7c4b8d9d3ebf04aa7ddd80a6b6db6ad223a44aba
   languageName: node
   linkType: hard
 
@@ -16779,7 +16795,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vue-demi@npm:^0.14.6, vue-demi@npm:^0.14.8":
+"vue-demi@npm:^0.14.10, vue-demi@npm:^0.14.6, vue-demi@npm:^0.14.8":
   version: 0.14.10
   resolution: "vue-demi@npm:0.14.10"
   peerDependencies:
