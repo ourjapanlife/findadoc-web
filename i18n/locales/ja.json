@@ -174,7 +174,8 @@
     "selectInsurances": "Accepted Insurances",
     "selectLocales": "Select Locales Spoken",
     "selectSpecialties": "Specialties",
-    "healthcareProfessionalId": "Healthcare Professional IDs"
+    "healthcareProfessionalId": "Healthcare Professional IDs",
+    "errorMessageHealthcareProfessionalId": "Healthcare Professional Id was not found"
   },
   "modSubmissionForm": {
     "addresses": "Addresses",

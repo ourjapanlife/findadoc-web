@@ -361,6 +361,7 @@
     "selectDegrees": "Degrees",
     "selectInsurances": "Accepted Insurances",
     "selectLocales": "Select Locales Spoken",
-    "selectSpecialties": "Specialties"
+    "selectSpecialties": "Specialties",
+    "errorMessageHealthcareProfessionalId": "Healthcare Professional Id was not found"
   }
 }
