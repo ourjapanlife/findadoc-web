@@ -8,7 +8,7 @@ import { type Ref, ref } from 'vue'
  */
 export const multiSelectWithoutKeyboard = <T extends string>(
     elementOrClassSelector: string,
-    arrayToUpdate: Ref<Array<T>> | Array<T> = ref([]),
+    arrayToUpdate: Ref<Array<T>> = ref([]),
     extractOption: (option: HTMLOptionElement) => T
 ) => {
     const selectElement = document.querySelector<HTMLSelectElement>(elementOrClassSelector)

@@ -61,11 +61,11 @@
                     {{ $t('modHealthcareProfessionalSection.addHealthCareProfessionalLocaleName') }}
                 </button>
                 <div
-                    v-if="professionalNameArray.length"
+                    v-if="sectionFields.healthcareProfessionalNameArray.length"
                     class="flex flex-wrap"
                 >
                     <div
-                        v-for="(healthcareProfessionalName, index) in professionalNameArray"
+                        v-for="(healthcareProfessionalName, index) in sectionFields.healthcareProfessionalNameArray"
                         :key="`${healthcareProfessionalName.firstName}-${index}`"
                         class="flex basis-1/3 justify-start items-center p-2"
                     >
@@ -209,7 +209,7 @@
 </template>
 
 <script lang="ts" setup>
-import { nextTick, onBeforeMount, onMounted, type Ref, ref } from 'vue'
+import { nextTick, onBeforeMount, onMounted, type Ref, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { type ToastInterface, useToast } from 'vue-toastification'
 import { ModerationScreen, useModerationScreenStore } from '~/stores/moderationScreenStore'
@@ -227,7 +227,6 @@ const { t } = useI18n()
 const moderationScreenStore = useModerationScreenStore()
 const healthcareProfessionalsStore = useHealthcareProfessionalsStore()
 const sectionFields = healthcareProfessionalsStore.healthcareProfessionalSectionFields
-const professionalNameArray = sectionFields.healthcareProfessionalNameArray
 const isEditSubmissionScreen = moderationScreenStore.activeScreen === ModerationScreen.EditSubmission
 
 const insuranceList = Object.values(Insurance) as Insurance[]
@@ -239,6 +238,12 @@ const selectedSpecialty = (option: HTMLOptionElement): Specialty => option.value
 const localeList = Object.values(Locale) as Locale[]
 const selectedLocale = (option: HTMLOptionElement): Locale => option.value as Locale
 const isHealthcareProfessionalInitialized: Ref<boolean> = ref(false)
+
+// These are component refs to enable the multi select to work properly
+const healthcareProfessionalAcceptedInsurancesArray: Ref<Array<Insurance>> = ref([])
+const healthcareProfessionalDegreesArray: Ref<Array<Degree>> = ref([])
+const healthcareProfessionalSpecialtiesArray: Ref<Array<Specialty>> = ref([])
+const healthcareProfessionalSpokenLanguages: Ref<Array<Locale>> = ref([])
 
 const handleLocalizedName = () => {
     const localizedNameToAdd: LocalizedNameInput = {
@@ -252,7 +257,7 @@ const handleLocalizedName = () => {
       && localizedNameToAdd.lastName
       && localizedNameToAdd.firstName.length > 1
       && localizedNameToAdd.lastName.length > 1) {
-        professionalNameArray.push(localizedNameToAdd)
+        sectionFields.healthcareProfessionalNameArray.push(localizedNameToAdd)
         sectionFields.localizedFirstName = ''
         sectionFields.localizedLastName = ''
         sectionFields.localizedMiddleName = ''
@@ -261,7 +266,7 @@ const handleLocalizedName = () => {
 }
 
 const handleRemoveHealthcareProfessionalName = (index: number) => {
-    professionalNameArray.splice(index, 1)
+    sectionFields.healthcareProfessionalNameArray.splice(index, 1)
 }
 
 onBeforeMount(async () => {
@@ -298,26 +303,46 @@ onBeforeMount(async () => {
 onMounted(() => {
     multiSelectWithoutKeyboard(
         '#healthcare-professional-accepted-insurances',
-        sectionFields.healthcareProfessionalAcceptedInsurances,
+        healthcareProfessionalAcceptedInsurancesArray,
         selectedInsurance
     )
 
     multiSelectWithoutKeyboard(
         '#healthcare-professional-degrees',
-        sectionFields.healthcareProfessionalDegrees,
+        healthcareProfessionalDegreesArray,
         selectedDegree
     )
 
     multiSelectWithoutKeyboard(
         '#healthcare-professional-specialties',
-        sectionFields.healthcareProfessionalSpecialties,
+        healthcareProfessionalSpecialtiesArray,
         selectedSpecialty
     )
 
     multiSelectWithoutKeyboard(
         '#healthcare-professional-locales',
-        sectionFields.healthcareProfessionalLocales,
+        healthcareProfessionalSpokenLanguages,
         selectedLocale
     )
 })
+
+watch(
+    () => [
+        healthcareProfessionalAcceptedInsurancesArray.value,
+        healthcareProfessionalDegreesArray.value,
+        healthcareProfessionalSpecialtiesArray.value,
+        healthcareProfessionalSpokenLanguages.value
+    ] as [
+        Insurance[],
+        Degree[],
+        Specialty[],
+        Locale[]
+    ],
+    ([newInsurances, newDegrees, newSpecialties, newLocales]) => {
+        sectionFields.healthcareProfessionalAcceptedInsurances = newInsurances
+        sectionFields.healthcareProfessionalDegrees = newDegrees
+        sectionFields.healthcareProfessionalSpecialties = newSpecialties
+        sectionFields.healthcareProfessionalLocales = newLocales
+    }
+)
 </script>
