@@ -17,6 +17,7 @@ export const useHealthcareProfessionalsStore = defineStore(
         const healthcareProfessionalsData: Ref<HealthcareProfessional[]>
         = ref([])
         const selectedHealthcareProfessionalId: Ref<string> = ref('')
+        const selectedHealthcareProfessionalData: Ref<HealthcareProfessional | undefined> = ref()
         const healthcareProfessionalSectionFields = reactive({
             healthcareProfessionalNameArray: [] as Array<LocalizedNameInput>,
             localizedFirstName: '' as string,
@@ -28,6 +29,19 @@ export const useHealthcareProfessionalsStore = defineStore(
             healthcareProfessionalSpecialties: [] as Array<Specialty>,
             healthcareProfessionalLocales: [] as Array<Locale>
         })
+
+        function setSelectedHealthcareProfessional(healthcareProfessionalId: string) {
+            selectedHealthcareProfessionalData.value = healthcareProfessionalsData.value
+                .find((healthcareProfessional: HealthcareProfessional) => healthcareProfessional.id === healthcareProfessionalId)
+        }
+
+        function initializeHealthcareProfessionalValues(healthcareProfessionalData: HealthcareProfessional | undefined) {
+            if (!healthcareProfessionalData) return
+
+            healthcareProfessionalSectionFields.localizedFirstName = healthcareProfessionalData.names[0].firstName
+            healthcareProfessionalSectionFields.localizedMiddleName = healthcareProfessionalData.names[0].middleName
+            healthcareProfessionalSectionFields.localizedLastName = healthcareProfessionalData.names[0].lastName
+        }
 
         async function getHealthcareProfessionals() {
             const healthcareProfessionalResults = await queryHealthcareProfessionals()
@@ -58,13 +72,19 @@ export const useHealthcareProfessionalsStore = defineStore(
             }
         }
 
+        console.log(healthcareProfessionalsData, 'all data')
+        console.log(selectedHealthcareProfessionalId, 'id')
+        console.log(selectedHealthcareProfessionalData, 'data')
         return {
             getHealthcareProfessionals,
             healthcareProfessionalsData,
             updateHealthcareProfessional,
             selectedHealthcareProfessionalId,
             deleteHealthcareProfessional,
-            healthcareProfessionalSectionFields
+            healthcareProfessionalSectionFields,
+            setSelectedHealthcareProfessional,
+            selectedHealthcareProfessionalData,
+            initializeHealthcareProfessionalValues
         }
     }
 )
