@@ -38,12 +38,24 @@ export const useHealthcareProfessionalsStore = defineStore(
                 .find((healthcareProfessional: HealthcareProfessional) => healthcareProfessional.id === healthcareProfessionalId)
         }
 
-        function initializeHealthcareProfessionalValues(healthcareProfessionalData: HealthcareProfessional | undefined) {
-            if (!healthcareProfessionalData) return
+        function initializeHealthcareProfessionalValues(selectedHealthcareProfessionalData: HealthcareProfessional | undefined) {
+            if (!selectedHealthcareProfessionalData) return
 
-            healthcareProfessionalSectionFields.localizedFirstName = healthcareProfessionalData.names[0].firstName
-            healthcareProfessionalSectionFields.localizedMiddleName = healthcareProfessionalData.names[0].middleName
-            healthcareProfessionalSectionFields.localizedLastName = healthcareProfessionalData.names[0].lastName
+            healthcareProfessionalSectionFields.healthcareProfessionalNameArray = selectedHealthcareProfessionalData.names
+            healthcareProfessionalSectionFields.localizedFirstName = selectedHealthcareProfessionalData.names[0].firstName
+            healthcareProfessionalSectionFields.localizedMiddleName = selectedHealthcareProfessionalData.names[0].middleName
+                ? selectedHealthcareProfessionalData.names[0].middleName
+                : ''
+            healthcareProfessionalSectionFields.localizedLastName = selectedHealthcareProfessionalData.names[0].lastName
+            healthcareProfessionalSectionFields.nameLocale = selectedHealthcareProfessionalData.names[0].locale
+            healthcareProfessionalSectionFields.healthcareProfessionalAcceptedInsurances
+                = selectedHealthcareProfessionalData.acceptedInsurance
+            healthcareProfessionalSectionFields.healthcareProfessionalDegrees
+                = selectedHealthcareProfessionalData.degrees
+            healthcareProfessionalSectionFields.healthcareProfessionalSpecialties
+                = selectedHealthcareProfessionalData.specialties
+            healthcareProfessionalSectionFields.healthcareProfessionalLocales
+                = selectedHealthcareProfessionalData.spokenLanguages
         }
 
         async function getHealthcareProfessionals() {
@@ -109,7 +121,7 @@ async function queryHealthcareProfessionals() {
             (getAllHealthcareProfessionalsData, searchHealthcareProfessionalsData)
         return response?.healthcareProfessionals ?? []
     } catch (error) {
-        console.log(`Error querying the healthcare professionals: ${JSON.stringify(error)}`)
+        console.error(`Error querying the healthcare professionals: ${JSON.stringify(error)}`)
         return []
     }
 }
