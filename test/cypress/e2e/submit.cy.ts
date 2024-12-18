@@ -15,7 +15,7 @@ describe('Submit page', () => {
         })
 
         it('shows the desktop top nav', () => {
-            cy.get('[data-testid="landscape-searchbar"]').should('exist').should('be.visible')
+            cy.get('[data-testid="landscape-searchbar"]').should('exist').should('not.be.visible')
         })
 
         it('does not show the hamburger component', () => {

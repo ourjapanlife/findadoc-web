@@ -51,6 +51,7 @@
             </NuxtLink>
         </div>
         <div
+            v-show="isHomepage"
             data-testid="landscape-searchbar"
             class="portrait:hidden flex align-middle"
         >
@@ -120,12 +121,16 @@
 </template>
 
 <script lang="ts" setup>
+import { useRoute } from 'vue-router'
+import { computed } from 'vue'
 import HamburgerMenu from './HamburgerMenu.vue'
 import SVGProfileIcon from '~/assets/icons/profile-icon.svg'
 import SVGSiteLogo from '~/assets/icons/site-logo.svg'
 import { useAuthStore } from '~/stores/authStore'
 
 const authStore = useAuthStore()
+const route = useRoute()
+const isHomepage = computed(() => route.path === '/')
 
 async function logout() {
     await authStore.logout()
