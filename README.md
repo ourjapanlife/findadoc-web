@@ -1,26 +1,45 @@
-[![All Contributors](https://img.shields.io/github/all-contributors/ourjapanlife/findadoc-web?color=ee8449&style=for-the-badge)](#contributors)
-
 # Find a Doc, Japan
 
-Hello volunteers! Please check out [CONTRIBUTING](/CONTRIBUTING.md)
+[![All Contributors](https://img.shields.io/github/all-contributors/ourjapanlife/findadoc-web?color=ee8449&style=for-the-badge)](#contributors)
 
-## Front-end Repository
 
-# 🧭 Mission
+[![GitBook Documentation](https://img.shields.io/badge/GitBook-Documentation-blue?style=for-the-badge&logo=gitbook)](https://your-gitbook-link.com)
 
-Connecting people in Japan to the healthcare services they need, in the languages they need.
+---
+### ✨ **Looking for more detailed documentaions?**
+👉 **[Check out our GitBook here!](https://documentation.findadoc.jp/development)**
 
-# 🔭 Vision
+### The Gitbook Contains:
+- 🚀 **Getting Started** : [Quick Installation and setup guides](https://documentation.findadoc.jp/development/start-coding/overview) .
+- 🔧 **Developer Tools** : [Learn how to run , test and contribute effectively](https://documentation.findadoc.jp/development/start-coding/getting-the-code-running).
+- 📒 **Complete Documentation** : [Explore the project structure and features in detail](https://documentation.findadoc.jp/development).
 
-We want to provide free, accessible, and quality healthcare information in multiple languages.
 
-## What is this repo?
+## 🚀 Quick Start
+### Prerequisites
+- [Yarn Berry](https://yarnpkg.com/getting-started/install) (latest version)
+- IDE plugins for:
+  - `eslint`
+  - `editorconfig`
+  - `stylelint`
 
-This is the open-source, public repository for the [findadoc.jp](https://findadoc.jp) website! We welcome support and contributions :)
+These plugins provide automatic linting error visibility instead of requiring manual `yarn lint` execution.
 
-Have a look at the [CONTRIBUTING](/CONTRIBUTING.md) and [CODE_OF_CONDUCT](/CODE_OF_CONDUCT.md) to learn more about how to get started and where we could use your help.
+## Running the code locally
 
-## Contributors
+👉see the **[Gitbook Documentaions]("https://documentation.findadoc.jp/development/start-coding/getting-the-code-running/starting-the-web-app-locally")**
+
+
+## 🤝 Contributing
+We Welcome Contributions!
+Check out the **[Contributing Guid](https://documentation.findadoc.jp/development/start-coding)** and **[ Our Code of Conduct](https://documentation.findadoc.jp/development/code-of-conduct)**
+
+## 🛠️ Troubleshooting
+Encounter any issues ?
+Consult the **[Troubleshooting Section ](https://documentation.findadoc.jp/development/start-coding/troubleshooting)** of the GitBook or join our **[Slack Channel](https://find-a-doc.slack.com/join/shared_invite/zt-2lb3j2t1z-O9F4thzcFktqsIXNzzjzHw#/shared-invite/email)**
+
+
+# 🧑‍💻 Contributors
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
@@ -61,158 +80,3 @@ Have a look at the [CONTRIBUTING](/CONTRIBUTING.md) and [CODE_OF_CONDUCT](/CODE_
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
-## Tech used
-
-- [Typescript](https://www.typescriptlang.org/)
-- [Vue 3](https://vuejs.org/)
-- [Nuxt 3](https://nuxtjs.org/)
-- [Pinia](https://pinia.vuejs.org/introduction.html)
-- [Node.js](https://nodejs.org/en/) version 16.18
-- [Yarn](https://yarnpkg.com/)
-
-### Code Style
-
-- [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/#summary)
-- [ESLint](https://eslint.org/)
-- [EditorConfig](https://editorconfig.org)
-
-# Getting started developing
-
-### Prerequisites
-
-- [Yarn Berry](https://yarnpkg.com/getting-started/install) (latest version)
-- Strongly recommended: IDE plugins for `vue`, `eslint` and `editorconfig`
-    - These provide automatic linting error visibility instead of having to run `yarn lint` every time
--
-
-## Running the code locally
-
-```bash
-# install dependencies
-$ yarn
-
-# set up husky
-$ yarn prepare
-
-# For Development, start a dev server with hot reloading at localhost:3000
-$ yarn dev
-```
-
-## Running the moderation panel locally
-<details>
-<summary>Click to for instructions on running moderation panel locally</summary>
- - You need to clone and setup the backend following its [README](https://github.com/ourjapanlife/findadoc-server).
-
- Then for the backend run:
-
-```bash
-# install dependencies
-$ npm install
-
-# start the local db
-$ npm run dev:startlocaldb
-
-# For Development, start a dev server backend
-$ npm run dev
-```
-
-Once this is up and running you can start the frontend server with:
-
-```bash
-#Starting the local server connected to local database
-yarn dev:localserver
-```
-
-To login you will want to go to `/login` and use the following username and password.
-
-- Username = ```findadoctest@proton.me```
-- Password = ```vCnL5J8agHg6m2f```
-
-Now you can go to `/moderation` and see any changes to moderation components you may be working on with fake data.
-</details>
-<br/>
-
-# Testing a production build
-<details>
-<summary>Click to for instructions on testing a production build</summary>
-<br/>
-
-## Generate the production bundle
-$ yarn prod:build
-
-## Launch production server
-$ yarn prod:start
-```
-# End to End Testing
-
-We use [Cypress.io](https://www.cypress.io/) for E2E testing. While the server is running on port 3000, you can run the GUI with:
-
-```sh
-yarn run test:e2e
-```
-
-Or headless mode:
-
-```sh
-yarn test:e2e:run
-```
-
-If you'd like to run the server and tests in a single command, use:
-
-```sh
-yarn start:test
-```
-
-To learn how to write tests and use the GUI runner, visit the [wiki](https://github.com/ourjapanlife/findadoc-web/wiki/Writing-Tests)
-</details>
-<br/>
-
-# Folder Structure
-
-### `assets/`
-
-The assets directory contains our uncompiled assets such as Stylus or Sass files, images, or fonts.
-Here's more information about the usage of this directory in the [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/assets).
-
-### `components/`
-
-The components directory contains our Vue.js components. Components make up the different parts of our page and can be reused and imported into the pages, layouts and even other components.
-Here's more information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/components).
-
-### `layouts/`
-
-Used for building the common templates of the news articles.
-Here's more information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/layouts).
-
-### `pages/`
-
-Contains all the pages of the site. Nuxt will read all the `*.vue` files inside this directory and setup Vue Router automatically.
-Here's more information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/get-started/routing).
-
-### `static/`
-
-This directory contains our static files. Each file inside this directory is mapped to `/`.
-Example: `/static/robots.txt` is mapped as `/robots.txt`. Here's more information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/static).
-
-### `stores/`
-
-Contains [Pinia](https://pinia.vuejs.org/introduction.html) store files for state management and data fetching.
-
-# Managing our Typescript types
-
-Typescript types should ideally be located in the `./typedefs` folder.
-
-To easily sync object schemas used by our graphql api, we generate api schema types by running:
-
-```bashrc
-    yarn generate
-```
-
-This will automatically generate the `gqlTypes.ts` file with any schema updates from the server/api.
-
-For any new typescript types, feel free to add them as well to the `./typedefs` folder.
-
-# Troubleshooting
-
-- If you're getting errors building, you might need to run `yarn` again to update your dependencies.
-- If you're getting a different error, feel free to reach out in our [#front-end](https://join.slack.com/t/find-a-doc/shared_invite/zt-s4744a6o-MGaGHzLN5wB9aXeha3vdsQ) slack channel or create a new github issue!
