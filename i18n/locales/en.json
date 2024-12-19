@@ -199,7 +199,8 @@
         "selectDegrees": "Degrees",
         "selectInsurances": "Accepted Insurances",
         "selectLocales": "Select Locales Spoken",
-        "selectSpecialties": "Specialties"
+        "selectSpecialties": "Specialties",
+        "facilities": "Facilities"
     },
     "modFacilitySection": {
         "addresses": "Addresses",
@@ -349,5 +350,9 @@
         "successMessageUpdated": "Submission updated successfully",
         "successMessageApproved": "Submission approved and created successfully",
         "updateButtonText": "Update"
+    },
+    "modFacilitySearchbar": {
+      "placeholderTextFacilitySearchbar": "Search by name or Id add a facility",
+      "noFacilitiesWereFound": "No facilities were found"
     }
 }

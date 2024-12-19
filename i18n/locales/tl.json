@@ -348,6 +348,11 @@
     "selectDegrees": "Degrees",
     "selectInsurances": "Accepted Insurances",
     "selectLocales": "Select Locales Spoken",
-    "selectSpecialties": "Specialties"
+    "selectSpecialties": "Specialties",
+    "facilities": "Facilities"
+  },
+  "modFacilitySearchbar": {
+    "placeholderTextFacilitySearchbar": "Search by name or Id add a facility",
+    "noFacilitiesWereFound": "No facilities were found"
   }
 }
