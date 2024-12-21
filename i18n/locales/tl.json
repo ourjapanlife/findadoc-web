@@ -351,8 +351,8 @@
     "selectSpecialties": "Specialties",
     "facilities": "Facilities"
   },
-  "modFacilitySearchbar": {
-    "placeholderTextFacilitySearchbar": "Search by name or Id add a facility",
+  "modFacilitySearchBar": {
+    "placeholderTextFacilitySearchBar": "Search by name or Id add a facility",
     "noFacilitiesWereFound": "No facilities were found"
   }
 }

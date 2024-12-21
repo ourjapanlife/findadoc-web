@@ -208,7 +208,16 @@
             >
                 {{ $t("modHealthcareProfessionalSection.facilities") }}
             </h2>
-            <ModFacilitySearchbar />
+            <!-- This is just an example how to use it -->
+            <ModFacilitySearchbar v-model="selectedFacitilies" />
+            <ul>
+                <li
+                    v-for="facility in selectedFacitilies"
+                    :key="facility.id"
+                >
+                    {{ `${facility.id} / ${facility.nameEn} / ${facility.nameJa}` }}
+                </li>
+            </ul>
         </div>
     </div>
 </template>
@@ -217,10 +226,12 @@
 import { onMounted, reactive, ref } from 'vue'
 import ModFacilitySearchbar from './ModFacilitySearchbar.vue'
 import { ModerationScreen, useModerationScreenStore } from '~/stores/moderationScreenStore'
-import { Locale, type LocalizedNameInput, Insurance, Degree, Specialty } from '~/typedefs/gqlTypes'
+import { Locale, type LocalizedNameInput, Insurance, Degree, Specialty, type Facility } from '~/typedefs/gqlTypes'
 import { multiSelectWithoutKeyboard } from '~/utils/multiSelectWithoutKeyboard'
 import SVGTrashCan from '~/assets/icons/trash-can.svg'
 import SVGProfileIcon from '~/assets/icons/profile-icon.svg'
+
+const selectedFacitilies = ref(new Set<Facility>())
 
 const healthcareProfessionalSectionFields = reactive({
     healthcareProfessionalNameArray: [] as Array<LocalizedNameInput>,
