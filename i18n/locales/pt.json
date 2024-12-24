@@ -358,5 +358,8 @@
     "BAD_USER_INPUT": "One or more of the inputs entered is invalid, please try again",
     "genericErrorMessage": "There was an error submitting your form, please try again",
     "errorCodeMessagingNeeded": "The server error code does not have a message for the user. Please add one."
+  },
+  "localeSelector": {
+    "loading": "Loading..."
   }
 }

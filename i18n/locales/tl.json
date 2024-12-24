@@ -349,5 +349,8 @@
     "selectInsurances": "Accepted Insurances",
     "selectLocales": "Select Locales Spoken",
     "selectSpecialties": "Specialties"
+  },
+  "localeSelector": {
+    "loading": "Loading..."
   }
 }
