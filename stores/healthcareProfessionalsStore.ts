@@ -58,6 +58,24 @@ export const useHealthcareProfessionalsStore = defineStore(
                 = selectedHealthcareProfessionalData.spokenLanguages
         }
 
+        function updateHealthcareProfessionalNameValues(selectedHealthcareProfessionalData: HealthcareProfessional |
+          undefined, chosenLocale: Locale) {
+            if (!selectedHealthcareProfessionalData) return
+
+            const localeIndex = selectedHealthcareProfessionalData.names
+                .findIndex(nameObject => nameObject.locale === chosenLocale)
+            if (localeIndex === -1) return
+            healthcareProfessionalSectionFields.healthcareProfessionalNameArray
+            = selectedHealthcareProfessionalData.names
+            healthcareProfessionalSectionFields.localizedFirstName
+            = selectedHealthcareProfessionalData.names[localeIndex].firstName
+            healthcareProfessionalSectionFields.localizedMiddleName
+            = selectedHealthcareProfessionalData.names[localeIndex].middleName
+                    ? selectedHealthcareProfessionalData.names[localeIndex].middleName
+                    : ''
+            healthcareProfessionalSectionFields.localizedLastName = selectedHealthcareProfessionalData.names[localeIndex].lastName
+        }
+
         async function getHealthcareProfessionals() {
             const healthcareProfessionalResults = await queryHealthcareProfessionals()
             healthcareProfessionalsData.value = healthcareProfessionalResults
@@ -104,7 +122,8 @@ export const useHealthcareProfessionalsStore = defineStore(
             displayChosenLocaleForHealthcareProfessional,
             setSelectedHealthcareProfessional,
             selectedHealthcareProfessionalData,
-            initializeHealthcareProfessionalValues
+            initializeHealthcareProfessionalValues,
+            updateHealthcareProfessionalNameValues
         }
     }
 )

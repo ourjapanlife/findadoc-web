@@ -44,6 +44,9 @@
                     name="Name Locales"
                     class="mb-5 px-3 py-3.5 w-96 h-12 bg-secondary-bg rounded-lg border border-primary-text-muted
                                 text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
+                    @change=" () => healthcareProfessionalsStore
+                        .updateHealthcareProfessionalNameValues(healthcareProfessionalsStore.selectedHealthcareProfessionalData,
+                                                                sectionFields.nameLocale)"
                 >
                     <option
                         v-for="(locale, index) in Locale"
