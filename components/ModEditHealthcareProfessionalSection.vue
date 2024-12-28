@@ -102,8 +102,7 @@
                                     cursor-pointer font-bold text-secondary text-sm"
                                 @click="() => handleRemoveHealthcareProfessionalName(index)"
                             >
-                                <SVGTrashCan class="flex items-center justify-center w-6 h-6" /> {{
-                                    $t('modHealthcareProfessionalSection.delete') }}
+                                <SVGTrashCan class="flex items-center justify-center w-6 h-6" />
                             </span>
                         </div>
                     </div>
@@ -225,6 +224,8 @@ import SVGProfileIcon from '~/assets/icons/profile-icon.svg'
 
 let toast: ToastInterface
 
+const route = useRoute()
+
 const { t } = useI18n()
 
 const moderationScreenStore = useModerationScreenStore()
@@ -275,15 +276,21 @@ const handleRemoveHealthcareProfessionalName = (index: number) => {
 onBeforeMount(async () => {
     isHealthcareProfessionalInitialized.value = false
 
-    const route = useRoute()
-
+    /**
+    Set the variable to useToast when the before the component mounts
+    since vue-taostification is only available on the client.
+    If not done this way the build fails
+     */
     toast = useToast()
+     
+    // Wait for the route to be fully resolved
     await nextTick()
+    // Ensure the route param `id` is available before proceeding
     const id = route.params.id
 
     if (!id) {
         console.error(t('modHealthcareProfessionalSection.errorMessageHealthcareProfessionalId'))
-        toast.error('modHealthcareProfessionalSection.errorMessageHealthcareProfessionalId')
+        toast.error(t('modHealthcareProfessionalSection.errorMessageHealthcareProfessionalId'))
         return
     }
 
