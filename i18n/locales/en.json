@@ -182,6 +182,7 @@
     },
     "modHealthcareProfessionalSection": {
         "addHealthCareProfessionalLocaleName": "Add Name by Locale",
+        "errorMessageHealthcareProfessionalId": "Healthcare Professional Id was not found",
         "healthcareProfessionalHeading": "Healthcare Professional Information",
         "healthcareProfessionalId": "Healthcare Professional IDs",
         "healthcareProfessionalMedicalInfoHeading": "Healthcare Professional Medical Info",
@@ -199,8 +200,7 @@
         "selectDegrees": "Degrees",
         "selectInsurances": "Accepted Insurances",
         "selectLocales": "Select Locales Spoken",
-        "selectSpecialties": "Specialties",
-        "errorMessageHealthcareProfessionalId": "Healthcare Professional Id was not found"
+        "selectSpecialties": "Specialties"
     },
     "modFacilitySection": {
         "addresses": "Addresses",
