@@ -64,7 +64,8 @@
                     {{ $t('modHealthcareProfessionalSection.addHealthCareProfessionalLocaleName') }}
                 </button>
                 <div
-                    v-if="sectionFields.healthcareProfessionalNameArray.length"
+                    v-if="sectionFields.healthcareProfessionalNameArray.length
+                        && healthcareProfessionalsStore.selectedHealthcareProfessionalData"
                     class="flex flex-wrap"
                 >
                     <ModDashboardHealthProfessionalCard
