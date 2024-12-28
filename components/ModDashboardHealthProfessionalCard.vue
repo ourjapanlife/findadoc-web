@@ -51,7 +51,10 @@
                     </div>
                 </div>
             </div>
-            <div v-if="moderationScreenStore.activeScreen === ModerationScreen.EditSubmission">
+            <div
+                v-if="moderationScreenStore.activeScreen === ModerationScreen.EditSubmission
+                    || moderationScreenStore.activeScreen === ModerationScreen.EditHealthcareProfessional"
+            >
                 <div
                     v-for="(nameLocale, index) in healthcareProfessional.names"
                     :key="`${nameLocale.firstName}-${nameLocale.lastName}-${index}`"

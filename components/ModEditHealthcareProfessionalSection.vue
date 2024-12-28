@@ -67,45 +67,9 @@
                     v-if="sectionFields.healthcareProfessionalNameArray.length"
                     class="flex flex-wrap"
                 >
-                    <div
-                        v-for="(healthcareProfessionalName, index) in sectionFields.healthcareProfessionalNameArray"
-                        :key="`${healthcareProfessionalName.firstName}-${index}`"
-                        class="flex basis-1/3 justify-start items-center p-2"
-                    >
-                        <div
-                            class="flex justify-center items-center rounded-lg p-3  border-2 border-primary"
-                            :data-testid="`mod-submission-list-item-${index + 1}`"
-                        >
-                            <div>
-                                <div class="flex font-bold">
-                                    <SVGProfileIcon
-                                        role="img"
-                                        alt="profile icon"
-                                        title="profile icon"
-                                        class="profile-icon w-6 h-6 stroke-primary stroke-1 inline mx-1"
-                                    />
-                                    <span>{{ healthcareProfessionalName.lastName }}</span>
-                                    <span class="mx-2">{{ healthcareProfessionalName.firstName }}</span>
-                                    <span v-show="healthcareProfessionalName.middleName">
-                                        {{ healthcareProfessionalName.middleName }}
-                                    </span>
-                                </div>
-                                <div
-                                    class="w-fit px-2 py-[1px] my-2 border border-primary/40 rounded-full
-                                        shadow text-sm text-center hover:bg-primary/20 transition-all"
-                                >
-                                    {{ healthcareProfessionalName.locale }}
-                                </div>
-                            </div>
-                            <span
-                                class="flex items-center justify-center
-                                    cursor-pointer font-bold text-secondary text-sm"
-                                @click="() => handleRemoveHealthcareProfessionalName(index)"
-                            >
-                                <SVGTrashCan class="flex items-center justify-center w-6 h-6" />
-                            </span>
-                        </div>
-                    </div>
+                    <ModDashboardHealthProfessionalCard
+                        :healthcare-professional="healthcareProfessionalsStore.selectedHealthcareProfessionalData"
+                    />
                 </div>
                 <h2
                     class="mod-healthcare-professional-section
@@ -219,8 +183,6 @@ import { useHealthcareProfessionalsStore } from '~/stores/healthcareProfessional
 import { Locale, type LocalizedNameInput, Insurance, Degree, Specialty } from '~/typedefs/gqlTypes'
 import { multiSelectWithoutKeyboard } from '~/utils/multiSelectWithoutKeyboard'
 import { useI18n } from '#imports'
-import SVGTrashCan from '~/assets/icons/trash-can.svg'
-import SVGProfileIcon from '~/assets/icons/profile-icon.svg'
 
 let toast: ToastInterface
 
@@ -269,10 +231,6 @@ const handleLocalizedName = () => {
     }
 }
 
-const handleRemoveHealthcareProfessionalName = (index: number) => {
-    sectionFields.healthcareProfessionalNameArray.splice(index, 1)
-}
-
 onBeforeMount(async () => {
     isHealthcareProfessionalInitialized.value = false
 
@@ -282,7 +240,7 @@ onBeforeMount(async () => {
     If not done this way the build fails
      */
     toast = useToast()
-     
+
     // Wait for the route to be fully resolved
     await nextTick()
     // Ensure the route param `id` is available before proceeding
