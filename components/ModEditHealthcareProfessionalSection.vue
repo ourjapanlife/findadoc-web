@@ -46,7 +46,7 @@
                                 text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
                     @change=" () => healthcareProfessionalsStore
                         .updateHealthcareProfessionalNameValues(healthcareProfessionalsStore.selectedHealthcareProfessionalData,
-                                                                sectionFields.nameLocale)"
+                                                                healthcareProfessionalModel.nameLocale)"
                 >
                     <option
                         v-for="(locale, index) in Locale"
@@ -64,7 +64,7 @@
                     {{ $t('modHealthcareProfessionalSection.addHealthCareProfessionalLocaleName') }}
                 </button>
                 <div
-                    v-if="sectionFields.healthcareProfessionalNameArray.length
+                    v-if="healthcareProfessionalModel.healthcareProfessionalNameArray.length
                         && healthcareProfessionalsStore.selectedHealthcareProfessionalData"
                     class="flex flex-wrap"
                 >
@@ -86,7 +86,7 @@
                 </label>
                 <select
                     id="accepted-insurances"
-                    v-model="sectionFields.healthcareProfessionalAcceptedInsurances"
+                    v-model="healthcareProfessionalModel.healthcareProfessionalAcceptedInsurances"
                     data-testid="mod-healthcare-professional-section-accepted-insurances"
                     name="Accepted Insurances"
                     multiple
@@ -109,7 +109,7 @@
                 </label>
                 <select
                     id="degrees"
-                    v-model="sectionFields.healthcareProfessionalDegrees"
+                    v-model="healthcareProfessionalModel.healthcareProfessionalDegrees"
                     data-testid="mod-healthcare-professional-section-degrees"
                     name="Degrees"
                     multiple
@@ -132,7 +132,7 @@
                 </label>
                 <select
                     id="specialties"
-                    v-model="sectionFields.healthcareProfessionalSpecialties"
+                    v-model="healthcareProfessionalModel.healthcareProfessionalSpecialties"
                     data-testid="mod-healthcare-professional-section-specialties"
                     name="Specialties"
                     multiple
@@ -155,7 +155,7 @@
                 </label>
                 <select
                     id="locales"
-                    v-model="sectionFields.healthcareProfessionalLocales"
+                    v-model="healthcareProfessionalModel.healthcareProfessionalLocales"
                     data-testid="mod-healthcare-professional-section-spoken-locales"
                     name="Locales"
                     multiple
@@ -193,7 +193,7 @@ const { t } = useI18n()
 
 const moderationScreenStore = useModerationScreenStore()
 const healthcareProfessionalsStore = useHealthcareProfessionalsStore()
-const sectionFields = healthcareProfessionalsStore.healthcareProfessionalSectionFields
+const healthcareProfessionalModel = healthcareProfessionalsStore.healthcareProfessionalSectionFields
 const isEditSubmissionScreen = moderationScreenStore.activeScreen === ModerationScreen.EditSubmission
 
 const insuranceList = Object.values(Insurance) as Insurance[]
@@ -214,21 +214,21 @@ const healthcareProfessionalSpokenLanguages: Ref<Array<Locale>> = ref([])
 
 const handleLocalizedName = () => {
     const localizedNameToAdd: LocalizedNameInput = {
-        firstName: sectionFields.localizedFirstName,
-        lastName: sectionFields.localizedLastName,
-        locale: sectionFields.nameLocale || Locale.EnUs,
-        middleName: sectionFields.localizedMiddleName
+        firstName: healthcareProfessionalModel.localizedFirstName,
+        lastName: healthcareProfessionalModel.localizedLastName,
+        locale: healthcareProfessionalModel.nameLocale || Locale.EnUs,
+        middleName: healthcareProfessionalModel.localizedMiddleName
     }
 
     if (localizedNameToAdd.firstName
       && localizedNameToAdd.lastName
       && localizedNameToAdd.firstName.length > 1
       && localizedNameToAdd.lastName.length > 1) {
-        sectionFields.healthcareProfessionalNameArray.push(localizedNameToAdd)
-        sectionFields.localizedFirstName = ''
-        sectionFields.localizedLastName = ''
-        sectionFields.localizedMiddleName = ''
-        sectionFields.nameLocale = Locale.EnUs
+        healthcareProfessionalModel.healthcareProfessionalNameArray.push(localizedNameToAdd)
+        healthcareProfessionalModel.localizedFirstName = ''
+        healthcareProfessionalModel.localizedLastName = ''
+        healthcareProfessionalModel.localizedMiddleName = ''
+        healthcareProfessionalModel.nameLocale = Locale.EnUs
     }
 }
 
@@ -308,10 +308,10 @@ watch(
         Locale[]
     ],
     ([newInsurances, newDegrees, newSpecialties, newLocales]) => {
-        sectionFields.healthcareProfessionalAcceptedInsurances = newInsurances
-        sectionFields.healthcareProfessionalDegrees = newDegrees
-        sectionFields.healthcareProfessionalSpecialties = newSpecialties
-        sectionFields.healthcareProfessionalLocales = newLocales
+        healthcareProfessionalModel.healthcareProfessionalAcceptedInsurances = newInsurances
+        healthcareProfessionalModel.healthcareProfessionalDegrees = newDegrees
+        healthcareProfessionalModel.healthcareProfessionalSpecialties = newSpecialties
+        healthcareProfessionalModel.healthcareProfessionalLocales = newLocales
     }
 )
 </script>
