@@ -34,6 +34,7 @@ export const useHealthcareProfessionalsStore = defineStore(
         })
 
         function setSelectedHealthcareProfessional(healthcareProfessionalId: string) {
+            selectedHealthcareProfessionalId.value = healthcareProfessionalId
             selectedHealthcareProfessionalData.value = healthcareProfessionalsData.value
                 .find((healthcareProfessional: HealthcareProfessional) => healthcareProfessional.id === healthcareProfessionalId)
         }

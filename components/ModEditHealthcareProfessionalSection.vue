@@ -257,8 +257,6 @@ onBeforeMount(async () => {
         await healthcareProfessionalsStore.getHealthcareProfessionals()
     }
 
-    healthcareProfessionalsStore.selectedHealthcareProfessionalId = id as string
-
     healthcareProfessionalsStore.setSelectedHealthcareProfessional(healthcareProfessionalsStore.selectedHealthcareProfessionalId)
 
     healthcareProfessionalsStore
