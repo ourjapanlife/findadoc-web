@@ -11,7 +11,7 @@
                     class="profile-icon stroke-primary w-16 h-16 stroke-1 inline mx-1 self-start"
                 />
             </div>
-            <div v-if="moderationScreenStore.activeScreen === ModerationScreen.EditFacility">
+            <div v-show="healthcareProfessionalsRelatedToFacility">
                 <div class="flex flex-col h-full w-64 pl-1 mb-1">
                     <div class="flex font-bold pt-2">
                         <span>{{ healthcareProfessionalsStore
@@ -52,8 +52,7 @@
                 </div>
             </div>
             <div
-                v-if="moderationScreenStore.activeScreen === ModerationScreen.EditSubmission
-                    || moderationScreenStore.activeScreen === ModerationScreen.EditHealthcareProfessional"
+                v-show="!healthcareProfessionalsRelatedToFacility"
             >
                 <div
                     v-for="(nameLocale, index) in healthcareProfessional.names"
