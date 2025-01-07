@@ -180,6 +180,10 @@
         "submitted": "Submitted",
         "underReview": "Under Review"
     },
+    "modHealthcareProfessionalCard": {
+        "editName": "Edit",
+        "saveName": "Save"
+    },
     "modHealthcareProfessionalSection": {
         "addHealthCareProfessionalLocaleName": "Add Name by Locale",
         "errorMessageHealthcareProfessionalId": "Healthcare Professional Id was not found",
