@@ -363,5 +363,9 @@
     "selectLocales": "Select Locales Spoken",
     "selectSpecialties": "Specialties",
     "errorMessageHealthcareProfessionalId": "Healthcare Professional Id was not found"
+  },
+  "modHealthcareProfessionalCard": {
+    "editName": "Edit",
+    "saveName": "Save"
   }
 }
