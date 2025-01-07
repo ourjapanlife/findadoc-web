@@ -1,14 +1,10 @@
 import { defineStore } from 'pinia'
 import { reactive, ref, type Ref } from 'vue'
 import { gql } from 'graphql-request'
-import type { HealthcareProfessional,
-    MutationDeleteHealthcareProfessionalArgs,
-    MutationUpdateHealthcareProfessionalArgs,
-    Insurance,
-    Degree,
-    Specialty,
-    LocalizedNameInput } from '~/typedefs/gqlTypes'
-import { Locale } from '~/typedefs/gqlTypes'
+import { type HealthcareProfessional,
+    type MutationDeleteHealthcareProfessionalArgs,
+    type MutationUpdateHealthcareProfessionalArgs,
+    Locale } from '~/typedefs/gqlTypes'
 import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql'
 import { useLocaleStore } from '~/stores/localeStore'
 
@@ -20,61 +16,87 @@ export const useHealthcareProfessionalsStore = defineStore(
         const healthcareProfessionalsData: Ref<HealthcareProfessional[]>
         = ref([])
         const selectedHealthcareProfessionalId: Ref<string> = ref('')
-        const selectedHealthcareProfessionalData: Ref<HealthcareProfessional | undefined> = ref()
-        const healthcareProfessionalSectionFields = reactive({
-            healthcareProfessionalNameArray: [] as Array<LocalizedNameInput>,
-            localizedFirstName: '' as string,
-            localizedLastName: '' as string,
-            localizedMiddleName: '' as string,
-            nameLocale: Locale.EnUs as Locale,
-            healthcareProfessionalAcceptedInsurances: [] as Array<Insurance>,
-            healthcareProfessionalDegrees: [] as Array<Degree>,
-            healthcareProfessionalSpecialties: [] as Array<Specialty>,
-            healthcareProfessionalLocales: [] as Array<Locale>
+        const healthcareProfessionalSectionFields = reactive<HealthcareProfessional>({
+            __typename: 'HealthcareProfessional', // Optional if you're working with GraphQL
+            acceptedInsurance: [],
+            createdDate: '',
+            degrees: [],
+            facilityIds: [],
+            id: '', // Empty string, assuming the ID will be set later
+            names: [],
+            specialties: [],
+            spokenLanguages: [],
+            updatedDate: ''
+        })
+
+        const selectedNameLocaleToUpdate = reactive({
+            localizedFirstName: '',
+            localizedMiddleName: '',
+            localizedLastName: '',
+            nameLocale: Locale.Und,
+            nameLocaleToChange: Locale.Und
         })
 
         function setSelectedHealthcareProfessional(healthcareProfessionalId: string) {
             selectedHealthcareProfessionalId.value = healthcareProfessionalId
-            selectedHealthcareProfessionalData.value = healthcareProfessionalsData.value
+            const selectedHealthcareProfessionalData = healthcareProfessionalsData.value
                 .find((healthcareProfessional: HealthcareProfessional) => healthcareProfessional.id === healthcareProfessionalId)
+            if (selectedHealthcareProfessionalData) {
+                updateHealthcareProfessionalSectionFields(selectedHealthcareProfessionalData)
+            }
         }
 
-        function initializeHealthcareProfessionalValues(selectedHealthcareProfessionalData: HealthcareProfessional | undefined) {
-            if (!selectedHealthcareProfessionalData) return
+        function updateHealthcareProfessionalSectionFields(healthcareProfessional: HealthcareProfessional) {
+            healthcareProfessionalSectionFields.__typename = healthcareProfessional.__typename
+            healthcareProfessionalSectionFields.acceptedInsurance = healthcareProfessional.acceptedInsurance
+            healthcareProfessionalSectionFields.createdDate = healthcareProfessional.createdDate
+            healthcareProfessionalSectionFields.degrees = healthcareProfessional.degrees
+            healthcareProfessionalSectionFields.facilityIds = healthcareProfessional.facilityIds
+            healthcareProfessionalSectionFields.id = healthcareProfessional.id
+            healthcareProfessionalSectionFields.names = healthcareProfessional.names
+            healthcareProfessionalSectionFields.specialties = healthcareProfessional.specialties
+            healthcareProfessionalSectionFields.spokenLanguages = healthcareProfessional.spokenLanguages
+            healthcareProfessionalSectionFields.updatedDate = healthcareProfessional.updatedDate
+        }
 
-            healthcareProfessionalSectionFields.healthcareProfessionalNameArray = selectedHealthcareProfessionalData.names
-            healthcareProfessionalSectionFields.localizedFirstName = selectedHealthcareProfessionalData.names[0].firstName
-            healthcareProfessionalSectionFields.localizedMiddleName = selectedHealthcareProfessionalData.names[0].middleName
-                ? selectedHealthcareProfessionalData.names[0].middleName
+        function setSelectedNameLocaleToUpdate(nameLocale: Locale) {
+            if (!healthcareProfessionalSectionFields.names.length) return
+
+            const nameLocaleToEdit = healthcareProfessionalSectionFields.names.find(name => name.locale === nameLocale)
+
+            if (!nameLocaleToEdit) return
+            selectedNameLocaleToUpdate.localizedFirstName = nameLocaleToEdit.firstName
+            selectedNameLocaleToUpdate.localizedLastName = nameLocaleToEdit.lastName
+            selectedNameLocaleToUpdate.localizedMiddleName = nameLocaleToEdit.middleName
+                ? nameLocaleToEdit.middleName
                 : ''
-            healthcareProfessionalSectionFields.localizedLastName = selectedHealthcareProfessionalData.names[0].lastName
-            healthcareProfessionalSectionFields.nameLocale = selectedHealthcareProfessionalData.names[0].locale
-            healthcareProfessionalSectionFields.healthcareProfessionalAcceptedInsurances
-                = selectedHealthcareProfessionalData.acceptedInsurance
-            healthcareProfessionalSectionFields.healthcareProfessionalDegrees
-                = selectedHealthcareProfessionalData.degrees
-            healthcareProfessionalSectionFields.healthcareProfessionalSpecialties
-                = selectedHealthcareProfessionalData.specialties
-            healthcareProfessionalSectionFields.healthcareProfessionalLocales
-                = selectedHealthcareProfessionalData.spokenLanguages
+            selectedNameLocaleToUpdate.nameLocale = nameLocale
+            selectedNameLocaleToUpdate.nameLocaleToChange = nameLocale
         }
 
-        function updateHealthcareProfessionalNameValues(selectedHealthcareProfessionalData: HealthcareProfessional |
-          undefined, chosenLocale: Locale) {
-            if (!selectedHealthcareProfessionalData) return
+        function updateHealthcareProfessionalNameValues() {
+            if (!healthcareProfessionalSectionFields) return
 
-            const localeIndex = selectedHealthcareProfessionalData.names
-                .findIndex(nameObject => nameObject.locale === chosenLocale)
+            if (!healthcareProfessionalSectionFields.names) return
+
+            const localeIndex = healthcareProfessionalSectionFields.names
+                .findIndex(nameObject => nameObject.locale === selectedNameLocaleToUpdate.nameLocaleToChange)
             if (localeIndex === -1) return
-            healthcareProfessionalSectionFields.healthcareProfessionalNameArray
-            = selectedHealthcareProfessionalData.names
-            healthcareProfessionalSectionFields.localizedFirstName
-            = selectedHealthcareProfessionalData.names[localeIndex].firstName
-            healthcareProfessionalSectionFields.localizedMiddleName
-            = selectedHealthcareProfessionalData.names[localeIndex].middleName
-                    ? selectedHealthcareProfessionalData.names[localeIndex].middleName
+            console.log(selectedNameLocaleToUpdate)
+            healthcareProfessionalSectionFields.names[localeIndex].firstName = selectedNameLocaleToUpdate.localizedFirstName
+            healthcareProfessionalSectionFields.names[localeIndex].middleName
+            = selectedNameLocaleToUpdate.localizedMiddleName
+                    ? selectedNameLocaleToUpdate.localizedMiddleName
                     : ''
-            healthcareProfessionalSectionFields.localizedLastName = selectedHealthcareProfessionalData.names[localeIndex].lastName
+            healthcareProfessionalSectionFields.names[localeIndex].lastName = selectedNameLocaleToUpdate.localizedLastName
+            healthcareProfessionalSectionFields.names[localeIndex].locale = selectedNameLocaleToUpdate.nameLocale
+
+            // Once the name is updated in the array we want to reset the values in case we need to edit a different one
+            selectedNameLocaleToUpdate.localizedFirstName = ''
+            selectedNameLocaleToUpdate.localizedLastName = ''
+            selectedNameLocaleToUpdate.localizedMiddleName = ''
+            selectedNameLocaleToUpdate.nameLocale = Locale.Und
+            selectedNameLocaleToUpdate.nameLocaleToChange = Locale.Und
         }
 
         async function getHealthcareProfessionals() {
@@ -122,9 +144,9 @@ export const useHealthcareProfessionalsStore = defineStore(
             healthcareProfessionalSectionFields,
             displayChosenLocaleForHealthcareProfessional,
             setSelectedHealthcareProfessional,
-            selectedHealthcareProfessionalData,
-            initializeHealthcareProfessionalValues,
-            updateHealthcareProfessionalNameValues
+            updateHealthcareProfessionalNameValues,
+            selectedNameLocaleToUpdate,
+            setSelectedNameLocaleToUpdate
         }
     }
 )
