@@ -293,6 +293,13 @@ onMounted(() => {
     )
 })
 
+/* This watch is necessary in order to update the reactive object
+for the selected healthcareProfessional based on the multiselect values. The
+multiselect functionality need their own refs within the component in order
+to properly update with our custom multiselect functionality. From there the
+healthcareProfessionalFields are updated within the store based on the chosen
+options in the multiselect
+*/
 watch(
     () => [
         healthcareProfessionalAcceptedInsurancesArray.value,
