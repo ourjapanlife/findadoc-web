@@ -1,233 +1,196 @@
 <template>
-    <div class="mod-healthcare-professional-section">
-        <h2
-            class="mb-3.5 text-start text-primary-text text-2xl font-bold font-sans leading-normal"
-        >
-            {{ $t('modHealthcareProfessionalSection.healthcareProfessionalNameHeading') }}
-        </h2>
-        <div class="input-fields flex flex-col my-4">
-            <ModInputField
-                v-model="healthcareProfessionalSectionFields.localizedLastName"
-                data-testid="mod-healthcare-professional-section-lastName"
-                :label="$t('modHealthcareProfessionalSection.labelHealthcareProfessionalLastName')"
-                type="text"
-                :placeholder="$t('modHealthcareProfessionalSection.placeholderTextHealthcareProfessionalLastName')"
-                :required="true"
-            />
-            <ModInputField
-                v-model="healthcareProfessionalSectionFields.localizedFirstName"
-                data-testid="mod-healthcare-professional-section-firstName"
-                :label="$t('modHealthcareProfessionalSection.labelHealthcareProfessionalFirstName')"
-                type="text"
-                :placeholder="$t('modHealthcareProfessionalSection.placeholderTextHealthcareProfessionalFirstName')"
-                :required="true"
-            />
-            <ModInputField
-                v-model="healthcareProfessionalSectionFields.localizedMiddleName"
-                data-testid="mod-healthcare-professional-section-middleName"
-                :label="$t('modHealthcareProfessionalSection.labelHealthcareProfessionalMiddleName')"
-                type="text"
-                :placeholder="$t('modHealthcareProfessionalSection.placeholderTextHealthcareProfessionalMiddleName')"
-                :required="false"
-            />
-            <label
-                for="name_locales"
-                class="my-2 text-primary-text text-sm font-bold font-sans"
-            >
-                {{ $t('modHealthcareProfessionalSection.labelHealthcareProfessionalNameLocale') }}
-            </label>
-            <select
-                id="name_locales"
-                v-model="healthcareProfessionalSectionFields.nameLocale"
-                data-testid="mod-healthcare-professional-section-name-locale"
-                name="Name Locales"
-                class="mb-5 px-3 py-3.5 w-96 h-12 bg-secondary-bg rounded-lg border border-primary-text-muted
-                            text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
-            >
-                <option
-                    v-for="(locale, index) in Locale"
-                    :key="`${locale}-${index}`"
-                >
-                    {{ locale }}
-                </option>
-            </select>
-            <button
-                v-show="isEditSubmissionScreen"
-                type="button"
-                class="bg-tertiary text-white font-bold py-2 px-4 my-2 rounded w-56"
-                @click="handleLocalizedName"
-            >
-                {{ $t('modHealthcareProfessionalSection.addHealthCareProfessionalLocaleName') }}
-            </button>
-            <div
-                v-if="professionalNameArray.length"
-                class="flex flex-wrap"
-            >
-                <div
-                    v-for="(healthcareProfessionalName, index) in professionalNameArray"
-                    :key="`${healthcareProfessionalName.firstName}-${index}`"
-                    class="flex basis-1/3 justify-start items-center p-2"
-                >
-                    <div
-                        class="flex justify-center items-center rounded-lg p-3  border-2 border-primary"
-                        :data-testid="`mod-submission-list-item-${index + 1}`"
-                    >
-                        <div>
-                            <div class="flex font-bold">
-                                <SVGProfileIcon
-                                    role="img"
-                                    alt="profile icon"
-                                    title="profile icon"
-                                    class="profile-icon w-6 h-6 stroke-primary stroke-1 inline mx-1"
-                                />
-                                <span>{{ healthcareProfessionalName.lastName }}</span>
-                                <span class="mx-2">{{ healthcareProfessionalName.firstName }}</span>
-                                <span v-show="healthcareProfessionalName.middleName">
-                                    {{ healthcareProfessionalName.middleName }}
-                                </span>
-                            </div>
-                            <div
-                                class="w-fit px-2 py-[1px] my-2 border border-primary/40 rounded-full
-                                    shadow text-sm text-center hover:bg-primary/20 transition-all"
-                            >
-                                {{ healthcareProfessionalName.locale }}
-                            </div>
-                        </div>
-                        <span
-                            class="flex items-center justify-center
-                                cursor-pointer font-bold text-secondary text-sm"
-                            @click="() => handleRemoveHealthcareProfessionalName(index)"
-                        >
-                            <SVGTrashCan class="flex items-center justify-center w-6 h-6" /> {{
-                                $t('modHealthcareProfessionalSection.delete') }}
-                        </span>
-                    </div>
-                </div>
-            </div>
+    <div v-if="isHealthcareProfessionalInitialized">
+        <div class="mod-healthcare-professional-section">
             <h2
-                class="mod-healthcare-professional-section
-                 my-3.5 text-start text-primary-text text-2xl font-bold font-sans leading-normal"
+                class="mb-3.5 text-start text-primary-text text-2xl font-bold font-sans leading-normal"
             >
-                {{ $t('modHealthcareProfessionalSection.healthcareProfessionalMedicalInfoHeading') }}
+                {{ $t('modHealthcareProfessionalSection.healthcareProfessionalNameHeading') }}
             </h2>
-            <label
-                for="Accepted Insurances"
-                class="my-2 text-primary-text text-sm font-bold font-sans"
-            >
-                {{ $t("modHealthcareProfessionalSection.selectInsurances") }}
-            </label>
-            <select
-                id="accepted-insurances"
-                v-model="healthcareProfessionalSectionFields.healthcareProfessionalAcceptedInsurances"
-                data-testid="mod-healthcare-professional-section-accepted-insurances"
-                name="Accepted Insurances"
-                multiple
-                class="mb-5 px-3 py-3.5 w-96 h-32 bg-secondary-bg rounded-lg border border-primary-text-muted
-                            text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
-            >
-                <option
-                    v-for="(insuranceType, index) in insuranceList"
-                    :key="`${insuranceType}-${index}`"
-                    :value="insuranceType"
+            <div class="input-fields flex flex-col my-4">
+                <ModInputField
+                    v-model="healthcareProfessionalsStore.selectedNameLocaleToUpdate.localizedLastName"
+                    data-testid="mod-healthcare-professional-section-lastName"
+                    :label="$t('modHealthcareProfessionalSection.labelHealthcareProfessionalLastName')"
+                    type="text"
+                    :placeholder="$t('modHealthcareProfessionalSection.placeholderTextHealthcareProfessionalLastName')"
+                    :required="true"
+                />
+                <ModInputField
+                    v-model="healthcareProfessionalsStore.selectedNameLocaleToUpdate.localizedFirstName"
+                    data-testid="mod-healthcare-professional-section-firstName"
+                    :label="$t('modHealthcareProfessionalSection.labelHealthcareProfessionalFirstName')"
+                    type="text"
+                    :placeholder="$t('modHealthcareProfessionalSection.placeholderTextHealthcareProfessionalFirstName')"
+                    :required="true"
+                />
+                <ModInputField
+                    v-model="healthcareProfessionalsStore.selectedNameLocaleToUpdate.localizedMiddleName"
+                    data-testid="mod-healthcare-professional-section-middleName"
+                    :label="$t('modHealthcareProfessionalSection.labelHealthcareProfessionalMiddleName')"
+                    type="text"
+                    :placeholder="$t('modHealthcareProfessionalSection.placeholderTextHealthcareProfessionalMiddleName')"
+                    :required="false"
+                />
+                <label
+                    for="name_locales"
+                    class="my-2 text-primary-text text-sm font-bold font-sans"
                 >
-                    {{ insuranceType }}
-                </option>
-            </select>
-            <label
-                for="degrees"
-                class="my-2 text-primary-text text-sm font-bold font-sans"
-            >
-                {{ $t("modHealthcareProfessionalSection.selectDegrees") }}
-            </label>
-            <select
-                id="degrees"
-                v-model="healthcareProfessionalSectionFields.healthcareProfessionalDegrees"
-                data-testid="mod-healthcare-professional-section-degrees"
-                name="Degrees"
-                multiple
-                class="mb-5 px-3 py-3.5 w-96 h-32 bg-secondary-bg rounded-lg border border-primary-text-muted
-                            text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
-            >
-                <option
-                    v-for="(degree, index) in degreeList"
-                    :key="`${degree}-${index}`"
-                    :value="degree"
+                    {{ $t('modHealthcareProfessionalSection.labelHealthcareProfessionalNameLocale') }}
+                </label>
+                <select
+                    id="name_locales"
+                    v-model="healthcareProfessionalsStore.selectedNameLocaleToUpdate.nameLocale"
+                    data-testid="mod-healthcare-professional-section-name-locale"
+                    name="Name Locales"
+                    class="mb-5 px-3 py-3.5 w-96 h-12 bg-secondary-bg rounded-lg border border-primary-text-muted
+                                text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
                 >
-                    {{ degree }}
-                </option>
-            </select>
-            <label
-                for="specialties"
-                class="my-2 text-primary-text text-sm font-bold font-sans"
-            >
-                {{ $t("modHealthcareProfessionalSection.selectSpecialties") }}
-            </label>
-            <select
-                id="specialties"
-                v-model="healthcareProfessionalSectionFields.healthcareProfessionalSpecialties"
-                data-testid="mod-healthcare-professional-section-specialties"
-                name="Specialties"
-                multiple
-                class="mb-5 px-3 py-3.5 w-96 h-32 bg-secondary-bg rounded-lg border border-primary-text-muted
-                            text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
-            >
-                <option
-                    v-for="(specialty, index) in specialtyList"
-                    :key="`${specialty}-${index}`"
-                    :value="specialty"
+                    <option
+                        v-for="(locale, index) in Locale"
+                        :key="`${locale}-${index}`"
+                    >
+                        {{ locale }}
+                    </option>
+                </select>
+                <button
+                    v-show="isEditSubmissionScreen"
+                    type="button"
+                    class="bg-tertiary text-primary-text font-bold py-2 px-4 my-2 rounded w-56"
+                    @click="handleLocalizedName"
                 >
-                    {{ specialty }}
-                </option>
-            </select>
-            <label
-                for="locales"
-                class="my-2 text-primary-text text-sm font-bold font-sans"
-            >
-                {{ $t("modHealthcareProfessionalSection.selectLocales") }}
-            </label>
-            <select
-                id="locales"
-                v-model="healthcareProfessionalSectionFields.healthcareProfessionalLocales"
-                data-testid="mod-healthcare-professional-section-spoken-locales"
-                name="Locales"
-                multiple
-                class="mb-5 px-3 py-3.5 w-96 h-32 bg-secondary-bg rounded-lg border border-primary-text-muted
-                            text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
-            >
-                <option
-                    v-for="(locale, index) in localeList"
-                    :key="`${locale}-${index}`"
-                    :value="locale"
+                    {{ $t('modHealthcareProfessionalSection.addHealthCareProfessionalLocaleName') }}
+                </button>
+                <div
+                    v-if="healthcareProfessionalsStore.healthcareProfessionalSectionFields.names"
+                    class="flex flex-wrap"
                 >
-                    {{ locale }}
-                </option>
-            </select>
+                    <ModDashboardHealthProfessionalCard
+                        :healthcare-professional="healthcareProfessionalsStore.healthcareProfessionalSectionFields"
+                        :set-on-click="healthcareProfessionalsStore.setSelectedNameLocaleToUpdate"
+                        :update-on-click="healthcareProfessionalsStore.updateHealthcareProfessionalNameValues"
+                    />
+                </div>
+                <h2
+                    class="mod-healthcare-professional-section
+                     my-3.5 text-start text-primary-text text-2xl font-bold font-sans leading-normal"
+                >
+                    {{ $t('modHealthcareProfessionalSection.healthcareProfessionalMedicalInfoHeading') }}
+                </h2>
+                <label
+                    for="Accepted Insurances"
+                    class="my-2 text-primary-text text-sm font-bold font-sans"
+                >
+                    {{ $t("modHealthcareProfessionalSection.selectInsurances") }}
+                </label>
+                <select
+                    id="accepted-insurances"
+                    v-model="healthcareProfessionalsStore.healthcareProfessionalSectionFields.acceptedInsurance"
+                    data-testid="mod-healthcare-professional-section-accepted-insurances"
+                    name="Accepted Insurances"
+                    multiple
+                    class="mb-5 px-3 py-3.5 w-96 h-32 bg-secondary-bg rounded-lg border border-primary-text-muted
+                                text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
+                >
+                    <option
+                        v-for="(insuranceType, index) in insuranceList"
+                        :key="`${insuranceType}-${index}`"
+                        :value="insuranceType"
+                    >
+                        {{ insuranceType }}
+                    </option>
+                </select>
+                <label
+                    for="degrees"
+                    class="my-2 text-primary-text text-sm font-bold font-sans"
+                >
+                    {{ $t("modHealthcareProfessionalSection.selectDegrees") }}
+                </label>
+                <select
+                    id="degrees"
+                    v-model="healthcareProfessionalsStore.healthcareProfessionalSectionFields.degrees"
+                    data-testid="mod-healthcare-professional-section-degrees"
+                    name="Degrees"
+                    multiple
+                    class="mb-5 px-3 py-3.5 w-96 h-32 bg-secondary-bg rounded-lg border border-primary-text-muted
+                                text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
+                >
+                    <option
+                        v-for="(degree, index) in degreeList"
+                        :key="`${degree}-${index}`"
+                        :value="degree"
+                    >
+                        {{ degree }}
+                    </option>
+                </select>
+                <label
+                    for="specialties"
+                    class="my-2 text-primary-text text-sm font-bold font-sans"
+                >
+                    {{ $t("modHealthcareProfessionalSection.selectSpecialties") }}
+                </label>
+                <select
+                    id="specialties"
+                    v-model="healthcareProfessionalsStore.healthcareProfessionalSectionFields.specialties"
+                    data-testid="mod-healthcare-professional-section-specialties"
+                    name="Specialties"
+                    multiple
+                    class="mb-5 px-3 py-3.5 w-96 h-32 bg-secondary-bg rounded-lg border border-primary-text-muted
+                                text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
+                >
+                    <option
+                        v-for="(specialty, index) in specialtyList"
+                        :key="`${specialty}-${index}`"
+                        :value="specialty"
+                    >
+                        {{ specialty }}
+                    </option>
+                </select>
+                <label
+                    for="locales"
+                    class="my-2 text-primary-text text-sm font-bold font-sans"
+                >
+                    {{ $t("modHealthcareProfessionalSection.selectLocales") }}
+                </label>
+                <select
+                    id="locales"
+                    v-model="healthcareProfessionalsStore.healthcareProfessionalSectionFields.spokenLanguages"
+                    data-testid="mod-healthcare-professional-section-spoken-locales"
+                    name="Locales"
+                    multiple
+                    class="mb-5 px-3 py-3.5 w-96 h-32 bg-secondary-bg rounded-lg border border-primary-text-muted
+                                text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
+                >
+                    <option
+                        v-for="(locale, index) in localeList"
+                        :key="`${locale}-${index}`"
+                        :value="locale"
+                    >
+                        {{ locale }}
+                    </option>
+                </select>
+            </div>
         </div>
     </div>
 </template>
 
 <script lang="ts" setup>
-import { onMounted, reactive, ref } from 'vue'
+import { nextTick, onBeforeMount, onUpdated, type Ref, ref, watch } from 'vue'
+import { useRoute } from 'vue-router'
+import { type ToastInterface, useToast } from 'vue-toastification'
 import { ModerationScreen, useModerationScreenStore } from '~/stores/moderationScreenStore'
-import { Locale, type LocalizedNameInput, Insurance, Degree, Specialty } from '~/typedefs/gqlTypes'
+import { useHealthcareProfessionalsStore } from '~/stores/healthcareProfessionalsStore'
+import { Locale, Insurance, Degree, Specialty, type LocalizedNameInput } from '~/typedefs/gqlTypes'
 import { multiSelectWithoutKeyboard } from '~/utils/multiSelectWithoutKeyboard'
-import SVGTrashCan from '~/assets/icons/trash-can.svg'
-import SVGProfileIcon from '~/assets/icons/profile-icon.svg'
+import { useI18n } from '#imports'
 
-const healthcareProfessionalSectionFields = reactive({
-    healthcareProfessionalNameArray: [] as Array<LocalizedNameInput>,
-    localizedFirstName: '',
-    localizedLastName: '',
-    localizedMiddleName: '',
-    nameLocale: Locale.EnUs,
-    healthcareProfessionalAcceptedInsurances: [] as Array<Insurance>,
-    healthcareProfessionalDegrees: [] as Array<Degree>,
-    healthcareProfessionalSpecialties: [] as Array<Specialty>,
-    healthcareProfessionalLocales: [] as Array<Locale>
-})
+let toast: ToastInterface
+
+const route = useRoute()
+
+const { t } = useI18n()
 
 const moderationScreenStore = useModerationScreenStore()
-const professionalNameArray = healthcareProfessionalSectionFields.healthcareProfessionalNameArray
+const healthcareProfessionalsStore = useHealthcareProfessionalsStore()
 const isEditSubmissionScreen = moderationScreenStore.activeScreen === ModerationScreen.EditSubmission
 
 const insuranceList = Object.values(Insurance) as Insurance[]
@@ -238,52 +201,122 @@ const specialtyList = Object.values(Specialty) as Specialty[]
 const selectedSpecialty = (option: HTMLOptionElement): Specialty => option.value as Specialty
 const localeList = Object.values(Locale) as Locale[]
 const selectedLocale = (option: HTMLOptionElement): Locale => option.value as Locale
+const isHealthcareProfessionalInitialized: Ref<boolean> = ref(false)
+
+// These are component refs to enable the multi select to work properly
+const healthcareProfessionalAcceptedInsurancesArray: Ref<Array<Insurance>> = ref([])
+const healthcareProfessionalDegreesArray: Ref<Array<Degree>> = ref([])
+const healthcareProfessionalSpecialtiesArray: Ref<Array<Specialty>> = ref([])
+const healthcareProfessionalSpokenLanguages: Ref<Array<Locale>> = ref([])
 
 const handleLocalizedName = () => {
     const localizedNameToAdd: LocalizedNameInput = {
-        firstName: healthcareProfessionalSectionFields.localizedFirstName,
-        lastName: healthcareProfessionalSectionFields.localizedLastName,
-        locale: healthcareProfessionalSectionFields.nameLocale || Locale.EnUs,
-        middleName: healthcareProfessionalSectionFields.localizedMiddleName
+        firstName: healthcareProfessionalsStore.selectedNameLocaleToUpdate.localizedFirstName,
+        lastName: healthcareProfessionalsStore.selectedNameLocaleToUpdate.localizedLastName,
+        locale: healthcareProfessionalsStore.selectedNameLocaleToUpdate.nameLocale || Locale.Und,
+        middleName: healthcareProfessionalsStore.selectedNameLocaleToUpdate.localizedMiddleName
     }
 
     if (localizedNameToAdd.firstName
-      && localizedNameToAdd.lastName) {
-        professionalNameArray.push(localizedNameToAdd)
-        healthcareProfessionalSectionFields.localizedFirstName = ''
-        healthcareProfessionalSectionFields.localizedLastName = ''
-        healthcareProfessionalSectionFields.localizedMiddleName = ''
-        healthcareProfessionalSectionFields.nameLocale = Locale.EnUs
+      && localizedNameToAdd.lastName
+      && localizedNameToAdd.firstName.length > 1
+      && localizedNameToAdd.lastName.length > 1
+      && healthcareProfessionalsStore.healthcareProfessionalSectionFields.names) {
+        healthcareProfessionalsStore.healthcareProfessionalSectionFields.names.push(localizedNameToAdd)
+        healthcareProfessionalsStore.selectedNameLocaleToUpdate.localizedFirstName = ''
+        healthcareProfessionalsStore.selectedNameLocaleToUpdate.localizedMiddleName = ''
+        healthcareProfessionalsStore.selectedNameLocaleToUpdate.localizedLastName = ''
+        healthcareProfessionalsStore.selectedNameLocaleToUpdate.nameLocale = Locale.Und
     }
 }
 
-const handleRemoveHealthcareProfessionalName = (index: number) => {
-    professionalNameArray.splice(index, 1)
-}
+onBeforeMount(async () => {
+    isHealthcareProfessionalInitialized.value = false
 
-onMounted(() => {
+    /**
+    Set the variable to useToast when the before the component mounts
+    since vue-taostification is only available on the client.
+    If not done this way the build fails
+     */
+    toast = useToast()
+
+    // Wait for the route to be fully resolved
+    await nextTick()
+    // Ensure the route param `id` is available before proceeding
+    const id = route.params.id
+
+    if (!id) {
+        console.error(t('modHealthcareProfessionalSection.errorMessageHealthcareProfessionalId'))
+        toast.error(t('modHealthcareProfessionalSection.errorMessageHealthcareProfessionalId'))
+        return
+    }
+
+    if (!healthcareProfessionalsStore.healthcareProfessionalsData.length) {
+        await healthcareProfessionalsStore.getHealthcareProfessionals()
+    }
+
+    healthcareProfessionalsStore.setSelectedHealthcareProfessional(healthcareProfessionalsStore.selectedHealthcareProfessionalId)
+
+    await nextTick()
+
+    isHealthcareProfessionalInitialized.value = true
+
+    await nextTick()
+})
+
+/* This runs the functions only when the DOM has fully loaded and been updated for
+the multiselects to be initialized properly
+*/
+onUpdated(() => {
     multiSelectWithoutKeyboard(
-        '#healthcare-professional-accepted-insurances',
-        ref(healthcareProfessionalSectionFields.healthcareProfessionalAcceptedInsurances),
+        '#accepted-insurances',
+        healthcareProfessionalAcceptedInsurancesArray,
         selectedInsurance
     )
 
     multiSelectWithoutKeyboard(
-        '#healthcare-professional-degrees',
-        ref(healthcareProfessionalSectionFields.healthcareProfessionalDegrees),
+        '#degrees',
+        healthcareProfessionalDegreesArray,
         selectedDegree
     )
 
     multiSelectWithoutKeyboard(
-        '#healthcare-professional-specialties',
-        ref(healthcareProfessionalSectionFields.healthcareProfessionalSpecialties),
+        '#specialties',
+        healthcareProfessionalSpecialtiesArray,
         selectedSpecialty
     )
 
     multiSelectWithoutKeyboard(
-        '#healthcare-professional-locales',
-        ref(healthcareProfessionalSectionFields.healthcareProfessionalLocales),
+        '#locales',
+        healthcareProfessionalSpokenLanguages,
         selectedLocale
     )
 })
+
+/* This watch is necessary in order to update the reactive object
+for the selected healthcareProfessional based on the multiselect values. The
+multiselect functionality need their own refs within the component in order
+to properly update with our custom multiselect functionality. From there the
+healthcareProfessionalFields are updated within the store based on the chosen
+options in the multiselect
+*/
+watch(
+    () => [
+        healthcareProfessionalAcceptedInsurancesArray.value,
+        healthcareProfessionalDegreesArray.value,
+        healthcareProfessionalSpecialtiesArray.value,
+        healthcareProfessionalSpokenLanguages.value
+    ] as [
+        Insurance[],
+        Degree[],
+        Specialty[],
+        Locale[]
+    ],
+    ([newInsurances, newDegrees, newSpecialties, newLocales]) => {
+        healthcareProfessionalsStore.healthcareProfessionalSectionFields.acceptedInsurance = newInsurances
+        healthcareProfessionalsStore.healthcareProfessionalSectionFields.degrees = newDegrees
+        healthcareProfessionalsStore.healthcareProfessionalSectionFields.specialties = newSpecialties
+        healthcareProfessionalsStore.healthcareProfessionalSectionFields.spokenLanguages = newLocales
+    }
+)
 </script>
