@@ -349,9 +349,7 @@
     "selectInsurances": "Accepted Insurances",
     "selectLocales": "Select Locales Spoken",
     "selectSpecialties": "Specialties",
-    "facilities": "Facilities"
-  },
-  "modFacilitySearchBar": {
+    "facilities": "Facilities",
     "placeholderTextFacilitySearchBar": "Search by name or Id add a facility",
     "noFacilitiesWereFound": "No facilities were found"
   }

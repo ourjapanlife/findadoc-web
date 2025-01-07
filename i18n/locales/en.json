@@ -200,7 +200,9 @@
         "selectInsurances": "Accepted Insurances",
         "selectLocales": "Select Locales Spoken",
         "selectSpecialties": "Specialties",
-        "facilities": "Facilities"
+        "facilities": "Facilities",
+        "placeholderTextFacilitySearchBar": "Search by name or Id add a facility",
+        "noFacilitiesWereFound": "No facilities were found"
     },
     "modFacilitySection": {
         "addresses": "Addresses",
@@ -350,9 +352,5 @@
         "successMessageUpdated": "Submission updated successfully",
         "successMessageApproved": "Submission approved and created successfully",
         "updateButtonText": "Update"
-    },
-    "modFacilitySearchBar": {
-      "placeholderTextFacilitySearchBar": "Search by name or Id add a facility",
-      "noFacilitiesWereFound": "No facilities were found"
     }
 }

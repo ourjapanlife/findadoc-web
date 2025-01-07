@@ -209,10 +209,16 @@
                 {{ $t("modHealthcareProfessionalSection.facilities") }}
             </h2>
             <!-- This is just an example how to use it -->
-            <ModFacilitySearchbar v-model="selectedFacitilies" />
+            <ModSearchbar
+                v-model="selectedFacilities"
+                :place-holder-text="$t('modHealthcareProfessionalSection.placeholderTextFacilitySearchBar')"
+                :no-match-text="$t('modHealthcareProfessionalSection.noFacilitiesWereFound')"
+                :fields-to-display-callback="fieldsToDisplayCallback"
+                @search-input-change="handleSearchInputChange"
+            />
             <ul>
                 <li
-                    v-for="facility in selectedFacitilies"
+                    v-for="facility in selectedFacilities"
                     :key="facility.id"
                 >
                     {{ `${facility.id} / ${facility.nameEn} / ${facility.nameJa}` }}
@@ -223,15 +229,26 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, reactive, ref } from 'vue'
-import ModFacilitySearchbar from './ModFacilitySearchbar.vue'
+import { onMounted, reactive, ref, type Ref } from 'vue'
+import ModSearchbar from './ModSearchBar.vue'
 import { ModerationScreen, useModerationScreenStore } from '~/stores/moderationScreenStore'
-import { Locale, type LocalizedNameInput, Insurance, Degree, Specialty, type Facility } from '~/typedefs/gqlTypes'
+import {
+    Locale,
+    Insurance,
+    Degree,
+    Specialty,
+    type LocalizedNameInput,
+    type Facility
+} from '~/typedefs/gqlTypes'
 import { multiSelectWithoutKeyboard } from '~/utils/multiSelectWithoutKeyboard'
 import SVGTrashCan from '~/assets/icons/trash-can.svg'
 import SVGProfileIcon from '~/assets/icons/profile-icon.svg'
+import { useFacilitiesStore } from '#imports'
 
-const selectedFacitilies = ref(new Set<Facility>())
+const selectedFacilities = ref(new Set<Facility>())
+const facilitiesStore = useFacilitiesStore()
+await facilitiesStore.getFacilities() // Fix a bug where facilities disappear after the user refreshes the page
+const currentFacilities = facilitiesStore.facilityData
 
 const healthcareProfessionalSectionFields = reactive({
     healthcareProfessionalNameArray: [] as Array<LocalizedNameInput>,
@@ -279,6 +296,18 @@ const handleLocalizedName = () => {
 const handleRemoveHealthcareProfessionalName = (index: number) => {
     professionalNameArray.splice(index, 1)
 }
+
+const handleSearchInputChange = (filteredItems: Ref<Facility[]>, inputValue: string) => {
+    filteredItems.value = currentFacilities.filter(({ nameEn, nameJa, id }) => {
+        const isMatch
+            = nameEn.toLowerCase().includes(inputValue)
+            || nameJa.toLowerCase().includes(inputValue)
+            || id.toLowerCase() === inputValue
+        return isMatch
+    })
+}
+
+const fieldsToDisplayCallback = (item: Facility) => [item.nameEn, item.nameJa]
 
 onMounted(() => {
     multiSelectWithoutKeyboard(
