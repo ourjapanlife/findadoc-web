@@ -11,7 +11,7 @@
                     class="profile-icon stroke-primary w-16 h-16 stroke-1 inline mx-1 self-start"
                 />
             </div>
-            <div v-show="healthcareProfessionalsRelatedToFacility">
+            <div v-if="healthcareProfessionalsRelatedToFacility">
                 <div class="flex flex-col h-full w-64 pl-1 mb-1">
                     <div class="flex font-bold pt-2">
                         <span>{{ healthcareProfessionalsStore
@@ -52,7 +52,7 @@
                 </div>
             </div>
             <div
-                v-show="!healthcareProfessionalsRelatedToFacility"
+                v-if="!healthcareProfessionalsRelatedToFacility"
             >
                 <div
                     v-for="(nameLocale, index) in healthcareProfessional.names"
@@ -72,6 +72,24 @@
                         {{ localeStore.formatLanguageCodeToSimpleText(
                             nameLocale.locale) }}
                     </span>
+                    <div>
+                        <button
+                            v-if="!isEditable && setOnClick"
+                            type="button"
+                            class="border-2 border-primary px-3 my-1 rounded-full font-semibold hover:bg-currentColor"
+                            @click="() => setChangeToEditable(nameLocale.locale)"
+                        >
+                            {{ $t("modHealthcareProfessionalCard.editName") }}
+                        </button>
+                        <button
+                            v-if="isEditable && updateOnClick"
+                            type="button"
+                            class="border-2 border-primary px-3 my-1 rounded-full font-semibold hover:bg-currentColor"
+                            @click="() => setToUneditableAndSave()"
+                        >
+                            {{ $t("modHealthcareProfessionalCard.saveName") }}
+                        </button>
+                    </div>
                 </div>
             </div>
             <div
@@ -99,6 +117,7 @@
 </template>
 
 <script setup lang="ts">
+import { type Ref, ref } from 'vue'
 import SVGTrashCan from '~/assets/icons/trash-can.svg'
 import SVGProfileIcon from '~/assets/icons/profile-icon.svg'
 import SVGUndoIcon from '~/assets/icons/undo-icon.svg'
@@ -112,6 +131,8 @@ const localeStore = useLocaleStore()
 const facilitiesStore = useFacilitiesStore()
 const moderationScreenStore = useModerationScreenStore()
 const healthcareProfessionalsStore = useHealthcareProfessionalsStore()
+
+const isEditable: Ref<boolean> = ref(false)
 
 // This checks whether an existing healthcare professional has been added for removal
 const isHealthcareProfessionalReadyForRemoval = (id: string) =>
@@ -142,8 +163,26 @@ const undoRemovalOfHealthcareProfessional = (id: string) => {
             .filter((healthcareProfessionalRelation: Relationship) => healthcareProfessionalRelation.otherEntityId !== id)
 }
 
+// This changes the component details to editable with an optional parameter to use in the callback function
+const setChangeToEditable = (param?: unknown) => {
+    if (props.setOnClick && param) props.setOnClick(param)
+    if (props.setOnClick && !param) props.setOnClick()
+
+    isEditable.value = true
+}
+
+// This changes the component to not editable and saves the changes based on updateOnClickFunction
+const setToUneditableAndSave = (param?: unknown) => {
+    if (props.updateOnClick && param) props.updateOnClick(param)
+    if (props.updateOnClick && !param) props.updateOnClick()
+
+    isEditable.value = false
+}
+
 const props = defineProps<{
     healthcareProfessional: HealthcareProfessional
     healthcareProfessionalsRelatedToFacility?: string[]
+    setOnClick?: (param?: unknown) => void
+    updateOnClick?: (param?: unknown) => void
 }>()
 </script>
