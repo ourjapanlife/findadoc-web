@@ -58,7 +58,7 @@
                 <button
                     v-show="isEditSubmissionScreen"
                     type="button"
-                    class="bg-tertiary text-white font-bold py-2 px-4 my-2 rounded w-56"
+                    class="bg-tertiary text-primary-text font-bold py-2 px-4 my-2 rounded w-56"
                     @click="handleLocalizedName"
                 >
                     {{ $t('modHealthcareProfessionalSection.addHealthCareProfessionalLocaleName') }}
