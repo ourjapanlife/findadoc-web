@@ -6,6 +6,7 @@ import { type DeleteResult, type HealthcareProfessional,
     type Mutation,
     type MutationDeleteHealthcareProfessionalArgs,
     type MutationUpdateHealthcareProfessionalArgs,
+    type Relationship,
     Locale } from '~/typedefs/gqlTypes'
 import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql'
 import { useLocaleStore } from '~/stores/localeStore'
@@ -31,6 +32,7 @@ export const useHealthcareProfessionalsStore = defineStore(
             spokenLanguages: [],
             updatedDate: ''
         })
+        const facilitiesRelationsToSelectedHealthcareProfessional: Ref<Relationship[]> = ref([])
 
         const selectedNameLocaleToUpdate = reactive({
             localizedFirstName: '',
@@ -107,16 +109,43 @@ export const useHealthcareProfessionalsStore = defineStore(
             healthcareProfessionalsData.value = healthcareProfessionalResults
         }
 
-        async function updateHealthcareProfessional(healthcareProfessional: MutationUpdateHealthcareProfessionalArgs) {
-            try {
-                return await graphQLClientRequestWithRetry(
-                    gqlClient.request.bind(gqlClient),
-                    updateHealthcareProfessionalGqlMutation,
-                    healthcareProfessional
-                )
-            } catch (error) {
-                console.error('Failed to update healthcare professional:', error)
+        async function updateHealthcareProfessional():
+        Promise<ServerResponse<Maybe<HealthcareProfessional>>> {
+            const serverResponse = { data: {} as Maybe<HealthcareProfessional>, errors: [] as ServerError[], hasErrors: false }
+
+            const updateHealthcareProfessionalInput: MutationUpdateHealthcareProfessionalArgs = {
+                id: selectedHealthcareProfessionalId.value,
+                input: {
+                    acceptedInsurance: healthcareProfessionalSectionFields.acceptedInsurance,
+                    degrees: healthcareProfessionalSectionFields.degrees,
+                    facilityIds: facilitiesRelationsToSelectedHealthcareProfessional.value.length
+                    > 0
+                        ? facilitiesRelationsToSelectedHealthcareProfessional.value
+                        : undefined,
+                    names: healthcareProfessionalSectionFields.names,
+                    specialties: healthcareProfessionalSectionFields.specialties,
+                    spokenLanguages: healthcareProfessionalSectionFields.spokenLanguages
+                }
             }
+
+            const response = await graphQLClientRequestWithRetry<Mutation>(
+                gqlClient.request.bind(gqlClient),
+                updateHealthcareProfessionalGqlMutation,
+                updateHealthcareProfessionalInput
+            )
+
+            serverResponse.data = response.data?.updateHealthcareProfessional
+            serverResponse.errors = response.errors
+                ? response.errors
+                : []
+            serverResponse.hasErrors = response.hasErrors
+
+            if (!serverResponse.errors.length) {
+                facilitiesRelationsToSelectedHealthcareProfessional.value = []
+                healthcareProfessionalSectionFields.facilityIds = serverResponse.data!.facilityIds
+            }
+
+            return serverResponse
         }
 
         async function deleteHealthcareProfessional(healthcareProfessionalId: MutationDeleteHealthcareProfessionalArgs):
