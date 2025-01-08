@@ -159,7 +159,9 @@
         "update": "Update",
         "updateAndExit": "Update & Exit",
         "facilityDeletedSuccessfully": "Facility deleted successfully",
-        "facilityUpdatedSuccessfully": "Facility updated successfully"
+        "facilityUpdatedSuccessfully": "Facility updated successfully",
+        "healthcareProfessionalDeletedSuccessfully": "Healthcare professional deleted successfully",
+        "healthcareProfessionalUpdatedSuccessfully": "Healthcare professional updated successfully"
     },
     "modEditSubmissionTopNav": {
         "saveAndExit": "Save & Exit",
