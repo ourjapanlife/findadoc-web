@@ -28,13 +28,17 @@ export const multiSelectWithoutKeyboard = <T extends string>(
         target.selected = !target.selected
 
         const value = extractOption(target)
-        const index = arrayToUpdate.value.indexOf(value)
+        // Check if the extracted value is already in the array
+        if (arrayToUpdate.value) {
+            const index = arrayToUpdate.value.indexOf(value)
+            // If the value is not in the array that is being updated, add it
+            if (index === -1) {
+                arrayToUpdate.value.push(value)
+                return
+            }
 
-        if (index === -1) {
-            arrayToUpdate.value.push(value)
-            return
+            // If the value is already in the array. Remove it
+            arrayToUpdate.value.splice(index, 1)
         }
-
-        arrayToUpdate.value.splice(index, 1)
     }, false)
 }

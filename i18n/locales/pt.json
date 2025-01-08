@@ -159,7 +159,8 @@
     "selectInsurances": "Accepted Insurances",
     "selectSpecialties": "Specialties",
     "selectDegrees": "Degrees",
-    "selectLocales": "Select Locales Spoken"
+    "selectLocales": "Select Locales Spoken",
+    "errorMessageHealthcareProfessionalId": "Healthcare Professional Id was not found"
   },
   "modSubmissionForm": {
     "addresses": "Endereços",
@@ -361,5 +362,9 @@
   },
   "localeSelector": {
     "loading": "Loading..."
+  },
+  "modHealthcareProfessionalCard": {
+    "editName": "Edit",
+    "saveName": "Save"
   }
 }

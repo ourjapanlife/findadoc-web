@@ -291,6 +291,8 @@ import type { HealthcareProfessional } from '~/typedefs/gqlTypes'
 // Initialize the variable that will be used to mount the toast library
 let toast: ToastInterface
 
+const route = useRoute()
+
 const { t } = useI18n()
 
 const moderationScreenStore = useModerationScreenStore()
@@ -332,8 +334,6 @@ const listPrefectureJapanJa: Ref<string[]> = ref([
 onBeforeMount(async () => {
     isFacilitySectionInitialized.value = false
 
-    const route = useRoute()
-
     /**
     Set the variable to useToast when the before the component mounts
     since vue-taostification is only available on the client.
@@ -347,7 +347,7 @@ onBeforeMount(async () => {
     const id = route.params.id
     if (!id) {
         console.error(t('modFacilitySection.errorMessageFacilityId'))
-        toast.error('modFacilitySection.errorMessageFacilityId')
+        toast.error(t('modFacilitySection.errorMessageFacilityId'))
         return
     }
 
