@@ -220,7 +220,7 @@ const openDeletionConfirmation = () => {
 }
 
 const deleteFacilityOrHealthcareProfessional = async () => {
-    // This makes the on click update the facility if the screen is EditFacility
+    // This makes the on click delete the facility if the screen is EditFacility
     if (moderationScreenStore.activeScreen === ModerationScreen.EditFacility) {
         const deleteFacilityArgs = {
             id: selectedId.value
@@ -234,6 +234,26 @@ const deleteFacilityOrHealthcareProfessional = async () => {
 
         toast.success(t('modEditFacilityOrHPTopbar.facilityDeletedSuccessfully'))
         // We are redirecting the moderator to the dashboard as there is no more facility to edit
+        router.push('/moderation')
+        modalStore.hideModal()
+        return response
+    }
+
+    // This makes the on click delete the healthcare professional if the screen is EditHealthcareProfessional
+    if (moderationScreenStore.activeScreen === ModerationScreen.EditHealthcareProfessional) {
+        const deleteHealthcareProfessionalArgs = {
+            id: selectedId.value
+        }
+
+        const response = await healthcareProfessionalsStore.deleteHealthcareProfessional(deleteHealthcareProfessionalArgs)
+
+        if (response.errors?.length) {
+            handleServerErrorMessaging(response.errors, toast, t)
+            return response
+        }
+
+        toast.success(t('modEditFacilityOrHPTopbar.healthcareProfessionalDeletedSuccessfully'))
+        // We are redirecting the moderator to the dashboard as there is no more healthcare professional to edit
         router.push('/moderation')
         modalStore.hideModal()
         return response
