@@ -86,7 +86,6 @@
                 <div
                     :data-testid="`mod-healthcare-professional-list-item-${index + 1}`"
                     class="grid grid-cols-subgrid col-span-4 bg-tertiary-bg cursor-pointer hover:bg-primary"
-                    @click="handleClickToHealthcareProfessionalForm(healthcareProfessional.id)"
                 >
                     <NuxtLink
                         :to="`/moderation/edit-healthcare-professional/${healthcareProfessional.id}`"
@@ -143,10 +142,5 @@ const submissionListItemTableColumns = computed(() => {
 const handleClickToSubmissionForm = (id: string) => {
     modSubmissionsListStore.selectedSubmissionId = id
     moderationScreenStore.setActiveScreen(ModerationScreen.EditSubmission)
-}
-
-const handleClickToHealthcareProfessionalForm = (id: string) => {
-    healthcareProfessionalsStore.selectedHealthcareProfessionalId = id
-    moderationScreenStore.setActiveScreen(ModerationScreen.EditHealthcareProfessional)
 }
 </script>
