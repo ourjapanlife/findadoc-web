@@ -153,7 +153,9 @@
     "facilityUpdatedSuccessfully": "Facility updated successfully",
     "deleteButtonText": "DELETE FOREVER",
     "deleteConfirmationFacility": "Are you sure you want to delete the facility: {facility} , with ID: {id}?",
-    "facilityDeletedSuccessfully": "Facility deleted successfully"
+    "facilityDeletedSuccessfully": "Facility deleted successfully",
+    "healthcareProfessionalDeletedSuccessfully": "Healthcare professional deleted successfully",
+    "healthcareProfessionalUpdatedSuccessfully": "Healthcare professional updated successfully"
   },
   "modEditSubmissionTopNav": {
     "saveAndExit": "I-Save at I-Exit",
