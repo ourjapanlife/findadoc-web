@@ -1,12 +1,15 @@
+import type { Maybe } from 'graphql/jsutils/Maybe'
 import { defineStore } from 'pinia'
 import { reactive, ref, type Ref } from 'vue'
 import { gql } from 'graphql-request'
-import { type HealthcareProfessional,
+import { type DeleteResult, type HealthcareProfessional,
+    type Mutation,
     type MutationDeleteHealthcareProfessionalArgs,
     type MutationUpdateHealthcareProfessionalArgs,
     Locale } from '~/typedefs/gqlTypes'
 import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql'
 import { useLocaleStore } from '~/stores/localeStore'
+import type { ServerError, ServerResponse } from '~/typedefs/serverResponse'
 
 export const useHealthcareProfessionalsStore = defineStore(
     'healthcareProfessionalsStore',
@@ -116,16 +119,21 @@ export const useHealthcareProfessionalsStore = defineStore(
             }
         }
 
-        async function deleteHealthcareProfessional(healthcareProfessionalId: MutationDeleteHealthcareProfessionalArgs) {
-            try {
-                return await graphQLClientRequestWithRetry(
-                    gqlClient.request.bind(gqlClient),
-                    deleteHealthcareProfessionalGqlMutation,
-                    healthcareProfessionalId
-                )
-            } catch (error) {
-                console.error('Failed to delete healthcare professional:', error)
-            }
+        async function deleteHealthcareProfessional(healthcareProfessionalId: MutationDeleteHealthcareProfessionalArgs):
+        Promise<ServerResponse<Maybe<DeleteResult>>> {
+            const serverResponse = { data: {} as Maybe<DeleteResult>, errors: [] as ServerError[], hasErrors: false }
+
+            const response = await graphQLClientRequestWithRetry<Mutation>(
+                gqlClient.request.bind(gqlClient),
+                deleteHealthcareProfessionalGqlMutation,
+                healthcareProfessionalId
+            )
+
+            serverResponse.data = response.data?.deleteHealthcareProfessional
+            serverResponse.errors = response.errors ? response.errors : []
+            serverResponse.hasErrors = response.hasErrors
+
+            return serverResponse
         }
 
         const displayChosenLocaleForHealthcareProfessional = (healthcareProfessional: HealthcareProfessional) => {
@@ -242,8 +250,8 @@ mutation Mutation($updateHealthcareProfessionalId: ID!, $input: UpdateHealthcare
 `
 
 const deleteHealthcareProfessionalGqlMutation = gql`
-mutation Mutation($deleteHealthcareProfessionalId: ID!) {
-  deleteHealthcareProfessional(id: $deleteHealthcareProfessionalId) {
+mutation Mutation($id: ID!) {
+  deleteHealthcareProfessional(id: $id) {
     isSuccessful
   }
 }
