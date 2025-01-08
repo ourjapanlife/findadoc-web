@@ -1,4 +1,5 @@
 import { defineNuxtConfig } from 'nuxt/config'
+import i18nLocales from './i18n'
 
 const SITE_TITLE = 'Find a Doc, Japan!'
 const SITE_DESCRIPTION
@@ -130,9 +131,19 @@ export default defineNuxtConfig({
 
         fallbackBreakpoint: 'desktop'
     },
-
     i18n: {
-        vueI18n: './i18n.options.ts'
+        strategy: 'no_prefix',
+        locales: i18nLocales,
+        defaultLocale: 'en-US',
+        fallbackLocale: 'en-US',
+        langDir: 'locales',
+        lazy: true,
+        detectBrowserLanguage: {
+            useCookie: true,
+            cookieKey: 'i18n_redirected',
+            fallbackLocale: 'en-US',
+            alwaysRedirect: true
+        }
     },
     svgo: {
         defaultImport: 'component'

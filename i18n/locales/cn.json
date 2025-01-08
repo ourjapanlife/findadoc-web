@@ -360,6 +360,9 @@
     "genericErrorMessage": "There was an error submitting your form, please try again",
     "errorCodeMessagingNeeded": "The server error code does not have a message for the user. Please add one."
   },
+  "localeSelector": {
+    "loading": "Loading..."
+  },
   "modHealthcareProfessionalCard": {
     "editName": "Edit",
     "saveName": "Save"

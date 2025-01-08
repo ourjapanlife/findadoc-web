@@ -367,5 +367,8 @@
   "modHealthcareProfessionalCard": {
     "editName": "Edit",
     "saveName": "Save"
+  },
+  "localeSelector": {
+    "loading": "Loading..."
   }
 }

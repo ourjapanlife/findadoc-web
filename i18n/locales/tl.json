@@ -351,6 +351,9 @@
     "selectSpecialties": "Specialties",
     "errorMessageHealthcareProfessionalId": "Healthcare Professional Id was not found"
   },
+    "localeSelector": {
+        "loading": "Loading..."
+    },
   "modHealthcareProfessionalCard": {
     "editName": "Edit",
     "saveName": "Save"
