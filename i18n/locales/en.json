@@ -200,6 +200,7 @@
         "labelHealthcareProfessionalLastName": "Last Name",
         "labelHealthcareProfessionalMiddleName": "Middle Name",
         "labelHealthcareProfessionalNameLocale": "Name Locale",
+        "nameForLocaleAlreadyExists": "Name for locale already exists. Either update existing name or choose a different locale.",
         "placeholderTextHealthcareProfessionalFirstName": "e.g. John",
         "placeholderTextHealthcareProfessionalLastName": "e.g. Doe",
         "placeholderTextHealthcareProfessionalMiddleName": "e.g. Bronson",

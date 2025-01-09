@@ -11,7 +11,10 @@
                     class="profile-icon stroke-primary w-16 h-16 stroke-1 inline mx-1 self-start"
                 />
             </div>
-            <div v-if="healthcareProfessionalsRelatedToFacility">
+            <div
+                v-if="healthcareProfessionalsRelatedToFacility"
+                class="min-w-44"
+            >
                 <div class="flex flex-col h-full w-64 pl-1 mb-1">
                     <div class="flex font-bold pt-2">
                         <span>{{ healthcareProfessionalsStore
@@ -52,44 +55,40 @@
                 </div>
             </div>
             <div
-                v-if="!healthcareProfessionalsRelatedToFacility"
+                v-if="healthcareProfessionalNameByLocale"
+                class="min-w-44"
             >
-                <div
-                    v-for="(nameLocale, index) in healthcareProfessional.names"
-                    :key="`${nameLocale.firstName}-${nameLocale.lastName}-${index}`"
-                >
-                    <div class="flex font-bold pt-2">
-                        <span>{{ nameLocale.lastName }}</span>
-                        <span class="mx-2">{{ nameLocale.firstName }}</span>
-                        <span v-show="nameLocale.middleName">
-                            {{ nameLocale.middleName }}
-                        </span>
-                    </div>
-                    <span
-                        class="w-24 px-2 py-[1px] mr-1 mb-1 bg-primary-text-muted text-nowrap rounded-full
-                    text-sm text-center"
-                    >
-                        {{ localeStore.formatLanguageCodeToSimpleText(
-                            nameLocale.locale) }}
+                <div class="flex font-bold pt-2">
+                    <span>{{ healthcareProfessionalNameByLocale.lastName }}</span>
+                    <span class="mx-2">{{ healthcareProfessionalNameByLocale.firstName }}</span>
+                    <span v-show="healthcareProfessionalNameByLocale.middleName">
+                        {{ healthcareProfessionalNameByLocale.middleName }}
                     </span>
-                    <div>
-                        <button
-                            v-if="!isEditable && setOnClick"
-                            type="button"
-                            class="border-2 border-primary px-3 my-1 rounded-full font-semibold hover:bg-currentColor"
-                            @click="() => setChangeToEditable(nameLocale.locale)"
-                        >
-                            {{ $t("modHealthcareProfessionalCard.editName") }}
-                        </button>
-                        <button
-                            v-if="isEditable && updateOnClick"
-                            type="button"
-                            class="border-2 border-primary px-3 my-1 rounded-full font-semibold hover:bg-currentColor"
-                            @click="() => setToUneditableAndSave()"
-                        >
-                            {{ $t("modHealthcareProfessionalCard.saveName") }}
-                        </button>
-                    </div>
+                </div>
+                <span
+                    class="w-24 px-2 py-[1px] mr-1 mb-1 bg-primary-text-muted text-nowrap rounded-full
+                    text-sm text-center"
+                >
+                    {{ localeStore.formatLanguageCodeToSimpleText(
+                        healthcareProfessionalNameByLocale.locale) }}
+                </span>
+                <div>
+                    <button
+                        v-if="!isEditable && setOnClick"
+                        type="button"
+                        class="border-2 border-primary px-3 my-1 rounded-full font-semibold hover:bg-currentColor"
+                        @click="() => setChangeToEditable(healthcareProfessionalNameByLocale.locale)"
+                    >
+                        {{ $t("modHealthcareProfessionalCard.editName") }}
+                    </button>
+                    <button
+                        v-if="isEditable && updateOnClick"
+                        type="button"
+                        class="border-2 border-primary px-3 my-1 rounded-full font-semibold hover:bg-currentColor"
+                        @click="() => setToUneditableAndSave()"
+                    >
+                        {{ $t("modHealthcareProfessionalCard.saveName") }}
+                    </button>
                 </div>
             </div>
             <div
@@ -125,7 +124,7 @@ import { useLocaleStore } from '~/stores/localeStore'
 import { useFacilitiesStore } from '~/stores/facilitiesStore'
 import { useHealthcareProfessionalsStore } from '~/stores/healthcareProfessionalsStore'
 import { ModerationScreen, useModerationScreenStore } from '~/stores/moderationScreenStore'
-import { RelationshipAction, type HealthcareProfessional, type Relationship } from '~/typedefs/gqlTypes'
+import { RelationshipAction, type HealthcareProfessional, type LocalizedNameInput, type Relationship } from '~/typedefs/gqlTypes'
 
 const localeStore = useLocaleStore()
 const facilitiesStore = useFacilitiesStore()
@@ -182,6 +181,7 @@ const setToUneditableAndSave = (param?: unknown) => {
 const props = defineProps<{
     healthcareProfessional: HealthcareProfessional
     healthcareProfessionalsRelatedToFacility?: string[]
+    healthcareProfessionalNameByLocale: LocalizedNameInput
     setOnClick?: (param?: unknown) => void
     updateOnClick?: (param?: unknown) => void
 }>()
