@@ -45,6 +45,14 @@
                             :update-on-click="healthcareProfessionalsStore.updateHealthcareProfessionalNameValues" />
                     </div>
                 </div>
+                <div v-if="healthcareProfessionalsStore.removedHealthcareProfessionalNames" class="flex flex-col">
+                    <div v-for="(nameLocale) in healthcareProfessionalsStore.removedHealthcareProfessionalNames"
+                        :key="`${nameLocale.firstName}-${nameLocale.lastName}-removed`">
+                        <ModDashboardHealthProfessionalCard
+                            :healthcare-professional="healthcareProfessionalsStore.healthcareProfessionalSectionFields"
+                            :healthcare-professional-name-by-locale="nameLocale" />
+                    </div>
+                </div>
                 <h2 class="mod-healthcare-professional-section
                      my-3.5 text-start text-primary-text text-2xl font-bold font-sans leading-normal">
                     {{ $t('modHealthcareProfessionalSection.healthcareProfessionalMedicalInfoHeading') }}

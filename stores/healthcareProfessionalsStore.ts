@@ -3,6 +3,7 @@ import { defineStore } from 'pinia'
 import { reactive, ref, type Ref } from 'vue'
 import { gql } from 'graphql-request'
 import { type DeleteResult, type HealthcareProfessional,
+    type LocalizedNameInput,
     type Mutation,
     type MutationDeleteHealthcareProfessionalArgs,
     type MutationUpdateHealthcareProfessionalArgs,
@@ -33,6 +34,8 @@ export const useHealthcareProfessionalsStore = defineStore(
             updatedDate: ''
         })
         const facilitiesRelationsToSelectedHealthcareProfessional: Ref<Relationship[]> = ref([])
+        // This helps users easily add name locales back to a healthcare professional by keeping track of removed ones
+        const removedHealthcareProfessionalNames: Ref<LocalizedNameInput[]> = ref([])
 
         const selectedNameLocaleToUpdate = reactive({
             localizedFirstName: '',
@@ -143,6 +146,7 @@ export const useHealthcareProfessionalsStore = defineStore(
             if (!serverResponse.errors.length) {
                 facilitiesRelationsToSelectedHealthcareProfessional.value = []
                 healthcareProfessionalSectionFields.facilityIds = serverResponse.data!.facilityIds
+                removedHealthcareProfessionalNames.value = []
             }
 
             return serverResponse
@@ -183,7 +187,8 @@ export const useHealthcareProfessionalsStore = defineStore(
             setSelectedHealthcareProfessional,
             updateHealthcareProfessionalNameValues,
             selectedNameLocaleToUpdate,
-            setSelectedNameLocaleToUpdate
+            setSelectedNameLocaleToUpdate,
+            removedHealthcareProfessionalNames
         }
     }
 )
