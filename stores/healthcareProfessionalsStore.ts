@@ -55,7 +55,7 @@ export const useHealthcareProfessionalsStore = defineStore(
         }
 
         function updateHealthcareProfessionalSectionFields(healthcareProfessional: HealthcareProfessional) {
-            healthcareProfessionalSectionFields.__typename = healthcareProfessional.__typename
+            healthcareProfessionalSectionFields.__typename = 'HealthcareProfessional'
             healthcareProfessionalSectionFields.acceptedInsurance = healthcareProfessional.acceptedInsurance
             healthcareProfessionalSectionFields.createdDate = healthcareProfessional.createdDate
             healthcareProfessionalSectionFields.degrees = healthcareProfessional.degrees
@@ -263,8 +263,8 @@ const getHealthcareProfessionalByIdGqlQuery = gql`
 }`
 
 const updateHealthcareProfessionalGqlMutation = gql`
-mutation Mutation($updateHealthcareProfessionalId: ID!, $input: UpdateHealthcareProfessionalInput!) {
-  updateHealthcareProfessional(id: $updateHealthcareProfessionalId, input: $input) {
+mutation Mutation($id: ID!, $input: UpdateHealthcareProfessionalInput!) {
+  updateHealthcareProfessional(id: $id, input: $input) {
     id
     names {
       firstName
