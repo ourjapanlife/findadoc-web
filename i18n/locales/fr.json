@@ -367,7 +367,8 @@
     "facilities": "Facilities",
     "placeholderTextFacilitySearchBar": "Search by name or Id add a facility",
     "noFacilitiesWereFound": "No facilities were found",
-    "errorMessageHealthcareProfessionalId": "Healthcare Professional Id was not found"
+    "errorMessageHealthcareProfessionalId": "Healthcare Professional Id was not found",
+    "nameForLocaleAlreadyExists": "Name for locale already exists. Either update existing name or choose a different locale."
   },
   "modHealthcareProfessionalCard": {
     "editName": "Edit",
