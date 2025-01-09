@@ -177,7 +177,16 @@
     "facilities": "Facilities",
     "placeholderTextFacilitySearchBar": "Search by name or Id add a facility",
     "noFacilitiesWereFound": "No facilities were found",
-    "errorMessageHealthcareProfessionalId": "Healthcare Professional Id was not found"
+    "errorMessageHealthcareProfessionalId": "Healthcare Professional Id was not found",
+    "nameForLocaleAlreadyExists": "Name for locale already exists. Either update existing name or choose a different locale.",
+    "placeholderTextAcceptedInsurances": "Search by insurance to add or remove an insurance",
+    "placeholderTextSpecialties": "Search by specialty to add or remove an specialty",
+    "placeholderTextDegrees": "Search by degree to add or remove an degree",
+    "placeholderTextLocales": "Search by locale to add or remove an locale",
+    "noSpecialtiesWereFound": "No specialties were found",
+    "noInsurancesWereFound": "No insurances were found",
+    "noDegreesWereFound": "No degrees were found",
+    "noLocalesWereFound": "No locales were found"
   },
   "modSubmissionForm": {
     "addresses": "地址",
