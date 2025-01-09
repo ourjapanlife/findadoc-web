@@ -263,8 +263,8 @@ const getHealthcareProfessionalByIdGqlQuery = gql`
 }`
 
 const updateHealthcareProfessionalGqlMutation = gql`
-mutation Mutation($updateHealthcareProfessionalId: ID!, $input: UpdateHealthcareProfessionalInput!) {
-  updateHealthcareProfessional(id: $updateHealthcareProfessionalId, input: $input) {
+mutation Mutation($id: ID!, $input: UpdateHealthcareProfessionalInput!) {
+  updateHealthcareProfessional(id: $id, input: $input) {
     id
     names {
       firstName
