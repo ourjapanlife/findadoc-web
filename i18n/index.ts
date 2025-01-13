@@ -6,6 +6,7 @@ import de from './locales/de.json'
 import cn from './locales/cn.json'
 import fr from './locales/fr.json'
 import tl from './locales/tl.json'
+import vi from './locales/vi.json'
 
 const i18n = {
     //eslint-disable-next-line
@@ -23,7 +24,9 @@ const i18n = {
     //eslint-disable-next-line
     fr_FR: fr,
     //eslint-disable-next-line
-    tl_PH: tl
+    tl_PH: tl,
+    //eslint-disable-next-line
+    vi_VN: vi
 }
 
 export default i18n
