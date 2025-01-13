@@ -169,6 +169,28 @@
                     </option>
                 </select>
             </div>
+            <h2
+                class="mod-healthcare-professional-section
+                 my-3.5 text-start text-primary-text text-2xl font-bold font-sans leading-normal"
+            >
+                {{ $t("modHealthcareProfessionalSection.facilities") }}
+            </h2>
+            <!-- This is just an example how to use it -->
+            <ModSearchbar
+                v-model="selectedFacilities"
+                :place-holder-text="$t('modHealthcareProfessionalSection.placeholderTextFacilitySearchBar')"
+                :no-match-text="$t('modHealthcareProfessionalSection.noFacilitiesWereFound')"
+                :fields-to-display-callback="fieldsToDisplayCallback"
+                @search-input-change="handleSearchInputChange"
+            />
+            <ul>
+                <li
+                    v-for="facility in selectedFacilities"
+                    :key="facility.id"
+                >
+                    {{ `${facility.id} / ${facility.nameEn} / ${facility.nameJa}` }}
+                </li>
+            </ul>
         </div>
     </div>
 </template>
@@ -177,17 +199,23 @@
 import { nextTick, onBeforeMount, onUpdated, type Ref, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { type ToastInterface, useToast } from 'vue-toastification'
+import ModSearchbar from './ModSearchBar.vue'
 import { ModerationScreen, useModerationScreenStore } from '~/stores/moderationScreenStore'
 import { useHealthcareProfessionalsStore } from '~/stores/healthcareProfessionalsStore'
-import { Locale, Insurance, Degree, Specialty, type LocalizedNameInput } from '~/typedefs/gqlTypes'
+import { Locale, Insurance, Degree, Specialty, type LocalizedNameInput, type Facility } from '~/typedefs/gqlTypes'
 import { multiSelectWithoutKeyboard } from '~/utils/multiSelectWithoutKeyboard'
-import { useI18n } from '#imports'
+import { useFacilitiesStore, useI18n } from '#imports'
 
 let toast: ToastInterface
 
 const route = useRoute()
 
 const { t } = useI18n()
+
+const selectedFacilities = ref(new Set<Facility>())
+const facilitiesStore = useFacilitiesStore()
+await facilitiesStore.getFacilities() // Fix a bug where facilities disappear after the user refreshes the page
+const currentFacilities = facilitiesStore.facilityData
 
 const moderationScreenStore = useModerationScreenStore()
 const healthcareProfessionalsStore = useHealthcareProfessionalsStore()
@@ -229,6 +257,18 @@ const handleLocalizedName = () => {
         healthcareProfessionalsStore.selectedNameLocaleToUpdate.nameLocale = Locale.Und
     }
 }
+
+const handleSearchInputChange = (filteredItems: Ref<Facility[]>, inputValue: string) => {
+    filteredItems.value = currentFacilities.filter(({ nameEn, nameJa, id }) => {
+        const isMatch
+            = nameEn.toLowerCase().includes(inputValue)
+            || nameJa.toLowerCase().includes(inputValue)
+            || id.toLowerCase() === inputValue
+        return isMatch
+    })
+}
+
+const fieldsToDisplayCallback = (item: Facility) => [item.nameEn, item.nameJa]
 
 onBeforeMount(async () => {
     isHealthcareProfessionalInitialized.value = false

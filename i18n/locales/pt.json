@@ -160,6 +160,9 @@
     "selectSpecialties": "Specialties",
     "selectDegrees": "Degrees",
     "selectLocales": "Select Locales Spoken",
+    "facilities": "Facilities",
+    "placeholderTextFacilitySearchBar": "Search by name or Id add a facility",
+    "noFacilitiesWereFound": "No facilities were found",
     "errorMessageHealthcareProfessionalId": "Healthcare Professional Id was not found"
   },
   "modSubmissionForm": {

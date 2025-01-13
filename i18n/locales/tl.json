@@ -349,6 +349,9 @@
     "selectInsurances": "Accepted Insurances",
     "selectLocales": "Select Locales Spoken",
     "selectSpecialties": "Specialties",
+    "facilities": "Facilities",
+    "placeholderTextFacilitySearchBar": "Search by name or Id add a facility",
+    "noFacilitiesWereFound": "No facilities were found",
     "errorMessageHealthcareProfessionalId": "Healthcare Professional Id was not found"
   },
   "modHealthcareProfessionalCard": {

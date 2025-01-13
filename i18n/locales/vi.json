@@ -194,7 +194,10 @@
     "selectInsurances": "Các bảo hiểm được chấp nhận",
     "selectLocales": "Chọn các ngôn ngữ địa phương được sử dụng",
     "selectSpecialties": "Chuyên ngành.",
-    "errorMessageHealthcareProfessionalId": "Healthcare Professional Id was not found"
+    "errorMessageHealthcareProfessionalId": "Healthcare Professional Id was not found",
+    "facilities": "Facilities",
+    "placeholderTextFacilitySearchBar": "Search by name or Id add a facility",
+    "noFacilitiesWereFound": "No facilities were found"
   },
   "modFacilitySection": {
     "addresses": "Địa chỉ.",

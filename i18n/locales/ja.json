@@ -175,6 +175,9 @@
     "selectLocales": "Select Locales Spoken",
     "selectSpecialties": "Specialties",
     "healthcareProfessionalId": "Healthcare Professional IDs",
+    "facilities": "Facilities",
+    "placeholderTextFacilitySearchBar": "Search by name or Id add a facility",
+    "noFacilitiesWereFound": "No facilities were found",
     "errorMessageHealthcareProfessionalId": "Healthcare Professional Id was not found"
   },
   "modSubmissionForm": {
