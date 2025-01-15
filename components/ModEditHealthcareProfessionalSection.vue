@@ -192,7 +192,6 @@
             >
                 {{ $t("modHealthcareProfessionalSection.facilities") }}
             </h2>
-            <!-- This is just an example how to use it -->
             <ModSearchbar
                 v-model="selectedFacilities"
                 :place-holder-text="$t('modHealthcareProfessionalSection.placeholderTextFacilitySearchBar')"
@@ -200,12 +199,13 @@
                 :fields-to-display-callback="fieldsToDisplayCallback"
                 @search-input-change="handleSearchInputChange"
             />
-            <ul>
+            <ul class="text-primary-text/60 font-semibold my-2">
                 <li
-                    v-for="facility in selectedFacilities"
+                    v-for="facility in currentFacilityRelations"
                     :key="facility.id"
+                    class="py-1"
                 >
-                    {{ `${facility.id} / ${facility.nameEn} / ${facility.nameJa}` }}
+                    - {{ `${facility.id} / ${facility.nameEn} / ${facility.nameJa}` }}
                 </li>
             </ul>
         </div>
@@ -216,6 +216,7 @@
 import { nextTick, onBeforeMount, onMounted, type Ref, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { type ToastInterface, useToast } from 'vue-toastification'
+import ModSearchbar from './ModSearchBar.vue'
 import { useHealthcareProfessionalsStore } from '~/stores/healthcareProfessionalsStore'
 import { Locale, Insurance, Degree, Specialty, type LocalizedNameInput, type Facility } from '~/typedefs/gqlTypes'
 import { multiSelectWithoutKeyboard } from '~/utils/multiSelectWithoutKeyboard'
@@ -230,13 +231,15 @@ const route = useRoute()
 
 const { t } = useI18n()
 
-const selectedFacilities = ref(new Set<Facility>())
 const facilitiesStore = useFacilitiesStore()
 await facilitiesStore.getFacilities() // Fix a bug where facilities disappear after the user refreshes the page
 const currentFacilities = facilitiesStore.facilityData
 
 const healthcareProfessionalsStore = useHealthcareProfessionalsStore()
 
+const selectedFacilities = ref(new Set<Facility>())
+//Keeps track of if the search bar inputs have been autofilled with existing facilities
+const currentFacilityRelations: Ref<Facility[]> = ref([])
 const elementIdsForMultiSelect: Ref<string[]> = ref(['accepted-insurances', 'degrees', 'specialties', 'spoken-languages'])
 const multiSelectElementsRendered: Ref<boolean> = ref(false)
 const insuranceList = Object.values(Insurance) as Insurance[]
@@ -289,7 +292,7 @@ const handleSearchInputChange = (filteredItems: Ref<Facility[]>, inputValue: str
         const isMatch
             = nameEn.toLowerCase().includes(inputValue)
             || nameJa.toLowerCase().includes(inputValue)
-            || id.toLowerCase() === inputValue
+            || id.toLowerCase().includes(inputValue)
         return isMatch
     })
 }
@@ -321,9 +324,15 @@ onBeforeMount(async () => {
         await healthcareProfessionalsStore.getHealthcareProfessionals()
     }
 
+    await nextTick()
+
     healthcareProfessionalsStore.setSelectedHealthcareProfessional(healthcareProfessionalsStore.selectedHealthcareProfessionalId)
 
     await nextTick()
+
+    currentFacilityRelations.value = facilitiesStore.facilityData
+        .filter(facility => healthcareProfessionalsStore.healthcareProfessionalSectionFields.facilityIds
+            .includes(facility.id))
 
     isHealthcareProfessionalInitialized.value = true
 
@@ -352,6 +361,23 @@ onMounted(() => {
     })
 
     observer.observe(document.body, { childList: true, subtree: true })
+})
+
+//This autofills the selected facilities based on which ones already have relations
+watch(() => healthcareProfessionalsStore.healthcareProfessionalSectionFields.facilityIds, newValue => {
+    if (newValue) {
+        currentFacilityRelations.value = facilitiesStore.facilityData
+            .filter(facility => healthcareProfessionalsStore.healthcareProfessionalSectionFields.facilityIds
+                .includes(facility.id))
+        selectedFacilities.value = new Set([])
+    }
+})
+
+// This updates the set in the store once the set is updated due to a dom change
+watch(() => Array.from(selectedFacilities.value), newValue => {
+    if (newValue) {
+        healthcareProfessionalsStore.selectedFacilities = selectedFacilities.value
+    }
 })
 
 // This watch will allow for custom multiselect once the elements are rendered
