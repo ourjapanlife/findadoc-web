@@ -207,6 +207,7 @@ const facilityOrHPHasUnsavedChanges = () => {
         !== JSON.stringify(originalHealthcareProfessional.spokenLanguages)
         || healthcareProfessionalsStore.healthcareProfessionalSectionFields.updatedDate
         !== originalHealthcareProfessional.updatedDate
+        || Array.from(healthcareProfessionalsStore.selectedFacilities).length
 
         return areThereUnsavedChanges
     }

@@ -2,13 +2,14 @@ import type { Maybe } from 'graphql/jsutils/Maybe'
 import { defineStore } from 'pinia'
 import { reactive, ref, type Ref } from 'vue'
 import { gql } from 'graphql-request'
-import { type DeleteResult, type HealthcareProfessional,
+import { type Facility, type DeleteResult, type HealthcareProfessional,
     type LocalizedNameInput,
     type Mutation,
     type MutationDeleteHealthcareProfessionalArgs,
     type MutationUpdateHealthcareProfessionalArgs,
     type Relationship,
-    Locale } from '~/typedefs/gqlTypes'
+    Locale,
+    RelationshipAction } from '~/typedefs/gqlTypes'
 import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql'
 import { useLocaleStore } from '~/stores/localeStore'
 import type { ServerError, ServerResponse } from '~/typedefs/serverResponse'
@@ -33,6 +34,8 @@ export const useHealthcareProfessionalsStore = defineStore(
             spokenLanguages: [],
             updatedDate: ''
         })
+        const selectedFacilities: Ref<Set<Facility>> = ref(new Set())
+        // This is the array to be sent to the backend if there is a change in the relations
         const facilitiesRelationsToSelectedHealthcareProfessional: Ref<Relationship[]> = ref([])
         // This helps users easily add name locales back to a healthcare professional by keeping track of removed ones
         const removedHealthcareProfessionalNames: Ref<LocalizedNameInput[]> = ref([])
@@ -116,6 +119,12 @@ export const useHealthcareProfessionalsStore = defineStore(
         Promise<ServerResponse<Maybe<HealthcareProfessional>>> {
             const serverResponse = { data: {} as Maybe<HealthcareProfessional>, errors: [] as ServerError[], hasErrors: false }
 
+            const facilitiesForRelationshipCreationArray = Array.from(selectedFacilities.value)
+
+            if (facilitiesForRelationshipCreationArray.length) {
+                //For each is used here to only add the necessary actions to the already created ref array of relationships
+                facilitiesForRelationshipCreationArray.forEach(facility => createFacilitiesRelationArray(facility))
+            }
             const updateHealthcareProfessionalInput: MutationUpdateHealthcareProfessionalArgs = {
                 id: selectedHealthcareProfessionalId.value,
                 input: {
@@ -150,6 +159,26 @@ export const useHealthcareProfessionalsStore = defineStore(
             }
 
             return serverResponse
+        }
+
+        function createFacilitiesRelationArray(facilityForRelationship: Facility) {
+            if (healthcareProfessionalSectionFields.facilityIds.includes(facilityForRelationship.id)) {
+                facilitiesRelationsToSelectedHealthcareProfessional.value.push({
+                    otherEntityId: facilityForRelationship.id,
+                    action: RelationshipAction.Delete
+                })
+
+                return
+            }
+
+            facilitiesRelationsToSelectedHealthcareProfessional.value.push(
+                {
+                    otherEntityId: facilityForRelationship.id,
+                    action: RelationshipAction.Create
+                }
+            )
+
+            return
         }
 
         async function deleteHealthcareProfessional(healthcareProfessionalId: MutationDeleteHealthcareProfessionalArgs):
@@ -188,7 +217,9 @@ export const useHealthcareProfessionalsStore = defineStore(
             updateHealthcareProfessionalNameValues,
             selectedNameLocaleToUpdate,
             setSelectedNameLocaleToUpdate,
-            removedHealthcareProfessionalNames
+            removedHealthcareProfessionalNames,
+            facilitiesRelationsToSelectedHealthcareProfessional,
+            selectedFacilities
         }
     }
 )
