@@ -200,6 +200,7 @@
         "labelHealthcareProfessionalLastName": "Last Name",
         "labelHealthcareProfessionalMiddleName": "Middle Name",
         "labelHealthcareProfessionalNameLocale": "Name Locale",
+        "nameForLocaleAlreadyExists": "Name for locale already exists. Either update existing name or choose a different locale.",
         "placeholderTextHealthcareProfessionalFirstName": "e.g. John",
         "placeholderTextHealthcareProfessionalLastName": "e.g. Doe",
         "placeholderTextHealthcareProfessionalMiddleName": "e.g. Bronson",
@@ -207,8 +208,8 @@
         "selectInsurances": "Accepted Insurances",
         "selectLocales": "Select Locales Spoken",
         "selectSpecialties": "Specialties",
-        "facilities": "Facilities",
-        "placeholderTextFacilitySearchBar": "Search by name or Id add a facility",
+        "facilities": "Healthcare Professionals related facilities",
+        "placeholderTextFacilitySearchBar": "Search by name or Id to add or remove a facility",
         "noFacilitiesWereFound": "No facilities were found"
     },
     "modFacilitySection": {

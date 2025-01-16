@@ -199,7 +199,8 @@
     "errorMessageHealthcareProfessionalId": "Healthcare Professional Id was not found",
     "facilities": "Facilities",
     "placeholderTextFacilitySearchBar": "Search by name or Id add a facility",
-    "noFacilitiesWereFound": "No facilities were found"
+    "noFacilitiesWereFound": "No facilities were found",
+    "nameForLocaleAlreadyExists": "Name for locale already exists. Either update existing name or choose a different locale."
   },
   "modFacilitySection": {
     "addresses": "Địa chỉ.",

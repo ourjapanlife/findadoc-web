@@ -97,7 +97,7 @@ import { useHealthcareProfessionalsStore } from '~/stores/healthcareProfessional
 import { useModerationScreenStore, ModerationScreen } from '~/stores/moderationScreenStore'
 import { useModalStore } from '~/stores/modalStore'
 import { handleServerErrorMessaging } from '~/utils/handleServerErrorMessaging'
-import type { Facility } from '~/typedefs/gqlTypes'
+import type { Facility, HealthcareProfessional } from '~/typedefs/gqlTypes'
 
 const router = useRouter()
 
@@ -112,7 +112,7 @@ const selectedId: ComputedRef<string> = computed(() => setSelectedId())
 const originalFacilityRefsValue: Ref<Facility | undefined> = ref()
 
 // Disable the buttons if there are no changes
-const unsavedChanges = computed(() => facilityHasUnsavedChanges())
+const unsavedChanges = computed(() => facilityOrHPHasUnsavedChanges())
 
 // Initialize the variable that will be used to mount the toast library
 let toast: ToastInterface
@@ -145,18 +145,19 @@ function setSelectedId() {
     }
 }
 
-const facilityHasUnsavedChanges = () => {
-    if (!originalFacilityRefsValue.value) return false
+const facilityOrHPHasUnsavedChanges = () => {
+    if (moderationScreenStore.activeScreen === ModerationScreen.EditFacility) {
+        if (!originalFacilityRefsValue.value) return false
 
-    const facilityBeforeChange = originalFacilityRefsValue.value
+        const facilityBeforeChange = originalFacilityRefsValue.value
 
-    /** This needs to be converted because to access the values of this object we do not need value.
+        /** This needs to be converted because to access the values of this object we do not need value.
     But to keep their reactivity in the store we keep them as Refs **/
-    const facilitySections = facilitiesStore.facilitySectionFields as unknown as {
-        [key: string]: string
-    }
+        const facilitySections = facilitiesStore.facilitySectionFields as unknown as {
+            [key: string]: string
+        }
 
-    const areThereUnsavedChanges
+        const areThereUnsavedChanges
         = facilityBeforeChange.nameEn !== facilitySections.nameEn
         || facilityBeforeChange.nameJa !== facilitySections.nameJa
         || facilityBeforeChange.contact.phone !== facilitySections.phone
@@ -178,17 +179,48 @@ const facilityHasUnsavedChanges = () => {
         !== JSON.stringify(facilitySections.healthcareProfessionalIds)
         || facilitySections.healthProfessionalsRelations.length
 
-    return areThereUnsavedChanges
+        return areThereUnsavedChanges
+    }
+    if (moderationScreenStore.activeScreen === ModerationScreen.EditHealthcareProfessional) {
+        const originalHealthcareProfessional = healthcareProfessionalsStore.healthcareProfessionalsData.find(
+            professional => professional.id === healthcareProfessionalsStore.selectedHealthcareProfessionalId
+        )
+
+        if (!originalHealthcareProfessional) return false // No match found, no changes to compare.
+
+        // Compare each field in the `healthcareProfessionalSectionFields` object with the original data.
+        const areThereUnsavedChanges
+        = JSON.stringify(healthcareProfessionalsStore.healthcareProfessionalSectionFields.acceptedInsurance)
+        !== JSON.stringify(originalHealthcareProfessional.acceptedInsurance)
+        || healthcareProfessionalsStore.healthcareProfessionalSectionFields.createdDate
+        !== originalHealthcareProfessional.createdDate
+        || JSON.stringify(healthcareProfessionalsStore.healthcareProfessionalSectionFields.degrees)
+        !== JSON.stringify(originalHealthcareProfessional.degrees)
+        || JSON.stringify(healthcareProfessionalsStore.healthcareProfessionalSectionFields.facilityIds)
+        !== JSON.stringify(originalHealthcareProfessional.facilityIds)
+        || healthcareProfessionalsStore.healthcareProfessionalSectionFields.id !== originalHealthcareProfessional.id
+        || JSON.stringify(healthcareProfessionalsStore.healthcareProfessionalSectionFields.names)
+        !== JSON.stringify(originalHealthcareProfessional.names)
+        || JSON.stringify(healthcareProfessionalsStore.healthcareProfessionalSectionFields.specialties)
+        !== JSON.stringify(originalHealthcareProfessional.specialties)
+        || JSON.stringify(healthcareProfessionalsStore.healthcareProfessionalSectionFields.spokenLanguages)
+        !== JSON.stringify(originalHealthcareProfessional.spokenLanguages)
+        || healthcareProfessionalsStore.healthcareProfessionalSectionFields.updatedDate
+        !== originalHealthcareProfessional.updatedDate
+        || Array.from(healthcareProfessionalsStore.selectedFacilities).length
+
+        return areThereUnsavedChanges
+    }
+    return false
 }
 
 const updateFacilityOrHealthcareProfessional = async () => {
     // This makes the on click update the facility if the screen is EditFacility
+    const checkForUnsavedChanges = facilityOrHPHasUnsavedChanges()
+    // This prevents us from sending a requested unnecessarily if the user has not made changes
+    if (!checkForUnsavedChanges) return
+
     if (moderationScreenStore.activeScreen === ModerationScreen.EditFacility) {
-        const checkForUnsavedChanges = facilityHasUnsavedChanges()
-
-        // This prevents us from sending a requested unnecessarily if the user has not made changes
-        if (!checkForUnsavedChanges) return
-
         const response = await facilitiesStore.updateFacility()
 
         if (response.errors?.length) {
@@ -201,18 +233,48 @@ const updateFacilityOrHealthcareProfessional = async () => {
         toast.success(t('modEditFacilityOrHPTopbar.facilityUpdatedSuccessfully'))
         return response
     }
+    // This makes the on click update the facility if the screen is EditFacility
+    if (moderationScreenStore.activeScreen === ModerationScreen.EditHealthcareProfessional) {
+        // This prevents us from sending a requested unnecessarily if the user has not made changes
+        if (!checkForUnsavedChanges) return
+
+        const response = await healthcareProfessionalsStore.updateHealthcareProfessional()
+
+        if (response.errors?.length) {
+            handleServerErrorMessaging(response.errors, toast, t)
+            return response
+        }
+
+        // This updates the healthcare professional section values with the data saved in our db
+        healthcareProfessionalsStore.healthcareProfessionalSectionFields = response.data as HealthcareProfessional
+        toast.success(t('modEditFacilityOrHPTopbar.healthcareProfessionalUpdatedSuccessfully'))
+        return response
+    }
 }
 
 const updateFacilityOrHealthcareProfessionalAndExit = async () => {
-    const response = await updateFacilityOrHealthcareProfessional()
+    if (moderationScreenStore.activeScreen === ModerationScreen.EditFacility) {
+        const response = await updateFacilityOrHealthcareProfessional()
 
-    if (response && response.errors?.length) {
-        handleServerErrorMessaging(response.errors, toast, t)
-        return response
+        if (response && response.errors?.length) {
+            handleServerErrorMessaging(response.errors, toast, t)
+            return response
+        }
+
+        router.push('/moderation')
+        moderationScreenStore.setActiveScreen(ModerationScreen.Dashboard)
     }
+    if (moderationScreenStore.activeScreen === ModerationScreen.EditHealthcareProfessional) {
+        const response = await updateFacilityOrHealthcareProfessional()
 
-    router.push('/moderation')
-    moderationScreenStore.setActiveScreen(ModerationScreen.Dashboard)
+        if (response && response.errors?.length) {
+            handleServerErrorMessaging(response.errors, toast, t)
+            return response
+        }
+
+        router.push('/moderation')
+        moderationScreenStore.setActiveScreen(ModerationScreen.Dashboard)
+    }
 }
 
 const openDeletionConfirmation = () => {
