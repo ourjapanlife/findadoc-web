@@ -152,15 +152,32 @@ export const useHealthcareProfessionalsStore = defineStore(
                 : []
             serverResponse.hasErrors = response.hasErrors
 
-            if (!serverResponse.errors.length) {
+            if (!serverResponse.errors.length && serverResponse.data) {
+                //This resets the relations so that way we can have a user update multiple times without duplicating values
                 facilitiesRelationsToSelectedHealthcareProfessional.value = []
-                healthcareProfessionalSectionFields.facilityIds = serverResponse.data!.facilityIds
+                //This finds the index of the healthcare professional so we can replace the ones we have already queried
+                const outdatedHealthcareProfessionalIndex = healthcareProfessionalsData.value.findIndex(
+                    (healthcareProfessional: HealthcareProfessional) => healthcareProfessional.id === serverResponse.data!.id
+                )
+
+                //This will replace the data we had from the index with the new data
+                if (outdatedHealthcareProfessionalIndex !== -1) {
+                    healthcareProfessionalsData.value[outdatedHealthcareProfessionalIndex] = serverResponse.data!
+                }
+
+                //This will update the data with what was returned from the server and is in our database
+                updateHealthcareProfessionalSectionFields(serverResponse.data!)
+
+                /*This resets the names we removed and kept track of in
+                order to change Locales if the wrong name for a locale was chosen */
                 removedHealthcareProfessionalNames.value = []
             }
 
             return serverResponse
         }
 
+        /* This function will create the relationships that need to be sent in the backend for
+        updating facilities the healthcare professional works at */
         function createFacilitiesRelationArray(facilityForRelationship: Facility) {
             if (healthcareProfessionalSectionFields.facilityIds.includes(facilityForRelationship.id)) {
                 facilitiesRelationsToSelectedHealthcareProfessional.value.push({

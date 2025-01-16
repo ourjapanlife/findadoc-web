@@ -385,7 +385,7 @@ onBeforeMount(async () => {
     await nextTick()
 })
 
-//This autofills the selected facilities based on which ones already have relations
+//This autofills the selected fields based on our current healthcare data for the user
 watch(() => [
     healthcareProfessionalsStore.healthcareProfessionalSectionFields.facilityIds,
     healthcareProfessionalsStore.healthcareProfessionalSectionFields.spokenLanguages,
