@@ -101,6 +101,7 @@
                 </label>
                 <ModSearchbar
                     v-model="healthcareProfessionalAcceptedInsurancesArray"
+                    data-test-id="mod-healthcare-professional-section-accepted-insurances"
                     :place-holder-text="$t('modHealthcareProfessionalSection.placeholderTextAcceptedInsurances')"
                     :no-match-text="$t('modHealthcareProfessionalSection.noInsurancesWereFound')"
                     :fields-to-display-callback="insurancesToDisplayCallback"
@@ -123,6 +124,7 @@
                 </label>
                 <ModSearchbar
                     v-model="healthcareProfessionalDegreesArray"
+                    data-test-id="mod-healthcare-professional-section-degrees"
                     :place-holder-text="$t('modHealthcareProfessionalSection.placeholderTextDegrees')"
                     :no-match-text="$t('modHealthcareProfessionalSection.noDegreesWereFound')"
                     :fields-to-display-callback="degreesToDisplayCallback"
@@ -145,6 +147,7 @@
                 </label>
                 <ModSearchbar
                     v-model="healthcareProfessionalSpecialtiesArray"
+                    data-test-id="mod-healthcare-professional-section-specialties"
                     :place-holder-text="$t('modHealthcareProfessionalSection.placeholderTextSpecialties')"
                     :no-match-text="$t('modHealthcareProfessionalSection.noSpecialtiesWereFound')"
                     :fields-to-display-callback="specialtiesToDisplayCallback"
@@ -167,6 +170,7 @@
                 </label>
                 <ModSearchbar
                     v-model="healthcareProfessionalSpokenLanguages"
+                    data-test-id="mod-healthcare-professional-section-spoken-locales"
                     :place-holder-text="$t('modHealthcareProfessionalSection.placeholderTextLocales')"
                     :no-match-text="$t('modHealthcareProfessionalSection.noLocalesWereFound')"
                     :fields-to-display-callback="localesToDisplayCallback"
