@@ -4,7 +4,7 @@
             <button
                 data-testid="mod-edit-facility-hp-topbar-copy-id"
                 class="flex w-90 bg-neutral p-2 m-2 border-2 border-inverted rounded hover"
-                @click="copyFacilityOrHPId"
+                @click="copyFacilityOrHealthcareProfessionalId"
             >
                 ID: {{ selectedId }}
                 <SVGSuccessCheckMark
@@ -24,7 +24,7 @@
         <div class="facility-hp-topbar-actions flex justify p-2 font-bold ">
             <button
                 type="button"
-                :disabled="!unsavedChanges"
+                :disabled="!enableUpdateButtons"
                 class="flex justify-center items-center rounded-full bg-secondary-bg border-primary-text-muted
                 border-2 w-28 text-sm mr-2"
                 data-testid="mod-edit-facility-hp-topbar-update"
@@ -36,7 +36,7 @@
             </button>
             <button
                 type="button"
-                :disabled="!unsavedChanges"
+                :disabled="!enableUpdateButtons"
                 class="flex justify-center items-center rounded-full bg-secondary-bg border-primary-text-muted
                 border-2 w-28 text-sm mr-2"
                 data-testid="mod-edit-facility-hp-topbar-update"
@@ -114,16 +114,15 @@ const originalFacilityRefsValue: Ref<Facility | undefined> = ref()
 const originalHealthcareProfessionalRefsValue: Ref<HealthcareProfessional | undefined> = ref()
 
 // Disable the buttons if there are no changes
-const unsavedChanges = computed(() => hasUnsavedChanges())
+const enableUpdateButtons = computed(() => hasUnsavedChanges())
 
-// Initialize the variable that will be used to mount the toast library
 let toast: ToastInterface
 
 const { t } = useI18n()
 
 const showCopySuccessIcon: Ref<boolean> = ref(false)
 
-const copyFacilityOrHPId = async () => {
+const copyFacilityOrHealthcareProfessionalId = async () => {
     try {
         await navigator.clipboard.writeText(selectedId.value)
         showCopySuccessIcon.value = true
@@ -154,9 +153,7 @@ const facilityHasUnsavedChanges = () => {
 
     /** This needs to be converted because to access the values of this object we do not need value.
     But to keep their reactivity in the store we keep them as Refs **/
-    const facilitySections = facilitiesStore.facilitySectionFields as unknown as {
-        [key: string]: string
-    }
+    const facilitySections = facilitiesStore.facilitySectionFields
 
     const areThereUnsavedFacilityChanges
         = facilityBeforeChange.nameEn !== facilitySections.nameEn
@@ -233,12 +230,10 @@ const hasUnsavedChanges = () => {
 }
 
 const updateFacilityOrHealthcareProfessional = async () => {
-    // This makes the on click update the facility if the screen is EditFacility
-    const checkForUnsavedChanges = unsavedChanges.value
-    // This prevents us from sending a requested unnecessarily if the user has not made changes
-    if (!checkForUnsavedChanges) return
-
     if (moderationScreenStore.activeScreen === ModerationScreen.EditFacility) {
+        // Prevent sending an unnecessary request if the user has not made changes
+        if (!facilityHasUnsavedChanges()) return
+
         const response = await facilitiesStore.updateFacility()
 
         if (response.errors?.length) {
@@ -246,7 +241,7 @@ const updateFacilityOrHealthcareProfessional = async () => {
             return response
         }
 
-        // This updates the facility section values with the data saved in our db
+        // Updates the facility section values with the data saved in the database
         facilitiesStore.initializeFacilitySectionValues(response.data as Facility)
         toast.success(t('modEditFacilityOrHPTopbar.facilityUpdatedSuccessfully'))
         return response
@@ -254,7 +249,7 @@ const updateFacilityOrHealthcareProfessional = async () => {
     // This makes the on click update the facility if the screen is EditFacility
     if (moderationScreenStore.activeScreen === ModerationScreen.EditHealthcareProfessional) {
         // This prevents us from sending a requested unnecessarily if the user has not made changes
-        if (!checkForUnsavedChanges) return
+        if (!healthcareProfessionalHasUnsavedChanges()) return
 
         const response = await healthcareProfessionalsStore.updateHealthcareProfessional()
 
@@ -298,8 +293,7 @@ const openDeletionConfirmation = () => {
 }
 
 const deleteFacilityOrHealthcareProfessional = async () => {
-    // This makes the on click delete the facility if the screen is EditFacility
-    if (moderationScreenStore.activeScreen === ModerationScreen.EditFacility) {
+    if (moderationScreenStore.editFacilityScreenIsActive()) {
         const deleteFacilityArgs = {
             id: selectedId.value
         }
@@ -311,14 +305,13 @@ const deleteFacilityOrHealthcareProfessional = async () => {
         }
 
         toast.success(t('modEditFacilityOrHPTopbar.facilityDeletedSuccessfully'))
-        // We are redirecting the moderator to the dashboard as there is no more facility to edit
+        // Redirect to the dashboard since the facility no longer exists
         router.push('/moderation')
         modalStore.hideModal()
         return response
     }
 
-    // This makes the on click delete the healthcare professional if the screen is EditHealthcareProfessional
-    if (moderationScreenStore.activeScreen === ModerationScreen.EditHealthcareProfessional) {
+    if (moderationScreenStore.editHealthcareProfessionalScreenIsActive()) {
         const deleteHealthcareProfessionalArgs = {
             id: selectedId.value
         }
@@ -331,7 +324,7 @@ const deleteFacilityOrHealthcareProfessional = async () => {
         }
 
         toast.success(t('modEditFacilityOrHPTopbar.healthcareProfessionalDeletedSuccessfully'))
-        // We are redirecting the moderator to the dashboard as there is no more healthcare professional to edit
+        // Redirect to the dashboard since the healthcare professional no longer exists
         router.push('/moderation')
         modalStore.hideModal()
         return response
