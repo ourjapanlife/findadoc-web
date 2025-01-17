@@ -7,12 +7,19 @@ const SITE_DESCRIPTION
 export default defineNuxtConfig({
     //typescript settings
     typescript: {
-        shim: false,
-        tsConfig: { compilerOptions: { baseUrl: '.' } }
+        tsConfig: {
+            compilerOptions: {
+                outDir: 'dist',
+                sourceMap: true
+            },
+            'ts-node': {
+                esm: true,
+                swc: true
+            }
+        }
     },
-
     app: {
-    // Global page headers: https://go.nuxtjs.dev/config-head
+    // Global page headers: https://nuxt.com/docs/getting-started/seo-meta
         head: {
             titleTemplate: 'Health Services in Japan',
             title: SITE_TITLE,
@@ -142,13 +149,6 @@ export default defineNuxtConfig({
     svgo: {
         defaultImport: 'component'
     },
-    pinia: {
-        autoImports: [
-            // automatically imports `defineStore`
-            'defineStore', // import { defineStore } from 'pinia'
-            ['defineStore', 'definePiniaStore'] // import { defineStore as definePiniaStore } from 'pinia'
-        ]
-    },
     // Postcss configuration
     postcss: {
         plugins: {
@@ -156,7 +156,6 @@ export default defineNuxtConfig({
             autoprefixer: {}
         }
     },
-    target: 'static',
     runtimeConfig: {
         public: {
 
