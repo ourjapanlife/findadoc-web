@@ -1,5 +1,10 @@
 <template>
-    <div class="border-2 border-primary rounded-lg px-2 my-3 w-fit">
+    <div
+        :class="[
+            'border-2 border-primary rounded-lg px-2 w-fit',
+            (isEditable && chosenLocaleIndex === 0) ? 'border-t-0 mt-0 rounded-t-none' : 'my-3',
+        ]"
+    >
         <div class="w-96">
             <div
                 class="flex justify-between items-center p-1"
