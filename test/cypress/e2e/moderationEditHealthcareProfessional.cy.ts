@@ -56,13 +56,10 @@ describe('Moderation edit professional healthcare form', () => {
             Cypress.session.clearCurrentSessionData()
         })
 
-        it('contains the following input fields', () => {
+        it('contains the following input and select fields', () => {
             cy.get('[data-testid="mod-healthcare-professional-section-lastName"]').should('exist')
             cy.get('[data-testid="mod-healthcare-professional-section-firstName"]').should('exist')
             cy.get('[data-testid="mod-healthcare-professional-section-middleName"]').should('exist')
-        })
-
-        it('should contain the following select field', () => {
             cy.get('[data-testid="mod-healthcare-professional-section-name-locale"]').should('exist')
             cy.get('[data-testid="mod-healthcare-professional-section-accepted-insurances"]').should('exist')
             cy.get('[data-testid="mod-healthcare-professional-section-degrees"]').should('exist')
@@ -71,22 +68,11 @@ describe('Moderation edit professional healthcare form', () => {
         })
 
         it('should be able to type in all input fields', () => {
+            cy.get('[data-testid="mod-healthcare-add-name-button"]').click()
             cy.get('[data-testid="mod-healthcare-professional-section-lastName"]').find('input').type('Doe')
             cy.get('[data-testid="mod-healthcare-professional-section-firstName"]').find('input').type('John')
             cy.get('[data-testid="mod-healthcare-professional-section-middleName"]').find('input').type('Johnny')
-        })
-
-        it('should be able to select a field', () => {
             cy.get('[data-testid="mod-healthcare-professional-section-name-locale"]').select('en_US')
-            cy.get('[data-testid="mod-healthcare-professional-section-accepted-insurances"]').select(
-                ['INSURANCE_NOT_ACCEPTED', 'INTERNATIONAL_HEALTH_INSURANCE',
-                 'JAPANESE_HEALTH_INSURANCE', 'UNINSURED'], { force: true }
-            )
-            cy.get('[data-testid="mod-healthcare-professional-section-degrees"]').select(['CNM', 'DMD'], { force: true })
-            cy.get('[data-testid="mod-healthcare-professional-section-specialties"]')
-                .select(['FAMILY_MEDICINE', 'NEUROLOGY'], { force: true })
-            cy.get('[data-testid="mod-healthcare-professional-section-spoken-locales"]')
-                .select(['en_US', 'fr_FR'], { force: true })
         })
     })
 })

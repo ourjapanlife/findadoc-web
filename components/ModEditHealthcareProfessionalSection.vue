@@ -120,6 +120,7 @@
                 </div>
                 <button
                     type="button"
+                    data-test-id="mod-healthcare-add-name-button"
                     class="bg-tertiary text-primary-text-inverted font-bold py-2 px-4 my-2 rounded w-44"
                     @click="handleOpenAddNewNameWithReset"
                 >
@@ -139,6 +140,7 @@
                 </label>
                 <ModSearchbar
                     v-model="healthcareProfessionalAcceptedInsurancesArray"
+                    data-test-id="mod-healthcare-professional-section-accepted-insurances"
                     :place-holder-text="$t('modHealthcareProfessionalSection.placeholderTextAcceptedInsurances')"
                     :no-match-text="$t('modHealthcareProfessionalSection.noInsurancesWereFound')"
                     :fields-to-display-callback="insurancesToDisplayCallback"
@@ -161,6 +163,7 @@
                 </label>
                 <ModSearchbar
                     v-model="healthcareProfessionalDegreesArray"
+                    data-test-id="mod-healthcare-professional-section-degrees"
                     :place-holder-text="$t('modHealthcareProfessionalSection.placeholderTextDegrees')"
                     :no-match-text="$t('modHealthcareProfessionalSection.noDegreesWereFound')"
                     :fields-to-display-callback="degreesToDisplayCallback"
@@ -183,6 +186,7 @@
                 </label>
                 <ModSearchbar
                     v-model="healthcareProfessionalSpecialtiesArray"
+                    data-test-id="mod-healthcare-professional-section-specialties"
                     :place-holder-text="$t('modHealthcareProfessionalSection.placeholderTextSpecialties')"
                     :no-match-text="$t('modHealthcareProfessionalSection.noSpecialtiesWereFound')"
                     :fields-to-display-callback="specialtiesToDisplayCallback"
@@ -205,6 +209,7 @@
                 </label>
                 <ModSearchbar
                     v-model="healthcareProfessionalSpokenLanguages"
+                    data-test-id="mod-healthcare-professional-section-spoken-locales"
                     :place-holder-text="$t('modHealthcareProfessionalSection.placeholderTextLocales')"
                     :no-match-text="$t('modHealthcareProfessionalSection.noLocalesWereFound')"
                     :fields-to-display-callback="localesToDisplayCallback"
@@ -309,7 +314,8 @@ const setEditingLocaleName = (newValue: boolean) => {
 
 // Closes the locale being added name inputs
 const handleCloseAddingNewLocalizedName = () => {
-    resetNameLocaleInputs()
+    // Allows for the inputs to completely transition before resetting the fields
+    setTimeout(() => resetNameLocaleInputs, 300)
     addingLocaleName.value = false
     // Makes sure both values cannot be true
     editingLocaleName.value = false
@@ -317,7 +323,8 @@ const handleCloseAddingNewLocalizedName = () => {
 
 // Opens the locale being added name inputs
 const handleOpenAddNewNameWithReset = () => {
-    resetNameLocaleInputs()
+    // Allows for the inputs to completely transition before resetting the fields
+    setTimeout(() => resetNameLocaleInputs, 300)
     addingLocaleName.value = true
     // Makes sure both values cannot be true
     editingLocaleName.value = false
@@ -365,7 +372,7 @@ const setChosenLocaleNameInput = (index: number) => {
     }
 }
 
-const handleUpdateExistingName = async () => {
+const handleUpdateExistingName = () => {
     const localizedNameToAdd: LocalizedNameInput = {
         firstName: nameLocaleInputs.firstName,
         lastName: nameLocaleInputs.lastName,
@@ -401,11 +408,12 @@ const handleUpdateExistingName = async () => {
 
     setEditingLocaleName(false)
 
-    await nextTick()
-    // resets values for further edits
-    resetNameLocaleInputs()
-    chosenHealthcareProfessionalToEdit.value = undefined
-    chosenLocaleIndex.value = null
+    // Allows for the inputs to completely transition before resetting the fields
+    setTimeout(() => {
+        resetNameLocaleInputs()
+        chosenHealthcareProfessionalToEdit.value = undefined
+        chosenLocaleIndex.value = null
+    }, 301)
 }
 
 const handleDeleteExistingName = () => {
@@ -417,12 +425,16 @@ const handleDeleteExistingName = () => {
     healthcareProfessionalsStore.healthcareProfessionalSectionFields.names.shift()
 
     setEditingLocaleName(false)
-    resetNameLocaleInputs()
-    chosenHealthcareProfessionalToEdit.value = undefined
-    chosenLocaleIndex.value = null
+
+    // Allows for the inputs to completely transition before resetting the fields
+    setTimeout(() => {
+        resetNameLocaleInputs()
+        chosenHealthcareProfessionalToEdit.value = undefined
+        chosenLocaleIndex.value = null
+    }, 301)
 }
 
-const handleAddLocalizedName = async () => {
+const handleAddLocalizedName = () => {
     const localizedNameToAdd: LocalizedNameInput = {
         firstName: nameLocaleInputs.firstName,
         lastName: nameLocaleInputs.lastName,
@@ -467,8 +479,6 @@ const handleAddLocalizedName = async () => {
 
     // Sets the chosen healthcare professional to undefined to reset
     handleCloseAddingNewLocalizedName()
-
-    await nextTick()
 }
 
 const handleFacilitySearchInputChange = (filteredItems: Ref<Facility[]>, inputValue: string) => {
