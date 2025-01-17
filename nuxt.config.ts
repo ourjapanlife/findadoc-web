@@ -153,5 +153,6 @@ export default defineNuxtConfig({
             NUXT_USE_LOCAL_API: process.env.NUXT_USE_LOCAL_API
         }
     },
-    telemetry: false
+    telemetry: false,
+    compatibilityDate: '2025-01-17'
 })
