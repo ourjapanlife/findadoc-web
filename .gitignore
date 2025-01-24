@@ -22,5 +22,9 @@ eslint-results.sarif
 cypress/videos
 *.DS_Store
 
+# Env
 .env
+.env.test
+
+# VS Code
 .vscode
