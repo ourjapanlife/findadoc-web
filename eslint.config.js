@@ -2,7 +2,7 @@ import globals from 'globals'
 import eslintJsPlugin from '@eslint/js'
 import tseslint from 'typescript-eslint'
 import stylistic from '@stylistic/eslint-plugin'
-import pluginCypress from 'eslint-plugin-cypress'
+import pluginCypress from 'eslint-plugin-cypress/flat'
 import pluginVue from 'eslint-plugin-vue'
 import withNuxt from './.nuxt/eslint.config.mjs'
 
@@ -14,7 +14,6 @@ export default withNuxt(
             '.output/*',
             '.nuxt/*',
             'coverage/*',
-            'cypress/*',
             '.yarn/*',
             'typedefs/gqlTypes.ts'
         ]
@@ -36,7 +35,7 @@ export default withNuxt(
             '@typescript-eslint': tseslint.plugin,
             '@stylistic': stylistic
         },
-        ignores: ['./typeDefs/gqlTypes.ts', './typesgeneratorconfig.ts', 'cypress/**/*'],
+        ignores: ['./typeDefs/gqlTypes.ts', './typesgeneratorconfig.ts'],
         rules: {
             ...tseslint.configs.recommended,
             // TS specific rules
@@ -94,32 +93,12 @@ export default withNuxt(
             'vue/html-indent': ['error', 4]
         }
     },
-    // Linting for tests (cypress + pinia)
+    // Linting for Cypress (https://www.npmjs.com/package/eslint-plugin-cypress)
     {
-        languageOptions: {
-            globals: {
-                cy: true,
-                it: true,
-                describe: true,
-                context: true,
-                beforeEach: true,
-                before: true
-            }
-        },
-        files: ['cypress/e2e/*.ts', 'test/**/*'],
-        plugins: {
-            cypress: pluginCypress
-        },
+        files: ['test/cypress/**/*'],
+        ...pluginCypress.configs.recommended,
         rules: {
-            //this is to support chai chaining syntax
-            '@typescript-eslint/no-unused-expressions': 'off'
-        //     'cypress/no-assigning-return-values": "error",
-        //     "cypress/no-unnecessary-waiting": "error",
-        //     "cypress/assertion-before-screenshot": "warn",
-        //     "cypress/no-force": "warn",
-        //     "cypress/no-async-tests": "error",
-        //     "cypress/no-async-before": "error",
-        //     "cypress/no-pause": "error"
+            'cypress/no-unnecessary-waiting': 'off'
         }
     }
 )
