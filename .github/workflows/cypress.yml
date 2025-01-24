@@ -36,6 +36,8 @@ jobs:
 
             - name: Run Cypress tests
               uses: cypress-io/github-action@v6
+              with:
+                command: yarn test:e2e
 
             - name: Upload screenshots
               uses: actions/upload-artifact@v4
