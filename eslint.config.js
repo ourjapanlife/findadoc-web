@@ -15,6 +15,7 @@ export default withNuxt(
             '.nuxt/*',
             'coverage/*',
             '.yarn/*',
+            'test/vitest',
             'typedefs/gqlTypes.ts'
         ]
     },
