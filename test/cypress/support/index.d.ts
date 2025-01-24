@@ -1,10 +1,7 @@
-export { }
+/// <reference types="cypress" />
 
-declare global {
-    namespace Cypress {
-        interface Chainable {
-            isInViewport(args?: string): Chainable<JQuery<HTMLElement>>
-            isNotInViewport(args?: string): Chainable<JQuery<HTMLElement>>
-        }
+declare namespace Cypress{
+    interface Chainable<Subject> {
+        login(): Chainable<Subject>
     }
 }
