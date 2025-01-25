@@ -36,6 +36,10 @@ jobs:
 
             - name: Run Cypress tests
               uses: cypress-io/github-action@v6
+              env:
+                AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
+                AUTH0_USERNAME: ${{ secrets.AUTH0_USERNAME }}
+                AUTH0_PASSWORD: ${{ secrets.AUTH0_PASSWORD }}
               with:
                 command: yarn test:e2e
 
