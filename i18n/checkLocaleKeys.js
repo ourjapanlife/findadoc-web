@@ -28,7 +28,7 @@ const checkLocaleKeys = () => {
 
     //insert in development
     findAndInsertMissingKeysAndValuesInNonEnFiles(
-        localeFilesWithoutEnFileName, enFileContent, referenceKeys, insertMissingKeysAndValues
+        localeFilesWithoutEnFileName, enFileContent, referenceKeys
     )
 }
 
@@ -81,7 +81,7 @@ the translations are later updated into their native language by a contributor.
 * @param {() => void} insertMissingKeysAndValues  - function to insert a key-value pair into a nested object
 */
 const findAndInsertMissingKeysAndValuesInNonEnFiles
-= (localeFilesWithoutEnFileName, enFileContent, referenceKeys, insertMissingKeysAndValues) => {
+= (localeFilesWithoutEnFileName, enFileContent, referenceKeys) => {
     localeFilesWithoutEnFileName.forEach(file => {
         const localeFilePath = path.join(localesI18nDirectory, file)
         const jsonContent = JSON.parse(fs.readFileSync(localeFilePath, 'utf-8'))
