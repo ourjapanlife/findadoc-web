@@ -126,6 +126,7 @@ export const useHealthcareProfessionalsStore = defineStore(
                 )
             } catch (error) {
                 console.error('Failed to update healthcare professional:', error)
+                return undefined
             }
         }
 

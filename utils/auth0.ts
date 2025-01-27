@@ -28,7 +28,11 @@ export const initializeAuth0 = () => {
         })
 
         auth0 = auth0Plugin
+
+        return undefined
     } catch (error) {
         console.error('Error initializing auth0', error)
+
+        return undefined
     }
 }

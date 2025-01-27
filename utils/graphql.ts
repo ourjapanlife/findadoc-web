@@ -21,6 +21,8 @@ export const initializeGqlClient = () => {
 
     const client = new GraphQLClient(apiURL)
     gqlClient = client
+
+    return undefined
 }
 
 export const graphQLClientRequestWithRetry = async <T>(

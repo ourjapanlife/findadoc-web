@@ -111,7 +111,7 @@ export const useModerationSubmissionsStore = defineStore(
         async function approveSubmission() {
             if (!selectedSubmissionId.value) {
                 console.error('Unable to approve submission. Submission ID is required.')
-                return
+                return undefined
             }
 
             const approveSubmissionInput: MutationUpdateSubmissionArgs = {
@@ -126,7 +126,7 @@ export const useModerationSubmissionsStore = defineStore(
         async function rejectSubmission() {
             if (!selectedSubmissionId.value) {
                 console.error('Unable to reject submission. Submission ID is required.')
-                return
+                return undefined
             }
 
             const facilityInputVariables = {
