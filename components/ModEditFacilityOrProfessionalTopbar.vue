@@ -4,7 +4,7 @@
             <button
                 data-testid="mod-edit-facility-hp-topbar-copy-id"
                 class="flex w-90 bg-neutral p-2 m-2 border-2 border-inverted rounded hover"
-                @click="copyFacilityOrHPId"
+                @click="copyFacilityOrHealthcareProfessionalId"
             >
                 ID: {{ selectedId }}
                 <SVGSuccessCheckMark
@@ -24,7 +24,7 @@
         <div class="facility-hp-topbar-actions flex justify p-2 font-bold ">
             <button
                 type="button"
-                :disabled="!unsavedChanges"
+                :disabled="!enableUpdateButtons"
                 class="flex justify-center items-center rounded-full bg-secondary-bg border-primary-text-muted
                 border-2 w-28 text-sm mr-2"
                 data-testid="mod-edit-facility-hp-topbar-update"
@@ -36,7 +36,7 @@
             </button>
             <button
                 type="button"
-                :disabled="!unsavedChanges"
+                :disabled="!enableUpdateButtons"
                 class="flex justify-center items-center rounded-full bg-secondary-bg border-primary-text-muted
                 border-2 w-28 text-sm mr-2"
                 data-testid="mod-edit-facility-hp-topbar-update"
@@ -101,27 +101,23 @@ import type { Facility } from '~/typedefs/gqlTypes'
 
 const router = useRouter()
 
-// Initialize the stores in use
 const facilitiesStore = useFacilitiesStore()
 const healthcareProfessionalsStore = useHealthcareProfessionalsStore()
 const moderationScreenStore = useModerationScreenStore()
 const modalStore = useModalStore()
 
-// Initialize the value of the selected Id based off of Moderation Screen
 const selectedId: ComputedRef<string> = computed(() => setSelectedId())
 const originalFacilityRefsValue: Ref<Facility | undefined> = ref()
 
-// Disable the buttons if there are no changes
-const unsavedChanges = computed(() => facilityHasUnsavedChanges())
+const enableUpdateButtons = computed(() => facilityHasUnsavedChanges())
 
-// Initialize the variable that will be used to mount the toast library
 let toast: ToastInterface
 
 const { t } = useI18n()
 
 const showCopySuccessIcon: Ref<boolean> = ref(false)
 
-const copyFacilityOrHPId = async () => {
+const copyFacilityOrHealthcareProfessionalId = async () => {
     try {
         await navigator.clipboard.writeText(selectedId.value)
         showCopySuccessIcon.value = true
@@ -152,42 +148,34 @@ const facilityHasUnsavedChanges = () => {
 
     /** This needs to be converted because to access the values of this object we do not need value.
     But to keep their reactivity in the store we keep them as Refs **/
-    const facilitySections = facilitiesStore.facilitySectionFields as unknown as {
-        [key: string]: string
-    }
+    const facilitySections = facilitiesStore.facilitySectionFields
 
-    const areThereUnsavedChanges
-        = facilityBeforeChange.nameEn !== facilitySections.nameEn
-        || facilityBeforeChange.nameJa !== facilitySections.nameJa
-        || facilityBeforeChange.contact.phone !== facilitySections.phone
-        || facilityBeforeChange.contact.website !== facilitySections.website
-        || facilityBeforeChange.contact.email !== facilitySections.email
-        || facilityBeforeChange.contact.address.postalCode !== facilitySections.postalCode
-        || facilityBeforeChange.contact.address.prefectureEn !== facilitySections.prefectureEn
-        || facilityBeforeChange.contact.address.cityEn !== facilitySections.cityEn
-        || facilityBeforeChange.contact.address.addressLine1En !== facilitySections.addressLine1En
-        || facilityBeforeChange.contact.address.addressLine2En !== facilitySections.addressLine2En
-        || facilityBeforeChange.contact.address.prefectureJa !== facilitySections.prefectureJa
-        || facilityBeforeChange.contact.address.cityJa !== facilitySections.cityJa
-        || facilityBeforeChange.contact.address.addressLine1Ja !== facilitySections.addressLine1Ja
-        || facilityBeforeChange.contact.address.addressLine2Ja !== facilitySections.addressLine2Ja
-        || facilityBeforeChange.contact.googleMapsUrl !== facilitySections.googlemapsURL
-        || facilityBeforeChange.mapLatitude.toString() !== facilitySections.mapLatitude
-        || facilityBeforeChange.mapLongitude.toString() !== facilitySections.mapLongitude
-        || JSON.stringify(facilityBeforeChange.healthcareProfessionalIds)
-        !== JSON.stringify(facilitySections.healthcareProfessionalIds)
-        || facilitySections.healthProfessionalsRelations.length
-
-    return areThereUnsavedChanges
+    return facilityBeforeChange.nameEn !== facilitySections.nameEn
+      || facilityBeforeChange.nameJa !== facilitySections.nameJa
+      || facilityBeforeChange.contact.phone !== facilitySections.phone
+      || facilityBeforeChange.contact.website !== facilitySections.website
+      || facilityBeforeChange.contact.email !== facilitySections.email
+      || facilityBeforeChange.contact.address.postalCode !== facilitySections.postalCode
+      || facilityBeforeChange.contact.address.prefectureEn !== facilitySections.prefectureEn
+      || facilityBeforeChange.contact.address.cityEn !== facilitySections.cityEn
+      || facilityBeforeChange.contact.address.addressLine1En !== facilitySections.addressLine1En
+      || facilityBeforeChange.contact.address.addressLine2En !== facilitySections.addressLine2En
+      || facilityBeforeChange.contact.address.prefectureJa !== facilitySections.prefectureJa
+      || facilityBeforeChange.contact.address.cityJa !== facilitySections.cityJa
+      || facilityBeforeChange.contact.address.addressLine1Ja !== facilitySections.addressLine1Ja
+      || facilityBeforeChange.contact.address.addressLine2Ja !== facilitySections.addressLine2Ja
+      || facilityBeforeChange.contact.googleMapsUrl !== facilitySections.googlemapsURL
+      || facilityBeforeChange.mapLatitude.toString() !== facilitySections.mapLatitude
+      || facilityBeforeChange.mapLongitude.toString() !== facilitySections.mapLongitude
+      || JSON.stringify(facilityBeforeChange.healthcareProfessionalIds)
+      !== JSON.stringify(facilitySections.healthcareProfessionalIds)
+      || facilitySections.healthProfessionalsRelations.length > 0
 }
 
 const updateFacilityOrHealthcareProfessional = async () => {
-    // This makes the on click update the facility if the screen is EditFacility
     if (moderationScreenStore.activeScreen === ModerationScreen.EditFacility) {
-        const checkForUnsavedChanges = facilityHasUnsavedChanges()
-
-        // This prevents us from sending a requested unnecessarily if the user has not made changes
-        if (!checkForUnsavedChanges) return
+        // Prevent sending an unnecessary request if the user has not made changes
+        if (!facilityHasUnsavedChanges()) return
 
         const response = await facilitiesStore.updateFacility()
 
@@ -196,7 +184,7 @@ const updateFacilityOrHealthcareProfessional = async () => {
             return response
         }
 
-        // This updates the facility section values with the data saved in our db
+        // Updates the facility section values with the data saved in the database
         facilitiesStore.initializeFacilitySectionValues(response.data as Facility)
         toast.success(t('modEditFacilityOrHPTopbar.facilityUpdatedSuccessfully'))
         return response
@@ -220,8 +208,7 @@ const openDeletionConfirmation = () => {
 }
 
 const deleteFacilityOrHealthcareProfessional = async () => {
-    // This makes the on click delete the facility if the screen is EditFacility
-    if (moderationScreenStore.activeScreen === ModerationScreen.EditFacility) {
+    if (moderationScreenStore.editFacilityScreenIsActive()) {
         const deleteFacilityArgs = {
             id: selectedId.value
         }
@@ -233,14 +220,13 @@ const deleteFacilityOrHealthcareProfessional = async () => {
         }
 
         toast.success(t('modEditFacilityOrHPTopbar.facilityDeletedSuccessfully'))
-        // We are redirecting the moderator to the dashboard as there is no more facility to edit
+        // Redirect to the dashboard since the facility no longer exists
         router.push('/moderation')
         modalStore.hideModal()
         return response
     }
 
-    // This makes the on click delete the healthcare professional if the screen is EditHealthcareProfessional
-    if (moderationScreenStore.activeScreen === ModerationScreen.EditHealthcareProfessional) {
+    if (moderationScreenStore.editHealthcareProfessionalScreenIsActive()) {
         const deleteHealthcareProfessionalArgs = {
             id: selectedId.value
         }
@@ -253,7 +239,7 @@ const deleteFacilityOrHealthcareProfessional = async () => {
         }
 
         toast.success(t('modEditFacilityOrHPTopbar.healthcareProfessionalDeletedSuccessfully'))
-        // We are redirecting the moderator to the dashboard as there is no more healthcare professional to edit
+        // Redirect to the dashboard since the healthcare professional no longer exists
         router.push('/moderation')
         modalStore.hideModal()
         return response
