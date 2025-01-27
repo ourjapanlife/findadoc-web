@@ -121,6 +121,14 @@ export default withNuxt(
         //     "cypress/no-async-before": "error",
         //     "cypress/no-pause": "error"
         }
+    },
+    // Vitest linting
+    {
+        files: ['test/vitest/**/*'],
+        rules: {
+            '@typescript-eslint/no-unused-expressions': 'off',
+            'no-unused-expressions': 'off'
+        }
     }
 )
     .override('nuxt/stylistic', {
