@@ -36,7 +36,7 @@ export default withNuxt(
             '@typescript-eslint': tseslint.plugin,
             '@stylistic': stylistic
         },
-        ignores: ['typeDefs/gqlTypes.ts', 'typesgeneratorconfig.ts', 'cypress/**/*'],
+        ignores: ['typeDefs/gqlTypes.ts', 'typesgeneratorconfig.ts', 'test/cypress/**/*'],
         rules: {
             ...tseslint.configs.eslintRecommended.rules,
             // TS specific rules
