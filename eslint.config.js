@@ -31,14 +31,14 @@ export default withNuxt(
                 }
             }
         },
-        files: ['test**/*.ts', './**/*.ts', './**/*.js'],
+        files: ['test/**/*.ts', '**/*.{ts,js}'],
         plugins: {
             '@typescript-eslint': tseslint.plugin,
             '@stylistic': stylistic
         },
-        ignores: ['./typeDefs/gqlTypes.ts', './typesgeneratorconfig.ts', 'cypress/**/*'],
+        ignores: ['typeDefs/gqlTypes.ts', 'typesgeneratorconfig.ts', 'cypress/**/*'],
         rules: {
-            ...tseslint.configs.recommended,
+            ...tseslint.configs.eslintRecommended.rules,
             // TS specific rules
             '@typescript-eslint/no-shadow': 'error',
             '@typescript-eslint/no-unused-vars': 'error',
