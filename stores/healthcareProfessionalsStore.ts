@@ -63,11 +63,15 @@ export const useHealthcareProfessionalsStore = defineStore(
         }
 
         function setSelectedNameLocaleToUpdate(nameLocale: Locale) {
-            if (!healthcareProfessionalSectionFields.names.length) { return }
+            if (!healthcareProfessionalSectionFields.names.length) {
+                return
+            }
 
             const nameLocaleToEdit = healthcareProfessionalSectionFields.names.find(name => name.locale === nameLocale)
 
-            if (!nameLocaleToEdit) { return }
+            if (!nameLocaleToEdit) {
+                return
+            }
             selectedNameLocaleToUpdate.localizedFirstName = nameLocaleToEdit.firstName
             selectedNameLocaleToUpdate.localizedLastName = nameLocaleToEdit.lastName
             selectedNameLocaleToUpdate.localizedMiddleName = nameLocaleToEdit.middleName
@@ -78,13 +82,19 @@ export const useHealthcareProfessionalsStore = defineStore(
         }
 
         function updateHealthcareProfessionalNameValues() {
-            if (!healthcareProfessionalSectionFields) { return }
+            if (!healthcareProfessionalSectionFields) {
+                return
+            }
 
-            if (!healthcareProfessionalSectionFields.names) { return }
+            if (!healthcareProfessionalSectionFields.names) {
+                return
+            }
 
             const localeIndex = healthcareProfessionalSectionFields.names
                 .findIndex(nameObject => nameObject.locale === selectedNameLocaleToUpdate.nameLocaleToChange)
-            if (localeIndex === -1) { return }
+            if (localeIndex === -1) {
+                return
+            }
             console.log(selectedNameLocaleToUpdate)
             healthcareProfessionalSectionFields.names[localeIndex].firstName = selectedNameLocaleToUpdate.localizedFirstName
             healthcareProfessionalSectionFields.names[localeIndex].middleName

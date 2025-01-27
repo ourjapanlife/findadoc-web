@@ -48,7 +48,9 @@ export const useFacilitiesStore = defineStore(
         }
 
         function initializeFacilitySectionValues(facilityData: Facility | undefined) {
-            if (!facilityData) { return }
+            if (!facilityData) {
+                return
+            }
 
             facilitySectionFields.nameEn = facilityData.nameEn
             facilitySectionFields.nameJa = facilityData.nameJa
