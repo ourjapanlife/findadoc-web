@@ -5,19 +5,6 @@ const SITE_DESCRIPTION
     = 'Health service information for the international community in Japan'
 
 export default defineNuxtConfig({
-    //typescript settings
-    typescript: {
-        tsConfig: {
-            compilerOptions: {
-                outDir: 'dist',
-                sourceMap: true
-            },
-            'ts-node': {
-                esm: true,
-                swc: true
-            }
-        }
-    },
     app: {
     // Global page headers: https://nuxt.com/docs/getting-started/seo-meta
         head: {
