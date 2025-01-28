@@ -11,7 +11,10 @@
                     class="profile-icon stroke-primary w-16 h-16 stroke-1 inline mx-1 self-start"
                 />
             </div>
-            <div v-if="healthcareProfessionalsRelatedToFacility">
+            <div
+                v-if="healthcareProfessionalsRelatedToFacility"
+                class="min-w-44"
+            >
                 <div class="flex flex-col h-full w-64 pl-1 mb-1">
                     <div class="flex font-bold pt-2">
                         <span>{{ healthcareProfessionalsStore
@@ -52,48 +55,46 @@
                 </div>
             </div>
             <div
-                v-if="!healthcareProfessionalsRelatedToFacility"
+                v-if="healthcareProfessionalNameByLocale"
+                class="min-w-44"
             >
-                <div
-                    v-for="(nameLocale, index) in healthcareProfessional.names"
-                    :key="`${nameLocale.firstName}-${nameLocale.lastName}-${index}`"
-                >
-                    <div class="flex font-bold pt-2">
-                        <span>{{ nameLocale.lastName }}</span>
-                        <span class="mx-2">{{ nameLocale.firstName }}</span>
-                        <span v-show="nameLocale.middleName">
-                            {{ nameLocale.middleName }}
-                        </span>
-                    </div>
-                    <span
-                        class="w-24 px-2 py-[1px] mr-1 mb-1 bg-primary-text-muted text-nowrap rounded-full
-                    text-sm text-center"
-                    >
-                        {{ localeStore.formatLanguageCodeToSimpleText(
-                            nameLocale.locale) }}
+                <div class="flex font-bold pt-2">
+                    <span>{{ healthcareProfessionalNameByLocale.lastName }}</span>
+                    <span class="mx-2">{{ healthcareProfessionalNameByLocale.firstName
+                    }}</span>
+                    <span v-show="healthcareProfessionalNameByLocale.middleName">
+                        {{ healthcareProfessionalNameByLocale.middleName }}
                     </span>
-                    <div>
-                        <button
-                            v-if="!isEditable && setOnClick"
-                            type="button"
-                            class="border-2 border-primary px-3 my-1 rounded-full font-semibold hover:bg-currentColor"
-                            @click="() => setChangeToEditable(nameLocale.locale)"
-                        >
-                            {{ $t("modHealthcareProfessionalCard.editName") }}
-                        </button>
-                        <button
-                            v-if="isEditable && updateOnClick"
-                            type="button"
-                            class="border-2 border-primary px-3 my-1 rounded-full font-semibold hover:bg-currentColor"
-                            @click="() => setToUneditableAndSave()"
-                        >
-                            {{ $t("modHealthcareProfessionalCard.saveName") }}
-                        </button>
-                    </div>
+                </div>
+                <span
+                    class="w-24 px-2 py-[1px] mr-1 mb-1 bg-primary-text-muted text-nowrap rounded-full
+                    text-sm text-center"
+                >
+                    {{ localeStore.formatLanguageCodeToSimpleText(
+                        healthcareProfessionalNameByLocale.locale) }}
+                </span>
+                <div>
+                    <button
+                        v-if="!isEditable && setOnClick"
+                        type="button"
+                        class="border-2 border-primary px-3 my-1 rounded-full font-semibold hover:bg-currentColor"
+                        @click="() => setChangeToEditable(healthcareProfessionalNameByLocale.locale)"
+                    >
+                        {{ $t("modHealthcareProfessionalCard.editName") }}
+                    </button>
+                    <button
+                        v-if="isEditable && updateOnClick"
+                        type="button"
+                        class="border-2 border-primary px-3 my-1 rounded-full font-semibold hover:bg-currentColor"
+                        @click="() => setToUneditableAndSave()"
+                    >
+                        {{ $t("modHealthcareProfessionalCard.saveName") }}
+                    </button>
                 </div>
             </div>
             <div
-                v-if="!isHealthcareProfessionalReadyForRemoval(healthcareProfessional.id)"
+                v-if="!isHealthcareProfessionalReadyForRemoval(healthcareProfessional.id)
+                    && !healthcareLocaleNameReadyForRemoval()"
                 class="flex w-8 items-center justify-center
                     cursor-pointer font-bold text-secondary text-sm self-start p-1"
                 @click="() => removeHealthcareProfessional(healthcareProfessional.id)"
@@ -103,7 +104,8 @@
                 />
             </div>
             <div
-                v-if="isHealthcareProfessionalReadyForRemoval(healthcareProfessional.id)"
+                v-if="isHealthcareProfessionalReadyForRemoval(healthcareProfessional.id)
+                    || healthcareLocaleNameReadyForRemoval()"
                 class="flex w-8 items-center justify-center
                     cursor-pointer font-bold text-secondary text-sm self-start p-1"
                 @click="() => undoRemovalOfHealthcareProfessional(healthcareProfessional.id)"
@@ -117,7 +119,7 @@
 </template>
 
 <script setup lang="ts">
-import { type Ref, ref } from 'vue'
+import { type Ref, ref, type ComputedRef, computed } from 'vue'
 import SVGTrashCan from '~/assets/icons/trash-can.svg'
 import SVGProfileIcon from '~/assets/icons/profile-icon.svg'
 import SVGUndoIcon from '~/assets/icons/undo-icon.svg'
@@ -125,12 +127,35 @@ import { useLocaleStore } from '~/stores/localeStore'
 import { useFacilitiesStore } from '~/stores/facilitiesStore'
 import { useHealthcareProfessionalsStore } from '~/stores/healthcareProfessionalsStore'
 import { ModerationScreen, useModerationScreenStore } from '~/stores/moderationScreenStore'
-import { RelationshipAction, type HealthcareProfessional, type Relationship } from '~/typedefs/gqlTypes'
+import { RelationshipAction,
+    type HealthcareProfessional,
+    type LocalizedNameInput,
+    type Relationship } from '~/typedefs/gqlTypes'
 
 const localeStore = useLocaleStore()
 const facilitiesStore = useFacilitiesStore()
 const moderationScreenStore = useModerationScreenStore()
 const healthcareProfessionalsStore = useHealthcareProfessionalsStore()
+
+// This finds and keeps track of the index of the names if there are multiple for locales
+const indexOfNameLocale: ComputedRef<number | undefined> = computed(() => {
+    // Check the first array (names)
+    let index = healthcareProfessionalsStore.healthcareProfessionalSectionFields.names
+        .findIndex(name => props.healthcareProfessionalNameByLocale
+            ? name.locale === props.healthcareProfessionalNameByLocale.locale
+            : false)
+
+    // If not found, check the second array (removedHealthcareProfessionalNames)
+    if (index === -1) {
+        index = healthcareProfessionalsStore.removedHealthcareProfessionalNames
+            .findIndex(name => props.healthcareProfessionalNameByLocale
+                ? name.locale === props.healthcareProfessionalNameByLocale.locale
+                : false)
+    }
+
+    // Return the found index (or undefined if not found)
+    return index === -1 ? undefined : index
+})
 
 const isEditable: Ref<boolean> = ref(false)
 
@@ -140,7 +165,7 @@ const isHealthcareProfessionalReadyForRemoval = (id: string) =>
         .find(healthcareProfessionalRelation => healthcareProfessionalRelation.otherEntityId === id
         && healthcareProfessionalRelation.action === RelationshipAction.Delete)
 
-const removeHealthcareProfessional = (id: string) => {
+const removeHealthcareProfessional = (id: string = '0') => {
     switch (moderationScreenStore.activeScreen) {
         case ModerationScreen.EditFacility:
             if (props.healthcareProfessionalsRelatedToFacility && props.healthcareProfessionalsRelatedToFacility.includes(id)) {
@@ -154,14 +179,37 @@ const removeHealthcareProfessional = (id: string) => {
             facilitiesStore.healthProfessionalsRelationsForDisplay
             = facilitiesStore.healthProfessionalsRelationsForDisplay
                     .filter(healthcareProfessional => healthcareProfessional.id !== id)
+            break
+        case ModerationScreen.EditHealthcareProfessional:
+            if (indexOfNameLocale.value !== undefined) {
+                healthcareProfessionalsStore.removedHealthcareProfessionalNames
+                    .push(healthcareProfessionalsStore.healthcareProfessionalSectionFields.names[indexOfNameLocale.value])
+
+                healthcareProfessionalsStore.healthcareProfessionalSectionFields.names.splice(indexOfNameLocale.value, 1)
+            }
     }
 }
 
 const undoRemovalOfHealthcareProfessional = (id: string) => {
-    facilitiesStore.facilitySectionFields.healthProfessionalsRelations
+    switch (moderationScreenStore.activeScreen) {
+        case ModerationScreen.EditFacility:
+            facilitiesStore.facilitySectionFields.healthProfessionalsRelations
         = facilitiesStore.facilitySectionFields.healthProfessionalsRelations
-            .filter((healthcareProfessionalRelation: Relationship) => healthcareProfessionalRelation.otherEntityId !== id)
+                    .filter((healthcareProfessionalRelation: Relationship) => healthcareProfessionalRelation.otherEntityId !== id)
+            break
+        case ModerationScreen.EditHealthcareProfessional:
+            healthcareProfessionalsStore.healthcareProfessionalSectionFields.names.push(
+                props.healthcareProfessionalNameByLocale
+            )
+            if (indexOfNameLocale.value !== undefined) {
+                healthcareProfessionalsStore.removedHealthcareProfessionalNames.splice(indexOfNameLocale.value, 1)
+            }
+            break
+    }
 }
+
+const healthcareLocaleNameReadyForRemoval = () => healthcareProfessionalsStore.removedHealthcareProfessionalNames
+    .find(name => name.locale === props.healthcareProfessionalNameByLocale.locale)
 
 // This changes the component details to editable with an optional parameter to use in the callback function
 const setChangeToEditable = (param?: unknown) => {
@@ -182,6 +230,7 @@ const setToUneditableAndSave = (param?: unknown) => {
 const props = defineProps<{
     healthcareProfessional: HealthcareProfessional
     healthcareProfessionalsRelatedToFacility?: string[]
+    healthcareProfessionalNameByLocale: LocalizedNameInput
     setOnClick?: (param?: unknown) => void
     updateOnClick?: (param?: unknown) => void
 }>()
