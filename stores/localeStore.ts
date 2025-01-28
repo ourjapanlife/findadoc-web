@@ -66,7 +66,7 @@ export const localeDisplayOptions = [
     { code: Locale.IdId, simpleText: 'Indonesian', displayText: 'Indonesian (Indonesia)' },
     { code: Locale.IgNg, simpleText: 'Igbo', displayText: 'Igbo (Nigeria)' },
     { code: Locale.IsIs, simpleText: 'Icelandic', displayText: 'Icelandic (Iceland)' },
-    { code: Locale.ItIt, simpleText: 'Italian', displayText: 'Italian (Italy)' },
+    { code: Locale.ItIt, simpleText: 'Italiano', displayText: 'Italiano (Italy)' },
     { code: Locale.KabDz, simpleText: 'Kabyle', displayText: 'Kabyle (Algeria)' },
     { code: Locale.KmKh, simpleText: 'Khmer', displayText: 'Khmer (Cambodia)' },
     { code: Locale.KnIn, simpleText: 'Kannada', displayText: 'Kannada (India)' },
@@ -101,5 +101,6 @@ export const mvpLocaleDisplayOptions = [
     { code: Locale.ZhCn, simpleText: '简体中文', displayText: 'Chinese (Simplified, China)' },
     { code: Locale.FrFr, simpleText: 'Français', displayText: 'Français (France)' },
     { code: Locale.TlPh, simpleText: 'Tagalog', displayText: 'Tagalog (Philippines)' },
-    { code: Locale.ViVn, simpleText: 'tiếng', displayText: 'tiếng Việt (Vietnam)' }
+    { code: Locale.ViVn, simpleText: 'tiếng', displayText: 'tiếng Việt (Vietnam)' },
+    { code: Locale.ItIt, simpleText: 'Italiano', displayText: 'Italiano (Italy)' }
 ] satisfies LocaleDisplay[]
