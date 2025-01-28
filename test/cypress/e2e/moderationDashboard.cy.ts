@@ -107,7 +107,7 @@ describe(
                 cy.get('[data-testid="mod-submission-list-item-1"]').should('exist')
             })
 
-            it.skip('it shows the moderation top nav', () => {
+            it('it shows the moderation top nav', () => {
                 cy.get('[data-testid="mod-submission-list-item-1"]').click()
                 cy.get('[data-testid="mod-edit-submission-copy-submission-id"]').click()
 
