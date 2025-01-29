@@ -64,7 +64,8 @@
                         </select>
                         <div
                             v-show="addingLocaleName"
-                            class="flex justify-between w-96">
+                            class="flex justify-between w-96"
+                        >
                             <button
                                 class="bg-primary text-primary-text-inverted font-bold py-2 px-4 my-2 rounded w-36"
                                 type="button"
@@ -82,7 +83,8 @@
                         </div>
                         <div
                             v-show="editingLocaleName"
-                            class="flex justify-between w-96">
+                            class="flex justify-between w-96"
+                        >
                             <button
                                 class="bg-primary text-primary-text-inverted font-bold py-2 px-4 my-2 rounded w-36"
                                 type="button"
@@ -120,7 +122,7 @@
                 </div>
                 <button
                     type="button"
-                    data-test-id="mod-healthcare-add-name-button"
+                    data-testid="mod-healthcare-add-name-button"
                     class="bg-tertiary text-primary-text-inverted font-bold py-2 px-4 my-2 rounded w-44"
                     @click="handleOpenAddNewNameWithReset"
                 >
