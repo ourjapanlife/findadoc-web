@@ -172,7 +172,15 @@
     "noSpecialtiesWereFound": "No specialties were found",
     "noInsurancesWereFound": "No insurances were found",
     "noDegreesWereFound": "No degrees were found",
-    "noLocalesWereFound": "No locales were found"
+    "noLocalesWereFound": "No locales were found",
+    "delete": "Permanently delete",
+    "exit": "Exit",
+    "missingFirstName": "No first name entered",
+    "missingLastName": "No last name entered",
+    "missingLocale": "No Locale Chosen",
+    "oneNameNecessary": "At least one name is required for a healthcare professional",
+    "save": "Save",
+    "update": "Update"
   },
   "modSubmissionForm": {
     "addresses": "Адреса",
