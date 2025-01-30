@@ -2,44 +2,32 @@
 
 [![All Contributors](https://img.shields.io/github/all-contributors/ourjapanlife/findadoc-web?color=ee8449&style=for-the-badge)](#contributors)
 
+## 🧭 Mission
 
-[![GitBook Documentation](https://img.shields.io/badge/GitBook-Documentation-blue?style=for-the-badge&logo=gitbook)](https://your-gitbook-link.com)
+Connecting people in Japan to the healthcare services they need, in the languages they need.
 
----
-### ✨ **Looking for more detailed documentaions?**
-👉 **[Check out our GitBook here!](https://documentation.findadoc.jp/development)**
+## 🔭 Vision
 
-### The Gitbook Contains:
-- 🚀 **Getting Started** : [Quick Installation and setup guides](https://documentation.findadoc.jp/development/start-coding/overview) .
-- 🔧 **Developer Tools** : [Learn how to run , test and contribute effectively](https://documentation.findadoc.jp/development/start-coding/getting-the-code-running).
-- 📒 **Complete Documentation** : [Explore the project structure and features in detail](https://documentation.findadoc.jp/development).
+We want to provide free, accessible, and quality healthcare information in multiple languages.
 
+## What is this repo?
 
-## 🚀 Quick Start
-### Prerequisites
-- [Yarn Berry](https://yarnpkg.com/getting-started/install) (latest version)
-- IDE plugins for:
-  - `eslint`
-  - `editorconfig`
-  - `stylelint`
+This is the open-source, public repository for the [findadoc.jp](https://findadoc.jp) website! We welcome support and contributions :)
 
-These plugins provide automatic linting error visibility instead of requiring manual `yarn lint` execution.
+### Documentation:
+- [📒 **Welcome to Find a Doc, Japan!**](https://documentation.findadoc.jp/development)
+- [❤️ **Code of Conduct**](./CODE_OF_CONDUCT.md)
+- [🤝 **Contributing Guidelines**](./CONTRIBUTING.md)
+- [🔧 **Tech Stack and Code Style**](https://documentation.findadoc.jp/development/start-coding/overview)
+- [🚀 **Get Started Developing**](https://documentation.findadoc.jp/development/start-coding/getting-the-code-running)
 
-## Running the code locally
-
-👉see the **[Gitbook Documentaions]("https://documentation.findadoc.jp/development/start-coding/getting-the-code-running/starting-the-web-app-locally")**
-
-
-## 🤝 Contributing
-We Welcome Contributions!
-Check out the **[Contributing Guid](https://documentation.findadoc.jp/development/start-coding)** and **[ Our Code of Conduct](https://documentation.findadoc.jp/development/code-of-conduct)**
 
 ## 🛠️ Troubleshooting
-Encounter any issues ?
-Consult the **[Troubleshooting Section ](https://documentation.findadoc.jp/development/start-coding/troubleshooting)** of the GitBook or join our **[Slack Channel](https://find-a-doc.slack.com/join/shared_invite/zt-2lb3j2t1z-O9F4thzcFktqsIXNzzjzHw#/shared-invite/email)**
+Encounter any issues?
+Consult the **[Troubleshooting Documentation](https://documentation.findadoc.jp/development/start-coding/troubleshooting)** or ask us on **[Slack](https://find-a-doc.slack.com/join/shared_invite/zt-2lb3j2t1z-O9F4thzcFktqsIXNzzjzHw#/shared-invite/email)**!
 
 
-# 🧑‍💻 Contributors
+## Our Amazing Volunteers ✨
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
