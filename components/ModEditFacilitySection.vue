@@ -1,6 +1,7 @@
 <template>
     <div v-if="isFacilitySectionInitialized">
         <div
+            :id="ModEditFacilityLeftBarSectionIDs.ContactInformation"
             class="mod-facility-section"
         >
             <h1
@@ -64,6 +65,7 @@
         </div>
 
         <div
+            :id="ModEditFacilityLeftBarSectionIDs.Addresses"
             class="mod-facility-address-section"
         >
             <span class="mb-3.5 text-center text-primary-text text-2xl font-bold font-sans leading-normal">
@@ -187,6 +189,7 @@
             />
         </div>
         <div
+            :id="ModEditFacilityLeftBarSectionIDs.GoogleMapsInformation"
             class="google-maps-section"
         >
             <span class="mb-3.5 text-center text-primary-text text-2xl font-bold font-sans leading-normal">
@@ -224,8 +227,15 @@
                 :invalid-input-error-message="$t('modFacilitySection.inputErrorMessageFacilityMapLongitude')"
             />
         </div>
-        <ModHealthcareProfessionalSearchbar data-testid="mod-facility-section-doctor-search" />
-        <div class="flex flex-col">
+        <div
+            :id="ModEditFacilityLeftBarSectionIDs.HealthcareProfessionalIds"
+        >
+            <ModHealthcareProfessionalSearchbar data-testid="mod-facility-section-doctor-search" />
+        </div>
+        <div
+            :id="ModEditFacilityLeftBarSectionIDs.HealthcareProfessionalToAdd"
+            class="flex flex-col"
+        >
             <span
                 v-if="moderationScreenStore.activeScreen === ModerationScreen.EditFacility"
                 class="mb-1 text-primary-text text-2xl font-bold font-sans leading-normal"
@@ -250,6 +260,7 @@
         </div>
         <div
             v-if="moderationScreenStore.activeScreen === ModerationScreen.EditFacility"
+            :id="ModEditFacilityLeftBarSectionIDs.CurrentHealthcareProfessionalsAtFacility"
         >
             <span class="mb-3.5 text-center text-primary-text text-2xl font-bold font-sans leading-normal">
                 {{ $t('modFacilitySection.existingHPHeading') }}
@@ -271,7 +282,7 @@
 import { type Ref, ref, onBeforeMount, nextTick, watch } from 'vue'
 import { type ToastInterface, useToast } from 'vue-toastification'
 import { useRoute } from 'vue-router'
-import { useModerationScreenStore, ModerationScreen } from '~/stores/moderationScreenStore'
+import { ModEditFacilityLeftBarSectionIDs, useModerationScreenStore, ModerationScreen } from '~/stores/moderationScreenStore'
 import { useFacilitiesStore } from '~/stores/facilitiesStore'
 import { useHealthcareProfessionalsStore } from '~/stores/healthcareProfessionalsStore'
 import { useI18n } from '#imports'
