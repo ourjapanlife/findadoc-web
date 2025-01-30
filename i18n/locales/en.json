@@ -152,6 +152,15 @@
         "healthcareProfessionalMedicalInfo": "Healthcare Professional Medical Info",
         "healthcareProfessionalFacilities": "Healthcare Professional Facilities"
     },
+    "modPanelFacilityLeftNavbar": {
+      "addresses": "Addresses",
+      "contactInformation":"Contact Information",
+      "facilityNameUnknown": "Facility Name Unknown",
+      "googleMapsInformation": "Google maps information",
+      "healthcareProfessionalIds": "Healthcare Professional IDs",
+      "healthcareProfessionalProfessionalToAdd": "Healthcare Professional to Add",
+      "currentHealthcareProfessionalsAtFacility": "Current Healthcare Professionals at Facility"
+  },
     "modDashboardTopbar": {
         "addHealthcareProfessional": "Add Healthcare Professional",
         "placeholderText": "Enter name or ID to search",

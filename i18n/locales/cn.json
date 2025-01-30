@@ -136,6 +136,15 @@
     "googleMapsInformation": "谷歌地图信息",
     "healthcareProfessionalIds": "医师IDs"
   },
+  "modPanelFacilityLeftNavbar": {
+    "addresses": "Addresses",
+    "contactInformation":"Contact Information",
+    "facilityNameUnknown": "Facility Name Unknown",
+    "googleMapsInformation": "Google maps information",
+    "healthcareProfessionalIds": "Healthcare Professional IDs",
+    "healthcareProfessionalProfessionalToAdd": "Healthcare Professional to Add",
+    "currentHealthcareProfessionalsAtFacility": "Current Healthcare Professionals at Facility"
+},
   "modEditSubmissionTopNav": {
     "saveAndExit": "保存并退出",
     "approve": "批准",
@@ -309,7 +318,8 @@
     "healthcareProfessionalIds": "Healthcare Professional IDs",
     "healthcareProfessionalName": "Healthcare Professional Name",
     "healthcareProfessionalMedicalInfo": "Healthcare Professional Medical Info",
-    "healthcareProfessionalFacilities": "Healthcare Professional Facilities"
+    "healthcareProfessionalProfessionalToAdd": "Healthcare Professional to Add",
+    "currentHealthcareProfessionalsAtFacility": "Current Healthcare Professionals at Facility"
   },
   "modDashboardTopbar": {
     "placeholderText": "Enter name or ID to search",
