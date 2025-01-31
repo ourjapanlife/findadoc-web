@@ -18,6 +18,7 @@
                 ref="searchInputElement"
                 type="text"
                 :placeholder="placeHolderText"
+                :data-testid="`${dataTestId}`"
                 class="grow focus-visible:outline-none"
                 @blur="handleSearchInputBlur"
                 @keydown.esc="handleSearchInputBlur"
@@ -136,6 +137,8 @@ type Props = {
     noMatchText: string
     // Callback to display the desired output
     fieldsToDisplayCallback: (item: SetType<T>) => string[]
+    //Optional test id for testing the component
+    dataTestId?: string
 }
 
 const { placeHolderText, noMatchText, fieldsToDisplayCallback } = defineProps<Props>()
