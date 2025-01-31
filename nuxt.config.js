@@ -162,5 +162,10 @@ export default defineNuxtConfig({
             NUXT_USE_LOCAL_API: process.env.NUXT_USE_LOCAL_API
         }
     },
-    telemetry: false
+    telemetry: false,
+    /*
+    `compatibilityDate` is associated with Nuxt, Nitro, and other modules to define their behavior prior to this date.
+    It prevents unexpected changes and updates.
+    */
+    compatibilityDate: '2025-01-17'
 })
