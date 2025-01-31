@@ -17,7 +17,7 @@
         "test": "yarn test:pinia --run && yarn test:e2e",
         "test:pinia": "nuxi prepare && nuxi generate && vitest",
         "test:pinia:coverage": "vitest run --coverage",
-        "test:e2e": "cypress run --e2e --browser chrome --record --key 04a1fe54-0011-407b-b7d7-fcb9b2daf1e6"
+        "test:e2e": "cypress run --e2e"
     },
     "packageManager": "yarn@4.4.0",
     "engines": {
