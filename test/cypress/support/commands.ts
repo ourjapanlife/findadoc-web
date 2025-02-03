@@ -36,7 +36,7 @@ Cypress.Commands.add('login', () => {
         autoEnd: false
     })
 
-    log.snapshot('before')
+    log.snapshot('Connecting to auth0')
 
     cy.session(`auth0-${auth0UserName}`, () => {
         auth0Login()
@@ -49,6 +49,6 @@ Cypress.Commands.add('login', () => {
         cacheAcrossSpecs: true
     })
 
-    log.snapshot('after')
+    log.snapshot('Successfully logged in')
     log.end()
 })
