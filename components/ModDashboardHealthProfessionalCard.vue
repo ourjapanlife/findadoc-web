@@ -172,7 +172,7 @@ const healthcareProfessionalsStore = useHealthcareProfessionalsStore()
 const isHealthcareProfessionalReadyForRemoval = (id: string) =>
     facilitiesStore.facilitySectionFields.healthProfessionalsRelations
         .find(healthcareProfessionalRelation => healthcareProfessionalRelation.otherEntityId === id
-        && healthcareProfessionalRelation.action === RelationshipAction.Delete)
+          && healthcareProfessionalRelation.action === RelationshipAction.Delete)
 
 const removeHealthcareProfessional = (id: string = '0') => {
     if (props.healthcareProfessionalsRelatedToFacility && props.healthcareProfessionalsRelatedToFacility.includes(id)) {

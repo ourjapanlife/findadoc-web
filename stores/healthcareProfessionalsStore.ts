@@ -82,7 +82,7 @@ export const useHealthcareProfessionalsStore = defineStore(
                     acceptedInsurance: healthcareProfessionalSectionFields.acceptedInsurance,
                     degrees: healthcareProfessionalSectionFields.degrees,
                     facilityIds: facilitiesRelationsToSelectedHealthcareProfessional.value.length
-                    > 0
+                      > 0
                         ? facilitiesRelationsToSelectedHealthcareProfessional.value
                         : undefined,
                     names: healthcareProfessionalSectionFields.names,
@@ -217,7 +217,7 @@ export async function getHealthcareProfessionalById(id: string) {
         )
 
         if (!result.healthcareProfessional) {
-            throw new Error(`The Healthcare Professional ID doesn't exist`)
+            throw new Error('The Healthcare Professional ID doesn\'t exist')
         }
         return result.healthcareProfessional
     } catch (error: unknown) {
