@@ -1,31 +1,23 @@
 {
-    "extends": "./.nuxt/tsconfig.json",
-    "compilerOptions": {
-        "target": "ESNext",
-        "module": "ESNext",
-        "moduleResolution": "Bundler",
-        "lib": [
-            "esnext",
-            "DOM"
-        ],
-        "strict": true,
-        "outDir": "dist",
-        "sourceMap": true,
-        "resolveJsonModule": true,
-        "esModuleInterop": true,
-        "skipLibCheck": true
-    },
-    "ts-node": {
-        "esm": true,
-        "swc": true
-    },
-    "include": [
-        "./**/*",
-        "utils/**/*",
-        "__tests__/*",
-        "typesgeneratorconfig.ts",
+  "extends": "./.nuxt/tsconfig.json",
+  "compilerOptions": {
+    "target": "ESNext",
+    "lib": [
+        "ESNext",
+        "DOM"
     ],
-    "exclude": [
-        "node_modules"
-    ]
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "sourceMap": true,
+    "outDir": "dist",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "skipLibCheck": true
+  },
+  "ts-node": {
+    "esm": true,
+    "swc": true,
+  },
 }
