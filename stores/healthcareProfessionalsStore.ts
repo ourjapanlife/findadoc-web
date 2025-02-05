@@ -2,11 +2,13 @@ import type { Maybe } from 'graphql/jsutils/Maybe'
 import { defineStore } from 'pinia'
 import { reactive, ref, type Ref } from 'vue'
 import { gql } from 'graphql-request'
-import { type DeleteResult, type HealthcareProfessional,
+import { type Facility, type DeleteResult, type HealthcareProfessional,
+    type LocalizedNameInput,
     type Mutation,
     type MutationDeleteHealthcareProfessionalArgs,
     type MutationUpdateHealthcareProfessionalArgs,
-    Locale } from '~/typedefs/gqlTypes'
+    type Relationship,
+    RelationshipAction } from '~/typedefs/gqlTypes'
 import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql'
 import { useLocaleStore } from '~/stores/localeStore'
 import type { ServerError, ServerResponse } from '~/typedefs/serverResponse'
@@ -31,14 +33,11 @@ export const useHealthcareProfessionalsStore = defineStore(
             spokenLanguages: [],
             updatedDate: ''
         })
-
-        const selectedNameLocaleToUpdate = reactive({
-            localizedFirstName: '',
-            localizedMiddleName: '',
-            localizedLastName: '',
-            nameLocale: Locale.Und,
-            nameLocaleToChange: Locale.Und
-        })
+        const selectedFacilities: Ref<Set<Facility>> = ref(new Set())
+        // This is the array to be sent to the backend if there is a change in the relations
+        const facilitiesRelationsToSelectedHealthcareProfessional: Ref<Relationship[]> = ref([])
+        // This helps users easily add name locales back to a healthcare professional by keeping track of removed ones
+        const removedHealthcareProfessionalNames: Ref<LocalizedNameInput[]> = ref([])
 
         function setSelectedHealthcareProfessional(healthcareProfessionalId: string) {
             selectedHealthcareProfessionalId.value = healthcareProfessionalId
@@ -50,7 +49,7 @@ export const useHealthcareProfessionalsStore = defineStore(
         }
 
         function updateHealthcareProfessionalSectionFields(healthcareProfessional: HealthcareProfessional) {
-            healthcareProfessionalSectionFields.__typename = healthcareProfessional.__typename
+            healthcareProfessionalSectionFields.__typename = 'HealthcareProfessional'
             healthcareProfessionalSectionFields.acceptedInsurance = healthcareProfessional.acceptedInsurance
             healthcareProfessionalSectionFields.createdDate = healthcareProfessional.createdDate
             healthcareProfessionalSectionFields.degrees = healthcareProfessional.degrees
@@ -62,61 +61,92 @@ export const useHealthcareProfessionalsStore = defineStore(
             healthcareProfessionalSectionFields.updatedDate = healthcareProfessional.updatedDate
         }
 
-        function setSelectedNameLocaleToUpdate(nameLocale: Locale) {
-            if (!healthcareProfessionalSectionFields.names.length) return
-
-            const nameLocaleToEdit = healthcareProfessionalSectionFields.names.find(name => name.locale === nameLocale)
-
-            if (!nameLocaleToEdit) return
-            selectedNameLocaleToUpdate.localizedFirstName = nameLocaleToEdit.firstName
-            selectedNameLocaleToUpdate.localizedLastName = nameLocaleToEdit.lastName
-            selectedNameLocaleToUpdate.localizedMiddleName = nameLocaleToEdit.middleName
-                ? nameLocaleToEdit.middleName
-                : ''
-            selectedNameLocaleToUpdate.nameLocale = nameLocale
-            selectedNameLocaleToUpdate.nameLocaleToChange = nameLocale
-        }
-
-        function updateHealthcareProfessionalNameValues() {
-            if (!healthcareProfessionalSectionFields) return
-
-            if (!healthcareProfessionalSectionFields.names) return
-
-            const localeIndex = healthcareProfessionalSectionFields.names
-                .findIndex(nameObject => nameObject.locale === selectedNameLocaleToUpdate.nameLocaleToChange)
-            if (localeIndex === -1) return
-            console.log(selectedNameLocaleToUpdate)
-            healthcareProfessionalSectionFields.names[localeIndex].firstName = selectedNameLocaleToUpdate.localizedFirstName
-            healthcareProfessionalSectionFields.names[localeIndex].middleName
-            = selectedNameLocaleToUpdate.localizedMiddleName
-                    ? selectedNameLocaleToUpdate.localizedMiddleName
-                    : ''
-            healthcareProfessionalSectionFields.names[localeIndex].lastName = selectedNameLocaleToUpdate.localizedLastName
-            healthcareProfessionalSectionFields.names[localeIndex].locale = selectedNameLocaleToUpdate.nameLocale
-
-            // Once the name is updated in the array we want to reset the values in case we need to edit a different one
-            selectedNameLocaleToUpdate.localizedFirstName = ''
-            selectedNameLocaleToUpdate.localizedLastName = ''
-            selectedNameLocaleToUpdate.localizedMiddleName = ''
-            selectedNameLocaleToUpdate.nameLocale = Locale.Und
-            selectedNameLocaleToUpdate.nameLocaleToChange = Locale.Und
-        }
-
         async function getHealthcareProfessionals() {
             const healthcareProfessionalResults = await queryHealthcareProfessionals()
             healthcareProfessionalsData.value = healthcareProfessionalResults
         }
 
-        async function updateHealthcareProfessional(healthcareProfessional: MutationUpdateHealthcareProfessionalArgs) {
-            try {
-                return await graphQLClientRequestWithRetry(
-                    gqlClient.request.bind(gqlClient),
-                    updateHealthcareProfessionalGqlMutation,
-                    healthcareProfessional
-                )
-            } catch (error) {
-                console.error('Failed to update healthcare professional:', error)
+        async function updateHealthcareProfessional():
+        Promise<ServerResponse<Maybe<HealthcareProfessional>>> {
+            const serverResponse = { data: {} as Maybe<HealthcareProfessional>, errors: [] as ServerError[], hasErrors: false }
+
+            const facilitiesForRelationshipCreationArray = Array.from(selectedFacilities.value)
+
+            if (facilitiesForRelationshipCreationArray.length) {
+                //For each is used here to only add the necessary actions to the already created ref array of relationships
+                facilitiesForRelationshipCreationArray.forEach(facility => createFacilitiesRelationArray(facility))
             }
+            const updateHealthcareProfessionalInput: MutationUpdateHealthcareProfessionalArgs = {
+                id: selectedHealthcareProfessionalId.value,
+                input: {
+                    acceptedInsurance: healthcareProfessionalSectionFields.acceptedInsurance,
+                    degrees: healthcareProfessionalSectionFields.degrees,
+                    facilityIds: facilitiesRelationsToSelectedHealthcareProfessional.value.length
+                    > 0
+                        ? facilitiesRelationsToSelectedHealthcareProfessional.value
+                        : undefined,
+                    names: healthcareProfessionalSectionFields.names,
+                    specialties: healthcareProfessionalSectionFields.specialties,
+                    spokenLanguages: healthcareProfessionalSectionFields.spokenLanguages
+                }
+            }
+
+            const response = await graphQLClientRequestWithRetry<Mutation>(
+                gqlClient.request.bind(gqlClient),
+                updateHealthcareProfessionalGqlMutation,
+                updateHealthcareProfessionalInput
+            )
+
+            serverResponse.data = response.data?.updateHealthcareProfessional
+            serverResponse.errors = response.errors
+                ? response.errors
+                : []
+            serverResponse.hasErrors = response.hasErrors
+
+            if (!serverResponse.errors.length && serverResponse.data) {
+                //This resets the relations so that way we can have a user update multiple times without duplicating values
+                facilitiesRelationsToSelectedHealthcareProfessional.value = []
+                //This finds the index of the healthcare professional so we can replace the ones we have already queried
+                const outdatedHealthcareProfessionalIndex = healthcareProfessionalsData.value.findIndex(
+                    (healthcareProfessional: HealthcareProfessional) => healthcareProfessional.id === serverResponse.data!.id
+                )
+
+                //This will replace the data we had from the index with the new data
+                if (outdatedHealthcareProfessionalIndex !== -1) {
+                    healthcareProfessionalsData.value[outdatedHealthcareProfessionalIndex] = serverResponse.data!
+                }
+
+                //This will update the data with what was returned from the server and is in our database
+                updateHealthcareProfessionalSectionFields(serverResponse.data!)
+
+                /*This resets the names we removed and kept track of in
+                order to change Locales if the wrong name for a locale was chosen */
+                removedHealthcareProfessionalNames.value = []
+            }
+
+            return serverResponse
+        }
+
+        /* This function will create the relationships that need to be sent in the backend for
+        updating facilities the healthcare professional works at */
+        function createFacilitiesRelationArray(facilityForRelationship: Facility) {
+            if (healthcareProfessionalSectionFields.facilityIds.includes(facilityForRelationship.id)) {
+                facilitiesRelationsToSelectedHealthcareProfessional.value.push({
+                    otherEntityId: facilityForRelationship.id,
+                    action: RelationshipAction.Delete
+                })
+
+                return
+            }
+
+            facilitiesRelationsToSelectedHealthcareProfessional.value.push(
+                {
+                    otherEntityId: facilityForRelationship.id,
+                    action: RelationshipAction.Create
+                }
+            )
+
+            return
         }
 
         async function deleteHealthcareProfessional(healthcareProfessionalId: MutationDeleteHealthcareProfessionalArgs):
@@ -152,9 +182,9 @@ export const useHealthcareProfessionalsStore = defineStore(
             healthcareProfessionalSectionFields,
             displayChosenLocaleForHealthcareProfessional,
             setSelectedHealthcareProfessional,
-            updateHealthcareProfessionalNameValues,
-            selectedNameLocaleToUpdate,
-            setSelectedNameLocaleToUpdate
+            removedHealthcareProfessionalNames,
+            facilitiesRelationsToSelectedHealthcareProfessional,
+            selectedFacilities
         }
     }
 )
@@ -229,8 +259,8 @@ const getHealthcareProfessionalByIdGqlQuery = gql`
 }`
 
 const updateHealthcareProfessionalGqlMutation = gql`
-mutation Mutation($updateHealthcareProfessionalId: ID!, $input: UpdateHealthcareProfessionalInput!) {
-  updateHealthcareProfessional(id: $updateHealthcareProfessionalId, input: $input) {
+mutation Mutation($id: ID!, $input: UpdateHealthcareProfessionalInput!) {
+  updateHealthcareProfessional(id: $id, input: $input) {
     id
     names {
       firstName
