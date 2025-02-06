@@ -323,7 +323,9 @@
     "successMessageUpdated": "Matagumpay na na-update ang pagsusumite.",
     "successMessageApproved": "Ang Isinumite ay matagumpay na na-aprubahan.",
     "updateButtonText": "I-update",
-    "facilitySuccessfullyRejected": "Matagumpay na hindi na-apprubahan ang pasilidad"
+    "facilitySuccessfullyRejected": "Matagumpay na hindi na-apprubahan ang pasilidad",
+    "rejectSubmissionConfirmationMessage": "Are you sure you want to reject this submission?",
+    "rejectSubmissionConfirmationButton": "Yes, reject the submission"
   },
   "serverErrorMessages": {
     "UNAUTHENTICATED": "Wala kang sapat na permiso upang gawin ang aksyong ito.",

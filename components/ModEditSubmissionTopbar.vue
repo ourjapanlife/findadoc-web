@@ -35,9 +35,10 @@
                 </span>
             </button>
             <button
+                data-testid="mod-edit-submission-reject-button"
                 type="button"
                 class="flex justify-center items-center rounded-full bg-secondary-bg border-primary border-2 w-28 text-sm mr-2 "
-                @click="rejectSubmission"
+                @click="showRejectionConfirmation"
             >
                 {{
                     $t('modEditSubmissionTopNav.reject') }}
@@ -93,7 +94,6 @@ const saveAndExit = () => {
     moderationSubmissionStore.setUpdatingSubmissionFromTopBar(true)
 }
 
-// Move all API calls to the store
 const acceptSubmission = () => {
     moderationSubmissionStore.setApprovingSubmissionFromTopBar(true)
     modalStore.showModal()
@@ -119,4 +119,9 @@ onMounted(() => {
      */
     toast = useToast()
 })
+const showRejectionConfirmation = () => {
+    moderationSubmissionStore.setShowRejectSubmissionConfirmation(true)
+    modalStore.showModal()
+    rejectSubmission()
+}
 </script>
