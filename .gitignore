@@ -13,6 +13,8 @@ node_modules
 !.yarn/versions
 yarn-error.log
 
+#cypress
+cypress
 # jest
 coverage
 # eslint results
