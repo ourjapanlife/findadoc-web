@@ -41,7 +41,7 @@ jobs:
                 AUTH0_USERNAME: ${{ secrets.AUTH0_USERNAME }}
                 AUTH0_PASSWORD: ${{ secrets.AUTH0_PASSWORD }}
               with:
-                command: yarn test:e2e
+                command: yarn test:e2e:ci
 
             - name: Upload screenshots
               uses: actions/upload-artifact@v4

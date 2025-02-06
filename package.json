@@ -17,11 +17,8 @@
         "test": "yarn test:pinia --run && yarn test:e2e",
         "test:pinia": "nuxi prepare && nuxi generate && vitest",
         "test:pinia:coverage": "vitest run --coverage",
-        "test:e2e": "NODE_ENV=test dotenv -e .env.test -o -- yarn test:e2e:start",
-        "test:e2e:start": "yarn test:env:echo && cypress run --e2e",
-        "test:e2e:open": "NODE_ENV=test dotenv -e .env.test -o -- yarn test:e2e:open:start",
-        "test:e2e:open:start": "yarn test:env:echo && cypress open",
-        "test:env:echo": "echo \n 🧪 $NODE_ENV environment loaded 🧪"
+        "test:e2e": "dotenv -e .env.test -o -- cypress open",
+        "test:e2e:ci": "dotenv -e .env.test -o -- cypress run --e2e"
     },
     "packageManager": "yarn@4.4.0",
     "engines": {
