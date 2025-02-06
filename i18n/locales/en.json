@@ -376,5 +376,8 @@
         "successMessageUpdated": "Submission updated successfully",
         "successMessageApproved": "Submission approved and created successfully",
         "updateButtonText": "Update"
+    },
+    "hiPhil": {
+        "teehee": "teehee"
     }
 }
