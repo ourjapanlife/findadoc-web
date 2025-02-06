@@ -74,17 +74,6 @@ describe('Moderation dashboard', () => {
             cy.get('[data-testid="mod-submission-list-item-1"]').should('exist')
         })
 
-        it('it shows the moderation top nav', () => {
-            cy.get('[data-testid="mod-submission-list-item-1"]').click()
-            cy.get('[data-testid="mod-edit-submission-copy-submission-id"]').click()
-
-            // Check that the value copied to the clipboard is the same that's displayed.
-            const clipboardResult = cy.window().then(win => win.navigator.clipboard.readText())
-
-            // The timeout is to give time for the clipboard to be read.
-            clipboardResult.should('exist', 10000)
-        })
-
         it('toggle between submissions and healthcare professionals submissions', () => {
             cy.get('[data-testid="mod-healthcare-professional-list-item-1"]').should('not.exist')
             cy.get('[data-testid="mod-facility-list-item-1"]').should('not.exist')
@@ -104,6 +93,17 @@ describe('Moderation dashboard', () => {
             cy.get('[data-testid="mod-healthcare-professional-list-item-1"]').should('not.exist')
             cy.get('[data-testid="mod-facility-list-item-1"]').should('not.exist')
             cy.get('[data-testid="mod-submission-list-item-1').should('exist')
+        })
+
+        it('it shows the moderation top nav', () => {
+            cy.get('[data-testid="mod-submission-list-item-1"]').click()
+            cy.get('[data-testid="mod-edit-submission-copy-submission-id"]').click()
+
+            // Check that the value copied to the clipboard is the same that's displayed.
+            const clipboardResult = cy.window().then(win => win.navigator.clipboard.readText())
+
+            // The timeout is to give time for the clipboard to be read.
+            clipboardResult.should('exist', 10000)
         })
     })
 })
