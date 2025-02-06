@@ -15,8 +15,8 @@
                     <svg
                         class="stroke-primary group-hover:stroke-primary-inverted"
                         width="20"
-                        heigh="20"
-                        viewBox="4 0 15 25"
+                        height="35"
+                        viewBox="4 -1 16 25"
                     >
                         <path
                             stroke-width="3"
