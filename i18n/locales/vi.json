@@ -365,7 +365,9 @@
     "successMessageUpdated": "Mẫu đơn đã được cập nhật thành công.",
     "successMessageApproved": "Đã phê duyệt và tạo thành công bài nộp.",
     "updateButtonText": "Cập nhật",
-    "facilitySuccessfullyRejected": "Facility rejected successfully"
+    "facilitySuccessfullyRejected": "Facility rejected successfully",
+    "rejectSubmissionConfirmationMessage": "Are you sure you want to reject this submission?",
+    "rejectSubmissionConfirmationButton": "Yes, reject the submission"
   },
   "serverErrorMessages": {
     "UNAUTHENTICATED": "You do not have the authentication to do this action",

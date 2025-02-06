@@ -375,6 +375,8 @@
         "submissionConfirmationMessage": "Are you sure you want to submit this form?",
         "successMessageUpdated": "Submission updated successfully",
         "successMessageApproved": "Submission approved and created successfully",
+        "rejectSubmissionConfirmationMessage": "Are you sure you want to reject this submission?",
+        "rejectSubmissionConfirmationButton": "Yes, reject the submission",
         "updateButtonText": "Update"
     }
 }
