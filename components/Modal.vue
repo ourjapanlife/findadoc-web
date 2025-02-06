@@ -1,14 +1,17 @@
 <template>
     <div
-        v-show="store.isOpen"
-        class="absolute z-10 bg-primary-bg rounded-xl overflow-hidden
-        hover:shadow-inner hover:shadow-secondary-bg/90"
+        v-if="store.isOpen"
+        data-testid="modal"
+        class="fixed top-0 left-0 flex items-center justify-center h-full w-full z-10 bg-secondary bg-opacity-40"
     >
-        <div class="modal">
+        <div
+            class="absolute z-10 bg-primary-bg rounded-xl overflow-hidden
+            hover:shadow-inner hover:shadow-secondary-bg/90"
+        >
             <button
                 type="button"
                 class="close-button absolute right-6 top-5 bg-primary-inverted rounded-lg px-2 py-.5
-                group hover:bg-primary-hover transition-all duration-200"
+                    group hover:bg-primary-hover transition-all duration-200"
                 @click="hideModalAndEmitClosedEvent"
             >
                 <span class="close-icon">
@@ -46,4 +49,3 @@ const hideModalAndEmitClosedEvent = () => {
     store.hideModal()
 }
 </script>
-
