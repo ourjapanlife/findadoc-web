@@ -375,6 +375,8 @@
     "submissionConfirmationMessage": "Sei sicuro di inviare questo form?",
     "successMessageUpdated": "Avvio aggiornato con successo",
     "successMessageApproved": "Invio approvato e creato con successo",
-    "updateButtonText": "Aggiorna"
+    "updateButtonText": "Aggiorna",
+    "rejectSubmissionConfirmationMessage": "Are you sure you want to reject this submission?",
+    "rejectSubmissionConfirmationButton": "Yes, reject the submission"
   }
 }
