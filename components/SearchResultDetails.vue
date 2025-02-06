@@ -38,7 +38,7 @@
                         v-for="(spokenLanguage, index) in spokenLanguages"
                         :key="index"
                         class="pl-2 pr-2 py-px mr-2 border-2 border-primary/40 rounded-full shadow-sm text-md
-                  text-primary hover:bg-primary/20 transition-all"
+                  text-primary hover:bg-primary/20 transition-all cursor-default"
                     >
                         {{ spokenLanguage }}
                     </div>
