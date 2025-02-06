@@ -17,6 +17,9 @@ jobs:
   locale-lint:
     name: Linting Locales 😎
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [21.3.0]
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -26,7 +29,7 @@ jobs:
       - name: Install Node.js and Yarn
         uses: actions/setup-node@v4
         with:
-          node-version: '21.3.0'
+          node-version: ${{ matrix.node-version }}
           cache: 'yarn'
 
       - name: Install Dependencies
