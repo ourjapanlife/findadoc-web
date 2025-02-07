@@ -13,7 +13,7 @@ jobs:
     if: |
       github.event.issue.pull_request &&
       contains(github.event.comment.body, 'Missing Locale Keys') &&
-      github.event.comment.reactions.rocket
+      github.event.comment.reactions.rocket > 0
     runs-on: ubuntu-latest
     strategy:
       matrix:
