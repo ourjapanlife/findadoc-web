@@ -1,19 +1,18 @@
-name: Add Locales with Comment Reaction
+name: Add Locales with Comment Trigger
 
 on:
   pull_request:
-     branches:
-      - 'feat/implement-locales-auto-fix'
+    branches:
+      - "feat/implement-locales-auto-fix"
   issue_comment:
     types: [created, edited]
 
 jobs:
-  add-mission-locales:
-    name: Add Missing Locale Keys 🚀
+  add-missing-locales:
+    name: Add Missing Locale Keys 🌍
     if: |
       github.event.issue.pull_request &&
-      contains(github.event.comment.body, 'Missing Locale Keys') &&
-      github.event.comment.reactions.rocket > 0
+      contains(github.event.comment.body, 'Fix missing locale keys 🌍')
     runs-on: ubuntu-latest
     strategy:
       matrix:
