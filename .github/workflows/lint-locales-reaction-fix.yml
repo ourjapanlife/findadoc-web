@@ -1,12 +1,16 @@
 name: Add Locales with Comment Reaction
 
 on:
-  issue_comment:
-    types: [created, edited]
+    push:
+        branches: [ "main" ]
+    pull_request:
+        branches: [ "main" ]
+    issue_comment:
+        types: [created, edited]
 
 jobs:
   add-mission-locales:
-    name: Add Missing Locale Keys
+    name: Add Missing Locale Keys 🚀
     if: |
       github.event.issue.pull_request &&
       contains(github.event.comment.body, 'Missing Locale Keys Found') &&
@@ -34,13 +38,13 @@ jobs:
         id: get-branch
         run: echo "CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)" >> $GITHUB_ENV
 
-      - name: Fix Missing Locale Keys, Commit, and Push Changes
-        run: |
-          node i18n/checkLocaleKeys.js
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add .
-          git commit -m "chore: fix missing locale keys" || echo "No changes to commit"
-          git push origin ${{ env.CURRENT_BRANCH }}
-        env:
-          CURRENT_BRANCH: ${{ steps.get-branch.outputs.branch }}
+    #   - name: Fix Missing Locale Keys, Commit, and Push Changes
+    #     run: |
+    #       node i18n/checkLocaleKeys.js
+    #       git config --global user.name "github-actions[bot]"
+    #       git config --global user.email "github-actions[bot]@users.noreply.github.com"
+    #       git add .
+    #       git commit -m "chore: fix missing locale keys" || echo "No changes to commit"
+    #       git push origin ${{ env.CURRENT_BRANCH }}
+    #     env:
+    #       CURRENT_BRANCH: ${{ steps.get-branch.outputs.branch }}
