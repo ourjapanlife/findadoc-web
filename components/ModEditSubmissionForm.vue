@@ -657,7 +657,7 @@ const validateFacilityFields = () => {
 const validateHealthcareProfessionalFields = () => {
     const areNamesSelectedToFacility: boolean
         = submissionFormFields.healthCareProfessionalNameArray.value.length > 0
-        || submissionFormFields.healthcareProfessionalIDs.value.length > 0
+          || submissionFormFields.healthcareProfessionalIDs.value.length > 0
     const areInsurancesSelected: boolean = submissionFormFields.healthcareProfessionalAcceptedInsurances.value.length > 0
     const areDegreesSelected: boolean = submissionFormFields.healthcareProfessionalDegrees.value.length > 0
     const areSpecialtiesSelected: boolean = submissionFormFields.healthcareProfessionalSpecialties.value.length > 0
@@ -718,13 +718,13 @@ function initializeSubmissionFormValues(submissionData: Submission | undefined) 
                     }
                     submissionFormFields.healthcareProfessionalAcceptedInsurances.value
                         = submissionData?.healthcareProfessionals?.[0]?.acceptedInsurance
-                        ?? []
+                          ?? []
                     submissionFormFields.healthcareProfessionalDegrees.value
                         = submissionData?.healthcareProfessionals?.[0]?.degrees
-                        ?? []
+                          ?? []
                     submissionFormFields.healthcareProfessionalSpecialties.value
                         = submissionData?.healthcareProfessionals?.[0]?.specialties
-                        ?? []
+                          ?? []
                     submissionFormFields.healthcareProfessionalLocales.value
                         = submissionData.spokenLanguages
                     break

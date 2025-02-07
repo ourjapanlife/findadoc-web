@@ -490,8 +490,8 @@ const handleFacilitySearchInputChange = (filteredItems: Ref<Facility[]>, inputVa
     filteredItems.value = currentFacilities.filter(({ nameEn, nameJa, id }) => {
         const isMatch
             = nameEn.toLowerCase().includes(inputValue)
-            || nameJa.toLowerCase().includes(inputValue)
-            || id.toLowerCase().includes(inputValue)
+              || nameJa.toLowerCase().includes(inputValue)
+              || id.toLowerCase().includes(inputValue)
         return isMatch
     })
 }
