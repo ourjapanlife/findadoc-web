@@ -1,6 +1,9 @@
 name: Add Locales with Comment Reaction
 
 on:
+  pull_request:
+     branches:
+      - 'feat/implement-locales-auto-fix'
   issue_comment:
     types: [created, edited]
 
