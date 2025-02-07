@@ -12,7 +12,7 @@ jobs:
     name: Add Missing Locale Keys 🌍
     if: |
       github.event.issue.pull_request &&
-      contains(github.event.comment.body, 'Fix missing locale keys 🌍')
+      contains(github.event.comment.body, 'fix missing locale keys')
     runs-on: ubuntu-latest
     strategy:
       matrix:
