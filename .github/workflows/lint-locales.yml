@@ -61,7 +61,7 @@ jobs:
               return;
             }
 
-            const formattedKeys = missingKeys.map(key => key.trim() && !key.includes(json) ? `- ${key}` : key).join('\n');
+            const formattedKeys = missingKeys.map(key => key.trim() && !key.includes("json") ? `- ${key}` : key).join('\n');
 
             const repo = context.repo.repo;
             const owner = context.repo.owner;
