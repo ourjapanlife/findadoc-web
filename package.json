@@ -14,7 +14,7 @@
         "prod:build": "yarn && yarn generate && nuxi generate",
         "prod:start": "nuxi start",
         "prepare:ci": "nuxi prepare",
-        "test": "yarn test:pinia --run && yarn test:e2e",
+        "test": "yarn test:pinia --run && yarn test:e2e:ci",
         "test:pinia": "nuxi prepare && nuxi generate && vitest",
         "test:pinia:coverage": "vitest run --coverage",
         "test:e2e": "dotenv -e .env.test -o -- cypress open",
