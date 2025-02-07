@@ -61,7 +61,10 @@ jobs:
               return;
             }
 
-            const formattedKeys = missingKeys.map(key => key.trim() ? `- ${key}` : key).join('\n');
+            const formattedKeys = missingKeys.map(key => `- ${key}`).join('\n');
+
+            const repo = context.repo.repo;
+            const owner = context.repo.owner;
 
             const commentBody = `### Missing Locale Keys Found: \n${formattedKeys}\n\nTo fix the missing keys, react with a 🚀 emoji`;
 
