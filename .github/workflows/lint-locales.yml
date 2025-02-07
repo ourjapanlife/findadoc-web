@@ -74,3 +74,6 @@ jobs:
               repo,
               body: commentBody
             });
+      - name: Debug Comment Body
+        run: |
+            echo "Comment body: ${{ github.event.comment.body }}"
