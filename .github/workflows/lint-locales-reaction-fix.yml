@@ -11,8 +11,7 @@ jobs:
   add-missing-locales:
     name: Add Missing Locale Keys 🌍
     if: |
-      github.event.issue.pull_request &&
-      contains(github.event.comment.body, 'fix missing locale keys')
+      github.event.issue.pull_request
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -37,6 +36,8 @@ jobs:
         run: echo "CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)" >> $GITHUB_ENV
 
       - name: Fix Missing Locale Keys, Commit, and Push Changes
+        if: contains(github.event.comment.body, '/add-missing-locales') &&
+            [ "${{ github.event.comment.user.login }}" != "github-actions[bot]" ]
         run: |
           node i18n/checkLocaleKeys.js
           git config --global user.name "github-actions[bot]"
