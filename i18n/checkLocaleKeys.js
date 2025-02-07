@@ -1,7 +1,6 @@
 import fs from 'fs'
 import path from 'path'
 import { fileURLToPath } from 'url'
-import { execSync } from 'child_process'
 
 // Convert import.meta.url to __dirname equivalent
 const __filename = fileURLToPath(import.meta.url)
@@ -24,22 +23,12 @@ const checkLocaleKeys = () => {
 
     let missingKeysSummary = []
 
-    // Check if in CI/CD and auto update and push
+    // Check if in CI/CD and write the .txt file for the body of the message in GitHub
     if (process.env.NODE_ENV === 'production') {
         missingKeysSummary = runCICDChecksForLocaleFiles(localeFilesWithoutEnFileName, referenceKeys)
         writeErrorMessageForMissingKeysToDeveloper(missingKeysSummary)
     }
 
-    if (process.env.NODE_ENV === 'key-update') {
-        missingKeysSummary = runCICDChecksForLocaleFiles(localeFilesWithoutEnFileName, referenceKeys)
-        if (missingKeysSummary.length) {
-            findAndInsertMissingKeysAndValuesInNonEnFiles(
-                localeFilesWithoutEnFileName, enFileContent, referenceKeys, insertMissingKeysAndValues
-            )
-            // Commit and push changes if any files were updated
-            commitAndPushChangesForLocaleFiles()
-        }
-    }
     // Insert in development
     findAndInsertMissingKeysAndValuesInNonEnFiles(
         localeFilesWithoutEnFileName, enFileContent, referenceKeys, insertMissingKeysAndValues
@@ -171,21 +160,6 @@ const writeErrorMessageForMissingKeysToDeveloper = missingKeysSummary => {
         fs.writeFileSync('missing_keys.txt', missingKeysSummary.map(({ file, keys }) => `${file}:\n${keys.join('\n')}`).join('\n\n'))
         console.error('❌ \x1b[31mLocale linting failed due to missing keys.\x1b[0m')
         process.exit(1)
-    }
-}
-
-// Function to commit and push changes
-const commitAndPushChangesForLocaleFiles = () => {
-    try {
-        const branchName = process.env.GITHUB_HEAD_REF || 'main'
-        execSync('git config --global user.name "github-actions[bot]"')
-        execSync('git config --global user.email "github-actions[bot]@users.noreply.github.com"')
-        execSync('git add .')
-        execSync('git commit -m "Fix locale linting errors"')
-        execSync(`git push origin HEAD:${branchName}`)
-        console.log('✅ \x1b[32mCommitted and pushed changes.\x1b[0m')
-    } catch (error) {
-        console.error('Failed to commit and push changes:', error.message)
     }
 }
 

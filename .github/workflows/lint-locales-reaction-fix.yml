@@ -1,0 +1,46 @@
+name: Add Locales with Comment Reaction
+
+on:
+  issue_comment:
+    types: [created, edited]
+
+jobs:
+  add-mission-locales:
+    name: Add Missing Locale Keys
+    if: |
+      github.event.issue.pull_request &&
+      contains(github.event.comment.body, 'Missing Locale Keys Found') &&
+      contains(github.event.comment.reactions, 'rocket')
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [21.3.0]
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install Yarn/ Node ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "yarn"
+
+      - name: Install Dependencies
+        run: yarn install --immutable
+
+      - name: Get Current Branch
+        id: get-branch
+        run: echo "CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)" >> $GITHUB_ENV
+
+      - name: Fix Missing Locale Keys, Commit, and Push Changes
+        run: |
+          node i18n/checkLocaleKeys.js
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "chore: fix missing locale keys" || echo "No changes to commit"
+          git push origin ${{ env.CURRENT_BRANCH }}
+        env:
+          CURRENT_BRANCH: ${{ steps.get-branch.outputs.branch }}

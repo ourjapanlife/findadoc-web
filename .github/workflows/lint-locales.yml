@@ -61,18 +61,9 @@ jobs:
               return;
             }
 
-            const formattedKeys = missingKeys.map(key => `- ${key}`).join('\n');
+            const formattedKeys = missingKeys.map(key => key.trim() ? `- ${key}` : key).join('\n');
 
-            const repo = context.repo.repo;
-            const owner = context.repo.owner;
-            const workflowId = 'fix-locales-keys.yml'; // Adjust to match your target workflow file name
-            const eventType = 'button_clicked'; // Custom event type
-            const ref = process.env.GITHUB_REF_NAME || 'main';
-
-            // Generate the link to trigger the repository_dispatch event
-            const fixButtonMarkdown = `[![Fix Missing Keys](https://img.shields.io/badge/-Fix%20Missing%20Keys-blue?style=for-the-badge&logo=github)](https://github.com/${owner}/${repo}/actions/workflows/${workflowId}/dispatches?ref=${ref}&event_type=${eventType})`;
-
-            const commentBody = `### Missing Locale Keys Found: ${formattedKeys}\n\n${fixButtonMarkdown}\n\nTo fix the missing keys, click the button above or run the following command in your terminal:\n\`\`\`bash\nyarn lint:locales\n\`\`\``;
+            const commentBody = `### Missing Locale Keys Found: \n${formattedKeys}\n\nTo fix the missing keys, react with a 🚀 emoji`;
 
             await github.rest.issues.createComment({
               issue_number: context.issue.number,
