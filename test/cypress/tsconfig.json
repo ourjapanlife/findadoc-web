@@ -7,7 +7,9 @@
       ],
       "types": [
         "cypress",
-        "node"
+        "node",
+        "cypress-real-events",
+        "cypress-plugin-tab"
       ],
       "sourceMap": false,
       "resolveJsonModule": true,

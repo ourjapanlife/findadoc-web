@@ -1,68 +1,37 @@
-import 'cypress-real-events'
-import 'cypress-plugin-tab'
-import facilityData from '../../fake_data/moderation_dashboard/fakeModFacilityData.json'
 import enUS from '../../../i18n/locales/en.json'
+import fakeFacilityResult from '../../fake_data/moderation_dashboard/fakeModFacilityData.json'
+import { aliasQuery } from '../utils'
 
-const FAKE_FACILITY_RESPONSE_PATH = 'moderation_dashboard/fakeModFacilityData.json'
+before(() => {
+    cy.login()
+})
 
 describe('Moderation edit facility form', () => {
     context('Landscape mode', () => {
-        // Before starting the execution, we need to load the fixture data using "this" context of the
-        // test object. We need to use regular function() callbacks instead of arrow functions when
-        // we need to access the "this" context.
-        before(function() {
-            cy.fixture(FAKE_FACILITY_RESPONSE_PATH).then(fakeFacilityResult => {
-                this.fakeFacilityResult = fakeFacilityResult
-            })
-
-            cy.viewport('macbook-16')
-            cy.visit('/login')
-            Cypress.session.clearCurrentSessionData()
-
-            // This intercepts the call to the GraphQL API in order to use fake data in the tests to protect the real data.
+        before(() => {
             cy.intercept('POST', '**/', req => {
-                if (req.body.query && req.body.query.includes('query Facilities')) {
-                    req.reply({
-                        statusCode: 200,
-                        body: this.fakeFacilityResult
-                    })
-                } else {
-                    req.continue()
-                }
-            }).as('getFacilities')
-
-            cy.origin('https://findadoc.jp.auth0.com/', () => {
-                cy.get('input#username').should('be.visible').type('findadoctest@proton.me')
-                cy.get('[data-action-button-primary]').should('be.visible').click()
-                cy.get('input#password').should('be.visible').type('vCnL5J8agHg6m2f')
-                cy.get('[data-action-button-primary]').should('be.visible').click()
+                aliasQuery(req, 'query Facilities', fakeFacilityResult)
             })
 
-            cy.url({ timeout: 10000 }).should('equal', 'http://localhost:3000/')
+            cy.visit('/moderation')
 
-            /* Chaining of visit was used here to make sure the user was logged in and that it would
-                100 percent visit moderation */
-            cy.get('[data-testid=top-nav-mod-link]').click().visit('/moderation')
+            cy.wait('@query Facilities')
 
-            cy.url({ timeout: 10000 }).should('include', '/moderation')
-
-            cy.wait('@getFacilities')
             cy.get('[data-testid="submission-type-select"]').select('FACILITIES')
-
             cy.get('[data-testid="mod-facility-list-item-1"]').click()
         })
 
-        after(() => {
-            Cypress.session.clearCurrentSessionData()
+        beforeEach(() => {
+            cy.viewport('macbook-16')
         })
 
-        it('contains the following fields and buttons in the topbar'), () => {
+        it('contains the following fields and buttons in the topbar', () => {
             cy.get('[data-testid="mod-edit-facility-hp-topbar-update"]').should('exist')
                 .contains(enUS.modEditFacilityOrHPTopbar.updateAndExit)
             cy.get('[data-testid="mod-edit-facility-hp-topbar-delete"]').should('exist')
                 .contains(enUS.modEditFacilityOrHPTopbar.delete)
             cy.get('[data-testid="mod-edit-facility-hp-topbar-copy-id"]').should('exist')
-        }
+        })
 
         it('it copies the selected id', () => {
             cy.get('[data-testid="mod-edit-facility-hp-topbar-copy-id"]').click()
@@ -100,35 +69,35 @@ describe('Moderation edit facility form', () => {
 
         it('should autofill all the form fields for an existing facility', () => {
             cy.get('[data-testid="mod-facility-section-nameEn"]')
-                .find('input').should('have.value', facilityData.data.facilities[0].nameEn)
+                .find('input').should('have.value', fakeFacilityResult.data.facilities[0].nameEn)
             cy.get('[data-testid="mod-facility-section-nameJa"]')
-                .find('input').should('have.value', facilityData.data.facilities[0].nameJa)
+                .find('input').should('have.value', fakeFacilityResult.data.facilities[0].nameJa)
             cy.get('[data-testid="mod-facility-section-phone"]').find('input')
-                .should('have.value', facilityData.data.facilities[0].contact.phone)
+                .should('have.value', fakeFacilityResult.data.facilities[0].contact.phone)
             cy.get('[data-testid="mod-facility-section-email"]').find('input')
-                .should('have.value', facilityData.data.facilities[0].contact.email)
+                .should('have.value', fakeFacilityResult.data.facilities[0].contact.email)
             cy.get('[data-testid="mod-facility-section-website"]').find('input')
-                .should('have.value', facilityData.data.facilities[0].contact.website)
+                .should('have.value', fakeFacilityResult.data.facilities[0].contact.website)
             cy.get('[data-testid="mod-facility-section-postalCode"]').find('input')
-                .should('have.value', facilityData.data.facilities[0].contact.address.postalCode)
+                .should('have.value', fakeFacilityResult.data.facilities[0].contact.address.postalCode)
             cy.get('[data-testid="mod-facility-section-cityEn"]').find('input')
-                .should('have.value', facilityData.data.facilities[0].contact.address.cityEn)
+                .should('have.value', fakeFacilityResult.data.facilities[0].contact.address.cityEn)
             cy.get('[data-testid="mod-facility-section-addressLine1En"]').find('input')
-                .should('have.value', facilityData.data.facilities[0].contact.address.addressLine1En)
+                .should('have.value', fakeFacilityResult.data.facilities[0].contact.address.addressLine1En)
             cy.get('[data-testid="mod-facility-section-addressLine2En"]').find('input')
-                .should('have.value', facilityData.data.facilities[0].contact.address.addressLine2En)
+                .should('have.value', fakeFacilityResult.data.facilities[0].contact.address.addressLine2En)
             cy.get('[data-testid="mod-facility-section-cityJa"]').find('input')
-                .should('have.value', facilityData.data.facilities[0].contact.address.cityJa)
+                .should('have.value', fakeFacilityResult.data.facilities[0].contact.address.cityJa)
             cy.get('[data-testid="mod-facility-section-addressLine1Ja"]').find('input')
-                .should('have.value', facilityData.data.facilities[0].contact.address.addressLine1Ja)
+                .should('have.value', fakeFacilityResult.data.facilities[0].contact.address.addressLine1Ja)
             cy.get('[data-testid="mod-facility-section-addressLine2Ja"]').find('input')
-                .should('have.value', facilityData.data.facilities[0].contact.address.addressLine2Ja)
+                .should('have.value', fakeFacilityResult.data.facilities[0].contact.address.addressLine2Ja)
             cy.get('[data-testid="mod-facility-section-google-maps"]').find('input')
-                .should('have.value', facilityData.data.facilities[0].contact.googleMapsUrl)
+                .should('have.value', fakeFacilityResult.data.facilities[0].contact.googleMapsUrl)
             cy.get('[data-testid="mod-facility-section-mapLatitude"]').find('input')
-                .should('have.value', facilityData.data.facilities[0].mapLatitude)
+                .should('have.value', fakeFacilityResult.data.facilities[0].mapLatitude)
             cy.get('[data-testid="mod-facility-section-mapLongitude"]').find('input')
-                .should('have.value', facilityData.data.facilities[0].mapLongitude)
+                .should('have.value', fakeFacilityResult.data.facilities[0].mapLongitude)
         })
 
         it('should be able to type in all input fields', () => {

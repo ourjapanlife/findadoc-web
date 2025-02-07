@@ -18,3 +18,15 @@ import './commands'
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
+
+// https://github.com/dmtrKovalenko/cypress-real-events#readme
+import 'cypress-real-events'
+
+// https://www.npmjs.com/package/cypress-plugin-tab
+import 'cypress-plugin-tab'
+
+// https://docs.cypress.io/api/cypress-api/screenshot-api
+// ! Be careful ! Enabling --record (Test Replay) hides the runner UI !
+Cypress.Screenshot.defaults({
+    capture: 'runner'
+})
