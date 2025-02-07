@@ -11,7 +11,7 @@ jobs:
   add-missing-locales:
     name: Add Missing Locale Keys 🌍
     if: |
-      github.event.issue.pull_request
+      ${{ github.event.issue.pull_request }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
