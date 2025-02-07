@@ -44,7 +44,7 @@ jobs:
             exit 1
           fi
 
-      - name: Create Comment with Fix Button
+      - name: Create Comment for Triggering Auto Fix
         if: failure()
         uses: actions/github-script@v6
         with:
@@ -61,7 +61,7 @@ jobs:
               return;
             }
 
-            const formattedKeys = missingKeys.map(key => `- ${key}`).join('\n');
+            const formattedKeys = missingKeys.map(key => key.trim() ? `- ${key}` : key).join('\n');
 
             const repo = context.repo.repo;
             const owner = context.repo.owner;
