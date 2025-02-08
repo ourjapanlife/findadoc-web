@@ -1,4 +1,5 @@
 <template>
+    <Loader />
     <div v-if="isHealthcareProfessionalInitialized">
         <div class="mod-healthcare-professional-section">
             <h2 class="mb-3.5 text-start text-primary-text text-2xl font-bold font-sans leading-normal">
@@ -272,6 +273,9 @@ let toast: ToastInterface
 const route = useRoute()
 
 const { t } = useI18n()
+
+const loadingStore = useLoadingStore()
+loadingStore.setIsLoading(true)
 
 const localesStore = useLocaleStore()
 const healthcareProfessionalsStore = useHealthcareProfessionalsStore()
@@ -592,6 +596,8 @@ onBeforeMount(async () => {
         = new Set(healthcareProfessionalsStore.healthcareProfessionalSectionFields.degrees)
 
     isHealthcareProfessionalInitialized.value = true
+
+    loadingStore.setIsLoading(false)
 
     await nextTick()
 })
