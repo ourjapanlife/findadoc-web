@@ -65,7 +65,8 @@ export default withNuxt(
             ],
             'vars-on-top': 'off',
             yoda: ['error', 'never', { exceptRange: true }],
-            'no-console': 'error', // we should use the logger instead
+            // Change to a logger in the future
+            'no-console': ['error', { allow: ['warn', 'error', 'info'] }],
             // Vue specific rules
 
             // Stylistic Issues and Opinions
