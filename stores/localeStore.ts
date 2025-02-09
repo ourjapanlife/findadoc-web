@@ -9,15 +9,15 @@ export type LocaleDisplay = {
 }
 
 export const useLocaleStore = defineStore('locale', () => {
-    const enUsLocale = localeDisplayOptions.find(o => o.code === Locale.EnUs) as LocaleDisplay
+    const enUsLocale = localeDisplayOptions.find(currentLocale => currentLocale.code === Locale.EnUs) as LocaleDisplay
     const locale: Ref<LocaleDisplay> = ref(enUsLocale)
 
     function setLocale(selectedLocale: Locale) {
-        locale.value = localeDisplayOptions.find(l => l.code === selectedLocale) as LocaleDisplay
+        locale.value = localeDisplayOptions.find(currentLocale => currentLocale.code === selectedLocale) as LocaleDisplay
     }
 
     function formatLanguageCodeToSimpleText(selectedLocale: string) {
-        const language = localeDisplayOptions.find(l => l.code === selectedLocale)
+        const language = localeDisplayOptions.find(currentLocale => currentLocale.code === selectedLocale)
         return language?.simpleText || 'Language not found'
     }
 
