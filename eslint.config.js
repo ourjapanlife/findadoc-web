@@ -3,6 +3,7 @@ import eslintJsPlugin from '@eslint/js'
 import tseslint from 'typescript-eslint'
 import stylistic from '@stylistic/eslint-plugin'
 import pluginCypress from 'eslint-plugin-cypress/flat'
+import pluginVitest from '@vitest/eslint-plugin'
 import pluginVue from 'eslint-plugin-vue'
 import withNuxt from './.nuxt/eslint.config.mjs'
 
@@ -15,7 +16,6 @@ export default withNuxt(
             '.nuxt/*',
             'coverage/*',
             '.yarn/*',
-            'test/vitest',
             'typedefs/gqlTypes.ts'
         ]
     },
@@ -103,6 +103,23 @@ export default withNuxt(
         ...pluginCypress.configs.recommended,
         rules: {
             'cypress/no-unnecessary-waiting': 'off'
+        }
+    },
+    // Linting for Vitest (https://github.com/vitest-dev/eslint-plugin-vitest)
+    {
+        files: ['test/vitest/**/*'],
+        plugins: {
+            vitest: pluginVitest
+        },
+        rules: {
+            ...pluginVitest.configs.recommended.rules,
+            '@typescript-eslint/no-unused-expressions': 'off',
+            'no-unused-expressions': 'off'
+        },
+        languageOptions: {
+            globals: {
+                ...pluginVitest.environments.env.globals
+            }
         }
     }
 )
