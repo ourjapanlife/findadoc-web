@@ -31,14 +31,17 @@ export default withNuxt(
                 }
             }
         },
-        files: ['test**/*.ts', './**/*.ts', './**/*.js'],
+        files: ['**/*.{ts,js}'],
         plugins: {
             '@typescript-eslint': tseslint.plugin,
             '@stylistic': stylistic
         },
         ignores: ['./typeDefs/gqlTypes.ts', './typesgeneratorconfig.ts'],
         rules: {
-            ...tseslint.configs.recommended,
+            // Current eslintRecommended rules (https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/src/configs/eslint-recommended-raw.ts)
+            // More information about the plugin (https://typescript-eslint.io/users/configs#eslint-recommended)
+            ...tseslint.configs.eslintRecommended.rules,
+
             // TS specific rules
             '@typescript-eslint/no-shadow': 'error',
             '@typescript-eslint/no-unused-vars': 'error',
