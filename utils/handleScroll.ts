@@ -7,7 +7,9 @@ export interface SectionInformation {
 
 export const handleScroll
 = (sectionDetailsObject: SectionInformation[], isScrolling: Ref<boolean> = ref(false), activeSection: Ref<string> = ref('')) => {
-    if (isScrolling.value) return
+    if (isScrolling.value) {
+        return
+    }
     let newActiveSection: string | null = null
 
     sectionDetailsObject.forEach(section => {

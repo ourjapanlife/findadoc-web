@@ -177,7 +177,7 @@ async function querySubmissions() {
         )
         return result?.submissions ?? []
     } catch (error) {
-        console.log(`Error querying the submissions: ${JSON.stringify(error)}`)
+        console.error(`Error querying the submissions: ${JSON.stringify(error)}`)
         return []
     }
 }

@@ -49,6 +49,7 @@ export const useHealthcareProfessionalsStore = defineStore(
         }
 
         function updateHealthcareProfessionalSectionFields(healthcareProfessional: HealthcareProfessional) {
+            // eslint-disable-next-line no-underscore-dangle
             healthcareProfessionalSectionFields.__typename = 'HealthcareProfessional'
             healthcareProfessionalSectionFields.acceptedInsurance = healthcareProfessional.acceptedInsurance
             healthcareProfessionalSectionFields.createdDate = healthcareProfessional.createdDate
@@ -221,7 +222,7 @@ export async function getHealthcareProfessionalById(id: string) {
         }
         return result.healthcareProfessional
     } catch (error: unknown) {
-        console.log(`Error retrieving healthcare professional by id: ${id}: ${JSON.stringify(error)}`)
+        console.error(`Error retrieving healthcare professional by id: ${id}: ${JSON.stringify(error)}`)
         return []
     }
 }
