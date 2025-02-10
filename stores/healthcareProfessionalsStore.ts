@@ -221,7 +221,7 @@ export async function getHealthcareProfessionalById(id: string) {
         }
         return result.healthcareProfessional
     } catch (error: unknown) {
-        console.log(`Error retrieving healthcare professional by id: ${id}: ${JSON.stringify(error)}`)
+        console.error(`Error retrieving healthcare professional by id: ${id}: ${JSON.stringify(error)}`)
         return []
     }
 }

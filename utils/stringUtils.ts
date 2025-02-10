@@ -45,7 +45,7 @@ export function isValidUrl(url: string | URL) {
     try {
         url = new URL(url)
     } catch (e) {
-        console.log(`Error: ${e}`)
+        console.error(`Error: ${e}`)
         return false
     }
     return url.protocol === 'https:'
