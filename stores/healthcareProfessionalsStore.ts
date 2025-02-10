@@ -49,6 +49,7 @@ export const useHealthcareProfessionalsStore = defineStore(
         }
 
         function updateHealthcareProfessionalSectionFields(healthcareProfessional: HealthcareProfessional) {
+            // eslint-disable-next-line no-underscore-dangle
             healthcareProfessionalSectionFields.__typename = 'HealthcareProfessional'
             healthcareProfessionalSectionFields.acceptedInsurance = healthcareProfessional.acceptedInsurance
             healthcareProfessionalSectionFields.createdDate = healthcareProfessional.createdDate
