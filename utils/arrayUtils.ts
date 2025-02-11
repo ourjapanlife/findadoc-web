@@ -22,35 +22,39 @@ export function arraysAreEqual<T>(array1: T[],
     // Compare each element in the sorted arrays
     for (let i = 0; i < sortedArray1.length; i++) {
         if (canonicalize(sortedArray1[i]) !== canonicalize(sortedArray2[i])) {
-          return false;
+            return false
         }
-      }
+    }
 
-      return true;
+    return true
 }
 
 function compareElements<T>(ele1: T, ele2: T): number {
-    const  ele1Str = canonicalize(ele1);
-    const  ele2Str = canonicalize(ele2);
-    if (ele1Str < ele2Str) return -1;
-    if (ele1Str > ele2Str) return 1;
+    const ele1Str = canonicalize(ele1)
+    const ele2Str = canonicalize(ele2)
+    if (ele1Str < ele2Str) return -1
+    if (ele1Str > ele2Str) return 1
     return 0
 }
 
 //This function handles different data types and returns them as canonicalized strings
-function canonicalize(value: any): string {
-    if (value === null) return 'null';
-    if (value === undefined) return 'undefined';
-    
+function canonicalize<T>(value: T): string {
+    if (value === null) return 'null'
+    if (value === undefined) return 'undefined'
+
     if (typeof value !== 'object') {
-      return JSON.stringify(value);
+        return JSON.stringify(value)
     }
-    
+
     if (Array.isArray(value)) {
-      return '[' + value.map(canonicalize).join(',') + ']';
+        return '[' + value.map(canonicalize).join(',') + ']'
+        //return '[' + (value as Array<unknown>).map(canonicalize).join(',') + ']'
     }
-    
-    const keys = Object.keys(value).sort();
-    const keyValuePairs = keys.map(key => `${JSON.stringify(key)}:${canonicalize(value[key])}`);
-    return '{' + keyValuePairs.join(',') + '}';
+
+    const obj = value as { [key: string]: unknown }
+    const keys = Object.keys(obj).sort()
+    const keyValuePairs = keys.map(
+        key => `${JSON.stringify(key)}:${canonicalize(obj[key])}`
+    )
+    return '{' + keyValuePairs.join(',') + '}'
 }
