@@ -26,7 +26,7 @@ export type AuditLog = {
   __typename?: 'AuditLog';
   actionType: ActionType;
   id: Scalars['ID']['output'];
-  newValue: Scalars['String']['output'];
+  newValue?: Maybe<Scalars['String']['output']>;
   objectType: ObjectType;
   oldValue?: Maybe<Scalars['String']['output']>;
   schemaVersion: SchemaVersion;
@@ -258,6 +258,11 @@ export type LocalizedNameInput = {
   middleName?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type ModerationAutofillDatabaseSubmissionInput = {
+  googleMapsUrl?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   createFacility?: Maybe<Facility>;
@@ -266,6 +271,7 @@ export type Mutation = {
   deleteFacility?: Maybe<DeleteResult>;
   deleteHealthcareProfessional?: Maybe<DeleteResult>;
   deleteSubmission?: Maybe<DeleteResult>;
+  moderationPanelUpdateSubmission?: Maybe<Submission>;
   updateFacility?: Maybe<Facility>;
   updateHealthcareProfessional?: Maybe<HealthcareProfessional>;
   updateSubmission?: Maybe<Submission>;
@@ -299,6 +305,11 @@ export type MutationDeleteHealthcareProfessionalArgs = {
 
 export type MutationDeleteSubmissionArgs = {
   id: Scalars['ID']['input'];
+};
+
+
+export type MutationModerationPanelUpdateSubmissionArgs = {
+  input: ModerationAutofillDatabaseSubmissionInput;
 };
 
 
@@ -495,6 +506,7 @@ export type UpdateHealthcareProfessionalInput = {
 };
 
 export type UpdateSubmissionInput = {
+  autofillPlaceFromSubmissionUrl?: InputMaybe<Scalars['Boolean']['input']>;
   facility?: InputMaybe<CreateFacilityInput>;
   googleMapsUrl?: InputMaybe<Scalars['String']['input']>;
   healthcareProfessionalName?: InputMaybe<Scalars['String']['input']>;
@@ -600,6 +612,7 @@ export type ResolversTypes = {
   Locale: Locale;
   LocalizedName: ResolverTypeWrapper<LocalizedName>;
   LocalizedNameInput: LocalizedNameInput;
+  ModerationAutofillDatabaseSubmissionInput: ModerationAutofillDatabaseSubmissionInput;
   Mutation: ResolverTypeWrapper<{}>;
   ObjectType: ObjectType;
   OrderBy: OrderBy;
@@ -640,6 +653,7 @@ export type ResolversParentTypes = {
   Int: Scalars['Int']['output'];
   LocalizedName: LocalizedName;
   LocalizedNameInput: LocalizedNameInput;
+  ModerationAutofillDatabaseSubmissionInput: ModerationAutofillDatabaseSubmissionInput;
   Mutation: {};
   OrderBy: OrderBy;
   PhysicalAddress: PhysicalAddress;
@@ -657,7 +671,7 @@ export type ResolversParentTypes = {
 export type AuditLogResolvers<ContextType = any, ParentType extends ResolversParentTypes['AuditLog'] = ResolversParentTypes['AuditLog']> = {
   actionType?: Resolver<ResolversTypes['ActionType'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  newValue?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  newValue?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   objectType?: Resolver<ResolversTypes['ObjectType'], ParentType, ContextType>;
   oldValue?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   schemaVersion?: Resolver<ResolversTypes['SchemaVersion'], ParentType, ContextType>;
@@ -743,6 +757,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   deleteFacility?: Resolver<Maybe<ResolversTypes['DeleteResult']>, ParentType, ContextType, RequireFields<MutationDeleteFacilityArgs, 'id'>>;
   deleteHealthcareProfessional?: Resolver<Maybe<ResolversTypes['DeleteResult']>, ParentType, ContextType, RequireFields<MutationDeleteHealthcareProfessionalArgs, 'id'>>;
   deleteSubmission?: Resolver<Maybe<ResolversTypes['DeleteResult']>, ParentType, ContextType, RequireFields<MutationDeleteSubmissionArgs, 'id'>>;
+  moderationPanelUpdateSubmission?: Resolver<Maybe<ResolversTypes['Submission']>, ParentType, ContextType, RequireFields<MutationModerationPanelUpdateSubmissionArgs, 'input'>>;
   updateFacility?: Resolver<Maybe<ResolversTypes['Facility']>, ParentType, ContextType, RequireFields<MutationUpdateFacilityArgs, 'id' | 'input'>>;
   updateHealthcareProfessional?: Resolver<Maybe<ResolversTypes['HealthcareProfessional']>, ParentType, ContextType, RequireFields<MutationUpdateHealthcareProfessionalArgs, 'id' | 'input'>>;
   updateSubmission?: Resolver<Maybe<ResolversTypes['Submission']>, ParentType, ContextType, RequireFields<MutationUpdateSubmissionArgs, 'id' | 'input'>>;
