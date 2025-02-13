@@ -170,7 +170,9 @@ export default withNuxt(
                     ignoreTemplateLiterals: true,
                     ignoreRegExpLiterals: true
                 }
-            ], // be friendly to laptops
+            ],
+            '@stylistic/max-statements-per-line': 'off',
+            // be friendly to laptops
             '@stylistic/padding-line-between-statements': 'off', //we can choose newlines after variable declarations
             '@stylistic/no-multiple-empty-lines': ['error', { max: 1, maxEOF: 1 }],
             '@stylistic/object-curly-newline': ['error', { consistent: true }],
