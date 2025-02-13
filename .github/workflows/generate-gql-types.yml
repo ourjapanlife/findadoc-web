@@ -6,8 +6,9 @@ on:
     - cron: '0 0 * * MON'
 
 permissions:
-  contents: write  # Allows for committing and creating pull requests
+  contents: write
   actions: write
+  pull-requests: write
 
 jobs:
   generate-gql-types:
@@ -18,41 +19,35 @@ jobs:
         node-version: [21.3.0]
 
     steps:
-      # Checkout the repository
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          
       - name: Install Yarn/Node ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'yarn'
+
       - name: Install Dependencies
         run: yarn install --immutable
+
       - name: Generate GQL Types
         run: yarn generate
-      - name: Check for changes
-        run: git diff --exit-code -- typedefs/
-        continue-on-error: true
 
-      # Commit and push changes if any exist
-      - name: Commit changes
-        if: failure()
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add typedefs/
-          git commit -m "chore: update gql types"
-          git push
-
-      # Create a pull request if changes were committed
+        # This will only create a PR if there are diffs created by yarn generate
       - name: Create Pull Request
-        if: failure()
         uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: "chore: update gql types"
+          committer: GitHub <noreply@github.com>
+          author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+          signoff: false
           title: "chore: update gql types"
           body: "This PR updates the GraphQL types."
           branch: "update-gql-types"
+          base: "main"
+          delete-branch: true
+        
