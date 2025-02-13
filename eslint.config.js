@@ -52,7 +52,6 @@ export default withNuxt(
             'no-unused-vars': 'off',
             'block-scoped-var': 'error',
             complexity: ['error', { max: 40 }],
-            curly: 'error',
             'dot-location': ['error', 'property'],
             'dot-notation': ['error', { allowPattern: '^[a-z]+(_[a-z]+)+$' }],
             'no-alert': 'error',
