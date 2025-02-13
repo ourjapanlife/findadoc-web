@@ -21,11 +21,8 @@
 // Nuxt vue-i18n documentation:
 // https://i18n.nuxtjs.org/docs/v8/api/vue-i18n
 
-import { onMounted, ref, watch } from 'vue'
-import { useLocaleStore } from '../stores/localeStore'
 import type { Locale } from '#i18n'
 import { Locale as GqlLocale } from '~/typedefs/gqlTypes.js'
-import { useI18n } from '#imports'
 
 const { setLocale, getLocaleCookie } = useI18n()
 const localeStore = useLocaleStore()
