@@ -48,7 +48,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, defineProps } from 'vue'
+import { computed } from 'vue'
 import SVGProfileIcon from '~/assets/icons/profile-icon.svg'
 import SVGChatBubblesIcon from '~/assets/icons/chat-bubbles.svg'
 import { useLocaleStore } from '~/stores/localeStore.js'
