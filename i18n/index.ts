@@ -1,36 +1,78 @@
-import en from './locales/en.json'
-import ja from './locales/ja.json'
-import pt from './locales/pt.json'
-import ru from './locales/ru.json'
-import de from './locales/de.json'
-import cn from './locales/cn.json'
-import fr from './locales/fr.json'
-import tl from './locales/tl.json'
-import vi from './locales/vi.json'
-import it from './locales/it.json'
+/*
+    The 'CustomLocale' object is based on our server's 'Locale' type.
+    We are extracting only the keys from it. Since our backend uses '_'
+    instead of '-' for the language code, we need to create a new type
+    to align with the browser and Nuxt language formats.
 
-const i18n = {
-    //eslint-disable-next-line
-    en_US: en,
-    //eslint-disable-next-line
-    ja_JP: ja,
-    //eslint-disable-next-line
-    pt_BR: pt,
-    //eslint-disable-next-line
-    ru_RU: ru,
-    //eslint-disable-next-line
-    de_DE: de,
-    //eslint-disable-next-line
-    zh_CN: cn,
-    //eslint-disable-next-line
-    fr_FR: fr,
-    //eslint-disable-next-line
-    tl_PH: tl,
-    //eslint-disable-next-line
-    vi_VN: vi,
-    //eslint-disable-next-line
-    it_IT: it
-}
+    We are using Partial because our server's type has more than 40 language codes,
+    but we haven't implemented all these languages yet.
+*/
+
+import type { LocaleObject } from '@nuxtjs/i18n'
+import type { Locale as OriginalLocale } from '~/typedefs/gqlTypes'
+
+type CustomLocale = Record<keyof typeof OriginalLocale, string>
+
+/**
+ * The browser's language code uses "-" instead of "_".
+ * Once the backend is updated to follow the browser's default locale code format, this will no longer be needed.
+ * At that point, we can import the codes directly from `gqlTypes.Locale`.
+ */
+const Locale = {
+    EnUs: 'en-US',
+    JaJp: 'ja-JP',
+    PtBr: 'pt-BR',
+    RuRu: 'ru-RU',
+    DeDe: 'de-DE',
+    ZhCn: 'zh-CN',
+    FrFr: 'fr-FR',
+    TlPh: 'tl-PH',
+    ViVn: 'vi-VN',
+    ItIt: 'it-IT'
+} as const satisfies Partial<CustomLocale>
+
+const i18n: LocaleObject[] = [
+    {
+        code: Locale.EnUs,
+        file: 'en.json'
+    },
+    {
+        code: Locale.JaJp,
+        file: 'ja.json'
+    },
+    {
+        code: Locale.PtBr,
+        file: 'pt.json'
+    },
+    {
+        code: Locale.RuRu,
+        file: 'ru.json'
+    },
+    {
+        code: Locale.DeDe,
+        file: 'de.json'
+    },
+    {
+        code: Locale.ZhCn,
+        file: 'cn.json'
+    },
+    {
+        code: Locale.FrFr,
+        file: 'fr.json'
+    },
+    {
+        code: Locale.TlPh,
+        file: 'tl.json'
+    },
+    {
+        code: Locale.ViVn,
+        file: 'vi.json'
+    },
+    {
+        code: Locale.ItIt,
+        file: 'it.json'
+    }
+]
 
 export default i18n
 
