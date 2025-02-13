@@ -18,17 +18,23 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue'
-import { useLocaleStore } from '../stores/localeStore'
-import { Locale } from '~/typedefs/gqlTypes.js'
-import { useI18n } from '#imports'
+// Nuxt vue-i18n documentation:
+// https://i18n.nuxtjs.org/docs/v8/api/vue-i18n
 
-const { locale } = useI18n()
+import type { Locale } from '#i18n'
+import { Locale as GqlLocale } from '~/typedefs/gqlTypes.js'
+
+const { setLocale, getLocaleCookie } = useI18n()
 const localeStore = useLocaleStore()
-const selectedLocale = ref(Locale.EnUs)
 
-watch(selectedLocale, (newLocale: Locale) => {
-    localeStore.setLocale(newLocale)
-    locale.value = newLocale
+// getLocaleCookie to set the initial locale, if there is no cookie, it will default based on the nuxt.config.js
+// Browser's code language is using "-" instead of "_".
+const localeCookie = getLocaleCookie()?.replace('-', '_') || GqlLocale.EnUs
+const selectedLocale = ref(localeCookie)
+
+watch(selectedLocale, newLocale => {
+    localeStore.setLocale(newLocale as GqlLocale)
+    // setLocale to update the i18n plugin and set the 'i18n_redirected' cookie
+    setLocale(newLocale.replace('_', '-') as Locale)
 })
 </script>
