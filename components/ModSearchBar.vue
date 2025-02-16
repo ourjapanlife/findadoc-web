@@ -74,9 +74,9 @@
                             <span class="text-xs">{{ item.id }}</span>
                             <div class="divide-x-2 mt-1">
                                 <!--
-                                    Originally, the 'item' type is UnwrapRefSimple<SetType<T>>,
+                                    Originally, the 'item' type is UnwrapRefSimple<ArrayType<T>>,
                                     but we don't have access to UnwrapRefSimple,
-                                    so we need to directly set the type as SetType<T>.
+                                    so we need to directly set the type as ArrayType<T>.
                                 -->
                                 <span
                                     v-for="(field, fieldIndex) in fieldsToDisplayCallback(item as ArrayType<T>)"
@@ -235,12 +235,10 @@ const handleSearchInputChange = (event: Event) => {
 
     /*
         We need to unwrap the `filteredItems` type since the original type is:
-        Ref<UnwrapRefSimple<SetType<T>>[], SetType<T>[] | UnwrapRefSimple<SetType<T>>[]>
-
+        Ref<UnwrapRefSimple<ArrayType<T>>[], ArrayType<T>[] | UnwrapRefSimple<ArrayType<T>>[]>
         We can't use UnwrapRefSimple as it is an internal Vue type. So, we need to explicitly
-        define this variable as Ref<SetType<T>[]>.
+        define this variable as Ref<ArrayType<T>[]>.
     */
-
     emit('searchInputChange', filteredItems as Ref<ArrayType<T>[]>, inputValue)
 }
 
