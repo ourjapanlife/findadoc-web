@@ -51,7 +51,7 @@ function canonicalize<T>(value: T): string {
 
     //Recursively handle arrays
     if (Array.isArray(value)) {
-        return '[' + value.map(canonicalize).join(',') + ']'
+        return `[${value.map(canonicalize).join(',')}]`
     }
 
     //sort and recursively handle objects
@@ -60,5 +60,5 @@ function canonicalize<T>(value: T): string {
     const keyValuePairs = keys.map(
         key => `${JSON.stringify(key)}:${canonicalize(obj[key])}`
     )
-    return '{' + keyValuePairs.join(',') + '}'
+    return `{${keyValuePairs.join(',')}}`
 }
