@@ -167,8 +167,8 @@ const handleListItem = () => {
     const item = filteredItems.value[selectedItemIndex.value]
 
     if (selectedItems.value.includes(item)) {
-        const itemIndex = selectedItems.value.indexOf(item);
-        selectedItems.value.splice(itemIndex, 1);
+        const itemIndex = selectedItems.value.indexOf(item)
+        selectedItems.value.splice(itemIndex, 1)
         return
     }
 
