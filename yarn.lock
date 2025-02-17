@@ -3456,7 +3456,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@stylistic/eslint-plugin@npm:^2.6.1, @stylistic/eslint-plugin@npm:^2.8.0":
+"@stylistic/eslint-plugin@npm:^2.13.0, @stylistic/eslint-plugin@npm:^2.8.0":
   version: 2.13.0
   resolution: "@stylistic/eslint-plugin@npm:2.13.0"
   dependencies:
@@ -8233,7 +8233,7 @@ __metadata:
     "@nuxt/types": "npm:^2.18.1"
     "@nuxtjs/i18n": "npm:^9.1.0"
     "@pinia/nuxt": "npm:^0.5.2"
-    "@stylistic/eslint-plugin": "npm:^2.6.1"
+    "@stylistic/eslint-plugin": "npm:^2.13.0"
     "@swc/core": "npm:^1.7.6"
     "@testing-library/vue": "npm:^8.1.0"
     "@vitejs/plugin-vue": "npm:^5.1.2"
