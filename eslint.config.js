@@ -3,6 +3,7 @@ import eslintJsPlugin from '@eslint/js'
 import tseslint from 'typescript-eslint'
 import stylistic from '@stylistic/eslint-plugin'
 import pluginCypress from 'eslint-plugin-cypress/flat'
+import pluginVitest from '@vitest/eslint-plugin'
 import pluginVue from 'eslint-plugin-vue'
 import withNuxt from './.nuxt/eslint.config.mjs'
 
@@ -15,7 +16,6 @@ export default withNuxt(
             '.nuxt/*',
             'coverage/*',
             '.yarn/*',
-            'test/vitest',
             'typedefs/gqlTypes.ts'
         ]
     },
@@ -31,14 +31,17 @@ export default withNuxt(
                 }
             }
         },
-        files: ['test**/*.ts', './**/*.ts', './**/*.js'],
+        files: ['**/*.{ts,js}'],
         plugins: {
             '@typescript-eslint': tseslint.plugin,
             '@stylistic': stylistic
         },
-        ignores: ['./typeDefs/gqlTypes.ts', './typesgeneratorconfig.ts'],
+        ignores: ['typeDefs/gqlTypes.ts', 'typesgeneratorconfig.ts', 'i18n/checkLocaleKeys.js'],
         rules: {
-            ...tseslint.configs.recommended,
+            // Current eslintRecommended rules (https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/src/configs/eslint-recommended-raw.ts)
+            // More information about the plugin (https://typescript-eslint.io/users/configs#eslint-recommended)
+            ...tseslint.configs.eslintRecommended.rules,
+
             // TS specific rules
             '@typescript-eslint/no-shadow': 'error',
             '@typescript-eslint/no-unused-vars': 'error',
@@ -49,8 +52,6 @@ export default withNuxt(
             'no-unused-vars': 'off',
             'block-scoped-var': 'error',
             complexity: ['error', { max: 40 }],
-            'consistent-return': 'error',
-            curly: 'error',
             'dot-location': ['error', 'property'],
             'dot-notation': ['error', { allowPattern: '^[a-z]+(_[a-z]+)+$' }],
             'no-alert': 'error',
@@ -62,7 +63,8 @@ export default withNuxt(
             ],
             'vars-on-top': 'off',
             yoda: ['error', 'never', { exceptRange: true }],
-            'no-console': 'error', // we should use the logger instead
+            // Change to a logger in the future
+            'no-console': ['error', { allow: ['warn', 'error', 'info'] }],
             // Vue specific rules
 
             // Stylistic Issues and Opinions
@@ -100,6 +102,16 @@ export default withNuxt(
         ...pluginCypress.configs.recommended,
         rules: {
             'cypress/no-unnecessary-waiting': 'off'
+        }
+    },
+    // Linting for Vitest (https://github.com/vitest-dev/eslint-plugin-vitest)
+    {
+        files: ['test/vitest/**/*'],
+        ...pluginVitest.configs.recommended,
+        ...pluginVitest.configs.env,
+        rules: {
+            '@typescript-eslint/no-unused-expressions': 'off',
+            'no-unused-expressions': 'off'
         }
     }
 )
@@ -156,7 +168,9 @@ export default withNuxt(
                     ignoreTemplateLiterals: true,
                     ignoreRegExpLiterals: true
                 }
-            ], // be friendly to laptops
+            ],
+            '@stylistic/max-statements-per-line': 'off',
+            // be friendly to laptops
             '@stylistic/padding-line-between-statements': 'off', //we can choose newlines after variable declarations
             '@stylistic/no-multiple-empty-lines': ['error', { max: 1, maxEOF: 1 }],
             '@stylistic/object-curly-newline': ['error', { consistent: true }],
