@@ -1,17 +1,17 @@
-name: Lint-Locales
+name: Lint Locales
 
 on:
   push:
     branches: [ "main" ]
   pull_request:
-    # The branches below must be a subset of the branches above
     branches: [ "main" ]
   schedule:
     - cron: '45 15 * * 4'
+
 permissions:
   contents: read
-  security-events: write
-  actions: write  # This is needed for pull requests to delete
+  pull-requests: write
+  actions: write  # Ensure actions permissions are set to write
 
 jobs:
   locale-lint:
@@ -25,12 +25,52 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Install Yarn/ Node ${{ matrix.node-version }}
+
+      - name: Install Node.js and Yarn
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          cache: "yarn"
+          cache: 'yarn'
+
       - name: Install Dependencies
         run: yarn install --immutable
+
       - name: Run Locales Lint
-        run: NODE_ENV=production yarn lint:locales
+        id: lint
+        run: |
+          NODE_ENV=production node i18n/checkLocaleKeys.js --report-only > missing_keys.txt
+          if [ -s missing_keys.txt ]; then
+            cat missing_keys.txt
+            exit 1
+          fi
+
+      - name: Create Comment for Triggering Auto Fix
+        if: failure()
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const fs = require('fs');
+
+            // Read missing keys from the file
+            const missingKeysContent = fs.readFileSync('missing_keys.txt', 'utf8').trim();
+            const missingKeys = missingKeysContent ? missingKeysContent.split('\n') : [];
+
+            if (missingKeys.length === 0) {
+              console.log('No missing keys found.');
+              return;
+            }
+
+            const formattedKeys = missingKeys.map(key => key.trim() && !key.includes("json") ? `- ${key}` : `**${key}**`).join('\n');
+
+            const repo = context.repo.repo;
+            const owner = context.repo.owner;
+
+            const commentBody = `### Missing Locale Keys Found: \n${formattedKeys}\n\nTo add the missing keys, comment with the following emoji 3 times:\n\n\`\`\`🌍\`\`\``;
+
+            await github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner,
+              repo,
+              body: commentBody
+            });
