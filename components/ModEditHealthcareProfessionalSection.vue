@@ -38,7 +38,7 @@
                             :required="true"
                         />
                         <ModInputField
-                            v-model="nameLocaleInputs.middleName"
+                            v-model="nameLocaleInputs.middleName as string"
                             data-testid="mod-healthcare-professional-section-middleName"
                             :label="$t('modHealthcareProfessionalSection.labelHealthcareProfessionalMiddleName')"
                             type="text"
