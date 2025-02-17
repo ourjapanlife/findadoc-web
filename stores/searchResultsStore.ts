@@ -100,6 +100,7 @@ async function queryProfessionals(searchSpecialty?: Specialty, searchLanguage?: 
         return professionalsSearchResult
     } catch (error) {
         console.error(`Error getting professionals: ${JSON.stringify(error)}`)
+        // eslint-disable-next-line no-alert
         alert('Error getting data! Please contact our support team by clicking the bottom right link on the page!')
         return []
     }
@@ -135,6 +136,7 @@ async function queryFacilities(healthcareProfessionalIds: string[], searchCity?:
         return locationFilteredSearchResults
     } catch (error) {
         console.error(`Error getting facilities: ${JSON.stringify(error)}`)
+        // eslint-disable-next-line no-alert
         alert('Error getting data! Please contact our support team by clicking the bottom right link on the page!')
         return []
     }
