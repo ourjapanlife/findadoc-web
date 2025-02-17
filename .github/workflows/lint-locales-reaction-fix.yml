@@ -1,0 +1,67 @@
+name: Add Locales with Comment Trigger
+
+on:
+  issue_comment:
+    types: [created]
+
+permissions:
+  contents: write
+  actions: write
+  pull-requests: write
+
+jobs:
+  add-missing-locales:
+    # This only runs if the event comes from a pull request and the body contains 3 worlds in a row
+    if: |
+      github.event.issue.pull_request && contains(github.event.comment.body, '🌍🌍🌍')
+    name: Add Missing Locale Keys 🌍
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [21.3.0]
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install Yarn/ Node ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'yarn'
+
+      - name: Install Dependencies
+        run: yarn install --immutable
+
+        # This finds which PR the the comment came from and the branch
+      - name: Get PR Head Branch
+        id: pr_info
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const prNumber = context.payload.issue.number;
+            const { data: pr } = await github.rest.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: prNumber,
+            });
+            core.setOutput('head_ref', pr.head.ref);
+      
+          # This checks out to the branch from the PR
+      - name: Checkout PR Branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ steps.pr_info.outputs.head_ref }}
+          fetch-depth: 0
+      
+          # This runs the linter and pushes it to the branch
+      - name: Fix Missing Locale Keys, Commit, and Push Changes
+        run: |
+          node i18n/checkLocaleKeys.js
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "chore: fix missing locale keys" || echo "No changes to commit"
+          git push origin ${{ steps.pr_info.outputs.head_ref }}
+      

@@ -28,3 +28,6 @@ cypress/videos
 
 # VS Code
 .vscode
+
+# txt file added when linting files
+*missing_keys.txt
