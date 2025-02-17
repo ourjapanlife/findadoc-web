@@ -1,11 +1,7 @@
-import { setActivePinia, createPinia } from 'pinia'
 import { expect } from 'chai'
 import { arraysAreEqual } from '@/utils/arrayUtils'
 
 describe('arraysAreEqual', () => {
-    beforeEach(() => {
-        setActivePinia(createPinia())
-    })
 
     it('should sort and find two arrays with the same primitive values to be equal', () => {
         expect(arraysAreEqual([1,2,3], [3,1,2])).to.be.true

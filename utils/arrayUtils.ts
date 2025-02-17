@@ -29,6 +29,7 @@ export function arraysAreEqual<T>(array1: T[],
     return true
 }
 
+//This function helps sort elements in an array
 function compareElements<T>(ele1: T, ele2: T): number {
     const ele1Str = canonicalize(ele1)
     const ele2Str = canonicalize(ele2)
@@ -37,7 +38,9 @@ function compareElements<T>(ele1: T, ele2: T): number {
     return 0
 }
 
-//This function handles different data types and returns them as canonicalized strings
+/*This function handles different data types and returns them as canonicalized strings.
+For example, two objects might contain the same key/value pairs but in different orders.
+This function would sort those objects and turn them into a "canon" comparable representation*/
 function canonicalize<T>(value: T): string {
     if (value === null) return 'null'
     if (value === undefined) return 'undefined'
@@ -46,11 +49,12 @@ function canonicalize<T>(value: T): string {
         return JSON.stringify(value)
     }
 
+    //Recursively handle arrays
     if (Array.isArray(value)) {
         return '[' + value.map(canonicalize).join(',') + ']'
-        //return '[' + (value as Array<unknown>).map(canonicalize).join(',') + ']'
     }
 
+    //sort and recursively handle objects
     const obj = value as { [key: string]: unknown }
     const keys = Object.keys(obj).sort()
     const keyValuePairs = keys.map(
