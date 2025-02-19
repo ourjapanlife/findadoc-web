@@ -12,9 +12,7 @@
             </p>
         </div>
         <div v-else-if="store.activeScreen === ModerationScreen.EditFacility">
-            <p class="text-xl font-bold">
-                NAVBAR REVIEW FACILITY
-            </p>
+            <ModEditFacilityLeftNavBar />
         </div>
     </div>
 </template>
