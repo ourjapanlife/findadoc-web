@@ -7,7 +7,8 @@ on:
         branches: ["main"]
     schedule:
         - cron: "45 15 * * 4"
-
+env:
+  NUXT_PUBLIC_LOAD_STORES: true
 jobs:
     cypress-run:
         name: Running Cypress tests ✨
@@ -23,6 +24,9 @@ jobs:
                 key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
                 restore-keys: |
                   ${{ runner.os }}-yarn-
+
+            - name: Log environment variable
+              run: echo "env_var=${{ env.LOAD_STORES }}"
 
             - name: Install dependencies and build
               run: |
