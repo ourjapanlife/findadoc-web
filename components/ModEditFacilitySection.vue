@@ -1,4 +1,5 @@
 <template>
+    <Loader />
     <div v-if="isFacilitySectionInitialized">
         <div
             class="mod-facility-section"
@@ -295,6 +296,9 @@ const route = useRoute()
 
 const { t } = useI18n()
 
+const loadingStore = useLoadingStore()
+loadingStore.setIsLoading(true)
+
 const moderationScreenStore = useModerationScreenStore()
 const facilityStore = useFacilitiesStore()
 const healthcareProfessionalsStore = useHealthcareProfessionalsStore()
@@ -376,6 +380,8 @@ onBeforeMount(async () => {
     syncHealthcareProfessionalsRelatedToFacility()
 
     isFacilitySectionInitialized.value = true
+
+    loadingStore.setIsLoading(false)
 
     // Ensure UI updates are reflected
     await nextTick()
