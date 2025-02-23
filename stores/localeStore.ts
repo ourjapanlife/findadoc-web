@@ -30,7 +30,26 @@ export const useLocaleStore = defineStore('locale', () => {
               ?? []
     }
 
-    return { locale, localeDisplayOptions, mvpLocaleDisplayOptions, setLocale, formatLanguages, formatLanguageCodeToSimpleText }
+    // Takes the input value and searches all locale display options to return the locale code
+    function getLocaleByInput(inputValue: string) {
+        const filteredLocales = localeDisplayOptions
+            .filter(localeDisplay =>
+                localeDisplay.code.toLowerCase().replace('_', '').includes(inputValue)
+                || localeDisplay.simpleText.toLowerCase().includes(inputValue)
+                || localeDisplay.displayText.toLowerCase().replace('(', '').replace(')', '').includes(inputValue))
+            .map(filteredLocale => filteredLocale.code as Locale)
+        return filteredLocales
+    }
+
+    return {
+        locale,
+        localeDisplayOptions,
+        mvpLocaleDisplayOptions,
+        setLocale,
+        formatLanguages,
+        formatLanguageCodeToSimpleText,
+        getLocaleByInput
+    }
 })
 
 export const localeDisplayOptions = [
