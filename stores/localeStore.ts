@@ -31,7 +31,7 @@ export const useLocaleStore = defineStore('locale', () => {
     }
 
     // Takes the input value and searches all locale display options to return the locale code
-    function getLocaleByInput(inputValue: string) {
+    function getLocaleByNameInput(inputValue: string) {
         const filteredLocales = localeDisplayOptions
             .filter(localeDisplay =>
                 localeDisplay.code.toLowerCase().replace('_', '').includes(inputValue)
@@ -48,7 +48,7 @@ export const useLocaleStore = defineStore('locale', () => {
         setLocale,
         formatLanguages,
         formatLanguageCodeToSimpleText,
-        getLocaleByInput
+        getLocaleByNameInput
     }
 })
 
