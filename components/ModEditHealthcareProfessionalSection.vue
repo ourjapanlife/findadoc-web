@@ -541,7 +541,15 @@ const handleLocaleInputChange = (filteredItems: Ref<Locale[]>, inputValue: strin
         return
     }
 
-    filteredItems.value = arrayOfLocales.filter(locale => locale.toLowerCase().includes(inputValue))
+    // Filter locales by all locale display options against the input value
+    const localeOptions = localesStore.localeDisplayOptions
+    const filteredLocales = localeOptions.filter(locale =>
+        locale.code.toLowerCase().replace('_', '').includes(inputValue)
+        || locale.simpleText.toLowerCase().includes(inputValue)
+        || locale.displayText.toLowerCase().replace('(', '').replace(')', '').includes(inputValue))
+
+    // Map the locale code to filtered items based on filtered locales
+    filteredItems.value = filteredLocales.map(locale => locale.code as Locale)
 }
 
 const facilitiesFieldsToDisplayCallback = (item: Facility) => [item.nameEn, item.nameJa]
