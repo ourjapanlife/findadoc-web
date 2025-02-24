@@ -33,7 +33,7 @@ export const useHealthcareProfessionalsStore = defineStore(
             spokenLanguages: [],
             updatedDate: ''
         })
-        const selectedFacilities: Ref<Set<Facility>> = ref(new Set())
+        const selectedFacilities: Ref<Facility[]> = ref([])
         // This is the array to be sent to the backend if there is a change in the relations
         const facilitiesRelationsToSelectedHealthcareProfessional: Ref<Relationship[]> = ref([])
         // This helps users easily add name locales back to a healthcare professional by keeping track of removed ones
