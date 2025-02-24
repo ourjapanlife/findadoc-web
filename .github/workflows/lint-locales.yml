@@ -66,7 +66,7 @@ jobs:
             const repo = context.repo.repo;
             const owner = context.repo.owner;
 
-            const commentBody = `### Missing Locale Keys Found: \n${formattedKeys}\n\nTo add the missing keys, comment with the following emoji 3 times:\n\n\`\`\`🌍\`\`\``;
+            const commentBody = `### Missing Locale Keys Found: \n${formattedKeys}\n\n### To add the missing keys, check the following box:\n\n\- [ ] Update and commit missing keys in locale files`;
 
             await github.rest.issues.createComment({
               issue_number: context.issue.number,
