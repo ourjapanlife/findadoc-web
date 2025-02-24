@@ -4288,9 +4288,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vitest/eslint-plugin@npm:^1.1.27":
-  version: 1.1.27
-  resolution: "@vitest/eslint-plugin@npm:1.1.27"
+"@vitest/eslint-plugin@npm:^1.1.28":
+  version: 1.1.31
+  resolution: "@vitest/eslint-plugin@npm:1.1.31"
   peerDependencies:
     "@typescript-eslint/utils": ">= 8.0"
     eslint: ">= 8.57.0"
@@ -4301,7 +4301,7 @@ __metadata:
       optional: true
     vitest:
       optional: true
-  checksum: 10/a2c5e79c449adc9929df4b38ff86f00e8ed16cb1c9c869410c56046681412d7eb07b0957ad90f48e44aaf8572534f2a54924b96057a77ecfc1276c4be6efafa7
+  checksum: 10/4575fa40acc62b0c1ddabd10c0f32cb93b0435d4296e91821f1fef8508afb0984101faf178e9aefc410e52cf8483e0cda8b9b30f4406b5ff5169dc32bee9c243
   languageName: node
   linkType: hard
 
@@ -8238,7 +8238,7 @@ __metadata:
     "@testing-library/vue": "npm:^8.1.0"
     "@vitejs/plugin-vue": "npm:^5.1.2"
     "@vitest/coverage-v8": "npm:^2.1.3"
-    "@vitest/eslint-plugin": "npm:^1.1.27"
+    "@vitest/eslint-plugin": "npm:^1.1.28"
     "@vue/test-utils": "npm:^2.4.6"
     all-contributors-cli: "npm:^6.26.1"
     autoprefixer: "npm:^10.4.20"
