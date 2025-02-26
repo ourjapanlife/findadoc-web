@@ -9,7 +9,8 @@
         "cypress",
         "node",
         "cypress-real-events",
-        "cypress-plugin-tab"
+        "cypress-plugin-tab",
+        "../../global.d.ts"
       ],
       "sourceMap": false,
       "resolveJsonModule": true,
