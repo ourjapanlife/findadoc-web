@@ -1,4 +1,4 @@
-import { StateTree } from 'pinia'
+import type { StateTree } from 'pinia'
 import enUS from '../../../i18n/locales/en.json'
 import fakeFacilityResult from '../../fake_data/moderation_dashboard/fakeModFacilityData.json'
 import { aliasQuery } from '../utils'
@@ -25,10 +25,9 @@ describe('Moderation edit facility form', () => {
 
             /* This will set the facilities stores or any other stores you need to access for testings.
                 This NEEDS to be in the describe and not the login before*/
-                cy.window().then((win) => {
-                    facilitiesStore = win.$pinia.state.value.facilitiesStore
-                  })
-                  
+            cy.window().then(win => {
+                facilitiesStore = win.$pinia.state.value.facilitiesStore
+            })
         })
 
         beforeEach(() => {

@@ -1,3 +1,4 @@
+/* eslint-disable */
 import type { CyHttpMessages } from 'cypress/types/net-stubbing'
 
 export type IncomingHttpRequest = CyHttpMessages.IncomingHttpRequest
