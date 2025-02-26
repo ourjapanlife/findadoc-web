@@ -1,5 +1,5 @@
 import enUS from '../../../i18n/locales/en.json'
-import { useFacilitiesStore } from '../../../stores/facilitiesStore'
+import type { useFacilitiesStore } from '../../../stores/facilitiesStore'
 import fakeFacilityResult from '../../fake_data/moderation_dashboard/fakeModFacilityData.json'
 import { aliasQuery } from '../utils'
 
@@ -25,11 +25,11 @@ describe('Moderation edit facility form', () => {
 
             /* This will set the facilities stores or any other stores you need to access for testings.
                 This NEEDS to be in the describe and not the login before*/
-            cy.window().then((win) => {
-                if (!win.__stores__) {
+            cy.window().then(win => {
+                if (!win.__stores__) { /* eslint-disable-line */
                     throw new Error('__stores__ is not defined on the window')
                 }
-                facilitiesStore = win.__stores__.facilitiesStore
+                facilitiesStore = win.__stores__.facilitiesStore /* eslint-disable-line */
             })
         })
 
