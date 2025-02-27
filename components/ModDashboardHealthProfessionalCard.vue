@@ -206,7 +206,7 @@ const setToUneditable = () => {
 const props = defineProps<{
     healthcareProfessional: HealthcareProfessional
     healthcareProfessionalsRelatedToFacility?: string[]
-    healthcareProfessionalNameByLocale: LocalizedNameInput
+    healthcareProfessionalNameByLocale?: LocalizedNameInput
     /* chosenLocaleIndex checks where in the array the locale name is. If it is 0 it is the one being edited.
     If not it is not being edited we want to display the pencil so it can be changed to be the locale name
     being edited */
