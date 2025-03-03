@@ -92,7 +92,7 @@
                 </div>
                 <div
                     v-if="!isHealthcareProfessionalReadyForRemoval(healthcareProfessional.id)
-                        && moderationScreenStore.activeScreen === ModerationScreen.EditSubmission"
+                        && moderationScreenStore.editSubmissionScreenIsActive()"
                     id="remove-related-healthcare-professional-to-facility"
                     class="flex w-8 items-center justify-center
                     cursor-pointer font-bold text-secondary text-sm self-start p-1"
@@ -104,7 +104,7 @@
                 </div>
                 <div
                     v-if="isHealthcareProfessionalReadyForRemoval(healthcareProfessional.id)
-                        || moderationScreenStore.activeScreen === ModerationScreen.EditSubmission"
+                        || moderationScreenStore.editSubmissionScreenIsActive()"
                     id="undo-remove-related-healthcare-professional-to-facility"
                     class="flex w-8 items-center justify-center
                     cursor-pointer font-bold text-secondary text-sm self-start p-1"
@@ -115,7 +115,7 @@
                     />
                 </div>
                 <div
-                    v-if="moderationScreenStore.activeScreen === ModerationScreen.EditHealthcareProfessional"
+                    v-if="moderationScreenStore.editHealthcareProfessionalScreenIsActive()"
                     class="flex w-8 items-center justify-center
                 cursor-pointer font-bold text-secondary text-sm self-start p-1"
                 >
@@ -157,7 +157,7 @@ import SVGXCloseIcon from '~/assets/icons/x-close-symbol.svg'
 import { useLocaleStore } from '~/stores/localeStore'
 import { useFacilitiesStore } from '~/stores/facilitiesStore'
 import { useHealthcareProfessionalsStore } from '~/stores/healthcareProfessionalsStore'
-import { ModerationScreen, useModerationScreenStore } from '~/stores/moderationScreenStore'
+import { useModerationScreenStore } from '~/stores/moderationScreenStore'
 import { RelationshipAction,
     type HealthcareProfessional,
     type LocalizedNameInput,

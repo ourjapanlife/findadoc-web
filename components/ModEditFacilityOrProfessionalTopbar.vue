@@ -65,7 +65,7 @@
                     class="flex flex-col aspect-square h-96 items-center justify-around bg-primary-inverted p-10 rounded"
                 >
                     <span
-                        v-show="moderationScreenStore.activeScreen === ModerationScreen.EditFacility"
+                        v-show="moderationScreenStore.editFacilityScreenIsActive()"
                         class="font-bold text-3xl"
                     >
                         {{ $t('modEditFacilityOrHPTopbar.deleteConfirmationFacility',
@@ -219,18 +219,18 @@ const healthcareProfessionalHasUnsavedChanges = () => {
 }
 
 const hasUnsavedChanges = () => {
-    if (moderationScreenStore.activeScreen === ModerationScreen.EditFacility) {
+    if (moderationScreenStore.editFacilityScreenIsActive()) {
         return facilityHasUnsavedChanges()
     }
 
-    if (moderationScreenStore.activeScreen === ModerationScreen.EditHealthcareProfessional) {
+    if (moderationScreenStore.editHealthcareProfessionalScreenIsActive()) {
         return healthcareProfessionalHasUnsavedChanges()
     }
     return false
 }
 
 const updateFacilityOrHealthcareProfessional = async () => {
-    if (moderationScreenStore.activeScreen === ModerationScreen.EditFacility) {
+    if (moderationScreenStore.editFacilityScreenIsActive()) {
         // Prevent sending an unnecessary request if the user has not made changes
         if (!facilityHasUnsavedChanges()) return
 
@@ -247,7 +247,7 @@ const updateFacilityOrHealthcareProfessional = async () => {
         return response
     }
     // This makes the on click update the facility if the screen is EditFacility
-    if (moderationScreenStore.activeScreen === ModerationScreen.EditHealthcareProfessional) {
+    if (moderationScreenStore.editHealthcareProfessionalScreenIsActive()) {
         // This prevents us from sending a requested unnecessarily if the user has not made changes
         if (!healthcareProfessionalHasUnsavedChanges()) return
 
@@ -264,7 +264,7 @@ const updateFacilityOrHealthcareProfessional = async () => {
 }
 
 const updateFacilityOrHealthcareProfessionalAndExit = async () => {
-    if (moderationScreenStore.activeScreen === ModerationScreen.EditFacility) {
+    if (moderationScreenStore.editFacilityScreenIsActive()) {
         const response = await updateFacilityOrHealthcareProfessional()
 
         if (response && response.errors?.length) {
@@ -275,7 +275,7 @@ const updateFacilityOrHealthcareProfessionalAndExit = async () => {
         router.push('/moderation')
         moderationScreenStore.setActiveScreen(ModerationScreen.Dashboard)
     }
-    if (moderationScreenStore.activeScreen === ModerationScreen.EditHealthcareProfessional) {
+    if (moderationScreenStore.editHealthcareProfessionalScreenIsActive()) {
         const response = await updateFacilityOrHealthcareProfessional()
 
         if (response && response.errors?.length) {
