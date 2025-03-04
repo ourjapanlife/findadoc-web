@@ -61,7 +61,7 @@
                     :key="item.id"
                     class="flex justify-between divide-x cursor-pointer"
                     :class="[
-                        selectedItems.has(item) ? 'bg-primary/90' : '',
+                        selectedItems.includes(item) ? 'bg-primary/90' : '',
                         selectedItemIndex === index ? 'bg-primary-hover text-primary-inverted' : 'opacity-95',
                     ]"
                     @click="handleListItemClick"
@@ -74,12 +74,12 @@
                             <span class="text-xs">{{ item.id }}</span>
                             <div class="divide-x-2 mt-1">
                                 <!--
-                                    Originally, the 'item' type is UnwrapRefSimple<SetType<T>>,
+                                    Originally, the 'item' type is UnwrapRefSimple<ArrayType<T>>,
                                     but we don't have access to UnwrapRefSimple,
-                                    so we need to directly set the type as SetType<T>.
+                                    so we need to directly set the type as ArrayType<T>.
                                 -->
                                 <span
-                                    v-for="(field, fieldIndex) in fieldsToDisplayCallback(item as SetType<T>)"
+                                    v-for="(field, fieldIndex) in fieldsToDisplayCallback(item as ArrayType<T>)"
                                     :key="fieldIndex"
                                     class="px-2 first-of-type:pl-0 last-of-type:pr-0"
                                 >
@@ -92,7 +92,7 @@
                         <SVGCheckMark
                             class="h-4 m-3"
                             :class="[
-                                selectedItems.has(item) ? 'opacity-100' : 'opacity-10',
+                                selectedItems.includes(item) ? 'opacity-100' : 'opacity-10',
                             ]"
                         />
                     </div>
@@ -109,7 +109,7 @@
     </div>
 </template>
 
-<script setup lang="ts" generic="T extends Set<any>">
+<script setup lang="ts" generic="T extends Array<any>">
 /*
     Vue Generics: https://vuejs.org/api/sfc-script-setup.html#generics
     Defining generic types using props
@@ -118,15 +118,15 @@ import { computed, ref, watch, type Ref } from 'vue'
 import SVGCheckMark from '~/assets/icons/check-mark.svg'
 import SVGLookingGlass from '~/assets/icons/looking-glass.svg'
 
-// Obtain the Set inner type
-type SetType<V> = V extends Set<infer U> ? U : never
+// Obtain the array inner type
+type ArrayType<V> = V extends Array<infer U> ? U : never
 
 const emit = defineEmits<{
     searchInputBlur: []
     searchInputArrowDown: []
     searchInputArrowUp: []
     searchInputEnter: []
-    searchInputChange: [filteredItems: Ref<SetType<T>[]>, inputValue: string]
+    searchInputChange: [filteredItems: Ref<ArrayType<T>[]>, inputValue: string]
 }>()
 
 // Using a type from the user. T is defined when selectedItems is passed down.
@@ -136,7 +136,8 @@ type Props = {
     placeHolderText: string
     noMatchText: string
     // Callback to display the desired output
-    fieldsToDisplayCallback: (item: SetType<T>) => string[]
+    fieldsToDisplayCallback: (item: ArrayType<T>) => string[]
+
     //Optional test id for testing the component
     dataTestId?: string
 }
@@ -145,7 +146,7 @@ const { placeHolderText, noMatchText, fieldsToDisplayCallback } = defineProps<Pr
 
 const searchInputElement = ref<HTMLInputElement>()
 const searchInputValue = ref('')
-const filteredItems = ref<SetType<T>[]>([]) // We want only the inner type of the Set for the array.
+const filteredItems = ref<ArrayType<T>[]>([])
 const selectedItemIndex = ref(0)
 const searchResultCount = ref(0)
 
@@ -165,12 +166,13 @@ const handleListItem = () => {
 
     const item = filteredItems.value[selectedItemIndex.value]
 
-    if (selectedItems.value.has(item)) {
-        selectedItems.value.delete(item)
+    if (selectedItems.value.includes(item)) {
+        const itemIndex = selectedItems.value.indexOf(item)
+        selectedItems.value.splice(itemIndex, 1)
         return
     }
 
-    selectedItems.value.add(item)
+    selectedItems.value.push(item)
 }
 
 const handleListItemClick = (event: MouseEvent) => {
@@ -234,13 +236,11 @@ const handleSearchInputChange = (event: Event) => {
 
     /*
         We need to unwrap the `filteredItems` type since the original type is:
-        Ref<UnwrapRefSimple<SetType<T>>[], SetType<T>[] | UnwrapRefSimple<SetType<T>>[]>
-
+        Ref<UnwrapRefSimple<ArrayType<T>>[], ArrayType<T>[] | UnwrapRefSimple<ArrayType<T>>[]>
         We can't use UnwrapRefSimple as it is an internal Vue type. So, we need to explicitly
-        define this variable as Ref<SetType<T>[]>.
+        define this variable as Ref<ArrayType<T>[]>.
     */
-
-    emit('searchInputChange', filteredItems as Ref<SetType<T>[]>, inputValue)
+    emit('searchInputChange', filteredItems as Ref<ArrayType<T>[]>, inputValue)
 }
 
 // Displays the dropdown above the searchInputElement if its position is greater than window.innerHeight / 1.5

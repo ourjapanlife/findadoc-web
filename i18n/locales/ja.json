@@ -286,7 +286,9 @@
     "infoMessageUpdateNeeded": "This needs to be updated before approval",
     "successMessageUpdated": "Submission updated successfully",
     "successMessageApproved": "Submission approved and created successfully",
-    "facilitySuccessfullyRejected": "Facility rejected successfully"
+    "facilitySuccessfullyRejected": "Facility rejected successfully",
+    "rejectSubmissionConfirmationMessage": "Are you sure you want to reject this submission?",
+    "rejectSubmissionConfirmationButton": "Yes, reject the submission"
   },
   "modPanelSubmissionLeftNavbar": {
     "addresses": "Addresses",

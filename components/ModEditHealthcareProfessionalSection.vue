@@ -38,7 +38,7 @@
                             :required="true"
                         />
                         <ModInputField
-                            v-model="nameLocaleInputs.middleName"
+                            v-model="nameLocaleInputs.middleName as string"
                             data-testid="mod-healthcare-professional-section-middleName"
                             :label="$t('modHealthcareProfessionalSection.labelHealthcareProfessionalMiddleName')"
                             type="text"
@@ -284,7 +284,7 @@ await facilitiesStore.getFacilities() // Fix a bug where facilities disappear af
 const currentFacilities = facilitiesStore.facilityData
 
 const isHealthcareProfessionalInitialized: Ref<boolean> = ref(false)
-const selectedFacilities = ref(new Set<Facility>())
+const selectedFacilities: Ref<Facility[]> = ref([])
 //Keeps track of if the search bar inputs have been autofilled with existing facilities
 const currentFacilityRelations: Ref<Facility[]> = ref([])
 const currentLanguagesSpoken: Ref<Locale[]> = ref([])
@@ -293,10 +293,10 @@ const currentDegrees: Ref<Degree[]> = ref([])
 const currentSpecialties: Ref<Specialty[]> = ref([])
 
 // These are component refs to enable the multi select to work properly
-const healthcareProfessionalAcceptedInsurancesArray = ref(new Set<Insurance>())
-const healthcareProfessionalDegreesArray = ref(new Set<Degree>())
-const healthcareProfessionalSpecialtiesArray = ref(new Set<Specialty>())
-const healthcareProfessionalSpokenLanguages = ref(new Set<Locale>())
+const healthcareProfessionalAcceptedInsurancesArray: Ref<Insurance[]> = ref([])
+const healthcareProfessionalDegreesArray: Ref<Degree[]> = ref([])
+const healthcareProfessionalSpecialtiesArray: Ref<Specialty[]> = ref([])
+const healthcareProfessionalSpokenLanguages: Ref<Locale[]> = ref([])
 
 // Tracks whether we want to display adding a new name
 const addingLocaleName: Ref<boolean> = ref(false)
@@ -587,13 +587,13 @@ onBeforeMount(async () => {
 
     //Sets the original values from the store based on the selected healthcare professional
     healthcareProfessionalSpokenLanguages.value
-        = new Set(healthcareProfessionalsStore.healthcareProfessionalSectionFields.spokenLanguages)
+        = healthcareProfessionalsStore.healthcareProfessionalSectionFields.spokenLanguages
     healthcareProfessionalAcceptedInsurancesArray.value
-        = new Set(healthcareProfessionalsStore.healthcareProfessionalSectionFields.acceptedInsurance)
+        = healthcareProfessionalsStore.healthcareProfessionalSectionFields.acceptedInsurance
     healthcareProfessionalSpecialtiesArray.value
-        = new Set(healthcareProfessionalsStore.healthcareProfessionalSectionFields.specialties)
+        = healthcareProfessionalsStore.healthcareProfessionalSectionFields.specialties
     healthcareProfessionalDegreesArray.value
-        = new Set(healthcareProfessionalsStore.healthcareProfessionalSectionFields.degrees)
+        = healthcareProfessionalsStore.healthcareProfessionalSectionFields.degrees
 
     isHealthcareProfessionalInitialized.value = true
 
@@ -625,7 +625,7 @@ watch(() => [
         currentFacilityRelations.value = facilitiesStore.facilityData
             .filter(facility => healthcareProfessionalsStore.healthcareProfessionalSectionFields.facilityIds
                 .includes(facility.id))
-        selectedFacilities.value = new Set([])
+        selectedFacilities.value = []
     }
     if (spokenLanguages) {
         currentLanguagesSpoken.value = spokenLanguages
@@ -641,37 +641,10 @@ watch(() => [
     }
 })
 
-// This updates the set in the store once the set is updated due to a facility clicked
-watch(() => Array.from(selectedFacilities.value), newValue => {
+// This updates the array in the store once it is updated due to a facility clicked
+watch(() => selectedFacilities.value, newValue => {
     if (newValue) {
         healthcareProfessionalsStore.selectedFacilities = selectedFacilities.value
     }
 })
-
-/* This watch is necessary in order to update the reactive object
-for the selected healthcareProfessional based on the input values. The
-input functionality need their own refs since they are sets within the component in order
-to properly update. From there the healthcareProfessionalFields are
-updated within the store based the set being transformed into arrays
-*/
-watch(
-    () => [
-        Array.from(healthcareProfessionalAcceptedInsurancesArray.value),
-        Array.from(healthcareProfessionalDegreesArray.value),
-        Array.from(healthcareProfessionalSpecialtiesArray.value),
-        Array.from(healthcareProfessionalSpokenLanguages.value)
-    ] as [
-        Insurance[],
-        Degree[],
-        Specialty[],
-        Locale[]
-    ],
-    ([newInsurances, newDegrees, newSpecialties, newLocales]) => {
-        const healthcareSectionFields = healthcareProfessionalsStore.healthcareProfessionalSectionFields
-        healthcareSectionFields.acceptedInsurance = newInsurances
-        healthcareSectionFields.degrees = newDegrees
-        healthcareSectionFields.specialties = newSpecialties
-        healthcareSectionFields.spokenLanguages = newLocales
-    }
-)
 </script>

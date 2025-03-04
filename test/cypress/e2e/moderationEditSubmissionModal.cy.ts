@@ -27,7 +27,7 @@ describe('Moderation Edit Submission Modal', () => {
             // ...the modal with the confirmation button should be visible.
             cy.get('[data-testid="submission-form-modal"]').should('be.visible')
             // When the user clicks the confirmation button on the modal...
-            cy.get('[data-testid="submission-form-modal-confirmation-btn"]').click()
+            cy.get('[data-testid="submission-unsaved-confirmation-btn"]').click()
             // ...they should be navigated back to the moderation screen.
             cy.location('pathname').should('eq', '/moderation')
         })

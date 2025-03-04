@@ -1,10 +1,8 @@
 <template>
-    <div
-        v-if="modalStore.isOpen"
-        class="fixed top-0 left-0 flex items-center justify-center h-full w-full z-10 bg-secondary bg-opacity-40"
-    >
+    <div>
         <Modal
             data-testid="submission-form-modal"
+            @modal-closed="resetModalRefs"
         >
             <div
                 v-if="moderationSubmissionStore.approvingSubmissionFromTopBar"
@@ -22,13 +20,30 @@
                 </button>
             </div>
             <div
+                v-if="moderationSubmissionStore.showRejectSubmissionConfirmation"
+                data-testid="reject-confirmation"
+                class="flex flex-col aspect-square h-96 items-center justify-around bg-primary-inverted p-10 rounded"
+            >
+                <span class="font-bold text-3xl">
+                    {{ $t('modSubmissionForm.rejectSubmissionConfirmationMessage') }}
+                </span>
+                <button
+                    data-testid="reject-submission-confirmation-btn"
+                    type="button"
+                    class="bg-primary p-4 rounded-full my-8 font-semibold text-xl"
+                    @click="rejectSubmission"
+                >
+                    {{ $t('modSubmissionForm.rejectSubmissionConfirmationButton') }}
+                </button>
+            </div>
+            <div
                 v-else
                 class="flex flex-col aspect-square h-96 items-center justify-around bg-primary-inverted p-10 rounded"
             >
                 <span class="font-bold text-3xl">{{ $t('modSubmissionForm.hasUnsavedChanges') }}</span>
                 <button
                     type="button"
-                    data-testid="submission-form-modal-confirmation-btn"
+                    data-testid="submission-unsaved-confirmation-btn"
                     class="bg-secondary p-4 rounded-full my-8 font-semibold text-xl hover:bg-primary"
                     @click="handleNavigateToModerationScreen"
                 >
@@ -864,6 +879,17 @@ async function submitCompletedForm(e: Event) {
 }
 
 const syntheticEvent = new Event('submit', { bubbles: false, cancelable: true })
+
+const resetModalRefs = async () => {
+    moderationSubmissionStore.setShowRejectSubmissionConfirmation(false)
+    moderationSubmissionStore.setApprovingSubmissionFromTopBar(false)
+}
+
+const rejectSubmission = async () => {
+    await moderationSubmissionStore.rejectSubmission()
+    await resetModalRefs()
+    handleNavigateToModerationScreen()
+}
 
 watch(moderationSubmissionStore, newValue => {
     //saves the submission by updating it and then going to the main
