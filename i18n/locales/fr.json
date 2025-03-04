@@ -233,7 +233,9 @@
     "successMessageUpdated": "Submission updated successfully",
     "successMessageApproved": "Submission approved and created successfully",
     "updateButtonText": "Update",
-    "facilitySuccessfullyRejected": "Facility rejected successfully"
+    "facilitySuccessfullyRejected": "Facility rejected successfully",
+    "rejectSubmissionConfirmationMessage": "Are you sure you want to reject this submission?",
+    "rejectSubmissionConfirmationButton": "Yes, reject the submission"
   },
   "login": {
     "heading": "Log in to your account",

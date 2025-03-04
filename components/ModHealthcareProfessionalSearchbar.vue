@@ -74,7 +74,7 @@ import SVGLookingGlass from '~/assets/icons/looking-glass.svg'
 import { RelationshipAction, type HealthcareProfessional } from '~/typedefs/gqlTypes'
 import { useHealthcareProfessionalsStore } from '~/stores/healthcareProfessionalsStore'
 import { useFacilitiesStore } from '~/stores/facilitiesStore'
-import { ModerationScreen, useModerationScreenStore } from '~/stores/moderationScreenStore'
+import { useModerationScreenStore } from '~/stores/moderationScreenStore'
 
 const healthcareProfessionalsStore = useHealthcareProfessionalsStore()
 const moderationScreenStore = useModerationScreenStore()
@@ -85,7 +85,7 @@ const searchValue: Ref<string> = ref('')
 const healthcareProfessionalByIdOrName: Ref<HealthcareProfessional[] | []> = ref([])
 
 const addHealthcareProfessional = (id: string) => {
-    if (moderationScreenStore.activeScreen === ModerationScreen.EditFacility) {
+    if (moderationScreenStore.editFacilityScreenIsActive()) {
         //Check if the healthcareProfessional has already been added
         const foundProfessionalAlreadyPartOfFacility
         = facilitiesStore.facilitySectionFields.healthProfessionalsRelations

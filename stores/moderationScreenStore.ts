@@ -27,6 +27,30 @@ export const useModerationScreenStore = defineStore(
             activeScreen.value = newValue
         }
 
-        return { activeScreen, ModerationScreen, setActiveScreen }
+        function dashboardScreenIsActive() {
+            return activeScreen.value === ModerationScreen.Dashboard
+        }
+
+        function editSubmissionScreenIsActive() {
+            return activeScreen.value === ModerationScreen.EditSubmission
+        }
+
+        function editHealthcareProfessionalScreenIsActive() {
+            return activeScreen.value === ModerationScreen.EditHealthcareProfessional
+        }
+
+        function editFacilityScreenIsActive() {
+            return activeScreen.value === ModerationScreen.EditFacility
+        }
+
+        return {
+            activeScreen,
+            ModerationScreen,
+            setActiveScreen,
+            dashboardScreenIsActive,
+            editSubmissionScreenIsActive,
+            editHealthcareProfessionalScreenIsActive,
+            editFacilityScreenIsActive
+        }
     }
 )

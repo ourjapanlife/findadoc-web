@@ -98,7 +98,8 @@ export default defineNuxtConfig({
         'nuxt-viewport',
         'nuxt-svgo',
         '@nuxt/eslint',
-        '@nuxt/test-utils/module'
+        '@nuxt/test-utils/module',
+        'nuxt-gtag'
     ],
     eslint: {
         config: {
@@ -147,6 +148,13 @@ export default defineNuxtConfig({
     svgo: {
         defaultImport: 'component'
     },
+
+    // Google analytics configuration
+    gtag: {
+        enabled: process.env.NODE_ENV === 'production',
+        id: 'G-T0RE9B3PRG'
+    },
+
     // Postcss configuration
     postcss: {
         plugins: {
@@ -158,8 +166,6 @@ export default defineNuxtConfig({
         public: {
 
             GOOGLE_MAPS_API_KEY: process.env.GOOGLE_MAPS_API_KEY,
-
-            ENABLE_MODERATION_PANEL: process.env.ENABLE_MODERATION_PANEL,
 
             NUXT_USE_LOCAL_API: process.env.NUXT_USE_LOCAL_API
         }
