@@ -1,11 +1,11 @@
 <template>
     <!-- styling will change from px to rm -->
     <div class="h-[76px] w-full">
-        <div v-if="moderationScreenStore.activeScreen === ModerationScreen.Dashboard">
+        <div v-if="moderationScreenStore.dashboardScreenIsActive()">
             <ModDashboardTopbar />
         </div>
         <div
-            v-else-if="moderationScreenStore.activeScreen === ModerationScreen.EditSubmission"
+            v-else-if="moderationScreenStore.editSubmissionScreenIsActive()"
             class="h-[76px] w-full"
         >
             <ModEditSubmissionTopbar
@@ -14,13 +14,13 @@
             />
         </div>
         <div
-            v-else-if="moderationScreenStore.activeScreen === ModerationScreen.EditFacility"
+            v-else-if="moderationScreenStore.editFacilityScreenIsActive()"
             class="h-[76px] w-full"
         >
             <ModEditFacilityOrProfessionalTopbar />
         </div>
         <div
-            v-else-if="moderationScreenStore.activeScreen === ModerationScreen.EditHealthcareProfessional"
+            v-else-if="moderationScreenStore.editHealthcareProfessionalScreenIsActive()"
             class="h-[76px] w-full"
         >
             <ModEditFacilityOrProfessionalTopbar />
@@ -30,7 +30,7 @@
 
 <script setup lang="ts">
 import { useModerationSubmissionsStore } from '~/stores/moderationSubmissionsStore'
-import { useModerationScreenStore, ModerationScreen } from '~/stores/moderationScreenStore'
+import { useModerationScreenStore } from '~/stores/moderationScreenStore'
 
 const moderationScreenStore = useModerationScreenStore()
 const modSubmissionsListStore = useModerationSubmissionsStore()
