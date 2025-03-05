@@ -1,7 +1,7 @@
 <template>
     <div
         :class="[
-            'border-2 border-primary rounded-lg px-2 w-fit',
+            'mod-dashboard-healthcare-professional-card border-2 border-primary rounded-lg px-2 w-fit',
             (isEditable && chosenLocaleIndex === 0) ? 'border-t-0 mt-0 rounded-t-none' : 'my-3',
         ]"
     >
@@ -115,7 +115,8 @@
                     />
                 </div>
                 <div
-                    v-if="moderationScreenStore.editHealthcareProfessionalScreenIsActive()"
+                    v-if="moderationScreenStore.editHealthcareProfessionalScreenIsActive()
+                        || moderationScreenStore.createHealthcareProfessionalScreenIsActive()"
                     class="flex w-8 items-center justify-center
                 cursor-pointer font-bold text-secondary text-sm self-start p-1"
                 >

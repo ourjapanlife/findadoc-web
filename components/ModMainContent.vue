@@ -27,6 +27,16 @@
                 <ModEditHealthcareProfessionalSection />
             </form>
         </div>
+        <div
+            v-if="moderationScreenStore.createHealthcareProfessionalScreenIsActive()"
+            class="h-full overflow-hidden"
+        >
+            <form
+                class="p-4 h-full overflow-y-auto"
+            >
+                <ModCreateHealthcareProfessionalSection />
+            </form>
+        </div>
     </div>
 </template>
 
@@ -66,6 +76,11 @@ const setActiveScreenBasedOnRoute = async () => {
         healthcareProfessionalStore.selectedHealthcareProfessionalId = selectedIdFromModSubmissionList.value
         return
     }
+    if (
+        routePathForModerationScreen.value.includes('create-healthcare-professional')) {
+        moderationScreenStore.setActiveScreen(ModerationScreen.CreateHealthcareProfessional)
+        return
+    }
 
     // This will default the screen based on the route to the dashboard if all the other stuff fails
     moderationScreenStore.setActiveScreen(ModerationScreen.Dashboard)
@@ -75,6 +90,7 @@ const setActiveScreenBasedOnRoute = async () => {
 }
 
 watch(selectedIdFromModSubmissionList, setActiveScreenBasedOnRoute)
+watch(routePathForModerationScreen, setActiveScreenBasedOnRoute)
 
 onMounted(() => {
     setActiveScreenBasedOnRoute()
