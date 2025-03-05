@@ -2,7 +2,11 @@
     <Loader />
     <div v-if="isHealthcareProfessionalInitialized">
         <div class="mod-healthcare-professional-section">
-            <h2 class="mb-3.5 text-start text-primary-text text-2xl font-bold font-sans leading-normal">
+            <h2
+                :id="moderationScreenStore.editSubmissionScreenIsActive()
+                    ? ModSubmissionLeftNavbarSectionIDs.HealthcareProfessionalName : ''"
+                class="mb-3.5 text-start text-primary-text text-2xl font-bold font-sans leading-normal"
+            >
                 {{ $t('modHealthcareProfessionalSection.healthcareProfessionalNameHeading') }}
             </h2>
             <div class="input-fields flex flex-col my-4">
@@ -133,6 +137,8 @@
                     {{ $t('modHealthcareProfessionalSection.addHealthCareProfessionalLocaleName') }}
                 </button>
                 <h2
+                    :id="moderationScreenStore.editSubmissionScreenIsActive()
+                        ? ModSubmissionLeftNavbarSectionIDs.HealthcareProfessionalMedicalInfo : ''"
                     class="mod-healthcare-professional-section
                      my-3.5 text-start text-primary-text text-2xl font-bold font-sans leading-normal"
                 >
@@ -265,6 +271,7 @@ import ModSearchbar from './ModSearchBar.vue'
 import { useHealthcareProfessionalsStore } from '~/stores/healthcareProfessionalsStore'
 import { useFacilitiesStore } from '~/stores/facilitiesStore'
 import { useLocaleStore } from '~/stores/localeStore'
+import { useModerationScreenStore } from '~/stores/moderationScreenStore'
 import { Insurance, Locale, Degree, Specialty, type LocalizedNameInput, type Facility } from '~/typedefs/gqlTypes'
 import { useI18n } from '#imports'
 
@@ -274,12 +281,14 @@ const route = useRoute()
 
 const { t } = useI18n()
 
-const loadingStore = useLoadingStore()
-loadingStore.setIsLoading(true)
-
+const moderationScreenStore = useModerationScreenStore()
 const localesStore = useLocaleStore()
 const healthcareProfessionalsStore = useHealthcareProfessionalsStore()
 const facilitiesStore = useFacilitiesStore()
+const loadingStore = useLoadingStore()
+
+loadingStore.setIsLoading(true)
+
 await facilitiesStore.getFacilities() // Fix a bug where facilities disappear after the user refreshes the page
 const currentFacilities = facilitiesStore.facilityData
 

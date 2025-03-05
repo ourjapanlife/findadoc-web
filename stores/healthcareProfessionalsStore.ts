@@ -8,7 +8,8 @@ import { type Facility, type DeleteResult, type HealthcareProfessional,
     type MutationDeleteHealthcareProfessionalArgs,
     type MutationUpdateHealthcareProfessionalArgs,
     type Relationship,
-    RelationshipAction } from '~/typedefs/gqlTypes'
+    RelationshipAction,
+    type HealthcareProfessionalSubmission } from '~/typedefs/gqlTypes'
 import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql'
 import { useLocaleStore } from '~/stores/localeStore'
 import type { ServerError, ServerResponse } from '~/typedefs/serverResponse'
@@ -60,6 +61,18 @@ export const useHealthcareProfessionalsStore = defineStore(
             healthcareProfessionalSectionFields.specialties = healthcareProfessional.specialties
             healthcareProfessionalSectionFields.spokenLanguages = healthcareProfessional.spokenLanguages
             healthcareProfessionalSectionFields.updatedDate = healthcareProfessional.updatedDate
+        }
+
+        function mapHealthcareProfessionalSubmissionToSectionFields(
+            healthcareProfessionalSubmission: HealthcareProfessionalSubmission
+        ) {
+            healthcareProfessionalSectionFields.acceptedInsurance = healthcareProfessionalSubmission.acceptedInsurance || []
+            healthcareProfessionalSectionFields.degrees = healthcareProfessionalSubmission.degrees || []
+            healthcareProfessionalSectionFields.facilityIds = healthcareProfessionalSubmission.facilityIds
+            healthcareProfessionalSectionFields.id = healthcareProfessionalSubmission.id || ''
+            healthcareProfessionalSectionFields.names = healthcareProfessionalSubmission.names
+            healthcareProfessionalSectionFields.specialties = healthcareProfessionalSubmission.specialties || []
+            healthcareProfessionalSectionFields.spokenLanguages = healthcareProfessionalSubmission.spokenLanguages
         }
 
         async function getHealthcareProfessionals() {
@@ -185,7 +198,8 @@ export const useHealthcareProfessionalsStore = defineStore(
             setSelectedHealthcareProfessional,
             removedHealthcareProfessionalNames,
             facilitiesRelationsToSelectedHealthcareProfessional,
-            selectedFacilities
+            selectedFacilities,
+            mapHealthcareProfessionalSubmissionToSectionFields
         }
     }
 )

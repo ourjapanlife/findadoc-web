@@ -3,6 +3,7 @@ import { ref, type Ref, reactive } from 'vue'
 import { gql } from 'graphql-request'
 import type { Maybe } from 'graphql/jsutils/Maybe'
 import type { DeleteResult, Facility,
+    FacilitySubmission,
     HealthcareProfessional,
     Mutation, MutationDeleteFacilityArgs, MutationUpdateFacilityArgs, Relationship } from '~/typedefs/gqlTypes'
 import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql'
@@ -13,7 +14,7 @@ export const useFacilitiesStore = defineStore(
     () => {
         const facilityData: Ref<Facility[]> = ref([])
         const selectedFacilityId: Ref<string> = ref('')
-        const selectedFacilityData: Ref<Facility | undefined> = ref()
+        const selectedFacilityData: Ref<Facility | FacilitySubmission | undefined> = ref()
         // This reactive object is used to share data changes of the updated facility or submission across the components
         const facilitySectionFields = reactive({
             // contactFields
@@ -68,6 +69,27 @@ export const useFacilitiesStore = defineStore(
             facilitySectionFields.healthcareProfessionalIds = data.healthcareProfessionalIds
             facilitySectionFields.mapLatitude = data.mapLatitude.toString()
             facilitySectionFields.mapLongitude = data.mapLongitude.toString()
+        }
+
+        function mapFacilitySubmissionDataToFacilitySectionFields(facilitySubmission: FacilitySubmission) {
+            facilitySectionFields.nameEn = facilitySubmission.nameEn || ''
+            facilitySectionFields.nameJa = facilitySubmission.nameJa || ''
+            facilitySectionFields.phone = facilitySubmission.contact?.phone || ''
+            facilitySectionFields.email = facilitySubmission.contact?.email || undefined
+            facilitySectionFields.website = facilitySubmission.contact?.website || undefined
+            facilitySectionFields.postalCode = facilitySubmission.contact?.address.postalCode || ''
+            facilitySectionFields.prefectureEn = facilitySubmission.contact?.address.prefectureEn || ''
+            facilitySectionFields.cityEn = facilitySubmission.contact?.address.cityEn || ''
+            facilitySectionFields.addressLine1En = facilitySubmission.contact?.address.addressLine1En || ''
+            facilitySectionFields.addressLine2En = facilitySubmission.contact?.address.addressLine2En || ''
+            facilitySectionFields.prefectureJa = facilitySubmission.contact?.address.prefectureJa || ''
+            facilitySectionFields.cityJa = facilitySubmission.contact?.address.cityJa || ''
+            facilitySectionFields.addressLine1Ja = facilitySubmission.contact?.address.addressLine1Ja || ''
+            facilitySectionFields.addressLine2Ja = facilitySubmission.contact?.address.addressLine2Ja || ''
+            facilitySectionFields.googlemapsURL = facilitySubmission.contact?.googleMapsUrl || ''
+            facilitySectionFields.healthcareProfessionalIds = facilitySubmission.healthcareProfessionalIds
+            facilitySectionFields.mapLatitude = facilitySubmission.mapLatitude?.toString() || ''
+            facilitySectionFields.mapLongitude = facilitySubmission.mapLongitude?.toString() || ''
         }
 
         async function getFacilities() {
@@ -154,7 +176,8 @@ export const useFacilitiesStore = defineStore(
             selectedFacilityData,
             setSelectedFacilityData,
             initializeFacilitySectionValues,
-            healthProfessionalsRelationsForDisplay
+            healthProfessionalsRelationsForDisplay,
+            mapFacilitySubmissionDataToFacilitySectionFields
         }
     }
 )

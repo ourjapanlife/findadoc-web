@@ -2,6 +2,7 @@
     <Loader />
     <div v-if="isFacilitySectionInitialized">
         <div
+            :id="moderationScreenStore.editSubmissionScreenIsActive() ? ModSubmissionLeftNavbarSectionIDs.ContactInformation : ''"
             class="mod-facility-section"
         >
             <h1
@@ -65,6 +66,7 @@
         </div>
 
         <div
+            :id="moderationScreenStore.editSubmissionScreenIsActive() ? ModSubmissionLeftNavbarSectionIDs.Addresses : ''"
             class="mod-facility-address-section"
         >
             <span class="mb-3.5 text-center text-primary-text text-2xl font-bold font-sans leading-normal">
@@ -188,6 +190,8 @@
             />
         </div>
         <div
+            :id="moderationScreenStore.editSubmissionScreenIsActive()
+                ? ModSubmissionLeftNavbarSectionIDs.GoogleMapsInformation : ''"
             class="google-maps-section"
         >
             <span class="mb-3.5 text-center text-primary-text text-2xl font-bold font-sans leading-normal">

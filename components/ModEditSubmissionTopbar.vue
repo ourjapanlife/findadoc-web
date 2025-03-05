@@ -1,4 +1,57 @@
 <template>
+    <div>
+        <Modal
+            data-testid="submission-form-modal"
+            @modal-closed="resetModalRefs"
+        >
+            <div
+                v-if="moderationSubmissionStore.approvingSubmissionFromTopBar"
+                class="flex flex-col aspect-square h-96 items-center justify-around bg-primary-inverted p-10 rounded"
+            >
+                <span class="font-bold text-3xl">
+                    {{ $t('modSubmissionForm.submissionConfirmationMessage') }}
+                </span>
+                <button
+                    type="button"
+                    class="bg-primary p-4 rounded-full my-8 font-semibold text-xl"
+                    @click="submitCompletedForm"
+                >
+                    {{ $t('modSubmissionForm.submissionConfirmationAcceptanceButton') }}
+                </button>
+            </div>
+            <div
+                v-if="moderationSubmissionStore.showRejectSubmissionConfirmation"
+                data-testid="reject-confirmation"
+                class="flex flex-col aspect-square h-96 items-center justify-around bg-primary-inverted p-10 rounded"
+            >
+                <span class="font-bold text-3xl">
+                    {{ $t('modSubmissionForm.rejectSubmissionConfirmationMessage') }}
+                </span>
+                <button
+                    data-testid="reject-submission-confirmation-btn"
+                    type="button"
+                    class="bg-primary p-4 rounded-full my-8 font-semibold text-xl"
+                    @click="rejectSubmission"
+                >
+                    {{ $t('modSubmissionForm.rejectSubmissionConfirmationButton') }}
+                </button>
+            </div>
+            <div
+                v-else
+                class="flex flex-col aspect-square h-96 items-center justify-around bg-primary-inverted p-10 rounded"
+            >
+                <span class="font-bold text-3xl">{{ $t('modSubmissionForm.hasUnsavedChanges') }}</span>
+                <button
+                    type="button"
+                    data-testid="submission-unsaved-confirmation-btn"
+                    class="bg-secondary p-4 rounded-full my-8 font-semibold text-xl hover:bg-primary"
+                    @click="handleNavigateToModerationScreen"
+                >
+                    {{ $t('modSubmissionForm.confirmationButton') }}
+                </button>
+            </div>
+        </Modal>
+    </div>
     <div class="flex flex-row justify-between w-full">
         <div>
             <button
@@ -66,12 +119,15 @@ import { useModerationSubmissionsStore } from '~/stores/moderationSubmissionsSto
 import { ModerationScreen, useModerationScreenStore } from '~/stores/moderationScreenStore'
 import { useModalStore } from '~/stores/modalStore'
 import { handleServerErrorMessaging } from '~/utils/handleServerErrorMessaging'
+import { onBeforeRouteLeave } from '#app'
 
 let toast: ToastInterface
 const router = useRouter()
 
 const { t } = useI18n()
+
 const modalStore = useModalStore()
+const screenStore = useModerationScreenStore()
 const moderationSubmissionStore = useModerationSubmissionsStore()
 const moderationScreenStore = useModerationScreenStore()
 const selectedSubmissionId: Ref<string> = ref(moderationSubmissionStore.selectedSubmissionId)
@@ -124,4 +180,24 @@ const showRejectionConfirmation = () => {
     modalStore.showModal()
     rejectSubmission()
 }
+
+const resetModalRefs = async () => {
+    moderationSubmissionStore.setShowRejectSubmissionConfirmation(false)
+    moderationSubmissionStore.setApprovingSubmissionFromTopBar(false)
+}
+
+const handleNavigateToModerationScreen = () => {
+    modalStore.hideModal()
+    screenStore.setActiveScreen(ModerationScreen.Dashboard)
+    router.push('/moderation')
+}
+
+onBeforeRouteLeave(async (to, from, next) => {
+    if (!moderationSubmissionStore.updatingSubmissionFromTopBar && submissionHasUnsavedChanges()) {
+        modalStore.showModal()
+        next(false)
+        return
+    }
+    next()
+})
 </script>
