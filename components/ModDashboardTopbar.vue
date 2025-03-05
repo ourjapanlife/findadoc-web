@@ -5,6 +5,13 @@
         >
             {{ updateTextForModerationDashboard(moderationSubmissionsStore.selectedModerationListViewChosen) }}
         </h1>
+        <NuxtLink
+            v-if="moderationSubmissionsStore.selectedModerationListViewChosen === 'HEALTHCARE_PROFESSIONALS'"
+            :to="`/moderation/create-healthcare-professional`"
+            class="displayed-section-header font-thin text-lg mx-1 cursor-pointer"
+        >
+            Add Healthcare Professional
+        </NuxtLink>
         <div class="dashboard-search flex flex-col mt-4">
             <div class="justify-start items-start flex">
                 <input
