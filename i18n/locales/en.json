@@ -146,6 +146,7 @@
         "healthcareProfessionalFacilities": "Healthcare Professional Facilities"
     },
     "modDashboardTopbar": {
+        "addHealthcareProfessional": "Add Healthcare Professional",
         "placeholderText": "Enter name or ID to search",
         "approved": "Approved",
         "rejected": "Rejected",
