@@ -32,11 +32,12 @@ export const useLocaleStore = defineStore('locale', () => {
 
     // Takes the input value and searches all locale display options to return the locale code
     function getLocaleByNameInput(inputValue: string) {
+        const lowercasedInput = inputValue.toLowerCase()
         const filteredLocales = localeDisplayOptions
             .filter(localeDisplay =>
-                localeDisplay.code.toLowerCase().replace('_', '').includes(inputValue)
-                || localeDisplay.simpleText.toLowerCase().includes(inputValue)
-                || localeDisplay.displayText.toLowerCase().replace('(', '').replace(')', '').includes(inputValue))
+                localeDisplay.code.toLowerCase().replace('_', '').includes(lowercasedInput)
+                || localeDisplay.simpleText.toLowerCase().includes(lowercasedInput)
+                || localeDisplay.displayText.toLowerCase().replace('(', '').replace(')', '').includes(lowercasedInput))
             .map(filteredLocale => filteredLocale.code as Locale)
         return filteredLocales
     }
