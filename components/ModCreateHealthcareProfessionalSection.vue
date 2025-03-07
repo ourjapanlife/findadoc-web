@@ -1,5 +1,6 @@
 <template>
     <Loader />
+    <div>HELLO</div>
     <div v-if="isHealthcareProfessionalInitialized">
         <div class="mod-healthcare-professional-section">
             <h2 class="mb-3.5 text-start text-primary-text text-2xl font-bold font-sans leading-normal">
@@ -259,7 +260,7 @@
 
 <script lang="ts" setup>
 import { nextTick, onBeforeMount, reactive, type Ref, ref, watch } from 'vue'
-import { useRoute } from 'vue-router'
+// import { useRoute } from 'vue-router'
 import { type ToastInterface, useToast } from 'vue-toastification'
 import ModSearchbar from './ModSearchBar.vue'
 import { useHealthcareProfessionalsStore } from '~/stores/healthcareProfessionalsStore'
@@ -270,7 +271,7 @@ import { useI18n } from '#imports'
 
 let toast: ToastInterface
 
-const route = useRoute()
+// const route = useRoute()
 
 const { t } = useI18n()
 
@@ -563,13 +564,13 @@ onBeforeMount(async () => {
     // Wait for the route to be fully resolved
     await nextTick()
     // Ensure the route param `id` is available before proceeding
-    const id = route.params.id
+    // const id = route.params.id
 
-    if (!id) {
-        console.error(t('modHealthcareProfessionalSection.errorMessageHealthcareProfessionalId'))
-        toast.error(t('modHealthcareProfessionalSection.errorMessageHealthcareProfessionalId'))
-        return
-    }
+    // if (!id) {
+    //     console.error(t('modHealthcareProfessionalSection.errorMessageHealthcareProfessionalId'))
+    //     toast.error(t('modHealthcareProfessionalSection.errorMessageHealthcareProfessionalId'))
+    //     return
+    // }
 
     if (!healthcareProfessionalsStore.healthcareProfessionalsData.length) {
         await healthcareProfessionalsStore.getHealthcareProfessionals()
