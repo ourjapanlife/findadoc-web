@@ -541,7 +541,7 @@ const handleLocaleInputChange = (filteredItems: Ref<Locale[]>, inputValue: strin
         return
     }
 
-    filteredItems.value = arrayOfLocales.filter(locale => locale.toLowerCase().includes(inputValue))
+    filteredItems.value = localesStore.getLocaleByNameInput(inputValue)
 }
 
 const facilitiesFieldsToDisplayCallback = (item: Facility) => [item.nameEn, item.nameJa]
