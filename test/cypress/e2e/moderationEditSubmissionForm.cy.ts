@@ -95,8 +95,8 @@ describe('Moderation Edit Submission Form', () => {
             cy.get('[data-testid="submission-form-google-maps"]')
                 .find('input')
                 .type('www.google.com/maps/place/82+Yamatech%C5%8D,+Naka+Ward,+Yokohama'
-                + ',+Kanagawa+231-0862,+Japan/@35.437123,139.651471,16z/data=!4m6!3m5!1s'
-                + '0x60185d201648e7c1:0x8f37d37bb381e29!8m2!3d35.4371228!4d139.6514712!16s%2Fg%2F11clpxxvx5?hl=en-US&entry=ttu')
+                  + ',+Kanagawa+231-0862,+Japan/@35.437123,139.651471,16z/data=!4m6!3m5!1s'
+                  + '0x60185d201648e7c1:0x8f37d37bb381e29!8m2!3d35.4371228!4d139.6514712!16s%2Fg%2F11clpxxvx5?hl=en-US&entry=ttu')
             cy.get('[data-testid="submission-form-mapLatitude"]').find('input').type('35.437123')
             cy.get('[data-testid="submission-form-mapLongitude"]').find('input').type('139.651471')
         })
