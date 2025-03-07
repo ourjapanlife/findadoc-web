@@ -167,6 +167,8 @@ export default defineNuxtConfig({
 
             GOOGLE_MAPS_API_KEY: process.env.GOOGLE_MAPS_API_KEY,
 
+            NUXT_PUBLIC_LOAD_STORES: process.env.NUXT_PUBLIC_LOAD_STORES,
+
             NUXT_USE_LOCAL_API: process.env.NUXT_USE_LOCAL_API
         }
     },
