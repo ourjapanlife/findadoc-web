@@ -27,6 +27,16 @@
                 <ModEditHealthcareProfessionalSection />
             </form>
         </div>
+        <div
+            v-else-if="screenStore.activeScreen === ModerationScreen.CreateHealthcareProfessional"
+            class="h-full overflow-hidden"
+        >
+            <form
+                class="p-4 h-full overflow-y-auto"
+            >
+                <ModCreateHealthcareProfessionalSection />
+            </form>
+        </div>
     </div>
 </template>
 
@@ -60,6 +70,10 @@ const setActiveScreenBasedOnRoute = async () => {
         routePathForModerationScreen.value.includes('edit-healthcare-professional') && selectedIdFromModSubmissionList.value) {
         screenStore.setActiveScreen(ModerationScreen.EditHealthcareProfessional)
         healthcareProfessionalStore.selectedHealthcareProfessionalId = selectedIdFromModSubmissionList.value
+    } else if (
+        routePathForModerationScreen.value.includes('create-healthcare-professional')) {
+        screenStore.setActiveScreen(ModerationScreen.CreateHealthcareProfessional)
+        // healthcareProfessionalStore.selectedHealthcareProfessionalId = selectedIdFromModSubmissionList.value
     } else {
         screenStore.setActiveScreen(ModerationScreen.Dashboard)
         moderationSubmissionsStore.selectedSubmissionId = ''
