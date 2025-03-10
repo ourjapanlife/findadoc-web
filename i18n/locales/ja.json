@@ -306,7 +306,8 @@
     "rejected": "Rejected",
     "forReview": "For Review",
     "healthcareProfessionals": "Healthcare Professionals",
-    "facilities": "Facilities"
+    "facilities": "Facilities",
+    "addHealthcareProfessional": "Add Healthcare Professional"
   },
   "modFacilitySection": {
     "addresses": "Addresses",
@@ -388,5 +389,12 @@
   "modHealthcareProfessionalCard": {
     "editName": "Edit",
     "saveName": "Save"
+  },
+  "modCreateFacilityOrHPTopbar": {
+    "confirmExit": "Exit without saving",
+    "create": "Create",
+    "exit": "Exit",
+    "heathcareProfessionalCreatedSuccessfully": "Healthcare professional created successfully.",
+    "unsavedChangesMessage": "This will exit without saving your entry. All unsaved data will be lost."
   }
 }

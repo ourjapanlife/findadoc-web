@@ -149,7 +149,8 @@
     "rejected": "Rifiutato",
     "forReview": "In revisione",
     "healthcareProfessionals": "Professionisti sanitari",
-    "facilities": "Strutture"
+    "facilities": "Strutture",
+    "addHealthcareProfessional": "Add Healthcare Professional"
   },
   "modEditFacilityOrHPTopbar": {
     "copyFailure": "Copiatura ID fallita",
@@ -378,5 +379,12 @@
     "updateButtonText": "Aggiorna",
     "rejectSubmissionConfirmationMessage": "Are you sure you want to reject this submission?",
     "rejectSubmissionConfirmationButton": "Yes, reject the submission"
+  },
+  "modCreateFacilityOrHPTopbar": {
+    "confirmExit": "Exit without saving",
+    "create": "Create",
+    "exit": "Exit",
+    "heathcareProfessionalCreatedSuccessfully": "Healthcare professional created successfully.",
+    "unsavedChangesMessage": "This will exit without saving your entry. All unsaved data will be lost."
   }
 }
