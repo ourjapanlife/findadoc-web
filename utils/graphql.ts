@@ -12,7 +12,7 @@ export const initializeGqlClient = () => {
 
     let apiURL
 
-    const useLocalApi = useRuntimeConfig().public.NUXT_USE_LOCAL_API as boolean | undefined
+    const useLocalApi = useRuntimeConfig().public.NUXT_USE_LOCAL_API as string | undefined
     if (useLocalApi) {
         apiURL = 'http://127.0.0.1:4000'
     } else {
