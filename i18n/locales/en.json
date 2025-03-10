@@ -126,6 +126,13 @@
         "unauthorizedline2": "If you want to become a moderator or have any questions, please contact us ",
         "unauthorizedline3": "here"
     },
+    "modCreateFacilityOrHPTopbar": {
+        "confirmExit": "Exit without saving",
+        "create": "Create",
+        "exit": "Exit",
+        "heathcareProfessionalCreatedSuccessfully": "Healthcare professional created successfully.",
+        "unsavedChangesMessage": "This will exit without saving your entry. All unsaved data will be lost."
+    },
     "modDashboardLeftNav": {
         "facilities": "Facilities",
         "healthcareProfessionals": "Healthcare Professionals",
