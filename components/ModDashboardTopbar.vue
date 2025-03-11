@@ -10,6 +10,7 @@
                 v-if="moderationSubmissionsStore.selectedModerationListViewChosen
                     === SelectedModerationListView.HealthcareProfessionals"
                 :to="`/moderation/create-healthcare-professional`"
+                data-testid="add-hp-button"
                 class="flex justify-center items-center rounded-full bg-secondary-bg border-primary p-1 border-2 w-40
                 font-semibold text-sm mr-2 overflow-hidden text-center hover:bg-currentColor"
             >
