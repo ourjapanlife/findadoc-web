@@ -70,6 +70,7 @@
                     >
                         <button
                             class="bg-primary text-primary-text-inverted font-bold py-2 px-4 my-2 rounded w-36"
+                            data-testid="mod-healthcare-professional-section-save-name"
                             type="button"
                             @click="handleAddLocalizedName"
                         >
@@ -77,6 +78,7 @@
                         </button>
                         <button
                             class="bg-error text-primary-text-inverted font-bold py-2 px-4 my-2 rounded w-36"
+                            data-testid="mod-healthcare-professional-section-close-name-section"
                             type="button"
                             @click="handleCloseAddingNewLocalizedName"
                         >
@@ -145,7 +147,7 @@
             <ModSearchbar
                 v-if="createHealthcareProfessionalSectionFields.acceptedInsurance"
                 v-model="createHealthcareProfessionalSectionFields.acceptedInsurance"
-                data-test-id="mod-healthcare-professional-section-accepted-insurances"
+                data-testid="mod-healthcare-professional-section-accepted-insurances"
                 :place-holder-text="$t('modHealthcareProfessionalSection.placeholderTextAcceptedInsurances')"
                 :no-match-text="$t('modHealthcareProfessionalSection.noInsurancesWereFound')"
                 :fields-to-display-callback="insurancesToDisplayCallback"
@@ -169,7 +171,7 @@
             <ModSearchbar
                 v-if="createHealthcareProfessionalSectionFields.degrees"
                 v-model="createHealthcareProfessionalSectionFields.degrees"
-                data-test-id="mod-healthcare-professional-section-degrees"
+                data-testid="mod-healthcare-professional-section-degrees"
                 :place-holder-text="$t('modHealthcareProfessionalSection.placeholderTextDegrees')"
                 :no-match-text="$t('modHealthcareProfessionalSection.noDegreesWereFound')"
                 :fields-to-display-callback="degreesToDisplayCallback"
@@ -193,7 +195,7 @@
             <ModSearchbar
                 v-if="createHealthcareProfessionalSectionFields.specialties"
                 v-model="createHealthcareProfessionalSectionFields.specialties"
-                data-test-id="mod-healthcare-professional-section-specialties"
+                data-testid="mod-healthcare-professional-section-specialties"
                 :place-holder-text="$t('modHealthcareProfessionalSection.placeholderTextSpecialties')"
                 :no-match-text="$t('modHealthcareProfessionalSection.noSpecialtiesWereFound')"
                 :fields-to-display-callback="specialtiesToDisplayCallback"
@@ -217,7 +219,7 @@
             <ModSearchbar
                 v-if="createHealthcareProfessionalSectionFields.spokenLanguages"
                 v-model="createHealthcareProfessionalSectionFields.spokenLanguages"
-                data-test-id="mod-healthcare-professional-section-spoken-locales"
+                data-testid="mod-healthcare-professional-section-spoken-locales"
                 :place-holder-text="$t('modHealthcareProfessionalSection.placeholderTextLocales')"
                 :no-match-text="$t('modHealthcareProfessionalSection.noLocalesWereFound')"
                 :fields-to-display-callback="localesToDisplayCallback"
@@ -241,6 +243,7 @@
         </h2>
         <ModSearchbar
             v-model="selectedFacilities"
+            data-testid="mod-healthcare-professional-section-facilities"
             :place-holder-text="$t('modHealthcareProfessionalSection.placeholderTextFacilitySearchBar')"
             :no-match-text="$t('modHealthcareProfessionalSection.noFacilitiesWereFound')"
             :fields-to-display-callback="facilitiesFieldsToDisplayCallback"
