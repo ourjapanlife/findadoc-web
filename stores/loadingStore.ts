@@ -3,11 +3,18 @@ import { ref } from 'vue'
 
 export const useLoadingStore = defineStore('loading', () => {
     const isLoading: Ref<boolean> = ref(false)
+    let timeout: ReturnType<typeof setTimeout> | null = null
 
-    function setIsLoading(newValue: boolean) {
-        if (newValue) {
+    function setIsLoading(loadingStatus: boolean) {
+        if (loadingStatus) {
             isLoading.value = true
-            setTimeout(() => (isLoading.value = false), 2000)
+
+            if (timeout) clearTimeout(timeout)
+
+            timeout = setTimeout(() => {
+                isLoading.value = false
+                timeout = null
+            }, 2000)
         }
     }
 
