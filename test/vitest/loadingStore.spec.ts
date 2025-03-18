@@ -1,5 +1,6 @@
 import { setActivePinia, createPinia } from 'pinia'
 import { expect } from 'chai'
+import { vi } from 'vitest'
 import { useLoadingStore } from '@/stores/loadingStore'
 
 describe('LoadingStore', () => {
@@ -20,6 +21,20 @@ describe('LoadingStore', () => {
 
         loadingStore.setIsLoading(false)
         expect(loadingStore.isLoading).to.be.false
+    })
+
+    it('should update isLoading to false after 2000ms', async () => {
+        vi.useFakeTimers()
+        const loadingStore = useLoadingStore()
+
+        loadingStore.setIsLoading(true, 2000)
+        expect(loadingStore.isLoading).to.be.true
+        await vi.advanceTimersByTimeAsync(2000)
+
+        loadingStore.setIsLoading(false)
+        expect(loadingStore.isLoading).to.be.false
+
+        vi.useRealTimers()
     })
 })
 
