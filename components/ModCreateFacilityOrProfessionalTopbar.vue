@@ -1,0 +1,106 @@
+<template>
+    <div class="mod-create-facility-hp-topbar flex justify-end h-full w-full">
+        <div class="facility-hp-topbar-actions flex justify p-2 font-bold ">
+            <button
+                type="button"
+                class="flex justify-center items-center rounded-full bg-secondary-bg border-primary hover:bg-currentColor
+              border-2 w-28 text-lg mr-2"
+                data-testid="mod-create-facility-hp-topbar-create"
+                @click="createFacilityOrHealthcareProfessional"
+            >
+                <span>
+                    {{ $t('modCreateFacilityOrHPTopbar.create') }}
+                </span>
+            </button>
+            <button
+                type="button"
+                class="flex justify-center items-center rounded-full bg-secondary-bg border-primary-text-muted
+              border-2 w-28 text-lg mr-2"
+                data-testid="mod-create-facility-hp-topbar-exit"
+                @click="openExitConfirmation"
+            >
+                <span>
+                    {{ $t('modCreateFacilityOrHPTopbar.exit') }}
+                </span>
+            </button>
+        </div>
+        <div
+            v-show="modalStore.isOpen"
+            class="fixed top-0 left-0 flex items-center justify-center h-full w-full z-10 bg-secondary/40"
+        >
+            <Modal>
+                <div
+                    class="flex flex-col aspect-square h-96 items-center justify-around bg-primary-inverted p-10 rounded"
+                >
+                    <span
+                        class="font-bold text-3xl"
+                    >
+                        {{ $t('modCreateFacilityOrHPTopbar.unsavedChangesMessage') }}
+                    </span>
+                    <button
+                        class="bg-primary p-4 rounded-full my-8 font-semibold text-xl"
+                        type="button"
+                        @click="navigateBackToDashboardWithoutCreation"
+                    >
+                        {{
+                            $t('modCreateFacilityOrHPTopbar.confirmExit') }}
+                    </button>
+                </div>
+            </Modal>
+        </div>
+    </div>
+</template>
+
+<script setup lang="ts">
+import { onMounted } from 'vue'
+import { type ToastInterface, useToast } from 'vue-toastification'
+import { useRouter } from 'vue-router'
+import { useI18n } from '#imports'
+import { useHealthcareProfessionalsStore } from '~/stores/healthcareProfessionalsStore'
+import { useModerationScreenStore, ModerationScreen } from '~/stores/moderationScreenStore'
+import { useModalStore } from '~/stores/modalStore'
+import { useModerationSubmissionsStore, SelectedModerationListView } from '~/stores/moderationSubmissionsStore'
+import { handleServerErrorMessaging } from '~/utils/handleServerErrorMessaging'
+
+const router = useRouter()
+
+// Initialize the stores in use
+const healthcareProfessionalsStore = useHealthcareProfessionalsStore()
+const moderationScreenStore = useModerationScreenStore()
+const modalStore = useModalStore()
+const moderationSubmissionsStore = useModerationSubmissionsStore()
+
+let toast: ToastInterface
+
+const { t } = useI18n()
+
+const createFacilityOrHealthcareProfessional = async () => {
+    if (moderationScreenStore.createHealthcareProfessionalScreenIsActive()) {
+        const response = await healthcareProfessionalsStore.createHealthcareProfessional()
+
+        if (response.errors?.length) {
+            handleServerErrorMessaging(response.errors, toast, t)
+            return response
+        }
+
+        toast.success(t('modCreateFacilityOrHPTopbar.heathcareProfessionalCreatedSuccessfully'))
+        router.push('/moderation')
+        moderationSubmissionsStore.setSelectedModerationListViewChosen(SelectedModerationListView.HealthcareProfessionals)
+        return response
+    }
+}
+
+const navigateBackToDashboardWithoutCreation = async () => {
+    router.push('/moderation')
+    moderationScreenStore.setActiveScreen(ModerationScreen.Dashboard)
+    modalStore.hideModal()
+}
+
+const openExitConfirmation = () => {
+    modalStore.showModal()
+}
+
+onMounted(() => {
+    toast = useToast()
+})
+</script>
