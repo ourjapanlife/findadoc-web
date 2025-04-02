@@ -38,7 +38,7 @@
                 </button>
             </div>
             <div
-                v-else
+                v-if="formHasUnsavedChanges"
                 class="flex flex-col aspect-square h-96 items-center justify-around bg-primary-inverted p-10 rounded"
             >
                 <span class="font-bold text-3xl">{{ $t('modSubmissionForm.hasUnsavedChanges') }}</span>
@@ -597,7 +597,48 @@ const submissionFormFields = reactive({
     isUnderReview: false as boolean
 })
 
-let submissionBeforeChanges: Partial<Submission> = {} as Submission
+/* This is used as an exact copy and not updated. This is to allow for change checks in values.
+We can then provide a better user experience based on if they change the values or not
+This is necessary because setting a variable directly in vue to the same as a reactive object
+may not always work as intended*/
+const submissionFormFieldsBeforeChanges = reactive({
+    // contactFields
+    nameEn: '' as string,
+    nameJa: '' as string,
+    phone: '' as string,
+    website: '' as string,
+    email: '' as string,
+    // addressesFields
+    postalCode: '' as string,
+    prefectureEn: '' as string,
+    cityEn: '' as string,
+    addressLine1En: '' as string,
+    addressLine2En: '' as string,
+    prefectureJa: '' as string,
+    cityJa: '' as string,
+    addressLine1Ja: '' as string,
+    addressLine2Ja: '' as string,
+    // googleMapsFields
+    googlemapsURL: '' as string,
+    mapLatitude: '' as string,
+    mapLongitude: '' as string,
+    //healthcareProfessionalFields
+    healthCareProfessionalNameArray: [] as LocalizedNameInput[],
+    healthcareProfessionalIDs: [] as string[],
+    localizedFirstName: '' as string,
+    localizedLastName: '' as string,
+    localizedMiddleName: '' as string,
+    nameLocale: Locale.EnUs as Locale,
+    healthcareProfessionalAcceptedInsurances: [] as Insurance[],
+    healthcareProfessionalDegrees: [] as Degree[],
+    healthcareProfessionalSpecialties: [] as Specialty[],
+    healthcareProfessionalLocales: [] as Locale[],
+    notes: '' as string,
+    isApproved: false as boolean,
+    isUnderReview: false as boolean
+})
+
+const formHasUnsavedChanges: Ref<boolean> = ref(false)
 
 const listPrefectureJapanEn: Ref<string[]> = ref([
     'Hokkaido', 'Aomori', 'Iwate', 'Miyagi', 'Akita',
@@ -739,6 +780,7 @@ function initializeSubmissionFormValues(submissionData: Submission | undefined) 
         if (submissionData[key as keyof Submission]) {
             switch (key) {
                 case 'facility':
+                    // This sets the values of the v-model
                     submissionFormFields.nameEn = submissionData['facility']?.nameEn || ''
                     submissionFormFields.nameJa = submissionData['facility']?.nameJa || ''
                     submissionFormFields.phone = submissionData['facility']?.contact?.phone || ''
@@ -755,14 +797,45 @@ function initializeSubmissionFormValues(submissionData: Submission | undefined) 
                     submissionFormFields.addressLine2Ja = submissionData['facility']?.contact?.address.addressLine2Ja || ''
                     submissionFormFields.mapLatitude = submissionData['facility']?.mapLatitude?.toString() || ''
                     submissionFormFields.mapLongitude = submissionData['facility']?.mapLongitude?.toString() || ''
+                    // This sets the values for the check if the user has updated any values
+                    submissionFormFieldsBeforeChanges.nameEn = submissionData['facility']?.nameEn || ''
+                    submissionFormFieldsBeforeChanges.nameJa = submissionData['facility']?.nameJa || ''
+                    submissionFormFieldsBeforeChanges.phone = submissionData['facility']?.contact?.phone || ''
+                    submissionFormFieldsBeforeChanges.email = submissionData['facility']?.contact?.email || ''
+                    submissionFormFieldsBeforeChanges.website = submissionData['facility']?.contact?.website || ''
+                    submissionFormFieldsBeforeChanges.postalCode = submissionData['facility']?.contact?.address.postalCode || ''
+                    submissionFormFieldsBeforeChanges.prefectureEn
+                    = submissionData['facility']?.contact?.address.prefectureEn || ''
+                    submissionFormFieldsBeforeChanges.cityEn = submissionData['facility']?.contact?.address.cityEn || ''
+                    submissionFormFieldsBeforeChanges.addressLine1En
+                    = submissionData['facility']?.contact?.address.addressLine1En || ''
+                    submissionFormFieldsBeforeChanges.addressLine2En
+                    = submissionData['facility']?.contact?.address.addressLine2En || ''
+                    submissionFormFieldsBeforeChanges.prefectureJa
+                    = submissionData['facility']?.contact?.address.prefectureJa || ''
+                    submissionFormFieldsBeforeChanges.cityJa = submissionData['facility']?.contact?.address.cityJa || ''
+                    submissionFormFieldsBeforeChanges.addressLine1Ja
+                    = submissionData['facility']?.contact?.address.addressLine1Ja || ''
+                    submissionFormFieldsBeforeChanges.addressLine2Ja
+                    = submissionData['facility']?.contact?.address.addressLine2Ja || ''
+                    submissionFormFieldsBeforeChanges.mapLatitude = submissionData['facility']?.mapLatitude?.toString() || ''
+                    submissionFormFieldsBeforeChanges.mapLongitude = submissionData['facility']?.mapLongitude?.toString() || ''
                     break
                 case 'googleMapsUrl':
-                    submissionFormFields.googlemapsURL
+                    submissionFormFields.googlemapsURL // For v-model
+                    = submissionData['facility']?.contact?.googleMapsUrl || submissionData['googleMapsUrl']
+                    submissionFormFieldsBeforeChanges.googlemapsURL // For change check
                     = submissionData['facility']?.contact?.googleMapsUrl || submissionData['googleMapsUrl']
                     break
                 case 'healthcareProfessionals':
                     if (submittedHealthcareProfessionalName && submittedHealthcareProfessionalName.length === 2) {
-                        submissionFormFields.healthCareProfessionalNameArray
+                        submissionFormFields.healthCareProfessionalNameArray // For v-model
+                            = submissionData?.healthcareProfessionals?.[0]?.names ?? [{
+                                firstName: submittedHealthcareProfessionalName[0] || '',
+                                lastName: submittedHealthcareProfessionalName[1] || '',
+                                locale: submissionData.spokenLanguages[0] || Locale.Und
+                            }]
+                        submissionFormFieldsBeforeChanges.healthCareProfessionalNameArray // For change check
                             = submissionData?.healthcareProfessionals?.[0]?.names ?? [{
                                 firstName: submittedHealthcareProfessionalName[0] || '',
                                 lastName: submittedHealthcareProfessionalName[1] || '',
@@ -770,7 +843,14 @@ function initializeSubmissionFormValues(submissionData: Submission | undefined) 
                             }]
                     }
                     if (submittedHealthcareProfessionalName && submittedHealthcareProfessionalName.length === 3) {
-                        submissionFormFields.healthCareProfessionalNameArray
+                        submissionFormFields.healthCareProfessionalNameArray // For v-model
+                        = submissionData?.healthcareProfessionals?.[0]?.names ?? [{
+                                firstName: submittedHealthcareProfessionalName[0] || '',
+                                middleName: submittedHealthcareProfessionalName[1] || '',
+                                lastName: submittedHealthcareProfessionalName[2] || '',
+                                locale: submissionData.spokenLanguages[0] || Locale.Und
+                            }]
+                        submissionFormFieldsBeforeChanges.healthCareProfessionalNameArray // For change check
                         = submissionData?.healthcareProfessionals?.[0]?.names ?? [{
                                 firstName: submittedHealthcareProfessionalName[0] || '',
                                 middleName: submittedHealthcareProfessionalName[1] || '',
@@ -778,6 +858,7 @@ function initializeSubmissionFormValues(submissionData: Submission | undefined) 
                                 locale: submissionData.spokenLanguages[0] || Locale.Und
                             }]
                     }
+                    // For v-model
                     submissionFormFields.healthcareProfessionalAcceptedInsurances
                         = submissionData?.healthcareProfessionals?.[0]?.acceptedInsurance
                           ?? []
@@ -789,9 +870,25 @@ function initializeSubmissionFormValues(submissionData: Submission | undefined) 
                           ?? []
                     submissionFormFields.healthcareProfessionalLocales
                         = submissionData.spokenLanguages
+                    // For change check
+                    submissionFormFieldsBeforeChanges.healthcareProfessionalAcceptedInsurances
+                        = submissionData?.healthcareProfessionals?.[0]?.acceptedInsurance
+                          ?? []
+                    submissionFormFieldsBeforeChanges.healthcareProfessionalDegrees
+                        = submissionData?.healthcareProfessionals?.[0]?.degrees
+                          ?? []
+                    submissionFormFieldsBeforeChanges.healthcareProfessionalSpecialties
+                        = submissionData?.healthcareProfessionals?.[0]?.specialties
+                          ?? []
+                    submissionFormFieldsBeforeChanges.healthcareProfessionalLocales
+                        = submissionData.spokenLanguages
                     break
                 case 'healthcareProfessionalIDs':
+                    // For v-model
                     submissionFormFields.healthcareProfessionalIDs
+                    = submissionData.facility?.healthcareProfessionalIds ?? []
+                    // For change check
+                    submissionFormFieldsBeforeChanges.healthcareProfessionalIDs
                     = submissionData.facility?.healthcareProfessionalIds ?? []
                     break
                 case 'isApproved':
@@ -802,43 +899,54 @@ function initializeSubmissionFormValues(submissionData: Submission | undefined) 
             }
         }
     }
-
-    submissionBeforeChanges = submissionFormFields
 }
 
 const submissionHasUnsavedChanges = () => {
-    const checkForUnsavedChangess
-    = submissionBeforeChanges.facility?.contact?.address.addressLine1En !== submissionFormFields.addressLine1En
-      || submissionBeforeChanges.facility?.contact?.address.addressLine1Ja !== submissionFormFields.addressLine1Ja
-      || submissionBeforeChanges.facility?.contact?.address.addressLine2En !== submissionFormFields.addressLine2En
-      || submissionBeforeChanges.facility?.contact?.address.addressLine2Ja !== submissionFormFields.addressLine2Ja
-      || submissionBeforeChanges.facility?.contact?.address.cityEn !== submissionFormFields.cityEn
-      || submissionBeforeChanges.facility?.contact?.address.cityJa !== submissionFormFields.cityJa
-      || submissionBeforeChanges.facility?.contact?.address.postalCode !== submissionFormFields.postalCode
-      || submissionBeforeChanges.facility?.contact?.address.prefectureEn !== submissionFormFields.prefectureEn
-      || submissionBeforeChanges.facility?.contact?.address.prefectureJa !== submissionFormFields.prefectureJa
-      || submissionBeforeChanges.facility?.contact?.email !== submissionFormFields.email
-      || submissionBeforeChanges.facility?.contact?.googleMapsUrl !== submissionFormFields.googlemapsURL
-      || submissionBeforeChanges.facility?.contact?.phone !== submissionFormFields.phone
-      || submissionBeforeChanges.facility?.contact?.website !== submissionFormFields.website
+    const checkForUnsavedChanges
+    = submissionFormFieldsBeforeChanges.addressLine1En !== submissionFormFields.addressLine1En
+      || submissionFormFieldsBeforeChanges.addressLine1Ja !== submissionFormFields.addressLine1Ja
+      || submissionFormFieldsBeforeChanges.addressLine2En !== submissionFormFields.addressLine2En
+      || submissionFormFieldsBeforeChanges.addressLine2Ja !== submissionFormFields.addressLine2Ja
+      || submissionFormFieldsBeforeChanges.cityEn !== submissionFormFields.cityEn
+      || submissionFormFieldsBeforeChanges.cityJa !== submissionFormFields.cityJa
+      || submissionFormFieldsBeforeChanges.postalCode !== submissionFormFields.postalCode
+      || submissionFormFieldsBeforeChanges.prefectureEn !== submissionFormFields.prefectureEn
+      || submissionFormFieldsBeforeChanges.prefectureJa !== submissionFormFields.prefectureJa
+      || submissionFormFieldsBeforeChanges.email !== submissionFormFields.email
+      || submissionFormFieldsBeforeChanges.googlemapsURL !== submissionFormFields.googlemapsURL
+      || submissionFormFieldsBeforeChanges.phone !== submissionFormFields.phone
+      || submissionFormFieldsBeforeChanges.website !== submissionFormFields.website
       /* returns false if not equal so to make it be true we add the ! to follow
        the same logic as above */
       || !arraysAreEqual(
-          submissionBeforeChanges.facility?.healthcareProfessionalIds,
+          submissionFormFieldsBeforeChanges.healthcareProfessionalIDs,
           submissionFormFields.healthcareProfessionalIDs
       )
-      || submissionBeforeChanges.facility.mapLatitude?.toString() !== submissionFormFields.mapLatitude
-      || submissionBeforeChanges.facility.mapLongitude?.toString() !== submissionFormFields.mapLongitude
-      || submissionBeforeChanges.facility.nameEn !== submissionFormFields.nameEn
-      || submissionBeforeChanges.facility.nameJa !== submissionFormFields.nameJa
-      || submissionBeforeChanges.googleMapsUrl !== submissionFormFields.googlemapsURL
-      || submissionBeforeChanges.notes !== submissionFormFields.notes
+      || submissionFormFieldsBeforeChanges.mapLatitude !== submissionFormFields.mapLatitude
+      || submissionFormFieldsBeforeChanges.mapLongitude !== submissionFormFields.mapLongitude
+      || submissionFormFieldsBeforeChanges.nameEn !== submissionFormFields.nameEn
+      || submissionFormFieldsBeforeChanges.nameJa !== submissionFormFields.nameJa
+      || submissionFormFieldsBeforeChanges.googlemapsURL !== submissionFormFields.googlemapsURL
+      || submissionFormFieldsBeforeChanges.notes !== submissionFormFields.notes
       || !arraysAreEqual(
-          submissionBeforeChanges.spokenLanguages ?? [],
+          submissionFormFieldsBeforeChanges.healthcareProfessionalLocales,
           submissionFormFields.healthcareProfessionalLocales
       )
+      || !arraysAreEqual(
+          submissionFormFieldsBeforeChanges.healthCareProfessionalNameArray,
+          submissionFormFields.healthCareProfessionalNameArray
+      )
+      || !arraysAreEqual(
+          submissionFormFieldsBeforeChanges.healthcareProfessionalAcceptedInsurances,
+          submissionFormFields.healthcareProfessionalAcceptedInsurances
+      )
+      || !arraysAreEqual(
+          submissionFormFieldsBeforeChanges.healthcareProfessionalDegrees,
+          submissionFormFields.healthcareProfessionalDegrees
+      )
 
-    return checkForUnsavedChangess
+    formHasUnsavedChanges.value = true
+    return checkForUnsavedChanges
 }
 
 async function submitUpdatedSubmission(e: Event) {
@@ -902,12 +1010,14 @@ async function submitUpdatedSubmission(e: Event) {
     }
 
     const submissionResult = result.data
+
     // This updates the submission in the form with the values stored in the db on success
     if (submissionResult) initializeSubmissionFormValues(submissionResult)
     toast.success(t('modSubmissionForm.successMessageUpdated'))
     if (moderationSubmissionStore.updatingSubmissionFromTopBar) {
         router.push('/moderation')
-        moderationSubmissionStore.setUpdatingSubmissionFromTopBar(false)
+        // reset all modal refs to prevent unintended side effects
+        resetModalRefs()
     }
 }
 
@@ -941,9 +1051,16 @@ async function submitCompletedForm(e: Event) {
     }
 
     try {
-        await moderationSubmissionStore.approveSubmission()
+        const result = await moderationSubmissionStore.approveSubmission()
+        console.log(result)
+        if (result?.errors?.length) {
+            handleServerErrorMessaging(result.errors, toast, t)
+            return
+        }
         modalStore.hideModal()
         toast.success(t('modSubmissionForm.successMessageApproved'))
+        // reset all modal refs to prevent unintended side effects
+        resetModalRefs()
         router.push('/moderation')
     } catch {
         toast.error(t('modSubmissionForm.errorMessageCompletedForm'))
@@ -955,11 +1072,13 @@ const syntheticEvent = new Event('submit', { bubbles: false, cancelable: true })
 const resetModalRefs = async () => {
     moderationSubmissionStore.setShowRejectSubmissionConfirmation(false)
     moderationSubmissionStore.setApprovingSubmissionFromTopBar(false)
+    formHasUnsavedChanges.value = false
 }
 
 const rejectSubmission = async () => {
     await moderationSubmissionStore.rejectSubmission()
     await resetModalRefs()
+    toast.success(t('modSubmissionForm.facilitySuccessfullyRejected'))
     handleNavigateToModerationScreen()
 }
 
