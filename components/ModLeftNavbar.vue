@@ -8,7 +8,7 @@
         </div>
         <div v-else-if="store.activeScreen === ModerationScreen.EditHealthcareProfessional">
             <p class="text-xl font-bold">
-                NAVBAR REVIEW HEALTHCARE PROFESSIONAL
+                <ModHealthcareProfessionalLeftNavbar />
             </p>
         </div>
         <div v-else-if="store.activeScreen === ModerationScreen.EditFacility">
