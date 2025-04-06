@@ -5251,6 +5251,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"autoprefixer@npm:^10.4.21":
+  version: 10.4.21
+  resolution: "autoprefixer@npm:10.4.21"
+  dependencies:
+    browserslist: "npm:^4.24.4"
+    caniuse-lite: "npm:^1.0.30001702"
+    fraction.js: "npm:^4.3.7"
+    normalize-range: "npm:^0.1.2"
+    picocolors: "npm:^1.1.1"
+    postcss-value-parser: "npm:^4.2.0"
+  peerDependencies:
+    postcss: ^8.1.0
+  bin:
+    autoprefixer: bin/autoprefixer
+  checksum: 10/5d7aeee78ef362a6838e12312908516a8ac5364414175273e5cff83bbff67612755b93d567f3aa01ce318342df48aeab4b291847b5800c780e58c458f61a98a6
+  languageName: node
+  linkType: hard
+
 "available-typed-arrays@npm:^1.0.7":
   version: 1.0.7
   resolution: "available-typed-arrays@npm:1.0.7"
@@ -5456,7 +5474,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"browserslist@npm:^4.0.0, browserslist@npm:^4.23.3, browserslist@npm:^4.24.0, browserslist@npm:^4.24.3":
+"browserslist@npm:^4.0.0, browserslist@npm:^4.23.3, browserslist@npm:^4.24.0, browserslist@npm:^4.24.3, browserslist@npm:^4.24.4":
   version: 4.24.4
   resolution: "browserslist@npm:4.24.4"
   dependencies:
@@ -5694,6 +5712,13 @@ __metadata:
   version: 1.0.30001697
   resolution: "caniuse-lite@npm:1.0.30001697"
   checksum: 10/cd0ca97e71f4157ff3d26990a24122586a973a14086ad43c459c2f0f2f9876b327eee57c2315bb04bd5e826e77d0b6f55723c583c78be0eaf0f3f171afaf7eff
+  languageName: node
+  linkType: hard
+
+"caniuse-lite@npm:^1.0.30001702":
+  version: 1.0.30001712
+  resolution: "caniuse-lite@npm:1.0.30001712"
+  checksum: 10/1831ac3260b9657c5a0236d21c02bea6a6b88fd67a451a0ff166d27da17c95ab398c5721e08aeb24f766bced1d38f562f07c8de84e91a10a065808e83835e89e
   languageName: node
   linkType: hard
 
@@ -8241,7 +8266,7 @@ __metadata:
     "@vitest/eslint-plugin": "npm:^1.1.27"
     "@vue/test-utils": "npm:^2.4.6"
     all-contributors-cli: "npm:^6.26.1"
-    autoprefixer: "npm:^10.4.20"
+    autoprefixer: "npm:^10.4.21"
     cypress: "npm:^13.13.2"
     cypress-plugin-tab: "npm:^1.0.5"
     cypress-real-events: "npm:^1.13.0"
