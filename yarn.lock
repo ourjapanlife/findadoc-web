@@ -6462,7 +6462,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cypress@npm:^13.13.2":
+"cypress@npm:^13.17.0":
   version: 13.17.0
   resolution: "cypress@npm:13.17.0"
   dependencies:
@@ -8242,7 +8242,7 @@ __metadata:
     "@vue/test-utils": "npm:^2.4.6"
     all-contributors-cli: "npm:^6.26.1"
     autoprefixer: "npm:^10.4.20"
-    cypress: "npm:^13.13.2"
+    cypress: "npm:^13.17.0"
     cypress-plugin-tab: "npm:^1.0.5"
     cypress-real-events: "npm:^1.13.0"
     dotenv-cli: "npm:^8.0.0"

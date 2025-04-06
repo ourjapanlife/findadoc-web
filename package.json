@@ -59,7 +59,7 @@
         "@vue/test-utils": "^2.4.6",
         "all-contributors-cli": "^6.26.1",
         "autoprefixer": "^10.4.20",
-        "cypress": "^13.13.2",
+        "cypress": "^13.17.0",
         "cypress-plugin-tab": "^1.0.5",
         "dotenv-cli": "^8.0.0",
         "eslint": "^9.8.0",
