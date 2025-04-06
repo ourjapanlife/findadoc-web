@@ -1,7 +1,10 @@
 <template>
     <Loader />
     <div v-if="isHealthcareProfessionalInitialized">
-        <div class="mod-healthcare-professional-section">
+        <div
+            :id="ModHealthcareProfessionalsLeftNavbarSections.HealthcareProfessionalName"
+            class="mod-healthcare-professional-section"
+        >
             <h2 class="mb-3.5 text-start text-primary-text text-2xl font-bold font-sans leading-normal">
                 {{ $t('modHealthcareProfessionalSection.healthcareProfessionalNameHeading') }}
             </h2>
@@ -133,6 +136,7 @@
                     {{ $t('modHealthcareProfessionalSection.addHealthCareProfessionalLocaleName') }}
                 </button>
                 <h2
+                    :id="ModHealthcareProfessionalsLeftNavbarSections.HealthcareProfessionalMedicalInfo"
                     class="mod-healthcare-professional-section
                      my-3.5 text-start text-primary-text text-2xl font-bold font-sans leading-normal"
                 >
@@ -232,6 +236,7 @@
                 </ol>
             </div>
             <h2
+                :id="ModHealthcareProfessionalsLeftNavbarSections.HealthcareProfessionalFacilities"
                 class="mod-healthcare-professional-section
                  my-3.5 text-start text-primary-text text-2xl font-bold font-sans leading-normal"
             >
