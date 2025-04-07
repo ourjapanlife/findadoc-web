@@ -131,6 +131,16 @@
                     data-testid="hamburger-menu-footer-section"
                     class="flex flex-col gap-5 px-5"
                 >
+                    <div>
+                        <p class="mb-1">Theme</p>
+                        <div class="flex">
+                            <div class="w-10 h-10 mr-1" style="background-color: #EB7100;"></div>
+                            <div class="bg-blue w-10 h-10 mr-1" style="background-color: #ED6C5A;"></div>
+                            <div class="w-10 h-10 mr-1" style="background-color: #A45D9A;" ></div>
+                            <div class="w-10 h-10 mr-1" style="background-color: #245A7D;" ></div>
+                            <div class="w-10 h-10" style="background-color: #1bdb9b;" ></div>
+                        </div>
+                    </div>
                     <div
                         data-testid="hamburger-menu-footer-legal"
                         class="flex gap-4"
