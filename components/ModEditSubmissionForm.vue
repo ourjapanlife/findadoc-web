@@ -120,7 +120,6 @@
                 :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityWebsite')"
             />
         </div>
-
         <div
             :id="ModSubmissionLeftNavbarSectionIDs.Addresses"
             class="submission-form-section"
@@ -284,6 +283,17 @@
                 :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityMapLongitude')"
             />
         </div>
+        <span class="mb-3.5 text-center text-primary-text text-2xl font-bold font-sans leading-normal">
+            {{ $t('modSubmissionForm.healthcareProfessionalId') }}
+        </span>
+        <ModSearchBar
+            v-model="selectedHealthcareProfessionalsInNewFacilitySubmission"
+            data-testid="submission-form-doctor-search"
+            :place-holder-text="$t('modSubmissionForm.placeholderTextHealthcareProfessionalSearchbar')"
+            :no-match-text="$t('modSubmissionForm.noHealthcareProfessionalFound')"
+            :fields-to-display-callback="healthcareProfessionalsToDisplayCallback"
+            @search-input-change="handleHealthcareProfessionalsInputChange"
+        />
         <ModHealthcareProfessionalSearchbar data-testid="submission-form-doctor-search" />
         <h2
             :id="ModSubmissionLeftNavbarSectionIDs.HealthcareProfessionalName"
@@ -518,7 +528,8 @@ import { Locale,
     type LocalizedNameInput,
     Insurance,
     Degree,
-    Specialty } from '~/typedefs/gqlTypes'
+    Specialty,
+    type HealthcareProfessional } from '~/typedefs/gqlTypes'
 import { validateAddressLineEn,
     validateAddressLineJa,
     validateNameEn,
@@ -552,10 +563,14 @@ const { t } = useI18n()
 const router = useRouter()
 
 const moderationSubmissionStore = useModerationSubmissionsStore()
+const healthcareProfessionalsStore = useHealthcareProfessionalsStore()
 const modalStore = useModalStore()
 const screenStore = useModerationScreenStore()
 const localeStore = useLocaleStore()
 const loadingStore = useLoadingStore()
+
+// This fetches healthcare professionals for the search bar in case there is a new facility but same healthcare professional
+healthcareProfessionalsStore.getHealthcareProfessionals()
 
 const isEditSubmissionFormInitialized: Ref<boolean> = ref(false)
 loadingStore.setIsLoading(true, 3000)
@@ -596,6 +611,9 @@ const submissionFormFields = reactive({
     isApproved: false as boolean,
     isUnderReview: false as boolean
 })
+
+// This will keep track of healthcare professionals so we can filter out the ids to send to the backend
+const selectedHealthcareProfessionalsInNewFacilitySubmission: Ref<HealthcareProfessional[]> = ref([])
 
 /* This is used as an exact copy and not updated. This is to allow for change checks in values.
 We can then provide a better user experience based on if they change the values or not
@@ -701,6 +719,33 @@ const handleLocaleInputChange = (filteredItems: Ref<Locale[]>, inputValue: strin
     filteredItems.value = localeStore.getLocaleByNameInput(inputValue)
 }
 
+const handleHealthcareProfessionalsInputChange = (filteredItems: Ref<HealthcareProfessional[]>, inputValue: string) => {
+    filteredItems.value = healthcareProfessionalsStore.healthcareProfessionalsData
+        .filter((healthcareProfessional: HealthcareProfessional) => {
+            const caseInsensitiveIdMatch = healthcareProfessional.id
+                .toLowerCase()
+                .startsWith(inputValue.toLowerCase().trim())
+
+            const nameMatches = healthcareProfessional.names.some(name => {
+                const firstNameMatch = name.firstName
+                    .toLowerCase()
+                    .includes(inputValue.toLowerCase())
+                const middleNameMatch = name.middleName
+                  && name.middleName
+                      .toLowerCase()
+                      .includes(inputValue.toLowerCase())
+                const lastNameMatch = name.lastName
+                    .toLowerCase()
+                    .includes(inputValue.toLowerCase())
+                return firstNameMatch || middleNameMatch || lastNameMatch
+            })
+
+            return caseInsensitiveIdMatch || nameMatches
+        })
+}
+
+const healthcareProfessionalsToDisplayCallback = (healthcareProfessional: HealthcareProfessional) =>
+    [healthcareProfessional.names[0].firstName + ' ' + healthcareProfessional.names[0].lastName]
 const specialtiesToDisplayCallback = (specialty: Specialty) => [specialty]
 const degreesToDisplayCallback = (degree: Degree) => [degree]
 const insurancesToDisplayCallback = (insurance: Insurance) => [insurance]
@@ -985,7 +1030,7 @@ async function submitUpdatedSubmission(e: Event) {
                         addressLine2Ja: submissionFormFields.addressLine2Ja
                     }
                 },
-                healthcareProfessionalIds: [],
+                healthcareProfessionalIds: submissionFormFields.healthcareProfessionalIDs,
                 mapLatitude: parseFloat(submissionFormFields.mapLatitude) || 0,
                 mapLongitude: parseFloat(submissionFormFields.mapLongitude) || 0
             },
@@ -1070,6 +1115,7 @@ async function submitCompletedForm(e: Event) {
 const syntheticEvent = new Event('submit', { bubbles: false, cancelable: true })
 
 const resetModalRefs = async () => {
+    moderationSubmissionStore.setUpdatingSubmissionFromTopBar(false)
     moderationSubmissionStore.setShowRejectSubmissionConfirmation(false)
     moderationSubmissionStore.setApprovingSubmissionFromTopBar(false)
     formHasUnsavedChanges.value = false
@@ -1126,5 +1172,12 @@ onBeforeRouteLeave(async (to, from, next) => {
         return
     }
     next()
+})
+
+// This watches for user inputting a healthcare professional that exists in our db into a new facility
+watch(selectedHealthcareProfessionalsInNewFacilitySubmission.value, newValue => {
+    if (newValue) {
+        submissionFormFields.healthcareProfessionalIDs = newValue.map(healthcareProfessional => healthcareProfessional.id)
+    }
 })
 </script>
