@@ -192,6 +192,15 @@ export const useHealthcareProfessionalsStore = defineStore(
             return serverResponse
         }
 
+        function resetCreateHealthcareProfessionalFields() {
+            createHealthcareProfessionalSectionFields.acceptedInsurance = []
+            createHealthcareProfessionalSectionFields.degrees = []
+            createHealthcareProfessionalSectionFields.facilityIds = []
+            createHealthcareProfessionalSectionFields.names = []
+            createHealthcareProfessionalSectionFields.specialties = []
+            createHealthcareProfessionalSectionFields.spokenLanguages = []
+        }
+
         async function deleteHealthcareProfessional(healthcareProfessionalId: MutationDeleteHealthcareProfessionalArgs):
         Promise<ServerResponse<Maybe<DeleteResult>>> {
             const serverResponse = { data: {} as Maybe<DeleteResult>, errors: [] as ServerError[], hasErrors: false }
@@ -231,7 +240,8 @@ export const useHealthcareProfessionalsStore = defineStore(
             facilitiesRelationsToSelectedHealthcareProfessional,
             selectedFacilities,
             createHealthcareProfessional,
-            createHealthcareProfessionalSectionFields
+            createHealthcareProfessionalSectionFields,
+            resetCreateHealthcareProfessionalFields
         }
     }
 )

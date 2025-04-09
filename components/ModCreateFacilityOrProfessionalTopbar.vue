@@ -86,12 +86,14 @@ const createFacilityOrHealthcareProfessional = async () => {
         toast.success(t('modCreateFacilityOrHPTopbar.heathcareProfessionalCreatedSuccessfully'))
         router.push('/moderation')
         moderationSubmissionsStore.setSelectedModerationListViewChosen(SelectedModerationListView.HealthcareProfessionals)
+        healthcareProfessionalsStore.resetCreateHealthcareProfessionalFields()
         return response
     }
 }
 
 const navigateBackToDashboardWithoutCreation = async () => {
     router.push('/moderation')
+    healthcareProfessionalsStore.resetCreateHealthcareProfessionalFields()
     moderationScreenStore.setActiveScreen(ModerationScreen.Dashboard)
     modalStore.hideModal()
 }
