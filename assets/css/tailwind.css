@@ -42,7 +42,7 @@
     --color-text-inverted: /* #ffffff */ 255 255 255;
     --color-bg-primary: /* #FCFCFC */ 252 252 252;
     --color-bg-secondary: /* #ffffff */ 255 255 255;
-    --color-bg-tertiary: /* #e5e7eb */ 229 231 235;
+    --color-bg-tertiary: 	/* #bebebe */ 190	190	190;
     --color-error: /* #d1523f */ 209 82 63;
   }
 
@@ -79,14 +79,14 @@
     --color-text-muted: /* #464646 */ 70 70 70;
     --color-text-inverted: /* #000000 */ 255 255 255;
     --color-bg-primary: /* #fcfcfc */ 252 252 252;
-    --color-bg-secondary: /* #b49ab1 */ 180 154 177;
+    --color-bg-secondary: /* #E5D9F2 */ 229 217 242;
     --color-bg-tertiary: /* #e5e7eb */ 229 231 235;
     --color-error: /* #d1523f */ 209 82 63;
   }
 
   .theme-ocean {
     /* general branding colors */
-    --color-primary: /* #245A7D */ 36 90 125;
+    --color-primary: /* #77A6CD "/ 119 166 205;
     --color-secondary: /* #DA5550 */ 218 85 80;
     --color-tertiary: /* #F4F3E9 */ 244 243 233;
     --color-primary-inverted: /* #ffffff */ 255 255 255;
@@ -105,16 +105,16 @@
 
   .theme-neon {
     /* general branding colors */
-    --color-primary: 0 109 106;
+    --color-primary: /* #006D6A */ 0 109 106;
     --color-secondary: /* #524c4c */ 82 76 76;
-    --color-tertiary: 255 51 119;
+    --color-tertiary: /* #FF3377 */ 255 51 119;
     --color-primary-inverted: /* #ffffff */ 255 255 255;
     --color-primary-hover: /* #1abb85 */ 26 187 133;
     --color-secondary-inverted: /* #ffffff */ 255 255 255;
     --color-secondary-hover: /* #d66051 */ 214 96 81;
     /* element specific colors */
     --color-text-base: /* #88eecc */ 136 238 204;
-    --color-text-muted: 54 132 106;
+    --color-text-muted: /* #36846A */ 54 132 106;
     --color-text-inverted: /* #252525 */ 37 37 37;
     --color-bg-primary: /* #383434 */ 56 52 52;
     --color-bg-secondary: /* #524c4c */ 82 76 76;
