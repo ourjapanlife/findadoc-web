@@ -135,7 +135,8 @@
     "googleMapsInformation": "Thông tin Google Maps",
     "healthcareProfessionalIds": "Mã số chuyên gia y tế",
     "healthcareProfessionalName": "Tên chuyên gia y tế",
-    "healthcareProfessionalMedicalInfo": "Thông tin Y tế dành cho Chuyên gia Chăm sóc Sức khỏe"
+    "healthcareProfessionalMedicalInfo": "Thông tin Y tế dành cho Chuyên gia Chăm sóc Sức khỏe",
+    "healthcareProfessionalFacilities": "Healthcare Professional Related Facilities"
   },
   "modDashboardTopbar": {
     "placeholderText": "Nhập tên hoặc mã ID để tìm kiếm",

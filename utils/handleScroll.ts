@@ -9,7 +9,6 @@ export const handleScroll
 = (sectionDetailsObject: SectionInformation[], isScrolling: Ref<boolean> = ref(false), activeSection: Ref<string> = ref('')) => {
     if (isScrolling.value) return
     let newActiveSection: string | null = null
-
     sectionDetailsObject.forEach(section => {
         let rect = null
         const foundSectionById = document.getElementById(section.sectionElementIdToScrollTo)
