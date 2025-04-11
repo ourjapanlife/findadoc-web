@@ -132,13 +132,35 @@
                     class="flex flex-col gap-5 px-5"
                 >
                     <div>
-                        <p class="mb-1">Theme</p>
+                        <p class="mb-1">
+                            Theme
+                        </p>
                         <div class="flex">
-                            <div class="w-10 h-10 mr-1" style="background-color: #EB7100;"></div>
-                            <div class="bg-primary w-10 h-10 mr-1" style="background-color: #ED6C5A;"></div>
-                            <div class="w-10 h-10 mr-1" style="background-color: #A45D9A;" ></div>
-                            <div class="w-10 h-10 mr-1" style="background-color: #245A7D;" ></div>
-                            <div class="w-10 h-10" style="background-color: #1bdb9b;" ></div>
+                            <div
+                                class="w-10 h-10 mr-1"
+                                style="background-color:#EB7100"
+                                @click="setTheme('orange')"
+                            />
+                            <div
+                                class="bg-primary w-10 h-10 mr-1"
+                                style="background-color: #ED6C5A;"
+                                @click="setTheme('coral')"
+                            />
+                            <div
+                                class="w-10 h-10 mr-1"
+                                style="background-color: #A45D9A;"
+                                @click="setTheme('violet')"
+                            />
+                            <div
+                                class="w-10 h-10 mr-1"
+                                style="background-color: #245A7D;"
+                                @click="setTheme('ocean')"
+                            />
+                            <div
+                                class="w-10 h-10"
+                                style="background-color: #1bdb9b;"
+                                @click="setTheme('neon')"
+                            />
                         </div>
                     </div>
                     <div
@@ -232,7 +254,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import SVGProfileIcon from '~/assets/icons/profile-icon.svg'
 import SVGHamburgerMenuIcon from '~/assets/icons/hamburger-menu.svg'
 import SVGGithubIcon from '~/assets/icons/social-github.svg'
@@ -254,6 +276,19 @@ function logout() {
     authStore.logout()
     closeMenu()
 }
+
+function setTheme(newTheme: string) {
+    document.documentElement.classList.remove('theme-orange', 'theme-coral', 'theme-violet', 'theme-ocean', 'theme-neon')
+    document.documentElement.classList.add(`theme-${newTheme}`)
+    localStorage.setItem('theme', newTheme)
+}
+
+onMounted(() => {
+    const saveTheme = localStorage.getItem('theme')
+    if (saveTheme) {
+        setTheme(saveTheme)
+    }
+})
 
 //this is a custom directive to close the menu when clicking outside of the menu
 const vCloseOnOutsideClick = {
