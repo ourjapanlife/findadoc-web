@@ -92,7 +92,9 @@
                 </div>
                 <div
                     v-if="!isHealthcareProfessionalReadyForRemoval(healthcareProfessional.id)
-                        && moderationScreenStore.editSubmissionScreenIsActive()"
+                        && moderationScreenStore.editSubmissionScreenIsActive()
+                        || moderationScreenStore.editFacilityScreenIsActive()
+                        && !isHealthcareProfessionalReadyForRemoval(healthcareProfessional.id)"
                     id="remove-related-healthcare-professional-to-facility"
                     class="flex w-8 items-center justify-center
                     cursor-pointer font-bold text-secondary text-sm self-start p-1"
