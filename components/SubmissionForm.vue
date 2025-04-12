@@ -3,7 +3,7 @@
         <Loader v-show="!isFormInitialized" />
         <form
             v-show="isFormInitialized"
-            class="flex flex-col place-self-center"
+            class="flex flex-col items-center"
         >
             <h1
                 data-testid="submit-heading"
