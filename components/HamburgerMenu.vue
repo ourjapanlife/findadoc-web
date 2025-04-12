@@ -139,26 +139,31 @@
                             <div
                                 class="w-10 h-10 mr-1"
                                 style="background-color:#EB7100"
+                                :class="currentTheme === 'orange' ? 'border-4 border-black' : 'border border-gray-300'"
                                 @click="setTheme('orange')"
                             />
                             <div
                                 class="bg-primary w-10 h-10 mr-1"
                                 style="background-color: #ED6C5A;"
+                                :class="currentTheme === 'coral' ? 'border-4 border-black' : 'border border-gray-300'"
                                 @click="setTheme('coral')"
                             />
                             <div
                                 class="w-10 h-10 mr-1"
                                 style="background-color: #A45D9A;"
+                                :class="currentTheme === 'violet' ? 'border-4 border-black' : 'border border-gray-300'"
                                 @click="setTheme('violet')"
                             />
                             <div
                                 class="w-10 h-10 mr-1"
                                 style="background-color: #245A7D;"
+                                :class="currentTheme === 'ocean' ? 'border-4 border-black' : 'border border-gray-300'"
                                 @click="setTheme('ocean')"
                             />
                             <div
                                 class="w-10 h-10"
                                 style="background-color: #1bdb9b;"
+                                :class="currentTheme === 'neon' ? 'border-4 border-black' : 'border border-gray-300'"
                                 @click="setTheme('neon')"
                             />
                         </div>
@@ -264,6 +269,8 @@ const authStore = useAuthStore()
 
 const isMenuOpen = ref(false)
 
+const currentTheme = ref('orange')
+
 function openMenu() {
     isMenuOpen.value = true
 }
@@ -281,11 +288,13 @@ function setTheme(newTheme: string) {
     document.documentElement.classList.remove('theme-orange', 'theme-coral', 'theme-violet', 'theme-ocean', 'theme-neon')
     document.documentElement.classList.add(`theme-${newTheme}`)
     localStorage.setItem('theme', newTheme)
+    currentTheme.value = newTheme
 }
 
 onMounted(() => {
     const saveTheme = localStorage.getItem('theme')
     if (saveTheme) {
+        currentTheme.value = saveTheme
         setTheme(saveTheme)
     }
 })
