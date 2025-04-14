@@ -133,7 +133,7 @@
                 >
                     <div>
                         <p class="mb-1">
-                            Theme
+                            {{ $t('hamburgerMenu.theme') }}
                         </p>
                         <div class="flex">
                             <div
