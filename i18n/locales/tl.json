@@ -335,7 +335,8 @@
     "noSpecialtiesWereFound": "No specialties were found",
     "noInsurancesWereFound": "No insurance was found",
     "noDegreesWereFound": "No degrees were found",
-    "noLocalesWereFound": "No locales were found"
+    "noLocalesWereFound": "No locales were found",
+    "noHealthcareProfessionalFound": "No healthcare professional was found"
   },
   "serverErrorMessages": {
     "UNAUTHENTICATED": "Wala kang sapat na permiso upang gawin ang aksyong ito.",
