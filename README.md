@@ -61,6 +61,9 @@ Consult the **[Troubleshooting Documentation](https://documentation.findadoc.jp/
       <td align="center" valign="top" width="14.28%"><a href="http://www.squareonejapan.com"><img src="https://avatars.githubusercontent.com/u/151515133?v=4?s=100" width="100px;" alt="Matt Keighley"/><br /><sub><b>Matt Keighley</b></sub></a><br /><a href="https://github.com/ourjapanlife/findadoc-web/commits?author=ShizuokaTerrier" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/Ghezz9"><img src="https://avatars.githubusercontent.com/u/177678145?v=4?s=100" width="100px;" alt="Davide Ghezzo"/><br /><sub><b>Davide Ghezzo</b></sub></a><br /><a href="https://github.com/ourjapanlife/findadoc-web/commits?author=Ghezz9" title="Code">💻</a></td>
     </tr>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/ConwayDecker"><img src="https://avatars.githubusercontent.com/u/171483356?v=4?s=100" width="100px;" alt="Jason"/><br /><sub><b>Jason</b></sub></a><br /><a href="https://github.com/ourjapanlife/findadoc-web/commits?author=ConwayDecker" title="Code">💻</a></td>
+    </tr>
   </tbody>
 </table>
 
