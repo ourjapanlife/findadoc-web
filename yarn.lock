@@ -8257,7 +8257,7 @@ __metadata:
     nuxt: "npm:^3.15.2"
     nuxt-gtag: "npm:3.0.2"
     nuxt-svgo: "npm:^4.0.2"
-    nuxt-viewport: "npm:^2.1.5"
+    nuxt-viewport: "npm:^2.2.0"
     pinia: "npm:^2.2.0"
     postcss: "npm:^8.4.41"
     postcss-html: "npm:^1.7.0"
@@ -11360,15 +11360,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nuxt-viewport@npm:^2.1.5":
-  version: 2.2.0
-  resolution: "nuxt-viewport@npm:2.2.0"
+"nuxt-viewport@npm:^2.2.0":
+  version: 2.3.0
+  resolution: "nuxt-viewport@npm:2.3.0"
   dependencies:
     "@nuxt/kit": "npm:^3.13.0"
     bowser: "npm:^2.11.0"
     cookiejs: "npm:^2.1.3"
     vue-demi: "npm:^0.14.6"
-  checksum: 10/c2139e63b5bdd32cbed93634a4706a3b6fa03b2313cd281f29292f2e70f287bb369f560caf3f85047ea7c4472bc4cdcb1cdc1ac50cdb509413fe2fe0807687d0
+  checksum: 10/b7b14be12fe84d9dc54fea6c092cbd13a79428c5f514eaad0b0e85096f98700d6ea0725d4bfd1574c2073ee48be1e4526a344c1a775a010cab88526d6f2fece3
   languageName: node
   linkType: hard
 
