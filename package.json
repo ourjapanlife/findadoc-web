@@ -71,7 +71,7 @@
         "nuxt": "^3.15.2",
         "nuxt-gtag": "3.0.2",
         "nuxt-viewport": "^2.1.5",
-        "postcss": "^8.4.41",
+        "postcss": "^8.5.3",
         "postcss-html": "^1.7.0",
         "start-server-and-test": "^2.0.8",
         "tailwindcss": "^3.4.7",
