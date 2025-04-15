@@ -8260,7 +8260,7 @@ __metadata:
     nuxt-viewport: "npm:^2.1.5"
     pinia: "npm:^2.2.0"
     postcss: "npm:^8.4.41"
-    postcss-html: "npm:^1.7.0"
+    postcss-html: "npm:^1.8.0"
     start-server-and-test: "npm:^2.0.8"
     tailwindcss: "npm:^3.4.7"
     typescript: "npm:5.5.4"
@@ -12220,7 +12220,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss-html@npm:^1.7.0":
+"postcss-html@npm:^1.8.0":
   version: 1.8.0
   resolution: "postcss-html@npm:1.8.0"
   dependencies:
