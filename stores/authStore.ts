@@ -39,5 +39,37 @@ export const useAuthStore = defineStore('authStore', () => {
         await auth0.logout({ logoutParams: { returnTo: window.location.origin } })
     }
 
-    return { userId, isLoggedIn, isLoadingAuth, isAdmin, isModerator, login, logout }
+    //Note: if this function is called while `isLoadingAuth` is true, it will return undefined
+    //If you need to wait for the auth0 object to be ready, use the `isLoadingAuth` computed property
+    //to check if the auth0 object is ready before calling this function
+    async function getAuthBearerToken() {
+        try {
+            const startTime = Date.now()
+            while (auth0?.isLoading.value) {
+            // wait for the auth0 object to be ready
+                await new Promise(resolve => setTimeout(resolve, 50))
+
+                // break the loop after 10 seconds to avoid infinite loop
+                if (Date.now() - startTime > 10000) {
+                    console.error('Auth0 loading timed out after 10 seconds')
+                    break
+                }
+            }
+
+            if (!isLoggedIn.value) {
+                return undefined
+            }
+
+            const token = await auth0?.getAccessTokenSilently({
+                authorizationParams: {
+                    audience: 'https://findadoc.jp.auth0.com' // our Auth0 API identifier
+                }
+            })
+            return token
+        } catch (error) {
+            console.error(`Error getting auth bearer token: ${JSON.stringify(error)}`)
+        }
+    }
+
+    return { userId, isLoggedIn, isLoadingAuth, isAdmin, isModerator, login, logout, getAuthBearerToken }
 })

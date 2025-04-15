@@ -26,7 +26,8 @@ export const initializeGqlClient = () => {
 export const graphQLClientRequestWithRetry = async <T>(
     gqlClientRequestFunction: (
         queryOrMutation: RequestDocument,
-        variables?: unknown
+        variables?: unknown,
+        requestHeaders?: HeadersInit
     ) => Promise<T>,
     queryOrMutation: RequestDocument,
     variables: unknown,
@@ -38,7 +39,15 @@ export const graphQLClientRequestWithRetry = async <T>(
 
     const executeGQLClientRequest = async (): Promise<ServerResponse<T>> => {
         try {
-            const data = await gqlClientRequestFunction(queryOrMutation, variables)
+            // get the auth0 token from the auth store
+            const authstore = useAuthStore()
+            const authToken = await authstore.getAuthBearerToken()
+            // Set the auth token in the request headers. This is used to authenticate the user with the API
+            const requestHeaders = {
+                authorization: authToken ? `Bearer ${authToken}` : ''
+            } satisfies HeadersInit
+
+            const data = await gqlClientRequestFunction(queryOrMutation, variables, requestHeaders)
             return { data, errors: [], hasErrors: false }
         } catch (error) {
             if (attempts < retryAmount) {
