@@ -251,7 +251,7 @@
                 <ModDashboardHealthProfessionalCard
                     :healthcare-professional="healthcareProfessional"
                     :healthcare-professionals-related-to-facility="healthcareProfessionalsRelatedToFacility"
-                    :hide-trash-can="true"
+                    :show-trash-can="false"
                 />
             </div>
         </div>
@@ -329,7 +329,7 @@ const handleHealthcareProfessionalsInputChange = (filteredItems: Ref<HealthcareP
                 return false
             }
 
-            const caseInsensitiveIdMatch = healthcareProfessional.id
+            const idMatches = healthcareProfessional.id
                 .toLowerCase()
                 .startsWith(inputValue.toLowerCase().trim())
             const nameMatches = healthcareProfessional.names.some(name => {
@@ -345,7 +345,7 @@ const handleHealthcareProfessionalsInputChange = (filteredItems: Ref<HealthcareP
                     .includes(inputValue.toLowerCase())
                 return firstNameMatch || middleNameMatch || lastNameMatch
             })
-            return caseInsensitiveIdMatch || nameMatches
+            return idMatches || nameMatches
         })
 }
 const healthcareProfessionalsToDisplayCallback = (healthcareProfessional: HealthcareProfessional) =>
