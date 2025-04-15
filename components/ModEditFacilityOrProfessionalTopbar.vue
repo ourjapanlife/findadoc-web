@@ -175,7 +175,7 @@ const facilityHasUnsavedChanges = () => {
           || facilityBeforeChange.mapLongitude.toString() !== facilitySections.mapLongitude
           || JSON.stringify(facilityBeforeChange.healthcareProfessionalIds)
           !== JSON.stringify(facilitySections.healthcareProfessionalIds)
-          || facilitySections.healthProfessionalsRelations.length
+          || facilitySections.healthProfessionalsRelations.length > 0
 
     return areThereUnsavedFacilityChanges
 }
@@ -335,9 +335,11 @@ onMounted(() => {
     toast = useToast()
 })
 
-watch(() => facilitiesStore.selectedFacilityData, newValue => {
-    originalFacilityRefsValue.value = newValue
-})
+watch(() => facilitiesStore.selectedFacilityData, (newValue, oldValue) => {
+    if (newValue !== oldValue) {
+        originalFacilityRefsValue.value = newValue
+    }
+}, { deep: true })
 
 watch(() => healthcareProfessionalsStore.healthcareProfessionalSectionFields.updatedDate, newValue => {
     if (newValue) {
