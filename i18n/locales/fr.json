@@ -29,7 +29,8 @@
     "balancesheet": "Balance Sheet",
     "moderation": "Moderation",
     "login": "Log in",
-    "logout": "Log out"
+    "logout": "Log out",
+    "theme": "Thème"
   },
   "privacyPage": {
     "heading": "Politique de Confidentialité",
