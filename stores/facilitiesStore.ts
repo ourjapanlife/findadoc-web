@@ -4,7 +4,7 @@ import { gql } from 'graphql-request'
 import type { Maybe } from 'graphql/jsutils/Maybe'
 import type { DeleteResult, Facility,
     HealthcareProfessional,
-    Mutation, MutationDeleteFacilityArgs, MutationUpdateFacilityArgs, Relationship } from '~/typedefs/gqlTypes'
+    Mutation, MutationDeleteFacilityArgs, MutationUpdateFacilityArgs, Query, Relationship } from '~/typedefs/gqlTypes'
 import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql'
 import type { ServerError, ServerResponse } from '~/typedefs/serverResponse'
 
@@ -166,8 +166,13 @@ async function queryFacilities() {
         }
     }
     try {
-        const response = await gqlClient.request<{ facilities: Facility[] }>(getAllFacilitiesForModeration, searchFacilitiesData)
-        return response?.facilities ?? []
+        const response = await graphQLClientRequestWithRetry<Query['facilities']>(
+            gqlClient.request.bind(gqlClient),
+            getAllFacilitiesForModeration,
+            searchFacilitiesData
+        )
+
+        return response?.data as Facility[] ?? []
     } catch (error) {
         console.error(`Error querying the facilities: ${JSON.stringify(error)}`)
         return []
