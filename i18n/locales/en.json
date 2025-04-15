@@ -141,7 +141,8 @@
         "googleMapsInformation": "Google maps information",
         "healthcareProfessionalIds": "Healthcare Professional IDs",
         "healthcareProfessionalName": "Healthcare Professional Name",
-        "healthcareProfessionalMedicalInfo": "Healthcare Professional Medical Info"
+        "healthcareProfessionalMedicalInfo": "Healthcare Professional Medical Info",
+        "healthcareProfessionalFacilities": "Healthcare Professional Facilities"
     },
     "modDashboardTopbar": {
         "placeholderText": "Enter name or ID to search",

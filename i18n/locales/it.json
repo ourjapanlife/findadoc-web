@@ -141,7 +141,8 @@
     "googleMapsInformation": "Informazioni Google Maps",
     "healthcareProfessionalIds": "ID professionista sanitario",
     "healthcareProfessionalName": "Nome del professionista sanitario",
-    "healthcareProfessionalMedicalInfo": "Info mediche professionista"
+    "healthcareProfessionalMedicalInfo": "Healthcare Professional Medical Info",
+    "healthcareProfessionalFacilities": "Strutture collegate ai medici"
   },
   "modDashboardTopbar": {
     "placeholderText": "Inserisci nome o ID per la ricerca",

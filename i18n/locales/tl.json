@@ -135,7 +135,8 @@
     "googleMapsInformation": "Impormasyon sa Google maps ",
     "healthcareProfessionalIds": "Mga ID ng propesyonal sa Pangangalagang Pangkalusugan",
     "healthcareProfessionalName": "Pangalan ng propesyonal sa Pangangalagang Pangkalusugan",
-    "healthcareProfessionalMedicalInfo": "Medikal na impormasyon ng propesyonal sa Pangangalagang Pangkalusugan"
+    "healthcareProfessionalMedicalInfo": "Medikal na impormasyon ng propesyonal sa Pangangalagang Pangkalusugan",
+    "healthcareProfessionalFacilities": "Healthcare Professional Related Facilities"
   },
   "modDashboardTopbar": {
     "placeholderText": "Maglagay ng pangalan o ID upang mahanap",
