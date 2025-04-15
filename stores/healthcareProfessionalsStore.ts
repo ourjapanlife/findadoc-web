@@ -13,7 +13,8 @@ import { type Insurance,
     type Relationship,
     RelationshipAction,
     type CreateHealthcareProfessionalInput,
-    type MutationCreateHealthcareProfessionalArgs } from '~/typedefs/gqlTypes'
+    type MutationCreateHealthcareProfessionalArgs,
+    type Query } from '~/typedefs/gqlTypes'
 import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql'
 import { useLocaleStore } from '~/stores/localeStore'
 import type { ServerError, ServerResponse } from '~/typedefs/serverResponse'
@@ -255,10 +256,13 @@ async function queryHealthcareProfessionals() {
         }
     }
     try {
-        const response = await gqlClient
-            .request<{ healthcareProfessionals: HealthcareProfessional[] }>
-            (getAllHealthcareProfessionalsData, searchHealthcareProfessionalsData)
-        return response?.healthcareProfessionals ?? []
+        const response = await graphQLClientRequestWithRetry<Query['healthcareProfessionals']>(
+            gqlClient.request.bind(gqlClient),
+            getAllHealthcareProfessionalsData,
+            searchHealthcareProfessionalsData
+        )
+
+        return response?.data ?? []
     } catch (error) {
         console.error(`Error querying the healthcare professionals: ${JSON.stringify(error)}`)
         return []
@@ -270,15 +274,16 @@ export async function getHealthcareProfessionalById(id: string) {
         const queryData = {
             healthcareProfessionalId: id
         }
-        const result = await gqlClient.request<{ healthcareProfessional: HealthcareProfessional[] }>(
+        const result = await graphQLClientRequestWithRetry<Query['healthcareProfessionals']>(
+            gqlClient.request.bind(gqlClient),
             getHealthcareProfessionalByIdGqlQuery,
             queryData
         )
 
-        if (!result.healthcareProfessional) {
+        if (!result.data) {
             throw new Error('The Healthcare Professional ID doesn\'t exist')
         }
-        return result.healthcareProfessional
+        return result.data
     } catch (error: unknown) {
         console.error(`Error retrieving healthcare professional by id: ${id}: ${JSON.stringify(error)}`)
         return []

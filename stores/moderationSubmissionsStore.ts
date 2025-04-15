@@ -2,7 +2,7 @@ import { gql } from 'graphql-request'
 import { defineStore } from 'pinia'
 import { ref, type Ref } from 'vue'
 import type { Maybe } from 'graphql/jsutils/Maybe'
-import type { Submission, MutationUpdateSubmissionArgs, Mutation } from '~/typedefs/gqlTypes.js'
+import type { Submission, MutationUpdateSubmissionArgs, Mutation, Query } from '~/typedefs/gqlTypes.js'
 import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql.js'
 import type { ServerError, ServerResponse } from '~/typedefs/serverResponse'
 
@@ -95,7 +95,8 @@ export const useModerationSubmissionsStore = defineStore(
         async function updateSubmission(submission: MutationUpdateSubmissionArgs):
         Promise<ServerResponse<Maybe<Submission>>> {
             const serverResponse = { data: {} as Maybe<Submission>, errors: [] as ServerError[], hasErrors: false }
-            const response = await graphQLClientRequestWithRetry<Mutation>(
+
+            const response = await graphQLClientRequestWithRetry<Mutation['updateSubmission']>(
                 gqlClient.request.bind(gqlClient),
                 updateFacilitySubmissionGqlMutation,
                 submission
@@ -106,7 +107,7 @@ export const useModerationSubmissionsStore = defineStore(
                 setUpdatingSubmissionFromTopBar(false)
             }
 
-            serverResponse.data = response.data?.updateSubmission
+            serverResponse.data = response.data
             serverResponse.errors = response.errors ? response.errors : []
             serverResponse.hasErrors = response.hasErrors
 
@@ -178,11 +179,13 @@ async function querySubmissions() {
             }
         }
 
-        const result = await gqlClient.request<{ submissions: Submission[] }>(
+        const response = await graphQLClientRequestWithRetry<Query['submissions']>(
+            gqlClient.request.bind(gqlClient),
             getSubmissionsGqlQuery,
             submissionsFilters
         )
-        return result?.submissions ?? []
+
+        return response?.data as Submission[] ?? []
     } catch (error) {
         console.error(`Error querying the submissions: ${JSON.stringify(error)}`)
         return []
