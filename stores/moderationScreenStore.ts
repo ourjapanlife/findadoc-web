@@ -18,6 +18,13 @@ export enum ModSubmissionLeftNavbarSectionIDs {
     HealthcareProfessionalName = 'HEALTHCARE_PROFESSIONAL_NAME'
 }
 
+export enum ModHealthcareProfessionalsLeftNavbarSections {
+    HealthcareProfessionalIds = 'HEALTHCARE_PROFESSIONAL_IDS',
+    HealthcareProfessionalMedicalInfo = 'HEALTHCARE_PROFESSIONAL_MEDICAL_INFO',
+    HealthcareProfessionalName = 'HEALTHCARE_PROFESSIONAL_NAME',
+    HealthcareProfessionalFacilities = 'HEALTHCARE_PROFESSIONAL_FACILITIES'
+}
+
 export const useModerationScreenStore = defineStore(
     'moderationScreenStore',
     () => {
