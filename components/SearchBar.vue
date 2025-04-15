@@ -100,7 +100,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watchEffect, type Ref } from 'vue'
+import { ref, watchEffect, type Ref, onMounted } from 'vue'
 import SVGSearchIcon from '~/assets/icons/search-icon.svg'
 import { useSearchResultsStore } from '~/stores/searchResultsStore.js'
 import { useLocationsStore } from '~/stores/locationsStore.js'
@@ -112,8 +112,6 @@ const localeStore = useLocaleStore()
 const locationsStore = useLocationsStore()
 const searchResultsStore = useSearchResultsStore()
 const specialtiesStore = useSpecialtiesStore()
-
-await locationsStore.fetchLocations()
 
 const languageOptions = localeStore.localeDisplayOptions
 const languageOptionsWithPlaceHolder = setSearchBarLanguageDropdownOptions()
@@ -127,6 +125,11 @@ const selectedLocation: Ref<string> = ref('')
 const selectedLanguage: Ref<Locale | string> = ref('')
 
 const placeHolderTextDisplay = '----Any----'
+
+onMounted(async () => {
+    // Initialize locations when component is mounted. The dropdown options are reactive, so they will update automatically
+    await locationsStore.fetchLocations()
+})
 
 function setSearchBarLanguageDropdownOptions() {
     // This will remove any codes code that is falsy
