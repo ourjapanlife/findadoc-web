@@ -64,6 +64,7 @@
                         selectedItems.includes(item) ? 'bg-primary/90' : '',
                         selectedItemIndex === index ? 'bg-primary-hover text-primary-inverted' : 'opacity-95',
                     ]"
+                    data-testid="mod-search-bar-search-result"
                     @click="handleListItemClick"
                     @mousedown="handleListItemMouseDown"
                     @mouseover="() => { handleListItemMouseOver(index) }"
