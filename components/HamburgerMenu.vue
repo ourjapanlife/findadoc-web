@@ -131,6 +131,43 @@
                     data-testid="hamburger-menu-footer-section"
                     class="flex flex-col gap-5 px-5"
                 >
+                    <div data-testid="hamburger-menu-theme-switcher">
+                        <p class="mb-1">
+                            {{ $t('hamburgerMenu.theme') }}
+                        </p>
+                        <div class="flex">
+                            <div
+                                class="w-10 h-10 mr-1"
+                                style="background-color:#EB7100"
+                                :class="getSelectedTheme('orange')"
+                                @click="setTheme('orange')"
+                            />
+                            <div
+                                class="bg-primary w-10 h-10 mr-1"
+                                style="background-color: #ED6C5A;"
+                                :class="getSelectedTheme('coral')"
+                                @click="setTheme('coral')"
+                            />
+                            <div
+                                class="w-10 h-10 mr-1"
+                                style="background-color: #A45D9A;"
+                                :class="getSelectedTheme('violet')"
+                                @click="setTheme('violet')"
+                            />
+                            <div
+                                class="w-10 h-10 mr-1"
+                                style="background-color: #245A7D;"
+                                :class="getSelectedTheme('ocean')"
+                                @click="setTheme('ocean')"
+                            />
+                            <div
+                                class="w-10 h-10"
+                                style="background-color: #1bdb9b;"
+                                :class="getSelectedTheme('neon')"
+                                @click="setTheme('neon')"
+                            />
+                        </div>
+                    </div>
                     <div
                         data-testid="hamburger-menu-footer-legal"
                         class="flex gap-4"
@@ -222,7 +259,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import SVGProfileIcon from '~/assets/icons/profile-icon.svg'
 import SVGHamburgerMenuIcon from '~/assets/icons/hamburger-menu.svg'
 import SVGGithubIcon from '~/assets/icons/social-github.svg'
@@ -231,6 +268,8 @@ import { useAuthStore } from '~/stores/authStore'
 const authStore = useAuthStore()
 
 const isMenuOpen = ref(false)
+
+const currentTheme = ref('orange')
 
 function openMenu() {
     isMenuOpen.value = true
@@ -244,6 +283,29 @@ function logout() {
     authStore.logout()
     closeMenu()
 }
+
+function setTheme(newTheme: string) {
+    document.documentElement.classList.remove('theme-orange', 'theme-coral', 'theme-violet', 'theme-ocean', 'theme-neon')
+    document.documentElement.classList.add(`theme-${newTheme}`)
+    localStorage.setItem('theme', newTheme)
+    currentTheme.value = newTheme
+}
+
+// this gives a black border to the selected theme in the hamburger menu
+function getSelectedTheme(theme: string) {
+    if (currentTheme.value === theme) {
+        return 'border-4 border-black'
+    }
+    return 'border border-gray-300'
+}
+
+onMounted(() => {
+    const saveTheme = localStorage.getItem('theme')
+    if (saveTheme) {
+        currentTheme.value = saveTheme
+        setTheme(saveTheme)
+    }
+})
 
 //this is a custom directive to close the menu when clicking outside of the menu
 const vCloseOnOutsideClick = {
