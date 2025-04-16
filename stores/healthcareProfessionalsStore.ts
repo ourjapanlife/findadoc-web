@@ -74,9 +74,10 @@ export const useHealthcareProfessionalsStore = defineStore(
             const facilitiesForRelationshipCreationArray = Array.from(selectedFacilities.value)
 
             if (facilitiesForRelationshipCreationArray.length) {
-                //For each is used here to only add the necessary actions to the already created ref array of relationships
-                facilitiesForRelationshipCreationArray.forEach(facility => createFacilitiesRelationArray(facility))
+                const generatedRelations = facilitiesForRelationshipCreationArray.map(createFacilityRelation)
+                facilitiesRelationsToSelectedHealthcareProfessional.value = generatedRelations
             }
+
             const updateHealthcareProfessionalInput: MutationUpdateHealthcareProfessionalArgs = {
                 id: selectedHealthcareProfessionalId.value,
                 input: {
@@ -130,24 +131,13 @@ export const useHealthcareProfessionalsStore = defineStore(
 
         /* This function will create the relationships that need to be sent in the backend for
         updating facilities the healthcare professional works at */
-        function createFacilitiesRelationArray(facilityForRelationship: Facility) {
-            if (healthcareProfessionalSectionFields.facilityIds.includes(facilityForRelationship.id)) {
-                facilitiesRelationsToSelectedHealthcareProfessional.value.push({
-                    otherEntityId: facilityForRelationship.id,
-                    action: RelationshipAction.Delete
-                })
-
-                return
+        function createFacilityRelation(facility: Facility): Relationship {
+            return {
+                otherEntityId: facility.id,
+                action: healthcareProfessionalSectionFields.facilityIds.includes(facility.id)
+                    ? RelationshipAction.Delete
+                    : RelationshipAction.Create
             }
-
-            facilitiesRelationsToSelectedHealthcareProfessional.value.push(
-                {
-                    otherEntityId: facilityForRelationship.id,
-                    action: RelationshipAction.Create
-                }
-            )
-
-            return
         }
 
         async function deleteHealthcareProfessional(healthcareProfessionalId: MutationDeleteHealthcareProfessionalArgs):
