@@ -8,7 +8,8 @@ import { type Facility, type DeleteResult, type HealthcareProfessional,
     type MutationDeleteHealthcareProfessionalArgs,
     type MutationUpdateHealthcareProfessionalArgs,
     type Relationship,
-    RelationshipAction } from '~/typedefs/gqlTypes'
+    RelationshipAction,
+    type UpdateHealthcareProfessionalInput } from '~/typedefs/gqlTypes'
 import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql'
 import { useLocaleStore } from '~/stores/localeStore'
 import type { ServerError, ServerResponse } from '~/typedefs/serverResponse'
@@ -77,20 +78,38 @@ export const useHealthcareProfessionalsStore = defineStore(
                 //For each is used here to only add the necessary actions to the already created ref array of relationships
                 facilitiesForRelationshipCreationArray.forEach(facility => createFacilitiesRelationArray(facility))
             }
-            const updateHealthcareProfessionalInput: MutationUpdateHealthcareProfessionalArgs = {
-                id: selectedHealthcareProfessionalId.value,
-                input: {
-                    acceptedInsurance: healthcareProfessionalSectionFields.acceptedInsurance,
-                    degrees: healthcareProfessionalSectionFields.degrees,
-                    facilityIds: facilitiesRelationsToSelectedHealthcareProfessional.value.length
-                      > 0
-                        ? facilitiesRelationsToSelectedHealthcareProfessional.value
-                        : undefined,
-                    names: healthcareProfessionalSectionFields.names,
-                    specialties: healthcareProfessionalSectionFields.specialties,
-                    spokenLanguages: healthcareProfessionalSectionFields.spokenLanguages
+            // Fetch the current healthcare professional data for comparison
+            const currentProfessional = healthcareProfessionalsData.value.find(
+                (hp: HealthcareProfessional) => hp.id === selectedHealthcareProfessionalId.value
+            )
+
+            const updatedInput: Partial<UpdateHealthcareProfessionalInput> = {}
+
+            // Check for changes and update the updateInput object
+            const checkChanges = <K extends keyof UpdateHealthcareProfessionalInput>
+            (key: K, newValue: UpdateHealthcareProfessionalInput[K]) => {
+                if (!currentProfessional || currentProfessional[key] !== newValue) {
+                    updatedInput[key] = newValue
+                } else {
+                    updatedInput[key] = undefined
                 }
             }
+            checkChanges('acceptedInsurance', healthcareProfessionalSectionFields.acceptedInsurance)
+            checkChanges('degrees', healthcareProfessionalSectionFields.degrees)
+            checkChanges('facilityIds',
+                         facilitiesRelationsToSelectedHealthcareProfessional.value.length > 0
+                             ? facilitiesRelationsToSelectedHealthcareProfessional.value
+                             : undefined)
+            checkChanges('names', healthcareProfessionalSectionFields.names)
+            checkChanges('specialties', healthcareProfessionalSectionFields.specialties)
+            checkChanges('spokenLanguages', healthcareProfessionalSectionFields.spokenLanguages)
+
+            const updateHealthcareProfessionalInput: MutationUpdateHealthcareProfessionalArgs = {
+                id: selectedHealthcareProfessionalId.value,
+                input: updatedInput
+            }
+
+            console.info(updateHealthcareProfessionalInput)
 
             const response = await graphQLClientRequestWithRetry<Mutation>(
                 gqlClient.request.bind(gqlClient),
