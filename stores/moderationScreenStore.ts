@@ -18,6 +18,13 @@ export enum ModSubmissionLeftNavbarSectionIDs {
     HealthcareProfessionalName = 'HEALTHCARE_PROFESSIONAL_NAME'
 }
 
+export enum ModHealthcareProfessionalsLeftNavbarSections {
+    HealthcareProfessionalIds = 'HEALTHCARE_PROFESSIONAL_IDS',
+    HealthcareProfessionalMedicalInfo = 'HEALTHCARE_PROFESSIONAL_MEDICAL_INFO',
+    HealthcareProfessionalName = 'HEALTHCARE_PROFESSIONAL_NAME',
+    HealthcareProfessionalFacilities = 'HEALTHCARE_PROFESSIONAL_FACILITIES'
+}
+
 export const useModerationScreenStore = defineStore(
     'moderationScreenStore',
     () => {
@@ -27,6 +34,30 @@ export const useModerationScreenStore = defineStore(
             activeScreen.value = newValue
         }
 
-        return { activeScreen, ModerationScreen, setActiveScreen }
+        function dashboardScreenIsActive() {
+            return activeScreen.value === ModerationScreen.Dashboard
+        }
+
+        function editSubmissionScreenIsActive() {
+            return activeScreen.value === ModerationScreen.EditSubmission
+        }
+
+        function editHealthcareProfessionalScreenIsActive() {
+            return activeScreen.value === ModerationScreen.EditHealthcareProfessional
+        }
+
+        function editFacilityScreenIsActive() {
+            return activeScreen.value === ModerationScreen.EditFacility
+        }
+
+        return {
+            activeScreen,
+            ModerationScreen,
+            setActiveScreen,
+            dashboardScreenIsActive,
+            editSubmissionScreenIsActive,
+            editHealthcareProfessionalScreenIsActive,
+            editFacilityScreenIsActive
+        }
     }
 )

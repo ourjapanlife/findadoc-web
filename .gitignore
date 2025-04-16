@@ -14,12 +14,13 @@ node_modules
 yarn-error.log
 
 #cypress
-cypress
+cypress/screenshots
+cypress/videos
+cypress/downloads
 # jest
 coverage
 # eslint results
 eslint-results.sarif
-cypress/videos
 *.DS_Store
 
 # Env

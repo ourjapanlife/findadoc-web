@@ -1,16 +1,16 @@
 <template>
     <div class="h-full overflow-hidden">
-        <div v-if="screenStore.activeScreen === ModerationScreen.Dashboard">
+        <div v-if="moderationScreenStore.dashboardScreenIsActive()">
             <ModSubmissionListContainer />
         </div>
         <div
-            v-else-if="screenStore.activeScreen === ModerationScreen.EditSubmission"
+            v-if="moderationScreenStore.editSubmissionScreenIsActive()"
             class="h-full overflow-hidden"
         >
             <ModEditSubmissionForm />
         </div>
         <div
-            v-else-if="screenStore.activeScreen === ModerationScreen.EditFacility"
+            v-if="moderationScreenStore.editFacilityScreenIsActive()"
             class="h-full overflow-hidden"
         >
             <form class="p-4 h-full overflow-y-auto">
@@ -18,7 +18,7 @@
             </form>
         </div>
         <div
-            v-else-if="screenStore.activeScreen === ModerationScreen.EditHealthcareProfessional"
+            v-if="moderationScreenStore.editHealthcareProfessionalScreenIsActive()"
             class="h-full overflow-hidden"
         >
             <form
@@ -40,7 +40,7 @@ import { useHealthcareProfessionalsStore } from '~/stores/healthcareProfessional
 
 const route = useRoute()
 
-const screenStore = useModerationScreenStore()
+const moderationScreenStore = useModerationScreenStore()
 const moderationSubmissionsStore = useModerationSubmissionsStore()
 const facilitiesStore = useFacilitiesStore()
 const healthcareProfessionalStore = useHealthcareProfessionalsStore()
@@ -51,21 +51,27 @@ const selectedIdFromModSubmissionList = computed(() => route.params.id as string
 const setActiveScreenBasedOnRoute = async () => {
     await nextTick()
     if (routePathForModerationScreen.value.includes('edit-submission') && selectedIdFromModSubmissionList.value) {
-        screenStore.setActiveScreen(ModerationScreen.EditSubmission)
+        moderationScreenStore.setActiveScreen(ModerationScreen.EditSubmission)
         moderationSubmissionsStore.selectedSubmissionId = selectedIdFromModSubmissionList.value
-    } else if (routePathForModerationScreen.value.includes('edit-facility') && selectedIdFromModSubmissionList.value) {
-        screenStore.setActiveScreen(ModerationScreen.EditFacility)
-        facilitiesStore.selectedFacilityId = selectedIdFromModSubmissionList.value
-    } else if (
-        routePathForModerationScreen.value.includes('edit-healthcare-professional') && selectedIdFromModSubmissionList.value) {
-        screenStore.setActiveScreen(ModerationScreen.EditHealthcareProfessional)
-        healthcareProfessionalStore.selectedHealthcareProfessionalId = selectedIdFromModSubmissionList.value
-    } else {
-        screenStore.setActiveScreen(ModerationScreen.Dashboard)
-        moderationSubmissionsStore.selectedSubmissionId = ''
-        facilitiesStore.selectedFacilityId = ''
-        healthcareProfessionalStore.selectedHealthcareProfessionalId = ''
+        return
     }
+    if (routePathForModerationScreen.value.includes('edit-facility') && selectedIdFromModSubmissionList.value) {
+        moderationScreenStore.setActiveScreen(ModerationScreen.EditFacility)
+        facilitiesStore.selectedFacilityId = selectedIdFromModSubmissionList.value
+        return
+    }
+    if (
+        routePathForModerationScreen.value.includes('edit-healthcare-professional') && selectedIdFromModSubmissionList.value) {
+        moderationScreenStore.setActiveScreen(ModerationScreen.EditHealthcareProfessional)
+        healthcareProfessionalStore.selectedHealthcareProfessionalId = selectedIdFromModSubmissionList.value
+        return
+    }
+
+    // This will default the screen based on the route to the dashboard if all the other stuff fails
+    moderationScreenStore.setActiveScreen(ModerationScreen.Dashboard)
+    moderationSubmissionsStore.selectedSubmissionId = ''
+    facilitiesStore.selectedFacilityId = ''
+    healthcareProfessionalStore.selectedHealthcareProfessionalId = ''
 }
 
 watch(selectedIdFromModSubmissionList, setActiveScreenBasedOnRoute)

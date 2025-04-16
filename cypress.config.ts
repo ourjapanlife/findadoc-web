@@ -1,15 +1,4 @@
-/* eslint-disable @typescript-eslint/no-namespace */
 import { defineConfig } from 'cypress'
-
-declare global {
-    namespace NodeJS {
-        interface ProcessEnv {
-            AUTH0_DOMAIN: string
-            AUTH0_USERNAME: string
-            AUTH0_PASSWORD: string
-        }
-    }
-}
 
 const config = defineConfig({
     projectId: 'brkojt',

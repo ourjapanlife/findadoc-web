@@ -1,6 +1,9 @@
+import type { StateTree } from 'pinia'
 import enUS from '../../../i18n/locales/en.json'
 import fakeFacilityResult from '../../fake_data/moderation_dashboard/fakeModFacilityData.json'
 import { aliasQuery } from '../utils'
+
+let facilitiesStore: StateTree
 
 before(() => {
     cy.login()
@@ -19,6 +22,12 @@ describe('Moderation edit facility form', () => {
 
             cy.get('[data-testid="submission-type-select"]').select('FACILITIES')
             cy.get('[data-testid="mod-facility-list-item-1"]').click()
+
+            /* This will set the facilities stores or any other stores you need to access for testings.
+                This NEEDS to be in the describe and not the login before*/
+            cy.window().then(win => {
+                facilitiesStore = win.$pinia.state.value.facilitiesStore
+            })
         })
 
         beforeEach(() => {
@@ -100,26 +109,41 @@ describe('Moderation edit facility form', () => {
                 .should('have.value', fakeFacilityResult.data.facilities[0].mapLongitude)
         })
 
-        it('should be able to type in all input fields', () => {
-            cy.get('[data-testid="mod-facility-section-nameEn"]').find('input').type('Hospital')
-            cy.get('[data-testid="mod-facility-section-nameJa"]').find('input').type('立川中央病院')
-            cy.get('[data-testid="mod-facility-section-phone"]').find('input').type('08080939393')
-            cy.get('[data-testid="mod-facility-section-email"]').find('input').type('example@mail.com')
-            cy.get('[data-testid="mod-facility-section-website"]').find('input').type('http://example.com')
-            cy.get('[data-testid="mod-facility-section-postalCode"]').find('input').type('180-0000')
-            cy.get('[data-testid="mod-facility-section-cityEn"]').find('input').type('Shibuya')
-            cy.get('[data-testid="mod-facility-section-addressLine1En"]').find('input').type('some address line 1')
-            cy.get('[data-testid="mod-facility-section-addressLine2En"]').find('input').type('some address line 2')
-            cy.get('[data-testid="mod-facility-section-cityJa"]').find('input').type('渋谷区')
-            cy.get('[data-testid="mod-facility-section-addressLine1Ja"]').find('input').type('道の駅')
-            cy.get('[data-testid="mod-facility-section-addressLine2Ja"]').find('input').type('道の')
+        it('should be able to type in all input fields and update the store values', () => {
+            cy.get('[data-testid="mod-facility-section-nameEn"]').find('input').clear().type('Hospital')
+            cy.get('[data-testid="mod-facility-section-nameJa"]').find('input').clear().type('立川中央病院')
+            cy.get('[data-testid="mod-facility-section-phone"]').find('input').clear().type('08080939393')
+            cy.get('[data-testid="mod-facility-section-email"]').find('input').clear().type('example@mail.com')
+            cy.get('[data-testid="mod-facility-section-website"]').find('input').clear().type('http://example.com')
+            cy.get('[data-testid="mod-facility-section-postalCode"]').find('input').clear().type('180-0000')
+            cy.get('[data-testid="mod-facility-section-cityEn"]').find('input').clear().type('Shibuya')
+            cy.get('[data-testid="mod-facility-section-addressLine1En"]').find('input').clear().type('some address line 1')
+            cy.get('[data-testid="mod-facility-section-addressLine2En"]').find('input').clear().type('some address line 2')
+            cy.get('[data-testid="mod-facility-section-cityJa"]').find('input').clear().type('渋谷区')
+            cy.get('[data-testid="mod-facility-section-addressLine1Ja"]').find('input').clear().type('道の駅')
+            cy.get('[data-testid="mod-facility-section-addressLine2Ja"]').find('input').clear().type('道の')
             //The typing is split into three due to our linting rules of length
             cy.get('[data-testid="mod-facility-section-google-maps"]')
-                .find('input')
+                .find('input').clear()
                 .type('www.google.com/maps/place/82+Yamatech%C5%8D,+Naka+Ward,+Yokohama,+Kanagawa+231-0862,')
                 .type('+Japan/@35.437123,139.651471,16z/data=!4m6!3m5!1s0x60185d201648e7c1:0x8f37d37bb381e29!8m2!3d35')
                 .type('.4371228!4d139.6514712!16s%2Fg%2F11clpxxvx5?hl=en-US&entry=ttu')
-            cy.get('[data-testid="mod-facility-section-doctor-search"]').find('input').type('Aya Yumino')
+            cy.get('[data-testid="mod-facility-section-doctor-search"]').find('input').clear().type('Aya Yumino')
+        })
+
+        it('should have updated the store values', () => {
+            expect(facilitiesStore.facilitySectionFields.nameEn).to.equal('Hospital')
+            expect(facilitiesStore.facilitySectionFields.nameJa).to.equal('立川中央病院')
+            expect(facilitiesStore.facilitySectionFields.phone).to.equal('08080939393')
+            expect(facilitiesStore.facilitySectionFields.email).to.equal('example@mail.com')
+            expect(facilitiesStore.facilitySectionFields.website).to.equal('http://example.com')
+            expect(facilitiesStore.facilitySectionFields.postalCode).to.equal('180-0000')
+            expect(facilitiesStore.facilitySectionFields.cityEn).to.equal('Shibuya')
+            expect(facilitiesStore.facilitySectionFields.addressLine1En).to.equal('some address line 1')
+            expect(facilitiesStore.facilitySectionFields.addressLine2En).to.equal('some address line 2')
+            expect(facilitiesStore.facilitySectionFields.cityJa).to.equal('渋谷区')
+            expect(facilitiesStore.facilitySectionFields.addressLine1Ja).to.equal('道の駅')
+            expect(facilitiesStore.facilitySectionFields.addressLine2Ja).to.equal('道の')
         })
 
         it('should be able to select a field', () => {

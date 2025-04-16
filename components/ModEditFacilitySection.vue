@@ -1,4 +1,5 @@
 <template>
+    <Loader />
     <div v-if="isFacilitySectionInitialized">
         <div
             class="mod-facility-section"
@@ -227,7 +228,7 @@
         <ModHealthcareProfessionalSearchbar data-testid="mod-facility-section-doctor-search" />
         <div class="flex flex-col">
             <span
-                v-if="moderationScreenStore.activeScreen === ModerationScreen.EditFacility"
+                v-if="moderationScreenStore.editFacilityScreenIsActive()"
                 class="mb-1 text-primary-text text-2xl font-bold font-sans leading-normal"
             >
                 {{ $t('modFacilitySection.healthcareProfessionalToAdd') }}
@@ -249,7 +250,7 @@
             </span>
         </div>
         <div
-            v-if="moderationScreenStore.activeScreen === ModerationScreen.EditFacility"
+            v-if="moderationScreenStore.editFacilityScreenIsActive()"
         >
             <span class="mb-3.5 text-center text-primary-text text-2xl font-bold font-sans leading-normal">
                 {{ $t('modFacilitySection.existingHPHeading') }}
@@ -294,6 +295,9 @@ let toast: ToastInterface
 const route = useRoute()
 
 const { t } = useI18n()
+
+const loadingStore = useLoadingStore()
+loadingStore.setIsLoading(true)
 
 const moderationScreenStore = useModerationScreenStore()
 const facilityStore = useFacilitiesStore()
@@ -376,6 +380,8 @@ onBeforeMount(async () => {
     syncHealthcareProfessionalsRelatedToFacility()
 
     isFacilitySectionInitialized.value = true
+
+    loadingStore.setIsLoading(false)
 
     // Ensure UI updates are reflected
     await nextTick()
