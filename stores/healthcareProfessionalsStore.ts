@@ -73,9 +73,11 @@ export const useHealthcareProfessionalsStore = defineStore(
 
             const facilitiesForRelationshipCreationArray = Array.from(selectedFacilities.value)
 
+            let relations: Relationship[] = []
+
             if (facilitiesForRelationshipCreationArray.length) {
-                const generatedRelations = facilitiesForRelationshipCreationArray.map(createFacilityRelation)
-                facilitiesRelationsToSelectedHealthcareProfessional.value = generatedRelations
+                relations = facilitiesForRelationshipCreationArray.map(createFacilityRelation)
+                facilitiesRelationsToSelectedHealthcareProfessional.value = relations
             }
 
             const updateHealthcareProfessionalInput: MutationUpdateHealthcareProfessionalArgs = {
@@ -83,10 +85,7 @@ export const useHealthcareProfessionalsStore = defineStore(
                 input: {
                     acceptedInsurance: healthcareProfessionalSectionFields.acceptedInsurance,
                     degrees: healthcareProfessionalSectionFields.degrees,
-                    facilityIds: facilitiesRelationsToSelectedHealthcareProfessional.value.length
-                      > 0
-                        ? facilitiesRelationsToSelectedHealthcareProfessional.value
-                        : undefined,
+                    facilityIds: relations.length > 0 ? relations : undefined,
                     names: healthcareProfessionalSectionFields.names,
                     specialties: healthcareProfessionalSectionFields.specialties,
                     spokenLanguages: healthcareProfessionalSectionFields.spokenLanguages
