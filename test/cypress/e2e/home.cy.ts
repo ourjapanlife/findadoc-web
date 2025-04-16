@@ -218,7 +218,7 @@ describe('Visits the home page', () => {
             })
 
             // theme switcher
-            it('theme switcher is visible', () => {
+            it('shows the theme switcher', () => {
                 // Open the hamburger menu
                 cy.get('[data-testid="hamburger-menu-icon"]').click()
                 cy.get('[data-testid="hamburger-menu-theme-switcher"]').should('exist').should('be.visible')
