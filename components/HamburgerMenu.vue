@@ -131,7 +131,7 @@
                     data-testid="hamburger-menu-footer-section"
                     class="flex flex-col gap-5 px-5"
                 >
-                    <div>
+                    <div data-testid="hamburger-menu-theme-switcher">
                         <p class="mb-1">
                             {{ $t('hamburgerMenu.theme') }}
                         </p>
