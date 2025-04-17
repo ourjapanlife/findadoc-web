@@ -10,13 +10,13 @@ export const useSubmissionStore = defineStore('submissionStore', () => {
 
     async function createNewSubmission(newSubmission: MutationCreateSubmissionArgs):
     Promise<ServerResponse<Mutation['createSubmission']>> {
-        const response = await graphQLClientRequestWithRetry<Mutation['createSubmission']>(
+        const serverResponse = await graphQLClientRequestWithRetry<Mutation['createSubmission']>(
             gqlClient.request.bind(gqlClient),
             createSubmissionMutation,
             newSubmission
         )
 
-        return response
+        return serverResponse
     }
 
     return { createNewSubmission,

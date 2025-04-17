@@ -47,7 +47,7 @@ export const useAuthStore = defineStore('authStore', () => {
             const startTime = Date.now()
             while (auth0?.isLoading.value) {
             // wait for the auth0 object to be ready
-                await new Promise(resolve => setTimeout(resolve, 50))
+                await new Promise(resolve => setTimeout(resolve, 100))
 
                 // break the loop after 10 seconds to avoid infinite loop
                 if (Date.now() - startTime > 10000) {
@@ -56,13 +56,14 @@ export const useAuthStore = defineStore('authStore', () => {
                 }
             }
 
-            if (!isLoggedIn.value) {
+            if (!auth0?.isAuthenticated.value) {
                 return undefined
             }
 
             const token = await auth0?.getAccessTokenSilently({
                 authorizationParams: {
-                    audience: 'https://findadoc.jp.auth0.com' // our Auth0 API identifier
+                    audience: 'findadoc',
+                    tokenSigningAlg: 'RS256'
                 }
             })
             return token
