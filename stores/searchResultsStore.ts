@@ -93,13 +93,13 @@ async function queryProfessionals(searchSpecialty?: Specialty, searchLanguage?: 
             } satisfies HealthcareProfessionalSearchFilters
         }
 
-        const response = await graphQLClientRequestWithRetry<Query['healthcareProfessionals']>(
+        const serverResponse = await graphQLClientRequestWithRetry<Query['healthcareProfessionals']>(
             gqlClient.request.bind(gqlClient),
             searchProfessionalsQuery,
             searchProfessionalsData
         )
 
-        const professionalsSearchResult = (response?.data ?? []) as HealthcareProfessional[]
+        const professionalsSearchResult = serverResponse?.data ?? []
         return professionalsSearchResult
     } catch (error) {
         console.error(`Error getting professionals: ${JSON.stringify(error)}`)
@@ -127,13 +127,13 @@ async function queryFacilities(healthcareProfessionalIds: string[], searchCity?:
             } satisfies FacilitySearchFilters
         }
 
-        const response = await graphQLClientRequestWithRetry<Query['facilities']>(
+        const serverResponse = await graphQLClientRequestWithRetry<Query['facilities']>(
             gqlClient.request.bind(gqlClient),
             searchFacilitiesQuery,
             searchFacilitiesData
         )
 
-        const facilitiesSearchResults = response?.data as Facility[] ?? []
+        const facilitiesSearchResults = serverResponse?.data ?? []
 
         //filter the search results by location if a location is selected
         const locationFilteredSearchResults = searchCity
