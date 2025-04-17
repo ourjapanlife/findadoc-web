@@ -5,6 +5,7 @@
         class="fixed top-0 left-0 flex items-center justify-center h-full w-full z-10 bg-secondary bg-opacity-40"
     >
         <div
+            ref="modal"
             class="absolute z-10 bg-primary-bg rounded-xl overflow-hidden
             hover:shadow-inner hover:shadow-secondary-bg/90"
         >
@@ -40,12 +41,19 @@
 </template>
 
 <script lang="ts" setup>
+import { onClickOutside } from '@vueuse/core'
+import { ref } from 'vue'
 import { useModalStore } from '~/stores/modalStore'
 
+const modal = ref(null)
 const store = useModalStore()
 const emit = defineEmits(['modal-closed'])
 const hideModalAndEmitClosedEvent = () => {
     emit('modal-closed')
     store.hideModal()
 }
+onClickOutside(modal, () => {
+    emit('modal-closed')
+    store.hideModal()
+})
 </script>
