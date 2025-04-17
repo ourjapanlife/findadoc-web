@@ -34,8 +34,6 @@ export const useHealthcareProfessionalsStore = defineStore(
             updatedDate: ''
         })
         const selectedFacilities: Ref<Facility[]> = ref([])
-        // This is the array to be sent to the backend if there is a change in the relations
-        const facilitiesRelationsToSelectedHealthcareProfessional: Ref<Relationship[]> = ref([])
         // This helps users easily add name locales back to a healthcare professional by keeping track of removed ones
         const removedHealthcareProfessionalNames: Ref<LocalizedNameInput[]> = ref([])
 
@@ -73,11 +71,12 @@ export const useHealthcareProfessionalsStore = defineStore(
 
             const facilitiesForRelationshipCreationArray = Array.from(selectedFacilities.value)
 
-            let relations: Relationship[] = []
+            // This is the array to be sent to the backend if there is a change in the relations
+            let facilitiesRelationsToSelectedHealthcareProfessional: Relationship[] = []
 
             if (facilitiesForRelationshipCreationArray.length) {
-                relations = facilitiesForRelationshipCreationArray.map(createFacilityRelation)
-                facilitiesRelationsToSelectedHealthcareProfessional.value = relations
+                facilitiesRelationsToSelectedHealthcareProfessional = facilitiesForRelationshipCreationArray
+                    .map(createFacilityRelation)
             }
 
             const updateHealthcareProfessionalInput: MutationUpdateHealthcareProfessionalArgs = {
@@ -85,7 +84,9 @@ export const useHealthcareProfessionalsStore = defineStore(
                 input: {
                     acceptedInsurance: healthcareProfessionalSectionFields.acceptedInsurance,
                     degrees: healthcareProfessionalSectionFields.degrees,
-                    facilityIds: relations.length > 0 ? relations : undefined,
+                    facilityIds: facilitiesRelationsToSelectedHealthcareProfessional.length > 0
+                        ? facilitiesRelationsToSelectedHealthcareProfessional
+                        : undefined,
                     names: healthcareProfessionalSectionFields.names,
                     specialties: healthcareProfessionalSectionFields.specialties,
                     spokenLanguages: healthcareProfessionalSectionFields.spokenLanguages
@@ -105,8 +106,6 @@ export const useHealthcareProfessionalsStore = defineStore(
             serverResponse.hasErrors = response.hasErrors
 
             if (!serverResponse.errors.length && serverResponse.data) {
-                //This resets the relations so that way we can have a user update multiple times without duplicating values
-                facilitiesRelationsToSelectedHealthcareProfessional.value = []
                 //This finds the index of the healthcare professional so we can replace the ones we have already queried
                 const outdatedHealthcareProfessionalIndex = healthcareProfessionalsData.value.findIndex(
                     (healthcareProfessional: HealthcareProfessional) => healthcareProfessional.id === serverResponse.data!.id
@@ -173,7 +172,6 @@ export const useHealthcareProfessionalsStore = defineStore(
             displayChosenLocaleForHealthcareProfessional,
             setSelectedHealthcareProfessional,
             removedHealthcareProfessionalNames,
-            facilitiesRelationsToSelectedHealthcareProfessional,
             selectedFacilities
         }
     }
