@@ -6,9 +6,7 @@
         ]"
     >
         <div class="w-96">
-            <div
-                class="flex justify-between items-center p-1"
-            >
+            <div class="flex justify-between items-center p-1">
                 <div class="w-16 self-start">
                     <SVGProfileIcon
                         role="img"
@@ -41,7 +39,7 @@
                             </span>
                         </div>
                         <span>
-                            ID:  {{ healthcareProfessional.id }}
+                            ID: {{ healthcareProfessional.id }}
                         </span>
                         <div>
                             <div
@@ -105,6 +103,7 @@
                     @click="() => removeHealthcareProfessional(healthcareProfessional.id)"
                 >
                     <SVGTrashCan
+                        v-show="!hideTrashCan"
                         class="flex items-center justify-center w-6 h-6"
                     />
                 </div>
@@ -116,9 +115,7 @@
                     cursor-pointer font-bold text-secondary text-sm self-start p-1"
                     @click="() => undoRemovalOfHealthcareProfessional(healthcareProfessional.id)"
                 >
-                    <SVGUndoIcon
-                        class="flex items-center justify-center w-6 h-6"
-                    />
+                    <SVGUndoIcon class="flex items-center justify-center w-6 h-6" />
                 </div>
                 <div
                     v-if="isEditOrCreateHealthcareProfessional"
@@ -164,10 +161,12 @@ import { useLocaleStore } from '~/stores/localeStore'
 import { useFacilitiesStore } from '~/stores/facilitiesStore'
 import { useHealthcareProfessionalsStore } from '~/stores/healthcareProfessionalsStore'
 import { useModerationScreenStore } from '~/stores/moderationScreenStore'
-import { RelationshipAction,
+import {
+    RelationshipAction,
     type HealthcareProfessional,
     type LocalizedNameInput,
-    type Relationship } from '~/typedefs/gqlTypes'
+    type Relationship
+} from '~/typedefs/gqlTypes'
 
 const localeStore = useLocaleStore()
 const facilitiesStore = useFacilitiesStore()
@@ -187,10 +186,10 @@ const removeHealthcareProfessional = (id: string = '0') => {
         return
     }
     facilitiesStore.facilitySectionFields.healthProfessionalsRelations
-            = facilitiesStore.facilitySectionFields.healthProfessionalsRelations
+        = facilitiesStore.facilitySectionFields.healthProfessionalsRelations
             .filter((healthcareProfessionalRelation: Relationship) => healthcareProfessionalRelation.otherEntityId !== id)
     facilitiesStore.healthProfessionalsRelationsForDisplay
-            = facilitiesStore.healthProfessionalsRelationsForDisplay
+        = facilitiesStore.healthProfessionalsRelationsForDisplay
             .filter(healthcareProfessional => healthcareProfessional.id !== id)
 }
 
@@ -219,6 +218,8 @@ const props = defineProps<{
     chosenLocaleIndex?: number
     isEditable?: boolean
     setIsEditableFunction?: (param: boolean) => void
+    // This is so you can hide the trash can icon in case you just want to display the information of the healthcare professional
+    hideTrashCan?: boolean
 }>()
 
 const isEditOrCreateHealthcareProfessional = computed(() => moderationScreenStore.editHealthcareProfessionalScreenIsActive()
