@@ -66,17 +66,17 @@
                 class="portrait:hidden flex gap-4 mx-6 self-center whitespace-nowrap"
             >
                 <NuxtLink
-                    :to="'/about'"
+                    to="/about"
                     class="hover:text-primary-hover transition-colors"
                 >{{ $t('topNav.about') }}
                 </NuxtLink>
                 <NuxtLink
-                    :to="'/'"
+                    to="/"
                     class="hover:text-primary-hover transition-colors"
                 >{{ $t('topNav.home') }}
                 </NuxtLink>
                 <NuxtLink
-                    :to="'/submit'"
+                    to="/submit"
                     class="hover:text-primary-hover transition-colors"
                 >{{ $t('topNav.submit') }}
                 </NuxtLink>
@@ -86,14 +86,14 @@
                     class="flex text-primary"
                 >
                     <NuxtLink
-                        :to="'/moderation'"
+                        to="/moderation"
                         class="hover:text-primary-hover transition-colors text-wrap mr-4"
                         data-testid="top-nav-mod-link"
                     >{{
                         $t('topNav.moderation') }}
                     </NuxtLink>
                     <NuxtLink
-                        :to="'/'"
+                        to="/"
                         class="mr-4"
                     >
                         <div
