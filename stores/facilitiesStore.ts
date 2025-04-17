@@ -1,10 +1,14 @@
 import { defineStore } from 'pinia'
 import { ref, type Ref, reactive } from 'vue'
 import { gql } from 'graphql-request'
-import type { Maybe } from 'graphql/jsutils/Maybe'
-import type { DeleteResult, Facility,
+import type { DeleteResult,
+    Facility,
     HealthcareProfessional,
-    Mutation, MutationDeleteFacilityArgs, MutationUpdateFacilityArgs, Query, Relationship } from '~/typedefs/gqlTypes'
+    Mutation,
+    MutationDeleteFacilityArgs,
+    MutationUpdateFacilityArgs,
+    Query,
+    Relationship } from '~/typedefs/gqlTypes'
 import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql'
 import type { ServerResponse } from '~/typedefs/serverResponse'
 
