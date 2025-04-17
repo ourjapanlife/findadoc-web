@@ -29,7 +29,8 @@
     "github": "Github",
     "languageDropdownTitle": "Lengwahe:",
     "netlify": "Powered by Netlify",
-    "copyright": "Find a Doc, Japan"
+    "copyright": "Find a Doc, Japan",
+    "theme": "Tema"
   },
   "privacyPage": {
     "heading": "Patakaran sa Pribasiya",
@@ -135,7 +136,8 @@
     "googleMapsInformation": "Impormasyon sa Google maps ",
     "healthcareProfessionalIds": "Mga ID ng propesyonal sa Pangangalagang Pangkalusugan",
     "healthcareProfessionalName": "Pangalan ng propesyonal sa Pangangalagang Pangkalusugan",
-    "healthcareProfessionalMedicalInfo": "Medikal na impormasyon ng propesyonal sa Pangangalagang Pangkalusugan"
+    "healthcareProfessionalMedicalInfo": "Medikal na impormasyon ng propesyonal sa Pangangalagang Pangkalusugan",
+    "healthcareProfessionalFacilities": "Healthcare Professional Related Facilities"
   },
   "modDashboardTopbar": {
     "placeholderText": "Maglagay ng pangalan o ID upang mahanap",
@@ -143,7 +145,8 @@
     "rejected": "Hindi na-aprubahan",
     "forReview": "Susuriin",
     "healthcareProfessionals": "Propesyonal sa Pangangalagang Pangkalusugan",
-    "facilities": "Pasilidad"
+    "facilities": "Pasilidad",
+    "addHealthcareProfessional": "Add Healthcare Professional"
   },
   "modEditFacilityOrHPTopbar": {
     "copyFailure": "Hindi nakopya ang ID",
@@ -325,7 +328,17 @@
     "updateButtonText": "I-update",
     "facilitySuccessfullyRejected": "Matagumpay na hindi na-apprubahan ang pasilidad",
     "rejectSubmissionConfirmationMessage": "Are you sure you want to reject this submission?",
-    "rejectSubmissionConfirmationButton": "Yes, reject the submission"
+    "rejectSubmissionConfirmationButton": "Yes, reject the submission",
+    "placeholderTextAcceptedInsurances": "Search by insurance",
+    "placeholderTextSpecialties": "Search by specialty",
+    "placeholderTextDegrees": "Search by degree",
+    "placeholderTextLocales": "Search by locale",
+    "placeholderTextFacilitySearchBar": "Search by facility name or ID",
+    "noFacilitiesWereFound": "No facilities were found",
+    "noSpecialtiesWereFound": "No specialties were found",
+    "noInsurancesWereFound": "No insurance was found",
+    "noDegreesWereFound": "No degrees were found",
+    "noLocalesWereFound": "No locales were found"
   },
   "serverErrorMessages": {
     "UNAUTHENTICATED": "Wala kang sapat na permiso upang gawin ang aksyong ito.",
@@ -358,12 +371,12 @@
     "noFacilitiesWereFound": "No facilities were found",
     "errorMessageHealthcareProfessionalId": "Healthcare Professional Id was not found",
     "nameForLocaleAlreadyExists": "Name for locale already exists. Either update existing name or choose a different locale.",
-    "placeholderTextAcceptedInsurances": "Search by insurance to add or remove an insurance",
-    "placeholderTextSpecialties": "Search by specialty to add or remove an specialty",
-    "placeholderTextDegrees": "Search by degree to add or remove an degree",
-    "placeholderTextLocales": "Search by locale to add or remove an locale",
+    "placeholderTextAcceptedInsurances": "Search by insurance",
+    "placeholderTextSpecialties": "Search by specialty",
+    "placeholderTextDegrees": "Search by degree",
+    "placeholderTextLocales": "Search by locale",
     "noSpecialtiesWereFound": "No specialties were found",
-    "noInsurancesWereFound": "No insurances were found",
+    "noInsurancesWereFound": "No insurance was found",
     "noDegreesWereFound": "No degrees were found",
     "noLocalesWereFound": "No locales were found",
     "delete": "Permanently delete",
@@ -378,5 +391,12 @@
   "modHealthcareProfessionalCard": {
     "editName": "Edit",
     "saveName": "Save"
+  },
+  "modCreateFacilityOrHPTopbar": {
+    "confirmExit": "Exit without saving",
+    "create": "Create",
+    "exit": "Exit",
+    "heathcareProfessionalCreatedSuccessfully": "Healthcare professional created successfully.",
+    "unsavedChangesMessage": "This will exit without saving your entry. All unsaved data will be lost."
   }
 }

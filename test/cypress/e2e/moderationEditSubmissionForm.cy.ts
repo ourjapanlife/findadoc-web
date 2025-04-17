@@ -57,7 +57,7 @@ describe('Moderation Edit Submission Form', () => {
                 .should('contain', enUS.modPanelSubmissionLeftNavbar.healthcareProfessionalMedicalInfo)
         })
 
-        it('should contain the following select field', () => {
+        it('should contain the following search bars and select fields', () => {
             cy.get('[data-testid="submission-form-prefectureEn"]').should('exist')
             cy.get('[data-testid="submission-form-prefectureJa"]').should('exist')
             cy.get('[data-testid="submission-form-accepted-insurances"]').should('exist')

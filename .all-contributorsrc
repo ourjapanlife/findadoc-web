@@ -198,6 +198,42 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "Ghezz9",
+      "name": "Davide Ghezzo",
+      "avatar_url": "https://avatars.githubusercontent.com/u/177678145?v=4",
+      "profile": "https://github.com/Ghezz9",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "ConwayDecker",
+      "name": "Jason",
+      "avatar_url": "https://avatars.githubusercontent.com/u/171483356?v=4",
+      "profile": "https://github.com/ConwayDecker",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "matthewkurtti",
+      "name": "Matthew Kurtti",
+      "avatar_url": "https://avatars.githubusercontent.com/u/29577421?v=4",
+      "profile": "https://github.com/matthewkurtti",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "prestonb91",
+      "name": "Preston Boardman",
+      "avatar_url": "https://avatars.githubusercontent.com/u/77235430?v=4",
+      "profile": "https://github.com/prestonb91",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
