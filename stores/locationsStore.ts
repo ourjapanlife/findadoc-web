@@ -57,7 +57,7 @@ async function queryFacilities(): Promise<Facility[]> {
             searchFacilitiesData
         )
 
-        return result?.data as Facility[] ?? []
+        return result.data ?? []
     } catch (error) {
         console.error(`Error getting facilities for dropdown: ${JSON.stringify(error)}`)
         // eslint-disable-next-line no-alert
