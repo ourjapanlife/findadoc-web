@@ -7,7 +7,7 @@
         >
             <Loader />
             <Modal
-                class="max-h-[calc(100vh-12rem)] ml-8 mt-12 overflow-y-auto"
+                class="absolute top-0 left-0 overflow-y-auto"
             >
                 <SearchResultDetails />
             </Modal>
