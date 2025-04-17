@@ -27,6 +27,16 @@
                 <ModEditHealthcareProfessionalSection />
             </form>
         </div>
+        <div
+            v-if="moderationScreenStore.createHealthcareProfessionalScreenIsActive()"
+            class="h-full overflow-hidden"
+        >
+            <form
+                class="p-4 h-full overflow-y-auto"
+            >
+                <ModCreateHealthcareProfessionalSection />
+            </form>
+        </div>
     </div>
 </template>
 
@@ -50,31 +60,45 @@ const selectedIdFromModSubmissionList = computed(() => route.params.id as string
 
 const setActiveScreenBasedOnRoute = async () => {
     await nextTick()
-    if (routePathForModerationScreen.value.includes('edit-submission') && selectedIdFromModSubmissionList.value) {
-        moderationScreenStore.setActiveScreen(ModerationScreen.EditSubmission)
-        moderationSubmissionsStore.selectedSubmissionId = selectedIdFromModSubmissionList.value
-        return
-    }
-    if (routePathForModerationScreen.value.includes('edit-facility') && selectedIdFromModSubmissionList.value) {
-        moderationScreenStore.setActiveScreen(ModerationScreen.EditFacility)
-        facilitiesStore.selectedFacilityId = selectedIdFromModSubmissionList.value
-        return
-    }
-    if (
-        routePathForModerationScreen.value.includes('edit-healthcare-professional') && selectedIdFromModSubmissionList.value) {
-        moderationScreenStore.setActiveScreen(ModerationScreen.EditHealthcareProfessional)
-        healthcareProfessionalStore.selectedHealthcareProfessionalId = selectedIdFromModSubmissionList.value
+    // grab the relevant part of the path
+    const pathSnippet = routePathForModerationScreen.value.split('/')[2]
+
+    // for routes that require a selected ID, check before entering the switch
+    const editRoutes = ['edit-submission', 'edit-facility', 'edit-healthcare-professional']
+    if (editRoutes.includes(pathSnippet) && !selectedIdFromModSubmissionList.value) {
+        moderationScreenStore.setActiveScreen(ModerationScreen.Dashboard)
+        moderationSubmissionsStore.selectedSubmissionId = ''
+        facilitiesStore.selectedFacilityId = ''
+        healthcareProfessionalStore.selectedHealthcareProfessionalId = ''
         return
     }
 
-    // This will default the screen based on the route to the dashboard if all the other stuff fails
-    moderationScreenStore.setActiveScreen(ModerationScreen.Dashboard)
-    moderationSubmissionsStore.selectedSubmissionId = ''
-    facilitiesStore.selectedFacilityId = ''
-    healthcareProfessionalStore.selectedHealthcareProfessionalId = ''
+    switch (pathSnippet) {
+        case 'edit-submission':
+            moderationScreenStore.setActiveScreen(ModerationScreen.EditSubmission)
+            moderationSubmissionsStore.selectedSubmissionId = selectedIdFromModSubmissionList.value
+            break
+        case 'edit-facility':
+            moderationScreenStore.setActiveScreen(ModerationScreen.EditFacility)
+            facilitiesStore.selectedFacilityId = selectedIdFromModSubmissionList.value
+            break
+        case 'edit-healthcare-professional':
+            moderationScreenStore.setActiveScreen(ModerationScreen.EditHealthcareProfessional)
+            healthcareProfessionalStore.selectedHealthcareProfessionalId = selectedIdFromModSubmissionList.value
+            break
+        case 'create-healthcare-professional':
+            moderationScreenStore.setActiveScreen(ModerationScreen.CreateHealthcareProfessional)
+            break
+        default:
+            moderationScreenStore.setActiveScreen(ModerationScreen.Dashboard)
+            moderationSubmissionsStore.selectedSubmissionId = ''
+            facilitiesStore.selectedFacilityId = ''
+            healthcareProfessionalStore.selectedHealthcareProfessionalId = ''
+    }
 }
 
 watch(selectedIdFromModSubmissionList, setActiveScreenBasedOnRoute)
+watch(routePathForModerationScreen, setActiveScreenBasedOnRoute)
 
 onMounted(() => {
     setActiveScreenBasedOnRoute()

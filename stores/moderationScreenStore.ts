@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { ref, type Ref } from 'vue'
 
 export enum ModerationScreen {
+    CreateHealthcareProfessional = 'CREATE_HEALTHCARE_PROFESSIONAL',
     Dashboard = 'DASHBOARD',
     EditSubmission = 'EDIT_SUBMISSION',
     EditHealthcareProfessional = 'EDIT_HEALTHCARE_PROFESSIONAL',
@@ -34,6 +35,10 @@ export const useModerationScreenStore = defineStore(
             activeScreen.value = newValue
         }
 
+        function createHealthcareProfessionalScreenIsActive() {
+            return activeScreen.value === ModerationScreen.CreateHealthcareProfessional
+        }
+
         function dashboardScreenIsActive() {
             return activeScreen.value === ModerationScreen.Dashboard
         }
@@ -54,6 +59,7 @@ export const useModerationScreenStore = defineStore(
             activeScreen,
             ModerationScreen,
             setActiveScreen,
+            createHealthcareProfessionalScreenIsActive,
             dashboardScreenIsActive,
             editSubmissionScreenIsActive,
             editHealthcareProfessionalScreenIsActive,
