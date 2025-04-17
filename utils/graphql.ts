@@ -52,11 +52,17 @@ export const graphQLClientRequestWithRetry = async <T>(
 
             // Extract the first property from the response which contains our actual data.
             // In Grahpql, the default response has the property name matching the endpoint name.
-            // Ex. facilities endpoint returns { data: { facilities: T }}
-            // const flattenedResponseData = serverResponse.data ? Object.values(serverResponse.data as object)[0] as T : {} as T
+            // Ex. facilities endpoint returns { data: { facilities: T }, errors: []} or { facilities: T }
+            const flattenedResponseData = serverResponse.data
+                ? Object.values(serverResponse.data as object)[0] as T
+                : serverResponse
+                    ? Object.values(serverResponse as object)[0] as T
+                    : {} as T
 
-            // return { data: flattenedResponseData, errors: serverResponse.errors, hasErrors: serverResponse.hasErrors }
-            return serverResponse
+            return { data: flattenedResponseData,
+                errors: serverResponse.errors ?? [],
+                hasErrors: serverResponse.hasErrors } satisfies ServerResponse<T>
+            // return serverResponse
         } catch (error) {
             if (attempts < retryAmount) {
                 attempts++
