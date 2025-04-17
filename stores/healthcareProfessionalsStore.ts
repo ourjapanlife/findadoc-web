@@ -84,9 +84,7 @@ export const useHealthcareProfessionalsStore = defineStore(
         }
 
         async function updateHealthcareProfessional():
-        Promise<ServerResponse<Maybe<HealthcareProfessional>>> {
-            const serverResponse = { data: {} as Maybe<HealthcareProfessional>, errors: [] as ServerError[], hasErrors: false }
-
+        Promise<ServerResponse<HealthcareProfessional>> {
             const facilitiesForRelationshipCreationArray = selectedFacilities.value
 
             if (facilitiesForRelationshipCreationArray.length) {
@@ -108,33 +106,29 @@ export const useHealthcareProfessionalsStore = defineStore(
                 }
             }
 
-            const response = await graphQLClientRequestWithRetry<Mutation>(
+            const serverResponse = await graphQLClientRequestWithRetry<Mutation['updateHealthcareProfessional']>(
                 gqlClient.request.bind(gqlClient),
                 updateHealthcareProfessionalGqlMutation,
                 updateHealthcareProfessionalInput
             )
 
-            serverResponse.data = response.data?.updateHealthcareProfessional
-            serverResponse.errors = response.errors
-                ? response.errors
-                : []
-            serverResponse.hasErrors = response.hasErrors
+            const responseData = serverResponse.data
 
-            if (!serverResponse.errors.length && serverResponse.data) {
+            if (!serverResponse.errors?.length && responseData) {
                 //This resets the relations so that way we can have a user update multiple times without duplicating values
                 facilitiesRelationsToSelectedHealthcareProfessional.value = []
                 //This finds the index of the healthcare professional so we can replace the ones we have already queried
                 const outdatedHealthcareProfessionalIndex = healthcareProfessionalsData.value.findIndex(
-                    (healthcareProfessional: HealthcareProfessional) => healthcareProfessional.id === serverResponse.data!.id
+                    (healthcareProfessional: HealthcareProfessional) => healthcareProfessional.id === responseData!.id
                 )
 
                 //This will replace the data we had from the index with the new data
                 if (outdatedHealthcareProfessionalIndex !== -1) {
-                    healthcareProfessionalsData.value[outdatedHealthcareProfessionalIndex] = serverResponse.data!
+                    healthcareProfessionalsData.value[outdatedHealthcareProfessionalIndex] = responseData!
                 }
 
                 //This will update the data with what was returned from the server and is in our database
-                updateHealthcareProfessionalSectionFields(serverResponse.data!)
+                updateHealthcareProfessionalSectionFields(responseData!)
 
                 /*This resets the names we removed and kept track of in
                 order to change Locales if the wrong name for a locale was chosen */
@@ -203,18 +197,12 @@ export const useHealthcareProfessionalsStore = defineStore(
         }
 
         async function deleteHealthcareProfessional(healthcareProfessionalId: MutationDeleteHealthcareProfessionalArgs):
-        Promise<ServerResponse<Maybe<DeleteResult>>> {
-            const serverResponse = { data: {} as Maybe<DeleteResult>, errors: [] as ServerError[], hasErrors: false }
-
-            const response = await graphQLClientRequestWithRetry<Mutation>(
+        Promise<ServerResponse<DeleteResult>> {
+            const serverResponse = await graphQLClientRequestWithRetry<Mutation['deleteHealthcareProfessional']>(
                 gqlClient.request.bind(gqlClient),
                 deleteHealthcareProfessionalGqlMutation,
                 healthcareProfessionalId
             )
-
-            serverResponse.data = response.data?.deleteHealthcareProfessional
-            serverResponse.errors = response.errors ? response.errors : []
-            serverResponse.hasErrors = response.hasErrors
 
             return serverResponse
         }
@@ -247,7 +235,7 @@ export const useHealthcareProfessionalsStore = defineStore(
     }
 )
 
-async function queryHealthcareProfessionals() {
+async function queryHealthcareProfessionals(): Promise<HealthcareProfessional[]> {
     const searchHealthcareProfessionalsData = {
         filters: {
             limit: 400
@@ -267,7 +255,7 @@ async function queryHealthcareProfessionals() {
     }
 }
 
-export async function getHealthcareProfessionalById(id: string) {
+export async function getHealthcareProfessionalById(id: string): Promise<HealthcareProfessional[]> {
     try {
         const queryData = {
             healthcareProfessionalId: id

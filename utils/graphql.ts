@@ -28,7 +28,7 @@ export const graphQLClientRequestWithRetry = async <T>(
         queryOrMutation: RequestDocument,
         variables?: unknown,
         requestHeaders?: HeadersInit
-    ) => Promise<T>,
+    ) => Promise<ServerResponse<T>>,
     queryOrMutation: RequestDocument,
     variables: unknown,
     retryOptions?: graphQLClientRequestWithRetryOptions
@@ -47,8 +47,16 @@ export const graphQLClientRequestWithRetry = async <T>(
                 authorization: authToken ? `Bearer ${authToken}` : ''
             } satisfies HeadersInit
 
-            const data = await gqlClientRequestFunction(queryOrMutation, variables, requestHeaders)
-            return { data, errors: [], hasErrors: false }
+            //Execute our actual HTTP request
+            const serverResponse = await gqlClientRequestFunction(queryOrMutation, variables, requestHeaders)
+
+            // Extract the first property from the response which contains our actual data.
+            // In Grahpql, the default response has the property name matching the endpoint name.
+            // Ex. facilities endpoint returns { data: { facilities: T }}
+            // const flattenedResponseData = serverResponse.data ? Object.values(serverResponse.data as object)[0] as T : {} as T
+
+            // return { data: flattenedResponseData, errors: serverResponse.errors, hasErrors: serverResponse.hasErrors }
+            return serverResponse
         } catch (error) {
             if (attempts < retryAmount) {
                 attempts++
@@ -60,10 +68,10 @@ export const graphQLClientRequestWithRetry = async <T>(
 
             // This is a consistent error messaging no matter the type of query or mutation
             console.error(`There was an error executing the request: ${error}`)
-            const serverError = error as ServerErrorResponse
+            const serverErrorResponse = error as ServerErrorResponse
 
             // This map transforms errors if they exist
-            const errors = serverError.response?.errors?.map(errorResponse => ({
+            const errors = serverErrorResponse.response?.errors?.map(errorResponse => ({
                 message: errorResponse.message,
                 fieldWithError: errorResponse.locations,
                 code: errorResponse.extensions.code as ErrorCode

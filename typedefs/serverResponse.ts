@@ -1,7 +1,7 @@
 import type { GraphQLError, SourceLocation } from 'graphql'
 
 export type ServerResponse<T> = {
-    data: T | undefined
+    data: T
     hasErrors: boolean
     errors?: ServerError[]
 }
