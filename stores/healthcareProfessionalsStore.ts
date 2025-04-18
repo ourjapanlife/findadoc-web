@@ -2,13 +2,18 @@ import type { Maybe } from 'graphql/jsutils/Maybe'
 import { defineStore } from 'pinia'
 import { reactive, ref, type Ref } from 'vue'
 import { gql } from 'graphql-request'
-import { type Facility, type DeleteResult, type HealthcareProfessional,
+import { type Insurance,
+    type Degree,
+    type Specialty,
+    type Locale, type Facility, type DeleteResult, type HealthcareProfessional,
     type LocalizedNameInput,
     type Mutation,
     type MutationDeleteHealthcareProfessionalArgs,
     type MutationUpdateHealthcareProfessionalArgs,
     type Relationship,
-    RelationshipAction } from '~/typedefs/gqlTypes'
+    RelationshipAction,
+    type CreateHealthcareProfessionalInput,
+    type MutationCreateHealthcareProfessionalArgs } from '~/typedefs/gqlTypes'
 import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql'
 import { useLocaleStore } from '~/stores/localeStore'
 import type { ServerError, ServerResponse } from '~/typedefs/serverResponse'
@@ -33,6 +38,16 @@ export const useHealthcareProfessionalsStore = defineStore(
             spokenLanguages: [],
             updatedDate: ''
         })
+
+        const createHealthcareProfessionalSectionFields: CreateHealthcareProfessionalInput = reactive({
+            acceptedInsurance: [] as Insurance[],
+            degrees: [] as Degree[],
+            facilityIds: [] as string[],
+            names: [] as LocalizedNameInput[],
+            specialties: [] as Specialty[],
+            spokenLanguages: [] as Locale[]
+        })
+
         const selectedFacilities: Ref<Facility[]> = ref([])
         // This helps users easily add name locales back to a healthcare professional by keeping track of removed ones
         const removedHealthcareProfessionalNames: Ref<LocalizedNameInput[]> = ref([])
@@ -69,7 +84,7 @@ export const useHealthcareProfessionalsStore = defineStore(
         Promise<ServerResponse<Maybe<HealthcareProfessional>>> {
             const serverResponse = { data: {} as Maybe<HealthcareProfessional>, errors: [] as ServerError[], hasErrors: false }
 
-            const facilitiesForRelationshipCreationArray = Array.from(selectedFacilities.value)
+            const facilitiesForRelationshipCreationArray = selectedFacilities.value
 
             // This is the array to be sent to the backend if there is a change in the relations
             let facilitiesRelationsToSelectedHealthcareProfessional: Relationship[] = []
@@ -138,6 +153,42 @@ export const useHealthcareProfessionalsStore = defineStore(
             }
         }
 
+        async function createHealthcareProfessional():
+        Promise<ServerResponse<Maybe<HealthcareProfessional>>> {
+            const serverResponse = { data: {} as Maybe<HealthcareProfessional>, errors: [] as ServerError[], hasErrors: false }
+
+            const createHealthcareProfessionalInput: MutationCreateHealthcareProfessionalArgs = {
+                input: {
+                    acceptedInsurance: createHealthcareProfessionalSectionFields.acceptedInsurance,
+                    degrees: createHealthcareProfessionalSectionFields.degrees,
+                    facilityIds: createHealthcareProfessionalSectionFields.facilityIds,
+                    names: createHealthcareProfessionalSectionFields.names,
+                    specialties: createHealthcareProfessionalSectionFields.specialties,
+                    spokenLanguages: createHealthcareProfessionalSectionFields.spokenLanguages
+                }
+            }
+            const response = await graphQLClientRequestWithRetry<Mutation>(
+                gqlClient.request.bind(gqlClient),
+                createHealthcareProfessionalGqMutation,
+                createHealthcareProfessionalInput
+            )
+
+            serverResponse.data = response.data?.createHealthcareProfessional
+            serverResponse.errors = response.errors ? response.errors : []
+            serverResponse.hasErrors = response.hasErrors
+
+            return serverResponse
+        }
+
+        function resetCreateHealthcareProfessionalFields() {
+            createHealthcareProfessionalSectionFields.acceptedInsurance = []
+            createHealthcareProfessionalSectionFields.degrees = []
+            createHealthcareProfessionalSectionFields.facilityIds = []
+            createHealthcareProfessionalSectionFields.names = []
+            createHealthcareProfessionalSectionFields.specialties = []
+            createHealthcareProfessionalSectionFields.spokenLanguages = []
+        }
+
         async function deleteHealthcareProfessional(healthcareProfessionalId: MutationDeleteHealthcareProfessionalArgs):
         Promise<ServerResponse<Maybe<DeleteResult>>> {
             const serverResponse = { data: {} as Maybe<DeleteResult>, errors: [] as ServerError[], hasErrors: false }
@@ -155,7 +206,9 @@ export const useHealthcareProfessionalsStore = defineStore(
             return serverResponse
         }
 
-        const displayChosenLocaleForHealthcareProfessional = (healthcareProfessional: HealthcareProfessional) => {
+        const displayChosenLocaleForHealthcareProfessional = (
+            healthcareProfessional: HealthcareProfessional | CreateHealthcareProfessionalInput
+        ) => {
             // find the name of the healthcare professional from the chosen display locale
             const nameFromChosenLocaleDisplay = healthcareProfessional.names.find(name => name.locale === localeStore.locale.code)
             // return the name of the healthcare professional of chosen locale or default to the 0 indexed recorded name
@@ -172,7 +225,10 @@ export const useHealthcareProfessionalsStore = defineStore(
             displayChosenLocaleForHealthcareProfessional,
             setSelectedHealthcareProfessional,
             removedHealthcareProfessionalNames,
-            selectedFacilities
+            selectedFacilities,
+            createHealthcareProfessional,
+            createHealthcareProfessionalSectionFields,
+            resetCreateHealthcareProfessionalFields
         }
     }
 )
@@ -271,6 +327,27 @@ const deleteHealthcareProfessionalGqlMutation = gql`
 mutation Mutation($id: ID!) {
   deleteHealthcareProfessional(id: $id) {
     isSuccessful
+  }
+}
+`
+
+const createHealthcareProfessionalGqMutation = gql`
+mutation Mutation($input: CreateHealthcareProfessionalInput!) {
+  createHealthcareProfessional(input: $input) {
+    id
+    names {
+      firstName
+      middleName
+      lastName
+      locale
+    }
+    spokenLanguages
+    degrees
+    specialties
+    acceptedInsurance
+    facilityIds
+    createdDate
+    updatedDate
   }
 }
 `

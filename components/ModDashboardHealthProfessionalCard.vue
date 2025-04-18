@@ -1,7 +1,7 @@
 <template>
     <div
         :class="[
-            'border-2 border-primary rounded-lg px-2 w-fit',
+            'mod-dashboard-healthcare-professional-card border-2 border-primary rounded-lg px-2 w-fit',
             (isEditable && chosenLocaleIndex === 0) ? 'border-t-0 mt-0 rounded-t-none' : 'my-3',
         ]"
     >
@@ -74,7 +74,10 @@
                         id="healthcare-professional-name-display-container"
                         class="flex font-bold pt-2"
                     >
-                        <span>{{ healthcareProfessionalNameByLocale.lastName }}</span>
+                        <span
+                            data-testid="healthcare-professional-card-last-name"
+                        >
+                            {{ healthcareProfessionalNameByLocale.lastName }}</span>
                         <span class="mx-2">{{ healthcareProfessionalNameByLocale.firstName
                         }}</span>
                         <span v-show="healthcareProfessionalNameByLocale.middleName">
@@ -85,6 +88,7 @@
                         id="healthcare-professional-name-locale"
                         class="w-24 px-2 py-[1px] mr-1 mb-1 bg-primary-text-muted text-nowrap rounded-full
                     text-sm text-center"
+                        data-testid="healthcare-professional-name-card-locale"
                     >
                         {{ localeStore.formatLanguageCodeToSimpleText(
                             healthcareProfessionalNameByLocale.locale) }}
@@ -92,7 +96,9 @@
                 </div>
                 <div
                     v-if="!isHealthcareProfessionalReadyForRemoval(healthcareProfessional.id)
-                        && moderationScreenStore.editSubmissionScreenIsActive()"
+                        && moderationScreenStore.editSubmissionScreenIsActive()
+                        || moderationScreenStore.editFacilityScreenIsActive()
+                        && !isHealthcareProfessionalReadyForRemoval(healthcareProfessional.id)"
                     id="remove-related-healthcare-professional-to-facility"
                     class="flex w-8 items-center justify-center
                     cursor-pointer font-bold text-secondary text-sm self-start p-1"
@@ -115,7 +121,7 @@
                     />
                 </div>
                 <div
-                    v-if="moderationScreenStore.editHealthcareProfessionalScreenIsActive()"
+                    v-if="isEditOrCreateHealthcareProfessional"
                     class="flex w-8 items-center justify-center
                 cursor-pointer font-bold text-secondary text-sm self-start p-1"
                 >
@@ -214,4 +220,7 @@ const props = defineProps<{
     isEditable?: boolean
     setIsEditableFunction?: (param: boolean) => void
 }>()
+
+const isEditOrCreateHealthcareProfessional = computed(() => moderationScreenStore.editHealthcareProfessionalScreenIsActive()
+  || moderationScreenStore.createHealthcareProfessionalScreenIsActive())
 </script>
