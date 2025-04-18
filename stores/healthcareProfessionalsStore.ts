@@ -49,8 +49,6 @@ export const useHealthcareProfessionalsStore = defineStore(
         })
 
         const selectedFacilities: Ref<Facility[]> = ref([])
-        // This is the array to be sent to the backend if there is a change in the relations
-        const facilitiesRelationsToSelectedHealthcareProfessional: Ref<Relationship[]> = ref([])
         // This helps users easily add name locales back to a healthcare professional by keeping track of removed ones
         const removedHealthcareProfessionalNames: Ref<LocalizedNameInput[]> = ref([])
 
@@ -88,18 +86,21 @@ export const useHealthcareProfessionalsStore = defineStore(
 
             const facilitiesForRelationshipCreationArray = selectedFacilities.value
 
+            // This is the array to be sent to the backend if there is a change in the relations
+            let facilitiesRelationsToSelectedHealthcareProfessional: Relationship[] = []
+
             if (facilitiesForRelationshipCreationArray.length) {
-                //For each is used here to only add the necessary actions to the already created ref array of relationships
-                facilitiesForRelationshipCreationArray.forEach(facility => createFacilitiesRelationArray(facility))
+                facilitiesRelationsToSelectedHealthcareProfessional = facilitiesForRelationshipCreationArray
+                    .map(createFacilityRelation)
             }
+
             const updateHealthcareProfessionalInput: MutationUpdateHealthcareProfessionalArgs = {
                 id: selectedHealthcareProfessionalId.value,
                 input: {
                     acceptedInsurance: healthcareProfessionalSectionFields.acceptedInsurance,
                     degrees: healthcareProfessionalSectionFields.degrees,
-                    facilityIds: facilitiesRelationsToSelectedHealthcareProfessional.value.length
-                      > 0
-                        ? facilitiesRelationsToSelectedHealthcareProfessional.value
+                    facilityIds: facilitiesRelationsToSelectedHealthcareProfessional.length > 0
+                        ? facilitiesRelationsToSelectedHealthcareProfessional
                         : undefined,
                     names: healthcareProfessionalSectionFields.names,
                     specialties: healthcareProfessionalSectionFields.specialties,
@@ -120,8 +121,6 @@ export const useHealthcareProfessionalsStore = defineStore(
             serverResponse.hasErrors = response.hasErrors
 
             if (!serverResponse.errors.length && serverResponse.data) {
-                //This resets the relations so that way we can have a user update multiple times without duplicating values
-                facilitiesRelationsToSelectedHealthcareProfessional.value = []
                 //This finds the index of the healthcare professional so we can replace the ones we have already queried
                 const outdatedHealthcareProfessionalIndex = healthcareProfessionalsData.value.findIndex(
                     (healthcareProfessional: HealthcareProfessional) => healthcareProfessional.id === serverResponse.data!.id
@@ -145,24 +144,13 @@ export const useHealthcareProfessionalsStore = defineStore(
 
         /* This function will create the relationships that need to be sent in the backend for
         updating facilities the healthcare professional works at */
-        function createFacilitiesRelationArray(facilityForRelationship: Facility) {
-            if (healthcareProfessionalSectionFields.facilityIds.includes(facilityForRelationship.id)) {
-                facilitiesRelationsToSelectedHealthcareProfessional.value.push({
-                    otherEntityId: facilityForRelationship.id,
-                    action: RelationshipAction.Delete
-                })
-
-                return
+        function createFacilityRelation(facility: Facility): Relationship {
+            return {
+                otherEntityId: facility.id,
+                action: healthcareProfessionalSectionFields.facilityIds.includes(facility.id)
+                    ? RelationshipAction.Delete
+                    : RelationshipAction.Create
             }
-
-            facilitiesRelationsToSelectedHealthcareProfessional.value.push(
-                {
-                    otherEntityId: facilityForRelationship.id,
-                    action: RelationshipAction.Create
-                }
-            )
-
-            return
         }
 
         async function createHealthcareProfessional():
@@ -237,7 +225,6 @@ export const useHealthcareProfessionalsStore = defineStore(
             displayChosenLocaleForHealthcareProfessional,
             setSelectedHealthcareProfessional,
             removedHealthcareProfessionalNames,
-            facilitiesRelationsToSelectedHealthcareProfessional,
             selectedFacilities,
             createHealthcareProfessional,
             createHealthcareProfessionalSectionFields,
