@@ -1,4 +1,8 @@
 import { defineConfig } from 'cypress'
+import dotenv from 'dotenv'
+
+// Load environment variables from .env file
+dotenv.config()
 
 const config = defineConfig({
     projectId: 'brkojt',
@@ -6,7 +10,9 @@ const config = defineConfig({
         env: {
             AUTH0_DOMAIN: process.env.AUTH0_DOMAIN,
             AUTH0_USERNAME: process.env.AUTH0_USERNAME,
-            AUTH0_PASSWORD: process.env.AUTH0_PASSWORD
+            AUTH0_PASSWORD: process.env.AUTH0_PASSWORD,
+            AUTH0_CLIENTID: process.env.AUTH0_CLIENTID,
+            AUTH0_CLIENTSECRET: process.env.AUTH0_CLIENTSECRET
         },
         setupNodeEvents() { },
         // Path to e2e specs folder

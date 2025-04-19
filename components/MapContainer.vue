@@ -1,7 +1,8 @@
 <template>
     <div class="h-full w-full">
         <!-- eslint-disable-next-line -->
-        <GoogleMap data-testid="map-of-japan" ref="mapRef" :api-key="runtimeConfig.public.GOOGLE_MAPS_API_KEY as string | undefined"
+        <GoogleMap data-testid="map-of-japan" ref="mapRef" v-if="isMapReady"
+                   :api-key="runtimeConfig.public.GOOGLE_MAPS_API_KEY as string ?? undefined"
                    map-id="153d718018a2577e"
                    class="h-full w-full"
                    :center="center"
@@ -46,4 +47,12 @@ const center = computed(() => {
 const searchResultsStore = useSearchResultsStore()
 const mapRef = ref(null)
 const runtimeConfig = useRuntimeConfig()
+
+const isMapReady = ref(false)
+
+onMounted(() => {
+    // This Google Maps Library Component will try to render before the component and throw a JS error.
+    // This is a trick to prevent it from rendering until the component is mounted.
+    isMapReady.value = true
+})
 </script>
