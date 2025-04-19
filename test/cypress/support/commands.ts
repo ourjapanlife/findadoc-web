@@ -28,8 +28,8 @@ Cypress.Commands.add('login', () => {
     }, {
         validate: () => {
             // Wait for and validate the auth token
-            cy.getAllLocalStorage().should((localStorage) => {
-                const localStorageKeys = Object.values(localStorage).map(store => Object.keys(store)).flat();
+            cy.getAllLocalStorage().should(localStorage => {
+                const localStorageKeys = Object.values(localStorage).map(store => Object.keys(store)).flat()
                 expect(localStorageKeys).to.include('auth_token', 'Auth token not found in localStorage')
             })
         },
