@@ -1,30 +1,8 @@
 // ***********************************************
-// This example commands.js shows you how to
-// create various custom commands and overwrite
-// existing commands.
-//
-// For more comprehensive examples of custom
-// commands please read more here:
+// docs for this file
 // https://on.cypress.io/custom-commands
 // ***********************************************
-//
-//
-// -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
-// https://docs.cypress.io/app/guides/authentication-testing/auth0-authentication
 import { auth0Login } from '../utils'
 
 Cypress.Commands.add('login', () => {
@@ -38,13 +16,22 @@ Cypress.Commands.add('login', () => {
 
     log.snapshot('Connecting to auth0')
 
-    cy.session(`auth0-${auth0UserName}`, () => {
+    // Generate a unique session ID using timestamp
+    const sessionId = `auth0-${auth0UserName}-${Date.now()}`
+
+    // Clear session and localStorage
+    cy.clearAllSessionStorage()
+    cy.clearAllLocalStorage()
+
+    cy.session(sessionId, () => {
         auth0Login()
     }, {
         validate: () => {
-            // https://auth0.com/docs/manage-users/cookies/authentication-api-cookies
-            // https://docs.cypress.io/api/commands/getcookie
-            cy.getCookie('auth0', { domain: 'findadoc.jp.auth0.com' }).should('exist')
+            // Wait for and validate the auth token
+            cy.getAllLocalStorage().should((localStorage) => {
+                const localStorageKeys = Object.values(localStorage).map(store => Object.keys(store)).flat();
+                expect(localStorageKeys).to.include('auth_token', 'Auth token not found in localStorage')
+            })
         },
         cacheAcrossSpecs: true
     })
