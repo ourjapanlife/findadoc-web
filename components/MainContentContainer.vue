@@ -17,11 +17,11 @@
         </div>
         <div
             v-else
-            class="h-full"
+            class="relative h-full"
         >
             <Loader />
             <Modal
-                class="min-h-1/2 ml-8 mt-12"
+                class="absolute top-0 left-0 overflow-y-auto"
             >
                 <SearchResultDetails />
             </Modal>
