@@ -5,6 +5,7 @@ export enum ModerationScreen {
     CreateHealthcareProfessional = 'CREATE_HEALTHCARE_PROFESSIONAL',
     Dashboard = 'DASHBOARD',
     EditSubmission = 'EDIT_SUBMISSION',
+    CreateFacility = 'CREATE_FACILITY',
     EditHealthcareProfessional = 'EDIT_HEALTHCARE_PROFESSIONAL',
     EditFacility = 'EDIT_FACILITY'
 }
@@ -43,6 +44,10 @@ export const useModerationScreenStore = defineStore(
             return activeScreen.value === ModerationScreen.Dashboard
         }
 
+        function createFacilityScreenIsActive() {
+            return activeScreen.value === ModerationScreen.CreateFacility
+        }
+
         function editSubmissionScreenIsActive() {
             return activeScreen.value === ModerationScreen.EditSubmission
         }
@@ -61,6 +66,7 @@ export const useModerationScreenStore = defineStore(
             setActiveScreen,
             createHealthcareProfessionalScreenIsActive,
             dashboardScreenIsActive,
+            createFacilityScreenIsActive,
             editSubmissionScreenIsActive,
             editHealthcareProfessionalScreenIsActive,
             editFacilityScreenIsActive

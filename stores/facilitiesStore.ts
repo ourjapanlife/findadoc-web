@@ -2,9 +2,10 @@ import { defineStore } from 'pinia'
 import { ref, type Ref, reactive } from 'vue'
 import { gql } from 'graphql-request'
 import type { Maybe } from 'graphql/jsutils/Maybe'
-import type { DeleteResult, Facility,
+import type { CreateFacilityInput, DeleteResult, Facility,
     HealthcareProfessional,
-    Mutation, MutationDeleteFacilityArgs, MutationUpdateFacilityArgs, Relationship } from '~/typedefs/gqlTypes'
+    Mutation, MutationDeleteFacilityArgs, MutationUpdateFacilityArgs, Relationship,
+    MutationCreateFacilityArgs } from '~/typedefs/gqlTypes'
 import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql'
 import type { ServerError, ServerResponse } from '~/typedefs/serverResponse'
 
@@ -40,6 +41,30 @@ export const useFacilitiesStore = defineStore(
             healthProfessionalsRelations: [] as Relationship[]
         })
 
+        const createFacilityFields: CreateFacilityInput = reactive({
+            nameEn: '',
+            nameJa: '',
+            contact: {
+                address: {
+                    addressLine1En: '',
+                    addressLine1Ja: '',
+                    addressLine2En: '',
+                    addressLine2Ja: '',
+                    postalCode: '',
+                    prefectureEn: '',
+                    prefectureJa: '',
+                    cityEn: '',
+                    cityJa: ''
+                },
+                email: undefined,
+                googleMapsUrl: '',
+                phone: '',
+                website: undefined
+            },
+            mapLatitude: 0,
+            mapLongitude: 0
+        })
+
         const healthProfessionalsRelationsForDisplay: Ref<HealthcareProfessional[]> = ref([])
 
         function setSelectedFacilityData(facilityId: string) {
@@ -73,6 +98,32 @@ export const useFacilitiesStore = defineStore(
         async function getFacilities() {
             const facilityResults = await queryFacilities()
             facilityData.value = facilityResults
+        }
+
+        async function createFacility():
+        Promise<ServerResponse<Maybe<Facility>>> {
+            const serverResponse = { data: {} as Maybe<Facility>, errors: [] as ServerError[], hasErrors: false }
+
+            const CreateFacilityInput: MutationCreateFacilityArgs = {
+                input: {
+                    contact: createFacilityFields.contact,
+                    mapLatitude: createFacilityFields.mapLatitude,
+                    mapLongitude: createFacilityFields.mapLongitude,
+                    nameEn: createFacilityFields.nameEn,
+                    nameJa: createFacilityFields.nameJa
+                }
+            }
+            const response = await graphQLClientRequestWithRetry<Mutation>(
+                gqlClient.request.bind(gqlClient),
+                CreateFacilityGqlMutation,
+                CreateFacilityInput
+            )
+
+            serverResponse.data = response.data?.createFacility
+            serverResponse.errors = response.errors ? response.errors : []
+            serverResponse.hasErrors = response.hasErrors
+
+            return serverResponse
         }
 
         async function updateFacility():
@@ -146,6 +197,8 @@ export const useFacilitiesStore = defineStore(
 
         return {
             getFacilities,
+            createFacility,
+            createFacilityFields,
             facilityData,
             updateFacility,
             facilitySectionFields,

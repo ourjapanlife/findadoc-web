@@ -120,6 +120,13 @@
     "unauthorizedline2": "Kung nais mong maging isang tagapamagitan o may mga katanungan, mangyaring makipag-ugnayan sa amin.",
     "unauthorizedline3": "dito"
   },
+  "modCreateFacilityOrHPTopbar": {
+    "confirmExit": "Exit without saving",
+    "create": "Create",
+    "exit": "Exit",
+    "FacilityCreatedSuccessfully": "Facility created successfully.",
+    "unsavedChangesMessage": "This will exit without saving your entry. All unsaved data will be lost."
+},
   "modDashboardLeftNav": {
     "facilities": "Pasilidad",
     "healthcareProfessionals": "Mga Propesyonal sa Pangangalagang Pangkalusugan",
@@ -140,6 +147,7 @@
     "healthcareProfessionalFacilities": "Healthcare Professional Related Facilities"
   },
   "modDashboardTopbar": {
+    "addFacility": "Add Facility",
     "placeholderText": "Maglagay ng pangalan o ID upang mahanap",
     "approved": "Aprubado",
     "rejected": "Hindi na-aprubahan",
