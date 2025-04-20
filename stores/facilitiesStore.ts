@@ -104,7 +104,7 @@ export const useFacilitiesStore = defineStore(
         Promise<ServerResponse<Maybe<Facility>>> {
             const serverResponse = { data: {} as Maybe<Facility>, errors: [] as ServerError[], hasErrors: false }
 
-            const CreateFacilityInput: MutationCreateFacilityArgs = {
+            const createFacilityInput: MutationCreateFacilityArgs = {
                 input: {
                     contact: createFacilityFields.contact,
                     mapLatitude: createFacilityFields.mapLatitude,
@@ -115,8 +115,8 @@ export const useFacilitiesStore = defineStore(
             }
             const response = await graphQLClientRequestWithRetry<Mutation>(
                 gqlClient.request.bind(gqlClient),
-                CreateFacilityGqlMutation,
-                CreateFacilityInput
+                createFacilityGqlMutation,
+                createFacilityInput
             )
 
             serverResponse.data = response.data?.createFacility
@@ -178,6 +178,31 @@ export const useFacilitiesStore = defineStore(
             return serverResponse
         }
 
+        function resetCreateFacilityFields() {
+            createFacilityFields.nameEn = ''
+            createFacilityFields.nameJa = ''
+            createFacilityFields.contact = {
+                address: {
+                    addressLine1En: '',
+                    addressLine1Ja: '',
+                    addressLine2En: '',
+                    addressLine2Ja: '',
+                    postalCode: '',
+                    prefectureEn: '',
+                    prefectureJa: '',
+                    cityEn: '',
+                    cityJa: ''
+                },
+                email: undefined,
+                googleMapsUrl: '',
+                phone: '',
+                website: undefined
+            }
+            createFacilityFields.mapLatitude = 0
+            createFacilityFields.mapLongitude = 0
+            createFacilityFields.healthcareProfessionalIds = []
+        }
+
         async function deleteFacility(facilityId: MutationDeleteFacilityArgs):
         Promise<ServerResponse<Maybe<DeleteResult>>> {
             const serverResponse = { data: {} as Maybe<DeleteResult>, errors: [] as ServerError[], hasErrors: false }
@@ -207,7 +232,8 @@ export const useFacilitiesStore = defineStore(
             selectedFacilityData,
             setSelectedFacilityData,
             initializeFacilitySectionValues,
-            healthProfessionalsRelationsForDisplay
+            healthProfessionalsRelationsForDisplay,
+            resetCreateFacilityFields
         }
     }
 )
@@ -295,6 +321,37 @@ const deleteExistingFacilityGqlMutation = gql`
 mutation Mutation($id: ID!) {
   deleteFacility(id: $id) {
     isSuccessful
+  }
+}
+`
+const createFacilityGqlMutation = gql`
+mutation CreateFacility($input: CreateFacilityInput!) {
+  createFacility(input: $input) {
+    id
+    nameEn
+    nameJa
+    contact {
+      googleMapsUrl
+      email
+      phone
+      website
+      address {
+        postalCode
+        prefectureEn
+        cityEn
+        addressLine1En
+        addressLine2En
+        prefectureJa
+        cityJa
+        addressLine1Ja
+        addressLine2Ja
+      }
+    }
+    mapLatitude
+    mapLongitude
+    healthcareProfessionalIds
+    createdDate
+    updatedDate
   }
 }
 `
