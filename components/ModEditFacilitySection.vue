@@ -249,6 +249,7 @@
                 :key="`${healthcareProfessional.id}-${index}`"
             >
                 <ModDashboardHealthProfessionalCard
+                    :data-testid="`healthcare-professional-card-${index}`"
                     :healthcare-professional="healthcareProfessional"
                     :healthcare-professionals-related-to-facility="healthcareProfessionalsRelatedToFacility"
                     :show-trash-can="false"

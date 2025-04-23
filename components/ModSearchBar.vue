@@ -101,6 +101,7 @@
                 <!-- Fallback for empty search results -->
                 <li
                     v-if="!filteredItems.length"
+                    data-testid="mod-search-bar-search-no-match"
                     class="m-3 cursor-default"
                 >
                     <span>{{ noMatchText }}</span>
