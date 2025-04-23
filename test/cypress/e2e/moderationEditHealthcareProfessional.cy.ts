@@ -1,5 +1,6 @@
 import fakeHealthcareProfessionalResult from '../../fake_data/moderation_dashboard/fakeModHealthcareProfessionalData.json'
 import { aliasQuery } from '../utils'
+import enUS from '../../../i18n/locales/en.json'
 
 before(() => {
     cy.login()
@@ -43,6 +44,33 @@ describe('Moderation edit professional healthcare form', () => {
             cy.get('[data-testid="mod-healthcare-professional-section-firstName"]').find('input').type('John')
             cy.get('[data-testid="mod-healthcare-professional-section-middleName"]').find('input').type('Johnny')
             cy.get('[data-testid="mod-healthcare-professional-section-name-locale"]').select('en_US')
+        })
+
+        it('contains the following fields and buttons in the topbar', () => {
+            cy.get('[data-testid="mod-edit-facility-hp-topbar-update"]').should('exist')
+                .contains(enUS.modEditFacilityOrHPTopbar.updateAndExit)
+            cy.get('[data-testid="mod-edit-facility-hp-topbar-delete"]').should('exist')
+                .contains(enUS.modEditFacilityOrHPTopbar.delete)
+            cy.get('[data-testid="mod-edit-facility-hp-topbar-copy-id"]').should('exist')
+        })
+
+        it('should disable topbar update button when no changes have been made', () => {
+            cy.get('[data-testid="mod-edit-facility-hp-topbar-update"]').should('be.disabled')
+        })
+
+        it('should disable topbar update button when changes have been reverted', () => {
+            cy.get('[data-testid="mod-healthcare-professional-section-degrees"]').clear().type('DVM')
+            cy.get('[data-testid="mod-search-bar-search-result"]').first().click()
+            cy.get('[data-testid="mod-edit-facility-hp-topbar-update"]').should('be.enabled')
+            cy.get('[data-testid="mod-healthcare-professional-section-degrees"]').clear().type('DVM')
+            cy.get('[data-testid="mod-search-bar-search-result"]').first().click()
+            cy.get('[data-testid="mod-edit-facility-hp-topbar-update"]').should('be.disabled')
+        })
+
+        it('should enable topbar update button when changes have been made', () => {
+            cy.get('[data-testid="mod-healthcare-professional-section-degrees"]').clear().type('DVM')
+            cy.get('[data-testid="mod-search-bar-search-result"]').first().click()
+            cy.get('[data-testid="mod-edit-facility-hp-topbar-update"]').should('be.enabled')
         })
     })
 })
