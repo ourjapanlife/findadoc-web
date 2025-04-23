@@ -495,6 +495,12 @@
                     {{ localeStore.formatLanguageCodeToSimpleText(locale) }}
                 </li>
             </ol>
+            <NoteInputField
+                v-model:note-input-value="submissionFormFields.notes"
+                data-testid="submission-form-notes"
+                type="textarea"
+                :required="false"
+            />
         </div>
         <button
             type="button"
@@ -883,6 +889,9 @@ function initializeSubmissionFormValues(submissionData: Submission | undefined) 
                     submissionFormFieldsBeforeChanges.healthcareProfessionalLocales
                         = submissionData.spokenLanguages
                     break
+                case 'notes':
+                    submissionFormFields.notes = submissionData.notes || ''
+                    break
                 case 'healthcareProfessionalIDs':
                     // For v-model
                     submissionFormFields.healthcareProfessionalIDs
@@ -998,7 +1007,8 @@ async function submitUpdatedSubmission(e: Event) {
                     names: submissionFormFields.healthCareProfessionalNameArray,
                     facilityIds: []
                 }
-            ]
+            ],
+            notes: submissionFormFields.notes
         }
     }
 
