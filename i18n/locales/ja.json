@@ -390,7 +390,8 @@
     "deleteConfirmationFacility": "Are you sure you want to delete the facility: {facility} , with ID: {id}?",
     "facilityDeletedSuccessfully": "Facility deleted successfully",
     "healthcareProfessionalDeletedSuccessfully": "Healthcare professional deleted successfully",
-    "healthcareProfessionalUpdatedSuccessfully": "Healthcare professional updated successfully"
+    "healthcareProfessionalUpdatedSuccessfully": "Healthcare professional updated successfully",
+    "back": "戻る"
   },
   "serverErrorMessages": {
     "UNAUTHENTICATED": "You do not have the authentication to do this action",
