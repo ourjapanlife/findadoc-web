@@ -24,7 +24,7 @@
         <div class="facility-hp-topbar-actions flex justify p-2 font-bold ">
             <button
                 type="button"
-                class="flex justify-center items-center rounded-full bg-secondary-bg border-primary-text-muted 
+                class="flex justify-center items-center rounded-full bg-secondary-bg border-primary-text-muted
                 border-2 w-28 text-sm mr-2"
                 data-testid="mod-edit-facility-hp-topbar-delete"
                 @click="cancelUpdateAndExit"
