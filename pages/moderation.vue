@@ -23,7 +23,7 @@
                         <span>{{ $t('login.unauthorizedline1') }}</span>
                         <span>{{ $t('login.unauthorizedline2') }}</span>
                         <NuxtLink
-                            :to="'https://forms.gle/4E763qfaq46kEsn99'"
+                            to="https://forms.gle/4E763qfaq46kEsn99"
                             target="_blank"
                             class="inline text-primary underline"
                         >
