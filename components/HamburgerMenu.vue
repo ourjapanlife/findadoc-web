@@ -75,25 +75,25 @@
                         data-testid="hamburger-menu-items"
                         class="mt-10 px-5 flex flex-col gap-6"
                     >
-                        <NuxtLink :to="'/'">
+                        <NuxtLink to="/">
                             <div @click="closeMenu()">
                                 {{ $t('hamburgerMenu.home') }}
                             </div>
                         </NuxtLink>
-                        <NuxtLink :to="'/about'">
+                        <NuxtLink to="/about">
                             <div @click="closeMenu()">
                                 {{ $t('hamburgerMenu.about') }}
                             </div>
                         </NuxtLink>
                         <NuxtLink
-                            :to="'https://forms.gle/4E763qfaq46kEsn99'"
+                            to="https://forms.gle/4E763qfaq46kEsn99"
                             target="_blank"
                         >
                             <div @click="closeMenu()">
                                 {{ $t('hamburgerMenu.contact') }}
                             </div>
                         </NuxtLink>
-                        <NuxtLink :to="'/submit'">
+                        <NuxtLink to="/submit">
                             <div @click="closeMenu()">
                                 {{ $t('hamburgerMenu.submit') }}
                             </div>
@@ -113,12 +113,12 @@
                                     {{ authStore.userId }}
                                 </div>
                             </div>
-                            <NuxtLink :to="'/moderation'">
+                            <NuxtLink to="/moderation">
                                 <div @click="closeMenu()">
                                     {{ $t('hamburgerMenu.moderation') }}
                                 </div>
                             </NuxtLink>
-                            <NuxtLink :to="'/'">
+                            <NuxtLink to="/">
                                 <div @click="logout()">
                                     {{ $t('hamburgerMenu.logout') }}
                                 </div>
@@ -173,7 +173,7 @@
                         class="flex gap-4"
                     >
                         <NuxtLink
-                            :to="'/terms'"
+                            to="/terms"
                             data-testid="hamburger-menu-footer-legal-terms"
                         >
                             <span @click="closeMenu()">
@@ -181,7 +181,7 @@
                             </span>
                         </NuxtLink>
                         <NuxtLink
-                            :to="'/privacypolicy'"
+                            to="/privacypolicy"
                             data-testid="hamburger-menu-footer-legal-privacy"
                         >
                             <span @click="closeMenu()">
@@ -194,7 +194,7 @@
                         class="flex gap-6"
                     >
                         <NuxtLink
-                            :to="'https://github.com/ourjapanlife'"
+                            to="https://github.com/ourjapanlife"
                             target="_blank"
                         >
                             <SVGGithubIcon
@@ -205,7 +205,7 @@
                         </NuxtLink>
                         <!-- Netlify Icons are available here: https://www.netlify.com/press/#badges -->
                         <NuxtLink
-                            :to="'https://www.netlify.com'"
+                            to="https://www.netlify.com"
                             target="_blank"
                             data-testid="hamburger-menu-footer-dev-links-netlify"
                         >
@@ -233,7 +233,7 @@
                             >
                                 NPO
                                 <NuxtLink
-                                    :to="'https://www.npo-hiroba.or.jp/search/zoom.php?pk=121289'"
+                                    to="https://www.npo-hiroba.or.jp/search/zoom.php?pk=121289"
                                     target="_blank"
                                     class="underline"
                                 >#9011005010215
@@ -244,7 +244,7 @@
                                 class="ml-2 mt-0.5"
                             >
                                 <NuxtLink
-                                    :to="'https://docs.google.com/spreadsheets/d/1CafQoHn1NNNoRy35QSt_nUZcgKL8QN2M'"
+                                    to="https://docs.google.com/spreadsheets/d/1CafQoHn1NNNoRy35QSt_nUZcgKL8QN2M"
                                     target="_blank"
                                     class="underline"
                                 >{{ $t('hamburgerMenu.balancesheet') }}
