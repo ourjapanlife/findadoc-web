@@ -391,7 +391,9 @@
     "facilityDeletedSuccessfully": "Facility deleted successfully",
     "healthcareProfessionalDeletedSuccessfully": "Healthcare professional deleted successfully",
     "healthcareProfessionalUpdatedSuccessfully": "Healthcare professional updated successfully",
-    "back": "戻る"
+    "back": "戻る",
+    "confirmationButton": "Leave Page",
+    "hasUnsavedChanges": "You have unsaved changes. Are you sure you want to leave?"
   },
   "serverErrorMessages": {
     "UNAUTHENTICATED": "You do not have the authentication to do this action",

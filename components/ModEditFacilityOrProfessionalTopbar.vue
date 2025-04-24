@@ -74,13 +74,10 @@
                 <div
                     class="flex flex-col aspect-square h-96 items-center justify-around bg-primary-inverted p-10 rounded"
                 >
-<<<<<<< HEAD
-                    <template v-if="modalType === 'unsavedChanges'">
-                        <span class="font-bold text-3xl">{{ $t('modSubmissionForm.hasUnsavedChanges') }}</span>
-=======
                     <div v-if="modalType === ModalType.UnsavedChanges">
-                        <div class="font-bold text-3xl">{{ $t('modEditFacilityOrHPTopbar.hasUnsavedChanges') }}</div>
->>>>>>> c9c1e2d (refactor: remove else statement in cancelUpdateAndExit logic)
+                        <div class="font-bold text-3xl">
+                            {{ $t('modEditFacilityOrHPTopbar.hasUnsavedChanges') }}
+                        </div>
                         <button
                             class="bg-primary p-4 rounded-full my-8 font-semibold text-xl"
                             type="button"

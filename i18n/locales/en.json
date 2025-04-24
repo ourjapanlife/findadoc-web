@@ -172,7 +172,9 @@
         "facilityUpdatedSuccessfully": "Facility updated successfully",
         "healthcareProfessionalDeletedSuccessfully": "Healthcare professional deleted successfully",
         "healthcareProfessionalUpdatedSuccessfully": "Healthcare professional updated successfully",
-        "back": "Back"
+        "back": "Back",
+        "confirmationButton": "Leave Page",
+        "hasUnsavedChanges": "You have unsaved changes. Are you sure you want to leave?"
     },
     "modEditSubmissionTopNav": {
         "saveAndExit": "Save & Exit",
