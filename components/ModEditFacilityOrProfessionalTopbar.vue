@@ -181,38 +181,40 @@ const facilityHasUnsavedChanges = () => {
 }
 
 const healthcareProfessionalHasUnsavedChanges = () => {
+    if (!originalHealthcareProfessionalRefsValue.value) return false // No match found, no changes to compare.
+
     const originalHealthcareProfessional = originalHealthcareProfessionalRefsValue.value
 
-    if (!originalHealthcareProfessional) return false // No match found, no changes to compare.
+    const healthcareProfessionalSections = healthcareProfessionalsStore.healthcareProfessionalSectionFields
 
     // Compare each field in the `healthcareProfessionalSectionFields` object with the original data.
     const areThereUnsavedHealthcareProfessionalChanges
-= arraysAreEqual(
-    healthcareProfessionalsStore.healthcareProfessionalSectionFields.acceptedInsurance,
+= !arraysAreEqual(
+    healthcareProfessionalSections.acceptedInsurance,
     originalHealthcareProfessional.acceptedInsurance
 )
-|| healthcareProfessionalsStore.healthcareProfessionalSectionFields.createdDate
-=== originalHealthcareProfessional.createdDate
-|| arraysAreEqual(
-    healthcareProfessionalsStore.healthcareProfessionalSectionFields.degrees,
+|| healthcareProfessionalSections.createdDate
+!== originalHealthcareProfessional.createdDate
+|| !arraysAreEqual(
+    healthcareProfessionalSections.degrees,
     originalHealthcareProfessional.degrees
 )
-|| arraysAreEqual(
-    healthcareProfessionalsStore.healthcareProfessionalSectionFields.facilityIds,
+|| !arraysAreEqual(
+    healthcareProfessionalSections.facilityIds,
     originalHealthcareProfessional.facilityIds
 )
-|| healthcareProfessionalsStore.healthcareProfessionalSectionFields.id
-=== originalHealthcareProfessional.id
-|| arraysAreEqual(
-    healthcareProfessionalsStore.healthcareProfessionalSectionFields.specialties,
+|| healthcareProfessionalSections.id
+!== originalHealthcareProfessional.id
+|| !arraysAreEqual(
+    healthcareProfessionalSections.specialties,
     originalHealthcareProfessional.specialties
 )
-|| arraysAreEqual(
-    healthcareProfessionalsStore.healthcareProfessionalSectionFields.spokenLanguages,
+|| !arraysAreEqual(
+    healthcareProfessionalSections.spokenLanguages,
     originalHealthcareProfessional.spokenLanguages
 )
-|| healthcareProfessionalsStore.healthcareProfessionalSectionFields.updatedDate
-=== originalHealthcareProfessional.updatedDate
+|| healthcareProfessionalSections.updatedDate
+!== originalHealthcareProfessional.updatedDate
 || Array.from(healthcareProfessionalsStore.selectedFacilities).length > 0
 
     return areThereUnsavedHealthcareProfessionalChanges
@@ -341,9 +343,11 @@ watch(() => facilitiesStore.selectedFacilityData, (newValue, oldValue) => {
     }
 }, { deep: true })
 
-watch(() => healthcareProfessionalsStore.healthcareProfessionalSectionFields.updatedDate, newValue => {
-    if (newValue) {
-        originalHealthcareProfessionalRefsValue.value = healthcareProfessionalsStore.healthcareProfessionalSectionFields
-    }
+// using stringify and then parsing was the only working solution to stop
+// originalHealthcareProfessionalRefsValue from being assigned a reference to
+// healthcareProfessionalsStore.selectedHealthcareProfessionalData; all other methods
+// had originalHealthcareProfessionalRefsValue updating with healthcareProfessionalsStore.healthcareProfessionalSectionFields
+watch(() => healthcareProfessionalsStore.selectedHealthcareProfessionalData, newValue => {
+    originalHealthcareProfessionalRefsValue.value = JSON.parse(JSON.stringify(newValue))
 })
 </script>
