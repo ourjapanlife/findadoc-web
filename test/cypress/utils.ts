@@ -14,6 +14,7 @@ export const auth0Login = () => {
         body: {
           grant_type: 'password',
           connection: 'Username-Password-Authentication',
+          audience: 'findadoc',
           username: Cypress.env('AUTH0_USERNAME'),
           password: Cypress.env('AUTH0_PASSWORD'),
           scope: 'openid profile email',

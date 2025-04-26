@@ -4,9 +4,20 @@ import { auth0 } from '../utils/auth0.js'
 import { useLoadingStore } from './loadingStore.js'
 
 export const useAuthStore = defineStore('authStore', () => {
-    const userId = computed(() => auth0?.user.value?.nickname ?? 'unknown user')
+    const userId = computed(() => {
+        if ((import.meta.client && window.Cypress)) {
+            const idToken = localStorage.getItem('id_token')
+            return idToken ?? 'unknown user'
+        }
+        return auth0?.user.value?.nickname ?? 'unknown user'
+    })
     const isLoadingAuth = computed(() => auth0?.isLoading.value)
-    const isLoggedIn = computed(() => !auth0?.isLoading.value && auth0?.isAuthenticated.value)
+    const isLoggedIn = computed(() => {
+        if ((import.meta.client && window.Cypress)) {
+            return localStorage.getItem('auth_token')
+        }
+        return !auth0.isLoading.value && auth0.isAuthenticated.value
+    })
     const isAdmin = computed(() => !auth0?.isLoading.value && auth0?.isAuthenticated.value)
     const isModerator: Ref<boolean> = ref(false)
 
@@ -54,6 +65,10 @@ export const useAuthStore = defineStore('authStore', () => {
                     console.error('Auth0 loading timed out after 10 seconds')
                     break
                 }
+            }
+
+            if ((import.meta.client && window.Cypress)) {
+                return localStorage.getItem('auth_token') ?? undefined
             }
 
             if (!auth0?.isAuthenticated.value) {
