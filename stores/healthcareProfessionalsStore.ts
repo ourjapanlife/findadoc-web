@@ -26,6 +26,7 @@ export const useHealthcareProfessionalsStore = defineStore(
         const healthcareProfessionalsData: Ref<HealthcareProfessional[]>
         = ref([])
         const selectedHealthcareProfessionalId: Ref<string> = ref('')
+        const selectedHealthcareProfessionalData: Ref<HealthcareProfessional | undefined> = ref()
         const healthcareProfessionalSectionFields = reactive<HealthcareProfessional>({
             __typename: 'HealthcareProfessional', // Optional if you're working with GraphQL
             acceptedInsurance: [],
@@ -54,10 +55,10 @@ export const useHealthcareProfessionalsStore = defineStore(
 
         function setSelectedHealthcareProfessional(healthcareProfessionalId: string) {
             selectedHealthcareProfessionalId.value = healthcareProfessionalId
-            const selectedHealthcareProfessionalData = healthcareProfessionalsData.value
+            selectedHealthcareProfessionalData.value = healthcareProfessionalsData.value
                 .find((healthcareProfessional: HealthcareProfessional) => healthcareProfessional.id === healthcareProfessionalId)
-            if (selectedHealthcareProfessionalData) {
-                updateHealthcareProfessionalSectionFields(selectedHealthcareProfessionalData)
+            if (selectedHealthcareProfessionalData.value) {
+                updateHealthcareProfessionalSectionFields(selectedHealthcareProfessionalData.value)
             }
         }
 
@@ -224,6 +225,7 @@ export const useHealthcareProfessionalsStore = defineStore(
             healthcareProfessionalSectionFields,
             displayChosenLocaleForHealthcareProfessional,
             setSelectedHealthcareProfessional,
+            selectedHealthcareProfessionalData,
             removedHealthcareProfessionalNames,
             selectedFacilities,
             createHealthcareProfessional,
