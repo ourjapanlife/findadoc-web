@@ -2,27 +2,27 @@
     <div
         v-close-on-outside-click="closeMenu"
         data-testid="hamburger-menu-container"
-        class="cursor-pointer w-full flex"
+        class="flex w-full cursor-pointer"
     >
         <SVGHamburgerMenuIcon
             data-testid="hamburger-menu-icon"
             alt="hamburger menu"
-            class="h-8 w-8"
+            class="w-8 h-8"
             @click="openMenu()"
         />
         <Transition
             enter-active-class="transition ease-in-out duration-300 transform: translate(100%, 0)"
             leave-active-class="transition ease-in-out duration-100 transform: translate(-100%, 0)"
             enter-from-class="opacity-0 translate-x-2.5"
-            enter-to-class="opacity-100 translate-x-0"
-            leave-from-class="opacity-100 translate-x-0"
+            enter-to-class="translate-x-0 opacity-100"
+            leave-from-class="translate-x-0 opacity-100"
             leave-to-class="opacity-0 translate-x-2.5"
         >
             <div
                 v-show="isMenuOpen"
                 data-testid="hamburger-menu"
-                class="z-20 absolute top-0 right-0 h-full w-2/3 pt-6 pb-2 rounded bg-primary-bg border-2
-                        flex flex-col justify-between "
+                class="absolute top-0 right-0 z-20 flex flex-col
+                justify-between w-2/3 h-full pt-6 pb-2 border-2 rounded bg-primary-bg "
             >
                 <div data-testid="hamburger-upper-section">
                     <div
@@ -31,10 +31,10 @@
                     >
                         <div class="flex">
                             <div
-                                class="title-text flex flex-col flex-shrink-0"
+                                class="flex flex-col flex-shrink-0 title-text"
                                 data-testid="logo"
                             >
-                                <div class="text-lg text-primary-text group-hover:text-primary-hover font-semibold">
+                                <div class="text-lg font-semibold text-primary-text group-hover:text-primary-hover">
                                     {{ $t('hamburgerMenu.copyright') }}
                                 </div>
                             </div>
@@ -65,15 +65,15 @@
                     </div>
                     <div
                         data-testid="hamburger-menu-language-section"
-                        class="flex mt-2 px-5"
+                        class="flex px-5 mt-2"
                     >
-                        <span class="text-primary-text self-center mr-2">{{ $t('hamburgerMenu.languageDropdownTitle')
+                        <span class="self-center mr-2 text-primary-text">{{ $t('hamburgerMenu.languageDropdownTitle')
                         }}</span>
                         <LocaleSelector class="py-1.5 text-primary-text bg-primary-bg" />
                     </div>
                     <div
                         data-testid="hamburger-menu-items"
-                        class="mt-10 px-5 flex flex-col gap-6"
+                        class="flex flex-col gap-6 px-5 mt-10"
                     >
                         <NuxtLink to="/">
                             <div @click="closeMenu()">
@@ -107,9 +107,9 @@
                                     role="img"
                                     alt="profile icon"
                                     title="profile icon"
-                                    class="profile-icon w-7 stroke-primary stroke-2 inline"
+                                    class="inline stroke-2 profile-icon w-7 stroke-primary"
                                 />
-                                <div class="text-primary font-bold">
+                                <div class="font-bold text-primary">
                                     {{ authStore.userId }}
                                 </div>
                             </div>
@@ -133,38 +133,59 @@
                 >
                     <div data-testid="hamburger-menu-theme-switcher">
                         <p class="mb-1">
-                            {{ $t('hamburgerMenu.theme') }}
+                            {{ $t('hamburgerMenu.theme') }}: {{ convertStringToTitleCase(currentTheme) }}
                         </p>
                         <div class="flex">
                             <div
                                 class="w-10 h-10 mr-1"
+                                title="Default Theme"
                                 style="background-color:#EB7100"
                                 :class="getSelectedTheme('orange')"
                                 @click="setTheme('orange')"
                             />
                             <div
-                                class="bg-primary w-10 h-10 mr-1"
+                                class="w-10 h-10 mr-1 bg-primary"
+                                title="Coral Theme"
                                 style="background-color: #ED6C5A;"
                                 :class="getSelectedTheme('coral')"
                                 @click="setTheme('coral')"
                             />
                             <div
                                 class="w-10 h-10 mr-1"
+                                title="Violet Theme"
                                 style="background-color: #A45D9A;"
                                 :class="getSelectedTheme('violet')"
                                 @click="setTheme('violet')"
                             />
                             <div
                                 class="w-10 h-10 mr-1"
+                                title="Ocean Theme"
                                 style="background-color: #245A7D;"
                                 :class="getSelectedTheme('ocean')"
                                 @click="setTheme('ocean')"
                             />
                             <div
-                                class="w-10 h-10"
+                                class="w-10 h-10 mr-1"
+                                title="Neon Theme"
                                 style="background-color: #1bdb9b;"
                                 :class="getSelectedTheme('neon')"
                                 @click="setTheme('neon')"
+                            />
+                            <div
+                                class="w-10 h-10 mr-1"
+                                title="Default Theme"
+                                style="background-color: #EEFF02FF;"
+                                :class="getSelectedTheme('accessible-high-contrast')"
+                                alt="Accessible: High Contrast Theme"
+                                @click="setTheme('accessible-high-contrast')"
+                            />
+                            <div
+                                class="w-10 h-10 mr-1"
+                                title="Accessible: Daltonian Color Blindness"
+                                style="background-color: #FF0000FF;"
+                                :class="getSelectedTheme('accessible-red-green')"
+                                alt="Accessible: Daltonian Color Blindness"
+                                @click="setTheme('accessible-red-green')"
                             />
                         </div>
                     </div>
@@ -200,7 +221,7 @@
                             <SVGGithubIcon
                                 data-testid="hamburger-menu-github-icon"
                                 alt="hamburger menu"
-                                class="h-10 w-8"
+                                class="w-8 h-10"
                             />
                         </NuxtLink>
                         <!-- Netlify Icons are available here: https://www.netlify.com/press/#badges -->
@@ -212,13 +233,13 @@
                             <img
                                 src="https://www.netlify.com/v3/img/components/netlify-light.svg"
                                 alt="Deploys by Netlify"
-                                class=" h-10 w-20"
+                                class="w-20 h-10 "
                             >
                         </NuxtLink>
                     </div>
                     <div
                         data-testid="hamburger-menu-footer-copyright"
-                        class="text-primary-text-muted text-xs"
+                        class="text-xs text-primary-text-muted"
                     >
                         <div>
                             © {{ new Date().getUTCFullYear() }} {{ $t('hamburgerMenu.copyright') }}
@@ -265,6 +286,7 @@ import SVGProfileIcon from '~/assets/icons/profile-icon.svg'
 import SVGHamburgerMenuIcon from '~/assets/icons/hamburger-menu.svg'
 import SVGGithubIcon from '~/assets/icons/social-github.svg'
 import { useAuthStore } from '~/stores/authStore'
+import { convertStringToTitleCase } from '~/utils/stringUtils'
 
 const authStore = useAuthStore()
 
@@ -286,13 +308,21 @@ function logout() {
 }
 
 function setTheme(newTheme: string) {
-    document.documentElement.classList.remove('theme-orange', 'theme-coral', 'theme-violet', 'theme-ocean', 'theme-neon')
+    document.documentElement.classList.remove(
+        'theme-orange',
+        'theme-coral',
+        'theme-violet',
+        'theme-ocean',
+        'theme-neon',
+        'theme-accessible-high-contrast',
+        'theme-accessible-red-green'
+    )
     document.documentElement.classList.add(`theme-${newTheme}`)
     localStorage.setItem('theme', newTheme)
     currentTheme.value = newTheme
 }
 
-// this gives a black border to the selected theme in the hamburger menu
+// This gives a black border to the currently selected theme
 function getSelectedTheme(theme: string) {
     if (currentTheme.value === theme) {
         return 'border-4 border-black'
