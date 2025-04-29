@@ -285,7 +285,7 @@ function logout() {
 }
 
 function setTheme(newTheme: string) {
-    document.documentElement.classList.remove('theme-orange', 'theme-coral', 'theme-violet', 'theme-ocean', 'theme-neon')
+    document.documentElement.classList.remove('theme-orange', 'theme-coral', 'theme-violet', 'theme-ocean', 'theme-neon', 'theme-accessible-high-contrast', 'theme-accessible-red-green')
     document.documentElement.classList.add(`theme-${newTheme}`)
     localStorage.setItem('theme', newTheme)
     currentTheme.value = newTheme
