@@ -141,30 +141,49 @@
                                 style="background-color:#EB7100"
                                 :class="getSelectedTheme('orange')"
                                 @click="setTheme('orange')"
+                                title="Default Theme"
                             />
                             <div
                                 class="bg-primary w-10 h-10 mr-1"
                                 style="background-color: #ED6C5A;"
                                 :class="getSelectedTheme('coral')"
                                 @click="setTheme('coral')"
+                                title="Coral Theme"
                             />
                             <div
                                 class="w-10 h-10 mr-1"
                                 style="background-color: #A45D9A;"
                                 :class="getSelectedTheme('violet')"
                                 @click="setTheme('violet')"
+                                title="Violet Theme"
                             />
                             <div
                                 class="w-10 h-10 mr-1"
                                 style="background-color: #245A7D;"
                                 :class="getSelectedTheme('ocean')"
                                 @click="setTheme('ocean')"
+                                title="Ocean Theme"
                             />
                             <div
-                                class="w-10 h-10"
+                                class="w-10 h-10 mr-1"
                                 style="background-color: #1bdb9b;"
                                 :class="getSelectedTheme('neon')"
                                 @click="setTheme('neon')"
+                                title="Neon Theme"
+                            />
+                            <div 
+                                class="w-10 h-10 mr-1"
+                                style="background-color: #EEFF02FF;"
+                                :class="getSelectedTheme('accessible-high-contrast')"
+                                @click="setTheme('accessible-high-contrast')"
+                                title="Accessible: High Contrast Theme"
+                            />
+                            <div
+                                class="w-10 h-10 mr-1"
+                                style="background-color: #FF0000FF;"
+                                :class="getSelectedTheme('accessible-red-green')"
+                                @click="setTheme('accessible-red-green')"
+                                title="Accessible: Daltonian Color Blindness"
                             />
                         </div>
                     </div>
