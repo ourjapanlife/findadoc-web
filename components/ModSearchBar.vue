@@ -9,7 +9,6 @@
             class="flex items-center px-3 py-3.5 w-96 h-12 bg-secondary-bg
     rounded-lg border border-primary-text-muted text-primary-text
     text-sm font-normal font-sans placeholder-primary-text-muted
-    outline outline-0 -outline-offset-2 gap-2 divide-x-2
     focus-within:outline-currentColor
     focus-within:outline-2
     "
@@ -19,7 +18,7 @@
                 type="text"
                 :placeholder="placeHolderText"
                 :data-testid="`${dataTestId}`"
-                class="grow focus-visible:outline-none"
+                class="grow focus-visible:outline-none bg-secondary-bg text-primary-text placeholder-primary-text-muted"
                 @blur="handleSearchInputBlur"
                 @keydown.esc="handleSearchInputBlur"
                 @keydown.down="handleSearchInputArrowDown"
@@ -64,6 +63,7 @@
                         selectedItems.includes(item) ? 'bg-primary/90' : '',
                         selectedItemIndex === index ? 'bg-primary-hover text-primary-inverted' : 'opacity-95',
                     ]"
+                    data-testid="mod-search-bar-search-result"
                     @click="handleListItemClick"
                     @mousedown="handleListItemMouseDown"
                     @mouseover="() => { handleListItemMouseOver(index) }"

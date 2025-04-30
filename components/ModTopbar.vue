@@ -5,7 +5,7 @@
             <ModDashboardTopbar />
         </div>
         <div
-            v-else-if="moderationScreenStore.editSubmissionScreenIsActive()"
+            v-if="moderationScreenStore.editSubmissionScreenIsActive()"
             class="h-[76px] w-full"
         >
             <ModEditSubmissionTopbar
@@ -14,16 +14,17 @@
             />
         </div>
         <div
-            v-else-if="moderationScreenStore.editFacilityScreenIsActive()"
+            v-if="moderationScreenStore.editFacilityScreenIsActive()
+                || moderationScreenStore.editHealthcareProfessionalScreenIsActive()"
             class="h-[76px] w-full"
         >
             <ModEditFacilityOrProfessionalTopbar />
         </div>
         <div
-            v-else-if="moderationScreenStore.editHealthcareProfessionalScreenIsActive()"
+            v-if="moderationScreenStore.createHealthcareProfessionalScreenIsActive()"
             class="h-[76px] w-full"
         >
-            <ModEditFacilityOrProfessionalTopbar />
+            <ModCreateFacilityOrProfessionalTopbar />
         </div>
     </div>
 </template>

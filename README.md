@@ -63,6 +63,8 @@ Consult the **[Troubleshooting Documentation](https://documentation.findadoc.jp/
     </tr>
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/ConwayDecker"><img src="https://avatars.githubusercontent.com/u/171483356?v=4?s=100" width="100px;" alt="Jason"/><br /><sub><b>Jason</b></sub></a><br /><a href="https://github.com/ourjapanlife/findadoc-web/commits?author=ConwayDecker" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/matthewkurtti"><img src="https://avatars.githubusercontent.com/u/29577421?v=4?s=100" width="100px;" alt="Matthew Kurtti"/><br /><sub><b>Matthew Kurtti</b></sub></a><br /><a href="https://github.com/ourjapanlife/findadoc-web/commits?author=matthewkurtti" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/prestonb91"><img src="https://avatars.githubusercontent.com/u/77235430?v=4?s=100" width="100px;" alt="Preston Boardman"/><br /><sub><b>Preston Boardman</b></sub></a><br /><a href="https://github.com/ourjapanlife/findadoc-web/commits?author=prestonb91" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>

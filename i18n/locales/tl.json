@@ -145,7 +145,8 @@
     "rejected": "Hindi na-aprubahan",
     "forReview": "Susuriin",
     "healthcareProfessionals": "Propesyonal sa Pangangalagang Pangkalusugan",
-    "facilities": "Pasilidad"
+    "facilities": "Pasilidad",
+    "addHealthcareProfessional": "Add Healthcare Professional"
   },
   "modEditFacilityOrHPTopbar": {
     "copyFailure": "Hindi nakopya ang ID",
@@ -390,5 +391,12 @@
   "modHealthcareProfessionalCard": {
     "editName": "Edit",
     "saveName": "Save"
+  },
+  "modCreateFacilityOrHPTopbar": {
+    "confirmExit": "Exit without saving",
+    "create": "Create",
+    "exit": "Exit",
+    "heathcareProfessionalCreatedSuccessfully": "Healthcare professional created successfully.",
+    "unsavedChangesMessage": "This will exit without saving your entry. All unsaved data will be lost."
   }
 }
