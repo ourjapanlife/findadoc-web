@@ -133,7 +133,7 @@
                 >
                     <div data-testid="hamburger-menu-theme-switcher">
                         <p class="mb-1">
-                            {{ $t('hamburgerMenu.theme') }}
+                            {{ $t('hamburgerMenu.theme') }}: {{ toLocaleCase(currentTheme) }}
                         </p>
                         <div class="flex">
                             <div
@@ -142,8 +142,6 @@
                                 style="background-color:#EB7100"
                                 :class="getSelectedTheme('orange')"
                                 @click="setTheme('orange')"
-                                @touchstart="handlesThemeMenuTouchStart($event, 'Default Theme')"
-                                @touchend="handlesThemeMenuTouchEnd"
                             />
                             <div
                                 class="bg-primary w-10 h-10 mr-1"
@@ -151,8 +149,6 @@
                                 style="background-color: #ED6C5A;"
                                 :class="getSelectedTheme('coral')"
                                 @click="setTheme('coral')"
-                                @touchstart="handlesThemeMenuTouchStart($event, 'Coral Theme')"
-                                @touchend="handlesThemeMenuTouchEnd"
                             />
                             <div
                                 class="w-10 h-10 mr-1"
@@ -160,8 +156,6 @@
                                 style="background-color: #A45D9A;"
                                 :class="getSelectedTheme('violet')"
                                 @click="setTheme('violet')"
-                                @touchstart="handlesThemeMenuTouchStart($event, 'Violet Theme')"
-                                @touchend="handlesThemeMenuTouchEnd"
                             />
                             <div
                                 class="w-10 h-10 mr-1"
@@ -169,8 +163,6 @@
                                 style="background-color: #245A7D;"
                                 :class="getSelectedTheme('ocean')"
                                 @click="setTheme('ocean')"
-                                @touchstart="handlesThemeMenuTouchStart($event, 'Ocean Theme')"
-                                @touchend="handlesThemeMenuTouchEnd"
                             />
                             <div
                                 class="w-10 h-10 mr-1"
@@ -178,8 +170,6 @@
                                 style="background-color: #1bdb9b;"
                                 :class="getSelectedTheme('neon')"
                                 @click="setTheme('neon')"
-                                @touchstart="handlesThemeMenuTouchStart($event, 'Neon Theme')"
-                                @touchend="handlesThemeMenuTouchEnd"
                             />
                             <div
                                 class="w-10 h-10 mr-1"
@@ -188,8 +178,6 @@
                                 :class="getSelectedTheme('accessible-high-contrast')"
                                 alt="Accessible: High Contrast Theme"
                                 @click="setTheme('accessible-high-contrast')"
-                                @touchstart="handlesThemeMenuTouchStart($event, 'Accessible: High Contrast Theme')"
-                                @touchend="handlesThemeMenuTouchEnd"
                             />
                             <div
                                 class="w-10 h-10 mr-1"
@@ -198,8 +186,6 @@
                                 :class="getSelectedTheme('accessible-red-green')"
                                 alt="Accessible: Daltonian Color Blindness"
                                 @click="setTheme('accessible-red-green')"
-                                @touchstart="handlesThemeMenuTouchStart($event, 'Accessible: Daltonian Color Blindness')"
-                                @touchend="handlesThemeMenuTouchEnd"
                             />
                         </div>
                     </div>
@@ -306,9 +292,6 @@ const isMenuOpen = ref(false)
 
 const currentTheme = ref('orange')
 
-// this is used to detect long press on the theme buttons (mobile view)
-const longPressTimer = ref<number | null>(null)
-
 function openMenu() {
     isMenuOpen.value = true
 }
@@ -345,21 +328,6 @@ function getSelectedTheme(theme: string) {
     return 'border border-gray-300'
 }
 
-// this is used to detect long press on the theme buttons (mobile view)
-function handlesThemeMenuTouchStart(event: TouchEvent, title: string) {
-    longPressTimer.value = window.setTimeout(() => {
-        alert(title)
-    }, 500) // 500ms for long press
-}
-
-// this is used to detect long press on the theme buttons (mobile view)
-function handlesThemeMenuTouchEnd() {
-    if (longPressTimer.value) {
-        clearTimeout(longPressTimer.value) // clear the timeout
-        longPressTimer.value = null // set the timer to "null"
-    }
-}
-
 onMounted(() => {
     const saveTheme = localStorage.getItem('theme')
     if (saveTheme) {
@@ -367,6 +335,11 @@ onMounted(() => {
         setTheme(saveTheme)
     }
 })
+
+// converts the theme name to locale case (first letter uppercase, rest lowercase)
+function toLocaleCase(theme: string) {
+    return theme.charAt(0).toUpperCase() + theme.slice(1)
+}
 
 // this is a custom directive to close the menu when clicking outside of the menu
 const vCloseOnOutsideClick = {
