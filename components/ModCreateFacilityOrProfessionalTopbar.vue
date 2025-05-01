@@ -92,7 +92,6 @@ const createFacilityOrHealthcareProfessional = async () => {
     }
 
     if (moderationScreenStore.createFacilityScreenIsActive()) {
-        // You’ll need a corresponding method in your store
         const response = await facilitiesStore.createFacility()
 
         if (response.errors?.length) {

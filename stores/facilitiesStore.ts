@@ -46,15 +46,15 @@ export const useFacilitiesStore = defineStore(
             nameJa: '',
             contact: {
                 address: {
-                    addressLine1En: '',
-                    addressLine1Ja: '',
-                    addressLine2En: '',
-                    addressLine2Ja: '',
                     postalCode: '',
                     prefectureEn: '',
-                    prefectureJa: '',
                     cityEn: '',
-                    cityJa: ''
+                    addressLine1En: '',
+                    addressLine2En: '',
+                    prefectureJa: '',
+                    cityJa: '',
+                    addressLine1Ja: '',
+                    addressLine2Ja: ''
                 },
                 email: undefined,
                 googleMapsUrl: '',
@@ -62,7 +62,8 @@ export const useFacilitiesStore = defineStore(
                 website: undefined
             },
             mapLatitude: 0,
-            mapLongitude: 0
+            mapLongitude: 0,
+            healthcareProfessionalIds: []
         })
 
         const healthProfessionalsRelationsForDisplay: Ref<HealthcareProfessional[]> = ref([])
@@ -100,19 +101,40 @@ export const useFacilitiesStore = defineStore(
             facilityData.value = facilityResults
         }
 
-        async function createFacility():
-        Promise<ServerResponse<Maybe<Facility>>> {
-            const serverResponse = { data: {} as Maybe<Facility>, errors: [] as ServerError[], hasErrors: false }
+        async function createFacility(): Promise<ServerResponse<Maybe<Facility>>> {
+            const serverResponse = {
+                data: {} as Maybe<Facility>,
+                errors: [] as ServerError[],
+                hasErrors: false
+            }
 
             const createFacilityInput: MutationCreateFacilityArgs = {
                 input: {
-                    contact: createFacilityFields.contact,
+                    nameEn: createFacilityFields.nameEn,
+                    nameJa: createFacilityFields.nameJa,
+                    contact: {
+                        address: {
+                            addressLine1En: createFacilityFields.contact.address.addressLine1En,
+                            addressLine1Ja: createFacilityFields.contact.address.addressLine1Ja,
+                            addressLine2En: createFacilityFields.contact.address.addressLine2En,
+                            addressLine2Ja: createFacilityFields.contact.address.addressLine2Ja,
+                            cityEn: createFacilityFields.contact.address.cityEn,
+                            cityJa: createFacilityFields.contact.address.cityJa,
+                            postalCode: createFacilityFields.contact.address.postalCode,
+                            prefectureEn: createFacilityFields.contact.address.prefectureEn,
+                            prefectureJa: createFacilityFields.contact.address.prefectureJa
+                        },
+                        email: createFacilityFields.contact.email,
+                        phone: createFacilityFields.contact.phone,
+                        website: createFacilityFields.contact.website,
+                        googleMapsUrl: createFacilityFields.contact.googleMapsUrl
+                    },
                     mapLatitude: createFacilityFields.mapLatitude,
                     mapLongitude: createFacilityFields.mapLongitude,
-                    nameEn: createFacilityFields.nameEn,
-                    nameJa: createFacilityFields.nameJa
+                    healthcareProfessionalIds: createFacilityFields.healthcareProfessionalIds
                 }
             }
+
             const response = await graphQLClientRequestWithRetry<Mutation>(
                 gqlClient.request.bind(gqlClient),
                 createFacilityGqlMutation,
@@ -120,7 +142,7 @@ export const useFacilitiesStore = defineStore(
             )
 
             serverResponse.data = response.data?.createFacility
-            serverResponse.errors = response.errors ? response.errors : []
+            serverResponse.errors = response.errors ?? []
             serverResponse.hasErrors = response.hasErrors
 
             return serverResponse
@@ -325,7 +347,7 @@ mutation Mutation($id: ID!) {
 }
 `
 const createFacilityGqlMutation = gql`
-mutation CreateFacility($input: CreateFacilityInput!) {
+mutation Mutation($input: CreateFacilityInput!) {
   createFacility(input: $input) {
     id
     nameEn
