@@ -1,9 +1,6 @@
-import type { StateTree } from 'pinia'
 import enUS from '../../../i18n/locales/en.json'
 import fakeHealthcareProfessionalResult from '../../fake_data/moderation_dashboard/fakeModHealthcareProfessionalData.json'
 import { aliasQuery } from '../utils'
-
-let healthcareProfessionalsStore: StateTree
 
 before(() => {
     cy.login()
@@ -29,28 +26,20 @@ describe('Moderation create healthcare professional button', () => {
 
 describe('Moderation create healthcare professional form', () => {
     context('Landscape mode', () => {
-        before(() => {
-            cy.intercept('POST', '**/', req => {
-                if (req.body.operationName === 'Query') {
+        beforeEach(() => {
+            cy.intercept('POST', '**', req => {
+                if (req.body.operationName === 'HealthcareProfessionalSearchFilters') {
                     aliasQuery(req, 'HealthcareProfessionalSearchFilters', fakeHealthcareProfessionalResult)
                 }
-            })
+            }).as('HealthcareProfessionalSearchFilters')
+
+            cy.viewport('macbook-16')
 
             cy.visit('/moderation')
 
-            cy.wait('@HealthcareProfessionalSearchFilters')
-
             cy.get('[data-testid="submission-type-select"]').select('HEALTHCARE_PROFESSIONALS')
-            cy.get('[data-testid="add-hp-button"]').click()
-            /* This will set the stores you need to access for testings.
-                    This NEEDS to be in the describe and not the login before*/
-            cy.window().then(win => {
-                healthcareProfessionalsStore = win.$pinia.state.value.healthcareProfessionalsStore
-            })
-        })
 
-        beforeEach(() => {
-            cy.viewport('macbook-16')
+            cy.get('[data-testid="add-hp-button"]').should('exist').click()
         })
 
         it('contains the following buttons and text in the topbar', () => {
@@ -93,32 +82,27 @@ describe('Moderation create healthcare professional form', () => {
             cy.get('[data-testid="healthcare-professional-name-card-locale"]').eq(1).should('have.text', '日本語')
         })
 
-        it('should be able to click on the healthcare professional fields', () => {
+        it('should update the store when fields are selected', () => {
             cy.get('[data-testid="mod-healthcare-professional-section-accepted-insurances"]').find('input')
                 .type('INSURANCE_NOT_ACCEPTED')
             cy.get('[data-testid="mod-search-bar-search-result"]').eq(0).click()
-            cy.get('[data-testid="mod-healthcare-professional-section-accepted-insurances"]').find('input').clear()
             cy.get('[data-testid="mod-healthcare-professional-section-degrees"]').find('input').type('PharmD')
             cy.get('[data-testid="mod-search-bar-search-result"]').eq(0).click()
-            cy.get('[data-testid="mod-healthcare-professional-section-degrees"]').find('input').clear()
             cy.get('[data-testid="mod-healthcare-professional-section-specialties"]').find('input').type('ANESTHESIOLOGY')
             cy.get('[data-testid="mod-search-bar-search-result"]').eq(0).click()
-            cy.get('[data-testid="mod-healthcare-professional-section-specialties"]').find('input').clear()
             cy.get('[data-testid="mod-healthcare-professional-section-spoken-locales"]').find('input').type('English')
             cy.get('[data-testid="mod-search-bar-search-result"]').eq(0).click()
-            cy.get('[data-testid="mod-healthcare-professional-section-spoken-locales"]').find('input').clear()
-        })
-
-        it('should have updated the store values', () => {
-            // casting this value as an array allows it to test proxy arrays from vue
-            expect(healthcareProfessionalsStore.createHealthcareProfessionalSectionFields.acceptedInsurance as [])
-                .to.include('INSURANCE_NOT_ACCEPTED')
-            expect(healthcareProfessionalsStore.createHealthcareProfessionalSectionFields.degrees)
-                .to.include('PharmD')
-            expect(healthcareProfessionalsStore.createHealthcareProfessionalSectionFields.specialties)
-                .to.include('ANESTHESIOLOGY')
-            expect(healthcareProfessionalsStore.createHealthcareProfessionalSectionFields.spokenLanguages)
-                .to.include('en_US')
+            cy.window().then(win => {
+                const store = win.$pinia.state.value.healthcareProfessionalsStore
+                expect(store.createHealthcareProfessionalSectionFields.acceptedInsurance as [])
+                    .to.include('INSURANCE_NOT_ACCEPTED')
+                expect(store.createHealthcareProfessionalSectionFields.degrees)
+                    .to.include('PharmD')
+                expect(store.createHealthcareProfessionalSectionFields.specialties)
+                    .to.include('ANESTHESIOLOGY')
+                expect(store.createHealthcareProfessionalSectionFields.spokenLanguages)
+                    .to.include('en_US')
+            })
         })
     })
 })
