@@ -5,7 +5,7 @@
         </h2>
         <div class="input-fields flex flex-col my-4">
             <ModInputField
-                v-model="facilityStore.facilitySectionFields.nameEn"
+                v-model="facilityStore.createFacilityFields.nameEn"
                 data-testid="mod-facility-section-nameEn"
                 :label="$t('modFacilitySection.labelFacilityNameEn')"
                 type="text"
@@ -15,7 +15,7 @@
                 :invalid-input-error-message="$t('modFacilitySection.inputErrorMessageFacilityNameEn')"
             />
             <ModInputField
-                v-model="facilityStore.facilitySectionFields.nameJa"
+                v-model="facilityStore.createFacilityFields.nameJa"
                 data-testid="mod-facility-section-nameJa"
                 :label="$t('modFacilitySection.labelFacilityNameJa')"
                 type="text"
@@ -25,7 +25,7 @@
                 :invalid-input-error-message="$t('modFacilitySection.inputErrorMessageFacilityNameJa')"
             />
             <ModInputField
-                v-model="facilityStore.facilitySectionFields.phone"
+                v-model="facilityStore.createFacilityFields.contact.phone"
                 data-testid="mod-facility-section-phone"
                 :label="$t('modFacilitySection.labelFacilityPhoneNumber')"
                 type="text"
@@ -35,7 +35,7 @@
                 :invalid-input-error-message="$t('modFacilitySection.inputErrorMessageFacilityPhoneNumber')"
             />
             <ModInputField
-                v-model="facilityStore.facilitySectionFields.email"
+                v-model="facilityStore.createFacilityFields.contact.email"
                 data-testid="mod-facility-section-email"
                 :label="$t('modFacilitySection.labelFacilityEmail')"
                 type="email"
@@ -45,7 +45,7 @@
                 :invalid-input-error-message="$t('modFacilitySection.inputErrorMessageFacilityEmail')"
             />
             <ModInputField
-                v-model="facilityStore.facilitySectionFields.website"
+                v-model="facilityStore.createFacilityFields.contact.website"
                 data-testid="mod-facility-section-website"
                 :label="$t('modFacilitySection.labelFacilityWebsite')"
                 type="url"
@@ -62,7 +62,7 @@
                     {{ $t('modFacilitySection.addresses') }}
                 </span>
                 <ModInputField
-                    v-model="facilityStore.facilitySectionFields.postalCode"
+                    v-model="facilityStore.createFacilityFields.contact.address.postalCode"
                     data-testid="mod-facility-section-postalCode"
                     :label="$t('modFacilitySection.labelFacilityPostalCode')"
                     type="text"
@@ -80,7 +80,7 @@
                     </label>
                     <select
                         id="1"
-                        v-model="facilityStore.facilitySectionFields.prefectureEn"
+                        v-model="facilityStore.createFacilityFields.contact.address.prefectureEn"
                         data-testid="mod-facility-section-prefectureEn"
                         name="Prefecture Japan"
                         class="mb-5 px-3 py-3.5 w-96 h-12 bg-secondary-bg rounded-lg border border-primary-text-muted
@@ -95,7 +95,7 @@
                     </select>
                 </div>
                 <ModInputField
-                    v-model="facilityStore.facilitySectionFields.cityEn"
+                    v-model="facilityStore.createFacilityFields.contact.address.cityEn"
                     data-testid="mod-facility-section-cityEn"
                     :label="$t('modFacilitySection.labelFacilityCityEn')"
                     type="text"
@@ -105,7 +105,7 @@
                     :invalid-input-error-message="$t('modFacilitySection.inputErrorMessageFacilityCityEn')"
                 />
                 <ModInputField
-                    v-model="facilityStore.facilitySectionFields.addressLine1En"
+                    v-model="facilityStore.createFacilityFields.contact.address.addressLine1En"
                     data-testid="mod-facility-section-addressLine1En"
                     :label="$t('modFacilitySection.labelFacilityAddressLine1En')"
                     type="text"
@@ -115,7 +115,7 @@
                     :invalid-input-error-message="$t('modFacilitySection.inputErrorMessageFacilityAddressLine1En')"
                 />
                 <ModInputField
-                    v-model="facilityStore.facilitySectionFields.addressLine2En"
+                    v-model="facilityStore.createFacilityFields.contact.address.addressLine2En"
                     data-testid="mod-facility-section-addressLine2En"
                     :label="$t('modFacilitySection.labelFacilityAddressLine2En')"
                     type="text"
@@ -133,7 +133,7 @@
                     </label>
                     <select
                         id="1"
-                        v-model="facilityStore.facilitySectionFields.prefectureJa"
+                        v-model="facilityStore.createFacilityFields.contact.address.prefectureJa"
                         data-testid="mod-facility-section-prefectureJa"
                         name="Prefecture Japan"
                         class="mb-5 px-3 py-3.5 w-96 h-12 bg-secondary-bg rounded-lg border border-primary-text-muted
@@ -148,7 +148,7 @@
                     </select>
                 </div>
                 <ModInputField
-                    v-model="facilityStore.facilitySectionFields.cityJa"
+                    v-model="facilityStore.createFacilityFields.contact.address.cityJa"
                     data-testid="mod-facility-section-cityJa"
                     :label="$t('modFacilitySection.labelFacilityCityJa')"
                     type="text"
@@ -158,7 +158,7 @@
                     :invalid-input-error-message="$t('modFacilitySection.inputErrorMessageFacilityCityJa')"
                 />
                 <ModInputField
-                    v-model="facilityStore.facilitySectionFields.addressLine1Ja"
+                    v-model="facilityStore.createFacilityFields.contact.address.addressLine1Ja"
                     data-testid="mod-facility-section-addressLine1Ja"
                     :label="$t('modFacilitySection.labelFacilityAddressLine1Ja')"
                     type="text"
@@ -168,7 +168,7 @@
                     :invalid-input-error-message="$t('modFacilitySection.inputErrorMessageFacilityAddressLine1Ja')"
                 />
                 <ModInputField
-                    v-model="facilityStore.facilitySectionFields.addressLine2Ja"
+                    v-model="facilityStore.createFacilityFields.contact.address.addressLine2Ja"
                     data-testid="mod-facility-section-addressLine2Ja"
                     :label="$t('modFacilitySection.labelFacilityAddressLine2Ja')"
                     type="text"
@@ -185,7 +185,7 @@
                     {{ $t('modFacilitySection.googleMapsInformation') }}
                 </span>
                 <ModInputField
-                    v-model="facilityStore.facilitySectionFields.googlemapsURL"
+                    v-model="facilityStore.createFacilityFields.contact.googleMapsUrl"
                     data-testid="mod-facility-section-google-maps"
                     :label="$t('modFacilitySection.labelFacilityGoogleMapsUrl')"
                     type="url"
@@ -196,7 +196,7 @@
                     :autofill="facilityStore.facilitySectionFields.googlemapsURL"
                 />
                 <ModInputField
-                    v-model="facilityStore.facilitySectionFields.mapLatitude"
+                    v-model="facilityStore.createFacilityFields.mapLatitude"
                     data-testid="mod-facility-section-mapLatitude"
                     :label="$t('modFacilitySection.labelFacilityMapLatitude')"
                     type="text"
@@ -206,10 +206,10 @@
                     :invalid-input-error-message="$t('modFacilitySection.inputErrorMessageFacilityMapLatitude')"
                 />
                 <ModInputField
-                    v-model="facilityStore.facilitySectionFields.mapLongitude"
+                    v-model="facilityStore.createFacilityFields.mapLongitude"
                     data-testid="mod-facility-section-mapLongitude"
                     :label="$t('modFacilitySection.labelFacilityMapLongitude')"
-                    type="text"
+                    type=""
                     :placeholder="$t('modFacilitySection.placeholderTextFacilityMapLongitude')"
                     :required="true"
                     :input-validation-check="validateFloat"
@@ -245,9 +245,7 @@
 </template>
 
 <script lang="ts" setup>
-import { type Ref, ref, onBeforeMount, onMounted, nextTick, watch, watchEffect } from 'vue'
-import { type ToastInterface, useToast } from 'vue-toastification'
-import { useRoute } from 'vue-router'
+import { type Ref, ref, onBeforeMount, nextTick, watch } from 'vue'
 import { useModerationScreenStore, ModerationScreen } from '~/stores/moderationScreenStore'
 import { useFacilitiesStore } from '~/stores/facilitiesStore'
 import { useHealthcareProfessionalsStore } from '~/stores/healthcareProfessionalsStore'
@@ -268,9 +266,9 @@ import {
 } from '~/utils/formValidations'
 import type { HealthcareProfessional } from '~/typedefs/gqlTypes'
 
-let toast: ToastInterface
-const route = useRoute()
-const { t } = useI18n()
+// Initialize the variable that will be used to mount the toast library
+
+useI18n()
 
 const loadingStore = useLoadingStore()
 loadingStore.setIsLoading(true)
@@ -280,7 +278,6 @@ const facilityStore = useFacilitiesStore()
 const healthcareProfessionalsStore = useHealthcareProfessionalsStore()
 
 const isFacilitySectionInitialized: Ref<boolean> = ref(false)
-const isFacilitySectionRendered: Ref<boolean> = ref(false)
 const healthcareProfessionalsRelatedToFacility: Ref<string[]> = ref([])
 const healthcareProfessionalRelatedToFacilityFiltered: Ref<HealthcareProfessional[]> = ref([])
 
@@ -300,44 +297,6 @@ const syncHealthcareProfessionalsRelatedToFacility = () => {
     }
 }
 
-onBeforeMount(async () => {
-    isFacilitySectionInitialized.value = false
-    toast = useToast()
-
-    await nextTick()
-
-    moderationScreenStore.setActiveScreen(ModerationScreen.CreateFacility)
-    facilityStore.setSelectedFacilityData(facilityStore.selectedFacilityId)
-    facilityStore.initializeFacilitySectionValues(facilityStore.selectedFacilityData)
-
-    await nextTick()
-
-    syncHealthcareProfessionalsRelatedToFacility()
-    isFacilitySectionInitialized.value = true
-    loadingStore.setIsLoading(false)
-    await nextTick()
-})
-
-onMounted(() => {
-    isFacilitySectionRendered.value = true
-})
-
-watch(
-    () => facilityStore.facilitySectionFields.healthcareProfessionalIds,
-    newValue => {
-        healthcareProfessionalRelatedToFacilityFiltered.value = []
-        healthcareProfessionalsRelatedToFacility.value = newValue
-        syncHealthcareProfessionalsRelatedToFacility()
-    }
-)
-
-watchEffect(() => {
-    if (facilityStore.selectedFacilityId && !facilityStore.selectedFacilityData) {
-        facilityStore.setSelectedFacilityData(facilityStore.selectedFacilityId)
-        facilityStore.initializeFacilitySectionValues(facilityStore.selectedFacilityData)
-    }
-})
-
 const listPrefectureJapanEn: Ref<string[]> = ref([
     'Hokkaido', 'Aomori', 'Iwate', 'Miyagi', 'Akita',
     'Yamagata', 'Fukushima', 'Ibaraki', 'Tochigi', 'Gumma', 'Saitama', 'Chiba', 'Tokyo', 'Kanagawa',
@@ -352,4 +311,61 @@ const listPrefectureJapanJa: Ref<string[]> = ref([
     '石川県', '福井県', '山梨県', '長野県', '岐阜県', '静岡県', '愛知県', '三重県', '滋賀県', '京都府', '大阪府',
     '兵庫県', '奈良県', '和歌山県', '鳥取県', '島根県', '岡山県', '広島県', '山口県', '徳島県', '香川県', '愛媛県',
     '高知県', '福岡県', '佐賀県', '長崎県', '熊本県', '大分県', '宮崎県', '鹿児島県', '沖縄県'])
+
+onBeforeMount(async () => {
+    isFacilitySectionInitialized.value = false
+
+    // Wait for the route to be fully resolved
+    await nextTick()
+
+    // This will fetch the healthcare professionals if sent here by link or a page is refreshed
+    if (!healthcareProfessionalsStore.healthcareProfessionalsData) {
+        await healthcareProfessionalsStore.getHealthcareProfessionals()
+    }
+
+    // Set the active screen and ensure the UI state is consistent
+    moderationScreenStore.setActiveScreen(ModerationScreen.CreateFacility)
+
+    // Ensure UI updates are reflected with the autofill values
+    await nextTick()
+
+    syncHealthcareProfessionalsRelatedToFacility()
+
+    isFacilitySectionInitialized.value = true
+
+    loadingStore.setIsLoading(false)
+
+    // Ensure UI updates are reflected
+    await nextTick()
+})
+
+/** This is making sure all the data is loaded in the component before running the function to set
+    the healthcare professionals related to the facility. This loads the data correctly whether sent the
+    link or navigating from the moderator dashboard **/
+watch(
+    () => [
+        healthcareProfessionalsStore.healthcareProfessionalsData,
+        facilityStore.facilityData,
+        facilityStore.selectedFacilityData
+    ],
+    ([healthcareData, relatedFacilityIds]) => {
+        if (healthcareData && relatedFacilityIds) {
+            syncHealthcareProfessionalsRelatedToFacility()
+        }
+        if (facilityStore.selectedFacilityData) {
+            healthcareProfessionalsRelatedToFacility.value
+                = facilityStore.facilitySectionFields.healthcareProfessionalIds
+        }
+    },
+    { immediate: false }
+)
+
+watch(() => facilityStore.facilitySectionFields.healthcareProfessionalIds, newValue => {
+    // Set the filtered related ones back to an empty array to sync upon update
+    healthcareProfessionalRelatedToFacilityFiltered.value = []
+    // Set the professionals related to the facility based on the updated value
+    healthcareProfessionalsRelatedToFacility.value = newValue
+    // Sync the list to the updated values
+    syncHealthcareProfessionalsRelatedToFacility()
+})
 </script>
