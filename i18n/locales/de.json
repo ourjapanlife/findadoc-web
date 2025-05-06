@@ -307,17 +307,19 @@
     "facilityNameUnknown": "Facility Name Unknown",
     "googleMapsInformation": "Google maps information",
     "healthcareProfessionalIds": "Healthcare Professional IDs",
-    "healthcareProfessionalName": "Healthcare Professional Name"
+    "healthcareProfessionalName": "Healthcare Professional Name",
+    "healthcareProfessionalMedicalInfo": "Healthcare Professional Medical Info",
+    "healthcareProfessionalFacilities": "Healthcare Professional Facilities"
   },
   "modPanelFacilityLeftNavbar": {
     "addresses": "Addresses",
-    "contactInformation":"Contact Information",
+    "contactInformation": "Contact Information",
     "facilityNameUnknown": "Facility Name Unknown",
     "googleMapsInformation": "Google maps information",
     "healthcareProfessionalIds": "Healthcare Professional IDs",
     "healthcareProfessionalProfessionalToAdd": "Healthcare Professional to Add",
     "currentHealthcareProfessionalsAtFacility": "Current Healthcare Professionals at Facility"
-},
+  },
   "modDashboardTopbar": {
     "placeholderText": "Enter name or ID to search",
     "approved": "Approved",

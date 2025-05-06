@@ -138,17 +138,18 @@
     "healthcareProfessionalName": "Pangalan ng propesyonal sa Pangangalagang Pangkalusugan",
     "healthcareProfessionalMedicalInfo": "Medikal na impormasyon ng propesyonal sa Pangangalagang Pangkalusugan",
     "healthcareProfessionalProfessionalToAdd": "Healthcare Professional to Add",
-    "currentHealthcareProfessionalsAtFacility": "Current Healthcare Professionals at Facility"
+    "currentHealthcareProfessionalsAtFacility": "Current Healthcare Professionals at Facility",
+    "healthcareProfessionalFacilities": "Healthcare Professional Facilities"
   },
   "modPanelFacilityLeftNavbar": {
     "addresses": "Addresses",
-    "contactInformation":"Contact Information",
+    "contactInformation": "Contact Information",
     "facilityNameUnknown": "Facility Name Unknown",
     "googleMapsInformation": "Google maps information",
     "healthcareProfessionalIds": "Healthcare Professional IDs",
     "healthcareProfessionalProfessionalToAdd": "Healthcare Professional to Add",
     "currentHealthcareProfessionalsAtFacility": "Current Healthcare Professionals at Facility"
-},
+  },
   "modDashboardTopbar": {
     "placeholderText": "Maglagay ng pangalan o ID upang mahanap",
     "approved": "Aprubado",
