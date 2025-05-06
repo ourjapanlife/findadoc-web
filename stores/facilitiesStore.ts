@@ -118,8 +118,10 @@ export const useFacilitiesStore = defineStore(
             )
 
             if (!serverResponse.errors?.length) {
+                // update the necessary values with the updated response
+                selectedFacilityData.value = serverResponse.data!
+                initializeFacilitySectionValues(serverResponse.data!)
                 facilitySectionFields.healthProfessionalsRelations = []
-                facilitySectionFields.healthcareProfessionalIds = serverResponse.data!.healthcareProfessionalIds
             }
 
             return serverResponse
