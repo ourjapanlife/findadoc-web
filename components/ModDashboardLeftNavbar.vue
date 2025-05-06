@@ -2,7 +2,7 @@
     <div>
         <select
             v-model="selectedDashboardView"
-            class="font-semibold p-1 border-b border-black mb-2"
+            class="font-semibold p-1 border-b border-black mb-2 bg-secondary-bg"
             data-testid="submission-type-select"
             @change="updateSelectedDashboardView"
         >
