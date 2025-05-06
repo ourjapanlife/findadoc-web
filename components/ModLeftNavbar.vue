@@ -7,18 +7,14 @@
             <ModSubmissionLeftNavbar />
         </div>
         <div v-if="moderationScreenStore.editHealthcareProfessionalScreenIsActive()">
-            <p class="text-xl font-bold">
-                <ModHealthcareProfessionalLeftNavbar />
-            </p>
+            <ModHealthcareProfessionalLeftNavbar />
         </div>
         <div v-if="moderationScreenStore.editFacilityScreenIsActive()">
-            <p class="text-xl font-bold">
-                NAVBAR REVIEW FACILITY PLACEHOLDER
-            </p>
+            <ModEditFacilityLeftNavBar />
         </div>
         <div v-if="moderationScreenStore.createHealthcareProfessionalScreenIsActive()">
             <p class="text-xl font-bold">
-                NAVBAR CREATE FACILITY PLACEHOLDER
+                NAVBAR CREATE HEALTHCARE PROFESSIONAL PLACEHOLDER
             </p>
         </div>
     </div>
