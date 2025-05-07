@@ -10,7 +10,7 @@
                 :class="{ 'bg-secondary': activeSection === ModSubmissionLeftNavbarSectionIDs.ContactInformation,
                           'bg-primary-inverted': activeSection !== ModSubmissionLeftNavbarSectionIDs.ContactInformation }"
                 class="w-full py-4 my-2 text-sm text-start pl-2 rounded border-b-2 border-tertiary-bg"
-                @click="scrollToSectionOfForm(ModSubmissionLeftNavbarSectionIDs.ContactInformation)"
+                @click="handleNavClick(ModSubmissionLeftNavbarSectionIDs.ContactInformation)"
             >
                 {{ $t("modPanelSubmissionLeftNavbar.contactInformation") }}
             </button>
@@ -19,7 +19,7 @@
                 :class="{ 'bg-secondary': activeSection === ModSubmissionLeftNavbarSectionIDs.Addresses,
                           'bg-primary-inverted': activeSection !== ModSubmissionLeftNavbarSectionIDs.Addresses }"
                 class="w-full py-4 my-2 text-sm text-start pl-2 rounded border-b-2 border-tertiary-bg"
-                @click="scrollToSectionOfForm(ModSubmissionLeftNavbarSectionIDs.Addresses)"
+                @click="handleNavClick(ModSubmissionLeftNavbarSectionIDs.Addresses)"
             >
                 {{ $t("modPanelSubmissionLeftNavbar.addresses") }}
             </button>
@@ -28,7 +28,7 @@
                 :class="{ 'bg-secondary': activeSection === ModSubmissionLeftNavbarSectionIDs.GoogleMapsInformation,
                           'bg-primary-inverted': activeSection !== ModSubmissionLeftNavbarSectionIDs.GoogleMapsInformation }"
                 class="w-full py-4 my-2 text-sm text-start pl-2 rounded border-b-2 border-tertiary-bg"
-                @click="scrollToSectionOfForm(ModSubmissionLeftNavbarSectionIDs.GoogleMapsInformation)"
+                @click="handleNavClick(ModSubmissionLeftNavbarSectionIDs.GoogleMapsInformation)"
             >
                 {{ $t("modPanelSubmissionLeftNavbar.googleMapsInformation") }}
             </button>
@@ -37,7 +37,7 @@
                 :class="{ 'bg-secondary': activeSection === ModSubmissionLeftNavbarSectionIDs.HealthcareProfessionalIds,
                           'bg-primary-inverted': activeSection !== ModSubmissionLeftNavbarSectionIDs.HealthcareProfessionalIds }"
                 class="w-full py-4 my-2 text-sm text-start pl-2 rounded border-b-2 border-tertiary-bg"
-                @click="scrollToSectionOfForm(ModSubmissionLeftNavbarSectionIDs.HealthcareProfessionalIds)"
+                @click="handleNavClick(ModSubmissionLeftNavbarSectionIDs.HealthcareProfessionalIds)"
             >
                 {{ $t("modPanelSubmissionLeftNavbar.healthcareProfessionalIds") }}
             </button>
@@ -46,7 +46,7 @@
                 :class="{ 'bg-secondary': activeSection === ModSubmissionLeftNavbarSectionIDs.ChangeLog,
                           'bg-primary-inverted': activeSection !== ModSubmissionLeftNavbarSectionIDs.ChangeLog }"
                 class="w-full py-4 my-2 text-sm text-start pl-2 rounded border-b-2 border-tertiary-bg"
-                @click="scrollToSectionOfForm(ModSubmissionLeftNavbarSectionIDs.ChangeLog)"
+                @click="handleNavClick(ModSubmissionLeftNavbarSectionIDs.ChangeLog)"
             >
                 {{ $t("modPanelSubmissionLeftNavbar.changeLog") }}
             </button>
@@ -55,7 +55,7 @@
                 :class="{ 'bg-secondary': activeSection === ModSubmissionLeftNavbarSectionIDs.HealthcareProfessionalName,
                           'bg-primary-inverted': activeSection !== ModSubmissionLeftNavbarSectionIDs.HealthcareProfessionalName }"
                 class="w-full py-4 my-2 text-sm text-start pl-2 rounded border-b-2 border-tertiary-bg"
-                @click="scrollToSectionOfForm(ModSubmissionLeftNavbarSectionIDs.HealthcareProfessionalName)"
+                @click="handleNavClick(ModSubmissionLeftNavbarSectionIDs.HealthcareProfessionalName)"
             >
                 {{ $t("modPanelSubmissionLeftNavbar.healthcareProfessionalName") }}
             </button>
@@ -65,7 +65,7 @@
                           'bg-primary-inverted': activeSection
                               !== ModSubmissionLeftNavbarSectionIDs.HealthcareProfessionalMedicalInfo }"
                 class="w-full py-4 my-2 text-sm text-start pl-2 rounded border-b-2 border-tertiary-bg"
-                @click="scrollToSectionOfForm(ModSubmissionLeftNavbarSectionIDs.HealthcareProfessionalMedicalInfo)"
+                @click="handleNavClick(ModSubmissionLeftNavbarSectionIDs.HealthcareProfessionalMedicalInfo)"
             >
                 {{ $t("modPanelSubmissionLeftNavbar.healthcareProfessionalMedicalInfo") }}
             </button>
@@ -113,13 +113,22 @@ const modLeftNavElementIdArray: SectionInformation[]
            sectionElementIdToScrollTo: ModSubmissionLeftNavbarSectionIDs.HealthcareProfessionalMedicalInfo
        }]
 
+const onScroll = () => {
+    handleScroll(modLeftNavElementIdArray, isScrolling, activeSection)
+}
+
+const handleNavClick = (sectionId: string) => {
+    scrollToSectionOfForm(sectionId)
+    activeSection.value = sectionId
+}
+
 onMounted(() => {
     observeFormSections(modLeftNavElementIdArray, isScrolling, activeSection)
-    window.addEventListener('scroll', () => handleScroll(modLeftNavElementIdArray, isScrolling, activeSection))
+    window.addEventListener('scroll', onScroll)
 })
 
 onUnmounted(() => {
-    window.removeEventListener('scroll', () => handleScroll(modLeftNavElementIdArray, isScrolling, activeSection))
+    window.removeEventListener('scroll', onScroll)
 })
 </script>
 
