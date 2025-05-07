@@ -133,7 +133,7 @@
                 >
                     <div data-testid="hamburger-menu-theme-switcher">
                         <p class="mb-1">
-                            {{ $t('hamburgerMenu.theme') }}: {{ toLocaleCase(currentTheme) }}
+                            {{ $t('hamburgerMenu.theme') }}: {{ toLocaleCapitalized(currentTheme) }}
                         </p>
                         <div class="flex">
                             <div
@@ -285,6 +285,7 @@ import SVGProfileIcon from '~/assets/icons/profile-icon.svg'
 import SVGHamburgerMenuIcon from '~/assets/icons/hamburger-menu.svg'
 import SVGGithubIcon from '~/assets/icons/social-github.svg'
 import { useAuthStore } from '~/stores/authStore'
+import { toLocaleCapitalized } from '~/utils/stringUtils'
 
 const authStore = useAuthStore()
 
@@ -335,11 +336,6 @@ onMounted(() => {
         setTheme(saveTheme)
     }
 })
-
-// converts the theme name to locale case (first letter uppercase, rest lowercase)
-function toLocaleCase(theme: string) {
-    return theme.charAt(0).toUpperCase() + theme.slice(1)
-}
 
 // this is a custom directive to close the menu when clicking outside of the menu
 const vCloseOnOutsideClick = {

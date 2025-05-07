@@ -50,3 +50,12 @@ export function isValidUrl(url: string | URL) {
     }
     return url.protocol === 'https:'
 }
+
+// converts the theme name to locale case (first letter uppercase, rest lowercase)
+export function toLocaleCapitalized(theme: string) {
+    if (theme.length === 0) { // if the string is empty, return an empty string
+        return ''
+    } else {
+        return theme.charAt(0).toUpperCase() + theme.slice(1) // capitalize the first letter and lowercase the rest
+    }
+}
