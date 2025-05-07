@@ -60,7 +60,7 @@
                 >
                     <NuxtLink
                         :to="`/moderation/edit-facility/${facility.id}`"
-                        class="grid grid-cols-subgrid col-span-4 bg-primary-text-muted p-1 hover:bg-primary"
+                        class="grid grid-cols-subgrid col-span-4 p-1 hover:bg-primary"
                     >
                         <span class="text-start">{{ index + 1 }}</span>
                         <span class="text-start">
@@ -89,7 +89,7 @@
                 >
                     <NuxtLink
                         :to="`/moderation/edit-healthcare-professional/${healthcareProfessional.id}`"
-                        class="grid grid-cols-subgrid col-span-4 bg-primary-text-muted p-1 hover:bg-primary"
+                        class="grid grid-cols-subgrid col-span-4 p-1 hover:bg-primary"
                     >
                         <span class="text-start">{{ index + 1 }}</span>
                         <span class="text-start">
