@@ -238,8 +238,9 @@
     "errorMessageFacilityId": "Hindi nahanap ang Id ng pasilidad.",
     "placeholderTextFacilityAddressLine1En": "Address ng Kalye",
     "existingHPHeading": "Current Healthcare Professionals at Facility",
-    "healthcareProfessionalToAdd": "Healthcare Professional to Add",
-    "noHPSelected": "No healthcare professionals selected"
+    "addHealthcareProfessional": "Add existing healthcare professional",
+    "noHPSelected": "No healthcare professionals selected",
+    "noHealthcareProfessionalFound": "No matching healthcare professionals found"
   },
   "modSubmissionForm": {
     "addHealthCareProfessionalLocaleName": "Magdagdag ng Pangalan ayon sa Lokal",

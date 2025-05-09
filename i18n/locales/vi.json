@@ -279,9 +279,10 @@
     "updateButtonText": "Cập nhật",
     "errorMessageFacilityId": "Facility Id was not found",
     "existingHPHeading": "Current Healthcare Professionals at Facility",
-    "healthcareProfessionalToAdd": "Healthcare Professional to Add",
+    "addHealthcareProfessional": "Add existing healthcare professional",
     "noHPSelected": "No healthcare professionals selected",
-    "placeholderTextFacilityAddressLine1En": "Street address"
+    "placeholderTextFacilityAddressLine1En": "Street address",
+    "noHealthcareProfessionalFound": "No matching healthcare professionals found"
   },
   "modSubmissionForm": {
     "addHealthCareProfessionalLocaleName": "Thêm tên theo ngôn ngữ/khu vực",
