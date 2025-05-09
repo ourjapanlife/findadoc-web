@@ -24,6 +24,16 @@
         <div class="facility-hp-topbar-actions flex justify p-2 font-bold ">
             <button
                 type="button"
+                class="flex justify-center items-center rounded-full bg-secondary-bg border-primary-text-muted
+                border-2 w-28 text-sm mr-2"
+                data-testid="mod-edit-facility-hp-topbar-delete"
+                @click="exitWithoutSavingUpdates"
+            >
+                {{
+                    $t('modEditFacilityOrHPTopbar.back') }}
+            </button>
+            <button
+                type="button"
                 :disabled="!enableUpdateButtons"
                 class="flex justify-center items-center rounded-full bg-secondary-bg border-primary-text-muted
                 border-2 w-28 text-sm mr-2"
@@ -64,21 +74,35 @@
                 <div
                     class="flex flex-col aspect-square h-96 items-center justify-around bg-primary-inverted p-10 rounded"
                 >
-                    <span
-                        v-show="moderationScreenStore.editFacilityScreenIsActive()"
-                        class="font-bold text-3xl"
-                    >
-                        {{ $t('modEditFacilityOrHPTopbar.deleteConfirmationFacility',
-                              { id: selectedId, facility: facilitiesStore.selectedFacilityData?.nameEn }) }}
-                    </span>
-                    <button
-                        class="bg-primary p-4 rounded-full my-8 font-semibold text-xl"
-                        type="button"
-                        @click="deleteFacilityOrHealthcareProfessional"
-                    >
-                        {{
-                            $t('modEditFacilityOrHPTopbar.deleteButtonText') }}
-                    </button>
+                    <div v-if="modalType === ModalType.UnsavedChanges">
+                        <div class="font-bold text-3xl">
+                            {{ $t('modEditFacilityOrHPTopbar.hasUnsavedChanges') }}
+                        </div>
+                        <button
+                            class="bg-primary p-4 rounded-full my-8 font-semibold text-xl"
+                            type="button"
+                            @click="handleNavigateToModerationScreen"
+                        >
+                            {{ $t('modSubmissionForm.confirmationButton') }}
+                        </button>
+                    </div>
+                    <div v-if="modalType === ModalType.DeleteConfirmation">
+                        <div
+                            v-show="moderationScreenStore.editFacilityScreenIsActive()"
+                            class="font-bold text-3xl"
+                        >
+                            {{ $t('modEditFacilityOrHPTopbar.deleteConfirmationFacility',
+                                  { id: selectedId, facility: facilitiesStore.selectedFacilityData?.nameEn }) }}
+                        </div>
+                        <button
+                            class="bg-primary p-4 rounded-full my-8 font-semibold text-xl"
+                            type="button"
+                            @click="deleteFacilityOrHealthcareProfessional"
+                        >
+                            {{
+                                $t('modEditFacilityOrHPTopbar.deleteButtonText') }}
+                        </button>
+                    </div>
                 </div>
             </Modal>
         </div>
@@ -95,10 +119,11 @@ import SVGSuccessCheckMark from '~/assets/icons/checkmark-square.svg'
 import { useFacilitiesStore } from '~/stores/facilitiesStore'
 import { useHealthcareProfessionalsStore } from '~/stores/healthcareProfessionalsStore'
 import { useModerationScreenStore, ModerationScreen } from '~/stores/moderationScreenStore'
-import { useModalStore } from '~/stores/modalStore'
+import { useModalStore, ModalType } from '~/stores/modalStore'
 import { handleServerErrorMessaging } from '~/utils/handleServerErrorMessaging'
 import type { Facility, HealthcareProfessional } from '~/typedefs/gqlTypes'
 import { arraysAreEqual } from '~/utils/arrayUtils'
+import { onBeforeRouteLeave } from '#app'
 
 const router = useRouter()
 
@@ -112,6 +137,7 @@ const modalStore = useModalStore()
 const selectedId: ComputedRef<string> = computed(() => setSelectedId())
 const originalFacilityRefsValue: Ref<Facility | undefined> = ref()
 const originalHealthcareProfessionalRefsValue: Ref<HealthcareProfessional | undefined> = ref()
+const modalType = ref<ModalType.UnsavedChanges | ModalType.DeleteConfirmation | null>(null)
 
 // Disable the buttons if there are no changes
 const enableUpdateButtons = computed(() => hasUnsavedChanges())
@@ -291,6 +317,7 @@ const updateFacilityOrHealthcareProfessionalAndExit = async () => {
 }
 
 const openDeletionConfirmation = () => {
+    modalType.value = ModalType.DeleteConfirmation
     modalStore.showModal()
 }
 
@@ -309,6 +336,7 @@ const deleteFacilityOrHealthcareProfessional = async () => {
         toast.success(t('modEditFacilityOrHPTopbar.facilityDeletedSuccessfully'))
         // Redirect to the dashboard since the facility no longer exists
         router.push('/moderation')
+        modalType.value = null
         modalStore.hideModal()
         return response
     }
@@ -328,9 +356,20 @@ const deleteFacilityOrHealthcareProfessional = async () => {
         toast.success(t('modEditFacilityOrHPTopbar.healthcareProfessionalDeletedSuccessfully'))
         // Redirect to the dashboard since the healthcare professional no longer exists
         router.push('/moderation')
+        modalType.value = null
         modalStore.hideModal()
         return response
     }
+}
+
+const exitWithoutSavingUpdates = () => {
+    if (!hasUnsavedChanges()) {
+        router.push('/moderation')
+        moderationScreenStore.setActiveScreen(ModerationScreen.Dashboard)
+        return
+    }
+    modalType.value = ModalType.UnsavedChanges
+    modalStore.showModal()
 }
 
 onMounted(() => {
@@ -349,5 +388,22 @@ watch(() => facilitiesStore.selectedFacilityData, (newValue, oldValue) => {
 // had originalHealthcareProfessionalRefsValue updating with healthcareProfessionalsStore.healthcareProfessionalSectionFields
 watch(() => healthcareProfessionalsStore.selectedHealthcareProfessionalData, newValue => {
     originalHealthcareProfessionalRefsValue.value = JSON.parse(JSON.stringify(newValue))
+})
+
+const handleNavigateToModerationScreen = () => {
+    modalType.value = null
+    modalStore.hideModal()
+    router.push('/moderation')
+    moderationScreenStore.setActiveScreen(ModerationScreen.Dashboard)
+}
+
+onBeforeRouteLeave(async (to, from, next) => {
+    if (hasUnsavedChanges()) {
+        modalType.value = ModalType.UnsavedChanges
+        modalStore.showModal()
+        next(false)
+        return
+    }
+    next()
 })
 </script>
