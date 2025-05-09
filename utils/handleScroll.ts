@@ -37,13 +37,14 @@ export const scrollToSectionOfForm
     activeSection.value = sectionId
 }
 
-export const observeFormSections = (
+export const observeFormSections = async (
     sectionsInfo: SectionInformation[],
     isScrolling: Ref<boolean> = ref(false),
     activeSection: Ref<string> = ref(''),
     thresholdValue: number = 0.70
 ) => {
     // Map the sectionInfo objects given to DOM elements and filter out any null elements
+    await nextTick()
     const sections: Element[]
     = sectionsInfo.map(info => document.getElementById(info.sectionElementIdToScrollTo)!).filter(element => element !== null)
 
