@@ -4,10 +4,67 @@ import { auth0 } from '../utils/auth0.js'
 import { useLoadingStore } from './loadingStore.js'
 
 export const useAuthStore = defineStore('authStore', () => {
-    const userId = computed(() => auth0?.user.value?.nickname ?? 'unknown user')
-    const isLoadingAuth = computed(() => auth0?.isLoading.value)
-    const isLoggedIn = computed(() => !auth0?.isLoading.value && auth0?.isAuthenticated.value)
-    const isAdmin = computed(() => !auth0?.isLoading.value && auth0?.isAuthenticated.value)
+    const secretPromise = ref<Promise<string> | null>(null)
+    const isTesting = ref(false)
+    const isReady = ref(false)
+
+    async function loadSecret(): Promise<string> {
+        if (!secretPromise.value) {
+            secretPromise.value = (async () => {
+                const checkForTestingEnvironment = await $fetch<{ testingEnvironment: string }>('/api/test-environment')
+                try {
+                    if (checkForTestingEnvironment.testingEnvironment) {
+                        const res = await $fetch<{ token: string }>('/api/auth-token')
+                        return res.token
+                    }
+                    return ''
+                } catch (err) {
+                    if (checkForTestingEnvironment.testingEnvironment) console.error('Failed to fetch auth secret', err)
+                    throw err
+                }
+            })()
+        }
+        return secretPromise.value!
+    }
+
+    async function init() {
+        try {
+            const token = await loadSecret()
+            isTesting.value = token === 'TEST'
+        } catch {
+            isTesting.value = false
+        } finally {
+            isReady.value = true
+        }
+    }
+    init()
+
+    const userId = computed(() => {
+        if (!isReady.value) return undefined
+        if (isTesting.value) {
+            return localStorage.getItem('id_token') ?? 'unknown user'
+        }
+        return auth0.user.value?.nickname ?? 'unknown user'
+    })
+
+    const isLoadingAuth = computed(() => {
+        if (!isReady.value) return true
+        return auth0.isLoading.value
+    })
+
+    const isLoggedIn = computed(() => {
+        if (!isReady.value) return false
+        if (isTesting.value) {
+            return !!localStorage.getItem('auth_token')
+        }
+        return !auth0.isLoading.value && auth0.isAuthenticated.value
+    })
+
+    const isAdmin = computed(() => {
+        if (!isReady.value) return false
+        return !auth0.isLoading.value && auth0.isAuthenticated.value
+    })
+
     const isModerator: Ref<boolean> = ref(false)
 
     async function login() {
@@ -46,7 +103,7 @@ export const useAuthStore = defineStore('authStore', () => {
         try {
             const startTime = Date.now()
             while (auth0?.isLoading.value) {
-            // wait for the auth0 object to be ready
+                // wait for the auth0 object to be ready
                 await new Promise(resolve => setTimeout(resolve, 100))
 
                 // break the loop after 10 seconds to avoid infinite loop
@@ -54,6 +111,12 @@ export const useAuthStore = defineStore('authStore', () => {
                     console.error('Auth0 loading timed out after 10 seconds')
                     break
                 }
+            }
+
+            if (!isReady.value) return undefined
+
+            if (isTesting.value) {
+                return localStorage.getItem('auth_token') ?? undefined
             }
 
             if (!auth0?.isAuthenticated.value) {
@@ -66,6 +129,7 @@ export const useAuthStore = defineStore('authStore', () => {
                     tokenSigningAlg: 'RS256'
                 }
             })
+
             return token
         } catch (error) {
             console.error(`Error getting auth bearer token: ${JSON.stringify(error)}`)

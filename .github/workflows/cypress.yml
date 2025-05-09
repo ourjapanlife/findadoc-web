@@ -1,57 +1,58 @@
 name: "Tests: Cypress e2e"
 
 on:
-    push:
-        branches: ["main"]
-    pull_request:
-        branches: ["main"]
-    schedule:
-        - cron: "45 15 * * 4"
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+  schedule:
+    - cron: "45 15 * * 4"
+
 env:
+  NUXT_AUTH_TOKEN_SECRET: ${{ secrets.NUXT_AUTH_TOKEN_SECRET }}
+  AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
+  AUTH0_USERNAME: ${{ secrets.AUTH0_USERNAME }}
+  AUTH0_PASSWORD: ${{ secrets.AUTH0_PASSWORD }}
+  AUTH0_CLIENTID: ${{ secrets.AUTH0_CLIENTID }}
+  AUTH0_CLIENTSECRET: ${{ secrets.AUTH0_CLIENTSECRET }}
   NUXT_PUBLIC_LOAD_STORES: true
+  NUXT_CYPRESS_TESTING: true
+
 jobs:
-    cypress-run:
-        name: Running Cypress tests ✨
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout code
-              uses: actions/checkout@v4
+  cypress-run:
+    name: Running Cypress tests ✨
+    runs-on: ubuntu-latest
 
-            - name: Cache yarn dependencies
-              uses: actions/cache@v3
-              with:
-                path: ~/.cache/yarn
-                key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-                restore-keys: |
-                  ${{ runner.os }}-yarn-
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-            - name: Log environment variable
-              run: echo "env_var=${{ env.LOAD_STORES }}"
+      - name: Cache yarn dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/yarn
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
 
-            - name: Install dependencies and build
-              run: |
-                yarn install
-                yarn prod:build
+      - name: Install dependencies and build
+        run: |
+          yarn install
+          yarn prod:build
 
-            - name: Start server and wait
-              run: |
-                yarn prod:start &
-                npx wait-on http://localhost:3000
+      - name: Start server and wait
+        run: |
+          yarn prod:start &
+          npx wait-on http://localhost:3000
 
-            - name: Run Cypress tests
-              uses: cypress-io/github-action@v6
-              env:
-                AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
-                AUTH0_USERNAME: ${{ secrets.AUTH0_USERNAME }}
-                AUTH0_PASSWORD: ${{ secrets.AUTH0_PASSWORD }}
-                AUTH0_CLIENTID: ${{ secrets.AUTH0_CLIENTID }}
-                AUTH0_CLIENTSECRET: ${{ secrets.AUTH0_CLIENTSECRET }}
-              with:
-                command: yarn test:e2e:ci
+      - name: Run Cypress tests
+        uses: cypress-io/github-action@v6
+        with:
+          command: yarn test:e2e:prod
 
-            - name: Upload screenshots
-              uses: actions/upload-artifact@v4
-              if: failure()
-              with:
-                name: cypress-screenshots
-                path: cypress/screenshots
+      - name: Upload screenshots
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cypress-screenshots
+          path: cypress/screenshots

@@ -12,7 +12,9 @@ const config = defineConfig({
             AUTH0_USERNAME: process.env.AUTH0_USERNAME,
             AUTH0_PASSWORD: process.env.AUTH0_PASSWORD,
             AUTH0_CLIENTID: process.env.AUTH0_CLIENTID,
-            AUTH0_CLIENTSECRET: process.env.AUTH0_CLIENTSECRET
+            AUTH0_CLIENTSECRET: process.env.AUTH0_CLIENTSECRET,
+            NUXT_AUTH_TOKEN_SECRET: process.env.NUXT_AUTH_TOKEN_SECRET,
+            CYPRESS_TESTING: process.env.CYPRESS_TESTING
         },
         setupNodeEvents() { },
         // Path to e2e specs folder
