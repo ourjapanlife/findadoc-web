@@ -185,7 +185,7 @@ const facilityHasUnsavedChanges = () => {
           || facilityBeforeChange.mapLongitude.toString() !== facilitySections.mapLongitude
           || JSON.stringify(facilityBeforeChange.healthcareProfessionalIds)
           !== JSON.stringify(facilitySections.healthcareProfessionalIds)
-          || facilitySections.healthProfessionalsRelations.length
+          || facilitySections.healthProfessionalsRelations.length > 0
 
     return areThereUnsavedFacilityChanges
 }
@@ -352,9 +352,11 @@ onMounted(() => {
     toast = useToast()
 })
 
-watch(() => facilitiesStore.selectedFacilityData, newValue => {
-    originalFacilityRefsValue.value = newValue
-})
+watch(() => facilitiesStore.selectedFacilityData, (newValue, oldValue) => {
+    if (newValue !== oldValue) {
+        originalFacilityRefsValue.value = newValue
+    }
+}, { deep: true })
 
 // using stringify and then parsing was the only working solution to stop
 // originalHealthcareProfessionalRefsValue from being assigned a reference to
