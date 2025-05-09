@@ -1,6 +1,6 @@
 <template>
     <div
-        v-close-on-outside-click
+        v-close-on-outside-click="closeMenu"
         data-testid="hamburger-menu-container"
         class="cursor-pointer w-full flex"
     >
@@ -260,6 +260,7 @@
 
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue'
+import { vCloseOnOutsideClick } from '~/utils/closeOnOutsideClick'
 import SVGProfileIcon from '~/assets/icons/profile-icon.svg'
 import SVGHamburgerMenuIcon from '~/assets/icons/hamburger-menu.svg'
 import SVGGithubIcon from '~/assets/icons/social-github.svg'
@@ -306,21 +307,4 @@ onMounted(() => {
         setTheme(saveTheme)
     }
 })
-
-//this is a custom directive to close the menu when clicking outside of the menu
-const vCloseOnOutsideClick = {
-    mounted: (el: ExtendedHTMLElement) => {
-        el.clickOutsideEvent = event => {
-            const eventTarget: EventTarget | null = event.target
-            const isClickInsideElement = (el == eventTarget || el.contains(eventTarget))
-            if (!isClickInsideElement) {
-                closeMenu()
-            }
-        }
-        document.addEventListener('click', el.clickOutsideEvent)
-    },
-    unmounted: (el: ExtendedHTMLElement) => {
-        document.removeEventListener('click', el.clickOutsideEvent)
-    }
-}
 </script>
