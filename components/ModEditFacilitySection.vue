@@ -63,7 +63,6 @@
                 :invalid-input-error-message="$t('modFacilitySection.inputErrorMessageFacilityWebsite')"
             />
         </div>
-
         <div
             class="mod-facility-address-section"
         >
@@ -225,45 +224,53 @@
                 :invalid-input-error-message="$t('modFacilitySection.inputErrorMessageFacilityMapLongitude')"
             />
         </div>
-        <ModHealthcareProfessionalSearchbar data-testid="mod-facility-section-doctor-search" />
         <div class="flex flex-col">
             <span
                 v-if="moderationScreenStore.editFacilityScreenIsActive()"
                 class="mb-1 text-primary-text text-2xl font-bold font-sans leading-normal"
             >
-                {{ $t('modFacilitySection.healthcareProfessionalToAdd') }}
+                {{ $t('modFacilitySection.addHealthcareProfessional') }}
             </span>
+            <ModSearchBar
+                v-model="healthcareProfessionalsToAddToFacility"
+                data-testid="mod-facility-section-doctor-search"
+                :place-holder-text="$t('modFacilitySection.placeholderTextHealthcareProfessionalSearchbar')"
+                :no-match-text="$t('modFacilitySection.noHealthcareProfessionalFound')"
+                :fields-to-display-callback="healthcareProfessionalsToDisplayCallback"
+                @search-input-change="handleHealthcareProfessionalsInputChange"
+            />
             <span
-                v-show="!facilityStore.healthProfessionalsRelationsForDisplay.length"
-                class="font-semibold"
+                v-show="!healthcareProfessionalsToAddToFacility.length"
+                class="font-semibold my-3"
             >- {{ $t('modFacilitySection.noHPSelected') }}
             </span>
-            <span v-show="facilityStore.healthProfessionalsRelationsForDisplay.length">
-                <div
-                    v-for="(healthcareProfessional) in facilityStore.healthProfessionalsRelationsForDisplay"
-                    :key="`${healthcareProfessional.id}-${healthcareProfessional.names[0].firstName}`"
-                >
-                    <ModDashboardHealthProfessionalCard
-                        :healthcare-professional="healthcareProfessional"
-                    />
-                </div>
-            </span>
-        </div>
-        <div
-            v-if="moderationScreenStore.editFacilityScreenIsActive()"
-        >
-            <span class="mb-3.5 text-center text-primary-text text-2xl font-bold font-sans leading-normal">
-                {{ $t('modFacilitySection.existingHPHeading') }}
-            </span>
             <div
-                v-for="(healthcareProfessional, index) in healthcareProfessionalRelatedToFacilityFiltered"
+                v-for="(healthcareProfessional, index) in healthcareProfessionalsToAddToFacility"
                 :key="`${healthcareProfessional.id}-${index}`"
             >
                 <ModDashboardHealthProfessionalCard
+                    :data-testid="`healthcare-professional-card-${index}`"
                     :healthcare-professional="healthcareProfessional"
                     :healthcare-professionals-related-to-facility="healthcareProfessionalsRelatedToFacility"
+                    :show-trash-can="false"
                 />
             </div>
+        </div>
+    </div>
+    <div
+        v-if="moderationScreenStore.editFacilityScreenIsActive()"
+    >
+        <span class="mb-3.5 text-center text-primary-text text-2xl font-bold font-sans leading-normal">
+            {{ $t('modFacilitySection.existingHPHeading') }}
+        </span>
+        <div
+            v-for="(healthcareProfessional, index) in healthcareProfessionalRelatedToFacilityFiltered"
+            :key="`${healthcareProfessional.id}-${index}`"
+        >
+            <ModDashboardHealthProfessionalCard
+                :healthcare-professional="healthcareProfessional"
+                :healthcare-professionals-related-to-facility="healthcareProfessionalsRelatedToFacility"
+            />
         </div>
     </div>
 </template>
@@ -287,26 +294,23 @@ import { validateAddressLineEn,
     validatePostalCode,
     validateWebsite,
     validateCityJa } from '~/utils/formValidations'
-import type { HealthcareProfessional } from '~/typedefs/gqlTypes'
-
+import { RelationshipAction, type HealthcareProfessional } from '~/typedefs/gqlTypes'
 // Initialize the variable that will be used to mount the toast library
 let toast: ToastInterface
-
 const route = useRoute()
-
 const { t } = useI18n()
-
 const loadingStore = useLoadingStore()
 loadingStore.setIsLoading(true)
-
 const moderationScreenStore = useModerationScreenStore()
 const facilityStore = useFacilitiesStore()
 const healthcareProfessionalsStore = useHealthcareProfessionalsStore()
-
 const isFacilitySectionInitialized: Ref<boolean> = ref(false)
+
 const healthcareProfessionalsRelatedToFacility: Ref<string[]>
 = ref([])
 const healthcareProfessionalRelatedToFacilityFiltered: Ref<HealthcareProfessional[]> = ref([])
+// This keeps track of the existing healthcare professionals we are adding to an existing facility
+const healthcareProfessionalsToAddToFacility: Ref<HealthcareProfessional[]> = ref([])
 
 const syncHealthcareProfessionalsRelatedToFacility = () => {
     if (healthcareProfessionalsStore.healthcareProfessionalsData
@@ -315,12 +319,38 @@ const syncHealthcareProfessionalsRelatedToFacility = () => {
             healthcareProfessionalId =>
                 healthcareProfessionalsStore.healthcareProfessionalsData.find(
                     healthcareProfessional => healthcareProfessional.id === healthcareProfessionalId
-
                 ) || []
         )
     }
 }
+const handleHealthcareProfessionalsInputChange = (filteredItems: Ref<HealthcareProfessional[]>, inputValue: string) => {
+    filteredItems.value = healthcareProfessionalsStore.healthcareProfessionalsData
+        .filter((healthcareProfessional: HealthcareProfessional) => {
+            if (facilityStore.facilitySectionFields.healthcareProfessionalIds.includes(healthcareProfessional.id)) {
+                return false
+            }
 
+            const idMatches = healthcareProfessional.id
+                .toLowerCase()
+                .startsWith(inputValue.toLowerCase().trim())
+            const nameMatches = healthcareProfessional.names.some(name => {
+                const firstNameMatch = name.firstName
+                    .toLowerCase()
+                    .includes(inputValue.toLowerCase())
+                const middleNameMatch = name.middleName
+                  && name.middleName
+                      .toLowerCase()
+                      .includes(inputValue.toLowerCase())
+                const lastNameMatch = name.lastName
+                    .toLowerCase()
+                    .includes(inputValue.toLowerCase())
+                return firstNameMatch || middleNameMatch || lastNameMatch
+            })
+            return idMatches || nameMatches
+        })
+}
+const healthcareProfessionalsToDisplayCallback = (healthcareProfessional: HealthcareProfessional) =>
+    [healthcareProfessional.names[0].firstName + ' ' + healthcareProfessional.names[0].lastName]
 const listPrefectureJapanEn: Ref<string[]> = ref([
     'Hokkaido', 'Aomori', 'Iwate', 'Miyagi', 'Akita',
     'Yamagata', 'Fukushima', 'Ibaraki', 'Tochigi', 'Gumma', 'Saitama', 'Chiba', 'Tokyo', 'Kanagawa',
@@ -334,17 +364,14 @@ const listPrefectureJapanJa: Ref<string[]> = ref([
     '石川県', '福井県', '山梨県', '長野県', '岐阜県', '静岡県', '愛知県', '三重県', '滋賀県', '京都府', '大阪府',
     '兵庫県', '奈良県', '和歌山県', '鳥取県', '島根県', '岡山県', '広島県', '山口県', '徳島県', '香川県', '愛媛県',
     '高知県', '福岡県', '佐賀県', '長崎県', '熊本県', '大分県', '宮崎県', '鹿児島県', '沖縄県'])
-
 onBeforeMount(async () => {
     isFacilitySectionInitialized.value = false
-
     /**
     Set the variable to useToast when the before the component mounts
     since vue-taostification is only available on the client.
     If not done this way the build fails
      */
     toast = useToast()
-
     // Wait for the route to be fully resolved
     await nextTick()
     // Ensure the route param `id` is available before proceeding
@@ -354,39 +381,27 @@ onBeforeMount(async () => {
         toast.error(t('modFacilitySection.errorMessageFacilityId'))
         return
     }
-
     // This will fetch the facilities if sent here by link or a page is refreshed
     if (!facilityStore.facilityData.length) {
         await facilityStore.getFacilities()
     }
-
     // This will fetch the healthcare professionals if sent here by link or a page is refreshed
     if (!healthcareProfessionalsStore.healthcareProfessionalsData) {
         await healthcareProfessionalsStore.getHealthcareProfessionals()
     }
-
     facilityStore.selectedFacilityId = id as string
-
     // Set the active screen and ensure the UI state is consistent
     moderationScreenStore.setActiveScreen(ModerationScreen.EditFacility)
-
     facilityStore.setSelectedFacilityData(facilityStore.selectedFacilityId)
-
     facilityStore.initializeFacilitySectionValues(facilityStore.selectedFacilityData)
-
     // Ensure UI updates are reflected with the autofill values
     await nextTick()
-
     syncHealthcareProfessionalsRelatedToFacility()
-
     isFacilitySectionInitialized.value = true
-
     loadingStore.setIsLoading(false)
-
     // Ensure UI updates are reflected
     await nextTick()
 })
-
 /** This is making sure all the data is loaded in the component before running the function to set
     the healthcare professionals related to the facility. This loads the data correctly whether sent the
     link or navigating from the moderator dashboard **/
@@ -407,7 +422,6 @@ watch(
     },
     { immediate: false }
 )
-
 watch(() => facilityStore.facilitySectionFields.healthcareProfessionalIds, newValue => {
     // Set the filtered related ones back to an empty array to sync upon update
     healthcareProfessionalRelatedToFacilityFiltered.value = []
@@ -415,5 +429,24 @@ watch(() => facilityStore.facilitySectionFields.healthcareProfessionalIds, newVa
     healthcareProfessionalsRelatedToFacility.value = newValue
     // Sync the list to the updated values
     syncHealthcareProfessionalsRelatedToFacility()
+
+    healthcareProfessionalsToAddToFacility.value = []
 })
+// This watch adds the relations for updating a facility with an added healthcareProfessional
+watch(() => healthcareProfessionalsToAddToFacility.value, newValue => {
+    if (newValue.length) {
+        // Filter out healthcare professionals not already included to prevent unintended side effects
+        const professionalsToAdd = healthcareProfessionalsToAddToFacility.value.filter(healthcareProfessional =>
+            !facilityStore.facilitySectionFields.healthcareProfessionalIds.includes(healthcareProfessional.id))
+        // Map the filtered professionals into relationship objects
+        const relationshipCreationArrayFromSelectedHealthcareProfessionalsToAdd
+        = professionalsToAdd.map(healthcareProfessional => ({
+            action: RelationshipAction.Create,
+            otherEntityId: healthcareProfessional.id
+        }))
+        // Update the store field with the new relationships
+        facilityStore.facilitySectionFields.healthProfessionalsRelations
+        = relationshipCreationArrayFromSelectedHealthcareProfessionalsToAdd
+    }
+}, { deep: true })
 </script>

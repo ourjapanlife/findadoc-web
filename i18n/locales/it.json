@@ -238,7 +238,7 @@
     "existingHPHeading": "Professionisti sanitari attuali nella struttura",
     "facilityHeading": "Informazioni sulla struttura",
     "googleMapsInformation": "Informazioni Google Maps",
-    "healthcareProfessionalToAdd": "Professionista sanitario da aggiungere",
+    "addHealthcareProfessional": "Professionista sanitario da aggiungere",
     "inputErrorMessageFacilityAddressLine1Ja": "Indirizzo giapponese non valido",
     "inputErrorMessageFacilityAddressLine2Ja": "Indirizzo giapponese non valido",
     "inputErrorMessageFacilityAddressLine1En": "Indirizzo inglese non valido",
@@ -288,7 +288,8 @@
     "placeholderTextFacilityPhoneNumber": "es. 08xxxxxxxxx",
     "placeholderTextFacilityPostalCode": "es. 186-0000",
     "placeholderTextFacilityWebsite": "es. http://www.example.com/",
-    "updateButtonText": "Aggiorna"
+    "updateButtonText": "Aggiorna",
+    "noHealthcareProfessionalFound": "No matching healthcare professionals found"
   },
   "modSubmissionForm": {
     "addHealthCareProfessionalLocaleName": "Aggiungi nome per località",

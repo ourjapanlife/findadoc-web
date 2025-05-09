@@ -1,6 +1,7 @@
 import type { StateTree } from 'pinia'
 import enUS from '../../../i18n/locales/en.json'
 import fakeFacilityResult from '../../fake_data/moderation_dashboard/fakeModFacilityData.json'
+import fakeHealthcareProfessionalResult from '../../fake_data/moderation_dashboard/fakeModHealthcareProfessionalData.json'
 import { aliasQuery } from '../utils'
 
 let facilitiesStore: StateTree
@@ -149,6 +150,36 @@ describe('Moderation edit facility form', () => {
         it('should be able to select a field', () => {
             cy.get('[data-testid="mod-facility-section-prefectureEn"]').select('Hokkaido')
             cy.get('[data-testid="mod-facility-section-prefectureJa"]').select('北海道')
+        })
+
+        it('should be able to add a professional that matches by id', () => {
+            cy.window().then(win => {
+                win.$pinia.state.value.healthcareProfessionalsStore.healthcareProfessionalsData
+            = fakeHealthcareProfessionalResult.data.healthcareProfessionals
+            })
+            cy.get('[data-testid="mod-facility-section-doctor-search"]').find('input').clear().type('UTF8YaYa')
+            cy.get('[data-testid="mod-search-bar-search-result"]').click()
+            cy.get('[data-testid="healthcare-professional-card-0"]').should('exist')
+        })
+
+        it('should be able to add a professional that matches by name', () => {
+            cy.get('[data-testid="mod-facility-section-doctor-search"]').find('input').clear().type('Bert')
+            cy.get('[data-testid="mod-search-bar-search-result"]').click()
+            cy.get('[data-testid="healthcare-professional-card-1"]').should('exist')
+        })
+
+        it('should be able to remove just one professional that was added out of 2 added', () => {
+            cy.get('[data-testid="mod-facility-section-doctor-search"]').find('input').clear().type('Bert')
+            cy.get('[data-testid="mod-search-bar-search-result"]').click()
+            cy.get('[data-testid="healthcare-professional-card-0"]').should('exist')
+            cy.get('[data-testid="healthcare-professional-card-1"]').should('not.exist')
+        })
+
+        it('should display message for no healthcareprofessional found', () => {
+            cy.get('[data-testid="mod-facility-section-doctor-search"]').find('input').clear().type('aaa'.repeat(50))
+            cy.get('[data-testid="mod-search-bar-search-no-match"]').should('exist')
+            cy.get('[data-testid="mod-search-bar-search-no-match"]')
+                .contains(enUS.modFacilitySection.noHealthcareProfessionalFound)
         })
 
         it('should be display error messages', () => {

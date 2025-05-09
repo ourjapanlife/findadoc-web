@@ -376,8 +376,9 @@
     "placeholderTextFacilityAddressLine1En": "Street address",
     "errorMessageFacilityId": "Facility Id was not found",
     "existingHPHeading": "Current Healthcare Professionals at Facility",
-    "healthcareProfessionalToAdd": "Healthcare Professional to Add",
-    "noHPSelected": "No healthcare professionals selected"
+    "addHealthcareProfessional": "Add existing healthcare professional",
+    "noHPSelected": "No healthcare professionals selected",
+    "noHealthcareProfessionalFound": "No matching healthcare professionals found"
   },
   "modEditFacilityOrHPTopbar": {
     "updateAndExit": "Update & Exit",
