@@ -100,7 +100,7 @@ export const useHealthcareProfessionalsStore = defineStore(
                 input: {
                     acceptedInsurance: healthcareProfessionalSectionFields.acceptedInsurance,
                     degrees: healthcareProfessionalSectionFields.degrees,
-                    facilityIds: facilitiesRelationsToSelectedHealthcareProfessional.length > 0
+                    facilityIds: facilitiesRelationsToSelectedHealthcareProfessional.length
                         ? facilitiesRelationsToSelectedHealthcareProfessional
                         : undefined,
                     names: healthcareProfessionalSectionFields.names,
