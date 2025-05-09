@@ -133,38 +133,59 @@
                 >
                     <div data-testid="hamburger-menu-theme-switcher">
                         <p class="mb-1">
-                            {{ $t('hamburgerMenu.theme') }}
+                            {{ $t('hamburgerMenu.theme') }}: {{ toLocaleCapitalized(currentTheme) }}
                         </p>
                         <div class="flex">
                             <div
                                 class="w-10 h-10 mr-1"
+                                title="Default Theme"
                                 style="background-color:#EB7100"
                                 :class="getSelectedTheme('orange')"
                                 @click="setTheme('orange')"
                             />
                             <div
                                 class="bg-primary w-10 h-10 mr-1"
+                                title="Coral Theme"
                                 style="background-color: #ED6C5A;"
                                 :class="getSelectedTheme('coral')"
                                 @click="setTheme('coral')"
                             />
                             <div
                                 class="w-10 h-10 mr-1"
+                                title="Violet Theme"
                                 style="background-color: #A45D9A;"
                                 :class="getSelectedTheme('violet')"
                                 @click="setTheme('violet')"
                             />
                             <div
                                 class="w-10 h-10 mr-1"
+                                title="Ocean Theme"
                                 style="background-color: #245A7D;"
                                 :class="getSelectedTheme('ocean')"
                                 @click="setTheme('ocean')"
                             />
                             <div
-                                class="w-10 h-10"
+                                class="w-10 h-10 mr-1"
+                                title="Neon Theme"
                                 style="background-color: #1bdb9b;"
                                 :class="getSelectedTheme('neon')"
                                 @click="setTheme('neon')"
+                            />
+                            <div
+                                class="w-10 h-10 mr-1"
+                                title="Default Theme"
+                                style="background-color: #EEFF02FF;"
+                                :class="getSelectedTheme('accessible-high-contrast')"
+                                alt="Accessible: High Contrast Theme"
+                                @click="setTheme('accessible-high-contrast')"
+                            />
+                            <div
+                                class="w-10 h-10 mr-1"
+                                title="Accessible: Daltonian Color Blindness"
+                                style="background-color: #FF0000FF;"
+                                :class="getSelectedTheme('accessible-red-green')"
+                                alt="Accessible: Daltonian Color Blindness"
+                                @click="setTheme('accessible-red-green')"
                             />
                         </div>
                     </div>
@@ -264,6 +285,7 @@ import SVGProfileIcon from '~/assets/icons/profile-icon.svg'
 import SVGHamburgerMenuIcon from '~/assets/icons/hamburger-menu.svg'
 import SVGGithubIcon from '~/assets/icons/social-github.svg'
 import { useAuthStore } from '~/stores/authStore'
+import { toLocaleCapitalized } from '~/utils/stringUtils'
 
 const authStore = useAuthStore()
 
@@ -285,13 +307,21 @@ function logout() {
 }
 
 function setTheme(newTheme: string) {
-    document.documentElement.classList.remove('theme-orange', 'theme-coral', 'theme-violet', 'theme-ocean', 'theme-neon')
+    document.documentElement.classList.remove(
+        'theme-orange',
+        'theme-coral',
+        'theme-violet',
+        'theme-ocean',
+        'theme-neon',
+        'theme-accessible-high-contrast',
+        'theme-accessible-red-green'
+    )
     document.documentElement.classList.add(`theme-${newTheme}`)
     localStorage.setItem('theme', newTheme)
     currentTheme.value = newTheme
 }
 
-// this gives a black border to the selected theme in the hamburger menu
+// this gives a black border to the selected theme in the hamburger menu (mobile view)
 function getSelectedTheme(theme: string) {
     if (currentTheme.value === theme) {
         return 'border-4 border-black'
@@ -307,7 +337,7 @@ onMounted(() => {
     }
 })
 
-//this is a custom directive to close the menu when clicking outside of the menu
+// this is a custom directive to close the menu when clicking outside of the menu
 const vCloseOnOutsideClick = {
     mounted: (el: ExtendedHTMLElement) => {
         el.clickOutsideEvent = event => {
