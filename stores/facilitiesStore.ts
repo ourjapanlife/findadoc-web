@@ -123,9 +123,9 @@ export const useFacilitiesStore = defineStore(
                             prefectureEn: createFacilityFields.contact.address.prefectureEn,
                             prefectureJa: createFacilityFields.contact.address.prefectureJa
                         },
-                        email: createFacilityFields.contact.email,
+                        email: createFacilityFields.contact.email || undefined,
                         phone: createFacilityFields.contact.phone,
-                        website: createFacilityFields.contact.website,
+                        website: createFacilityFields.contact.website || undefined,
                         googleMapsUrl: createFacilityFields.contact.googleMapsUrl
                     },
                     mapLatitude: parseFloat(createFacilityFields.mapLatitude),
