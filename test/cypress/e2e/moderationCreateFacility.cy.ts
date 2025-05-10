@@ -35,7 +35,7 @@ describe('Moderation edit facility form', () => {
             cy.viewport('macbook-16')
         })
 
-        it('contains the following fields and buttons in the topbar', () => {
+        it('contains the following buttons and text in the topbar', () => {
             cy.get('[data-testid="mod-create-facility-hp-topbar-create"]').should('exist')
                 .contains(enUS.modCreateFacilityOrHPTopbar.create)
             cy.get('[data-testid="mod-create-facility-hp-topbar-exit"]').should('exist')

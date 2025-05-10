@@ -124,7 +124,8 @@
     "confirmExit": "Verlassen ohne zu Speichern",
     "create": "Erstellen",
     "exit": "Verlassen",
-    "FacilityCreatedSuccessfully": "Einrichtung erfolgreich erstellt.",
+    "facilityCreatedSuccessfully": "Einrichtung erfolgreich erstellt.",
+    "heathcareProfessionalCreatedSuccessfully": "Gesundheitsfachkraft erfolgreich erstellt.",
     "unsavedChangesMessage": "Die Seite wird verlassen, ohne das Ihr Eintrag gespeichert wird. Alle nicht gespeicherten Daten gehen verloren."
 },
   "modDashboardLeftNav": {
@@ -412,12 +413,5 @@
   "modHealthcareProfessionalCard": {
     "editName": "Edit",
     "saveName": "Save"
-  },
-  "modCreateFacilityOrHPTopbar": {
-    "confirmExit": "Exit without saving",
-    "create": "Create",
-    "exit": "Exit",
-    "heathcareProfessionalCreatedSuccessfully": "Healthcare professional created successfully.",
-    "unsavedChangesMessage": "This will exit without saving your entry. All unsaved data will be lost."
   }
 }
