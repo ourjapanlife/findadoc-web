@@ -92,7 +92,7 @@ describe('Moderation create facility form', () => {
             expect(facilitiesStore.createFacilityFields.nameEn).to.equal('Hospital')
             expect(facilitiesStore.createFacilityFields.nameJa).to.equal('立川中央病院')
             expect(facilitiesStore.createFacilityFields.contact.phone).to.equal('08080939393')
-            expect(facilitiesStore.createFacilityFields.contct.email).to.equal('example@mail.com')
+            expect(facilitiesStore.createFacilityFields.contact.email).to.equal('example@mail.com')
             expect(facilitiesStore.createFacilityFields.contact.website).to.equal('http://example.com')
             expect(facilitiesStore.createFacilityFields.contact.address.postalCode).to.equal('180-0000')
             expect(facilitiesStore.createFacilityFields.contact.address.cityEn).to.equal('Shibuya')
