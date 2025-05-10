@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref, type Ref, reactive } from 'vue'
 import { gql } from 'graphql-request'
-import type { CreateFacilityInput, DeleteResult,
+import type { DeleteResult,
     Facility,
     HealthcareProfessional,
     Mutation,
@@ -45,7 +45,7 @@ export const useFacilitiesStore = defineStore(
             healthProfessionalsRelations: [] as Relationship[]
         })
 
-        const createFacilityFields: CreateFacilityInput = reactive({
+        const createFacilityFields = reactive({
             nameEn: '',
             nameJa: '',
             contact: {
@@ -60,14 +60,14 @@ export const useFacilitiesStore = defineStore(
                     addressLine1Ja: '',
                     addressLine2Ja: ''
                 },
-                email: undefined,
+                email: '' as string | undefined,
                 googleMapsUrl: '',
                 phone: '',
-                website: undefined
+                website: '' as string | undefined
             },
-            mapLatitude: 0,
-            mapLongitude: 0,
-            healthcareProfessionalIds: []
+            mapLatitude: '',
+            mapLongitude: '',
+            healthcareProfessionalIds: [] as string[]
         })
 
         const healthProfessionalsRelationsForDisplay: Ref<HealthcareProfessional[]> = ref([])
@@ -123,13 +123,13 @@ export const useFacilitiesStore = defineStore(
                             prefectureEn: createFacilityFields.contact.address.prefectureEn,
                             prefectureJa: createFacilityFields.contact.address.prefectureJa
                         },
-                        email: createFacilityFields.contact.email,
+                        email: createFacilityFields.contact.email || undefined,
                         phone: createFacilityFields.contact.phone,
-                        website: createFacilityFields.contact.website,
+                        website: createFacilityFields.contact.website || undefined,
                         googleMapsUrl: createFacilityFields.contact.googleMapsUrl
                     },
-                    mapLatitude: createFacilityFields.mapLatitude,
-                    mapLongitude: createFacilityFields.mapLongitude,
+                    mapLatitude: parseFloat(createFacilityFields.mapLatitude),
+                    mapLongitude: parseFloat(createFacilityFields.mapLongitude),
                     healthcareProfessionalIds: createFacilityFields.healthcareProfessionalIds
                 }
             }
@@ -215,8 +215,8 @@ export const useFacilitiesStore = defineStore(
                 phone: '',
                 website: undefined
             }
-            createFacilityFields.mapLatitude = 0
-            createFacilityFields.mapLongitude = 0
+            createFacilityFields.mapLatitude = ''
+            createFacilityFields.mapLongitude = ''
             createFacilityFields.healthcareProfessionalIds = []
         }
 
