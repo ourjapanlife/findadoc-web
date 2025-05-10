@@ -18,7 +18,7 @@
             <NuxtLink
                 v-if="isFacility"
                 to="/moderation/create-facility"
-                data-testid="add-hp-button"
+                data-testid="add-facility-button"
                 class="flex justify-center items-center rounded-full bg-secondary-bg border-primary p-1 border-2 w-40
                 font-semibold text-sm mr-2 overflow-hidden text-center hover:bg-currentColor"
             >
