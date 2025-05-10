@@ -26,6 +26,12 @@
         >
             <ModCreateFacilityOrProfessionalTopbar />
         </div>
+        <div
+            v-else-if="moderationScreenStore.createFacilityScreenIsActive()"
+            class="h-[76px] w-full"
+        >
+            <ModCreateFacilityOrProfessionalTopbar />
+        </div>
     </div>
 </template>
 

@@ -66,6 +66,7 @@ const router = useRouter()
 
 // Initialize the stores in use
 const healthcareProfessionalsStore = useHealthcareProfessionalsStore()
+const facilitiesStore = useFacilitiesStore()
 const moderationScreenStore = useModerationScreenStore()
 const modalStore = useModalStore()
 const moderationSubmissionsStore = useModerationSubmissionsStore()
@@ -87,6 +88,23 @@ const createFacilityOrHealthcareProfessional = async () => {
         router.push('/moderation')
         moderationSubmissionsStore.setSelectedModerationListViewChosen(SelectedModerationListView.HealthcareProfessionals)
         healthcareProfessionalsStore.resetCreateHealthcareProfessionalFields()
+        return response
+    }
+
+    if (moderationScreenStore.createFacilityScreenIsActive()) {
+        const response = await facilitiesStore.createFacility()
+
+        if (response.errors?.length) {
+            handleServerErrorMessaging(response.errors, toast, t)
+            return response
+        }
+
+        toast.success(t('modCreateFacilityOrHPTopbar.facilityCreatedSuccessfully'))
+        router.push('/moderation')
+        moderationSubmissionsStore.setSelectedModerationListViewChosen(
+            SelectedModerationListView.Facilities
+        )
+        facilitiesStore.resetCreateFacilityFields()
         return response
     }
 }
