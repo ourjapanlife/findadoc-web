@@ -209,7 +209,7 @@
                     v-model="facilityStore.createFacilityFields.mapLongitude"
                     data-testid="mod-facility-section-mapLongitude"
                     :label="$t('modFacilitySection.labelFacilityMapLongitude')"
-                    type=""
+                    type="text"
                     :placeholder="$t('modFacilitySection.placeholderTextFacilityMapLongitude')"
                     :required="true"
                     :input-validation-check="validateFloat"
@@ -274,8 +274,6 @@ import {
 } from '~/utils/formValidations'
 import type { HealthcareProfessional } from '~/typedefs/gqlTypes'
 
-// Initialize the variable that will be used to mount the toast library
-
 useI18n()
 
 const loadingStore = useLoadingStore()
@@ -304,30 +302,19 @@ const syncHealthcareProfessionalsRelatedToFacility = () => {
     }
 }
 const handleHealthcareProfessionalsInputChange = (filteredItems: Ref<HealthcareProfessional[]>, inputValue: string) => {
-    filteredItems.value = healthcareProfessionalsStore.healthcareProfessionalsData
-        .filter((healthcareProfessional: HealthcareProfessional) => {
-            if (facilityStore.createFacilityFields.healthcareProfessionalIds?.includes(healthcareProfessional.id)) {
-                return false
-            }
-
-            const idMatches = healthcareProfessional.id
-                .toLowerCase()
-                .startsWith(inputValue.toLowerCase().trim())
+    const input = inputValue.toLowerCase().trim()
+    filteredItems.value = healthcareProfessionalsStore.healthcareProfessionalsData.filter(
+        (healthcareProfessional: HealthcareProfessional) => {
+            const idMatches = healthcareProfessional.id.toLowerCase().startsWith(input)
             const nameMatches = healthcareProfessional.names.some(name => {
-                const firstNameMatch = name.firstName
-                    .toLowerCase()
-                    .includes(inputValue.toLowerCase())
-                const middleNameMatch = name.middleName
-                  && name.middleName
-                      .toLowerCase()
-                      .includes(inputValue.toLowerCase())
-                const lastNameMatch = name.lastName
-                    .toLowerCase()
-                    .includes(inputValue.toLowerCase())
+                const firstNameMatch = name.firstName.toLowerCase().includes(input)
+                const middleNameMatch = name.middleName?.toLowerCase().includes(input)
+                const lastNameMatch = name.lastName.toLowerCase().includes(input)
                 return firstNameMatch || middleNameMatch || lastNameMatch
             })
             return idMatches || nameMatches
-        })
+        }
+    )
 }
 const healthcareProfessionalsToDisplayCallback = (healthcareProfessional: HealthcareProfessional) =>
     [healthcareProfessional.names[0].firstName + ' ' + healthcareProfessional.names[0].lastName]
@@ -374,7 +361,10 @@ onBeforeMount(async () => {
     await nextTick()
 })
 
-watch(healthcareProfessionalsToAddToFacility, newVal => {
-    facilityStore.createFacilityFields.healthcareProfessionalIds = newVal.map(healthcareProfessional => healthcareProfessional.id)
+watch(healthcareProfessionalsToAddToFacility.value, newValue => {
+    if (newValue) {
+        facilityStore.createFacilityFields.healthcareProfessionalIds
+        = healthcareProfessionalsToAddToFacility.value.map(healthcareProfessional => healthcareProfessional.id)
+    }
 }, { deep: true })
 </script>
