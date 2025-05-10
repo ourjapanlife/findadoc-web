@@ -10,7 +10,7 @@ before(() => {
     cy.login()
 })
 
-describe('Moderation edit facility form', () => {
+describe('Moderation create facility form', () => {
     context('Landscape mode', () => {
         before(() => {
             cy.intercept('POST', '**/', req => {
@@ -22,7 +22,7 @@ describe('Moderation edit facility form', () => {
             cy.wait('@query Facilities')
 
             cy.get('[data-testid="submission-type-select"]').select('FACILITIES')
-            cy.get('[data-testid="mod-facility-list-item-1"]').click()
+            cy.get('[data-testid="add-facility-button"]').click()
 
             /* This will set the facilities stores or any other stores you need to access for testings.
                 This NEEDS to be in the describe and not the login before*/
