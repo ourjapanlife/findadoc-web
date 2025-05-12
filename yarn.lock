@@ -84,7 +84,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@auth0/auth0-vue@npm:^2.3.3":
+"@auth0/auth0-vue@npm:^2.4.0":
   version: 2.4.0
   resolution: "@auth0/auth0-vue@npm:2.4.0"
   dependencies:
@@ -8223,7 +8223,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "findadoc-web@workspace:."
   dependencies:
-    "@auth0/auth0-vue": "npm:^2.3.3"
+    "@auth0/auth0-vue": "npm:^2.4.0"
     "@graphql-codegen/cli": "npm:^5.0.3"
     "@graphql-codegen/typescript": "npm:^4.0.9"
     "@graphql-codegen/typescript-resolvers": "npm:^4.2.1"

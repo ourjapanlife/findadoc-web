@@ -26,7 +26,7 @@
     },
     "type": "module",
     "dependencies": {
-        "@auth0/auth0-vue": "^2.3.3",
+        "@auth0/auth0-vue": "^2.4.0",
         "@pinia/nuxt": "^0.5.2",
         "cypress-real-events": "^1.13.0",
         "graphql": "^16.9.0",
