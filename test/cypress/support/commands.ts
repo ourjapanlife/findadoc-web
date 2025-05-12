@@ -7,7 +7,6 @@ import { auth0Login } from '../utils'
 
 Cypress.Commands.add('login', () => {
     const auth0UserName = Cypress.env('AUTH0_USERNAME')
-
     const log = Cypress.log({
         displayName: 'AUTH0_LOGIN',
         message: [`🔐 Authenticating | ${auth0UserName}`],
@@ -35,7 +34,6 @@ Cypress.Commands.add('login', () => {
         },
         cacheAcrossSpecs: true
     })
-
     log.snapshot('Successfully logged in')
     log.end()
 })
