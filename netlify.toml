@@ -17,3 +17,7 @@
   for = "/*"
     [headers.values]
     Access-Control-Allow-Origin = "*"
+
+[context.deploy-preview.environment]
+  # This is so the previews will fetch the data to show in previews on the home page
+  NODE_ENV = "production"
