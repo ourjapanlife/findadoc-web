@@ -1,12 +1,13 @@
 import { defineStore } from 'pinia'
-import { type Ref, ref, computed } from 'vue'
+import { ref, computed } from 'vue'
 import { auth0 } from '../utils/auth0.js'
 import { useLoadingStore } from './loadingStore.js'
 
 export const useAuthStore = defineStore('authStore', () => {
-    const secretPromise = ref<Promise<boolean> | null>(null)
-    const isTesting = ref(false)
-    const isReady = ref(false)
+    const isTestingMode = ref(() => {
+        const runtimeConfig = useRuntimeConfig()
+        return !!runtimeConfig.isTestingMode && import.meta.client
+    })
 
     async function loadSecret(): Promise<boolean> {
         if (!secretPromise.value) {
@@ -39,32 +40,23 @@ export const useAuthStore = defineStore('authStore', () => {
     init()
 
     const userId = computed(() => {
-        if (!isReady.value) return undefined
-        if (isTesting.value) {
+        if (isTestingMode.value) {
             return localStorage.getItem('id_token') ?? 'unknown user'
         }
         return auth0.user.value?.nickname ?? 'unknown user'
     })
 
-    const isLoadingAuth = computed(() => {
-        if (!isReady.value) return true
-        return auth0.isLoading.value
-    })
+    const isLoadingAuth = computed(() => auth0.isLoading.value)
 
     const isLoggedIn = computed(() => {
-        if (!isReady.value) return false
-        if (isTesting.value) {
+        if (isTestingMode.value) {
             return !!localStorage.getItem('auth_token')
         }
         return !auth0.isLoading.value && auth0.isAuthenticated.value
     })
 
-    const isAdmin = computed(() => {
-        if (!isReady.value) return false
-        return !auth0.isLoading.value && auth0.isAuthenticated.value
-    })
-
-    const isModerator: Ref<boolean> = ref(false)
+    //TODO: this should be based on the user's role
+    const isModerator = computed(() => !auth0.isLoading.value && auth0.isAuthenticated.value)
 
     async function login() {
         //set the loading visual state
@@ -112,9 +104,7 @@ export const useAuthStore = defineStore('authStore', () => {
                 }
             }
 
-            if (!isReady.value) return undefined
-
-            if (isTesting.value) {
+            if (isTestingMode.value) {
                 return localStorage.getItem('auth_token') ?? undefined
             }
 
@@ -135,5 +125,5 @@ export const useAuthStore = defineStore('authStore', () => {
         }
     }
 
-    return { userId, isLoggedIn, isLoadingAuth, isAdmin, isModerator, login, logout, getAuthBearerToken }
+    return { userId, isLoggedIn, isLoadingAuth, isModerator, login, logout, getAuthBearerToken }
 })

@@ -19,8 +19,8 @@
         "test": "yarn test:pinia --run && yarn test:e2e:headless",
         "test:pinia": "nuxi prepare && nuxi generate && vitest",
         "test:pinia:coverage": "vitest run --coverage",
-        "test:e2e": "NUXT_CYPRESS_TESTING=true yarn dev:localserver & npx wait-on http://localhost:3000 && cypress open",
-        "test:e2e:headless": "NUXT_CYPRESS_TESTING=true yarn dev:localserver & npx wait-on http://localhost:3000 && cypress run --e2e",
+        "test:e2e": "NUXT_IS_TESTING_MODE=true yarn dev:localserver & npx wait-on http://localhost:3000 && cypress open",
+        "test:e2e:headless": "NUXT_IS_TESTING_MODE=true yarn dev:localserver & npx wait-on http://localhost:3000 && cypress run --e2e",
         "test:e2e:ci": "cypress run --e2e"
     },
     "packageManager": "yarn@4.4.0",
