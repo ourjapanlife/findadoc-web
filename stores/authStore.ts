@@ -4,33 +4,32 @@ import { auth0 } from '../utils/auth0.js'
 import { useLoadingStore } from './loadingStore.js'
 
 export const useAuthStore = defineStore('authStore', () => {
-    const secretPromise = ref<Promise<string> | null>(null)
+    const secretPromise = ref<Promise<boolean> | null>(null)
     const isTesting = ref(false)
     const isReady = ref(false)
 
-    async function loadSecret(): Promise<string> {
+    async function loadSecret(): Promise<boolean> {
         if (!secretPromise.value) {
             secretPromise.value = (async () => {
                 const checkForTestingEnvironment = await $fetch<{ testingEnvironment: string }>('/api/test-environment')
                 try {
                     if (checkForTestingEnvironment.testingEnvironment) {
-                        const res = await $fetch<{ token: string }>('/api/auth-token')
-                        return res.token
+                        isTesting.value = true
+                        return true
                     }
-                    return ''
+                    return false
                 } catch (err) {
                     if (checkForTestingEnvironment.testingEnvironment) console.error('Failed to fetch auth secret', err)
                     throw err
                 }
             })()
         }
-        return secretPromise.value!
+        return secretPromise.value
     }
 
     async function init() {
         try {
-            const token = await loadSecret()
-            isTesting.value = token === 'TEST'
+            await loadSecret()
         } catch {
             isTesting.value = false
         } finally {

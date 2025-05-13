@@ -38,17 +38,17 @@ jobs:
       - name: Install dependencies and build
         run: |
           yarn install
-          yarn prod:build
+          yarn ci:build
 
       - name: Start server and wait
         run: |
-          yarn prod:start &
+          yarn ci:start &
           npx wait-on http://localhost:3000
 
       - name: Run Cypress tests
         uses: cypress-io/github-action@v6
         with:
-          command: yarn test:e2e:prod
+          command: yarn test:e2e:ci
 
       - name: Upload screenshots
         if: failure()
