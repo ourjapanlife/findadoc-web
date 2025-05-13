@@ -163,6 +163,8 @@ export default defineNuxtConfig({
         }
     },
     runtimeConfig: {
+        cypressTesting: process.env.NUXT_CYPRESS_TESTING,
+
         public: {
 
             GOOGLE_MAPS_API_KEY: process.env.GOOGLE_MAPS_API_KEY,

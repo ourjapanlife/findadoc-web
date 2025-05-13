@@ -26,8 +26,9 @@ export const initializeGqlClient = () => {
 export const graphQLClientRequestWithRetry = async <T>(
     gqlClientRequestFunction: (
         queryOrMutation: RequestDocument,
-        variables?: unknown
-    ) => Promise<T>,
+        variables?: unknown,
+        requestHeaders?: HeadersInit
+    ) => Promise<ServerResponse<T>>,
     queryOrMutation: RequestDocument,
     variables: unknown,
     retryOptions?: graphQLClientRequestWithRetryOptions
@@ -38,8 +39,30 @@ export const graphQLClientRequestWithRetry = async <T>(
 
     const executeGQLClientRequest = async (): Promise<ServerResponse<T>> => {
         try {
-            const data = await gqlClientRequestFunction(queryOrMutation, variables)
-            return { data, errors: [], hasErrors: false }
+            // get the auth0 token from the auth store
+            const authstore = useAuthStore()
+            const authToken = await authstore.getAuthBearerToken()
+            // Set the auth token in the request headers. This is used to authenticate the user with the API
+            const requestHeaders = {
+                authorization: authToken ? `Bearer ${authToken}` : ''
+            } satisfies HeadersInit
+
+            //Execute our actual HTTP request
+            const serverResponse = await gqlClientRequestFunction(queryOrMutation, variables, requestHeaders)
+
+            // Extract the first property from the response which contains our actual data.
+            // In Grahpql, the default response has the property name matching the endpoint name.
+            // Ex. facilities endpoint returns { data: { facilities: T }, errors: []} or { facilities: T }
+            const flattenedResponseData = serverResponse.data
+                ? Object.values(serverResponse.data as object)[0] as T
+                : serverResponse
+                    ? Object.values(serverResponse as object)[0] as T
+                    : {} as T
+
+            return { data: flattenedResponseData,
+                errors: serverResponse.errors ?? [],
+                hasErrors: serverResponse.hasErrors } satisfies ServerResponse<T>
+            // return serverResponse
         } catch (error) {
             if (attempts < retryAmount) {
                 attempts++
@@ -51,10 +74,10 @@ export const graphQLClientRequestWithRetry = async <T>(
 
             // This is a consistent error messaging no matter the type of query or mutation
             console.error(`There was an error executing the request: ${error}`)
-            const serverError = error as ServerErrorResponse
+            const serverErrorResponse = error as ServerErrorResponse
 
             // This map transforms errors if they exist
-            const errors = serverError.response?.errors?.map(errorResponse => ({
+            const errors = serverErrorResponse.response?.errors?.map(errorResponse => ({
                 message: errorResponse.message,
                 fieldWithError: errorResponse.locations,
                 code: errorResponse.extensions.code as ErrorCode

@@ -1,11 +1,16 @@
 import { defineStore } from 'pinia'
 import { ref, type Ref, reactive } from 'vue'
 import { gql } from 'graphql-request'
-import type { Maybe } from 'graphql/jsutils/Maybe'
-import type { DeleteResult, Facility,
+import type { DeleteResult,
+    Facility,
     HealthcareProfessional,
-    Mutation, MutationDeleteFacilityArgs, MutationUpdateFacilityArgs, Relationship,
-    MutationCreateFacilityArgs } from '~/typedefs/gqlTypes'
+    Mutation,
+    MutationDeleteFacilityArgs,
+    MutationUpdateFacilityArgs,
+    MutationCreateFacilityArgs,
+    Query,
+    Relationship,
+    Maybe } from '~/typedefs/gqlTypes'
 import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql'
 import type { ServerError, ServerResponse } from '~/typedefs/serverResponse'
 
@@ -149,9 +154,7 @@ export const useFacilitiesStore = defineStore(
         }
 
         async function updateFacility():
-        Promise<ServerResponse<Maybe<Facility>>> {
-            const serverResponse = { data: {} as Maybe<Facility>, errors: [] as ServerError[], hasErrors: false }
-
+        Promise<ServerResponse<Facility>> {
             const updateFacilityInput: MutationUpdateFacilityArgs = {
                 id: selectedFacilityId.value,
                 input: {
@@ -182,17 +185,13 @@ export const useFacilitiesStore = defineStore(
                 }
             }
 
-            const response = await graphQLClientRequestWithRetry<Mutation>(
+            const serverResponse = await graphQLClientRequestWithRetry<Mutation['updateFacility']>(
                 gqlClient.request.bind(gqlClient),
                 updateExistingFacilityGqlMutation,
                 updateFacilityInput
             )
 
-            serverResponse.data = response.data?.updateFacility
-            serverResponse.errors = response.errors ? response.errors : []
-            serverResponse.hasErrors = response.hasErrors
-
-            if (!serverResponse.errors.length) {
+            if (!serverResponse.errors?.length) {
                 // update the necessary values with the updated response
                 selectedFacilityData.value = serverResponse.data!
                 initializeFacilitySectionValues(serverResponse.data!)
@@ -228,18 +227,12 @@ export const useFacilitiesStore = defineStore(
         }
 
         async function deleteFacility(facilityId: MutationDeleteFacilityArgs):
-        Promise<ServerResponse<Maybe<DeleteResult>>> {
-            const serverResponse = { data: {} as Maybe<DeleteResult>, errors: [] as ServerError[], hasErrors: false }
-
-            const response = await graphQLClientRequestWithRetry<Mutation>(
+        Promise<ServerResponse<DeleteResult>> {
+            const serverResponse = await graphQLClientRequestWithRetry<Mutation['deleteFacility']>(
                 gqlClient.request.bind(gqlClient),
                 deleteExistingFacilityGqlMutation,
                 facilityId
             )
-
-            serverResponse.data = response.data?.deleteFacility
-            serverResponse.errors = response.errors ? response.errors : []
-            serverResponse.hasErrors = response.hasErrors
 
             return serverResponse
         }
@@ -262,15 +255,20 @@ export const useFacilitiesStore = defineStore(
     }
 )
 
-async function queryFacilities() {
+async function queryFacilities(): Promise<Facility[]> {
     const searchFacilitiesData = {
         filters: {
             limit: 400
         }
     }
     try {
-        const response = await gqlClient.request<{ facilities: Facility[] }>(getAllFacilitiesForModeration, searchFacilitiesData)
-        return response?.facilities ?? []
+        const response = await graphQLClientRequestWithRetry<Query['facilities']>(
+            gqlClient.request.bind(gqlClient),
+            getAllFacilitiesForModeration,
+            searchFacilitiesData
+        )
+
+        return response.data ?? []
     } catch (error) {
         console.error(`Error querying the facilities: ${JSON.stringify(error)}`)
         return []
