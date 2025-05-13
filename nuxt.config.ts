@@ -163,8 +163,6 @@ export default defineNuxtConfig({
         }
     },
     runtimeConfig: {
-        authTokenSecret: process.env.NUXT_AUTH_TOKEN_SECRET,
-
         cypressTesting: process.env.NUXT_CYPRESS_TESTING,
 
         public: {
