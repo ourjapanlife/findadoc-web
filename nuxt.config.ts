@@ -163,7 +163,7 @@ export default defineNuxtConfig({
         }
     },
     runtimeConfig: {
-        cypressTesting: process.env.NUXT_CYPRESS_TESTING,
+        isTestingMode: process.env.NUXT_IS_TESTING_MODE,
 
         public: {
 
