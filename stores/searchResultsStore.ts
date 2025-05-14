@@ -9,7 +9,8 @@ import type { Locale,
     Facility,
     FacilitySearchFilters,
     HealthcareProfessional,
-    HealthcareProfessionalSearchFilters } from '~/typedefs/gqlTypes.js'
+    HealthcareProfessionalSearchFilters,
+    Query } from '~/typedefs/gqlTypes.js'
 
 type SearchResult = {
     professional: HealthcareProfessional
@@ -92,11 +93,13 @@ async function queryProfessionals(searchSpecialty?: Specialty, searchLanguage?: 
             } satisfies HealthcareProfessionalSearchFilters
         }
 
-        const response = await gqlClient.request<{ healthcareProfessionals: HealthcareProfessional[] }>(
-            searchProfessionalsQuery, searchProfessionalsData
+        const serverResponse = await graphQLClientRequestWithRetry<Query['healthcareProfessionals']>(
+            gqlClient.request.bind(gqlClient),
+            searchProfessionalsQuery,
+            searchProfessionalsData
         )
 
-        const professionalsSearchResult = (response?.healthcareProfessionals ?? []) as HealthcareProfessional[]
+        const professionalsSearchResult = serverResponse?.data ?? []
         return professionalsSearchResult
     } catch (error) {
         console.error(`Error getting professionals: ${JSON.stringify(error)}`)
@@ -124,8 +127,13 @@ async function queryFacilities(healthcareProfessionalIds: string[], searchCity?:
             } satisfies FacilitySearchFilters
         }
 
-        const response = await gqlClient.request<{ facilities: Facility[] }>(searchFacilitiesQuery, searchFacilitiesData)
-        const facilitiesSearchResults = (response?.facilities ?? []) as Facility[]
+        const serverResponse = await graphQLClientRequestWithRetry<Query['facilities']>(
+            gqlClient.request.bind(gqlClient),
+            searchFacilitiesQuery,
+            searchFacilitiesData
+        )
+
+        const facilitiesSearchResults = serverResponse?.data ?? []
 
         //filter the search results by location if a location is selected
         const locationFilteredSearchResults = searchCity
