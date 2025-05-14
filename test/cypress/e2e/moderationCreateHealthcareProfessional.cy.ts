@@ -27,7 +27,7 @@ describe('Moderation create healthcare professional button', () => {
 describe('Moderation create healthcare professional form', () => {
     context('Landscape mode', () => {
         beforeEach(() => {
-            cy.intercept('POST', '**', req => {
+            cy.intercept('POST', '**/', req => {
                 if (req.body.operationName === 'HealthcareProfessionalSearchFilters') {
                     aliasQuery(req, 'HealthcareProfessionalSearchFilters', fakeHealthcareProfessionalResult)
                 }
