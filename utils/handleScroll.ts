@@ -1,86 +1,65 @@
-import { ref, type Ref } from 'vue'
+import { type Ref, nextTick } from 'vue'
 
 export interface SectionInformation {
     sectionTitle: string
     sectionElementIdToScrollTo: string
 }
 
-export const handleScroll
-= (sectionDetailsObject: SectionInformation[], isScrolling: Ref<boolean> = ref(false), activeSection: Ref<string> = ref('')) => {
-    if (isScrolling.value) return
-    let newActiveSection: string | null = null
-    sectionDetailsObject.forEach(section => {
-        let rect = null
-        const foundSectionById = document.getElementById(section.sectionElementIdToScrollTo)
-        if (!foundSectionById) {
-            return
-        }
-        rect = foundSectionById.getBoundingClientRect()
+let lastSetTimeout: number
 
-        const sectionId = section.sectionElementIdToScrollTo
-
-        if (rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2) {
-            newActiveSection = sectionId
-        }
-    })
-
-    if (newActiveSection) {
-        activeSection.value = newActiveSection
-    }
-}
-
-export const scrollToSectionOfForm
-= (sectionId: string, activeSection: Ref<string> = ref('')) => {
-    document.getElementById(sectionId)?.scrollIntoView({
-        behavior: 'smooth'
-    })
+export const scrollToSectionOfForm = (
+    sectionId: string,
+    activeSection: Ref<string>
+) => {
+    document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' })
     activeSection.value = sectionId
 }
 
 export const observeFormSections = async (
     sectionsInfo: SectionInformation[],
-    isScrolling: Ref<boolean> = ref(false),
-    activeSection: Ref<string> = ref(''),
-    thresholdValue: number = 0.70
+    isScrolling: Ref<boolean>,
+    activeSection: Ref<string>
 ) => {
-    // Map the sectionInfo objects given to DOM elements and filter out any null elements
     await nextTick()
-    const sections: Element[]
-    = sectionsInfo.map(info => document.getElementById(info.sectionElementIdToScrollTo)!).filter(element => element !== null)
 
-    const sectionsObserver = new IntersectionObserver(
-        (entries: IntersectionObserverEntry[]) => {
-            let currentSection: string | null = null
+    setTimeout(() => {
+        sectionsInfo.forEach(info => {
+            const sectionElement = document.getElementById(info.sectionElementIdToScrollTo)
+            if (!sectionElement) return
 
-            //This will go through each entry in order to set the current section to the ID of the intersecting section
-            entries.forEach((entry: IntersectionObserverEntry) => {
-                /*  This returns early if the entry is not intersecting or if the intersection ratio is below the
-                threshold we give as a parameter */
-                if (!entry.isIntersecting || entry.intersectionRatio < thresholdValue) {
-                    return
+            const sectionHeight = sectionElement.getBoundingClientRect().height
+            const viewportHeight = window.innerHeight
+
+            // Threshold: lower for short sections, higher for taller ones
+            const threshold = Math.min(0.6, sectionHeight < 300
+                ? 0.1
+                : sectionHeight / viewportHeight)
+
+            // Less aggressive margin to allow first and last sections to trigger
+            const rootMargin = '0px 0px -30% 0px'
+
+            const observer = new IntersectionObserver(
+                entries => {
+                    const visibleEntries = entries
+                        .filter(entry => entry.isIntersecting)
+                        .sort((a, b) => b.intersectionRatio - a.intersectionRatio)
+
+                    if (!visibleEntries.length || isScrolling.value) return
+
+                    const mostVisible = visibleEntries[0]
+
+                    // Debounced update to avoid flickering
+                    clearTimeout(lastSetTimeout)
+                    lastSetTimeout = window.setTimeout(() => {
+                        activeSection.value = mostVisible.target.id
+                    }, 50)
+                },
+                {
+                    threshold,
+                    rootMargin
                 }
-
-                const sectionId = entry.target.id
-
-                // This returns early here so it waits until the page stops scrolling from the possible click event
-                if (isScrolling.value) {
-                    return
-                }
-
-                currentSection = sectionId
-            })
-
-            //This will update the current section in order to update the active section. This could be used for CSS applications
-            if (currentSection) {
-                activeSection.value = currentSection
-            }
-        },
-
-        { threshold: thresholdValue }
-    )
-
-    // Observe each section in the sections array found from the SectionInfo param
-    sections.forEach(section => {
-        sectionsObserver.observe(section)
-    })
+            )
+            observer.observe(sectionElement)
+        })
+    }, 200)
 }
