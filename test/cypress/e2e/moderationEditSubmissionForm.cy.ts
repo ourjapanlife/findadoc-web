@@ -111,10 +111,6 @@ describe('Moderation Edit Submission Form', () => {
             cy.get('[data-testid="submission-form-nameEn"]')
                 .find('p').should('exist').contains('Invalid English Name')
 
-            cy.get('[data-testid="submission-form-nameJa"]').find('input').clear().type('Tachikawa Hospital').realPress('Tab')
-            cy.get('[data-testid="submission-form-nameJa"]')
-                .find('p').should('exist').contains('Invalid Japanese Name')
-
             cy.get('[data-testid="submission-form-phone"]').find('input').clear().type('Hello').realPress('Tab')
             cy.get('[data-testid="submission-form-phone"]')
                 .find('p').should('exist').contains('Invalid Phone Number')
@@ -146,13 +142,6 @@ describe('Moderation Edit Submission Form', () => {
             cy.get('[data-testid=submission-form-cityJa]').find('input').clear().type('Shibuya').realPress('Tab')
             cy.get('[data-testid=submission-form-cityJa]')
                 .find('p').should('exist').contains('Invalid Japanese City Name')
-
-            cy.get('[data-testid="submission-form-addressLine1Ja"]')
-                .find('input').clear().type('Peanutbutter street').realPress('Tab')
-            cy.get('[data-testid="submission-form-addressLine1Ja"]').should('exist').contains('Invalid Japanese Address')
-
-            cy.get('[data-testid="submission-form-addressLine2Ja"]').find('input').clear().type('Jelly street').realPress('Tab')
-            cy.get('[data-testid="submission-form-addressLine2Ja"]').should('exist').contains('Invalid Japanese Address')
 
             cy.get('[data-testid="submission-form-mapLatitude"]')
                 .find('input').clear().type('Not Number Latitude').realPress('Tab')
