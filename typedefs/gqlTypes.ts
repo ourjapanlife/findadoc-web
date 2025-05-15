@@ -435,6 +435,7 @@ export enum SchemaVersion {
 export enum Specialty {
   AllergyAndImmunology = 'ALLERGY_AND_IMMUNOLOGY',
   Anesthesiology = 'ANESTHESIOLOGY',
+  Dentistry = 'DENTISTRY',
   Dermatology = 'DERMATOLOGY',
   DiagnosticRadiology = 'DIAGNOSTIC_RADIOLOGY',
   EmergencyMedicine = 'EMERGENCY_MEDICINE',

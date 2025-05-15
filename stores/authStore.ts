@@ -19,7 +19,7 @@ export const useAuthStore = defineStore('authStore', () => {
                     }
                     return false
                 } catch (err) {
-                    if (checkForTestingEnvironment.testingEnvironment) console.error('Failed to fetch auth secret', err)
+                    if (!checkForTestingEnvironment.testingEnvironment) console.error('Failed to fetch auth secret', err)
                     throw err
                 }
             })()
