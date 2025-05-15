@@ -1,17 +1,17 @@
 <template>
-    <div class="h-full overflow-hidden">
+    <div class="h-full overflow-y-auto">
         <div v-if="moderationScreenStore.dashboardScreenIsActive()">
             <ModSubmissionListContainer />
         </div>
         <div
             v-if="moderationScreenStore.editSubmissionScreenIsActive()"
-            class="h-full overflow-hidden"
+            class="h-full overflow-y-auto"
         >
             <ModEditSubmissionForm />
         </div>
         <div
             v-if="moderationScreenStore.editFacilityScreenIsActive()"
-            class="h-full overflow-hidden"
+            class="h-full overflow-y-auto"
         >
             <form class="p-4 h-full overflow-y-auto">
                 <ModEditFacilitySection />
@@ -19,7 +19,7 @@
         </div>
         <div
             v-if="moderationScreenStore.editHealthcareProfessionalScreenIsActive()"
-            class="h-full overflow-hidden"
+            class="h-full overflow-y-auto"
         >
             <form
                 class="p-4 h-full overflow-y-auto"
@@ -29,7 +29,7 @@
         </div>
         <div
             v-if="moderationScreenStore.createHealthcareProfessionalScreenIsActive()"
-            class="h-full overflow-hidden"
+            class="h-full overflow-y-auto"
         >
             <form
                 class="p-4 h-full overflow-y-auto"
