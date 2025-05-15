@@ -74,6 +74,8 @@ const router = useRouter()
 const doesTheUserHaveAccess: Ref<boolean> = ref(true)
 
 const checkIfUserIsLoggedIn = async () => {
+    // init the auth to see if we are in dev/testing mode or prod
+    await authStore.init()
     // This promise is here to make the Suspense component work.
     // It doesn't do anything, but <Suspense> requires an awaited setup method
     await new Promise(resolve => {

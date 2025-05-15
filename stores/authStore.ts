@@ -36,7 +36,6 @@ export const useAuthStore = defineStore('authStore', () => {
             isReady.value = true
         }
     }
-    init()
 
     const userId = computed(() => {
         if (!isReady.value) return undefined
@@ -135,5 +134,5 @@ export const useAuthStore = defineStore('authStore', () => {
         }
     }
 
-    return { userId, isLoggedIn, isLoadingAuth, isAdmin, isModerator, login, logout, getAuthBearerToken }
+    return { userId, isLoggedIn, isLoadingAuth, isAdmin, isModerator, login, logout, getAuthBearerToken, init }
 })

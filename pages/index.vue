@@ -21,9 +21,13 @@
 
 <script setup lang="ts">
 import { useScreenOrientation } from '~/utils/useScreenOrientation'
-import { useModalStore } from '~/stores/modalStore'
+import { useAuthStore } from '#imports'
 
-useModalStore()
+const authStore = useAuthStore()
 
 const { isPortrait } = useScreenOrientation()
+
+onMounted(async () => {
+    await authStore.init()
+})
 </script>
