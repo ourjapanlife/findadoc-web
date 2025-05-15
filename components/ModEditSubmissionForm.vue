@@ -259,7 +259,7 @@
                 type="url"
                 :placeholder="$t('modSubmissionForm.placeholderTextFacilityGoogleMapsUrl')"
                 :required="true"
-                :input-validation-check="validateWebsite"
+                :input-validation-check="validateGoogleMapsUrlInput"
                 :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityGoogleMapsUrl')"
                 :autofill-value="submissionFormFields.googlemapsURL"
             />
