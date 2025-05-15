@@ -168,7 +168,8 @@ async function querySubmissions(): Promise<Submission[]> {
     try {
         const submissionsFilters = {
             filters: {
-                id: undefined
+                id: undefined,
+                limit: 100
             }
         }
 
