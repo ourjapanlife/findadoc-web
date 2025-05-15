@@ -43,7 +43,7 @@
                     </option>
                     <option>{{ placeHolderTextDisplay }}</option>
                     <option
-                        v-for="(cityDetails) in citySearchBarDisplayText"
+                        v-for="(cityDetails) in locationDropdownOptions"
                         :key="cityDetails.cityDisplayText"
                         :value="cityDetails.cityDisplayText"
                     >
@@ -100,7 +100,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watchEffect, type Ref, onMounted } from 'vue'
+import { ref, type Ref, onMounted } from 'vue'
 import SVGSearchIcon from '~/assets/icons/search-icon.svg'
 import { useSearchResultsStore } from '~/stores/searchResultsStore.js'
 import { useLocationsStore } from '~/stores/locationsStore.js'
@@ -116,7 +116,8 @@ const specialtiesStore = useSpecialtiesStore()
 const languageOptions = localeStore.localeDisplayOptions
 const languageOptionsWithPlaceHolder = setSearchBarLanguageDropdownOptions()
 
-const locationDropdownOptions: Ref<string[]> = ref(locationsStore.citiesDisplayOptions)
+const locationDropdownOptions: ComputedRef<CityDisplayItems> = computed(() =>
+    createLocationDropdownOptions(locationsStore.citiesDisplayOptions))
 const specialtyDropdownOptions: Ref<SpecialtyDisplayOption[]> = ref(specialtiesStore.specialtyDisplayOptions)
 const languageDropdownOptions: Ref<LocaleDisplay[]> = ref(languageOptionsWithPlaceHolder)
 
@@ -147,10 +148,8 @@ interface CityDisplayItems {
         cityOccurrenceCount: number
     }
 }
-function createCityDisplayText() {
+function createLocationDropdownOptions(cities: string[]) {
     const cityDisplayTextObject: CityDisplayItems = {}
-
-    const cities = locationsStore.citiesDisplayOptions
 
     cities.forEach(city => {
         if (city === placeHolderTextDisplay) {
@@ -168,12 +167,6 @@ function createCityDisplayText() {
 
     return cityDisplayTextObject
 }
-
-const citySearchBarDisplayText: CityDisplayItems = createCityDisplayText()
-
-watchEffect(() => {
-    locationDropdownOptions.value = locationsStore.citiesDisplayOptions
-})
 
 async function search() {
     const blankRemovedLocation = selectedLocation.value == '----Any----' ? '' : selectedLocation.value
