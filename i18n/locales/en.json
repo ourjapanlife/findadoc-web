@@ -402,5 +402,12 @@
         "rejectSubmissionConfirmationMessage": "Are you sure you want to reject this submission?",
         "rejectSubmissionConfirmationButton": "Yes, reject the submission",
         "updateButtonText": "Update"
+    },
+    "modDashboardHealthcareProfessionalCard": {
+        "spokenLanguages": "Spoken Languages",
+        "lastName": "Last Name",
+        "firstName": "First Name",
+        "middleName": "Middle Name",
+        "nameLocale": "Name locale"
     }
 }
