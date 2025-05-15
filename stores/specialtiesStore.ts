@@ -12,6 +12,7 @@ const specialtyDisplayOptions = [
     { code: '', displayText: '----Any----' },
     { code: 'ALLERGY_AND_IMMUNOLOGY', displayText: 'Allergy and Immunology' },
     { code: 'ANESTHESIOLOGY', displayText: 'Anesthesiology' },
+    { code: 'DENTISTRY', displayText: 'Dentistry' },
     { code: 'DERMATOLOGY', displayText: 'Dermatology' },
     { code: 'DIAGNOSTIC_RADIOLOGY', displayText: 'Diagnostic Radiology' },
     { code: 'EMERGENCY_MEDICINE', displayText: 'Emergency Medicine' },
