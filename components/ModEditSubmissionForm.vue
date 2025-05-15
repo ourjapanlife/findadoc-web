@@ -61,6 +61,12 @@
             :id="ModSubmissionLeftNavbarSectionIDs.ContactInformation"
             class="submission-form-section"
         >
+            <button
+                type="button"
+                class="bg-primary p-4 rounded-full my-8 font-semibold text-xl text-white"
+            >
+                Autofill
+            </button>
             <h1
                 class="mb-3.5 text-start text-primary-text text-3xl font-bold font-sans leading-normal"
             >
