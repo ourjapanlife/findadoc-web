@@ -116,7 +116,7 @@ export const useHealthcareProfessionalsStore = defineStore(
 
             const responseData = serverResponse.data
 
-            if (!serverResponse.errors.length && serverResponse.data) {
+            if (!serverResponse.errors?.length && serverResponse.data) {
                 //This finds the index of the healthcare professional so we can replace the ones we have already queried
                 const outdatedHealthcareProfessionalIndex = healthcareProfessionalsData.value.findIndex(
                     (healthcareProfessional: HealthcareProfessional) => healthcareProfessional.id === responseData!.id
