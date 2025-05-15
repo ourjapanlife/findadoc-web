@@ -43,7 +43,7 @@
                     </option>
                     <option>{{ placeHolderTextDisplay }}</option>
                     <option
-                        v-for="(cityDetails) in citySearchBarDisplayText"
+                        v-for="(cityDetails) in locationDropdownOptions"
                         :key="cityDetails.cityDisplayText"
                         :value="cityDetails.cityDisplayText"
                     >
@@ -100,7 +100,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watchEffect, type Ref } from 'vue'
+import { ref, type Ref, onMounted } from 'vue'
 import SVGSearchIcon from '~/assets/icons/search-icon.svg'
 import { useSearchResultsStore } from '~/stores/searchResultsStore.js'
 import { useLocationsStore } from '~/stores/locationsStore.js'
@@ -113,12 +113,11 @@ const locationsStore = useLocationsStore()
 const searchResultsStore = useSearchResultsStore()
 const specialtiesStore = useSpecialtiesStore()
 
-await locationsStore.fetchLocations()
-
 const languageOptions = localeStore.localeDisplayOptions
 const languageOptionsWithPlaceHolder = setSearchBarLanguageDropdownOptions()
 
-const locationDropdownOptions: Ref<string[]> = ref(locationsStore.citiesDisplayOptions)
+const locationDropdownOptions: ComputedRef<CityDisplayItems> = computed(() =>
+    createLocationDropdownOptions(locationsStore.citiesDisplayOptions))
 const specialtyDropdownOptions: Ref<SpecialtyDisplayOption[]> = ref(specialtiesStore.specialtyDisplayOptions)
 const languageDropdownOptions: Ref<LocaleDisplay[]> = ref(languageOptionsWithPlaceHolder)
 
@@ -127,6 +126,11 @@ const selectedLocation: Ref<string> = ref('')
 const selectedLanguage: Ref<Locale | string> = ref('')
 
 const placeHolderTextDisplay = '----Any----'
+
+onMounted(async () => {
+    // Initialize locations when component is mounted. The dropdown options are reactive, so they will update automatically
+    await locationsStore.fetchLocations()
+})
 
 function setSearchBarLanguageDropdownOptions() {
     // This will remove any codes code that is falsy
@@ -144,10 +148,8 @@ interface CityDisplayItems {
         cityOccurrenceCount: number
     }
 }
-function createCityDisplayText() {
+function createLocationDropdownOptions(cities: string[]) {
     const cityDisplayTextObject: CityDisplayItems = {}
-
-    const cities = locationsStore.citiesDisplayOptions
 
     cities.forEach(city => {
         if (city === placeHolderTextDisplay) {
@@ -165,12 +167,6 @@ function createCityDisplayText() {
 
     return cityDisplayTextObject
 }
-
-const citySearchBarDisplayText: CityDisplayItems = createCityDisplayText()
-
-watchEffect(() => {
-    locationDropdownOptions.value = locationsStore.citiesDisplayOptions
-})
 
 async function search() {
     const blankRemovedLocation = selectedLocation.value == '----Any----' ? '' : selectedLocation.value
