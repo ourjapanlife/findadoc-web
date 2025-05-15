@@ -4,7 +4,7 @@ import { ref, type Ref } from 'vue'
 import { gqlClient } from '../utils/graphql.js'
 import { useLoadingStore } from './loadingStore.js'
 import { useLocaleStore } from './localeStore.js'
-import { Locale, type Facility, type FacilitySearchFilters } from '~/typedefs/gqlTypes.js'
+import { Locale, type Facility, type FacilitySearchFilters, type Query } from '~/typedefs/gqlTypes.js'
 
 export const useLocationsStore = defineStore('locationsStore', () => {
     const citiesDisplayOptions: Ref<string[]> = ref([])
@@ -51,8 +51,13 @@ async function queryFacilities(): Promise<Facility[]> {
             } satisfies FacilitySearchFilters
         }
 
-        const result = await gqlClient.request<{ facilities: Facility[] }>(searchFacilitiesQuery, searchFacilitiesData)
-        return result?.facilities ?? []
+        const result = await graphQLClientRequestWithRetry<Query['facilities']>(
+            gqlClient.request.bind(gqlClient),
+            searchFacilitiesQuery,
+            searchFacilitiesData
+        )
+
+        return result.data ?? []
     } catch (error) {
         console.error(`Error getting facilities for dropdown: ${JSON.stringify(error)}`)
         // eslint-disable-next-line no-alert
