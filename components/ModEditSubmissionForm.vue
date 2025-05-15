@@ -1083,9 +1083,9 @@ const rejectSubmission = async () => {
     handleNavigateToModerationScreen()
 }
 
-watch(moderationSubmissionStore, newValue => {
+watch(() => moderationSubmissionStore.updatingSubmissionFromTopBar, newValue => {
     //saves the submission by updating it and then going to the main
-    if (newValue.updatingSubmissionFromTopBar) {
+    if (newValue) {
         submitUpdatedSubmission(syntheticEvent)
     }
 })
