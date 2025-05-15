@@ -1072,6 +1072,7 @@ const syntheticEvent = new Event('submit', { bubbles: false, cancelable: true })
 const resetModalRefs = async () => {
     moderationSubmissionStore.setShowRejectSubmissionConfirmation(false)
     moderationSubmissionStore.setApprovingSubmissionFromTopBar(false)
+    moderationSubmissionStore.setUpdatingSubmissionFromTopBar(false)
     formHasUnsavedChanges.value = false
 }
 
