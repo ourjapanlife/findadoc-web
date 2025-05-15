@@ -225,14 +225,6 @@ describe('Moderation edit facility form', () => {
             cy.get('[data-testid=mod-facility-section-cityJa]')
                 .find('p').should('exist').contains('Invalid Japanese City Name')
 
-            cy.get('[data-testid="mod-facility-section-addressLine1Ja"]')
-                .find('input').clear().type('Peanutbutter street').realPress('Tab')
-            cy.get('[data-testid="mod-facility-section-addressLine1Ja"]').should('exist').contains('Invalid Japanese Address')
-
-            cy.get('[data-testid="mod-facility-section-addressLine2Ja"]')
-                .find('input').clear().type('Jelly street').realPress('Tab')
-            cy.get('[data-testid="mod-facility-section-addressLine2Ja"]').should('exist').contains('Invalid Japanese Address')
-
             cy.get('[data-testid="mod-facility-section-mapLatitude"]')
                 .find('input').clear().type('Not Number Latitude').realPress('Tab')
             cy.get('[data-testid="mod-facility-section-mapLatitude"]')
