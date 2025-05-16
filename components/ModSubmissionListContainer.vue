@@ -109,7 +109,6 @@
 
 <script setup lang="ts">
 import { computed, onMounted } from 'vue'
-import { ModerationScreen, useModerationScreenStore } from '~/stores/moderationScreenStore'
 import { SelectedModerationListView, useModerationSubmissionsStore } from '~/stores/moderationSubmissionsStore'
 import { useHealthcareProfessionalsStore } from '~/stores/healthcareProfessionalsStore'
 import { useFacilitiesStore } from '~/stores/facilitiesStore'
@@ -117,7 +116,6 @@ import { useFacilitiesStore } from '~/stores/facilitiesStore'
 const modSubmissionsListStore = useModerationSubmissionsStore()
 const healthcareProfessionalsStore = useHealthcareProfessionalsStore()
 const facilitiesStore = useFacilitiesStore()
-const moderationScreenStore = useModerationScreenStore()
 
 onMounted(async () => {
     await modSubmissionsListStore.getSubmissions()
@@ -141,6 +139,5 @@ const submissionListItemTableColumns = computed(() => {
 
 const handleClickToSubmissionForm = (id: string) => {
     modSubmissionsListStore.selectedSubmissionId = id
-    moderationScreenStore.setActiveScreen(ModerationScreen.EditSubmission)
 }
 </script>
