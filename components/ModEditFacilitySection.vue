@@ -1,5 +1,5 @@
 <template>
-    <Loader />
+    <Loader v-if="moderationScreenStore.editFacilityScreenIsActive()" />
     <div v-if="isFacilitySectionInitialized">
         <div
             class="mod-facility-section"
@@ -303,7 +303,6 @@ let toast: ToastInterface
 const route = useRoute()
 const { t } = useI18n()
 const loadingStore = useLoadingStore()
-loadingStore.setIsLoading(true)
 const moderationScreenStore = useModerationScreenStore()
 const facilityStore = useFacilitiesStore()
 const healthcareProfessionalsStore = useHealthcareProfessionalsStore()
@@ -368,6 +367,11 @@ const listPrefectureJapanJa: Ref<string[]> = ref([
     '兵庫県', '奈良県', '和歌山県', '鳥取県', '島根県', '岡山県', '広島県', '山口県', '徳島県', '香川県', '愛媛県',
     '高知県', '福岡県', '佐賀県', '長崎県', '熊本県', '大分県', '宮崎県', '鹿児島県', '沖縄県'])
 onBeforeMount(async () => {
+    if (!moderationScreenStore.editFacilityScreenIsActive()) {
+        isFacilitySectionInitialized.value = true
+        return
+    }
+
     isFacilitySectionInitialized.value = false
     /**
     Set the variable to useToast when the before the component mounts
@@ -376,6 +380,8 @@ onBeforeMount(async () => {
      */
     toast = useToast()
     // Wait for the route to be fully resolved
+
+    loadingStore.setIsLoading(true)
     await nextTick()
     // Ensure the route param `id` is available before proceeding
     const id = route.params.id
@@ -393,7 +399,7 @@ onBeforeMount(async () => {
         await healthcareProfessionalsStore.getHealthcareProfessionals()
     }
     facilityStore.selectedFacilityId = id as string
-    // Set the active screen and ensure the UI state is consistent
+
     facilityStore.setSelectedFacilityData(facilityStore.selectedFacilityId)
     facilityStore.initializeFacilitySectionValues(facilityStore.selectedFacilityData)
     // Ensure UI updates are reflected with the autofill values
