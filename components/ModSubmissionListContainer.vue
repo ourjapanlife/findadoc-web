@@ -21,7 +21,7 @@
             class="grid grid-cols-subgrid col-span-4"
         >
             <div
-                v-for="(submission, index) in modSubmissionsListStore.filteredSubmissionDataForListComponent"
+                v-for="(submission, index) in paginatedSubmissions"
                 :key="index"
                 class="grid grid-cols-subgrid col-span-4 bg-tertiary-bg"
             >
@@ -43,6 +43,12 @@
                     </NuxtLink>
                 </div>
             </div>
+            <ModPagination
+                :current-page="currentPage"
+                :total-items="totalSubmissions"
+                :items-per-page="itemsPerPage"
+                @update:current-page="val => currentPage = val"
+            />
         </div>
         <div
             v-else-if="hasFacilities
@@ -108,16 +114,20 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted } from 'vue'
+import { computed, onMounted, ref, type Ref } from 'vue'
 import { ModerationScreen, useModerationScreenStore } from '~/stores/moderationScreenStore'
 import { SelectedModerationListView, useModerationSubmissionsStore } from '~/stores/moderationSubmissionsStore'
 import { useHealthcareProfessionalsStore } from '~/stores/healthcareProfessionalsStore'
 import { useFacilitiesStore } from '~/stores/facilitiesStore'
+import ModPagination from '~/components/ModPagination.vue'
 
 const modSubmissionsListStore = useModerationSubmissionsStore()
 const healthcareProfessionalsStore = useHealthcareProfessionalsStore()
 const facilitiesStore = useFacilitiesStore()
 const moderationScreenStore = useModerationScreenStore()
+
+const currentPage: Ref<number> = ref(1)
+const itemsPerPage = 20
 
 onMounted(async () => {
     await modSubmissionsListStore.getSubmissions()
@@ -143,4 +153,13 @@ const handleClickToSubmissionForm = (id: string) => {
     modSubmissionsListStore.selectedSubmissionId = id
     moderationScreenStore.setActiveScreen(ModerationScreen.EditSubmission)
 }
+
+const paginatedSubmissions = computed(() => {
+    const start = (currentPage.value - 1) * itemsPerPage
+    const end = start + itemsPerPage
+    return modSubmissionsListStore.filteredSubmissionDataForListComponent.slice(start, end)
+})
+
+const totalSubmissions = computed(() =>
+    modSubmissionsListStore.filteredSubmissionDataForListComponent.length)
 </script>
