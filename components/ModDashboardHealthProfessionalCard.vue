@@ -195,11 +195,13 @@ const localeStore = useLocaleStore()
 const facilitiesStore = useFacilitiesStore()
 const moderationScreenStore = useModerationScreenStore()
 const healthcareProfessionalsStore = useHealthcareProfessionalsStore()
+
 // This checks whether an existing healthcare professional has been added for removal
 const isHealthcareProfessionalReadyForRemoval = (id: string = '0') =>
     facilitiesStore.facilitySectionFields.healthProfessionalsRelations
         .find(healthcareProfessionalRelation => healthcareProfessionalRelation.otherEntityId === id
           && healthcareProfessionalRelation.action === RelationshipAction.Delete)
+
 const removeHealthcareProfessional = (id: string = '0') => {
     if (props.healthcareProfessionalsRelatedToFacility && props.healthcareProfessionalsRelatedToFacility.includes(id)) {
         facilitiesStore.facilitySectionFields.healthProfessionalsRelations
@@ -223,10 +225,12 @@ const undoRemovalOfHealthcareProfessional = (id: string = '0') => {
 const setChangeToEditable = () => {
     if (props.setIsEditableFunction) props.setIsEditableFunction(true)
 }
+
 // This changes the component to not editable and does not save the changes
 const setToUneditable = () => {
     if (props.setIsEditableFunction) props.setIsEditableFunction(false)
 }
+
 const props = withDefaults(defineProps<{
     // The healthcare professional is not created yet if modEditSubmissionForm
     healthcareProfessional?: HealthcareProfessional
@@ -244,6 +248,7 @@ const props = withDefaults(defineProps<{
                            {
                                showTrashCan: true // This defaults the trash can to being true
                            })
+
 const isEditOrCreateHealthcareProfessional = computed(() => moderationScreenStore.editHealthcareProfessionalScreenIsActive()
   || moderationScreenStore.createHealthcareProfessionalScreenIsActive())
 const isEditOrCreateFacility = computed(() => moderationScreenStore.editFacilityScreenIsActive()
