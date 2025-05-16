@@ -7,7 +7,9 @@
             v-if="moderationScreenStore.editSubmissionScreenIsActive()"
             class="h-full overflow-y-auto"
         >
-            <ModEditSubmissionForm />
+            <form class="p-4 h-full overflow-y-auto">
+                <ModEditSubmissionForm />
+            </form>
         </div>
         <div
             v-if="moderationScreenStore.createFacilityScreenIsActive()"
