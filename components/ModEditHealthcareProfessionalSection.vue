@@ -244,9 +244,10 @@
                     :id="ModHealthcareProfessionalsLeftNavbarSections.HealthcareProfessionalFacilities"
                     class="mod-healthcare-professional-section
                  my-3.5 text-start text-primary-text text-2xl font-bold font-sans leading-normal"
-                >
-                    {{ $t("modHealthcareProfessionalSection.facilities") }}
-                </h2>
+            >
+                {{ $t("modHealthcareProfessionalSection.facilities") }}
+            </h2>
+            <div v-if="moderationScreenStore.editHealthcareProfessionalScreenIsActive()">
                 <ModSearchbar
                     v-model="selectedFacilities"
                     :place-holder-text="$t('modHealthcareProfessionalSection.placeholderTextFacilitySearchBar')"
