@@ -246,7 +246,9 @@
     "noSpecialtiesWereFound": "No specialties were found",
     "noInsurancesWereFound": "No insurance was found",
     "noDegreesWereFound": "No degrees were found",
-    "noLocalesWereFound": "No locales were found"
+    "noLocalesWereFound": "No locales were found",
+    "searchExistingFacilities": "Search for existing facility",
+    "searchExistingHealthcareProfessionals": "Search for existing healthcare professionals"
   },
   "login": {
     "heading": "Log in to your account",
@@ -403,7 +405,8 @@
     "missingLocale": "No Locale Chosen",
     "oneNameNecessary": "At least one name is required for a healthcare professional",
     "save": "Save",
-    "update": "Update"
+    "update": "Update",
+    "charactersOfLanguageDoNotMatchNameLocale": "The characters of the healthcare professional's name are invalid in chosen locale"
   },
   "modHealthcareProfessionalCard": {
     "editName": "Edit",
