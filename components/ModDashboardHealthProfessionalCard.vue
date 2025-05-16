@@ -16,7 +16,7 @@
                     />
                 </div>
                 <div
-                    v-if="healthcareProfessionalsRelatedToFacility"
+                    v-if="healthcareProfessionalsRelatedToFacility && healthcareProfessional"
                     class="min-w-44"
                 >
                     <div class="flex flex-col h-full w-64 pl-1 mb-1">
@@ -84,7 +84,7 @@
                     </div>
                     <span
                         id="healthcare-professional-name-locale"
-                        class="w-24 px-2 py-[1px] mr-1 mb-1 bg-primary-text-muted text-nowrap rounded-full
+                        class="w-24 px-2 py-[1px] mr-1 mb-1 bg-primary-text-muted/40 text-nowrap rounded-full
                     text-sm text-center"
                         data-testid="healthcare-professional-name-card-locale"
                     >
@@ -93,14 +93,14 @@
                     </span>
                 </div>
                 <div
-                    v-if="!isHealthcareProfessionalReadyForRemoval(healthcareProfessional.id)
+                    v-if="healthcareProfessional && !isHealthcareProfessionalReadyForRemoval(healthcareProfessional.id)
                         && moderationScreenStore.editSubmissionScreenIsActive()
                         || moderationScreenStore.editFacilityScreenIsActive()
-                        && !isHealthcareProfessionalReadyForRemoval(healthcareProfessional.id)"
+                        && !isHealthcareProfessionalReadyForRemoval(healthcareProfessional?.id)"
                     id="remove-related-healthcare-professional-to-facility"
                     class="flex w-8 items-center justify-center
                     cursor-pointer font-bold text-secondary text-sm self-start p-1"
-                    @click="() => removeHealthcareProfessional(healthcareProfessional.id)"
+                    @click="() => removeHealthcareProfessional(healthcareProfessional?.id)"
                 >
                     <SVGTrashCan
                         v-show="showTrashCan"
@@ -108,17 +108,16 @@
                     />
                 </div>
                 <div
-                    v-if="isHealthcareProfessionalReadyForRemoval(healthcareProfessional.id)
-                        || moderationScreenStore.editSubmissionScreenIsActive()"
+                    v-if="isEditSubmissionAndNoHealthcareProfessional"
                     id="undo-remove-related-healthcare-professional-to-facility"
                     class="flex w-8 items-center justify-center
                     cursor-pointer font-bold text-secondary text-sm self-start p-1"
-                    @click="() => undoRemovalOfHealthcareProfessional(healthcareProfessional.id)"
+                    @click="() => undoRemovalOfHealthcareProfessional(healthcareProfessional?.id)"
                 >
                     <SVGUndoIcon class="flex items-center justify-center w-6 h-6" />
                 </div>
                 <div
-                    v-if="isEditOrCreateHealthcareProfessional"
+                    v-if="isEditOrCreateHealthcareProfessional || isEditSubmission"
                     class="flex w-8 items-center justify-center
                 cursor-pointer font-bold text-secondary text-sm self-start p-1"
                 >
@@ -172,13 +171,11 @@ const localeStore = useLocaleStore()
 const facilitiesStore = useFacilitiesStore()
 const moderationScreenStore = useModerationScreenStore()
 const healthcareProfessionalsStore = useHealthcareProfessionalsStore()
-
 // This checks whether an existing healthcare professional has been added for removal
-const isHealthcareProfessionalReadyForRemoval = (id: string) =>
+const isHealthcareProfessionalReadyForRemoval = (id: string = '0') =>
     facilitiesStore.facilitySectionFields.healthProfessionalsRelations
         .find(healthcareProfessionalRelation => healthcareProfessionalRelation.otherEntityId === id
           && healthcareProfessionalRelation.action === RelationshipAction.Delete)
-
 const removeHealthcareProfessional = (id: string = '0') => {
     if (props.healthcareProfessionalsRelatedToFacility && props.healthcareProfessionalsRelatedToFacility.includes(id)) {
         facilitiesStore.facilitySectionFields.healthProfessionalsRelations
@@ -192,8 +189,7 @@ const removeHealthcareProfessional = (id: string = '0') => {
         = facilitiesStore.healthProfessionalsRelationsForDisplay
             .filter(healthcareProfessional => healthcareProfessional.id !== id)
 }
-
-const undoRemovalOfHealthcareProfessional = (id: string) => {
+const undoRemovalOfHealthcareProfessional = (id: string = '0') => {
     facilitiesStore.facilitySectionFields.healthProfessionalsRelations
         = facilitiesStore.facilitySectionFields.healthProfessionalsRelations
             .filter((healthcareProfessionalRelation: Relationship) => healthcareProfessionalRelation.otherEntityId !== id)
@@ -202,14 +198,13 @@ const undoRemovalOfHealthcareProfessional = (id: string) => {
 const setChangeToEditable = () => {
     if (props.setIsEditableFunction) props.setIsEditableFunction(true)
 }
-
 // This changes the component to not editable and does not save the changes
 const setToUneditable = () => {
     if (props.setIsEditableFunction) props.setIsEditableFunction(false)
 }
-
 const props = withDefaults(defineProps<{
-    healthcareProfessional: HealthcareProfessional
+    // The healthcare professional is not created yet if modEditSubmissionForm
+    healthcareProfessional?: HealthcareProfessional
     healthcareProfessionalsRelatedToFacility?: string[]
     healthcareProfessionalNameByLocale?: LocalizedNameInput
     /* chosenLocaleIndex checks where in the array the locale name is. If it is 0 it is the one being edited.
@@ -224,7 +219,10 @@ const props = withDefaults(defineProps<{
                            {
                                showTrashCan: true // This defaults the trash can to being true
                            })
-
 const isEditOrCreateHealthcareProfessional = computed(() => moderationScreenStore.editHealthcareProfessionalScreenIsActive()
   || moderationScreenStore.createHealthcareProfessionalScreenIsActive())
+const isEditSubmission = computed(() => moderationScreenStore.editSubmissionScreenIsActive())
+const isEditSubmissionAndNoHealthcareProfessional = computed(() => (props.healthcareProfessional
+  && isHealthcareProfessionalReadyForRemoval(props.healthcareProfessional?.id))
+|| (props.healthcareProfessional && moderationScreenStore.editSubmissionScreenIsActive()))
 </script>
