@@ -249,6 +249,7 @@
         "missingFirstName": "No first name entered",
         "missingLastName": "No last name entered",
         "missingLocale": "No Locale Chosen",
+        "charactersOfLanguageDoNotMatchNameLocale": "The characters of the healthcare professional's name are invalid in chosen locale",
         "nameForLocaleAlreadyExists": "Name for locale already exists. Either update existing name or choose a different locale.",
         "oneNameNecessary": "At least one name is required for a healthcare professional",
         "placeholderTextHealthcareProfessionalFirstName": "e.g. John",

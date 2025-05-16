@@ -1,5 +1,6 @@
 <template>
     <Loader v-if="moderationScreenStore.editHealthcareProfessionalScreenIsActive()" />
+    <Loader v-if="moderationScreenStore.editHealthcareProfessionalScreenIsActive()" />
     <div v-if="isHealthcareProfessionalInitialized">
         <div
             :id="ModHealthcareProfessionalsLeftNavbarSections.HealthcareProfessionalName"
