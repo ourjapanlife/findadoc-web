@@ -5,6 +5,7 @@
             class="mod-facility-section"
         >
             <h1
+                v-if="moderationScreenStore.editFacilityScreenIsActive()"
                 class="mb-3.5 text-start text-primary-text text-3xl font-bold font-sans leading-normal"
             >
                 {{ $t('modFacilitySection.facilityHeading') }}
@@ -279,7 +280,7 @@
 import { type Ref, ref, onBeforeMount, nextTick, watch } from 'vue'
 import { type ToastInterface, useToast } from 'vue-toastification'
 import { useRoute } from 'vue-router'
-import { useModerationScreenStore, ModerationScreen } from '~/stores/moderationScreenStore'
+import { useModerationScreenStore } from '~/stores/moderationScreenStore'
 import { useFacilitiesStore } from '~/stores/facilitiesStore'
 import { useHealthcareProfessionalsStore } from '~/stores/healthcareProfessionalsStore'
 import { useI18n } from '#imports'
@@ -391,7 +392,6 @@ onBeforeMount(async () => {
     }
     facilityStore.selectedFacilityId = id as string
     // Set the active screen and ensure the UI state is consistent
-    moderationScreenStore.setActiveScreen(ModerationScreen.EditFacility)
     facilityStore.setSelectedFacilityData(facilityStore.selectedFacilityId)
     facilityStore.initializeFacilitySectionValues(facilityStore.selectedFacilityData)
     // Ensure UI updates are reflected with the autofill values
