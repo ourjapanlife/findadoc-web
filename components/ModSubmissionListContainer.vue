@@ -43,6 +43,12 @@
                     </NuxtLink>
                 </div>
             </div>
+            <ModPagination
+                :current-page="currentPage"
+                :total-items="totalSubmissions"
+                :items-per-page="itemsPerPage"
+                @update:current-page="val => currentPage = val"
+            />
         </div>
         <div
             v-else-if="hasFacilities
@@ -104,12 +110,6 @@
         <div v-else>
             {{ $t("modPanelSubmissionList.noSubmissions") }}
         </div>
-        <ModPagination
-  :currentPage="currentPage"
-  :totalItems="totalSubmissions"
-  :itemsPerPage="itemsPerPage"
-  @update:currentPage="val => currentPage = val"
-/>
     </div>
 </template>
 
@@ -155,12 +155,11 @@ const handleClickToSubmissionForm = (id: string) => {
 }
 
 const paginatedSubmissions = computed(() => {
-  const start = (currentPage.value - 1) * itemsPerPage
-  const end = start + itemsPerPage
-  return modSubmissionsListStore.filteredSubmissionDataForListComponent.slice(start, end)
+    const start = (currentPage.value - 1) * itemsPerPage
+    const end = start + itemsPerPage
+    return modSubmissionsListStore.filteredSubmissionDataForListComponent.slice(start, end)
 })
 
 const totalSubmissions = computed(() =>
-  modSubmissionsListStore.filteredSubmissionDataForListComponent.length
-)
+    modSubmissionsListStore.filteredSubmissionDataForListComponent.length)
 </script>
