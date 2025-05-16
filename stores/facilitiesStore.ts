@@ -7,6 +7,7 @@ import type { DeleteResult,
     Mutation,
     MutationDeleteFacilityArgs,
     MutationUpdateFacilityArgs,
+    MutationCreateFacilityArgs,
     Query,
     Relationship,
     MutationCreateFacilityArgs } from '~/typedefs/gqlTypes'
