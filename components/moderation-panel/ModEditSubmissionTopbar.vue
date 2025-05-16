@@ -31,18 +31,18 @@
                 @click="updateWithoutExiting"
             >
                 <span>
-                    {{ $t('modEditSubmissionTopNav.save') }}
+                    {{ t('modEditSubmissionTopNav.update') }}
                 </span>
             </button>
             <button
                 type="button"
                 class="flex justify-center items-center rounded-full bg-secondary-bg border-primary-text-muted
                 border-2 w-28 text-sm mr-2"
-                data-testid="submission-topNav-saveAndExit"
-                @click="saveAndExit"
+                data-testid="submission-topNav-updateAndExit"
+                @click="updateAndExit"
             >
                 <span>
-                    {{ t('modEditSubmissionTopNav.saveAndExit') }}
+                    {{ t('modEditSubmissionTopNav.updateAndExit') }}
                 </span>
             </button>
             <button
@@ -71,11 +71,9 @@ import { ref, type Ref } from 'vue'
 import SVGCopyContent from '~/assets/icons/content-copy.svg'
 import SVGSuccessCheckMark from '~/assets/icons/checkmark-square.svg'
 import { useModerationSubmissionsStore } from '~/stores/moderationSubmissionsStore'
-import { useModalStore } from '~/stores/modalStore'
 
 const { t } = useI18n()
 
-const modalStore = useModalStore()
 const moderationSubmissionStore = useModerationSubmissionsStore()
 const selectedSubmissionId: Ref<string> = ref(moderationSubmissionStore.selectedSubmissionId)
 
@@ -93,21 +91,19 @@ const copySubmissionId = async () => {
     }
 }
 
-const saveAndExit = () => {
+const updateAndExit = () => {
     moderationSubmissionStore.setUpdatingSubmissionFromTopBarAndExiting(true)
 }
 
-const saveWithoutExiting = () => {
+const updateWithoutExiting = () => {
     moderationSubmissionStore.setUpdatingSubmissionFromTopBar(true)
 }
 
 const acceptSubmission = () => {
     moderationSubmissionStore.setApprovingSubmissionFromTopBar(true)
-    modalStore.showModal()
 }
 
 const showRejectionConfirmation = () => {
     moderationSubmissionStore.setShowRejectSubmissionConfirmation(true)
-    modalStore.showModal()
 }
 </script>

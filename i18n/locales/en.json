@@ -423,6 +423,8 @@
         "noInsurancesWereFound": "No insurance was found",
         "noDegreesWereFound": "No degrees were found",
         "noLocalesWereFound": "No locales were found",
+        "searchExistingFacilities": "Search for existing facility",
+        "searchExistingHealthcareProfessionals": "Search for existing healthcare professionals",
         "selectDegrees": "Degrees",
         "selectInsurances": "Accepted Insurances",
         "selectLocales": "Select Locales Spoken",

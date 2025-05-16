@@ -96,18 +96,26 @@ export const useModerationSubmissionsStore = defineStore(
             }
         }
 
-        async function updateSubmission(submission: MutationUpdateSubmissionArgs):
+        async function updateSubmission(updateSubmissionInput: MutationUpdateSubmissionArgs):
         Promise<ServerResponse<Submission>> {
             const serverResponse = await graphQLClientRequestWithRetry<Mutation['updateSubmission']>(
                 gqlClient.request.bind(gqlClient),
                 updateFacilitySubmissionGqlMutation,
-                submission
+                updateSubmissionInput
             )
 
             if (serverResponse.errors?.length) {
                 setDidMutationFail(true)
-                setUpdatingSubmissionFromTopBarAndExiting(false)
+                return serverResponse
             }
+
+            // Update the submission in the submissionsData array
+            const updatedSubmission = serverResponse.data
+            const indexOfOutdatedSubmissionData = submissionsData.value
+                .findIndex(submission => submission.id === updatedSubmission.id)
+            submissionsData.value[indexOfOutdatedSubmissionData] = updatedSubmission
+
+            selectedSubmissionData.value = updatedSubmission
 
             return serverResponse
         }
