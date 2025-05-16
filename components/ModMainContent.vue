@@ -20,16 +20,6 @@
             </form>
         </div>
         <div
-            v-if="moderationScreenStore.createFacilityScreenIsActive()"
-            class="h-full overflow-hidden"
-        >
-            <form
-                class="p-4 h-full overflow-y-auto"
-            >
-                <ModCreateFacilitySection />
-            </form>
-        </div>
-        <div
             v-if="moderationScreenStore.editFacilityScreenIsActive()"
             class="h-full overflow-y-auto"
         >
