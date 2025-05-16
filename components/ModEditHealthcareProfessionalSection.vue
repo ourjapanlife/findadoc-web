@@ -242,22 +242,24 @@
             >
                 {{ $t("modHealthcareProfessionalSection.facilities") }}
             </h2>
-            <ModSearchbar
-                v-model="selectedFacilities"
-                :place-holder-text="$t('modHealthcareProfessionalSection.placeholderTextFacilitySearchBar')"
-                :no-match-text="$t('modHealthcareProfessionalSection.noFacilitiesWereFound')"
-                :fields-to-display-callback="facilitiesFieldsToDisplayCallback"
-                @search-input-change="handleFacilitySearchInputChange"
-            />
-            <ol class="list-disc text-primary-text/60 font-semibold my-2 px-2 ">
-                <li
-                    v-for="facility in currentFacilityRelations"
-                    :key="facility.id"
-                    class="py-1"
-                >
-                    {{ `${facility.id} / ${facility.nameEn} / ${facility.nameJa}` }}
-                </li>
-            </ol>
+            <div v-if="moderationScreenStore.editHealthcareProfessionalScreenIsActive()">
+                <ModSearchbar
+                    v-model="selectedFacilities"
+                    :place-holder-text="$t('modHealthcareProfessionalSection.placeholderTextFacilitySearchBar')"
+                    :no-match-text="$t('modHealthcareProfessionalSection.noFacilitiesWereFound')"
+                    :fields-to-display-callback="facilitiesFieldsToDisplayCallback"
+                    @search-input-change="handleFacilitySearchInputChange"
+                />
+                <ol class="list-disc text-primary-text/60 font-semibold my-2 px-2 ">
+                    <li
+                        v-for="facility in currentFacilityRelations"
+                        :key="facility.id"
+                        class="py-1"
+                    >
+                        {{ `${facility.id} / ${facility.nameEn} / ${facility.nameJa}` }}
+                    </li>
+                </ol>
+            </div>
         </div>
     </div>
 </template>
@@ -269,6 +271,7 @@ import { type ToastInterface, useToast } from 'vue-toastification'
 import ModSearchbar from './ModSearchBar.vue'
 import { useHealthcareProfessionalsStore } from '~/stores/healthcareProfessionalsStore'
 import { useFacilitiesStore } from '~/stores/facilitiesStore'
+import { useModerationScreenStore } from '~/stores/moderationScreenStore'
 import { useLocaleStore } from '~/stores/localeStore'
 import { Insurance, Locale, Degree, Specialty, type LocalizedNameInput, type Facility } from '~/typedefs/gqlTypes'
 import { useI18n } from '#imports'
@@ -282,6 +285,7 @@ const { t } = useI18n()
 const loadingStore = useLoadingStore()
 loadingStore.setIsLoading(true)
 
+const moderationScreenStore = useModerationScreenStore()
 const localesStore = useLocaleStore()
 const healthcareProfessionalsStore = useHealthcareProfessionalsStore()
 const facilitiesStore = useFacilitiesStore()
