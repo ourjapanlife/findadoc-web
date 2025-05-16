@@ -224,9 +224,11 @@
                 :invalid-input-error-message="$t('modFacilitySection.inputErrorMessageFacilityMapLongitude')"
             />
         </div>
-        <div class="flex flex-col">
+        <div
+            v-if="moderationScreenStore.editFacilityScreenIsActive()"
+            class="flex flex-col"
+        >
             <span
-                v-if="moderationScreenStore.editFacilityScreenIsActive()"
                 class="mb-1 text-primary-text text-2xl font-bold font-sans leading-normal"
             >
                 {{ $t('modFacilitySection.addHealthcareProfessional') }}
