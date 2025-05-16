@@ -1,5 +1,5 @@
 <template>
-    <Loader />
+    <Loader v-if="moderationScreenStore.editHealthcareProfessionalScreenIsActive()" />
     <div v-if="isHealthcareProfessionalInitialized">
         <div
             :id="ModHealthcareProfessionalsLeftNavbarSections.HealthcareProfessionalName"
@@ -235,14 +235,14 @@
                     </li>
                 </ol>
             </div>
-            <h2
-                :id="ModHealthcareProfessionalsLeftNavbarSections.HealthcareProfessionalFacilities"
-                class="mod-healthcare-professional-section
-                 my-3.5 text-start text-primary-text text-2xl font-bold font-sans leading-normal"
-            >
-                {{ $t("modHealthcareProfessionalSection.facilities") }}
-            </h2>
             <div v-if="moderationScreenStore.editHealthcareProfessionalScreenIsActive()">
+                <h2
+                    :id="ModHealthcareProfessionalsLeftNavbarSections.HealthcareProfessionalFacilities"
+                    class="mod-healthcare-professional-section
+                 my-3.5 text-start text-primary-text text-2xl font-bold font-sans leading-normal"
+                >
+                    {{ $t("modHealthcareProfessionalSection.facilities") }}
+                </h2>
                 <ModSearchbar
                     v-model="selectedFacilities"
                     :place-holder-text="$t('modHealthcareProfessionalSection.placeholderTextFacilitySearchBar')"
@@ -283,7 +283,6 @@ const route = useRoute()
 const { t } = useI18n()
 
 const loadingStore = useLoadingStore()
-loadingStore.setIsLoading(true)
 
 const moderationScreenStore = useModerationScreenStore()
 const localesStore = useLocaleStore()
@@ -560,7 +559,11 @@ const insurancesToDisplayCallback = (insurance: Insurance) => [insurance]
 const localesToDisplayCallback = (locale: Locale) => [localesStore.formatLanguageCodeToSimpleText(locale)]
 
 onBeforeMount(async () => {
-    isHealthcareProfessionalInitialized.value = false
+    if (!moderationScreenStore.editHealthcareProfessionalScreenIsActive()) {
+        isHealthcareProfessionalInitialized.value = true
+        return
+    }
+    loadingStore.setIsLoading(true)
 
     /**
     Set the variable to useToast when the before the component mounts
@@ -586,14 +589,14 @@ onBeforeMount(async () => {
 
     await nextTick()
 
-    healthcareProfessionalsStore.setSelectedHealthcareProfessional(healthcareProfessionalsStore.selectedHealthcareProfessionalId)
+    healthcareProfessionalsStore
+        .setSelectedHealthcareProfessional(healthcareProfessionalsStore.selectedHealthcareProfessionalId)
 
     await nextTick()
 
     currentFacilityRelations.value = facilitiesStore.facilityData
         .filter(facility => healthcareProfessionalsStore.healthcareProfessionalSectionFields.facilityIds
             .includes(facility.id))
-
     //Sets the original values from the store based on the selected healthcare professional
     healthcareProfessionalSpokenLanguages.value
         = healthcareProfessionalsStore.healthcareProfessionalSectionFields.spokenLanguages
@@ -648,12 +651,12 @@ watch(() => [
     if (specialties) {
         currentSpecialties.value = specialties
     }
-})
+}, { immediate: true, deep: true })
 
 // This updates the array in the store once it is updated due to a facility clicked
 watch(() => selectedFacilities.value, newValue => {
     if (newValue) {
         healthcareProfessionalsStore.selectedFacilities = selectedFacilities.value
     }
-})
+}, { immediate: true, deep: true })
 </script>
