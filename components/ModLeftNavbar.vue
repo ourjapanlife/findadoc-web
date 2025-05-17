@@ -23,7 +23,7 @@
         </div>
         <div v-if="moderationScreenStore.createFacilityScreenIsActive()">
             <p class="text-xl font-bold">
-                NAVBAR CREATE FACILITY
+                NAVBAR CREATE FACILITY PLACEHOLDER
             </p>
         </div>
     </div>

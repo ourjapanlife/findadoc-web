@@ -81,10 +81,10 @@
                             {{ $t('modFacilitySection.labelFacilityPrefectureEn') }}
                         </label>
                         <select
-                            id="1"
+                            id="prefecture-select-en"
                             v-model="facilityStore.createFacilityFields.contact.address.prefectureEn"
                             data-testid="mod-facility-section-prefectureEn"
-                            name="Prefecture Japan"
+                            name="prefecture-japan-en"
                             class="mb-5 px-3 py-3.5 w-96 h-12 bg-secondary-bg rounded-lg border border-primary-text-muted
                 text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
                         >
@@ -134,10 +134,10 @@
                             {{ $t('modFacilitySection.labelFacilityPrefectureJa') }}
                         </label>
                         <select
-                            id="1"
+                            id="prefecture-select-ja"
                             v-model="facilityStore.createFacilityFields.contact.address.prefectureJa"
                             data-testid="mod-facility-section-prefectureJa"
-                            name="Prefecture Japan"
+                            name="prefecture-japan-ja"
                             class="mb-5 px-3 py-3.5 w-96 h-12 bg-secondary-bg rounded-lg border border-primary-text-muted
                 text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
                         >
@@ -193,7 +193,7 @@
                         type="url"
                         :placeholder="$t('modFacilitySection.placeholderTextFacilityGoogleMapsUrl')"
                         :required="true"
-                        :input-validation-check="validateWebsite"
+                        :input-validation-check="validateGoogleMapsUrlInput"
                         :invalid-input-error-message="$t('modFacilitySection.inputErrorMessageFacilityGoogleMapsUrl')"
                         :autofill="facilityStore.facilitySectionFields.googlemapsURL"
                     />

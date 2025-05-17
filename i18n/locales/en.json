@@ -155,7 +155,7 @@
     },
     "modDashboardTopbar": {
         "addHealthcareProfessional": "Add Healthcare Professional",
-        "addFacility": "Add Facility",
+        "addFacility": "Add facility",
         "placeholderText": "Enter name or ID to search",
         "approved": "Approved",
         "rejected": "Rejected",

@@ -79,7 +79,7 @@ describe('Moderation create facility form', () => {
             cy.get('[data-testid="mod-facility-section-cityJa"]').find('input').clear().type('渋谷区')
             cy.get('[data-testid="mod-facility-section-addressLine1Ja"]').find('input').clear().type('道の駅')
             cy.get('[data-testid="mod-facility-section-addressLine2Ja"]').find('input').clear().type('道の')
-            //The typing is split into three due to our linting rules of length
+            // The typing is split into three due to our linting rules of length
             cy.get('[data-testid="mod-facility-section-google-maps"]')
                 .find('input').clear()
                 .type('www.google.com/maps/place/82+Yamatech%C5%8D,+Naka+Ward,+Yokohama,+Kanagawa+231-0862,')

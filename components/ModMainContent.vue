@@ -11,7 +11,7 @@
         </div>
         <div
             v-if="moderationScreenStore.createFacilityScreenIsActive()"
-            class="h-full overflow-hidden"
+            class="h-full overflow-y-auto"
         >
             <form
                 class="p-4 h-full overflow-y-auto"
