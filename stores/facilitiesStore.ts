@@ -7,6 +7,7 @@ import type { DeleteResult,
     Mutation,
     MutationDeleteFacilityArgs,
     MutationUpdateFacilityArgs,
+    MutationCreateFacilityArgs,
     Query,
     Relationship } from '~/typedefs/gqlTypes'
 import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql'
@@ -44,6 +45,31 @@ export const useFacilitiesStore = defineStore(
             healthProfessionalsRelations: [] as Relationship[]
         })
 
+        const createFacilityFields = reactive({
+            nameEn: '',
+            nameJa: '',
+            contact: {
+                address: {
+                    postalCode: '',
+                    prefectureEn: '',
+                    cityEn: '',
+                    addressLine1En: '',
+                    addressLine2En: '',
+                    prefectureJa: '',
+                    cityJa: '',
+                    addressLine1Ja: '',
+                    addressLine2Ja: ''
+                },
+                email: '' as string | undefined,
+                googleMapsUrl: '',
+                phone: '',
+                website: '' as string | undefined
+            },
+            mapLatitude: '',
+            mapLongitude: '',
+            healthcareProfessionalIds: [] as string[]
+        })
+
         const healthProfessionalsRelationsForDisplay: Ref<HealthcareProfessional[]> = ref([])
 
         function setSelectedFacilityData(facilityId: string) {
@@ -77,6 +103,48 @@ export const useFacilitiesStore = defineStore(
         async function getFacilities() {
             const facilityResults = await queryFacilities()
             facilityData.value = facilityResults
+        }
+
+        async function createFacility():
+        Promise<ServerResponse<Facility>> {
+            const CreateFacilityInput: MutationCreateFacilityArgs = {
+                input: {
+                    nameEn: createFacilityFields.nameEn,
+                    nameJa: createFacilityFields.nameJa,
+                    contact: {
+                        address: {
+                            addressLine1En: createFacilityFields.contact.address.addressLine1En,
+                            addressLine1Ja: createFacilityFields.contact.address.addressLine1Ja,
+                            addressLine2En: createFacilityFields.contact.address.addressLine2En,
+                            addressLine2Ja: createFacilityFields.contact.address.addressLine2Ja,
+                            cityEn: createFacilityFields.contact.address.cityEn,
+                            cityJa: createFacilityFields.contact.address.cityJa,
+                            postalCode: createFacilityFields.contact.address.postalCode,
+                            prefectureEn: createFacilityFields.contact.address.prefectureEn,
+                            prefectureJa: createFacilityFields.contact.address.prefectureJa
+                        },
+                        email: createFacilityFields.contact.email,
+                        phone: createFacilityFields.contact.phone,
+                        website: createFacilityFields.contact.website,
+                        googleMapsUrl: createFacilityFields.contact.googleMapsUrl
+                    },
+                    mapLatitude: parseFloat(createFacilityFields.mapLatitude),
+                    mapLongitude: parseFloat(createFacilityFields.mapLongitude),
+                    healthcareProfessionalIds: createFacilityFields.healthcareProfessionalIds
+                }
+            }
+            const serverResponse = await graphQLClientRequestWithRetry<Mutation['createFacility']>(
+                gqlClient.request.bind(gqlClient),
+                createFacilityGqlMutation,
+                CreateFacilityInput
+            )
+
+            if (!serverResponse.errors?.length) {
+                selectedFacilityData.value = serverResponse.data!
+                initializeFacilitySectionValues(serverResponse.data!)
+            }
+
+            return serverResponse
         }
 
         async function updateFacility():
@@ -127,6 +195,31 @@ export const useFacilitiesStore = defineStore(
             return serverResponse
         }
 
+        function resetCreateFacilityFields() {
+            createFacilityFields.nameEn = ''
+            createFacilityFields.nameJa = ''
+            createFacilityFields.contact = {
+                address: {
+                    addressLine1En: '',
+                    addressLine1Ja: '',
+                    addressLine2En: '',
+                    addressLine2Ja: '',
+                    postalCode: '',
+                    prefectureEn: '',
+                    prefectureJa: '',
+                    cityEn: '',
+                    cityJa: ''
+                },
+                email: '',
+                googleMapsUrl: '',
+                phone: '',
+                website: ''
+            }
+            createFacilityFields.mapLatitude = ''
+            createFacilityFields.mapLongitude = ''
+            createFacilityFields.healthcareProfessionalIds = []
+        }
+
         async function deleteFacility(facilityId: MutationDeleteFacilityArgs):
         Promise<ServerResponse<DeleteResult>> {
             const serverResponse = await graphQLClientRequestWithRetry<Mutation['deleteFacility']>(
@@ -140,6 +233,8 @@ export const useFacilitiesStore = defineStore(
 
         return {
             getFacilities,
+            createFacility,
+            createFacilityFields,
             facilityData,
             updateFacility,
             facilitySectionFields,
@@ -148,7 +243,8 @@ export const useFacilitiesStore = defineStore(
             selectedFacilityData,
             setSelectedFacilityData,
             initializeFacilitySectionValues,
-            healthProfessionalsRelationsForDisplay
+            healthProfessionalsRelationsForDisplay,
+            resetCreateFacilityFields
         }
     }
 )
@@ -241,6 +337,37 @@ const deleteExistingFacilityGqlMutation = gql`
 mutation Mutation($id: ID!) {
   deleteFacility(id: $id) {
     isSuccessful
+  }
+}
+`
+const createFacilityGqlMutation = gql`
+mutation Mutation($input: CreateFacilityInput!) {
+  createFacility(input: $input) {
+    id
+    nameEn
+    nameJa
+    contact {
+      googleMapsUrl
+      email
+      phone
+      website
+      address {
+        postalCode
+        prefectureEn
+        cityEn
+        addressLine1En
+        addressLine2En
+        prefectureJa
+        cityJa
+        addressLine1Ja
+        addressLine2Ja
+      }
+    }
+    mapLatitude
+    mapLongitude
+    healthcareProfessionalIds
+    createdDate
+    updatedDate
   }
 }
 `
