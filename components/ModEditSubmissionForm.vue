@@ -1075,12 +1075,12 @@ async function submitUpdatedSubmission(e: Event) {
                 }
             }),
             ...(healthcareProfessionals.some (obj => hasTruthyValues(obj)) && {
-                healthcareProfessionals: [{
+                healthcareProfessionals: healthcareProfessionals.map(prof => ({
                     spokenLanguages: submissionFormFields.healthcareProfessionalLocales,
                     names: submissionFormFields.healthCareProfessionalNameArray,
                     facilityIds: [],
-                    ...healthcareProfessionals
-                }]
+                    ...prof
+                }))
             })
         }
     }
