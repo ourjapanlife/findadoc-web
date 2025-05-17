@@ -74,6 +74,31 @@ export const useFacilitiesStore = defineStore(
             facilitySectionFields.mapLongitude = data.mapLongitude.toString()
         }
 
+        function resetFacilitySectionFields() {
+            facilitySectionFields.nameEn = ''
+            facilitySectionFields.nameJa = ''
+            facilitySectionFields.phone = ''
+            facilitySectionFields.website = undefined
+            facilitySectionFields.email = undefined
+
+            facilitySectionFields.postalCode = ''
+            facilitySectionFields.prefectureEn = ''
+            facilitySectionFields.cityEn = ''
+            facilitySectionFields.addressLine1En = ''
+            facilitySectionFields.addressLine2En = ''
+            facilitySectionFields.prefectureJa = ''
+            facilitySectionFields.cityJa = ''
+            facilitySectionFields.addressLine1Ja = ''
+            facilitySectionFields.addressLine2Ja = ''
+
+            facilitySectionFields.googlemapsURL = ''
+            facilitySectionFields.mapLatitude = ''
+            facilitySectionFields.mapLongitude = ''
+
+            facilitySectionFields.healthcareProfessionalIds = []
+            facilitySectionFields.healthProfessionalsRelations = []
+        }
+
         async function getFacilities() {
             const facilityResults = await queryFacilities()
             facilityData.value = facilityResults
@@ -148,7 +173,8 @@ export const useFacilitiesStore = defineStore(
             selectedFacilityData,
             setSelectedFacilityData,
             initializeFacilitySectionValues,
-            healthProfessionalsRelationsForDisplay
+            healthProfessionalsRelationsForDisplay,
+            resetFacilitySectionFields
         }
     }
 )
