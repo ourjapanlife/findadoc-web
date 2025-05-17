@@ -50,3 +50,7 @@ export function isValidUrl(url: string | URL) {
     }
     return url.protocol === 'https:'
 }
+
+export function convertThemeNameToSentenceCase(theme: string) {
+    return !theme.length ? '' : theme.charAt(0).toUpperCase() + theme.slice(1).toLowerCase()
+}
