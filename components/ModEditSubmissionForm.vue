@@ -518,7 +518,11 @@ import { Locale,
     type LocalizedNameInput,
     Insurance,
     Degree,
-    Specialty } from '~/typedefs/gqlTypes'
+    Specialty,
+    type ContactInput,
+    type CreateFacilityInput,
+    type CreateHealthcareProfessionalInput,
+    type PhysicalAddressInput } from '~/typedefs/gqlTypes'
 import { validateAddressLineEn,
     validateAddressLineJa,
     validateNameEn,
@@ -961,44 +965,123 @@ async function submitUpdatedSubmission(e: Event) {
         return
     }
 
+    type SubmissionFormFields = typeof submissionFormFields
+    const markUnchangedFieldsAsUndefined = (
+        currentSubmissionForm: SubmissionFormFields,
+        submissionFormBeforeChanges: SubmissionFormFields
+    ) => {
+        const result: Partial<
+            Record<keyof SubmissionFormFields, SubmissionFormFields[keyof SubmissionFormFields] | undefined>
+        > = {}
+
+        for (const key in currentSubmissionForm) {
+            const typedKey = key as keyof SubmissionFormFields
+            const currentVal = currentSubmissionForm[typedKey]
+            const valBeforeChanges = submissionFormBeforeChanges[typedKey]
+
+            // Compare current with original and return undefined if there are no changes
+            if (typeof currentVal === 'string' || typeof currentVal === 'boolean') {
+                result[typedKey] = currentVal === valBeforeChanges ? undefined : currentVal
+            } else if (Array.isArray(currentVal)) {
+                result[typedKey] = JSON.stringify(currentVal) === JSON.stringify(valBeforeChanges) ? undefined : currentVal
+            }
+        }
+
+        return result
+    }
+
+    const cleanedFields = markUnchangedFieldsAsUndefined(
+        submissionFormFields,
+        submissionFormFieldsBeforeChanges
+    )
+
+    const address: Partial<PhysicalAddressInput> = {
+        ...(typeof cleanedFields.postalCode === 'string' && { postalCode: cleanedFields.postalCode }),
+        ...(typeof cleanedFields.prefectureEn === 'string' && { prefectureEn: cleanedFields.prefectureEn }),
+        ...(typeof cleanedFields.cityEn === 'string' && { cityEn: cleanedFields.cityEn }),
+        ...(typeof cleanedFields.addressLine1En === 'string' && { addressLine1En: cleanedFields.addressLine1En }),
+        ...(typeof cleanedFields.addressLine2En === 'string' && { addressLine2En: cleanedFields.addressLine2En }),
+        ...(typeof cleanedFields.prefectureJa === 'string' && { prefectureJa: cleanedFields.prefectureJa }),
+        ...(typeof cleanedFields.cityJa === 'string' && { cityJa: cleanedFields.cityJa }),
+        ...(typeof cleanedFields.addressLine1Ja === 'string' && { addressLine1Ja: cleanedFields.addressLine1Ja }),
+        ...(typeof cleanedFields.addressLine2Ja === 'string' && { addressLine2Ja: cleanedFields.addressLine2Ja })
+    }
+
+    const contact: Partial<ContactInput> = {
+        ...(typeof cleanedFields.googlemapsURL === 'string' && { googleMapsUrl: cleanedFields.googlemapsURL }),
+        ...(typeof cleanedFields.phone === 'string' && { phone: cleanedFields.phone }),
+        ...(typeof cleanedFields.email === 'string' && { email: cleanedFields.email }),
+        ...(typeof cleanedFields.website === 'string' && { website: cleanedFields.website })
+    }
+
+    const facility: Partial<CreateFacilityInput> = {
+        ...(typeof cleanedFields.nameEn === 'string' && { nameEn: cleanedFields.nameEn }),
+        ...(typeof cleanedFields.nameJa === 'string' && { nameJa: cleanedFields.nameJa }),
+        ...(typeof cleanedFields.mapLatitude === 'string' && { mapLatitude: parseFloat(cleanedFields.mapLatitude) }),
+        ...(typeof cleanedFields.mapLongitude === 'string' && { mapLongitude: parseFloat(cleanedFields.mapLongitude) })
+    }
+
+    const healthcareProfessionals: Partial<CreateHealthcareProfessionalInput>[] = [
+        {
+            ...(Array.isArray(cleanedFields.healthcareProfessionalAcceptedInsurances)
+              && cleanedFields.healthcareProfessionalAcceptedInsurances.length > 0 && {
+                acceptedInsurance: cleanedFields.healthcareProfessionalAcceptedInsurances as Insurance[]
+            }),
+            ...(Array.isArray(cleanedFields.healthcareProfessionalDegrees)
+              && cleanedFields.healthcareProfessionalDegrees.length > 0 && {
+                degrees: cleanedFields.healthcareProfessionalDegrees as Degree[]
+            }),
+            ...(Array.isArray(cleanedFields.healthcareProfessionalSpecialties)
+              && cleanedFields.healthcareProfessionalSpecialties.length > 0 && {
+                specialties: cleanedFields.healthcareProfessionalSpecialties as Specialty[]
+            }),
+            ...(Array.isArray(cleanedFields.healthcareProfessionalLocales)
+              && cleanedFields.healthcareProfessionalLocales.length > 0 && {
+                spokenLanguages: cleanedFields.healthcareProfessionalLocales as Locale[]
+            }),
+            ...(Array.isArray(cleanedFields.healthCareProfessionalNameArray)
+              && cleanedFields.healthCareProfessionalNameArray.length > 0 && {
+                names: cleanedFields.healthCareProfessionalNameArray as LocalizedNameInput[]
+            })
+        }
+    ]
+
     const submissionInputVariables: MutationUpdateSubmissionArgs = {
         id: formSubmissionId,
         input: {
-            isUnderReview: true,
-            facility: {
-                nameEn: submissionFormFields.nameEn,
-                nameJa: submissionFormFields.nameJa,
-                contact: {
-                    googleMapsUrl: submissionFormFields.googlemapsURL,
-                    email: submissionFormFields.email,
-                    phone: submissionFormFields.phone,
-                    website: submissionFormFields.website,
-                    address: {
-                        postalCode: submissionFormFields.postalCode,
-                        prefectureEn: submissionFormFields.prefectureEn,
-                        cityEn: submissionFormFields.cityEn,
-                        addressLine1En: submissionFormFields.addressLine1En,
-                        addressLine2En: submissionFormFields.addressLine2En,
-                        prefectureJa: submissionFormFields.prefectureJa,
-                        cityJa: submissionFormFields.cityJa,
-                        addressLine1Ja: submissionFormFields.addressLine1Ja,
-                        addressLine2Ja: submissionFormFields.addressLine2Ja
-                    }
-                },
-                healthcareProfessionalIds: [],
-                mapLatitude: parseFloat(submissionFormFields.mapLatitude) || 0,
-                mapLongitude: parseFloat(submissionFormFields.mapLongitude) || 0
-            },
-            healthcareProfessionals: [
-                {
-                    acceptedInsurance: submissionFormFields.healthcareProfessionalAcceptedInsurances,
-                    degrees: submissionFormFields.healthcareProfessionalDegrees,
-                    specialties: submissionFormFields.healthcareProfessionalSpecialties,
+            ...((hasTruthyValues(facility) || hasTruthyValues(contact) || hasTruthyValues(address)) && {
+                facility: {
+                    nameEn: submissionFormFields.nameEn,
+                    nameJa: submissionFormFields.nameJa,
+                    contact: {
+                        googleMapsUrl: submissionFormFields.googlemapsURL,
+                        phone: submissionFormFields.phone,
+                        address: {
+                            postalCode: submissionFormFields.postalCode,
+                            prefectureEn: submissionFormFields.prefectureEn,
+                            cityEn: submissionFormFields.cityEn,
+                            addressLine1En: submissionFormFields.addressLine1En,
+                            addressLine2En: submissionFormFields.addressLine2En,
+                            prefectureJa: submissionFormFields.prefectureJa,
+                            cityJa: submissionFormFields.cityJa,
+                            addressLine1Ja: submissionFormFields.addressLine1Ja,
+                            addressLine2Ja: submissionFormFields.addressLine2Ja
+                        },
+                        ...contact
+                    },
+                    healthcareProfessionalIds: [],
+                    mapLatitude: parseFloat(submissionFormFields.mapLatitude) || 0,
+                    mapLongitude: parseFloat(submissionFormFields.mapLongitude) || 0
+                }
+            }),
+            ...(healthcareProfessionals.some (obj => hasTruthyValues(obj)) && {
+                healthcareProfessionals: [{
                     spokenLanguages: submissionFormFields.healthcareProfessionalLocales,
                     names: submissionFormFields.healthCareProfessionalNameArray,
-                    facilityIds: []
-                }
-            ]
+                    facilityIds: [],
+                    ...healthcareProfessionals
+                }]
+            })
         }
     }
 
