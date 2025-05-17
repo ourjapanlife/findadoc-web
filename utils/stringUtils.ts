@@ -52,6 +52,5 @@ export function isValidUrl(url: string | URL) {
 }
 
 export function convertThemeNameToSentenceCase(theme: string) {
-    // if the string is empty, return an empty string, otherwise capitalize the first letter and lowercase the rest
     return !theme.length ? '' : theme.charAt(0).toUpperCase() + theme.slice(1).toLowerCase()
 }
