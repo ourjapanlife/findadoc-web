@@ -613,6 +613,7 @@ const submissionFormFields = reactive({
     //healthcareProfessionalFields
     healthCareProfessionalNameArray: [] as LocalizedNameInput[],
     healthcareProfessionalIDs: [] as string[],
+    facilityIds: [] as string [],
     localizedFirstName: '' as string,
     localizedLastName: '' as string,
     localizedMiddleName: '' as string,
@@ -654,6 +655,7 @@ const submissionFormFieldsBeforeChanges = reactive({
     //healthcareProfessionalFields
     healthCareProfessionalNameArray: [] as LocalizedNameInput[],
     healthcareProfessionalIDs: [] as string[],
+    facilityIds: [] as string [],
     localizedFirstName: '' as string,
     localizedLastName: '' as string,
     localizedMiddleName: '' as string,
@@ -1064,18 +1066,24 @@ function initializeSubmissionFormValues(submissionData: Submission | undefined) 
                           ?? []
                     submissionFormFields.healthcareProfessionalLocales
                         = submissionData.spokenLanguages
+                    submissionFormFields.facilityIds
+                        = submissionData?.healthcareProfessionals?.[0]?.facilityIds
+                          ?? []
                     // For change check
                     submissionFormFieldsBeforeChanges.healthcareProfessionalAcceptedInsurances
-                        = submissionData?.healthcareProfessionals?.[0]?.acceptedInsurance
-                          ?? []
+                        = JSON.parse(JSON.stringify(submissionData?.healthcareProfessionals?.[0]?.acceptedInsurance
+                          ?? []))
                     submissionFormFieldsBeforeChanges.healthcareProfessionalDegrees
-                        = submissionData?.healthcareProfessionals?.[0]?.degrees
-                          ?? []
+                        = JSON.parse(JSON.stringify(submissionData?.healthcareProfessionals?.[0]?.degrees
+                          ?? []))
                     submissionFormFieldsBeforeChanges.healthcareProfessionalSpecialties
-                        = submissionData?.healthcareProfessionals?.[0]?.specialties
-                          ?? []
+                        = JSON.parse(JSON.stringify(submissionData?.healthcareProfessionals?.[0]?.specialties
+                          ?? []))
                     submissionFormFieldsBeforeChanges.healthcareProfessionalLocales
-                        = submissionData.spokenLanguages
+                        = JSON.parse(JSON.stringify(submissionData?.spokenLanguages ?? []))
+                    submissionFormFieldsBeforeChanges.facilityIds
+                        = JSON.parse(JSON.stringify(submissionData?.healthcareProfessionals?.[0]?.facilityIds
+                          ?? []))
                     break
                 case 'healthcareProfessionalIDs':
                     // For v-model
@@ -1095,49 +1103,61 @@ function initializeSubmissionFormValues(submissionData: Submission | undefined) 
     }
 }
 
+const hasFacilityChanges = (before: typeof submissionFormFieldsBeforeChanges, after: typeof submissionFormFields): boolean =>
+    before.nameEn !== after.nameEn
+    || before.nameJa !== after.nameJa
+    || before.googlemapsURL !== after.googlemapsURL
+    || before.phone !== after.phone
+    || before.email !== after.email
+    || before.website !== after.website
+    || before.postalCode !== after.postalCode
+    || before.prefectureEn !== after.prefectureEn
+    || before.cityEn !== after.cityEn
+    || before.addressLine1En !== after.addressLine1En
+    || before.addressLine2En !== after.addressLine2En
+    || before.prefectureJa !== after.prefectureJa
+    || before.cityJa !== after.cityJa
+    || before.addressLine1Ja !== after.addressLine1Ja
+    || before.addressLine2Ja !== after.addressLine2Ja
+    || before.mapLatitude !== after.mapLatitude
+    || before.mapLongitude !== after.mapLongitude
+    /* returns false if not equal so to make it be true we add the ! to follow
+       the same logic as above */
+    || !arraysAreEqual(
+        before.healthcareProfessionalIDs,
+        after.healthcareProfessionalIDs
+    )
+
+const hasHealthcareProfessionalChanges = (
+    before: typeof submissionFormFieldsBeforeChanges,
+    after: typeof submissionFormFields
+): boolean =>
+    !arraysAreEqual(
+        before.healthcareProfessionalAcceptedInsurances,
+        after.healthcareProfessionalAcceptedInsurances
+    )
+    || !arraysAreEqual(
+        before.healthcareProfessionalDegrees,
+        after.healthcareProfessionalDegrees
+    )
+    || !arraysAreEqual(
+        before.healthcareProfessionalSpecialties,
+        after.healthcareProfessionalSpecialties
+    )
+    || !arraysAreEqual(
+        before.healthcareProfessionalLocales,
+        after.healthcareProfessionalLocales
+    )
+    || !arraysAreEqual(
+        before.healthCareProfessionalNameArray,
+        after.healthCareProfessionalNameArray
+    )
+
 const submissionHasUnsavedChanges = () => {
     const checkForUnsavedChanges
-    = submissionFormFieldsBeforeChanges.addressLine1En !== submissionFormFields.addressLine1En
-      || submissionFormFieldsBeforeChanges.addressLine1Ja !== submissionFormFields.addressLine1Ja
-      || submissionFormFieldsBeforeChanges.addressLine2En !== submissionFormFields.addressLine2En
-      || submissionFormFieldsBeforeChanges.addressLine2Ja !== submissionFormFields.addressLine2Ja
-      || submissionFormFieldsBeforeChanges.cityEn !== submissionFormFields.cityEn
-      || submissionFormFieldsBeforeChanges.cityJa !== submissionFormFields.cityJa
-      || submissionFormFieldsBeforeChanges.postalCode !== submissionFormFields.postalCode
-      || submissionFormFieldsBeforeChanges.prefectureEn !== submissionFormFields.prefectureEn
-      || submissionFormFieldsBeforeChanges.prefectureJa !== submissionFormFields.prefectureJa
-      || submissionFormFieldsBeforeChanges.email !== submissionFormFields.email
-      || submissionFormFieldsBeforeChanges.googlemapsURL !== submissionFormFields.googlemapsURL
-      || submissionFormFieldsBeforeChanges.phone !== submissionFormFields.phone
-      || submissionFormFieldsBeforeChanges.website !== submissionFormFields.website
-      /* returns false if not equal so to make it be true we add the ! to follow
-       the same logic as above */
-      || !arraysAreEqual(
-          submissionFormFieldsBeforeChanges.healthcareProfessionalIDs,
-          submissionFormFields.healthcareProfessionalIDs
-      )
-      || submissionFormFieldsBeforeChanges.mapLatitude !== submissionFormFields.mapLatitude
-      || submissionFormFieldsBeforeChanges.mapLongitude !== submissionFormFields.mapLongitude
-      || submissionFormFieldsBeforeChanges.nameEn !== submissionFormFields.nameEn
-      || submissionFormFieldsBeforeChanges.nameJa !== submissionFormFields.nameJa
-      || submissionFormFieldsBeforeChanges.googlemapsURL !== submissionFormFields.googlemapsURL
+    = hasFacilityChanges(submissionFormFieldsBeforeChanges, submissionFormFields)
+      || hasHealthcareProfessionalChanges(submissionFormFieldsBeforeChanges, submissionFormFields)
       || submissionFormFieldsBeforeChanges.notes !== submissionFormFields.notes
-      || !arraysAreEqual(
-          submissionFormFieldsBeforeChanges.healthcareProfessionalLocales,
-          submissionFormFields.healthcareProfessionalLocales
-      )
-      || !arraysAreEqual(
-          submissionFormFieldsBeforeChanges.healthCareProfessionalNameArray,
-          submissionFormFields.healthCareProfessionalNameArray
-      )
-      || !arraysAreEqual(
-          submissionFormFieldsBeforeChanges.healthcareProfessionalAcceptedInsurances,
-          submissionFormFields.healthcareProfessionalAcceptedInsurances
-      )
-      || !arraysAreEqual(
-          submissionFormFieldsBeforeChanges.healthcareProfessionalDegrees,
-          submissionFormFields.healthcareProfessionalDegrees
-      )
 
     formHasUnsavedChanges.value = true
     return checkForUnsavedChanges
@@ -1158,41 +1178,66 @@ async function submitUpdatedSubmission(e: Event) {
     const submissionInputVariables: MutationUpdateSubmissionArgs = {
         id: formSubmissionId,
         input: {
-            isUnderReview: true,
-            facility: {
-                nameEn: submissionFormFields.nameEn,
-                nameJa: submissionFormFields.nameJa,
-                contact: {
-                    googleMapsUrl: submissionFormFields.googlemapsURL,
-                    email: submissionFormFields.email,
-                    phone: submissionFormFields.phone,
-                    website: submissionFormFields.website,
-                    address: {
-                        postalCode: submissionFormFields.postalCode,
-                        prefectureEn: submissionFormFields.prefectureEn,
-                        cityEn: submissionFormFields.cityEn,
-                        addressLine1En: submissionFormFields.addressLine1En,
-                        addressLine2En: submissionFormFields.addressLine2En,
-                        prefectureJa: submissionFormFields.prefectureJa,
-                        cityJa: submissionFormFields.cityJa,
-                        addressLine1Ja: submissionFormFields.addressLine1Ja,
-                        addressLine2Ja: submissionFormFields.addressLine2Ja
-                    }
-                },
-                healthcareProfessionalIds: [],
-                mapLatitude: parseFloat(submissionFormFields.mapLatitude) || 0,
-                mapLongitude: parseFloat(submissionFormFields.mapLongitude) || 0
-            },
-            healthcareProfessionals: [
-                {
-                    acceptedInsurance: submissionFormFields.healthcareProfessionalAcceptedInsurances,
-                    degrees: submissionFormFields.healthcareProfessionalDegrees,
-                    specialties: submissionFormFields.healthcareProfessionalSpecialties,
+            facility: hasFacilityChanges(submissionFormFieldsBeforeChanges, submissionFormFields)
+                ? {
+                    nameEn: submissionFormFields.nameEn,
+                    nameJa: submissionFormFields.nameJa,
+                    contact: {
+                        googleMapsUrl: submissionFormFields.googlemapsURL,
+                        phone: submissionFormFields.phone,
+                        address: {
+                            postalCode: submissionFormFields.postalCode,
+                            prefectureEn: submissionFormFields.prefectureEn,
+                            cityEn: submissionFormFields.cityEn,
+                            addressLine1En: submissionFormFields.addressLine1En,
+                            addressLine2En: submissionFormFields.addressLine2En,
+                            prefectureJa: submissionFormFields.prefectureJa,
+                            cityJa: submissionFormFields.cityJa,
+                            addressLine1Ja: submissionFormFields.addressLine1Ja,
+                            addressLine2Ja: submissionFormFields.addressLine2Ja
+                        },
+                        email: submissionFormFieldsBeforeChanges.email !== submissionFormFields.email
+                            ? submissionFormFields.email
+                            : undefined,
+                        website: submissionFormFieldsBeforeChanges.website !== submissionFormFields.website
+                            ? submissionFormFields.website
+                            : undefined
+                    },
+                    healthcareProfessionalIds: !arraysAreEqual(
+                        submissionFormFields.healthcareProfessionalIDs,
+                        submissionFormFieldsBeforeChanges.healthcareProfessionalIDs
+                    )
+                        ? submissionFormFields.healthcareProfessionalIDs
+                        : undefined,
+                    mapLatitude: parseFloat(submissionFormFields.mapLatitude) || 0,
+                    mapLongitude: parseFloat(submissionFormFields.mapLongitude) || 0
+                }
+                : undefined,
+            healthcareProfessionals: hasHealthcareProfessionalChanges(submissionFormFieldsBeforeChanges, submissionFormFields)
+                ? [{
                     spokenLanguages: submissionFormFields.healthcareProfessionalLocales,
                     names: submissionFormFields.healthCareProfessionalNameArray,
-                    facilityIds: []
-                }
-            ]
+                    facilityIds: submissionFormFields.facilityIds,
+                    acceptedInsurance: !arraysAreEqual(
+                        submissionFormFields.healthcareProfessionalAcceptedInsurances,
+                        submissionFormFieldsBeforeChanges.healthcareProfessionalAcceptedInsurances
+                    )
+                        ? submissionFormFields.healthcareProfessionalAcceptedInsurances
+                        : undefined,
+                    degrees: !arraysAreEqual(
+                        submissionFormFields.healthcareProfessionalDegrees,
+                        submissionFormFieldsBeforeChanges.healthcareProfessionalDegrees
+                    )
+                        ? submissionFormFields.healthcareProfessionalDegrees
+                        : undefined,
+                    specialties: !arraysAreEqual(
+                        submissionFormFields.healthcareProfessionalSpecialties,
+                        submissionFormFieldsBeforeChanges.healthcareProfessionalSpecialties
+                    )
+                        ? submissionFormFields.healthcareProfessionalSpecialties
+                        : undefined
+                }]
+                : undefined
         }
     }
 
@@ -1246,7 +1291,7 @@ async function submitCompletedForm(e: Event) {
 
     try {
         const result = await moderationSubmissionStore.approveSubmission()
-        console.log(result)
+
         if (result?.errors?.length) {
             handleServerErrorMessaging(result.errors, toast, t)
             return
