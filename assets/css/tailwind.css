@@ -125,7 +125,6 @@
     /* MARK: Accessible Themes */
 
 /* accessible high contrast theme */
- /* sses black/white backgrounds and text with bright accents */
 
  .theme-accessible-high-contrast { 
   /* general branding colors */
@@ -148,7 +147,6 @@
 }
 
 /* accessible r-g color blindness friendly theme (daltonism) */
- /* avoids red/green pairs */
 
  .theme-accessible-red-green { 
   /* general branding colors */

@@ -21,8 +21,7 @@
             <div
                 v-show="isMenuOpen"
                 data-testid="hamburger-menu"
-                class="absolute top-0 right-0 z-20 flex flex-col
-                justify-between w-2/3 h-full pt-6 pb-2 border-2 rounded bg-primary-bg "
+                class="absolute top-0 right-0 z-20 flex flex-col justify-between w-2/3 h-full pt-6 pb-2 border-2 rounded bg-primary-bg "
             >
                 <div data-testid="hamburger-upper-section">
                     <div
@@ -133,7 +132,7 @@
                 >
                     <div data-testid="hamburger-menu-theme-switcher">
                         <p class="mb-1">
-                            {{ $t('hamburgerMenu.theme') }}: {{ toSentenceCase(currentTheme) }}
+                            {{ $t('hamburgerMenu.theme') }}: {{ convertStringToTitleCase(currentTheme) }}
                         </p>
                         <div class="flex">
                             <div
@@ -286,7 +285,8 @@ import SVGProfileIcon from '~/assets/icons/profile-icon.svg'
 import SVGHamburgerMenuIcon from '~/assets/icons/hamburger-menu.svg'
 import SVGGithubIcon from '~/assets/icons/social-github.svg'
 import { useAuthStore } from '~/stores/authStore'
-import { toSentenceCase } from '~/utils/stringUtils'
+import { convertStringToSentenceCase } from '~/utils/stringUtils'
+import { convertStringToTitleCase } from '~/utils/stringUtils'
 
 const authStore = useAuthStore()
 
@@ -322,7 +322,7 @@ function setTheme(newTheme: string) {
     currentTheme.value = newTheme
 }
 
-// this gives a black border to the currently selected theme
+// This gives a black border to the currently selected theme
 function getSelectedTheme(theme: string) {
     if (currentTheme.value === theme) {
         return 'border-4 border-black'
