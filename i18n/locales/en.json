@@ -60,14 +60,14 @@
         "paragraph16": "By using our service, you agree to the terms outlined in this Privacy Policy."
     },
     "submitPage": {
-        "firstName": "First Name",
+        "firstName": "First name",
         "firstNameValidation": "Enter a first name",
         "googleMaps": "Google Maps URL",
         "googleMapsValidation": "Enter a URL starting with https://",
         "heading": "Add a Doctor",
         "healthcareProfessionalName": "Healthcare Professional Name",
         "invalidOption": "Invalid option",
-        "lastName": "Last Name",
+        "lastName": "Last name",
         "lastNameValidation": "Enter a last name",
         "location": "Location",
         "selectLanguage1": "Select First Language",
@@ -404,10 +404,10 @@
         "updateButtonText": "Update"
     },
     "modDashboardHealthcareProfessionalCard": {
-        "spokenLanguages": "Spoken Languages",
-        "lastName": "Last Name",
-        "firstName": "First Name",
-        "middleName": "Middle Name",
+        "spokenLanguages": "Spoken languages",
+        "lastName": "Last name",
+        "firstName": "First name",
+        "middleName": "Middle name",
         "nameLocale": "Name locale"
     }
 }
