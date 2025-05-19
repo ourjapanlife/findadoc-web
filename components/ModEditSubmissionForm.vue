@@ -194,7 +194,7 @@
             />
             <div class="flex flex-col mt-4">
                 <label
-                    for="Prefecture Japan"
+                    for="prefecture-japan"
                     class="mb-2 text-primary-text text-sm font-bold font-sans"
                 >
                     {{ $t('modSubmissionForm.labelFacilityPrefectureJa') }}
@@ -203,7 +203,7 @@
                     id="1"
                     v-model="submissionFormFields.prefectureJa"
                     data-testid="submission-form-prefectureJa"
-                    name="Prefecture Japan"
+                    name="prefecture-japan"
                     class="mb-5 px-3 py-3.5 w-96 h-12 bg-secondary-bg rounded-lg border border-primary-text-muted
                     text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
                 >
@@ -339,7 +339,7 @@
                             :required="false"
                         />
                         <label
-                            for="name_locales"
+                            for="name-locales"
                             class="my-2 text-primary-text text-sm font-bold font-sans"
                         >
                             {{ $t('modHealthcareProfessionalSection.labelHealthcareProfessionalNameLocale') }}
@@ -348,7 +348,7 @@
                             id="name-locales"
                             v-model="nameLocaleInputsToAddOrUpdate.locale"
                             data-testid="mod-healthcare-professional-section-name-locale"
-                            name="Name Locales"
+                            name="name-locales"
                             class="mb-5 px-3 py-3.5 w-96 h-12 bg-secondary-bg rounded-lg border border-primary-text-muted
                                 text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
                         >
