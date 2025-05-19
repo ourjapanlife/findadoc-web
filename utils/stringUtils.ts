@@ -50,3 +50,24 @@ export function isValidUrl(url: string | URL) {
     }
     return url.protocol === 'https:'
 }
+
+// converts a given string to "Sentence case"
+export function convertStringToSentenceCase(theme: string) {
+    // if the string is empty, return an empty string, otherwise capitalize the first letter and lowercase the rest
+    return !theme.length ? '' : theme.charAt(0).toUpperCase() + theme.slice(1).toLowerCase()
+}
+
+// converts a given string into "Title Case"
+export function convertStringToTitleCase(stringToConvert: string) {
+    // if we don't have a string to convert, return
+    if (!stringToConvert) {
+        return ''
+    }
+    const normalizedString = stringToConvert.replace(/[^a-zA-Z0-9]+/g, ' ').trim()
+    const splitStringArray = normalizedString.split(' ')
+
+    // capitalize each word using helper function
+    const titleCasedWords = splitStringArray.map(word => convertStringToSentenceCase(word))
+    const titleCaseString = titleCasedWords.join(' ')
+    return titleCaseString
+}

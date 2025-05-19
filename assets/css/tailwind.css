@@ -121,4 +121,50 @@
     --color-bg-tertiary: /* #e5e7eb */ 82 82 82;
     --color-error: /* #525252 */ 209 82 63;
   }
+
+    /* MARK: Accessible Themes */
+
+/* accessible high contrast theme */
+
+ .theme-accessible-high-contrast { 
+  /* general branding colors */
+  --color-primary: /* #00FFFF */ 0 255 255;       
+  --color-secondary: /* #FFFF00 */ 255 255 0;    
+  --color-tertiary: /* #FF00FF */ 255 0 255;     
+  --color-primary-inverted: /* #000000 */ 0 0 0; 
+  --color-primary-hover: /* #7FFFD4 */ 127 255 212; 
+  --color-secondary-inverted: /* #000000 */ 0 0 0; 
+  --color-secondary-hover: /* #FFFACD */ 255 250 205; 
+  
+  /* element specific colors */
+  --color-text-base: /* #FFFFFF */ 255 255 255;  
+  --color-text-muted: /* #C0C0C0 */ 192 192 192; 
+  --color-text-inverted: /* #000000 */ 0 0 0;   
+  --color-bg-primary: /* #000000 */ 0 0 0;       
+  --color-bg-secondary: /* #1A1A1A */ 26 26 26;  
+  --color-bg-tertiary: /* #FFFFFF */ 255 255 255;
+  --color-error: /* #FF4500 */ 255 69 0;         
+}
+
+/* accessible r-g color blindness friendly theme (daltonism) */
+
+ .theme-accessible-red-green { 
+  /* general branding colors */
+  --color-primary: /* #0056B3 */ 0 86 179;       
+  --color-secondary: /* #D97706 */ 217 119 6;    
+  --color-tertiary: /* #FFC107 */ 255 193 7;     
+  --color-primary-inverted: /* #FFFFFF */ 255 255 255; 
+  --color-primary-hover: /* #2563EB */ 37 99 235;  
+  --color-secondary-inverted: /* #FFFFFF */ 255 255 255; 
+  --color-secondary-hover: /* #F59E0B */ 245 158 11; 
+  
+  /* element specific colors */
+  --color-text-base: /* #E5E7EB */ 229 231 235;  
+  --color-text-muted: /* #9CA3AF */ 156 163 175; 
+  --color-text-inverted: /* #111827 */ 17 24 39;    
+  --color-bg-primary: /* #1F2937 */ 31 41 55;       
+  --color-bg-secondary: /* #374151 */ 55 65 81;  
+  --color-bg-tertiary: /* #F3F4F6 */ 243 244 246;
+  --color-error: /* #F97316 */ 249 115 22;         
+}
 }
