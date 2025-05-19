@@ -51,10 +51,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, type Ref, onMounted, onUnmounted } from 'vue'
+import { ref, type Ref, watch } from 'vue'
 import { useModerationSubmissionsStore } from '~/stores/moderationSubmissionsStore'
 import { ModHealthcareProfessionalsLeftNavbarSections } from '~/stores/moderationScreenStore'
-import { handleScroll, observeFormSections, scrollToSectionOfForm, type SectionInformation } from '~/utils/handleScroll'
+import { observeFormSections, scrollToSectionOfForm, type SectionInformation } from '~/utils/handleScroll'
 
 const moderationSubmissionsStore = useModerationSubmissionsStore()
 const activeSection: Ref<string> = ref(ModHealthcareProfessionalsLeftNavbarSections.HealthcareProfessionalName)
@@ -75,21 +75,17 @@ const modLeftNavElementIdArray: SectionInformation[] = [
     }
 ]
 
-const onScroll = () => {
-    handleScroll(modLeftNavElementIdArray, isScrolling, activeSection)
-}
-
 const handleNavClick = (sectionId: string) => {
-    scrollToSectionOfForm(sectionId)
+    scrollToSectionOfForm(sectionId, activeSection)
     activeSection.value = sectionId
 }
 
-onMounted(() => {
-    observeFormSections(modLeftNavElementIdArray, isScrolling, activeSection)
-    window.addEventListener('scroll', onScroll)
-})
-
-onUnmounted(() => {
-    window.removeEventListener('scroll', onScroll)
-})
+watch(
+    () => moderationSubmissionsStore.selectedSubmissionData,
+    data => {
+        if (!data) return
+        observeFormSections(modLeftNavElementIdArray, isScrolling, activeSection)
+    },
+    { immediate: true }
+)
 </script>
