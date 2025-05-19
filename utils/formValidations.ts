@@ -251,7 +251,7 @@ export function validateNameLocaleMatchesLanguage(
             return hasLatinCharacters(fullName)
 
         default:
-            // This defaults to true for now as we need to add for other languages functions
+            // Defaults to true for locales that have yet to be added
             return true
     }
 }
