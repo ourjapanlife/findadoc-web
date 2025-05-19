@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/no-spaces-around-equal-signs-in-attribute -->
 <template>
     <Loader />
     <div>
@@ -193,7 +194,7 @@
             />
             <div class="flex flex-col mt-4">
                 <label
-                    for="Prefecture Japan"
+                    for="prefecture-japan"
                     class="mb-2 text-primary-text text-sm font-bold font-sans"
                 >
                     {{ $t('modSubmissionForm.labelFacilityPrefectureJa') }}
@@ -202,7 +203,7 @@
                     id="1"
                     v-model="submissionFormFields.prefectureJa"
                     data-testid="submission-form-prefectureJa"
-                    name="Prefecture Japan"
+                    name="prefecture-japan"
                     class="mb-5 px-3 py-3.5 w-96 h-12 bg-secondary-bg rounded-lg border border-primary-text-muted
                     text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
                 >
@@ -292,217 +293,247 @@
             {{ $t('modSubmissionForm.healthcareProfessionalNameHeading') }}
         </h2>
         <div class="flex flex-col my-4">
-            <ModInputField
-                v-model="submissionFormFields.localizedLastName"
-                data-testid="submission-form-last-name"
-                :label="$t('modSubmissionForm.labelHealthcareProfessionalLastName')"
-                type="text"
-                :placeholder="$t('modSubmissionForm.placeholderTextHealthcareProfessionalLastName')"
-                :required="false"
-            />
-            <ModInputField
-                v-model="submissionFormFields.localizedFirstName"
-                data-testid="submission-form-first-name"
-                :label="$t('modSubmissionForm.labelHealthcareProfessionalFirstName')"
-                type="text"
-                :placeholder="$t('modSubmissionForm.placeholderTextHealthcareProfessionalFirstName')"
-                :required="false"
-            />
-            <ModInputField
-                v-model="submissionFormFields.localizedMiddleName"
-                data-testid="submission-form-middle-name"
-                :label="$t('modSubmissionForm.labelHealthcareProfessionalMiddleName')"
-                type="text"
-                :placeholder="$t('modSubmissionForm.placeholderTextHealthcareProfessionalMiddleName')"
-                :required="false"
-            />
-            <label
-                for="Name Locales"
-                class="my-2 text-primary-text text-sm font-bold font-sans"
-            >
-                {{ $t('modSubmissionForm.labelHealthcareProfessionalNameLocale') }}
-            </label>
-            <select
-                v-model="submissionFormFields.nameLocale"
-                data-testid="submission-form-locale"
-                name="Name Locales"
-                class="mb-5 px-3 py-3.5 w-96 h-12 bg-secondary-bg rounded-lg border border-primary-text-muted
-                        text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
-            >
-                <option
-                    v-for="(locale, index) in localeDisplayOptions"
-                    :key="`${locale}-${index}`"
-                    :value="locale.code"
-                >
-                    {{ locale.simpleText }}
-                </option>
-            </select>
-            <button
-                type="button"
-                class="bg-tertiary text-white font-bold py-2 px-4 my-2 rounded w-56"
-                @click="handleLocalizedNameToSubmission"
-            >
-                {{ $t('modSubmissionForm.addHealthCareProfessionalLocaleName') }}
-            </button>
-            <div
-                v-if="submissionFormFields.healthCareProfessionalNameArray.length"
-                class="flex flex-wrap"
-            >
-                <div
-                    v-for="(healthcareProfessionalName, index) in submissionFormFields.healthCareProfessionalNameArray"
-                    :key="`${healthcareProfessionalName.firstName}-${index}`"
-                    class="flex basis-1/3 justify-start items-center"
+            <div class="input-fields flex flex-col my-4">
+                <Transition
+                    enter-active-class="transition-all ease-in-out duration-300"
+                    leave-active-class="transition-all ease-in-out duration-300"
+                    enter-from-class="opacity-0 max-h-0"
+                    enter-to-class="opacity-100 max-h-[500px]"
+                    leave-from-class="opacity-100 max-h-[500px]"
+                    leave-to-class="opacity-0 max-h-0"
                 >
                     <div
-                        class="flex justify-center items-center rounded-lg p-3 border-2 border-primary"
-                        :data-testid="`mod-submission-list-item-${index + 1}`"
+                        v-show="addingNewNameLocaleForHealthcareProfessional
+                            || editingExistingNameLocaleForHealthcareProfessional"
+                        :class="[
+                            'name-locale-input-fields rounded-lg border-2 border-primary flex flex-col px-2 w-fit',
+                            editingExistingNameLocaleForHealthcareProfessional
+                                ? 'rounded-b-none border-b-0 pb-5' : 'rounded-lg border-2 border-primary',
+                        ]"
                     >
-                        <div>
-                            <div class="flex font-bold">
-                                <SVGProfileIcon
-                                    role="img"
-                                    alt="profile icon"
-                                    title="profile icon"
-                                    class="profile-icon w-6 h-6 stroke-primary stroke-1 inline mx-1"
-                                />
-                                <span>{{ healthcareProfessionalName.lastName }}</span>
-                                <span class="mx-2">{{ healthcareProfessionalName.firstName }}</span>
-                                <span v-show="healthcareProfessionalName.middleName">
-                                    {{ healthcareProfessionalName.middleName }}
-                                </span>
-                            </div>
-                            <div
-                                v-for="(healthcareProfessionalLocale, indexOfLocale)
-                                    in submissionFormFields.healthcareProfessionalLocales"
-                                :key="`${healthcareProfessionalLocale}-${indexOfLocale}`"
-                            >
-                                <span
-                                    class="w-fit px-2 py-[1px] my-2 border border-primary/40 rounded-full
-                                shadow text-sm text-center hover:bg-primary/20 transition-all"
-                                >
-                                    {{ localeStore.formatLanguageCodeToSimpleText(
-                                        healthcareProfessionalLocale) }}
-                                </span>
-                            </div>
-                        </div>
-                        <span
-                            class="flex items-center justify-center
-                            cursor-pointer font-bold text-secondary text-sm"
-                            @click="() => handleRemoveHealthcareProfessionalName(index)"
+                        <ModInputField
+                            v-model="nameLocaleInputsToAddOrUpdate.lastName"
+                            data-testid="mod-healthcare-professional-section-lastName"
+                            :label="$t('modHealthcareProfessionalSection.labelHealthcareProfessionalLastName')"
+                            type="text"
+                            :placeholder=
+                                "$t('modHealthcareProfessionalSection.placeholderTextHealthcareProfessionalLastName')"
+                            :required="true"
+                        />
+                        <ModInputField
+                            v-model="nameLocaleInputsToAddOrUpdate.firstName"
+                            data-testid="mod-healthcare-professional-section-firstName"
+                            :label="$t('modHealthcareProfessionalSection.labelHealthcareProfessionalFirstName')"
+                            type="text"
+                            :placeholder=
+                                "$t('modHealthcareProfessionalSection.placeholderTextHealthcareProfessionalFirstName')"
+                            :required="true"
+                        />
+                        <ModInputField
+                            v-model="nameLocaleInputsToAddOrUpdate.middleName as string"
+                            data-testid="mod-healthcare-professional-section-middleName"
+                            :label="$t('modHealthcareProfessionalSection.labelHealthcareProfessionalMiddleName')"
+                            type="text"
+                            :placeholder=
+                                "$t('modHealthcareProfessionalSection.placeholderTextHealthcareProfessionalMiddleName')"
+                            :required="false"
+                        />
+                        <label
+                            for="name-locales"
+                            class="my-2 text-primary-text text-sm font-bold font-sans"
                         >
-                            <SVGTrashCan class="flex items-center justify-center w-6 h-6" /> {{
-                                $t('modSubmissionForm.delete') }}
-                        </span>
+                            {{ $t('modHealthcareProfessionalSection.labelHealthcareProfessionalNameLocale') }}
+                        </label>
+                        <select
+                            id="name-locales"
+                            v-model="nameLocaleInputsToAddOrUpdate.locale"
+                            data-testid="mod-healthcare-professional-section-name-locale"
+                            name="name-locales"
+                            class="mb-5 px-3 py-3.5 w-96 h-12 bg-secondary-bg rounded-lg border border-primary-text-muted
+                                text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
+                        >
+                            <option
+                                v-for="(locale, index) in Locale"
+                                :key="`${locale}-${index}`"
+                            >
+                                {{ locale }}
+                            </option>
+                        </select>
+                        <div
+                            v-show="addingNewNameLocaleForHealthcareProfessional"
+                            class="flex justify-between w-96"
+                        >
+                            <button
+                                class="bg-primary text-primary-text-inverted font-bold py-2 px-4 my-2 rounded w-36"
+                                type="button"
+                                @click="handleAddLocalizedName"
+                            >
+                                {{ $t('modHealthcareProfessionalSection.save') }}
+                            </button>
+                            <button
+                                class="bg-error text-primary-text-inverted font-bold py-2 px-4 my-2 rounded w-36"
+                                type="button"
+                                @click="handleCloseAddingNewLocalizedName"
+                            >
+                                {{ $t('modHealthcareProfessionalSection.exit') }}
+                            </button>
+                        </div>
+                        <div
+                            v-show="editingExistingNameLocaleForHealthcareProfessional"
+                            class="flex justify-between w-96"
+                        >
+                            <button
+                                class="bg-primary text-primary-text-inverted font-bold py-2 px-4 my-2 rounded w-36"
+                                type="button"
+                                @click="handleUpdateExistingName"
+                            >
+                                {{ $t('modHealthcareProfessionalSection.update') }}
+                            </button>
+                            <button
+                                class="bg-error text-primary-text-inverted font-bold py-2 px-4 my-2 rounded w-36"
+                                type="button"
+                                @click="handleDeleteExistingName"
+                            >
+                                {{ $t('modHealthcareProfessionalSection.delete') }}
+                            </button>
+                        </div>
+                    </div>
+                </Transition>
+                <div
+                    v-if="submissionFormFields.healthCareProfessionalNameArray"
+                    class="flex flex-col"
+                >
+                    <div
+                        v-for="(nameLocale, index) in submissionFormFields.healthCareProfessionalNameArray"
+                        :key="`${nameLocale.firstName}-${nameLocale.lastName}-${index}`"
+                        @click="() => setChosenLocaleNameInput(index)"
+                    >
+                        <ModDashboardHealthProfessionalCard
+                            :healthcare-professional-name-by-locale="nameLocale"
+                            :chosen-locale-index="index"
+                            :is-editable="editingExistingNameLocaleForHealthcareProfessional"
+                            :set-is-editable-function="setEditingLocaleName"
+                        />
                     </div>
                 </div>
+                <button
+                    type="button"
+                    data-testid="mod-healthcare-add-name-button"
+                    class="bg-tertiary text-primary-text-inverted font-bold py-2 px-4 my-2 rounded w-44"
+                    @click="handleOpenAddNewNameWithReset"
+                >
+                    {{ $t('modHealthcareProfessionalSection.addHealthCareProfessionalLocaleName') }}
+                </button>
             </div>
-            <h2
-                :id="ModSubmissionLeftNavbarSectionIDs.HealthcareProfessionalMedicalInfo"
-                class="submission-form-section
+            <div class="flex flex-col">
+                <h2
+                    :id="ModSubmissionLeftNavbarSectionIDs.HealthcareProfessionalMedicalInfo"
+                    class="submission-form-section
                     my-3.5 text-start text-primary-text text-2xl font-bold font-sans leading-normal"
-            >
-                {{ $t('modSubmissionForm.healthcareProfessionalMedicalInfoHeading') }}
-            </h2>
-            <label
-                for="Accepted Insurances"
-                class="my-2 text-primary-text text-sm font-bold font-sans"
-            >
-                {{ $t("modSubmissionForm.selectInsurances") }}
-            </label>
-            <ModSearchBar
-                v-model="submissionFormFields.healthcareProfessionalAcceptedInsurances"
-                data-testid="submission-form-accepted-insurances"
-                :place-holder-text="$t('modSubmissionForm.placeholderTextAcceptedInsurances')"
-                :no-match-text="$t('modSubmissionForm.noInsurancesWereFound')"
-                :fields-to-display-callback="insurancesToDisplayCallback"
-                @search-input-change="handleInsuranceInputChange"
-            />
-            <ol class="list-disc text-primary-text/60 font-semibold my-2 px-2">
-                <li
-                    v-for="insurance in submissionFormFields.healthcareProfessionalAcceptedInsurances"
-                    :key="`accepted-${insurance}`"
-                    class="py-1"
                 >
-                    {{ insurance }}
-                </li>
-            </ol>
-            <label
-                for="degrees"
-                class="my-2 text-primary-text text-sm font-bold font-sans"
-            >
-                {{ $t("modSubmissionForm.selectDegrees") }}
-            </label>
-            <ModSearchBar
-                v-model="submissionFormFields.healthcareProfessionalDegrees"
-                data-testid="submission-form-degrees"
-                :place-holder-text="$t('modSubmissionForm.placeholderTextDegrees')"
-                :no-match-text="$t('modSubmissionForm.noDegreesWereFound')"
-                :fields-to-display-callback="degreesToDisplayCallback"
-                @search-input-change="handleDegreeInputChange"
-            />
-            <ol class="list-disc text-primary-text/60 font-semibold my-2 px-2">
-                <li
-                    v-for="degree in submissionFormFields.healthcareProfessionalDegrees"
-                    :key="`current-${degree}`"
-                    class="py-1"
+                    {{ $t('modSubmissionForm.healthcareProfessionalMedicalInfoHeading') }}
+                </h2>
+                <label
+                    for="accepted-insurances"
+                    class="my-2 text-primary-text text-sm font-bold font-sans"
                 >
-                    {{ degree }}
-                </li>
-            </ol>
-            <label
-                for="specialties"
-                class="my-2 text-primary-text text-sm font-bold font-sans"
-            >
-                {{ $t("modSubmissionForm.selectSpecialties") }}
-            </label>
-            <ModSearchBar
-                v-model="submissionFormFields.healthcareProfessionalSpecialties"
-                data-testid="submission-form-specialties"
-                :place-holder-text="$t('modSubmissionForm.placeholderTextSpecialties')"
-                :no-match-text="$t('modSubmissionForm.noSpecialtiesWereFound')"
-                :fields-to-display-callback="specialtiesToDisplayCallback"
-                @search-input-change="handleSpecialtyInputChange"
-            />
-            <ol class="list-disc text-primary-text/60 font-semibold my-2 px-2">
-                <li
-                    v-for="specialty in submissionFormFields.healthcareProfessionalSpecialties"
-                    :key="`current-${specialty}`"
-                    class="py-1"
+                    {{ $t("modSubmissionForm.selectInsurances") }}
+                </label>
+                <ModSearchBar
+                    v-model="submissionFormFields.healthcareProfessionalAcceptedInsurances"
+                    data-testid="submission-form-accepted-insurances"
+                    :place-holder-text="$t('modSubmissionForm.placeholderTextAcceptedInsurances')"
+                    :no-match-text="$t('modSubmissionForm.noInsurancesWereFound')"
+                    :fields-to-display-callback="insurancesToDisplayCallback"
+                    @search-input-change="handleInsuranceInputChange"
+                />
+                <ol class="list-disc text-primary-text/60 font-semibold my-2 px-2">
+                    <li
+                        v-for="insurance in submissionFormFields.healthcareProfessionalAcceptedInsurances"
+                        :key="`accepted-${insurance}`"
+                        class="py-1"
+                    >
+                        {{ insurance }}
+                    </li>
+                </ol>
+                <label
+                    for="degrees"
+                    class="my-2 text-primary-text text-sm font-bold font-sans"
                 >
-                    {{ specialty }}
-                </li>
-            </ol>
-            <label
-                for="locales"
-                class="my-2 text-primary-text text-sm font-bold font-sans"
-            >
-                {{ $t("modSubmissionForm.selectLocales") }}
-            </label>
-            <ModSearchBar
-                v-model="submissionFormFields.healthcareProfessionalLocales"
-                data-testid="submission-form-locales"
-                :place-holder-text="$t('modSubmissionForm.placeholderTextLocales')"
-                :no-match-text="$t('modSubmissionForm.noLocalesWereFound')"
-                :fields-to-display-callback="localesToDisplayCallback"
-                @search-input-change="handleLocaleInputChange"
-            />
-            <ol class="list-disc text-primary-text/60 font-semibold my-2 px-2">
-                <li
-                    v-for="locale in submissionFormFields.healthcareProfessionalLocales"
-                    :key="`spoken-${locale}`"
-                    class="py-1"
+                    {{ $t("modSubmissionForm.selectDegrees") }}
+                </label>
+                <ModSearchBar
+                    v-model="submissionFormFields.healthcareProfessionalDegrees"
+                    data-testid="submission-form-degrees"
+                    :place-holder-text="$t('modSubmissionForm.placeholderTextDegrees')"
+                    :no-match-text="$t('modSubmissionForm.noDegreesWereFound')"
+                    :fields-to-display-callback="degreesToDisplayCallback"
+                    @search-input-change="handleDegreeInputChange"
+                />
+                <ol class="list-disc text-primary-text/60 font-semibold my-2 px-2">
+                    <li
+                        v-for="degree in submissionFormFields.healthcareProfessionalDegrees"
+                        :key="`current-${degree}`"
+                        class="py-1"
+                    >
+                        {{ degree }}
+                    </li>
+                </ol>
+                <label
+                    for="specialties"
+                    class="my-2 text-primary-text text-sm font-bold font-sans"
                 >
-                    {{ localeStore.formatLanguageCodeToSimpleText(locale) }}
-                </li>
-            </ol>
+                    {{ $t("modSubmissionForm.selectSpecialties") }}
+                </label>
+                <ModSearchBar
+                    v-model="submissionFormFields.healthcareProfessionalSpecialties"
+                    data-testid="submission-form-specialties"
+                    :place-holder-text="$t('modSubmissionForm.placeholderTextSpecialties')"
+                    :no-match-text="$t('modSubmissionForm.noSpecialtiesWereFound')"
+                    :fields-to-display-callback="specialtiesToDisplayCallback"
+                    @search-input-change="handleSpecialtyInputChange"
+                />
+                <ol class="list-disc text-primary-text/60 font-semibold my-2 px-2">
+                    <li
+                        v-for="specialty in submissionFormFields.healthcareProfessionalSpecialties"
+                        :key="`current-${specialty}`"
+                        class="py-1"
+                    >
+                        {{ specialty }}
+                    </li>
+                </ol>
+                <label
+                    for="locales"
+                    class="my-2 text-primary-text text-sm font-bold font-sans"
+                >
+                    {{ $t("modSubmissionForm.selectLocales") }}
+                </label>
+                <ModSearchBar
+                    v-model="submissionFormFields.healthcareProfessionalLocales"
+                    data-testid="submission-form-locales"
+                    :place-holder-text="$t('modSubmissionForm.placeholderTextLocales')"
+                    :no-match-text="$t('modSubmissionForm.noLocalesWereFound')"
+                    :fields-to-display-callback="localesToDisplayCallback"
+                    @search-input-change="handleLocaleInputChange"
+                />
+                <ol class="list-disc text-primary-text/60 font-semibold my-2 px-2">
+                    <li
+                        v-for="locale in submissionFormFields.healthcareProfessionalLocales"
+                        :key="`spoken-${locale}`"
+                        class="py-1"
+                    >
+                        {{ localeStore.formatLanguageCodeToSimpleText(locale) }}
+                    </li>
+                </ol>
+            </div>
+            <button
+                type="button"
+                class="bg-currentColor text-white font-bold py-2 px-4 my-2 rounded w-56"
+                @click="submitUpdatedSubmission"
+            >
+                {{ $t('modSubmissionForm.updateButtonText') }}
+            </button>
         </div>
-        <button
-            type="button"
-            class="bg-currentColor text-white font-bold py-2 px-4 my-2 rounded w-56"
-            @click="submitUpdatedSubmission"
-        >
-            {{ $t('modSubmissionForm.updateButtonText') }}
-        </button>
     </form>
 </template>
 
@@ -534,11 +565,9 @@ import { ModSubmissionLeftNavbarSectionIDs, useModerationScreenStore, Moderation
 import { onBeforeRouteLeave } from '#app'
 import { useI18n } from '#imports'
 import { useModalStore } from '~/stores/modalStore'
-import SVGTrashCan from '~/assets/icons/trash-can.svg'
-import SVGProfileIcon from '~/assets/icons/profile-icon.svg'
 import { triggerFormValidationErrorMessages } from '~/utils/triggerFormValidationErrorMessages'
 import { arraysAreEqual } from '~/utils/arrayUtils'
-import { useLocaleStore, localeDisplayOptions } from '~/stores/localeStore'
+import { useLocaleStore } from '~/stores/localeStore'
 import { handleServerErrorMessaging } from '~/utils/handleServerErrorMessaging'
 /**
 This initalizes the variable that needs to be set on mount.
@@ -657,6 +686,192 @@ const listPrefectureJapanJa: Ref<string[]> = ref([
 const formSubmissionId = moderationSubmissionStore.selectedSubmissionId
 moderationSubmissionStore.filterSelectedSubmission(formSubmissionId)
 
+const addingNewNameLocaleForHealthcareProfessional: Ref<boolean> = ref(false)
+const editingExistingNameLocaleForHealthcareProfessional: Ref<boolean> = ref(false)
+const chosenNameLocaleIndex: Ref<number | null> = ref(null)
+const chosenHealthcareProfessionalNameLocaleToEdit: Ref<LocalizedNameInput | undefined> = ref()
+const nameLocaleInputsToAddOrUpdate: LocalizedNameInput = reactive(
+    { firstName: '',
+        lastName: '',
+        middleName: '',
+        locale: Locale.Und }
+)
+
+// Sets the locale being edited name value
+const setEditingLocaleName = (newValue: boolean) => {
+    editingExistingNameLocaleForHealthcareProfessional.value = newValue
+    // Makes sure both values cannot be true
+    addingNewNameLocaleForHealthcareProfessional.value = false
+}
+
+// Closes the locale being added name inputs
+const handleCloseAddingNewLocalizedName = () => {
+    // Allows for the inputs to completely transition before resetting the fields
+    setTimeout(() => resetNameLocaleInputs, 300)
+    addingNewNameLocaleForHealthcareProfessional.value = false
+    // Makes sure both values cannot be true
+    editingExistingNameLocaleForHealthcareProfessional.value = false
+}
+
+// Opens the locale being added name inputs
+const handleOpenAddNewNameWithReset = () => {
+    resetNameLocaleInputs()
+    addingNewNameLocaleForHealthcareProfessional.value = true
+    // Makes sure both values cannot be true
+    editingExistingNameLocaleForHealthcareProfessional.value = false
+}
+
+// This resets the fields
+const resetNameLocaleInputs = () => {
+    nameLocaleInputsToAddOrUpdate.firstName = ''
+    nameLocaleInputsToAddOrUpdate.middleName = ''
+    nameLocaleInputsToAddOrUpdate.lastName = ''
+    nameLocaleInputsToAddOrUpdate.locale = Locale.Und
+}
+
+// This autofills the inputs if a name is being edited
+const autofillNameLocaleInputWithChosenHealthcareProfessional = (localizedNameInput: LocalizedNameInput) => {
+    nameLocaleInputsToAddOrUpdate.firstName = localizedNameInput.firstName
+    nameLocaleInputsToAddOrUpdate.lastName = localizedNameInput.lastName
+    nameLocaleInputsToAddOrUpdate.middleName = localizedNameInput.middleName || ''
+    nameLocaleInputsToAddOrUpdate.locale = localizedNameInput.locale
+}
+
+// This will set the name that needs to be autofilled and move it to the zero index
+const setChosenLocaleNameInput = (index: number) => {
+    chosenNameLocaleIndex.value = index
+
+    // This will keep track of the healthcare professional to not lose it but we can swap it later with the chosen one
+    const tempToHoldZeroIndexedHealthcareProfessionalToSwap
+    = submissionFormFields.healthCareProfessionalNameArray[0]
+
+    // This finds the chosen healthcare professional to edit
+    chosenHealthcareProfessionalNameLocaleToEdit.value
+    = submissionFormFields.healthCareProfessionalNameArray.find((_, index) => index === chosenNameLocaleIndex.value)
+
+    if (chosenHealthcareProfessionalNameLocaleToEdit.value) {
+        // Set the chosen healthcare professional name to move it closer to the input
+        submissionFormFields.healthCareProfessionalNameArray[0]
+    = chosenHealthcareProfessionalNameLocaleToEdit.value
+        // Put the temp one in the index where the old locale name was
+        submissionFormFields.healthCareProfessionalNameArray[chosenNameLocaleIndex.value]
+        = tempToHoldZeroIndexedHealthcareProfessionalToSwap
+        // Autofill with the chosen healthcare professional locale name
+        autofillNameLocaleInputWithChosenHealthcareProfessional(chosenHealthcareProfessionalNameLocaleToEdit.value)
+        // Set the chosenNameLocaleIndex to 0 so the correct pencil is showing
+        chosenNameLocaleIndex.value = 0
+    }
+}
+
+const handleUpdateExistingName = () => {
+    const localizedNameToAdd: LocalizedNameInput = {
+        firstName: nameLocaleInputsToAddOrUpdate.firstName,
+        lastName: nameLocaleInputsToAddOrUpdate.lastName,
+        locale: nameLocaleInputsToAddOrUpdate.locale || Locale.Und,
+        middleName: nameLocaleInputsToAddOrUpdate.middleName
+    }
+
+    // Checks to keep user from adding a name with same locale instead of editing
+    const existingNameForLocale = submissionFormFields.healthCareProfessionalNameArray
+        .find(name => name.locale === nameLocaleInputsToAddOrUpdate.locale)
+
+    // Displays message if user is trying to add a locale for name that exists and they aren't editing a healthcare professional
+    if (existingNameForLocale) {
+        toast.error(t('modHealthcareProfessionalSection.nameForLocaleAlreadyExists'))
+        return
+    }
+
+    // Displays message for user if they haven't chosen a locale
+    if (!nameLocaleInputsToAddOrUpdate.locale || nameLocaleInputsToAddOrUpdate.locale === Locale.Und) {
+        toast.error(t('modHealthcareProfessionalSection.missingLocale'))
+        return
+    }
+
+    // This updates the array in the store with the new edited name since we already ordered the index to this when autofilling
+    if (chosenHealthcareProfessionalNameLocaleToEdit.value) {
+        submissionFormFields.healthCareProfessionalNameArray[0] = localizedNameToAdd
+    }
+
+    // This updates the array in the store with the new edited name since we already ordered the index to this when autofilling
+    if (chosenHealthcareProfessionalNameLocaleToEdit.value) {
+        submissionFormFields.healthCareProfessionalNameArray[0] = localizedNameToAdd
+    }
+
+    setEditingLocaleName(false)
+
+    // Allows for the inputs to completely transition before resetting the fields
+    setTimeout(() => {
+        resetNameLocaleInputs()
+        chosenHealthcareProfessionalNameLocaleToEdit.value = undefined
+        chosenNameLocaleIndex.value = null
+    }, 301)
+}
+
+const handleDeleteExistingName = () => {
+    if (submissionFormFields.healthCareProfessionalNameArray.length <= 1) {
+        toast.error(t('modHealthcareProfessionalSection.oneNameNecessary'))
+        return
+    }
+    // Remove the first element safely since we reordered the one for deletion at 0
+    submissionFormFields.healthCareProfessionalNameArray.shift()
+
+    setEditingLocaleName(false)
+
+    // Allows for the inputs to completely transition before resetting the fields
+    setTimeout(() => {
+        resetNameLocaleInputs()
+        chosenHealthcareProfessionalNameLocaleToEdit.value = undefined
+        chosenNameLocaleIndex.value = null
+    }, 301)
+}
+
+const handleAddLocalizedName = () => {
+    const localizedNameToAdd: LocalizedNameInput = {
+        firstName: nameLocaleInputsToAddOrUpdate.firstName,
+        lastName: nameLocaleInputsToAddOrUpdate.lastName,
+        locale: nameLocaleInputsToAddOrUpdate.locale || Locale.Und,
+        middleName: nameLocaleInputsToAddOrUpdate.middleName
+    }
+    // Checks to keep user from adding a name with same locale instead of editing
+    const existingNameForLocale = submissionFormFields.healthCareProfessionalNameArray
+        .find(name => name.locale === nameLocaleInputsToAddOrUpdate.locale)
+
+    // Displays message if user is trying to add a locale for name that exists and they aren't editing a healthcare professional
+    if (existingNameForLocale) {
+        toast.error(t('modHealthcareProfessionalSection.nameForLocaleAlreadyExists'))
+        return
+    }
+
+    // Displays message for user if they haven't entered a last name
+    if (!nameLocaleInputsToAddOrUpdate.lastName) {
+        toast.error(t('modHealthcareProfessionalSection.missingLastName'))
+        return
+    }
+
+    // Displays message for user if they haven't entered a first name
+    if (!nameLocaleInputsToAddOrUpdate.firstName) {
+        toast.error(t('modHealthcareProfessionalSection.missingFirstName'))
+        return
+    }
+
+    // Displays message for user if they haven't chosen a locale
+    if (!nameLocaleInputsToAddOrUpdate.locale || nameLocaleInputsToAddOrUpdate.locale === Locale.Und) {
+        toast.error(t('modHealthcareProfessionalSection.missingLocale'))
+        return
+    }
+
+    if (nameLocaleInputsToAddOrUpdate.firstName
+      && nameLocaleInputsToAddOrUpdate.lastName
+      && nameLocaleInputsToAddOrUpdate.firstName.length
+      && nameLocaleInputsToAddOrUpdate.lastName.length
+      && submissionFormFields.healthCareProfessionalNameArray) {
+        submissionFormFields.healthCareProfessionalNameArray.push(localizedNameToAdd)
+    }
+
+    // Sets the chosen healthcare professional to undefined to reset
+    handleCloseAddingNewLocalizedName()
+}
+
 const handleInsuranceInputChange = (filteredItems: Ref<Insurance[]>, inputValue: string) => {
     const arrayOfInsurances = Object.values(Insurance) as Insurance[]
 
@@ -705,27 +920,6 @@ const specialtiesToDisplayCallback = (specialty: Specialty) => [specialty]
 const degreesToDisplayCallback = (degree: Degree) => [degree]
 const insurancesToDisplayCallback = (insurance: Insurance) => [insurance]
 const localesToDisplayCallback = (locale: Locale) => [localeStore.formatLanguageCodeToSimpleText(locale)]
-
-const handleLocalizedNameToSubmission = () => {
-    const localizedNameToAdd: LocalizedNameInput = {
-        firstName: submissionFormFields.localizedFirstName,
-        lastName: submissionFormFields.localizedLastName,
-        locale: submissionFormFields.nameLocale || Locale.EnUs,
-        middleName: submissionFormFields.localizedMiddleName
-    }
-
-    if (localizedNameToAdd.firstName && localizedNameToAdd.lastName) {
-        submissionFormFields.healthCareProfessionalNameArray.push(localizedNameToAdd)
-        submissionFormFields.localizedFirstName = ''
-        submissionFormFields.localizedLastName = ''
-        submissionFormFields.localizedMiddleName = ''
-        submissionFormFields.nameLocale = Locale.EnUs
-    }
-}
-
-const handleRemoveHealthcareProfessionalName = (index: number) => {
-    submissionFormFields.healthCareProfessionalNameArray.splice(index, 1)
-}
 
 const validateFacilityFields = () => {
     const isNameEnValid: boolean = validateNameEn(submissionFormFields.nameEn)
