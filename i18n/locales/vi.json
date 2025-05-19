@@ -158,7 +158,10 @@
     "facilityDeletedSuccessfully": "Facility deleted successfully",
     "facilityUpdatedSuccessfully": "Facility updated successfully",
     "healthcareProfessionalDeletedSuccessfully": "Healthcare professional deleted successfully",
-    "healthcareProfessionalUpdatedSuccessfully": "Healthcare professional updated successfully"
+    "healthcareProfessionalUpdatedSuccessfully": "Healthcare professional updated successfully",
+    "back": "Back",
+    "confirmationButton": "Leave Page",
+    "hasUnsavedChanges": "You have unsaved changes. Are you sure you want to leave?"
   },
   "modEditSubmissionTopNav": {
     "saveAndExit": "Lưu và thoát.",

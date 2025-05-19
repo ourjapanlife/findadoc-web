@@ -164,7 +164,10 @@
     "facilityDeletedSuccessfully": "Struttura eliminata con successo",
     "facilityUpdatedSuccessfully": "Struttura aggiornata con successo",
     "healthcareProfessionalDeletedSuccessfully": "Professionista sanitario eliminato con successo",
-    "healthcareProfessionalUpdatedSuccessfully": "Professionista sanitario aggiornato con successo"
+    "healthcareProfessionalUpdatedSuccessfully": "Professionista sanitario aggiornato con successo",
+    "back": "Back",
+    "confirmationButton": "Leave Page",
+    "hasUnsavedChanges": "You have unsaved changes. Are you sure you want to leave?"
   },
   "modEditSubmissionTopNav": {
     "saveAndExit": "Salva & Esci",
