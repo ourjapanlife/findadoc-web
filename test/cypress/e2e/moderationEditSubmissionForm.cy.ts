@@ -38,6 +38,7 @@ describe('Moderation Edit Submission Form', () => {
             cy.get('[data-testid="submission-form-google-maps"]').should('exist')
             cy.get('[data-testid="submission-form-mapLatitude"]').should('exist')
             cy.get('[data-testid="submission-form-mapLongitude"]').should('exist')
+            cy.get('[data-testid="submission-form-notes"]').should('exist')
         })
 
         it('contains the following left nav buttons for navigation', () => {
@@ -99,6 +100,18 @@ describe('Moderation Edit Submission Form', () => {
                   + '0x60185d201648e7c1:0x8f37d37bb381e29!8m2!3d35.4371228!4d139.6514712!16s%2Fg%2F11clpxxvx5?hl=en-US&entry=ttu')
             cy.get('[data-testid="submission-form-mapLatitude"]').find('input').type('35.437123')
             cy.get('[data-testid="submission-form-mapLongitude"]').find('input').type('139.651471')
+        })
+
+        it('should be able to open the notes field for editing, type a note, and close the edit', () => {
+            cy.get('[data-testid="note-edit-button"]')
+                .click()
+            cy.get('[data-testid="submission-form-notes"]')
+                .clear()
+                .type('Sample note input')
+            cy.get('[data-testid="note-save-button"]')
+                .click()
+            cy.get('[data-testid="submission-form-notes"]')
+                .contains('Sample note input')
         })
 
         it('should be able to select a field', () => {
