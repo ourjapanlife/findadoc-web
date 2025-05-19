@@ -5,7 +5,7 @@ import { hasJapaneseCharacters,
     isValidWebsite,
     isFloat,
     isValidPostalCode } from './stringUtils'
-import { Locale } from '~/typedefs/gqlTypes'
+import { Locale, type LocalizedNameInput } from '~/typedefs/gqlTypes'
 
 export function validateNameEn(nameEn: string): boolean {
     if (nameEn.length < 1 || nameEn.length > 128) {
@@ -236,3 +236,22 @@ export function validateSecondSpokenLanguage(localeCode: string): boolean {
     return false
 }
 
+export function validateNameLocaleMatchesLanguage(
+  nameLocale: LocalizedNameInput
+): boolean {
+    const fullName = nameLocale.lastName
+      + (nameLocale.middleName || '')
+      + nameLocale.firstName
+
+    switch (nameLocale.locale) {
+        case Locale.JaJp:
+            return hasJapaneseCharacters(fullName)
+
+        case Locale.EnUs:
+            return hasLatinCharacters(fullName)
+
+        default:
+            // This defaults to true for now as we need to add for other languages functions
+            return true
+    }
+}
