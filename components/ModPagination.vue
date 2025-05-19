@@ -21,7 +21,7 @@
             v-if="totalPages >0 "
             :disabled="currentPage === 1 || totalPages === 0"
             class="w-10 h-10 flex items-center justify-center rounded bg-gray-400 disabled:opacity-30"
-            @click="emit('update:currentPage', currentPage - 1)"
+            @click="emit('update:currentPage', currentPage + 1)"
         >
             <SVGSVGRightArrow class="w-4 h-4 text-white" />
         </button>
