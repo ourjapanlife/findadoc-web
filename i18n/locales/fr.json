@@ -415,5 +415,12 @@
     "exit": "Exit",
     "heathcareProfessionalCreatedSuccessfully": "Healthcare professional created successfully.",
     "unsavedChangesMessage": "This will exit without saving your entry. All unsaved data will be lost."
+  },
+  "modDashboardHealthcareProfessionalCard": {
+    "spokenLanguages": "Spoken languages",
+    "lastName": "Last name",
+    "firstName": "First name",
+    "middleName": "Middle name",
+    "nameLocale": "Name locale"
   }
 }

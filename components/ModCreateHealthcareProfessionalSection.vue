@@ -373,7 +373,7 @@ const setChosenLocaleNameInput = (index: number) => {
         healthcareProfessionalsStore.createHealthcareProfessionalSectionFields.names[chosenLocaleIndex.value]
     = tempToHoldZeroIndexedHealthcareProfessionalToSwap
 
-        //Autofill with the chosen healthcare professional locale name]
+        //Autofill with the chosen healthcare professional locale name
         autofillNameLocaleInputWithChosenHealthcareProfessional(chosenHealthcareProfessionalToEdit.value)
         // Set the chosenLocaleIndex to 0 so the correct pencil is showing
         chosenLocaleIndex.value = 0
