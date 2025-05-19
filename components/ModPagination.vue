@@ -9,14 +9,13 @@
         >
             <SVGSVGLeftArrow class="w-4 h-4 text-white" />
         </button>
-
         <!-- Page info -->
         <p
             v-if="totalPages >0 "
-            class="text-sm text-gray-600">
+            class="text-sm text-gray-600"
+        >
             {{ $t("modPagination.page") }} {{ currentPage }} {{ $t("modPagination.of") }} {{ totalPages }}
         </p>
-
         <!-- Right arrow -->
         <button
             v-if="totalPages >0 "
