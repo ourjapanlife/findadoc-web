@@ -445,6 +445,10 @@
         "lastName": "Last name",
         "firstName": "First name",
         "middleName": "Middle name",
+<<<<<<< HEAD
         "nameLocale": "Name language"
+=======
+        "nameLocale": "Name locale"
+>>>>>>> 9068f40 (fix: optimize pagination component)
     }
 }
