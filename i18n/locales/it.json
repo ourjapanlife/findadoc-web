@@ -409,5 +409,9 @@
     "firstName": "First name",
     "middleName": "Middle name",
     "nameLocale": "Name locale"
+  },
+  "modPagination": {
+        "page": "Pagina",
+        "of": "di"
   }
 }
