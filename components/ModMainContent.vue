@@ -10,6 +10,16 @@
             <ModEditSubmissionForm />
         </div>
         <div
+            v-if="moderationScreenStore.createFacilityScreenIsActive()"
+            class="h-full overflow-y-auto"
+        >
+            <form
+                class="p-4 h-full overflow-y-auto"
+            >
+                <ModCreateFacilitySection />
+            </form>
+        </div>
+        <div
             v-if="moderationScreenStore.editFacilityScreenIsActive()"
             class="h-full overflow-y-auto"
         >
@@ -70,6 +80,11 @@ const setActiveScreenBasedOnRoute = async () => {
         moderationSubmissionsStore.selectedSubmissionId = ''
         facilitiesStore.selectedFacilityId = ''
         healthcareProfessionalStore.selectedHealthcareProfessionalId = ''
+        return
+    }
+    if (
+        routePathForModerationScreen.value.includes('create-facility')) {
+        moderationScreenStore.setActiveScreen(ModerationScreen.CreateFacility)
         return
     }
 

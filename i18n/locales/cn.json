@@ -120,6 +120,14 @@
     "unauthorizedline2": "如果您想成为审核员或有任何疑问，请联系我们。",
     "unauthorizedline3": "这里"
   },
+  "modCreateFacilityOrHPTopbar": {
+    "confirmExit": "Exit without saving",
+    "create": "Create",
+    "exit": "Exit",
+    "facilityCreatedSuccessfully": "Facility created successfully.",
+    "heathcareProfessionalCreatedSuccessfully": "Healthcare professional created successfully.",
+    "unsavedChangesMessage": "This will exit without saving your entry. All unsaved data will be lost."
+},
   "modDashboardLeftNav": {
     "facilities": "机构",
     "healthcareProfessionals": "医师",
@@ -313,6 +321,7 @@
     "healthcareProfessionalFacilities": "Healthcare Professional Facilities"
   },
   "modDashboardTopbar": {
+    "addFacility": "Add Facility",
     "placeholderText": "Enter name or ID to search",
     "approved": "Approved",
     "rejected": "Rejected",
@@ -406,11 +415,11 @@
     "editName": "Edit",
     "saveName": "Save"
   },
-  "modCreateFacilityOrHPTopbar": {
-    "confirmExit": "Exit without saving",
-    "create": "Create",
-    "exit": "Exit",
-    "heathcareProfessionalCreatedSuccessfully": "Healthcare professional created successfully.",
-    "unsavedChangesMessage": "This will exit without saving your entry. All unsaved data will be lost."
+  "modDashboardHealthcareProfessionalCard": {
+    "spokenLanguages": "Spoken languages",
+    "lastName": "Last name",
+    "firstName": "First name",
+    "middleName": "Middle name",
+    "nameLocale": "Name locale"
   }
 }

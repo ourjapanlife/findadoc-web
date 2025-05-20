@@ -77,6 +77,19 @@ export const useHealthcareProfessionalsStore = defineStore(
             healthcareProfessionalSectionFields.updatedDate = healthcareProfessional.updatedDate
         }
 
+        function resetHealthcareProfessionalSectionFields() {
+            // eslint-disable-next-line no-underscore-dangle
+            healthcareProfessionalSectionFields.__typename = 'HealthcareProfessional'
+            healthcareProfessionalSectionFields.acceptedInsurance = []
+            healthcareProfessionalSectionFields.createdDate = ''
+            healthcareProfessionalSectionFields.degrees = []
+            healthcareProfessionalSectionFields.facilityIds = []
+            healthcareProfessionalSectionFields.id = ''
+            healthcareProfessionalSectionFields.names = []
+            healthcareProfessionalSectionFields.specialties = []
+            healthcareProfessionalSectionFields.spokenLanguages = []
+            healthcareProfessionalSectionFields.updatedDate = ''
+        }
         async function getHealthcareProfessionals() {
             const healthcareProfessionalResults = await queryHealthcareProfessionals()
             healthcareProfessionalsData.value = healthcareProfessionalResults
@@ -219,7 +232,8 @@ export const useHealthcareProfessionalsStore = defineStore(
             selectedFacilities,
             createHealthcareProfessional,
             createHealthcareProfessionalSectionFields,
-            resetCreateHealthcareProfessionalFields
+            resetCreateHealthcareProfessionalFields,
+            resetHealthcareProfessionalSectionFields
         }
     }
 )
