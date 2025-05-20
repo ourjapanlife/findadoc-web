@@ -135,6 +135,7 @@
   },
   "modSubmissionForm": {
     "addresses": "Adresses",
+    "autofill": "Remplissage Automatique",
     "contactInformation": "Informations de contact",
     "googleMapsInformation": "Informations Google Maps",
     "healthcareProfessionalId": "Identifiants des professionnels de santé",

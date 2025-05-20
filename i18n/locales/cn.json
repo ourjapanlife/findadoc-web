@@ -199,6 +199,7 @@
   },
   "modSubmissionForm": {
     "addresses": "地址",
+    "autofill": "自动填充",
     "contactInformation": "联系方式",
     "googleMapsInformation": "谷歌地图信息",
     "healthcareProfessionalId": "医师ID",

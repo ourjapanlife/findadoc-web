@@ -304,6 +304,7 @@
     "modSubmissionForm": {
         "addHealthCareProfessionalLocaleName": "Add Name by Locale",
         "addresses": "Addresses",
+        "autofill": "Autofill",
         "confirmationButton": "Leave Page",
         "hasUnsavedChanges": "You have unsaved changes. Are you sure you want to leave?",
         "contactInformation": "Contact Information",

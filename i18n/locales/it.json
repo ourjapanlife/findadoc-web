@@ -297,6 +297,7 @@
   "modSubmissionForm": {
     "addHealthCareProfessionalLocaleName": "Aggiungi nome per località",
     "addresses": "Indirizzi",
+    "autofill": "Riempimento Automatico",
     "confirmationButton": "Lascia la pagina",
     "hasUnsavedChanges": "Hai delle modifiche non salvate. Sei sicuro di voler uscire?",
     "contactInformation": "Informazioni di contatto",

@@ -245,6 +245,7 @@
   "modSubmissionForm": {
     "addHealthCareProfessionalLocaleName": "Magdagdag ng Pangalan ayon sa Lokal",
     "addresses": "Mga Address",
+    "autofill": "Autofill",
     "confirmationButton": "Umalis sa pahina",
     "hasUnsavedChanges": "Mayroon mga hindi na-save na pagbabago. Sigurado ka bang nais mong umalis?",
     "contactInformation": "Impormasyon sa Pakikipag-ugnayan",

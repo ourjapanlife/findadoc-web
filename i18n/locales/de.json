@@ -199,6 +199,7 @@
   },
   "modSubmissionForm": {
     "addresses": "Adressen",
+    "autofill": "Automatisch Ausfüllen",
     "contactInformation": "Kontaktinformationen",
     "googleMapsInformation": "Google Maps Informationen",
     "healthcareProfessionalId": "Gesundheitsfachkraft-IDs",

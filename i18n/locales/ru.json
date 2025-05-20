@@ -185,6 +185,7 @@
   },
   "modSubmissionForm": {
     "addresses": "Адреса",
+    "autofill": "автозаполнение",
     "contactInformation": "Контактная информация",
     "googleMapsInformation": " Информация о картах Google ",
     "healthcareProfessionalId": "ID Медицинских специалистов ",

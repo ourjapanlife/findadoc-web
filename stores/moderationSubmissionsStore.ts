@@ -1,7 +1,9 @@
 import { gql } from 'graphql-request'
 import { defineStore } from 'pinia'
 import { ref, type Ref } from 'vue'
-import type { Submission, MutationUpdateSubmissionArgs, Mutation, Query } from '~/typedefs/gqlTypes.js'
+import type { Submission, MutationUpdateSubmissionArgs, Mutation, Query,
+    UpdateSubmissionInput, ModerationAutofillDatabaseSubmissionInput,
+    MutationModerationPanelUpdateSubmissionArgs } from '~/typedefs/gqlTypes.js'
 import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql.js'
 import type { ServerResponse } from '~/typedefs/serverResponse'
 
@@ -138,6 +140,15 @@ export const useModerationSubmissionsStore = defineStore(
 
             return updateSubmission(facilityInputVariables)
         }
+
+        // async function autofill() {
+        //     const autofillInput: MutationModerationPanelUpdateSubmissionArgs = {
+        //         input: {
+        //             googleMapsUrl: ,
+        //             id: selectedSubmissionId,
+        //         }
+        //     }
+        // }
 
         return { getSubmissions,
             submissionsData,
