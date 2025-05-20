@@ -518,11 +518,7 @@ import { Locale,
     type LocalizedNameInput,
     Insurance,
     Degree,
-    Specialty,
-    type ContactInput,
-    type CreateFacilityInput,
-    type CreateHealthcareProfessionalInput,
-    type PhysicalAddressInput } from '~/typedefs/gqlTypes'
+    Specialty } from '~/typedefs/gqlTypes'
 import { validateAddressLineEn,
     validateAddressLineJa,
     validateNameEn,
@@ -876,16 +872,16 @@ function initializeSubmissionFormValues(submissionData: Submission | undefined) 
                         = submissionData.spokenLanguages
                     // For change check
                     submissionFormFieldsBeforeChanges.healthcareProfessionalAcceptedInsurances
-                        = submissionData?.healthcareProfessionals?.[0]?.acceptedInsurance
-                          ?? []
+                        = JSON.parse(JSON.stringify(submissionData?.healthcareProfessionals?.[0]?.acceptedInsurance
+                          ?? []))
                     submissionFormFieldsBeforeChanges.healthcareProfessionalDegrees
-                        = submissionData?.healthcareProfessionals?.[0]?.degrees
-                          ?? []
+                        = JSON.parse(JSON.stringify(submissionData?.healthcareProfessionals?.[0]?.degrees
+                          ?? []))
                     submissionFormFieldsBeforeChanges.healthcareProfessionalSpecialties
-                        = submissionData?.healthcareProfessionals?.[0]?.specialties
-                          ?? []
+                        = JSON.parse(JSON.stringify(submissionData?.healthcareProfessionals?.[0]?.specialties
+                          ?? []))
                     submissionFormFieldsBeforeChanges.healthcareProfessionalLocales
-                        = submissionData.spokenLanguages
+                        = JSON.parse(JSON.stringify(submissionData?.spokenLanguages ?? []))
                     break
                 case 'healthcareProfessionalIDs':
                     // For v-model
@@ -905,49 +901,61 @@ function initializeSubmissionFormValues(submissionData: Submission | undefined) 
     }
 }
 
+const hasFacilityChanges = (before: typeof submissionFormFieldsBeforeChanges, after: typeof submissionFormFields): boolean =>
+    before.nameEn !== after.nameEn
+    || before.nameJa !== after.nameJa
+    || before.googlemapsURL !== after.googlemapsURL
+    || before.phone !== after.phone
+    || before.email !== after.email
+    || before.website !== after.website
+    || before.postalCode !== after.postalCode
+    || before.prefectureEn !== after.prefectureEn
+    || before.cityEn !== after.cityEn
+    || before.addressLine1En !== after.addressLine1En
+    || before.addressLine2En !== after.addressLine2En
+    || before.prefectureJa !== after.prefectureJa
+    || before.cityJa !== after.cityJa
+    || before.addressLine1Ja !== after.addressLine1Ja
+    || before.addressLine2Ja !== after.addressLine2Ja
+    || before.mapLatitude !== after.mapLatitude
+    || before.mapLongitude !== after.mapLongitude
+    /* returns false if not equal so to make it be true we add the ! to follow
+       the same logic as above */
+    || !arraysAreEqual(
+        before.healthcareProfessionalIDs,
+        after.healthcareProfessionalIDs
+    )
+
+const hasHealthcareProfessionalChanges = (
+    before: typeof submissionFormFieldsBeforeChanges,
+    after: typeof submissionFormFields
+): boolean =>
+    !arraysAreEqual(
+        before.healthcareProfessionalAcceptedInsurances,
+        after.healthcareProfessionalAcceptedInsurances
+    )
+    || !arraysAreEqual(
+        before.healthcareProfessionalDegrees,
+        after.healthcareProfessionalDegrees
+    )
+    || !arraysAreEqual(
+        before.healthcareProfessionalSpecialties,
+        after.healthcareProfessionalSpecialties
+    )
+    || !arraysAreEqual(
+        before.healthcareProfessionalLocales,
+        after.healthcareProfessionalLocales
+    )
+    || !arraysAreEqual(
+        before.healthCareProfessionalNameArray,
+        after.healthCareProfessionalNameArray
+    )
+
 const submissionHasUnsavedChanges = () => {
     const checkForUnsavedChanges
-    = submissionFormFieldsBeforeChanges.addressLine1En !== submissionFormFields.addressLine1En
-      || submissionFormFieldsBeforeChanges.addressLine1Ja !== submissionFormFields.addressLine1Ja
-      || submissionFormFieldsBeforeChanges.addressLine2En !== submissionFormFields.addressLine2En
-      || submissionFormFieldsBeforeChanges.addressLine2Ja !== submissionFormFields.addressLine2Ja
-      || submissionFormFieldsBeforeChanges.cityEn !== submissionFormFields.cityEn
-      || submissionFormFieldsBeforeChanges.cityJa !== submissionFormFields.cityJa
-      || submissionFormFieldsBeforeChanges.postalCode !== submissionFormFields.postalCode
-      || submissionFormFieldsBeforeChanges.prefectureEn !== submissionFormFields.prefectureEn
-      || submissionFormFieldsBeforeChanges.prefectureJa !== submissionFormFields.prefectureJa
-      || submissionFormFieldsBeforeChanges.email !== submissionFormFields.email
-      || submissionFormFieldsBeforeChanges.googlemapsURL !== submissionFormFields.googlemapsURL
-      || submissionFormFieldsBeforeChanges.phone !== submissionFormFields.phone
-      || submissionFormFieldsBeforeChanges.website !== submissionFormFields.website
-      /* returns false if not equal so to make it be true we add the ! to follow
-       the same logic as above */
-      || !arraysAreEqual(
-          submissionFormFieldsBeforeChanges.healthcareProfessionalIDs,
-          submissionFormFields.healthcareProfessionalIDs
-      )
-      || submissionFormFieldsBeforeChanges.mapLatitude !== submissionFormFields.mapLatitude
-      || submissionFormFieldsBeforeChanges.mapLongitude !== submissionFormFields.mapLongitude
-      || submissionFormFieldsBeforeChanges.nameEn !== submissionFormFields.nameEn
-      || submissionFormFieldsBeforeChanges.nameJa !== submissionFormFields.nameJa
-      || submissionFormFieldsBeforeChanges.googlemapsURL !== submissionFormFields.googlemapsURL
+    = hasFacilityChanges(submissionFormFieldsBeforeChanges, submissionFormFields)
+      || hasHealthcareProfessionalChanges(submissionFormFieldsBeforeChanges, submissionFormFields)
       || submissionFormFieldsBeforeChanges.notes !== submissionFormFields.notes
-      || !arraysAreEqual(
-          submissionFormFieldsBeforeChanges.healthcareProfessionalLocales,
-          submissionFormFields.healthcareProfessionalLocales
-      )
-      || !arraysAreEqual(
-          submissionFormFieldsBeforeChanges.healthCareProfessionalNameArray,
-          submissionFormFields.healthCareProfessionalNameArray
-      )
-      || !arraysAreEqual(
-          submissionFormFieldsBeforeChanges.healthcareProfessionalAcceptedInsurances,
-          submissionFormFields.healthcareProfessionalAcceptedInsurances
-      )
-      || !arraysAreEqual(
-          submissionFormFieldsBeforeChanges.healthcareProfessionalDegrees,
-          submissionFormFields.healthcareProfessionalDegrees
-      )
 
     formHasUnsavedChanges.value = true
     return checkForUnsavedChanges
@@ -965,91 +973,11 @@ async function submitUpdatedSubmission(e: Event) {
         return
     }
 
-    type SubmissionFormFields = typeof submissionFormFields
-    const markUnchangedFieldsAsUndefined = (
-        currentSubmissionForm: SubmissionFormFields,
-        submissionFormBeforeChanges: SubmissionFormFields
-    ) => {
-        const result: Partial<
-            Record<keyof SubmissionFormFields, SubmissionFormFields[keyof SubmissionFormFields] | undefined>
-        > = {}
-
-        for (const key in currentSubmissionForm) {
-            const typedKey = key as keyof SubmissionFormFields
-            const currentVal = currentSubmissionForm[typedKey]
-            const valBeforeChanges = submissionFormBeforeChanges[typedKey]
-
-            // Compare current with original and return undefined if there are no changes
-            if (typeof currentVal === 'string' || typeof currentVal === 'boolean') {
-                result[typedKey] = currentVal === valBeforeChanges ? undefined : currentVal
-            } else if (Array.isArray(currentVal)) {
-                result[typedKey] = JSON.stringify(currentVal) === JSON.stringify(valBeforeChanges) ? undefined : currentVal
-            }
-        }
-
-        return result
-    }
-
-    const cleanedFields = markUnchangedFieldsAsUndefined(
-        submissionFormFields,
-        submissionFormFieldsBeforeChanges
-    )
-
-    const address: Partial<PhysicalAddressInput> = {
-        ...(typeof cleanedFields.postalCode === 'string' && { postalCode: cleanedFields.postalCode }),
-        ...(typeof cleanedFields.prefectureEn === 'string' && { prefectureEn: cleanedFields.prefectureEn }),
-        ...(typeof cleanedFields.cityEn === 'string' && { cityEn: cleanedFields.cityEn }),
-        ...(typeof cleanedFields.addressLine1En === 'string' && { addressLine1En: cleanedFields.addressLine1En }),
-        ...(typeof cleanedFields.addressLine2En === 'string' && { addressLine2En: cleanedFields.addressLine2En }),
-        ...(typeof cleanedFields.prefectureJa === 'string' && { prefectureJa: cleanedFields.prefectureJa }),
-        ...(typeof cleanedFields.cityJa === 'string' && { cityJa: cleanedFields.cityJa }),
-        ...(typeof cleanedFields.addressLine1Ja === 'string' && { addressLine1Ja: cleanedFields.addressLine1Ja }),
-        ...(typeof cleanedFields.addressLine2Ja === 'string' && { addressLine2Ja: cleanedFields.addressLine2Ja })
-    }
-
-    const contact: Partial<ContactInput> = {
-        ...(typeof cleanedFields.googlemapsURL === 'string' && { googleMapsUrl: cleanedFields.googlemapsURL }),
-        ...(typeof cleanedFields.phone === 'string' && { phone: cleanedFields.phone }),
-        ...(typeof cleanedFields.email === 'string' && { email: cleanedFields.email }),
-        ...(typeof cleanedFields.website === 'string' && { website: cleanedFields.website })
-    }
-
-    const facility: Partial<CreateFacilityInput> = {
-        ...(typeof cleanedFields.nameEn === 'string' && { nameEn: cleanedFields.nameEn }),
-        ...(typeof cleanedFields.nameJa === 'string' && { nameJa: cleanedFields.nameJa }),
-        ...(typeof cleanedFields.mapLatitude === 'string' && { mapLatitude: parseFloat(cleanedFields.mapLatitude) }),
-        ...(typeof cleanedFields.mapLongitude === 'string' && { mapLongitude: parseFloat(cleanedFields.mapLongitude) })
-    }
-
-    const healthcareProfessionals: Partial<CreateHealthcareProfessionalInput>[] = [
-        {
-            ...(Array.isArray(cleanedFields.healthcareProfessionalAcceptedInsurances)
-              && cleanedFields.healthcareProfessionalAcceptedInsurances.length > 0 && {
-                acceptedInsurance: cleanedFields.healthcareProfessionalAcceptedInsurances as Insurance[]
-            }),
-            ...(Array.isArray(cleanedFields.healthcareProfessionalDegrees)
-              && cleanedFields.healthcareProfessionalDegrees.length > 0 && {
-                degrees: cleanedFields.healthcareProfessionalDegrees as Degree[]
-            }),
-            ...(Array.isArray(cleanedFields.healthcareProfessionalSpecialties)
-              && cleanedFields.healthcareProfessionalSpecialties.length > 0 && {
-                specialties: cleanedFields.healthcareProfessionalSpecialties as Specialty[]
-            }),
-            ...(Array.isArray(cleanedFields.healthcareProfessionalLocales)
-              && cleanedFields.healthcareProfessionalLocales.length > 0 && {
-                spokenLanguages: cleanedFields.healthcareProfessionalLocales as Locale[]
-            }),
-            ...(Array.isArray(cleanedFields.healthCareProfessionalNameArray)
-              && cleanedFields.healthCareProfessionalNameArray.length > 0 && {
-                names: cleanedFields.healthCareProfessionalNameArray as LocalizedNameInput[]
-            })
-        }
-    ]
-
     const submissionInputVariables: MutationUpdateSubmissionArgs = {
         id: formSubmissionId,
         input: {
-            ...((hasTruthyValues(facility) || hasTruthyValues(contact) || hasTruthyValues(address)) && {
+            // include facility object only if there are changes in any of the fields
+            ...(hasFacilityChanges(submissionFormFieldsBeforeChanges, submissionFormFields) && {
                 facility: {
                     nameEn: submissionFormFields.nameEn,
                     nameJa: submissionFormFields.nameJa,
@@ -1067,20 +995,40 @@ async function submitUpdatedSubmission(e: Event) {
                             addressLine1Ja: submissionFormFields.addressLine1Ja,
                             addressLine2Ja: submissionFormFields.addressLine2Ja
                         },
-                        ...contact
+                        // include only if there are changes as these are optional fields
+                        ...(submissionFormFieldsBeforeChanges.email !== submissionFormFields.email
+                          && { email: submissionFormFields.email }),
+                        ...(submissionFormFieldsBeforeChanges.website !== submissionFormFields.website
+                          && { website: submissionFormFields.website })
                     },
-                    healthcareProfessionalIds: [],
+                    healthcareProfessionalIds: submissionFormFields.healthcareProfessionalIDs,
                     mapLatitude: parseFloat(submissionFormFields.mapLatitude) || 0,
                     mapLongitude: parseFloat(submissionFormFields.mapLongitude) || 0
                 }
             }),
-            ...(healthcareProfessionals.some (obj => hasTruthyValues(obj)) && {
-                healthcareProfessionals: healthcareProfessionals.map(prof => ({
+            // include healthcare professionals array only if there are changes in any of the fields
+            ...(hasHealthcareProfessionalChanges(submissionFormFieldsBeforeChanges, submissionFormFields) && {
+                healthcareProfessionals: [{
                     spokenLanguages: submissionFormFields.healthcareProfessionalLocales,
                     names: submissionFormFields.healthCareProfessionalNameArray,
                     facilityIds: [],
-                    ...prof
-                }))
+                    // include only if there are changes or existing values
+                    ...((!arraysAreEqual(
+                        submissionFormFields.healthcareProfessionalAcceptedInsurances,
+                        submissionFormFieldsBeforeChanges.healthcareProfessionalAcceptedInsurances
+                    ) || submissionFormFields.healthcareProfessionalAcceptedInsurances.length > 0)
+                    && { acceptedInsurance: submissionFormFields.healthcareProfessionalAcceptedInsurances }),
+                    ...((!arraysAreEqual(
+                        submissionFormFields.healthcareProfessionalDegrees,
+                        submissionFormFieldsBeforeChanges.healthcareProfessionalDegrees
+                    ) || submissionFormFields.healthcareProfessionalDegrees.length > 0)
+                    && { degrees: submissionFormFields.healthcareProfessionalDegrees }),
+                    ...((!arraysAreEqual(
+                        submissionFormFields.healthcareProfessionalSpecialties,
+                        submissionFormFieldsBeforeChanges.healthcareProfessionalSpecialties
+                    ) || submissionFormFields.healthcareProfessionalSpecialties.length > 0)
+                    && { specialties: submissionFormFields.healthcareProfessionalSpecialties })
+                }]
             })
         }
     }
