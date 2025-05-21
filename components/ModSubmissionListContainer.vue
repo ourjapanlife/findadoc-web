@@ -50,7 +50,7 @@
             class="grid grid-cols-subgrid col-span-4"
         >
             <div
-                v-for="(facility, index) in facilitiesStore.facilityData"
+                v-for="(facility, index) in paginatedFacilities"
                 :key="index"
                 class="grid grid-cols-subgrid col-span-4 bg-tertiary-bg"
             >
@@ -62,7 +62,9 @@
                         :to="`/moderation/edit-facility/${facility.id}`"
                         class="grid grid-cols-subgrid col-span-4 p-1 hover:bg-primary"
                     >
-                        <span class="text-start">{{ index + 1 }}</span>
+                        <span class="text-start">
+                            {{ (currentFacilitiesPage - 1) * facilitiesPerPage + index + 1 }}
+                        </span>
                         <span class="text-start">
                             {{ facility?.nameEn }}
                         </span>
@@ -71,6 +73,12 @@
                     </NuxtLink>
                 </div>
             </div>
+            <ModPagination
+                :current-page="currentFacilitiesPage"
+                :total-items="totalFacilities"
+                :items-per-page="facilitiesPerPage"
+                @update:current-page="val => currentFacilitiesPage = val"
+            />
         </div>
         <div
             v-else-if="hasHealthcareProfessionals
@@ -108,14 +116,18 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted } from 'vue'
+import { computed, onMounted, ref, type Ref } from 'vue'
 import { SelectedModerationListView, useModerationSubmissionsStore } from '~/stores/moderationSubmissionsStore'
 import { useHealthcareProfessionalsStore } from '~/stores/healthcareProfessionalsStore'
 import { useFacilitiesStore } from '~/stores/facilitiesStore'
+import ModPagination from '~/components/ModPagination.vue'
 
 const modSubmissionsListStore = useModerationSubmissionsStore()
 const healthcareProfessionalsStore = useHealthcareProfessionalsStore()
 const facilitiesStore = useFacilitiesStore()
+
+const currentFacilitiesPage: Ref<number> = ref(1)
+const facilitiesPerPage = 20
 
 onMounted(async () => {
     await modSubmissionsListStore.getSubmissions()
@@ -140,4 +152,13 @@ const submissionListItemTableColumns = computed(() => {
 const handleClickToSubmissionForm = (id: string) => {
     modSubmissionsListStore.selectedSubmissionId = id
 }
+
+const paginatedFacilities = computed(() => {
+    const start = (currentFacilitiesPage.value - 1) * facilitiesPerPage
+    const end = start + facilitiesPerPage
+    return facilitiesStore.facilityData.slice(start, end)
+})
+const totalFacilities = computed(() =>
+    facilitiesStore.facilityData.length)
 </script>
+
