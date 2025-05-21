@@ -2,7 +2,7 @@
     <div class="flex items-center justify-center gap-4 mt-4">
         <!-- Left arrow -->
         <button
-
+            v-if="totalPages >0 "
             :disabled="currentPage === 1 || totalPages === 0"
             class="w-10 h-10 flex items-center justify-center rounded bg-gray-400 disabled:opacity-30"
             @click="emit('update:currentPage', currentPage - 1)"
@@ -11,14 +11,14 @@
         </button>
         <!-- Page info -->
         <p
-
+            v-if="totalPages >0 "
             class="text-sm text-gray-600"
         >
             {{ $t("modPagination.page") }} {{ currentPage }} {{ $t("modPagination.of") }} {{ totalPages }}
         </p>
         <!-- Right arrow -->
         <button
-
+            v-if="totalPages >0 "
             :disabled="currentPage === 1 || totalPages === 0"
             class="w-10 h-10 flex items-center justify-center rounded bg-gray-400 disabled:opacity-30"
             @click="emit('update:currentPage', currentPage + 1)"
