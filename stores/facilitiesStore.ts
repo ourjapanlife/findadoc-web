@@ -171,8 +171,10 @@ export const useFacilitiesStore = defineStore(
             return serverResponse
         }
 
-        async function updateFacility():
-        Promise<ServerResponse<Facility>> {
+        async function updateFacility(): Promise<ServerResponse<Facility>> {
+            // healthProfessionalRelations array before updating the healthcare professionals related to a facility
+            const preUpdateRelations = [...facilitySectionFields.healthProfessionalsRelations]
+
             const updateFacilityInput: MutationUpdateFacilityArgs = {
                 id: selectedFacilityId.value,
                 input: {
@@ -209,11 +211,20 @@ export const useFacilitiesStore = defineStore(
                 updateFacilityInput
             )
 
-            if (!serverResponse.errors?.length) {
+            if (!serverResponse.errors?.length && serverResponse.data) {
                 // update the necessary values with the updated response
-                selectedFacilityData.value = serverResponse.data!
-                initializeFacilitySectionValues(serverResponse.data!)
-                facilitySectionFields.healthProfessionalsRelations = []
+                selectedFacilityData.value = serverResponse.data
+                initializeFacilitySectionValues(serverResponse.data)
+
+                // compare the healthProfessionalRelations array from before and after updating the facility
+                const postUpdateRelations = facilitySectionFields.healthProfessionalsRelations
+                const hasUserChangedRelations
+                    = postUpdateRelations.length !== preUpdateRelations.length
+                      || !postUpdateRelations.every((relation, i) => relation === preUpdateRelations[i])
+
+                if (!hasUserChangedRelations) {
+                    facilitySectionFields.healthProfessionalsRelations = []
+                }
             }
 
             return serverResponse
