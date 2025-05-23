@@ -147,10 +147,10 @@
                     {{ $t('modSubmissionForm.labelFacilityPrefectureEn') }}
                 </label>
                 <select
-                    id="1"
+                    id="prefecture-select-en"
                     v-model="submissionFormFields.prefectureEn"
                     data-testid="submission-form-prefectureEn"
-                    name="Prefecture Japan"
+                    name="prefecture-japan-en"
                     class="mb-5 px-3 py-3.5 w-96 h-12 bg-secondary-bg rounded-lg border border-primary-text-muted
                         text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
                 >
@@ -200,10 +200,10 @@
                     {{ $t('modSubmissionForm.labelFacilityPrefectureJa') }}
                 </label>
                 <select
-                    id="1"
+                    id="prefecture-select-ja"
                     v-model="submissionFormFields.prefectureJa"
                     data-testid="submission-form-prefectureJa"
-                    name="prefecture-japan"
+                    name="prefecture-japan-ja"
                     class="mb-5 px-3 py-3.5 w-96 h-12 bg-secondary-bg rounded-lg border border-primary-text-muted
                     text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
                 >
