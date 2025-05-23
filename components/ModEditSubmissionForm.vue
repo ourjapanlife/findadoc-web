@@ -62,6 +62,13 @@
             :id="ModSubmissionLeftNavbarSectionIDs.ContactInformation"
             class="submission-form-section"
         >
+            <button
+                type="button"
+                class="bg-primary p-4 rounded-full my-8 font-semibold text-xl text-white"
+                @click="handleAutoFillSubmission"
+            >
+                {{ $t('modSubmissionForm.autofill') }}
+            </button>
             <h1
                 class="mb-3.5 text-start text-primary-text text-3xl font-bold font-sans leading-normal"
             >
@@ -1322,4 +1329,21 @@ onBeforeRouteLeave(async (to, from, next) => {
     }
     next()
 })
+
+const submissionInputVariablesAutofill: MutationUpdateSubmissionArgs = {
+    id: formSubmissionId,
+    input: {
+        autofillPlaceFromSubmissionUrl: true,
+        googleMapsUrl: 'https://maps.app.goo.gl/ZvV6JwDQoP5RkW7c9'
+    }
+}
+
+const handleAutoFillSubmission = async () => {
+    // const selectedSubmissionId = moderationSubmissionStore.selectedSubmissionId
+
+    const results = await moderationSubmissionStore.updateSubmission(submissionInputVariablesAutofill)
+
+    console.log('Update from places button clicked')
+    console.log('Results', results)
+}
 </script>
