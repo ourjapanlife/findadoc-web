@@ -85,7 +85,8 @@ const searchValue: Ref<string> = ref('')
 const healthcareProfessionalByIdOrName: Ref<HealthcareProfessional[] | []> = ref([])
 
 const addHealthcareProfessional = (id: string) => {
-    if (moderationScreenStore.editFacilityScreenIsActive()) {
+    if (moderationScreenStore.editFacilityScreenIsActive()
+      || moderationScreenStore.createFacilityScreenIsActive()) {
         //Check if the healthcareProfessional has already been added
         const foundProfessionalAlreadyPartOfFacility
         = facilitiesStore.facilitySectionFields.healthProfessionalsRelations
