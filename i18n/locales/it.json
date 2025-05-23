@@ -126,6 +126,14 @@
     "unauthorizedline2": "Se desideri diventare un moderatore o hai domande, contattaci",
     "unauthorizedline3": "qui"
   },
+  "modCreateFacilityOrHPTopbar": {
+    "confirmExit": "Exit without saving",
+    "create": "Create",
+    "exit": "Exit",
+    "facilityCreatedSuccessfully": "Facility created successfully.",
+    "heathcareProfessionalCreatedSuccessfully": "Healthcare professional created successfully.",
+    "unsavedChangesMessage": "This will exit without saving your entry. All unsaved data will be lost."
+},
   "modDashboardLeftNav": {
     "facilities": "Strutture",
     "healthcareProfessionals": "Professionisti sanitari",
@@ -146,6 +154,7 @@
     "healthcareProfessionalFacilities": "Strutture collegate ai medici"
   },
   "modDashboardTopbar": {
+    "addFacility": "Add Facility",
     "placeholderText": "Inserisci nome o ID per la ricerca",
     "approved": "Approvato",
     "rejected": "Rifiutato",
@@ -396,11 +405,11 @@
     "noDegreesWereFound": "No degrees were found",
     "noLocalesWereFound": "No locales were found"
   },
-  "modCreateFacilityOrHPTopbar": {
-    "confirmExit": "Exit without saving",
-    "create": "Create",
-    "exit": "Exit",
-    "heathcareProfessionalCreatedSuccessfully": "Healthcare professional created successfully.",
-    "unsavedChangesMessage": "This will exit without saving your entry. All unsaved data will be lost."
+  "modDashboardHealthcareProfessionalCard": {
+    "spokenLanguages": "Spoken languages",
+    "lastName": "Last name",
+    "firstName": "First name",
+    "middleName": "Middle name",
+    "nameLocale": "Name locale"
   }
 }
