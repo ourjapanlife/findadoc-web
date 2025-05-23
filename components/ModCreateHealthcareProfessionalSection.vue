@@ -44,7 +44,7 @@
                         :required="false"
                     />
                     <label
-                        for="name_locales"
+                        for="name-locales"
                         class="my-2 text-primary-text text-sm font-bold font-sans"
                     >
                         {{ $t('modHealthcareProfessionalSection.labelHealthcareProfessionalNameLocale') }}
@@ -139,7 +139,7 @@
                 {{ $t('modHealthcareProfessionalSection.healthcareProfessionalMedicalInfoHeading') }}
             </h2>
             <label
-                for="Accepted Insurances"
+                for="accepted-insurances"
                 class="my-2 text-primary-text text-sm font-bold font-sans"
             >
                 {{ $t("modHealthcareProfessionalSection.selectInsurances") }}

@@ -81,7 +81,7 @@
             />
             <div class="flex flex-col mt-4">
                 <label
-                    for="Prefecture Japan"
+                    for="prefecture-select-en"
                     class="mb-2 text-primary-text text-sm font-bold font-sans"
                 >
                     {{ $t('modFacilitySection.labelFacilityPrefectureEn') }}
@@ -134,7 +134,7 @@
             />
             <div class="flex flex-col mt-4">
                 <label
-                    for="Prefecture Japan"
+                    for="prefecture-select-ja"
                     class="mb-2 text-primary-text text-sm font-bold font-sans"
                 >
                     {{ $t('modFacilitySection.labelFacilityPrefectureJa') }}
