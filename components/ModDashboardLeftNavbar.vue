@@ -27,7 +27,7 @@
                     class="flex flex-row items-center text-start p-1"
                     @click="updateSubmissionListViewState(SelectedSubmissionListViewTab.ForReview)"
                 >
-                    {{ $t("modDashboardLeftNav.forReview") }} ({{ autofillStatusCount.forReviewCount }})
+                    {{ $t("modDashboardLeftNav.forReview") }} ({{ autofillStatusCount?.forReviewCount }})
                 </button>
             </div>
             <div class="flex w-4/5 justify-start items-center border-b-2 border-slate-200">
@@ -37,7 +37,7 @@
                     class="flex flex-row items-center text-start p-1 "
                     @click=" updateSubmissionListViewState(SelectedSubmissionListViewTab.Approved)"
                 >
-                    {{ $t("modDashboardLeftNav.approved") }} ({{ autofillStatusCount.approvedCount }})
+                    {{ $t("modDashboardLeftNav.approved") }} ({{ autofillStatusCount?.approvedCount }})
                 </button>
             </div>
             <div class="flex flex-row w-4/5 justify-start items-center ">
@@ -47,7 +47,7 @@
                     class="flex flex-row items-center text-start p-1"
                     @click="updateSubmissionListViewState(SelectedSubmissionListViewTab.Rejected)"
                 >
-                    {{ $t("modDashboardLeftNav.rejected") }} ({{ autofillStatusCount.rejectedCount }})
+                    {{ $t("modDashboardLeftNav.rejected") }} ({{ autofillStatusCount?.rejectedCount }})
                 </button>
             </div>
         </div>
@@ -94,7 +94,19 @@ const updateSelectedDashboardView = (event: Event) => {
 }
 
 function createCountsForSubmissionListView(submissions: Submission[]) {
-    return submissions.reduce((statusCountObject, submission) => {
+    const defaultStatusCounts = {
+        forReviewCount: 0,
+        approvedCount: 0,
+        rejectedCount: 0
+    }
+
+    let countedSubmissions
+    if (!submissions.length) {
+        countedSubmissions = defaultStatusCounts
+        return countedSubmissions
+    }
+
+    countedSubmissions = submissions.reduce((statusCountObject, submission) => {
         const isNewSubmission = !submission.isRejected && !submission.isApproved && !submission.isUnderReview
         if (submission.isUnderReview) {
             statusCountObject.forReviewCount += 1
@@ -109,11 +121,8 @@ function createCountsForSubmissionListView(submissions: Submission[]) {
             statusCountObject.forReviewCount += 1
         }
         return statusCountObject
-    }, {
-        forReviewCount: 0,
-        approvedCount: 0,
-        rejectedCount: 0
-    })
+    }, defaultStatusCounts)
+    return countedSubmissions
 }
 
 const autofillStatusCount = computed(() => createCountsForSubmissionListView(moderationSubmissionsStore.submissionsData))
