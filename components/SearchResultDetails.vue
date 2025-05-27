@@ -77,11 +77,15 @@
                 <div class="phone flex my-4">
                     <SVGPhoneIcon
                         role="img"
-                        alt="Facility Banner Image"
+                        alt="Facility36 Banner Image"
                         title="banner image"
                         class="banner-icon w-6 h-6 stroke-primary mr-2 self-center"
                     />
-                    {{ phone }}
+                    <a  v-if="phone"
+                            :href="`tel:${phone}`"
+                            class=" underline decoration-primary underline-offset-2 font-semibold hover:text-primary transition-all">
+                             {{ phone }}
+                    </a>   
                 </div>
                 <div
                     v-if="!excludedEmailAddresses.includes(email)"
