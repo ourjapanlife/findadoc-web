@@ -3,12 +3,10 @@
         <div
             v-if="$viewport.isGreaterThan('tablet')"
             id="landscape-content"
-            class="bg-secondary-bg/20 hover:shadow-inner hover:shadow-secondary-bg/90 h-full w-full relative"
+            class="flex items-end bg-secondary-bg/20 hover:shadow-inner hover:shadow-secondary-bg/90 h-full w-full relative"
         >
             <Loader />
-            <Modal
-                class="absolute top-0 left-0 overflow-y-auto"
-            >
+            <Modal :is-side-modal="true">
                 <SearchResultDetails />
             </Modal>
             <div class="flex-1 h-full">
@@ -21,7 +19,8 @@
         >
             <Loader />
             <Modal
-                class="absolute top-0 left-0 overflow-y-auto"
+                :is-side-modal="true"
+                :is-side-modal-mobile-view="true"
             >
                 <SearchResultDetails />
             </Modal>
