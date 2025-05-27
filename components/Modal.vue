@@ -2,7 +2,8 @@
     <div
         v-if="store.isOpen"
         data-testid="modal"
-        class="fixed top-0 left-0 flex items-center justify-center h-full w-full z-10 bg-secondary bg-opacity-40"
+        class="fixed top-0 left-0 flex items-center justify-center h-full z-10 bg-secondary bg-opacity-40"
+        :class="isFullWidthModal ? 'w-full' : 'w-fit'"
     >
         <div
             ref="modal"
@@ -45,6 +46,12 @@
 import { ref } from 'vue'
 import { vCloseOnOutsideClick } from '~/utils/closeOnOutsideClick'
 import { useModalStore } from '~/stores/modalStore'
+
+interface Props {
+    isFullWidthModal?: boolean
+}
+
+const { isFullWidthModal = true } = defineProps<Props>()
 
 const modal = ref(null)
 const store = useModalStore()
