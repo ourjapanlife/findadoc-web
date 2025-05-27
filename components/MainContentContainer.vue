@@ -3,12 +3,10 @@
         <div
             v-if="$viewport.isGreaterThan('tablet')"
             id="landscape-content"
-            class="bg-secondary-bg/20 hover:shadow-inner hover:shadow-secondary-bg/90 h-full w-full relative"
+            class="flex items-end bg-secondary-bg/20 hover:shadow-inner hover:shadow-secondary-bg/90 h-full w-full relative"
         >
             <Loader />
-            <Modal
-                class="max-h-[calc(100vh-12rem)] ml-8 mt-12 overflow-y-auto"
-            >
+            <Modal :is-side-modal="true">
                 <SearchResultDetails />
             </Modal>
             <div class="flex-1 h-full">
@@ -17,11 +15,12 @@
         </div>
         <div
             v-else
-            class="h-full"
+            class="relative h-full"
         >
             <Loader />
             <Modal
-                class="min-h-1/2 ml-8 mt-12"
+                :is-side-modal="true"
+                :is-side-modal-mobile-view="true"
             >
                 <SearchResultDetails />
             </Modal>
