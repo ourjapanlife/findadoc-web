@@ -120,6 +120,14 @@
     "unauthorizedline2": "Wenn Sie Moderator werden möchten oder Fragen haben, kontaktieren Sie uns bitte ",
     "unauthorizedline3": "hier"
   },
+  "modCreateFacilityOrHPTopbar": {
+    "confirmExit": "Verlassen ohne zu Speichern",
+    "create": "Erstellen",
+    "exit": "Verlassen",
+    "facilityCreatedSuccessfully": "Einrichtung erfolgreich erstellt.",
+    "heathcareProfessionalCreatedSuccessfully": "Gesundheitsfachkraft erfolgreich erstellt.",
+    "unsavedChangesMessage": "Die Seite wird verlassen, ohne das Ihr Eintrag gespeichert wird. Alle nicht gespeicherten Daten gehen verloren."
+},
   "modDashboardLeftNav": {
     "facilities": "Einrichtungen",
     "healthcareProfessionals": "Gesundheitsfachkräfte",
@@ -312,6 +320,7 @@
     "healthcareProfessionalFacilities": "Healthcare Professional Facilities"
   },
   "modDashboardTopbar": {
+    "addFacility": "Einrichtung hinzufügen",
     "placeholderText": "Enter name or ID to search",
     "approved": "Approved",
     "rejected": "Rejected",
@@ -405,22 +414,11 @@
     "editName": "Edit",
     "saveName": "Save"
   },
-  "modCreateFacilityOrHPTopbar": {
-    "confirmExit": "Exit without saving",
-    "create": "Create",
-    "exit": "Exit",
-    "heathcareProfessionalCreatedSuccessfully": "Healthcare professional created successfully.",
-    "unsavedChangesMessage": "This will exit without saving your entry. All unsaved data will be lost."
-  },
   "modDashboardHealthcareProfessionalCard": {
     "spokenLanguages": "Spoken languages",
     "lastName": "Last name",
     "firstName": "First name",
     "middleName": "Middle name",
     "nameLocale": "Name locale"
-  },
-  "modPagination": {
-        "page": "Page",
-        "of": "of"
   }
 }

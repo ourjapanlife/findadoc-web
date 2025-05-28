@@ -106,6 +106,14 @@
     "login": "Log in",
     "logout": "Log out"
   },
+  "modCreateFacilityOrHPTopbar": {
+    "confirmExit": "Exit without saving",
+    "create": "Create",
+    "exit": "Exit",
+    "facilityCreatedSuccessfully": "Facility created successfully.",
+    "heathcareProfessionalCreatedSuccessfully": "Healthcare professional created successfully.",
+    "unsavedChangesMessage": "This will exit without saving your entry. All unsaved data will be lost."
+},
   "modDashboardLeftNav": {
     "facilities": "Instalações",
     "healthcareProfessionals": "Profissionais de saúde",
@@ -312,6 +320,7 @@
     "healthcareProfessionalFacilities": "Healthcare Professional Facilities"
   },
   "modDashboardTopbar": {
+    "addFacility": "Add Facility",
     "placeholderText": "Enter name or ID to search",
     "approved": "Approved",
     "rejected": "Rejected",
@@ -405,22 +414,11 @@
     "editName": "Edit",
     "saveName": "Save"
   },
-  "modCreateFacilityOrHPTopbar": {
-    "confirmExit": "Exit without saving",
-    "create": "Create",
-    "exit": "Exit",
-    "heathcareProfessionalCreatedSuccessfully": "Healthcare professional created successfully.",
-    "unsavedChangesMessage": "This will exit without saving your entry. All unsaved data will be lost."
-  },
   "modDashboardHealthcareProfessionalCard": {
     "spokenLanguages": "Spoken languages",
     "lastName": "Last name",
     "firstName": "First name",
     "middleName": "Middle name",
     "nameLocale": "Name locale"
-  },
-  "modPagination": {
-        "page": "Page",
-        "of": "of"
   }
 }

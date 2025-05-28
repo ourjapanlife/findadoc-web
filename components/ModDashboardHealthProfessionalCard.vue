@@ -121,6 +121,7 @@
                     v-if="healthcareProfessional && !isHealthcareProfessionalReadyForRemoval(healthcareProfessional.id)
                         && moderationScreenStore.editSubmissionScreenIsActive()
                         || moderationScreenStore.editFacilityScreenIsActive()
+                        || moderationScreenStore.createFacilityScreenIsActive()
                         && !isHealthcareProfessionalReadyForRemoval(healthcareProfessional?.id)"
                     id="remove-related-healthcare-professional-to-facility"
                     class="flex w-8 items-center justify-center
