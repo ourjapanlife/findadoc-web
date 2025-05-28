@@ -95,7 +95,7 @@
             class="grid grid-cols-subgrid col-span-4"
         >
             <div
-                v-for="(healthcareProfessional, index) in healthcareProfessionalsStore.healthcareProfessionalsData"
+                v-for="(healthcareProfessional, index) in paginatedHealthcareProfessionals"
                 :key="index"
                 class="grid grid-cols-subgrid col-span-4 bg-tertiary-bg"
             >
@@ -107,7 +107,9 @@
                         :to="`/moderation/edit-healthcare-professional/${healthcareProfessional.id}`"
                         class="grid grid-cols-subgrid col-span-4 p-1 hover:bg-primary"
                     >
-                        <span class="text-start">{{ index + 1 }}</span>
+                        <span class="text-start">
+                            {{ (currentHealthcarePage - 1) * healthcarePerPage + index + 1 }}
+                        </span>
                         <span class="text-start">
                             {{ healthcareProfessional.names[0].firstName }} {{ healthcareProfessional.names[0].lastName }}
                         </span>
@@ -116,6 +118,12 @@
                     </NuxtLink>
                 </div>
             </div>
+            <ModPagination
+                :current-page="currentHealthcarePage"
+                :total-items="totalHealthcareProfessionals"
+                :items-per-page="healthcarePerPage"
+                @update:current-page="val => currentHealthcarePage = val"
+            />
         </div>
         <div v-else>
             {{ $t("modPanelSubmissionList.noSubmissions") }}
@@ -134,12 +142,14 @@ const modSubmissionsListStore = useModerationSubmissionsStore()
 const healthcareProfessionalsStore = useHealthcareProfessionalsStore()
 const facilitiesStore = useFacilitiesStore()
 
+const currentHealthcarePage: Ref<number> = ref(1)
+const healthcarePerPage = 20
+
 const currentFacilitiesPage: Ref<number> = ref(1)
 const facilitiesPerPage = 20
 
 const currentPage: Ref<number> = ref(1)
 const itemsPerPage = 20
-
 
 onMounted(async () => {
     await modSubmissionsListStore.getSubmissions()
@@ -164,6 +174,15 @@ const submissionListItemTableColumns = computed(() => {
 const handleClickToSubmissionForm = (id: string) => {
     modSubmissionsListStore.selectedSubmissionId = id
 }
+
+
+const paginatedHealthcareProfessionals = computed(() => {
+    const start = (currentHealthcarePage.value - 1) * healthcarePerPage
+    const end = start + healthcarePerPage
+    return healthcareProfessionalsStore.healthcareProfessionalsData.slice(start, end)
+})
+const totalHealthcareProfessionals = computed(() =>
+    healthcareProfessionalsStore.healthcareProfessionalsData.length)
 
 const paginatedFacilities = computed(() => {
     const start = (currentFacilitiesPage.value - 1) * facilitiesPerPage
