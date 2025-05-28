@@ -1,10 +1,11 @@
 <template>
-    <Loader />
+    <Loader v-if="moderationScreenStore.editFacilityScreenIsActive()" />
     <div v-if="isFacilitySectionInitialized">
         <div
             class="mod-facility-section"
         >
             <h1
+                v-if="moderationScreenStore.editFacilityScreenIsActive()"
                 class="mb-3.5 text-start text-primary-text text-3xl font-bold font-sans leading-normal"
             >
                 {{ $t('modFacilitySection.facilityHeading') }}
@@ -199,7 +200,7 @@
                 type="url"
                 :placeholder="$t('modFacilitySection.placeholderTextFacilityGoogleMapsUrl')"
                 :required="true"
-                :input-validation-check="validateWebsite"
+                :input-validation-check="validateGoogleMapsUrlInput"
                 :invalid-input-error-message="$t('modFacilitySection.inputErrorMessageFacilityGoogleMapsUrl')"
                 :autofill="facilityStore.facilitySectionFields.googlemapsURL"
             />
@@ -224,9 +225,11 @@
                 :invalid-input-error-message="$t('modFacilitySection.inputErrorMessageFacilityMapLongitude')"
             />
         </div>
-        <div class="flex flex-col">
+        <div
+            v-if="moderationScreenStore.editFacilityScreenIsActive()"
+            class="flex flex-col"
+        >
             <span
-                v-if="moderationScreenStore.editFacilityScreenIsActive()"
                 class="mb-1 text-primary-text text-2xl font-bold font-sans leading-normal"
             >
                 {{ $t('modFacilitySection.addHealthcareProfessional') }}
@@ -279,7 +282,7 @@
 import { type Ref, ref, onBeforeMount, nextTick, watch } from 'vue'
 import { type ToastInterface, useToast } from 'vue-toastification'
 import { useRoute } from 'vue-router'
-import { useModerationScreenStore, ModerationScreen } from '~/stores/moderationScreenStore'
+import { useModerationScreenStore } from '~/stores/moderationScreenStore'
 import { useFacilitiesStore } from '~/stores/facilitiesStore'
 import { useHealthcareProfessionalsStore } from '~/stores/healthcareProfessionalsStore'
 import { useI18n } from '#imports'
@@ -302,7 +305,6 @@ let toast: ToastInterface
 const route = useRoute()
 const { t } = useI18n()
 const loadingStore = useLoadingStore()
-loadingStore.setIsLoading(true)
 const moderationScreenStore = useModerationScreenStore()
 const facilityStore = useFacilitiesStore()
 const healthcareProfessionalsStore = useHealthcareProfessionalsStore()
@@ -325,6 +327,7 @@ const syncHealthcareProfessionalsRelatedToFacility = () => {
         )
     }
 }
+
 const handleHealthcareProfessionalsInputChange = (filteredItems: Ref<HealthcareProfessional[]>, inputValue: string) => {
     filteredItems.value = healthcareProfessionalsStore.healthcareProfessionalsData
         .filter((healthcareProfessional: HealthcareProfessional) => {
@@ -351,10 +354,17 @@ const handleHealthcareProfessionalsInputChange = (filteredItems: Ref<HealthcareP
             return idMatches || nameMatches
         })
 }
+
 const healthcareProfessionalsToDisplayCallback = (healthcareProfessional: HealthcareProfessional) =>
     [healthcareProfessional.names[0].firstName + ' ' + healthcareProfessional.names[0].lastName]
 
 onBeforeMount(async () => {
+    // This onBeforeMount can be skipped on other screens since this logic is handled there when active
+    if (!moderationScreenStore.editFacilityScreenIsActive()) {
+        isFacilitySectionInitialized.value = true
+        return
+    }
+
     isFacilitySectionInitialized.value = false
     /**
     Set the variable to useToast when the before the component mounts
@@ -363,6 +373,8 @@ onBeforeMount(async () => {
      */
     toast = useToast()
     // Wait for the route to be fully resolved
+
+    loadingStore.setIsLoading(true)
     await nextTick()
     // Ensure the route param `id` is available before proceeding
     const id = route.params.id
@@ -380,8 +392,7 @@ onBeforeMount(async () => {
         await healthcareProfessionalsStore.getHealthcareProfessionals()
     }
     facilityStore.selectedFacilityId = id as string
-    // Set the active screen and ensure the UI state is consistent
-    moderationScreenStore.setActiveScreen(ModerationScreen.EditFacility)
+
     facilityStore.setSelectedFacilityData(facilityStore.selectedFacilityId)
     facilityStore.initializeFacilitySectionValues(facilityStore.selectedFacilityData)
     // Ensure UI updates are reflected with the autofill values
@@ -392,6 +403,7 @@ onBeforeMount(async () => {
     // Ensure UI updates are reflected
     await nextTick()
 })
+
 /** This is making sure all the data is loaded in the component before running the function to set
     the healthcare professionals related to the facility. This loads the data correctly whether sent the
     link or navigating from the moderator dashboard **/
@@ -412,6 +424,7 @@ watch(
     },
     { immediate: false }
 )
+
 watch(() => facilityStore.facilitySectionFields.healthcareProfessionalIds, newValue => {
     // Set the filtered related ones back to an empty array to sync upon update
     healthcareProfessionalRelatedToFacilityFiltered.value = []
@@ -422,6 +435,7 @@ watch(() => facilityStore.facilitySectionFields.healthcareProfessionalIds, newVa
 
     healthcareProfessionalsToAddToFacility.value = []
 })
+
 // This watch adds the relations for updating a facility with an added healthcareProfessional
 watch(() => healthcareProfessionalsToAddToFacility.value, newValue => {
     if (newValue.length) {
