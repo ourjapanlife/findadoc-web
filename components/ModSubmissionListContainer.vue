@@ -136,7 +136,6 @@ import { computed, onMounted, ref, type Ref } from 'vue'
 import { SelectedModerationListView, useModerationSubmissionsStore } from '~/stores/moderationSubmissionsStore'
 import { useHealthcareProfessionalsStore } from '~/stores/healthcareProfessionalsStore'
 import { useFacilitiesStore } from '~/stores/facilitiesStore'
-import ModPagination from '~/components/ModPagination.vue'
 
 const modSubmissionsListStore = useModerationSubmissionsStore()
 const healthcareProfessionalsStore = useHealthcareProfessionalsStore()
