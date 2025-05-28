@@ -79,7 +79,7 @@ export default defineNuxtConfig({
                     content: 'https://www.findadoc.jp'
                 }
             ],
-            link: [{ rel: 'icon', type: 'image/x-icon', href: '/assets/favicon.ico' }]
+            link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.svg' }]
         }
     },
 

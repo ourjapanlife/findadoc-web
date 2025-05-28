@@ -130,6 +130,7 @@
         "confirmExit": "Exit without saving",
         "create": "Create",
         "exit": "Exit",
+        "facilityCreatedSuccessfully": "Facility created successfully.",
         "heathcareProfessionalCreatedSuccessfully": "Healthcare professional created successfully.",
         "unsavedChangesMessage": "This will exit without saving your entry. All unsaved data will be lost."
     },
@@ -154,6 +155,7 @@
     },
     "modDashboardTopbar": {
         "addHealthcareProfessional": "Add Healthcare Professional",
+        "addFacility": "Add facility",
         "placeholderText": "Enter name or ID to search",
         "approved": "Approved",
         "rejected": "Rejected",
@@ -409,9 +411,5 @@
         "firstName": "First name",
         "middleName": "Middle name",
         "nameLocale": "Name locale"
-    },
-    "modPagination": {
-        "page": "Page",
-        "of": "of"
     }
 }
