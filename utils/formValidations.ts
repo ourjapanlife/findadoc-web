@@ -4,9 +4,8 @@ import { hasJapaneseCharacters,
     isValidPhoneNumber,
     isValidWebsite,
     isFloat,
-    isValidPostalCode,
-    isValidUrl } from './stringUtils'
-import { Locale } from '~/typedefs/gqlTypes'
+    isValidPostalCode } from './stringUtils'
+import { Locale, type LocalizedNameInput } from '~/typedefs/gqlTypes'
 
 export function validateNameEn(nameEn: string): boolean {
     if (nameEn.length < 1 || nameEn.length > 128) {
@@ -88,9 +87,9 @@ export function validateAddressLineEn(addressLineEn: string): boolean {
         return false
     }
 
-    const containsJapanseCharacters: boolean = hasJapaneseCharacters(addressLineEn)
+    const containsJapaneseCharacters: boolean = hasJapaneseCharacters(addressLineEn)
 
-    if (containsJapanseCharacters) {
+    if (containsJapaneseCharacters) {
         return false
     }
 
@@ -99,12 +98,6 @@ export function validateAddressLineEn(addressLineEn: string): boolean {
 
 export function validateAddressLineJa(addressLineJa: string): boolean {
     if (addressLineJa.length < 1 || addressLineJa.length > 128) {
-        return false
-    }
-
-    const containsLatinCharacters: boolean = hasLatinCharacters(addressLineJa)
-
-    if (containsLatinCharacters) {
         return false
     }
 
@@ -221,7 +214,8 @@ export function validateUserSubmittedFirstName(name: string): boolean {
 
 export function validateGoogleMapsUrlInput(url: string): boolean {
     url = url.trim()
-    if (url.startsWith('https://') && isValidUrl(url)) {
+    if (url.startsWith('https://www.google.com/maps') || url.startsWith('https://www.google.co.jp/maps')
+      || url.startsWith('https://maps.google.com/')) {
         return true
     }
     return false
@@ -242,3 +236,22 @@ export function validateSecondSpokenLanguage(localeCode: string): boolean {
     return false
 }
 
+export function validateNameLocaleMatchesLanguage(
+  nameLocale: LocalizedNameInput
+): boolean {
+    const fullName = nameLocale.lastName
+      + (nameLocale.middleName || '')
+      + nameLocale.firstName
+
+    switch (nameLocale.locale) {
+        case Locale.JaJp:
+            return hasJapaneseCharacters(fullName)
+
+        case Locale.EnUs:
+            return hasLatinCharacters(fullName)
+
+        default:
+            // Defaults to true for locales that have yet to be added
+            return true
+    }
+}

@@ -120,6 +120,14 @@
     "unauthorizedline2": "Nếu bạn muốn trở thành quản trị viên hoặc có bất kỳ câu hỏi nào, vui lòng liên hệ với chúng tôi.",
     "unauthorizedline3": "Ở đây"
   },
+  "modCreateFacilityOrHPTopbar": {
+    "confirmExit": "Exit without saving",
+    "create": "Create",
+    "exit": "Exit",
+    "facilityCreatedSuccessfully": "Facility created successfully.",
+    "heathcareProfessionalCreatedSuccessfully": "Healthcare professional created successfully.",
+    "unsavedChangesMessage": "This will exit without saving your entry. All unsaved data will be lost."
+},
   "modDashboardLeftNav": {
     "facilities": "Cơ sở vật chất",
     "healthcareProfessionals": "Chuyên gia y tế",
@@ -140,6 +148,7 @@
     "healthcareProfessionalFacilities": "Healthcare Professional Related Facilities"
   },
   "modDashboardTopbar": {
+    "addFacility": "Add Facility",
     "placeholderText": "Nhập tên hoặc mã ID để tìm kiếm",
     "approved": "Đã được phê duyệt",
     "rejected": "Đã bị từ chối",
@@ -158,7 +167,10 @@
     "facilityDeletedSuccessfully": "Facility deleted successfully",
     "facilityUpdatedSuccessfully": "Facility updated successfully",
     "healthcareProfessionalDeletedSuccessfully": "Healthcare professional deleted successfully",
-    "healthcareProfessionalUpdatedSuccessfully": "Healthcare professional updated successfully"
+    "healthcareProfessionalUpdatedSuccessfully": "Healthcare professional updated successfully",
+    "back": "Back",
+    "confirmationButton": "Leave Page",
+    "hasUnsavedChanges": "You have unsaved changes. Are you sure you want to leave?"
   },
   "modEditSubmissionTopNav": {
     "saveAndExit": "Lưu và thoát.",
@@ -393,11 +405,11 @@
     "editName": "Edit",
     "saveName": "Save"
   },
-  "modCreateFacilityOrHPTopbar": {
-    "confirmExit": "Exit without saving",
-    "create": "Create",
-    "exit": "Exit",
-    "heathcareProfessionalCreatedSuccessfully": "Healthcare professional created successfully.",
-    "unsavedChangesMessage": "This will exit without saving your entry. All unsaved data will be lost."
+  "modDashboardHealthcareProfessionalCard": {
+    "spokenLanguages": "Spoken languages",
+    "lastName": "Last name",
+    "firstName": "First name",
+    "middleName": "Middle name",
+    "nameLocale": "Name locale"
   }
 }
