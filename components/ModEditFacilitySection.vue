@@ -373,6 +373,13 @@ const listPrefectureJapanJa: Ref<string[]> = ref([
     '高知県', '福岡県', '佐賀県', '長崎県', '熊本県', '大分県', '宮崎県', '鹿児島県', '沖縄県'])
 
 onBeforeMount(async () => {
+    /**
+    Set the variable to useToast when the before the component mounts
+    since vue-taostification is only available on the client.
+    If not done this way the build fails
+     */
+    toast = useToast()
+
     // This onBeforeMount can be skipped on other screens since this logic is handled there when active
     if (!moderationScreenStore.editFacilityScreenIsActive()) {
         isFacilitySectionInitialized.value = true
@@ -380,12 +387,6 @@ onBeforeMount(async () => {
     }
 
     isFacilitySectionInitialized.value = false
-    /**
-    Set the variable to useToast when the before the component mounts
-    since vue-taostification is only available on the client.
-    If not done this way the build fails
-     */
-    toast = useToast()
     // Wait for the route to be fully resolved
 
     loadingStore.setIsLoading(true)

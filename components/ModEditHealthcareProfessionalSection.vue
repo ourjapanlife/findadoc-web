@@ -566,18 +566,18 @@ const insurancesToDisplayCallback = (insurance: Insurance) => [insurance]
 const localesToDisplayCallback = (locale: Locale) => [localesStore.formatLanguageCodeToSimpleText(locale)]
 
 onBeforeMount(async () => {
-    if (!moderationScreenStore.editHealthcareProfessionalScreenIsActive()) {
-        isHealthcareProfessionalInitialized.value = true
-        return
-    }
-    loadingStore.setIsLoading(true)
-
     /**
     Set the variable to useToast when the before the component mounts
     since vue-taostification is only available on the client.
     If not done this way the build fails
      */
     toast = useToast()
+
+    if (!moderationScreenStore.editHealthcareProfessionalScreenIsActive()) {
+        isHealthcareProfessionalInitialized.value = true
+        return
+    }
+    loadingStore.setIsLoading(true)
 
     // Wait for the route to be fully resolved
     await nextTick()
