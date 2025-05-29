@@ -208,6 +208,7 @@
         "hasUnsavedChanges": "You have unsaved changes. Are you sure you want to leave?"
     },
     "modEditSubmissionTopNav": {
+        "save": "Save",
         "saveAndExit": "Save & Exit",
         "saving": "Saving...",
         "retryMessage": "Something’s not right. Retrying in {seconds}s...",

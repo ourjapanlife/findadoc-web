@@ -27,6 +27,17 @@
                 type="button"
                 class="flex justify-center items-center rounded-full bg-secondary-bg border-primary-text-muted
                 border-2 w-28 text-sm mr-2"
+                data-testid="submission-topNav-update"
+                @click="updateWithoutExiting"
+            >
+                <span>
+                    {{ $t('modEditSubmissionTopNav.save') }}
+                </span>
+            </button>
+            <button
+                type="button"
+                class="flex justify-center items-center rounded-full bg-secondary-bg border-primary-text-muted
+                border-2 w-28 text-sm mr-2"
                 data-testid="submission-topNav-saveAndExit"
                 @click="saveAndExit"
             >
@@ -83,6 +94,10 @@ const copySubmissionId = async () => {
 }
 
 const saveAndExit = () => {
+    moderationSubmissionStore.setUpdatingSubmissionFromTopBarAndExiting(true)
+}
+
+const saveWithoutExiting = () => {
     moderationSubmissionStore.setUpdatingSubmissionFromTopBar(true)
 }
 
