@@ -1208,11 +1208,12 @@ async function submitUpdatedSubmission(e: Event) {
     // This updates the submission in the form with the values stored in the db on success
     if (submissionResult) initializeSubmissionFormValues(submissionResult)
     toast.success(t('modSubmissionForm.successMessageUpdated'))
-    if (moderationSubmissionStore.updatingSubmissionFromTopBar) {
-        router.push('/moderation')
+    if (moderationSubmissionStore.updatingSubmissionFromTopBarAndExiting) {
+        await nextTick()
         // reset all modal refs to prevent unintended side effects
-        resetModalRefs()
+        router.push('/moderation')
     }
+    resetModalRefs()
 }
 
 async function submitCompletedForm(e: Event) {
@@ -1266,6 +1267,7 @@ const syntheticEvent = new Event('submit', { bubbles: false, cancelable: true })
 const resetModalRefs = async () => {
     moderationSubmissionStore.setShowRejectSubmissionConfirmation(false)
     moderationSubmissionStore.setApprovingSubmissionFromTopBar(false)
+    moderationSubmissionStore.setUpdatingSubmissionFromTopBarAndExiting(false)
     moderationSubmissionStore.setUpdatingSubmissionFromTopBar(false)
     formHasUnsavedChanges.value = false
 }
@@ -1277,9 +1279,9 @@ const rejectSubmission = async () => {
     handleNavigateToModerationScreen()
 }
 
-watch(() => moderationSubmissionStore.updatingSubmissionFromTopBar, newValue => {
+watch(moderationSubmissionStore, newValue => {
     //saves the submission by updating it and then going to the main
-    if (newValue) {
+    if (newValue.updatingSubmissionFromTopBarAndExiting || newValue.updatingSubmissionFromTopBar) {
         submitUpdatedSubmission(syntheticEvent)
     }
 })
@@ -1315,7 +1317,7 @@ const handleNavigateToModerationScreen = () => {
 }
 
 onBeforeRouteLeave(async (to, from, next) => {
-    if (!moderationSubmissionStore.updatingSubmissionFromTopBar && submissionHasUnsavedChanges()) {
+    if (!moderationSubmissionStore.updatingSubmissionFromTopBarAndExiting && submissionHasUnsavedChanges()) {
         modalStore.showModal()
         next(false)
         return
