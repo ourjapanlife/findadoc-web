@@ -94,7 +94,17 @@ const updateSelectedDashboardView = (event: Event) => {
 }
 
 function createCountsForSubmissionListView(submissions: Submission[]) {
-    return submissions.reduce((statusCountObject, submission) => {
+    const submissionStatusCounts = {
+        forReviewCount: 0,
+        approvedCount: 0,
+        rejectedCount: 0
+    }
+
+    if (!submissions.length) {
+        return submissionStatusCounts
+    }
+
+    submissions.reduce((statusCountObject, submission) => {
         const isNewSubmission = !submission.isRejected && !submission.isApproved && !submission.isUnderReview
         if (submission.isUnderReview) {
             statusCountObject.forReviewCount += 1
@@ -109,11 +119,8 @@ function createCountsForSubmissionListView(submissions: Submission[]) {
             statusCountObject.forReviewCount += 1
         }
         return statusCountObject
-    }, {
-        forReviewCount: 0,
-        approvedCount: 0,
-        rejectedCount: 0
-    })
+    }, submissionStatusCounts)
+    return submissionStatusCounts
 }
 
 const autofillStatusCount = computed(() => createCountsForSubmissionListView(moderationSubmissionsStore.submissionsData))
