@@ -72,6 +72,10 @@
                     <a
                         v-if="website"
                         :href="website"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="underline text-primary decoration-primary underline-offset-2
+                        font-semibold hover:text-secondary hover:decoration-secondary transition-all"
                     >{{ website }}</a>
                 </div>
                 <div class="phone flex my-4">
