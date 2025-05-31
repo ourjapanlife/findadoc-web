@@ -240,6 +240,7 @@
                 :place-holder-text="$t('modFacilitySection.placeholderTextHealthcareProfessionalSearchbar')"
                 :no-match-text="$t('modFacilitySection.noHealthcareProfessionalFound')"
                 :fields-to-display-callback="healthcareProfessionalsToDisplayCallback"
+                :default-suggestions="defaultHealthcareProfessionalSuggestions"
                 @search-input-change="handleHealthcareProfessionalsInputChange"
             />
             <span
@@ -314,6 +315,7 @@ const healthcareProfessionalsRelatedToFacility: Ref<string[]>
 const healthcareProfessionalRelatedToFacilityFiltered: Ref<HealthcareProfessional[]> = ref([])
 // This keeps track of the existing healthcare professionals we are adding to an existing facility
 const healthcareProfessionalsToAddToFacility: Ref<HealthcareProfessional[]> = ref([])
+const defaultHealthcareProfessionalSuggestions: Ref<HealthcareProfessional[]> = ref([])
 
 const syncHealthcareProfessionalsRelatedToFacility = () => {
     if (healthcareProfessionalsStore.healthcareProfessionalsData
@@ -409,6 +411,9 @@ onBeforeMount(async () => {
 
     facilityStore.setSelectedFacilityData(facilityStore.selectedFacilityId)
     facilityStore.initializeFacilitySectionValues(facilityStore.selectedFacilityData)
+
+    defaultHealthcareProfessionalSuggestions.value = healthcareProfessionalsStore.healthcareProfessionalsData
+
     // Ensure UI updates are reflected with the autofill values
     await nextTick()
     syncHealthcareProfessionalsRelatedToFacility()
