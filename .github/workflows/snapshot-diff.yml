@@ -2,7 +2,7 @@ name: "Snapshot Tests: Vue Components"
 
 on:
   pull_request:
-    branches: [main]
+    branches: [feat/snapshot-tests]
 
 permissions:
   contents: read
