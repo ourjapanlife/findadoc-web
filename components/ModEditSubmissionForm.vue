@@ -445,6 +445,7 @@
                     :place-holder-text="$t('modSubmissionForm.placeholderTextAcceptedInsurances')"
                     :no-match-text="$t('modSubmissionForm.noInsurancesWereFound')"
                     :fields-to-display-callback="insurancesToDisplayCallback"
+                    :default-suggestions="Object.values(Insurance)"
                     @search-input-change="handleInsuranceInputChange"
                 />
                 <ol class="list-disc text-primary-text/60 font-semibold my-2 px-2">
@@ -468,6 +469,7 @@
                     :place-holder-text="$t('modSubmissionForm.placeholderTextDegrees')"
                     :no-match-text="$t('modSubmissionForm.noDegreesWereFound')"
                     :fields-to-display-callback="degreesToDisplayCallback"
+                    :default-suggestions="Object.values(Degree)"
                     @search-input-change="handleDegreeInputChange"
                 />
                 <ol class="list-disc text-primary-text/60 font-semibold my-2 px-2">
@@ -491,6 +493,7 @@
                     :place-holder-text="$t('modSubmissionForm.placeholderTextSpecialties')"
                     :no-match-text="$t('modSubmissionForm.noSpecialtiesWereFound')"
                     :fields-to-display-callback="specialtiesToDisplayCallback"
+                    :default-suggestions="Object.values(Specialty)"
                     @search-input-change="handleSpecialtyInputChange"
                 />
                 <ol class="list-disc text-primary-text/60 font-semibold my-2 px-2">
@@ -514,6 +517,7 @@
                     :place-holder-text="$t('modSubmissionForm.placeholderTextLocales')"
                     :no-match-text="$t('modSubmissionForm.noLocalesWereFound')"
                     :fields-to-display-callback="localesToDisplayCallback"
+                    :default-suggestions="Object.values(Locale)"
                     @search-input-change="handleLocaleInputChange"
                 />
                 <ol class="list-disc text-primary-text/60 font-semibold my-2 px-2">
