@@ -147,7 +147,7 @@
                     {{ $t('modSubmissionForm.labelFacilityPrefectureEn') }}
                 </label>
                 <select
-                    id="prefecture-select-en"
+                    id="mod-edit-submission-form-prefecture-select-en"
                     v-model="submissionFormFields.prefectureEn"
                     data-testid="submission-form-prefectureEn"
                     name="prefecture-japan-en"
@@ -200,7 +200,7 @@
                     {{ $t('modSubmissionForm.labelFacilityPrefectureJa') }}
                 </label>
                 <select
-                    id="prefecture-select-ja"
+                    id="mod-edit-submission-form-prefecture-select-ja"
                     v-model="submissionFormFields.prefectureJa"
                     data-testid="submission-form-prefectureJa"
                     name="prefecture-japan-ja"
@@ -345,7 +345,7 @@
                             {{ $t('modHealthcareProfessionalSection.labelHealthcareProfessionalNameLocale') }}
                         </label>
                         <select
-                            id="name-locales"
+                            id="mod-edit-submission-form-name-locales"
                             v-model="nameLocaleInputsToAddOrUpdate.locale"
                             data-testid="mod-healthcare-professional-section-name-locale"
                             name="name-locales"

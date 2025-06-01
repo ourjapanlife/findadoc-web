@@ -50,7 +50,7 @@
                         {{ $t('modHealthcareProfessionalSection.labelHealthcareProfessionalNameLocale') }}
                     </label>
                     <select
-                        id="name-locales"
+                        id="mod-create-healthcare-professional-section-name-locales"
                         v-model="nameLocaleInputs.locale"
                         data-testid="mod-healthcare-professional-section-name-locale"
                         name="name-locales"

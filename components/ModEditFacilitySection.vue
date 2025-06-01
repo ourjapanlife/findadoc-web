@@ -88,7 +88,7 @@
                     {{ $t('modFacilitySection.labelFacilityPrefectureEn') }}
                 </label>
                 <select
-                    id="prefecture-select-en"
+                    id="mod-edit-facility-section-prefecture-select-en"
                     v-model="facilityStore.facilitySectionFields.prefectureEn"
                     data-testid="mod-facility-section-prefectureEn"
                     name="prefecture-japan-en"
@@ -141,7 +141,7 @@
                     {{ $t('modFacilitySection.labelFacilityPrefectureJa') }}
                 </label>
                 <select
-                    id="prefecture-select-ja"
+                    id="mod-edit-facility-section-prefecture-select-ja"
                     v-model="facilityStore.facilitySectionFields.prefectureJa"
                     data-testid="mod-facility-section-prefectureJa"
                     name="prefecture-japan-ja"
