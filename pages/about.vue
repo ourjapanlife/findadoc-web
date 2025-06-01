@@ -60,7 +60,7 @@
                 class="grid grid-cols-2 md:grid-cols-3 mx-4 gap-8 pb-12 md:pb-32"
             >
                 <div
-                    v-for="(member, index) in data.members"
+                    v-for="(member, index) in data.members.slice(0, 3)"
                     :key="member.avatarImg"
                     data-testid="member"
                     class="members-list grid"
