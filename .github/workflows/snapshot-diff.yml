@@ -26,6 +26,9 @@ jobs:
       - name: Install dependencies
         run: yarn install --immutable
 
+      - name: Prepare Nuxt for tests
+        run: yarn prepare
+
       - name: Run Snapshot Tests
         id: run-tests
         run: |
