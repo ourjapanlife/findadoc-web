@@ -172,8 +172,7 @@ export const useFacilitiesStore = defineStore(
         }
 
         async function updateFacility(): Promise<ServerResponse<Facility>> {
-            // healthProfessionalRelations array before updating the healthcare professionals related to a facility
-            const preUpdateRelations = [...facilitySectionFields.healthProfessionalsRelations]
+            const healthProfessionalRelationsBeforeMutation = facilitySectionFields.healthProfessionalsRelations
 
             const updateFacilityInput: MutationUpdateFacilityArgs = {
                 id: selectedFacilityId.value,
@@ -196,8 +195,8 @@ export const useFacilitiesStore = defineStore(
                         website: facilitySectionFields.website
                     },
                     healthcareProfessionalIds: facilitySectionFields.healthProfessionalsRelations.length > 0
-                        ? facilitySectionFields.healthProfessionalsRelations
-                        : undefined,
+            ? facilitySectionFields.healthProfessionalsRelations
+            : undefined,
                     mapLatitude: parseFloat(facilitySectionFields.mapLatitude),
                     mapLongitude: parseFloat(facilitySectionFields.mapLongitude),
                     nameEn: facilitySectionFields.nameEn,
@@ -211,18 +210,11 @@ export const useFacilitiesStore = defineStore(
                 updateFacilityInput
             )
 
-            if (!serverResponse.errors?.length && serverResponse.data) {
-                // update the necessary values with the updated response
+            if (!serverResponse.errors?.length) {
                 selectedFacilityData.value = serverResponse.data
                 initializeFacilitySectionValues(serverResponse.data)
 
-                // compare the healthProfessionalRelations array from before and after updating the facility
-                const postUpdateRelations = facilitySectionFields.healthProfessionalsRelations
-                const hasUserChangedRelations
-                    = postUpdateRelations.length !== preUpdateRelations.length
-                      || !postUpdateRelations.every((relation, i) => relation === preUpdateRelations[i])
-
-                if (!hasUserChangedRelations) {
+                if (facilitySectionFields.healthProfessionalsRelations === healthProfessionalRelationsBeforeMutation) {
                     facilitySectionFields.healthProfessionalsRelations = []
                 }
             }
