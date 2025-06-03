@@ -141,7 +141,7 @@
             />
             <div class="flex flex-col mt-4">
                 <label
-                    for="prefecture-select-en"
+                    for="mod-edit-submission-form-prefecture-select-en"
                     class="mb-2 text-primary-text text-sm font-bold font-sans"
                 >
                     {{ $t('modSubmissionForm.labelFacilityPrefectureEn') }}
@@ -194,7 +194,7 @@
             />
             <div class="flex flex-col mt-4">
                 <label
-                    for="prefecture-select-ja"
+                    for="mod-edit-submission-form-prefecture-select-ja"
                     class="mb-2 text-primary-text text-sm font-bold font-sans"
                 >
                     {{ $t('modSubmissionForm.labelFacilityPrefectureJa') }}
@@ -339,7 +339,7 @@
                             :required="false"
                         />
                         <label
-                            for="name-locales"
+                            for="mod-edit-submission-form-name-locales"
                             class="my-2 text-primary-text text-sm font-bold font-sans"
                         >
                             {{ $t('modHealthcareProfessionalSection.labelHealthcareProfessionalNameLocale') }}

@@ -44,7 +44,7 @@
                         :required="false"
                     />
                     <label
-                        for="name-locales"
+                        for="mod-create-healthcare-professional-section-name-locales"
                         class="my-2 text-primary-text text-sm font-bold font-sans"
                     >
                         {{ $t('modHealthcareProfessionalSection.labelHealthcareProfessionalNameLocale') }}

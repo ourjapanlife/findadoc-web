@@ -49,7 +49,7 @@
                             :required="false"
                         />
                         <label
-                            for="name-locales"
+                            for="mod-edit-healthcare-professional-section-select-name-locales"
                             class="my-2 text-primary-text text-sm font-bold font-sans"
                         >
                             {{ $t('modHealthcareProfessionalSection.labelHealthcareProfessionalNameLocale') }}
