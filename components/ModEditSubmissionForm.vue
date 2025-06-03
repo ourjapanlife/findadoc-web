@@ -1071,19 +1071,15 @@ function initializeSubmissionFormValues(submissionData: Submission | undefined) 
                           ?? []
                     // For change check
                     submissionFormFieldsBeforeChanges.healthcareProfessionalAcceptedInsurances
-                        = JSON.parse(JSON.stringify(submissionData?.healthcareProfessionals?.[0]?.acceptedInsurance
-                          ?? []))
+                        = structuredClone(submissionData?.healthcareProfessionals?.[0]?.acceptedInsurance ?? [])
                     submissionFormFieldsBeforeChanges.healthcareProfessionalDegrees
-                        = JSON.parse(JSON.stringify(submissionData?.healthcareProfessionals?.[0]?.degrees
-                          ?? []))
+                        = structuredClone(submissionData?.healthcareProfessionals?.[0]?.degrees ?? [])
                     submissionFormFieldsBeforeChanges.healthcareProfessionalSpecialties
-                        = JSON.parse(JSON.stringify(submissionData?.healthcareProfessionals?.[0]?.specialties
-                          ?? []))
+                        = structuredClone(submissionData?.healthcareProfessionals?.[0]?.specialties ?? [])
                     submissionFormFieldsBeforeChanges.healthcareProfessionalLocales
-                        = JSON.parse(JSON.stringify(submissionData?.spokenLanguages ?? []))
+                        = structuredClone(submissionData?.spokenLanguages ?? [])
                     submissionFormFieldsBeforeChanges.facilityIds
-                        = JSON.parse(JSON.stringify(submissionData?.healthcareProfessionals?.[0]?.facilityIds
-                          ?? []))
+                        = structuredClone(submissionData?.healthcareProfessionals?.[0]?.facilityIds ?? [])
                     break
                 case 'healthcareProfessionalIDs':
                     // For v-model
