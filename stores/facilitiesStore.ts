@@ -195,8 +195,8 @@ export const useFacilitiesStore = defineStore(
                         website: facilitySectionFields.website
                     },
                     healthcareProfessionalIds: facilitySectionFields.healthProfessionalsRelations.length > 0
-            ? facilitySectionFields.healthProfessionalsRelations
-            : undefined,
+                        ? facilitySectionFields.healthProfessionalsRelations
+                        : undefined,
                     mapLatitude: parseFloat(facilitySectionFields.mapLatitude),
                     mapLongitude: parseFloat(facilitySectionFields.mapLongitude),
                     nameEn: facilitySectionFields.nameEn,
