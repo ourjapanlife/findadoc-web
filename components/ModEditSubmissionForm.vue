@@ -141,16 +141,16 @@
             />
             <div class="flex flex-col mt-4">
                 <label
-                    for="Prefecture Japan"
+                    for="mod-edit-submission-form-prefecture-select-en"
                     class="mb-2 text-primary-text text-sm font-bold font-sans"
                 >
                     {{ $t('modSubmissionForm.labelFacilityPrefectureEn') }}
                 </label>
                 <select
-                    id="1"
+                    id="mod-edit-submission-form-prefecture-select-en"
                     v-model="submissionFormFields.prefectureEn"
                     data-testid="submission-form-prefectureEn"
-                    name="Prefecture Japan"
+                    name="prefecture-japan-en"
                     class="mb-5 px-3 py-3.5 w-96 h-12 bg-secondary-bg rounded-lg border border-primary-text-muted
                         text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
                 >
@@ -194,16 +194,16 @@
             />
             <div class="flex flex-col mt-4">
                 <label
-                    for="prefecture-japan"
+                    for="mod-edit-submission-form-prefecture-select-ja"
                     class="mb-2 text-primary-text text-sm font-bold font-sans"
                 >
                     {{ $t('modSubmissionForm.labelFacilityPrefectureJa') }}
                 </label>
                 <select
-                    id="1"
+                    id="mod-edit-submission-form-prefecture-select-ja"
                     v-model="submissionFormFields.prefectureJa"
                     data-testid="submission-form-prefectureJa"
-                    name="prefecture-japan"
+                    name="prefecture-japan-ja"
                     class="mb-5 px-3 py-3.5 w-96 h-12 bg-secondary-bg rounded-lg border border-primary-text-muted
                     text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
                 >
@@ -339,13 +339,13 @@
                             :required="false"
                         />
                         <label
-                            for="name-locales"
+                            for="mod-edit-submission-form-name-locales"
                             class="my-2 text-primary-text text-sm font-bold font-sans"
                         >
                             {{ $t('modHealthcareProfessionalSection.labelHealthcareProfessionalNameLocale') }}
                         </label>
                         <select
-                            id="name-locales"
+                            id="mod-edit-submission-form-name-locales"
                             v-model="nameLocaleInputsToAddOrUpdate.locale"
                             data-testid="mod-healthcare-professional-section-name-locale"
                             name="name-locales"
