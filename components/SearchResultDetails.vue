@@ -72,6 +72,9 @@
                     <a
                         v-if="website"
                         :href="website"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="underline text-blue"
                     >{{ website }}</a>
                 </div>
                 <div class="phone flex my-4">
