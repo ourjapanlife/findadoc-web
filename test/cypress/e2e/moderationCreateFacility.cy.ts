@@ -10,7 +10,7 @@ before(() => {
     cy.login()
 })
 
-describe('Moderation edit facility form', () => {
+describe('Moderation create facility form', () => {
     context('Landscape mode', () => {
         before(() => {
             cy.intercept('POST', '**/', req => {
@@ -22,7 +22,7 @@ describe('Moderation edit facility form', () => {
             cy.wait('@query Facilities')
 
             cy.get('[data-testid="submission-type-select"]').select('FACILITIES')
-            cy.get('[data-testid="mod-facility-list-item-1"]').click()
+            cy.get('[data-testid="add-facility-button"]').click()
 
             /* This will set the facilities stores or any other stores you need to access for testings.
                 This NEEDS to be in the describe and not the login before*/
@@ -35,22 +35,11 @@ describe('Moderation edit facility form', () => {
             cy.viewport('macbook-16')
         })
 
-        it('contains the following fields and buttons in the topbar', () => {
-            cy.get('[data-testid="mod-edit-facility-hp-topbar-update"]').should('exist')
-                .contains(enUS.modEditFacilityOrHPTopbar.updateAndExit)
-            cy.get('[data-testid="mod-edit-facility-hp-topbar-delete"]').should('exist')
-                .contains(enUS.modEditFacilityOrHPTopbar.delete)
-            cy.get('[data-testid="mod-edit-facility-hp-topbar-copy-id"]').should('exist')
-        })
-
-        it('it copies the selected id', () => {
-            cy.get('[data-testid="mod-edit-facility-hp-topbar-copy-id"]').click()
-
-            // Check that the value copied to the clipboard is the same that's displayed.
-            const clipboardResult = cy.window().then(win => win.navigator.clipboard.readText())
-
-            // The timeout is to give time for the clipboard to be read.
-            clipboardResult.should('exist', 10000)
+        it('contains the following buttons and text in the topbar', () => {
+            cy.get('[data-testid="mod-create-facility-hp-topbar-create"]').should('exist')
+                .contains(enUS.modCreateFacilityOrHPTopbar.create)
+            cy.get('[data-testid="mod-create-facility-hp-topbar-exit"]').should('exist')
+                .contains(enUS.modCreateFacilityOrHPTopbar.exit)
         })
 
         it('contains the following input fields', () => {
@@ -77,39 +66,6 @@ describe('Moderation edit facility form', () => {
             cy.get('[data-testid="mod-facility-section-prefectureJa"]').should('exist')
         })
 
-        it('should autofill all the form fields for an existing facility', () => {
-            cy.get('[data-testid="mod-facility-section-nameEn"]')
-                .find('input').should('have.value', fakeFacilityResult.data.facilities[0].nameEn)
-            cy.get('[data-testid="mod-facility-section-nameJa"]')
-                .find('input').should('have.value', fakeFacilityResult.data.facilities[0].nameJa)
-            cy.get('[data-testid="mod-facility-section-phone"]').find('input')
-                .should('have.value', fakeFacilityResult.data.facilities[0].contact.phone)
-            cy.get('[data-testid="mod-facility-section-email"]').find('input')
-                .should('have.value', fakeFacilityResult.data.facilities[0].contact.email)
-            cy.get('[data-testid="mod-facility-section-website"]').find('input')
-                .should('have.value', fakeFacilityResult.data.facilities[0].contact.website)
-            cy.get('[data-testid="mod-facility-section-postalCode"]').find('input')
-                .should('have.value', fakeFacilityResult.data.facilities[0].contact.address.postalCode)
-            cy.get('[data-testid="mod-facility-section-cityEn"]').find('input')
-                .should('have.value', fakeFacilityResult.data.facilities[0].contact.address.cityEn)
-            cy.get('[data-testid="mod-facility-section-addressLine1En"]').find('input')
-                .should('have.value', fakeFacilityResult.data.facilities[0].contact.address.addressLine1En)
-            cy.get('[data-testid="mod-facility-section-addressLine2En"]').find('input')
-                .should('have.value', fakeFacilityResult.data.facilities[0].contact.address.addressLine2En)
-            cy.get('[data-testid="mod-facility-section-cityJa"]').find('input')
-                .should('have.value', fakeFacilityResult.data.facilities[0].contact.address.cityJa)
-            cy.get('[data-testid="mod-facility-section-addressLine1Ja"]').find('input')
-                .should('have.value', fakeFacilityResult.data.facilities[0].contact.address.addressLine1Ja)
-            cy.get('[data-testid="mod-facility-section-addressLine2Ja"]').find('input')
-                .should('have.value', fakeFacilityResult.data.facilities[0].contact.address.addressLine2Ja)
-            cy.get('[data-testid="mod-facility-section-google-maps"]').find('input')
-                .should('have.value', fakeFacilityResult.data.facilities[0].contact.googleMapsUrl)
-            cy.get('[data-testid="mod-facility-section-mapLatitude"]').find('input')
-                .should('have.value', fakeFacilityResult.data.facilities[0].mapLatitude)
-            cy.get('[data-testid="mod-facility-section-mapLongitude"]').find('input')
-                .should('have.value', fakeFacilityResult.data.facilities[0].mapLongitude)
-        })
-
         it('should be able to type in all input fields and update the store values', () => {
             cy.get('[data-testid="mod-facility-section-nameEn"]').find('input').clear().type('Hospital')
             cy.get('[data-testid="mod-facility-section-nameJa"]').find('input').clear().type('立川中央病院')
@@ -123,7 +79,7 @@ describe('Moderation edit facility form', () => {
             cy.get('[data-testid="mod-facility-section-cityJa"]').find('input').clear().type('渋谷区')
             cy.get('[data-testid="mod-facility-section-addressLine1Ja"]').find('input').clear().type('道の駅')
             cy.get('[data-testid="mod-facility-section-addressLine2Ja"]').find('input').clear().type('道の')
-            //The typing is split into three due to our linting rules of length
+            // The typing is split into three due to our linting rules of length
             cy.get('[data-testid="mod-facility-section-google-maps"]')
                 .find('input').clear()
                 .type('www.google.com/maps/place/82+Yamatech%C5%8D,+Naka+Ward,+Yokohama,+Kanagawa+231-0862,')
@@ -133,18 +89,18 @@ describe('Moderation edit facility form', () => {
         })
 
         it('should have updated the store values', () => {
-            expect(facilitiesStore.facilitySectionFields.nameEn).to.equal('Hospital')
-            expect(facilitiesStore.facilitySectionFields.nameJa).to.equal('立川中央病院')
-            expect(facilitiesStore.facilitySectionFields.phone).to.equal('08080939393')
-            expect(facilitiesStore.facilitySectionFields.email).to.equal('example@mail.com')
-            expect(facilitiesStore.facilitySectionFields.website).to.equal('http://example.com')
-            expect(facilitiesStore.facilitySectionFields.postalCode).to.equal('180-0000')
-            expect(facilitiesStore.facilitySectionFields.cityEn).to.equal('Shibuya')
-            expect(facilitiesStore.facilitySectionFields.addressLine1En).to.equal('some address line 1')
-            expect(facilitiesStore.facilitySectionFields.addressLine2En).to.equal('some address line 2')
-            expect(facilitiesStore.facilitySectionFields.cityJa).to.equal('渋谷区')
-            expect(facilitiesStore.facilitySectionFields.addressLine1Ja).to.equal('道の駅')
-            expect(facilitiesStore.facilitySectionFields.addressLine2Ja).to.equal('道の')
+            expect(facilitiesStore.createFacilityFields.nameEn).to.equal('Hospital')
+            expect(facilitiesStore.createFacilityFields.nameJa).to.equal('立川中央病院')
+            expect(facilitiesStore.createFacilityFields.contact.phone).to.equal('08080939393')
+            expect(facilitiesStore.createFacilityFields.contact.email).to.equal('example@mail.com')
+            expect(facilitiesStore.createFacilityFields.contact.website).to.equal('http://example.com')
+            expect(facilitiesStore.createFacilityFields.contact.address.postalCode).to.equal('180-0000')
+            expect(facilitiesStore.createFacilityFields.contact.address.cityEn).to.equal('Shibuya')
+            expect(facilitiesStore.createFacilityFields.contact.address.addressLine1En).to.equal('some address line 1')
+            expect(facilitiesStore.createFacilityFields.contact.address.addressLine2En).to.equal('some address line 2')
+            expect(facilitiesStore.createFacilityFields.contact.address.cityJa).to.equal('渋谷区')
+            expect(facilitiesStore.createFacilityFields.contact.address.addressLine1Ja).to.equal('道の駅')
+            expect(facilitiesStore.createFacilityFields.contact.address.addressLine2Ja).to.equal('道の')
         })
 
         it('should be able to select a field', () => {

@@ -1,10 +1,9 @@
 import { gql } from 'graphql-request'
 import { defineStore } from 'pinia'
 import { ref, type Ref } from 'vue'
-import type { Maybe } from 'graphql/jsutils/Maybe'
-import type { Submission, MutationUpdateSubmissionArgs, Mutation } from '~/typedefs/gqlTypes.js'
+import type { Submission, MutationUpdateSubmissionArgs, Mutation, Query } from '~/typedefs/gqlTypes.js'
 import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql.js'
-import type { ServerError, ServerResponse } from '~/typedefs/serverResponse'
+import type { ServerResponse } from '~/typedefs/serverResponse'
 
 export enum SelectedSubmissionListViewTab {
     ForReview = 'FOR_REVIEW',
@@ -93,22 +92,17 @@ export const useModerationSubmissionsStore = defineStore(
         }
 
         async function updateSubmission(submission: MutationUpdateSubmissionArgs):
-        Promise<ServerResponse<Maybe<Submission>>> {
-            const serverResponse = { data: {} as Maybe<Submission>, errors: [] as ServerError[], hasErrors: false }
-            const response = await graphQLClientRequestWithRetry<Mutation>(
+        Promise<ServerResponse<Submission>> {
+            const serverResponse = await graphQLClientRequestWithRetry<Mutation['updateSubmission']>(
                 gqlClient.request.bind(gqlClient),
                 updateFacilitySubmissionGqlMutation,
                 submission
             )
 
-            if (response.errors?.length) {
+            if (serverResponse.errors?.length) {
                 setDidMutationFail(true)
                 setUpdatingSubmissionFromTopBar(false)
             }
-
-            serverResponse.data = response.data?.updateSubmission
-            serverResponse.errors = response.errors ? response.errors : []
-            serverResponse.hasErrors = response.hasErrors
 
             return serverResponse
         }
@@ -170,19 +164,22 @@ export const useModerationSubmissionsStore = defineStore(
     }
 )
 
-async function querySubmissions() {
+async function querySubmissions(): Promise<Submission[]> {
     try {
         const submissionsFilters = {
             filters: {
-                id: undefined
+                id: undefined,
+                limit: 100
             }
         }
 
-        const result = await gqlClient.request<{ submissions: Submission[] }>(
+        const serverResponse = await graphQLClientRequestWithRetry<Query['submissions']>(
+            gqlClient.request.bind(gqlClient),
             getSubmissionsGqlQuery,
             submissionsFilters
         )
-        return result?.submissions ?? []
+
+        return serverResponse?.data ?? []
     } catch (error) {
         console.error(`Error querying the submissions: ${JSON.stringify(error)}`)
         return []

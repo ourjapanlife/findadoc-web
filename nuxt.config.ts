@@ -79,7 +79,7 @@ export default defineNuxtConfig({
                     content: 'https://www.findadoc.jp'
                 }
             ],
-            link: [{ rel: 'icon', type: 'image/x-icon', href: '/assets/favicon.ico' }]
+            link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.svg' }]
         }
     },
 
@@ -163,6 +163,8 @@ export default defineNuxtConfig({
         }
     },
     runtimeConfig: {
+        cypressTesting: process.env.NUXT_CYPRESS_TESTING,
+
         public: {
 
             GOOGLE_MAPS_API_KEY: process.env.GOOGLE_MAPS_API_KEY,

@@ -44,16 +44,16 @@
                         :required="false"
                     />
                     <label
-                        for="name_locales"
+                        for="mod-create-healthcare-professional-section-name-locales"
                         class="my-2 text-primary-text text-sm font-bold font-sans"
                     >
                         {{ $t('modHealthcareProfessionalSection.labelHealthcareProfessionalNameLocale') }}
                     </label>
                     <select
-                        id="name_locales"
+                        id="mod-create-healthcare-professional-section-name-locales"
                         v-model="nameLocaleInputs.locale"
                         data-testid="mod-healthcare-professional-section-name-locale"
-                        name="Name Locales"
+                        name="name-locales"
                         class="mb-5 px-3 py-3.5 w-96 h-12 bg-secondary-bg rounded-lg border border-primary-text-muted
                                 text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
                     >
@@ -139,7 +139,7 @@
                 {{ $t('modHealthcareProfessionalSection.healthcareProfessionalMedicalInfoHeading') }}
             </h2>
             <label
-                for="Accepted Insurances"
+                for="accepted-insurances"
                 class="my-2 text-primary-text text-sm font-bold font-sans"
             >
                 {{ $t("modHealthcareProfessionalSection.selectInsurances") }}
@@ -373,7 +373,7 @@ const setChosenLocaleNameInput = (index: number) => {
         healthcareProfessionalsStore.createHealthcareProfessionalSectionFields.names[chosenLocaleIndex.value]
     = tempToHoldZeroIndexedHealthcareProfessionalToSwap
 
-        //Autofill with the chosen healthcare professional locale name]
+        //Autofill with the chosen healthcare professional locale name
         autofillNameLocaleInputWithChosenHealthcareProfessional(chosenHealthcareProfessionalToEdit.value)
         // Set the chosenLocaleIndex to 0 so the correct pencil is showing
         chosenLocaleIndex.value = 0
