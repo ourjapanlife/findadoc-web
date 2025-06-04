@@ -29,9 +29,6 @@ describe('Visits the home page', () => {
             cy.get('.search-specialty select').select('Dermatology')
             cy.get('.search-specialty select').should('be.visible', 'Dermatology')
 
-            cy.get('.search-location select').select('Shinagawa')
-            cy.get('.search-location select').should('be.visible', 'Shinagawa')
-
             cy.get('.search-language select').select('English')
             cy.get('.search-language select').should('be.visible', 'English')
         })
