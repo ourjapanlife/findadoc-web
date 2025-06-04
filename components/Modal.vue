@@ -4,11 +4,13 @@
         data-testid="modal"
         class="fixed top-0 left-0 flex items-center justify-center h-full w-full z-10 bg-secondary bg-opacity-40"
     >
-        <ModalContents><slot /></ModalContents>
+        <ModalContents>
+            <slot />
+        </ModalContents>
     </div>
     <ModalContents
         v-if="store.isOpen && isSideModal"
-        :class="isSideModalMobileView ? 'h-full rounded-none' : 'h-[92%] m-3'"
+        :class="isSideModalMobileView ? 'h-full w-full' : 'h-[92%] m-3'"
     >
         <slot />
     </ModalContents>
