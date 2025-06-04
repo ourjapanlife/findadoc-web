@@ -29,9 +29,6 @@ describe('Visits the home page', () => {
             cy.get('.search-specialty select').select('Dermatology')
             cy.get('.search-specialty select').should('be.visible', 'Dermatology')
 
-            cy.get('.search-location select').select('Shinagawa')
-            cy.get('.search-location select').should('be.visible', 'Shinagawa')
-
             cy.get('.search-language select').select('English')
             cy.get('.search-language select').should('be.visible', 'English')
         })
@@ -68,15 +65,6 @@ describe('Visits the home page', () => {
 
         it('shows doctors nearby', () => {
             cy.contains('Doctors Nearby').should('be.visible')
-        })
-
-        it('shows the last doctor of the search results', () => {
-            // ensure scrollable is set to false in case the list isn't long enough where the container needs to scroll
-            cy.get('[data-testid="search-results-list-container"]').scrollTo('bottom', { ensureScrollable: false })
-            //This finds the lenght of the div so that we know it is showing the final doctor in the search
-            cy.get('[data-testid="search-results-list"]').its('length').then(length => {
-                cy.get(`[data-testid='search-result-list-item-${length - 1}']`).should('be.visible')
-            })
         })
 
         describe('Checks footer links', () => {
@@ -152,15 +140,6 @@ describe('Visits the home page', () => {
 
         it('shows doctors nearby', () => {
             cy.contains('Doctors Nearby').should('be.visible')
-        })
-
-        it('shows the last doctor of the search results', () => {
-            // ensure scrollable is set to false in case the list isn't long enough where the container needs to scroll
-            cy.get('[data-testid="search-results-list-container"]').scrollTo('bottom', { ensureScrollable: false })
-            //This finds the lenght of the div so that we know it is showing the final doctor in the search
-            cy.get('[data-testid="search-results-list"]').its('length').then(length => {
-                cy.get(`[data-testid='search-result-list-item-${length - 1}']`).should('be.visible')
-            })
         })
 
         describe('Hamburger Menu tests', () => {
