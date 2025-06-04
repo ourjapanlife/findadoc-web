@@ -7,7 +7,7 @@
         <SVGHamburgerMenuIcon
             data-testid="hamburger-menu-icon"
             alt="hamburger menu"
-            class="w-8 h-8"
+            class="w-8 h-8 fill-primary"
             @click="openMenu()"
         />
         <Transition
