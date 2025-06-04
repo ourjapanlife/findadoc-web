@@ -75,13 +75,13 @@
                     />
                     <div class="flex flex-col mt-4">
                         <label
-                            for="Prefecture Japan"
+                            for="mod-create-facility-section-prefecture-select-en"
                             class="mb-2 text-primary-text text-sm font-bold font-sans"
                         >
                             {{ $t('modFacilitySection.labelFacilityPrefectureEn') }}
                         </label>
                         <select
-                            id="prefecture-select-en"
+                            id="mod-create-facility-section-prefecture-select-en"
                             v-model="facilityStore.createFacilityFields.contact.address.prefectureEn"
                             data-testid="mod-facility-section-prefectureEn"
                             name="prefecture-japan-en"
@@ -128,13 +128,13 @@
                     />
                     <div class="flex flex-col mt-4">
                         <label
-                            for="Prefecture Japan"
+                            for="mod-create-facility-section-prefecture-select-ja"
                             class="mb-2 text-primary-text text-sm font-bold font-sans"
                         >
                             {{ $t('modFacilitySection.labelFacilityPrefectureJa') }}
                         </label>
                         <select
-                            id="prefecture-select-ja"
+                            id="mod-create-facility-section-prefecture-select-ja"
                             v-model="facilityStore.createFacilityFields.contact.address.prefectureJa"
                             data-testid="mod-facility-section-prefectureJa"
                             name="prefecture-japan-ja"

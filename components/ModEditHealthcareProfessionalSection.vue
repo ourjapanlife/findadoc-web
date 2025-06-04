@@ -49,16 +49,16 @@
                             :required="false"
                         />
                         <label
-                            for="name_locales"
+                            for="mod-edit-healthcare-professional-section-select-name-locales"
                             class="my-2 text-primary-text text-sm font-bold font-sans"
                         >
                             {{ $t('modHealthcareProfessionalSection.labelHealthcareProfessionalNameLocale') }}
                         </label>
                         <select
-                            id="name_locales"
+                            id="mod-edit-healthcare-professional-section-select-name-locales"
                             v-model="nameLocaleInputs.locale"
                             data-testid="mod-healthcare-professional-section-name-locale"
-                            name="Name Locales"
+                            name="name-locales"
                             class="mb-5 px-3 py-3.5 w-96 h-12 bg-secondary-bg rounded-lg border border-primary-text-muted
                                 text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
                         >
@@ -143,7 +143,7 @@
                     {{ $t('modHealthcareProfessionalSection.healthcareProfessionalMedicalInfoHeading') }}
                 </h2>
                 <label
-                    for="Accepted Insurances"
+                    for="accepted-insurances"
                     class="my-2 text-primary-text text-sm font-bold font-sans"
                 >
                     {{ $t("modHealthcareProfessionalSection.selectInsurances") }}
