@@ -231,6 +231,7 @@
                         :place-holder-text="$t('modFacilitySection.placeholderTextHealthcareProfessionalSearchbar')"
                         :no-match-text="$t('modFacilitySection.noHealthcareProfessionalFound')"
                         :fields-to-display-callback="healthcareProfessionalsToDisplayCallback"
+                        :default-suggestions="defaultHealthcareProfessionalSuggestions"
                         @search-input-change="handleHealthcareProfessionalsInputChange"
                     />
                     <span
@@ -291,8 +292,11 @@ const healthcareProfessionalsRelatedToFacility: Ref<string[]>
 // This keeps track of the existing healthcare professionals we are adding to the new facility
 const healthcareProfessionalsToAddToFacility: Ref<HealthcareProfessional[]> = ref([])
 
+const defaultHealthcareProfessionalSuggestions: Ref<HealthcareProfessional[]> = ref([])
+
 const handleHealthcareProfessionalsInputChange = (filteredItems: Ref<HealthcareProfessional[]>, inputValue: string) => {
     const input = inputValue.toLowerCase().trim()
+
     filteredItems.value = healthcareProfessionalsStore.healthcareProfessionalsData.filter(
         (healthcareProfessional: HealthcareProfessional) => {
             const idMatches = healthcareProfessional.id.toLowerCase().startsWith(input)
@@ -317,6 +321,13 @@ onBeforeMount(async () => {
 
     // Set the active screen and ensure the UI state is consistent
     moderationScreenStore.setActiveScreen(ModerationScreen.CreateFacility)
+
+    // Fetch data first if not loaded yet
+    if (!healthcareProfessionalsStore.healthcareProfessionalsData) {
+        await healthcareProfessionalsStore.getHealthcareProfessionals()
+    }
+
+    defaultHealthcareProfessionalSuggestions.value = healthcareProfessionalsStore.healthcareProfessionalsData
 
     // Ensure UI updates are reflected with the autofill values
     await nextTick()
