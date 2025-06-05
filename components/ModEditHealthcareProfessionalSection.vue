@@ -149,7 +149,7 @@
                     {{ $t("modHealthcareProfessionalSection.selectInsurances") }}
                 </label>
                 <ModSearchbar
-                    v-model="healthcareProfessionalAcceptedInsurancesArray"
+                    v-model="healthcareProfessionalsStore.healthcareProfessionalSectionFields.acceptedInsurance"
                     data-test-id="mod-healthcare-professional-section-accepted-insurances"
                     :place-holder-text="$t('modHealthcareProfessionalSection.placeholderTextAcceptedInsurances')"
                     :no-match-text="$t('modHealthcareProfessionalSection.noInsurancesWereFound')"
@@ -173,7 +173,7 @@
                     {{ $t("modHealthcareProfessionalSection.selectDegrees") }}
                 </label>
                 <ModSearchbar
-                    v-model="healthcareProfessionalDegreesArray"
+                    v-model="healthcareProfessionalsStore.healthcareProfessionalSectionFields.degrees"
                     data-test-id="mod-healthcare-professional-section-degrees"
                     :place-holder-text="$t('modHealthcareProfessionalSection.placeholderTextDegrees')"
                     :no-match-text="$t('modHealthcareProfessionalSection.noDegreesWereFound')"
@@ -197,7 +197,7 @@
                     {{ $t("modHealthcareProfessionalSection.selectSpecialties") }}
                 </label>
                 <ModSearchbar
-                    v-model="healthcareProfessionalSpecialtiesArray"
+                    v-model="healthcareProfessionalsStore.healthcareProfessionalSectionFields.specialties"
                     data-test-id="mod-healthcare-professional-section-specialties"
                     :place-holder-text="$t('modHealthcareProfessionalSection.placeholderTextSpecialties')"
                     :no-match-text="$t('modHealthcareProfessionalSection.noSpecialtiesWereFound')"
@@ -221,7 +221,7 @@
                     {{ $t("modHealthcareProfessionalSection.selectLocales") }}
                 </label>
                 <ModSearchbar
-                    v-model="healthcareProfessionalSpokenLanguages"
+                    v-model="healthcareProfessionalsStore.healthcareProfessionalSectionFields.spokenLanguages"
                     data-test-id="mod-healthcare-professional-section-spoken-locales"
                     :place-holder-text="$t('modHealthcareProfessionalSection.placeholderTextLocales')"
                     :no-match-text="$t('modHealthcareProfessionalSection.noLocalesWereFound')"
@@ -578,7 +578,7 @@ onBeforeMount(async () => {
      */
     toast = useToast()
 
-    if (!moderationScreenStore.editHealthcareProfessionalScreenIsActive()) {
+    if (moderationScreenStore.editSubmissionScreenIsActive()) {
         isHealthcareProfessionalInitialized.value = true
         return
     }

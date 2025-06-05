@@ -369,7 +369,7 @@ onBeforeMount(async () => {
     toast = useToast()
 
     // This onBeforeMount can be skipped on other screens since this logic is handled there when active
-    if (!moderationScreenStore.editFacilityScreenIsActive()) {
+    if (moderationScreenStore.editSubmissionScreenIsActive()) {
         isFacilitySectionInitialized.value = true
         return
     }
