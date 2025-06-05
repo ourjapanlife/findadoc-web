@@ -216,6 +216,10 @@ const healthcareProfessionalHasUnsavedChanges = () => {
     // Compare each field in the `healthcareProfessionalSectionFields` object with the original data.
     const areThereUnsavedHealthcareProfessionalChanges
 = !arraysAreEqual(
+    healthcareProfessionalSections.names,
+    originalHealthcareProfessional.names
+)
+|| !arraysAreEqual(
     healthcareProfessionalSections.acceptedInsurance,
     originalHealthcareProfessional.acceptedInsurance
 )
