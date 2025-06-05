@@ -208,6 +208,7 @@
   },
   "modSubmissionForm": {
     "addresses": "Addresses",
+    "autofill": "Autofill",
     "contactInformation": "Contact Information",
     "googleMapsInformation": "Google maps information",
     "healthcareProfessionalId": "Healthcare Professional IDs",
