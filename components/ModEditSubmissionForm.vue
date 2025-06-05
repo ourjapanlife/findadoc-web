@@ -333,139 +333,145 @@ const validateHealthcareProfessionalFields = () => {
 }
 
 function initializeSubmissionFormValues(submissionData: Submission | undefined) {
-    const submittedHealthcareProfessionalName = submissionData?.healthcareProfessionalName?.split(' ')
-    const facilitySectionFields = facilitiesStore.facilitySectionFields
-    const healthcareProfessionalSections = healthcareProfessionalsStore.healthcareProfessionalSectionFields
+    const submittedHealthcareProfessionalName
+    = submissionData?.healthcareProfessionalName?.split(' ') ?? []
 
-    for (const key in submissionData) {
-        if (submissionData[key as keyof Submission]) {
-            switch (key) {
-                case 'facility':
-                    // This sets the values of the v-model
-                    facilitySectionFields.nameEn = submissionData['facility']?.nameEn || ''
-                    facilitySectionFields.nameJa = submissionData['facility']?.nameJa || ''
-                    facilitySectionFields.phone = submissionData['facility']?.contact?.phone || ''
-                    facilitySectionFields.email = submissionData['facility']?.contact?.email || ''
-                    facilitySectionFields.website = submissionData['facility']?.contact?.website || ''
-                    facilitySectionFields.postalCode = submissionData['facility']?.contact?.address.postalCode || ''
-                    facilitySectionFields.prefectureEn = submissionData['facility']?.contact?.address.prefectureEn || ''
-                    facilitySectionFields.cityEn = submissionData['facility']?.contact?.address.cityEn || ''
-                    facilitySectionFields.addressLine1En = submissionData['facility']?.contact?.address.addressLine1En || ''
-                    facilitySectionFields.addressLine2En = submissionData['facility']?.contact?.address.addressLine2En || ''
-                    facilitySectionFields.prefectureJa = submissionData['facility']?.contact?.address.prefectureJa || ''
-                    facilitySectionFields.cityJa = submissionData['facility']?.contact?.address.cityJa || ''
-                    facilitySectionFields.addressLine1Ja = submissionData['facility']?.contact?.address.addressLine1Ja || ''
-                    facilitySectionFields.addressLine2Ja = submissionData['facility']?.contact?.address.addressLine2Ja || ''
-                    facilitySectionFields.mapLatitude = submissionData['facility']?.mapLatitude?.toString() || ''
-                    facilitySectionFields.mapLongitude = submissionData['facility']?.mapLongitude?.toString() || ''
-                    // This sets the values for the check if the user has updated any values
-                    submissionFormFieldsBeforeChanges.nameEn = submissionData['facility']?.nameEn || ''
-                    submissionFormFieldsBeforeChanges.nameJa = submissionData['facility']?.nameJa || ''
-                    submissionFormFieldsBeforeChanges.phone = submissionData['facility']?.contact?.phone || ''
-                    submissionFormFieldsBeforeChanges.email = submissionData['facility']?.contact?.email || ''
-                    submissionFormFieldsBeforeChanges.website = submissionData['facility']?.contact?.website || ''
-                    submissionFormFieldsBeforeChanges.postalCode = submissionData['facility']?.contact?.address.postalCode || ''
-                    submissionFormFieldsBeforeChanges.prefectureEn
-                    = submissionData['facility']?.contact?.address.prefectureEn || ''
-                    submissionFormFieldsBeforeChanges.cityEn = submissionData['facility']?.contact?.address.cityEn || ''
-                    submissionFormFieldsBeforeChanges.addressLine1En
-                    = submissionData['facility']?.contact?.address.addressLine1En || ''
-                    submissionFormFieldsBeforeChanges.addressLine2En
-                    = submissionData['facility']?.contact?.address.addressLine2En || ''
-                    submissionFormFieldsBeforeChanges.prefectureJa
-                    = submissionData['facility']?.contact?.address.prefectureJa || ''
-                    submissionFormFieldsBeforeChanges.cityJa = submissionData['facility']?.contact?.address.cityJa || ''
-                    submissionFormFieldsBeforeChanges.addressLine1Ja
-                    = submissionData['facility']?.contact?.address.addressLine1Ja || ''
-                    submissionFormFieldsBeforeChanges.addressLine2Ja
-                    = submissionData['facility']?.contact?.address.addressLine2Ja || ''
-                    submissionFormFieldsBeforeChanges.mapLatitude = submissionData['facility']?.mapLatitude?.toString() || ''
-                    submissionFormFieldsBeforeChanges.mapLongitude = submissionData['facility']?.mapLongitude?.toString() || ''
-                    break
-                case 'googleMapsUrl':
-                    facilitySectionFields.googlemapsURL // For v-model
-                    = submissionData['facility']?.contact?.googleMapsUrl || submissionData['googleMapsUrl']
-                    submissionFormFieldsBeforeChanges.googlemapsURL // For change check
-                    = submissionData['facility']?.contact?.googleMapsUrl || submissionData['googleMapsUrl']
-                    break
-                case 'healthcareProfessionals':
-                    if (submittedHealthcareProfessionalName && submittedHealthcareProfessionalName.length === 2) {
-                        healthcareProfessionalSections.names // For v-model
-                            = submissionData?.healthcareProfessionals?.[0]?.names ?? [{
-                                firstName: submittedHealthcareProfessionalName[0] || '',
-                                lastName: submittedHealthcareProfessionalName[1] || '',
-                                locale: submissionData.spokenLanguages[0] || Locale.Und
-                            }]
-                        submissionFormFieldsBeforeChanges.healthCareProfessionalNameArray // For change check
-                            = submissionData?.healthcareProfessionals?.[0]?.names ?? [{
-                                firstName: submittedHealthcareProfessionalName[0] || '',
-                                lastName: submittedHealthcareProfessionalName[1] || '',
-                                locale: submissionData.spokenLanguages[0] || Locale.Und
-                            }]
-                    }
-                    if (submittedHealthcareProfessionalName && submittedHealthcareProfessionalName.length === 3) {
-                        healthcareProfessionalSections.names // For v-model
-                        = submissionData?.healthcareProfessionals?.[0]?.names ?? [{
-                                firstName: submittedHealthcareProfessionalName[0] || '',
-                                middleName: submittedHealthcareProfessionalName[1] || '',
-                                lastName: submittedHealthcareProfessionalName[2] || '',
-                                locale: submissionData.spokenLanguages[0] || Locale.Und
-                            }]
-                        submissionFormFieldsBeforeChanges.healthCareProfessionalNameArray // For change check
-                        = submissionData?.healthcareProfessionals?.[0]?.names ?? [{
-                                firstName: submittedHealthcareProfessionalName[0] || '',
-                                middleName: submittedHealthcareProfessionalName[1] || '',
-                                lastName: submittedHealthcareProfessionalName[2] || '',
-                                locale: submissionData.spokenLanguages[0] || Locale.Und
-                            }]
-                    }
-                    // For v-model
-                    healthcareProfessionalSections.facilityIds = submissionData?.healthcareProfessionals?.length
-                        ? submissionData?.healthcareProfessionals[0]?.facilityIds
-                        : []
-                    currentFacilityRelations.value = healthcareProfessionalSections.facilityIds
-                        .map(facilityId => facilitiesStore.facilityData.find(facility =>
-                            facility.id === facilityId)).filter(facility => facility !== undefined)
-                    healthcareProfessionalSections.acceptedInsurance
-                        = submissionData?.healthcareProfessionals?.[0]?.acceptedInsurance
-                          ?? []
-                    healthcareProfessionalSections.degrees
-                        = submissionData?.healthcareProfessionals?.[0]?.degrees
-                          ?? []
-                    healthcareProfessionalSections.specialties
-                        = submissionData?.healthcareProfessionals?.[0]?.specialties
-                          ?? []
-                    healthcareProfessionalSections.spokenLanguages
-                        = submissionData.spokenLanguages
-                    // For change check
-                    submissionFormFieldsBeforeChanges.healthcareProfessionalAcceptedInsurances
-                        = submissionData?.healthcareProfessionals?.[0]?.acceptedInsurance
-                          ?? []
-                    submissionFormFieldsBeforeChanges.healthcareProfessionalDegrees
-                        = submissionData?.healthcareProfessionals?.[0]?.degrees
-                          ?? []
-                    submissionFormFieldsBeforeChanges.healthcareProfessionalSpecialties
-                        = submissionData?.healthcareProfessionals?.[0]?.specialties
-                          ?? []
-                    submissionFormFieldsBeforeChanges.spokenLanguages
-                        = submissionData.spokenLanguages
-                    break
-                case 'healthcareProfessionalIDs':
-                    // For v-model
-                    facilitySectionFields.healthcareProfessionalIds
-                    = submissionData.facility?.healthcareProfessionalIds ?? []
-                    currentExistingHealthcareProfessionals.value = facilitySectionFields.healthcareProfessionalIds
-                        .map(healthcareProfessionalId =>
-                            healthcareProfessionalsStore.healthcareProfessionalsData.find(healthcareProfessional =>
-                                healthcareProfessional.id === healthcareProfessionalId))
-                        .filter(healthcareProfessional => healthcareProfessional !== undefined)
-                    // For change check
-                    submissionFormFieldsBeforeChanges.healthcareProfessionalIDs
-                    = submissionData.facility?.healthcareProfessionalIds ?? []
-                    break
-            }
-        }
-    }
+    const facilitySectionFields = facilitiesStore.facilitySectionFields
+    const healthcareProfessionalSections
+    = healthcareProfessionalsStore.healthcareProfessionalSectionFields
+
+    // Facility fields
+    facilitySectionFields.nameEn = submissionData?.facility?.nameEn ?? ''
+    facilitySectionFields.nameJa = submissionData?.facility?.nameJa ?? ''
+    facilitySectionFields.phone = submissionData?.facility?.contact?.phone ?? ''
+    facilitySectionFields.email = submissionData?.facility?.contact?.email ?? ''
+    facilitySectionFields.website = submissionData?.facility?.contact?.website ?? ''
+    facilitySectionFields.postalCode
+    = submissionData?.facility?.contact?.address.postalCode ?? ''
+    facilitySectionFields.prefectureEn
+    = submissionData?.facility?.contact?.address.prefectureEn ?? ''
+    facilitySectionFields.cityEn
+    = submissionData?.facility?.contact?.address.cityEn ?? ''
+    facilitySectionFields.addressLine1En
+    = submissionData?.facility?.contact?.address.addressLine1En ?? ''
+    facilitySectionFields.addressLine2En
+    = submissionData?.facility?.contact?.address.addressLine2En ?? ''
+    facilitySectionFields.prefectureJa
+    = submissionData?.facility?.contact?.address.prefectureJa ?? ''
+    facilitySectionFields.cityJa
+    = submissionData?.facility?.contact?.address.cityJa ?? ''
+    facilitySectionFields.addressLine1Ja
+    = submissionData?.facility?.contact?.address.addressLine1Ja ?? ''
+    facilitySectionFields.addressLine2Ja
+    = submissionData?.facility?.contact?.address.addressLine2Ja ?? ''
+    facilitySectionFields.mapLatitude
+    = submissionData?.facility?.mapLatitude?.toString() ?? ''
+    facilitySectionFields.mapLongitude
+    = submissionData?.facility?.mapLongitude?.toString() ?? ''
+
+    submissionFormFieldsBeforeChanges.nameEn
+    = submissionData?.facility?.nameEn ?? ''
+    submissionFormFieldsBeforeChanges.nameJa
+    = submissionData?.facility?.nameJa ?? ''
+    submissionFormFieldsBeforeChanges.phone
+    = submissionData?.facility?.contact?.phone ?? ''
+    submissionFormFieldsBeforeChanges.email
+    = submissionData?.facility?.contact?.email ?? ''
+    submissionFormFieldsBeforeChanges.website
+    = submissionData?.facility?.contact?.website ?? ''
+    submissionFormFieldsBeforeChanges.postalCode
+    = submissionData?.facility?.contact?.address.postalCode ?? ''
+    submissionFormFieldsBeforeChanges.prefectureEn
+    = submissionData?.facility?.contact?.address.prefectureEn ?? ''
+    submissionFormFieldsBeforeChanges.cityEn
+    = submissionData?.facility?.contact?.address.cityEn ?? ''
+    submissionFormFieldsBeforeChanges.addressLine1En
+    = submissionData?.facility?.contact?.address.addressLine1En ?? ''
+    submissionFormFieldsBeforeChanges.addressLine2En
+    = submissionData?.facility?.contact?.address.addressLine2En ?? ''
+    submissionFormFieldsBeforeChanges.prefectureJa
+    = submissionData?.facility?.contact?.address.prefectureJa ?? ''
+    submissionFormFieldsBeforeChanges.cityJa
+    = submissionData?.facility?.contact?.address.cityJa ?? ''
+    submissionFormFieldsBeforeChanges.addressLine1Ja
+    = submissionData?.facility?.contact?.address.addressLine1Ja ?? ''
+    submissionFormFieldsBeforeChanges.addressLine2Ja
+    = submissionData?.facility?.contact?.address.addressLine2Ja ?? ''
+    submissionFormFieldsBeforeChanges.mapLatitude
+    = submissionData?.facility?.mapLatitude?.toString() ?? ''
+    submissionFormFieldsBeforeChanges.mapLongitude
+    = submissionData?.facility?.mapLongitude?.toString() ?? ''
+
+    facilitySectionFields.googlemapsURL
+    = submissionData?.facility?.contact?.googleMapsUrl
+      ?? submissionData?.googleMapsUrl
+      ?? ''
+    submissionFormFieldsBeforeChanges.googlemapsURL
+    = submissionData?.facility?.contact?.googleMapsUrl
+      ?? submissionData?.googleMapsUrl
+      ?? ''
+
+    const hpIds = submissionData?.facility?.healthcareProfessionalIds ?? []
+    facilitySectionFields.healthcareProfessionalIds = [...hpIds]
+    currentExistingHealthcareProfessionals.value
+    = hpIds
+            .map(healthcareProfessionalId =>
+                healthcareProfessionalsStore.healthcareProfessionalsData.find(
+                    hp => hp.id === healthcareProfessionalId
+                ))
+            .filter((hp): hp is NonNullable<typeof hp> => hp !== undefined)
+
+    // Healthcare Professionals fields
+    healthcareProfessionalSections.names
+    = submissionData?.healthcareProfessionals?.[0]?.names
+      ?? (submittedHealthcareProfessionalName.length === 2
+          ? [
+              {
+                  firstName: submittedHealthcareProfessionalName[0] || '',
+                  lastName: submittedHealthcareProfessionalName[1] || '',
+                  locale: submissionData?.spokenLanguages?.[0] ?? Locale.Und
+              }
+          ]
+          : submittedHealthcareProfessionalName.length === 3
+              ? [
+                  {
+                      firstName: submittedHealthcareProfessionalName[0] || '',
+                      middleName: submittedHealthcareProfessionalName[1] || '',
+                      lastName: submittedHealthcareProfessionalName[2] || '',
+                      locale: submissionData?.spokenLanguages?.[0] ?? Locale.Und
+                  }
+              ]
+              : [])
+
+    submissionFormFieldsBeforeChanges.healthCareProfessionalNameArray
+    = healthcareProfessionalSections.names
+
+    const hpFacilityIds
+    = submissionData?.healthcareProfessionals?.[0]?.facilityIds ?? []
+    healthcareProfessionalSections.facilityIds = [...hpFacilityIds]
+    currentFacilityRelations.value
+    = hpFacilityIds
+            .map(facilityId =>
+                facilitiesStore.facilityData.find(facility => facility.id === facilityId))
+            .filter((facility): facility is NonNullable<typeof facility> => facility !== undefined)
+
+    healthcareProfessionalSections.acceptedInsurance
+    = submissionData?.healthcareProfessionals?.[0]?.acceptedInsurance ?? []
+    healthcareProfessionalSections.degrees
+    = submissionData?.healthcareProfessionals?.[0]?.degrees ?? []
+    healthcareProfessionalSections.specialties
+    = submissionData?.healthcareProfessionals?.[0]?.specialties ?? []
+    healthcareProfessionalSections.spokenLanguages
+    = submissionData?.spokenLanguages ?? []
+
+    submissionFormFieldsBeforeChanges.healthcareProfessionalAcceptedInsurances
+    = submissionData?.healthcareProfessionals?.[0]?.acceptedInsurance ?? []
+    submissionFormFieldsBeforeChanges.healthcareProfessionalDegrees
+    = submissionData?.healthcareProfessionals?.[0]?.degrees ?? []
+    submissionFormFieldsBeforeChanges.healthcareProfessionalSpecialties
+    = submissionData?.healthcareProfessionals?.[0]?.specialties ?? []
+    submissionFormFieldsBeforeChanges.spokenLanguages
+    = submissionData?.spokenLanguages ?? []
 }
 
 // Checks if form fields have unsaved changes
@@ -662,10 +668,6 @@ const resetModalRefs = async () => {
     moderationSubmissionStore.setApprovingSubmissionFromTopBar(false)
     moderationSubmissionStore.setUpdatingSubmissionFromTopBarAndExiting(false)
     moderationSubmissionStore.setUpdatingSubmissionFromTopBar(false)
-    // reset healthcareProfessionalSections
-    healthcareProfessionalsStore.resetHealthcareProfessionalSectionFields()
-    // reset facilitySectionFields
-    facilitiesStore.resetFacilitySectionFields()
     formHasUnsavedChanges.value = false
 }
 
@@ -748,6 +750,10 @@ onBeforeRouteLeave(async (to, from, next) => {
         return
     }
     await resetModalRefs()
+    // reset healthcareProfessionalSections
+    healthcareProfessionalsStore.resetHealthcareProfessionalSectionFields()
+    // reset facilitySectionFields
+    facilitiesStore.resetFacilitySectionFields()
     next()
 })
 </script>
