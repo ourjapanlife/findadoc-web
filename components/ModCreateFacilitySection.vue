@@ -231,6 +231,7 @@
                         :place-holder-text="$t('modFacilitySection.placeholderTextHealthcareProfessionalSearchbar')"
                         :no-match-text="$t('modFacilitySection.noHealthcareProfessionalFound')"
                         :fields-to-display-callback="healthcareProfessionalsToDisplayCallback"
+                        :default-suggestions="defaultHealthcareProfessionalSuggestions"
                         @search-input-change="handleHealthcareProfessionalsInputChange"
                     />
                     <span
@@ -275,6 +276,7 @@ import {
     validateCityJa
 } from '~/utils/formValidations'
 import type { HealthcareProfessional } from '~/typedefs/gqlTypes'
+import { listPrefectureJapanEn, listPrefectureJapanJa } from '~/stores/locationsStore'
 
 const loadingStore = useLoadingStore()
 loadingStore.setIsLoading(true)
@@ -290,8 +292,11 @@ const healthcareProfessionalsRelatedToFacility: Ref<string[]>
 // This keeps track of the existing healthcare professionals we are adding to the new facility
 const healthcareProfessionalsToAddToFacility: Ref<HealthcareProfessional[]> = ref([])
 
+const defaultHealthcareProfessionalSuggestions: Ref<HealthcareProfessional[]> = ref([])
+
 const handleHealthcareProfessionalsInputChange = (filteredItems: Ref<HealthcareProfessional[]>, inputValue: string) => {
     const input = inputValue.toLowerCase().trim()
+
     filteredItems.value = healthcareProfessionalsStore.healthcareProfessionalsData.filter(
         (healthcareProfessional: HealthcareProfessional) => {
             const idMatches = healthcareProfessional.id.toLowerCase().startsWith(input)
@@ -308,21 +313,6 @@ const handleHealthcareProfessionalsInputChange = (filteredItems: Ref<HealthcareP
 const healthcareProfessionalsToDisplayCallback = (healthcareProfessional: HealthcareProfessional) =>
     [healthcareProfessional.names[0].firstName + ' ' + healthcareProfessional.names[0].lastName]
 
-const listPrefectureJapanEn: Ref<string[]> = ref([
-    'Hokkaido', 'Aomori', 'Iwate', 'Miyagi', 'Akita',
-    'Yamagata', 'Fukushima', 'Ibaraki', 'Tochigi', 'Gumma', 'Saitama', 'Chiba', 'Tokyo', 'Kanagawa',
-    'Niigata', 'Toyama', 'Ishikawa', 'Fukui', 'Yamanashi', 'Nagano', 'Gifu', 'Shizuoka', 'Aichi',
-    'Mie', 'Shiga', 'Kyoto', 'Osaka', 'Hyogo', 'Nara', 'Wakayama', 'Tottori', 'Shimane', 'Okayama',
-    'Hiroshima', 'Yamaguchi', 'Tokushima', 'Kagawa', 'Ehime', 'Kochi', 'Fukuoka', 'Saga',
-    'Nagasaki', 'Kumamoto', 'Oita', 'Miyazaki', 'Kagoshima', 'Okinawa'])
-
-const listPrefectureJapanJa: Ref<string[]> = ref([
-    '北海道', '青森県', '岩手県', '宮城県', '秋田県',
-    '山形県', '福島県', '茨城県', '栃木県', '群馬県', '埼玉県', '千葉県', '東京都', '神奈川県', '新潟県', '富山県',
-    '石川県', '福井県', '山梨県', '長野県', '岐阜県', '静岡県', '愛知県', '三重県', '滋賀県', '京都府', '大阪府',
-    '兵庫県', '奈良県', '和歌山県', '鳥取県', '島根県', '岡山県', '広島県', '山口県', '徳島県', '香川県', '愛媛県',
-    '高知県', '福岡県', '佐賀県', '長崎県', '熊本県', '大分県', '宮崎県', '鹿児島県', '沖縄県'])
-
 onBeforeMount(async () => {
     isFacilitySectionInitialized.value = false
 
@@ -331,6 +321,13 @@ onBeforeMount(async () => {
 
     // Set the active screen and ensure the UI state is consistent
     moderationScreenStore.setActiveScreen(ModerationScreen.CreateFacility)
+
+    // Fetch data first if not loaded yet
+    if (!healthcareProfessionalsStore.healthcareProfessionalsData) {
+        await healthcareProfessionalsStore.getHealthcareProfessionals()
+    }
+
+    defaultHealthcareProfessionalSuggestions.value = healthcareProfessionalsStore.healthcareProfessionalsData
 
     // Ensure UI updates are reflected with the autofill values
     await nextTick()

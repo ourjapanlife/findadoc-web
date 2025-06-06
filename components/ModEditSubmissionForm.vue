@@ -445,6 +445,7 @@
                     :place-holder-text="$t('modSubmissionForm.placeholderTextAcceptedInsurances')"
                     :no-match-text="$t('modSubmissionForm.noInsurancesWereFound')"
                     :fields-to-display-callback="insurancesToDisplayCallback"
+                    :default-suggestions="Object.values(Insurance)"
                     @search-input-change="handleInsuranceInputChange"
                 />
                 <ol class="list-disc text-primary-text/60 font-semibold my-2 px-2">
@@ -468,6 +469,7 @@
                     :place-holder-text="$t('modSubmissionForm.placeholderTextDegrees')"
                     :no-match-text="$t('modSubmissionForm.noDegreesWereFound')"
                     :fields-to-display-callback="degreesToDisplayCallback"
+                    :default-suggestions="Object.values(Degree)"
                     @search-input-change="handleDegreeInputChange"
                 />
                 <ol class="list-disc text-primary-text/60 font-semibold my-2 px-2">
@@ -491,6 +493,7 @@
                     :place-holder-text="$t('modSubmissionForm.placeholderTextSpecialties')"
                     :no-match-text="$t('modSubmissionForm.noSpecialtiesWereFound')"
                     :fields-to-display-callback="specialtiesToDisplayCallback"
+                    :default-suggestions="Object.values(Specialty)"
                     @search-input-change="handleSpecialtyInputChange"
                 />
                 <ol class="list-disc text-primary-text/60 font-semibold my-2 px-2">
@@ -514,6 +517,7 @@
                     :place-holder-text="$t('modSubmissionForm.placeholderTextLocales')"
                     :no-match-text="$t('modSubmissionForm.noLocalesWereFound')"
                     :fields-to-display-callback="localesToDisplayCallback"
+                    :default-suggestions="Object.values(Locale)"
                     @search-input-change="handleLocaleInputChange"
                 />
                 <ol class="list-disc text-primary-text/60 font-semibold my-2 px-2">
@@ -569,6 +573,8 @@ import { triggerFormValidationErrorMessages } from '~/utils/triggerFormValidatio
 import { arraysAreEqual } from '~/utils/arrayUtils'
 import { useLocaleStore } from '~/stores/localeStore'
 import { handleServerErrorMessaging } from '~/utils/handleServerErrorMessaging'
+import { listPrefectureJapanEn, listPrefectureJapanJa } from '~/stores/locationsStore'
+
 /**
 This initalizes the variable that needs to be set on mount.
 If this is set as a const the build will fail since the plugin
@@ -668,20 +674,6 @@ const submissionFormFieldsBeforeChanges = reactive({
 })
 
 const formHasUnsavedChanges: Ref<boolean> = ref(false)
-
-const listPrefectureJapanEn: Ref<string[]> = ref([
-    'Hokkaido', 'Aomori', 'Iwate', 'Miyagi', 'Akita',
-    'Yamagata', 'Fukushima', 'Ibaraki', 'Tochigi', 'Gumma', 'Saitama', 'Chiba', 'Tokyo', 'Kanagawa',
-    'Niigata', 'Toyama', 'Ishikawa', 'Fukui', 'Yamanashi', 'Nagano', 'Gifu', 'Shizuoka', 'Aichi',
-    'Mie', 'Shiga', 'Kyoto', 'Osaka', 'Hyogo', 'Nara', 'Wakayama', 'Tottori', 'Shimane', 'Okayama',
-    'Hiroshima', 'Yamaguchi', 'Tokushima', 'Kagawa', 'Ehime', 'Kochi', 'Fukuoka', 'Saga',
-    'Nagasaki', 'Kumamoto', 'Oita', 'Miyazaki', 'Kagoshima', 'Okinawa'])
-const listPrefectureJapanJa: Ref<string[]> = ref([
-    '北海道', '青森県', '岩手県', '宮城県', '秋田県',
-    '山形県', '福島県', '茨城県', '栃木県', '群馬県', '埼玉県', '千葉県', '東京都', '神奈川県', '新潟県', '富山県',
-    '石川県', '福井県', '山梨県', '長野県', '岐阜県', '静岡県', '愛知県', '三重県', '滋賀県', '京都府', '大阪府',
-    '兵庫県', '奈良県', '和歌山県', '鳥取県', '島根県', '岡山県', '広島県', '山口県', '徳島県', '香川県', '愛媛県',
-    '高知県', '福岡県', '佐賀県', '長崎県', '熊本県', '大分県', '宮崎県', '鹿児島県', '沖縄県'])
 
 const formSubmissionId = moderationSubmissionStore.selectedSubmissionId
 moderationSubmissionStore.filterSelectedSubmission(formSubmissionId)
