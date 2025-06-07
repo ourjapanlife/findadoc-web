@@ -25,7 +25,7 @@
             class="mx-1"
         >
             <button
-                v-if="page !== '...'"
+                v-if="page !== dots"
                 :class="[
                     'w-8 h-8 rounded flex items-center justify-center font-semibold text-black',
                     currentPage === Number(page)
@@ -42,7 +42,7 @@
                 v-else
                 class="px-1 text-gray-500"
             >
-                ...
+                {{ dots }}
             </span>
         </span>
 
@@ -79,6 +79,8 @@ const props = defineProps<{
     itemsPerPage: number
 }>()
 
+const dots = '...'
+
 const emit = defineEmits<{
     (e: 'update:currentPage', value: number): void
 }>()
@@ -93,32 +95,29 @@ function goToPage(page: number) {
 }
 
 const visiblePages = computed(() => {
+    const total = totalPages.value
+    const current = props.currentPage
     const pages: (number | string)[] = []
 
-    if (totalPages.value <= 3) {
-        for (let i = 1; i <= totalPages.value; i++) {
-            pages.push(i)
-        }
-    } else {
-        if (props.currentPage > 2) {
-            pages.push(1)
-            if (props.currentPage > 3) pages.push('...')
-        }
-
-        const start = Math.max(1, props.currentPage - 1)
-        const end = Math.min(totalPages.value, props.currentPage + 1)
-
-        for (let i = start; i <= end; i++) {
-            pages.push(i)
-        }
-
-        if (props.currentPage < totalPages.value - 1) {
-            if (props.currentPage < totalPages.value - 2) pages.push('...')
-            pages.push(totalPages.value)
-        }
+    // Easy case
+    if (total <= 3) {
+        return Array.from({ length: total }, (_, i) => i + 1)
     }
+
+    // Add first pages and after ...
+    if (current > 2) pages.push(1)
+    if (current > 3) pages.push(dots)
+
+    // mid pages: current -1, current, current +1
+    const start = Math.max(1, current - 1)
+    const end = Math.min(total, current + 1)
+    const middlePages = Array.from({ length: end - start + 1 }, (_, i) => start + i)
+    pages.push(...middlePages)
+
+    // Add ... and last page
+    if (current < total - 2) pages.push(dots)
+    if (current < total - 1) pages.push(total)
 
     return pages
 })
 </script>
-

@@ -35,7 +35,7 @@
                         class="grid grid-cols-subgrid col-span-4 bg-primary-text-muted p-1 hover:bg-primary"
                     >
                         <span class="text-start">
-                            {{ (currentSubmissionsPage - 1) * submissionsPerPage + index + 1 }}
+                            {{ getGlobalRowNumber(currentSubmissionsPage, submissionsPerPage, index) }}
                         </span>
                         <span class="text-start">
                             {{ submission.healthcareProfessionalName || $t("modPanelSubmissionList.facilityNameUnknown") }}
@@ -49,7 +49,7 @@
                 :current-page="currentSubmissionsPage"
                 :total-items="totalSubmissions"
                 :items-per-page="submissionsPerPage"
-                @update:current-page="val => currentSubmissionsPage = val"
+                @update:current-page="updateSubmissionsPage"
             />
         </div>
         <div
@@ -71,7 +71,7 @@
                         class="grid grid-cols-subgrid col-span-4 p-1 hover:bg-primary"
                     >
                         <span class="text-start">
-                            {{ (currentFacilitiesPage - 1) * facilitiesPerPage + index + 1 }}
+                            {{ getGlobalRowNumber(currentFacilitiesPage, facilitiesPerPage, index) }}
                         </span>
                         <span class="text-start">
                             {{ facility?.nameEn }}
@@ -85,7 +85,7 @@
                 :current-page="currentFacilitiesPage"
                 :total-items="totalFacilities"
                 :items-per-page="facilitiesPerPage"
-                @update:current-page="val => currentFacilitiesPage = val"
+                @update:current-page="updateFacilitiesPage"
             />
         </div>
         <div
@@ -108,7 +108,7 @@
                         class="grid grid-cols-subgrid col-span-4 p-1 hover:bg-primary"
                     >
                         <span class="text-start">
-                            {{ (currentHealthcarePage - 1) * healthcarePerPage + index + 1 }}
+                            {{ getGlobalRowNumber(currentHealthcarePage, healthcarePerPage, index) }}
                         </span>
                         <span class="text-start">
                             {{ healthcareProfessional.names[0].firstName }} {{ healthcareProfessional.names[0].lastName }}
@@ -122,7 +122,7 @@
                 :current-page="currentHealthcarePage"
                 :total-items="totalHealthcareProfessionals"
                 :items-per-page="healthcarePerPage"
-                @update:current-page="val => currentHealthcarePage = val"
+                @update:current-page="updateHealthcarePage"
             />
         </div>
         <div v-else>
@@ -197,5 +197,21 @@ const paginatedSubmissions = computed(() => {
 })
 const totalSubmissions = computed(() =>
     modSubmissionsListStore.filteredSubmissionDataForListComponent.length)
+
+function getGlobalRowNumber(page: number, perPage: number, index: number): number {
+    return (page - 1) * perPage + index + 1
+}
+
+function updateHealthcarePage(value: number) {
+    currentHealthcarePage.value = value
+}
+
+function updateFacilitiesPage(value: number) {
+    currentFacilitiesPage.value = value
+}
+
+function updateSubmissionsPage(value: number) {
+    currentSubmissionsPage.value = value
+}
 </script>
 
