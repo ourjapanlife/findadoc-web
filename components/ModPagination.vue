@@ -25,7 +25,7 @@
             class="mx-1"
         >
             <button
-                v-if="page !== dots"
+                v-if="typeof page === 'number'"
                 :class="[
                     'w-8 h-8 rounded flex items-center justify-center font-semibold text-black',
                     currentPage === Number(page)
@@ -99,22 +99,18 @@ const visiblePages = computed(() => {
     const current = props.currentPage
     const pages: (number | string)[] = []
 
-    // Easy case
     if (total <= 3) {
         return Array.from({ length: total }, (_, i) => i + 1)
     }
 
-    // Add first pages and after ...
     if (current > 2) pages.push(1)
     if (current > 3) pages.push(dots)
 
-    // mid pages: current -1, current, current +1
     const start = Math.max(1, current - 1)
     const end = Math.min(total, current + 1)
     const middlePages = Array.from({ length: end - start + 1 }, (_, i) => start + i)
     pages.push(...middlePages)
 
-    // Add ... and last page
     if (current < total - 2) pages.push(dots)
     if (current < total - 1) pages.push(total)
 
