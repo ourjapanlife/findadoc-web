@@ -32,11 +32,16 @@ export const useModerationSubmissionsStore = defineStore(
         const selectedSubmissionData: Ref<Submission | undefined> = ref()
         const filteredSubmissionDataForListComponent: Ref<Submission[]> = ref([])
         const didMutationFail: Ref<boolean> = ref(false)
+        const updatingSubmissionFromTopBarAndExiting: Ref<boolean> = ref(false)
         const updatingSubmissionFromTopBar: Ref<boolean> = ref(false)
         const approvingSubmissionFromTopBar: Ref<boolean> = ref(false)
         const showRejectSubmissionConfirmation: Ref<boolean> = ref(false)
         const selectedModerationListViewTabChosen: Ref<SelectedSubmissionListViewTab>
         = ref(SelectedSubmissionListViewTab.ForReview)
+
+        function setUpdatingSubmissionFromTopBarAndExiting(newValue: boolean) {
+            updatingSubmissionFromTopBarAndExiting.value = newValue
+        }
 
         function setUpdatingSubmissionFromTopBar(newValue: boolean) {
             updatingSubmissionFromTopBar.value = newValue
@@ -101,7 +106,7 @@ export const useModerationSubmissionsStore = defineStore(
 
             if (serverResponse.errors?.length) {
                 setDidMutationFail(true)
-                setUpdatingSubmissionFromTopBar(false)
+                setUpdatingSubmissionFromTopBarAndExiting(false)
             }
 
             return serverResponse
@@ -152,6 +157,8 @@ export const useModerationSubmissionsStore = defineStore(
             setSelectedModerationListViewChosen,
             updatingSubmissionFromTopBar,
             setUpdatingSubmissionFromTopBar,
+            updatingSubmissionFromTopBarAndExiting,
+            setUpdatingSubmissionFromTopBarAndExiting,
             showRejectSubmissionConfirmation,
             setShowRejectSubmissionConfirmation,
             approvingSubmissionFromTopBar,
