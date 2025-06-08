@@ -1,51 +1,70 @@
 name: "Snapshot Tests: Vue Components"
+
 on:
   pull_request:
     branches: [main]
+
 permissions:
   contents: read
   pull-requests: write
 
 jobs:
-  setup:
-      name: Vue Snapshot Tests 📷
-      strategy:
-          matrix:
-            node-version: [21.3.0]
-      runs-on: ubuntu-latest
-      steps:
-          - name: Checkout code
-            uses: actions/checkout@v3
-            with:
-                fetch-depth: 0
-          - name: Install Yarn/ Node ${{ matrix.node-version }}
-            uses: actions/setup-node@v3
-            with:
-                node-version: ${{ matrix.node-version }}
-                cache: "yarn"
-          - name: Install dependencies and build
-            run: |
-              yarn install --immutable
-              yarn ci:build
-          - name: Prepare Nuxt for tests
-            run: yarn prepare
+  snapshot-test:
+    name: Vue Snapshot Tests 📷
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [21.3.0]
 
-          - name: Run Snapshot Tests
-            id: run-tests
-            run: |
-              yarn test:snapshot > snapshot-output.txt || true
-          - name: Comment PR on Snapshot Failure
-            if: steps.run-tests.outcome == 'failure'
-            uses: actions/github-script@v6
-            with:
-              github-token: ${{ secrets.GITHUB_TOKEN }}
-              script: |
-                const fs = require('fs');
-                const diff = fs.readFileSync('snapshot-output.txt', 'utf8');
-                github.rest.issues.createComment({
-                  issue_number: context.issue.number,
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  body: `🧪 **Snapshot Test Failed**\n\n\`\`\`\n${diff.slice(0, 6500)}\n\`\`\`\n\nRun \`yarn test:snapshot:update\` to update snapshots if changes are expected.`
-                });
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "yarn"
+
+      - name: Install dependencies and build
+        run: |
+          yarn install --immutable
+          yarn ci:build
+
+      - name: Prepare Nuxt for tests
+        run: yarn prepare
+
+      - name: Run Snapshot Tests
+        run: yarn test:snapshot > snapshot-output.txt || true
+
+      - name: Upload snapshot-output.txt as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: snapshot-output
+          path: snapshot-output.txt
+
+      - name: Comment PR with snapshot result
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const fs = require('fs');
+            const output = fs.readFileSync('snapshot-output.txt', 'utf8');
+            let body = '';
+
+            if (output.includes('Snapshot Summary') || output.includes('›')) {
+              body = `🧪 **Snapshot Changed**\n\n\`\`\`\n${output.slice(0, 6500)}\n\`\`\`\n\nIf these changes are expected, run \`yarn test:snapshot:update\`.`;
+            } else {
+              body = `✅ **Snapshot Test Passed** — Nothing in the UI changed.`;
+            }
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: body
+            });
+
 
