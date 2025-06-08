@@ -32,10 +32,13 @@ jobs:
       - name: Run Snapshot Tests
         id: run-tests
         run: |
-          yarn test:snapshot > snapshot-output.txt || true
+          set +e
+          yarn test:snapshot > snapshot-output.txt
+          echo "exit_code=$?" >> $GITHUB_OUTPUT
+          set -e
 
       - name: Comment PR on Snapshot Failure
-        if: steps.run-tests.outcome == 'failure'
+        if: steps.snapshot.outputs.exit_code != '0'
         uses: actions/github-script@v6
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -46,6 +49,6 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: `🧪 **Snapshot Test Failed**\n\n\`\`\`\n${diff.slice(0, 6500)}\n\`\`\`\n\nRun \`yarn test:snapshot:update\` to update snapshots if changes are expected.`
+              body: `🧪 **Snapshot Test Failed**\n\n\`\`\`\n${diff.slice(0, 6500)}\n\`\`\`\n\nIf these changes are expected, run \`yarn test:snapshot:update\` and commit the updated snapshots.`
             });
 
