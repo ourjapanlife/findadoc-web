@@ -7,6 +7,7 @@ export default defineVitestConfig({
             nuxt: {
                 domEnvironment: 'jsdom'
             }
-        }
+        },
+        exclude: ['**/*.jest.test.ts', 'node_modules']
     }
 })

@@ -1,6 +1,5 @@
 import { mount } from '@vue/test-utils'
 import { createI18n } from 'vue-i18n'
-import { describe, it, expect } from '@jest/globals'
 import About from '~/pages/about.vue'
 
 const i18n = createI18n({
