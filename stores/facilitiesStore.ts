@@ -11,6 +11,7 @@ import type { DeleteResult, Facility,
     Relationship } from '~/typedefs/gqlTypes'
 import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql'
 import type { ServerResponse } from '~/typedefs/serverResponse'
+import { arraysAreEqual } from '~/utils/arrayUtils'
 
 export const useFacilitiesStore = defineStore(
     'facilitiesStore',
@@ -214,7 +215,10 @@ export const useFacilitiesStore = defineStore(
                 selectedFacilityData.value = serverResponse.data
                 initializeFacilitySectionValues(serverResponse.data)
 
-                if (facilitySectionFields.healthProfessionalsRelations === healthProfessionalRelationsBeforeMutation) {
+                if (arraysAreEqual(
+                    facilitySectionFields.healthProfessionalsRelations,
+                    healthProfessionalRelationsBeforeMutation
+                )) {
                     facilitySectionFields.healthProfessionalsRelations = []
                 }
             }
