@@ -1,62 +1,27 @@
 import { defineStore } from 'pinia'
-import { ref, computed } from 'vue'
+import { computed } from 'vue'
 import { auth0 } from '../utils/auth0.js'
 import { useLoadingStore } from './loadingStore.js'
 
 export const useAuthStore = defineStore('authStore', () => {
-    const isTestingMode = ref(() => {
-        const runtimeConfig = useRuntimeConfig()
-        return !!runtimeConfig.isTestingMode && import.meta.client
-    })
-
-    async function loadSecret(): Promise<boolean> {
-        if (!secretPromise.value) {
-            secretPromise.value = (async () => {
-                const checkForTestingEnvironment = await $fetch<{ testingEnvironment: string }>('/api/test-environment')
-                try {
-                    if (checkForTestingEnvironment.testingEnvironment) {
-                        isTesting.value = true
-                        return true
-                    }
-                    return false
-                } catch (err) {
-                    if (!checkForTestingEnvironment.testingEnvironment) console.error('Failed to fetch auth secret', err)
-                    throw err
-                }
-            })()
-        }
-        return secretPromise.value
-    }
-
-    async function init() {
-        try {
-            await loadSecret()
-        } catch {
-            isTesting.value = false
-        } finally {
-            isReady.value = true
-        }
-    }
-    init()
+    const runtimeConfig = useRuntimeConfig()
+    const isTestingMode = !!runtimeConfig.public.isTestingMode
 
     const userId = computed(() => {
-        if (isTestingMode.value) {
+        if (isTestingMode) {
             return localStorage.getItem('id_token') ?? 'unknown user'
         }
-        return auth0.user.value?.nickname ?? 'unknown user'
+        return auth0?.user.value?.nickname ?? 'unknown user'
     })
 
-    const isLoadingAuth = computed(() => auth0.isLoading.value)
+    const isLoadingAuth = computed(() => auth0?.isLoading.value ?? true)
 
     const isLoggedIn = computed(() => {
-        if (isTestingMode.value) {
-            return !!localStorage.getItem('auth_token')
+        if (isTestingMode) {
+            return localStorage.getItem('auth_token') !== undefined
         }
-        return !auth0.isLoading.value && auth0.isAuthenticated.value
+        return auth0?.isAuthenticated.value ?? false
     })
-
-    //TODO: this should be based on the user's role
-    const isModerator = computed(() => !auth0.isLoading.value && auth0.isAuthenticated.value)
 
     async function login() {
         //set the loading visual state
@@ -65,9 +30,7 @@ export const useAuthStore = defineStore('authStore', () => {
         try {
             loadingStore.setIsLoading(true)
 
-            isModerator.value = false
-
-            if (!auth0.isAuthenticated.value) {
+            if (!isLoggedIn.value) {
                 await auth0.loginWithRedirect()
             }
 
@@ -81,38 +44,23 @@ export const useAuthStore = defineStore('authStore', () => {
     }
 
     async function logout() {
-        isModerator.value = false
-
         //TODO clear the credentials
         await auth0.logout({ logoutParams: { returnTo: window.location.origin } })
     }
 
-    //Note: if this function is called while `isLoadingAuth` is true, it will return undefined
-    //If you need to wait for the auth0 object to be ready, use the `isLoadingAuth` computed property
-    //to check if the auth0 object is ready before calling this function
     async function getAuthBearerToken() {
         try {
-            const startTime = Date.now()
-            while (auth0?.isLoading.value) {
-                // wait for the auth0 object to be ready
-                await new Promise(resolve => setTimeout(resolve, 100))
-
-                // break the loop after 10 seconds to avoid infinite loop
-                if (Date.now() - startTime > 10000) {
-                    console.error('Auth0 loading timed out after 10 seconds')
-                    break
-                }
-            }
-
-            if (isTestingMode.value) {
+            if (isTestingMode) {
                 return localStorage.getItem('auth_token') ?? undefined
             }
 
-            if (!auth0?.isAuthenticated.value) {
+            await waitForAuth0ToLoad()
+
+            if (!auth0.isAuthenticated.value) {
                 return undefined
             }
 
-            const token = await auth0?.getAccessTokenSilently({
+            const token = await auth0.getAccessTokenSilently({
                 authorizationParams: {
                     audience: 'findadoc',
                     tokenSigningAlg: 'RS256'
@@ -125,5 +73,28 @@ export const useAuthStore = defineStore('authStore', () => {
         }
     }
 
-    return { userId, isLoggedIn, isLoadingAuth, isModerator, login, logout, getAuthBearerToken }
+    //Note: This is use for async functions that need to wait for the auth0 object to be ready.
+    //If not within an async function, use the `isLoadingAuth` computed property instead.
+    async function waitForAuth0ToLoad() {
+        const timeoutMs = 10000
+
+        return new Promise<void>((resolve, reject) => {
+            const startTime = Date.now()
+
+            watch(
+                () => auth0?.isLoading.value ?? true,
+                isAuthStillLoading => {
+                    if (!isAuthStillLoading) {
+                        resolve()
+                    } else if (Date.now() - startTime > timeoutMs) {
+                        console.error('Auth0 loading timed out after 10 seconds')
+                        reject(new Error('Auth0 loading timed out after 10 seconds'))
+                    }
+                },
+                { immediate: true }
+            )
+        })
+    }
+
+    return { userId, isLoggedIn, isLoadingAuth, login, logout, getAuthBearerToken }
 })

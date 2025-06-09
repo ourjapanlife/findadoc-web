@@ -6,7 +6,7 @@ import { useRoute } from 'vue-router'
 //eslint-disable-next-line
 export let auth0: Auth0Plugin
 
-export const initializeAuth0 = () => {
+export const initializeAuth0 = async () => {
     try {
         // skip if auth0 is already initialized. We also only want to run this on the browser side.
         if (auth0) {
@@ -27,8 +27,12 @@ export const initializeAuth0 = () => {
             }
         })
 
+        //set the global auth0 instance
         auth0 = auth0Plugin
+
+        return auth0Plugin
     } catch (error) {
         console.error('Error initializing auth0', error)
+        throw error
     }
 }

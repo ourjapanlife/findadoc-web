@@ -163,10 +163,8 @@ export default defineNuxtConfig({
         }
     },
     runtimeConfig: {
-        isTestingMode: process.env.NUXT_IS_TESTING_MODE,
-
         public: {
-
+            isTestingMode: process.env.NUXT_IS_TESTING_MODE,
             GOOGLE_MAPS_API_KEY: process.env.GOOGLE_MAPS_API_KEY,
 
             NUXT_PUBLIC_LOAD_STORES: process.env.NUXT_PUBLIC_LOAD_STORES,

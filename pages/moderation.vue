@@ -13,7 +13,7 @@
                     {{ $t('login.checkingauth') }}
                 </div>
                 <div
-                    v-if="!doesTheUserHaveAccess && !authStore.isModerator"
+                    v-if="!doesTheUserHaveAccess"
                     data-testid="unauthorized-message"
                 >
                     <div
