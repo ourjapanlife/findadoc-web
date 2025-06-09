@@ -42,7 +42,7 @@
                 v-else
                 class="px-1 text-gray-500"
             >
-                {{ dots }}
+                {{ ellipsisToShowMoreContent }}
             </span>
         </span>
 
@@ -79,7 +79,7 @@ const props = defineProps<{
     itemsPerPage: number
 }>()
 
-const dots = '...'
+const ellipsisToShowMoreContent = '...'
 
 const emit = defineEmits<{
     (e: 'update:currentPage', value: number): void
@@ -104,14 +104,14 @@ const visiblePages = computed(() => {
     }
 
     if (current > 2) pages.push(1)
-    if (current > 3) pages.push(dots)
+    if (current > 3) pages.push(ellipsisToShowMoreContent)
 
     const start = Math.max(1, current - 1)
     const end = Math.min(total, current + 1)
     const middlePages = Array.from({ length: end - start + 1 }, (_, i) => start + i)
     pages.push(...middlePages)
 
-    if (current < total - 2) pages.push(dots)
+    if (current < total - 2) pages.push(ellipsisToShowMoreContent)
     if (current < total - 1) pages.push(total)
 
     return pages
