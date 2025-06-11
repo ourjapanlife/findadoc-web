@@ -82,16 +82,16 @@
             />
             <div class="flex flex-col mt-4">
                 <label
-                    for="Prefecture Japan"
+                    for="mod-edit-facility-section-prefecture-select-en"
                     class="mb-2 text-primary-text text-sm font-bold font-sans"
                 >
                     {{ $t('modFacilitySection.labelFacilityPrefectureEn') }}
                 </label>
                 <select
-                    id="1"
+                    id="mod-edit-facility-section-prefecture-select-en"
                     v-model="facilityStore.facilitySectionFields.prefectureEn"
                     data-testid="mod-facility-section-prefectureEn"
-                    name="Prefecture Japan"
+                    name="prefecture-japan-en"
                     class="mb-5 px-3 py-3.5 w-96 h-12 bg-secondary-bg rounded-lg border border-primary-text-muted
                 text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
                 >
@@ -135,16 +135,16 @@
             />
             <div class="flex flex-col mt-4">
                 <label
-                    for="Prefecture Japan"
+                    for="mod-edit-facility-section-prefecture-select-ja"
                     class="mb-2 text-primary-text text-sm font-bold font-sans"
                 >
                     {{ $t('modFacilitySection.labelFacilityPrefectureJa') }}
                 </label>
                 <select
-                    id="1"
+                    id="mod-edit-facility-section-prefecture-select-ja"
                     v-model="facilityStore.facilitySectionFields.prefectureJa"
                     data-testid="mod-facility-section-prefectureJa"
-                    name="Prefecture Japan"
+                    name="prefecture-japan-ja"
                     class="mb-5 px-3 py-3.5 w-96 h-12 bg-secondary-bg rounded-lg border border-primary-text-muted
                 text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
                 >
@@ -240,6 +240,7 @@
                 :place-holder-text="$t('modFacilitySection.placeholderTextHealthcareProfessionalSearchbar')"
                 :no-match-text="$t('modFacilitySection.noHealthcareProfessionalFound')"
                 :fields-to-display-callback="healthcareProfessionalsToDisplayCallback"
+                :default-suggestions="defaultHealthcareProfessionalSuggestions"
                 @search-input-change="handleHealthcareProfessionalsInputChange"
             />
             <span
@@ -298,6 +299,7 @@ import { validateAddressLineEn,
     validateWebsite,
     validateCityJa } from '~/utils/formValidations'
 import { RelationshipAction, type HealthcareProfessional } from '~/typedefs/gqlTypes'
+import { listPrefectureJapanEn, listPrefectureJapanJa } from '~/stores/locationsStore'
 
 // Initialize the variable that will be used to mount the toast library
 let toast: ToastInterface
@@ -314,6 +316,7 @@ const healthcareProfessionalsRelatedToFacility: Ref<string[]>
 const healthcareProfessionalRelatedToFacilityFiltered: Ref<HealthcareProfessional[]> = ref([])
 // This keeps track of the existing healthcare professionals we are adding to an existing facility
 const healthcareProfessionalsToAddToFacility: Ref<HealthcareProfessional[]> = ref([])
+const defaultHealthcareProfessionalSuggestions: Ref<HealthcareProfessional[]> = ref([])
 
 const syncHealthcareProfessionalsRelatedToFacility = () => {
     if (healthcareProfessionalsStore.healthcareProfessionalsData
@@ -357,21 +360,6 @@ const handleHealthcareProfessionalsInputChange = (filteredItems: Ref<HealthcareP
 const healthcareProfessionalsToDisplayCallback = (healthcareProfessional: HealthcareProfessional) =>
     [healthcareProfessional.names[0].firstName + ' ' + healthcareProfessional.names[0].lastName]
 
-const listPrefectureJapanEn: Ref<string[]> = ref([
-    'Hokkaido', 'Aomori', 'Iwate', 'Miyagi', 'Akita',
-    'Yamagata', 'Fukushima', 'Ibaraki', 'Tochigi', 'Gumma', 'Saitama', 'Chiba', 'Tokyo', 'Kanagawa',
-    'Niigata', 'Toyama', 'Ishikawa', 'Fukui', 'Yamanashi', 'Nagano', 'Gifu', 'Shizuoka', 'Aichi',
-    'Mie', 'Shiga', 'Kyoto', 'Osaka', 'Hyogo', 'Nara', 'Wakayama', 'Tottori', 'Shimane', 'Okayama',
-    'Hiroshima', 'Yamaguchi', 'Tokushima', 'Kagawa', 'Ehime', 'Kochi', 'Fukuoka', 'Saga',
-    'Nagasaki', 'Kumamoto', 'Oita', 'Miyazaki', 'Kagoshima', 'Okinawa'])
-
-const listPrefectureJapanJa: Ref<string[]> = ref([
-    '北海道', '青森県', '岩手県', '宮城県', '秋田県',
-    '山形県', '福島県', '茨城県', '栃木県', '群馬県', '埼玉県', '千葉県', '東京都', '神奈川県', '新潟県', '富山県',
-    '石川県', '福井県', '山梨県', '長野県', '岐阜県', '静岡県', '愛知県', '三重県', '滋賀県', '京都府', '大阪府',
-    '兵庫県', '奈良県', '和歌山県', '鳥取県', '島根県', '岡山県', '広島県', '山口県', '徳島県', '香川県', '愛媛県',
-    '高知県', '福岡県', '佐賀県', '長崎県', '熊本県', '大分県', '宮崎県', '鹿児島県', '沖縄県'])
-
 onBeforeMount(async () => {
     // This onBeforeMount can be skipped on other screens since this logic is handled there when active
     if (!moderationScreenStore.editFacilityScreenIsActive()) {
@@ -409,6 +397,9 @@ onBeforeMount(async () => {
 
     facilityStore.setSelectedFacilityData(facilityStore.selectedFacilityId)
     facilityStore.initializeFacilitySectionValues(facilityStore.selectedFacilityData)
+
+    defaultHealthcareProfessionalSuggestions.value = healthcareProfessionalsStore.healthcareProfessionalsData
+
     // Ensure UI updates are reflected with the autofill values
     await nextTick()
     syncHealthcareProfessionalsRelatedToFacility()
