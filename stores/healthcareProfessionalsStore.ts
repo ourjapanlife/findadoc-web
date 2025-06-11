@@ -18,6 +18,7 @@ import { type Insurance,
 import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql'
 import { useLocaleStore } from '~/stores/localeStore'
 import type { ServerError, ServerResponse } from '~/typedefs/serverResponse'
+import { arraysAreEqual } from '~/utils/arrayUtils'
 
 export const useHealthcareProfessionalsStore = defineStore(
     'healthcareProfessionalsStore',
@@ -99,6 +100,30 @@ export const useHealthcareProfessionalsStore = defineStore(
         Promise<ServerResponse<HealthcareProfessional>> {
             const facilitiesForRelationshipCreationArray = selectedFacilities.value
 
+            // Fetch the current healthcare professional data for comparison
+            const currentProfessionalData = healthcareProfessionalsData.value.find(
+                (hp: HealthcareProfessional) =>
+                    hp.id === selectedHealthcareProfessionalId.value
+            )
+            // return out if no current professional data found
+            if (!currentProfessionalData) {
+                console.error(`No data found for currentProfessionalData with id ${selectedHealthcareProfessionalId.value}`)
+                return {
+                    data: {
+                        acceptedInsurance: [],
+                        createdDate: '',
+                        degrees: [],
+                        facilityIds: [],
+                        id: '',
+                        names: [],
+                        specialties: [],
+                        spokenLanguages: [],
+                        updatedDate: ''
+                    },
+                    hasErrors: true
+                }
+            }
+
             // This is the array to be sent to the backend if there is a change in the relations
             let facilitiesRelationsToSelectedHealthcareProfessional: Relationship[] = []
 
@@ -107,17 +132,44 @@ export const useHealthcareProfessionalsStore = defineStore(
                     .map(createFacilityRelation)
             }
 
+            //if section field and current value are the same (no updates), use undefined in payload
+            // otherwise, use new section field value to update that field
             const updateHealthcareProfessionalInput: MutationUpdateHealthcareProfessionalArgs = {
                 id: selectedHealthcareProfessionalId.value,
                 input: {
-                    acceptedInsurance: healthcareProfessionalSectionFields.acceptedInsurance,
-                    degrees: healthcareProfessionalSectionFields.degrees,
+                    acceptedInsurance: arraysAreEqual(
+                        healthcareProfessionalSectionFields.acceptedInsurance,
+                        currentProfessionalData.acceptedInsurance
+                    )
+                        ? undefined
+                        : healthcareProfessionalSectionFields.acceptedInsurance,
+                    degrees: arraysAreEqual(
+                        healthcareProfessionalSectionFields.degrees,
+                        currentProfessionalData.degrees
+                    )
+                        ? undefined
+                        : healthcareProfessionalSectionFields.degrees,
                     facilityIds: facilitiesRelationsToSelectedHealthcareProfessional.length
                         ? facilitiesRelationsToSelectedHealthcareProfessional
                         : undefined,
-                    names: healthcareProfessionalSectionFields.names,
-                    specialties: healthcareProfessionalSectionFields.specialties,
-                    spokenLanguages: healthcareProfessionalSectionFields.spokenLanguages
+                    names: arraysAreEqual(
+                        healthcareProfessionalSectionFields.names,
+                        currentProfessionalData.names
+                    )
+                        ? undefined
+                        : healthcareProfessionalSectionFields.names,
+                    specialties: arraysAreEqual(
+                        healthcareProfessionalSectionFields.specialties,
+                        currentProfessionalData.specialties
+                    )
+                        ? undefined
+                        : healthcareProfessionalSectionFields.specialties,
+                    spokenLanguages: arraysAreEqual(
+                        healthcareProfessionalSectionFields.spokenLanguages,
+                        currentProfessionalData.spokenLanguages
+                    )
+                        ? undefined
+                        : healthcareProfessionalSectionFields.spokenLanguages
                 }
             }
 
