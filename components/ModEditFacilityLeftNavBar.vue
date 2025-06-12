@@ -7,8 +7,7 @@
         <div class="flex flex-col items-start">
             <button
                 data-testid="submission-form-leftnav-contact-information"
-                :class="{ 'bg-secondary': activeSection === ModEditFacilityLeftBarSectionIDs.ContactInformation,
-                          'bg-primary-inverted': activeSection !== ModEditFacilityLeftBarSectionIDs.ContactInformation }"
+                :class="isContactInfoSelected() ?'selected-info': 'unselected-info'"
                 class="btn-leftnav"
                 @click="handleNavClick(ModEditFacilityLeftBarSectionIDs.ContactInformation)"
             >
@@ -16,8 +15,7 @@
             </button>
             <button
                 data-testid="submission-form-leftnav-addresses"
-                :class="{ 'bg-secondary': activeSection === ModEditFacilityLeftBarSectionIDs.Addresses,
-                          'bg-primary-inverted': activeSection !== ModEditFacilityLeftBarSectionIDs.Addresses }"
+                :class="isAddressInfoSelected() ?'selected-info': 'unselected-info'"
                 class="btn-leftnav"
                 @click="handleNavClick(ModEditFacilityLeftBarSectionIDs.Addresses)"
             >
@@ -25,8 +23,7 @@
             </button>
             <button
                 data-testid="submission-form-leftnav-google-maps-information"
-                :class="{ 'bg-secondary': activeSection === ModEditFacilityLeftBarSectionIDs.GoogleMapsInformation,
-                          'bg-primary-inverted': activeSection !== ModEditFacilityLeftBarSectionIDs.GoogleMapsInformation }"
+                :class="isGoogleMapsInfoSelected() ?'selected-info': 'unselected-info'"
                 class="btn-leftnav"
                 @click="handleNavClick(ModEditFacilityLeftBarSectionIDs.GoogleMapsInformation)"
             >
@@ -34,8 +31,7 @@
             </button>
             <button
                 data-testid="submission-form-leftnav-healthcare-professional-ids"
-                :class="{ 'bg-secondary': activeSection === ModEditFacilityLeftBarSectionIDs.HealthcareProfessionalIds,
-                          'bg-primary-inverted': activeSection !== ModEditFacilityLeftBarSectionIDs.HealthcareProfessionalIds }"
+                :class="isHealthcareProfessionalsIdSelected() ?'selected-info': 'unselected-info'"
                 class="btn-leftnav"
                 @click="handleNavClick(ModEditFacilityLeftBarSectionIDs.HealthcareProfessionalIds)"
             >
@@ -43,8 +39,7 @@
             </button>
             <button
                 data-testid="submission-form-leftnav-healthcare-professional-name"
-                :class="{ 'bg-secondary': activeSection === ModEditFacilityLeftBarSectionIDs.HealthcareProfessionalToAdd,
-                          'bg-primary-inverted': activeSection !== ModEditFacilityLeftBarSectionIDs.HealthcareProfessionalToAdd }"
+                :class="isHealthcareProfessionalsToAddSelected() ?'selected-info': 'unselected-info'"
                 class="btn-leftnav"
                 @click="handleNavClick(ModEditFacilityLeftBarSectionIDs.HealthcareProfessionalToAdd)"
             >
@@ -52,10 +47,7 @@
             </button>
             <button
                 data-testid="submission-form-leftnav-healthcare-professional-medical-info"
-                :class="{ 'bg-secondary': activeSection
-                              === ModEditFacilityLeftBarSectionIDs.CurrentHealthcareProfessionalsAtFacility,
-                          'bg-primary-inverted': activeSection
-                              !== ModEditFacilityLeftBarSectionIDs.CurrentHealthcareProfessionalsAtFacility }"
+                :class="isCurrentHealthcareProfessionalsInfoSelected() ?'selected-info': 'unselected-info'"
                 class="btn-leftnav"
                 @click="handleNavClick(ModEditFacilityLeftBarSectionIDs.CurrentHealthcareProfessionalsAtFacility)"
             >
@@ -122,6 +114,26 @@ onUnmounted(() => {
 function isContactInfoSelected() {
     return activeSection.value === ModEditFacilityLeftBarSectionIDs.ContactInformation
 }
+
+function isAddressInfoSelected() {
+    return activeSection.value === ModEditFacilityLeftBarSectionIDs.Addresses
+}
+
+function isGoogleMapsInfoSelected() {
+    return activeSection.value === ModEditFacilityLeftBarSectionIDs.GoogleMapsInformation
+}
+
+function isHealthcareProfessionalsIdSelected() {
+    return activeSection.value === ModEditFacilityLeftBarSectionIDs.HealthcareProfessionalIds
+}
+
+function isHealthcareProfessionalsToAddSelected() {
+    return activeSection.value === ModEditFacilityLeftBarSectionIDs.HealthcareProfessionalToAdd
+}
+
+function isCurrentHealthcareProfessionalsInfoSelected() {
+    return activeSection.value === ModEditFacilityLeftBarSectionIDs.CurrentHealthcareProfessionalsAtFacility
+}
 </script>
 
 <style lang="postcss">
@@ -129,11 +141,11 @@ function isContactInfoSelected() {
         @apply w-full py-4 my-2 text-sm text-start pl-2 rounded border-b-2 border-tertiary-bg;
     }
 
-    .selected-contact-info {
+    .selected-info {
   @apply bg-secondary;
 }
 
-.unselected-contact-info {
-  @apply bg-primary-inverted;
+    .unselected-info {
+        @apply bg-primary-inverted;
 }
 </style>

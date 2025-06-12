@@ -230,7 +230,7 @@
         </div>
         <div
             :id="ModEditFacilityLeftBarSectionIDs.HealthcareProfessionalIds"
-            >
+        >
             <ModHealthcareProfessionalSearchbar data-testid="mod-facility-section-doctor-search" />
         </div>
         <div
