@@ -9,7 +9,7 @@
                 data-testid="submission-form-leftnav-contact-information"
                 :class="{ 'bg-secondary': activeSection === ModEditFacilityLeftBarSectionIDs.ContactInformation,
                           'bg-primary-inverted': activeSection !== ModEditFacilityLeftBarSectionIDs.ContactInformation }"
-                class="w-full py-4 my-2 text-sm text-start pl-2 rounded border-b-2 border-tertiary-bg"
+                class="btn-leftnav"
                 @click="handleNavClick(ModEditFacilityLeftBarSectionIDs.ContactInformation)"
             >
                 {{ $t("modPanelFacilityLeftNavbar.contactInformation") }}
@@ -18,7 +18,7 @@
                 data-testid="submission-form-leftnav-addresses"
                 :class="{ 'bg-secondary': activeSection === ModEditFacilityLeftBarSectionIDs.Addresses,
                           'bg-primary-inverted': activeSection !== ModEditFacilityLeftBarSectionIDs.Addresses }"
-                class="w-full py-4 my-2 text-sm text-start pl-2 rounded border-b-2 border-tertiary-bg"
+                class="btn-leftnav"
                 @click="handleNavClick(ModEditFacilityLeftBarSectionIDs.Addresses)"
             >
                 {{ $t("modPanelFacilityLeftNavbar.addresses") }}
@@ -27,7 +27,7 @@
                 data-testid="submission-form-leftnav-google-maps-information"
                 :class="{ 'bg-secondary': activeSection === ModEditFacilityLeftBarSectionIDs.GoogleMapsInformation,
                           'bg-primary-inverted': activeSection !== ModEditFacilityLeftBarSectionIDs.GoogleMapsInformation }"
-                class="w-full py-4 my-2 text-sm text-start pl-2 rounded border-b-2 border-tertiary-bg"
+                class="btn-leftnav"
                 @click="handleNavClick(ModEditFacilityLeftBarSectionIDs.GoogleMapsInformation)"
             >
                 {{ $t("modPanelFacilityLeftNavbar.googleMapsInformation") }}
@@ -36,7 +36,7 @@
                 data-testid="submission-form-leftnav-healthcare-professional-ids"
                 :class="{ 'bg-secondary': activeSection === ModEditFacilityLeftBarSectionIDs.HealthcareProfessionalIds,
                           'bg-primary-inverted': activeSection !== ModEditFacilityLeftBarSectionIDs.HealthcareProfessionalIds }"
-                class="w-full py-4 my-2 text-sm text-start pl-2 rounded border-b-2 border-tertiary-bg"
+                class="btn-leftnav"
                 @click="handleNavClick(ModEditFacilityLeftBarSectionIDs.HealthcareProfessionalIds)"
             >
                 {{ $t("modPanelFacilityLeftNavbar.healthcareProfessionalIds") }}
@@ -45,7 +45,7 @@
                 data-testid="submission-form-leftnav-healthcare-professional-name"
                 :class="{ 'bg-secondary': activeSection === ModEditFacilityLeftBarSectionIDs.HealthcareProfessionalToAdd,
                           'bg-primary-inverted': activeSection !== ModEditFacilityLeftBarSectionIDs.HealthcareProfessionalToAdd }"
-                class="w-full py-4 my-2 text-sm text-start pl-2 rounded border-b-2 border-tertiary-bg"
+                class="btn-leftnav"
                 @click="handleNavClick(ModEditFacilityLeftBarSectionIDs.HealthcareProfessionalToAdd)"
             >
                 {{ $t("modPanelFacilityLeftNavbar.healthcareProfessionalProfessionalToAdd") }}
@@ -56,7 +56,7 @@
                               === ModEditFacilityLeftBarSectionIDs.CurrentHealthcareProfessionalsAtFacility,
                           'bg-primary-inverted': activeSection
                               !== ModEditFacilityLeftBarSectionIDs.CurrentHealthcareProfessionalsAtFacility }"
-                class="w-full py-4 my-2 text-sm text-start pl-2 rounded border-b-2 border-tertiary-bg"
+                class="btn-leftnav"
                 @click="handleNavClick(ModEditFacilityLeftBarSectionIDs.CurrentHealthcareProfessionalsAtFacility)"
             >
                 {{ $t("modPanelFacilityLeftNavbar.currentHealthcareProfessionalsAtFacility") }}
@@ -118,4 +118,22 @@ onMounted(() => {
 onUnmounted(() => {
     window.removeEventListener('scroll', onScroll)
 })
+
+function isContactInfoSelected() {
+    return activeSection.value === ModEditFacilityLeftBarSectionIDs.ContactInformation
+}
 </script>
+
+<style lang="postcss">
+    .btn-leftnav {
+        @apply w-full py-4 my-2 text-sm text-start pl-2 rounded border-b-2 border-tertiary-bg;
+    }
+
+    .selected-contact-info {
+  @apply bg-secondary;
+}
+
+.unselected-contact-info {
+  @apply bg-primary-inverted;
+}
+</style>
