@@ -25,9 +25,10 @@
                 @keydown.up="handleSearchInputArrowUp"
                 @keydown.enter="handleSearchInputEnter"
                 @input="handleSearchInputChange"
+                @focus="handleSearchInputFocus"
             >
             <span
-                v-if="searchResultCount > 0"
+                v-if="isInputFocused && searchResultCount > 0"
                 class="pl-2"
             >
                 {{ searchResultCount }}
@@ -45,7 +46,7 @@
         </div>
         <div class="container relative">
             <ul
-                v-if="searchInputValue.trim() !== ''"
+                v-if="isInputFocused"
                 id="search-list"
                 class="bg-primary-bg shadow-md border-2 border-primary/50 rounded-lg absolute
                 w-full flex flex-col divide-y-2 max-h-64 overflow-y-auto overflow-x-hidden
@@ -100,6 +101,7 @@
                 <!-- Fallback for empty search results -->
                 <li
                     v-if="!filteredItems.length"
+                    data-testid="mod-search-bar-search-no-match"
                     class="m-3 cursor-default"
                 >
                     <span>{{ noMatchText }}</span>
@@ -137,18 +139,20 @@ type Props = {
     noMatchText: string
     // Callback to display the desired output
     fieldsToDisplayCallback: (item: ArrayType<T>) => string[]
+    defaultSuggestions: ArrayType<T>[]
 
     //Optional test id for testing the component
     dataTestId?: string
 }
 
-const { placeHolderText, noMatchText, fieldsToDisplayCallback } = defineProps<Props>()
+const { placeHolderText, noMatchText, fieldsToDisplayCallback, defaultSuggestions } = defineProps<Props>()
 
 const searchInputElement = ref<HTMLInputElement>()
 const searchInputValue = ref('')
 const filteredItems = ref<ArrayType<T>[]>([])
 const selectedItemIndex = ref(0)
 const searchResultCount = ref(0)
+const isInputFocused = ref(false)
 
 const handleListScroll = () => {
     const selectedElement = document.getElementById(`search-list-item-${selectedItemIndex.value}`)
@@ -189,10 +193,15 @@ const handleListItemMouseDown = (event: MouseEvent) => {
     event.preventDefault()
 }
 
-const handleSearchInputBlur = (event: Event) => {
-    if (!searchInputElement.value) return
-    searchInputElement.value.value = ''
-    handleSearchInputChange(event)
+const handleSearchInputBlur = () => {
+    isInputFocused.value = false
+
+    if (searchInputElement.value) {
+        searchInputElement.value.value = ''
+    }
+
+    searchInputValue.value = ''
+    filteredItems.value = defaultSuggestions
     emit('searchInputBlur')
 }
 
@@ -230,7 +239,7 @@ const handleSearchInputChange = (event: Event) => {
     selectedItemIndex.value = 0
 
     if (inputValue.trim() === '') {
-        filteredItems.value = []
+        filteredItems.value = defaultSuggestions
         return
     }
 
@@ -241,6 +250,11 @@ const handleSearchInputChange = (event: Event) => {
         define this variable as Ref<ArrayType<T>[]>.
     */
     emit('searchInputChange', filteredItems as Ref<ArrayType<T>[]>, inputValue)
+}
+
+const handleSearchInputFocus = (event: Event) => {
+    isInputFocused.value = true
+    handleSearchInputChange(event)
 }
 
 // Displays the dropdown above the searchInputElement if its position is greater than window.innerHeight / 1.5

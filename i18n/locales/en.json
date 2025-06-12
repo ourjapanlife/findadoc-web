@@ -60,14 +60,14 @@
         "paragraph16": "By using our service, you agree to the terms outlined in this Privacy Policy."
     },
     "submitPage": {
-        "firstName": "First Name",
+        "firstName": "First name",
         "firstNameValidation": "Enter a first name",
         "googleMaps": "Google Maps URL",
         "googleMapsValidation": "Enter a URL starting with https://",
         "heading": "Add a Doctor",
         "healthcareProfessionalName": "Healthcare Professional Name",
         "invalidOption": "Invalid option",
-        "lastName": "Last Name",
+        "lastName": "Last name",
         "lastNameValidation": "Enter a last name",
         "location": "Location",
         "selectLanguage1": "Select First Language",
@@ -130,6 +130,7 @@
         "confirmExit": "Exit without saving",
         "create": "Create",
         "exit": "Exit",
+        "facilityCreatedSuccessfully": "Facility created successfully.",
         "heathcareProfessionalCreatedSuccessfully": "Healthcare professional created successfully.",
         "unsavedChangesMessage": "This will exit without saving your entry. All unsaved data will be lost."
     },
@@ -163,6 +164,7 @@
   },
     "modDashboardTopbar": {
         "addHealthcareProfessional": "Add Healthcare Professional",
+        "addFacility": "Add facility",
         "placeholderText": "Enter name or ID to search",
         "approved": "Approved",
         "rejected": "Rejected",
@@ -180,7 +182,10 @@
         "facilityDeletedSuccessfully": "Facility deleted successfully",
         "facilityUpdatedSuccessfully": "Facility updated successfully",
         "healthcareProfessionalDeletedSuccessfully": "Healthcare professional deleted successfully",
-        "healthcareProfessionalUpdatedSuccessfully": "Healthcare professional updated successfully"
+        "healthcareProfessionalUpdatedSuccessfully": "Healthcare professional updated successfully",
+        "back": "Back",
+        "confirmationButton": "Leave Page",
+        "hasUnsavedChanges": "You have unsaved changes. Are you sure you want to leave?"
     },
     "modEditSubmissionTopNav": {
         "saveAndExit": "Save & Exit",
@@ -254,7 +259,7 @@
         "existingHPHeading": "Current Healthcare Professionals at Facility",
         "facilityHeading": "Facility Information",
         "googleMapsInformation": "Google maps information",
-        "healthcareProfessionalToAdd": "Healthcare Professional to Add",
+        "addHealthcareProfessional": "Add existing healthcare professional",
         "inputErrorMessageFacilityAddressLine1Ja": "Invalid Japanese Address",
         "inputErrorMessageFacilityAddressLine2Ja": "Invalid Japanese Address",
         "inputErrorMessageFacilityAddressLine1En": "Invalid English Address",
@@ -288,6 +293,7 @@
         "labelFacilityMapLatitude": "Map latitude",
         "labelFacilityMapLongitude": "Map longitude",
         "noHPSelected": "No healthcare professionals selected",
+        "noHealthcareProfessionalFound": "No matching healthcare professionals found",
         "placeholderTextFacilityAddressLine1En": "Street address",
         "placeholderTextFacilityAddressLine2En": "Apartment, building, room...",
         "placeholderTextFacilityAddressLine1Ja": "Street address",
@@ -407,5 +413,12 @@
         "rejectSubmissionConfirmationMessage": "Are you sure you want to reject this submission?",
         "rejectSubmissionConfirmationButton": "Yes, reject the submission",
         "updateButtonText": "Update"
+    },
+    "modDashboardHealthcareProfessionalCard": {
+        "spokenLanguages": "Spoken languages",
+        "lastName": "Last name",
+        "firstName": "First name",
+        "middleName": "Middle name",
+        "nameLocale": "Name locale"
     }
 }

@@ -1,5 +1,5 @@
 <template>
-    <Loader />
+    <Loader v-if="moderationScreenStore.editHealthcareProfessionalScreenIsActive()" />
     <div v-if="isHealthcareProfessionalInitialized">
         <div
             :id="ModHealthcareProfessionalsLeftNavbarSections.HealthcareProfessionalName"
@@ -49,16 +49,16 @@
                             :required="false"
                         />
                         <label
-                            for="name_locales"
+                            for="mod-edit-healthcare-professional-section-select-name-locales"
                             class="my-2 text-primary-text text-sm font-bold font-sans"
                         >
                             {{ $t('modHealthcareProfessionalSection.labelHealthcareProfessionalNameLocale') }}
                         </label>
                         <select
-                            id="name_locales"
+                            id="mod-edit-healthcare-professional-section-select-name-locales"
                             v-model="nameLocaleInputs.locale"
                             data-testid="mod-healthcare-professional-section-name-locale"
-                            name="Name Locales"
+                            name="name-locales"
                             class="mb-5 px-3 py-3.5 w-96 h-12 bg-secondary-bg rounded-lg border border-primary-text-muted
                                 text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
                         >
@@ -143,7 +143,7 @@
                     {{ $t('modHealthcareProfessionalSection.healthcareProfessionalMedicalInfoHeading') }}
                 </h2>
                 <label
-                    for="Accepted Insurances"
+                    for="accepted-insurances"
                     class="my-2 text-primary-text text-sm font-bold font-sans"
                 >
                     {{ $t("modHealthcareProfessionalSection.selectInsurances") }}
@@ -154,6 +154,7 @@
                     :place-holder-text="$t('modHealthcareProfessionalSection.placeholderTextAcceptedInsurances')"
                     :no-match-text="$t('modHealthcareProfessionalSection.noInsurancesWereFound')"
                     :fields-to-display-callback="insurancesToDisplayCallback"
+                    :default-suggestions="Object.values(Insurance)"
                     @search-input-change="handleInsuranceInputChange"
                 />
                 <ol class="list-disc text-primary-text/60 font-semibold my-2 px-2">
@@ -177,6 +178,7 @@
                     :place-holder-text="$t('modHealthcareProfessionalSection.placeholderTextDegrees')"
                     :no-match-text="$t('modHealthcareProfessionalSection.noDegreesWereFound')"
                     :fields-to-display-callback="degreesToDisplayCallback"
+                    :default-suggestions="Object.values(Degree)"
                     @search-input-change="handleDegreeInputChange"
                 />
                 <ol class="list-disc text-primary-text/60 font-semibold my-2 px-2">
@@ -200,6 +202,7 @@
                     :place-holder-text="$t('modHealthcareProfessionalSection.placeholderTextSpecialties')"
                     :no-match-text="$t('modHealthcareProfessionalSection.noSpecialtiesWereFound')"
                     :fields-to-display-callback="specialtiesToDisplayCallback"
+                    :default-suggestions="Object.values(Specialty)"
                     @search-input-change="handleSpecialtyInputChange"
                 />
                 <ol class="list-disc text-primary-text/60 font-semibold my-2 px-2">
@@ -223,6 +226,7 @@
                     :place-holder-text="$t('modHealthcareProfessionalSection.placeholderTextLocales')"
                     :no-match-text="$t('modHealthcareProfessionalSection.noLocalesWereFound')"
                     :fields-to-display-callback="localesToDisplayCallback"
+                    :default-suggestions="Object.values(Locale)"
                     @search-input-change="handleLocaleInputChange"
                 />
                 <ol class="list-disc text-primary-text/60 font-semibold my-2 px-2">
@@ -235,29 +239,32 @@
                     </li>
                 </ol>
             </div>
-            <h2
-                :id="ModHealthcareProfessionalsLeftNavbarSections.HealthcareProfessionalFacilities"
-                class="mod-healthcare-professional-section
+            <div v-if="moderationScreenStore.editHealthcareProfessionalScreenIsActive()">
+                <h2
+                    :id="ModHealthcareProfessionalsLeftNavbarSections.HealthcareProfessionalFacilities"
+                    class="mod-healthcare-professional-section
                  my-3.5 text-start text-primary-text text-2xl font-bold font-sans leading-normal"
-            >
-                {{ $t("modHealthcareProfessionalSection.facilities") }}
-            </h2>
-            <ModSearchbar
-                v-model="selectedFacilities"
-                :place-holder-text="$t('modHealthcareProfessionalSection.placeholderTextFacilitySearchBar')"
-                :no-match-text="$t('modHealthcareProfessionalSection.noFacilitiesWereFound')"
-                :fields-to-display-callback="facilitiesFieldsToDisplayCallback"
-                @search-input-change="handleFacilitySearchInputChange"
-            />
-            <ol class="list-disc text-primary-text/60 font-semibold my-2 px-2 ">
-                <li
-                    v-for="facility in currentFacilityRelations"
-                    :key="facility.id"
-                    class="py-1"
                 >
-                    {{ `${facility.id} / ${facility.nameEn} / ${facility.nameJa}` }}
-                </li>
-            </ol>
+                    {{ $t("modHealthcareProfessionalSection.facilities") }}
+                </h2>
+                <ModSearchbar
+                    v-model="selectedFacilities"
+                    :place-holder-text="$t('modHealthcareProfessionalSection.placeholderTextFacilitySearchBar')"
+                    :no-match-text="$t('modHealthcareProfessionalSection.noFacilitiesWereFound')"
+                    :fields-to-display-callback="facilitiesFieldsToDisplayCallback"
+                    :default-suggestions="currentFacilities"
+                    @search-input-change="handleFacilitySearchInputChange"
+                />
+                <ol class="list-disc text-primary-text/60 font-semibold my-2 px-2 ">
+                    <li
+                        v-for="facility in currentFacilityRelations"
+                        :key="facility.id"
+                        class="py-1"
+                    >
+                        {{ `${facility.id} / ${facility.nameEn} / ${facility.nameJa}` }}
+                    </li>
+                </ol>
+            </div>
         </div>
     </div>
 </template>
@@ -269,9 +276,11 @@ import { type ToastInterface, useToast } from 'vue-toastification'
 import ModSearchbar from './ModSearchBar.vue'
 import { useHealthcareProfessionalsStore } from '~/stores/healthcareProfessionalsStore'
 import { useFacilitiesStore } from '~/stores/facilitiesStore'
+import { useModerationScreenStore } from '~/stores/moderationScreenStore'
 import { useLocaleStore } from '~/stores/localeStore'
 import { Insurance, Locale, Degree, Specialty, type LocalizedNameInput, type Facility } from '~/typedefs/gqlTypes'
 import { useI18n } from '#imports'
+import { validateNameLocaleMatchesLanguage } from '~/utils/formValidations'
 
 let toast: ToastInterface
 
@@ -280,8 +289,8 @@ const route = useRoute()
 const { t } = useI18n()
 
 const loadingStore = useLoadingStore()
-loadingStore.setIsLoading(true)
 
+const moderationScreenStore = useModerationScreenStore()
 const localesStore = useLocaleStore()
 const healthcareProfessionalsStore = useHealthcareProfessionalsStore()
 const facilitiesStore = useFacilitiesStore()
@@ -379,7 +388,7 @@ const setChosenLocaleNameInput = (index: number) => {
         // Put the temp one in the index where the old locale name was
         healthcareProfessionalsStore.healthcareProfessionalSectionFields.names[chosenLocaleIndex.value]
         = tempToHoldZeroIndexedHealthcareProfessionalToSwap
-        //Autofill with the chosen healthcare professional locale name]
+        //Autofill with the chosen healthcare professional locale name
         autofillNameLocaleInputWithChosenHealthcareProfessional(chosenHealthcareProfessionalToEdit.value)
         // Set the chosenLocaleIndex to 0 so the correct pencil is showing
         chosenLocaleIndex.value = 0
@@ -483,6 +492,12 @@ const handleAddLocalizedName = () => {
         return
     }
 
+    // Check to make sure the input is valid for the Locale entered
+    if (!validateNameLocaleMatchesLanguage(nameLocaleInputs)) {
+        toast.error(t('modHealthcareProfessionalSection.charactersOfLanguageDoNotMatchNameLocale'))
+        return
+    }
+
     if (nameLocaleInputs.firstName
       && nameLocaleInputs.lastName
       && nameLocaleInputs.firstName.length
@@ -556,7 +571,11 @@ const insurancesToDisplayCallback = (insurance: Insurance) => [insurance]
 const localesToDisplayCallback = (locale: Locale) => [localesStore.formatLanguageCodeToSimpleText(locale)]
 
 onBeforeMount(async () => {
-    isHealthcareProfessionalInitialized.value = false
+    if (!moderationScreenStore.editHealthcareProfessionalScreenIsActive()) {
+        isHealthcareProfessionalInitialized.value = true
+        return
+    }
+    loadingStore.setIsLoading(true)
 
     /**
     Set the variable to useToast when the before the component mounts
@@ -582,14 +601,14 @@ onBeforeMount(async () => {
 
     await nextTick()
 
-    healthcareProfessionalsStore.setSelectedHealthcareProfessional(healthcareProfessionalsStore.selectedHealthcareProfessionalId)
+    healthcareProfessionalsStore
+        .setSelectedHealthcareProfessional(healthcareProfessionalsStore.selectedHealthcareProfessionalId)
 
     await nextTick()
 
     currentFacilityRelations.value = facilitiesStore.facilityData
         .filter(facility => healthcareProfessionalsStore.healthcareProfessionalSectionFields.facilityIds
             .includes(facility.id))
-
     //Sets the original values from the store based on the selected healthcare professional
     healthcareProfessionalSpokenLanguages.value
         = healthcareProfessionalsStore.healthcareProfessionalSectionFields.spokenLanguages
@@ -644,12 +663,12 @@ watch(() => [
     if (specialties) {
         currentSpecialties.value = specialties
     }
-})
+}, { immediate: true, deep: true })
 
 // This updates the array in the store once it is updated due to a facility clicked
 watch(() => selectedFacilities.value, newValue => {
     if (newValue) {
         healthcareProfessionalsStore.selectedFacilities = selectedFacilities.value
     }
-})
+}, { immediate: true, deep: true })
 </script>

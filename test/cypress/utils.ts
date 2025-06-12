@@ -5,38 +5,44 @@ export type IncomingHttpRequest = CyHttpMessages.IncomingHttpRequest
 
 // https://docs.cypress.io/app/guides/authentication-testing/auth0-authentication
 export const auth0Login = () => {
-    cy.visit('/login')
-    cy.origin(Cypress.env('AUTH0_DOMAIN'), () => {
-        const auth0UserName = Cypress.env('AUTH0_USERNAME')
-        const auth0Password = Cypress.env('AUTH0_PASSWORD')
+  // This is using auth0's programmatic API for testing purposes and doesn't use the UI flow
+  // This is primarily because there's a consent approval error that pops up we can't target and this is easier in general.
 
-        cy.get('input#username').type(auth0UserName)
-        cy.get('[data-action-button-primary]').click()
-        cy.get('input#password').type(auth0Password)
-        cy.get('[data-action-button-primary]').click()
+    const options = {
+      method: 'POST',
+      url: `https://findadoc.jp.auth0.com/oauth/token`,
+      body: {
+        grant_type: 'password',
+        connection: 'Username-Password-Authentication',
+        audience: 'findadoc',
+        username: Cypress.env('AUTH0_USERNAME'),
+        password: Cypress.env('AUTH0_PASSWORD'),
+        scope: 'openid profile email',
+        client_id: Cypress.env('AUTH0_CLIENTID'),
+        client_secret: Cypress.env('AUTH0_CLIENTSECRET'),
+      },
+    }
+
+    cy.request(options).then((response) => {
+      const { body } = response
+      const { access_token, id_token } = body
+
+      //We want to store the auth token so tests can reuse it and not login for every test
+      cy.window().then((win) => {
+        win.localStorage.setItem('auth_token', access_token)
+        win.localStorage.setItem('id_token', id_token)
+      })
     })
-
-    const baseUrl = `${Cypress.config().baseUrl}/`
-
-    cy.url().should('equal', baseUrl)
 }
 
-/**
- * https://docs.cypress.io/app/guides/network-requests#Working-with-GraphQL
- *
- * Set the alias for a request based on the operation name. After setting it we can use cy.wait(@{alias}).
- *
- * e.g. operation: query Submissions / cy.wait('@query Submissions')
- **/
 export const aliasQuery = (req: IncomingHttpRequest, operation: string, responseBody: unknown) => {
     /**
     * Check if the GraphQL operation is included in the request body
     **/
-    const hasOperation = (req: IncomingHttpRequest, operation: string): boolean => {
-        const { query } = req.body
-        return query && query.includes(operation)
-    }
-
+  const hasOperation = (req: IncomingHttpRequest, operation: string): boolean => {
+    const { query } = req.body
+    return query && query.includes(operation)
+  }
     /**
      * https://docs.cypress.io/api/commands/intercept#Interception-lifecycle
      *
@@ -47,24 +53,24 @@ export const aliasQuery = (req: IncomingHttpRequest, operation: string, response
      *
      * To prevent this, we set 'cache-control' to 'no-store', this prevents all the requests to be cached.
      **/
-    const preventRequestCache = (req: IncomingHttpRequest) => {
-        req.on('before:response', res => {
-            // force all API responses to not be cached
-            res.headers['cache-control'] = 'no-store'
-        })
-    }
-
-    preventRequestCache(req)
-
-    if (!hasOperation(req, operation)) {
-        req.continue()
-        return
-    }
-
-    req.alias = operation
-
-    req.reply({
-        statusCode: 200,
-        body: responseBody
+  const preventRequestCache = (req: IncomingHttpRequest) => {
+    req.on('before:response', res => {
+      // force all API responses to not be cached
+      res.headers['cache-control'] = 'no-store'
     })
+  }
+
+  preventRequestCache(req)
+
+  if (!hasOperation(req, operation)) {
+    req.continue()
+    return
+  }
+
+  req.alias = operation
+
+  req.reply({
+    statusCode: 200,
+    body: responseBody
+  })
 }

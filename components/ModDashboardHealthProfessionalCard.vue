@@ -1,14 +1,17 @@
 <template>
     <div
         :class="[
-            'mod-dashboard-healthcare-professional-card border-2 border-primary rounded-lg px-2 w-fit',
-            (isEditable && chosenLocaleIndex === 0) ? 'border-t-0 mt-0 rounded-t-none' : 'my-3',
+            'mod-dashboard-healthcare-professional-card',
+            'flex items-center justify-center',
+            'border-2 border-primary',
+            'rounded-lg p-2 h-32 w-fit',
+            (isEditable && chosenLocaleIndex === 0)
+                ? 'border-t-0 mt-0 rounded-t-none'
+                : 'my-3',
         ]"
     >
         <div class="w-96">
-            <div
-                class="flex justify-between items-center p-1"
-            >
+            <div class="flex justify-between items-center p-1">
                 <div class="w-16 self-start">
                     <SVGProfileIcon
                         role="img"
@@ -18,7 +21,7 @@
                     />
                 </div>
                 <div
-                    v-if="healthcareProfessionalsRelatedToFacility"
+                    v-if="healthcareProfessionalsRelatedToFacility && healthcareProfessional"
                     class="min-w-44"
                 >
                     <div class="flex flex-col h-full w-64 pl-1 mb-1">
@@ -41,25 +44,31 @@
                             </span>
                         </div>
                         <span>
-                            ID:  {{ healthcareProfessional.id }}
+                            ID: {{ healthcareProfessional.id }}
                         </span>
                         <div>
                             <div
                                 id="healthcare-professional-related-to-facility-formatted-locale-spoken"
                                 class="flex flex-wrap justify-start items-start self-end pt-2"
                             >
-                                <div
-                                    v-for="(spokenLanguage, indexOfLocale)
-                                        in healthcareProfessional.spokenLanguages"
-                                    :key="`${spokenLanguage}-${indexOfLocale}`"
-                                    class="healthcare-professional-related-to-facility-formatted-spoken-language
+                                <div class="flex flex-col">
+                                    <label class="font-semibold">
+                                        {{ $t('modDashboardHealthcareProfessionalCard.spokenLanguages') }}</label>
+                                    <div class="flex">
+                                        <div
+                                            v-for="(spokenLanguage, indexOfLocale)
+                                                in healthcareProfessional.spokenLanguages"
+                                            :key="`${spokenLanguage}-${indexOfLocale}`"
+                                            class="healthcare-professional-related-to-facility-formatted-spoken-language
                                     w-24 px-2 py-[1px] mr-1 mb-1 bg-primary-text-muted/30
                                     text-nowrap rounded-full text-sm text-center"
-                                >
-                                    <span>
-                                        {{ localeStore.formatLanguageCodeToSimpleText(
-                                            spokenLanguage) }}
-                                    </span>
+                                        >
+                                            <span>
+                                                {{ localeStore.formatLanguageCodeToSimpleText(
+                                                    spokenLanguage) }}
+                                            </span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -72,56 +81,69 @@
                 >
                     <div
                         id="healthcare-professional-name-display-container"
-                        class="flex font-bold pt-2"
+                        class="flex pt-2"
                     >
+                        <div class="flex flex-col mx-2">
+                            <label class="font-semibold text-nowrap">
+                                {{ $t('modDashboardHealthcareProfessionalCard.lastName') }}</label>
+                            <span
+                                data-testid="healthcare-professional-card-last-name"
+                            >
+                                {{ healthcareProfessionalNameByLocale.lastName }}</span>
+                        </div>
+                        <div class="flex flex-col mr-2">
+                            <label class="font-semibold text-nowrap">
+                                {{ $t('modDashboardHealthcareProfessionalCard.firstName') }}</label>
+                            <span>{{ healthcareProfessionalNameByLocale.firstName
+                            }}</span>
+                        </div>
+                        <div class="flex flex-col mr-2">
+                            <label class="font-semibold text-nowrap">
+                                {{ $t('modDashboardHealthcareProfessionalCard.middleName') }}</label>
+                            <span v-show="healthcareProfessionalNameByLocale.middleName">
+                                {{ healthcareProfessionalNameByLocale.middleName }}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="flex self-start mr-2 my-2">
+                        <label class="font-semibold mx-2">{{ $t('modDashboardHealthcareProfessionalCard.nameLocale') }}:</label>
                         <span
-                            data-testid="healthcare-professional-card-last-name"
+                            id="healthcare-professional-name-locale"
+                            class="w-24"
+                            data-testid="healthcare-professional-name-card-locale"
                         >
-                            {{ healthcareProfessionalNameByLocale.lastName }}</span>
-                        <span class="mx-2">{{ healthcareProfessionalNameByLocale.firstName
-                        }}</span>
-                        <span v-show="healthcareProfessionalNameByLocale.middleName">
-                            {{ healthcareProfessionalNameByLocale.middleName }}
+                            {{ localeStore.formatLanguageCodeToSimpleText(
+                                healthcareProfessionalNameByLocale.locale) }}
                         </span>
                     </div>
-                    <span
-                        id="healthcare-professional-name-locale"
-                        class="w-24 px-2 py-[1px] mr-1 mb-1 bg-primary-text-muted text-nowrap rounded-full
-                    text-sm text-center"
-                        data-testid="healthcare-professional-name-card-locale"
-                    >
-                        {{ localeStore.formatLanguageCodeToSimpleText(
-                            healthcareProfessionalNameByLocale.locale) }}
-                    </span>
                 </div>
                 <div
-                    v-if="!isHealthcareProfessionalReadyForRemoval(healthcareProfessional.id)
+                    v-if="healthcareProfessional && !isHealthcareProfessionalReadyForRemoval(healthcareProfessional.id)
                         && moderationScreenStore.editSubmissionScreenIsActive()
                         || moderationScreenStore.editFacilityScreenIsActive()
-                        && !isHealthcareProfessionalReadyForRemoval(healthcareProfessional.id)"
+                        || moderationScreenStore.createFacilityScreenIsActive()
+                        && !isHealthcareProfessionalReadyForRemoval(healthcareProfessional?.id)"
                     id="remove-related-healthcare-professional-to-facility"
                     class="flex w-8 items-center justify-center
                     cursor-pointer font-bold text-secondary text-sm self-start p-1"
-                    @click="() => removeHealthcareProfessional(healthcareProfessional.id)"
+                    @click="() => removeHealthcareProfessional(healthcareProfessional?.id)"
                 >
                     <SVGTrashCan
+                        v-show="showTrashCan"
                         class="flex items-center justify-center w-6 h-6"
                     />
                 </div>
                 <div
-                    v-if="isHealthcareProfessionalReadyForRemoval(healthcareProfessional.id)
-                        || moderationScreenStore.editSubmissionScreenIsActive()"
+                    v-if="isEditSubmissionAndNoHealthcareProfessional"
                     id="undo-remove-related-healthcare-professional-to-facility"
                     class="flex w-8 items-center justify-center
                     cursor-pointer font-bold text-secondary text-sm self-start p-1"
-                    @click="() => undoRemovalOfHealthcareProfessional(healthcareProfessional.id)"
+                    @click="() => undoRemovalOfHealthcareProfessional(healthcareProfessional?.id)"
                 >
-                    <SVGUndoIcon
-                        class="flex items-center justify-center w-6 h-6"
-                    />
+                    <SVGUndoIcon class="flex items-center justify-center w-6 h-6" />
                 </div>
                 <div
-                    v-if="isEditOrCreateHealthcareProfessional"
+                    v-if="isEditOrCreateHealthcareProfessional || isEditSubmission"
                     class="flex w-8 items-center justify-center
                 cursor-pointer font-bold text-secondary text-sm self-start p-1"
                 >
@@ -164,10 +186,12 @@ import { useLocaleStore } from '~/stores/localeStore'
 import { useFacilitiesStore } from '~/stores/facilitiesStore'
 import { useHealthcareProfessionalsStore } from '~/stores/healthcareProfessionalsStore'
 import { useModerationScreenStore } from '~/stores/moderationScreenStore'
-import { RelationshipAction,
+import {
+    RelationshipAction,
     type HealthcareProfessional,
     type LocalizedNameInput,
-    type Relationship } from '~/typedefs/gqlTypes'
+    type Relationship
+} from '~/typedefs/gqlTypes'
 
 const localeStore = useLocaleStore()
 const facilitiesStore = useFacilitiesStore()
@@ -175,7 +199,7 @@ const moderationScreenStore = useModerationScreenStore()
 const healthcareProfessionalsStore = useHealthcareProfessionalsStore()
 
 // This checks whether an existing healthcare professional has been added for removal
-const isHealthcareProfessionalReadyForRemoval = (id: string) =>
+const isHealthcareProfessionalReadyForRemoval = (id: string = '0') =>
     facilitiesStore.facilitySectionFields.healthProfessionalsRelations
         .find(healthcareProfessionalRelation => healthcareProfessionalRelation.otherEntityId === id
           && healthcareProfessionalRelation.action === RelationshipAction.Delete)
@@ -187,14 +211,14 @@ const removeHealthcareProfessional = (id: string = '0') => {
         return
     }
     facilitiesStore.facilitySectionFields.healthProfessionalsRelations
-            = facilitiesStore.facilitySectionFields.healthProfessionalsRelations
+        = facilitiesStore.facilitySectionFields.healthProfessionalsRelations
             .filter((healthcareProfessionalRelation: Relationship) => healthcareProfessionalRelation.otherEntityId !== id)
     facilitiesStore.healthProfessionalsRelationsForDisplay
-            = facilitiesStore.healthProfessionalsRelationsForDisplay
+        = facilitiesStore.healthProfessionalsRelationsForDisplay
             .filter(healthcareProfessional => healthcareProfessional.id !== id)
 }
 
-const undoRemovalOfHealthcareProfessional = (id: string) => {
+const undoRemovalOfHealthcareProfessional = (id: string = '0') => {
     facilitiesStore.facilitySectionFields.healthProfessionalsRelations
         = facilitiesStore.facilitySectionFields.healthProfessionalsRelations
             .filter((healthcareProfessionalRelation: Relationship) => healthcareProfessionalRelation.otherEntityId !== id)
@@ -209,8 +233,9 @@ const setToUneditable = () => {
     if (props.setIsEditableFunction) props.setIsEditableFunction(false)
 }
 
-const props = defineProps<{
-    healthcareProfessional: HealthcareProfessional
+const props = withDefaults(defineProps<{
+    // The healthcare professional is not created yet if modEditSubmissionForm
+    healthcareProfessional?: HealthcareProfessional
     healthcareProfessionalsRelatedToFacility?: string[]
     healthcareProfessionalNameByLocale?: LocalizedNameInput
     /* chosenLocaleIndex checks where in the array the locale name is. If it is 0 it is the one being edited.
@@ -219,8 +244,18 @@ const props = defineProps<{
     chosenLocaleIndex?: number
     isEditable?: boolean
     setIsEditableFunction?: (param: boolean) => void
-}>()
+    // This is so you can hide the trash can icon in case you just want to display the information of the healthcare professional
+    showTrashCan?: boolean
+}>(),
+                           {
+                               showTrashCan: true // This defaults the trash can to being true
+                           })
 
 const isEditOrCreateHealthcareProfessional = computed(() => moderationScreenStore.editHealthcareProfessionalScreenIsActive()
   || moderationScreenStore.createHealthcareProfessionalScreenIsActive())
+
+const isEditSubmission = computed(() => moderationScreenStore.editSubmissionScreenIsActive())
+const isEditSubmissionAndNoHealthcareProfessional = computed(() => (props.healthcareProfessional
+  && isHealthcareProfessionalReadyForRemoval(props.healthcareProfessional?.id))
+|| (props.healthcareProfessional && moderationScreenStore.editSubmissionScreenIsActive()))
 </script>

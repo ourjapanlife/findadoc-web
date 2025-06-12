@@ -120,6 +120,14 @@
     "unauthorizedline2": "モデレーターになりたい場合やご質問がある場合は、お問い合わせください",
     "unauthorizedline3": "こちらからお問い合わせ"
   },
+  "modCreateFacilityOrHPTopbar": {
+    "confirmExit": "Exit without saving",
+    "create": "Create",
+    "exit": "Exit",
+    "facilityCreatedSuccessfully": "Facility created successfully.",
+    "heathcareProfessionalCreatedSuccessfully": "Healthcare professional created successfully.",
+    "unsavedChangesMessage": "This will exit without saving your entry. All unsaved data will be lost."
+},
   "modDashboardLeftNav": {
     "facilities": "Facilities",
     "healthcareProfessionals": "Healthcare Professionals",
@@ -324,6 +332,7 @@
     "currentHealthcareProfessionalsAtFacility": "Current Healthcare Professionals at Facility"
   },
   "modDashboardTopbar": {
+    "addFacility": "Add Facility",
     "placeholderText": "Enter name or ID to search",
     "approved": "Approved",
     "rejected": "Rejected",
@@ -388,8 +397,9 @@
     "placeholderTextFacilityAddressLine1En": "Street address",
     "errorMessageFacilityId": "Facility Id was not found",
     "existingHPHeading": "Current Healthcare Professionals at Facility",
-    "healthcareProfessionalToAdd": "Healthcare Professional to Add",
-    "noHPSelected": "No healthcare professionals selected"
+    "addHealthcareProfessional": "Add existing healthcare professional",
+    "noHPSelected": "No healthcare professionals selected",
+    "noHealthcareProfessionalFound": "No matching healthcare professionals found"
   },
   "modEditFacilityOrHPTopbar": {
     "updateAndExit": "Update & Exit",
@@ -401,7 +411,10 @@
     "deleteConfirmationFacility": "Are you sure you want to delete the facility: {facility} , with ID: {id}?",
     "facilityDeletedSuccessfully": "Facility deleted successfully",
     "healthcareProfessionalDeletedSuccessfully": "Healthcare professional deleted successfully",
-    "healthcareProfessionalUpdatedSuccessfully": "Healthcare professional updated successfully"
+    "healthcareProfessionalUpdatedSuccessfully": "Healthcare professional updated successfully",
+    "back": "戻る",
+    "confirmationButton": "Leave Page",
+    "hasUnsavedChanges": "You have unsaved changes. Are you sure you want to leave?"
   },
   "serverErrorMessages": {
     "UNAUTHENTICATED": "You do not have the authentication to do this action",
@@ -413,11 +426,11 @@
     "editName": "Edit",
     "saveName": "Save"
   },
-  "modCreateFacilityOrHPTopbar": {
-    "confirmExit": "Exit without saving",
-    "create": "Create",
-    "exit": "Exit",
-    "heathcareProfessionalCreatedSuccessfully": "Healthcare professional created successfully.",
-    "unsavedChangesMessage": "This will exit without saving your entry. All unsaved data will be lost."
+  "modDashboardHealthcareProfessionalCard": {
+    "spokenLanguages": "Spoken languages",
+    "lastName": "Last name",
+    "firstName": "First name",
+    "middleName": "Middle name",
+    "nameLocale": "Name locale"
   }
 }

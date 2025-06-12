@@ -1,11 +1,12 @@
 <template>
-    <Loader />
+    <Loader v-if="moderationScreenStore.editFacilityScreenIsActive()" />
     <div v-if="isFacilitySectionInitialized">
         <div
             :id="ModEditFacilityLeftBarSectionIDs.ContactInformation"
             class="mod-facility-section"
         >
             <h1
+                v-if="moderationScreenStore.editFacilityScreenIsActive()"
                 class="mb-3.5 text-start text-primary-text text-3xl font-bold font-sans leading-normal"
             >
                 {{ $t('modFacilitySection.facilityHeading') }}
@@ -64,7 +65,6 @@
                 :invalid-input-error-message="$t('modFacilitySection.inputErrorMessageFacilityWebsite')"
             />
         </div>
-
         <div
             :id="ModEditFacilityLeftBarSectionIDs.Addresses"
             class="mod-facility-address-section"
@@ -84,16 +84,16 @@
             />
             <div class="flex flex-col mt-4">
                 <label
-                    for="Prefecture Japan"
+                    for="mod-edit-facility-section-prefecture-select-en"
                     class="mb-2 text-primary-text text-sm font-bold font-sans"
                 >
                     {{ $t('modFacilitySection.labelFacilityPrefectureEn') }}
                 </label>
                 <select
-                    id="1"
+                    id="mod-edit-facility-section-prefecture-select-en"
                     v-model="facilityStore.facilitySectionFields.prefectureEn"
                     data-testid="mod-facility-section-prefectureEn"
-                    name="Prefecture Japan"
+                    name="prefecture-japan-en"
                     class="mb-5 px-3 py-3.5 w-96 h-12 bg-secondary-bg rounded-lg border border-primary-text-muted
                 text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
                 >
@@ -137,16 +137,16 @@
             />
             <div class="flex flex-col mt-4">
                 <label
-                    for="Prefecture Japan"
+                    for="mod-edit-facility-section-prefecture-select-ja"
                     class="mb-2 text-primary-text text-sm font-bold font-sans"
                 >
                     {{ $t('modFacilitySection.labelFacilityPrefectureJa') }}
                 </label>
                 <select
-                    id="1"
+                    id="mod-edit-facility-section-prefecture-select-ja"
                     v-model="facilityStore.facilitySectionFields.prefectureJa"
                     data-testid="mod-facility-section-prefectureJa"
-                    name="Prefecture Japan"
+                    name="prefecture-japan-ja"
                     class="mb-5 px-3 py-3.5 w-96 h-12 bg-secondary-bg rounded-lg border border-primary-text-muted
                 text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
                 >
@@ -203,7 +203,7 @@
                 type="url"
                 :placeholder="$t('modFacilitySection.placeholderTextFacilityGoogleMapsUrl')"
                 :required="true"
-                :input-validation-check="validateWebsite"
+                :input-validation-check="validateGoogleMapsUrlInput"
                 :invalid-input-error-message="$t('modFacilitySection.inputErrorMessageFacilityGoogleMapsUrl')"
                 :autofill="facilityStore.facilitySectionFields.googlemapsURL"
             />
@@ -230,22 +230,31 @@
         </div>
         <div
             :id="ModEditFacilityLeftBarSectionIDs.HealthcareProfessionalIds"
-        >
+            >
             <ModHealthcareProfessionalSearchbar data-testid="mod-facility-section-doctor-search" />
         </div>
         <div
+            v-if="moderationScreenStore.editFacilityScreenIsActive()"
             :id="ModEditFacilityLeftBarSectionIDs.HealthcareProfessionalToAdd"
             class="flex flex-col"
         >
             <span
-                v-if="moderationScreenStore.editFacilityScreenIsActive()"
                 class="mb-1 text-primary-text text-2xl font-bold font-sans leading-normal"
             >
-                {{ $t('modFacilitySection.healthcareProfessionalToAdd') }}
+                {{ $t('modFacilitySection.addHealthcareProfessional') }}
             </span>
+            <ModSearchBar
+                v-model="healthcareProfessionalsToAddToFacility"
+                data-testid="mod-facility-section-doctor-search"
+                :place-holder-text="$t('modFacilitySection.placeholderTextHealthcareProfessionalSearchbar')"
+                :no-match-text="$t('modFacilitySection.noHealthcareProfessionalFound')"
+                :fields-to-display-callback="healthcareProfessionalsToDisplayCallback"
+                :default-suggestions="defaultHealthcareProfessionalSuggestions"
+                @search-input-change="handleHealthcareProfessionalsInputChange"
+            />
             <span
-                v-show="!facilityStore.healthProfessionalsRelationsForDisplay.length"
-                class="font-semibold"
+                v-show="!healthcareProfessionalsToAddToFacility.length"
+                class="font-semibold my-3"
             >- {{ $t('modFacilitySection.noHPSelected') }}
             </span>
             <span v-show="facilityStore.healthProfessionalsRelationsForDisplay.length">
@@ -261,7 +270,6 @@
         </div>
         <div
             v-if="moderationScreenStore.editFacilityScreenIsActive()"
-            :id="ModEditFacilityLeftBarSectionIDs.CurrentHealthcareProfessionalsAtFacility"
         >
             <span class="mb-3.5 text-center text-primary-text text-2xl font-bold font-sans leading-normal">
                 {{ $t('modFacilitySection.existingHPHeading') }}
@@ -283,7 +291,7 @@
 import { type Ref, ref, onBeforeMount, nextTick, watch } from 'vue'
 import { type ToastInterface, useToast } from 'vue-toastification'
 import { useRoute } from 'vue-router'
-import { useModerationScreenStore, ModerationScreen } from '~/stores/moderationScreenStore'
+import { useModerationScreenStore } from '~/stores/moderationScreenStore'
 import { useFacilitiesStore } from '~/stores/facilitiesStore'
 import { useHealthcareProfessionalsStore } from '~/stores/healthcareProfessionalsStore'
 import { useI18n } from '#imports'
@@ -298,26 +306,25 @@ import { validateAddressLineEn,
     validatePostalCode,
     validateWebsite,
     validateCityJa } from '~/utils/formValidations'
-import type { HealthcareProfessional } from '~/typedefs/gqlTypes'
+import { RelationshipAction, type HealthcareProfessional } from '~/typedefs/gqlTypes'
+import { listPrefectureJapanEn, listPrefectureJapanJa } from '~/stores/locationsStore'
 
 // Initialize the variable that will be used to mount the toast library
 let toast: ToastInterface
-
 const route = useRoute()
-
 const { t } = useI18n()
-
 const loadingStore = useLoadingStore()
-loadingStore.setIsLoading(true)
-
 const moderationScreenStore = useModerationScreenStore()
 const facilityStore = useFacilitiesStore()
 const healthcareProfessionalsStore = useHealthcareProfessionalsStore()
-
 const isFacilitySectionInitialized: Ref<boolean> = ref(false)
+
 const healthcareProfessionalsRelatedToFacility: Ref<string[]>
 = ref([])
 const healthcareProfessionalRelatedToFacilityFiltered: Ref<HealthcareProfessional[]> = ref([])
+// This keeps track of the existing healthcare professionals we are adding to an existing facility
+const healthcareProfessionalsToAddToFacility: Ref<HealthcareProfessional[]> = ref([])
+const defaultHealthcareProfessionalSuggestions: Ref<HealthcareProfessional[]> = ref([])
 
 const syncHealthcareProfessionalsRelatedToFacility = () => {
     if (healthcareProfessionalsStore.healthcareProfessionalsData
@@ -326,37 +333,58 @@ const syncHealthcareProfessionalsRelatedToFacility = () => {
             healthcareProfessionalId =>
                 healthcareProfessionalsStore.healthcareProfessionalsData.find(
                     healthcareProfessional => healthcareProfessional.id === healthcareProfessionalId
-
                 ) || []
         )
     }
 }
 
-const listPrefectureJapanEn: Ref<string[]> = ref([
-    'Hokkaido', 'Aomori', 'Iwate', 'Miyagi', 'Akita',
-    'Yamagata', 'Fukushima', 'Ibaraki', 'Tochigi', 'Gumma', 'Saitama', 'Chiba', 'Tokyo', 'Kanagawa',
-    'Niigata', 'Toyama', 'Ishikawa', 'Fukui', 'Yamanashi', 'Nagano', 'Gifu', 'Shizuoka', 'Aichi',
-    'Mie', 'Shiga', 'Kyoto', 'Osaka', 'Hyogo', 'Nara', 'Wakayama', 'Tottori', 'Shimane', 'Okayama',
-    'Hiroshima', 'Yamaguchi', 'Tokushima', 'Kagawa', 'Ehime', 'Kochi', 'Fukuoka', 'Saga',
-    'Nagasaki', 'Kumamoto', 'Oita', 'Miyazaki', 'Kagoshima', 'Okinawa'])
-const listPrefectureJapanJa: Ref<string[]> = ref([
-    '北海道', '青森県', '岩手県', '宮城県', '秋田県',
-    '山形県', '福島県', '茨城県', '栃木県', '群馬県', '埼玉県', '千葉県', '東京都', '神奈川県', '新潟県', '富山県',
-    '石川県', '福井県', '山梨県', '長野県', '岐阜県', '静岡県', '愛知県', '三重県', '滋賀県', '京都府', '大阪府',
-    '兵庫県', '奈良県', '和歌山県', '鳥取県', '島根県', '岡山県', '広島県', '山口県', '徳島県', '香川県', '愛媛県',
-    '高知県', '福岡県', '佐賀県', '長崎県', '熊本県', '大分県', '宮崎県', '鹿児島県', '沖縄県'])
+const handleHealthcareProfessionalsInputChange = (filteredItems: Ref<HealthcareProfessional[]>, inputValue: string) => {
+    filteredItems.value = healthcareProfessionalsStore.healthcareProfessionalsData
+        .filter((healthcareProfessional: HealthcareProfessional) => {
+            if (facilityStore.facilitySectionFields.healthcareProfessionalIds.includes(healthcareProfessional.id)) {
+                return false
+            }
+
+            const idMatches = healthcareProfessional.id
+                .toLowerCase()
+                .startsWith(inputValue.toLowerCase().trim())
+            const nameMatches = healthcareProfessional.names.some(name => {
+                const firstNameMatch = name.firstName
+                    .toLowerCase()
+                    .includes(inputValue.toLowerCase())
+                const middleNameMatch = name.middleName
+                  && name.middleName
+                      .toLowerCase()
+                      .includes(inputValue.toLowerCase())
+                const lastNameMatch = name.lastName
+                    .toLowerCase()
+                    .includes(inputValue.toLowerCase())
+                return firstNameMatch || middleNameMatch || lastNameMatch
+            })
+            return idMatches || nameMatches
+        })
+}
+
+const healthcareProfessionalsToDisplayCallback = (healthcareProfessional: HealthcareProfessional) =>
+    [healthcareProfessional.names[0].firstName + ' ' + healthcareProfessional.names[0].lastName]
 
 onBeforeMount(async () => {
-    isFacilitySectionInitialized.value = false
+    // This onBeforeMount can be skipped on other screens since this logic is handled there when active
+    if (!moderationScreenStore.editFacilityScreenIsActive()) {
+        isFacilitySectionInitialized.value = true
+        return
+    }
 
+    isFacilitySectionInitialized.value = false
     /**
     Set the variable to useToast when the before the component mounts
     since vue-taostification is only available on the client.
     If not done this way the build fails
      */
     toast = useToast()
-
     // Wait for the route to be fully resolved
+
+    loadingStore.setIsLoading(true)
     await nextTick()
     // Ensure the route param `id` is available before proceeding
     const id = route.params.id
@@ -365,35 +393,26 @@ onBeforeMount(async () => {
         toast.error(t('modFacilitySection.errorMessageFacilityId'))
         return
     }
-
     // This will fetch the facilities if sent here by link or a page is refreshed
     if (!facilityStore.facilityData.length) {
         await facilityStore.getFacilities()
     }
-
     // This will fetch the healthcare professionals if sent here by link or a page is refreshed
     if (!healthcareProfessionalsStore.healthcareProfessionalsData) {
         await healthcareProfessionalsStore.getHealthcareProfessionals()
     }
-
     facilityStore.selectedFacilityId = id as string
 
-    // Set the active screen and ensure the UI state is consistent
-    moderationScreenStore.setActiveScreen(ModerationScreen.EditFacility)
-
     facilityStore.setSelectedFacilityData(facilityStore.selectedFacilityId)
-
     facilityStore.initializeFacilitySectionValues(facilityStore.selectedFacilityData)
+
+    defaultHealthcareProfessionalSuggestions.value = healthcareProfessionalsStore.healthcareProfessionalsData
 
     // Ensure UI updates are reflected with the autofill values
     await nextTick()
-
     syncHealthcareProfessionalsRelatedToFacility()
-
     isFacilitySectionInitialized.value = true
-
     loadingStore.setIsLoading(false)
-
     // Ensure UI updates are reflected
     await nextTick()
 })
@@ -426,5 +445,25 @@ watch(() => facilityStore.facilitySectionFields.healthcareProfessionalIds, newVa
     healthcareProfessionalsRelatedToFacility.value = newValue
     // Sync the list to the updated values
     syncHealthcareProfessionalsRelatedToFacility()
+
+    healthcareProfessionalsToAddToFacility.value = []
 })
+
+// This watch adds the relations for updating a facility with an added healthcareProfessional
+watch(() => healthcareProfessionalsToAddToFacility.value, newValue => {
+    if (newValue.length) {
+        // Filter out healthcare professionals not already included to prevent unintended side effects
+        const professionalsToAdd = healthcareProfessionalsToAddToFacility.value.filter(healthcareProfessional =>
+            !facilityStore.facilitySectionFields.healthcareProfessionalIds.includes(healthcareProfessional.id))
+        // Map the filtered professionals into relationship objects
+        const relationshipCreationArrayFromSelectedHealthcareProfessionalsToAdd
+        = professionalsToAdd.map(healthcareProfessional => ({
+            action: RelationshipAction.Create,
+            otherEntityId: healthcareProfessional.id
+        }))
+        // Update the store field with the new relationships
+        facilityStore.facilitySectionFields.healthProfessionalsRelations
+        = relationshipCreationArrayFromSelectedHealthcareProfessionalsToAdd
+    }
+}, { deep: true })
 </script>

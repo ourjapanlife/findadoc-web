@@ -17,6 +17,11 @@
                 NAVBAR CREATE HEALTHCARE PROFESSIONAL PLACEHOLDER
             </p>
         </div>
+        <div v-if="moderationScreenStore.createFacilityScreenIsActive()">
+            <p class="text-xl font-bold">
+                NAVBAR CREATE FACILITY PLACEHOLDER
+            </p>
+        </div>
     </div>
 </template>
 

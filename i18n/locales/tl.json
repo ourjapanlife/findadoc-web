@@ -120,6 +120,14 @@
     "unauthorizedline2": "Kung nais mong maging isang tagapamagitan o may mga katanungan, mangyaring makipag-ugnayan sa amin.",
     "unauthorizedline3": "dito"
   },
+  "modCreateFacilityOrHPTopbar": {
+    "confirmExit": "Exit without saving",
+    "create": "Create",
+    "exit": "Exit",
+    "facilityCreatedSuccessfully": "Facility created successfully.",
+    "heathcareProfessionalCreatedSuccessfully": "Healthcare professional created successfully.",
+    "unsavedChangesMessage": "This will exit without saving your entry. All unsaved data will be lost."
+},
   "modDashboardLeftNav": {
     "facilities": "Pasilidad",
     "healthcareProfessionals": "Mga Propesyonal sa Pangangalagang Pangkalusugan",
@@ -151,6 +159,7 @@
     "currentHealthcareProfessionalsAtFacility": "Current Healthcare Professionals at Facility"
   },
   "modDashboardTopbar": {
+    "addFacility": "Add Facility",
     "placeholderText": "Maglagay ng pangalan o ID upang mahanap",
     "approved": "Aprubado",
     "rejected": "Hindi na-aprubahan",
@@ -169,7 +178,10 @@
     "deleteConfirmationFacility": "Are you sure you want to delete the facility: {facility} , with ID: {id}?",
     "facilityDeletedSuccessfully": "Facility deleted successfully",
     "healthcareProfessionalDeletedSuccessfully": "Healthcare professional deleted successfully",
-    "healthcareProfessionalUpdatedSuccessfully": "Healthcare professional updated successfully"
+    "healthcareProfessionalUpdatedSuccessfully": "Healthcare professional updated successfully",
+    "back": "Bumalik",
+    "confirmationButton": "Leave Page",
+    "hasUnsavedChanges": "You have unsaved changes. Are you sure you want to leave?"
   },
   "modEditSubmissionTopNav": {
     "saveAndExit": "I-Save at I-Exit",
@@ -246,8 +258,9 @@
     "errorMessageFacilityId": "Hindi nahanap ang Id ng pasilidad.",
     "placeholderTextFacilityAddressLine1En": "Address ng Kalye",
     "existingHPHeading": "Current Healthcare Professionals at Facility",
-    "healthcareProfessionalToAdd": "Healthcare Professional to Add",
-    "noHPSelected": "No healthcare professionals selected"
+    "addHealthcareProfessional": "Add existing healthcare professional",
+    "noHPSelected": "No healthcare professionals selected",
+    "noHealthcareProfessionalFound": "No matching healthcare professionals found"
   },
   "modSubmissionForm": {
     "addHealthCareProfessionalLocaleName": "Magdagdag ng Pangalan ayon sa Lokal",
@@ -403,11 +416,11 @@
     "editName": "Edit",
     "saveName": "Save"
   },
-  "modCreateFacilityOrHPTopbar": {
-    "confirmExit": "Exit without saving",
-    "create": "Create",
-    "exit": "Exit",
-    "heathcareProfessionalCreatedSuccessfully": "Healthcare professional created successfully.",
-    "unsavedChangesMessage": "This will exit without saving your entry. All unsaved data will be lost."
+  "modDashboardHealthcareProfessionalCard": {
+    "spokenLanguages": "Spoken languages",
+    "lastName": "Last name",
+    "firstName": "First name",
+    "middleName": "Middle name",
+    "nameLocale": "Name locale"
   }
 }
