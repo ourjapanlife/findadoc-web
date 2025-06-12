@@ -130,10 +130,10 @@
     "confirmExit": "Exit without saving",
     "create": "Create",
     "exit": "Exit",
-    "facilityCreatedSuccessfully": "Facility created successfully.",
     "heathcareProfessionalCreatedSuccessfully": "Healthcare professional created successfully.",
-    "unsavedChangesMessage": "This will exit without saving your entry. All unsaved data will be lost."
-},
+    "unsavedChangesMessage": "This will exit without saving your entry. All unsaved data will be lost.",
+    "facilityCreatedSuccessfully": "Facility created successfully."
+  },
   "modDashboardLeftNav": {
     "facilities": "Strutture",
     "healthcareProfessionals": "Professionisti sanitari",
@@ -405,14 +405,7 @@
     "noDegreesWereFound": "No degrees were found",
     "noLocalesWereFound": "No locales were found"
   },
-  "modCreateFacilityOrHPTopbar": {
-    "confirmExit": "Exit without saving",
-    "create": "Create",
-    "exit": "Exit",
-    "heathcareProfessionalCreatedSuccessfully": "Healthcare professional created successfully.",
-    "unsavedChangesMessage": "This will exit without saving your entry. All unsaved data will be lost."
-  },
-    "modPanelFacilityLeftNavbar": {
+  "modPanelFacilityLeftNavbar": {
     "addresses": "Addresses",
     "contactInformation": "Contact Information",
     "facilityNameUnknown": "Facility Name Unknown",
@@ -421,7 +414,7 @@
     "healthcareProfessionalProfessionalToAdd": "Healthcare Professional to Add",
     "currentHealthcareProfessionalsAtFacility": "Current Healthcare Professionals at Facility"
   },
-    "modDashboardHealthcareProfessionalCard": {
+  "modDashboardHealthcareProfessionalCard": {
     "spokenLanguages": "Spoken languages",
     "lastName": "Last name",
     "firstName": "First name",
