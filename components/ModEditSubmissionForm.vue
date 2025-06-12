@@ -79,6 +79,17 @@
                     {{ `${facility.id} / ${facility.nameEn} / ${facility.nameJa}` }}
                 </li>
             </ol>
+            <div
+                v-show="!currentFacilityRelations.length"
+                class="mod-edit-facility-section"
+            >
+                <h1
+                    class="mb-3.5 text-start text-primary-text text-3xl font-bold font-sans leading-normal"
+                >
+                    {{ $t('modFacilitySection.facilityHeading') }}
+                </h1>
+                <ModEditFacilitySection />
+            </div>
         </div>
         <div class="flex flex-col">
             <label
@@ -106,24 +117,13 @@
                     / ${healthcareProfessional.names[0].firstName}` }}
                 </li>
             </ol>
+            <div
+                v-show="!currentExistingHealthcareProfessionals.length"
+                class="mod-edit-healthcare-professional-section"
+            >
+                <ModEditHealthcareProfessionalSection />
+            </div>
         </div>
-    </div>
-    <div
-        v-show="!currentFacilityRelations.length"
-        class="mod-edit-facility-section"
-    >
-        <h1
-            class="mb-3.5 text-start text-primary-text text-3xl font-bold font-sans leading-normal"
-        >
-            {{ $t('modFacilitySection.facilityHeading') }}
-        </h1>
-        <ModEditFacilitySection />
-    </div>
-    <div
-        v-show="!currentExistingHealthcareProfessionals.length"
-        class="mod-edit-healthcare-professional-section"
-    >
-        <ModEditHealthcareProfessionalSection />
     </div>
 </template>
 
