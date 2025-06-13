@@ -50,3 +50,18 @@ export function isValidUrl(url: string | URL) {
     }
     return url.protocol === 'https:'
 }
+
+export function convertStringToSentenceCase(theme: string) {
+    return !theme.length ? '' : theme.charAt(0).toUpperCase() + theme.slice(1).toLowerCase()
+}
+
+export function convertStringToTitleCase(stringToConvert: string) {
+    if (!stringToConvert) {
+        return ''
+    }
+    const normalizedString = stringToConvert.replace(/[^a-zA-Z0-9]+/g, ' ').trim()
+    const splitStringArray = normalizedString.split(' ')
+    const titleCasedWords = splitStringArray.map(word => convertStringToSentenceCase(word))
+    const titleCaseString = titleCasedWords.join(' ')
+    return titleCaseString
+}

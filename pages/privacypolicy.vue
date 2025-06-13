@@ -5,67 +5,71 @@
                 data-testid="privacy-heading"
                 class="mb-20 text-black text-5xl font-bold font-sans"
             >
-                {{ $t("privacyPage.heading") }}
+                {{ t("privacyPage.heading") }}
             </h1>
         </div>
         <h2
             data-testid="privacy-subheading"
             class="mb-10 text-black text-2xl font-normal font-sans"
         >
-            {{ $t("privacyPage.subheading") }}
+            {{ t("privacyPage.subheading") }}
         </h2>
         <div class="text-gray-500 text-lg font-normal font-sans">
             <p class="mb-10">
-                {{ $t("privacyPage.date") }}
+                {{ t("privacyPage.date") }}
             </p>
             <p class="mb-10">
-                {{ $t("privacyPage.paragraph1") }}
+                {{ t("privacyPage.paragraph1") }}
             </p>
             <p class="mb-2 font-bold">
-                {{ $t("privacyPage.paragraph2") }}
+                {{ t("privacyPage.paragraph2") }}
             </p>
             <p class="mb-10">
-                {{ $t("privacyPage.paragraph3") }}
+                {{ t("privacyPage.paragraph3") }}
             </p>
             <p class="mb-2 font-bold">
-                {{ $t("privacyPage.paragraph4") }}
+                {{ t("privacyPage.paragraph4") }}
             </p>
             <p class="mb-10">
-                {{ $t("privacyPage.paragraph5") }}
+                {{ t("privacyPage.paragraph5") }}
             </p>
             <p class="mb-2 font-bold">
-                {{ $t("privacyPage.paragraph6") }}:
+                {{ t("privacyPage.paragraph6") }}:
             </p>
             <p class="mb-10">
-                {{ $t("privacyPage.paragraph7") }}
+                {{ t("privacyPage.paragraph7") }}
             </p>
             <p class="mb-2 font-bold">
-                {{ $t("privacyPage.paragraph8") }}:
+                {{ t("privacyPage.paragraph8") }}:
             </p>
             <p class="mb-10">
-                {{ $t("privacyPage.paragraph9") }}
+                {{ t("privacyPage.paragraph9") }}
             </p>
             <p class="mb-2 font-bold">
-                {{ $t("privacyPage.paragraph10") }}
+                {{ t("privacyPage.paragraph10") }}
             </p>
             <p class="mb-10">
-                {{ $t("privacyPage.paragraph11") }}
+                {{ t("privacyPage.paragraph11") }}
             </p>
             <p class="mb-2 font-bold">
-                {{ $t("privacyPage.paragraph12") }}
+                {{ t("privacyPage.paragraph12") }}
             </p>
             <p class="mb-10">
-                {{ $t("privacyPage.paragraph13") }}
+                {{ t("privacyPage.paragraph13") }}
             </p>
             <p class="mb-2 font-bold">
-                {{ $t("privacyPage.paragraph14") }}
+                {{ t("privacyPage.paragraph14") }}
             </p>
             <p class="mb-10">
-                {{ $t("privacyPage.paragraph15") }}
+                {{ t("privacyPage.paragraph15") }}
             </p>
             <p class="mb-10">
-                {{ $t("privacyPage.paragraph16") }}
+                {{ t("privacyPage.paragraph16") }}
             </p>
         </div>
     </div>
 </template>
+
+<script setup lang="ts">
+const { t } = useI18n()
+</script>

@@ -2,7 +2,7 @@
     <div class="flex flex-col">
         <h1 class="font-bold text-lg p-1 mb-2 text-ellipsis">
             {{ moderationSubmissionsStore.selectedSubmissionData?.facility?.nameEn
-                || $t("modPanelSubmissionLeftNavbar.facilityNameUnknown") }}
+                || t("modPanelSubmissionLeftNavbar.facilityNameUnknown") }}
         </h1>
         <div class="flex flex-col items-start">
             <button
@@ -12,7 +12,7 @@
                 class="w-full py-4 my-2 text-sm text-start pl-2 rounded border-b-2 border-tertiary-bg"
                 @click="scrollToSectionOfForm(ModSubmissionLeftNavbarSectionIDs.ContactInformation)"
             >
-                {{ $t("modPanelSubmissionLeftNavbar.contactInformation") }}
+                {{ t("modPanelSubmissionLeftNavbar.contactInformation") }}
             </button>
             <button
                 data-testid="submission-form-leftnav-addresses"
@@ -21,7 +21,7 @@
                 class="w-full py-4 my-2 text-sm text-start pl-2 rounded border-b-2 border-tertiary-bg"
                 @click="scrollToSectionOfForm(ModSubmissionLeftNavbarSectionIDs.Addresses)"
             >
-                {{ $t("modPanelSubmissionLeftNavbar.addresses") }}
+                {{ t("modPanelSubmissionLeftNavbar.addresses") }}
             </button>
             <button
                 data-testid="submission-form-leftnav-google-maps-information"
@@ -30,7 +30,7 @@
                 class="w-full py-4 my-2 text-sm text-start pl-2 rounded border-b-2 border-tertiary-bg"
                 @click="scrollToSectionOfForm(ModSubmissionLeftNavbarSectionIDs.GoogleMapsInformation)"
             >
-                {{ $t("modPanelSubmissionLeftNavbar.googleMapsInformation") }}
+                {{ t("modPanelSubmissionLeftNavbar.googleMapsInformation") }}
             </button>
             <button
                 data-testid="submission-form-leftnav-healthcare-professional-ids"
@@ -39,7 +39,7 @@
                 class="w-full py-4 my-2 text-sm text-start pl-2 rounded border-b-2 border-tertiary-bg"
                 @click="scrollToSectionOfForm(ModSubmissionLeftNavbarSectionIDs.HealthcareProfessionalIds)"
             >
-                {{ $t("modPanelSubmissionLeftNavbar.healthcareProfessionalIds") }}
+                {{ t("modPanelSubmissionLeftNavbar.healthcareProfessionalIds") }}
             </button>
             <button
                 data-testid="submission-form-leftnav-change-log"
@@ -48,7 +48,7 @@
                 class="w-full py-4 my-2 text-sm text-start pl-2 rounded border-b-2 border-tertiary-bg"
                 @click="scrollToSectionOfForm(ModSubmissionLeftNavbarSectionIDs.ChangeLog)"
             >
-                {{ $t("modPanelSubmissionLeftNavbar.changeLog") }}
+                {{ t("modPanelSubmissionLeftNavbar.changeLog") }}
             </button>
             <button
                 data-testid="submission-form-leftnav-healthcare-professional-name"
@@ -57,7 +57,7 @@
                 class="w-full py-4 my-2 text-sm text-start pl-2 rounded border-b-2 border-tertiary-bg"
                 @click="scrollToSectionOfForm(ModSubmissionLeftNavbarSectionIDs.HealthcareProfessionalName)"
             >
-                {{ $t("modPanelSubmissionLeftNavbar.healthcareProfessionalName") }}
+                {{ t("modPanelSubmissionLeftNavbar.healthcareProfessionalName") }}
             </button>
             <button
                 data-testid="submission-form-leftnav-healthcare-professional-medical-info"
@@ -67,7 +67,7 @@
                 class="w-full py-4 my-2 text-sm text-start pl-2 rounded border-b-2 border-tertiary-bg"
                 @click="scrollToSectionOfForm(ModSubmissionLeftNavbarSectionIDs.HealthcareProfessionalMedicalInfo)"
             >
-                {{ $t("modPanelSubmissionLeftNavbar.healthcareProfessionalMedicalInfo") }}
+                {{ t("modPanelSubmissionLeftNavbar.healthcareProfessionalMedicalInfo") }}
             </button>
         </div>
     </div>
@@ -78,6 +78,8 @@ import { ref, type Ref, onMounted, onUnmounted } from 'vue'
 import { useModerationSubmissionsStore } from '~/stores/moderationSubmissionsStore'
 import { ModSubmissionLeftNavbarSectionIDs } from '~/stores/moderationScreenStore'
 import { handleScroll, observeFormSections, scrollToSectionOfForm, type SectionInformation } from '~/utils/handleScroll'
+
+const { t } = useI18n()
 
 const moderationSubmissionsStore = useModerationSubmissionsStore()
 const activeSection: Ref<string> = ref(ModSubmissionLeftNavbarSectionIDs.ContactInformation)

@@ -68,17 +68,17 @@
                 <NuxtLink
                     to="/about"
                     class="hover:text-primary-hover transition-colors"
-                >{{ $t('topNav.about') }}
+                >{{ t('topNav.about') }}
                 </NuxtLink>
                 <NuxtLink
                     to="/"
                     class="hover:text-primary-hover transition-colors"
-                >{{ $t('topNav.home') }}
+                >{{ t('topNav.home') }}
                 </NuxtLink>
                 <NuxtLink
                     to="/submit"
                     class="hover:text-primary-hover transition-colors"
-                >{{ $t('topNav.submit') }}
+                >{{ t('topNav.submit') }}
                 </NuxtLink>
                 <div
                     v-if="authStore.isLoggedIn"
@@ -90,7 +90,7 @@
                         class="hover:text-primary-hover transition-colors text-wrap mr-4"
                         data-testid="top-nav-mod-link"
                     >{{
-                        $t('topNav.moderation') }}
+                        t('topNav.moderation') }}
                     </NuxtLink>
                     <NuxtLink
                         to="/"
@@ -100,7 +100,7 @@
                             class="text-primary"
                             @click="logout()"
                         >
-                            {{ $t('topNav.logout') }}
+                            {{ t('topNav.logout') }}
                         </div>
                     </NuxtLink>
                     <SVGProfileIcon
@@ -127,6 +127,8 @@ import HamburgerMenu from './HamburgerMenu.vue'
 import SVGProfileIcon from '~/assets/icons/profile-icon.svg'
 import SVGSiteLogo from '~/assets/icons/site-logo.svg'
 import { useAuthStore } from '~/stores/authStore'
+
+const { t } = useI18n()
 
 const authStore = useAuthStore()
 const route = useRoute()

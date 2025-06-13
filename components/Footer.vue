@@ -9,14 +9,14 @@
                 to="/"
                 class="self-center ml-8 mr-2 hover:text-primary-hover transition-colors"
             >© {{ new
-                Date().getUTCFullYear() }} {{ $t('footer.copyright') }}</NuxtLink>
+                Date().getUTCFullYear() }} {{ t('footer.copyright') }}</NuxtLink>
             <span class="self-center">·</span>
             <nav class="flex mx-2">
                 <NuxtLink
                     to="/privacypolicy"
                     class="self-center hover:text-primary-hover transition-colors"
                     data-testid="privacy-link"
-                >{{ $t('footer.privacy') }}</NuxtLink>
+                >{{ t('footer.privacy') }}</NuxtLink>
             </nav>
             <span class="self-center">·</span>
             <nav class="flex mx-2">
@@ -24,11 +24,11 @@
                     to="/terms"
                     class="self-center hover:text-primary-hover transition-colors"
                     data-testid="terms-link"
-                >{{ $t('footer.terms') }}</NuxtLink>
+                >{{ t('footer.terms') }}</NuxtLink>
             </nav>
         </div>
         <div class="middle-footer-section flex flex-1 align-middle justify-center sm:self-center">
-            <span class="self-center">{{ $t('footer.poweredBy') }}</span>
+            <span class="self-center">{{ t('footer.poweredBy') }}</span>
             <nav class="flex mx-2 self-center">
                 <NuxtLink
                     to="https://www.netlify.com/"
@@ -47,7 +47,7 @@
                     class="flex flex-col flex-wrap"
                     data-testid="github-link"
                 >
-                    <div>{{ $t('footer.contribute') }}</div>
+                    <div>{{ t('footer.contribute') }}</div>
                     <div class="self-center">
                         GitHub
                     </div>
@@ -55,14 +55,18 @@
             </div>
             <span class="self-center">·</span>
             <div class="flex flex-col flex-wrap hover:text-primary-hover transition-colors">
-                <span>{{ $t('footer.feedback') }}</span>
+                <span>{{ t('footer.feedback') }}</span>
                 <NuxtLink
                     to="https://forms.gle/4E763qfaq46kEsn99"
                     target="_blank"
                     class="px-2 mx-auto underline font-bold"
                     data-testid="feedback-link"
-                >{{ $t('footer.clickHere') }}</NuxtLink>
+                >{{ t('footer.clickHere') }}</NuxtLink>
             </div>
         </div>
     </div>
 </template>
+
+<script setup lang="ts">
+const { t } = useI18n()
+</script>

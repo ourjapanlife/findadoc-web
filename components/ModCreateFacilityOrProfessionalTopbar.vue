@@ -9,7 +9,7 @@
                 @click="createFacilityOrHealthcareProfessional"
             >
                 <span>
-                    {{ $t('modCreateFacilityOrHPTopbar.create') }}
+                    {{ t('modCreateFacilityOrHPTopbar.create') }}
                 </span>
             </button>
             <button
@@ -20,7 +20,7 @@
                 @click="openExitConfirmation"
             >
                 <span>
-                    {{ $t('modCreateFacilityOrHPTopbar.exit') }}
+                    {{ t('modCreateFacilityOrHPTopbar.exit') }}
                 </span>
             </button>
         </div>
@@ -35,7 +35,7 @@
                     <span
                         class="font-bold text-3xl"
                     >
-                        {{ $t('modCreateFacilityOrHPTopbar.unsavedChangesMessage') }}
+                        {{ t('modCreateFacilityOrHPTopbar.unsavedChangesMessage') }}
                     </span>
                     <button
                         class="bg-primary p-4 rounded-full my-8 font-semibold text-xl"
@@ -43,7 +43,7 @@
                         @click="navigateBackToDashboardWithoutCreation"
                     >
                         {{
-                            $t('modCreateFacilityOrHPTopbar.confirmExit') }}
+                            t('modCreateFacilityOrHPTopbar.confirmExit') }}
                     </button>
                 </div>
             </Modal>

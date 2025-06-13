@@ -11,7 +11,7 @@
             class="h-8"
         />
         <span>
-            {{ $t('login.redirectingtoauth0') }}...
+            {{ t('login.redirectingtoauth0') }}...
         </span>
     </h1>
 </template>
@@ -21,6 +21,8 @@ import SVGLoadingIcon from '~/assets/icons/loading.svg'
 import { useAuthStore } from '~/stores/authStore'
 
 const authStore = useAuthStore()
+
+const { t } = useI18n()
 
 // since the login is a redirection, let's go there right away
 await authStore.login()

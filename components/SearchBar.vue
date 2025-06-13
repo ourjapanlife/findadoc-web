@@ -16,7 +16,7 @@
                         disabled
                         selected
                     >
-                        {{ $t('searchBar.selectSpecialty') }}
+                        {{ t('searchBar.selectSpecialty') }}
                     </option>
                     <option
                         v-for="(specialty) in specialtyDropdownOptions"
@@ -39,7 +39,7 @@
                         disabled
                         selected
                     >
-                        {{ $t('searchBar.selectLocation') }}
+                        {{ t('searchBar.selectLocation') }}
                     </option>
                     <option>{{ placeHolderTextDisplay }}</option>
                     <option
@@ -64,7 +64,7 @@
                         disabled
                         selected
                     >
-                        {{ $t('searchBar.selectLanguage') }}
+                        {{ t('searchBar.selectLanguage') }}
                     </option>
                     <option
                         v-for="(language) in languageDropdownOptions"
@@ -93,7 +93,7 @@
                     title="search icon"
                     class="search-icon w-5 h-5 mr-1 fill-primary-text-inverted"
                 />
-                <span class="self-center text-primary-text-inverted">{{ $t('searchBar.search') }}</span>
+                <span class="self-center text-primary-text-inverted">{{ t('searchBar.search') }}</span>
             </button>
         </div>
     </div>
@@ -107,6 +107,8 @@ import { useLocationsStore } from '~/stores/locationsStore.js'
 import { useSpecialtiesStore, type SpecialtyDisplayOption } from '~/stores/specialtiesStore.js'
 import type { Locale, Specialty } from '~/typedefs/gqlTypes.js'
 import { useLocaleStore, type LocaleDisplay } from '~/stores/localeStore.js'
+
+const { t } = useI18n()
 
 const localeStore = useLocaleStore()
 const locationsStore = useLocationsStore()

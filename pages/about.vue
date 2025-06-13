@@ -11,25 +11,25 @@
                 data-testid="about-heading"
                 class="mb-12 font-bold text-4xl"
             >
-                {{ $t("about.heading") }}
+                {{ t("about.heading") }}
             </h1>
             <p
                 data-testid="about-subheading"
                 class="mb-12 text-2xl"
             >
-                {{ $t("about.subheading") }}
+                {{ t("about.subheading") }}
             </p>
             <p
                 data-testid="about-paragraph1"
                 class="mb-6 text-md text-primary-text-muted"
             >
-                {{ $t("about.paragraph1") }}
+                {{ t("about.paragraph1") }}
             </p>
             <p
                 data-testid="about-paragraph2"
                 class="text-md text-primary-text-muted"
             >
-                {{ $t("about.paragraph2") }}
+                {{ t("about.paragraph2") }}
             </p>
         </div>
         <div
@@ -44,7 +44,7 @@
             >
                 <div class="flex-1 border-currentColor/70 border self-center" />
                 <div class="text-primary/80 text-xl font-semibold mx-4 p-2 whitespace-nowrap">
-                    {{ $t("about.members") }}
+                    {{ t("about.members") }}
                 </div>
                 <div class="flex-1 border-currentColor/70 border self-center" />
             </div>
@@ -83,4 +83,6 @@
 import data from '../member_directory/members.json'
 import MemberComponent from '~/components/MemberComponent.vue'
 import SvgHeartPlus from '~/assets/icons/heart-plus.svg'
+
+const { t } = useI18n()
 </script>
