@@ -53,7 +53,7 @@
                             >
                                 <div class="flex flex-col">
                                     <label class="font-semibold">
-                                        {{ $t('modDashboardHealthcareProfessionalCard.spokenLanguages') }}</label>
+                                        {{ t('modDashboardHealthcareProfessionalCard.spokenLanguages') }}</label>
                                     <div class="flex">
                                         <div
                                             v-for="(spokenLanguage, indexOfLocale)
@@ -85,7 +85,7 @@
                     >
                         <div class="flex flex-col mx-2">
                             <label class="font-semibold text-nowrap">
-                                {{ $t('modDashboardHealthcareProfessionalCard.lastName') }}</label>
+                                {{ t('modDashboardHealthcareProfessionalCard.lastName') }}</label>
                             <span
                                 data-testid="healthcare-professional-card-last-name"
                             >
@@ -93,20 +93,20 @@
                         </div>
                         <div class="flex flex-col mr-2">
                             <label class="font-semibold text-nowrap">
-                                {{ $t('modDashboardHealthcareProfessionalCard.firstName') }}</label>
+                                {{ t('modDashboardHealthcareProfessionalCard.firstName') }}</label>
                             <span>{{ healthcareProfessionalNameByLocale.firstName
                             }}</span>
                         </div>
                         <div class="flex flex-col mr-2">
                             <label class="font-semibold text-nowrap">
-                                {{ $t('modDashboardHealthcareProfessionalCard.middleName') }}</label>
+                                {{ t('modDashboardHealthcareProfessionalCard.middleName') }}</label>
                             <span v-show="healthcareProfessionalNameByLocale.middleName">
                                 {{ healthcareProfessionalNameByLocale.middleName }}
                             </span>
                         </div>
                     </div>
                     <div class="flex self-start mr-2 my-2">
-                        <label class="font-semibold mx-2">{{ $t('modDashboardHealthcareProfessionalCard.nameLocale') }}:</label>
+                        <label class="font-semibold mx-2">{{ t('modDashboardHealthcareProfessionalCard.nameLocale') }}:</label>
                         <span
                             id="healthcare-professional-name-locale"
                             class="w-24"
@@ -192,6 +192,8 @@ import {
     type LocalizedNameInput,
     type Relationship
 } from '~/typedefs/gqlTypes'
+
+const { t } = useI18n()
 
 const localeStore = useLocaleStore()
 const facilitiesStore = useFacilitiesStore()

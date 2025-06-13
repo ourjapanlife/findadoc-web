@@ -35,7 +35,7 @@
                                 data-testid="logo"
                             >
                                 <div class="text-lg font-semibold text-primary-text group-hover:text-primary-hover">
-                                    {{ $t('hamburgerMenu.copyright') }}
+                                    {{ t('hamburgerMenu.copyright') }}
                                 </div>
                             </div>
                         </div>
@@ -67,7 +67,7 @@
                         data-testid="hamburger-menu-language-section"
                         class="flex px-5 mt-2"
                     >
-                        <span class="self-center mr-2 text-primary-text">{{ $t('hamburgerMenu.languageDropdownTitle')
+                        <span class="self-center mr-2 text-primary-text">{{ t('hamburgerMenu.languageDropdownTitle')
                         }}</span>
                         <LocaleSelector class="py-1.5 text-primary-text bg-primary-bg" />
                     </div>
@@ -77,12 +77,12 @@
                     >
                         <NuxtLink to="/">
                             <div @click="closeMenu()">
-                                {{ $t('hamburgerMenu.home') }}
+                                {{ t('hamburgerMenu.home') }}
                             </div>
                         </NuxtLink>
                         <NuxtLink to="/about">
                             <div @click="closeMenu()">
-                                {{ $t('hamburgerMenu.about') }}
+                                {{ t('hamburgerMenu.about') }}
                             </div>
                         </NuxtLink>
                         <NuxtLink
@@ -90,12 +90,12 @@
                             target="_blank"
                         >
                             <div @click="closeMenu()">
-                                {{ $t('hamburgerMenu.contact') }}
+                                {{ t('hamburgerMenu.contact') }}
                             </div>
                         </NuxtLink>
                         <NuxtLink to="/submit">
                             <div @click="closeMenu()">
-                                {{ $t('hamburgerMenu.submit') }}
+                                {{ t('hamburgerMenu.submit') }}
                             </div>
                         </NuxtLink>
                         <div
@@ -115,12 +115,12 @@
                             </div>
                             <NuxtLink to="/moderation">
                                 <div @click="closeMenu()">
-                                    {{ $t('hamburgerMenu.moderation') }}
+                                    {{ t('hamburgerMenu.moderation') }}
                                 </div>
                             </NuxtLink>
                             <NuxtLink to="/">
                                 <div @click="logout()">
-                                    {{ $t('hamburgerMenu.logout') }}
+                                    {{ t('hamburgerMenu.logout') }}
                                 </div>
                             </NuxtLink>
                         </div>
@@ -133,7 +133,7 @@
                 >
                     <div data-testid="hamburger-menu-theme-switcher">
                         <p class="mb-1">
-                            {{ $t('hamburgerMenu.theme') }}: {{ convertStringToTitleCase(currentTheme) }}
+                            {{ t('hamburgerMenu.theme') }}: {{ convertStringToTitleCase(currentTheme) }}
                         </p>
                         <div class="flex">
                             <div
@@ -198,7 +198,7 @@
                             data-testid="hamburger-menu-footer-legal-terms"
                         >
                             <span @click="closeMenu()">
-                                {{ $t('footer.terms') }}
+                                {{ t('footer.terms') }}
                             </span>
                         </NuxtLink>
                         <NuxtLink
@@ -206,7 +206,7 @@
                             data-testid="hamburger-menu-footer-legal-privacy"
                         >
                             <span @click="closeMenu()">
-                                {{ $t('footer.privacy') }}
+                                {{ t('footer.privacy') }}
                             </span>
                         </NuxtLink>
                     </div>
@@ -242,7 +242,7 @@
                         class="text-xs text-primary-text-muted"
                     >
                         <div>
-                            © {{ new Date().getUTCFullYear() }} {{ $t('hamburgerMenu.copyright') }}
+                            © {{ new Date().getUTCFullYear() }} {{ t('hamburgerMenu.copyright') }}
                         </div>
                         <div
                             data-testid="hamburger-menu-footer-legal"
@@ -268,7 +268,7 @@
                                     to="https://docs.google.com/spreadsheets/d/1CafQoHn1NNNoRy35QSt_nUZcgKL8QN2M"
                                     target="_blank"
                                     class="underline"
-                                >{{ $t('hamburgerMenu.balancesheet') }}
+                                >{{ t('hamburgerMenu.balancesheet') }}
                                 </NuxtLink>
                             </span>
                         </div>
@@ -293,6 +293,8 @@ const authStore = useAuthStore()
 const isMenuOpen = ref(false)
 
 const currentTheme = ref('orange')
+
+const { t } = useI18n()
 
 function openMenu() {
     isMenuOpen.value = true
