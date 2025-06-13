@@ -183,6 +183,11 @@ const currentFacilityRelations: Ref<Facility[]> = ref([])
 //Keeps of existing healthcare professionals related to new facility submission
 const currentExistingHealthcareProfessionals: Ref<HealthcareProfessional[]> = ref([])
 
+// Flag to indicate if an existing facility has been selected from the search bar
+const isExistingFacilitySelected: Ref<boolean> = ref(false)
+// Flag to indicate if an existing healthcare professional has been selected from the search bar
+const isExistingHealthcareProfessionalSelected: Ref<boolean> = ref(false)
+
 /* This is used as an exact copy and not updated. This is to allow for change checks in values.
 We can then provide a better user experience based on if they change the values or not
 This is necessary because setting a variable directly in vue to the same as a reactive object
@@ -231,7 +236,7 @@ const handleFacilitySearchInputChange = (filteredItems: Ref<Facility[]>, inputVa
               || id.toLowerCase().includes(inputValue)
         return isMatch
     })
-
+    /*
     if (currentFacilityRelations.value.length) {
         facilitiesStore.resetFacilitySectionFields()
         return
@@ -241,6 +246,7 @@ const handleFacilitySearchInputChange = (filteredItems: Ref<Facility[]>, inputVa
         initializeSubmissionFormValues(moderationSubmissionStore.selectedSubmissionData)
         return
     }
+    */
 }
 
 const facilitiesFieldsToDisplayCallback = (item: Facility) => [item.nameEn, item.nameJa]
@@ -266,16 +272,27 @@ const handleHealthcareProfessionalsInputChange = (filteredItems: Ref<HealthcareP
             })
             return idMatches || nameMatches
         })
+    /*
+    // REASON FOR REMOVAL:
+    // This logic is being removed because it directly manipulates the global `facilitiesStore.facilitySectionFields`
+    // and `moderationSubmissionStore.selectedSubmissionData`.
+    // In our new state management approach, the `ModEditSubmissionForm` (parent) component
+    // is responsible for holding the `currentFacilityData` and `currentHealthcareProfessionalData` refs,
+    // which represent the editable state of the form.
+    // When a user interacts with the search bar and selects an existing facility (which updates `currentFacilityRelations`),
+    // the parent's `watch(currentFacilityRelations, ...)` handler will now take care of:
+    // 1. Updating `currentFacilityData.value` (by cloning the selected facility).
+    // 2. Setting `isExistingFacilitySelected.value = true`.
+    */
+    // if (currentFacilityRelations.value.length) {
+    //     facilitiesStore.resetFacilitySectionFields()
+    //     return
+    // }
 
-    if (currentExistingHealthcareProfessionals.value.length) {
-        healthcareProfessionalsStore.resetHealthcareProfessionalSectionFields()
-        return
-    }
-
-    if (!currentExistingHealthcareProfessionals.value.length) {
-        initializeSubmissionFormValues(moderationSubmissionStore.selectedSubmissionData)
-        return
-    }
+    // if (!currentFacilityRelations.value.length) {
+    //     initializeSubmissionFormValues(moderationSubmissionStore.selectedSubmissionData)
+    //     return
+    // }
 }
 const healthcareProfessionalsToDisplayCallback = (healthcareProfessional: HealthcareProfessional) =>
     [healthcareProfessional.names[0].firstName + ' ' + healthcareProfessional.names[0].lastName]
@@ -288,7 +305,7 @@ const validateFacilityFields = () => {
     // This validates the email only if it exists or skips the check returning false since optional
     const isEmailValid: boolean = facilitySections.email ? validateEmail(facilitySections.email) : false
     // This validates the website only if it exists or skips the check returning false since optional
-    const isWebsiteValid: boolean = facilitySections.website ? validateWebsite(facilitySections.website) : false
+    const isWebsiteValid: boolean = facilitySections.website ? validateWebsite(facilitySections.website) : true
     const isAddressLine1EnValid: boolean = validateAddressLineEn(facilitySections.addressLine1En)
     const isAddressLine2EnValid: boolean = validateAddressLineEn(facilitySections.addressLine2En)
     const isAddressLine1JaValid: boolean = validateAddressLineJa(facilitySections.addressLine1Ja)
@@ -322,7 +339,7 @@ const validateHealthcareProfessionalFields = () => {
           || facilitySectionFields.healthcareProfessionalIds.length > 0
     const areInsurancesSelected: boolean = healthcareProfessionalFields.acceptedInsurance.length > 0
     const areDegreesSelected: boolean = healthcareProfessionalFields.degrees.length > 0
-    const areSpecialtiesSelected: boolean = healthcareProfessionalFields.spokenLanguages.length > 0
+    const areSpecialtiesSelected: boolean = healthcareProfessionalFields.specialties.length > 0
     const areLocalesSelected: boolean = healthcareProfessionalFields.spokenLanguages.length > 0
 
     const areAllFieldsValid = areNamesSelectedToFacility
@@ -623,19 +640,20 @@ async function submitCompletedForm(e: Event) {
         return
     }
 
-    const isValidFacility = validateFacilityFields()
-    const isValidHealthcareProfessional = validateHealthcareProfessionalFields()
-    const submittedFacilityAlreadyExists = selectedSubmissionData && selectedSubmissionData.healthcareProfessionals
-      && selectedSubmissionData?.healthcareProfessionals[0].facilityIds.length
-    const submittedHealthcareAlreadyExists = selectedSubmissionData?.facility?.healthcareProfessionalIds.length
+    // Validate facility fields ONLY if no existing facility is selected (i.e., a new one is being created/edited)
+    const isValidFacility = isExistingFacilitySelected.value ? true : validateFacilityFields()
+    // Validate healthcare professional fields ONLY if no existing HP is selected (i.e., a new one is being created/edited)
+    const isValidHealthcareProfessional
+        = isExistingHealthcareProfessionalSelected.value ? true : validateHealthcareProfessionalFields()
 
-    //This shows a toast and returns if the facility fields arent valid
-    if (!isValidFacility && !submittedFacilityAlreadyExists) {
+    // If a new facility is being added AND its fields are not valid, show error
+    if (!isExistingFacilitySelected.value && !isValidFacility) {
         toast.error(t('modSubmissionForm.errorMessageFacilityInputsInvalid'))
         return
     }
 
-    if (!isValidHealthcareProfessional && !submittedHealthcareAlreadyExists) {
+    // If a new healthcare professional is being added AND its fields are not valid, show error
+    if (!isExistingHealthcareProfessionalSelected.value && !isValidHealthcareProfessional) {
         toast.error(t('modSubmissionForm.errorMessageHealthcareInputsInvalid'))
         return
     }
@@ -728,18 +746,83 @@ const handleNavigateToModerationScreen = () => {
 }
 
 watch(currentFacilityRelations, newValue => {
-    if (newValue.length) {
-        healthcareProfessionalsStore.healthcareProfessionalSectionFields.facilityIds = newValue
-            .map(facility => facility.id)
+    // If one or more existing Facilities have been selected (i.e., the search bar is not empty)
+    if (newValue.length > 0) {
+        // 1. Associate the IDs of the selected Facilities to the Healthcare Professional (correct association)
+        healthcareProfessionalsStore.healthcareProfessionalSectionFields.facilityIds = newValue.map(facility => facility.id)
+        // Set the flag to true, indicating an existing facility is selected
+        isExistingFacilitySelected.value = true
+
+        // 2. Populate the Facility form fields with the data of the selected Facility.
+        //    We assume you are selecting a single Facility from the search bar for editing.
+        //    If multi-selection and modification are allowed, the logic would be more complex.
+        //    Here, we take the first selected item:
+        const selectedFacility = newValue[0]
+        if (selectedFacility) {
+            facilitiesStore.facilitySectionFields.nameEn = selectedFacility.nameEn ?? ''
+            facilitiesStore.facilitySectionFields.nameJa = selectedFacility.nameJa ?? ''
+            facilitiesStore.facilitySectionFields.phone = selectedFacility.contact?.phone ?? ''
+            facilitiesStore.facilitySectionFields.email = selectedFacility.contact?.email ?? ''
+            facilitiesStore.facilitySectionFields.website = selectedFacility.contact?.website ?? ''
+            facilitiesStore.facilitySectionFields.postalCode = selectedFacility.contact?.address?.postalCode ?? ''
+            facilitiesStore.facilitySectionFields.prefectureEn = selectedFacility.contact?.address?.prefectureEn ?? ''
+            facilitiesStore.facilitySectionFields.cityEn = selectedFacility.contact?.address?.cityEn ?? ''
+            facilitiesStore.facilitySectionFields.addressLine1En = selectedFacility.contact?.address?.addressLine1En ?? ''
+            facilitiesStore.facilitySectionFields.addressLine2En = selectedFacility.contact?.address?.addressLine2En ?? ''
+            facilitiesStore.facilitySectionFields.prefectureJa = selectedFacility.contact?.address?.prefectureJa ?? ''
+            facilitiesStore.facilitySectionFields.cityJa = selectedFacility.contact?.address?.cityJa ?? ''
+            facilitiesStore.facilitySectionFields.addressLine1Ja = selectedFacility.contact?.address?.addressLine1Ja ?? ''
+            facilitiesStore.facilitySectionFields.addressLine2Ja = selectedFacility.contact?.address?.addressLine2Ja ?? ''
+            facilitiesStore.facilitySectionFields.mapLatitude = selectedFacility.mapLatitude?.toString() ?? ''
+            facilitiesStore.facilitySectionFields.mapLongitude = selectedFacility.mapLongitude?.toString() ?? ''
+            facilitiesStore.facilitySectionFields.googlemapsURL = selectedFacility.contact?.googleMapsUrl ?? ''
+        }
+    } else { // If NO existing Facility is selected (or has been deselected from the search bar)
+        // Reset the fields to allow entering a NEW Facility
+        healthcareProfessionalsStore.healthcareProfessionalSectionFields.facilityIds = [] // Remove IDs from the HP
+        isExistingFacilitySelected.value = false // Set the flag to false
+        facilitiesStore.resetFacilitySectionFields() // Clear the Facility form fields
     }
 }, { deep: true })
 
 watch(currentExistingHealthcareProfessionals, newValue => {
-    if (healthcareProfessionalsStore.healthcareProfessionalsData
-      && newValue.length) {
+    // If healthcare professionals data is loaded and one or more existing HPs have been selected
+    if (healthcareProfessionalsStore.healthcareProfessionalsData && newValue.length > 0) {
+        // 1. Associate the IDs of the selected HPs to the Facility
         facilitiesStore.facilitySectionFields.healthcareProfessionalIds = newValue.map(
             healthcareProfessional => healthcareProfessional.id
         )
+        // Set the flag to true, indicating an existing HP is selected
+        isExistingHealthcareProfessionalSelected.value = true
+
+        // 2. Populate the Healthcare Professional form fields with the data of the selected HP.
+        //    We assume you are selecting a single HP from the search bar for editing.
+        const selectedHp = newValue[0]
+        if (selectedHp) {
+            // Get the primary name available for the HP
+            const primaryName = selectedHp.names?.[0]
+            if (primaryName) {
+                healthcareProfessionalsStore.healthcareProfessionalSectionFields.names = [{
+                    firstName: primaryName.firstName ?? '',
+                    middleName: primaryName.middleName ?? '',
+                    lastName: primaryName.lastName ?? '',
+                    locale: primaryName.locale ?? Locale.Und // Ensure Locale.Und is handled correctly
+                }]
+            } else {
+                healthcareProfessionalsStore.healthcareProfessionalSectionFields.names = []
+            }
+
+            healthcareProfessionalsStore.healthcareProfessionalSectionFields.acceptedInsurance
+                = selectedHp.acceptedInsurance ?? []
+            healthcareProfessionalsStore.healthcareProfessionalSectionFields.degrees = selectedHp.degrees ?? []
+            healthcareProfessionalsStore.healthcareProfessionalSectionFields.specialties = selectedHp.specialties ?? []
+            healthcareProfessionalsStore.healthcareProfessionalSectionFields.spokenLanguages = selectedHp.spokenLanguages ?? []
+        }
+    } else { // If NO existing HP is selected (or has been deselected from the search bar)
+        // Reset the fields to allow entering a NEW HP
+        facilitiesStore.facilitySectionFields.healthcareProfessionalIds = []// Remove IDs from the Facility
+        isExistingHealthcareProfessionalSelected.value = false// Set the flag to false
+        healthcareProfessionalsStore.resetHealthcareProfessionalSectionFields()// Clear the HP form fields
     }
 }, { deep: true })
 

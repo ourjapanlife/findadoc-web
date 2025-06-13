@@ -56,7 +56,7 @@
             <ModInputField
                 v-model="facilityStore.facilitySectionFields.website"
                 data-testid="mod-facility-section-website"
-                :label="$t('modFacilitySection.labelFacilityWebsite')"
+                :label="`${$t('modFacilitySection.labelFacilityWebsite')} (optional)`"
                 type="url"
                 :placeholder="$t('modFacilitySection.placeholderTextFacilityWebsite')"
                 :required="false"
