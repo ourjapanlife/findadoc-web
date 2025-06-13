@@ -2,24 +2,21 @@ import { defineStore } from 'pinia'
 import { computed } from 'vue'
 import { auth0 } from '../utils/auth0.js'
 import { useLoadingStore } from './loadingStore.js'
+import { useCookie, useRuntimeConfig } from '#app'
 
 export const useAuthStore = defineStore('authStore', () => {
     const runtimeConfig = useRuntimeConfig()
     const isTestingMode = !!runtimeConfig.public.isTestingMode
 
     const userId = computed(() => {
-        if (isTestingMode) {
-            return localStorage?.getItem('id_token') ?? 'unknown user'
-        }
+        if (isTestingMode) return useCookie('id_token').value ?? 'unknown user'
         return auth0?.user.value?.nickname ?? 'unknown user'
     })
 
     const isLoadingAuth = computed(() => auth0?.isLoading.value ?? true)
 
     const isLoggedIn = computed(() => {
-        if (isTestingMode) {
-            return localStorage?.getItem('auth_token') !== undefined
-        }
+        if (isTestingMode) return useCookie('authToken').value !== null
         return auth0?.isAuthenticated.value ?? false
     })
 
@@ -44,14 +41,19 @@ export const useAuthStore = defineStore('authStore', () => {
     }
 
     async function logout() {
-        //TODO clear the credentials
+        //Clear the following cookies when they are used in testing
+        useCookie('auth_token').value = null
+        useCookie('id_token').value = null
+        useCookie('authToken').value = null
+
+        //Logout from Auth0
         await auth0.logout({ logoutParams: { returnTo: window.location.origin } })
     }
 
     async function getAuthBearerToken() {
         try {
             if (isTestingMode) {
-                return localStorage?.getItem('auth_token') ?? undefined
+                return useCookie('auth_token').value ?? undefined
             }
 
             if (!auth0) {

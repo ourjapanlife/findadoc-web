@@ -70,6 +70,7 @@ export type CreateHealthcareProfessionalInput = {
 };
 
 export type CreateSubmissionInput = {
+  autofillPlaceFromSubmissionUrl?: InputMaybe<Scalars['Boolean']['input']>;
   googleMapsUrl?: InputMaybe<Scalars['String']['input']>;
   healthcareProfessionalName?: InputMaybe<Scalars['String']['input']>;
   notes?: InputMaybe<Scalars['String']['input']>;
@@ -460,6 +461,7 @@ export enum Specialty {
 
 export type Submission = {
   __typename?: 'Submission';
+  autofillPlaceFromSubmissionUrl?: Maybe<Scalars['Boolean']['output']>;
   createdDate: Scalars['String']['output'];
   facility?: Maybe<FacilitySubmission>;
   googleMapsUrl: Scalars['String']['output'];
@@ -788,6 +790,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
 };
 
 export type SubmissionResolvers<ContextType = any, ParentType extends ResolversParentTypes['Submission'] = ResolversParentTypes['Submission']> = {
+  autofillPlaceFromSubmissionUrl?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
   createdDate?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   facility?: Resolver<Maybe<ResolversTypes['FacilitySubmission']>, ParentType, ContextType>;
   googleMapsUrl?: Resolver<ResolversTypes['String'], ParentType, ContextType>;

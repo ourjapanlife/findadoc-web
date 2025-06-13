@@ -5,37 +5,66 @@ export type IncomingHttpRequest = CyHttpMessages.IncomingHttpRequest
 
 // https://docs.cypress.io/app/guides/authentication-testing/auth0-authentication
 export const auth0Login = () => {
-  // This is using auth0's programmatic API for testing purposes and doesn't use the UI flow
-  // This is primarily because there's a consent approval error that pops up we can't target and this is easier in general.
-
-    const options = {
+  const options = {
       method: 'POST',
       url: `https://findadoc.jp.auth0.com/oauth/token`,
       body: {
-        grant_type: 'password',
-        connection: 'Username-Password-Authentication',
-        audience: 'findadoc',
-        username: Cypress.env('AUTH0_USERNAME'),
-        password: Cypress.env('AUTH0_PASSWORD'),
-        scope: 'openid profile email',
-        client_id: Cypress.env('AUTH0_CLIENTID'),
-        client_secret: Cypress.env('AUTH0_CLIENTSECRET'),
+          grant_type: 'password',
+          connection: 'Username-Password-Authentication',
+          audience: 'findadoc',
+          username: Cypress.env('AUTH0_USERNAME'),
+          password: Cypress.env('AUTH0_PASSWORD'),
+          scope: 'openid profile email',
+          client_id: Cypress.env('AUTH0_CLIENTID'),
+          client_secret: Cypress.env('AUTH0_CLIENTSECRET'),
       },
-    }
+  }
 
-    cy.request(options).then((response) => {
+  cy.request(options).then((response) => {
       const { body } = response
       const { access_token, id_token } = body
 
-      //We want to store the auth token so tests can reuse it and not login for every test
-      cy.window().then((win) => {
-        win.localStorage.setItem('auth_token', access_token)
-        win.localStorage.setItem('id_token', id_token)
+      // Set auth tokens as cookies
+      cy.setCookie('auth_token', access_token, {
+          domain: 'localhost', // Set explicitly for Cypress
+          path: '/',
+          httpOnly: false,
+          secure: false, // Set to false for local development
+          sameSite: 'lax',
+          expiry: Math.floor(Date.now() / 1000) + (60 * 60 * 24) // 24 hours
       })
-    })
+
+      cy.setCookie('id_token', id_token, {
+          domain: 'localhost',
+          path: '/',
+          httpOnly: false,
+          secure: false,
+          sameSite: 'lax',
+          expiry: Math.floor(Date.now() / 1000) + (60 * 60 * 24)
+      })
+
+      // Set auth flag
+      cy.setCookie('authToken', 'true', {
+          domain: 'localhost',
+          path: '/',
+          httpOnly: false,
+          secure: false,
+          sameSite: 'lax',
+          expiry: Math.floor(Date.now() / 1000) + (60 * 60 * 24)
+      })
+
+      // Verify cookies were set
+      cy.getCookie('auth_token').should('exist')
+      cy.getCookie('id_token').should('exist')
+      cy.getCookie('authToken').should('exist')
+
+      // Wait a bit to ensure cookies are properly set
+      cy.wait(200)
+  })
 }
 
-export const aliasQuery = (req: IncomingHttpRequest, operation: string, responseBody: unknown) => {
+
+  export const aliasQuery = (req: IncomingHttpRequest, operation: string, responseBody: unknown) => {
     /**
     * Check if the GraphQL operation is included in the request body
     **/
