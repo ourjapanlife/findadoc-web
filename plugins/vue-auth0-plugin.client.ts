@@ -7,6 +7,6 @@ export default defineNuxtPlugin(async nuxtApp => {
 
     //load the user's session. don't await so it doesn't block the rendering
     //This must be ran auth0 is initialized in the vue app
-    await auth0.checkSession()
+    auth0.checkSession()
 })
 

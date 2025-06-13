@@ -54,7 +54,9 @@ export const useAuthStore = defineStore('authStore', () => {
                 return localStorage.getItem('auth_token') ?? undefined
             }
 
-            await waitForAuth0ToLoad()
+            if (!auth0) {
+                await waitForAuth0ToLoad()
+            }
 
             if (!auth0.isAuthenticated.value) {
                 return undefined

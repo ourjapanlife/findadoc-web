@@ -13,8 +13,6 @@ export const initializeAuth0 = async () => {
             return auth0
         }
 
-        const isProduction = process.env.NODE_ENV === 'production' && window.location.origin !== 'http://localhost:3000'
-
         const auth0Plugin = createAuth0({
             domain: 'findadoc.jp.auth0.com',
             clientId: 'HB5Jow9yA5yiA4LTPQCKBYrfDyRkO9JX',
@@ -23,7 +21,7 @@ export const initializeAuth0 = async () => {
                     target: useRoute().path
                 },
                 //eslint-disable-next-line
-                redirect_uri: isProduction ? 'https://www.findadoc.jp' : 'http://localhost:3000'
+                redirect_uri: window.location.origin
             }
         })
 
