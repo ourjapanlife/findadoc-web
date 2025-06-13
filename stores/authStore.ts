@@ -9,7 +9,7 @@ export const useAuthStore = defineStore('authStore', () => {
 
     const userId = computed(() => {
         if (isTestingMode) {
-            return localStorage.getItem('id_token') ?? 'unknown user'
+            return window.localStorage.getItem('id_token') ?? 'unknown user'
         }
         return auth0?.user.value?.nickname ?? 'unknown user'
     })
@@ -18,7 +18,7 @@ export const useAuthStore = defineStore('authStore', () => {
 
     const isLoggedIn = computed(() => {
         if (isTestingMode) {
-            return localStorage.getItem('auth_token') !== undefined
+            return window.localStorage.getItem('auth_token') !== undefined
         }
         return auth0?.isAuthenticated.value ?? false
     })
@@ -51,7 +51,7 @@ export const useAuthStore = defineStore('authStore', () => {
     async function getAuthBearerToken() {
         try {
             if (isTestingMode) {
-                return localStorage.getItem('auth_token') ?? undefined
+                return window.localStorage.getItem('auth_token') ?? undefined
             }
 
             if (!auth0) {
