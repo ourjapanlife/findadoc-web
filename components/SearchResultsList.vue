@@ -4,7 +4,7 @@
     >
         <div class="results-header flex flex-row ml-9 mr-5 mb-6 pt-5">
             <span class="flex-1 w-1/2 font-bold self-center">
-                {{ $t('searchResultsList.doctorsNearby') }}
+                {{ t('searchResultsList.doctorsNearby') }}
             </span>
             <button
                 role="button"
@@ -19,7 +19,7 @@
                     class="fill-primary/50 h-5 w-5 self-center group-hover:fill-primary-text-inverted/50"
                 />
                 <span class="text-primary-text/50 pl-1 font-bold self-center group-hover:text-primary-text-inverted/50">
-                    {{ $t('searchResultsList.filters') }}
+                    {{ t('searchResultsList.filters') }}
                 </span>
             </button>
         </div>
@@ -75,9 +75,9 @@
             <div class="flex flex-col">
                 <SVGNoSearchResults class="portrait:px-4 h-12" />
                 <span class="text-primary-text px-1 font-bold self-center group-hover:text-primary-text-inverted/50">{{
-                    $t('searchResultsList.noResults') }}</span>
+                    t('searchResultsList.noResults') }}</span>
                 <span class="text-primary-text self-center text-center">{{
-                    $t('searchResultsList.noResultsSubtext') }}</span>
+                    t('searchResultsList.noResultsSubtext') }}</span>
             </div>
         </div>
     </div>
@@ -92,6 +92,8 @@ import { Locale } from '~/typedefs/gqlTypes.js'
 import SVGLoadingIcon from '~/assets/icons/loading.svg'
 import SVGNoSearchResults from '~/assets/icons/no-search-results-graphic.svg'
 import SVGHamburgerListIcon from '~/assets/icons/hamburger-list-icon.svg'
+
+const { t } = useI18n()
 
 const resultsStore = useSearchResultsStore()
 const localeStore = useLocaleStore()

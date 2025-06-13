@@ -31,7 +31,7 @@
             </div>
             <div>
                 <div class="ml-9 mt-2 font-bold text-sm">
-                    <span>{{ $t("searchResultsDetails.speaks") }}:</span>
+                    <span>{{ t("searchResultsDetails.speaks") }}:</span>
                 </div>
                 <div class="result-tags flex flex-wrap w-64 mb-6 mt-1 ml-6 pl-2">
                     <div
@@ -46,7 +46,7 @@
             </div>
             <div class="about ml-4 pl-2">
                 <span class="font-semibold">{{
-                    $t("searchResultsDetails.contact")
+                    t("searchResultsDetails.contact")
                 }}</span>
                 <div class="address flex my-4">
                     <SVGMapPinIcon
@@ -124,6 +124,8 @@ import { useLocaleStore } from '~/stores/localeStore.js'
 import { useSpecialtiesStore } from '~/stores/specialtiesStore.js'
 import { useSearchResultsStore } from '~/stores/searchResultsStore'
 import { Locale } from '~/typedefs/gqlTypes.js'
+
+const { t } = useI18n()
 
 const resultsStore = useSearchResultsStore()
 const localeStore = useLocaleStore()

@@ -2,7 +2,7 @@
     <div class="flex flex-col">
         <h1 class="font-bold text-lg p-1 mb-2 text-ellipsis">
             {{ moderationSubmissionsStore.selectedSubmissionData?.facility?.nameEn
-                || $t("modPanelSubmissionLeftNavbar.facilityNameUnknown") }}
+                || t("modPanelSubmissionLeftNavbar.facilityNameUnknown") }}
         </h1>
         <div class="flex flex-col items-start">
             <button
@@ -15,7 +15,7 @@
                 class="w-full py-4 my-2 text-sm text-start pl-2 rounded border-b-2 border-tertiary-bg"
                 @click="handleNavClick(ModHealthcareProfessionalsLeftNavbarSections.HealthcareProfessionalName)"
             >
-                {{ $t("modPanelSubmissionLeftNavbar.healthcareProfessionalName") }}
+                {{ t("modPanelSubmissionLeftNavbar.healthcareProfessionalName") }}
             </button>
 
             <button
@@ -29,7 +29,7 @@
                 class="w-full py-4 my-2 text-sm text-start pl-2 rounded border-b-2 border-tertiary-bg"
                 @click="handleNavClick(ModHealthcareProfessionalsLeftNavbarSections.HealthcareProfessionalMedicalInfo)"
             >
-                {{ $t("modPanelSubmissionLeftNavbar.healthcareProfessionalMedicalInfo") }}
+                {{ t("modPanelSubmissionLeftNavbar.healthcareProfessionalMedicalInfo") }}
             </button>
 
             <button
@@ -44,7 +44,7 @@
                 @click="handleNavClick(
                     ModHealthcareProfessionalsLeftNavbarSections.HealthcareProfessionalFacilities)"
             >
-                {{ $t("modPanelSubmissionLeftNavbar.healthcareProfessionalFacilities") }}
+                {{ t("modPanelSubmissionLeftNavbar.healthcareProfessionalFacilities") }}
             </button>
         </div>
     </div>
@@ -55,6 +55,8 @@ import { ref, type Ref, onMounted, onUnmounted } from 'vue'
 import { useModerationSubmissionsStore } from '~/stores/moderationSubmissionsStore'
 import { ModHealthcareProfessionalsLeftNavbarSections } from '~/stores/moderationScreenStore'
 import { handleScroll, observeFormSections, scrollToSectionOfForm, type SectionInformation } from '~/utils/handleScroll'
+
+const { t } = useI18n()
 
 const moderationSubmissionsStore = useModerationSubmissionsStore()
 const activeSection: Ref<string> = ref(ModHealthcareProfessionalsLeftNavbarSections.HealthcareProfessionalName)
