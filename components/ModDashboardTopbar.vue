@@ -13,7 +13,7 @@
                 class="flex justify-center items-center rounded-full bg-secondary-bg border-primary p-1 border-2 w-40
                 font-semibold text-sm mr-2 overflow-hidden text-center hover:bg-currentColor"
             >
-                {{ $t('modDashboardTopbar.addHealthcareProfessional') }}
+                {{ t('modDashboardTopbar.addHealthcareProfessional') }}
             </NuxtLink>
             <NuxtLink
                 v-if="isFacility"
@@ -22,12 +22,12 @@
                 class="flex justify-center items-center rounded-full bg-secondary-bg border-primary p-1 border-2 w-40
                 font-semibold text-sm mr-2 overflow-hidden text-center hover:bg-currentColor"
             >
-                {{ $t('modDashboardTopbar.addFacility') }}
+                {{ t('modDashboardTopbar.addFacility') }}
             </NuxtLink>
             <div class="justify-start items-start flex">
                 <input
                     type="text"
-                    :placeholder="$t('modDashboardTopbar.placeholderText')"
+                    :placeholder="t('modDashboardTopbar.placeholderText')"
                     class=" px-3 py-3.5 w-96 h-12 bg-secondary-bg rounded-lg border border-primary-text-muted
                     text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
                 >

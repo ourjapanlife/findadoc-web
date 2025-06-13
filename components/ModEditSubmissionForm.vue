@@ -11,14 +11,14 @@
                 class="flex flex-col aspect-square h-96 items-center justify-around bg-primary-inverted p-10 rounded"
             >
                 <span class="font-bold text-3xl">
-                    {{ $t('modSubmissionForm.submissionConfirmationMessage') }}
+                    {{ t('modSubmissionForm.submissionConfirmationMessage') }}
                 </span>
                 <button
                     type="button"
                     class="bg-primary p-4 rounded-full my-8 font-semibold text-xl"
                     @click="submitCompletedForm"
                 >
-                    {{ $t('modSubmissionForm.submissionConfirmationAcceptanceButton') }}
+                    {{ t('modSubmissionForm.submissionConfirmationAcceptanceButton') }}
                 </button>
             </div>
             <div
@@ -27,7 +27,7 @@
                 class="flex flex-col aspect-square h-96 items-center justify-around bg-primary-inverted p-10 rounded"
             >
                 <span class="font-bold text-3xl">
-                    {{ $t('modSubmissionForm.rejectSubmissionConfirmationMessage') }}
+                    {{ t('modSubmissionForm.rejectSubmissionConfirmationMessage') }}
                 </span>
                 <button
                     data-testid="reject-submission-confirmation-btn"
@@ -35,21 +35,21 @@
                     class="bg-primary p-4 rounded-full my-8 font-semibold text-xl"
                     @click="rejectSubmission"
                 >
-                    {{ $t('modSubmissionForm.rejectSubmissionConfirmationButton') }}
+                    {{ t('modSubmissionForm.rejectSubmissionConfirmationButton') }}
                 </button>
             </div>
             <div
                 v-if="formHasUnsavedChanges"
                 class="flex flex-col aspect-square h-96 items-center justify-around bg-primary-inverted p-10 rounded"
             >
-                <span class="font-bold text-3xl">{{ $t('modSubmissionForm.hasUnsavedChanges') }}</span>
+                <span class="font-bold text-3xl">{{ t('modSubmissionForm.hasUnsavedChanges') }}</span>
                 <button
                     type="button"
                     data-testid="submission-unsaved-confirmation-btn"
                     class="bg-secondary p-4 rounded-full my-8 font-semibold text-xl hover:bg-primary"
                     @click="handleNavigateToModerationScreen"
                 >
-                    {{ $t('modSubmissionForm.confirmationButton') }}
+                    {{ t('modSubmissionForm.confirmationButton') }}
                 </button>
             </div>
         </Modal>
@@ -65,60 +65,60 @@
             <h1
                 class="mb-3.5 text-start text-primary-text text-3xl font-bold font-sans leading-normal"
             >
-                {{ $t('modSubmissionForm.facilityHeading') }}
+                {{ t('modSubmissionForm.facilityHeading') }}
             </h1>
             <span class="mb-3.5 text-center text-primary-text text-2xl font-bold font-sans leading-normal">
-                {{ $t('modSubmissionForm.contactInformation') }}
+                {{ t('modSubmissionForm.contactInformation') }}
             </span>
             <ModInputField
                 v-model="submissionFormFields.nameEn"
                 data-testid="submission-form-nameEn"
-                :label="$t('modSubmissionForm.labelFacilityNameEn')"
+                :label="t('modSubmissionForm.labelFacilityNameEn')"
                 type="text"
-                :placeholder="$t('modSubmissionForm.placeholderTextFacilityNameEn')"
+                :placeholder="t('modSubmissionForm.placeholderTextFacilityNameEn')"
                 :required="true"
                 :input-validation-check="validateNameEn"
-                :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityNameEn')"
+                :invalid-input-error-message="t('modSubmissionForm.inputErrorMessageFacilityNameEn')"
             />
             <ModInputField
                 v-model="submissionFormFields.nameJa"
                 data-testid="submission-form-nameJa"
-                :label="$t('modSubmissionForm.labelFacilityNameJa')"
+                :label="t('modSubmissionForm.labelFacilityNameJa')"
                 type="text"
-                :placeholder="$t('modSubmissionForm.placeholderTextFacilityNameJa')"
+                :placeholder="t('modSubmissionForm.placeholderTextFacilityNameJa')"
                 :required="true"
                 :input-validation-check="validateNameJa"
-                :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityNameJa')"
+                :invalid-input-error-message="t('modSubmissionForm.inputErrorMessageFacilityNameJa')"
             />
             <ModInputField
                 v-model="submissionFormFields.phone"
                 data-testid="submission-form-phone"
-                :label="$t('modSubmissionForm.labelFacilityPhoneNumber')"
+                :label="t('modSubmissionForm.labelFacilityPhoneNumber')"
                 type="text"
-                :placeholder="$t('modSubmissionForm.placeholderTextFacilityPhoneNumber')"
+                :placeholder="t('modSubmissionForm.placeholderTextFacilityPhoneNumber')"
                 :required="true"
                 :input-validation-check="validatePhoneNumber"
-                :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityPhoneNumber')"
+                :invalid-input-error-message="t('modSubmissionForm.inputErrorMessageFacilityPhoneNumber')"
             />
             <ModInputField
                 v-model="submissionFormFields.email"
                 data-testid="submission-form-email"
-                :label="$t('modSubmissionForm.labelFacilityEmail')"
+                :label="t('modSubmissionForm.labelFacilityEmail')"
                 type="email"
-                :placeholder="$t('modSubmissionForm.placeholderTextFacilityEmail')"
+                :placeholder="t('modSubmissionForm.placeholderTextFacilityEmail')"
                 :required="false"
                 :input-validation-check="validateEmail"
-                :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityEmail')"
+                :invalid-input-error-message="t('modSubmissionForm.inputErrorMessageFacilityEmail')"
             />
             <ModInputField
                 v-model="submissionFormFields.website"
                 data-testid="submission-form-website"
-                :label="$t('modSubmissionForm.labelFacilityWebsite')"
+                :label="t('modSubmissionForm.labelFacilityWebsite')"
                 type="url"
-                :placeholder="$t('modSubmissionForm.placeholderTextFacilityWebsite')"
+                :placeholder="t('modSubmissionForm.placeholderTextFacilityWebsite')"
                 :required="false"
                 :input-validation-check="validateWebsite"
-                :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityWebsite')"
+                :invalid-input-error-message="t('modSubmissionForm.inputErrorMessageFacilityWebsite')"
             />
         </div>
 
@@ -127,24 +127,24 @@
             class="submission-form-section"
         >
             <span class="mb-3.5 text-center text-primary-text text-2xl font-bold font-sans leading-normal">
-                {{ $t('modSubmissionForm.addresses') }}
+                {{ t('modSubmissionForm.addresses') }}
             </span>
             <ModInputField
                 v-model="submissionFormFields.postalCode"
                 data-testid="submission-form-postalCode"
-                :label="$t('modSubmissionForm.labelFacilityPostalCode')"
+                :label="t('modSubmissionForm.labelFacilityPostalCode')"
                 type="text"
-                :placeholder="$t('modSubmissionForm.placeholderTextFacilityPostalCode')"
+                :placeholder="t('modSubmissionForm.placeholderTextFacilityPostalCode')"
                 :required="true"
                 :input-validation-check="validatePostalCode"
-                :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityPostalCode')"
+                :invalid-input-error-message="t('modSubmissionForm.inputErrorMessageFacilityPostalCode')"
             />
             <div class="flex flex-col mt-4">
                 <label
                     for="mod-edit-submission-form-prefecture-select-en"
                     class="mb-2 text-primary-text text-sm font-bold font-sans"
                 >
-                    {{ $t('modSubmissionForm.labelFacilityPrefectureEn') }}
+                    {{ t('modSubmissionForm.labelFacilityPrefectureEn') }}
                 </label>
                 <select
                     id="mod-edit-submission-form-prefecture-select-en"
@@ -165,39 +165,39 @@
             <ModInputField
                 v-model="submissionFormFields.cityEn"
                 data-testid="submission-form-cityEn"
-                :label="$t('modSubmissionForm.labelFacilityCityEn')"
+                :label="t('modSubmissionForm.labelFacilityCityEn')"
                 type="text"
-                :placeholder="$t('modSubmissionForm.placeholderTextFacilityCityEn')"
+                :placeholder="t('modSubmissionForm.placeholderTextFacilityCityEn')"
                 :required="true"
                 :input-validation-check="validateCityEn"
-                :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityCityEn')"
+                :invalid-input-error-message="t('modSubmissionForm.inputErrorMessageFacilityCityEn')"
             />
             <ModInputField
                 v-model="submissionFormFields.addressLine1En"
                 data-testid="submission-form-addressLine1En"
-                :label="$t('modSubmissionForm.labelFacilityAddressLine1En')"
+                :label="t('modSubmissionForm.labelFacilityAddressLine1En')"
                 type="text"
-                :placeholder="$t('modSubmissionForm.placeholderTextFacilityAddressLine1En')"
+                :placeholder="t('modSubmissionForm.placeholderTextFacilityAddressLine1En')"
                 :required="true"
                 :input-validation-check="validateAddressLineEn"
-                :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityAddressLine1En')"
+                :invalid-input-error-message="t('modSubmissionForm.inputErrorMessageFacilityAddressLine1En')"
             />
             <ModInputField
                 v-model="submissionFormFields.addressLine2En"
                 data-testid="submission-form-addressLine2En"
-                :label="$t('modSubmissionForm.labelFacilityAddressLine2En')"
+                :label="t('modSubmissionForm.labelFacilityAddressLine2En')"
                 type="text"
-                :placeholder="$t('modSubmissionForm.placeholderTextFacilityAddressLine2En')"
+                :placeholder="t('modSubmissionForm.placeholderTextFacilityAddressLine2En')"
                 :required="true"
                 :input-validation-check="validateAddressLineEn"
-                :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityAddressLine2En')"
+                :invalid-input-error-message="t('modSubmissionForm.inputErrorMessageFacilityAddressLine2En')"
             />
             <div class="flex flex-col mt-4">
                 <label
                     for="mod-edit-submission-form-prefecture-select-ja"
                     class="mb-2 text-primary-text text-sm font-bold font-sans"
                 >
-                    {{ $t('modSubmissionForm.labelFacilityPrefectureJa') }}
+                    {{ t('modSubmissionForm.labelFacilityPrefectureJa') }}
                 </label>
                 <select
                     id="mod-edit-submission-form-prefecture-select-ja"
@@ -218,32 +218,32 @@
             <ModInputField
                 v-model="submissionFormFields.cityJa"
                 data-testid="submission-form-cityJa"
-                :label="$t('modSubmissionForm.labelFacilityCityJa')"
+                :label="t('modSubmissionForm.labelFacilityCityJa')"
                 type="text"
-                :placeholder="$t('modSubmissionForm.placeholderTextFacilityCityJa')"
+                :placeholder="t('modSubmissionForm.placeholderTextFacilityCityJa')"
                 :required="true"
                 :input-validation-check="validateCityJa"
-                :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityCityJa')"
+                :invalid-input-error-message="t('modSubmissionForm.inputErrorMessageFacilityCityJa')"
             />
             <ModInputField
                 v-model="submissionFormFields.addressLine1Ja"
                 data-testid="submission-form-addressLine1Ja"
-                :label="$t('modSubmissionForm.labelFacilityAddressLine1Ja')"
+                :label="t('modSubmissionForm.labelFacilityAddressLine1Ja')"
                 type="text"
-                :placeholder="$t('modSubmissionForm.placeholderTextFacilityAddressLine1Ja')"
+                :placeholder="t('modSubmissionForm.placeholderTextFacilityAddressLine1Ja')"
                 :required="true"
                 :input-validation-check="validateAddressLineJa"
-                :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityAddressLine1Ja')"
+                :invalid-input-error-message="t('modSubmissionForm.inputErrorMessageFacilityAddressLine1Ja')"
             />
             <ModInputField
                 v-model="submissionFormFields.addressLine2Ja"
                 data-testid="submission-form-addressLine2Ja"
-                :label="$t('modSubmissionForm.labelFacilityAddressLine2Ja')"
+                :label="t('modSubmissionForm.labelFacilityAddressLine2Ja')"
                 type="text"
-                :placeholder="$t('modSubmissionForm.placeholderTextFacilityAddressLine2Ja')"
+                :placeholder="t('modSubmissionForm.placeholderTextFacilityAddressLine2Ja')"
                 :required="true"
                 :input-validation-check="validateAddressLineJa"
-                :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityAddressLine2Ja')"
+                :invalid-input-error-message="t('modSubmissionForm.inputErrorMessageFacilityAddressLine2Ja')"
             />
         </div>
         <div
@@ -251,38 +251,38 @@
             class="submission-form-section"
         >
             <span class="mb-3.5 text-center text-primary-text text-2xl font-bold font-sans leading-normal">
-                {{ $t('modSubmissionForm.googleMapsInformation') }}
+                {{ t('modSubmissionForm.googleMapsInformation') }}
             </span>
             <ModInputField
                 v-model="submissionFormFields.googlemapsURL"
                 data-testid="submission-form-google-maps"
-                :label="$t('modSubmissionForm.labelFacilityGoogleMapsUrl')"
+                :label="t('modSubmissionForm.labelFacilityGoogleMapsUrl')"
                 type="url"
-                :placeholder="$t('modSubmissionForm.placeholderTextFacilityGoogleMapsUrl')"
+                :placeholder="t('modSubmissionForm.placeholderTextFacilityGoogleMapsUrl')"
                 :required="true"
                 :input-validation-check="validateGoogleMapsUrlInput"
-                :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityGoogleMapsUrl')"
+                :invalid-input-error-message="t('modSubmissionForm.inputErrorMessageFacilityGoogleMapsUrl')"
                 :autofill-value="submissionFormFields.googlemapsURL"
             />
             <ModInputField
                 v-model="submissionFormFields.mapLatitude"
                 data-testid="submission-form-mapLatitude"
-                :label="$t('modSubmissionForm.labelFacilityMapLatitude')"
+                :label="t('modSubmissionForm.labelFacilityMapLatitude')"
                 type="text"
-                :placeholder="$t('modSubmissionForm.placeholderTextFacilityMapLatitude')"
+                :placeholder="t('modSubmissionForm.placeholderTextFacilityMapLatitude')"
                 :required="true"
                 :input-validation-check="validateFloat"
-                :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityMapLatitude')"
+                :invalid-input-error-message="t('modSubmissionForm.inputErrorMessageFacilityMapLatitude')"
             />
             <ModInputField
                 v-model="submissionFormFields.mapLongitude"
                 data-testid="submission-form-mapLongitude"
-                :label="$t('modSubmissionForm.labelFacilityMapLongitude')"
+                :label="t('modSubmissionForm.labelFacilityMapLongitude')"
                 type="text"
-                :placeholder="$t('modSubmissionForm.placeholderTextFacilityMapLongitude')"
+                :placeholder="t('modSubmissionForm.placeholderTextFacilityMapLongitude')"
                 :required="true"
                 :input-validation-check="validateFloat"
-                :invalid-input-error-message="$t('modSubmissionForm.inputErrorMessageFacilityMapLongitude')"
+                :invalid-input-error-message="t('modSubmissionForm.inputErrorMessageFacilityMapLongitude')"
             />
         </div>
         <ModHealthcareProfessionalSearchbar data-testid="submission-form-doctor-search" />
@@ -290,7 +290,7 @@
             :id="ModSubmissionLeftNavbarSectionIDs.HealthcareProfessionalName"
             class="submission-form-section mb-3.5 text-start text-primary-text text-2xl font-bold font-sans leading-normal"
         >
-            {{ $t('modSubmissionForm.healthcareProfessionalNameHeading') }}
+            {{ t('modSubmissionForm.healthcareProfessionalNameHeading') }}
         </h2>
         <div class="flex flex-col my-4">
             <div class="input-fields flex flex-col my-4">
@@ -314,35 +314,35 @@
                         <ModInputField
                             v-model="nameLocaleInputsToAddOrUpdate.lastName"
                             data-testid="mod-healthcare-professional-section-lastName"
-                            :label="$t('modHealthcareProfessionalSection.labelHealthcareProfessionalLastName')"
+                            :label="t('modHealthcareProfessionalSection.labelHealthcareProfessionalLastName')"
                             type="text"
                             :placeholder=
-                                "$t('modHealthcareProfessionalSection.placeholderTextHealthcareProfessionalLastName')"
+                                "t('modHealthcareProfessionalSection.placeholderTextHealthcareProfessionalLastName')"
                             :required="true"
                         />
                         <ModInputField
                             v-model="nameLocaleInputsToAddOrUpdate.firstName"
                             data-testid="mod-healthcare-professional-section-firstName"
-                            :label="$t('modHealthcareProfessionalSection.labelHealthcareProfessionalFirstName')"
+                            :label="t('modHealthcareProfessionalSection.labelHealthcareProfessionalFirstName')"
                             type="text"
                             :placeholder=
-                                "$t('modHealthcareProfessionalSection.placeholderTextHealthcareProfessionalFirstName')"
+                                "t('modHealthcareProfessionalSection.placeholderTextHealthcareProfessionalFirstName')"
                             :required="true"
                         />
                         <ModInputField
                             v-model="nameLocaleInputsToAddOrUpdate.middleName as string"
                             data-testid="mod-healthcare-professional-section-middleName"
-                            :label="$t('modHealthcareProfessionalSection.labelHealthcareProfessionalMiddleName')"
+                            :label="t('modHealthcareProfessionalSection.labelHealthcareProfessionalMiddleName')"
                             type="text"
                             :placeholder=
-                                "$t('modHealthcareProfessionalSection.placeholderTextHealthcareProfessionalMiddleName')"
+                                "t('modHealthcareProfessionalSection.placeholderTextHealthcareProfessionalMiddleName')"
                             :required="false"
                         />
                         <label
                             for="mod-edit-submission-form-name-locales"
                             class="my-2 text-primary-text text-sm font-bold font-sans"
                         >
-                            {{ $t('modHealthcareProfessionalSection.labelHealthcareProfessionalNameLocale') }}
+                            {{ t('modHealthcareProfessionalSection.labelHealthcareProfessionalNameLocale') }}
                         </label>
                         <select
                             id="mod-edit-submission-form-name-locales"
@@ -368,14 +368,14 @@
                                 type="button"
                                 @click="handleAddLocalizedName"
                             >
-                                {{ $t('modHealthcareProfessionalSection.save') }}
+                                {{ t('modHealthcareProfessionalSection.save') }}
                             </button>
                             <button
                                 class="bg-error text-primary-text-inverted font-bold py-2 px-4 my-2 rounded w-36"
                                 type="button"
                                 @click="handleCloseAddingNewLocalizedName"
                             >
-                                {{ $t('modHealthcareProfessionalSection.exit') }}
+                                {{ t('modHealthcareProfessionalSection.exit') }}
                             </button>
                         </div>
                         <div
@@ -387,14 +387,14 @@
                                 type="button"
                                 @click="handleUpdateExistingName"
                             >
-                                {{ $t('modHealthcareProfessionalSection.update') }}
+                                {{ t('modHealthcareProfessionalSection.update') }}
                             </button>
                             <button
                                 class="bg-error text-primary-text-inverted font-bold py-2 px-4 my-2 rounded w-36"
                                 type="button"
                                 @click="handleDeleteExistingName"
                             >
-                                {{ $t('modHealthcareProfessionalSection.delete') }}
+                                {{ t('modHealthcareProfessionalSection.delete') }}
                             </button>
                         </div>
                     </div>
@@ -422,7 +422,7 @@
                     class="bg-tertiary text-primary-text-inverted font-bold py-2 px-4 my-2 rounded w-44"
                     @click="handleOpenAddNewNameWithReset"
                 >
-                    {{ $t('modHealthcareProfessionalSection.addHealthCareProfessionalLocaleName') }}
+                    {{ t('modHealthcareProfessionalSection.addHealthCareProfessionalLocaleName') }}
                 </button>
             </div>
             <div class="flex flex-col">
@@ -431,20 +431,21 @@
                     class="submission-form-section
                     my-3.5 text-start text-primary-text text-2xl font-bold font-sans leading-normal"
                 >
-                    {{ $t('modSubmissionForm.healthcareProfessionalMedicalInfoHeading') }}
+                    {{ t('modSubmissionForm.healthcareProfessionalMedicalInfoHeading') }}
                 </h2>
                 <label
                     for="accepted-insurances"
                     class="my-2 text-primary-text text-sm font-bold font-sans"
                 >
-                    {{ $t("modSubmissionForm.selectInsurances") }}
+                    {{ t("modSubmissionForm.selectInsurances") }}
                 </label>
                 <ModSearchBar
                     v-model="submissionFormFields.healthcareProfessionalAcceptedInsurances"
                     data-testid="submission-form-accepted-insurances"
-                    :place-holder-text="$t('modSubmissionForm.placeholderTextAcceptedInsurances')"
-                    :no-match-text="$t('modSubmissionForm.noInsurancesWereFound')"
+                    :place-holder-text="t('modSubmissionForm.placeholderTextAcceptedInsurances')"
+                    :no-match-text="t('modSubmissionForm.noInsurancesWereFound')"
                     :fields-to-display-callback="insurancesToDisplayCallback"
+                    :default-suggestions="Object.values(Insurance)"
                     @search-input-change="handleInsuranceInputChange"
                 />
                 <ol class="list-disc text-primary-text/60 font-semibold my-2 px-2">
@@ -460,14 +461,15 @@
                     for="degrees"
                     class="my-2 text-primary-text text-sm font-bold font-sans"
                 >
-                    {{ $t("modSubmissionForm.selectDegrees") }}
+                    {{ t("modSubmissionForm.selectDegrees") }}
                 </label>
                 <ModSearchBar
                     v-model="submissionFormFields.healthcareProfessionalDegrees"
                     data-testid="submission-form-degrees"
-                    :place-holder-text="$t('modSubmissionForm.placeholderTextDegrees')"
-                    :no-match-text="$t('modSubmissionForm.noDegreesWereFound')"
+                    :place-holder-text="t('modSubmissionForm.placeholderTextDegrees')"
+                    :no-match-text="t('modSubmissionForm.noDegreesWereFound')"
                     :fields-to-display-callback="degreesToDisplayCallback"
+                    :default-suggestions="Object.values(Degree)"
                     @search-input-change="handleDegreeInputChange"
                 />
                 <ol class="list-disc text-primary-text/60 font-semibold my-2 px-2">
@@ -483,14 +485,15 @@
                     for="specialties"
                     class="my-2 text-primary-text text-sm font-bold font-sans"
                 >
-                    {{ $t("modSubmissionForm.selectSpecialties") }}
+                    {{ t("modSubmissionForm.selectSpecialties") }}
                 </label>
                 <ModSearchBar
                     v-model="submissionFormFields.healthcareProfessionalSpecialties"
                     data-testid="submission-form-specialties"
-                    :place-holder-text="$t('modSubmissionForm.placeholderTextSpecialties')"
-                    :no-match-text="$t('modSubmissionForm.noSpecialtiesWereFound')"
+                    :place-holder-text="t('modSubmissionForm.placeholderTextSpecialties')"
+                    :no-match-text="t('modSubmissionForm.noSpecialtiesWereFound')"
                     :fields-to-display-callback="specialtiesToDisplayCallback"
+                    :default-suggestions="Object.values(Specialty)"
                     @search-input-change="handleSpecialtyInputChange"
                 />
                 <ol class="list-disc text-primary-text/60 font-semibold my-2 px-2">
@@ -506,14 +509,15 @@
                     for="locales"
                     class="my-2 text-primary-text text-sm font-bold font-sans"
                 >
-                    {{ $t("modSubmissionForm.selectLocales") }}
+                    {{ t("modSubmissionForm.selectLocales") }}
                 </label>
                 <ModSearchBar
                     v-model="submissionFormFields.healthcareProfessionalLocales"
                     data-testid="submission-form-locales"
-                    :place-holder-text="$t('modSubmissionForm.placeholderTextLocales')"
-                    :no-match-text="$t('modSubmissionForm.noLocalesWereFound')"
+                    :place-holder-text="t('modSubmissionForm.placeholderTextLocales')"
+                    :no-match-text="t('modSubmissionForm.noLocalesWereFound')"
                     :fields-to-display-callback="localesToDisplayCallback"
+                    :default-suggestions="Object.values(Locale)"
                     @search-input-change="handleLocaleInputChange"
                 />
                 <ol class="list-disc text-primary-text/60 font-semibold my-2 px-2">
@@ -531,7 +535,7 @@
                 class="bg-currentColor text-white font-bold py-2 px-4 my-2 rounded w-56"
                 @click="submitUpdatedSubmission"
             >
-                {{ $t('modSubmissionForm.updateButtonText') }}
+                {{ t('modSubmissionForm.updateButtonText') }}
             </button>
         </div>
     </form>
@@ -569,6 +573,8 @@ import { triggerFormValidationErrorMessages } from '~/utils/triggerFormValidatio
 import { arraysAreEqual } from '~/utils/arrayUtils'
 import { useLocaleStore } from '~/stores/localeStore'
 import { handleServerErrorMessaging } from '~/utils/handleServerErrorMessaging'
+import { listPrefectureJapanEn, listPrefectureJapanJa } from '~/stores/locationsStore'
+
 /**
 This initalizes the variable that needs to be set on mount.
 If this is set as a const the build will fail since the plugin
@@ -670,20 +676,6 @@ const submissionFormFieldsBeforeChanges = reactive({
 })
 
 const formHasUnsavedChanges: Ref<boolean> = ref(false)
-
-const listPrefectureJapanEn: Ref<string[]> = ref([
-    'Hokkaido', 'Aomori', 'Iwate', 'Miyagi', 'Akita',
-    'Yamagata', 'Fukushima', 'Ibaraki', 'Tochigi', 'Gumma', 'Saitama', 'Chiba', 'Tokyo', 'Kanagawa',
-    'Niigata', 'Toyama', 'Ishikawa', 'Fukui', 'Yamanashi', 'Nagano', 'Gifu', 'Shizuoka', 'Aichi',
-    'Mie', 'Shiga', 'Kyoto', 'Osaka', 'Hyogo', 'Nara', 'Wakayama', 'Tottori', 'Shimane', 'Okayama',
-    'Hiroshima', 'Yamaguchi', 'Tokushima', 'Kagawa', 'Ehime', 'Kochi', 'Fukuoka', 'Saga',
-    'Nagasaki', 'Kumamoto', 'Oita', 'Miyazaki', 'Kagoshima', 'Okinawa'])
-const listPrefectureJapanJa: Ref<string[]> = ref([
-    '北海道', '青森県', '岩手県', '宮城県', '秋田県',
-    '山形県', '福島県', '茨城県', '栃木県', '群馬県', '埼玉県', '千葉県', '東京都', '神奈川県', '新潟県', '富山県',
-    '石川県', '福井県', '山梨県', '長野県', '岐阜県', '静岡県', '愛知県', '三重県', '滋賀県', '京都府', '大阪府',
-    '兵庫県', '奈良県', '和歌山県', '鳥取県', '島根県', '岡山県', '広島県', '山口県', '徳島県', '香川県', '愛媛県',
-    '高知県', '福岡県', '佐賀県', '長崎県', '熊本県', '大分県', '宮崎県', '鹿児島県', '沖縄県'])
 
 const formSubmissionId = moderationSubmissionStore.selectedSubmissionId
 moderationSubmissionStore.filterSelectedSubmission(formSubmissionId)

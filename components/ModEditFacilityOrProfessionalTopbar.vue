@@ -30,7 +30,7 @@
                 @click="exitWithoutSavingUpdates"
             >
                 {{
-                    $t('modEditFacilityOrHPTopbar.back') }}
+                    t('modEditFacilityOrHPTopbar.back') }}
             </button>
             <button
                 type="button"
@@ -41,7 +41,7 @@
                 @click="updateFacilityOrHealthcareProfessional"
             >
                 <span>
-                    {{ $t('modEditFacilityOrHPTopbar.update') }}
+                    {{ t('modEditFacilityOrHPTopbar.update') }}
                 </span>
             </button>
             <button
@@ -53,7 +53,7 @@
                 @click="updateFacilityOrHealthcareProfessionalAndExit"
             >
                 <span>
-                    {{ $t('modEditFacilityOrHPTopbar.updateAndExit') }}
+                    {{ t('modEditFacilityOrHPTopbar.updateAndExit') }}
                 </span>
             </button>
             <button
@@ -63,7 +63,7 @@
                 @click="openDeletionConfirmation"
             >
                 {{
-                    $t('modEditFacilityOrHPTopbar.delete') }}
+                    t('modEditFacilityOrHPTopbar.delete') }}
             </button>
         </div>
         <div
@@ -76,14 +76,14 @@
                 >
                     <div v-if="modalType === ModalType.UnsavedChanges">
                         <div class="font-bold text-3xl">
-                            {{ $t('modEditFacilityOrHPTopbar.hasUnsavedChanges') }}
+                            {{ t('modEditFacilityOrHPTopbar.hasUnsavedChanges') }}
                         </div>
                         <button
                             class="bg-primary p-4 rounded-full my-8 font-semibold text-xl"
                             type="button"
                             @click="handleNavigateToModerationScreen"
                         >
-                            {{ $t('modSubmissionForm.confirmationButton') }}
+                            {{ t('modSubmissionForm.confirmationButton') }}
                         </button>
                     </div>
                     <div v-if="modalType === ModalType.DeleteConfirmation">
@@ -91,8 +91,8 @@
                             v-show="moderationScreenStore.editFacilityScreenIsActive()"
                             class="font-bold text-3xl"
                         >
-                            {{ $t('modEditFacilityOrHPTopbar.deleteConfirmationFacility',
-                                  { id: selectedId, facility: facilitiesStore.selectedFacilityData?.nameEn }) }}
+                            {{ t('modEditFacilityOrHPTopbar.deleteConfirmationFacility',
+                                 { id: selectedId, facility: facilitiesStore.selectedFacilityData?.nameEn }) }}
                         </div>
                         <button
                             class="bg-primary p-4 rounded-full my-8 font-semibold text-xl"
@@ -100,7 +100,7 @@
                             @click="deleteFacilityOrHealthcareProfessional"
                         >
                             {{
-                                $t('modEditFacilityOrHPTopbar.deleteButtonText') }}
+                                t('modEditFacilityOrHPTopbar.deleteButtonText') }}
                         </button>
                     </div>
                 </div>
@@ -216,6 +216,10 @@ const healthcareProfessionalHasUnsavedChanges = () => {
     // Compare each field in the `healthcareProfessionalSectionFields` object with the original data.
     const areThereUnsavedHealthcareProfessionalChanges
 = !arraysAreEqual(
+    healthcareProfessionalSections.names,
+    originalHealthcareProfessional.names
+)
+|| !arraysAreEqual(
     healthcareProfessionalSections.acceptedInsurance,
     originalHealthcareProfessional.acceptedInsurance
 )

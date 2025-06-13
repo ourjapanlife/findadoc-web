@@ -31,7 +31,7 @@
             </div>
             <div>
                 <div class="ml-9 mt-2 font-bold text-sm">
-                    <span>{{ $t("searchResultsDetails.speaks") }}:</span>
+                    <span>{{ t("searchResultsDetails.speaks") }}:</span>
                 </div>
                 <div class="result-tags flex flex-wrap w-64 mb-6 mt-1 ml-6 pl-2">
                     <div
@@ -46,7 +46,7 @@
             </div>
             <div class="about ml-4 pl-2">
                 <span class="font-semibold">{{
-                    $t("searchResultsDetails.contact")
+                    t("searchResultsDetails.contact")
                 }}</span>
                 <div class="address flex my-4">
                     <SVGMapPinIcon
@@ -56,10 +56,17 @@
                         class="w-6 h-6 stroke-primary mr-2 self-center"
                     />
                     <div class="flex flex-col">
-                        <div>{{ addressLine1 }}</div>
-                        <div v-if="addressLine2">
-                            {{ addressLine2 }}
-                        </div>
+                        <a
+                            :href="addressLink"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="underline text-blue"
+                        >
+                            <div>{{ addressLine1 }}</div>
+                            <div v-if="addressLine2">
+                                {{ addressLine2 }}
+                            </div>
+                        </a>
                     </div>
                 </div>
                 <div class="website flex my-4">
@@ -72,6 +79,9 @@
                     <a
                         v-if="website"
                         :href="website"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="underline text-blue"
                     >{{ website }}</a>
                 </div>
                 <div class="phone flex my-4">
@@ -114,6 +124,8 @@ import { useLocaleStore } from '~/stores/localeStore.js'
 import { useSpecialtiesStore } from '~/stores/specialtiesStore.js'
 import { useSearchResultsStore } from '~/stores/searchResultsStore'
 import { Locale } from '~/typedefs/gqlTypes.js'
+
+const { t } = useI18n()
 
 const resultsStore = useSearchResultsStore()
 const localeStore = useLocaleStore()
@@ -198,6 +210,9 @@ const addressLine2 = computed(() => {
     const englishAddress = `${addressObj?.cityEn}, ${addressObj?.prefectureEn} ${addressObj?.postalCode}`
     return localeStore.locale.code !== Locale.JaJp ? englishAddress : ''
 })
+const addressLink = computed(
+    () => resultsStore.$state.activeResult?.facilities[0].contact.googleMapsUrl
+)
 const website = computed(
     () => resultsStore.$state.activeResult?.facilities[0]?.contact?.website
 )

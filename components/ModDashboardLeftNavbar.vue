@@ -7,13 +7,13 @@
             @change="updateSelectedDashboardView"
         >
             <option :value="SelectedModerationListView.Submissions">
-                {{ $t("modDashboardLeftNav.submissions") }}
+                {{ t("modDashboardLeftNav.submissions") }}
             </option>
             <option :value="SelectedModerationListView.Facilities">
-                {{ $t("modDashboardLeftNav.facilities") }}
+                {{ t("modDashboardLeftNav.facilities") }}
             </option>
             <option :value="SelectedModerationListView.HealthcareProfessionals">
-                {{ $t("modDashboardLeftNav.healthcareProfessionals") }}
+                {{ t("modDashboardLeftNav.healthcareProfessionals") }}
             </option>
         </select>
         <div
@@ -27,7 +27,7 @@
                     class="flex flex-row items-center text-start p-1"
                     @click="updateSubmissionListViewState(SelectedSubmissionListViewTab.ForReview)"
                 >
-                    {{ $t("modDashboardLeftNav.forReview") }} ({{ autofillStatusCount.forReviewCount }})
+                    {{ t("modDashboardLeftNav.forReview") }} ({{ autofillStatusCount.forReviewCount }})
                 </button>
             </div>
             <div class="flex w-4/5 justify-start items-center border-b-2 border-slate-200">
@@ -37,7 +37,7 @@
                     class="flex flex-row items-center text-start p-1 "
                     @click=" updateSubmissionListViewState(SelectedSubmissionListViewTab.Approved)"
                 >
-                    {{ $t("modDashboardLeftNav.approved") }} ({{ autofillStatusCount.approvedCount }})
+                    {{ t("modDashboardLeftNav.approved") }} ({{ autofillStatusCount.approvedCount }})
                 </button>
             </div>
             <div class="flex flex-row w-4/5 justify-start items-center ">
@@ -47,7 +47,7 @@
                     class="flex flex-row items-center text-start p-1"
                     @click="updateSubmissionListViewState(SelectedSubmissionListViewTab.Rejected)"
                 >
-                    {{ $t("modDashboardLeftNav.rejected") }} ({{ autofillStatusCount.rejectedCount }})
+                    {{ t("modDashboardLeftNav.rejected") }} ({{ autofillStatusCount.rejectedCount }})
                 </button>
             </div>
         </div>
@@ -66,6 +66,8 @@ import {
     SelectedModerationListView
 } from '~/stores/moderationSubmissionsStore'
 import type { Submission } from '~/typedefs/gqlTypes'
+
+const { t } = useI18n()
 
 const moderationSubmissionsStore = useModerationSubmissionsStore()
 

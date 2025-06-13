@@ -9,7 +9,6 @@ export const vCloseOnOutsideClick = {
         let isOpen = false
 
         el.clickOutsideEvent = event => {
-            event.preventDefault()
             const eventTarget: EventTarget | null = event.target
             const isClickInsideElement = (el == eventTarget || el.contains(eventTarget as Node))
             if (isOpen && !isClickInsideElement) {

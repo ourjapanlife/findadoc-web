@@ -7,13 +7,13 @@
             #
         </div>
         <div class="font-bold text-left p-1">
-            {{ $t("modPanelSubmissionList.name") }}
+            {{ t("modPanelSubmissionList.name") }}
         </div>
         <div class="font-bold text-left p-1">
-            {{ $t("modPanelSubmissionList.modified") }}
+            {{ t("modPanelSubmissionList.modified") }}
         </div>
         <div class="font-bold text-left p-1">
-            {{ $t("modPanelSubmissionList.submitted") }}
+            {{ t("modPanelSubmissionList.submitted") }}
         </div>
         <div
             v-if="hasSubmissions
@@ -36,7 +36,7 @@
                     >
                         <span class="text-start">{{ index + 1 }}</span>
                         <span class="text-start">
-                            {{ submission.healthcareProfessionalName || $t("modPanelSubmissionList.facilityNameUnknown") }}
+                            {{ submission.healthcareProfessionalName || t("modPanelSubmissionList.facilityNameUnknown") }}
                         </span>
                         <span class="text-start">{{ convertDateToLocalTime(submission.updatedDate) }}</span>
                         <span class="text-start">{{ convertDateToLocalTime(submission.createdDate) }}</span>
@@ -102,7 +102,7 @@
             </div>
         </div>
         <div v-else>
-            {{ $t("modPanelSubmissionList.noSubmissions") }}
+            {{ t("modPanelSubmissionList.noSubmissions") }}
         </div>
     </div>
 </template>
@@ -112,6 +112,8 @@ import { computed, onMounted } from 'vue'
 import { SelectedModerationListView, useModerationSubmissionsStore } from '~/stores/moderationSubmissionsStore'
 import { useHealthcareProfessionalsStore } from '~/stores/healthcareProfessionalsStore'
 import { useFacilitiesStore } from '~/stores/facilitiesStore'
+
+const { t } = useI18n()
 
 const modSubmissionsListStore = useModerationSubmissionsStore()
 const healthcareProfessionalsStore = useHealthcareProfessionalsStore()
