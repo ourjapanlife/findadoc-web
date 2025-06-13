@@ -2,6 +2,7 @@
     <Loader v-if="moderationScreenStore.editFacilityScreenIsActive()" />
     <div v-if="isFacilitySectionInitialized">
         <div
+            :id="ModEditFacilityLeftBarSectionIDs.ContactInformation"
             class="mod-facility-section"
         >
             <h1
@@ -65,6 +66,7 @@
             />
         </div>
         <div
+            :id="ModEditFacilityLeftBarSectionIDs.Addresses"
             class="mod-facility-address-section"
         >
             <span class="mb-3.5 text-center text-primary-text text-2xl font-bold font-sans leading-normal">
@@ -188,6 +190,7 @@
             />
         </div>
         <div
+            :id="ModEditFacilityLeftBarSectionIDs.GoogleMapsInformation"
             class="google-maps-section"
         >
             <span class="mb-3.5 text-center text-primary-text text-2xl font-bold font-sans leading-normal">
@@ -226,7 +229,13 @@
             />
         </div>
         <div
+            :id="ModEditFacilityLeftBarSectionIDs.HealthcareProfessionalIds"
+        >
+            <ModHealthcareProfessionalSearchbar data-testid="mod-facility-section-doctor-search" />
+        </div>
+        <div
             v-if="moderationScreenStore.editFacilityScreenIsActive()"
+            :id="ModEditFacilityLeftBarSectionIDs.HealthcareProfessionalToAdd"
             class="flex flex-col"
         >
             <span
@@ -248,33 +257,32 @@
                 class="font-semibold my-3"
             >- {{ $t('modFacilitySection.noHPSelected') }}
             </span>
+            <span v-show="facilityStore.healthProfessionalsRelationsForDisplay.length">
+                <div
+                    v-for="(healthcareProfessional) in facilityStore.healthProfessionalsRelationsForDisplay"
+                    :key="`${healthcareProfessional.id}-${healthcareProfessional.names[0].firstName}`"
+                >
+                    <ModDashboardHealthProfessionalCard
+                        :healthcare-professional="healthcareProfessional"
+                    />
+                </div>
+            </span>
+        </div>
+        <div
+            v-if="moderationScreenStore.editFacilityScreenIsActive()"
+        >
+            <span class="mb-3.5 text-center text-primary-text text-2xl font-bold font-sans leading-normal">
+                {{ $t('modFacilitySection.existingHPHeading') }}
+            </span>
             <div
-                v-for="(healthcareProfessional, index) in healthcareProfessionalsToAddToFacility"
+                v-for="(healthcareProfessional, index) in healthcareProfessionalRelatedToFacilityFiltered"
                 :key="`${healthcareProfessional.id}-${index}`"
             >
                 <ModDashboardHealthProfessionalCard
-                    :data-testid="`healthcare-professional-card-${index}`"
                     :healthcare-professional="healthcareProfessional"
                     :healthcare-professionals-related-to-facility="healthcareProfessionalsRelatedToFacility"
-                    :show-trash-can="false"
                 />
             </div>
-        </div>
-    </div>
-    <div
-        v-if="moderationScreenStore.editFacilityScreenIsActive()"
-    >
-        <span class="mb-3.5 text-center text-primary-text text-2xl font-bold font-sans leading-normal">
-            {{ $t('modFacilitySection.existingHPHeading') }}
-        </span>
-        <div
-            v-for="(healthcareProfessional, index) in healthcareProfessionalRelatedToFacilityFiltered"
-            :key="`${healthcareProfessional.id}-${index}`"
-        >
-            <ModDashboardHealthProfessionalCard
-                :healthcare-professional="healthcareProfessional"
-                :healthcare-professionals-related-to-facility="healthcareProfessionalsRelatedToFacility"
-            />
         </div>
     </div>
 </template>

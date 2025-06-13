@@ -145,7 +145,18 @@
     "healthcareProfessionalIds": "Mã số chuyên gia y tế",
     "healthcareProfessionalName": "Tên chuyên gia y tế",
     "healthcareProfessionalMedicalInfo": "Thông tin Y tế dành cho Chuyên gia Chăm sóc Sức khỏe",
-    "healthcareProfessionalFacilities": "Healthcare Professional Related Facilities"
+    "healthcareProfessionalProfessionalToAdd": "Healthcare Professional to Add",
+    "currentHealthcareProfessionalsAtFacility": "Current Healthcare Professionals at Facility",
+    "healthcareProfessionalFacilities": "Healthcare Professional Facilities"
+  },
+  "modPanelFacilityLeftNavbar": {
+    "addresses": "Addresses",
+    "contactInformation": "Contact Information",
+    "facilityNameUnknown": "Facility Name Unknown",
+    "googleMapsInformation": "Google maps information",
+    "healthcareProfessionalIds": "Healthcare Professional IDs",
+    "healthcareProfessionalProfessionalToAdd": "Healthcare Professional to Add",
+    "currentHealthcareProfessionalsAtFacility": "Current Healthcare Professionals at Facility"
   },
   "modDashboardTopbar": {
     "addFacility": "Add Facility",
