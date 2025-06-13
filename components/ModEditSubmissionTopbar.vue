@@ -31,7 +31,7 @@
                 @click="saveAndExit"
             >
                 <span>
-                    {{ $t('modEditSubmissionTopNav.saveAndExit') }}
+                    {{ t('modEditSubmissionTopNav.saveAndExit') }}
                 </span>
             </button>
             <button
@@ -41,7 +41,7 @@
                 @click="showRejectionConfirmation"
             >
                 {{
-                    $t('modEditSubmissionTopNav.reject') }}
+                    t('modEditSubmissionTopNav.reject') }}
             </button>
             <button
                 type="button"
@@ -49,7 +49,7 @@
                 @click="acceptSubmission"
             >
                 {{
-                    $t('modEditSubmissionTopNav.approve') }}
+                    t('modEditSubmissionTopNav.approve') }}
             </button>
         </div>
     </div>
@@ -61,6 +61,8 @@ import SVGCopyContent from '~/assets/icons/content-copy.svg'
 import SVGSuccessCheckMark from '~/assets/icons/checkmark-square.svg'
 import { useModerationSubmissionsStore } from '~/stores/moderationSubmissionsStore'
 import { useModalStore } from '~/stores/modalStore'
+
+const { t } = useI18n()
 
 const modalStore = useModalStore()
 const moderationSubmissionStore = useModerationSubmissionsStore()
