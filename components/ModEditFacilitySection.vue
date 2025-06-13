@@ -56,7 +56,7 @@
             <ModInputField
                 v-model="facilityStore.facilitySectionFields.website"
                 data-testid="mod-facility-section-website"
-                :label="$t('modFacilitySection.labelFacilityWebsite')"
+                :label="`${$t('modFacilitySection.labelFacilityWebsite')} (optional)`"
                 type="url"
                 :placeholder="$t('modFacilitySection.placeholderTextFacilityWebsite')"
                 :required="false"
@@ -361,19 +361,20 @@ const healthcareProfessionalsToDisplayCallback = (healthcareProfessional: Health
     [healthcareProfessional.names[0].firstName + ' ' + healthcareProfessional.names[0].lastName]
 
 onBeforeMount(async () => {
-    // This onBeforeMount can be skipped on other screens since this logic is handled there when active
-    if (!moderationScreenStore.editFacilityScreenIsActive()) {
-        isFacilitySectionInitialized.value = true
-        return
-    }
-
-    isFacilitySectionInitialized.value = false
     /**
     Set the variable to useToast when the before the component mounts
     since vue-taostification is only available on the client.
     If not done this way the build fails
      */
     toast = useToast()
+
+    // This onBeforeMount can be skipped on other screens since this logic is handled there when active
+    if (moderationScreenStore.editSubmissionScreenIsActive()) {
+        isFacilitySectionInitialized.value = true
+        return
+    }
+
+    isFacilitySectionInitialized.value = false
     // Wait for the route to be fully resolved
 
     loadingStore.setIsLoading(true)
