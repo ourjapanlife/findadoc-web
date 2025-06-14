@@ -139,6 +139,15 @@ export const useModerationSubmissionsStore = defineStore(
             return updateSubmission(facilityInputVariables)
         }
 
+        // async function autofill() {
+        //     const autofillInput: MutationModerationPanelUpdateSubmissionArgs = {
+        //         input: {
+        //             googleMapsUrl: ,
+        //             id: selectedSubmissionId,
+        //         }
+        //     }
+        // }
+
         return { getSubmissions,
             submissionsData,
             filterSubmissionByStatus,
