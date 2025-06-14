@@ -63,6 +63,7 @@
                 {{ $t('modSubmissionForm.searchExistingFacilities') }}
             </label>
             <ModSearchBar
+                v-if="!isExistingHealthcareProfessionalSelected || isExistingFacilitySelected"
                 v-model="currentFacilityRelations"
                 :place-holder-text="$t('modHealthcareProfessionalSection.placeholderTextFacilitySearchBar')"
                 :no-match-text="$t('modHealthcareProfessionalSection.noFacilitiesWereFound')"
@@ -99,6 +100,7 @@
                 {{ $t('modSubmissionForm.searchExistingHealthcareProfessionals') }}
             </label>
             <ModSearchBar
+                v-if="!isExistingFacilitySelected || isExistingHealthcareProfessionalSelected"
                 v-model="currentExistingHealthcareProfessionals"
                 data-testid="mod-facility-section-doctor-search"
                 :place-holder-text="$t('modFacilitySection.placeholderTextHealthcareProfessionalSearchbar')"
@@ -140,7 +142,9 @@ import { Locale,
     type Degree,
     type Specialty,
     type Facility,
-    type HealthcareProfessional } from '~/typedefs/gqlTypes'
+    type HealthcareProfessional,
+    type UpdateFacilityInput,
+    type UpdateHealthcareProfessionalInput } from '~/typedefs/gqlTypes'
 import { validateAddressLineEn,
     validateAddressLineJa,
     validateNameEn,
@@ -236,7 +240,7 @@ const handleFacilitySearchInputChange = (filteredItems: Ref<Facility[]>, inputVa
               || id.toLowerCase().includes(inputValue)
         return isMatch
     })
-    /*
+
     if (currentFacilityRelations.value.length) {
         facilitiesStore.resetFacilitySectionFields()
         return
@@ -246,7 +250,6 @@ const handleFacilitySearchInputChange = (filteredItems: Ref<Facility[]>, inputVa
         initializeSubmissionFormValues(moderationSubmissionStore.selectedSubmissionData)
         return
     }
-    */
 }
 
 const facilitiesFieldsToDisplayCallback = (item: Facility) => [item.nameEn, item.nameJa]
@@ -272,27 +275,16 @@ const handleHealthcareProfessionalsInputChange = (filteredItems: Ref<HealthcareP
             })
             return idMatches || nameMatches
         })
-    /*
-    // REASON FOR REMOVAL:
-    // This logic is being removed because it directly manipulates the global `facilitiesStore.facilitySectionFields`
-    // and `moderationSubmissionStore.selectedSubmissionData`.
-    // In our new state management approach, the `ModEditSubmissionForm` (parent) component
-    // is responsible for holding the `currentFacilityData` and `currentHealthcareProfessionalData` refs,
-    // which represent the editable state of the form.
-    // When a user interacts with the search bar and selects an existing facility (which updates `currentFacilityRelations`),
-    // the parent's `watch(currentFacilityRelations, ...)` handler will now take care of:
-    // 1. Updating `currentFacilityData.value` (by cloning the selected facility).
-    // 2. Setting `isExistingFacilitySelected.value = true`.
-    */
-    // if (currentFacilityRelations.value.length) {
-    //     facilitiesStore.resetFacilitySectionFields()
-    //     return
-    // }
 
-    // if (!currentFacilityRelations.value.length) {
-    //     initializeSubmissionFormValues(moderationSubmissionStore.selectedSubmissionData)
-    //     return
-    // }
+    if (currentFacilityRelations.value.length) {
+        facilitiesStore.resetFacilitySectionFields()
+        return
+    }
+
+    if (!currentFacilityRelations.value.length) {
+        initializeSubmissionFormValues(moderationSubmissionStore.selectedSubmissionData)
+        return
+    }
 }
 const healthcareProfessionalsToDisplayCallback = (healthcareProfessional: HealthcareProfessional) =>
     [healthcareProfessional.names[0].firstName + ' ' + healthcareProfessional.names[0].lastName]
@@ -349,7 +341,7 @@ const validateHealthcareProfessionalFields = () => {
     return areAllFieldsValid
 }
 
-function initializeSubmissionFormValues(submissionData: Submission | undefined) {
+/*function initializeSubmissionFormValues(submissionData: Submission | undefined) {
     const submittedHealthcareProfessionalName
     = submissionData?.healthcareProfessionalName?.split(' ') ?? []
 
@@ -489,8 +481,116 @@ function initializeSubmissionFormValues(submissionData: Submission | undefined) 
     = submissionData?.healthcareProfessionals?.[0]?.specialties ?? []
     submissionFormFieldsBeforeChanges.spokenLanguages
     = submissionData?.spokenLanguages ?? []
-}
+}*/
 
+function initializeSubmissionFormValues(submissionData: Submission | undefined) {
+    const submittedHealthcareProfessionalName = submissionData?.healthcareProfessionalName?.split(' ') ?? [];
+
+    const facilitySectionFields = facilitiesStore.facilitySectionFields;
+    const healthcareProfessionalSections = healthcareProfessionalsStore.healthcareProfessionalSectionFields;
+
+    // --- Facility fields ---
+    facilitySectionFields.nameEn = submissionData?.facility?.nameEn ?? '';
+    facilitySectionFields.nameJa = submissionData?.facility?.nameJa ?? '';
+    facilitySectionFields.phone = submissionData?.facility?.contact?.phone ?? '';
+    facilitySectionFields.email = submissionData?.facility?.contact?.email ?? '';
+    facilitySectionFields.website = submissionData?.facility?.contact?.website ?? '';
+    facilitySectionFields.postalCode = submissionData?.facility?.contact?.address.postalCode ?? '';
+    facilitySectionFields.prefectureEn = submissionData?.facility?.contact?.address.prefectureEn ?? '';
+    facilitySectionFields.cityEn = submissionData?.facility?.contact?.address.cityEn ?? '';
+    facilitySectionFields.addressLine1En = submissionData?.facility?.contact?.address.addressLine1En ?? '';
+    facilitySectionFields.addressLine2En = submissionData?.facility?.contact?.address.addressLine2En ?? '';
+    facilitySectionFields.prefectureJa = submissionData?.facility?.contact?.address.prefectureJa ?? '';
+    facilitySectionFields.cityJa = submissionData?.facility?.contact?.address.cityJa ?? '';
+    facilitySectionFields.addressLine1Ja = submissionData?.facility?.contact?.address.addressLine1Ja ?? '';
+    facilitySectionFields.addressLine2Ja = submissionData?.facility?.contact?.address.addressLine2Ja ?? '';
+    facilitySectionFields.mapLatitude = submissionData?.facility?.mapLatitude?.toString() ?? '';
+    facilitySectionFields.mapLongitude = submissionData?.facility?.mapLongitude?.toString() ?? '';
+
+    // Store initial values for tracking changes
+    submissionFormFieldsBeforeChanges.nameEn = submissionData?.facility?.nameEn ?? '';
+    submissionFormFieldsBeforeChanges.nameJa = submissionData?.facility?.nameJa ?? '';
+    submissionFormFieldsBeforeChanges.phone = submissionData?.facility?.contact?.phone ?? '';
+    submissionFormFieldsBeforeChanges.email = submissionData?.facility?.contact?.email ?? '';
+    submissionFormFieldsBeforeChanges.website = submissionData?.facility?.contact?.website ?? '';
+    submissionFormFieldsBeforeChanges.postalCode = submissionData?.facility?.contact?.address.postalCode ?? '';
+    submissionFormFieldsBeforeChanges.prefectureEn = submissionData?.facility?.contact?.address.prefectureEn ?? '';
+    submissionFormFieldsBeforeChanges.cityEn = submissionData?.facility?.contact?.address.cityEn ?? '';
+    submissionFormFieldsBeforeChanges.addressLine1En = submissionData?.facility?.contact?.address.addressLine1En ?? '';
+    submissionFormFieldsBeforeChanges.addressLine2En = submissionData?.facility?.contact?.address.addressLine2En ?? '';
+    submissionFormFieldsBeforeChanges.prefectureJa = submissionData?.facility?.contact?.address.prefectureJa ?? '';
+    submissionFormFieldsBeforeChanges.cityJa = submissionData?.facility?.contact?.address.cityJa ?? '';
+    submissionFormFieldsBeforeChanges.addressLine1Ja = submissionData?.facility?.contact?.address.addressLine1Ja ?? '';
+    submissionFormFieldsBeforeChanges.addressLine2Ja = submissionData?.facility?.contact?.address.addressLine2Ja ?? '';
+    submissionFormFieldsBeforeChanges.mapLatitude = submissionData?.facility?.mapLatitude?.toString() ?? '';
+    submissionFormFieldsBeforeChanges.mapLongitude = submissionData?.facility?.mapLongitude?.toString() ?? '';
+
+    facilitySectionFields.googlemapsURL = submissionData?.facility?.contact?.googleMapsUrl ?? submissionData?.googleMapsUrl ?? '';
+    submissionFormFieldsBeforeChanges.googlemapsURL = submissionData?.facility?.contact?.googleMapsUrl ?? submissionData?.googleMapsUrl ?? '';
+
+    // Populate currentExistingHealthcareProfessionals based on submissionData for Facility's HP relations
+    const hpIds = submissionData?.facility?.healthcareProfessionalIds ?? [];
+    // Ensure that facilitySectionFields.healthcareProfessionalIds reflects the IDs from the submission's facility
+    facilitySectionFields.healthcareProfessionalIds = [...hpIds];
+    currentExistingHealthcareProfessionals.value = hpIds
+        .map(healthcareProfessionalId =>
+            healthcareProfessionalsStore.healthcareProfessionalsData.find(
+                hp => hp.id === healthcareProfessionalId
+            ))
+        .filter((hp): hp is NonNullable<typeof hp> => hp !== undefined);
+
+    // --- IMPORTANT: Set the flag for existing Healthcare Professional selection on initialization ---
+    // If the submission's facility has associated HP IDs, it means an existing HP is involved.
+    // This flag indicates that the HP details are NOT editable through the form because an existing one is selected.
+    isExistingHealthcareProfessionalSelected.value = currentExistingHealthcareProfessionals.value.length > 0;
+
+    // --- Healthcare Professionals fields ---
+    healthcareProfessionalSections.names = submissionData?.healthcareProfessionals?.[0]?.names ??
+        (submittedHealthcareProfessionalName.length === 2
+            ? [
+                  {
+                      firstName: submittedHealthcareProfessionalName[0] || '',
+                      lastName: submittedHealthcareProfessionalName[1] || '',
+                      locale: submissionData?.spokenLanguages?.[0] ?? Locale.Und
+                  }
+              ]
+            : submittedHealthcareProfessionalName.length === 3
+                  ? [
+                        {
+                            firstName: submittedHealthcareProfessionalName[0] || '',
+                            middleName: submittedHealthcareProfessionalName[1] || '',
+                            lastName: submittedHealthcareProfessionalName[2] || '',
+                            locale: submissionData?.spokenLanguages?.[0] ?? Locale.Und
+                        }
+                    ]
+                  : []);
+
+    submissionFormFieldsBeforeChanges.healthCareProfessionalNameArray = healthcareProfessionalSections.names;
+
+    // Populate currentFacilityRelations based on submissionData for HP's Facility relations
+    const hpFacilityIds = submissionData?.healthcareProfessionals?.[0]?.facilityIds ?? [];
+    // Ensure that healthcareProfessionalSections.facilityIds reflects the IDs from the submission's HP
+    healthcareProfessionalSections.facilityIds = [...hpFacilityIds];
+    currentFacilityRelations.value = hpFacilityIds
+        .map(facilityId =>
+            facilitiesStore.facilityData.find(facility => facility.id === facilityId))
+        .filter((facility): facility is NonNullable<typeof facility> => facility !== undefined);
+
+    // --- IMPORTANT: Set the flag for existing Facility selection on initialization ---
+    // If the submission's healthcare professional has associated Facility IDs, it means an existing Facility is involved.
+    // This flag indicates that the Facility details are NOT editable through the form because an existing one is selected.
+    isExistingFacilitySelected.value = currentFacilityRelations.value.length > 0;
+
+    healthcareProfessionalSections.acceptedInsurance = submissionData?.healthcareProfessionals?.[0]?.acceptedInsurance ?? [];
+    healthcareProfessionalSections.degrees = submissionData?.healthcareProfessionals?.[0]?.degrees ?? [];
+    healthcareProfessionalSections.specialties = submissionData?.healthcareProfessionals?.[0]?.specialties ?? [];
+    healthcareProfessionalSections.spokenLanguages = submissionData?.spokenLanguages ?? [];
+
+    submissionFormFieldsBeforeChanges.healthcareProfessionalAcceptedInsurances = submissionData?.healthcareProfessionals?.[0]?.acceptedInsurance ?? [];
+    submissionFormFieldsBeforeChanges.healthcareProfessionalDegrees = submissionData?.healthcareProfessionals?.[0]?.degrees ?? [];
+    submissionFormFieldsBeforeChanges.healthcareProfessionalSpecialties = submissionData?.healthcareProfessionals?.[0]?.specialties ?? [];
+    submissionFormFieldsBeforeChanges.spokenLanguages = submissionData?.spokenLanguages ?? [];
+}
 // Checks if form fields have unsaved changes
 function submissionHasUnsavedChanges() {
     const facilityFields = facilitiesStore.facilitySectionFields
@@ -535,7 +635,7 @@ function submissionHasUnsavedChanges() {
     return hasChanges
 }
 
-async function submitUpdatedSubmission(e: Event) {
+/*async function submitUpdatedSubmission(e: Event) {
     // Prevent form submission before validation is completed.
     e.preventDefault()
 
@@ -591,6 +691,126 @@ async function submitUpdatedSubmission(e: Event) {
                 facilityIds: healthcareProfessionalsStore.healthcareProfessionalSectionFields.facilityIds
             }
         ]
+
+    const submissionInputVariables: MutationUpdateSubmissionArgs = {
+        id: moderationSubmissionStore.selectedSubmissionId,
+        input: {
+            isUnderReview: true,
+            facility: facilitySubmissionUpdate,
+            healthcareProfessionals: healthcareProfessionalUpdate
+        }
+    }
+
+    const result = await moderationSubmissionStore.updateSubmission(submissionInputVariables)
+    // This is used in the component and not graphQL call as it is user messaging and needs the mounted toast library
+    if (result?.errors?.length) {
+        handleServerErrorMessaging(result.errors, toast, t)
+        return
+    }
+
+    const submissionResult = result.data
+
+    // This updates the submission in the form with the values stored in the db on success
+    if (submissionResult) initializeSubmissionFormValues(submissionResult)
+    toast.success(t('modSubmissionForm.successMessageUpdated'))
+    if (moderationSubmissionStore.updatingSubmissionFromTopBarAndExiting) {
+        // reset all modal refs to prevent unintended side effects
+        router.push('/moderation')
+        await nextTick()
+    }
+
+    if (moderationSubmissionStore.updatingSubmissionFromTopBar) {
+        await resetModalRefs()
+    }
+}*/
+
+async function submitUpdatedSubmission(e: Event) {
+    // Prevent form submission before validation is completed.
+    e.preventDefault()
+
+    const id = moderationSubmissionStore.selectedSubmissionId || ''
+
+    if (!id) {
+        toast.error(t('modSubmissionForm.errorMessageFacilityId'))
+        console.error(t('modSubmissionForm.errorMessageFacilityId'))
+        return
+    }
+
+    // --- Start: Modified logic for facilitySubmissionUpdate ---
+    // Initialize to undefined. It will be populated only if the user is NOT using an existing facility.
+    let facilitySubmissionUpdate: UpdateFacilityInput | undefined = undefined // 'any' can be kept if the backend types allow it for optional fields.
+
+    // If 'isExistingFacilitySelected.value' is false, it means the user is either
+    // creating a new facility for this submission OR editing the submission's
+    // existing facility (which is not an "existing" facility from the main database list).
+    if (!isExistingFacilitySelected.value) {
+        facilitySubmissionUpdate = {
+            // No 'id' property here. The backend will understand this means
+            // either create a new facility linked to this submission, or update
+            // the submission's own facility if it already has one.
+            nameEn: facilitiesStore.facilitySectionFields.nameEn,
+            nameJa: facilitiesStore.facilitySectionFields.nameJa,
+            contact: {
+                googleMapsUrl: facilitiesStore.facilitySectionFields.googlemapsURL,
+                email: facilitiesStore.facilitySectionFields.email,
+                phone: facilitiesStore.facilitySectionFields.phone,
+                website: facilitiesStore.facilitySectionFields.website,
+                address: {
+                    postalCode: facilitiesStore.facilitySectionFields.postalCode,
+                    prefectureEn: facilitiesStore.facilitySectionFields.prefectureEn,
+                    cityEn: facilitiesStore.facilitySectionFields.cityEn,
+                    addressLine1En: facilitiesStore.facilitySectionFields.addressLine1En,
+                    addressLine2En: facilitiesStore.facilitySectionFields.addressLine2En,
+                    prefectureJa: facilitiesStore.facilitySectionFields.prefectureJa,
+                    cityJa: facilitiesStore.facilitySectionFields.cityJa,
+                    addressLine1Ja: facilitiesStore.facilitySectionFields.addressLine1Ja,
+                    addressLine2Ja: facilitiesStore.facilitySectionFields.addressLine2Ja
+                }
+            },
+            // Healthcare professional IDs associated with this facility.
+            // These IDs are managed by your watchers and will contain IDs of
+            // existing HPs if they were selected and associated.
+            healthcareProfessionalIds: facilitiesStore.facilitySectionFields.healthcareProfessionalIds,
+            mapLatitude: parseFloat(facilitiesStore.facilitySectionFields.mapLatitude) || 0,
+            mapLongitude: parseFloat(facilitiesStore.facilitySectionFields.mapLongitude) || 0
+        }
+    }
+    // If 'isExistingFacilitySelected.value' is true, facilitySubmissionUpdate remains 'undefined',
+    // which correctly tells the backend not to update the facility's details, only its associations.
+    // --- End: Modified logic for facilitySubmissionUpdate ---
+
+
+    // --- Start: Modified logic for healthcareProfessionalUpdate ---
+    // Initialize to undefined. It will be populated only if the user is NOT using an existing HP.
+    let healthcareProfessionalUpdate: UpdateHealthcareProfessionalInput[] | undefined = undefined // 'any' can be kept if types allow.
+
+    // If 'isExistingHealthcareProfessionalSelected.value' is false, it means the user is either
+    // creating a new HP for this submission OR editing the submission's
+    // existing HP (not an "existing" HP from the main database list).
+    if (!isExistingHealthcareProfessionalSelected.value) {
+        healthcareProfessionalUpdate = [
+            {
+                // No 'id' property here. Backend handles creation/update for submission's HP.
+                acceptedInsurance: healthcareProfessionalsStore.healthcareProfessionalSectionFields
+                    .acceptedInsurance,
+                degrees: healthcareProfessionalsStore.healthcareProfessionalSectionFields
+                    .degrees,
+                specialties: healthcareProfessionalsStore.healthcareProfessionalSectionFields
+                    .specialties,
+                spokenLanguages: healthcareProfessionalsStore.healthcareProfessionalSectionFields
+                    .spokenLanguages,
+                names: healthcareProfessionalsStore.healthcareProfessionalSectionFields
+                    .names,
+                // Facility IDs associated with this HP.
+                // These IDs are managed by your watchers and will contain IDs of
+                // existing Facilities if they were selected and associated.
+                facilityIds: healthcareProfessionalsStore.healthcareProfessionalSectionFields.facilityIds
+            }
+        ]
+    }
+    // If 'isExistingHealthcareProfessionalSelected.value' is true, healthcareProfessionalUpdate remains 'undefined',
+    // which correctly tells the backend not to update the HP's details, only its associations.
+    // --- End: Modified logic for healthcareProfessionalUpdate ---
 
     const submissionInputVariables: MutationUpdateSubmissionArgs = {
         id: moderationSubmissionStore.selectedSubmissionId,
@@ -745,86 +965,47 @@ const handleNavigateToModerationScreen = () => {
     router.push('/moderation')
 }
 
-watch(currentFacilityRelations, newValue => {
-    // If one or more existing Facilities have been selected (i.e., the search bar is not empty)
+// ModEditSubmissionForm.vue
+
+watch(currentFacilityRelations, newValue => { // Removed 'oldValue'
     if (newValue.length > 0) {
-        // 1. Associate the IDs of the selected Facilities to the Healthcare Professional (correct association)
-        healthcareProfessionalsStore.healthcareProfessionalSectionFields.facilityIds = newValue.map(facility => facility.id)
-        // Set the flag to true, indicating an existing facility is selected
-        isExistingFacilitySelected.value = true
+        // Only associate the ID. DO NOT POPULATE FACILITY FORM FIELDS HERE.
+        healthcareProfessionalsStore.healthcareProfessionalSectionFields.facilityIds = newValue.map(facility => facility.id);
+        isExistingFacilitySelected.value = true;
 
-        // 2. Populate the Facility form fields with the data of the selected Facility.
-        //    We assume you are selecting a single Facility from the search bar for editing.
-        //    If multi-selection and modification are allowed, the logic would be more complex.
-        //    Here, we take the first selected item:
-        const selectedFacility = newValue[0]
-        if (selectedFacility) {
-            facilitiesStore.facilitySectionFields.nameEn = selectedFacility.nameEn ?? ''
-            facilitiesStore.facilitySectionFields.nameJa = selectedFacility.nameJa ?? ''
-            facilitiesStore.facilitySectionFields.phone = selectedFacility.contact?.phone ?? ''
-            facilitiesStore.facilitySectionFields.email = selectedFacility.contact?.email ?? ''
-            facilitiesStore.facilitySectionFields.website = selectedFacility.contact?.website ?? ''
-            facilitiesStore.facilitySectionFields.postalCode = selectedFacility.contact?.address?.postalCode ?? ''
-            facilitiesStore.facilitySectionFields.prefectureEn = selectedFacility.contact?.address?.prefectureEn ?? ''
-            facilitiesStore.facilitySectionFields.cityEn = selectedFacility.contact?.address?.cityEn ?? ''
-            facilitiesStore.facilitySectionFields.addressLine1En = selectedFacility.contact?.address?.addressLine1En ?? ''
-            facilitiesStore.facilitySectionFields.addressLine2En = selectedFacility.contact?.address?.addressLine2En ?? ''
-            facilitiesStore.facilitySectionFields.prefectureJa = selectedFacility.contact?.address?.prefectureJa ?? ''
-            facilitiesStore.facilitySectionFields.cityJa = selectedFacility.contact?.address?.cityJa ?? ''
-            facilitiesStore.facilitySectionFields.addressLine1Ja = selectedFacility.contact?.address?.addressLine1Ja ?? ''
-            facilitiesStore.facilitySectionFields.addressLine2Ja = selectedFacility.contact?.address?.addressLine2Ja ?? ''
-            facilitiesStore.facilitySectionFields.mapLatitude = selectedFacility.mapLatitude?.toString() ?? ''
-            facilitiesStore.facilitySectionFields.mapLongitude = selectedFacility.mapLongitude?.toString() ?? ''
-            facilitiesStore.facilitySectionFields.googlemapsURL = selectedFacility.contact?.googleMapsUrl ?? ''
+        // Mutual exclusion logic: Clear HP fields if a Facility is selected
+        if (isExistingHealthcareProfessionalSelected.value) {
+            isExistingHealthcareProfessionalSelected.value = false;
+            healthcareProfessionalsStore.resetHealthcareProfessionalSectionFields();
+            currentExistingHealthcareProfessionals.value = []; // Reset existing HP relations
         }
-    } else { // If NO existing Facility is selected (or has been deselected from the search bar)
-        // Reset the fields to allow entering a NEW Facility
-        healthcareProfessionalsStore.healthcareProfessionalSectionFields.facilityIds = [] // Remove IDs from the HP
-        isExistingFacilitySelected.value = false // Set the flag to false
-        facilitiesStore.resetFacilitySectionFields() // Clear the Facility form fields
+    } else {
+        // If no existing Facility is selected, allow manual input for Facility fields.
+        healthcareProfessionalsStore.healthcareProfessionalSectionFields.facilityIds = [];
+        isExistingFacilitySelected.value = false;
     }
-}, { deep: true })
+}, { deep: true });
 
-watch(currentExistingHealthcareProfessionals, newValue => {
-    // If healthcare professionals data is loaded and one or more existing HPs have been selected
+watch(currentExistingHealthcareProfessionals, newValue => { // Removed 'oldValue'
     if (healthcareProfessionalsStore.healthcareProfessionalsData && newValue.length > 0) {
-        // 1. Associate the IDs of the selected HPs to the Facility
+        // Only associate the ID. DO NOT POPULATE HP FORM FIELDS HERE.
         facilitiesStore.facilitySectionFields.healthcareProfessionalIds = newValue.map(
             healthcareProfessional => healthcareProfessional.id
-        )
-        // Set the flag to true, indicating an existing HP is selected
-        isExistingHealthcareProfessionalSelected.value = true
+        );
+        isExistingHealthcareProfessionalSelected.value = true;
 
-        // 2. Populate the Healthcare Professional form fields with the data of the selected HP.
-        //    We assume you are selecting a single HP from the search bar for editing.
-        const selectedHp = newValue[0]
-        if (selectedHp) {
-            // Get the primary name available for the HP
-            const primaryName = selectedHp.names?.[0]
-            if (primaryName) {
-                healthcareProfessionalsStore.healthcareProfessionalSectionFields.names = [{
-                    firstName: primaryName.firstName ?? '',
-                    middleName: primaryName.middleName ?? '',
-                    lastName: primaryName.lastName ?? '',
-                    locale: primaryName.locale ?? Locale.Und // Ensure Locale.Und is handled correctly
-                }]
-            } else {
-                healthcareProfessionalsStore.healthcareProfessionalSectionFields.names = []
-            }
-
-            healthcareProfessionalsStore.healthcareProfessionalSectionFields.acceptedInsurance
-                = selectedHp.acceptedInsurance ?? []
-            healthcareProfessionalsStore.healthcareProfessionalSectionFields.degrees = selectedHp.degrees ?? []
-            healthcareProfessionalsStore.healthcareProfessionalSectionFields.specialties = selectedHp.specialties ?? []
-            healthcareProfessionalsStore.healthcareProfessionalSectionFields.spokenLanguages = selectedHp.spokenLanguages ?? []
+        // Mutual exclusion logic: Clear Facility fields if an HP is selected
+        if (isExistingFacilitySelected.value) {
+            isExistingFacilitySelected.value = false;
+            facilitiesStore.resetFacilitySectionFields();
+            currentFacilityRelations.value = []; // Reset existing Facility relations
         }
-    } else { // If NO existing HP is selected (or has been deselected from the search bar)
-        // Reset the fields to allow entering a NEW HP
-        facilitiesStore.facilitySectionFields.healthcareProfessionalIds = []// Remove IDs from the Facility
-        isExistingHealthcareProfessionalSelected.value = false// Set the flag to false
-        healthcareProfessionalsStore.resetHealthcareProfessionalSectionFields()// Clear the HP form fields
+    } else {
+        // If no existing HP is selected, allow manual input for HP fields.
+        facilitiesStore.facilitySectionFields.healthcareProfessionalIds = [];
+        isExistingHealthcareProfessionalSelected.value = false;
     }
-}, { deep: true })
+}, { deep: true });
 
 onBeforeRouteLeave(async (to, from, next) => {
     if (!moderationSubmissionStore.updatingSubmissionFromTopBarAndExiting && submissionHasUnsavedChanges()) {
