@@ -6,6 +6,7 @@ const SITE_DESCRIPTION
     = 'Health service information for the international community in Japan'
 
 export default defineNuxtConfig({
+    ssr: false,
     app: {
     // Global page headers: https://nuxt.com/docs/getting-started/seo-meta
         head: {
