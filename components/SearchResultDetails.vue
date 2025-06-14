@@ -141,16 +141,20 @@ const healthcareProfessionalName = computed(() => {
             n => n.locale === Locale.JaJp
         )
 
-    const englishFullName = `${englishName?.firstName} ${englishName?.lastName}`
-    const japaneseFullName = `${japaneseName?.lastName} ${japaneseName?.firstName}`
-
+    const englishFullName = englishName?.firstName && englishName?.lastName 
+        ? `${englishName.firstName} ${englishName.lastName}`
+        : null
+    const japaneseFullName = japaneseName?.firstName && japaneseName?.lastName
+        ? `${japaneseName.lastName} ${japaneseName.firstName}`
+        : null
+        
     switch (localeStore.locale.code) {
         case Locale.EnUs:
-            return englishFullName ? englishFullName : japaneseFullName
+            return englishFullName || japaneseFullName || ''
         case Locale.JaJp:
-            return japaneseFullName ? japaneseFullName : englishFullName
+            return japaneseFullName || englishFullName || ''
         default:
-            return englishFullName ? englishFullName : japaneseFullName
+            return englishFullName || japaneseFullName || ''
     }
 })
 const healthcareProfessionalDegrees = computed(() => {
