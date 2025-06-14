@@ -1063,15 +1063,15 @@ function initializeSubmissionFormValues(submissionData: Submission | undefined) 
                           ?? []
                     // For change check
                     submissionFormFieldsBeforeChanges.healthcareProfessionalAcceptedInsurances
-                        = structuredClone(submissionData?.healthcareProfessionals?.[0]?.acceptedInsurance ?? [])
+                        = JSON.parse(JSON.stringify(submissionData?.healthcareProfessionals?.[0]?.acceptedInsurance ?? []))
                     submissionFormFieldsBeforeChanges.healthcareProfessionalDegrees
-                        = structuredClone(submissionData?.healthcareProfessionals?.[0]?.degrees ?? [])
+                        = JSON.parse(JSON.stringify(submissionData?.healthcareProfessionals?.[0]?.degrees ?? []))
                     submissionFormFieldsBeforeChanges.healthcareProfessionalSpecialties
-                        = structuredClone(submissionData?.healthcareProfessionals?.[0]?.specialties ?? [])
+                        = JSON.parse(JSON.stringify(submissionData?.healthcareProfessionals?.[0]?.specialties ?? []))
                     submissionFormFieldsBeforeChanges.healthcareProfessionalLocales
-                        = structuredClone(submissionData?.spokenLanguages ?? [])
+                        = JSON.parse(JSON.stringify(submissionData?.spokenLanguages ?? []))
                     submissionFormFieldsBeforeChanges.facilityIds
-                        = structuredClone(submissionData?.healthcareProfessionals?.[0]?.facilityIds ?? [])
+                        = JSON.parse(JSON.stringify(submissionData?.healthcareProfessionals?.[0]?.facilityIds ?? []))
                     break
                 case 'healthcareProfessionalIDs':
                     // For v-model
@@ -1147,7 +1147,7 @@ const submissionHasUnsavedChanges = () => {
       || hasHealthcareProfessionalChanges(submissionFormFieldsBeforeChanges, submissionFormFields)
       || submissionFormFieldsBeforeChanges.notes !== submissionFormFields.notes
 
-    formHasUnsavedChanges.value = true
+    formHasUnsavedChanges.value = checkForUnsavedChanges
     return checkForUnsavedChanges
 }
 
