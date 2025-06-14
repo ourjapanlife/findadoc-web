@@ -2,6 +2,7 @@
     <div class="flex flex-col mt-4">
         <label class="mb-2 text-primary-text text-sm font-bold font-sans">
             {{ label }}
+            <span v-if="!required" class="text-gray-500 ml-1 font-normal">(optional)</span>
         </label>
         <p
             v-if="!isTheInputValueValid"
