@@ -13,7 +13,7 @@
         "lint:ci": "yarn prepare:ci && eslint . --config eslint.config.js --format @microsoft/eslint-formatter-sarif --output-file eslint-results.sarif",
         "prod:build": "yarn && yarn generate && nuxi generate",
         "prod:start": "nuxi start",
-        "ci:build": "yarn && yarn generate && nuxi generate && nuxi build",
+        "ci:build": "yarn && yarn generate && nuxi generate",
         "ci:start": "nuxi start",
         "prepare:ci": "nuxi prepare",
         "test": "yarn test:pinia --run && yarn test:e2e:headless",
