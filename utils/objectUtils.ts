@@ -6,3 +6,4 @@ export function MapDefinedFields<T>(objectToCopyFrom: Partial<T>, objectToCopyTo
         }
     }
 }
+
