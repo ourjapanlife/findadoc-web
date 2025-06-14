@@ -545,7 +545,6 @@
 import { type Ref, ref, watch, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useToast, type ToastInterface } from 'vue-toastification'
-import ModSearchBar from './ModSearchBar.vue'
 import { useModerationSubmissionsStore } from '~/stores/moderationSubmissionsStore'
 import { Locale,
     type Submission,

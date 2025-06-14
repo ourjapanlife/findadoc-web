@@ -90,8 +90,13 @@ export default defineNuxtConfig({
     // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
     plugins: [],
 
-    // Auto import components: https://go.nuxtjs.dev/config-components
-    components: true,
+    // Auto import components: https://nuxt.com/docs/guide/directory-structure/components#component-names
+    components: [
+        {
+            path: '~/components',
+            pathPrefix: false
+        }
+    ],
 
     modules: [
         '@nuxtjs/i18n',
