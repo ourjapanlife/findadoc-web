@@ -24,4 +24,4 @@ export const formatHealthcareProfessionalName = (
         default:
             return englishFullName || japaneseFullName || ''
     }
-} 
+}

@@ -138,8 +138,8 @@ const healthcareProfessionalName = computed(() => {
         localeStore.locale.code as Locale
     )
     return name
-}
-)
+})
+
 const healthcareProfessionalDegrees = computed(() => {
     const healthcareProfessionalDegreesText
         = resultsStore.$state.activeResult?.professional.degrees.join(', ')
