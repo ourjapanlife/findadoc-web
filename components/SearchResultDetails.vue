@@ -124,6 +124,7 @@ import { useLocaleStore } from '~/stores/localeStore.js'
 import { useSpecialtiesStore } from '~/stores/specialtiesStore.js'
 import { useSearchResultsStore } from '~/stores/searchResultsStore'
 import { Locale } from '~/typedefs/gqlTypes.js'
+import { formatHealthcareProfessionalName } from '~/utils/nameUtils'
 
 const { t } = useI18n()
 
@@ -132,27 +133,13 @@ const localeStore = useLocaleStore()
 const specialtiesStore = useSpecialtiesStore()
 
 const healthcareProfessionalName = computed(() => {
-    const englishName
-        = resultsStore.$state.activeResult?.professional.names.find(
-            n => n.locale === Locale.EnUs
-        )
-    const japaneseName
-        = resultsStore.$state.activeResult?.professional.names.find(
-            n => n.locale === Locale.JaJp
-        )
-
-    const englishFullName = `${englishName?.firstName} ${englishName?.lastName}`
-    const japaneseFullName = `${japaneseName?.lastName} ${japaneseName?.firstName}`
-
-    switch (localeStore.locale.code) {
-        case Locale.EnUs:
-            return englishFullName ? englishFullName : japaneseFullName
-        case Locale.JaJp:
-            return japaneseFullName ? japaneseFullName : englishFullName
-        default:
-            return englishFullName ? englishFullName : japaneseFullName
-    }
+    const name = formatHealthcareProfessionalName(
+        resultsStore.$state.activeResult?.professional.names,
+        localeStore.locale.code as Locale
+    )
+    return name
 })
+
 const healthcareProfessionalDegrees = computed(() => {
     const healthcareProfessionalDegreesText
         = resultsStore.$state.activeResult?.professional.degrees.join(', ')
