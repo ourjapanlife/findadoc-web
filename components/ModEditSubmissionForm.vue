@@ -143,8 +143,8 @@ import { Locale,
     type Specialty,
     type Facility,
     type HealthcareProfessional,
-    type UpdateFacilityInput,
-    type UpdateHealthcareProfessionalInput } from '~/typedefs/gqlTypes'
+    type CreateFacilityInput,
+    type CreateHealthcareProfessionalInput } from '~/typedefs/gqlTypes'
 import { validateAddressLineEn,
     validateAddressLineJa,
     validateNameEn,
@@ -741,7 +741,7 @@ async function submitUpdatedSubmission(e: Event) {
 
     // --- Start: Modified logic for facilitySubmissionUpdate ---
     // Initialize to undefined. It will be populated only if the user is NOT using an existing facility.
-    let facilitySubmissionUpdate: UpdateFacilityInput | undefined = undefined
+    let facilitySubmissionUpdate: CreateFacilityInput | undefined = undefined
 
     // If 'isExistingFacilitySelected.value' is false, it means the user is either
     // creating a new facility for this submission OR editing the submission's
@@ -784,7 +784,7 @@ async function submitUpdatedSubmission(e: Event) {
 
     // --- Start: Modified logic for healthcareProfessionalUpdate ---
     // Initialize to undefined. It will be populated only if the user is NOT using an existing HP.
-    let healthcareProfessionalUpdate: UpdateHealthcareProfessionalInput[] | undefined = undefined // 'any' can be kept if types allow.
+    let healthcareProfessionalUpdate: CreateHealthcareProfessionalInput[] | undefined = undefined // 'any' can be kept if types allow.
 
     // If 'isExistingHealthcareProfessionalSelected.value' is false, it means the user is either
     // creating a new HP for this submission OR editing the submission's
