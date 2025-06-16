@@ -18,18 +18,19 @@ Cypress.Commands.add('login', () => {
     // Generate a unique session ID using timestamp
     const sessionId = `auth0-${auth0UserName}-${Date.now()}`
 
-    // Clear session and localStorage
+    // Clear session and cookies
     cy.clearAllSessionStorage()
-    cy.clearAllLocalStorage()
+    cy.clearAllCookies()
 
     cy.session(sessionId, () => {
         auth0Login()
     }, {
         validate: () => {
             // Wait for and validate the auth token
-            cy.getAllLocalStorage().should(localStorage => {
-                const localStorageKeys = Object.values(localStorage).map(store => Object.keys(store)).flat()
-                expect(localStorageKeys).to.include('auth_token', 'Auth token not found in localStorage')
+            cy.getCookies().then(cookies => {
+                const cookieNames = cookies.map(cookie => cookie.name)
+                expect(cookieNames).to.include('auth_token', 'Auth token not found in cookies')
+                expect(cookieNames).to.include('authToken', 'Auth token flag not found in cookies')
             })
         },
         cacheAcrossSpecs: true

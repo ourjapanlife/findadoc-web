@@ -148,7 +148,7 @@
                 >
                     {{ t("modHealthcareProfessionalSection.selectInsurances") }}
                 </label>
-                <ModSearchbar
+                <ModSearchBar
                     v-model="healthcareProfessionalAcceptedInsurancesArray"
                     data-test-id="mod-healthcare-professional-section-accepted-insurances"
                     :place-holder-text="t('modHealthcareProfessionalSection.placeholderTextAcceptedInsurances')"
@@ -172,7 +172,7 @@
                 >
                     {{ t("modHealthcareProfessionalSection.selectDegrees") }}
                 </label>
-                <ModSearchbar
+                <ModSearchBar
                     v-model="healthcareProfessionalDegreesArray"
                     data-test-id="mod-healthcare-professional-section-degrees"
                     :place-holder-text="t('modHealthcareProfessionalSection.placeholderTextDegrees')"
@@ -196,7 +196,7 @@
                 >
                     {{ t("modHealthcareProfessionalSection.selectSpecialties") }}
                 </label>
-                <ModSearchbar
+                <ModSearchBar
                     v-model="healthcareProfessionalSpecialtiesArray"
                     data-test-id="mod-healthcare-professional-section-specialties"
                     :place-holder-text="t('modHealthcareProfessionalSection.placeholderTextSpecialties')"
@@ -220,7 +220,7 @@
                 >
                     {{ t("modHealthcareProfessionalSection.selectLocales") }}
                 </label>
-                <ModSearchbar
+                <ModSearchBar
                     v-model="healthcareProfessionalSpokenLanguages"
                     data-test-id="mod-healthcare-professional-section-spoken-locales"
                     :place-holder-text="t('modHealthcareProfessionalSection.placeholderTextLocales')"
@@ -247,7 +247,7 @@
                 >
                     {{ t("modHealthcareProfessionalSection.facilities") }}
                 </h2>
-                <ModSearchbar
+                <ModSearchBar
                     v-model="selectedFacilities"
                     :place-holder-text="t('modHealthcareProfessionalSection.placeholderTextFacilitySearchBar')"
                     :no-match-text="t('modHealthcareProfessionalSection.noFacilitiesWereFound')"
@@ -273,7 +273,6 @@
 import { nextTick, onBeforeMount, reactive, type Ref, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { type ToastInterface, useToast } from 'vue-toastification'
-import ModSearchbar from './ModSearchBar.vue'
 import { useHealthcareProfessionalsStore } from '~/stores/healthcareProfessionalsStore'
 import { useFacilitiesStore } from '~/stores/facilitiesStore'
 import { useModerationScreenStore } from '~/stores/moderationScreenStore'

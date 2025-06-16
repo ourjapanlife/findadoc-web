@@ -144,7 +144,7 @@
             >
                 {{ t("modHealthcareProfessionalSection.selectInsurances") }}
             </label>
-            <ModSearchbar
+            <ModSearchBar
                 v-if="createHealthcareProfessionalSectionFields.acceptedInsurance"
                 v-model="createHealthcareProfessionalSectionFields.acceptedInsurance"
                 data-testid="mod-healthcare-professional-section-accepted-insurances"
@@ -169,7 +169,7 @@
             >
                 {{ t("modHealthcareProfessionalSection.selectDegrees") }}
             </label>
-            <ModSearchbar
+            <ModSearchBar
                 v-if="createHealthcareProfessionalSectionFields.degrees"
                 v-model="createHealthcareProfessionalSectionFields.degrees"
                 data-testid="mod-healthcare-professional-section-degrees"
@@ -194,7 +194,7 @@
             >
                 {{ t("modHealthcareProfessionalSection.selectSpecialties") }}
             </label>
-            <ModSearchbar
+            <ModSearchBar
                 v-if="createHealthcareProfessionalSectionFields.specialties"
                 v-model="createHealthcareProfessionalSectionFields.specialties"
                 data-testid="mod-healthcare-professional-section-specialties"
@@ -219,7 +219,7 @@
             >
                 {{ t("modHealthcareProfessionalSection.selectLocales") }}
             </label>
-            <ModSearchbar
+            <ModSearchBar
                 v-if="createHealthcareProfessionalSectionFields.spokenLanguages"
                 v-model="createHealthcareProfessionalSectionFields.spokenLanguages"
                 data-testid="mod-healthcare-professional-section-spoken-locales"
@@ -245,7 +245,7 @@
         >
             {{ t("modHealthcareProfessionalSection.facilities") }}
         </h2>
-        <ModSearchbar
+        <ModSearchBar
             v-model="selectedFacilities"
             data-testid="mod-healthcare-professional-section-facilities"
             :place-holder-text="t('modHealthcareProfessionalSection.placeholderTextFacilitySearchBar')"
@@ -269,7 +269,6 @@
 <script lang="ts" setup>
 import { onBeforeMount, reactive, type Ref, ref, watch } from 'vue'
 import { type ToastInterface, useToast } from 'vue-toastification'
-import ModSearchbar from './ModSearchBar.vue'
 import { useHealthcareProfessionalsStore } from '~/stores/healthcareProfessionalsStore'
 import { useFacilitiesStore } from '~/stores/facilitiesStore'
 import { useLocaleStore } from '~/stores/localeStore'
