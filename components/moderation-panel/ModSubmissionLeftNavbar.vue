@@ -9,7 +9,7 @@
                 data-testid="submission-form-leftnav-contact-information"
                 :class="{ 'bg-secondary': activeSection === ModSubmissionLeftNavbarSectionIDs.ContactInformation,
                           'bg-primary-inverted': activeSection !== ModSubmissionLeftNavbarSectionIDs.ContactInformation }"
-                class="w-full py-4 my-2 text-sm text-start pl-2 rounded border-b-2 border-tertiary-bg"
+                class="w-full py-4 my-2 text-sm text-start pl-2 rounded border-b-2 border-accent-bg"
                 @click="scrollToSectionOfForm(ModSubmissionLeftNavbarSectionIDs.ContactInformation)"
             >
                 {{ t("modPanelSubmissionLeftNavbar.contactInformation") }}
@@ -18,7 +18,7 @@
                 data-testid="submission-form-leftnav-addresses"
                 :class="{ 'bg-secondary': activeSection === ModSubmissionLeftNavbarSectionIDs.Addresses,
                           'bg-primary-inverted': activeSection !== ModSubmissionLeftNavbarSectionIDs.Addresses }"
-                class="w-full py-4 my-2 text-sm text-start pl-2 rounded border-b-2 border-tertiary-bg"
+                class="w-full py-4 my-2 text-sm text-start pl-2 rounded border-b-2 border-accent-bg"
                 @click="scrollToSectionOfForm(ModSubmissionLeftNavbarSectionIDs.Addresses)"
             >
                 {{ t("modPanelSubmissionLeftNavbar.addresses") }}
@@ -27,7 +27,7 @@
                 data-testid="submission-form-leftnav-google-maps-information"
                 :class="{ 'bg-secondary': activeSection === ModSubmissionLeftNavbarSectionIDs.GoogleMapsInformation,
                           'bg-primary-inverted': activeSection !== ModSubmissionLeftNavbarSectionIDs.GoogleMapsInformation }"
-                class="w-full py-4 my-2 text-sm text-start pl-2 rounded border-b-2 border-tertiary-bg"
+                class="w-full py-4 my-2 text-sm text-start pl-2 rounded border-b-2 border-accent-bg"
                 @click="scrollToSectionOfForm(ModSubmissionLeftNavbarSectionIDs.GoogleMapsInformation)"
             >
                 {{ t("modPanelSubmissionLeftNavbar.googleMapsInformation") }}
@@ -36,7 +36,7 @@
                 data-testid="submission-form-leftnav-healthcare-professional-ids"
                 :class="{ 'bg-secondary': activeSection === ModSubmissionLeftNavbarSectionIDs.HealthcareProfessionalIds,
                           'bg-primary-inverted': activeSection !== ModSubmissionLeftNavbarSectionIDs.HealthcareProfessionalIds }"
-                class="w-full py-4 my-2 text-sm text-start pl-2 rounded border-b-2 border-tertiary-bg"
+                class="w-full py-4 my-2 text-sm text-start pl-2 rounded border-b-2 border-accent-bg"
                 @click="scrollToSectionOfForm(ModSubmissionLeftNavbarSectionIDs.HealthcareProfessionalIds)"
             >
                 {{ t("modPanelSubmissionLeftNavbar.healthcareProfessionalIds") }}
@@ -45,7 +45,7 @@
                 data-testid="submission-form-leftnav-change-log"
                 :class="{ 'bg-secondary': activeSection === ModSubmissionLeftNavbarSectionIDs.ChangeLog,
                           'bg-primary-inverted': activeSection !== ModSubmissionLeftNavbarSectionIDs.ChangeLog }"
-                class="w-full py-4 my-2 text-sm text-start pl-2 rounded border-b-2 border-tertiary-bg"
+                class="w-full py-4 my-2 text-sm text-start pl-2 rounded border-b-2 border-accent-bg"
                 @click="scrollToSectionOfForm(ModSubmissionLeftNavbarSectionIDs.ChangeLog)"
             >
                 {{ t("modPanelSubmissionLeftNavbar.changeLog") }}
@@ -54,7 +54,7 @@
                 data-testid="submission-form-leftnav-healthcare-professional-name"
                 :class="{ 'bg-secondary': activeSection === ModSubmissionLeftNavbarSectionIDs.HealthcareProfessionalName,
                           'bg-primary-inverted': activeSection !== ModSubmissionLeftNavbarSectionIDs.HealthcareProfessionalName }"
-                class="w-full py-4 my-2 text-sm text-start pl-2 rounded border-b-2 border-tertiary-bg"
+                class="w-full py-4 my-2 text-sm text-start pl-2 rounded border-b-2 border-accent-bg"
                 @click="scrollToSectionOfForm(ModSubmissionLeftNavbarSectionIDs.HealthcareProfessionalName)"
             >
                 {{ t("modPanelSubmissionLeftNavbar.healthcareProfessionalName") }}
@@ -64,7 +64,7 @@
                 :class="{ 'bg-secondary': activeSection === ModSubmissionLeftNavbarSectionIDs.HealthcareProfessionalMedicalInfo,
                           'bg-primary-inverted': activeSection
                               !== ModSubmissionLeftNavbarSectionIDs.HealthcareProfessionalMedicalInfo }"
-                class="w-full py-4 my-2 text-sm text-start pl-2 rounded border-b-2 border-tertiary-bg"
+                class="w-full py-4 my-2 text-sm text-start pl-2 rounded border-b-2 border-accent-bg"
                 @click="scrollToSectionOfForm(ModSubmissionLeftNavbarSectionIDs.HealthcareProfessionalMedicalInfo)"
             >
                 {{ t("modPanelSubmissionLeftNavbar.healthcareProfessionalMedicalInfo") }}
