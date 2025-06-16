@@ -6453,7 +6453,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cypress-real-events@npm:^1.13.0":
+"cypress-real-events@npm:^1.14.0":
   version: 1.14.0
   resolution: "cypress-real-events@npm:1.14.0"
   peerDependencies:
@@ -8244,7 +8244,7 @@ __metadata:
     autoprefixer: "npm:^10.4.20"
     cypress: "npm:^13.13.2"
     cypress-plugin-tab: "npm:^1.0.5"
-    cypress-real-events: "npm:^1.13.0"
+    cypress-real-events: "npm:^1.14.0"
     dotenv-cli: "npm:^8.0.0"
     eslint: "npm:^9.8.0"
     eslint-plugin-cypress: "npm:^3.4.0"
