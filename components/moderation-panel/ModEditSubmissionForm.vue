@@ -38,7 +38,7 @@
                 </button>
             </div>
             <div
-                v-else-if="formHasUnsavedChanges"
+                v-else-if="formHasUnsavedChanges()"
                 class="flex flex-col aspect-square h-96 items-center justify-around bg-primary-inverted p-10 rounded"
             >
                 <span class="font-bold text-3xl">{{ t('modSubmissionForm.hasUnsavedChanges') }}</span>
@@ -143,10 +143,6 @@ import { useModerationSubmissionsStore } from '~/stores/moderationSubmissionsSto
 import { Locale,
     type Submission,
     type MutationUpdateSubmissionArgs,
-    type LocalizedNameInput,
-    type Insurance,
-    type Degree,
-    type Specialty,
     type Facility,
     type HealthcareProfessional } from '~/typedefs/gqlTypes'
 import { validateAddressLineEn,
@@ -185,51 +181,16 @@ const facilitiesStore = useFacilitiesStore()
 const healthcareProfessionalsStore = useHealthcareProfessionalsStore()
 
 const isEditSubmissionFormInitialized: Ref<boolean> = ref(false)
+const submissionBeforeChanges: Ref<Submission | undefined> = computed(() => moderationSubmissionStore.selectedSubmissionData
+    ? {
+        ...moderationSubmissionStore.selectedSubmissionData
+    }
+    : undefined)
 
 //Keeps track of existing facilities related to new healthcare professional submission
 const currentFacilityRelations: Ref<Facility[]> = ref([])
 //Keeps track of existing healthcare professionals related to new facility submission
 const currentExistingHealthcareProfessionals: Ref<HealthcareProfessional[]> = ref([])
-
-/* This is used as an exact copy and not updated. This is to allow for change checks in values.
-We can then provide a better user experience based on if they change the values or not
-This is necessary because setting a variable directly in vue to the same as a reactive object
-may not always work as intended*/
-const submissionFormFieldsBeforeChanges = reactive({
-    // contactFields
-    nameEn: '' as string,
-    nameJa: '' as string,
-    phone: '' as string,
-    website: '' as string,
-    email: '' as string,
-    // addressesFields
-    postalCode: '' as string,
-    prefectureEn: '' as string,
-    cityEn: '' as string,
-    addressLine1En: '' as string,
-    addressLine2En: '' as string,
-    prefectureJa: '' as string,
-    cityJa: '' as string,
-    addressLine1Ja: '' as string,
-    addressLine2Ja: '' as string,
-    // googleMapsFields
-    googlemapsURL: '' as string,
-    mapLatitude: '' as string,
-    mapLongitude: '' as string,
-    //healthcareProfessionalFields
-    healthCareProfessionalNameArray: [] as LocalizedNameInput[],
-    healthcareProfessionalIDs: [] as string[],
-    localizedFirstName: '' as string,
-    localizedLastName: '' as string,
-    localizedMiddleName: '' as string,
-    nameLocale: Locale.EnUs as Locale,
-    healthcareProfessionalAcceptedInsurances: [] as Insurance[],
-    healthcareProfessionalDegrees: [] as Degree[],
-    healthcareProfessionalSpecialties: [] as Specialty[],
-    spokenLanguages: [] as Locale[]
-})
-
-const formHasUnsavedChanges: Ref<boolean> = ref(false)
 
 const handleFacilitySearchInputChange = (filteredItems: Ref<Facility[]>, inputValue: string) => {
     filteredItems.value = facilitiesStore.facilityData.filter(({ nameEn, nameJa, id }) => {
@@ -390,52 +351,14 @@ function initializeSubmissionFormValues(submissionData: Submission | undefined) 
     facilitySectionFields.mapLongitude
     = submissionData?.facility?.mapLongitude?.toString() ?? ''
 
-    submissionFormFieldsBeforeChanges.nameEn
-    = submissionData?.facility?.nameEn ?? ''
-    submissionFormFieldsBeforeChanges.nameJa
-    = submissionData?.facility?.nameJa ?? ''
-    submissionFormFieldsBeforeChanges.phone
-    = submissionData?.facility?.contact?.phone ?? ''
-    submissionFormFieldsBeforeChanges.email
-    = submissionData?.facility?.contact?.email ?? ''
-    submissionFormFieldsBeforeChanges.website
-    = submissionData?.facility?.contact?.website ?? ''
-    submissionFormFieldsBeforeChanges.postalCode
-    = submissionData?.facility?.contact?.address.postalCode ?? ''
-    submissionFormFieldsBeforeChanges.prefectureEn
-    = submissionData?.facility?.contact?.address.prefectureEn ?? ''
-    submissionFormFieldsBeforeChanges.cityEn
-    = submissionData?.facility?.contact?.address.cityEn ?? ''
-    submissionFormFieldsBeforeChanges.addressLine1En
-    = submissionData?.facility?.contact?.address.addressLine1En ?? ''
-    submissionFormFieldsBeforeChanges.addressLine2En
-    = submissionData?.facility?.contact?.address.addressLine2En ?? ''
-    submissionFormFieldsBeforeChanges.prefectureJa
-    = submissionData?.facility?.contact?.address.prefectureJa ?? ''
-    submissionFormFieldsBeforeChanges.cityJa
-    = submissionData?.facility?.contact?.address.cityJa ?? ''
-    submissionFormFieldsBeforeChanges.addressLine1Ja
-    = submissionData?.facility?.contact?.address.addressLine1Ja ?? ''
-    submissionFormFieldsBeforeChanges.addressLine2Ja
-    = submissionData?.facility?.contact?.address.addressLine2Ja ?? ''
-    submissionFormFieldsBeforeChanges.mapLatitude
-    = submissionData?.facility?.mapLatitude?.toString() ?? ''
-    submissionFormFieldsBeforeChanges.mapLongitude
-    = submissionData?.facility?.mapLongitude?.toString() ?? ''
-
     facilitySectionFields.googlemapsURL
     = submissionData?.facility?.contact?.googleMapsUrl
       ?? submissionData?.googleMapsUrl
       ?? ''
-    submissionFormFieldsBeforeChanges.googlemapsURL
-    = submissionData?.facility?.contact?.googleMapsUrl
-      ?? submissionData?.googleMapsUrl
-      ?? ''
 
-    const hpIds = submissionData?.facility?.healthcareProfessionalIds ?? []
-    facilitySectionFields.healthcareProfessionalIds = [...hpIds]
+    facilitySectionFields.healthcareProfessionalIds = submissionData?.facility?.healthcareProfessionalIds ?? []
     currentExistingHealthcareProfessionals.value
-    = hpIds
+    = facilitySectionFields.healthcareProfessionalIds
             .map(healthcareProfessionalId =>
                 healthcareProfessionalsStore.healthcareProfessionalsData.find(
                     hp => hp.id === healthcareProfessionalId
@@ -464,9 +387,6 @@ function initializeSubmissionFormValues(submissionData: Submission | undefined) 
               ]
               : [])
 
-    submissionFormFieldsBeforeChanges.healthCareProfessionalNameArray
-    = healthcareProfessionalSections.names
-
     const hpFacilityIds
     = submissionData?.healthcareProfessionals?.[0]?.facilityIds ?? []
     healthcareProfessionalSections.facilityIds = [...hpFacilityIds]
@@ -484,59 +404,68 @@ function initializeSubmissionFormValues(submissionData: Submission | undefined) 
     = submissionData?.healthcareProfessionals?.[0]?.specialties ?? []
     healthcareProfessionalSections.spokenLanguages
     = submissionData?.spokenLanguages ?? []
-
-    submissionFormFieldsBeforeChanges.healthcareProfessionalAcceptedInsurances
-    = submissionData?.healthcareProfessionals?.[0]?.acceptedInsurance ?? []
-    submissionFormFieldsBeforeChanges.healthcareProfessionalDegrees
-    = submissionData?.healthcareProfessionals?.[0]?.degrees ?? []
-    submissionFormFieldsBeforeChanges.healthcareProfessionalSpecialties
-    = submissionData?.healthcareProfessionals?.[0]?.specialties ?? []
-    submissionFormFieldsBeforeChanges.spokenLanguages
-    = submissionData?.spokenLanguages ?? []
 }
 
-// Checks if form fields have unsaved changes
-function submissionHasUnsavedChanges() {
-    const facilityFields = facilitiesStore.facilitySectionFields
-    const healthcareProfessionalFields = healthcareProfessionalsStore.healthcareProfessionalSectionFields
+// assume you already have:
+// • isEditSubmissionFormInitialized
+// • submissionFormFieldsBeforeChanges (“before” snapshot)
+// • facilitiesStore.facilitySectionFields → facility
+// • healthcareProfessionalsStore.healthcareProfessionalSectionFields → hp
+// • arraysAreEqual
+const formHasUnsavedChanges = () => {
+    const facilitySectionFields = facilitiesStore.facilitySectionFields
+    const hpSectionFields = healthcareProfessionalsStore.healthcareProfessionalSectionFields
+    const submissionBeforeChangesComparison = submissionBeforeChanges.value
 
-    // Compare each relevant field against its initial value
-    const hasFacilityChanges = (
-        submissionFormFieldsBeforeChanges.nameEn !== facilityFields.nameEn
-        || submissionFormFieldsBeforeChanges.nameJa !== facilityFields.nameJa
-        || submissionFormFieldsBeforeChanges.phone !== facilityFields.phone
-        || submissionFormFieldsBeforeChanges.email !== facilityFields.email
-        || submissionFormFieldsBeforeChanges.website !== facilityFields.website
-        || submissionFormFieldsBeforeChanges.postalCode !== facilityFields.postalCode
-        || submissionFormFieldsBeforeChanges.prefectureEn !== facilityFields.prefectureEn
-        || submissionFormFieldsBeforeChanges.cityEn !== facilityFields.cityEn
-        || submissionFormFieldsBeforeChanges.addressLine1En !== facilityFields.addressLine1En
-        || submissionFormFieldsBeforeChanges.addressLine2En !== facilityFields.addressLine2En
-        || submissionFormFieldsBeforeChanges.prefectureJa !== facilityFields.prefectureJa
-        || submissionFormFieldsBeforeChanges.cityJa !== facilityFields.cityJa
-        || submissionFormFieldsBeforeChanges.addressLine1Ja !== facilityFields.addressLine1Ja
-        || submissionFormFieldsBeforeChanges.addressLine2Ja !== facilityFields.addressLine2Ja
-        || submissionFormFieldsBeforeChanges.mapLatitude !== facilityFields.mapLatitude
-        || submissionFormFieldsBeforeChanges.mapLongitude !== facilityFields.mapLongitude
-        || !arraysAreEqual(submissionFormFieldsBeforeChanges.healthcareProfessionalIDs, facilityFields.healthcareProfessionalIds)
+    if (!submissionBeforeChangesComparison) {
+        return false
+    }
+
+    // Check the diffs in the facility section
+    const facilityChanged = (
+        submissionBeforeChangesComparison?.facility?.nameEn !== facilitySectionFields.nameEn
+        || submissionBeforeChangesComparison?.facility?.nameJa !== facilitySectionFields.nameJa
+        || submissionBeforeChangesComparison?.facility?.contact?.phone !== facilitySectionFields.phone
+        || (submissionBeforeChangesComparison?.facility?.contact?.email
+          && submissionBeforeChangesComparison?.facility?.contact?.email !== facilitySectionFields.email)
+        || (submissionBeforeChangesComparison?.facility?.contact?.website
+          && submissionBeforeChangesComparison?.facility?.contact?.website !== facilitySectionFields.website)
+        || submissionBeforeChangesComparison?.facility?.contact?.address?.postalCode !== facilitySectionFields.postalCode
+        || !arraysAreEqual(submissionBeforeChangesComparison?.facility?.healthcareProfessionalIds,
+                           facilitySectionFields.healthcareProfessionalIds)
     )
 
-    const hasProfessionalChanges = (
-        !arraysAreEqual(submissionFormFieldsBeforeChanges.healthCareProfessionalNameArray, healthcareProfessionalFields.names)
-        || !arraysAreEqual(submissionFormFieldsBeforeChanges.healthcareProfessionalAcceptedInsurances,
-                           healthcareProfessionalFields.acceptedInsurance)
-                         || !arraysAreEqual(submissionFormFieldsBeforeChanges
-                             .healthcareProfessionalDegrees, healthcareProfessionalFields.degrees)
-                           || !arraysAreEqual(submissionFormFieldsBeforeChanges.healthcareProfessionalSpecialties,
-                                              healthcareProfessionalFields.specialties)
-                                            || !arraysAreEqual(submissionFormFieldsBeforeChanges.spokenLanguages,
-                                                               healthcareProfessionalFields.spokenLanguages)
+    // Check the diffs in the healthcare professional section
+    const hpChanged = (
+        (submissionBeforeChangesComparison?.healthcareProfessionals?.[0]?.names
+            ? !arraysAreEqual(
+                submissionBeforeChangesComparison?.healthcareProfessionals?.[0]?.names,
+                hpSectionFields.names
+            )
+            : false)
+          || (submissionBeforeChangesComparison?.healthcareProfessionals?.[0]?.acceptedInsurance
+              ? !arraysAreEqual(
+                  submissionBeforeChangesComparison?.healthcareProfessionals?.[0]?.acceptedInsurance,
+                  hpSectionFields.acceptedInsurance
+              )
+              : false)
+            || (submissionBeforeChangesComparison?.healthcareProfessionals?.[0]?.degrees
+                ? !arraysAreEqual(
+                    submissionBeforeChangesComparison?.healthcareProfessionals?.[0]?.degrees,
+                    hpSectionFields.degrees
+                )
+                : false)
+              || (submissionBeforeChangesComparison?.healthcareProfessionals?.[0]?.specialties
+                  ? !arraysAreEqual(submissionBeforeChangesComparison?.healthcareProfessionals?.[0]?.specialties,
+                                    hpSectionFields.specialties)
+                  : false)
+                || (submissionBeforeChangesComparison?.healthcareProfessionals?.[0]?.spokenLanguages
+                    ? !arraysAreEqual(submissionBeforeChangesComparison?.healthcareProfessionals?.[0]?.spokenLanguages,
+                                      hpSectionFields.spokenLanguages)
+                    : false)
     )
 
-    // This determins the overall state of the changes
-    const hasChanges = hasFacilityChanges || hasProfessionalChanges
-    formHasUnsavedChanges.value = hasChanges
-    return hasChanges
+    return facilityChanged || hpChanged
 }
 
 async function submitUpdatedSubmission(e: Event) {
@@ -683,7 +612,6 @@ async function submitCompletedForm(e: Event) {
 const syntheticEvent = new Event('submit', { bubbles: false, cancelable: true })
 
 const resetModalRefs = async () => {
-    formHasUnsavedChanges.value = false
     await nextTick()
     moderationSubmissionStore.setShowRejectSubmissionConfirmation(false)
     moderationSubmissionStore.setApprovingSubmissionFromTopBar(false)
@@ -760,22 +688,25 @@ const handleNavigateToModerationScreen = () => {
 }
 
 watch(currentFacilityRelations, newValue => {
-    const newIds = newValue.map(facility => facility.id)
-    healthcareProfessionalsStore.healthcareProfessionalSectionFields.facilityIds = newIds
-}, { immediate: true, deep: true })
+    if (isEditSubmissionFormInitialized.value) {
+        const newIds = newValue.map(facility => facility.id)
+        healthcareProfessionalsStore.healthcareProfessionalSectionFields.facilityIds = newIds
+    }
+}, { deep: true })
 
 watch(currentExistingHealthcareProfessionals, newValue => {
-    facilitiesStore.facilitySectionFields.healthcareProfessionalIds = newValue.map(
-        healthcareProfessional => healthcareProfessional.id
-    )
-}, { immediate: true, deep: true })
+    if (isEditSubmissionFormInitialized.value) {
+        facilitiesStore.facilitySectionFields.healthcareProfessionalIds = newValue.map(
+            healthcareProfessional => healthcareProfessional.id
+        )
+    }
+}, { deep: true })
 
 onBeforeRouteLeave(async (_, __, next) => {
-    // We do not need to checking if updating and leaving or approving and leaving
-    const shouldCheckForChangesOverrides
-    = !moderationSubmissionStore.updatingSubmissionFromTopBarAndExiting
-      || !moderationSubmissionStore.approvingSubmissionFromTopBar
-    if (shouldCheckForChangesOverrides && submissionHasUnsavedChanges()) {
+    if (formHasUnsavedChanges()
+      && !moderationSubmissionStore.updatingSubmissionFromTopBarAndExiting
+      && !moderationSubmissionStore.approvingSubmissionFromTopBar) {
+        modalStore.showModal()
         next(false)
         return
     }
