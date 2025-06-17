@@ -1,6 +1,6 @@
 <template>
     <div data-testid="moderation-app">
-        <slot />
+        <NuxtPage />
     </div>
 </template>
 

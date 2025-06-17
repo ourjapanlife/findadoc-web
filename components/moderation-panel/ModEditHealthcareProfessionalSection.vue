@@ -6,7 +6,7 @@
             class="mod-healthcare-professional-section"
         >
             <h2 class="mb-3.5 text-start text-primary-text text-2xl font-bold font-sans leading-normal">
-                {{ $t('modHealthcareProfessionalSection.healthcareProfessionalNameHeading') }}
+                {{ t('modHealthcareProfessionalSection.healthcareProfessionalNameHeading') }}
             </h2>
             <div class="input-fields flex flex-col my-4">
                 <Transition
@@ -27,38 +27,38 @@
                         <ModInputField
                             v-model="nameLocaleInputs.lastName"
                             data-testid="mod-healthcare-professional-section-lastName"
-                            :label="$t('modHealthcareProfessionalSection.labelHealthcareProfessionalLastName')"
+                            :label="t('modHealthcareProfessionalSection.labelHealthcareProfessionalLastName')"
                             type="text"
-                            :placeholder="$t('modHealthcareProfessionalSection.placeholderTextHealthcareProfessionalLastName')"
+                            :placeholder="t('modHealthcareProfessionalSection.placeholderTextHealthcareProfessionalLastName')"
                             :required="true"
                         />
                         <ModInputField
                             v-model="nameLocaleInputs.firstName"
                             data-testid="mod-healthcare-professional-section-firstName"
-                            :label="$t('modHealthcareProfessionalSection.labelHealthcareProfessionalFirstName')"
+                            :label="t('modHealthcareProfessionalSection.labelHealthcareProfessionalFirstName')"
                             type="text"
-                            :placeholder="$t('modHealthcareProfessionalSection.placeholderTextHealthcareProfessionalFirstName')"
+                            :placeholder="t('modHealthcareProfessionalSection.placeholderTextHealthcareProfessionalFirstName')"
                             :required="true"
                         />
                         <ModInputField
                             v-model="nameLocaleInputs.middleName as string"
                             data-testid="mod-healthcare-professional-section-middleName"
-                            :label="$t('modHealthcareProfessionalSection.labelHealthcareProfessionalMiddleName')"
+                            :label="t('modHealthcareProfessionalSection.labelHealthcareProfessionalMiddleName')"
                             type="text"
-                            :placeholder="$t('modHealthcareProfessionalSection.placeholderTextHealthcareProfessionalMiddleName')"
+                            :placeholder="t('modHealthcareProfessionalSection.placeholderTextHealthcareProfessionalMiddleName')"
                             :required="false"
                         />
                         <label
-                            for="name_locales"
+                            for="mod-edit-healthcare-professional-section-select-name-locales"
                             class="my-2 text-primary-text text-sm font-bold font-sans"
                         >
-                            {{ $t('modHealthcareProfessionalSection.labelHealthcareProfessionalNameLocale') }}
+                            {{ t('modHealthcareProfessionalSection.labelHealthcareProfessionalNameLocale') }}
                         </label>
                         <select
-                            id="name_locales"
+                            id="mod-edit-healthcare-professional-section-select-name-locales"
                             v-model="nameLocaleInputs.locale"
                             data-testid="mod-healthcare-professional-section-name-locale"
-                            name="Name Locales"
+                            name="name-locales"
                             class="mb-5 px-3 py-3.5 w-96 h-12 bg-secondary-bg rounded-lg border border-primary-text-muted
                                 text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
                         >
@@ -78,14 +78,14 @@
                                 type="button"
                                 @click="handleAddLocalizedName"
                             >
-                                {{ $t('modHealthcareProfessionalSection.save') }}
+                                {{ t('modHealthcareProfessionalSection.save') }}
                             </button>
                             <button
                                 class="bg-error text-primary-text-inverted font-bold py-2 px-4 my-2 rounded w-36"
                                 type="button"
                                 @click="handleCloseAddingNewLocalizedName"
                             >
-                                {{ $t('modHealthcareProfessionalSection.exit') }}
+                                {{ t('modHealthcareProfessionalSection.exit') }}
                             </button>
                         </div>
                         <div
@@ -97,14 +97,14 @@
                                 type="button"
                                 @click="handleUpdateExistingName"
                             >
-                                {{ $t('modHealthcareProfessionalSection.update') }}
+                                {{ t('modHealthcareProfessionalSection.update') }}
                             </button>
                             <button
                                 class="bg-error text-primary-text-inverted font-bold py-2 px-4 my-2 rounded w-36"
                                 type="button"
                                 @click="handleDeleteExistingName"
                             >
-                                {{ $t('modHealthcareProfessionalSection.delete') }}
+                                {{ t('modHealthcareProfessionalSection.delete') }}
                             </button>
                         </div>
                     </div>
@@ -130,30 +130,31 @@
                 <button
                     type="button"
                     data-testid="mod-healthcare-add-name-button"
-                    class="bg-tertiary text-primary-text-inverted font-bold py-2 px-4 my-2 rounded w-44"
+                    class="bg-accent text-primary-text-inverted font-bold py-2 px-4 my-2 rounded w-44"
                     @click="handleOpenAddNewNameWithReset"
                 >
-                    {{ $t('modHealthcareProfessionalSection.addHealthCareProfessionalLocaleName') }}
+                    {{ t('modHealthcareProfessionalSection.addHealthCareProfessionalLocaleName') }}
                 </button>
                 <h2
                     :id="ModHealthcareProfessionalsLeftNavbarSections.HealthcareProfessionalMedicalInfo"
                     class="mod-healthcare-professional-section
                      my-3.5 text-start text-primary-text text-2xl font-bold font-sans leading-normal"
                 >
-                    {{ $t('modHealthcareProfessionalSection.healthcareProfessionalMedicalInfoHeading') }}
+                    {{ t('modHealthcareProfessionalSection.healthcareProfessionalMedicalInfoHeading') }}
                 </h2>
                 <label
-                    for="Accepted Insurances"
+                    for="accepted-insurances"
                     class="my-2 text-primary-text text-sm font-bold font-sans"
                 >
-                    {{ $t("modHealthcareProfessionalSection.selectInsurances") }}
+                    {{ t("modHealthcareProfessionalSection.selectInsurances") }}
                 </label>
-                <ModSearchbar
+                <ModSearchBar
                     v-model="healthcareProfessionalAcceptedInsurancesArray"
                     data-test-id="mod-healthcare-professional-section-accepted-insurances"
-                    :place-holder-text="$t('modHealthcareProfessionalSection.placeholderTextAcceptedInsurances')"
-                    :no-match-text="$t('modHealthcareProfessionalSection.noInsurancesWereFound')"
+                    :place-holder-text="t('modHealthcareProfessionalSection.placeholderTextAcceptedInsurances')"
+                    :no-match-text="t('modHealthcareProfessionalSection.noInsurancesWereFound')"
                     :fields-to-display-callback="insurancesToDisplayCallback"
+                    :default-suggestions="Object.values(Insurance)"
                     @search-input-change="handleInsuranceInputChange"
                 />
                 <ol class="list-disc text-primary-text/60 font-semibold my-2 px-2">
@@ -169,14 +170,15 @@
                     for="degrees"
                     class="my-2 text-primary-text text-sm font-bold font-sans"
                 >
-                    {{ $t("modHealthcareProfessionalSection.selectDegrees") }}
+                    {{ t("modHealthcareProfessionalSection.selectDegrees") }}
                 </label>
-                <ModSearchbar
+                <ModSearchBar
                     v-model="healthcareProfessionalDegreesArray"
                     data-test-id="mod-healthcare-professional-section-degrees"
-                    :place-holder-text="$t('modHealthcareProfessionalSection.placeholderTextDegrees')"
-                    :no-match-text="$t('modHealthcareProfessionalSection.noDegreesWereFound')"
+                    :place-holder-text="t('modHealthcareProfessionalSection.placeholderTextDegrees')"
+                    :no-match-text="t('modHealthcareProfessionalSection.noDegreesWereFound')"
                     :fields-to-display-callback="degreesToDisplayCallback"
+                    :default-suggestions="Object.values(Degree)"
                     @search-input-change="handleDegreeInputChange"
                 />
                 <ol class="list-disc text-primary-text/60 font-semibold my-2 px-2">
@@ -192,14 +194,15 @@
                     for="specialties"
                     class="my-2 text-primary-text text-sm font-bold font-sans"
                 >
-                    {{ $t("modHealthcareProfessionalSection.selectSpecialties") }}
+                    {{ t("modHealthcareProfessionalSection.selectSpecialties") }}
                 </label>
-                <ModSearchbar
+                <ModSearchBar
                     v-model="healthcareProfessionalSpecialtiesArray"
                     data-test-id="mod-healthcare-professional-section-specialties"
-                    :place-holder-text="$t('modHealthcareProfessionalSection.placeholderTextSpecialties')"
-                    :no-match-text="$t('modHealthcareProfessionalSection.noSpecialtiesWereFound')"
+                    :place-holder-text="t('modHealthcareProfessionalSection.placeholderTextSpecialties')"
+                    :no-match-text="t('modHealthcareProfessionalSection.noSpecialtiesWereFound')"
                     :fields-to-display-callback="specialtiesToDisplayCallback"
+                    :default-suggestions="Object.values(Specialty)"
                     @search-input-change="handleSpecialtyInputChange"
                 />
                 <ol class="list-disc text-primary-text/60 font-semibold my-2 px-2">
@@ -215,14 +218,15 @@
                     for="locales"
                     class="my-2 text-primary-text text-sm font-bold font-sans"
                 >
-                    {{ $t("modHealthcareProfessionalSection.selectLocales") }}
+                    {{ t("modHealthcareProfessionalSection.selectLocales") }}
                 </label>
-                <ModSearchbar
+                <ModSearchBar
                     v-model="healthcareProfessionalSpokenLanguages"
                     data-test-id="mod-healthcare-professional-section-spoken-locales"
-                    :place-holder-text="$t('modHealthcareProfessionalSection.placeholderTextLocales')"
-                    :no-match-text="$t('modHealthcareProfessionalSection.noLocalesWereFound')"
+                    :place-holder-text="t('modHealthcareProfessionalSection.placeholderTextLocales')"
+                    :no-match-text="t('modHealthcareProfessionalSection.noLocalesWereFound')"
                     :fields-to-display-callback="localesToDisplayCallback"
+                    :default-suggestions="Object.values(Locale)"
                     @search-input-change="handleLocaleInputChange"
                 />
                 <ol class="list-disc text-primary-text/60 font-semibold my-2 px-2">
@@ -241,13 +245,14 @@
                     class="mod-healthcare-professional-section
                  my-3.5 text-start text-primary-text text-2xl font-bold font-sans leading-normal"
                 >
-                    {{ $t("modHealthcareProfessionalSection.facilities") }}
+                    {{ t("modHealthcareProfessionalSection.facilities") }}
                 </h2>
-                <ModSearchbar
+                <ModSearchBar
                     v-model="selectedFacilities"
-                    :place-holder-text="$t('modHealthcareProfessionalSection.placeholderTextFacilitySearchBar')"
-                    :no-match-text="$t('modHealthcareProfessionalSection.noFacilitiesWereFound')"
+                    :place-holder-text="t('modHealthcareProfessionalSection.placeholderTextFacilitySearchBar')"
+                    :no-match-text="t('modHealthcareProfessionalSection.noFacilitiesWereFound')"
                     :fields-to-display-callback="facilitiesFieldsToDisplayCallback"
+                    :default-suggestions="currentFacilities"
                     @search-input-change="handleFacilitySearchInputChange"
                 />
                 <ol class="list-disc text-primary-text/60 font-semibold my-2 px-2 ">
@@ -268,7 +273,6 @@
 import { nextTick, onBeforeMount, reactive, type Ref, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { type ToastInterface, useToast } from 'vue-toastification'
-import ModSearchbar from './ModSearchBar.vue'
 import { useHealthcareProfessionalsStore } from '~/stores/healthcareProfessionalsStore'
 import { useFacilitiesStore } from '~/stores/facilitiesStore'
 import { useModerationScreenStore } from '~/stores/moderationScreenStore'

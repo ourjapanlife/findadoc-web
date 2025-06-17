@@ -25,13 +25,13 @@ module.exports = {
             currentColor: '#ED6C5A',
             primary: 'rgb(var(--color-primary) / <alpha-value>)',
             secondary: 'rgb(var(--color-secondary) / <alpha-value>)',
-            tertiary: 'rgb(var(--color-tertiary) / <alpha-value>)',
+            accent: 'rgb(var(--color-accent) / <alpha-value>)',
             'primary-inverted':
                 'rgb(var(--color-primary-inverted) / <alpha-value>)',
             'primary-hover': 'rgb(var(--color-primary-hover) / <alpha-value>)',
             'primary-bg': 'rgb(var(--color-bg-primary) / <alpha-value>)',
             'secondary-bg': 'rgb(var(--color-bg-secondary) / <alpha-value>)',
-            'tertiary-bg': 'rgb(var(--color-bg-tertiary) / <alpha-value>)',
+            'accent-bg': 'rgb(var(--color-bg-accent) / <alpha-value>)',
             'primary-text': 'rgb(var(--color-text-base) / <alpha-value>)',
             'primary-text-muted':
                 'rgb(var(--color-text-muted) / <alpha-value>)',
@@ -41,8 +41,14 @@ module.exports = {
                 'rgb(var(--color-secondary-inverted) / <alpha-value>)',
             'secondary-hover':
                 'rgb(var(--color-secondary-hover) / <alpha-value>)',
+            success:
+                'rgb(var(--color-success) / <alpha-value>)',
             error:
-                'rgb(var(--color-secondary-hover) / <alpha-value>)',
+                'rgb(var(--color-error) / <alpha-value>)',
+            warning:
+                'rgb(var(--color-warning) / <alpha-value>)',
+            info:
+                'rgb(var(--color-info) / <alpha-value>)',
             blue: '#245A7D',
             neutral: colors.gray,
             black: colors.black,

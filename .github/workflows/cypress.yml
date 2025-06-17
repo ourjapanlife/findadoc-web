@@ -16,7 +16,7 @@ env:
   AUTH0_CLIENTID: ${{ secrets.AUTH0_CLIENTID }}
   AUTH0_CLIENTSECRET: ${{ secrets.AUTH0_CLIENTSECRET }}
   NUXT_PUBLIC_LOAD_STORES: true
-  NUXT_CYPRESS_TESTING: true
+  NUXT_IS_TESTING_MODE: true
 
 jobs:
   cypress-run:

@@ -9,17 +9,17 @@
                 data-testid="submit-heading"
                 class="mb-3.5 text-center text-primary-text text-2xl font-bold font-sans leading-normal"
             >
-                {{ $t('submitPage.heading') }}
+                {{ t('submitPage.heading') }}
             </h1>
             <p
                 data-testid="submit-subheading"
                 class="mb-10 w-96 text-center text-primary-text-muted text-sm font-normal font-sans"
             >
-                {{ $t('submitPage.subheading') }}
+                {{ t('submitPage.subheading') }}
             </p>
             <span
                 class="mb-2 text-primary-text text-sm font-normal font-sans"
-            >{{ $t('submitPage.googleMaps') }}</span>
+            >{{ t('submitPage.googleMaps') }}</span>
 
             <input
                 v-model="location"
@@ -28,7 +28,7 @@
                 required
                 class="px-3 py-3.5 w-96 h-12 bg-secondary-bg rounded-lg border border-primary-text-muted
                 text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
-                :placeholder="$t('submitPage.location')"
+                :placeholder="t('submitPage.location')"
                 @blur="initialValidationCheck(location, 'googleMaps')"
             >
             <div class="google-maps-validation-container flex text-error text-xs font-sans h-3 mt-1 mb-3">
@@ -36,12 +36,12 @@
                     v-show="!isValidInput.googleMapsUrl.value"
                     class="text-error text-xs font-sans"
                 >
-                    {{ $t('submitPage.googleMapsValidation') }}
+                    {{ t('submitPage.googleMapsValidation') }}
                 </span>
             </div>
             <span
                 class="mb-2 text-primary-text text-sm font-normal font-sans"
-            >{{ $t('submitPage.healthcareProfessionalName') }}</span>
+            >{{ t('submitPage.healthcareProfessionalName') }}</span>
 
             <div>
                 <input
@@ -52,7 +52,7 @@
                     type="text"
                     required
                     maxlength="30"
-                    :placeholder="$t('submitPage.lastName')"
+                    :placeholder="t('submitPage.lastName')"
                     @blur="initialValidationCheck(lastName, 'lastName')"
                 >
                 <input
@@ -62,7 +62,7 @@
                 text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
                     type="text"
                     maxlength="30"
-                    :placeholder="$t('submitPage.firstName')"
+                    :placeholder="t('submitPage.firstName')"
                     @blur="initialValidationCheck(firstName, 'firstName')"
                 >
             </div>
@@ -71,32 +71,32 @@
                     <span
                         v-show="!isValidInput.lastName.value"
                     >
-                        {{ $t('submitPage.lastNameValidation') }}
+                        {{ t('submitPage.lastNameValidation') }}
                     </span>
                 </div>
 
                 <div class="last-name-validation-container w-44">
                     <span
                         v-show="!isValidInput.firstName.value"
-                    >   {{ $t('submitPage.firstNameValidation') }}
+                    >   {{ t('submitPage.firstNameValidation') }}
                     </span>
                 </div>
             </div>
             <span
                 class="mb-2 text-primary-text text-sm font-normal font-sans"
-            >{{ $t('submitPage.spokenLanguage1') }}</span>
+            >{{ t('submitPage.spokenLanguage1') }}</span>
             <p
                 v-show="!isValidInput.primarySpokenLangauge.value"
                 class="text-error text-xs font-sans"
             >
-                {{ $t('submitPage.spokenLanguageValidation') }}
+                {{ t('submitPage.spokenLanguageValidation') }}
             </p>
             <select
                 v-model="selectLanguage1"
                 data-testid="submit-select-language1"
                 class="mb-5 px-3 py-3.5 w-96 h-12 bg-secondary-bg rounded-lg border border-primary-text-muted
                         text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
-                :placeholder="$t('submitPage.selectLanguage1')"
+                :placeholder="t('submitPage.selectLanguage1')"
                 @change="initialValidationCheck(selectLanguage1, 'primaryLanguage')"
             >
                 <option
@@ -109,19 +109,19 @@
             </select>
             <span
                 class="mb-2 text-primary-text text-sm font-normal font-sans"
-            >{{ $t('submitPage.spokenLanguage2') }}</span>
+            >{{ t('submitPage.spokenLanguage2') }}</span>
             <p
                 v-show="!isValidInput.secondarySpokenLanguage.value"
                 class="text-error text-xs font-sans"
             >
-                {{ $t('submitPage.invalidOption') }}
+                {{ t('submitPage.invalidOption') }}
             </p>
             <select
                 v-model="selectLanguage2"
                 data-testid="submit-select-language2"
                 class="mb-5 px-3 py-3.5 w-96 h-12 bg-primary-text-inverted rounded-lg border border-primary-text-muted
                         text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
-                :placeholder="$t('submitPage.selectLanguage2')"
+                :placeholder="t('submitPage.selectLanguage2')"
                 @change="initialValidationCheck(selectLanguage1, 'secondaryLanguage')"
             >
                 <option
@@ -134,7 +134,7 @@
             </select>
             <span
                 class="mb-2 text-primary-text text-sm font-normal font-sans"
-            >{{ $t('submitPage.otherNotes') }}({{ $t('submitPage.optional') }})</span>
+            >{{ t('submitPage.otherNotes') }}({{ t('submitPage.optional') }})</span>
             <textarea
                 v-model="otherNotes"
                 data-testid="submit-input-notes"
@@ -148,7 +148,7 @@
                  text-primary-inverted font-medium font-sans"
                 @click="submitNewSubmission"
             >
-                {{ $t('submitPage.submitButton') }}
+                {{ t('submitPage.submitButton') }}
             </button>
         </form>
         <div />

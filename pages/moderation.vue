@@ -10,24 +10,24 @@
                     class="w-full h-full mt-16 mb-16 text-primary-text text-2xl font-bold
                 flex self-center justify-items-center justify-center text-center"
                 >
-                    {{ $t('login.checkingauth') }}
+                    {{ t('login.checkingauth') }}
                 </div>
                 <div
-                    v-if="!doesTheUserHaveAccess && !authStore.isAdmin && !authStore.isModerator"
+                    v-if="!doesTheUserHaveAccess"
                     data-testid="unauthorized-message"
                 >
                     <div
                         class="flex flex-col w-full h-full mt-16 mb-16 text-primary-text text-2xl font-bold
                     self-center justify-items-center justify-center text-center"
                     >
-                        <span>{{ $t('login.unauthorizedline1') }}</span>
-                        <span>{{ $t('login.unauthorizedline2') }}</span>
+                        <span>{{ t('login.unauthorizedline1') }}</span>
+                        <span>{{ t('login.unauthorizedline2') }}</span>
                         <NuxtLink
                             to="https://forms.gle/4E763qfaq46kEsn99"
                             target="_blank"
                             class="inline text-primary underline"
                         >
-                            {{ $t('login.unauthorizedline3') }}
+                            {{ t('login.unauthorizedline3') }}
                         </NuxtLink>
                     </div>
                 </div>
@@ -49,7 +49,7 @@
                     class="w-full h-full mt-16 mb-16 text-primary-text text-2xl font-bold
                 flex self-center justify-items-center justify-center text-center"
                 >
-                    {{ $t('login.checkingauth') }}
+                    {{ t('login.checkingauth') }}
                 </div>
             </template>
         </Suspense>
@@ -66,6 +66,8 @@ import { definePageMeta } from '#imports'
 definePageMeta({
     layout: 'moderationlayout'
 })
+
+const { t } = useI18n()
 
 const authStore = useAuthStore()
 const route = useRoute()

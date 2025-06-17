@@ -6,6 +6,7 @@ const SITE_DESCRIPTION
     = 'Health service information for the international community in Japan'
 
 export default defineNuxtConfig({
+    ssr: false,
     app: {
     // Global page headers: https://nuxt.com/docs/getting-started/seo-meta
         head: {
@@ -89,8 +90,13 @@ export default defineNuxtConfig({
     // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
     plugins: [],
 
-    // Auto import components: https://go.nuxtjs.dev/config-components
-    components: true,
+    // Auto import components: https://nuxt.com/docs/guide/directory-structure/components#component-names
+    components: [
+        {
+            path: '~/components',
+            pathPrefix: false
+        }
+    ],
 
     modules: [
         '@nuxtjs/i18n',
@@ -163,10 +169,8 @@ export default defineNuxtConfig({
         }
     },
     runtimeConfig: {
-        cypressTesting: process.env.NUXT_CYPRESS_TESTING,
-
         public: {
-
+            isTestingMode: process.env.NUXT_IS_TESTING_MODE,
             GOOGLE_MAPS_API_KEY: process.env.GOOGLE_MAPS_API_KEY,
 
             NUXT_PUBLIC_LOAD_STORES: process.env.NUXT_PUBLIC_LOAD_STORES,

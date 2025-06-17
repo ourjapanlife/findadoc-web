@@ -1,14 +1,14 @@
 <template>
     <div>
         <span class="mb-3.5 text-center text-primary-text text-2xl font-bold font-sans leading-normal">
-            {{ $t('modSubmissionForm.healthcareProfessionalId') }}
+            {{ t('modSubmissionForm.healthcareProfessionalId') }}
         </span>
         <div class="flex flex-col mt-4">
             <div class="justify-start items-start flex">
                 <input
                     v-model="searchValue"
                     type="text"
-                    :placeholder="$t('modSubmissionForm.placeholderTextHealthcareProfessionalSearchbar')"
+                    :placeholder="t('modSubmissionForm.placeholderTextHealthcareProfessionalSearchbar')"
                     class="px-3 py-3.5 w-96 h-12 bg-secondary-bg rounded-lg border border-primary-text-muted
                     text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
                     @input="searchHealthcareProfessionalByIdOrName"
@@ -75,6 +75,8 @@ import { RelationshipAction, type HealthcareProfessional } from '~/typedefs/gqlT
 import { useHealthcareProfessionalsStore } from '~/stores/healthcareProfessionalsStore'
 import { useFacilitiesStore } from '~/stores/facilitiesStore'
 import { useModerationScreenStore } from '~/stores/moderationScreenStore'
+
+const { t } = useI18n()
 
 const healthcareProfessionalsStore = useHealthcareProfessionalsStore()
 const moderationScreenStore = useModerationScreenStore()

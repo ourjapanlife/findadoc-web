@@ -7,13 +7,13 @@
             #
         </div>
         <div class="font-bold text-left p-1">
-            {{ $t("modPanelSubmissionList.name") }}
+            {{ t("modPanelSubmissionList.name") }}
         </div>
         <div class="font-bold text-left p-1">
-            {{ $t("modPanelSubmissionList.modified") }}
+            {{ t("modPanelSubmissionList.modified") }}
         </div>
         <div class="font-bold text-left p-1">
-            {{ $t("modPanelSubmissionList.submitted") }}
+            {{ t("modPanelSubmissionList.submitted") }}
         </div>
         <div
             v-if="hasSubmissions
@@ -23,11 +23,11 @@
             <div
                 v-for="(submission, index) in modSubmissionsListStore.filteredSubmissionDataForListComponent"
                 :key="index"
-                class="grid grid-cols-subgrid col-span-4 bg-tertiary-bg"
+                class="grid grid-cols-subgrid col-span-4 bg-accent-bg"
             >
                 <div
                     :data-testid="`mod-submission-list-item-${index + 1}`"
-                    class="grid grid-cols-subgrid col-span-4 bg-tertiary-bg cursor-pointer hover:bg-primary"
+                    class="grid grid-cols-subgrid col-span-4 bg-accent-bg cursor-pointer hover:bg-primary"
                     @click="handleClickToSubmissionForm(submission.id)"
                 >
                     <NuxtLink
@@ -36,7 +36,7 @@
                     >
                         <span class="text-start">{{ index + 1 }}</span>
                         <span class="text-start">
-                            {{ submission.healthcareProfessionalName || $t("modPanelSubmissionList.facilityNameUnknown") }}
+                            {{ submission.healthcareProfessionalName || t("modPanelSubmissionList.facilityNameUnknown") }}
                         </span>
                         <span class="text-start">{{ convertDateToLocalTime(submission.updatedDate) }}</span>
                         <span class="text-start">{{ convertDateToLocalTime(submission.createdDate) }}</span>
@@ -52,11 +52,11 @@
             <div
                 v-for="(facility, index) in facilitiesStore.facilityData"
                 :key="index"
-                class="grid grid-cols-subgrid col-span-4 bg-tertiary-bg"
+                class="grid grid-cols-subgrid col-span-4 bg-accent-bg"
             >
                 <div
                     :data-testid="`mod-facility-list-item-${index + 1}`"
-                    class="grid grid-cols-subgrid col-span-4 bg-tertiary-bg cursor-pointer hover:bg-primary"
+                    class="grid grid-cols-subgrid col-span-4 bg-accent-bg cursor-pointer hover:bg-primary"
                 >
                     <NuxtLink
                         :to="`/moderation/edit-facility/${facility.id}`"
@@ -81,11 +81,11 @@
             <div
                 v-for="(healthcareProfessional, index) in healthcareProfessionalsStore.healthcareProfessionalsData"
                 :key="index"
-                class="grid grid-cols-subgrid col-span-4 bg-tertiary-bg"
+                class="grid grid-cols-subgrid col-span-4 bg-accent-bg"
             >
                 <div
                     :data-testid="`mod-healthcare-professional-list-item-${index + 1}`"
-                    class="grid grid-cols-subgrid col-span-4 bg-tertiary-bg cursor-pointer hover:bg-primary"
+                    class="grid grid-cols-subgrid col-span-4 bg-accent-bg cursor-pointer hover:bg-primary"
                 >
                     <NuxtLink
                         :to="`/moderation/edit-healthcare-professional/${healthcareProfessional.id}`"
@@ -102,7 +102,7 @@
             </div>
         </div>
         <div v-else>
-            {{ $t("modPanelSubmissionList.noSubmissions") }}
+            {{ t("modPanelSubmissionList.noSubmissions") }}
         </div>
     </div>
 </template>
@@ -112,6 +112,8 @@ import { computed, onMounted } from 'vue'
 import { SelectedModerationListView, useModerationSubmissionsStore } from '~/stores/moderationSubmissionsStore'
 import { useHealthcareProfessionalsStore } from '~/stores/healthcareProfessionalsStore'
 import { useFacilitiesStore } from '~/stores/facilitiesStore'
+
+const { t } = useI18n()
 
 const modSubmissionsListStore = useModerationSubmissionsStore()
 const healthcareProfessionalsStore = useHealthcareProfessionalsStore()
