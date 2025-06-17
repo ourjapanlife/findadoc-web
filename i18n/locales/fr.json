@@ -113,7 +113,7 @@
     "facilityCreatedSuccessfully": "Facility created successfully.",
     "heathcareProfessionalCreatedSuccessfully": "Healthcare professional created successfully.",
     "unsavedChangesMessage": "This will exit without saving your entry. All unsaved data will be lost."
-},
+  },
   "modDashboardLeftNav": {
     "facilities": "Établissements",
     "healthcareProfessionals": "Professionnels de la santé",
@@ -296,7 +296,8 @@
     "radiationOncology": "Radiothérapeute oncologue",
     "sportsMedicine": "Médecine du sport",
     "urology": "Urologue",
-    "traumatology": "Traumatologie"
+    "traumatology": "Traumatologie",
+    "physicalMedicineAndRehabilitation": "Physical Medicine & Rehabilitation"
   },
   "modPanelSubmissionLeftNavbar": {
     "addresses": "Addresses",
