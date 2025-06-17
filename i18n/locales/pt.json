@@ -443,8 +443,11 @@
     "pediatrics": "Pediatra",
     "physiotherapy": "Fisioterapeuta",
     "psychiatry": "Psiquiatra",
+    "preventiveMedicine": "Medicina preventiva",
     "radiationOncology": "Oncologista de radiação",
     "sportsMedicine": "Medicina esportiva",
-    "urology": "Urologista"
+    "physicalMedicineAndRehabilitation": "Medicina física e reabilitação",
+    "urology": "Urologista",
+    "traumatology": "Traumatologia"
   }
 }

@@ -141,10 +141,13 @@
     "pathology": "Pathologe/Pathologin",
     "pediatrics": "Kinderarzt/Kinderärztin",
     "physiotherapy": "Physiotherapeut/Physiotherapeutin",
-    "psychiatry": "Psychiater/Psychiaterin",
+    "psychiatry": "Psychiatrie / Psychotherapie / psychosomatische Medizin",
+    "preventiveMedicine": "Präventivmedizin",
     "radiationOncology": "Strahlentherapeut/Strahlentherapeutin",
-    "sportsMedicine": "Sportmediziner/Sportmedizinerin",
-    "urology": "Urologe/Urologin"
+    "sportsMedicine": "Sportmedizin",
+    "physicalMedicineAndRehabilitation": "Physikalische Medizin und Rehabilitation",
+    "traumatology": "Traumatologie",
+    "urology": "Urologie"
   },
   "modCreateFacilityOrHPTopbar": {
     "confirmExit": "Verlassen ohne zu Speichern",

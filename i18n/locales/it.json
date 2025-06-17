@@ -434,8 +434,11 @@
     "pediatrics": "Pediatra",
     "physiotherapy": "Fisioterapista",
     "psychiatry": "Psichiatra",
+    "preventiveMedicine": "Medicina preventiva",
     "radiationOncology": "Radioterapista oncologo/Radioterapista oncologa",
     "sportsMedicine": "Medicina dello sport",
+    "physicalMedicineAndRehabilitation": "Medicina fisica e riabilitativa",
+    "traumatology": "Traumatologia",
     "urology": "Urologo/Urologa"
   }
 }

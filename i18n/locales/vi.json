@@ -434,8 +434,11 @@
     "pediatrics": "Bác sĩ Nhi khoa",
     "physiotherapy": "Bác sĩ Vật lý trị liệu",
     "psychiatry": "Bác sĩ Tâm thần",
+    "preventiveMedicine": "Y học dự phòng",
     "radiationOncology": "Bác sĩ Xạ trị ung thư",
     "sportsMedicine": "Bác sĩ Y học thể thao",
-    "urology": "Bác sĩ Tiết niệu"
+    "physicalMedicineAndRehabilitation": "Y học vật lý và phục hồi chức năng",
+    "urology": "Bác sĩ Tiết niệu",
+    "traumatology": "Chấn thương học"
   }
 }

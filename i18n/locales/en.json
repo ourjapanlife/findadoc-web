@@ -148,9 +148,12 @@
         "pediatrics": "Pediatrician",
         "physiotherapy": "Physical Therapist",
         "psychiatry": "Psychiatrist",
+        "preventiveMedicine": "Preventive Medicine",
         "radiationOncology": "Radiation Oncologist",
         "sportsMedicine": "Sports Medicine",
-        "urology": "Urologist"
+        "physicalMedicineAndRehabilitation": "Physical Medicine & Rehabilitation",
+        "urology": "Urologist",
+        "traumatology": "Traumatologist"
     },
     "modCreateFacilityOrHPTopbar": {
         "confirmExit": "Exit without saving",

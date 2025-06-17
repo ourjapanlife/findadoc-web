@@ -292,9 +292,11 @@
     "pediatrics": "Pédiatre",
     "physiotherapy": "Physiothérapeute",
     "psychiatry": "Psychiatre",
+    "preventiveMedicine": "Médecine préventive",
     "radiationOncology": "Radiothérapeute oncologue",
     "sportsMedicine": "Médecine du sport",
-    "urology": "Urologue"
+    "urology": "Urologue",
+    "traumatology": "Traumatologie"
   },
   "modPanelSubmissionLeftNavbar": {
     "addresses": "Addresses",

@@ -40,19 +40,18 @@ export const useSpecialtiesStore = defineStore('specialtiesStore', () => {
         { code: 'PATHOLOGY', displayText: t('specialties.pathology') },
         { code: 'PEDIATRICS', displayText: t('specialties.pediatrics') },
         { code: 'PHYSIOTHERAPY', displayText: t('specialties.physiotherapy') },
+        { code: 'PREVENTIVE_MEDICINE', displayText: t('specialties.preventiveMedicine') },
         { code: 'PSYCHIATRY', displayText: t('specialties.psychiatry') },
+        { code: 'PHYSICAL_MEDICINE_AND_REHABILITATION', displayText: t('specialties.physicalMedicineAndRehabilitation') },
         { code: 'RADIATION_ONCOLOGY', displayText: t('specialties.radiationOncology') },
         { code: 'SPORTS_MEDICINE', displayText: t('specialties.sportsMedicine') },
+        { code: 'TRAUMATOLOGY', displayText: t('specialties.traumatology') },
         { code: 'UROLOGY', displayText: t('specialties.urology') }
         // Intentionally excluded specialties
-        // { code: 'PREVENTIVE_MEDICINE', displayText: t('specialties.preventiveMedicine') },
         // { code: 'SURGERY', displayText: t('specialties.surgery') },
-        // { code: 'TRAUMATOLOGY', displayText: t('specialties traumatology') },
         // Combined into General Practitioner / Pediatrition since most people don't know the nuanced difference
         // { code: 'INTERNAL_MEDICINE', displayText: t('specialties.internalMedicine') },
         // { code: 'FAMILY_MEDICINE', displayText: t('specialties.familyMedicine') },
-        // Combined with Sports Medicine
-        // { code: 'PHYSICAL_MEDICINE_AND_REHABILITATION', displayText: t('specialties.physicalMedicineAndRehabilitation') },
     ] as SpecialtyDisplayOption[]
 
     return {

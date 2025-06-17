@@ -434,8 +434,11 @@
     "pediatrics": "Pedyatrisyan",
     "physiotherapy": "Pisyoterapista",
     "psychiatry": "Saykayatrista",
+    "preventiveMedicine": "Medisinang Pang-iwas",
     "radiationOncology": "Onkolohistang Radiation",
     "sportsMedicine": "Doktor ng Medisinang Pampalakasan",
-    "urology": "Urologistang Doktor"
+    "physicalMedicineAndRehabilitation": "Pisikal na Medisina at Rehabilitasyon",
+    "urology": "Urologistang Doktor",
+    "traumatology": "Traumatolohiya"
   }
 }

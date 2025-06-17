@@ -443,8 +443,11 @@
     "pediatrics": "Педиатр",
     "physiotherapy": "Физиотерапевт",
     "psychiatry": "Психиатр",
+    "preventiveMedicine": "Профилактическая медицина",
     "radiationOncology": "Радиотерапевт-онколог",
     "sportsMedicine": "Врач спортивной медицины",
-    "urology": "Уролог"
+    "physicalMedicineAndRehabilitation": "Физическая медицина и реабилитация",
+    "urology": "Уролог",
+    "traumatology": "Травматология"
   }
 }

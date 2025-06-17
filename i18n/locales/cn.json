@@ -443,8 +443,11 @@
     "pediatrics": "儿科医生",
     "physiotherapy": "物理治疗师",
     "psychiatry": "精神科医生",
+    "preventiveMedicine": "预防医学",
     "radiationOncology": "放射肿瘤科医生",
     "sportsMedicine": "运动医学医生",
-    "urology": "泌尿科医生"
+    "physicalMedicineAndRehabilitation": "物理医学与康复",
+    "urology": "泌尿科医生",
+    "traumatology": "创伤学"
   }
 }
