@@ -411,5 +411,31 @@
     "firstName": "First name",
     "middleName": "Middle name",
     "nameLocale": "Name locale"
+  },
+  "specialties": {
+    "allergyAndImmunology": "Allergologo/Allergologa",
+    "anesthesiology": "Anestesista",
+    "cardiology": "Cardiologo/Cardiologa",
+    "dentistry": "Dentista",
+    "dermatology": "Dermatologo/Dermatologa",
+    "diagnosticRadiology": "Radiologo/Radiologa",
+    "entSpecialist": "Otorinolaringoiatra (ORL)",
+    "emergencyMedicine": "Medicina d'urgenza",
+    "infectiousDiseases": "Malattie infettive",
+    "generalPractitioner": "Medico di medicina generale",
+    "medicalGenetics": "Genetista medico",
+    "neurology": "Neurologo/Neurologa",
+    "nuclearMedicine": "Medicina nucleare",
+    "obstetricsAndGynecology": "Ginecologo-ostetrico/Ginecologa-ostetrica",
+    "ophthalmology": "Chirurgo oculista (Oftalmologo/Oftalmologa)",
+    "orthopedicSurgery": "Chirurgo ortopedico/Chirurga ortopedica",
+    "optometry": "Ottico optometrista",
+    "pathology": "Anatomopatologo/Anatomopatologa",
+    "pediatrics": "Pediatra",
+    "physiotherapy": "Fisioterapista",
+    "psychiatry": "Psichiatra",
+    "radiationOncology": "Radioterapista oncologo/Radioterapista oncologa",
+    "sportsMedicine": "Medicina dello sport",
+    "urology": "Urologo/Urologa"
   }
 }

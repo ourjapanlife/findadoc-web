@@ -15,7 +15,7 @@ export const useSpecialtiesStore = defineStore('specialtiesStore', () => {
         { code: 'PHYSIOTHERAPY', displayText: t('specialties.physiotherapy') },
         { code: 'OPTOMETRY', displayText: t('specialties.optometry') },
         { code: 'ENT_SPECIALIST', displayText: t('specialties.entSpecialist') },
-        { code: 'EMERGENCY_MEDICINE', displayText: t('specialties.emergencyMedicine') },
+        { code: 'EMERGENCY_MEDICINE', displayText: t('specialties.emergencyMedicine') }
     ]
 
     const specialtyDisplayOptions = [
