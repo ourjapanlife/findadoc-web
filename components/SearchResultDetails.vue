@@ -91,7 +91,13 @@
                         title="banner image"
                         class="banner-icon w-6 h-6 stroke-primary mr-2 self-center"
                     />
-                    {{ phone }}
+                    <a
+                        v-if="phone"
+                        :href="`tel:${phone}`"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="underline text-blue"
+                    >{{ phone }}</a>
                 </div>
                 <div
                     v-if="!excludedEmailAddresses.includes(email)"

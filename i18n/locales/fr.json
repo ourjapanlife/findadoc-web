@@ -113,7 +113,7 @@
     "facilityCreatedSuccessfully": "Facility created successfully.",
     "heathcareProfessionalCreatedSuccessfully": "Healthcare professional created successfully.",
     "unsavedChangesMessage": "This will exit without saving your entry. All unsaved data will be lost."
-},
+  },
   "modDashboardLeftNav": {
     "facilities": "Établissements",
     "healthcareProfessionals": "Professionnels de la santé",
@@ -123,11 +123,12 @@
     "submissions": "Submissions"
   },
   "modEditSubmissionTopNav": {
-    "saveAndExit": "Enregistrer et quitter",
+    "updateAndExit": "Enregistrer et quitter",
     "approve": "Approuver",
     "reject": "Rejeter",
     "saving": "Saving...",
-    "retryMessage": "Something’s not right. Retrying in {seconds}s..."
+    "retryMessage": "Something’s not right. Retrying in {seconds}s...",
+    "update": "Update"
   },
   "modPanelSubmissionList": {
     "approved": "Approuvé",
@@ -254,7 +255,9 @@
     "noSpecialtiesWereFound": "No specialties were found",
     "noInsurancesWereFound": "No insurance was found",
     "noDegreesWereFound": "No degrees were found",
-    "noLocalesWereFound": "No locales were found"
+    "noLocalesWereFound": "No locales were found",
+    "searchExistingFacilities": "Search for existing facility",
+    "searchExistingHealthcareProfessionals": "Search for existing healthcare professionals"
   },
   "login": {
     "heading": "Log in to your account",
@@ -269,6 +272,35 @@
     "unauthorizedline1": "It looks like you don't have the necessary permissions to access this page. Redirecting in 10 seconds...",
     "unauthorizedline2": "If you want to become a moderator or have any questions, please contact us ",
     "unauthorizedline3": "here"
+  },
+  "specialties": {
+    "allergyAndImmunology": "Allergologue",
+    "anesthesiology": "Anesthésiste",
+    "cardiology": "Cardiologue",
+    "dentistry": "Dentiste",
+    "dermatology": "Dermatologue",
+    "diagnosticRadiology": "Radiologue",
+    "entSpecialist": "ORL (Oto-Rhino-Laryngologiste)",
+    "emergencyMedicine": "Médecine d'urgence",
+    "infectiousDiseases": "Maladies infectieuses",
+    "generalPractitioner": "Médecin généraliste",
+    "medicalGenetics": "Généticien médical",
+    "neurology": "Neurologue",
+    "nuclearMedicine": "Médecine nucléaire",
+    "obstetricsAndGynecology": "Gynécologue-obstétricien(ne)",
+    "ophthalmology": "Chirurgien(ne) ophtalmologiste",
+    "orthopedicSurgery": "Chirurgien(ne) orthopédiste",
+    "optometry": "Optométriste",
+    "pathology": "Pathologiste",
+    "pediatrics": "Pédiatre",
+    "physiotherapy": "Physiothérapeute",
+    "psychiatry": "Psychiatre",
+    "preventiveMedicine": "Médecine préventive",
+    "radiationOncology": "Radiothérapeute oncologue",
+    "sportsMedicine": "Médecine du sport",
+    "urology": "Urologue",
+    "traumatology": "Traumatologie",
+    "physicalMedicineAndRehabilitation": "Physical Medicine & Rehabilitation"
   },
   "modPanelSubmissionLeftNavbar": {
     "addresses": "Addresses",
@@ -412,7 +444,8 @@
     "missingLocale": "No Locale Chosen",
     "oneNameNecessary": "At least one name is required for a healthcare professional",
     "save": "Save",
-    "update": "Update"
+    "update": "Update",
+    "charactersOfLanguageDoNotMatchNameLocale": "The characters of the healthcare professional's name are invalid in chosen locale"
   },
   "modHealthcareProfessionalCard": {
     "editName": "Edit",

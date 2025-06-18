@@ -138,10 +138,10 @@
                         <div class="flex">
                             <div
                                 class="w-10 h-10 mr-1"
-                                title="Default Theme"
+                                title="Original Theme"
                                 style="background-color:#EB7100"
-                                :class="getSelectedTheme('orange')"
-                                @click="setTheme('orange')"
+                                :class="getSelectedTheme('original')"
+                                @click="setTheme('original')"
                             />
                             <div
                                 class="w-10 h-10 mr-1 bg-primary"
