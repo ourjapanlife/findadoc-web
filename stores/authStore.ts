@@ -9,7 +9,9 @@ export const useAuthStore = defineStore('authStore', () => {
     const isTestingMode = !!runtimeConfig.public.isTestingMode
 
     const userId = computed(() => {
-        if (isTestingMode) return useCookie('id_token').value ?? 'unknown user'
+        if (isTestingMode)
+            //we use the id_token cookie name for testing, but it's long so we just use the first 5 characters
+            return useCookie('id_token').value?.substring(0, 5) ?? 'unknown user'
         return auth0?.user.value?.nickname ?? 'unknown user'
     })
 
