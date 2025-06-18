@@ -26,7 +26,7 @@ describe('Visits the home page', () => {
         it('allows setting search fields', () => {
             cy.get('[data-testid="search-button"]').should('be.visible')
 
-            cy.get('.search-specialty select').select('Dermatology')
+            cy.get('.search-specialty select').select('Dermatologist')
             cy.get('.search-specialty select').should('be.visible', 'Dermatology')
 
             cy.get('.search-language select').select('English')
