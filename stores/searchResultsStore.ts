@@ -4,13 +4,14 @@ import { ref, type Ref } from 'vue'
 import { gqlClient } from '../utils/graphql.js'
 import { useModalStore } from './modalStore'
 import { useLoadingStore } from './loadingStore.js'
-import type { Locale,
+import { type Locale,
+    type Facility,
+    type FacilitySearchFilters,
+    type HealthcareProfessional,
+    type HealthcareProfessionalSearchFilters,
+    type Query,
     Specialty,
-    Facility,
-    FacilitySearchFilters,
-    HealthcareProfessional,
-    HealthcareProfessionalSearchFilters,
-    Query } from '~/typedefs/gqlTypes.js'
+    SpecialtyCategory } from '~/typedefs/gqlTypes.js'
 
 type SearchResult = {
     professional: HealthcareProfessional
@@ -197,3 +198,66 @@ const searchFacilitiesQuery = gql`query QueryFacilities($filters: FacilitySearch
     }
   }
   `
+
+// Maps the category to the specialties that fall under it
+export const categoryToSpecialties: Record<SpecialtyCategory, Specialty[]> = {
+    [SpecialtyCategory.PrimaryCare]: [
+        Specialty.FamilyMedicine,
+        Specialty.GeneralMedicine
+    ],
+    [SpecialtyCategory.InternalMedicine]: [
+        Specialty.InternalMedicine,
+        Specialty.Cardiology,
+        Specialty.MedicalGenetics,
+        Specialty.InfectiousDiseases,
+        Specialty.NuclearMedicine,
+        Specialty.PreventiveMedicine
+    ],
+    [SpecialtyCategory.Surgical]: [
+        Specialty.Surgery,
+        Specialty.OrthopedicSurgery,
+        Specialty.Traumatology,
+        Specialty.Urology,
+        Specialty.ObstetricsAndGynecology
+    ],
+    [SpecialtyCategory.Diagnostic]: [
+        Specialty.DiagnosticRadiology,
+        Specialty.Pathology,
+        Specialty.RadiationOncology
+    ],
+    [SpecialtyCategory.MentalHealth]: [
+        Specialty.Psychiatry
+    ],
+    [SpecialtyCategory.WomensHealth]: [
+        Specialty.ObstetricsAndGynecology
+    ],
+    [SpecialtyCategory.ChildrensHealth]: [
+        Specialty.Pediatrics
+    ],
+    [SpecialtyCategory.Musculoskeletal]: [
+        Specialty.OrthopedicSurgery,
+        Specialty.PhysicalMedicineAndRehabilitation,
+        Specialty.Physiotherapy
+    ],
+    [SpecialtyCategory.EyeAndVision]: [
+        Specialty.Ophthalmology,
+        Specialty.Optometry
+    ],
+    [SpecialtyCategory.Dental]: [
+        Specialty.Dentistry
+    ],
+    [SpecialtyCategory.Ent]: [
+        Specialty.EntSpecialist
+    ],
+    [SpecialtyCategory.SportsAndRehab]: [
+        Specialty.SportsMedicine,
+        Specialty.Physiotherapy
+    ],
+    [SpecialtyCategory.Other]: [
+        Specialty.AllergyAndImmunology,
+        Specialty.Anesthesiology,
+        Specialty.Dermatology,
+        Specialty.EmergencyMedicine,
+        Specialty.Neurology
+    ]
+}
