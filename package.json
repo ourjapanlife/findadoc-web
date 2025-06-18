@@ -16,15 +16,14 @@
         "ci:build": "yarn && yarn generate && nuxi generate",
         "ci:start": "nuxi start",
         "prepare:ci": "nuxi prepare",
-        "test": "yarn test:pinia --run && yarn test:e2e:headless && yarn test:jest",
+        "test": "yarn test:pinia --run && yarn test:e2e:headless",
         "test:pinia": "nuxi prepare && nuxi generate && vitest",
         "test:pinia:coverage": "vitest run --coverage",
         "test:e2e": "NUXT_IS_TESTING_MODE=true yarn dev:localserver & npx wait-on http://localhost:3000 && cypress open",
         "test:e2e:headless": "NUXT_IS_TESTING_MODE=true yarn dev:localserver & npx wait-on http://localhost:3000 && cypress run --e2e",
         "test:e2e:ci": "cypress run --e2e",
-        "test:jest": "jest --config jest.config.ts",
-        "test:snapshot": "vitest run",
-        "test:snapshot:update": "vitest run --update"
+        "test:snapshot": "jest --config jest.config.ts",
+        "test:snapshot:update": "jest --updateSnapshot"
     },
     "packageManager": "yarn@4.4.0",
     "engines": {
@@ -33,7 +32,6 @@
     "type": "module",
     "dependencies": {
         "@auth0/auth0-vue": "^2.3.3",
-        "@intlify/shared": "9.2.0",
         "@pinia/nuxt": "^0.5.2",
         "cypress-real-events": "^1.13.0",
         "eslint-plugin-jest": "^28.12.0",
@@ -43,7 +41,6 @@
         "pinia": "^2.2.0",
         "vue": "^3.4.35",
         "vue-gtag": "^2.0.1",
-        "vue-i18n": "9.2.2",
         "vue-router": "^4.4.2",
         "vue-server-renderer": "^2.7.16",
         "vue-template-compiler": "^2.7.16",

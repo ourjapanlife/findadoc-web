@@ -60,7 +60,7 @@
                 class="grid grid-cols-2 md:grid-cols-3 mx-4 gap-8 pb-12 md:pb-32"
             >
                 <div
-                    v-for="(member, index) in data.members.slice(0, 3)"
+                    v-for="(member, index) in data.members"
                     :key="member.avatarImg"
                     data-testid="member"
                     class="members-list grid"
@@ -80,6 +80,7 @@
 </template>
 
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n'
 import data from '../member_directory/members.json'
 import MemberComponent from '~/components/MemberComponent.vue'
 import SvgHeartPlus from '~/assets/icons/heart-plus.svg'

@@ -2520,18 +2520,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@intlify/core-base@npm:9.2.2":
-  version: 9.2.2
-  resolution: "@intlify/core-base@npm:9.2.2"
-  dependencies:
-    "@intlify/devtools-if": "npm:9.2.2"
-    "@intlify/message-compiler": "npm:9.2.2"
-    "@intlify/shared": "npm:9.2.2"
-    "@intlify/vue-devtools": "npm:9.2.2"
-  checksum: 10/4ddbf615012234539b6965fcc339f6e4a7f8c774cd95fb218ccce0cb199fa3ab084c5d3a1ee1c9ddc16838f557dce3ed174f5f8858cfa8f622ee27dabd5fe614
-  languageName: node
-  linkType: hard
-
 "@intlify/core@npm:^10.0.3":
   version: 10.0.5
   resolution: "@intlify/core@npm:10.0.5"
@@ -2539,15 +2527,6 @@ __metadata:
     "@intlify/core-base": "npm:10.0.5"
     "@intlify/shared": "npm:10.0.5"
   checksum: 10/102ab1d67d7aa3e7eeda9bdaec1759726f7ca1a1ca56e00a206c651e77fa1fe638b51a73713481fb96cb1d063c7539f17c54edfce2d2e4b12a0d70e80945ffd1
-  languageName: node
-  linkType: hard
-
-"@intlify/devtools-if@npm:9.2.2":
-  version: 9.2.2
-  resolution: "@intlify/devtools-if@npm:9.2.2"
-  dependencies:
-    "@intlify/shared": "npm:9.2.2"
-  checksum: 10/6368090184d9ae324398517d5210efe799aeebd6fb7e1d80dd07ae0df6833e63acbd1880f991fc49034be46091f1e8f25d8d9bfe016db37a2a3305a948fa1863
   languageName: node
   linkType: hard
 
@@ -2568,16 +2547,6 @@ __metadata:
     "@intlify/shared": "npm:10.0.5"
     source-map-js: "npm:^1.0.2"
   checksum: 10/3e386b042ac6dd98533b6ea2b4af610999236a1eb7ff4d77762cd06cae1858a53735b0b7e60828c569c715a9f0ae588aaaf8496f9a4b287a44e7f0fd470857ff
-  languageName: node
-  linkType: hard
-
-"@intlify/message-compiler@npm:9.2.2":
-  version: 9.2.2
-  resolution: "@intlify/message-compiler@npm:9.2.2"
-  dependencies:
-    "@intlify/shared": "npm:9.2.2"
-    source-map: "npm:0.6.1"
-  checksum: 10/ebd5ef1f90231c380874b9b7888faf999212e73d17202ae4b905fddafb7c3248db9263cec26914dad5ecfaca1746f00d261d302bd1bf770eede2a184b573e35c
   languageName: node
   linkType: hard
 
@@ -2602,20 +2571,6 @@ __metadata:
   version: 11.0.0-rc.1
   resolution: "@intlify/shared@npm:11.0.0-rc.1"
   checksum: 10/3395abac510a4c8345f17a41b0eb77e871e3ebf0b11c6787e5e7e1ac0725371fa29a394de7eca38d0eaeca4ad744d083559ccd8c6cf4f08d07b15df46649bc34
-  languageName: node
-  linkType: hard
-
-"@intlify/shared@npm:9.2.0":
-  version: 9.2.0
-  resolution: "@intlify/shared@npm:9.2.0"
-  checksum: 10/46af9ae7227ff707956b6fd1b42215d5dae7464b581c5bad16236189c20abae0098d9315d60edcba60b7b36770edbd72c747f8cc91fd53b882a26db9765bbc60
-  languageName: node
-  linkType: hard
-
-"@intlify/shared@npm:9.2.2":
-  version: 9.2.2
-  resolution: "@intlify/shared@npm:9.2.2"
-  checksum: 10/62e6d4f3bde79a49b7d775ce735d5c884432495f214b070fad403906b572e1223a0bfc0ee5115fe5df0f2fd0bb56bcbfb9779796d2bd5d16e5d93f289c912298
   languageName: node
   linkType: hard
 
@@ -2663,16 +2618,6 @@ __metadata:
   version: 0.13.0
   resolution: "@intlify/utils@npm:0.13.0"
   checksum: 10/4f6c63887600b385c0c97249df02a199083ce6446cf505f76448f02505a766854eababf8d29022c4d0bd59ceff6501954059de810d0848461f47a881acf14e6d
-  languageName: node
-  linkType: hard
-
-"@intlify/vue-devtools@npm:9.2.2":
-  version: 9.2.2
-  resolution: "@intlify/vue-devtools@npm:9.2.2"
-  dependencies:
-    "@intlify/core-base": "npm:9.2.2"
-    "@intlify/shared": "npm:9.2.2"
-  checksum: 10/9801f6f50c9e2979a989299cf12ec73faf2ecbc9a615a623ff020ffe4e2f040a4d3814d90545733038c04c8da8462f96dc964082ba0a899cfe8bf2b9a71d7176
   languageName: node
   linkType: hard
 
@@ -5652,7 +5597,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vue/devtools-api@npm:^6.2.1, @vue/devtools-api@npm:^6.5.0, @vue/devtools-api@npm:^6.6.3, @vue/devtools-api@npm:^6.6.4":
+"@vue/devtools-api@npm:^6.5.0, @vue/devtools-api@npm:^6.6.3, @vue/devtools-api@npm:^6.6.4":
   version: 6.6.4
   resolution: "@vue/devtools-api@npm:6.6.4"
   checksum: 10/0fca4912b6ae0185b9375f5d113d417984077db0681c74cf39eb8522eb82c27f662a72e1ae3e0d79e105fdd0a99a7cbd65ed111465d238f60cce10922e02a812
@@ -9791,7 +9736,6 @@ __metadata:
     "@graphql-codegen/cli": "npm:^5.0.3"
     "@graphql-codegen/typescript": "npm:^4.0.9"
     "@graphql-codegen/typescript-resolvers": "npm:^4.2.1"
-    "@intlify/shared": "npm:9.2.0"
     "@jest/globals": "npm:30.0.0-beta.3"
     "@microsoft/eslint-formatter-sarif": "npm:^3.1.0"
     "@nuxt/eslint": "npm:^0.5.0"
@@ -9844,7 +9788,6 @@ __metadata:
     vitest: "npm:^2.1.3"
     vue: "npm:^3.4.35"
     vue-gtag: "npm:^2.0.1"
-    vue-i18n: "npm:9.2.2"
     vue-router: "npm:^4.4.2"
     vue-server-renderer: "npm:^2.7.16"
     vue-template-compiler: "npm:^2.7.16"
@@ -16236,7 +16179,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"source-map@npm:0.6.1, source-map@npm:^0.6.0, source-map@npm:^0.6.1, source-map@npm:~0.6.1":
+"source-map@npm:^0.6.0, source-map@npm:^0.6.1, source-map@npm:~0.6.1":
   version: 0.6.1
   resolution: "source-map@npm:0.6.1"
   checksum: 10/59ef7462f1c29d502b3057e822cdbdae0b0e565302c4dd1a95e11e793d8d9d62006cdc10e0fd99163ca33ff2071360cf50ee13f90440806e7ed57d81cba2f7ff
@@ -18417,20 +18360,6 @@ __metadata:
   peerDependencies:
     vue: ^3.0.0
   checksum: 10/cdcdba21ea76413f47461ddd6f8852e5a45514cd788dc8f60feff4de66724a81f9c4b79c4357cc8a97c9c1946d7dd931e3cf586eb0c23601d4cd22fad3ffc3b5
-  languageName: node
-  linkType: hard
-
-"vue-i18n@npm:9.2.2":
-  version: 9.2.2
-  resolution: "vue-i18n@npm:9.2.2"
-  dependencies:
-    "@intlify/core-base": "npm:9.2.2"
-    "@intlify/shared": "npm:9.2.2"
-    "@intlify/vue-devtools": "npm:9.2.2"
-    "@vue/devtools-api": "npm:^6.2.1"
-  peerDependencies:
-    vue: ^3.0.0
-  checksum: 10/8daea5409af938fc39fd2956cf4bdbfed50f1820f1fb8567eac1dda8adef23f8ee530316316c74418d6a210c942437820e668bd4b1c7816b627469fabfc5a780
   languageName: node
   linkType: hard
 
