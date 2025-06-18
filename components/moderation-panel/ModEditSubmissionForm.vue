@@ -419,7 +419,7 @@
                 <button
                     type="button"
                     data-testid="mod-healthcare-add-name-button"
-                    class="bg-tertiary text-primary-text-inverted font-bold py-2 px-4 my-2 rounded w-44"
+                    class="bg-accent text-primary-text-inverted font-bold py-2 px-4 my-2 rounded w-44"
                     @click="handleOpenAddNewNameWithReset"
                 >
                     {{ t('modHealthcareProfessionalSection.addHealthCareProfessionalLocaleName') }}
@@ -545,7 +545,6 @@
 import { type Ref, ref, watch, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useToast, type ToastInterface } from 'vue-toastification'
-import ModSearchBar from './ModSearchBar.vue'
 import { useModerationSubmissionsStore } from '~/stores/moderationSubmissionsStore'
 import { Locale,
     type Submission,
