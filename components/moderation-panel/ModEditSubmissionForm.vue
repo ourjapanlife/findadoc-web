@@ -687,6 +687,9 @@ const handleNavigateToModerationScreen = () => {
     router.push('/moderation')
 }
 
+/* This updates the healthcare professional with existing facilities in order to update
+ the healthcare professional section fields to include the existing facility ids
+ and help prevent adding duplicate of the same facility */
 watch(currentFacilityRelations, newValue => {
     if (isEditSubmissionFormInitialized.value) {
         const newIds = newValue.map(facility => facility.id)
@@ -694,6 +697,9 @@ watch(currentFacilityRelations, newValue => {
     }
 }, { deep: true })
 
+/* This updates the fcaility with existing healthcare professionals in order to update
+ the facility section fields to include the existing healthcare professional ids
+ and help prevent adding duplicate of the same healthcareprofessional*/
 watch(currentExistingHealthcareProfessionals, newValue => {
     if (isEditSubmissionFormInitialized.value) {
         facilitiesStore.facilitySectionFields.healthcareProfessionalIds = newValue.map(

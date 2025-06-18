@@ -149,7 +149,7 @@
                     {{ t("modHealthcareProfessionalSection.selectInsurances") }}
                 </label>
                 <ModSearchBar
-                    v-model="healthcareProfessionalAcceptedInsurancesArray"
+                    v-model="healthcareProfessionalsStore.healthcareProfessionalSectionFields.acceptedInsurance"
                     data-test-id="mod-healthcare-professional-section-accepted-insurances"
                     :place-holder-text="t('modHealthcareProfessionalSection.placeholderTextAcceptedInsurances')"
                     :no-match-text="t('modHealthcareProfessionalSection.noInsurancesWereFound')"
@@ -159,7 +159,7 @@
                 />
                 <ol class="list-disc text-primary-text/60 font-semibold my-2 px-2">
                     <li
-                        v-for="insurance in currentAcceptedInsurances"
+                        v-for="insurance in healthcareProfessionalsStore.healthcareProfessionalSectionFields.acceptedInsurance"
                         :key="`accepted-${insurance}`"
                         class="py-1"
                     >
@@ -173,7 +173,7 @@
                     {{ t("modHealthcareProfessionalSection.selectDegrees") }}
                 </label>
                 <ModSearchBar
-                    v-model="healthcareProfessionalDegreesArray"
+                    v-model="healthcareProfessionalsStore.healthcareProfessionalSectionFields.degrees"
                     data-test-id="mod-healthcare-professional-section-degrees"
                     :place-holder-text="t('modHealthcareProfessionalSection.placeholderTextDegrees')"
                     :no-match-text="t('modHealthcareProfessionalSection.noDegreesWereFound')"
@@ -183,7 +183,7 @@
                 />
                 <ol class="list-disc text-primary-text/60 font-semibold my-2 px-2">
                     <li
-                        v-for="degree in currentDegrees"
+                        v-for="degree in healthcareProfessionalsStore.healthcareProfessionalSectionFields.degrees"
                         :key="`current-${degree}`"
                         class="py-1"
                     >
@@ -197,7 +197,7 @@
                     {{ t("modHealthcareProfessionalSection.selectSpecialties") }}
                 </label>
                 <ModSearchBar
-                    v-model="healthcareProfessionalSpecialtiesArray"
+                    v-model="healthcareProfessionalsStore.healthcareProfessionalSectionFields.specialties"
                     data-test-id="mod-healthcare-professional-section-specialties"
                     :place-holder-text="t('modHealthcareProfessionalSection.placeholderTextSpecialties')"
                     :no-match-text="t('modHealthcareProfessionalSection.noSpecialtiesWereFound')"
@@ -207,7 +207,7 @@
                 />
                 <ol class="list-disc text-primary-text/60 font-semibold my-2 px-2">
                     <li
-                        v-for="specialty in currentSpecialties"
+                        v-for="specialty in healthcareProfessionalsStore.healthcareProfessionalSectionFields.specialties"
                         :key="`current-${specialty}`"
                         class="py-1"
                     >
@@ -221,7 +221,7 @@
                     {{ t("modHealthcareProfessionalSection.selectLocales") }}
                 </label>
                 <ModSearchBar
-                    v-model="healthcareProfessionalSpokenLanguagesArray"
+                    v-model="healthcareProfessionalsStore.healthcareProfessionalSectionFields.spokenLanguages"
                     data-test-id="mod-healthcare-professional-section-spoken-locales"
                     :place-holder-text="t('modHealthcareProfessionalSection.placeholderTextLocales')"
                     :no-match-text="t('modHealthcareProfessionalSection.noLocalesWereFound')"
@@ -231,7 +231,7 @@
                 />
                 <ol class="list-disc text-primary-text/60 font-semibold my-2 px-2">
                     <li
-                        v-for="locale in currentLanguagesSpoken"
+                        v-for="locale in healthcareProfessionalsStore.healthcareProfessionalSectionFields.spokenLanguages"
                         :key="`spoken-${locale}`"
                         class="py-1"
                     >
@@ -270,7 +270,7 @@
 </template>
 
 <script lang="ts" setup>
-import { nextTick, onBeforeMount, reactive, type Ref, ref, watch, computed } from 'vue'
+import { nextTick, onBeforeMount, reactive, type Ref, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { type ToastInterface, useToast } from 'vue-toastification'
 import { useHealthcareProfessionalsStore } from '~/stores/healthcareProfessionalsStore'
@@ -300,26 +300,9 @@ const currentFacilities = facilitiesStore.facilityData
 const isHealthcareProfessionalInitialized: Ref<boolean> = ref(false)
 const selectedFacilities: Ref<Facility[]> = ref([])
 
-// Keeps track of if the search bar inputs have been autofilled with existing facilities
+/* Keeps track of if the search bar inputs have been autofilled with existing facilities
+ and is used because this hold facilities while we need to sift through the ids*/
 const currentFacilityRelations: Ref<Facility[]> = ref([])
-const currentLanguagesSpoken = computed(() =>
-    healthcareProfessionalsStore.healthcareProfessionalSectionFields.spokenLanguages)
-const currentAcceptedInsurances = computed(() =>
-    healthcareProfessionalsStore.healthcareProfessionalSectionFields.acceptedInsurance)
-const currentDegrees = computed(() =>
-    healthcareProfessionalsStore.healthcareProfessionalSectionFields.degrees)
-const currentSpecialties = computed(() =>
-    healthcareProfessionalsStore.healthcareProfessionalSectionFields.specialties)
-
-// These are component refs to enable the multi select to work properly
-const healthcareProfessionalAcceptedInsurancesArray = computed(() =>
-    healthcareProfessionalsStore.healthcareProfessionalSectionFields.acceptedInsurance)
-const healthcareProfessionalDegreesArray = computed(() =>
-    healthcareProfessionalsStore.healthcareProfessionalSectionFields.degrees)
-const healthcareProfessionalSpecialtiesArray = computed(() =>
-    healthcareProfessionalsStore.healthcareProfessionalSectionFields.specialties)
-const healthcareProfessionalSpokenLanguagesArray = computed(() =>
-    healthcareProfessionalsStore.healthcareProfessionalSectionFields.spokenLanguages)
 
 // Tracks whether we want to display adding a new name
 const addingLocaleName: Ref<boolean> = ref(false)
