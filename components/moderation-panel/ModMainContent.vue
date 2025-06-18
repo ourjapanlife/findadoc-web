@@ -111,7 +111,7 @@ const setActiveScreenBasedOnRoute = async () => {
             healthcareProfessionalsStore.selectedHealthcareProfessionalId = ''
             // Reset healthcareProfessionalSections
             healthcareProfessionalsStore.resetHealthcareProfessionalSectionFields()
-            // reset facilitySectionFields
+            // Reset facilitySectionFields
             facilitiesStore.resetFacilitySectionFields()
     }
 }
