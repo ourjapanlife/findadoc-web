@@ -626,7 +626,7 @@ onBeforeMount(async () => {
     await nextTick()
 })
 
-//This autofills the selected fields based on our current healthcare data for the user
+// This autofills the selected fields based on our current healthcare data for the user
 watch(() => healthcareProfessionalsStore.healthcareProfessionalSectionFields.facilityIds,
       facilityIds => {
           if (facilityIds) {
