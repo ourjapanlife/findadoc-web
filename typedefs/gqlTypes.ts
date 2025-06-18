@@ -437,30 +437,52 @@ export enum Specialty {
   AllergyAndImmunology = 'ALLERGY_AND_IMMUNOLOGY',
   Anesthesiology = 'ANESTHESIOLOGY',
   Cardiology = 'CARDIOLOGY',
+  CosmeticSurgery = 'COSMETIC_SURGERY',
   Dentistry = 'DENTISTRY',
   Dermatology = 'DERMATOLOGY',
   DiagnosticRadiology = 'DIAGNOSTIC_RADIOLOGY',
   EmergencyMedicine = 'EMERGENCY_MEDICINE',
   EntSpecialist = 'ENT_SPECIALIST',
-  GeneralPractitioner = 'GENERAL_PRACTITIONER',
+  FamilyMedicine = 'FAMILY_MEDICINE',
+  GeneralMedicine = 'GENERAL_MEDICINE',
   InfectiousDiseases = 'INFECTIOUS_DISEASES',
+  InternalMedicine = 'INTERNAL_MEDICINE',
   MedicalGenetics = 'MEDICAL_GENETICS',
   Neurology = 'NEUROLOGY',
   NuclearMedicine = 'NUCLEAR_MEDICINE',
   ObstetricsAndGynecology = 'OBSTETRICS_AND_GYNECOLOGY',
   Ophthalmology = 'OPHTHALMOLOGY',
   Optometry = 'OPTOMETRY',
+  Orthodontics = 'ORTHODONTICS',
   OrthopedicSurgery = 'ORTHOPEDIC_SURGERY',
   Pathology = 'PATHOLOGY',
   Pediatrics = 'PEDIATRICS',
+  Pharmacy = 'PHARMACY',
   PhysicalMedicineAndRehabilitation = 'PHYSICAL_MEDICINE_AND_REHABILITATION',
   Physiotherapy = 'PHYSIOTHERAPY',
+  PlasticSurgery = 'PLASTIC_SURGERY',
   PreventiveMedicine = 'PREVENTIVE_MEDICINE',
   Psychiatry = 'PSYCHIATRY',
   RadiationOncology = 'RADIATION_ONCOLOGY',
   SportsMedicine = 'SPORTS_MEDICINE',
+  Surgery = 'SURGERY',
   Traumatology = 'TRAUMATOLOGY',
   Urology = 'UROLOGY'
+}
+
+export enum SpecialtyCategory {
+  ChildrensHealth = 'CHILDRENS_HEALTH',
+  CosmeticAndPlasticSurgery = 'COSMETIC_AND_PLASTIC_SURGERY',
+  Dental = 'DENTAL',
+  Dermatology = 'DERMATOLOGY',
+  Ent = 'ENT',
+  EyeAndVision = 'EYE_AND_VISION',
+  MensHealth = 'MENS_HEALTH',
+  MentalHealth = 'MENTAL_HEALTH',
+  PhysicalTherapy = 'PHYSICAL_THERAPY',
+  PrimaryCare = 'PRIMARY_CARE',
+  SportsAndRehab = 'SPORTS_AND_REHAB',
+  WomensHealth = 'WOMENS_HEALTH'
 }
 
 export type Submission = {
@@ -631,6 +653,7 @@ export type ResolversTypes = {
   RelationshipAction: RelationshipAction;
   SchemaVersion: SchemaVersion;
   Specialty: Specialty;
+  SpecialtyCategory: SpecialtyCategory;
   String: ResolverTypeWrapper<Scalars['String']['output']>;
   Submission: ResolverTypeWrapper<Submission>;
   SubmissionSearchFilters: SubmissionSearchFilters;
