@@ -351,8 +351,8 @@ export type PhysicalAddress = {
   __typename?: 'PhysicalAddress';
   addressLine1En: Scalars['String']['output'];
   addressLine1Ja: Scalars['String']['output'];
-  addressLine2En: Scalars['String']['output'];
-  addressLine2Ja: Scalars['String']['output'];
+  addressLine2En?: Maybe<Scalars['String']['output']>;
+  addressLine2Ja?: Maybe<Scalars['String']['output']>;
   cityEn: Scalars['String']['output'];
   cityJa: Scalars['String']['output'];
   postalCode: Scalars['String']['output'];
@@ -773,8 +773,8 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
 export type PhysicalAddressResolvers<ContextType = any, ParentType extends ResolversParentTypes['PhysicalAddress'] = ResolversParentTypes['PhysicalAddress']> = {
   addressLine1En?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   addressLine1Ja?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  addressLine2En?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  addressLine2Ja?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  addressLine2En?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  addressLine2Ja?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   cityEn?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   cityJa?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   postalCode?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
