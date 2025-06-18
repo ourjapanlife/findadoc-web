@@ -300,7 +300,7 @@ const currentFacilities = facilitiesStore.facilityData
 const isHealthcareProfessionalInitialized: Ref<boolean> = ref(false)
 const selectedFacilities: Ref<Facility[]> = ref([])
 
-//Keeps track of if the search bar inputs have been autofilled with existing facilities
+// Keeps track of if the search bar inputs have been autofilled with existing facilities
 const currentFacilityRelations: Ref<Facility[]> = ref([])
 const currentLanguagesSpoken = computed(() =>
     healthcareProfessionalsStore.healthcareProfessionalSectionFields.spokenLanguages)
