@@ -109,7 +109,7 @@ const setActiveScreenBasedOnRoute = async () => {
             moderationSubmissionsStore.selectedSubmissionId = ''
             facilitiesStore.selectedFacilityId = ''
             healthcareProfessionalsStore.selectedHealthcareProfessionalId = ''
-            // reset healthcareProfessionalSections
+            // Reset healthcareProfessionalSections
             healthcareProfessionalsStore.resetHealthcareProfessionalSectionFields()
             // reset facilitySectionFields
             facilitiesStore.resetFacilitySectionFields()
