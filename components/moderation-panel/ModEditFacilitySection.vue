@@ -129,9 +129,7 @@
                 :label="t('modFacilitySection.labelFacilityAddressLine2En')"
                 type="text"
                 :placeholder="t('modFacilitySection.placeholderTextFacilityAddressLine2En')"
-                :required="true"
-                :input-validation-check="validateAddressLineEn"
-                :invalid-input-error-message="t('modFacilitySection.inputErrorMessageFacilityAddressLine2En')"
+                :required="false"
             />
             <div class="flex flex-col mt-4">
                 <label
@@ -182,9 +180,7 @@
                 :label="t('modFacilitySection.labelFacilityAddressLine2Ja')"
                 type="text"
                 :placeholder="t('modFacilitySection.placeholderTextFacilityAddressLine2Ja')"
-                :required="true"
-                :input-validation-check="validateAddressLineJa"
-                :invalid-input-error-message="t('modFacilitySection.inputErrorMessageFacilityAddressLine2Ja')"
+                :required="false"
             />
         </div>
         <div
@@ -361,19 +357,20 @@ const healthcareProfessionalsToDisplayCallback = (healthcareProfessional: Health
     [healthcareProfessional.names[0].firstName + ' ' + healthcareProfessional.names[0].lastName]
 
 onBeforeMount(async () => {
-    // This onBeforeMount can be skipped on other screens since this logic is handled there when active
-    if (!moderationScreenStore.editFacilityScreenIsActive()) {
-        isFacilitySectionInitialized.value = true
-        return
-    }
-
-    isFacilitySectionInitialized.value = false
     /**
     Set the variable to useToast when the before the component mounts
     since vue-taostification is only available on the client.
     If not done this way the build fails
      */
     toast = useToast()
+
+    // This onBeforeMount can be skipped on other screens since this logic is handled there when active
+    if (moderationScreenStore.editSubmissionScreenIsActive()) {
+        isFacilitySectionInitialized.value = true
+        return
+    }
+
+    isFacilitySectionInitialized.value = false
     // Wait for the route to be fully resolved
 
     loadingStore.setIsLoading(true)
