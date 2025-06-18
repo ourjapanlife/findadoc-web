@@ -280,7 +280,7 @@ import { useLocaleStore } from '~/stores/localeStore'
 import { Insurance, Locale, Degree, Specialty, type LocalizedNameInput, type Facility } from '~/typedefs/gqlTypes'
 import { useI18n } from '#imports'
 import { validateNameLocaleMatchesLanguage } from '~/utils/formValidations'
-//Keeps track of if the search bar inputs have been autofilled with existing facilities
+// Keeps track of if the search bar inputs have been autofilled with existing facilities
 
 let toast: ToastInterface
 
