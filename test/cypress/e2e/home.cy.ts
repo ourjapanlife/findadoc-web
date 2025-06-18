@@ -1,3 +1,5 @@
+import { Specialty } from '../../../typedefs/gqlTypes'
+
 describe('Visits the home page', () => {
     const googleForm = 'https://forms.gle/4E763qfaq46kEsn99'
     const netlify = 'https://www.netlify.com/'
@@ -26,7 +28,7 @@ describe('Visits the home page', () => {
         it('allows setting search fields', () => {
             cy.get('[data-testid="search-button"]').should('be.visible')
 
-            cy.get('.search-specialty select').select('Dermatologist')
+            cy.get('.search-specialty select').select(Specialty.Dermatology)
             cy.get('.search-specialty select').should('be.visible', 'Dermatology')
 
             cy.get('.search-language select').select('English')
