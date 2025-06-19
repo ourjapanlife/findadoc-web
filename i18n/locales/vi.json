@@ -213,7 +213,7 @@
     "selectLocales": "Chọn các ngôn ngữ địa phương được sử dụng",
     "selectSpecialties": "Chuyên ngành.",
     "errorMessageHealthcareProfessionalId": "Healthcare Professional Id was not found",
-    "facilities": "Facilities",
+    "facilities": "Healthcare Professional Facilities",
     "placeholderTextFacilitySearchBar": "Search by name or Id add a facility",
     "noFacilitiesWereFound": "No facilities were found",
     "nameForLocaleAlreadyExists": "Name for locale already exists. Either update existing name or choose a different locale.",

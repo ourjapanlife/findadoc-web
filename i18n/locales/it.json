@@ -150,7 +150,7 @@
     "googleMapsInformation": "Informazioni Google Maps",
     "healthcareProfessionalIds": "ID professionista sanitario",
     "healthcareProfessionalName": "Nome del professionista sanitario",
-    "healthcareProfessionalMedicalInfo": "Healthcare Professional Medical Info",
+    "healthcareProfessionalMedicalInfo": "HHealthcare Professional Details",
     "healthcareProfessionalFacilities": "Strutture collegate ai medici"
   },
   "modDashboardTopbar": {
@@ -223,7 +223,7 @@
     "selectInsurances": "Selezione assicurazione",
     "selectLocales": "Seleziona le lingue parlate",
     "selectSpecialties": "Specializzazioni",
-    "facilities": "Strutture",
+    "facilities": "Healthcare Professional Facilities",
     "placeholderTextFacilitySearchBar": "Cerca per nome o ID",
     "noFacilitiesWereFound": "Nessuna struttura è stata trovata",
     "nameForLocaleAlreadyExists": "Name for locale already exists. Either update existing name or choose a different locale.",
