@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { useI18n } from 'vue-i18n'
-import type { Specialty } from '~/typedefs/gqlTypes.js'
+import { type Specialty, SpecialtyCategory } from '~/typedefs/gqlTypes.js'
 
 export const useSpecialtiesStore = defineStore('specialtiesStore', () => {
     const { t } = useI18n()
@@ -10,7 +10,7 @@ export const useSpecialtiesStore = defineStore('specialtiesStore', () => {
         { code: 'DERMATOLOGY', displayText: t('specialties.dermatology') },
         { code: 'PEDIATRICS', displayText: t('specialties.pediatrics') },
         { code: 'OBSTETRICS_AND_GYNECOLOGY', displayText: t('specialties.obstetricsAndGynecology') },
-        { code: 'GENERAL_PRACTITIONER', displayText: t('specialties.generalPractitioner') },
+        { code: SpecialtyCategory.PrimaryCare, displayText: t('specialties.generalPractitioner') },
         { code: 'PSYCHIATRY', displayText: t('specialties.psychiatry') },
         { code: 'PHYSIOTHERAPY', displayText: t('specialties.physiotherapy') },
         { code: 'OPTOMETRY', displayText: t('specialties.optometry') },
@@ -28,8 +28,9 @@ export const useSpecialtiesStore = defineStore('specialtiesStore', () => {
         { code: 'DIAGNOSTIC_RADIOLOGY', displayText: t('specialties.diagnosticRadiology') },
         { code: 'EMERGENCY_MEDICINE', displayText: t('specialties.emergencyMedicine') },
         { code: 'ENT_SPECIALIST', displayText: t('specialties.entSpecialist') },
+        { code: 'FAMILY_MEDICINE', displayText: t('specialties.familyMedicine') },
         { code: 'INFECTIOUS_DISEASES', displayText: t('specialties.infectiousDiseases') },
-        { code: 'GENERAL_PRACTITIONER', displayText: t('specialties.generalPractitioner') },
+        { code: 'INTERNAL_MEDICINE', displayText: t('specialties.internalMedicine') },
         { code: 'MEDICAL_GENETICS', displayText: t('specialties.medicalGenetics') },
         { code: 'NEUROLOGY', displayText: t('specialties.neurology') },
         { code: 'NUCLEAR_MEDICINE', displayText: t('specialties.nuclearMedicine') },
@@ -45,13 +46,9 @@ export const useSpecialtiesStore = defineStore('specialtiesStore', () => {
         { code: 'PHYSICAL_MEDICINE_AND_REHABILITATION', displayText: t('specialties.physicalMedicineAndRehabilitation') },
         { code: 'RADIATION_ONCOLOGY', displayText: t('specialties.radiationOncology') },
         { code: 'SPORTS_MEDICINE', displayText: t('specialties.sportsMedicine') },
+        { code: 'SURGERY', displayText: t('specialties.surgery') },
         { code: 'TRAUMATOLOGY', displayText: t('specialties.traumatology') },
         { code: 'UROLOGY', displayText: t('specialties.urology') }
-        // Intentionally excluded specialties
-        // { code: 'SURGERY', displayText: t('specialties.surgery') },
-        // Combined into General Practitioner / Pediatrition since most people don't know the nuanced difference
-        // { code: 'INTERNAL_MEDICINE', displayText: t('specialties.internalMedicine') },
-        // { code: 'FAMILY_MEDICINE', displayText: t('specialties.familyMedicine') },
     ] as SpecialtyDisplayOption[]
 
     return {

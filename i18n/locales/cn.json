@@ -127,7 +127,7 @@
     "facilityCreatedSuccessfully": "Facility created successfully.",
     "heathcareProfessionalCreatedSuccessfully": "Healthcare professional created successfully.",
     "unsavedChangesMessage": "This will exit without saving your entry. All unsaved data will be lost."
-},
+  },
   "modDashboardLeftNav": {
     "facilities": "机构",
     "healthcareProfessionals": "医师",
@@ -145,11 +145,12 @@
     "healthcareProfessionalIds": "医师IDs"
   },
   "modEditSubmissionTopNav": {
-    "saveAndExit": "保存并退出",
+    "updateAndExit": "保存并退出",
     "approve": "批准",
     "reject": "驳回",
     "saving": "Saving...",
-    "retryMessage": "Something’s not right. Retrying in {seconds}s..."
+    "retryMessage": "Something’s not right. Retrying in {seconds}s...",
+    "update": "Update"
   },
   "modPanelSubmissionList": {
     "approved": "已批准",
@@ -203,7 +204,8 @@
     "missingLocale": "No Locale Chosen",
     "oneNameNecessary": "At least one name is required for a healthcare professional",
     "save": "Save",
-    "update": "Update"
+    "update": "Update",
+    "charactersOfLanguageDoNotMatchNameLocale": "The characters of the healthcare professional's name are invalid in chosen locale"
   },
   "modSubmissionForm": {
     "addresses": "地址",
@@ -306,7 +308,9 @@
     "noSpecialtiesWereFound": "No specialties were found",
     "noInsurancesWereFound": "No insurance was found",
     "noDegreesWereFound": "No degrees were found",
-    "noLocalesWereFound": "No locales were found"
+    "noLocalesWereFound": "No locales were found",
+    "searchExistingFacilities": "Search for existing facility",
+    "searchExistingHealthcareProfessionals": "Search for existing healthcare professionals"
   },
   "modPanelSubmissionLeftNavbar": {
     "addresses": "Addresses",

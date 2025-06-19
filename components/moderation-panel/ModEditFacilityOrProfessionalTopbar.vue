@@ -243,9 +243,13 @@ const healthcareProfessionalHasUnsavedChanges = () => {
     healthcareProfessionalSections.spokenLanguages,
     originalHealthcareProfessional.spokenLanguages
 )
+|| !arraysAreEqual(
+    healthcareProfessionalSections.facilityIds,
+    originalHealthcareProfessional.facilityIds
+)
 || healthcareProfessionalSections.updatedDate
 !== originalHealthcareProfessional.updatedDate
-|| Array.from(healthcareProfessionalsStore.selectedFacilities).length > 0
+|| healthcareProfessionalsStore.selectedFacilities.length
 
     return areThereUnsavedHealthcareProfessionalChanges
 }

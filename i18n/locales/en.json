@@ -208,7 +208,8 @@
         "hasUnsavedChanges": "You have unsaved changes. Are you sure you want to leave?"
     },
     "modEditSubmissionTopNav": {
-        "saveAndExit": "Save & Exit",
+        "update": "Update",
+        "updateAndExit": "Update & Exit",
         "saving": "Saving...",
         "retryMessage": "Something’s not right. Retrying in {seconds}s...",
         "approve": "Approve",
@@ -249,6 +250,7 @@
         "missingFirstName": "No first name entered",
         "missingLastName": "No last name entered",
         "missingLocale": "No Locale Chosen",
+        "charactersOfLanguageDoNotMatchNameLocale": "The characters of the healthcare professional's name are invalid in chosen locale",
         "nameForLocaleAlreadyExists": "Name for locale already exists. Either update existing name or choose a different locale.",
         "oneNameNecessary": "At least one name is required for a healthcare professional",
         "placeholderTextHealthcareProfessionalFirstName": "e.g. John",
@@ -421,6 +423,8 @@
         "noInsurancesWereFound": "No insurance was found",
         "noDegreesWereFound": "No degrees were found",
         "noLocalesWereFound": "No locales were found",
+        "searchExistingFacilities": "Search for existing facility",
+        "searchExistingHealthcareProfessionals": "Search for existing healthcare professionals",
         "selectDegrees": "Degrees",
         "selectInsurances": "Accepted Insurances",
         "selectLocales": "Select Locales Spoken",
