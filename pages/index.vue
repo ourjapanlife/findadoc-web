@@ -3,27 +3,15 @@
         id="index"
         class="h-full w-full overflow-hidden"
     >
-        <div
-            v-if="!isPortrait"
-            class="flex h-full overflow-clip"
-        >
-            <LeftNavbar class="bg-primary-bg w-96" />
-            <MainContentContainer class="overflow-clip" />
-        </div>
-        <div
-            v-else
-            class="h-full w-full"
-        >
-            <MainContentContainer />
-        </div>
+        <MainContentContainer />
     </div>
 </template>
 
 <script setup lang="ts">
-import { useScreenOrientation } from '~/utils/useScreenOrientation'
-import { useModalStore } from '~/stores/modalStore'
+import { definePageMeta } from '#imports'
 
-useModalStore()
-
-const { isPortrait } = useScreenOrientation()
+// tell nuxt to our moderation layout
+definePageMeta({
+    layout: 'onboarding'
+})
 </script>

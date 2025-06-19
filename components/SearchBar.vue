@@ -172,8 +172,8 @@ function createLocationDropdownOptions(cities: string[]) {
 
 async function search() {
     const blankRemovedLocation = selectedLocation.value == '----Any----' ? '' : selectedLocation.value
-    const blankRemovedSpecialty = selectedSpecialty.value == '----Any----' ? undefined : selectedSpecialty.value as Specialty
-    const blankRemovedLanguage = selectedLanguage.value == '----Any----' ? undefined : selectedLanguage.value as Locale
+    const blankRemovedSpecialty = selectedSpecialty.value == '----Any----' ? undefined : [selectedSpecialty.value] as Specialty[]
+    const blankRemovedLanguage = selectedLanguage.value == '----Any----' ? undefined : [selectedLanguage.value] as Locale[]
 
     await searchResultsStore.search(blankRemovedLocation, blankRemovedSpecialty, blankRemovedLanguage)
 }

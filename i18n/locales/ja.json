@@ -444,11 +444,11 @@
         "pediatrics": "小児科",
         "physiotherapy": "リハビリテーション科・理学療法",
         "psychiatry": "精神科・心療内科",
-    "preventiveMedicine": "予防医学",
+        "preventiveMedicine": "予防医学",
         "radiationOncology": "放射線腫瘍科",
         "sportsMedicine": "スポーツ医学",
-    "physicalMedicineAndRehabilitation": "リハビリテーション医学",
+        "physicalMedicineAndRehabilitation": "リハビリテーション医学",
         "urology": "泌尿器科",
-    "traumatology": "外傷学"
+        "traumatology": "外傷学"
     }
 }

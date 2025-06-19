@@ -56,7 +56,6 @@ export const useLocaleStore = defineStore('locale', () => {
 export const localeDisplayOptions = [
     { code: '', simpleText: '', displayText: 'None' },
     { code: Locale.EnUs, simpleText: 'English', displayText: 'English (US)' },
-    { code: Locale.JaJp, simpleText: '日本語', displayText: '日本語 (Japan)' },
     { code: Locale.AkGh, simpleText: 'Akan', displayText: 'Akan (Ghana)' },
     { code: Locale.AmEt, simpleText: 'Amharic', displayText: 'Amharic (Ethiopia)' },
     { code: Locale.ArAe, simpleText: 'اَلْعَرَبِيَّة', displayText: 'اَلْعَرَبِيَّة (United Arab Emirates)' },
@@ -87,6 +86,7 @@ export const localeDisplayOptions = [
     { code: Locale.IgNg, simpleText: 'Igbo', displayText: 'Igbo (Nigeria)' },
     { code: Locale.IsIs, simpleText: 'Icelandic', displayText: 'Icelandic (Iceland)' },
     { code: Locale.ItIt, simpleText: 'Italiano', displayText: 'Italiano (Italy)' },
+    { code: Locale.JaJp, simpleText: '日本語', displayText: '日本語 (Japan)' },
     { code: Locale.KabDz, simpleText: 'Kabyle', displayText: 'Kabyle (Algeria)' },
     { code: Locale.KmKh, simpleText: 'Khmer', displayText: 'Khmer (Cambodia)' },
     { code: Locale.KnIn, simpleText: 'Kannada', displayText: 'Kannada (India)' },
