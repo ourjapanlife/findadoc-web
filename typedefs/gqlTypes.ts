@@ -351,8 +351,8 @@ export type PhysicalAddress = {
   __typename?: 'PhysicalAddress';
   addressLine1En: Scalars['String']['output'];
   addressLine1Ja: Scalars['String']['output'];
-  addressLine2En: Scalars['String']['output'];
-  addressLine2Ja: Scalars['String']['output'];
+  addressLine2En?: Maybe<Scalars['String']['output']>;
+  addressLine2Ja?: Maybe<Scalars['String']['output']>;
   cityEn: Scalars['String']['output'];
   cityJa: Scalars['String']['output'];
   postalCode: Scalars['String']['output'];
@@ -436,10 +436,13 @@ export enum SchemaVersion {
 export enum Specialty {
   AllergyAndImmunology = 'ALLERGY_AND_IMMUNOLOGY',
   Anesthesiology = 'ANESTHESIOLOGY',
+  Cardiology = 'CARDIOLOGY',
+  CosmeticSurgery = 'COSMETIC_SURGERY',
   Dentistry = 'DENTISTRY',
   Dermatology = 'DERMATOLOGY',
   DiagnosticRadiology = 'DIAGNOSTIC_RADIOLOGY',
   EmergencyMedicine = 'EMERGENCY_MEDICINE',
+  EntSpecialist = 'ENT_SPECIALIST',
   FamilyMedicine = 'FAMILY_MEDICINE',
   GeneralMedicine = 'GENERAL_MEDICINE',
   InfectiousDiseases = 'INFECTIOUS_DISEASES',
@@ -449,14 +452,37 @@ export enum Specialty {
   NuclearMedicine = 'NUCLEAR_MEDICINE',
   ObstetricsAndGynecology = 'OBSTETRICS_AND_GYNECOLOGY',
   Ophthalmology = 'OPHTHALMOLOGY',
+  Optometry = 'OPTOMETRY',
+  Orthodontics = 'ORTHODONTICS',
+  OrthopedicSurgery = 'ORTHOPEDIC_SURGERY',
   Pathology = 'PATHOLOGY',
   Pediatrics = 'PEDIATRICS',
+  Pharmacy = 'PHARMACY',
   PhysicalMedicineAndRehabilitation = 'PHYSICAL_MEDICINE_AND_REHABILITATION',
+  Physiotherapy = 'PHYSIOTHERAPY',
+  PlasticSurgery = 'PLASTIC_SURGERY',
   PreventiveMedicine = 'PREVENTIVE_MEDICINE',
   Psychiatry = 'PSYCHIATRY',
   RadiationOncology = 'RADIATION_ONCOLOGY',
+  SportsMedicine = 'SPORTS_MEDICINE',
   Surgery = 'SURGERY',
+  Traumatology = 'TRAUMATOLOGY',
   Urology = 'UROLOGY'
+}
+
+export enum SpecialtyCategory {
+  ChildrensHealth = 'CHILDRENS_HEALTH',
+  CosmeticAndPlasticSurgery = 'COSMETIC_AND_PLASTIC_SURGERY',
+  Dental = 'DENTAL',
+  Dermatology = 'DERMATOLOGY',
+  Ent = 'ENT',
+  EyeAndVision = 'EYE_AND_VISION',
+  MensHealth = 'MENS_HEALTH',
+  MentalHealth = 'MENTAL_HEALTH',
+  PhysicalTherapy = 'PHYSICAL_THERAPY',
+  PrimaryCare = 'PRIMARY_CARE',
+  SportsAndRehab = 'SPORTS_AND_REHAB',
+  WomensHealth = 'WOMENS_HEALTH'
 }
 
 export type Submission = {
@@ -627,6 +653,7 @@ export type ResolversTypes = {
   RelationshipAction: RelationshipAction;
   SchemaVersion: SchemaVersion;
   Specialty: Specialty;
+  SpecialtyCategory: SpecialtyCategory;
   String: ResolverTypeWrapper<Scalars['String']['output']>;
   Submission: ResolverTypeWrapper<Submission>;
   SubmissionSearchFilters: SubmissionSearchFilters;
@@ -769,8 +796,8 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
 export type PhysicalAddressResolvers<ContextType = any, ParentType extends ResolversParentTypes['PhysicalAddress'] = ResolversParentTypes['PhysicalAddress']> = {
   addressLine1En?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   addressLine1Ja?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  addressLine2En?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  addressLine2Ja?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  addressLine2En?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  addressLine2Ja?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   cityEn?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   cityJa?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   postalCode?: Resolver<ResolversTypes['String'], ParentType, ContextType>;

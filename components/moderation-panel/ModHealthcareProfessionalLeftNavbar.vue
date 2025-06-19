@@ -12,7 +12,7 @@
                     'bg-primary-inverted': activeSection
                         !== ModHealthcareProfessionalsLeftNavbarSections.HealthcareProfessionalName,
                 }"
-                class="w-full py-4 my-2 text-sm text-start pl-2 rounded border-b-2 border-tertiary-bg"
+                class="w-full py-4 my-2 text-sm text-start pl-2 rounded border-b-2 border-accent-bg"
                 @click="handleNavClick(ModHealthcareProfessionalsLeftNavbarSections.HealthcareProfessionalName)"
             >
                 {{ t("modPanelSubmissionLeftNavbar.healthcareProfessionalName") }}
@@ -26,7 +26,7 @@
                     'bg-primary-inverted': activeSection
                         !== ModHealthcareProfessionalsLeftNavbarSections.HealthcareProfessionalMedicalInfo,
                 }"
-                class="w-full py-4 my-2 text-sm text-start pl-2 rounded border-b-2 border-tertiary-bg"
+                class="w-full py-4 my-2 text-sm text-start pl-2 rounded border-b-2 border-accent-bg"
                 @click="handleNavClick(ModHealthcareProfessionalsLeftNavbarSections.HealthcareProfessionalMedicalInfo)"
             >
                 {{ t("modPanelSubmissionLeftNavbar.healthcareProfessionalMedicalInfo") }}
@@ -40,7 +40,7 @@
                     'bg-primary-inverted': activeSection
                         !== ModHealthcareProfessionalsLeftNavbarSections.HealthcareProfessionalFacilities,
                 }"
-                class="w-full py-4 my-2 text-sm text-start pl-2 rounded border-b-2 border-tertiary-bg"
+                class="w-full py-4 my-2 text-sm text-start pl-2 rounded border-b-2 border-accent-bg"
                 @click="handleNavClick(
                     ModHealthcareProfessionalsLeftNavbarSections.HealthcareProfessionalFacilities)"
             >

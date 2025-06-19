@@ -23,16 +23,16 @@
             <div
                 v-for="(submission, index) in modSubmissionsListStore.filteredSubmissionDataForListComponent"
                 :key="index"
-                class="grid grid-cols-subgrid col-span-4 bg-tertiary-bg"
+                class="grid grid-cols-subgrid col-span-4 bg-accent-bg"
             >
                 <div
                     :data-testid="`mod-submission-list-item-${index + 1}`"
-                    class="grid grid-cols-subgrid col-span-4 bg-tertiary-bg cursor-pointer hover:bg-primary"
+                    class="grid grid-cols-subgrid col-span-4 bg-accent-bg cursor-pointer hover:bg-primary"
                     @click="handleClickToSubmissionForm(submission.id)"
                 >
                     <NuxtLink
                         :to="`/moderation/edit-submission/${submission.id}`"
-                        class="grid grid-cols-subgrid col-span-4 bg-primary-text-muted p-1 hover:bg-primary"
+                        class="grid grid-cols-subgrid col-span-4 p-1 hover:bg-primary"
                     >
                         <span class="text-start">{{ index + 1 }}</span>
                         <span class="text-start">
@@ -52,11 +52,11 @@
             <div
                 v-for="(facility, index) in facilitiesStore.facilityData"
                 :key="index"
-                class="grid grid-cols-subgrid col-span-4 bg-tertiary-bg"
+                class="grid grid-cols-subgrid col-span-4 bg-accent-bg"
             >
                 <div
                     :data-testid="`mod-facility-list-item-${index + 1}`"
-                    class="grid grid-cols-subgrid col-span-4 bg-tertiary-bg cursor-pointer hover:bg-primary"
+                    class="grid grid-cols-subgrid col-span-4 bg-accent-bg cursor-pointer hover:bg-primary"
                 >
                     <NuxtLink
                         :to="`/moderation/edit-facility/${facility.id}`"
@@ -81,11 +81,11 @@
             <div
                 v-for="(healthcareProfessional, index) in healthcareProfessionalsStore.healthcareProfessionalsData"
                 :key="index"
-                class="grid grid-cols-subgrid col-span-4 bg-tertiary-bg"
+                class="grid grid-cols-subgrid col-span-4 bg-accent-bg"
             >
                 <div
                     :data-testid="`mod-healthcare-professional-list-item-${index + 1}`"
-                    class="grid grid-cols-subgrid col-span-4 bg-tertiary-bg cursor-pointer hover:bg-primary"
+                    class="grid grid-cols-subgrid col-span-4 bg-accent-bg cursor-pointer hover:bg-primary"
                 >
                     <NuxtLink
                         :to="`/moderation/edit-healthcare-professional/${healthcareProfessional.id}`"

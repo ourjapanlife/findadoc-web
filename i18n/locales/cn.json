@@ -127,7 +127,7 @@
     "facilityCreatedSuccessfully": "Facility created successfully.",
     "heathcareProfessionalCreatedSuccessfully": "Healthcare professional created successfully.",
     "unsavedChangesMessage": "This will exit without saving your entry. All unsaved data will be lost."
-},
+  },
   "modDashboardLeftNav": {
     "facilities": "机构",
     "healthcareProfessionals": "医师",
@@ -145,11 +145,12 @@
     "healthcareProfessionalIds": "医师IDs"
   },
   "modEditSubmissionTopNav": {
-    "saveAndExit": "保存并退出",
+    "updateAndExit": "保存并退出",
     "approve": "批准",
     "reject": "驳回",
     "saving": "Saving...",
-    "retryMessage": "Something’s not right. Retrying in {seconds}s..."
+    "retryMessage": "Something’s not right. Retrying in {seconds}s...",
+    "update": "Update"
   },
   "modPanelSubmissionList": {
     "approved": "已批准",
@@ -203,7 +204,8 @@
     "missingLocale": "No Locale Chosen",
     "oneNameNecessary": "At least one name is required for a healthcare professional",
     "save": "Save",
-    "update": "Update"
+    "update": "Update",
+    "charactersOfLanguageDoNotMatchNameLocale": "The characters of the healthcare professional's name are invalid in chosen locale"
   },
   "modSubmissionForm": {
     "addresses": "地址",
@@ -306,7 +308,9 @@
     "noSpecialtiesWereFound": "No specialties were found",
     "noInsurancesWereFound": "No insurance was found",
     "noDegreesWereFound": "No degrees were found",
-    "noLocalesWereFound": "No locales were found"
+    "noLocalesWereFound": "No locales were found",
+    "searchExistingFacilities": "Search for existing facility",
+    "searchExistingHealthcareProfessionals": "Search for existing healthcare professionals"
   },
   "modPanelSubmissionLeftNavbar": {
     "addresses": "Addresses",
@@ -420,5 +424,34 @@
     "firstName": "First name",
     "middleName": "Middle name",
     "nameLocale": "Name locale"
+  },
+  "specialties": {
+    "allergyAndImmunology": "过敏与免疫科医生",
+    "anesthesiology": "麻醉科医生",
+    "cardiology": "心脏科医生",
+    "dentistry": "牙医",
+    "dermatology": "皮肤科医生",
+    "diagnosticRadiology": "放射诊断科医生",
+    "entSpecialist": "耳鼻喉科医生",
+    "emergencyMedicine": "急诊科医生",
+    "infectiousDiseases": "传染病科医生",
+    "generalPractitioner": "全科医生",
+    "medicalGenetics": "医学遗传学医生",
+    "neurology": "神经科医生",
+    "nuclearMedicine": "核医学科医生",
+    "obstetricsAndGynecology": "妇产科医生",
+    "ophthalmology": "眼科医生（眼科手术医生）",
+    "orthopedicSurgery": "骨科医生（骨科手术医生）",
+    "optometry": "验光师",
+    "pathology": "病理科医生",
+    "pediatrics": "儿科医生",
+    "physiotherapy": "物理治疗师",
+    "psychiatry": "精神科医生",
+    "preventiveMedicine": "预防医学",
+    "radiationOncology": "放射肿瘤科医生",
+    "sportsMedicine": "运动医学医生",
+    "physicalMedicineAndRehabilitation": "物理医学与康复",
+    "urology": "泌尿科医生",
+    "traumatology": "创伤学"
   }
 }
