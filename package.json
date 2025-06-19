@@ -22,7 +22,7 @@
         "test:e2e": "NUXT_IS_TESTING_MODE=true yarn dev:localserver & npx wait-on http://localhost:3000 && cypress open",
         "test:e2e:headless": "NUXT_IS_TESTING_MODE=true yarn dev:localserver & npx wait-on http://localhost:3000 && cypress run --e2e",
         "test:e2e:ci": "cypress run --e2e",
-        "test:snapshot": "jest --config jest.config.ts",
+        "test:snapshot": "jest --config jest.config.ts --ci --color",
         "test:snapshot:update": "jest --updateSnapshot"
     },
     "packageManager": "yarn@4.4.0",
