@@ -215,6 +215,386 @@ exports[`about.vue renders correctly 1`] = `
           </div>
         </div>
       </div>
+      <div
+        class="members-list grid"
+        data-testid="member"
+      >
+        <div
+          class="member flex flex-col items-center text-center"
+        >
+          <fadeintransitionimage
+            alt="Kuniko Arita"
+            border-radius="rounded-full"
+            data-test-id="member-avatar-3"
+            height="h-32"
+            img-src="/avatars/kuniko_arita.jpg"
+            object-styling="object-cover"
+            width="w-32"
+          />
+          <div
+            class="member-name mt-1 text-xl font-bold"
+            data-testid="member-name"
+          >
+            Kuniko Arita
+          </div>
+          <div
+            class="member-title text-md text-primary-text-muted"
+            data-testid="member-title"
+          >
+            Medical & Social Welfare Expert
+          </div>
+          <div
+            class="member-social flex flex-row mt-2"
+          >
+            <!--v-if-->
+            <!--v-if-->
+          </div>
+        </div>
+      </div>
+      <div
+        class="members-list grid"
+        data-testid="member"
+      >
+        <div
+          class="member flex flex-col items-center text-center"
+        >
+          <fadeintransitionimage
+            alt="Aya Yumino, MD"
+            border-radius="rounded-full"
+            data-test-id="member-avatar-4"
+            height="h-32"
+            img-src="/avatars/aya_yumino.jpg"
+            object-styling="object-cover"
+            width="w-32"
+          />
+          <div
+            class="member-name mt-1 text-xl font-bold"
+            data-testid="member-name"
+          >
+            Aya Yumino, MD
+          </div>
+          <div
+            class="member-title text-md text-primary-text-muted"
+            data-testid="member-title"
+          >
+            Medical & Social Welfare Expert
+          </div>
+          <div
+            class="member-social flex flex-row mt-2"
+          >
+            <!--v-if-->
+            <!--v-if-->
+          </div>
+        </div>
+      </div>
+      <div
+        class="members-list grid"
+        data-testid="member"
+      >
+        <div
+          class="member flex flex-col items-center text-center"
+        >
+          <fadeintransitionimage
+            alt="Niaya Harper Igarashi"
+            border-radius="rounded-full"
+            data-test-id="member-avatar-5"
+            height="h-32"
+            img-src="/avatars/niaya_harper_igarashi.jpg"
+            object-styling="object-cover"
+            width="w-32"
+          />
+          <div
+            class="member-name mt-1 text-xl font-bold"
+            data-testid="member-name"
+          >
+            Niaya Harper Igarashi
+          </div>
+          <div
+            class="member-title text-md text-primary-text-muted"
+            data-testid="member-title"
+          >
+            Access, Community Outreach
+          </div>
+          <div
+            class="member-social flex flex-row mt-2"
+          >
+            <a
+              class="social-link"
+              data-testid="member-linkedin"
+              href="https://www.linkedin.com/in/niayaharper/r"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <!---->
+            </a>
+            <!--v-if-->
+          </div>
+        </div>
+      </div>
+      <div
+        class="members-list grid"
+        data-testid="member"
+      >
+        <div
+          class="member flex flex-col items-center text-center"
+        >
+          <fadeintransitionimage
+            alt="Kei Yumino"
+            border-radius="rounded-full"
+            data-test-id="member-avatar-6"
+            height="h-32"
+            img-src="/avatars/kei_yumino.jpg"
+            object-styling="object-cover"
+            width="w-32"
+          />
+          <div
+            class="member-name mt-1 text-xl font-bold"
+            data-testid="member-name"
+          >
+            Kei Yumino
+          </div>
+          <div
+            class="member-title text-md text-primary-text-muted"
+            data-testid="member-title"
+          >
+            Design Lead
+          </div>
+          <div
+            class="member-social flex flex-row mt-2"
+          >
+            <a
+              class="social-link"
+              data-testid="member-linkedin"
+              href="https://www.linkedin.com/in/kei-yumino-86299861/"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <!---->
+            </a>
+            <!--v-if-->
+          </div>
+        </div>
+      </div>
+      <div
+        class="members-list grid"
+        data-testid="member"
+      >
+        <div
+          class="member flex flex-col items-center text-center"
+        >
+          <fadeintransitionimage
+            alt="Emanuele Monica"
+            border-radius="rounded-full"
+            data-test-id="member-avatar-7"
+            height="h-32"
+            img-src="/avatars/emanuele_monica.jpg"
+            object-styling="object-cover"
+            width="w-32"
+          />
+          <div
+            class="member-name mt-1 text-xl font-bold"
+            data-testid="member-name"
+          >
+            Emanuele Monica
+          </div>
+          <div
+            class="member-title text-md text-primary-text-muted"
+            data-testid="member-title"
+          >
+            Language Support
+          </div>
+          <div
+            class="member-social flex flex-row mt-2"
+          >
+            <a
+              class="social-link"
+              data-testid="member-linkedin"
+              href="https://www.linkedin.com/in/emanuele-monica-59b93949/"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <!---->
+            </a>
+            <!--v-if-->
+          </div>
+        </div>
+      </div>
+      <div
+        class="members-list grid"
+        data-testid="member"
+      >
+        <div
+          class="member flex flex-col items-center text-center"
+        >
+          <fadeintransitionimage
+            alt="Chunyan Li"
+            border-radius="rounded-full"
+            data-test-id="member-avatar-8"
+            height="h-32"
+            img-src="/avatars/chunyan_li.jpg"
+            object-styling="object-cover"
+            width="w-32"
+          />
+          <div
+            class="member-name mt-1 text-xl font-bold"
+            data-testid="member-name"
+          >
+            Chunyan Li
+          </div>
+          <div
+            class="member-title text-md text-primary-text-muted"
+            data-testid="member-title"
+          >
+            Public Health Expert
+          </div>
+          <div
+            class="member-social flex flex-row mt-2"
+          >
+            <a
+              class="social-link"
+              data-testid="member-linkedin"
+              href="https://www.linkedin.com/in/chunyan-li-10/"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <!---->
+            </a>
+            <!--v-if-->
+          </div>
+        </div>
+      </div>
+      <div
+        class="members-list grid"
+        data-testid="member"
+      >
+        <div
+          class="member flex flex-col items-center text-center"
+        >
+          <fadeintransitionimage
+            alt="Andrew Leemhuis"
+            border-radius="rounded-full"
+            data-test-id="member-avatar-9"
+            height="h-32"
+            img-src="/avatars/andrew_leemhuis.jpg"
+            object-styling="object-cover"
+            width="w-32"
+          />
+          <div
+            class="member-name mt-1 text-xl font-bold"
+            data-testid="member-name"
+          >
+            Andrew Leemhuis
+          </div>
+          <div
+            class="member-title text-md text-primary-text-muted"
+            data-testid="member-title"
+          >
+            Design
+          </div>
+          <div
+            class="member-social flex flex-row mt-2"
+          >
+            <a
+              class="social-link"
+              data-testid="member-linkedin"
+              href="https://www.linkedin.com/in/andrew-leemhuis-01482718/"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <!---->
+            </a>
+            <!--v-if-->
+          </div>
+        </div>
+      </div>
+      <div
+        class="members-list grid"
+        data-testid="member"
+      >
+        <div
+          class="member flex flex-col items-center text-center"
+        >
+          <fadeintransitionimage
+            alt="Shingo Toyoda"
+            border-radius="rounded-full"
+            data-test-id="member-avatar-10"
+            height="h-32"
+            img-src="/avatars/shingo_toyoda.jpg"
+            object-styling="object-cover"
+            width="w-32"
+          />
+          <div
+            class="member-name mt-1 text-xl font-bold"
+            data-testid="member-name"
+          >
+            Shingo Toyoda
+          </div>
+          <div
+            class="member-title text-md text-primary-text-muted"
+            data-testid="member-title"
+          >
+            Language Support
+          </div>
+          <div
+            class="member-social flex flex-row mt-2"
+          >
+            <!--v-if-->
+            <!--v-if-->
+          </div>
+        </div>
+      </div>
+      <div
+        class="members-list grid"
+        data-testid="member"
+      >
+        <div
+          class="member flex flex-col items-center text-center"
+        >
+          <fadeintransitionimage
+            alt="Natalja Dembek"
+            border-radius="rounded-full"
+            data-test-id="member-avatar-11"
+            height="h-32"
+            img-src="/avatars/natalja_dembek.jpg"
+            object-styling="object-cover"
+            width="w-32"
+          />
+          <div
+            class="member-name mt-1 text-xl font-bold"
+            data-testid="member-name"
+          >
+            Natalja Dembek
+          </div>
+          <div
+            class="member-title text-md text-primary-text-muted"
+            data-testid="member-title"
+          >
+            UI/UX Designer
+          </div>
+          <div
+            class="member-social flex flex-row mt-2"
+          >
+            <a
+              class="social-link"
+              data-testid="member-linkedin"
+              href="https://www.linkedin.com/in/nataljadembek/"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <!---->
+            </a>
+            <a
+              class="social-link"
+              data-testid="member-github"
+              href="https://github.com/Ntlja"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <!---->
+            </a>
+          </div>
+        </div>
+      </div>
       
     </div>
   </div>
