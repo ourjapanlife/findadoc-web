@@ -57,11 +57,7 @@ jobs:
               .split('\n')
               .filter(line => 
                 line.includes('expect(received).toMatchSnapshot') ||
-                line.includes('Snapshot name:') ||
-                line.includes('Snapshot Summary') ||
-                line.startsWith('● ') ||
-                line.startsWith('+') ||
-                line.startsWith('-')
+                line.includes('Snapshot name:')
               );
             let body = '';
 
