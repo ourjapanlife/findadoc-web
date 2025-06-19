@@ -37,7 +37,7 @@ jobs:
         run: yarn prepare
 
       - name: Run Snapshot Tests
-        run: yarn test:snapshot > snapshot-output.txt || true
+        run: yarn test:snapshot > snapshot-output.txt 2>&1
 
       - name: Upload snapshot-output.txt as artifact
         uses: actions/upload-artifact@v4
@@ -46,6 +46,7 @@ jobs:
           path: snapshot-output.txt
 
       - name: Comment PR with snapshot result
+        if: always()
         uses: actions/github-script@v6
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -66,5 +67,3 @@ jobs:
               repo: context.repo.repo,
               body: body
             });
-
-
