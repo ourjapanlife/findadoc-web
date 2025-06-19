@@ -127,7 +127,7 @@
     "facilityCreatedSuccessfully": "Facility created successfully.",
     "heathcareProfessionalCreatedSuccessfully": "Healthcare professional created successfully.",
     "unsavedChangesMessage": "This will exit without saving your entry. All unsaved data will be lost."
-},
+  },
   "modDashboardLeftNav": {
     "facilities": "Cơ sở vật chất",
     "healthcareProfessionals": "Chuyên gia y tế",
@@ -173,11 +173,12 @@
     "hasUnsavedChanges": "You have unsaved changes. Are you sure you want to leave?"
   },
   "modEditSubmissionTopNav": {
-    "saveAndExit": "Lưu và thoát.",
+    "updateAndExit": "Lưu và thoát.",
     "saving": "Đang lưu...",
     "retryMessage": "Có gì đó không đúng. Đang thử lại trong {seconds} giây ...",
     "approve": "Phê duyệt",
-    "reject": "Từ chối"
+    "reject": "Từ chối",
+    "update": "Save"
   },
   "modPanelSubmissionList": {
     "approved": "Đã phê duyệt",
@@ -231,7 +232,8 @@
     "missingLocale": "No Locale Chosen",
     "oneNameNecessary": "At least one name is required for a healthcare professional",
     "save": "Save",
-    "update": "Update"
+    "update": "Update",
+    "charactersOfLanguageDoNotMatchNameLocale": "The characters of the healthcare professional's name are invalid in chosen locale"
   },
   "modFacilitySection": {
     "addresses": "Địa chỉ.",
@@ -393,7 +395,9 @@
     "noSpecialtiesWereFound": "No specialties were found",
     "noInsurancesWereFound": "No insurance was found",
     "noDegreesWereFound": "No degrees were found",
-    "noLocalesWereFound": "No locales were found"
+    "noLocalesWereFound": "No locales were found",
+    "searchExistingFacilities": "Search for existing facility",
+    "searchExistingHealthcareProfessionals": "Search for existing healthcare professionals"
   },
   "serverErrorMessages": {
     "UNAUTHENTICATED": "You do not have the authentication to do this action",
