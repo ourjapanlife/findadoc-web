@@ -284,7 +284,7 @@
     "placeholderTextFacilityNameJa": "Ví.dụ. 立川中央病院",
     "placeholderTextFacilityPhoneNumber": "Ví.dụ. 08xxxxxxxxx",
     "placeholderTextFacilityPostalCode": "Ví.dụ. 186-0000",
-    "placeholderTextFacilityWebsite": "Ví.dụ. http://www.example.com/",
+    "placeholderTextFacilityWebsite": "Ví.dụ http://www.example.com/",
     "updateButtonText": "Cập nhật",
     "errorMessageFacilityId": "Facility Id was not found",
     "existingHPHeading": "Current Healthcare Professionals at Facility",
@@ -440,5 +440,19 @@
     "physicalMedicineAndRehabilitation": "Y học vật lý và phục hồi chức năng",
     "urology": "Bác sĩ Tiết niệu",
     "traumatology": "Chấn thương học"
+  },
+  "specialtyCategories": {
+    "childrensHealth": "Sức khỏe trẻ em",
+    "cosmeticAndPlasticSurgery": "Phẫu thuật thẩm mỹ và tạo hình",
+    "dental": "Nha khoa",
+    "dermatology": "Da liễu",
+    "ent": "Tai Mũi Họng",
+    "eyeAndVision": "Mắt và thị lực",
+    "mensHealth": "Sức khỏe nam giới",
+    "mentalHealth": "Sức khỏe tâm thần",
+    "physicalTherapy": "Vật lý trị liệu",
+    "primaryCare": "Chăm sóc ban đầu",
+    "sportsAndRehab": "Thể thao và phục hồi",
+    "womensHealth": "Sức khỏe phụ nữ"
   }
 }

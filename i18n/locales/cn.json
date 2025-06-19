@@ -449,5 +449,19 @@
     "physicalMedicineAndRehabilitation": "物理医学与康复",
     "urology": "泌尿科医生",
     "traumatology": "创伤学"
+  },
+  "specialtyCategories": {
+    "childrensHealth": "儿童健康",
+    "cosmeticAndPlasticSurgery": "美容整形外科",
+    "dental": "牙科",
+    "dermatology": "皮肤科",
+    "ent": "耳鼻喉科",
+    "eyeAndVision": "眼科和视力",
+    "mensHealth": "男性健康",
+    "mentalHealth": "心理健康",
+    "physicalTherapy": "物理治疗",
+    "primaryCare": "初级保健",
+    "sportsAndRehab": "运动康复",
+    "womensHealth": "女性健康"
   }
 }

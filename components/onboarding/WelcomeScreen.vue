@@ -2,11 +2,18 @@
     <div class="relative h-screen w-full overflow-hidden bg-primary-bg">
         <!-- Content -->
         <div class="h-full flex flex-col text-center text-primary-text-inverted">
+            <!-- Top half of screen -->
             <div
-                class="flex flex-col justify-between pt-8
-                min-h-[60vh] bg-primary"
+                class="flex flex-col justify-center pt-8
+                min-h-[60vh] bg-primary relative
+                transition-all duration-700 ease-out"
+                :class="{ 'h-full min-h-full': isBackgroundExpanding }"
             >
-                <div class="flex flex-col self-center items-center px-6">
+                <!-- Header text -->
+                <div
+                    class="flex flex-col self-center items-center px-6 transition-opacity duration-500"
+                    :class="{ 'opacity-0': isBackgroundExpanding }"
+                >
                     <h1 class="text-4xl font-bold mb-6">
                         <span class="block">Welcome to</span>
                         <span class="block">Find a Doc, Japan!</span>
@@ -16,10 +23,11 @@
                     </p>
                 </div>
                 <!-- Background wave transition -->
-                <div class="w-full">
+                <div class="w-full absolute bottom-0">
                     <svg
                         viewBox="0 0 375 56"
-                        class="w-full z-10 transition-all duration-500"
+                        class="w-full z-10 transition-all duration-500ease-out"
+                        :class="{ 'h-0': isBackgroundExpanding }"
                         width="100%"
                         height="56"
                         preserveAspectRatio="none"
@@ -38,20 +46,27 @@
                     </svg>
                 </div>
             </div>
-            <div class="pt-24">
-                <!-- Enhanced bouncing arrow -->
+            <!-- Bottom half of screen -->
+            <div
+                class="h-full flex items-center justify-center transition-opacity duration-500"
+                :class="{ 'opacity-0': isBackgroundExpanding }"
+            >
+                <!-- Bouncing arrow -->
                 <button
                     type="button"
-                    class="relative group flex flex-col items-center justify-center focus:outline-none animate-bounce"
+                    class="relative group flex items-center justify-center focus:outline-none
+                        bg-primary hover:bg-primary/90 transition-colors px-6 py-3
+                        rounded-full animate-bounce"
                     :style="{ animationDuration: '1.5s' }"
                     @click="expandBackground"
                 >
-                    <span class="text-accent text-sm mb-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                        Get Started
+                    <!-- Button text -->
+                    <span class="text-primary-text-inverted mr-3 opacity-100 transition-opacity">
+                        Let's Go
                     </span>
-                    <!-- Arrow SVG -->
+                    <!-- Right-pointing Arrow SVG -->
                     <svg
-                        class="w-12 h-12 text-primary-text transform group-hover:scale-110 transition-transform"
+                        class="w-6 h-6 text-primary-text-inverted transform group-hover:translate-x-1 transition-transform"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -61,7 +76,7 @@
                             stroke-linecap="round"
                             stroke-linejoin="round"
                             stroke-width="2"
-                            d="M19 14l-7 7m0 0l-7-7m7 7V3"
+                            d="M9 5l7 7-7 7"
                         />
                     </svg>
                 </button>
@@ -73,35 +88,28 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-const isExpanded = ref(false)
+const isBackgroundExpanding = ref(false)
+const waveHover = ref(false)
+
 const emit = defineEmits<{
     (e: 'next'): void
 }>()
 
 const expandBackground = () => {
-    isExpanded.value = true
-    emit('next')
+    isBackgroundExpanding.value = true
+    setTimeout(() => {
+        emit('next')
+    }, 1000)
 }
-
-const waveHover = ref(false)
 </script>
 
 <style scoped>
-@keyframes spin-slow {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-.animate-spin-slow {
-    animation: spin-slow 20s linear infinite;
-}
-
 .animate-bounce {
   animation: bounce 1.5s infinite;
+}
+
+.animate-bounce:hover {
+  animation-play-state: paused;
 }
 
 @keyframes bounce {

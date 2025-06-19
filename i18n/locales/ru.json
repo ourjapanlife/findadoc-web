@@ -449,5 +449,19 @@
     "physicalMedicineAndRehabilitation": "Физическая медицина и реабилитация",
     "urology": "Уролог",
     "traumatology": "Травматология"
+  },
+  "specialtyCategories": {
+    "childrensHealth": "Детское здоровье",
+    "cosmeticAndPlasticSurgery": "Косметическая и пластическая хирургия",
+    "dental": "Стоматология",
+    "dermatology": "Дерматология",
+    "ent": "ЛОР (Ухо, горло, нос)",
+    "eyeAndVision": "Глаза и зрение",
+    "mensHealth": "Мужское здоровье",
+    "mentalHealth": "Психическое здоровье",
+    "physicalTherapy": "Физиотерапия",
+    "primaryCare": "Первичная медицинская помощь",
+    "sportsAndRehab": "Спорт и реабилитация",
+    "womensHealth": "Женское здоровье"
   }
 }

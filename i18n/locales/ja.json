@@ -450,5 +450,19 @@
         "physicalMedicineAndRehabilitation": "リハビリテーション医学",
         "urology": "泌尿器科",
         "traumatology": "外傷学"
+    },
+    "specialtyCategories": {
+        "childrensHealth": "小児医療",
+        "cosmeticAndPlasticSurgery": "美容・形成外科",
+        "dental": "歯科",
+        "dermatology": "皮膚科",
+        "ent": "耳鼻咽喉科",
+        "eyeAndVision": "眼科・視力",
+        "mensHealth": "男性医療",
+        "mentalHealth": "メンタルヘルス",
+        "physicalTherapy": "理学療法",
+        "primaryCare": "一般診療",
+        "sportsAndRehab": "スポーツ・リハビリ",
+        "womensHealth": "女性医療"
     }
 }

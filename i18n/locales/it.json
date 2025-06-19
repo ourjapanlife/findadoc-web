@@ -440,5 +440,19 @@
     "physicalMedicineAndRehabilitation": "Medicina fisica e riabilitativa",
     "traumatology": "Traumatologia",
     "urology": "Urologo/Urologa"
+  },
+  "specialtyCategories": {
+    "childrensHealth": "Salute dei bambini",
+    "cosmeticAndPlasticSurgery": "Chirurgia estetica e plastica",
+    "dental": "Dentale",
+    "dermatology": "Dermatologia",
+    "ent": "ORL (Orecchio, Naso e Gola)",
+    "eyeAndVision": "Occhi e vista",
+    "mensHealth": "Salute maschile",
+    "mentalHealth": "Salute mentale",
+    "physicalTherapy": "Fisioterapia",
+    "primaryCare": "Cure primarie",
+    "sportsAndRehab": "Sport e riabilitazione",
+    "womensHealth": "Salute femminile"
   }
 }

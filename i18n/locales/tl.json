@@ -440,5 +440,19 @@
     "physicalMedicineAndRehabilitation": "Pisikal na Medisina at Rehabilitasyon",
     "urology": "Urologistang Doktor",
     "traumatology": "Traumatolohiya"
+  },
+  "specialtyCategories": {
+    "childrensHealth": "Kalusugan ng mga Bata",
+    "cosmeticAndPlasticSurgery": "Kosmetik at Plastic Surgery",
+    "dental": "Dental",
+    "dermatology": "Dermatolohiya",
+    "ent": "ENT (Tainga, Ilong at Lalamunan)",
+    "eyeAndVision": "Mata at Paningin",
+    "mensHealth": "Kalusugan ng mga Lalaki",
+    "mentalHealth": "Kalusugan ng Isip",
+    "physicalTherapy": "Physical Therapy",
+    "primaryCare": "Pangunahing Pag-aalaga",
+    "sportsAndRehab": "Sports at Rehabilitasyon",
+    "womensHealth": "Kalusugan ng mga Babae"
   }
 }

@@ -12,7 +12,7 @@
                 v-else-if="currentStep === OnboardingSteps.Categories"
                 @select-category="handleCategorySelect"
             />
-            <TransitionAnimation
+            <TransitionToSearchScreen
                 v-else-if="currentStep === OnboardingSteps.LoadingSearch"
                 :category="selectedCategory"
                 @animation-complete="completeOnboarding"

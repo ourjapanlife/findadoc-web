@@ -149,6 +149,20 @@
     "traumatology": "Traumatologie",
     "urology": "Urologie"
   },
+  "specialtyCategories": {
+    "childrensHealth": "Kindergesundheit",
+    "cosmeticAndPlasticSurgery": "Kosmetische und Plastische Chirurgie",
+    "dental": "Zahnmedizin",
+    "dermatology": "Dermatologie",
+    "ent": "HNO (Hals, Nase, Ohren)",
+    "eyeAndVision": "Augen und Sehen",
+    "mensHealth": "Männergesundheit",
+    "mentalHealth": "Psychische Gesundheit",
+    "physicalTherapy": "Physiotherapie",
+    "primaryCare": "Hausarztversorgung",
+    "sportsAndRehab": "Sport und Rehabilitation",
+    "womensHealth": "Frauengesundheit"
+  },
   "modCreateFacilityOrHPTopbar": {
     "confirmExit": "Verlassen ohne zu Speichern",
     "create": "Erstellen",
