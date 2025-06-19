@@ -249,7 +249,7 @@
         "labelHealthcareProfessionalNameLocale": "Name Language",
         "missingFirstName": "No first name entered",
         "missingLastName": "No last name entered",
-        "missingLocale": "No Language Chosen",
+        "missingLocale": "No language chosen",
         "charactersOfLanguageDoNotMatchNameLocale": "The characters of the Healthcare Professional's name are invalid in the chosen language",
         "nameForLocaleAlreadyExists": "Name for chosen language already exists. Either update existing name or choose a different language.",
         "oneNameNecessary": "At least one name is required for a Healthcare Professional",
@@ -443,6 +443,6 @@
         "lastName": "Last name",
         "firstName": "First name",
         "middleName": "Middle name",
-        "nameLocale": "Name Language"
+        "nameLocale": "Name language"
     }
 }
