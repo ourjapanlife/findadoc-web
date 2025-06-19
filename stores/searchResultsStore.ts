@@ -22,28 +22,21 @@ export const useSearchResultsStore = defineStore('searchResultsStore', () => {
     const activeResult: Ref<SearchResult | undefined> = ref()
     const searchResultsList: Ref<SearchResult[]> = ref([])
 
-    const searchCity: Ref<string | undefined> = ref()
-    const searchSpecialties: Ref<Specialty[] | undefined> = ref()
-    const searchLanguages: Ref<Locale[] | undefined> = ref()
+    const selectedCity: Ref<string | undefined> = ref()
+    const selectedSpecialties: Ref<Specialty[]> = ref([])
+    const selectedLanguages: Ref<Locale[]> = ref([])
 
-    async function search(selectedSearchCity?: string,
-        selectedSearchSpecialties?: Specialty[],
-        selectedSearchLanguages?: Locale[]) {
+    async function search() {
         //set the loading visual state
         const loadingStore = useLoadingStore()
         loadingStore.setIsLoading(true)
 
-        //set the state variables
-        searchCity.value = selectedSearchCity
-        searchSpecialties.value = selectedSearchSpecialties
-        searchLanguages.value = selectedSearchLanguages
-
-        const professionalsSearchResults = await queryProfessionals(selectedSearchSpecialties, selectedSearchLanguages)
+        const professionalsSearchResults = await queryProfessionals(selectedSpecialties.value, selectedLanguages.value)
 
         const professionalIds = professionalsSearchResults.map(professional => professional.id)
 
         //get the facilities that match the professionals we found
-        const facilitiesSearchResults = await queryFacilities(professionalIds, selectedSearchCity)
+        const facilitiesSearchResults = await queryFacilities(professionalIds, selectedCity.value)
 
         //combine the professionals and facilities into a single search result
         //then filter out any results that don't have any facilities
@@ -75,18 +68,28 @@ export const useSearchResultsStore = defineStore('searchResultsStore', () => {
         activeResultId.value = undefined
     }
 
-    return { activeResultId, activeResult, searchResultsList, search, setActiveSearchResult, clearActiveSearchResult }
+    return {
+        activeResultId,
+        activeResult,
+        searchResultsList,
+        search,
+        setActiveSearchResult,
+        clearActiveSearchResult,
+        selectedCity,
+        selectedSpecialties,
+        selectedLanguages
+    }
 })
 
-async function queryProfessionals(searchSpecialties?: Specialty[], searchLanguages?: Locale[]):
+async function queryProfessionals(searchSpecialties: Specialty[], searchLanguages: Locale[]):
 Promise<HealthcareProfessional[]> {
     try {
         const searchProfessionalsData = {
             filters: {
                 limit: 100,
                 offset: 0,
-                specialties: searchSpecialties ? searchSpecialties : undefined,
-                spokenLanguages: searchLanguages ? searchLanguages : undefined,
+                specialties: searchSpecialties,
+                spokenLanguages: searchLanguages,
                 acceptedInsurance: undefined,
                 degrees: undefined,
                 names: undefined,

@@ -46,7 +46,11 @@
                 @click="selectCategory(undefined)"
             >
                 <span class="inline-block w-6 h-6">
-                    <component :is="HealthiconQuestionCircleOutline" class="w-6 h-6" aria-hidden="true" />
+                    <component
+                        :is="HealthiconQuestionCircleOutline"
+                        class="w-6 h-6"
+                        aria-hidden="true"
+                    />
                 </span>
                 <span>{{ t('onboarding.notsurebutton') }}</span>
             </button>

@@ -6,7 +6,7 @@
         >
             <div class="search-specialty col-span-1 inline-block w-1/3 py-4">
                 <select
-                    v-model="selectedSpecialty"
+                    v-model="searchResultsStore.selectedSpecialties"
                     class="rounded-l-full rounded-r-none w-full px-1 border-2 border-primary/60
                     py-1.5 drop-shadow-md text-primary-text bg-primary-bg hover:bg-primary-hover/10 transition-all"
                 >
@@ -29,7 +29,7 @@
             </div>
             <div class="search-location col-span-1 inline-block w-1/3 py-4">
                 <select
-                    v-model="selectedLocation"
+                    v-model="searchResultsStore.selectedCity"
                     class="w-full px-1 border-y-2 border-primary/60 py-1.5 drop-shadow-md
                         text-primary-text bg-primary-bg hover:bg-primary-hover/10 transition-all"
                 >
@@ -53,9 +53,9 @@
             </div>
             <div class="search-language col-span-1 inline-block w-1/3 py-4">
                 <select
-                    v-model="selectedLanguage"
-                    class="rounded-r-full rounded-l-none w-full px-1 border-2 border-primary/60 py-1.5
-                        drop-shadow-md text-primary-text bg-primary-bg hover:bg-primary-hover/10 transition-all"
+                    v-model="searchResultsStore.selectedLanguages"
+                    class="rounded-r-full rounded-l-none w-full px-1 border-2 border-primary/60
+                        py-1.5 drop-shadow-md text-primary-text bg-primary-bg hover:bg-primary-hover/10 transition-all"
                     data-testid="search-bar-language"
                 >
                     <option
@@ -105,8 +105,7 @@ import SVGSearchIcon from '~/assets/icons/search-icon.svg'
 import { useSearchResultsStore } from '~/stores/searchResultsStore.js'
 import { useLocationsStore } from '~/stores/locationsStore.js'
 import { useSpecialtiesStore, type SpecialtyDisplayOption } from '~/stores/specialtiesStore.js'
-import type { Locale, Specialty } from '~/typedefs/gqlTypes.js'
-import { useLocaleStore, type LocaleDisplay } from '~/stores/localeStore.js'
+import { useLocaleStore } from '~/stores/localeStore.js'
 
 const { t } = useI18n()
 
@@ -122,10 +121,6 @@ const locationDropdownOptions: ComputedRef<CityDisplayItems> = computed(() =>
     createLocationDropdownOptions(locationsStore.citiesDisplayOptions))
 const specialtyDropdownOptions: Ref<SpecialtyDisplayOption[]> = ref(specialtiesStore.specialtyDisplayOptions)
 const languageDropdownOptions: Ref<LocaleDisplay[]> = ref(languageOptionsWithPlaceHolder)
-
-const selectedSpecialty: Ref<Specialty | string> = ref('')
-const selectedLocation: Ref<string> = ref('')
-const selectedLanguage: Ref<Locale | string> = ref('')
 
 const placeHolderTextDisplay = '----Any----'
 
@@ -171,10 +166,6 @@ function createLocationDropdownOptions(cities: string[]) {
 }
 
 async function search() {
-    const blankRemovedLocation = selectedLocation.value == '----Any----' ? '' : selectedLocation.value
-    const blankRemovedSpecialty = selectedSpecialty.value == '----Any----' ? undefined : [selectedSpecialty.value] as Specialty[]
-    const blankRemovedLanguage = selectedLanguage.value == '----Any----' ? undefined : [selectedLanguage.value] as Locale[]
-
-    await searchResultsStore.search(blankRemovedLocation, blankRemovedSpecialty, blankRemovedLanguage)
+    await searchResultsStore.search()
 }
 </script>

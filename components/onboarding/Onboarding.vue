@@ -48,10 +48,14 @@ const handleCategorySelect = (category: SpecialtyCategory | undefined) => {
 }
 
 const completeOnboarding = async () => {
-    const categoryToSearch = selectedCategory.value ? specialtiesStore.categoryToSpecialtyMap[selectedCategory.value] : undefined
-
     // Let's start the search with the selected category to start
-    await searchResultsStore.search(undefined, categoryToSearch)
+    const specialtiesToSearch = selectedCategory.value
+        ? specialtiesStore.categoryToSpecialtyMap[selectedCategory.value]
+        : undefined
+
+    searchResultsStore.selectedSpecialties = specialtiesToSearch ?? []
+
+    await searchResultsStore.search()
     onboardingStore.setOnboardingState(OnboardingState.Completed)
 }
 </script>

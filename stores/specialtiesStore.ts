@@ -22,7 +22,6 @@ export const useSpecialtiesStore = defineStore('specialtiesStore', () => {
     ])
 
     const specialtyDisplayOptions = computed(() => [
-        { code: '', displayText: '----Any----' },
         { code: Specialty.AllergyAndImmunology, displayText: t('specialties.allergyAndImmunology') },
         { code: Specialty.Anesthesiology, displayText: t('specialties.anesthesiology') },
         { code: Specialty.Cardiology, displayText: t('specialties.cardiology') },
@@ -32,7 +31,7 @@ export const useSpecialtiesStore = defineStore('specialtiesStore', () => {
         { code: Specialty.EmergencyMedicine, displayText: t('specialties.emergencyMedicine') },
         { code: Specialty.EntSpecialist, displayText: t('specialties.entSpecialist') },
         { code: Specialty.InfectiousDiseases, displayText: t('specialties.infectiousDiseases') },
-        { code: Specialty.GeneralMedicine, displayText: t('specialties.generalPractitioner') },
+        { code: Specialty.GeneralMedicine, displayText: t('specialties.generalMedicine') },
         { code: Specialty.MedicalGenetics, displayText: t('specialties.medicalGenetics') },
         { code: Specialty.Neurology, displayText: t('specialties.neurology') },
         { code: Specialty.NuclearMedicine, displayText: t('specialties.nuclearMedicine') },
