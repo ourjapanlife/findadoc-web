@@ -59,6 +59,13 @@
     "paragraph15": "Ci riserviamo il diritto di aggiornare questa Informativa sulla privacy per riflettere i cambiamenti nelle nostre pratiche e nei nostri servizi. Ti informeremo di eventuali modifiche significative pubblicando l'informativa aggiornata sul nostro sito web.",
     "paragraph16": "Utilizzando il nostro servizio, accetti i termini descritti in questa Informativa sulla privacy."
   },
+  "onboarding": {
+    "welcometo": "Benvenuto su",
+    "selectcategory": "Seleziona una categoria per iniziare.",
+    "getstartedbutton": "Inizia",
+    "notsurebutton": "Non sono sicuro o altro",
+    "searchloading": "Il tuo viaggio inizia qui"
+  },
   "submitPage": {
     "firstName": "Nome",
     "firstNameValidation": "Inserisci un nome",

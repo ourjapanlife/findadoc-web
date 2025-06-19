@@ -53,6 +53,13 @@
     "paragraph15": "Wir behalten uns das Recht vor, diese Datenschutzerklärung zu aktualisieren, um Änderungen in unseren Praktiken und Dienstleistungen widerzuspiegeln. Wir werden Sie über alle wesentlichen Änderungen informieren, indem wir die aktualisierte Richtlinie auf unserer Website veröffentlichen.",
     "paragraph16": "Durch die Nutzung unseres Dienstes stimmen Sie den in dieser Datenschutzerklärung dargelegten Bedingungen zu."
   },
+  "onboarding": {
+    "welcometo": "Willkommen bei",
+    "selectcategory": "Bitte wählen Sie eine Kategorie, um zu starten.",
+    "getstartedbutton": "Loslegen",
+    "notsurebutton": "Ich bin mir nicht sicher oder etwas anderes",
+    "searchloading": "Ihre Reise beginnt hier"
+  },
   "submitPage": {
     "firstName": "Vorname",
     "firstNameValidation": "Geben Sie einen Vornamen ein",

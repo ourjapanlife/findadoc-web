@@ -126,6 +126,13 @@
         "unauthorizedline2": "If you want to become a moderator or have any questions, please contact us ",
         "unauthorizedline3": "here"
     },
+    "onboarding": {
+        "welcometo": "Welcome to",
+        "selectcategory": "Please select a category to get started",
+        "getstartedbutton": "Get Started",
+        "notsurebutton": "Something else",
+        "searchloading": "Your journey starts here"
+    },
     "specialties": {
         "allergyAndImmunology": "Allergist",
         "anesthesiology": "Anesthesiologist",
@@ -136,8 +143,10 @@
         "diagnosticRadiology": "Radiologist",
         "entSpecialist": "ENT Specialist",
         "emergencyMedicine": "Emergency Medicine",
+        "familyMedicine": "Family Medicine",
         "infectiousDiseases": "Infectious Diseases",
-        "generalPractitioner": "General Practitioner",
+        "internalMedicine": "Internal Medicine",
+        "generalMedicine": "General Medicine",
         "medicalGenetics": "Medical Genetics",
         "neurology": "Neurologist",
         "nuclearMedicine": "Nuclear Medicine",
@@ -154,6 +163,7 @@
         "preventiveMedicine": "Preventive Medicine",
         "radiationOncology": "Radiation Oncologist",
         "sportsMedicine": "Sports Medicine",
+        "surgery": "Surgery",
         "physicalMedicineAndRehabilitation": "Physical Medicine & Rehabilitation",
         "urology": "Urologist",
         "traumatology": "Traumatologist"

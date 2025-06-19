@@ -7,35 +7,19 @@ export const useSpecialtiesStore = defineStore('specialtiesStore', () => {
     const { t } = useI18n()
 
     const specialtyCategories = computed(() => [
-        { code: SpecialtyCategory.Dental, displayText: t('specialties.dentistry') },
-        { code: SpecialtyCategory.Dermatology, displayText: t('specialties.dermatology') },
-        { code: SpecialtyCategory.ChildrensHealth, displayText: t('specialties.pediatrics') },
-        { code: SpecialtyCategory.WomensHealth, displayText: t('specialties.obstetricsAndGynecology') },
-        { code: SpecialtyCategory.PrimaryCare, displayText: t('specialties.generalPractitioner') },
-        { code: SpecialtyCategory.MentalHealth, displayText: t('specialties.psychiatry') },
-        { code: SpecialtyCategory.MensHealth, displayText: t('specialties.urology') },
-        { code: SpecialtyCategory.PhysicalTherapy, displayText: t('specialties.physiotherapy') },
-        { code: SpecialtyCategory.EyeAndVision, displayText: t('specialties.optometry') },
-        { code: SpecialtyCategory.Ent, displayText: t('specialties.entSpecialist') },
-        { code: SpecialtyCategory.SportsAndRehab, displayText: t('specialties.sportsMedicine') },
-        { code: SpecialtyCategory.CosmeticAndPlasticSurgery, displayText: t('specialties.plasticSurgery') }
+        { code: SpecialtyCategory.Dental, displayText: t('specialtyCategories.dental') },
+        { code: SpecialtyCategory.Dermatology, displayText: t('specialtyCategories.dermatology') },
+        { code: SpecialtyCategory.ChildrensHealth, displayText: t('specialtyCategories.childrensHealth') },
+        { code: SpecialtyCategory.WomensHealth, displayText: t('specialtyCategories.womensHealth') },
+        { code: SpecialtyCategory.PrimaryCare, displayText: t('specialtyCategories.primaryCare') },
+        { code: SpecialtyCategory.MentalHealth, displayText: t('specialtyCategories.mentalHealth') },
+        { code: SpecialtyCategory.MensHealth, displayText: t('specialtyCategories.mensHealth') },
+        { code: SpecialtyCategory.PhysicalTherapy, displayText: t('specialtyCategories.physicalTherapy') },
+        { code: SpecialtyCategory.EyeAndVision, displayText: t('specialtyCategories.eyeAndVision') },
+        { code: SpecialtyCategory.Ent, displayText: t('specialtyCategories.ent') },
+        { code: SpecialtyCategory.SportsAndRehab, displayText: t('specialtyCategories.sportsAndRehab') },
+        { code: SpecialtyCategory.CosmeticAndPlasticSurgery, displayText: t('specialtyCategories.cosmeticAndPlasticSurgery') }
     ])
-
-    // Map UI categories to GraphQL Specialty enum values
-    const categoryToSpecialtyMap = {
-        [SpecialtyCategory.Dental]: [Specialty.Dentistry],
-        [SpecialtyCategory.Dermatology]: [Specialty.Dermatology],
-        [SpecialtyCategory.ChildrensHealth]: [Specialty.Pediatrics],
-        [SpecialtyCategory.WomensHealth]: [Specialty.ObstetricsAndGynecology],
-        [SpecialtyCategory.PrimaryCare]: [Specialty.InternalMedicine],
-        [SpecialtyCategory.MentalHealth]: [Specialty.Psychiatry],
-        [SpecialtyCategory.PhysicalTherapy]: [Specialty.Physiotherapy],
-        [SpecialtyCategory.EyeAndVision]: [Specialty.Optometry],
-        [SpecialtyCategory.Ent]: [Specialty.EntSpecialist],
-        [SpecialtyCategory.MensHealth]: [Specialty.Urology],
-        [SpecialtyCategory.SportsAndRehab]: [Specialty.SportsMedicine],
-        [SpecialtyCategory.CosmeticAndPlasticSurgery]: [Specialty.Surgery]
-    }
 
     const specialtyDisplayOptions = computed(() => [
         { code: '', displayText: '----Any----' },
@@ -70,6 +54,39 @@ export const useSpecialtiesStore = defineStore('specialtiesStore', () => {
         { code: Specialty.InternalMedicine, displayText: t('specialties.internalMedicine') },
         { code: Specialty.FamilyMedicine, displayText: t('specialties.familyMedicine') }
     ] as SpecialtyDisplayOption[])
+
+    // This helps us map what specialties belong under a category.
+    // This is used in the onboarding flow and helpful for search results
+    const categoryToSpecialtyMap = computed(() => ({
+        [SpecialtyCategory.Dental]: [Specialty.Dentistry],
+        [SpecialtyCategory.Dermatology]: [Specialty.Dermatology],
+        [SpecialtyCategory.ChildrensHealth]: [Specialty.Pediatrics],
+        [SpecialtyCategory.WomensHealth]: [Specialty.ObstetricsAndGynecology],
+        [SpecialtyCategory.PrimaryCare]: [
+            Specialty.InternalMedicine,
+            Specialty.AllergyAndImmunology,
+            Specialty.Cardiology,
+            Specialty.DiagnosticRadiology,
+            Specialty.EmergencyMedicine,
+            Specialty.InfectiousDiseases,
+            Specialty.GeneralMedicine,
+            Specialty.MedicalGenetics,
+            Specialty.Neurology,
+            Specialty.NuclearMedicine,
+            Specialty.Pathology,
+            Specialty.PreventiveMedicine,
+            Specialty.RadiationOncology
+        ],
+        [SpecialtyCategory.MentalHealth]: [Specialty.Psychiatry],
+        [SpecialtyCategory.PhysicalTherapy]: [Specialty.Physiotherapy],
+        [SpecialtyCategory.EyeAndVision]: [Specialty.Optometry, Specialty.Ophthalmology],
+        [SpecialtyCategory.Ent]: [Specialty.EntSpecialist],
+        [SpecialtyCategory.MensHealth]: [Specialty.Urology],
+        [SpecialtyCategory.SportsAndRehab]: [Specialty.SportsMedicine,
+                                             Specialty.OrthopedicSurgery,
+                                             Specialty.PhysicalMedicineAndRehabilitation],
+        [SpecialtyCategory.CosmeticAndPlasticSurgery]: [Specialty.Surgery, Specialty.Anesthesiology]
+    }))
 
     return {
         specialtyCategories,

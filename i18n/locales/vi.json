@@ -53,6 +53,13 @@
     "paragraph15": "Chúng tôi có quyền cập nhật Chính sách Bảo mật này để phản ánh những thay đổi trong thực tiễn và dịch vụ của mình. Chúng tôi sẽ thông báo cho bạn về bất kỳ thay đổi quan trọng nào bằng cách đăng chính sách đã cập nhật trên trang web của chúng tôi.",
     "paragraph16": "Bằng cách sử dụng dịch vụ của chúng tôi, bạn đồng ý với các điều khoản được nêu trong Chính sách Bảo mật này."
   },
+  "onboarding": {
+    "welcometo": "Chào mừng đến với",
+    "selectcategory": "Vui lòng chọn một danh mục để bắt đầu.",
+    "getstartedbutton": "Bắt đầu",
+    "notsurebutton": "Tôi không chắc hoặc khác",
+    "searchloading": "Hành trình của bạn bắt đầu từ đây"
+  },
   "submitPage": {
     "firstName": "Tên",
     "firstNameValidation": "Nhập tên của bạn",

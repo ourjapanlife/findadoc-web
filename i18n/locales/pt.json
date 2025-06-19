@@ -53,6 +53,13 @@
     "paragraph15": "Nos reservamos o direito de atualizar ou alterar esta política de privacidade para refletir qualquer mudança que venha a acontecer nos nossos serviços ou nas nossas atividades. Iremos notificar qualquer mudança significativa publicando as políticas em nosso website.",
     "paragraph16": "Ao utilizar os nossos serviços, você concorda com os termos explicitados nesta política de privacidade."
   },
+  "onboarding": {
+    "welcometo": "Bem-vindo ao",
+    "selectcategory": "Por favor, selecione uma categoria para começar.",
+    "getstartedbutton": "Começar",
+    "notsurebutton": "Não tenho certeza ou outra opção",
+    "searchloading": "Sua jornada começa aqui"
+  },
   "submitPage": {
     "firstName": "Nome",
     "firstNameValidation": "Enter a first name",

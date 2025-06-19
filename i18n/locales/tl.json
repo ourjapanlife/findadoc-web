@@ -53,6 +53,13 @@
     "paragraph15": "Inilalaan namin ang karapatang baguhin ang Patakaran sa Pribasiya na ito upang ipakita ang mga pagbabago sa aming serbisyo. Ibabahagi namin ang anumang mahahalagang impormasyon sa pamamagitan ng pag-post ng anumang pagbabago ng mga patakaran sa aming website.",
     "paragraph16": "Sa paggamit ng aming serbisyo, ikaw ay sumasang-ayon sa mga tuntunin na nakasaad sa Patakaran sa Pribasiya na ito."
   },
+  "onboarding": {
+    "welcometo": "Maligayang pagdating sa",
+    "selectcategory": "Pumili ng kategorya upang magsimula.",
+    "getstartedbutton": "Simulan",
+    "notsurebutton": "Hindi ako sigurado o iba pa",
+    "searchloading": "Dito nagsisimula ang iyong paglalakbay"
+  },
   "submitPage": {
     "firstName": "Pangalan",
     "firstNameValidation": "Ilagay ang Pangalan",

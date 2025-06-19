@@ -1,5 +1,8 @@
 <template>
-    <div class="relative h-screen w-full overflow-hidden bg-primary-bg">
+    <div
+        class="relative h-screen w-full overflow-hidden bg-primary-bg"
+        :style="{ opacity: isFadingIn ? 1 : 0, transition: 'opacity 0.5s ease' }"
+    >
         <!-- Content -->
         <div class="h-full flex flex-col text-center text-primary-text-inverted">
             <!-- Top half of screen -->
@@ -14,15 +17,15 @@
                     class="flex flex-col self-center items-center px-6 transition-opacity duration-500"
                     :class="{ 'opacity-0': isBackgroundExpanding }"
                 >
-                    <h1 class="text-4xl font-bold mb-6">
-                        <span class="block">Welcome to</span>
-                        <span class="block">Find a Doc, Japan!</span>
+                    <h1 class="landscape:text-7xl text-4xl font-bold mb-6">
+                        <span class="block">{{ t('onboarding.welcometo') }}</span>
+                        <span class="block mt-2">Find a Doc, Japan!</span>
                     </h1>
-                    <p class="text-lg mb-12 max-w-md">
-                        Connecting people in Japan to the healthcare services they need, in the languages they need.
+                    <p class="landscape:text-2xl text-lg my-8 max-w-md">
+                        {{ t('about.subheading') }}
                     </p>
                 </div>
-                <!-- Background wave transition -->
+                <!-- Background wave svg -->
                 <div class="w-full absolute bottom-0">
                     <svg
                         viewBox="0 0 375 56"
@@ -86,7 +89,15 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
+
+const isFadingIn = ref(false)
+onMounted(() => {
+    setTimeout(() => { isFadingIn.value = true }, 10)
+})
 
 const isBackgroundExpanding = ref(false)
 const waveHover = ref(false)
@@ -99,7 +110,7 @@ const expandBackground = () => {
     isBackgroundExpanding.value = true
     setTimeout(() => {
         emit('next')
-    }, 1000)
+    }, 300)
 }
 </script>
 

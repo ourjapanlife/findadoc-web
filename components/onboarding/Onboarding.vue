@@ -42,17 +42,16 @@ const currentStep = ref<OnboardingSteps>(OnboardingSteps.Welcome)
 const selectedCategory = ref<SpecialtyCategory | undefined>(undefined)
 
 const handleCategorySelect = (category: SpecialtyCategory | undefined) => {
-    if (category === undefined || category in specialtiesStore.specialtyCategories) {
-        selectedCategory.value = category
-        currentStep.value = OnboardingSteps.LoadingSearch
-        onboardingStore.setOnboardingState(OnboardingState.Completed)
-    }
+    selectedCategory.value = category
+    currentStep.value = OnboardingSteps.LoadingSearch
+    onboardingStore.setOnboardingState(OnboardingState.Completed)
 }
 
 const completeOnboarding = async () => {
-    if (selectedCategory.value !== undefined) {
-        await searchResultsStore.search(undefined, specialtiesStore.categoryToSpecialtyMap[selectedCategory.value])
-    }
+    const categoryToSearch = selectedCategory.value ? specialtiesStore.categoryToSpecialtyMap[selectedCategory.value] : undefined
+
+    // Let's start the search with the selected category to start
+    await searchResultsStore.search(undefined, categoryToSearch)
     onboardingStore.setOnboardingState(OnboardingState.Completed)
 }
 </script>
@@ -60,7 +59,7 @@ const completeOnboarding = async () => {
 <style scoped>
 .fade-enter-active,
 .fade-leave-active {
-    transition: opacity 0.3s ease;
+    transition: opacity 0.5s ease;
 }
 
 .fade-enter-from,

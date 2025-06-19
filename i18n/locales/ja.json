@@ -53,7 +53,14 @@
         "paragraph15": "We reserve the right to update this Privacy Policy to reflect changes in our practices and services. We will notify you of any significant changes by posting the updated policy on our website.",
         "paragraph16": "By using our service, you agree to the terms outlined in this Privacy Policy."
     },
-    "submitPage": {
+    "onboarding": {
+    "welcometo": "ようこそ",
+    "selectcategory": "はじめにカテゴリを選択してください。",
+    "getstartedbutton": "はじめる",
+    "notsurebutton": "よく分からない・その他",
+    "searchloading": "あなたの旅はここから始まります"
+  },
+  "submitPage": {
         "firstName": "名",
         "firstNameValidation": "Enter a first name",
         "googleMaps": "Google MapsのURL",

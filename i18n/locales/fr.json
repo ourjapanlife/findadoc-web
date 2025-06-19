@@ -53,6 +53,13 @@
     "paragraph15": "Nous nous réservons le droit de mettre à jour cette politique de confidentialité pour refléter les changements dans nos pratiques et services. Nous vous informerons de tout changement important en publiant la politique mise à jour sur notre site web.",
     "paragraph16": "En utilisant notre service, vous acceptez les termes énoncés dans cette politique de confidentialité."
   },
+  "onboarding": {
+    "welcometo": "Bienvenue à",
+    "selectcategory": "Veuillez sélectionner une catégorie pour commencer.",
+    "getstartedbutton": "Commencer",
+    "notsurebutton": "Je ne suis pas sûr ou autre chose",
+    "searchloading": "Votre aventure commence ici"
+  },
   "submitPage": {
     "firstName": "Prénom",
     "googleMaps": "URL de Google Maps",

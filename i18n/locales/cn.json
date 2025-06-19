@@ -53,6 +53,13 @@
     "paragraph15": "我们保留更新本隐私政策的权利，以适应我们工作和服务过程中可能存在的变化。我们将通过在网站上发布更新的隐私政策来通知您任何重大变更。",
     "paragraph16": "使用我们的服务即表示您同意本隐私政策中列出的条款。"
   },
+  "onboarding": {
+    "welcometo": "欢迎来到",
+    "selectcategory": "请选择一个类别以开始。",
+    "getstartedbutton": "开始",
+    "notsurebutton": "我不确定或其他",
+    "searchloading": "您的旅程从这里开始"
+  },
   "submitPage": {
     "firstName": "名",
     "firstNameValidation": "请输入名字（不含姓）",
