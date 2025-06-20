@@ -345,6 +345,7 @@
         "errorMessageFacilityInputsInvalid": "Some of the Facility Fields were not filled in correctly",
         "errorMessageFacilityId": "Facility ID is required for updating the facility",
         "errorMessageHealthcareInputsInvalid": "Some of the Healthcare Professional Fields were not filled in correctly",
+        "errorMessageRomajiNameRequired": "The healthcare professional must have a name in Romaji",
         "errorMessageUpdated": "Failed to update submission form",
         "facilityHeading": "Facility Information",
         "facilitySuccessfullyRejected": "Facility rejected successfully",

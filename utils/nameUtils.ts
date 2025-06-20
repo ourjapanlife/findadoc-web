@@ -18,10 +18,16 @@ export const formatHealthcareProfessionalName = (
 
     switch (preferredLocale) {
         case Locale.EnUs:
-            return englishFullName || japaneseFullName || ''
+            return englishFullName
+              || japaneseFullName
+              || 'Something went wrong on our end, please let us know so we can resolve the issue as soon as possible.'
         case Locale.JaJp:
-            return japaneseFullName || englishFullName || ''
+            return japaneseFullName
+              || englishFullName
+              || 'Something went wrong on our end, please let us know so we can resolve the issue as soon as possible.'
         default:
-            return englishFullName || japaneseFullName || ''
+            return englishFullName
+              || japaneseFullName
+              || 'Something went wrong on our end, please let us know so we can resolve the issue as soon as possible.'
     }
 }

@@ -156,6 +156,7 @@ import { validateAddressLineEn,
     validatePostalCode,
     validateWebsite,
     validateCityJa } from '~/utils/formValidations'
+import { hasLatinCharacters } from '~/utils/stringUtils'
 import { onBeforeRouteLeave } from '#app'
 import { useI18n } from '#imports'
 import { triggerFormValidationErrorMessages } from '~/utils/triggerFormValidationErrorMessages'
@@ -312,6 +313,20 @@ const validateHealthcareProfessionalFields = () => {
       && areSpecialtiesSelected && areLocalesSelected
 
     return areAllFieldsValid
+}
+
+const validateHealthcareProfessionalRomajiName = () => {
+    const healthcareProfessionalFields = healthcareProfessionalsStore.healthcareProfessionalSectionFields
+    const names = healthcareProfessionalFields.names
+
+    // Check if the healthcare professional has a name in Romaji (Latin characters)
+    const hasANameInRomaji = names.some(healthcareProfessionalName => {
+        const hasAFirstNameInRomaji = hasLatinCharacters(healthcareProfessionalName.firstName)
+        const hasALastNameInRomaji = hasLatinCharacters(healthcareProfessionalName.lastName)
+        return hasAFirstNameInRomaji && hasALastNameInRomaji
+    })
+
+    return hasANameInRomaji
 }
 
 function initializeSubmissionFormValues(submissionData: Submission | undefined) {
@@ -579,6 +594,7 @@ async function submitCompletedForm(e: Event) {
 
     const isValidFacility = validateFacilityFields()
     const isValidHealthcareProfessional = validateHealthcareProfessionalFields()
+    const isValidRomajiName = validateHealthcareProfessionalRomajiName()
 
     //This shows a toast and returns if the facility fields arent valid
     if (!isValidFacility && !currentFacilityRelations.value.length) {
@@ -589,6 +605,12 @@ async function submitCompletedForm(e: Event) {
 
     if (!isValidHealthcareProfessional && !currentExistingHealthcareProfessionals.value.length) {
         toast.error(t('modSubmissionForm.errorMessageHealthcareInputsInvalid'))
+        await resetModalRefs()
+        return
+    }
+
+    if (!isValidRomajiName) {
+        toast.error(t('modSubmissionForm.errorMessageRomajiNameRequired'))
         await resetModalRefs()
         return
     }
