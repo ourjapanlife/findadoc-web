@@ -1,5 +1,8 @@
 <template>
-    <div class="h-screen w-full bg-primary flex items-center justify-center overflow-hidden">
+    <div
+        class="h-screen w-full bg-primary flex items-center justify-center overflow-hidden"
+        :style="{ opacity: isFadingOut ? 0 : 1, transition: 'opacity 1s ease' }"
+    >
         <div class="relative w-full max-w-md px-6 text-center">
             <!-- Main Content -->
             <div class="relative z-10">
@@ -51,9 +54,15 @@
 </template>
 
 <script setup lang="ts">
+import { ref, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
+
+const isFadingOut = ref(false)
+onMounted(() => {
+    setTimeout(() => { isFadingOut.value = true }, 2000)
+})
 </script>
 
 <style scoped>
