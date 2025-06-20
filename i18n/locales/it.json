@@ -443,6 +443,8 @@
     "sportsMedicine": "Medicina dello sport",
     "physicalMedicineAndRehabilitation": "Medicina fisica e riabilitativa",
     "traumatology": "Traumatologia",
-    "urology": "Urologo/Urologa"
+    "urology": "Urologo/Urologa",
+    "internalMedicine": "Internal Medicine",
+    "familyMedicine": "Family Medicine"
   }
 }

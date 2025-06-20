@@ -147,7 +147,9 @@
     "sportsMedicine": "Sportmedizin",
     "physicalMedicineAndRehabilitation": "Physikalische Medizin und Rehabilitation",
     "traumatology": "Traumatologie",
-    "urology": "Urologie"
+    "urology": "Urologie",
+    "internalMedicine": "Internal Medicine",
+    "familyMedicine": "Family Medicine"
   },
   "modCreateFacilityOrHPTopbar": {
     "confirmExit": "Verlassen ohne zu Speichern",

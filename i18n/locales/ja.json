@@ -453,6 +453,8 @@
     "sportsMedicine": "Sports Medicine",
     "physicalMedicineAndRehabilitation": "Physical Medicine & Rehabilitation",
     "urology": "Urologist",
-    "traumatology": "Traumatologist"
+    "traumatology": "Traumatologist",
+    "internalMedicine": "内科",
+    "familyMedicine": "Family Medicine"
   }
 }

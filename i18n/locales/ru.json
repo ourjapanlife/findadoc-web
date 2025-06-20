@@ -452,6 +452,8 @@
     "sportsMedicine": "Врач спортивной медицины",
     "physicalMedicineAndRehabilitation": "Физическая медицина и реабилитация",
     "urology": "Уролог",
-    "traumatology": "Травматология"
+    "traumatology": "Травматология",
+    "internalMedicine": "Internal Medicine",
+    "familyMedicine": "Family Medicine"
   }
 }
