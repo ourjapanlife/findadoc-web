@@ -444,5 +444,8 @@
     "physicalMedicineAndRehabilitation": "Medicina fisica e riabilitativa",
     "traumatology": "Traumatologia",
     "urology": "Urologo/Urologa"
+  },
+  "modInputField": {
+    "optional": "Optional"
   }
 }

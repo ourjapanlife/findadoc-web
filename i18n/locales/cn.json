@@ -453,5 +453,8 @@
     "physicalMedicineAndRehabilitation": "物理医学与康复",
     "urology": "泌尿科医生",
     "traumatology": "创伤学"
+  },
+  "modInputField": {
+    "optional": "Optional"
   }
 }

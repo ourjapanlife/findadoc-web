@@ -444,5 +444,8 @@
     "physicalMedicineAndRehabilitation": "Y học vật lý và phục hồi chức năng",
     "urology": "Bác sĩ Tiết niệu",
     "traumatology": "Chấn thương học"
+  },
+  "modInputField": {
+    "optional": "Optional"
   }
 }

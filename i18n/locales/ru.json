@@ -453,5 +453,8 @@
     "physicalMedicineAndRehabilitation": "Физическая медицина и реабилитация",
     "urology": "Уролог",
     "traumatology": "Травматология"
+  },
+  "modInputField": {
+    "optional": "Optional"
   }
 }
