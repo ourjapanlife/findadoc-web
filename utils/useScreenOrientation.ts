@@ -1,17 +1,20 @@
-import { ref, onMounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 
 export const useScreenOrientation = () => {
-    const isPortrait = ref(true)
+    const width = ref(window.innerWidth)
 
-    const checkViewport = () => {
-        isPortrait.value = window.innerWidth <= 768
+    const updateWidth = () => {
+        width.value = window.innerWidth
     }
 
     onMounted(() => {
-        checkViewport()
+        window.addEventListener('resize', updateWidth)
+    })
+    onUnmounted(() => {
+        window.removeEventListener('resize', updateWidth)
     })
 
-    return {
-        isPortrait
-    }
+    const isPortrait = computed(() => width.value <= 768)
+
+    return { isPortrait }
 }
