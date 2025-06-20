@@ -38,6 +38,9 @@
         "netlify": "Powered by Netlify",
         "copyright": "Find a Doc, Japan"
     },
+    "modNoteInputField": {
+        "label": "Mod Submission Notes"
+    },
     "privacyPage": {
         "heading": "Privacy Policy",
         "subheading": "This Privacy Policy is meant to help you understand what information we collect, why we collect it, and how you canupdate, manage, export, and delete your information.",

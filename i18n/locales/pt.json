@@ -454,5 +454,8 @@
     "physicalMedicineAndRehabilitation": "Medicina física e reabilitação",
     "urology": "Urologista",
     "traumatology": "Traumatologia"
+  },
+  "modNoteInputField": {
+    "label": "Mod Submission Notes"
   }
 }
