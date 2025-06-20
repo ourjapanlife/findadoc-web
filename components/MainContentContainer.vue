@@ -1,13 +1,13 @@
 <template>
     <div class="h-full w-full">
         <div
-            v-if="$viewport.isGreaterThan('tablet')"
+            v-if="!isPortrait"
             id="landscape-content"
             class="bg-secondary-bg/20 hover:shadow-inner hover:shadow-secondary-bg/90 h-full w-full relative"
         >
             <Loader />
             <Modal
-                class="max-h-[calc(100vh-12rem)] ml-8 mt-12 overflow-y-auto"
+                class="overflow-y-auto"
             >
                 <SearchResultDetails />
             </Modal>
@@ -36,7 +36,7 @@
 </template>
 
 <script lang="ts" setup>
-import { useNuxtApp } from '#app'
+import { useScreenOrientation } from '~/utils/useScreenOrientation'
 
-const { $viewport } = useNuxtApp()
+const { isPortrait } = useScreenOrientation()
 </script>
