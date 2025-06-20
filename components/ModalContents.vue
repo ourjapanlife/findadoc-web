@@ -1,0 +1,50 @@
+<template>
+    <div
+        ref="modal"
+        v-close-on-outside-click="hideModalAndEmitClosedEvent"
+        class="absolute z-10 bg-primary-bg rounded-xl overflow-x-hidden
+        hover:shadow-inner hover:shadow-secondary-bg/90"
+    >
+        <button
+            type="button"
+            class="close-button absolute right-6 top-5 bg-primary-inverted rounded-lg px-2 py-.5
+                group hover:bg-primary-hover transition-all duration-200"
+            @click="hideModalAndEmitClosedEvent"
+        >
+            <span class="close-icon">
+                <svg
+                    class="stroke-primary group-hover:stroke-primary-inverted"
+                    width="20"
+                    heigh="20"
+                    viewBox="4 0 15 25"
+                >
+                    <path
+                        stroke-width="3"
+                        fill="none"
+                        d="M6.25,6.25,17.75,17.75"
+                    />
+                    <path
+                        stroke-width="3"
+                        fill="none"
+                        d="M6.25,17.75,17.75,6.25"
+                    />
+                </svg>
+            </span>
+        </button>
+        <slot />
+    </div>
+</template>
+
+<script lang="ts" setup>
+import { ref } from 'vue'
+import { vCloseOnOutsideClick } from '~/utils/closeOnOutsideClick'
+import { useModalStore } from '~/stores/modalStore'
+
+const modal = ref(null)
+const store = useModalStore()
+const emit = defineEmits(['modal-closed'])
+const hideModalAndEmitClosedEvent = () => {
+    emit('modal-closed')
+    store.hideModal()
+}
+</script>
