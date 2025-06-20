@@ -456,6 +456,9 @@
     "lastName": "Last name",
     "firstName": "First name",
     "middleName": "Middle name",
-    "nameLocale": "Name language"
+    "nameLocale": "Name locale"
+  },
+  "modNoteInputField": {
+    "label": "Mod Submission Notes"
   }
 }
