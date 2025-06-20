@@ -20,7 +20,7 @@
 </template>
 
 <script setup lang="ts">
-import { useScreenOrientation } from '~/utils/useScreenOrientation'
+import { useScreenOrientation } from '~/composables/useScreenOrientation'
 import { useModalStore } from '~/stores/modalStore'
 
 useModalStore()

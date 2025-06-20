@@ -36,7 +36,7 @@
 </template>
 
 <script lang="ts" setup>
-import { useScreenOrientation } from '~/utils/useScreenOrientation'
+import { useScreenOrientation } from '~/composables/useScreenOrientation'
 
 const { isPortrait } = useScreenOrientation()
 </script>

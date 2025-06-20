@@ -163,7 +163,7 @@ import { useSubmissionStore } from '~/stores/submissionStore'
 import type { Locale, MutationCreateSubmissionArgs } from '~/typedefs/gqlTypes'
 import { useLocaleStore } from '~/stores/localeStore'
 import { useI18n } from '#imports'
-import { handleServerErrorMessaging } from '~/utils/handleServerErrorMessaging'
+import { handleServerErrorMessaging } from '~/composables/handleServerErrorMessaging'
 
 /**
 This initalizes the variable that needs to be set on mount.
