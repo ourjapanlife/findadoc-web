@@ -10,24 +10,23 @@
                 {{ t('onboarding.selectcategory') }}
             </h1>
             <div
-                class="grid grid-cols-3 gap-x-2 gap-y-4 mx-1
-                    portrait:flex-grow portrait:mb-8
-                    landscape:mb-8 landscape:justify-items-center"
+                class="grid grid-cols-[.18fr,.18fr,.18fr] gap-x-2 gap-y-4 mx-1 justify-items-center
+                    portrait:mb-8 landscape:mb-8"
             >
                 <button
                     v-for="category in categories"
                     :key="category.code"
                     type="button"
                     class="bg-secondary-bg/90 hover:bg-secondary-bg transition-all
-                        rounded-xl pt-1 pb-2 px-2 landscape:p-4 text-center shadow transform hover:scale-105
-                        hover:shadow-xl landscape:min-w-64 min-w-24 whitespace-pre-line text-sm"
+                        rounded-xl pt-3 pb-4 px-2 text-center shadow hover:shadow-xl
+                        transform hover:scale-105 w-24 landscape:w-64 whitespace-pre-line text-sm"
                     @click="selectCategory(category.code)"
                 >
                     <div class="flex justify-center items-start">
                         <span class="inline-block w-8 h-8">
                             <component
                                 :is="categoryIconMap[category.code]"
-                                class="w-8 h-8"
+                                class="w-8 h-8 fill-currentColor"
                                 aria-hidden="true"
                             />
                         </span>
@@ -39,12 +38,13 @@
             </div>
             <button
                 type="button"
-                class="bg-accent/70 hover:bg-accent/90 text-primary-text-inverted py-4 my-10 rounded-xl
-                    font-medium transition-colors mb-6 border-2 border-primary-bg/20
-                    hover:border-primary-bg/40 shadow-lg transform hover:scale-105
-                        hover:shadow-xl self-center max-w-md w-full flex items-center justify-center gap-2"
+                class="text-primary-text-inverted py-4 mt-10 mx-8 mb-6 rounded-xl
+                    font-medium bg-accent/70 hover:bg-accent/90 border-2 border-primary-bg/20 hover:border-primary-bg/40
+                    shadow-lg hover:shadow-xl transition-colors transform hover:scale-105
+                         self-center max-w-md w-full flex items-center justify-center gap-2"
                 @click="selectCategory(undefined)"
             >
+                <span>{{ t('onboarding.notsurebutton') }}</span>
                 <span class="inline-block w-6 h-6">
                     <component
                         :is="HealthiconQuestionCircleOutline"
@@ -52,7 +52,6 @@
                         aria-hidden="true"
                     />
                 </span>
-                <span>{{ t('onboarding.notsurebutton') }}</span>
             </button>
         </div>
     </div>

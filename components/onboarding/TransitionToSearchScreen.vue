@@ -6,9 +6,9 @@
         <div class="relative w-full max-w-md px-6 text-center">
             <!-- Main Content -->
             <div class="relative z-10">
-                <div class="relative inline-block mb-8">
+                <div class="relative inline-block mb-6">
                     <svg
-                        class="w-24 h-24 mx-auto mb-6"
+                        class="w-24 h-24 mx-auto"
                         viewBox="0 0 100 100"
                         xmlns="http://www.w3.org/2000/svg"
                     >
@@ -32,6 +32,7 @@
                             stroke-width="2"
                             stroke-dasharray="283"
                             class="circle-draw opacity-30"
+                            :style="{ animationDelay: '0.7s' }"
                         />
                     </svg>
                 </div>
@@ -42,7 +43,7 @@
                             v-for="(word, index) in t('onboarding.searchloading').split(' ')"
                             :key="index"
                             class="inline-block opacity-0 animate-fade-in-up"
-                            :style="`animation-delay: ${index * 0.15}s`"
+                            :style="`animation-delay: ${index * 0.10}s`"
                         >
                             {{ word }}<span v-if="index < t('onboarding.searchloading').split(' ').length - 1">&nbsp;</span>
                         </span>
@@ -61,7 +62,7 @@ const { t } = useI18n()
 
 const isFadingOut = ref(false)
 onMounted(() => {
-    setTimeout(() => { isFadingOut.value = true }, 2000)
+    setTimeout(() => { isFadingOut.value = true }, 3000)
 })
 </script>
 

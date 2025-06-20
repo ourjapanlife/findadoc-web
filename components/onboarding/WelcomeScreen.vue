@@ -17,13 +17,48 @@
                     class="flex flex-col self-center items-center px-6 transition-opacity duration-500"
                     :class="{ 'opacity-0': isBackgroundExpanding }"
                 >
-                    <h1 class="landscape:text-7xl text-4xl font-bold mb-6">
+                    <h1 class="landscape:text-7xl text-4xl font-bold mb-6 mt-12">
                         <span class="block">{{ t('onboarding.welcometo') }}</span>
                         <span class="block mt-2">Find a Doc, Japan!</span>
                     </h1>
-                    <p class="landscape:text-2xl text-lg my-8 max-w-md">
+                    <p class="landscape:text-2xl text-lg mt-3 max-w-md">
                         {{ t('about.subheading') }}
                     </p>
+                </div>
+                <!-- Bouncing arrow button -->
+                <div
+                    class="h-full flex items-center justify-center transition-opacity duration-500"
+                    :class="{ 'opacity-0': isBackgroundExpanding }"
+                >
+                    <button
+                        type="button"
+                        class="relative group flex self-start focus:outline-none
+                        bg-secondary hover:bg-secondary/80 transition-colors
+                        px-6 py-3 landscape:mt-24 mt-14
+                        rounded-full animate-bounce z-10"
+                        :style="{ animationDuration: '1.5s' }"
+                        @click="expandBackground"
+                    >
+                        <!-- Button text -->
+                        <span class="font-bold text-primary-text-inverted opacity-100 transition-opacity">
+                            {{ t('onboarding.letsGoButtonText') }}
+                        </span>
+                        <!-- Right-pointing Arrow SVG -->
+                        <svg
+                            class="w-6 h-6 text-primary-text-inverted transform group-hover:translate-x-1 transition-transform"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M9 5l7 7-7 7"
+                            />
+                        </svg>
+                    </button>
                 </div>
                 <!-- Background wave svg -->
                 <div class="w-full absolute bottom-0">
@@ -54,35 +89,13 @@
                 class="h-full flex items-center justify-center transition-opacity duration-500"
                 :class="{ 'opacity-0': isBackgroundExpanding }"
             >
-                <!-- Bouncing arrow -->
-                <button
-                    type="button"
-                    class="relative group flex items-center justify-center focus:outline-none
-                        bg-primary hover:bg-primary/90 transition-colors px-6 py-3
-                        rounded-full animate-bounce"
-                    :style="{ animationDuration: '1.5s' }"
-                    @click="expandBackground"
+                <!-- Faded background findadoc character team -->
+                <img
+                    src="@/assets/images/welcome-screen-illustration.png"
+                    alt="Welcome Illustration"
+                    class="absolute right-0 bottom-0 landscape:right-12 landscape:w-96 w-64
+                        max-w-xs opacity-50 pointer-events-none select-none z-0"
                 >
-                    <!-- Button text -->
-                    <span class="text-primary-text-inverted mr-3 opacity-100 transition-opacity">
-                        Let's Go
-                    </span>
-                    <!-- Right-pointing Arrow SVG -->
-                    <svg
-                        class="w-6 h-6 text-primary-text-inverted transform group-hover:translate-x-1 transition-transform"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M9 5l7 7-7 7"
-                        />
-                    </svg>
-                </button>
             </div>
         </div>
     </div>
