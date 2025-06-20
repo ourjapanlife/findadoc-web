@@ -6,7 +6,7 @@
         >
             <WelcomeScreen
                 v-if="currentStep === OnboardingSteps.Welcome"
-                @next="currentStep = OnboardingSteps.Categories"
+                @next="completeOnboarding"
             />
             <CategorySelection
                 v-else-if="currentStep === OnboardingSteps.Categories"
@@ -14,7 +14,6 @@
             />
             <TransitionToSearchScreen
                 v-else-if="currentStep === OnboardingSteps.LoadingSearch"
-                :category="selectedCategory"
             />
         </Transition>
     </div>
@@ -48,19 +47,20 @@ const handleCategorySelect = async (category: SpecialtyCategory | undefined) => 
 }
 
 const completeOnboarding = async () => {
+    currentStep.value = OnboardingSteps.LoadingSearch
     // Wait for the loading animation to finish, then transition to the search page
     setTimeout(() => {
         onboardingStore.setOnboardingState(OnboardingState.Completed)
     }, 3000)
 
     // Let's start the search with the selected category to start
-    const specialtiesToSearch = selectedCategory.value
-        ? specialtiesStore.categoryToSpecialtyMap[selectedCategory.value]
-        : undefined
+    // const specialtiesToSearch = selectedCategory.value
+    //     ? specialtiesStore.categoryToSpecialtyMap[selectedCategory.value]
+    //     : undefined
 
-    searchResultsStore.selectedSpecialties = specialtiesToSearch ?? []
+    // searchResultsStore.selectedSpecialties = specialtiesToSearch ?? []
 
-    await searchResultsStore.search()
+    // await searchResultsStore.search()
 }
 </script>
 

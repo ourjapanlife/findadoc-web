@@ -1,18 +1,16 @@
 <template>
     <div class="h-screen w-full bg-primary-bg p-2 pt-6 overflow-hidden">
-        <!-- Animated background elements -->
-        <div class="absolute inset-0 opacity-10">
-            <div class="absolute inset-0 bg-grid-white/[0.05]" />
-        </div>
-
         <div class="flex flex-col">
+            <!-- Header text -->
             <h1 class="landscape:text-4xl landscape:my-12 landscape:mb-20 text-4xl font-bold text-primary-text mb-8 text-center">
                 {{ t('onboarding.selectcategory') }}
             </h1>
+            <!-- Category selection grid -->
             <div
-                class="grid grid-cols-[.18fr,.18fr,.18fr] gap-x-2 gap-y-4 mx-1 justify-items-center
+                class="grid grid-cols-[.18fr,.18fr,.18fr] gap-x-2 gap-y-4 mx-1 justify-content-center
                     portrait:mb-8 landscape:mb-8"
             >
+                <!-- Category buttons -->
                 <button
                     v-for="category in categories"
                     :key="category.code"
@@ -36,6 +34,7 @@
                     </span>
                 </button>
             </div>
+            <!-- "Something else" button -->
             <button
                 type="button"
                 class="text-primary-text-inverted py-4 mt-10 mx-8 mb-6 rounded-xl
