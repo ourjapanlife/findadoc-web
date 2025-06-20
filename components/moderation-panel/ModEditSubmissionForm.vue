@@ -181,6 +181,8 @@ const loadingStore = useLoadingStore()
 const facilitiesStore = useFacilitiesStore()
 const healthcareProfessionalsStore = useHealthcareProfessionalsStore()
 
+const syntheticEvent = new Event('submit', { bubbles: false, cancelable: true })
+
 const isEditSubmissionFormInitialized: Ref<boolean> = ref(false)
 const submissionBeforeChanges: Ref<Submission | undefined> = computed(() => moderationSubmissionStore.selectedSubmissionData
     ? {
@@ -188,9 +190,9 @@ const submissionBeforeChanges: Ref<Submission | undefined> = computed(() => mode
     }
     : undefined)
 
-//Keeps track of existing facilities related to new healthcare professional submission
+// Keeps track of existing facilities related to new healthcare professional submission
 const currentFacilityRelations: Ref<Facility[]> = ref([])
-//Keeps track of existing healthcare professionals related to new facility submission
+// Keeps track of existing healthcare professionals related to new facility submission
 const currentExistingHealthcareProfessionals: Ref<HealthcareProfessional[]> = ref([])
 
 const handleFacilitySearchInputChange = (filteredItems: Ref<Facility[]>, inputValue: string) => {
@@ -421,7 +423,7 @@ function initializeSubmissionFormValues(submissionData: Submission | undefined) 
     = submissionData?.spokenLanguages ?? []
 }
 
-// assume you already have:
+// Assume you already have:
 // • isEditSubmissionFormInitialized
 // • submissionFormFieldsBeforeChanges (“before” snapshot)
 // • facilitiesStore.facilitySectionFields → facility
@@ -579,7 +581,7 @@ async function submitCompletedForm(e: Event) {
     e.preventDefault()
 
     const selectedSubmissionData = moderationSubmissionStore.selectedSubmissionData
-    //This prevents submission of an already approved submission the backend does this but as an extra visual and check
+    // This prevents submission of an already approved submission the backend does this but as an extra visual and check
     if (selectedSubmissionData && selectedSubmissionData.isApproved) {
         toast.info(t('modSubmissionForm.infoMessageAlreadyApproved'))
         await resetModalRefs()
@@ -596,7 +598,7 @@ async function submitCompletedForm(e: Event) {
     const isValidHealthcareProfessional = validateHealthcareProfessionalFields()
     const isValidRomajiName = validateHealthcareProfessionalRomajiName()
 
-    //This shows a toast and returns if the facility fields arent valid
+    // This shows a toast and returns if the facility fields arent valid
     if (!isValidFacility && !currentFacilityRelations.value.length) {
         toast.error(t('modSubmissionForm.errorMessageFacilityInputsInvalid'))
         await resetModalRefs()
@@ -616,6 +618,8 @@ async function submitCompletedForm(e: Event) {
     }
 
     try {
+        // This updates submission before approving since moderators might not think to update first
+        await submitUpdatedSubmission(syntheticEvent)
         const result = await moderationSubmissionStore.approveSubmission()
         if (result?.errors?.length) {
             handleServerErrorMessaging(result.errors, toast, t)
@@ -630,8 +634,6 @@ async function submitCompletedForm(e: Event) {
         await resetModalRefs()
     }
 }
-
-const syntheticEvent = new Event('submit', { bubbles: false, cancelable: true })
 
 const resetModalRefs = async () => {
     await nextTick()
@@ -721,7 +723,7 @@ watch(currentFacilityRelations, newValue => {
 
 /* This updates the fcaility with existing healthcare professionals in order to update
  the facility section fields to include the existing healthcare professional ids
- and help prevent adding duplicate of the same healthcareprofessional*/
+ and help prevent adding duplicate of the same healthcareprofessional */
 watch(currentExistingHealthcareProfessionals, newValue => {
     if (isEditSubmissionFormInitialized.value) {
         facilitiesStore.facilitySectionFields.healthcareProfessionalIds = newValue.map(
