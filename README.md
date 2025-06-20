@@ -67,6 +67,7 @@ Consult the **[Troubleshooting Documentation](https://documentation.findadoc.jp/
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/prestonb91"><img src="https://avatars.githubusercontent.com/u/77235430?v=4?s=100" width="100px;" alt="Preston Boardman"/><br /><sub><b>Preston Boardman</b></sub></a><br /><a href="https://github.com/ourjapanlife/findadoc-web/commits?author=prestonb91" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/ljbroersen"><img src="https://avatars.githubusercontent.com/u/62942462?v=4?s=100" width="100px;" alt="Lisa Broersen"/><br /><sub><b>Lisa Broersen</b></sub></a><br /><a href="https://github.com/ourjapanlife/findadoc-web/commits?author=ljbroersen" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/bnogimauemura"><img src="https://avatars.githubusercontent.com/u/186167453?v=4?s=100" width="100px;" alt="Bruno Nogima Uemura"/><br /><sub><b>Bruno Nogima Uemura</b></sub></a><br /><a href="https://github.com/ourjapanlife/findadoc-web/commits?author=bnogimauemura" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/ayushjava07"><img src="https://avatars.githubusercontent.com/u/171397266?v=4?s=100" width="100px;" alt="ayush kumar "/><br /><sub><b>ayush kumar </b></sub></a><br /><a href="https://github.com/ourjapanlife/findadoc-web/commits?author=ayushjava07" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
