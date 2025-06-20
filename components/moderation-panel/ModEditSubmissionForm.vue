@@ -181,9 +181,173 @@ const facilitiesStore = useFacilitiesStore()
 const healthcareProfessionalsStore = useHealthcareProfessionalsStore()
 
 const isEditSubmissionFormInitialized: Ref<boolean> = ref(false)
+<<<<<<< Updated upstream
 const submissionBeforeChanges: Ref<Submission | undefined> = computed(() => moderationSubmissionStore.selectedSubmissionData
     ? {
         ...moderationSubmissionStore.selectedSubmissionData
+=======
+loadingStore.setIsLoading(true, 3000)
+
+const syntheticEvent = new Event('submit', { bubbles: false, cancelable: true })
+
+const submissionFormFields = reactive({
+    // contactFields
+    nameEn: '' as string,
+    nameJa: '' as string,
+    phone: '' as string,
+    website: '' as string,
+    email: '' as string,
+    // addressesFields
+    postalCode: '' as string,
+    prefectureEn: '' as string,
+    cityEn: '' as string,
+    addressLine1En: '' as string,
+    addressLine2En: '' as string,
+    prefectureJa: '' as string,
+    cityJa: '' as string,
+    addressLine1Ja: '' as string,
+    addressLine2Ja: '' as string,
+    // googleMapsFields
+    googlemapsURL: '' as string,
+    mapLatitude: '' as string,
+    mapLongitude: '' as string,
+    //healthcareProfessionalFields
+    healthCareProfessionalNameArray: [] as LocalizedNameInput[],
+    healthcareProfessionalIDs: [] as string[],
+    localizedFirstName: '' as string,
+    localizedLastName: '' as string,
+    localizedMiddleName: '' as string,
+    nameLocale: Locale.EnUs as Locale,
+    healthcareProfessionalAcceptedInsurances: [] as Insurance[],
+    healthcareProfessionalDegrees: [] as Degree[],
+    healthcareProfessionalSpecialties: [] as Specialty[],
+    healthcareProfessionalLocales: [] as Locale[],
+    notes: '' as string,
+    isApproved: false as boolean,
+    isUnderReview: false as boolean
+})
+
+/* This is used as an exact copy and not updated. This is to allow for change checks in values.
+We can then provide a better user experience based on if they change the values or not
+This is necessary because setting a variable directly in vue to the same as a reactive object
+may not always work as intended*/
+const submissionFormFieldsBeforeChanges = reactive({
+    // contactFields
+    nameEn: '' as string,
+    nameJa: '' as string,
+    phone: '' as string,
+    website: '' as string,
+    email: '' as string,
+    // addressesFields
+    postalCode: '' as string,
+    prefectureEn: '' as string,
+    cityEn: '' as string,
+    addressLine1En: '' as string,
+    addressLine2En: '' as string,
+    prefectureJa: '' as string,
+    cityJa: '' as string,
+    addressLine1Ja: '' as string,
+    addressLine2Ja: '' as string,
+    // googleMapsFields
+    googlemapsURL: '' as string,
+    mapLatitude: '' as string,
+    mapLongitude: '' as string,
+    //healthcareProfessionalFields
+    healthCareProfessionalNameArray: [] as LocalizedNameInput[],
+    healthcareProfessionalIDs: [] as string[],
+    localizedFirstName: '' as string,
+    localizedLastName: '' as string,
+    localizedMiddleName: '' as string,
+    nameLocale: Locale.EnUs as Locale,
+    healthcareProfessionalAcceptedInsurances: [] as Insurance[],
+    healthcareProfessionalDegrees: [] as Degree[],
+    healthcareProfessionalSpecialties: [] as Specialty[],
+    healthcareProfessionalLocales: [] as Locale[],
+    notes: '' as string,
+    isApproved: false as boolean,
+    isUnderReview: false as boolean
+})
+
+const formHasUnsavedChanges: Ref<boolean> = ref(false)
+
+const formSubmissionId = moderationSubmissionStore.selectedSubmissionId
+moderationSubmissionStore.filterSelectedSubmission(formSubmissionId)
+
+const addingNewNameLocaleForHealthcareProfessional: Ref<boolean> = ref(false)
+const editingExistingNameLocaleForHealthcareProfessional: Ref<boolean> = ref(false)
+const chosenNameLocaleIndex: Ref<number | null> = ref(null)
+const chosenHealthcareProfessionalNameLocaleToEdit: Ref<LocalizedNameInput | undefined> = ref()
+const nameLocaleInputsToAddOrUpdate: LocalizedNameInput = reactive(
+    { firstName: '',
+        lastName: '',
+        middleName: '',
+        locale: Locale.Und }
+)
+
+// Sets the locale being edited name value
+const setEditingLocaleName = (newValue: boolean) => {
+    editingExistingNameLocaleForHealthcareProfessional.value = newValue
+    // Makes sure both values cannot be true
+    addingNewNameLocaleForHealthcareProfessional.value = false
+}
+
+// Closes the locale being added name inputs
+const handleCloseAddingNewLocalizedName = () => {
+    // Allows for the inputs to completely transition before resetting the fields
+    setTimeout(() => resetNameLocaleInputs, 300)
+    addingNewNameLocaleForHealthcareProfessional.value = false
+    // Makes sure both values cannot be true
+    editingExistingNameLocaleForHealthcareProfessional.value = false
+}
+
+// Opens the locale being added name inputs
+const handleOpenAddNewNameWithReset = () => {
+    resetNameLocaleInputs()
+    addingNewNameLocaleForHealthcareProfessional.value = true
+    // Makes sure both values cannot be true
+    editingExistingNameLocaleForHealthcareProfessional.value = false
+}
+
+// This resets the fields
+const resetNameLocaleInputs = () => {
+    nameLocaleInputsToAddOrUpdate.firstName = ''
+    nameLocaleInputsToAddOrUpdate.middleName = ''
+    nameLocaleInputsToAddOrUpdate.lastName = ''
+    nameLocaleInputsToAddOrUpdate.locale = Locale.Und
+}
+
+// This autofills the inputs if a name is being edited
+const autofillNameLocaleInputWithChosenHealthcareProfessional = (localizedNameInput: LocalizedNameInput) => {
+    nameLocaleInputsToAddOrUpdate.firstName = localizedNameInput.firstName
+    nameLocaleInputsToAddOrUpdate.lastName = localizedNameInput.lastName
+    nameLocaleInputsToAddOrUpdate.middleName = localizedNameInput.middleName || ''
+    nameLocaleInputsToAddOrUpdate.locale = localizedNameInput.locale
+}
+
+// This will set the name that needs to be autofilled and move it to the zero index
+const setChosenLocaleNameInput = (index: number) => {
+    chosenNameLocaleIndex.value = index
+
+    // This will keep track of the healthcare professional to not lose it but we can swap it later with the chosen one
+    const tempToHoldZeroIndexedHealthcareProfessionalToSwap
+    = submissionFormFields.healthCareProfessionalNameArray[0]
+
+    // This finds the chosen healthcare professional to edit
+    chosenHealthcareProfessionalNameLocaleToEdit.value
+    = submissionFormFields.healthCareProfessionalNameArray.find((_, index) => index === chosenNameLocaleIndex.value)
+
+    if (chosenHealthcareProfessionalNameLocaleToEdit.value) {
+        // Set the chosen healthcare professional name to move it closer to the input
+        submissionFormFields.healthCareProfessionalNameArray[0]
+    = chosenHealthcareProfessionalNameLocaleToEdit.value
+        // Put the temp one in the index where the old locale name was
+        submissionFormFields.healthCareProfessionalNameArray[chosenNameLocaleIndex.value]
+        = tempToHoldZeroIndexedHealthcareProfessionalToSwap
+        // Autofill with the chosen healthcare professional locale name
+        autofillNameLocaleInputWithChosenHealthcareProfessional(chosenHealthcareProfessionalNameLocaleToEdit.value)
+        // Set the chosenNameLocaleIndex to 0 so the correct pencil is showing
+        chosenNameLocaleIndex.value = 0
+>>>>>>> Stashed changes
     }
     : undefined)
 
@@ -594,6 +758,8 @@ async function submitCompletedForm(e: Event) {
     }
 
     try {
+        // This updates the submission before approving since moderators might not think to update first
+        await submitUpdatedSubmission(syntheticEvent)
         const result = await moderationSubmissionStore.approveSubmission()
         if (result?.errors?.length) {
             handleServerErrorMessaging(result.errors, toast, t)
@@ -608,8 +774,6 @@ async function submitCompletedForm(e: Event) {
         await resetModalRefs()
     }
 }
-
-const syntheticEvent = new Event('submit', { bubbles: false, cancelable: true })
 
 const resetModalRefs = async () => {
     await nextTick()
