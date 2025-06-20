@@ -160,7 +160,7 @@ import { onBeforeRouteLeave } from '#app'
 import { useI18n } from '#imports'
 import { triggerFormValidationErrorMessages } from '~/utils/triggerFormValidationErrorMessages'
 import { arraysAreEqual } from '~/utils/arrayUtils'
-import { handleServerErrorMessaging } from '~/utils/handleServerErrorMessaging'
+import { handleServerErrorMessaging } from '~/composables/handleServerErrorMessaging'
 
 /**
 This initalizes the variable that needs to be set on mount.
