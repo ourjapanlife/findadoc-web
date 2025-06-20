@@ -1,3 +1,7 @@
+/* Composables are only supposed to be used within a Vue component
+https://vuejs.org/guide/reusability/composables.html#composables-are-only-supposed-to-be-used-within-a-vue-component
+*/
+
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 
 export const useScreenOrientation = () => {
