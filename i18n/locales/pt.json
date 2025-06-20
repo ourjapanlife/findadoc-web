@@ -456,5 +456,8 @@
     "traumatology": "Traumatologia",
     "internalMedicine": "Internal Medicine",
     "familyMedicine": "Family Medicine"
+  },
+  "modInputField": {
+    "optional": "Optional"
   }
 }

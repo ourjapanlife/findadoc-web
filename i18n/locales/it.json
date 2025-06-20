@@ -446,5 +446,8 @@
     "urology": "Urologo/Urologa",
     "internalMedicine": "Internal Medicine",
     "familyMedicine": "Family Medicine"
+  },
+  "modInputField": {
+    "optional": "Optional"
   }
 }

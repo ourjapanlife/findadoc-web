@@ -459,5 +459,8 @@
     "firstName": "First name",
     "middleName": "Middle name",
     "nameLocale": "Name language"
+  },
+  "modInputField": {
+    "optional": "Optional"
   }
 }

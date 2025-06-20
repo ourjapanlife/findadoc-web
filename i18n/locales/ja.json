@@ -456,5 +456,8 @@
     "traumatology": "Traumatologist",
     "internalMedicine": "内科",
     "familyMedicine": "Family Medicine"
+  },
+  "modInputField": {
+    "optional": "Optional"
   }
 }
