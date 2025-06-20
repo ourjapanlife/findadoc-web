@@ -36,6 +36,8 @@ jobs:
         run: yarn install --immutable
 
       - name: Run Locales Lint
+        env:
+            DEEPL: ${{ secrets.DEEPL }}
         id: lint
         run: |
           NODE_ENV=production node i18n/checkLocaleKeys.js --report-only > missing_keys.txt
