@@ -52,6 +52,13 @@
                     />
                 </span>
             </button>
+            <SVGCharactersSachiQuestioning
+                role="img"
+                alt="Findadoc character sachi questioning"
+                title="Findadoc character sachi questioning"
+                class="absolute left-0 bottom-0 landscape:left-12 landscape:w-96 w-64
+                    max-w-xs opacity-50 pointer-events-none select-none z-0"
+            />
         </div>
     </div>
 </template>
@@ -73,6 +80,7 @@ import HealthiconFamilyPracticeOutline from '~/assets/icons/category-primary-car
 import HealthiconSportsInjuryOutline from '~/assets/icons/category-sports.svg'
 import HealthiconFemaleOutline from '~/assets/icons/category-womens-health.svg'
 import HealthiconQuestionCircleOutline from '~/assets/icons/question.svg' // for something else button
+import SVGCharactersSachiQuestioning from '@/assets/icons/characters-sachi-questioning.svg'
 
 const { t } = useI18n()
 

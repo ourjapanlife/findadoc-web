@@ -32,20 +32,21 @@
                 >
                     <button
                         type="button"
-                        class="relative group flex self-start focus:outline-none
-                        bg-secondary hover:bg-secondary/80 transition-colors
+                        class="relative group flex items-center self-start focus:outline-none
+                        bg-secondary hover:bg-secondary/90 transition-colors
                         px-6 py-3 landscape:mt-24 mt-14
                         rounded-full animate-bounce z-10"
                         :style="{ animationDuration: '1.5s' }"
                         @click="expandBackground"
                     >
                         <!-- Button text -->
-                        <span class="font-bold text-primary-text-inverted opacity-100 transition-opacity">
+                        <span class="text-xl font-bold text-primary-text-inverted">
                             {{ t('onboarding.letsGoButtonText') }}
                         </span>
                         <!-- Right-pointing Arrow SVG -->
                         <svg
-                            class="w-6 h-6 text-primary-text-inverted transform group-hover:translate-x-1 transition-transform"
+                            class="w-6 h-6 pt-1 text-primary-text-inverted transform
+                                group-hover:translate-x-1 transition-transform"
                             fill="none"
                             stroke="currentColor"
                             viewBox="0 0 24 24"
@@ -54,7 +55,7 @@
                             <path
                                 stroke-linecap="round"
                                 stroke-linejoin="round"
-                                stroke-width="2"
+                                stroke-width="3"
                                 d="M9 5l7 7-7 7"
                             />
                         </svg>
@@ -90,12 +91,13 @@
                 :class="{ 'opacity-0': isBackgroundExpanding }"
             >
                 <!-- Faded background findadoc character team -->
-                <img
-                    src="@/assets/images/welcome-screen-illustration.png"
-                    alt="Welcome Illustration"
-                    class="absolute right-0 bottom-0 landscape:right-12 landscape:w-96 w-64
-                        max-w-xs opacity-50 pointer-events-none select-none z-0"
-                >
+                <SVGCharactersTogetherWelcomeScreen
+                    role="img"
+                    alt="Findadoc character team"
+                    title="Findadoc character team"
+                    class="absolute right-0 bottom-0 landscape:right-12 landscape:w-[416px] w-[300px]
+                        opacity-70 pointer-events-none select-none z-0"
+                />
             </div>
         </div>
     </div>
@@ -104,6 +106,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
+import SVGCharactersTogetherWelcomeScreen from '@/assets/icons/characters-together-welcomescreen.svg'
 
 const { t } = useI18n()
 
