@@ -9,8 +9,8 @@
             ref="modal"
             v-close-on-outside-click="hideModalAndEmitClosedEvent"
             class="absolute z-10 bg-primary-bg rounded-xl overflow-hidden
-            shadow-md shadow-primary-bg/50
-            hover:shadow-inner hover:shadow-secondary-bg/90"
+            shadow-lg shadow-primary
+            hover:shadow-inner hover:shadow-primary/90"
         >
             <button
                 type="button"
