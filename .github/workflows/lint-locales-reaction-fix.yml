@@ -4,6 +4,9 @@ on:
   issue_comment:
     types: [created, edited]
 
+env:
+    DEEPL: ${{ secrets.DEEPL }}
+
 permissions:
   contents: write
   actions: write
@@ -54,8 +57,6 @@ jobs:
           fetch-depth: 0
 
       - name: Fix Missing Locale Keys, Commit, and Push Changes
-        env:
-            DEEPL: ${{ secrets.DEEPL }}
         run: |
           node i18n/checkLocaleKeys.js
           git config --global user.name "github-actions[bot]"
