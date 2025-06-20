@@ -129,9 +129,9 @@
     "onboarding": {
         "welcometo": "Welcome to",
         "selectcategory": "Please select a category to get started",
-        "getstartedbutton": "Get Started",
         "notsurebutton": "Something else",
-        "searchloading": "Your journey starts here"
+        "searchloading": "Finding your care now",
+        "letsGoButtonText": "Find a Doc!"
     },
     "specialties": {
         "allergyAndImmunology": "Allergist",
