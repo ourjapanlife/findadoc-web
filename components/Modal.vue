@@ -2,12 +2,14 @@
     <div
         v-if="store.isOpen"
         data-testid="modal"
-        class="fixed top-0 left-0 flex items-center justify-center h-full w-full z-10 bg-secondary bg-opacity-40"
+        :class="`fixed top-0 left-0 flex items-center justify-center h-full w-full
+        z-10 ${stylingForSelectedHealthcareProfessionalMainPage}`"
     >
         <div
             ref="modal"
             v-close-on-outside-click="hideModalAndEmitClosedEvent"
             class="absolute z-10 bg-primary-bg rounded-xl overflow-hidden
+            shadow-md shadow-primary-bg/50
             hover:shadow-inner hover:shadow-secondary-bg/90"
         >
             <button
@@ -42,12 +44,19 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
+import { useRoute } from 'vue-router'
 import { vCloseOnOutsideClick } from '~/utils/closeOnOutsideClick'
 import { useModalStore } from '~/stores/modalStore'
 
 const modal = ref(null)
 const store = useModalStore()
+const route = useRoute()
+
+const stylingForSelectedHealthcareProfessionalMainPage = computed(() => route.path === '/'
+    ? ''
+    : 'bg-secondary bg-opacity-40')
+
 const emit = defineEmits(['modal-closed'])
 const hideModalAndEmitClosedEvent = () => {
     emit('modal-closed')
