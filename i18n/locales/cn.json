@@ -452,6 +452,8 @@
     "sportsMedicine": "运动医学医生",
     "physicalMedicineAndRehabilitation": "物理医学与康复",
     "urology": "泌尿科医生",
-    "traumatology": "创伤学"
+    "traumatology": "创伤学",
+    "internalMedicine": "Internal Medicine",
+    "familyMedicine": "Family Medicine"
   }
 }
