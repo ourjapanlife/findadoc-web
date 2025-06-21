@@ -17,6 +17,7 @@
     <div
         v-else
         id="search-portrait"
+        class="h-[calc(100vh-16rem)]"
     >
         <Loader />
         <Modal class="min-h-1/2 mt-12">
