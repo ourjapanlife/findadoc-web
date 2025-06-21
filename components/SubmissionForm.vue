@@ -134,7 +134,7 @@
             </select>
             <span
                 class="mb-2 text-primary-text text-sm font-normal font-sans"
-            >{{ t('submitPage.otherNotes') }}({{ t('submitPage.optional') }})</span>
+            >{{ t('submitPage.otherNotes') }} ({{ t('submitPage.optional') }})</span>
             <textarea
                 v-model="otherNotes"
                 data-testid="submit-input-notes"
