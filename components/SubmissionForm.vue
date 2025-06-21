@@ -157,7 +157,7 @@
 
 <script lang="ts" setup>
 import { ref, watch, nextTick, type Ref, onMounted } from 'vue'
-import { type ToastInterface, useToast } from 'vue-toastification'
+import { useToast } from 'vue-toastification'
 import * as validations from '../utils/formValidations'
 import { useSubmissionStore } from '~/stores/submissionStore'
 import type { Locale, MutationCreateSubmissionArgs } from '~/typedefs/gqlTypes'
@@ -323,8 +323,6 @@ watch(() => selectLanguage2.value, newValue => {
 })
 
 onMounted(async () => {
-
-
     resetForm()
 
     /**  `await nextTick()` waits until the next DOM update cycle, allowing any changes made to reactive data to be applied

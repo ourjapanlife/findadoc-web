@@ -52,7 +52,7 @@
 </template>
 
 <script setup lang="ts">
-import {  useToast } from 'vue-toastification'
+import { useToast } from 'vue-toastification'
 import { useRouter } from 'vue-router'
 import { useI18n } from '#imports'
 import { useHealthcareProfessionalsStore } from '~/stores/healthcareProfessionalsStore'
@@ -118,5 +118,4 @@ const navigateBackToDashboardWithoutCreation = async () => {
 const openExitConfirmation = () => {
     modalStore.showModal()
 }
-
 </script>
