@@ -2,32 +2,28 @@
     <!-- Landscape / Desktop Mode -->
     <div
         v-if="$viewport.isGreaterThan('tablet')"
-        id="landscape-content"
-        class="bg-secondary-bg/20 hover:shadow-inner hover:shadow-secondary-bg/90 h-full w-full relative"
+        id="search-landscape"
     >
         <Loader />
-        <Modal class="max-h-[calc(100vh-12rem)] ml-8 mt-12 overflow-y-auto">
+        <Modal class="max-h-[calc(100vh-10rem)] mt-12 overflow-y-auto">
             <SearchResultDetails />
         </Modal>
-        <div class="flex-1 h-full">
-            <MapContainer />
+        <div class="flex h-[calc(100vh-10rem)]">
+            <LeftNavbar class="bg-primary-bg w-96" />
+            <MapContainer class="grow" />
         </div>
     </div>
     <!-- Portrait / Mobile Mode -->
     <div
         v-else
-        class="h-full"
+        id="search-portrait"
     >
         <Loader />
-        <Modal class="min-h-1/2 ml-8 mt-12">
+        <Modal class="min-h-1/2 mt-12">
             <SearchResultDetails />
         </Modal>
-        <div class="h-1/4">
-            <MapContainer />
-        </div>
-        <div class="h-3/4">
-            <SearchResultsList />
-        </div>
+        <MapContainer class="h-1/4" />
+        <SearchResultsList class="h-3/4" />
     </div>
 </template>
 

@@ -3,9 +3,11 @@
         <Onboarding
             v-if="onboardingState === OnboardingState.NotStarted"
         />
-        <div v-if="onboardingState === OnboardingState.Completed">
+        <div
+            v-if="onboardingState === OnboardingState.Completed"
+            id="search-container"
+        >
             <TopNav />
-            <LeftNavbar class="bg-primary-bg w-96" />
             <SearchContainer />
             <Footer />
         </div>

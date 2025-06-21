@@ -1,7 +1,7 @@
 <template>
     <div
         id="index"
-        class="h-full w-full overflow-hidden"
+        class=""
     >
         <MainContentContainer />
     </div>
