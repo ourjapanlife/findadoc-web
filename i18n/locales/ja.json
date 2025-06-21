@@ -309,9 +309,10 @@
     "noSpecialtiesWereFound": "No specialties were found",
     "noInsurancesWereFound": "No insurance was found",
     "noDegreesWereFound": "No degrees were found",
-    "noLocalesWereFound": "No languages were found",
-    "searchExistingFacilities": "Search for existing Facility",
-    "searchExistingHealthcareProfessionals": "Search for existing Healthcare Professionals"
+    "noLocalesWereFound": "No locales were found",
+    "searchExistingFacilities": "Search for existing facility",
+    "searchExistingHealthcareProfessionals": "Search for existing healthcare professionals",
+    "errorMessageRomajiNameRequired": "The healthcare professional must have a name in Romaji"
   },
   "modPanelSubmissionLeftNavbar": {
     "addresses": "Addresses",
