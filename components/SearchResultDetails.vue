@@ -140,7 +140,7 @@ const specialtiesStore = useSpecialtiesStore()
 
 const healthcareProfessionalName = computed(() => {
     const name = formatHealthcareProfessionalName(
-        resultsStore.$state.activeResult?.professional.names,
+        resultsStore.activeResult?.professional.names,
         localeStore.locale.code as Locale
     )
     return name
@@ -148,12 +148,12 @@ const healthcareProfessionalName = computed(() => {
 
 const healthcareProfessionalDegrees = computed(() => {
     const healthcareProfessionalDegreesText
-        = resultsStore.$state.activeResult?.professional.degrees.join(', ')
+        = resultsStore.activeResult?.professional.degrees.join(', ')
     return healthcareProfessionalDegreesText
 })
 const specialties = computed(() => {
     const specialties
-        = resultsStore.$state.activeResult?.professional.specialties
+        = resultsStore.activeResult?.professional.specialties
 
     const specialtiesDisplayText = specialties?.map(specialty => {
         const specialtyDisplayText
@@ -166,14 +166,14 @@ const specialties = computed(() => {
     return specialtiesDisplayText
 })
 const facilityName = computed(() => {
-    const englishName = resultsStore.$state.activeResult?.facilities[0].nameEn
-    const japaneseName = resultsStore.$state.activeResult?.facilities[0].nameJa
+    const englishName = resultsStore.activeResult?.facilities[0].nameEn
+    const japaneseName = resultsStore.activeResult?.facilities[0].nameJa
     return localeStore.locale.code === Locale.JaJp ? japaneseName : englishName
 })
 
 const spokenLanguages = computed(() => {
     const languagesDisplayText
-        = resultsStore.$state.activeResult?.professional.spokenLanguages?.map(
+        = resultsStore.activeResult?.professional.spokenLanguages?.map(
             s => {
                 const languageDisplayText
                     = localeStore.localeDisplayOptions.find(
@@ -188,7 +188,7 @@ const spokenLanguages = computed(() => {
 
 const addressLine1 = computed(() => {
     const addressObj
-        = resultsStore.$state.activeResult?.facilities[0].contact.address
+        = resultsStore.activeResult?.facilities[0].contact.address
 
     const englishAddress = `${addressObj?.addressLine1En} ${addressObj?.addressLine2En}`
     const japaneseAddress = `${addressObj?.postalCode} ${addressObj?.prefectureJa}${addressObj?.cityJa}${addressObj?.addressLine1Ja}${addressObj?.addressLine2Ja}`
@@ -198,22 +198,22 @@ const addressLine1 = computed(() => {
 })
 const addressLine2 = computed(() => {
     const addressObj
-        = resultsStore.$state.activeResult?.facilities[0].contact.address
+        = resultsStore.activeResult?.facilities[0].contact.address
 
     const englishAddress = `${addressObj?.cityEn}, ${addressObj?.prefectureEn} ${addressObj?.postalCode}`
     return localeStore.locale.code !== Locale.JaJp ? englishAddress : ''
 })
 const addressLink = computed(
-    () => resultsStore.$state.activeResult?.facilities[0].contact.googleMapsUrl
+    () => resultsStore.activeResult?.facilities[0].contact.googleMapsUrl
 )
 const website = computed(
-    () => resultsStore.$state.activeResult?.facilities[0]?.contact?.website
+    () => resultsStore.activeResult?.facilities[0]?.contact?.website
 )
 const phone = computed(
-    () => resultsStore.$state.activeResult?.facilities[0]?.contact?.phone
+    () => resultsStore.activeResult?.facilities[0]?.contact?.phone
 )
 const email = computed(
-    () => resultsStore.$state.activeResult?.facilities[0]?.contact?.email ?? ''
+    () => resultsStore.activeResult?.facilities[0]?.contact?.email ?? ''
 )
 
 const excludedEmailAddresses = ['none', 'email@email.com']
