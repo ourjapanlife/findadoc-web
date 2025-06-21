@@ -165,13 +165,7 @@ import { useLocaleStore } from '~/stores/localeStore'
 import { useI18n } from '#imports'
 import { handleServerErrorMessaging } from '~/composables/handleServerErrorMessaging'
 
-/**
-This initalizes the variable that needs to be set on mount.
-If this is set as a const the build will fail since the plugin
-for vue-toastification is only available onMounted of the component
-through Nuxt
- */
-let toast: ToastInterface
+const toast = useToast()
 const { t } = useI18n()
 
 const submissionStore = useSubmissionStore()
@@ -329,12 +323,7 @@ watch(() => selectLanguage2.value, newValue => {
 })
 
 onMounted(async () => {
-    /**
-    Set the variable to useToast when the compoenet mounts
-    since vue-taostification is only available on the client.
-    If not done this way the build fails
-     */
-    toast = useToast()
+
 
     resetForm()
 
