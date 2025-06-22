@@ -86,7 +86,9 @@
   "searchBar": {
     "selectSpecialty": "Chọn chuyên khoa...",
     "selectLocation": "Chọn vị trí...",
-    "selectLanguage": "Chọn ngôn ngữ...",
+
+    "allLocations": "Tất cả địa điểm",
+    "allSpecialties": "Tất cả chuyên khoa",
     "search": "Tìm kiếm"
   },
   "searchResultsList": {

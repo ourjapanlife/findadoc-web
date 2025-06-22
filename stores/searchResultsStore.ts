@@ -23,15 +23,16 @@ export const useSearchResultsStore = defineStore('searchResultsStore', () => {
     const searchResultsList: Ref<SearchResult[]> = ref([])
 
     const selectedCity: Ref<string | undefined> = ref()
-    const selectedSpecialties: Ref<Specialty[]> = ref([])
-    const selectedLanguages: Ref<Locale[]> = ref([])
+    const selectedSpecialties: Ref<Specialty[] | undefined> = ref()
+    const selectedLanguages: Ref<Locale[] | undefined> = ref()
 
     async function search() {
         //set the loading visual state
         const loadingStore = useLoadingStore()
         loadingStore.setIsLoading(true)
 
-        const professionalsSearchResults = await queryProfessionals(selectedSpecialties.value, selectedLanguages.value)
+        const professionalsSearchResults = await queryProfessionals(selectedSpecialties.value ?? [],
+                                                                    selectedLanguages.value ?? [])
 
         const professionalIds = professionalsSearchResults.map(professional => professional.id)
 

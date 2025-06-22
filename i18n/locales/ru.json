@@ -86,7 +86,9 @@
   "searchBar": {
     "selectSpecialty": " Выбрать специальность...",
     "selectLocation": " Выбрать локацию...",
-    "selectLanguage": "Выбрать язык...",
+
+    "allLocations": "Все места",
+    "allSpecialties": "Все специальности",
     "search": "Поиск"
   },
   "searchResultsList": {

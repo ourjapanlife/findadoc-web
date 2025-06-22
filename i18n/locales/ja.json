@@ -86,7 +86,9 @@
     "searchBar": {
         "selectSpecialty": "専門を選択",
         "selectLocation": "場所を選択",
-        "selectLanguage": "対応言語を選択",
+
+        "allLocations": "すべての場所",
+        "allSpecialties": "すべての専門分野",
         "search": "検索"
     },
     "searchResultsList": {

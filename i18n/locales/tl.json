@@ -86,7 +86,9 @@
   "searchBar": {
     "selectSpecialty": "Pumili ng espesyalidad...",
     "selectLocation": "Pumili ng lokasyon...",
-    "selectLanguage": "Pumili ng lengwahe...",
+
+    "allLocations": "Lahat ng Lokasyon",
+    "allSpecialties": "Lahat ng Espesyalidad",
     "search": "Maghanap"
   },
   "searchResultsList": {

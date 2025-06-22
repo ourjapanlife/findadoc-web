@@ -86,7 +86,9 @@
   "searchBar": {
     "selectSpecialty": "Escolha uma especialidade...",
     "selectLocation": "Escolha uma localização...",
-    "selectLanguage": "Escolha um idioma...",
+
+    "allLocations": "Todos os locais",
+    "allSpecialties": "Todas as especialidades",
     "search": "Procurar"
   },
   "searchResultsList": {

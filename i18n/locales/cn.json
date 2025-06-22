@@ -85,7 +85,9 @@
   "searchBar": {
     "selectSpecialty": "请选择一个专科...",
     "selectLocation": "请选择一个地点...",
-    "selectLanguage": "请选择一种语言...",
+
+    "allLocations": "所有地点",
+    "allSpecialties": "所有专科",
     "search": "搜索"
   },
   "searchResultsList": {

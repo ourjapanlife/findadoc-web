@@ -92,7 +92,9 @@
   "searchBar": {
     "selectSpecialty": "Seleziona una specialità...",
     "selectLocation": "Seleziona una posizione...",
-    "selectLanguage": "Seleziona una lingua...",
+
+        "allLocations": "Tutte le località",
+        "allSpecialties": "Tutte le specialità",
     "search": "Cerca"
   },
   "searchResultsList": {
