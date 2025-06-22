@@ -34,18 +34,18 @@
                         :to="`/moderation/edit-submission/${submission.id}`"
                         class="grid grid-cols-subgrid col-span-4 p-1 hover:bg-primary"
                     >
-                        <span class="text-start">
+                        <span class="text-skip">
                             {{ getGlobalRowNumber(currentSubmissionsPage, submissionsPerPage, index) }}
                         </span>
-                        <span class="text-start">
+                        <span class="text-skip">
                             {{ submission.healthcareProfessionalName || t("modPanelSubmissionList.facilityNameUnknown") }}
                         </span>
-                        <span class="text-start">{{ convertDateToLocalTime(submission.updatedDate) }}</span>
-                        <span class="text-start">{{ convertDateToLocalTime(submission.createdDate) }}</span>
+                        <span class="text-skip">{{ convertDateToLocalTime(submission.updatedDate) }}</span>
+                        <span class="text-skip">{{ convertDateToLocalTime(submission.createdDate) }}</span>
                     </NuxtLink>
                 </div>
             </div>
-            <ModPagination
+            <Pagination
                 :current-page="currentSubmissionsPage"
                 :total-items="totalSubmissions"
                 :items-per-page="submissionsPerPage"
@@ -70,18 +70,18 @@
                         :to="`/moderation/edit-facility/${facility.id}`"
                         class="grid grid-cols-subgrid col-span-4 p-1 hover:bg-primary"
                     >
-                        <span class="text-start">
+                        <span class="text-skip">
                             {{ getGlobalRowNumber(currentFacilitiesPage, facilitiesPerPage, index) }}
                         </span>
-                        <span class="text-start">
+                        <span class="text-skip">
                             {{ facility?.nameEn }}
                         </span>
-                        <span class="text-start">{{ convertDateToLocalTime(facility.updatedDate) }}</span>
-                        <span class="text-start">{{ convertDateToLocalTime(facility.createdDate) }}</span>
+                        <span class="text-skip">{{ convertDateToLocalTime(facility.updatedDate) }}</span>
+                        <span class="text-skip">{{ convertDateToLocalTime(facility.createdDate) }}</span>
                     </NuxtLink>
                 </div>
             </div>
-            <ModPagination
+            <Pagination
                 :current-page="currentFacilitiesPage"
                 :total-items="totalFacilities"
                 :items-per-page="facilitiesPerPage"
@@ -107,18 +107,18 @@
                         :to="`/moderation/edit-healthcare-professional/${healthcareProfessional.id}`"
                         class="grid grid-cols-subgrid col-span-4 p-1 hover:bg-primary"
                     >
-                        <span class="text-start">
+                        <span class="text-skip">
                             {{ getGlobalRowNumber(currentHealthcarePage, healthcarePerPage, index) }}
                         </span>
-                        <span class="text-start">
+                        <span class="text-skip">
                             {{ healthcareProfessional.names[0].firstName }} {{ healthcareProfessional.names[0].lastName }}
                         </span>
-                        <span class="text-start">{{ convertDateToLocalTime(healthcareProfessional.updatedDate) }}</span>
-                        <span class="text-start">{{ convertDateToLocalTime(healthcareProfessional.createdDate) }}</span>
+                        <span class="text-skip">{{ convertDateToLocalTime(healthcareProfessional.updatedDate) }}</span>
+                        <span class="text-skip">{{ convertDateToLocalTime(healthcareProfessional.createdDate) }}</span>
                     </NuxtLink>
                 </div>
             </div>
-            <ModPagination
+            <Pagination
                 :current-page="currentHealthcarePage"
                 :total-items="totalHealthcareProfessionals"
                 :items-per-page="healthcarePerPage"
@@ -177,25 +177,25 @@ const handleClickToSubmissionForm = (id: string) => {
 }
 
 const paginatedHealthcareProfessionals = computed(() => {
-    const start = (currentHealthcarePage.value - 1) * healthcarePerPage
-    const end = start + healthcarePerPage
-    return healthcareProfessionalsStore.healthcareProfessionalsData.slice(start, end)
+    const skip = (currentHealthcarePage.value - 1) * healthcarePerPage
+    const take = skip + healthcarePerPage
+    return healthcareProfessionalsStore.healthcareProfessionalsData.slice(skip, take)
 })
 const totalHealthcareProfessionals = computed(() =>
     healthcareProfessionalsStore.healthcareProfessionalsData.length)
 
 const paginatedFacilities = computed(() => {
-    const start = (currentFacilitiesPage.value - 1) * facilitiesPerPage
-    const end = start + facilitiesPerPage
-    return facilitiesStore.facilityData.slice(start, end)
+    const skip = (currentFacilitiesPage.value - 1) * facilitiesPerPage
+    const take = skip + facilitiesPerPage
+    return facilitiesStore.facilityData.slice(skip, take)
 })
 const totalFacilities = computed(() =>
     facilitiesStore.facilityData.length)
 
 const paginatedSubmissions = computed(() => {
-    const start = (currentSubmissionsPage.value - 1) * submissionsPerPage
-    const end = start + submissionsPerPage
-    return modSubmissionsListStore.filteredSubmissionDataForListComponent.slice(start, end)
+    const skip = (currentSubmissionsPage.value - 1) * submissionsPerPage
+    const take = skip + submissionsPerPage
+    return modSubmissionsListStore.filteredSubmissionDataForListComponent.slice(skip, take)
 })
 const totalSubmissions = computed(() =>
     modSubmissionsListStore.filteredSubmissionDataForListComponent.length)
