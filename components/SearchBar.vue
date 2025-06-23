@@ -149,6 +149,7 @@ function createSpecialtyDropdownOptions() {
         value: specialty.code
     })) as DropdownOption[]
 
+    // Add the "All" option to the top of the list
     dropdownOptions.unshift({ displayText: t('searchBar.allSpecialties'), value: '' })
 
     specialtyDropdownOptions.value = dropdownOptions
@@ -166,7 +167,6 @@ async function createLocationDropdownOptions(): Promise<void> {
         ? locationsStore.allCitiesEnglishList
         : locationsStore.allCitiesJapaneseList
 
-    // Initialize the dropdown options with the "All" option
     const newLocationDropdownOptions: LocationDropdownOption[] = []
 
     // Add the cities to the dropdown and add a count for each city
@@ -180,6 +180,7 @@ async function createLocationDropdownOptions(): Promise<void> {
         }
     })
 
+    // Add the "All" option to the top of the list
     newLocationDropdownOptions.unshift({ displayText: t('searchBar.allLocations'),
         value: '',
         cityOccurrenceCount: allCities.length })
