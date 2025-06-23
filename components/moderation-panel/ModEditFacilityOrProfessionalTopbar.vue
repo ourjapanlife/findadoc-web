@@ -87,31 +87,19 @@
                         </button>
                     </div>
                     <div v-if="modalType === ModalType.DeleteConfirmation">
-                        <div
-                            v-show="moderationScreenStore.editFacilityScreenIsActive()"
-                            class="font-bold text-3xl"
-                        >
-                            {{ t('modEditFacilityOrHPTopbar.deleteConfirmationFacility',
-                                 { id: selectedId, facility: facilitiesStore.selectedFacilityData?.nameEn }) }}
-                        </div>
-                        <div
-                            v-show="moderationScreenStore.editHealthcareProfessionalScreenIsActive()"
-                            class="font-bold text-3xl"
-                        >
-                            {{ t('modEditFacilityOrHPTopbar.deleteConfirmationHealthcareProfessional', {
-                                id: selectedId,
-                                healthcareProfessional: `${healthcareProfessionalsStore.selectedHealthcareProfessionalData
-                                    ?.names[0]?.firstName} ${healthcareProfessionalsStore.selectedHealthcareProfessionalData
-                                    ?.names[0]?.lastName}`,
-                            }) }}
+                        <div class="font-bold text-3xl">
+                            {{ t(deleteConfirmationModalMessage.translationKey, { id: selectedId,
+                                                                                  facility:
+                                                                                      deleteConfirmationModalMessage.name,
+                                                                                  healthcareProfessional:
+                                                                                      deleteConfirmationModalMessage.name }) }}
                         </div>
                         <button
                             class="bg-primary p-4 rounded-full my-8 font-semibold text-xl"
                             type="button"
                             @click="deleteFacilityOrHealthcareProfessional"
                         >
-                            {{
-                                t('modEditFacilityOrHPTopbar.deleteButtonText') }}
+                            {{ t('modEditFacilityOrHPTopbar.deleteButtonText') }}
                         </button>
                     </div>
                 </div>
@@ -339,6 +327,26 @@ const openDeletionConfirmation = () => {
     modalType.value = ModalType.DeleteConfirmation
     modalStore.showModal()
 }
+
+const deleteConfirmationModalMessage = computed(() => {
+    if (moderationScreenStore.editFacilityScreenIsActive()) {
+        return {
+            translationKey: 'modEditFacilityOrHPTopbar.deleteConfirmationFacility',
+            name: facilitiesStore.selectedFacilityData?.nameEn
+        }
+    }
+
+    if (moderationScreenStore.editHealthcareProfessionalScreenIsActive()) {
+        const healthcareProfessional = healthcareProfessionalsStore.selectedHealthcareProfessionalData?.names[0]
+        const healthcareProfessionalFullName = `${healthcareProfessional?.firstName ?? ''} ${healthcareProfessional?.lastName}`
+        return {
+            translationKey: 'modEditFacilityOrHPTopbar.deleteConfirmationHealthcareProfessional',
+            name: healthcareProfessionalFullName
+        }
+    }
+
+    return { translationKey: '', name: '' }
+})
 
 const deleteFacilityOrHealthcareProfessional = async () => {
     if (moderationScreenStore.editFacilityScreenIsActive()) {
