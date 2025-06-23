@@ -22,7 +22,7 @@ describe('Moderation Edit Submission Modal', () => {
             cy.get('[data-testid="mod-submission-list-item-1"]').click()
 
             // When the user clicks the back button on their browser with unsaved changes...
-            cy.get('[data-testid="submission-form-nameEn"]').find('input').type('Hospital')
+            cy.get('[data-testid="mod-facility-section-nameEn"]').find('input').type('Hospital')
             cy.go('back')
             // ...the modal with the confirmation button should be visible.
             cy.get('[data-testid="submission-form-modal"]').should('be.visible')

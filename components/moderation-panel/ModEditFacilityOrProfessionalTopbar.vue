@@ -120,7 +120,7 @@ import { useFacilitiesStore } from '~/stores/facilitiesStore'
 import { useHealthcareProfessionalsStore } from '~/stores/healthcareProfessionalsStore'
 import { useModerationScreenStore, ModerationScreen } from '~/stores/moderationScreenStore'
 import { useModalStore, ModalType } from '~/stores/modalStore'
-import { handleServerErrorMessaging } from '~/utils/handleServerErrorMessaging'
+import { handleServerErrorMessaging } from '~/composables/handleServerErrorMessaging'
 import type { Facility, HealthcareProfessional } from '~/typedefs/gqlTypes'
 import { arraysAreEqual } from '~/utils/arrayUtils'
 import { onBeforeRouteLeave } from '#app'
@@ -243,9 +243,13 @@ const healthcareProfessionalHasUnsavedChanges = () => {
     healthcareProfessionalSections.spokenLanguages,
     originalHealthcareProfessional.spokenLanguages
 )
+|| !arraysAreEqual(
+    healthcareProfessionalSections.facilityIds,
+    originalHealthcareProfessional.facilityIds
+)
 || healthcareProfessionalSections.updatedDate
 !== originalHealthcareProfessional.updatedDate
-|| Array.from(healthcareProfessionalsStore.selectedFacilities).length > 0
+|| healthcareProfessionalsStore.selectedFacilities.length
 
     return areThereUnsavedHealthcareProfessionalChanges
 }

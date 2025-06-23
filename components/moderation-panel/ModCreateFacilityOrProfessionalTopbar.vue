@@ -60,7 +60,7 @@ import { useHealthcareProfessionalsStore } from '~/stores/healthcareProfessional
 import { useModerationScreenStore, ModerationScreen } from '~/stores/moderationScreenStore'
 import { useModalStore } from '~/stores/modalStore'
 import { useModerationSubmissionsStore, SelectedModerationListView } from '~/stores/moderationSubmissionsStore'
-import { handleServerErrorMessaging } from '~/utils/handleServerErrorMessaging'
+import { handleServerErrorMessaging } from '~/composables/handleServerErrorMessaging'
 
 const router = useRouter()
 
