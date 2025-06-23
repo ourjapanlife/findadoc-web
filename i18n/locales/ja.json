@@ -55,13 +55,13 @@
     },
     "onboarding": {
         "letsGoButtonText": "医者を探す！",
-    "welcometo": "ようこそ",
-    "selectcategory": "はじめにカテゴリを選択してください。",
-    "getstartedbutton": "はじめる",
-    "notsurebutton": "よく分からない・その他",
-    "searchloading": "あなたの旅はここから始まります"
-  },
-  "submitPage": {
+        "welcometo": "ようこそ",
+        "selectcategory": "はじめにカテゴリを選択してください。",
+        "getstartedbutton": "はじめる",
+        "notsurebutton": "よく分からない・その他",
+        "searchloading": "あなたの旅はここから始まります"
+    },
+    "submitPage": {
         "firstName": "名",
         "firstNameValidation": "Enter a first name",
         "googleMaps": "Google MapsのURL",
@@ -86,7 +86,6 @@
     "searchBar": {
         "selectSpecialty": "専門を選択",
         "selectLocation": "場所を選択",
-
         "allLocations": "すべての場所",
         "allSpecialties": "すべての専門分野",
         "search": "検索"
