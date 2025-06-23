@@ -367,6 +367,7 @@ function initializeSubmissionFormValues(submissionData: Submission | undefined) 
                 ))
             .filter((hp): hp is NonNullable<typeof hp> => hp !== undefined)
 
+    console.log(facilitySectionFields)
     // Healthcare Professionals fields
     healthcareProfessionalSections.names
     = submissionData?.healthcareProfessionals?.[0]?.names
@@ -406,6 +407,8 @@ function initializeSubmissionFormValues(submissionData: Submission | undefined) 
     = submissionData?.healthcareProfessionals?.[0]?.specialties ?? []
     healthcareProfessionalSections.spokenLanguages
     = submissionData?.spokenLanguages ?? []
+
+    console.log(healthcareProfessionalSections)
 }
 
 // Assume you already have:
@@ -424,18 +427,33 @@ const formHasUnsavedChanges = () => {
     }
 
     // Check the diffs in the facility section
-    const facilityChanged = (
-        submissionBeforeChangesComparison?.facility?.nameEn !== facilitySectionFields.nameEn
-        || submissionBeforeChangesComparison?.facility?.nameJa !== facilitySectionFields.nameJa
-        || submissionBeforeChangesComparison?.facility?.contact?.phone !== facilitySectionFields.phone
-        || (submissionBeforeChangesComparison?.facility?.contact?.email
-          && submissionBeforeChangesComparison?.facility?.contact?.email !== facilitySectionFields.email)
-        || (submissionBeforeChangesComparison?.facility?.contact?.website
-          && submissionBeforeChangesComparison?.facility?.contact?.website !== facilitySectionFields.website)
-        || submissionBeforeChangesComparison?.facility?.contact?.address?.postalCode !== facilitySectionFields.postalCode
-        || !arraysAreEqual(submissionBeforeChangesComparison?.facility?.healthcareProfessionalIds,
-                           facilitySectionFields.healthcareProfessionalIds)
+    const isFacilitySectionEmpty = (
+        !facilitySectionFields.nameEn
+        && !facilitySectionFields.nameJa
+        && !facilitySectionFields.phone
+        && !facilitySectionFields.email
+        && !facilitySectionFields.website
+        && !facilitySectionFields.postalCode
+        && (!facilitySectionFields.healthcareProfessionalIds || facilitySectionFields.healthcareProfessionalIds.length === 0)
     )
+
+    // Check the diffs in the facility section
+    const facilityChanged = submissionBeforeChangesComparison.facility === null
+        ? !isFacilitySectionEmpty
+        : (
+            submissionBeforeChangesComparison?.facility?.nameEn !== facilitySectionFields.nameEn
+            || submissionBeforeChangesComparison?.facility?.nameJa !== facilitySectionFields.nameJa
+            || submissionBeforeChangesComparison?.facility?.contact?.phone !== facilitySectionFields.phone
+            || (submissionBeforeChangesComparison?.facility?.contact?.email
+              && submissionBeforeChangesComparison?.facility?.contact.email !== facilitySectionFields.email)
+            || (submissionBeforeChangesComparison?.facility?.contact?.website
+              && submissionBeforeChangesComparison?.facility?.contact.website !== facilitySectionFields.website)
+            || submissionBeforeChangesComparison?.facility?.contact?.address?.postalCode !== facilitySectionFields.postalCode
+            || !arraysAreEqual(
+                submissionBeforeChangesComparison?.facility?.healthcareProfessionalIds ?? [],
+                facilitySectionFields.healthcareProfessionalIds
+            )
+        )
 
     // Check the diffs in the healthcare professional section
     const hpChanged = (
