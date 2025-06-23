@@ -137,7 +137,9 @@
         "diagnosticRadiology": "Radiologe/Radiologin",
         "entSpecialist": "HNO-Arzt/HNO-Ärztin",
         "emergencyMedicine": "Notfallmedizin",
+        "familyMedicine": "Familienmedizin",
         "infectiousDiseases": "Infektiologe/Infektiologin",
+        "internalMedicine": "Internist/Internistin",
         "generalMedicine": "Allgemeinarzt/Allgemeinärztin",
         "medicalGenetics": "Humangenetiker/Humangenetikerin",
         "neurology": "Neurologe/Neurologin",
@@ -155,9 +157,7 @@
         "sportsMedicine": "Sportmedizin",
         "physicalMedicineAndRehabilitation": "Physikalische Medizin und Rehabilitation",
         "traumatology": "Traumatologie",
-        "urology": "Urologie",
-        "internalMedicine": "Internal Medicine",
-        "familyMedicine": "Family Medicine"
+        "urology": "Urologie"
     },
     "specialtyCategories": {
         "childrensHealth": "Kindergesundheit",

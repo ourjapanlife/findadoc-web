@@ -444,7 +444,9 @@
         "diagnosticRadiology": "放射線科",
         "entSpecialist": "耳鼻咽喉科",
         "emergencyMedicine": "救急科",
+        "familyMedicine": "家庭医学",
         "infectiousDiseases": "感染症科",
+        "internalMedicine": "内科",
         "generalMedicine": "総合診療科・一般内科",
         "medicalGenetics": "遺伝子診療科",
         "neurology": "神経内科",
@@ -462,9 +464,7 @@
         "sportsMedicine": "スポーツ医学",
         "physicalMedicineAndRehabilitation": "リハビリテーション医学",
         "urology": "泌尿器科",
-        "traumatology": "外傷学",
-        "internalMedicine": "内科",
-        "familyMedicine": "家庭医学"
+        "traumatology": "外傷学"
     },
     "specialtyCategories": {
         "childrensHealth": "小児医療",

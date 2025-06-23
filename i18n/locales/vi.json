@@ -136,7 +136,7 @@
         "facilityCreatedSuccessfully": "Facility created successfully.",
         "heathcareProfessionalCreatedSuccessfully": "Healthcare Professional created successfully.",
         "unsavedChangesMessage": "This will exit without saving your entry. All unsaved data will be lost."
-      },
+    },
     "modDashboardLeftNav": {
         "facilities": "Cơ sở vật chất",
         "healthcareProfessionals": "Chuyên gia y tế",
@@ -187,7 +187,7 @@
         "retryMessage": "Có gì đó không đúng. Đang thử lại trong {seconds} giây ...",
         "approve": "Phê duyệt",
         "reject": "Từ chối",
-    "update": "Save"
+        "update": "Save"
     },
     "modPanelSubmissionList": {
         "approved": "Đã phê duyệt",
@@ -242,7 +242,7 @@
         "oneNameNecessary": "At least one name is required for a Healthcare Professional",
         "save": "Save",
         "update": "Update",
-    "charactersOfLanguageDoNotMatchNameLocale": "The characters of the Healthcare Professional's name are invalid in the chosen language"
+        "charactersOfLanguageDoNotMatchNameLocale": "The characters of the Healthcare Professional's name are invalid in the chosen language"
     },
     "modFacilitySection": {
         "addresses": "Địa chỉ.",
@@ -405,8 +405,8 @@
         "noInsurancesWereFound": "No insurance was found",
         "noDegreesWereFound": "No degrees were found",
         "noLocalesWereFound": "No languages were found",
-    "searchExistingFacilities": "Search for existing Facility",
-    "searchExistingHealthcareProfessionals": "Search for existing Healthcare Professionals"
+        "searchExistingFacilities": "Search for existing Facility",
+        "searchExistingHealthcareProfessionals": "Search for existing Healthcare Professionals"
     },
     "serverErrorMessages": {
         "UNAUTHENTICATED": "You do not have the authentication to do this action",
@@ -458,9 +458,7 @@
         "surgery": "Surgery",
         "physicalMedicineAndRehabilitation": "Y học vật lý và phục hồi chức năng",
         "urology": "Bác sĩ Tiết niệu",
-        "traumatology": "Chấn thương học",
-    "internalMedicine": "Internal Medicine",
-    "familyMedicine": "Family Medicine"
+        "traumatology": "Chấn thương học"
     },
     "specialtyCategories": {
         "childrensHealth": "Sức khỏe trẻ em",

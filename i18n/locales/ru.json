@@ -122,7 +122,7 @@
         "facilityCreatedSuccessfully": "Facility created successfully.",
         "heathcareProfessionalCreatedSuccessfully": "Healthcare Professional created successfully.",
         "unsavedChangesMessage": "This will exit without saving your entry. All unsaved data will be lost."
-      },
+    },
     "modDashboardLeftNav": {
         "facilities": "Услуги",
         "healthcareProfessionals": " Медицинские специалисты ",
@@ -145,7 +145,7 @@
         "reject": "Отклонить",
         "saving": "Saving...",
         "retryMessage": "Something’s not right. Retrying in {seconds}s...",
-    "update": "Update"
+        "update": "Update"
     },
     "modPanelSubmissionList": {
         "approved": "Одобрено",
@@ -200,7 +200,7 @@
         "oneNameNecessary": "At least one name is required for a Healthcare Professional",
         "save": "Save",
         "update": "Update",
-    "charactersOfLanguageDoNotMatchNameLocale": "The characters of the Healthcare Professional's name are invalid in chosen language"
+        "charactersOfLanguageDoNotMatchNameLocale": "The characters of the Healthcare Professional's name are invalid in chosen language"
     },
     "modSubmissionForm": {
         "addresses": "Адреса",
@@ -304,8 +304,8 @@
         "noInsurancesWereFound": "No insurance was found",
         "noDegreesWereFound": "No degrees were found",
         "noLocalesWereFound": "No languages were found",
-    "searchExistingFacilities": "Search for existing Facility",
-    "searchExistingHealthcareProfessionals": "Search for existing Healthcare Professionals"
+        "searchExistingFacilities": "Search for existing Facility",
+        "searchExistingHealthcareProfessionals": "Search for existing Healthcare Professionals"
     },
     "login": {
         "heading": "Log in to your account",
@@ -467,9 +467,7 @@
         "surgery": "Хирургия",
         "physicalMedicineAndRehabilitation": "Физическая медицина и реабилитация",
         "urology": "Урология",
-        "traumatology": "Травматология",
-    "internalMedicine": "Internal Medicine",
-    "familyMedicine": "Family Medicine"
+        "traumatology": "Травматология"
     },
     "specialtyCategories": {
         "childrensHealth": "Детское здоровье",

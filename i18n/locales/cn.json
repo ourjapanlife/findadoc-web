@@ -443,7 +443,9 @@
         "diagnosticRadiology": "放射诊断科医生",
         "entSpecialist": "耳鼻喉科医生",
         "emergencyMedicine": "急诊科医生",
+        "familyMedicine": "家庭医学",
         "infectiousDiseases": "传染病科医生",
+        "internalMedicine": "内科医生",
         "generalPractitioner": "全科医生",
         "medicalGenetics": "医学遗传学医生",
         "neurology": "神经科医生",
@@ -461,9 +463,7 @@
         "sportsMedicine": "运动医学医生",
         "physicalMedicineAndRehabilitation": "物理医学与康复",
         "urology": "泌尿科医生",
-        "traumatology": "创伤学",
-        "internalMedicine": "Internal Medicine",
-        "familyMedicine": "Family Medicine"
+        "traumatology": "创伤学"
     },
     "specialtyCategories": {
         "childrensHealth": "儿童健康",

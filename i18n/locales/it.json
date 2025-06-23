@@ -1,5 +1,4 @@
 {
-{
     "about": {
         "heading": "Informazioni su Find a Doc, Japan",
         "members": "Membri",
@@ -435,6 +434,8 @@
         "entSpecialist": "Otorinolaringoiatra (ORL)",
         "emergencyMedicine": "Medicina d'urgenza",
         "infectiousDiseases": "Malattie infettive",
+        "internalMedicine": "Internal Medicine",
+        "familyMedicine": "Family Medicine",
         "generalMedicine": "Medico di medicina generale",
         "medicalGenetics": "Genetista medico",
         "neurology": "Neurologo/Neurologa",
@@ -452,9 +453,7 @@
         "sportsMedicine": "Medicina dello sport",
         "physicalMedicineAndRehabilitation": "Medicina fisica e riabilitativa",
         "traumatology": "Traumatologia",
-        "urology": "Urologo/Urologa",
-        "internalMedicine": "Internal Medicine",
-        "familyMedicine": "Family Medicine"
+        "urology": "Urologo/Urologa"
     },
     "specialtyCategories": {
         "childrensHealth": "Salute dei bambini",
@@ -470,5 +469,4 @@
         "sportsAndRehab": "Sport e riabilitazione",
         "womensHealth": "Salute femminile"
     }
-}
 }

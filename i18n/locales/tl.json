@@ -136,7 +136,7 @@
         "facilityCreatedSuccessfully": "Facility created successfully.",
         "heathcareProfessionalCreatedSuccessfully": "Healthcare Professional created successfully.",
         "unsavedChangesMessage": "This will exit without saving your entry. All unsaved data will be lost."
-      },
+    },
     "modDashboardLeftNav": {
         "facilities": "Pasilidad",
         "healthcareProfessionals": "Mga Propesyonal sa Pangangalagang Pangkalusugan",
@@ -187,7 +187,7 @@
         "retryMessage": "May hindi tama. Sumubok muli sa {seconds} segundo...",
         "approve": "Aprubado",
         "reject": "Hindi na-aprubahan",
-    "update": "Update"
+        "update": "Update"
     },
     "modPanelSubmissionList": {
         "approved": "Aprubado",
@@ -362,8 +362,8 @@
         "noInsurancesWereFound": "No insurance was found",
         "noDegreesWereFound": "No degrees were found",
         "noLocalesWereFound": "No languages were found",
-    "searchExistingFacilities": "Search for existing Facility",
-    "searchExistingHealthcareProfessionals": "Search for existing Healthcare Professionals"
+        "searchExistingFacilities": "Search for existing Facility",
+        "searchExistingHealthcareProfessionals": "Search for existing Healthcare Professionals"
     },
     "serverErrorMessages": {
         "UNAUTHENTICATED": "Wala kang sapat na permiso upang gawin ang aksyong ito.",
@@ -412,7 +412,7 @@
         "oneNameNecessary": "At least one name is required for a Healthcare Professional",
         "save": "Save",
         "update": "Update",
-    "charactersOfLanguageDoNotMatchNameLocale": "The characters of the Healthcare Professional's name are invalid in the chosen language"
+        "charactersOfLanguageDoNotMatchNameLocale": "The characters of the Healthcare Professional's name are invalid in the chosen language"
     },
     "modHealthcareProfessionalCard": {
         "editName": "Edit",
@@ -455,9 +455,7 @@
         "preventiveMedicine": "Preventive Medicine",
         "radiationOncology": "Radiation Oncology",
         "sportsMedicine": "Sports Medicine",
-        "traumatology": "Traumatolohiya",
-    "internalMedicine": "Internal Medicine",
-    "familyMedicine": "Family Medicine"
+        "traumatology": "Traumatolohiya"
     },
     "specialtyCategories": {
         "childrensHealth": "Kalusugan ng mga Bata",
