@@ -46,7 +46,7 @@
                 <span>{{ t('onboarding.notsurebutton') }}</span>
                 <span class="inline-block w-6 h-6">
                     <component
-                        :is="HealthiconQuestionCircleOutline"
+                        :is="HealthIconQuestionCircleOutline"
                         class="w-6 h-6"
                         aria-hidden="true"
                     />
@@ -67,19 +67,19 @@
 import { useI18n } from 'vue-i18n'
 import type { SpecialtyCategory } from '~/typedefs/gqlTypes'
 
-import HealthiconBabyOutline from '~/assets/icons/category-childrens.svg'
-import HealthiconCosmeticSurgeryOutline from '~/assets/icons/category-cosmetic.svg'
-import HealthiconDentistOutline from '~/assets/icons/category-dentist.svg'
-import HealthiconSkinOutline from '~/assets/icons/category-dermatology.svg'
-import HealthiconEarOutline from '~/assets/icons/category-ent.svg'
-import HealthiconVisionOutline from '~/assets/icons/category-eye.svg'
-import HealthiconMaleOutline from '~/assets/icons/category-mens-health.svg'
-import HealthiconMentalHealthOutline from '~/assets/icons/category-mental-health.svg'
-import HealthiconPhysicalTherapyOutline from '~/assets/icons/category-rehab.svg'
-import HealthiconFamilyPracticeOutline from '~/assets/icons/category-primary-care.svg'
-import HealthiconSportsInjuryOutline from '~/assets/icons/category-sports.svg'
-import HealthiconFemaleOutline from '~/assets/icons/category-womens-health.svg'
-import HealthiconQuestionCircleOutline from '~/assets/icons/question.svg' // for something else button
+import HealthIconBabyOutline from '@/assets/icons/category-childrens.svg'
+import HealthIconCosmeticSurgeryOutline from '@/assets/icons/category-cosmetic.svg'
+import HealthIconDentistOutline from '@/assets/icons/category-dentist.svg'
+import HealthIconSkinOutline from '@/assets/icons/category-dermatology.svg'
+import HealthIconEarOutline from '@/assets/icons/category-ent.svg'
+import HealthIconVisionOutline from '@/assets/icons/category-eye.svg'
+import HealthIconMaleOutline from '@/assets/icons/category-mens-health.svg'
+import HealthIconMentalHealthOutline from '@/assets/icons/category-mental-health.svg'
+import HealthIconPhysicalTherapyOutline from '@/assets/icons/category-rehab.svg'
+import HealthIconFamilyPracticeOutline from '@/assets/icons/category-primary-care.svg'
+import HealthIconSportsInjuryOutline from '@/assets/icons/category-sports.svg'
+import HealthIconFemaleOutline from '@/assets/icons/category-womens-health.svg'
+import HealthIconQuestionCircleOutline from '@/assets/icons/question.svg' // for something else button
 import SVGCharactersSachiQuestioning from '@/assets/icons/characters-sachi-questioning.svg'
 
 const { t } = useI18n()
@@ -89,18 +89,18 @@ const specialtyStore = useSpecialtiesStore()
 const categories = computed(() => specialtyStore.specialtyCategories)
 
 const categoryIconMap: Record<SpecialtyCategory, string> = {
-    CHILDRENS_HEALTH: HealthiconBabyOutline,
-    COSMETIC_AND_PLASTIC_SURGERY: HealthiconCosmeticSurgeryOutline,
-    DENTAL: HealthiconDentistOutline,
-    DERMATOLOGY: HealthiconSkinOutline,
-    ENT: HealthiconEarOutline,
-    EYE_AND_VISION: HealthiconVisionOutline,
-    MENS_HEALTH: HealthiconMaleOutline,
-    MENTAL_HEALTH: HealthiconMentalHealthOutline,
-    PHYSICAL_THERAPY: HealthiconPhysicalTherapyOutline,
-    PRIMARY_CARE: HealthiconFamilyPracticeOutline,
-    SPORTS_AND_REHAB: HealthiconSportsInjuryOutline,
-    WOMENS_HEALTH: HealthiconFemaleOutline
+    CHILDRENS_HEALTH: HealthIconBabyOutline,
+    COSMETIC_AND_PLASTIC_SURGERY: HealthIconCosmeticSurgeryOutline,
+    DENTAL: HealthIconDentistOutline,
+    DERMATOLOGY: HealthIconSkinOutline,
+    ENT: HealthIconEarOutline,
+    EYE_AND_VISION: HealthIconVisionOutline,
+    MENS_HEALTH: HealthIconMaleOutline,
+    MENTAL_HEALTH: HealthIconMentalHealthOutline,
+    PHYSICAL_THERAPY: HealthIconPhysicalTherapyOutline,
+    PRIMARY_CARE: HealthIconFamilyPracticeOutline,
+    SPORTS_AND_REHAB: HealthIconSportsInjuryOutline,
+    WOMENS_HEALTH: HealthIconFemaleOutline
 }
 
 const emit = defineEmits<{
