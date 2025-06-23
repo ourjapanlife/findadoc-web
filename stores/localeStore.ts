@@ -10,10 +10,10 @@ export type LocaleDisplay = {
 
 export const useLocaleStore = defineStore('locale', () => {
     const enUsLocale = localeDisplayOptions.find(currentLocale => currentLocale.code === Locale.EnUs) as LocaleDisplay
-    const locale: Ref<LocaleDisplay> = ref(enUsLocale)
+    const activeLocale: Ref<LocaleDisplay> = ref(enUsLocale)
 
     function setLocale(selectedLocale: Locale) {
-        locale.value = localeDisplayOptions.find(currentLocale => currentLocale.code === selectedLocale) as LocaleDisplay
+        activeLocale.value = localeDisplayOptions.find(currentLocale => currentLocale.code === selectedLocale) as LocaleDisplay
     }
 
     function formatLanguageCodeToSimpleText(selectedLocale: string) {
@@ -43,7 +43,7 @@ export const useLocaleStore = defineStore('locale', () => {
     }
 
     return {
-        locale,
+        activeLocale,
         localeDisplayOptions,
         mvpLocaleDisplayOptions,
         setLocale,
@@ -54,7 +54,6 @@ export const useLocaleStore = defineStore('locale', () => {
 })
 
 export const localeDisplayOptions = [
-    { code: '', simpleText: '', displayText: 'None' },
     { code: Locale.EnUs, simpleText: 'English', displayText: 'English (US)' },
     { code: Locale.AkGh, simpleText: 'Akan', displayText: 'Akan (Ghana)' },
     { code: Locale.AmEt, simpleText: 'Amharic', displayText: 'Amharic (Ethiopia)' },

@@ -97,7 +97,7 @@ import { useSearchResultsStore } from '~/stores/searchResultsStore.js'
 import { useLocationsStore } from '~/stores/locationsStore.js'
 import { useSpecialtiesStore } from '~/stores/specialtiesStore.js'
 import { useLocaleStore } from '~/stores/localeStore.js'
-import { Locale, Specialty } from '~/typedefs/gqlTypes.js'
+import { type Specialty, Locale } from '~/typedefs/gqlTypes.js'
 
 const { t } = useI18n()
 
@@ -112,7 +112,7 @@ const languageDropdownOptions: Ref<DropdownOption[]> = ref([])
 
 const selectedSpecialties: Ref<string> = ref('')
 const selectedLocations: Ref<string> = ref('')
-const selectedLanguages: Ref<string> = ref('')
+const selectedLanguages: Ref<string> = ref(localeStore.activeLocale.code)
 
 interface DropdownOption {
     displayText: string
@@ -149,6 +149,8 @@ function createSpecialtyDropdownOptions() {
         value: specialty.code
     })) as DropdownOption[]
 
+    dropdownOptions.unshift({ displayText: t('searchBar.allSpecialties'), value: '' })
+
     specialtyDropdownOptions.value = dropdownOptions
 }
 
@@ -160,7 +162,7 @@ async function createLocationDropdownOptions(): Promise<void> {
 
     const localeStore = useLocaleStore()
 
-    const allCities = localeStore.locale.code === Locale.EnUs
+    const allCities = localeStore.activeLocale.code === Locale.EnUs
         ? locationsStore.allCitiesEnglishList
         : locationsStore.allCitiesJapaneseList
 
@@ -186,16 +188,18 @@ async function createLocationDropdownOptions(): Promise<void> {
 }
 
 watch(selectedSpecialties, () => {
-    searchResultsStore.selectedSpecialties = [Specialty[selectedSpecialties.value as keyof typeof Specialty]]
+    // If the selected specialty is empty, clear the selected specialties
+    searchResultsStore.selectedSpecialties = selectedSpecialties.value === ''
+        ? []
+        : [selectedSpecialties.value as Specialty]
 })
 
 watch(selectedLocations, () => {
-    searchResultsStore.selectedCity = selectedLocations.value
+    searchResultsStore.selectedCity = selectedLocations.value ? selectedLocations.value : undefined
 })
 
 watch(selectedLanguages, () => {
-    const selectedLanguage = Locale[selectedLanguages.value]
-    searchResultsStore.selectedLanguages = selectedLanguage
+    searchResultsStore.selectedLanguages = selectedLanguages.value ? [selectedLanguages.value as Locale] : []
 })
 
 async function search() {

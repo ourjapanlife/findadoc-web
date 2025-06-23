@@ -265,7 +265,8 @@ export const useHealthcareProfessionalsStore = defineStore(
             healthcareProfessional: HealthcareProfessional | CreateHealthcareProfessionalInput
         ) => {
             // find the name of the healthcare professional from the chosen display locale
-            const nameFromChosenLocaleDisplay = healthcareProfessional.names.find(name => name.locale === localeStore.locale.code)
+            const nameFromChosenLocaleDisplay = healthcareProfessional.names.find(name =>
+                name.locale === localeStore.activeLocale.code)
             // return the name of the healthcare professional of chosen locale or default to the 0 indexed recorded name
             return nameFromChosenLocaleDisplay ? nameFromChosenLocaleDisplay : healthcareProfessional.names[0]
         }
