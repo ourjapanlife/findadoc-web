@@ -168,6 +168,7 @@
     "delete": "Elimina",
     "deleteButtonText": "ELIMINA DEFINITIVAMENTE",
     "deleteConfirmationFacility": "Sei sicuro di voler eliminare la struttura: {facility}, con ID: {id}?",
+    "deleteConfirmationHealthcareProfessional": "Are you sure you want to delete the Healthcare Professional: {healthcareProfessional}, with ID: {id}?",
     "update": "Aggiorna",
     "updateAndExit": "Aggiorna & Esci",
     "facilityDeletedSuccessfully": "Struttura eliminata con successo",

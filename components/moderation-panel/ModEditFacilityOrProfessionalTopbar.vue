@@ -94,6 +94,17 @@
                             {{ t('modEditFacilityOrHPTopbar.deleteConfirmationFacility',
                                  { id: selectedId, facility: facilitiesStore.selectedFacilityData?.nameEn }) }}
                         </div>
+                        <div
+                            v-show="moderationScreenStore.editHealthcareProfessionalScreenIsActive()"
+                            class="font-bold text-3xl"
+                        >
+                            {{ t('modEditFacilityOrHPTopbar.deleteConfirmationHealthcareProfessional', {
+                                id: selectedId,
+                                healthcareProfessional: `${healthcareProfessionalsStore.selectedHealthcareProfessionalData
+                                    ?.names[0]?.firstName} ${healthcareProfessionalsStore.selectedHealthcareProfessionalData
+                                    ?.names[0]?.lastName}`,
+                            }) }}
+                        </div>
                         <button
                             class="bg-primary p-4 rounded-full my-8 font-semibold text-xl"
                             type="button"
