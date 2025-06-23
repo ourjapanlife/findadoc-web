@@ -454,10 +454,10 @@
     "physicalMedicineAndRehabilitation": "Medicina fisica e riabilitativa",
     "traumatology": "Traumatologia",
     "urology": "Urologo/Urologa",
-    "cosmeticSurgery": "Cosmetic Surgeon",
-    "orthodontics": "Orthodontist",
-    "plasticSurgery": "Plastic Surgeon",
-    "surgery": "Surgery"
+    "cosmeticSurgery": "Chirurgia estetica",
+    "orthodontics": "Orthodontista",
+    "plasticSurgery": "Chirurgia plastica",
+    "surgery": "Chirurgia"
   },
   "specialtyCategories": {
     "childrensHealth": "Salute dei bambini",
