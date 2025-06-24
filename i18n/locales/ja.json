@@ -311,7 +311,9 @@
     "noDegreesWereFound": "No degrees were found",
     "noLocalesWereFound": "No languages were found",
     "searchExistingFacilities": "Search for existing Facility",
-    "searchExistingHealthcareProfessionals": "Search for existing Healthcare Professionals"
+    "searchExistingHealthcareProfessionals": "Search for existing Healthcare Professionals",
+    "labelModNoteInput": "Moderator Notes",
+    "placeholderTextNoteInput": "e.g. waiting for call back from clinic"
   },
   "modPanelSubmissionLeftNavbar": {
     "addresses": "Addresses",
@@ -456,5 +458,8 @@
     "traumatology": "Traumatologist",
     "internalMedicine": "内科",
     "familyMedicine": "Family Medicine"
+  },
+  "noteInputField": {
+    "optional": "(optional)"
   }
 }

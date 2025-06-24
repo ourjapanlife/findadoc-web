@@ -297,7 +297,9 @@
     "noDegreesWereFound": "No degrees were found",
     "noLocalesWereFound": "No languages were found",
     "searchExistingFacilities": "Search for existing Facility",
-    "searchExistingHealthcareProfessionals": "Search for existing Healthcare Professionals"
+    "searchExistingHealthcareProfessionals": "Search for existing Healthcare Professionals",
+    "labelModNoteInput": "Moderator Notes",
+    "placeholderTextNoteInput": "e.g. waiting for call back from clinic"
   },
   "login": {
     "heading": "Log in to your account",
@@ -456,5 +458,8 @@
     "traumatology": "Traumatologia",
     "internalMedicine": "Internal Medicine",
     "familyMedicine": "Family Medicine"
+  },
+  "noteInputField": {
+    "optional": "(optional)"
   }
 }

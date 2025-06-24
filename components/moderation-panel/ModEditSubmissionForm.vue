@@ -131,6 +131,13 @@
             >
                 <ModEditHealthcareProfessionalSection />
             </div>
+            <NoteInputField
+                v-model="currentSubmissionNotes"
+                data-testid="submission-form-notes"
+                :label="t('modSubmissionForm.labelModNoteInput')"
+                :placeholder="t('modSubmissionForm.placeholderTextNoteInput')"
+                :required="false"
+            />
         </div>
     </div>
 </template>
@@ -179,6 +186,8 @@ const screenStore = useModerationScreenStore()
 const loadingStore = useLoadingStore()
 const facilitiesStore = useFacilitiesStore()
 const healthcareProfessionalsStore = useHealthcareProfessionalsStore()
+
+const currentSubmissionNotes = ref('')
 
 const syntheticEvent = new Event('submit', { bubbles: false, cancelable: true })
 
@@ -319,6 +328,10 @@ const validateHealthcareProfessionalFields = () => {
 function initializeSubmissionFormValues(submissionData: Submission | undefined) {
     const submittedHealthcareProfessionalName
     = submissionData?.healthcareProfessionalName?.split(' ') ?? []
+
+    if (submissionData && submissionData.notes) {
+        currentSubmissionNotes.value = submissionData.notes
+    }
 
     const facilitySectionFields = facilitiesStore.facilitySectionFields
     const healthcareProfessionalSections
@@ -533,7 +546,8 @@ async function submitUpdatedSubmission(e: Event) {
         input: {
             isUnderReview: true,
             facility: facilitySubmissionUpdate,
-            healthcareProfessionals: healthcareProfessionalUpdate
+            healthcareProfessionals: healthcareProfessionalUpdate,
+            notes: currentSubmissionNotes.value
         }
     }
 

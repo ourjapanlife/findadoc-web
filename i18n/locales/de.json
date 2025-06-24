@@ -341,7 +341,9 @@
     "noDegreesWereFound": "No degrees were found",
     "noLocalesWereFound": "No language were found",
     "searchExistingFacilities": "Search for existing Facility",
-    "searchExistingHealthcareProfessionals": "Search for existing Healthcare Professionals"
+    "searchExistingHealthcareProfessionals": "Search for existing Healthcare Professionals",
+    "labelModNoteInput": "Moderator Notes",
+    "placeholderTextNoteInput": "e.g. waiting for call back from clinic"
   },
   "modPanelSubmissionLeftNavbar": {
     "addresses": "Addresses",
@@ -455,5 +457,8 @@
     "firstName": "First name",
     "middleName": "Middle name",
     "nameLocale": "Name language"
+  },
+  "noteInputField": {
+    "optional": "(optional)"
   }
 }
