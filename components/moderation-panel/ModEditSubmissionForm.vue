@@ -367,7 +367,6 @@ function initializeSubmissionFormValues(submissionData: Submission | undefined) 
                 ))
             .filter((hp): hp is NonNullable<typeof hp> => hp !== undefined)
 
-    console.log(facilitySectionFields)
     // Healthcare Professionals fields
     healthcareProfessionalSections.names
     = submissionData?.healthcareProfessionals?.[0]?.names
@@ -407,8 +406,6 @@ function initializeSubmissionFormValues(submissionData: Submission | undefined) 
     = submissionData?.healthcareProfessionals?.[0]?.specialties ?? []
     healthcareProfessionalSections.spokenLanguages
     = submissionData?.spokenLanguages ?? []
-
-    console.log(healthcareProfessionalSections)
 }
 
 // Assume you already have:
