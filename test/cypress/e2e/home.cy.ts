@@ -6,6 +6,7 @@ describe('Visits the home page', () => {
 
     context('Landscape mode', () => {
         before(() => {
+            cy.skipOnboardingFlow()
             cy.visit('/')
         })
 
@@ -118,6 +119,7 @@ describe('Visits the home page', () => {
     // Portrait mode tests - usually for mobile and tablet
     context('Portrait mode', () => {
         before(() => {
+            cy.skipOnboardingFlow()
             cy.visit('/')
         })
 

@@ -4,6 +4,7 @@ import enUS from '../../../i18n/locales/en.json'
 describe('Submit page', () => {
     context('Desktop resolution', () => {
         before(() => {
+            cy.skipOnboardingFlow()
             cy.visit('/submit')
         })
 
@@ -105,6 +106,7 @@ describe('Submit page', () => {
 
     context('Portrait mode', () => {
         before(() => {
+            cy.skipOnboardingFlow()
             cy.visit('/submit')
         })
 

@@ -6,7 +6,9 @@
         data-testid="app"
         class="h-screen w-full font-sans text-primary-text bg-primary-bg"
     >
+        <TopNav />
         <NuxtPage />
+        <Footer />
     </div>
 </template>
 
