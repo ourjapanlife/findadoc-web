@@ -2,6 +2,7 @@ import fakeSubmissionResponse from '../../fake_data/moderation_dashboard/fakeSub
 import { aliasQuery } from '../utils'
 
 before(() => {
+    cy.skipOnboardingFlow()
     cy.login()
 })
 

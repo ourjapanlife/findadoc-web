@@ -3,6 +3,7 @@ import fakeHealthcareProfessionalResult from '../../fake_data/moderation_dashboa
 import { aliasQuery } from '../utils'
 
 before(() => {
+    cy.skipOnboardingFlow()
     cy.login()
 })
 
@@ -27,6 +28,7 @@ describe('Moderation create healthcare professional button', () => {
 describe('Moderation create healthcare professional form', () => {
     context('Landscape mode', () => {
         beforeEach(() => {
+            cy.skipOnboardingFlow()
             cy.intercept('POST', '**/', req => {
                 if (req.body.operationName === 'HealthcareProfessionalSearchFilters') {
                     aliasQuery(req, 'HealthcareProfessionalSearchFilters', fakeHealthcareProfessionalResult)

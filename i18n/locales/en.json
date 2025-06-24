@@ -2,7 +2,7 @@
     "about": {
         "heading": "About Find a Doc, Japan",
         "members": "Members",
-        "subheading": "Connecting people in Japan to the healthcare services they need, in the languages they need.",
+        "subheading": "Connecting you to the healthcare services you need, in your language",
         "paragraph1": "At Find a Doc, Japan, our mission is to promote a healthier and more inclusive society. We offer quality health information for free in many languages for everyone, including foreigners and medical professionals. We aim for a Japan where all people, regardless of nationality or language, can confidently navigate the healthcare system, find the right doctors and get the healthcare they need.",
         "paragraph2": "We are a non-profit organization driven by the ideal that everyone should have access to health information as part of a flourishing life. Our activities are guided by a sense of social justice, cultural sensitivity and innovation. We are always happy to connect with partners in the governmental, non-profit and medical communities. Together with our partners, we hope to create a Japan where everyone has access to healthcare, feels included and can live well."
     },
@@ -84,7 +84,8 @@
     "searchBar": {
         "selectSpecialty": "Select a specialty...",
         "selectLocation": "Select a location...",
-        "selectLanguage": "Select a language...",
+        "allLocations": "All Locations",
+        "allSpecialties": "All Specialties",
         "search": "Search"
     },
     "searchResultsList": {
@@ -126,10 +127,18 @@
         "unauthorizedline2": "If you want to become a moderator or have any questions, please contact us ",
         "unauthorizedline3": "here"
     },
+    "onboarding": {
+        "welcometo": "Welcome to",
+        "selectcategory": "Please select a category to get started",
+        "notsurebutton": "Something else",
+        "searchloading": "Finding your care now",
+        "letsGoButtonText": "Find a Doctor!"
+    },
     "specialties": {
         "allergyAndImmunology": "Allergist",
         "anesthesiology": "Anesthesiologist",
         "cardiology": "Cardiologist",
+        "cosmeticSurgery": "Cosmetic Surgeon",
         "dentistry": "Dentist",
         "dermatology": "Dermatologist",
         "diagnosticRadiology": "Radiologist",
@@ -138,24 +147,41 @@
         "familyMedicine": "Family Medicine",
         "infectiousDiseases": "Infectious Diseases",
         "internalMedicine": "Internal Medicine",
-        "generalPractitioner": "General Practitioner",
+        "generalMedicine": "General Medicine",
         "medicalGenetics": "Medical Genetics",
         "neurology": "Neurologist",
         "nuclearMedicine": "Nuclear Medicine",
         "obstetricsAndGynecology": "Gynecologist (Ob-Gyn)",
         "ophthalmology": "Eye Surgeon (Ophthalmologist)",
         "orthopedicSurgery": "Orthopedic Surgeon",
+        "orthodontics": "Orthodontist",
         "optometry": "Eye Doctor (Optometrist)",
         "pathology": "Pathologist",
         "pediatrics": "Pediatrician",
         "physiotherapy": "Physical Therapist",
+        "plasticSurgery": "Plastic Surgeon",
         "psychiatry": "Psychiatrist",
         "preventiveMedicine": "Preventive Medicine",
         "radiationOncology": "Radiation Oncologist",
         "sportsMedicine": "Sports Medicine",
+        "surgery": "Surgery",
         "physicalMedicineAndRehabilitation": "Physical Medicine & Rehabilitation",
         "urology": "Urologist",
         "traumatology": "Traumatologist"
+    },
+    "specialtyCategories": {
+        "childrensHealth": "Children's Health",
+        "cosmeticAndPlasticSurgery": "Cosmetic and Plastic Surgery",
+        "dental": "Dental",
+        "dermatology": "Dermatology",
+        "ent": "ENT (Ears, Nose, and Throat)",
+        "eyeAndVision": "Eye and Vision",
+        "mensHealth": "Men's Health",
+        "mentalHealth": "Mental Health",
+        "physicalTherapy": "Physical Therapy",
+        "primaryCare": "Primary Care",
+        "sportsAndRehab": "Sports and Rehab",
+        "womensHealth": "Women's Health"
     },
     "modCreateFacilityOrHPTopbar": {
         "confirmExit": "Exit without saving",
