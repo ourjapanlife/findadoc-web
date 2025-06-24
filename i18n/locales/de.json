@@ -340,7 +340,7 @@
     "noLocalesWereFound": "No locales were found",
     "searchExistingFacilities": "Search for existing facility",
     "searchExistingHealthcareProfessionals": "Search for existing healthcare professionals",
-    "errorMessageRomajiNameRequired": "The healthcare professional must have a name in Romaji"
+    "errorMessageEnglishNameRequired": "The healthcare professional must have an English name"
   },
   "modPanelSubmissionLeftNavbar": {
     "addresses": "Addresses",

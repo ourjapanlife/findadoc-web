@@ -156,7 +156,6 @@ import { validateAddressLineEn,
     validatePostalCode,
     validateWebsite,
     validateCityJa } from '~/utils/formValidations'
-import { hasLatinCharacters } from '~/utils/stringUtils'
 import { onBeforeRouteLeave } from '#app'
 import { useI18n } from '#imports'
 import { triggerFormValidationErrorMessages } from '~/utils/triggerFormValidationErrorMessages'
@@ -317,18 +316,14 @@ const validateHealthcareProfessionalFields = () => {
     return areAllFieldsValid
 }
 
-const validateHealthcareProfessionalRomajiName = () => {
+const validateHealthcareProfessionalEnglishName = () => {
     const healthcareProfessionalFields = healthcareProfessionalsStore.healthcareProfessionalSectionFields
     const names = healthcareProfessionalFields.names
 
-    // Check if the healthcare professional has a name in Romaji (Latin characters)
-    const hasANameInRomaji = names.some(healthcareProfessionalName => {
-        const hasAFirstNameInRomaji = hasLatinCharacters(healthcareProfessionalName.firstName)
-        const hasALastNameInRomaji = hasLatinCharacters(healthcareProfessionalName.lastName)
-        return hasAFirstNameInRomaji && hasALastNameInRomaji
-    })
+    // Check if the healthcare professional has a name in the 'en_US' locale (assumed to be in Romaji)
+    const hasEnglishName = names.some(name => name.locale == 'en_US')
 
-    return hasANameInRomaji
+    return hasEnglishName
 }
 
 function initializeSubmissionFormValues(submissionData: Submission | undefined) {
@@ -596,7 +591,7 @@ async function submitCompletedForm(e: Event) {
 
     const isValidFacility = validateFacilityFields()
     const isValidHealthcareProfessional = validateHealthcareProfessionalFields()
-    const isValidRomajiName = validateHealthcareProfessionalRomajiName()
+    const hasEnglishName = validateHealthcareProfessionalEnglishName()
 
     // This shows a toast and returns if the facility fields arent valid
     if (!isValidFacility && !currentFacilityRelations.value.length) {
@@ -611,8 +606,8 @@ async function submitCompletedForm(e: Event) {
         return
     }
 
-    if (!isValidRomajiName) {
-        toast.error(t('modSubmissionForm.errorMessageRomajiNameRequired'))
+    if (!hasEnglishName) {
+        toast.error(t('modSubmissionForm.errorMessageEnglishNameRequired'))
         await resetModalRefs()
         return
     }
