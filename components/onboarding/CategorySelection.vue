@@ -36,6 +36,7 @@
             </div>
             <!-- "Something else" button -->
             <button
+                id="something-else-category-button"
                 type="button"
                 class="text-primary-text-inverted py-4 mt-10 mx-8 mb-6 rounded-xl
                     font-medium bg-accent/70 hover:bg-accent/90 border-2 border-primary-bg/20 hover:border-primary-bg/40
@@ -54,8 +55,8 @@
             </button>
             <SVGCharactersSachiQuestioning
                 role="img"
-                alt="Findadoc character sachi questioning"
-                title="Findadoc character sachi questioning"
+                alt="Find a Doc, Japan character sachi questioning"
+                title="Find a Doc, Japan character sachi questioning"
                 class="absolute left-0 bottom-0 landscape:left-12 landscape:w-96 w-64
                     max-w-xs opacity-50 pointer-events-none select-none z-0"
             />

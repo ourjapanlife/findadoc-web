@@ -1,7 +1,6 @@
 <template>
     <div
         id="index"
-        class=""
     >
         <MainContentContainer />
     </div>

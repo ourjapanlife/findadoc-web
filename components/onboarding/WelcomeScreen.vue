@@ -90,11 +90,11 @@
                 class="h-full flex items-center justify-center transition-opacity duration-500"
                 :class="{ 'opacity-0': isBackgroundExpanding }"
             >
-                <!-- Faded background findadoc character team -->
+                <!-- Faded background Find a Doc, Japan character team -->
                 <SVGCharactersTogetherWelcomeScreen
                     role="img"
-                    alt="Findadoc character team"
-                    title="Findadoc character team"
+                    alt="Find a Doc, Japan character team"
+                    title="Find a Doc, Japan character team"
                     class="absolute right-0 bottom-0 landscape:right-12 landscape:w-[416px] w-[300px]
                         opacity-70 pointer-events-none select-none z-0"
                 />
