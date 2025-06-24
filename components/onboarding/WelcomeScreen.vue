@@ -8,9 +8,9 @@
             <!-- Top half of screen -->
             <div
                 class="flex flex-col justify-center pt-8
-                min-h-[60vh] bg-primary relative
+                min-h-[65vh] bg-primary relative
                 transition-all duration-700 ease-out"
-                :class="{ 'h-full min-h-full': isBackgroundExpanding }"
+                :class="{ 'min-h-[100vh]': isBackgroundExpanding }"
             >
                 <!-- Header text -->
                 <div
@@ -31,6 +31,7 @@
                     :class="{ 'opacity-0': isBackgroundExpanding }"
                 >
                     <button
+                        id="welcome-screen-arrow-button"
                         type="button"
                         class="relative group flex items-center self-start focus:outline-none
                         bg-secondary hover:bg-secondary/90 transition-colors
@@ -65,12 +66,11 @@
                 <div class="w-full absolute bottom-0">
                     <svg
                         viewBox="0 0 375 56"
-                        class="w-full z-10 transition-all duration-500ease-out"
+                        class="w-full z-10 transition-all duration-500ease-out block"
                         :class="{ 'h-0': isBackgroundExpanding }"
                         width="100%"
                         height="56"
                         preserveAspectRatio="none"
-                        :style="{ display: 'block' }"
                         @mouseenter="waveHover = true"
                         @mouseleave="waveHover = false"
                     >
