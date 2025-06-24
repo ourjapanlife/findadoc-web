@@ -340,6 +340,8 @@ const deleteFacilityOrHealthcareProfessional = async () => {
             handleServerErrorMessaging(response.errors, toast, t)
             return response
         }
+        // Wipe the data of the now deleted facility from the ref to prevent the UnsavedChanges modal from triggering
+        originalFacilityRefsValue.value = undefined
 
         toast.success(t('modEditFacilityOrHPTopbar.facilityDeletedSuccessfully'))
         // Redirect to the dashboard since the facility no longer exists
