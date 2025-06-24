@@ -1,6 +1,7 @@
 describe('Privacy Policy page', () => {
     context('Landscape resolution', () => {
         beforeEach(() => {
+            cy.skipOnboardingFlow()
             cy.viewport('macbook-16')
             cy.visit('/privacypolicy')
         })
@@ -28,6 +29,7 @@ describe('Privacy Policy page', () => {
 
     context('Portrait mode', () => {
         beforeEach(() => {
+            cy.skipOnboardingFlow()
             cy.viewport('iphone-5')
             cy.visit('/privacypolicy')
         })

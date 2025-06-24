@@ -60,7 +60,7 @@
                             :name="`${searchResult.professional.names[0].firstName}
                             ${searchResult.professional.names[0].lastName}`"
                             :degrees="searchResult.professional.degrees"
-                            :facility-name="localeStore.locale.code == Locale.JaJp
+                            :facility-name="localeStore.activeLocale.code == Locale.JaJp
                                 ? searchResult.facilities[0]?.nameJa
                                 : searchResult.facilities[0]?.nameEn"
                             :specialties="searchResult.professional.specialties"

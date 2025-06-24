@@ -1,12 +1,14 @@
 <template>
-    <div class="h-full w-full">
-        <!-- eslint-disable-next-line -->
-        <GoogleMap data-testid="map-of-japan" ref="mapRef" v-if="isMapReady"
-                   :api-key="runtimeConfig.public.GOOGLE_MAPS_API_KEY as string ?? undefined"
-                   map-id="153d718018a2577e"
-                   class="h-full w-full"
-                   :center="center"
-                   :zoom="9"
+    <div class="">
+        <GoogleMap
+            v-if="isMapReady"
+            ref="mapRef"
+            data-testid="map-of-japan"
+            :api-key="runtimeConfig.public.GOOGLE_MAPS_API_KEY as string ?? undefined"
+            map-id="153d718018a2577e"
+            class="h-full w-full"
+            :center="center"
+            :zoom="9"
         >
             <CustomMarker
                 v-for="(location, index) in searchResultsStore.searchResultsList"
@@ -53,6 +55,6 @@ const isMapReady = ref(false)
 onMounted(() => {
     // This Google Maps Library Component will try to render before the component and throw a JS error.
     // This is a trick to prevent it from rendering until the component is mounted.
-    isMapReady.value = true
+    setTimeout(() => { isMapReady.value = true }, 10)
 })
 </script>
