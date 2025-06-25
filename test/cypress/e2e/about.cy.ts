@@ -3,6 +3,7 @@ import enUS from '../../../i18n/locales/en.json'
 describe('About page', () => {
     context('Desktop resolution', () => {
         before(() => {
+            cy.skipOnboardingFlow()
             cy.visit('/about')
         })
 

@@ -267,8 +267,8 @@
 </template>
 
 <script lang="ts" setup>
-import { onBeforeMount, reactive, type Ref, ref, watch } from 'vue'
-import { type ToastInterface, useToast } from 'vue-toastification'
+import { reactive, type Ref, ref, watch } from 'vue'
+import { useToast } from 'vue-toastification'
 import { useHealthcareProfessionalsStore } from '~/stores/healthcareProfessionalsStore'
 import { useFacilitiesStore } from '~/stores/facilitiesStore'
 import { useLocaleStore } from '~/stores/localeStore'
@@ -282,7 +282,7 @@ import { Insurance,
     type HealthcareProfessional } from '~/typedefs/gqlTypes'
 import { useI18n } from '#imports'
 
-let toast: ToastInterface
+const toast = useToast()
 
 const { t } = useI18n()
 
@@ -557,15 +557,6 @@ const specialtiesToDisplayCallback = (specialty: Specialty) => [specialty]
 const degreesToDisplayCallback = (degree: Degree) => [degree]
 const insurancesToDisplayCallback = (insurance: Insurance) => [insurance]
 const localesToDisplayCallback = (locale: Locale) => [localesStore.formatLanguageCodeToSimpleText(locale)]
-
-onBeforeMount(async () => {
-    /**
-    Set the variable to useToast when the before the component mounts
-    since vue-taostification is only available on the client.
-    If not done this way the build fails
-     */
-    toast = useToast()
-})
 
 // This updates the array in the store once it is updated due to a facility clicked
 watch(selectedFacilities.value, newValue => {

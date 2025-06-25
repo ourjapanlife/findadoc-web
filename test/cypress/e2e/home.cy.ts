@@ -1,4 +1,4 @@
-import { Specialty } from '../../../typedefs/gqlTypes'
+import { Locale, Specialty } from '../../../typedefs/gqlTypes'
 
 describe('Visits the home page', () => {
     const googleForm = 'https://forms.gle/4E763qfaq46kEsn99'
@@ -6,6 +6,7 @@ describe('Visits the home page', () => {
 
     context('Landscape mode', () => {
         before(() => {
+            cy.skipOnboardingFlow()
             cy.visit('/')
         })
 
@@ -31,7 +32,7 @@ describe('Visits the home page', () => {
             cy.get('.search-specialty select').select(Specialty.Dermatology)
             cy.get('.search-specialty select').should('be.visible', 'Dermatology')
 
-            cy.get('.search-language select').select('English')
+            cy.get('.search-language select').select(Locale.EnUs)
             cy.get('.search-language select').should('be.visible', 'English')
         })
 
@@ -42,7 +43,7 @@ describe('Visits the home page', () => {
         it('can select "English" from the language bar', () => {
             cy.get('[data-testid="search-bar-language"]').should('be.visible')
 
-            cy.get('[data-testid="search-bar-language"]').select('English')
+            cy.get('[data-testid="search-bar-language"]').select(Locale.EnUs)
 
             cy.get('[data-testid="search-bar-language"]').should(
                 'have.value',
@@ -53,7 +54,7 @@ describe('Visits the home page', () => {
         it('can select "Japanese" from the language bar', () => {
             cy.get('[data-testid="search-bar-language"]').should('be.visible')
 
-            cy.get('[data-testid="search-bar-language"]').select('日本語')
+            cy.get('[data-testid="search-bar-language"]').select(Locale.JaJp)
 
             cy.get('[data-testid="search-bar-language"]').should(
                 'have.value',
@@ -118,6 +119,7 @@ describe('Visits the home page', () => {
     // Portrait mode tests - usually for mobile and tablet
     context('Portrait mode', () => {
         before(() => {
+            cy.skipOnboardingFlow()
             cy.visit('/')
         })
 
