@@ -7,6 +7,7 @@ import { aliasQuery } from '../utils'
 let facilitiesStore: StateTree
 
 before(() => {
+    cy.skipOnboardingFlow()
     cy.login()
 })
 
