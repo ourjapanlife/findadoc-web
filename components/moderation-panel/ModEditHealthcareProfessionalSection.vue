@@ -149,7 +149,7 @@
                     {{ t("modHealthcareProfessionalSection.selectInsurances") }}
                 </label>
                 <ModSearchBar
-                    v-model="healthcareProfessionalAcceptedInsurancesArray"
+                    v-model="healthcareProfessionalsStore.healthcareProfessionalSectionFields.acceptedInsurance"
                     data-test-id="mod-healthcare-professional-section-accepted-insurances"
                     :place-holder-text="t('modHealthcareProfessionalSection.placeholderTextAcceptedInsurances')"
                     :no-match-text="t('modHealthcareProfessionalSection.noInsurancesWereFound')"
@@ -159,7 +159,7 @@
                 />
                 <ol class="list-disc text-primary-text/60 font-semibold my-2 px-2">
                     <li
-                        v-for="insurance in currentAcceptedInsurances"
+                        v-for="insurance in healthcareProfessionalsStore.healthcareProfessionalSectionFields.acceptedInsurance"
                         :key="`accepted-${insurance}`"
                         class="py-1"
                     >
@@ -173,7 +173,7 @@
                     {{ t("modHealthcareProfessionalSection.selectDegrees") }}
                 </label>
                 <ModSearchBar
-                    v-model="healthcareProfessionalDegreesArray"
+                    v-model="healthcareProfessionalsStore.healthcareProfessionalSectionFields.degrees"
                     data-test-id="mod-healthcare-professional-section-degrees"
                     :place-holder-text="t('modHealthcareProfessionalSection.placeholderTextDegrees')"
                     :no-match-text="t('modHealthcareProfessionalSection.noDegreesWereFound')"
@@ -183,7 +183,7 @@
                 />
                 <ol class="list-disc text-primary-text/60 font-semibold my-2 px-2">
                     <li
-                        v-for="degree in currentDegrees"
+                        v-for="degree in healthcareProfessionalsStore.healthcareProfessionalSectionFields.degrees"
                         :key="`current-${degree}`"
                         class="py-1"
                     >
@@ -197,7 +197,7 @@
                     {{ t("modHealthcareProfessionalSection.selectSpecialties") }}
                 </label>
                 <ModSearchBar
-                    v-model="healthcareProfessionalSpecialtiesArray"
+                    v-model="healthcareProfessionalsStore.healthcareProfessionalSectionFields.specialties"
                     data-test-id="mod-healthcare-professional-section-specialties"
                     :place-holder-text="t('modHealthcareProfessionalSection.placeholderTextSpecialties')"
                     :no-match-text="t('modHealthcareProfessionalSection.noSpecialtiesWereFound')"
@@ -207,7 +207,7 @@
                 />
                 <ol class="list-disc text-primary-text/60 font-semibold my-2 px-2">
                     <li
-                        v-for="specialty in currentSpecialties"
+                        v-for="specialty in healthcareProfessionalsStore.healthcareProfessionalSectionFields.specialties"
                         :key="`current-${specialty}`"
                         class="py-1"
                     >
@@ -221,7 +221,7 @@
                     {{ t("modHealthcareProfessionalSection.selectLocales") }}
                 </label>
                 <ModSearchBar
-                    v-model="healthcareProfessionalSpokenLanguages"
+                    v-model="healthcareProfessionalsStore.healthcareProfessionalSectionFields.spokenLanguages"
                     data-test-id="mod-healthcare-professional-section-spoken-locales"
                     :place-holder-text="t('modHealthcareProfessionalSection.placeholderTextLocales')"
                     :no-match-text="t('modHealthcareProfessionalSection.noLocalesWereFound')"
@@ -231,7 +231,7 @@
                 />
                 <ol class="list-disc text-primary-text/60 font-semibold my-2 px-2">
                     <li
-                        v-for="locale in currentLanguagesSpoken"
+                        v-for="locale in healthcareProfessionalsStore.healthcareProfessionalSectionFields.spokenLanguages"
                         :key="`spoken-${locale}`"
                         class="py-1"
                     >
@@ -252,7 +252,7 @@
                     :place-holder-text="t('modHealthcareProfessionalSection.placeholderTextFacilitySearchBar')"
                     :no-match-text="t('modHealthcareProfessionalSection.noFacilitiesWereFound')"
                     :fields-to-display-callback="facilitiesFieldsToDisplayCallback"
-                    :default-suggestions="currentFacilities"
+                    :default-suggestions="facilitiesStore.facilityData"
                     @search-input-change="handleFacilitySearchInputChange"
                 />
                 <ol class="list-disc text-primary-text/60 font-semibold my-2 px-2 ">
@@ -272,7 +272,7 @@
 <script lang="ts" setup>
 import { nextTick, onBeforeMount, reactive, type Ref, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
-import { type ToastInterface, useToast } from 'vue-toastification'
+import { useToast } from 'vue-toastification'
 import { useHealthcareProfessionalsStore } from '~/stores/healthcareProfessionalsStore'
 import { useFacilitiesStore } from '~/stores/facilitiesStore'
 import { useModerationScreenStore } from '~/stores/moderationScreenStore'
@@ -280,8 +280,9 @@ import { useLocaleStore } from '~/stores/localeStore'
 import { Insurance, Locale, Degree, Specialty, type LocalizedNameInput, type Facility } from '~/typedefs/gqlTypes'
 import { useI18n } from '#imports'
 import { validateNameLocaleMatchesLanguage } from '~/utils/formValidations'
+// Keeps track of if the search bar inputs have been autofilled with existing facilities
 
-let toast: ToastInterface
+const toast = useToast()
 
 const route = useRoute()
 
@@ -298,18 +299,10 @@ const currentFacilities = facilitiesStore.facilityData
 
 const isHealthcareProfessionalInitialized: Ref<boolean> = ref(false)
 const selectedFacilities: Ref<Facility[]> = ref([])
-//Keeps track of if the search bar inputs have been autofilled with existing facilities
-const currentFacilityRelations: Ref<Facility[]> = ref([])
-const currentLanguagesSpoken: Ref<Locale[]> = ref([])
-const currentAcceptedInsurances: Ref<Insurance[]> = ref([])
-const currentDegrees: Ref<Degree[]> = ref([])
-const currentSpecialties: Ref<Specialty[]> = ref([])
 
-// These are component refs to enable the multi select to work properly
-const healthcareProfessionalAcceptedInsurancesArray: Ref<Insurance[]> = ref([])
-const healthcareProfessionalDegreesArray: Ref<Degree[]> = ref([])
-const healthcareProfessionalSpecialtiesArray: Ref<Specialty[]> = ref([])
-const healthcareProfessionalSpokenLanguages: Ref<Locale[]> = ref([])
+/* Keeps track of if the search bar inputs have been autofilled with existing facilities
+ and is used because this hold facilities while we need to sift through the ids*/
+const currentFacilityRelations: Ref<Facility[]> = ref([])
 
 // Tracks whether we want to display adding a new name
 const addingLocaleName: Ref<boolean> = ref(false)
@@ -570,18 +563,11 @@ const insurancesToDisplayCallback = (insurance: Insurance) => [insurance]
 const localesToDisplayCallback = (locale: Locale) => [localesStore.formatLanguageCodeToSimpleText(locale)]
 
 onBeforeMount(async () => {
-    if (!moderationScreenStore.editHealthcareProfessionalScreenIsActive()) {
+    if (moderationScreenStore.editSubmissionScreenIsActive()) {
         isHealthcareProfessionalInitialized.value = true
         return
     }
     loadingStore.setIsLoading(true)
-
-    /**
-    Set the variable to useToast when the before the component mounts
-    since vue-taostification is only available on the client.
-    If not done this way the build fails
-     */
-    toast = useToast()
 
     // Wait for the route to be fully resolved
     await nextTick()
@@ -608,15 +594,6 @@ onBeforeMount(async () => {
     currentFacilityRelations.value = facilitiesStore.facilityData
         .filter(facility => healthcareProfessionalsStore.healthcareProfessionalSectionFields.facilityIds
             .includes(facility.id))
-    //Sets the original values from the store based on the selected healthcare professional
-    healthcareProfessionalSpokenLanguages.value
-        = healthcareProfessionalsStore.healthcareProfessionalSectionFields.spokenLanguages
-    healthcareProfessionalAcceptedInsurancesArray.value
-        = healthcareProfessionalsStore.healthcareProfessionalSectionFields.acceptedInsurance
-    healthcareProfessionalSpecialtiesArray.value
-        = healthcareProfessionalsStore.healthcareProfessionalSectionFields.specialties
-    healthcareProfessionalDegreesArray.value
-        = healthcareProfessionalsStore.healthcareProfessionalSectionFields.degrees
 
     isHealthcareProfessionalInitialized.value = true
 
@@ -625,49 +602,21 @@ onBeforeMount(async () => {
     await nextTick()
 })
 
-//This autofills the selected fields based on our current healthcare data for the user
-watch(() => [
-    healthcareProfessionalsStore.healthcareProfessionalSectionFields.facilityIds,
-    healthcareProfessionalsStore.healthcareProfessionalSectionFields.spokenLanguages,
-    healthcareProfessionalsStore.healthcareProfessionalSectionFields.acceptedInsurance,
-    healthcareProfessionalsStore.healthcareProfessionalSectionFields.degrees,
-    healthcareProfessionalsStore.healthcareProfessionalSectionFields.specialties
-] as [
-    string[],
-    Locale[],
-    Insurance[],
-    Degree[],
-    Specialty[]
-], ([
-    facilityIds,
-    spokenLanguages,
-    acceptedInsurances,
-    degrees,
-    specialties]) => {
-    if (facilityIds) {
-        currentFacilityRelations.value = facilitiesStore.facilityData
-            .filter(facility => healthcareProfessionalsStore.healthcareProfessionalSectionFields.facilityIds
-                .includes(facility.id))
-        selectedFacilities.value = []
-    }
-    if (spokenLanguages) {
-        currentLanguagesSpoken.value = spokenLanguages
-    }
-    if (acceptedInsurances) {
-        currentAcceptedInsurances.value = acceptedInsurances
-    }
-    if (degrees) {
-        currentDegrees.value = degrees
-    }
-    if (specialties) {
-        currentSpecialties.value = specialties
-    }
-}, { immediate: true, deep: true })
+// This autofills the selected fields based on our current healthcare data for the user
+watch(() => healthcareProfessionalsStore.healthcareProfessionalSectionFields.facilityIds,
+      facilityIds => {
+          if (facilityIds) {
+              currentFacilityRelations.value = facilitiesStore.facilityData
+                  .filter(facility => healthcareProfessionalsStore.healthcareProfessionalSectionFields.facilityIds
+                      .includes(facility.id))
+              selectedFacilities.value = []
+          }
+      }, { deep: true })
 
 // This updates the array in the store once it is updated due to a facility clicked
 watch(() => selectedFacilities.value, newValue => {
     if (newValue) {
         healthcareProfessionalsStore.selectedFacilities = selectedFacilities.value
     }
-}, { immediate: true, deep: true })
+}, { deep: true })
 </script>

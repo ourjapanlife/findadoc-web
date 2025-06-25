@@ -3,6 +3,7 @@ import { aliasQuery } from '../utils'
 import enUS from '../../../i18n/locales/en.json'
 
 before(() => {
+    cy.skipOnboardingFlow()
     cy.login()
 })
 

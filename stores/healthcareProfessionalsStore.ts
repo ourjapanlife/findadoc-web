@@ -17,7 +17,7 @@ import { type Insurance,
     type Query } from '~/typedefs/gqlTypes'
 import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql'
 import { useLocaleStore } from '~/stores/localeStore'
-import type { ServerError, ServerResponse } from '~/typedefs/serverResponse'
+import { ErrorCode, type ServerError, type ServerResponse } from '~/typedefs/serverResponse'
 import { arraysAreEqual } from '~/utils/arrayUtils'
 
 export const useHealthcareProfessionalsStore = defineStore(
@@ -105,6 +105,7 @@ export const useHealthcareProfessionalsStore = defineStore(
                 (hp: HealthcareProfessional) =>
                     hp.id === selectedHealthcareProfessionalId.value
             )
+
             // return out if no current professional data found
             if (!currentProfessionalData) {
                 console.error(`No data found for currentProfessionalData with id ${selectedHealthcareProfessionalId.value}`)
@@ -124,6 +125,8 @@ export const useHealthcareProfessionalsStore = defineStore(
                 }
             }
 
+            const currentProfessionalDataCopy = { ...currentProfessionalData }
+
             // This is the array to be sent to the backend if there is a change in the relations
             let facilitiesRelationsToSelectedHealthcareProfessional: Relationship[] = []
 
@@ -137,39 +140,53 @@ export const useHealthcareProfessionalsStore = defineStore(
             const updateHealthcareProfessionalInput: MutationUpdateHealthcareProfessionalArgs = {
                 id: selectedHealthcareProfessionalId.value,
                 input: {
-                    acceptedInsurance: arraysAreEqual(
+                    acceptedInsurance: !arraysAreEqual(
                         healthcareProfessionalSectionFields.acceptedInsurance,
-                        currentProfessionalData.acceptedInsurance
+                        currentProfessionalDataCopy.acceptedInsurance
                     )
                         ? undefined
                         : healthcareProfessionalSectionFields.acceptedInsurance,
-                    degrees: arraysAreEqual(
+                    degrees: !arraysAreEqual(
                         healthcareProfessionalSectionFields.degrees,
-                        currentProfessionalData.degrees
+                        currentProfessionalDataCopy.degrees
                     )
                         ? undefined
                         : healthcareProfessionalSectionFields.degrees,
                     facilityIds: facilitiesRelationsToSelectedHealthcareProfessional.length
                         ? facilitiesRelationsToSelectedHealthcareProfessional
                         : undefined,
-                    names: arraysAreEqual(
+                    names: !arraysAreEqual(
                         healthcareProfessionalSectionFields.names,
-                        currentProfessionalData.names
+                        currentProfessionalDataCopy.names
                     )
                         ? undefined
                         : healthcareProfessionalSectionFields.names,
-                    specialties: arraysAreEqual(
+                    specialties: !arraysAreEqual(
                         healthcareProfessionalSectionFields.specialties,
-                        currentProfessionalData.specialties
+                        currentProfessionalDataCopy.specialties
                     )
                         ? undefined
                         : healthcareProfessionalSectionFields.specialties,
-                    spokenLanguages: arraysAreEqual(
+                    spokenLanguages: !arraysAreEqual(
                         healthcareProfessionalSectionFields.spokenLanguages,
-                        currentProfessionalData.spokenLanguages
+                        currentProfessionalDataCopy.spokenLanguages
                     )
                         ? undefined
                         : healthcareProfessionalSectionFields.spokenLanguages
+                }
+            }
+
+            const hasUpdates = !!Object.values(updateHealthcareProfessionalInput.input).find(value => value !== undefined)
+
+            if (!hasUpdates) {
+                return {
+                    data: currentProfessionalData,
+                    hasErrors: true,
+                    errors: [{
+                        message: 'No updates found',
+                        fieldWithError: undefined,
+                        code: ErrorCode.NO_UPDATES_FOUND
+                    }]
                 }
             }
 
@@ -265,7 +282,8 @@ export const useHealthcareProfessionalsStore = defineStore(
             healthcareProfessional: HealthcareProfessional | CreateHealthcareProfessionalInput
         ) => {
             // find the name of the healthcare professional from the chosen display locale
-            const nameFromChosenLocaleDisplay = healthcareProfessional.names.find(name => name.locale === localeStore.locale.code)
+            const nameFromChosenLocaleDisplay = healthcareProfessional.names.find(name =>
+                name.locale === localeStore.activeLocale.code)
             // return the name of the healthcare professional of chosen locale or default to the 0 indexed recorded name
             return nameFromChosenLocaleDisplay ? nameFromChosenLocaleDisplay : healthcareProfessional.names[0]
         }

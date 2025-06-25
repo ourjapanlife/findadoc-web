@@ -3,7 +3,14 @@
 // https://on.cypress.io/custom-commands
 // ***********************************************
 
+// Custom command to set onboarding state to completed
 import { auth0Login } from '../utils'
+
+Cypress.Commands.add('skipOnboardingFlow', () => {
+    cy.window().then(win => {
+        win.localStorage.setItem('onboardingState', '"completed"')
+    })
+})
 
 Cypress.Commands.add('login', () => {
     const auth0UserName = Cypress.env('AUTH0_USERNAME')

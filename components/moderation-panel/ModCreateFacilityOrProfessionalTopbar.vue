@@ -52,15 +52,14 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue'
-import { type ToastInterface, useToast } from 'vue-toastification'
+import { useToast } from 'vue-toastification'
 import { useRouter } from 'vue-router'
 import { useI18n } from '#imports'
 import { useHealthcareProfessionalsStore } from '~/stores/healthcareProfessionalsStore'
 import { useModerationScreenStore, ModerationScreen } from '~/stores/moderationScreenStore'
 import { useModalStore } from '~/stores/modalStore'
 import { useModerationSubmissionsStore, SelectedModerationListView } from '~/stores/moderationSubmissionsStore'
-import { handleServerErrorMessaging } from '~/utils/handleServerErrorMessaging'
+import { handleServerErrorMessaging } from '~/composables/handleServerErrorMessaging'
 
 const router = useRouter()
 
@@ -71,7 +70,7 @@ const moderationScreenStore = useModerationScreenStore()
 const modalStore = useModalStore()
 const moderationSubmissionsStore = useModerationSubmissionsStore()
 
-let toast: ToastInterface
+const toast = useToast()
 
 const { t } = useI18n()
 
@@ -119,8 +118,4 @@ const navigateBackToDashboardWithoutCreation = async () => {
 const openExitConfirmation = () => {
     modalStore.showModal()
 }
-
-onMounted(() => {
-    toast = useToast()
-})
 </script>

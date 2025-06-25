@@ -7,7 +7,9 @@
             v-if="moderationScreenStore.editSubmissionScreenIsActive()"
             class="h-full overflow-y-auto"
         >
-            <ModEditSubmissionForm />
+            <form class="p-4 h-full overflow-y-auto">
+                <ModEditSubmissionForm />
+            </form>
         </div>
         <div
             v-if="moderationScreenStore.createFacilityScreenIsActive()"
@@ -63,7 +65,7 @@ const route = useRoute()
 const moderationScreenStore = useModerationScreenStore()
 const moderationSubmissionsStore = useModerationSubmissionsStore()
 const facilitiesStore = useFacilitiesStore()
-const healthcareProfessionalStore = useHealthcareProfessionalsStore()
+const healthcareProfessionalsStore = useHealthcareProfessionalsStore()
 
 const routePathForModerationScreen = computed(() => route.path as string)
 const selectedIdFromModSubmissionList = computed(() => route.params.id as string)
@@ -79,12 +81,7 @@ const setActiveScreenBasedOnRoute = async () => {
         moderationScreenStore.setActiveScreen(ModerationScreen.Dashboard)
         moderationSubmissionsStore.selectedSubmissionId = ''
         facilitiesStore.selectedFacilityId = ''
-        healthcareProfessionalStore.selectedHealthcareProfessionalId = ''
-        return
-    }
-    if (
-        routePathForModerationScreen.value.includes('create-facility')) {
-        moderationScreenStore.setActiveScreen(ModerationScreen.CreateFacility)
+        healthcareProfessionalsStore.selectedHealthcareProfessionalId = ''
         return
     }
 
@@ -99,16 +96,23 @@ const setActiveScreenBasedOnRoute = async () => {
             break
         case 'edit-healthcare-professional':
             moderationScreenStore.setActiveScreen(ModerationScreen.EditHealthcareProfessional)
-            healthcareProfessionalStore.selectedHealthcareProfessionalId = selectedIdFromModSubmissionList.value
+            healthcareProfessionalsStore.selectedHealthcareProfessionalId = selectedIdFromModSubmissionList.value
             break
         case 'create-healthcare-professional':
             moderationScreenStore.setActiveScreen(ModerationScreen.CreateHealthcareProfessional)
+            break
+        case 'create-facility':
+            moderationScreenStore.setActiveScreen(ModerationScreen.CreateFacility)
             break
         default:
             moderationScreenStore.setActiveScreen(ModerationScreen.Dashboard)
             moderationSubmissionsStore.selectedSubmissionId = ''
             facilitiesStore.selectedFacilityId = ''
-            healthcareProfessionalStore.selectedHealthcareProfessionalId = ''
+            healthcareProfessionalsStore.selectedHealthcareProfessionalId = ''
+            // Reset healthcareProfessionalSections
+            healthcareProfessionalsStore.resetHealthcareProfessionalSectionFields()
+            // Reset facilitySectionFields
+            facilitiesStore.resetFacilitySectionFields()
     }
 }
 

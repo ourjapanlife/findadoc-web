@@ -110,8 +110,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref, watch, type ComputedRef, type Ref } from 'vue'
-import { type ToastInterface, useToast } from 'vue-toastification'
+import { computed, ref, watch, type ComputedRef, type Ref } from 'vue'
+import { useToast } from 'vue-toastification'
 import { useRouter } from 'vue-router'
 import { useI18n } from '#imports'
 import SVGCopyContent from '~/assets/icons/content-copy.svg'
@@ -120,7 +120,7 @@ import { useFacilitiesStore } from '~/stores/facilitiesStore'
 import { useHealthcareProfessionalsStore } from '~/stores/healthcareProfessionalsStore'
 import { useModerationScreenStore, ModerationScreen } from '~/stores/moderationScreenStore'
 import { useModalStore, ModalType } from '~/stores/modalStore'
-import { handleServerErrorMessaging } from '~/utils/handleServerErrorMessaging'
+import { handleServerErrorMessaging } from '~/composables/handleServerErrorMessaging'
 import type { Facility, HealthcareProfessional } from '~/typedefs/gqlTypes'
 import { arraysAreEqual } from '~/utils/arrayUtils'
 import { onBeforeRouteLeave } from '#app'
@@ -142,7 +142,7 @@ const modalType = ref<ModalType.UnsavedChanges | ModalType.DeleteConfirmation | 
 // Disable the buttons if there are no changes
 const enableUpdateButtons = computed(() => hasUnsavedChanges())
 
-let toast: ToastInterface
+const toast = useToast()
 
 const { t } = useI18n()
 
@@ -243,9 +243,13 @@ const healthcareProfessionalHasUnsavedChanges = () => {
     healthcareProfessionalSections.spokenLanguages,
     originalHealthcareProfessional.spokenLanguages
 )
+|| !arraysAreEqual(
+    healthcareProfessionalSections.facilityIds,
+    originalHealthcareProfessional.facilityIds
+)
 || healthcareProfessionalSections.updatedDate
 !== originalHealthcareProfessional.updatedDate
-|| Array.from(healthcareProfessionalsStore.selectedFacilities).length > 0
+|| healthcareProfessionalsStore.selectedFacilities.length
 
     return areThereUnsavedHealthcareProfessionalChanges
 }
@@ -336,6 +340,8 @@ const deleteFacilityOrHealthcareProfessional = async () => {
             handleServerErrorMessaging(response.errors, toast, t)
             return response
         }
+        // Wipe the data of the now deleted facility from the ref to prevent the UnsavedChanges modal from triggering
+        originalFacilityRefsValue.value = undefined
 
         toast.success(t('modEditFacilityOrHPTopbar.facilityDeletedSuccessfully'))
         // Redirect to the dashboard since the facility no longer exists
@@ -375,10 +381,6 @@ const exitWithoutSavingUpdates = () => {
     modalType.value = ModalType.UnsavedChanges
     modalStore.showModal()
 }
-
-onMounted(() => {
-    toast = useToast()
-})
 
 watch(() => facilitiesStore.selectedFacilityData, (newValue, oldValue) => {
     if (newValue !== oldValue) {

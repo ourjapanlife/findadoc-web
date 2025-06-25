@@ -118,10 +118,7 @@
                     </div>
                 </div>
                 <div
-                    v-if="healthcareProfessional && !isHealthcareProfessionalReadyForRemoval(healthcareProfessional.id)
-                        && moderationScreenStore.editSubmissionScreenIsActive()
-                        || moderationScreenStore.editFacilityScreenIsActive()
-                        || moderationScreenStore.createFacilityScreenIsActive()
+                    v-if="isEditOrCreateFacility
                         && !isHealthcareProfessionalReadyForRemoval(healthcareProfessional?.id)"
                     id="remove-related-healthcare-professional-to-facility"
                     class="flex w-8 items-center justify-center
@@ -134,7 +131,8 @@
                     />
                 </div>
                 <div
-                    v-if="isEditSubmissionAndNoHealthcareProfessional"
+                    v-if="isEditOrCreateFacility
+                        && isHealthcareProfessionalReadyForRemoval(healthcareProfessional?.id)"
                     id="undo-remove-related-healthcare-professional-to-facility"
                     class="flex w-8 items-center justify-center
                     cursor-pointer font-bold text-secondary text-sm self-start p-1"
@@ -255,9 +253,7 @@ const props = withDefaults(defineProps<{
 
 const isEditOrCreateHealthcareProfessional = computed(() => moderationScreenStore.editHealthcareProfessionalScreenIsActive()
   || moderationScreenStore.createHealthcareProfessionalScreenIsActive())
-
+const isEditOrCreateFacility = computed(() => moderationScreenStore.editFacilityScreenIsActive()
+  || moderationScreenStore.createFacilityScreenIsActive())
 const isEditSubmission = computed(() => moderationScreenStore.editSubmissionScreenIsActive())
-const isEditSubmissionAndNoHealthcareProfessional = computed(() => (props.healthcareProfessional
-  && isHealthcareProfessionalReadyForRemoval(props.healthcareProfessional?.id))
-|| (props.healthcareProfessional && moderationScreenStore.editSubmissionScreenIsActive()))
 </script>

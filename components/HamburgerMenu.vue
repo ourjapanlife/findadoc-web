@@ -281,7 +281,7 @@
 
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue'
-import { vCloseOnOutsideClick } from '~/utils/closeOnOutsideClick'
+import { vCloseOnOutsideClick } from '~/composables/closeOnOutsideClick'
 import SVGProfileIcon from '~/assets/icons/profile-icon.svg'
 import SVGHamburgerMenuIcon from '~/assets/icons/hamburger-menu.svg'
 import SVGGithubIcon from '~/assets/icons/social-github.svg'

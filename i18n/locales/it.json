@@ -59,6 +59,14 @@
     "paragraph15": "Ci riserviamo il diritto di aggiornare questa Informativa sulla privacy per riflettere i cambiamenti nelle nostre pratiche e nei nostri servizi. Ti informeremo di eventuali modifiche significative pubblicando l'informativa aggiornata sul nostro sito web.",
     "paragraph16": "Utilizzando il nostro servizio, accetti i termini descritti in questa Informativa sulla privacy."
   },
+  "onboarding": {
+    "letsGoButtonText": "Trova un medico!",
+    "welcometo": "Benvenuto su",
+    "selectcategory": "Seleziona una categoria per iniziare.",
+    "getstartedbutton": "Inizia",
+    "notsurebutton": "Non sono sicuro o altro",
+    "searchloading": "Il tuo viaggio inizia qui"
+  },
   "submitPage": {
     "firstName": "Nome",
     "firstNameValidation": "Inserisci un nome",
@@ -84,6 +92,8 @@
   "searchBar": {
     "selectSpecialty": "Seleziona una specialità...",
     "selectLocation": "Seleziona una posizione...",
+    "allLocations": "Tutte le località",
+    "allSpecialties": "Tutte le specialità",
     "selectLanguage": "Seleziona una lingua...",
     "search": "Cerca"
   },
@@ -131,9 +141,9 @@
     "create": "Create",
     "exit": "Exit",
     "facilityCreatedSuccessfully": "Facility created successfully.",
-    "heathcareProfessionalCreatedSuccessfully": "Healthcare professional created successfully.",
+    "heathcareProfessionalCreatedSuccessfully": "Healthcare Professional created successfully.",
     "unsavedChangesMessage": "This will exit without saving your entry. All unsaved data will be lost."
-},
+  },
   "modDashboardLeftNav": {
     "facilities": "Strutture",
     "healthcareProfessionals": "Professionisti sanitari",
@@ -150,7 +160,7 @@
     "googleMapsInformation": "Informazioni Google Maps",
     "healthcareProfessionalIds": "ID professionista sanitario",
     "healthcareProfessionalName": "Nome del professionista sanitario",
-    "healthcareProfessionalMedicalInfo": "Healthcare Professional Medical Info",
+    "healthcareProfessionalMedicalInfo": "Healthcare Professional Details",
     "healthcareProfessionalFacilities": "Strutture collegate ai medici"
   },
   "modDashboardTopbar": {
@@ -179,11 +189,12 @@
     "hasUnsavedChanges": "You have unsaved changes. Are you sure you want to leave?"
   },
   "modEditSubmissionTopNav": {
-    "saveAndExit": "Salva & Esci",
+    "updateAndExit": "Aggiorna & Esci",
     "saving": "Salvataggio...",
     "retryMessage": "Qualcosa non sta funzionando. Riprova tra {seconds}s...",
     "approve": "Approva",
-    "reject": "Rifiuta"
+    "reject": "Rifiuta",
+    "update": "Aggiorna"
   },
   "modPanelSubmissionList": {
     "approved": "Approvato",
@@ -199,7 +210,12 @@
   },
   "modHealthcareProfessionalCard": {
     "editName": "Modifica",
-    "saveName": "Salva"
+    "saveName": "Salva",
+    "spokenLanguages": "Spoken languages",
+    "lastName": "Last name",
+    "firstName": "First name",
+    "middleName": "Middle name",
+    "nameLocale": "Name language"
   },
   "modHealthcareProfessionalSection": {
     "addHealthCareProfessionalLocaleName": "Aggiungi nome per località",
@@ -222,26 +238,27 @@
     "selectInsurances": "Selezione assicurazione",
     "selectLocales": "Seleziona le lingue parlate",
     "selectSpecialties": "Specializzazioni",
-    "facilities": "Strutture",
+    "facilities": "Healthcare Professional Facilities",
     "placeholderTextFacilitySearchBar": "Cerca per nome o ID",
     "noFacilitiesWereFound": "Nessuna struttura è stata trovata",
-    "nameForLocaleAlreadyExists": "Name for locale already exists. Either update existing name or choose a different locale.",
+    "nameForLocaleAlreadyExists": "Name for language already exists. Either update existing name or choose a different language.",
     "placeholderTextAcceptedInsurances": "Search by insurance",
     "placeholderTextSpecialties": "Search by specialty",
     "placeholderTextDegrees": "Search by degree",
-    "placeholderTextLocales": "Search by locale",
+    "placeholderTextLocales": "Search by language",
     "noSpecialtiesWereFound": "No specialties were found",
     "noInsurancesWereFound": "No insurance was found",
     "noDegreesWereFound": "No degrees were found",
-    "noLocalesWereFound": "No locales were found",
+    "noLocalesWereFound": "No languages were found",
     "delete": "Permanently delete",
     "exit": "Exit",
     "missingFirstName": "No first name entered",
     "missingLastName": "No last name entered",
-    "missingLocale": "No Locale Chosen",
-    "oneNameNecessary": "At least one name is required for a healthcare professional",
+    "missingLocale": "No language chosen",
+    "oneNameNecessary": "At least one name is required for a Healthcare Professional",
     "save": "Save",
-    "update": "Update"
+    "update": "Update",
+    "charactersOfLanguageDoNotMatchNameLocale": "The characters of the Healthcare Professional's name are invalid in the chosen language"
   },
   "modFacilitySection": {
     "addresses": "Indirizzi",
@@ -266,20 +283,20 @@
     "inputErrorMessageFacilityPhoneNumber": "Numero di telefono non valido",
     "inputErrorMessageFacilityPostalCode": "Codice postale no valido",
     "inputErrorMessageFacilityWebsite": "URL sito web non valido",
-    "labelFacilityNameEn": "Nome En",
-    "labelFacilityNameJa": "Nome Ja",
-    "labelFacilityPhoneNumber": "Telefono",
+    "labelFacilityNameEn": "English Name Facility",
+    "labelFacilityNameJa": "Japanese Name Facility",
+    "labelFacilityPhoneNumber": "Phone",
     "labelFacilityEmail": "Email",
-    "labelFacilityWebsite": "Sito web",
-    "labelFacilityPostalCode": "Codice postale",
-    "labelFacilityPrefectureEn": "Prefettura En",
-    "labelFacilityPrefectureJa": "Prefettura Ja",
-    "labelFacilityCityEn": "Città En",
-    "labelFacilityCityJa": "Città Ja",
-    "labelFacilityAddressLine1En": "Indirizzo 1 En",
-    "labelFacilityAddressLine2En": "Indirizzo 2 En",
-    "labelFacilityAddressLine1Ja": "Indirizzo 1 Ja",
-    "labelFacilityAddressLine2Ja": "Indirizzo 2 Ja",
+    "labelFacilityWebsite": "Website",
+    "labelFacilityPostalCode": "Postal Code",
+    "labelFacilityPrefectureEn": "English Name Prefecture",
+    "labelFacilityPrefectureJa": "Japanese Name Prefecture",
+    "labelFacilityCityEn": "English Name City",
+    "labelFacilityCityJa": "Japanese Name City",
+    "labelFacilityAddressLine1En": "English Address Line 1",
+    "labelFacilityAddressLine2En": "English Address Line 2",
+    "labelFacilityAddressLine1Ja": "Japanese Address Line 1",
+    "labelFacilityAddressLine2Ja": "Japanese Address Line 2",
     "labelFacilityGoogleMapsUrl": "URL Google Maps",
     "labelFacilityMapLatitude": "Latitudine mappa",
     "labelFacilityMapLongitude": "Longitudine mappa",
@@ -301,7 +318,7 @@
     "placeholderTextFacilityPostalCode": "es. 186-0000",
     "placeholderTextFacilityWebsite": "es. http://www.example.com/",
     "updateButtonText": "Aggiorna",
-    "noHealthcareProfessionalFound": "No matching healthcare professionals found"
+    "noHealthcareProfessionalFound": "No matching Healthcare Professionals found"
   },
   "modSubmissionForm": {
     "addHealthCareProfessionalLocaleName": "Aggiungi nome per località",
@@ -345,21 +362,21 @@
     "labelHealthcareProfessionalFirstName": "Nome",
     "labelHealthcareProfessionalLastName": "Cognome",
     "labelHealthcareProfessionalMiddleName": "Nome intermedio",
-    "labelHealthcareProfessionalNameLocale": "Name Locale",
-    "labelFacilityNameEn": "Name En",
-    "labelFacilityNameJa": "Name Ja",
-    "labelFacilityPhoneNumber": "Telefono",
+    "labelHealthcareProfessionalNameLocale": "Name Language",
+    "labelFacilityNameEn": "English Name Facility",
+    "labelFacilityNameJa": "Japanese Name Facility",
+    "labelFacilityPhoneNumber": "Phone",
     "labelFacilityEmail": "Email",
-    "labelFacilityWebsite": "Sito web",
-    "labelFacilityPostalCode": "Codice postale",
-    "labelFacilityPrefectureEn": "Prefecture En",
-    "labelFacilityPrefectureJa": "Prefecture Ja",
-    "labelFacilityCityEn": "Città En",
-    "labelFacilityCityJa": "Città Ja",
-    "labelFacilityAddressLine1En": "Indirizzo 1 En",
-    "labelFacilityAddressLine2En": "Indirizzo 2 En",
-    "labelFacilityAddressLine1Ja": "Indirizzo 1 Ja",
-    "labelFacilityAddressLine2Ja": "Indirizzo 2 Ja",
+    "labelFacilityWebsite": "Website",
+    "labelFacilityPostalCode": "Postal Code",
+    "labelFacilityPrefectureEn": "English Name Prefecture",
+    "labelFacilityPrefectureJa": "Japanese Name Prefecture",
+    "labelFacilityCityEn": "English Name City",
+    "labelFacilityCityJa": "Japanese Name City",
+    "labelFacilityAddressLine1En": "English Address Line 1",
+    "labelFacilityAddressLine2En": "English Address Line 2",
+    "labelFacilityAddressLine1Ja": "Japanese Address Line 1",
+    "labelFacilityAddressLine2Ja": "Japanese Address Line 2",
     "labelFacilityGoogleMapsUrl": "URL Google Maps",
     "labelFacilityMapLatitude": "Latitudine mappa",
     "labelFacilityMapLongitude": "Longitudine mappa",
@@ -397,20 +414,15 @@
     "placeholderTextAcceptedInsurances": "Search by insurance",
     "placeholderTextSpecialties": "Search by specialty",
     "placeholderTextDegrees": "Search by degree",
-    "placeholderTextLocales": "Search by locale",
-    "placeholderTextFacilitySearchBar": "Search by facility name or ID",
-    "noFacilitiesWereFound": "No facilities were found",
+    "placeholderTextLocales": "Search by language",
+    "placeholderTextFacilitySearchBar": "Search by Facility name or ID",
+    "noFacilitiesWereFound": "No Facilities were found",
     "noSpecialtiesWereFound": "No specialties were found",
     "noInsurancesWereFound": "No insurance was found",
     "noDegreesWereFound": "No degrees were found",
-    "noLocalesWereFound": "No locales were found"
-  },
-  "modDashboardHealthcareProfessionalCard": {
-    "spokenLanguages": "Spoken languages",
-    "lastName": "Last name",
-    "firstName": "First name",
-    "middleName": "Middle name",
-    "nameLocale": "Name locale"
+    "noLocalesWereFound": "No languages were found",
+    "searchExistingFacilities": "Search for existing Facility",
+    "searchExistingHealthcareProfessionals": "Search for existing Healthcare Professionals"
   },
   "specialties": {
     "allergyAndImmunology": "Allergologo/Allergologa",
@@ -422,7 +434,9 @@
     "entSpecialist": "Otorinolaringoiatra (ORL)",
     "emergencyMedicine": "Medicina d'urgenza",
     "infectiousDiseases": "Malattie infettive",
-    "generalPractitioner": "Medico di medicina generale",
+    "internalMedicine": "Internal Medicine",
+    "familyMedicine": "Family Medicine",
+    "generalMedicine": "Medico di medicina generale",
     "medicalGenetics": "Genetista medico",
     "neurology": "Neurologo/Neurologa",
     "nuclearMedicine": "Medicina nucleare",
@@ -439,6 +453,31 @@
     "sportsMedicine": "Medicina dello sport",
     "physicalMedicineAndRehabilitation": "Medicina fisica e riabilitativa",
     "traumatology": "Traumatologia",
-    "urology": "Urologo/Urologa"
+    "urology": "Urologo/Urologa",
+    "cosmeticSurgery": "Chirurgia estetica",
+    "orthodontics": "Orthodontista",
+    "plasticSurgery": "Chirurgia plastica",
+    "surgery": "Chirurgia"
+  },
+  "specialtyCategories": {
+    "childrensHealth": "Salute dei bambini",
+    "cosmeticAndPlasticSurgery": "Chirurgia estetica e plastica",
+    "dental": "Dentale",
+    "dermatology": "Dermatologia",
+    "ent": "ORL (Orecchio, Naso e Gola)",
+    "eyeAndVision": "Occhi e vista",
+    "mensHealth": "Salute maschile",
+    "mentalHealth": "Salute mentale",
+    "physicalTherapy": "Fisioterapia",
+    "primaryCare": "Cure primarie",
+    "sportsAndRehab": "Sport e riabilitazione",
+    "womensHealth": "Salute femminile"
+  },
+  "modDashboardHealthcareProfessionalCard": {
+    "spokenLanguages": "Spoken languages",
+    "lastName": "Last name",
+    "firstName": "First name",
+    "middleName": "Middle name",
+    "nameLocale": "Name language"
   }
 }
