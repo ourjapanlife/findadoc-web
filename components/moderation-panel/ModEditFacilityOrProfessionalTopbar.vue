@@ -86,13 +86,33 @@
                             {{ t('modSubmissionForm.confirmationButton') }}
                         </button>
                     </div>
-                    <div v-if="modalType === ModalType.DeleteConfirmation">
+                    <div v-if="modalType === ModalType.DeleteConfirmation && moderationScreenStore.editFacilityScreenIsActive()">
                         <div class="font-bold text-3xl">
-                            {{ t(deleteConfirmationModalMessage.translationKey, { id: selectedId,
-                                                                                  facility:
-                                                                                      deleteConfirmationModalMessage.name,
-                                                                                  healthcareProfessional:
-                                                                                      deleteConfirmationModalMessage.name }) }}
+                            {{ t('modEditFacilityOrHPTopbar.deleteConfirmationFacility', {
+                                id: selectedId,
+                                facility: facilitiesStore.selectedFacilityData?.nameEn,
+                            }) }}
+                        </div>
+                        <button
+                            class="bg-primary p-4 rounded-full my-8 font-semibold text-xl"
+                            type="button"
+                            @click="deleteFacilityOrHealthcareProfessional"
+                        >
+                            {{ t('modEditFacilityOrHPTopbar.deleteButtonText') }}
+                        </button>
+                    </div>
+
+                    <div
+                        v-if="modalType === ModalType.DeleteConfirmation
+                            && moderationScreenStore.editHealthcareProfessionalScreenIsActive()"
+                    >
+                        <div class="font-bold text-3xl">
+                            {{ t('modEditFacilityOrHPTopbar.deleteConfirmationHealthcareProfessional', {
+                                id: selectedId,
+                                healthcareProfessional: `${healthcareProfessionalsStore.selectedHealthcareProfessionalData
+                                    ?.names[0]?.firstName} ${healthcareProfessionalsStore.selectedHealthcareProfessionalData
+                                    ?.names[0]?.lastName}`,
+                            }) }}
                         </div>
                         <button
                             class="bg-primary p-4 rounded-full my-8 font-semibold text-xl"
@@ -327,26 +347,6 @@ const openDeletionConfirmation = () => {
     modalType.value = ModalType.DeleteConfirmation
     modalStore.showModal()
 }
-
-const deleteConfirmationModalMessage = computed(() => {
-    if (moderationScreenStore.editFacilityScreenIsActive()) {
-        return {
-            translationKey: 'modEditFacilityOrHPTopbar.deleteConfirmationFacility',
-            name: facilitiesStore.selectedFacilityData?.nameEn
-        }
-    }
-
-    if (moderationScreenStore.editHealthcareProfessionalScreenIsActive()) {
-        const healthcareProfessional = healthcareProfessionalsStore.selectedHealthcareProfessionalData?.names[0]
-        const healthcareProfessionalFullName = `${healthcareProfessional?.firstName ?? ''} ${healthcareProfessional?.lastName}`
-        return {
-            translationKey: 'modEditFacilityOrHPTopbar.deleteConfirmationHealthcareProfessional',
-            name: healthcareProfessionalFullName
-        }
-    }
-
-    return { translationKey: '', name: '' }
-})
 
 const deleteFacilityOrHealthcareProfessional = async () => {
     if (moderationScreenStore.editFacilityScreenIsActive()) {
