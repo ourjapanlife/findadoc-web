@@ -364,7 +364,9 @@
         "noDegreesWereFound": "No degrees were found",
         "noLocalesWereFound": "No languages were found",
         "searchExistingFacilities": "Search for existing Facility",
-        "searchExistingHealthcareProfessionals": "Search for existing Healthcare Professionals"
+        "searchExistingHealthcareProfessionals": "Search for existing Healthcare Professionals",
+        "labelModNoteInput": "Moderator Notes",
+        "placeholderTextNoteInput": "e.g. waiting for call back from clinic"
     },
     "serverErrorMessages": {
         "UNAUTHENTICATED": "Wala kang sapat na permiso upang gawin ang aksyong ito.",
@@ -474,5 +476,8 @@
         "primaryCare": "Pangunahing Pag-aalaga",
         "sportsAndRehab": "Sports at Rehabilitasyon",
         "womensHealth": "Kalusugan ng mga Babae"
+    },
+    "noteInputField": {
+      "optional": "(optional)"
     }
 }

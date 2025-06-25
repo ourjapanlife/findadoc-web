@@ -423,6 +423,7 @@
         "labelFacilityGoogleMapsUrl": "Google Maps URL",
         "labelFacilityMapLatitude": "Map Latitude",
         "labelFacilityMapLongitude": "Map Longitude",
+        "labelModNoteInput": "Moderator Notes",
         "placeholderTextFacilityAddressLine1En": "Street address",
         "placeholderTextFacilityAddressLine2En": "Apartment, building, room...",
         "placeholderTextFacilityAddressLine1Ja": "Street address",
@@ -447,6 +448,7 @@
         "placeholderTextDegrees": "Search by degree",
         "placeholderTextLocales": "Search by language",
         "placeholderTextFacilitySearchBar": "Search by Facility name or ID",
+        "placeholderTextNoteInput": "e.g. waiting for call back from clinic",
         "noFacilitiesWereFound": "No Facilities were found",
         "noSpecialtiesWereFound": "No specialties were found",
         "noInsurancesWereFound": "No insurance was found",
@@ -473,5 +475,8 @@
         "firstName": "First name",
         "middleName": "Middle name",
         "nameLocale": "Name language"
+    },
+    "noteInputField": {
+        "optional": "(optional)"
     }
 }

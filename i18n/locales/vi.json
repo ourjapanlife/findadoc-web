@@ -407,7 +407,9 @@
         "noDegreesWereFound": "No degrees were found",
         "noLocalesWereFound": "No languages were found",
         "searchExistingFacilities": "Search for existing Facility",
-        "searchExistingHealthcareProfessionals": "Search for existing Healthcare Professionals"
+        "searchExistingHealthcareProfessionals": "Search for existing Healthcare Professionals",
+        "labelModNoteInput": "Moderator Notes",
+        "placeholderTextNoteInput": "e.g. waiting for call back from clinic"
     },
     "serverErrorMessages": {
         "UNAUTHENTICATED": "You do not have the authentication to do this action",
@@ -474,5 +476,8 @@
         "primaryCare": "Chăm sóc ban đầu",
         "sportsAndRehab": "Thể thao và phục hồi",
         "womensHealth": "Sức khỏe phụ nữ"
+    },
+    "noteInputField": {
+      "optional": "(optional)"
     }
 }
