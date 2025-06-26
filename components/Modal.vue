@@ -46,7 +46,7 @@
 <script lang="ts" setup>
 import { ref, computed } from 'vue'
 import { useRoute } from 'vue-router'
-import { vCloseOnOutsideClick } from '~/utils/closeOnOutsideClick'
+import { vCloseOnOutsideClick } from '~/composables/closeOnOutsideClick'
 import { useModalStore } from '~/stores/modalStore'
 
 const modal = ref(null)

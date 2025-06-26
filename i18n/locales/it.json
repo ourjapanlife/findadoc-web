@@ -59,6 +59,14 @@
     "paragraph15": "Ci riserviamo il diritto di aggiornare questa Informativa sulla privacy per riflettere i cambiamenti nelle nostre pratiche e nei nostri servizi. Ti informeremo di eventuali modifiche significative pubblicando l'informativa aggiornata sul nostro sito web.",
     "paragraph16": "Utilizzando il nostro servizio, accetti i termini descritti in questa Informativa sulla privacy."
   },
+  "onboarding": {
+    "letsGoButtonText": "Trova un medico!",
+    "welcometo": "Benvenuto su",
+    "selectcategory": "Seleziona una categoria per iniziare.",
+    "getstartedbutton": "Inizia",
+    "notsurebutton": "Non sono sicuro o altro",
+    "searchloading": "Il tuo viaggio inizia qui"
+  },
   "submitPage": {
     "firstName": "Nome",
     "firstNameValidation": "Inserisci un nome",
@@ -84,6 +92,8 @@
   "searchBar": {
     "selectSpecialty": "Seleziona una specialità...",
     "selectLocation": "Seleziona una posizione...",
+    "allLocations": "Tutte le località",
+    "allSpecialties": "Tutte le specialità",
     "selectLanguage": "Seleziona una lingua...",
     "search": "Cerca"
   },
@@ -168,6 +178,7 @@
     "delete": "Elimina",
     "deleteButtonText": "ELIMINA DEFINITIVAMENTE",
     "deleteConfirmationFacility": "Sei sicuro di voler eliminare la struttura: {facility}, con ID: {id}?",
+    "deleteConfirmationHealthcareProfessional": "Are you sure you want to delete the Healthcare Professional: {healthcareProfessional}, with ID: {id}?",
     "update": "Aggiorna",
     "updateAndExit": "Aggiorna & Esci",
     "facilityDeletedSuccessfully": "Struttura eliminata con successo",
@@ -200,7 +211,12 @@
   },
   "modHealthcareProfessionalCard": {
     "editName": "Modifica",
-    "saveName": "Salva"
+    "saveName": "Salva",
+    "spokenLanguages": "Spoken languages",
+    "lastName": "Last name",
+    "firstName": "First name",
+    "middleName": "Middle name",
+    "nameLocale": "Name language"
   },
   "modHealthcareProfessionalSection": {
     "addHealthCareProfessionalLocaleName": "Aggiungi nome per località",
@@ -316,6 +332,7 @@
     "errorMessageFacilityInputsInvalid": "Alcuni campi della struttura non sono stati compilati correttamente",
     "errorMessageFacilityId": "L'ID della struttura è obbligatiorio per aggiornare la struttura",
     "errorMessageHealthcareInputsInvalid": "Alcuni campi del professionista sanitario non sono stati compilati correttamente",
+    "errorMessageEnglishNameRequired": "Il professionista sanitario deve avere un nome in inglese",
     "errorMessageUpdated": "Impossibile aggiornare il modulo di sottomissione",
     "facilityHeading": "Informazioni della struttura",
     "facilitySuccessfullyRejected": "Struttura rifiutata con successo",
@@ -408,14 +425,8 @@
     "noLocalesWereFound": "No locales were found",
     "searchExistingFacilities": "Search for existing facility",
     "searchExistingHealthcareProfessionals": "Search for existing healthcare professionals",
-    "errorMessageEnglishNameRequired": "The healthcare professional must have an English name"
-  },
-  "modDashboardHealthcareProfessionalCard": {
-    "spokenLanguages": "Spoken languages",
-    "lastName": "Last name",
-    "firstName": "First name",
-    "middleName": "Middle name",
-    "nameLocale": "Name language"
+    "labelModNoteInput": "Moderator Notes",
+    "placeholderTextNoteInput": "e.g. waiting for call back from clinic"
   },
   "specialties": {
     "allergyAndImmunology": "Allergologo/Allergologa",
@@ -427,7 +438,9 @@
     "entSpecialist": "Otorinolaringoiatra (ORL)",
     "emergencyMedicine": "Medicina d'urgenza",
     "infectiousDiseases": "Malattie infettive",
-    "generalPractitioner": "Medico di medicina generale",
+    "internalMedicine": "Internal Medicine",
+    "familyMedicine": "Family Medicine",
+    "generalMedicine": "Medico di medicina generale",
     "medicalGenetics": "Genetista medico",
     "neurology": "Neurologo/Neurologa",
     "nuclearMedicine": "Medicina nucleare",
@@ -444,6 +457,37 @@
     "sportsMedicine": "Medicina dello sport",
     "physicalMedicineAndRehabilitation": "Medicina fisica e riabilitativa",
     "traumatology": "Traumatologia",
-    "urology": "Urologo/Urologa"
+    "urology": "Urologo/Urologa",
+    "cosmeticSurgery": "Chirurgia estetica",
+    "orthodontics": "Orthodontista",
+    "plasticSurgery": "Chirurgia plastica",
+    "surgery": "Chirurgia"
+  },
+  "specialtyCategories": {
+    "childrensHealth": "Salute dei bambini",
+    "cosmeticAndPlasticSurgery": "Chirurgia estetica e plastica",
+    "dental": "Dentale",
+    "dermatology": "Dermatologia",
+    "ent": "ORL (Orecchio, Naso e Gola)",
+    "eyeAndVision": "Occhi e vista",
+    "mensHealth": "Salute maschile",
+    "mentalHealth": "Salute mentale",
+    "physicalTherapy": "Fisioterapia",
+    "primaryCare": "Cure primarie",
+    "sportsAndRehab": "Sport e riabilitazione",
+    "womensHealth": "Salute femminile"
+  },
+  "modDashboardHealthcareProfessionalCard": {
+    "spokenLanguages": "Spoken languages",
+    "lastName": "Last name",
+    "firstName": "First name",
+    "middleName": "Middle name",
+    "nameLocale": "Name language"
+  },
+  "noteInputField": {
+    "optional": "(optional)"
+  },
+  "modInputField": {
+    "optional": "Optional"
   }
 }
