@@ -139,34 +139,11 @@ const localeStore = useLocaleStore()
 const specialtiesStore = useSpecialtiesStore()
 
 const healthcareProfessionalName = computed(() => {
-<<<<<<< HEAD
     const name = formatHealthcareProfessionalName(
         resultsStore.activeResult?.professional.names,
-        localeStore.locale.code as Locale
+        localeStore.activeLocale.code as Locale
     )
     return name
-=======
-    const englishName
-        = resultsStore.$state.activeResult?.professional.names.find(
-            n => n.locale === Locale.EnUs
-        )
-    const japaneseName
-        = resultsStore.$state.activeResult?.professional.names.find(
-            n => n.locale === Locale.JaJp
-        )
-
-    const englishFullName = `${englishName?.firstName} ${englishName?.lastName}`
-    const japaneseFullName = `${japaneseName?.lastName} ${japaneseName?.firstName}`
-
-    switch (localeStore.activeLocale.code) {
-        case Locale.EnUs:
-            return englishFullName ? englishFullName : japaneseFullName
-        case Locale.JaJp:
-            return japaneseFullName ? japaneseFullName : englishFullName
-        default:
-            return englishFullName ? englishFullName : japaneseFullName
-    }
->>>>>>> main
 })
 
 const healthcareProfessionalDegrees = computed(() => {
@@ -189,15 +166,9 @@ const specialties = computed(() => {
     return specialtiesDisplayText
 })
 const facilityName = computed(() => {
-<<<<<<< HEAD
     const englishName = resultsStore.activeResult?.facilities[0].nameEn
     const japaneseName = resultsStore.activeResult?.facilities[0].nameJa
-    return localeStore.locale.code === Locale.JaJp ? japaneseName : englishName
-=======
-    const englishName = resultsStore.$state.activeResult?.facilities[0].nameEn
-    const japaneseName = resultsStore.$state.activeResult?.facilities[0].nameJa
     return localeStore.activeLocale.code === Locale.JaJp ? japaneseName : englishName
->>>>>>> main
 })
 
 const spokenLanguages = computed(() => {
