@@ -176,11 +176,7 @@ const healthcareProfessionalsStore = useHealthcareProfessionalsStore()
 const syntheticEvent = new Event('submit', { bubbles: false, cancelable: true })
 
 const isEditSubmissionFormInitialized: Ref<boolean> = ref(false)
-const submissionBeforeChanges: Ref<Submission | undefined> = computed(() => moderationSubmissionStore.selectedSubmissionData
-    ? {
-        ...moderationSubmissionStore.selectedSubmissionData
-    }
-    : undefined)
+const submissionBeforeChanges: Ref<Submission | undefined> = ref(undefined)
 
 // Keeps track of existing facilities related to new healthcare professional submission
 const currentFacilityRelations: Ref<Facility[]> = ref([])
@@ -309,7 +305,42 @@ const validateHealthcareProfessionalFields = () => {
     return areAllFieldsValid
 }
 
+// Manual deep copy function for submission data
+function createSubmissionDeepCopy(submissionData: Submission): Submission {
+    return {
+        ...submissionData,
+        facility: submissionData.facility
+            ? {
+                ...submissionData.facility,
+                contact: submissionData.facility.contact
+                    ? {
+                        ...submissionData.facility.contact,
+                        address: {
+                            ...submissionData.facility.contact.address
+                        }
+                    }
+                    : undefined,
+                healthcareProfessionalIds: [...submissionData.facility.healthcareProfessionalIds]
+            }
+            : undefined,
+        healthcareProfessionals: submissionData.healthcareProfessionals?.map(hp => ({
+            ...hp,
+            names: hp.names.map(name => ({ ...name })),
+            acceptedInsurance: hp.acceptedInsurance ? [...hp.acceptedInsurance] : [],
+            degrees: hp.degrees ? [...hp.degrees] : [],
+            specialties: hp.specialties ? [...hp.specialties] : [],
+            spokenLanguages: hp.spokenLanguages ? [...hp.spokenLanguages] : [],
+            facilityIds: hp.facilityIds ? [...hp.facilityIds] : []
+        })) || []
+    }
+}
+
 function initializeSubmissionFormValues(submissionData: Submission | undefined) {
+    // Create a deep copy of the submission data to preserve the original state
+    if (submissionData) {
+        submissionBeforeChanges.value = createSubmissionDeepCopy(submissionData)
+    }
+
     const submittedHealthcareProfessionalName
     = submissionData?.healthcareProfessionalName?.split(' ') ?? []
 
@@ -432,32 +463,30 @@ const hasHealthcareProfessionalChanges = (submissionBeforeChangesComparison: Sub
     if (!submissionBeforeChangesComparison) return false
 
     return (
-        (submissionBeforeChangesComparison?.healthcareProfessionals?.[0]?.names
-            ? !arraysAreEqual(
-                submissionBeforeChangesComparison?.healthcareProfessionals?.[0]?.names,
-                hpSectionFields.names
-            )
-            : false)
-          || (submissionBeforeChangesComparison?.healthcareProfessionals?.[0]?.acceptedInsurance
-              ? !arraysAreEqual(
-                  submissionBeforeChangesComparison?.healthcareProfessionals?.[0]?.acceptedInsurance,
-                  hpSectionFields.acceptedInsurance
-              )
-              : false)
-            || (submissionBeforeChangesComparison?.healthcareProfessionals?.[0]?.degrees
-                ? !arraysAreEqual(
-                    submissionBeforeChangesComparison?.healthcareProfessionals?.[0]?.degrees,
-                    hpSectionFields.degrees
-                )
-                : false)
-              || (submissionBeforeChangesComparison?.healthcareProfessionals?.[0]?.specialties
-                  ? !arraysAreEqual(submissionBeforeChangesComparison?.healthcareProfessionals?.[0]?.specialties,
-                                    hpSectionFields.specialties)
-                  : false)
-                || (submissionBeforeChangesComparison?.healthcareProfessionals?.[0]?.spokenLanguages
-                    ? !arraysAreEqual(submissionBeforeChangesComparison?.healthcareProfessionals?.[0]?.spokenLanguages,
-                                      hpSectionFields.spokenLanguages)
-                    : false)
+        !arraysAreEqual(
+            submissionBeforeChangesComparison?.healthcareProfessionals?.[0]?.names || [],
+            hpSectionFields.names
+        )
+        || !arraysAreEqual(
+            submissionBeforeChangesComparison?.healthcareProfessionals?.[0]?.acceptedInsurance || [],
+            hpSectionFields.acceptedInsurance
+        )
+        || !arraysAreEqual(
+            submissionBeforeChangesComparison?.healthcareProfessionals?.[0]?.degrees || [],
+            hpSectionFields.degrees
+        )
+        || !arraysAreEqual(
+            submissionBeforeChangesComparison?.healthcareProfessionals?.[0]?.specialties || [],
+            hpSectionFields.specialties
+        )
+        || !arraysAreEqual(
+            submissionBeforeChangesComparison?.healthcareProfessionals?.[0]?.spokenLanguages || [],
+            hpSectionFields.spokenLanguages
+        )
+        || !arraysAreEqual(
+            submissionBeforeChangesComparison?.healthcareProfessionals?.[0]?.facilityIds || [],
+            hpSectionFields.facilityIds
+        )
     )
 }
 
