@@ -369,7 +369,9 @@
         "noDegreesWereFound": "No degrees were found",
         "noLocalesWereFound": "No language were found",
         "searchExistingFacilities": "Search for existing Facility",
-        "searchExistingHealthcareProfessionals": "Search for existing Healthcare Professionals"
+        "searchExistingHealthcareProfessionals": "Search for existing Healthcare Professionals",
+        "labelModNoteInput": "Moderator Notes",
+        "placeholderTextNoteInput": "e.g. waiting for call back from clinic"
     },
     "modPanelSubmissionLeftNavbar": {
         "addresses": "Addresses",
@@ -459,7 +461,8 @@
         "update": "Update",
         "facilityUpdatedSuccessfully": "Facility updated successfully",
         "deleteButtonText": "DELETE FOREVER",
-        "deleteConfirmationFacility": "Are you sure you want to delete the Facility: {facility} , with ID: {id}?",
+        "deleteConfirmationFacility": "Are you sure you want to delete the Facility: {facility}, with ID: {id}?",
+        "deleteConfirmationHealthcareProfessional": "Are you sure you want to delete the Healthcare Professional: {healthcareProfessional}, with ID: {id}?",
         "facilityDeletedSuccessfully": "Facility deleted successfully",
         "healthcareProfessionalDeletedSuccessfully": "Healthcare Professional deleted successfully",
         "healthcareProfessionalUpdatedSuccessfully": "Healthcare Professional updated successfully",
@@ -483,6 +486,9 @@
         "firstName": "First name",
         "middleName": "Middle name",
         "nameLocale": "Name language"
+    },
+    "noteInputField": {
+        "optional": "(optional)"
     },
     "modInputField": {
         "optional": "Optional"

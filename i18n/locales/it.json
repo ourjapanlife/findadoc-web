@@ -178,6 +178,7 @@
     "delete": "Elimina",
     "deleteButtonText": "ELIMINA DEFINITIVAMENTE",
     "deleteConfirmationFacility": "Sei sicuro di voler eliminare la struttura: {facility}, con ID: {id}?",
+    "deleteConfirmationHealthcareProfessional": "Are you sure you want to delete the Healthcare Professional: {healthcareProfessional}, with ID: {id}?",
     "update": "Aggiorna",
     "updateAndExit": "Aggiorna & Esci",
     "facilityDeletedSuccessfully": "Struttura eliminata con successo",
@@ -422,7 +423,9 @@
     "noDegreesWereFound": "No degrees were found",
     "noLocalesWereFound": "No languages were found",
     "searchExistingFacilities": "Search for existing Facility",
-    "searchExistingHealthcareProfessionals": "Search for existing Healthcare Professionals"
+    "searchExistingHealthcareProfessionals": "Search for existing Healthcare Professionals",
+    "labelModNoteInput": "Moderator Notes",
+    "placeholderTextNoteInput": "e.g. waiting for call back from clinic"
   },
   "specialties": {
     "allergyAndImmunology": "Allergologo/Allergologa",
@@ -479,6 +482,9 @@
     "firstName": "First name",
     "middleName": "Middle name",
     "nameLocale": "Name language"
+  },
+  "noteInputField": {
+    "optional": "(optional)"
   },
   "modInputField": {
     "optional": "Optional"
