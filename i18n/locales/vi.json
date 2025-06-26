@@ -479,5 +479,8 @@
     },
     "noteInputField": {
       "optional": "(optional)"
+    },
+    "modInputField": {
+        "optional": "Optional"
     }
 }

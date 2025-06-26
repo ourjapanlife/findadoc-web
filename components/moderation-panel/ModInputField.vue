@@ -2,6 +2,12 @@
     <div class="flex flex-col mt-4">
         <label class="mb-2 text-primary-text text-sm font-bold font-sans">
             {{ label }}
+            <span
+                v-if="!required"
+                class="text-primary-text-muted ml-1 font-normal"
+            >
+                ({{ t('modInputField.optional') }})
+            </span>
         </label>
         <p
             v-if="!isTheInputValueValid"
