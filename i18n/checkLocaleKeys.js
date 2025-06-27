@@ -1,6 +1,8 @@
 import fs from 'fs'
 import path from 'path'
 import { fileURLToPath } from 'url'
+import * as deepl from 'deepl-node'
+import dotenv from 'dotenv'
 
 // Convert import.meta.url to __dirname equivalent
 const __filename = fileURLToPath(import.meta.url)
@@ -8,6 +10,31 @@ const __dirname = path.dirname(__filename)
 
 // Define the path to our i18n locales directory
 const localesI18nDirectory = path.join(__dirname, '/locales')
+
+// Load environment variables from .env file
+dotenv.config()
+
+// Define Deepl client and credentials
+const deeplAuthKey = process.env.DEEPL
+const deeplClient = new deepl.DeepLClient(deeplAuthKey)
+
+const deeplTargetLanguages = {
+    de: 'DE',
+    en: 'EN-US',
+    fr: 'FR',
+    it: 'IT',
+    ja: 'JA',
+    pt: 'PT-BR',
+    ru: 'RU',
+    vi: 'VI',
+    cn: 'ZH-HANS',
+    tl: 'EN-US' // Deepl does not support Tagalog so this is added to fill the missing string in English
+
+}
+async function translateValueWithDeepl(targetLang, value) {
+    const result = await deeplClient.translateText(value, 'EN', targetLang)
+    return result
+}
 
 // Import the key-checking function
 const checkLocaleKeys = () => {
@@ -57,6 +84,7 @@ const isNestedObject = value => typeof value === 'object' && value !== null
 
 // Function to insert a key-value pair into a nested object
 const insertMissingKeysAndValues = (targetObject, keyPath, value) => {
+    console.log('value =', value)
     const keyPathParts = keyPath.split('.')
     let currentLevel = targetObject
     keyPathParts.forEach((part, index) => {
@@ -90,26 +118,26 @@ const findAndInsertMissingKeysAndValuesInNonEnFiles
         const jsonContent = JSON.parse(fs.readFileSync(localeFilePath, 'utf-8'))
 
         const existingKeys = new Set(extractAllKeys(jsonContent))
-        let fileUpdated = false
         const missingKeys = []
 
-        referenceKeys.forEach(key => {
+        referenceKeys.forEach(async key => {
             if (!existingKeys.has(key)) {
-                const value = key.split('.').reduce((obj, part) => obj?.[part], enFileContent)
-                if (value !== undefined) {
-                    insertMissingKeysAndValues(jsonContent, key, value)
-                    missingKeys.push(key)
-                    fileUpdated = true
+                const enValue = key.split('.').reduce((obj, part) => obj?.[part], enFileContent)
+
+                if (enValue !== undefined) {
+                    const localizedValue = await translateValueWithDeepl(deeplTargetLanguages[file.substring(0, 2)], enValue)
+                    if (localizedValue.text) {
+                        insertMissingKeysAndValues(jsonContent, key, localizedValue.text)
+                        missingKeys.push(key)
+
+                        fs.writeFileSync(localeFilePath, JSON.stringify(jsonContent, null, 2), 'utf-8')
+                        console.log(`\x1b[35mInserted missing keys into ${file}\x1b[0m`)
+                        console.log('\x1b[34mMissing keys:\x1b[0m')
+                        missingKeys.forEach(key => console.log(`- ${key}`))
+                    }
                 }
             }
         })
-
-        if (fileUpdated) {
-            fs.writeFileSync(localeFilePath, JSON.stringify(jsonContent, null, 2), 'utf-8')
-            console.log(`\x1b[35mInserted missing keys into ${file}\x1b[0m`)
-            console.log('\x1b[34mMissing keys:\x1b[0m')
-            missingKeys.forEach(key => console.log(`- ${key}`))
-        }
     })
 }
 
