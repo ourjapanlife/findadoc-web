@@ -137,6 +137,7 @@
                 :label="t('modSubmissionForm.labelModNoteInput')"
                 :placeholder="t('modSubmissionForm.placeholderTextNoteInput')"
                 :required="false"
+                :text-size="'text-2xl'"
             />
         </div>
     </div>
@@ -416,6 +417,8 @@ function initializeSubmissionFormValues(submissionData: Submission | undefined) 
 
     healthcareProfessionalSections.acceptedInsurance
     = submissionData?.healthcareProfessionals?.[0]?.acceptedInsurance ?? []
+    healthcareProfessionalSections.additionalInfoForPatients
+    = submissionData?.healthcareProfessionals?.[0]?.additionalInfoForPatients ?? ''
     healthcareProfessionalSections.degrees
     = submissionData?.healthcareProfessionals?.[0]?.degrees ?? []
     healthcareProfessionalSections.specialties
@@ -532,6 +535,8 @@ async function submitUpdatedSubmission(e: Event) {
             {
                 acceptedInsurance: healthcareProfessionalsStore.healthcareProfessionalSectionFields
                     .acceptedInsurance,
+                additionalInfoForPatients:
+                    healthcareProfessionalsStore.healthcareProfessionalSectionFields.additionalInfoForPatients,
                 degrees: healthcareProfessionalsStore.healthcareProfessionalSectionFields
                     .degrees,
                 specialties: healthcareProfessionalsStore.healthcareProfessionalSectionFields
