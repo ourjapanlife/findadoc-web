@@ -238,6 +238,16 @@
                         {{ localesStore.formatLanguageCodeToSimpleText(locale) }}
                     </li>
                 </ol>
+                <label
+                    class="my-2 text-primary-text text-sm font-bold font-sans"
+                >
+                    Additional Notes for Patients
+                </label>
+                <NoteInputField
+                    data-testid="submission-form-notes"
+                    :placeholder="t('modSubmissionForm.placeholderTextNoteInput')"
+                    :required="false"
+                />
             </div>
             <div v-if="moderationScreenStore.editHealthcareProfessionalScreenIsActive()">
                 <h2
