@@ -318,6 +318,16 @@ const validateHealthcareProfessionalFields = () => {
     return areAllFieldsValid
 }
 
+const validateHealthcareProfessionalEnglishName = () => {
+    const healthcareProfessionalFields = healthcareProfessionalsStore.healthcareProfessionalSectionFields
+    const names = healthcareProfessionalFields.names
+
+    // Check if the healthcare professional has a name in the 'en_US' locale (assumed to be in Romaji)
+    const hasEnglishName = names.some(name => name.locale == 'en_US')
+
+    return hasEnglishName
+}
+
 function initializeSubmissionFormValues(submissionData: Submission | undefined) {
     const submittedHealthcareProfessionalName
     = submissionData?.healthcareProfessionalName?.split(' ') ?? []
@@ -588,6 +598,7 @@ async function submitCompletedForm(e: Event) {
 
     const isValidFacility = validateFacilityFields()
     const isValidHealthcareProfessional = validateHealthcareProfessionalFields()
+    const hasEnglishName = validateHealthcareProfessionalEnglishName()
 
     // This shows a toast and returns if the facility fields arent valid
     if (!isValidFacility && !currentFacilityRelations.value.length) {
@@ -598,6 +609,12 @@ async function submitCompletedForm(e: Event) {
 
     if (!isValidHealthcareProfessional && !currentExistingHealthcareProfessionals.value.length) {
         toast.error(t('modSubmissionForm.errorMessageHealthcareInputsInvalid'))
+        await resetModalRefs()
+        return
+    }
+
+    if (!hasEnglishName) {
+        toast.error(t('modSubmissionForm.errorMessageEnglishNameRequired'))
         await resetModalRefs()
         return
     }
