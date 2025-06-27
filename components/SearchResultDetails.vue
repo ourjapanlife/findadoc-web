@@ -150,7 +150,7 @@ const healthcareProfessionalName = computed(() => {
     const englishFullName = `${englishName?.firstName} ${englishName?.lastName}`
     const japaneseFullName = `${japaneseName?.lastName} ${japaneseName?.firstName}`
 
-    switch (localeStore.locale.code) {
+    switch (localeStore.activeLocale.code) {
         case Locale.EnUs:
             return englishFullName ? englishFullName : japaneseFullName
         case Locale.JaJp:
@@ -181,7 +181,7 @@ const specialties = computed(() => {
 const facilityName = computed(() => {
     const englishName = resultsStore.$state.activeResult?.facilities[0].nameEn
     const japaneseName = resultsStore.$state.activeResult?.facilities[0].nameJa
-    return localeStore.locale.code === Locale.JaJp ? japaneseName : englishName
+    return localeStore.activeLocale.code === Locale.JaJp ? japaneseName : englishName
 })
 
 const spokenLanguages = computed(() => {
@@ -205,7 +205,7 @@ const addressLine1 = computed(() => {
 
     const englishAddress = `${addressObj?.addressLine1En} ${addressObj?.addressLine2En}`
     const japaneseAddress = `${addressObj?.postalCode} ${addressObj?.prefectureJa}${addressObj?.cityJa}${addressObj?.addressLine1Ja}${addressObj?.addressLine2Ja}`
-    return localeStore.locale.code === Locale.JaJp
+    return localeStore.activeLocale.code === Locale.JaJp
         ? japaneseAddress
         : englishAddress
 })
@@ -214,7 +214,7 @@ const addressLine2 = computed(() => {
         = resultsStore.$state.activeResult?.facilities[0].contact.address
 
     const englishAddress = `${addressObj?.cityEn}, ${addressObj?.prefectureEn} ${addressObj?.postalCode}`
-    return localeStore.locale.code !== Locale.JaJp ? englishAddress : ''
+    return localeStore.activeLocale.code !== Locale.JaJp ? englishAddress : ''
 })
 const addressLink = computed(
     () => resultsStore.$state.activeResult?.facilities[0].contact.googleMapsUrl

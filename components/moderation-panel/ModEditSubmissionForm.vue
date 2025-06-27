@@ -131,6 +131,13 @@
             >
                 <ModEditHealthcareProfessionalSection />
             </div>
+            <NoteInputField
+                v-model="currentSubmissionNotes"
+                data-testid="submission-form-notes"
+                :label="t('modSubmissionForm.labelModNoteInput')"
+                :placeholder="t('modSubmissionForm.placeholderTextNoteInput')"
+                :required="false"
+            />
         </div>
     </div>
 </template>
@@ -138,7 +145,7 @@
 <script lang="ts" setup>
 import { type Ref, ref, watch, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { useToast, type ToastInterface } from 'vue-toastification'
+import { useToast } from 'vue-toastification'
 import { useModerationSubmissionsStore } from '~/stores/moderationSubmissionsStore'
 import { Locale,
     type Submission,
@@ -162,14 +169,7 @@ import { triggerFormValidationErrorMessages } from '~/utils/triggerFormValidatio
 import { arraysAreEqual } from '~/utils/arrayUtils'
 import { handleServerErrorMessaging } from '~/composables/handleServerErrorMessaging'
 
-/**
-This initalizes the variable that needs to be set on mount.
-If this is set as a const the build will fail since the plugin
-for vue-toastification is only available onMounted of the component
-through Nuxt
- */
-let toast: ToastInterface
-
+const toast = useToast()
 const { t } = useI18n()
 const router = useRouter()
 
@@ -179,6 +179,8 @@ const screenStore = useModerationScreenStore()
 const loadingStore = useLoadingStore()
 const facilitiesStore = useFacilitiesStore()
 const healthcareProfessionalsStore = useHealthcareProfessionalsStore()
+
+const currentSubmissionNotes = ref('')
 
 const syntheticEvent = new Event('submit', { bubbles: false, cancelable: true })
 
@@ -319,6 +321,10 @@ const validateHealthcareProfessionalFields = () => {
 function initializeSubmissionFormValues(submissionData: Submission | undefined) {
     const submittedHealthcareProfessionalName
     = submissionData?.healthcareProfessionalName?.split(' ') ?? []
+
+    if (submissionData && submissionData.notes) {
+        currentSubmissionNotes.value = submissionData.notes
+    }
 
     const facilitySectionFields = facilitiesStore.facilitySectionFields
     const healthcareProfessionalSections
@@ -533,7 +539,8 @@ async function submitUpdatedSubmission(e: Event) {
         input: {
             isUnderReview: true,
             facility: facilitySubmissionUpdate,
-            healthcareProfessionals: healthcareProfessionalUpdate
+            healthcareProfessionals: healthcareProfessionalUpdate,
+            notes: currentSubmissionNotes.value
         }
     }
 
@@ -649,12 +656,7 @@ watch(
 
 onMounted(async () => {
     isEditSubmissionFormInitialized.value = false
-    /**
-    Set the variable to useToast when the compoenet mounts
-    since vue-taostification is only available on the client.
-    If not done this way the build fails
-     */
-    toast = useToast()
+
     loadingStore.setIsLoading(true)
 
     if (!moderationSubmissionStore.submissionsData.length) {

@@ -60,7 +60,7 @@
 import { useRoute, useRouter } from 'vue-router'
 import { watch, ref, type Ref, onMounted } from 'vue'
 import { useAuthStore } from '~/stores/authStore'
-import { definePageMeta } from '#imports'
+import { definePageMeta, useI18n } from '#imports'
 
 // tell nuxt to our moderation layout
 definePageMeta({
