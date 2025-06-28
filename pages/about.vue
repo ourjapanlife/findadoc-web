@@ -80,6 +80,7 @@
 </template>
 
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n'
 import data from '../member_directory/members.json'
 import MemberComponent from '~/components/MemberComponent.vue'
 import SvgHeartPlus from '~/assets/icons/heart-plus.svg'
