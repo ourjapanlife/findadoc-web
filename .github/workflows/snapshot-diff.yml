@@ -53,16 +53,10 @@ jobs:
           script: |
             const fs = require('fs');
             const output = fs.readFileSync('snapshot-output.txt', 'utf8');
-            const relevantLines = output
-              .split('\n')
-              .filter(line => 
-                line.includes('expect(received).toMatchSnapshot') ||
-                line.includes('Snapshot name:')
-              );
             let body = '';
 
-            if (relevantLines.length > 0) {
-              body = `🧪 **Snapshot Changed**\n\n\`\`\`\n${relevantLines.join('\n').slice(0, 6500)}\n\`\`\`\n\nIf these changes are expected, run \`yarn test:snapshot:update\`.`;
+            if (output.includes('expect(received).toMatchSnapshot')) {
+              body = `❌ **Snapshot Changed**\n\nIf these changes are expected, run \`yarn test:snapshot:update\`.`;
             } else {
               body = `✅ **Snapshot Test Passed** — Nothing in the UI changed.`;
             }
