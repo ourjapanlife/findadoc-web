@@ -1,12 +1,18 @@
 <template>
     <div
-        class="h-full flex flex-col"
+        class="flex flex-col bg-primary-bg overflow-y-auto mx-2"
     >
-        <div class="results-header flex flex-row ml-9 mr-5 mb-6 pt-5">
-            <span class="flex-1 w-1/2 font-bold self-center">
-                {{ t('searchResultsList.doctorsNearby') }}
-            </span>
+        <!-- Search Filters Bar -->
+        <div
+            v-show="isSearchPage"
+            data-testid="searchbar"
+            class="results-header flex justify-center grow"
+        >
+            <SearchBar class="mx-4" />
         </div>
+        <!-- Divider line -->
+        <div class="h-px border border-accent/10 my-2 mx-auto w-20" />
+        <!-- Loading List Placeholder -->
         <div v-if="loadingStore.isLoading">
             <div class="h-full flex justify-center items-center w-full">
                 <div class="flex flex-col justify-center align-middle">
@@ -20,6 +26,7 @@
                 </div>
             </div>
         </div>
+        <!-- Results List -->
         <div
             v-else-if="hasResults"
             class="overflow-y-auto"
@@ -34,11 +41,11 @@
                     :key="index"
                     class="results-list flex flex-col"
                     data-testid="search-results-list"
-                    @click="resultsStore.setActiveSearchResult(searchResult.professional.id)"
+                    @click="resultClicked(searchResult.professional.id)"
                 >
                     <div
-                        class="flex-1 h-24 w-6/8 border-b-2 border-primary/20 p-3
-                        hover:border-transparent hover:bg-primary/5 transition-all hover:cursor-pointer"
+                        class="flex flex-col my-4 mx-4 py-1 min-h-36 rounded-sm border-t-2 border-primary/10
+                    bg-primary-bg hover:bg-primary-hover/50 drop-shadow-md transition-all cursor-pointer"
                     >
                         <SearchResultsListItem
                             :name="`${searchResult.professional.names[0].firstName}
@@ -68,6 +75,7 @@
 </template>
 
 <script setup lang="ts">
+import { useRoute } from 'vue-router'
 import { computed, onMounted } from 'vue'
 import { useSearchResultsStore } from '../stores/searchResultsStore'
 import { useLocaleStore } from '../stores/localeStore'
@@ -82,9 +90,17 @@ const resultsStore = useSearchResultsStore()
 const localeStore = useLocaleStore()
 const loadingStore = useLoadingStore()
 
+const route = useRoute()
+const isSearchPage = computed(() => route.path === '/')
+
 onMounted(() => {
     resultsStore.search()
 })
 
 const hasResults = computed(() => resultsStore.searchResultsList.length > 0)
+
+function resultClicked(resultId: string) {
+    resultsStore.setActiveSearchResult(resultId)
+    useBottomSheetStore().showBottomSheet(BottomSheetType.SearchResultDetails)
+}
 </script>

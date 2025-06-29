@@ -5,7 +5,7 @@
             ref="mapRef"
             data-testid="map-of-japan"
             :api-key="runtimeConfig.public.GOOGLE_MAPS_API_KEY as string ?? undefined"
-            map-id="153d718018a2577e"
+            map-id="c982cfeef5b99b19c5706a34"
             :disable-default-ui="true"
             class="h-full w-full"
             :center="center"

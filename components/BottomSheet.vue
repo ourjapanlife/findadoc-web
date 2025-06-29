@@ -51,6 +51,9 @@
 <script setup lang="ts">
 import { computed, nextTick, ref } from 'vue'
 import Hammer from 'hammerjs'
+import { useBottomSheetStore } from '@/stores/bottomSheetStore'
+
+const bottomSheetStore = useBottomSheetStore()
 
 /**
    * Bottom sheet props interface
@@ -166,7 +169,7 @@ const sheetHeightString = computed(() => sheetHeight.value && sheetHeight.value 
 /**
    * Return max height string
    */
-const maxHeightString = computed(() => props.maxHeight ? `${props.maxHeight}%` : 'inherit')
+const maxHeightString = computed(() => props.maxHeight ? `${props.maxHeight}px` : 'inherit')
 
 /**
    * Return current translate value string with percents
@@ -293,6 +296,7 @@ const open = () => {
    * Close bottom sheet method
    */
 const close = async () => {
+    bottomSheetStore.isOpen = false
     showSheet.value = false
     translateValue.value = 100
     setTimeout(() => {

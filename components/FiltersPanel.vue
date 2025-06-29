@@ -3,18 +3,17 @@
         data-testid="filters-panel-container"
         class="flex w-full"
     >
-        <bottom-sheet
+        <BottomSheet
             ref="filtersBottomSheet"
-            :max-height="90"
         >
             <!-- Close button -->
             <button
                 data-testid="filters-panel-close-button"
-                class="px-2 py-.5 mr-2"
+                class="absolute top-4 right-2 px-2 py-.5 mr-2"
                 @click="closePanel()"
             >
                 <svg
-                    class="stroke-primary"
+                    class="stroke-primary/60"
                     width="20"
                     heigh="20"
                     viewBox="4 0 15 25"
@@ -33,7 +32,7 @@
             </button>
             <!-- Filters panel -->
             <div
-                class="flex flex-col justify-between w-2/3 h-full pt-6 pb-2 border-2 rounded bg-primary-bg"
+                class="flex flex-col justify-between w-full h-[80vh] pt-6 pb-2"
             >
                 <!-- Search fields -->
                 <div
@@ -41,11 +40,11 @@
                     class="grid-cols-3 mx-4"
                 >
                     <!-- Specialty dropdown -->
-                    <div class="search-specialty col-span-1 inline-block w-1/3 py-4">
+                    <div class="search-specialty col-span-1 inline-block w-full py-4">
                         <select
                             v-model="selectedSpecialties"
-                            class="rounded-l-full rounded-r-none w-full px-1 border-2 border-primary/60
-                    py-1.5 drop-shadow-md text-primary-text bg-primary-bg hover:bg-primary-hover/10 transition-all"
+                            class="px-1 py-1.5 border-2 border-primary/60 rounded-md text-primary-text
+                                    drop-shadow-md bg-primary-bg/10 transition-all"
                         >
                             <option
                                 value=""
@@ -65,11 +64,11 @@
                         </select>
                     </div>
                     <!-- Location dropdown -->
-                    <div class="search-location col-span-1 inline-block w-1/3 py-4">
+                    <div class="search-location col-span-1 inline-block w-full py-4">
                         <select
                             v-model="selectedLocations"
-                            class="w-full px-1 border-y-2 border-primary/60 py-1.5 drop-shadow-md
-                        text-primary-text bg-primary-bg hover:bg-primary-hover/10 transition-all"
+                            class="px-1 py-1.5 border-2 border-primary/60 rounded-md text-primary-text
+                                    drop-shadow-md bg-primary-bg/10 transition-all"
                         >
                             <option
                                 value=""
@@ -89,11 +88,11 @@
                         </select>
                     </div>
                     <!-- Language dropdown -->
-                    <div class="search-language col-span-1 inline-block w-1/3 py-4">
+                    <div class="search-language col-span-1 inline-block w-full py-4">
                         <select
                             v-model="selectedLanguages"
-                            class="rounded-r-full rounded-l-none w-full px-1 border-2 border-primary/60
-                        py-1.5 drop-shadow-md text-primary-text bg-primary-bg hover:bg-primary-hover/10 transition-all"
+                            class="px-1 py-1.5 border-2 border-primary/60 rounded-md text-primary-text
+                                    drop-shadow-md bg-primary-bg/10 transition-all"
                             data-testid="search-bar-language"
                         >
                             <option
@@ -113,9 +112,9 @@
                 >
                     <button
                         id="searchButton"
-                        class="flex flex-0 flex-row rounded-full bg-primary
-            w-28 pl-1 pr-2 py-2 text-sm align-middle justify-center
-            hover:bg-primary-hover transition-all"
+                        class="flex flex-0 flex-row rounded-md
+                                w-full mx-4 pl-1 pr-2 py-4 text-sm align-middle justify-center
+                                bg-accent hover:bg-accent-hover transition-all"
                         data-testid="search-button"
                         @click="search"
                     >
@@ -129,19 +128,21 @@
                     </button>
                 </div>
             </div>
-        </bottom-sheet>
+        </BottomSheet>
     </div>
 </template>
 
 <script setup lang="ts">
 import { ref, type Ref, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
+import BottomSheet from '~/components/BottomSheet.vue'
 import SVGSearchIcon from '~/assets/icons/search-icon.svg'
 import { useSearchResultsStore } from '~/stores/searchResultsStore.js'
 import { useLocationsStore } from '~/stores/locationsStore.js'
 import { useSpecialtiesStore } from '~/stores/specialtiesStore.js'
 import { useLocaleStore } from '~/stores/localeStore.js'
 import { type Specialty, Locale } from '~/typedefs/gqlTypes.js'
+import { BottomSheetType, useBottomSheetStore } from '~/stores/bottomSheetStore.js'
 
 const { t } = useI18n()
 
@@ -149,6 +150,7 @@ const localeStore = useLocaleStore()
 const locationsStore = useLocationsStore()
 const searchResultsStore = useSearchResultsStore()
 const specialtiesStore = useSpecialtiesStore()
+const bottomSheetStore = useBottomSheetStore()
 
 const locationDropdownOptions: Ref<LocationDropdownOption[]> = ref([])
 const specialtyDropdownOptions: Ref<DropdownOption[]> = ref([])
@@ -157,6 +159,8 @@ const languageDropdownOptions: Ref<DropdownOption[]> = ref([])
 const selectedSpecialties: Ref<string> = ref('')
 const selectedLocations: Ref<string> = ref('')
 const selectedLanguages: Ref<string> = ref(localeStore.activeLocale.code)
+
+const filtersBottomSheet = ref<InstanceType<typeof BottomSheet> | null>(null)
 
 interface DropdownOption {
     displayText: string
@@ -167,7 +171,13 @@ interface LocationDropdownOption extends DropdownOption {
     cityOccurrenceCount: number
 }
 
-const filtersBottomSheet = ref<{ open: () => void, close: () => void } | null>(null)
+watch(() => bottomSheetStore.isOpen, newVal => {
+    if (newVal && bottomSheetStore.bottomSheetType === BottomSheetType.FiltersPanel) {
+        openPanel()
+    } else if (!newVal && bottomSheetStore.bottomSheetType === BottomSheetType.FiltersPanel) {
+        closePanel()
+    }
+})
 
 const openPanel = () => {
     filtersBottomSheet.value?.open()
@@ -176,8 +186,6 @@ const openPanel = () => {
 const closePanel = () => {
     filtersBottomSheet.value?.close()
 }
-
-defineExpose({ openPanel, closePanel })
 
 // -- Internal functions --
 

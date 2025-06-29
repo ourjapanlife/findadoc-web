@@ -1,36 +1,44 @@
 <template>
-    <div class="flex flex-col landscape:p-4 portrait:px-4 mx-2 bg-primary-bg/95 rounded-b-lg">
+    <div class="flex flex-col landscape:p-4 portrait:px-4 mt-4  bg-primary-bg/85 rounded-b-lg ">
         <div
             class="flex justify-between items-center"
         >
             <!-- Mobile Site Icon -->
             <div
                 id="mobile-site-icon"
-                class="landscape:hidden font-semibold text-xl group transition-colors flex justify-between items-start"
+                class="landscape:hidden flex justify-between items-start font-semibold text-xl
+                group transition-colors p-2 bg-primary-inverted/10 rounded-2xl"
             >
                 <SVGSiteLogo
                     role="img"
                     title="site icon"
                     class="mt-1 mr-1 w-10 h-10 flex-shrink-0 align-middle fill-primary group-hover:fill-primary-hover"
+                    @click="toggleLogoText()"
                 />
-                <!-- Find a Doc, Japan Logo Text -->
-                <div
-                    v-show="!isSearchPage"
-                    class="title-text flex flex-col flex-shrink-0"
-                    data-testid="portrait-logo"
+                <Transition
+                    name="slide-left"
+                    mode="out-in"
                 >
-                    <div class="text-lg text-primary group-hover:text-primary-hover">
-                        Find a Doc,
+                    <!-- Find a Doc, Japan Logo Text -->
+                    <div
+                        v-show="showLogoText"
+                        class="title-text flex flex-col flex-shrink-0"
+                        data-testid="landscape-logo"
+                    >
+                        <div class="text-lg text-primary group-hover:text-primary-hover">
+                            Find a Doc
+                        </div>
+                        <div class="text-sm text-primary leading-none group-hover:text-primary-hover">
+                            Japan
+                        </div>
                     </div>
-                    <div class="text-sm text-primary leading-none group-hover:text-primary-hover">
-                        Japan
-                    </div>
-                </div>
+                </Transition>
             </div>
             <!-- Desktop Site Icon -->
             <div
                 id="desktop-site-icon"
-                class="portrait:hidden font-semibold text-xl group transition-colors items-start w-52"
+                class="portrait:hidden w-52 font-semibold text-xl
+                group transition-colors items-start p-2 bg-primary-bg/60 rounded-2xl"
             >
                 <NuxtLink
                     class="flex"
@@ -122,23 +130,13 @@
                     </div>
                 </nav>
                 <LocaleSelector class="portrait:hidden" />
-                <HamburgerMenu class="landscape:hidden justify-end z-20" />
+                <HamburgerMenu class="landscape:hidden justify-end z-20 p-2 bg-primary-bg/20 rounded-2xl" />
             </div>
-        </div>
-        <!-- Second row -->
-        <div
-            v-show="isSearchPage"
-            data-testid="searchbar"
-            class="flex justify-center grow"
-        >
-            <SearchBar />
         </div>
     </div>
 </template>
 
 <script lang="ts" setup>
-import { useRoute } from 'vue-router'
-import { computed } from 'vue'
 import HamburgerMenu from './HamburgerMenu.vue'
 import SVGProfileIcon from '~/assets/icons/profile-icon.svg'
 import SVGSiteLogo from '~/assets/icons/site-logo.svg'
@@ -147,10 +145,40 @@ import { useAuthStore } from '~/stores/authStore'
 const { t } = useI18n()
 
 const authStore = useAuthStore()
-const route = useRoute()
-const isSearchPage = computed(() => route.path === '/')
+
+const showLogoText = ref(false)
+
+function toggleLogoText() {
+    showLogoText.value = true
+    setTimeout(() => {
+        showLogoText.value = false
+    }, 2000)
+}
 
 async function logout() {
     await authStore.logout()
 }
 </script>
+
+<style scoped>
+.slide-left-enter-active,
+.slide-left-leave-active {
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.slide-left-enter-from {
+  transform: translateX(-40px);
+  opacity: 0;
+}
+.slide-left-enter-to {
+  transform: translateX(0);
+  opacity: 1;
+}
+.slide-left-leave-from {
+  transform: translateX(0);
+  opacity: 1;
+}
+.slide-left-leave-to {
+  transform: translateX(0);
+  opacity: 0;
+}
+</style>
