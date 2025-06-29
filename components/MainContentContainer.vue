@@ -7,9 +7,9 @@
             v-if="onboardingState === OnboardingState.Completed"
             id="search-container"
         >
-            <TopNav />
-            <SearchContainer />
-            <Footer />
+            <TopNav class="relative top-0 left-0 z-10" />
+            <SearchContainer class="absolute top-0 z-0 w-full" />
+            <Footer class="z-10" />
         </div>
     </div>
 </template>

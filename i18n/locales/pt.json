@@ -93,7 +93,6 @@
     },
     "searchResultsList": {
         "doctorsNearby": "Profissionais de saúde na região",
-        "filters": "Filtros",
         "noResults": "Nenhum resultado foi encontrado",
         "noResultsSubtext": "Por favor, tente outra combinação de filtros"
     },

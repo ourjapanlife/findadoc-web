@@ -21,8 +21,8 @@
             <div
                 v-show="isMenuOpen"
                 data-testid="hamburger-menu"
-                class="absolute top-0 right-0 z-20 flex flex-col
-                justify-between w-2/3 h-full pt-6 pb-2 border-2 rounded bg-primary-bg "
+                class="fixed top-0 right-0 z-20 flex flex-col
+                justify-between w-2/3 h-dvh pt-6 pb-2 border-l-2 border-primary/20 rounded bg-primary-bg "
             >
                 <div data-testid="hamburger-upper-section">
                     <div

@@ -17,14 +17,14 @@
     <div
         v-else
         id="search-portrait"
-        class="h-[calc(100vh-16rem)]"
+        class="h-[calc(100vh)]"
     >
         <Loader />
         <Modal class="min-h-1/2 mt-12">
             <SearchResultDetails />
         </Modal>
-        <MapContainer class="h-1/4" />
-        <SearchResultsList class="h-3/4" />
+        <MapContainer class="h-1/2" />
+        <SearchResultsList class="h-1/2 mx-2" />
     </div>
 </template>
 

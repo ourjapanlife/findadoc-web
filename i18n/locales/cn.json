@@ -93,7 +93,6 @@
     },
     "searchResultsList": {
         "doctorsNearby": "附近的医师",
-        "filters": "筛选条件",
         "noResults": "无符合条件的结果",
         "noResultsSubtext": "请使用不同的筛选条件"
     },

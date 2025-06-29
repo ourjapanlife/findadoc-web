@@ -92,7 +92,6 @@
     },
     "searchResultsList": {
         "doctorsNearby": "近隣の医師",
-        "filters": "フィルター",
         "noResults": "もう一度お試しください",
         "noResultsSubtext": "それぞれ別のフィルターでお試しください"
     },
