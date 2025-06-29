@@ -2,7 +2,7 @@
     <div class="w-full my-2">
         <!-- Search Bar -->
         <button
-            class="flex flex-col py-1 rounded-full w-full border-2 border-primary/20
+            class="flex flex-col my-2 py-1 rounded w-full border-2 border-primary/20
                     drop-shadow-md text-primary-text-muted text-xs
                     bg-primary-bg hover:bg-primary-hover/50 transition-all
                     cursor-pointer"
@@ -24,19 +24,39 @@
             /> -->
             <!-- Selected Specialties -->
             <div class="search-specialty">
-                <span class="block">
+                <span class="block text-start pl-2">
                     • {{ selectedSpecialtyText }}
                 </span>
             </div>
+        </button>
+        <button
+            class="flex flex-col my-2 py-1 rounded w-full border-2 border-primary/20
+                    drop-shadow-md text-primary-text-muted text-xs
+                    bg-primary-bg hover:bg-primary-hover/50 transition-all
+                    cursor-pointer"
+            alt="filters panel"
+            data-testid="filters-panel-summary"
+            @click="openPanel()"
+        >
             <!-- Selected Locations -->
             <div class="search-location">
-                <span class="block">
+                <span class="block text-start pl-2">
                     • {{ selectedLocationText }}
                 </span>
             </div>
+        </button>
+        <button
+            class="flex flex-col my-2 py-1 rounded w-full border-2 border-primary/20
+                    drop-shadow-md text-primary-text-muted text-xs
+                    bg-primary-bg hover:bg-primary-hover/50 transition-all
+                    cursor-pointer"
+            alt="filters panel"
+            data-testid="filters-panel-summary"
+            @click="openPanel()"
+        >
             <!-- Selected Languages -->
             <div class="search-language">
-                <span class="block">
+                <span class="block text-start pl-2">
                     • {{ selectedLanguageText }}
                 </span>
             </div>
