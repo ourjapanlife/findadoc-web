@@ -93,7 +93,6 @@
     },
     "searchResultsList": {
         "doctorsNearby": "Ärzte in der Nähe",
-        "filters": "Filter",
         "noResults": "Keine Ergebnisse gefunden",
         "noResultsSubtext": "Bitte versuchen Sie eine andere Filterkombination."
     },

@@ -2,7 +2,6 @@ import { gql } from 'graphql-request'
 import { defineStore } from 'pinia'
 import { ref, type Ref } from 'vue'
 import { gqlClient } from '../utils/graphql.js'
-import { useModalStore } from './modalStore'
 import { useLoadingStore } from './loadingStore.js'
 import type { Locale,
     Specialty,
@@ -60,9 +59,6 @@ export const useSearchResultsStore = defineStore('searchResultsStore', () => {
 
         activeResult.value = newResult
         activeResultId.value = newResult?.professional.id
-
-        //show the search result details in a modal
-        useModalStore().showModal()
     }
 
     function clearActiveSearchResult() {

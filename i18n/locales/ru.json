@@ -92,7 +92,6 @@
     },
     "searchResultsList": {
         "doctorsNearby": "Врачи рядом",
-        "filters": "Фильтр",
         "noResults": " Ничего не найдено ",
         "noResultsSubtext": " Попробуйте другую комбинацию фильтров."
     },
