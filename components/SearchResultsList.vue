@@ -65,6 +65,7 @@
                                 : searchResult.facilities[0]?.nameEn"
                             :specialties="searchResult.professional.specialties"
                             :spoken-languages="searchResult.professional.spokenLanguages"
+                            :updated-date="searchResult.professional.updatedDate"
                             :data-testid="`search-result-list-item-${index}`"
                         />
                     </div>

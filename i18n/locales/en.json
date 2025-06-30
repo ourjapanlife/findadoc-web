@@ -98,6 +98,9 @@
         "speaks": "This doctor speaks",
         "contact": "Contact"
     },
+    "searchResultsItem": {
+        "lastUpdate": "Last update: "
+    },
     "thankYouPage": {
         "heading": "Thank you!",
         "submission": "Your submission will be reviewed shortly by our moderators.",
