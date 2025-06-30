@@ -172,7 +172,8 @@
         "update": "Update",
         "facilityUpdatedSuccessfully": "Facility updated successfully",
         "deleteButtonText": "DELETE FOREVER",
-        "deleteConfirmationFacility": "Are you sure you want to delete the Facility: {facility} , with ID: {id}?",
+        "deleteConfirmationFacility": "Are you sure you want to delete the Facility: {facility}, with ID: {id}?",
+        "deleteConfirmationHealthcareProfessional": "Are you sure you want to delete the Healthcare Professional: {healthcareProfessional}, with ID: {id}?",
         "facilityDeletedSuccessfully": "Facility deleted successfully",
         "healthcareProfessionalDeletedSuccessfully": "Healthcare Professional deleted successfully",
         "healthcareProfessionalUpdatedSuccessfully": "Healthcare Professional updated successfully",
@@ -271,6 +272,7 @@
         "errorMessageFacilityInputsInvalid": "Ang ilan sa mga impormasyon ng pasilidad ay hindi nakumpleto ng tama.",
         "errorMessageFacilityId": "Kinakailangan ang ID ng Pasilidad upang ma-update ang pasilidad.",
         "errorMessageHealthcareInputsInvalid": "Ang ilan sa mga impormasyon ng Propesyonal sa Pangangalagang Pangkalusugan ay hindi nakumpleto ng tama.",
+        "errorMessageEnglishNameRequired": "Ang propesyonal sa Pangangalagang Pangkalusugan ay kailangang may pangalan sa Ingles",
         "errorMessageUpdated": "Hindi na-update ang submisyon form",
         "facilityHeading": "Impormasyon ng Pasilidad",
         "googleMapsInformation": "Impormasyon sa Google maps",
@@ -362,7 +364,9 @@
         "noDegreesWereFound": "No degrees were found",
         "noLocalesWereFound": "No languages were found",
         "searchExistingFacilities": "Search for existing Facility",
-        "searchExistingHealthcareProfessionals": "Search for existing Healthcare Professionals"
+        "searchExistingHealthcareProfessionals": "Search for existing Healthcare Professionals",
+        "labelModNoteInput": "Moderator Notes",
+        "placeholderTextNoteInput": "e.g. waiting for call back from clinic"
     },
     "serverErrorMessages": {
         "UNAUTHENTICATED": "Wala kang sapat na permiso upang gawin ang aksyong ito.",
@@ -472,5 +476,11 @@
         "primaryCare": "Pangunahing Pag-aalaga",
         "sportsAndRehab": "Sports at Rehabilitasyon",
         "womensHealth": "Kalusugan ng mga Babae"
+    },
+    "noteInputField": {
+      "optional": "(optional)"
+    },
+    "modInputField": {
+        "optional": "Opsyonal"
     }
 }

@@ -223,7 +223,8 @@
         "copyFailure": "Failed to copy ID",
         "delete": "Delete",
         "deleteButtonText": "DELETE FOREVER",
-        "deleteConfirmationFacility": "Are you sure you want to delete the Facility: {facility} , with ID: {id}?",
+        "deleteConfirmationFacility": "Are you sure you want to delete the Facility: {facility}, with ID: {id}?",
+        "deleteConfirmationHealthcareProfessional": "Are you sure you want to delete the Healthcare Professional: {healthcareProfessional}, with ID: {id}?",
         "update": "Update",
         "updateAndExit": "Update & Exit",
         "facilityDeletedSuccessfully": "Facility deleted successfully",
@@ -372,6 +373,7 @@
         "errorMessageFacilityInputsInvalid": "Some of the Facility Fields were not filled in correctly",
         "errorMessageFacilityId": "Facility ID is required for updating the Facility",
         "errorMessageHealthcareInputsInvalid": "Some of the Healthcare Professional Fields were not filled in correctly",
+        "errorMessageEnglishNameRequired": "The healthcare professional must have an English name",
         "errorMessageUpdated": "Failed to update submission form",
         "facilityHeading": "Facility Information",
         "facilitySuccessfullyRejected": "Facility rejected successfully",
@@ -421,6 +423,7 @@
         "labelFacilityGoogleMapsUrl": "Google Maps URL",
         "labelFacilityMapLatitude": "Map Latitude",
         "labelFacilityMapLongitude": "Map Longitude",
+        "labelModNoteInput": "Moderator Notes",
         "placeholderTextFacilityAddressLine1En": "Street address",
         "placeholderTextFacilityAddressLine2En": "Apartment, building, room...",
         "placeholderTextFacilityAddressLine1Ja": "Street address",
@@ -445,6 +448,7 @@
         "placeholderTextDegrees": "Search by degree",
         "placeholderTextLocales": "Search by language",
         "placeholderTextFacilitySearchBar": "Search by Facility name or ID",
+        "placeholderTextNoteInput": "e.g. waiting for call back from clinic",
         "noFacilitiesWereFound": "No Facilities were found",
         "noSpecialtiesWereFound": "No specialties were found",
         "noInsurancesWereFound": "No insurance was found",
@@ -471,5 +475,11 @@
         "firstName": "First name",
         "middleName": "Middle name",
         "nameLocale": "Name language"
+    },
+    "noteInputField": {
+        "optional": "(optional)"
+    },
+    "modInputField": {
+        "optional": "Optional"
     }
 }

@@ -170,7 +170,8 @@
         "delete": "Xóa",
         "updateAndExit": "Cập nhật và thoát.",
         "deleteButtonText": "DELETE FOREVER",
-        "deleteConfirmationFacility": "Are you sure you want to delete the Facility: {facility} , with ID: {id}?",
+        "deleteConfirmationFacility": "Are you sure you want to delete the Facility: {facility}, with ID: {id}?",
+        "deleteConfirmationHealthcareProfessional": "Are you sure you want to delete the Healthcare Professional: {healthcareProfessional}, with ID: {id}?",
         "update": "Update",
         "facilityDeletedSuccessfully": "Facility deleted successfully",
         "facilityUpdatedSuccessfully": "Facility updated successfully",
@@ -314,6 +315,7 @@
         "errorMessageFacilityInputsInvalid": "Một số trường thông tin cơ sở vật chất chưa được điền chính xác.",
         "errorMessageFacilityId": "Mã cơ sở vật chất là bắt buộc để cập nhật cơ sở vật chất.",
         "errorMessageHealthcareInputsInvalid": "Một số trường thông tin về chuyên gia y tế chưa được điền chính xác.",
+        "errorMessageEnglishNameRequired": "Chuyên gia y tế phải có tên tiếng Anh",
         "errorMessageUpdated": "Cập nhật mẫu đơn không thành công.",
         "facilityHeading": "Thông tin cơ sở vật chất",
         "googleMapsInformation": "Thông tin Google Maps",
@@ -405,7 +407,9 @@
         "noDegreesWereFound": "No degrees were found",
         "noLocalesWereFound": "No languages were found",
         "searchExistingFacilities": "Search for existing Facility",
-        "searchExistingHealthcareProfessionals": "Search for existing Healthcare Professionals"
+        "searchExistingHealthcareProfessionals": "Search for existing Healthcare Professionals",
+        "labelModNoteInput": "Moderator Notes",
+        "placeholderTextNoteInput": "e.g. waiting for call back from clinic"
     },
     "serverErrorMessages": {
         "UNAUTHENTICATED": "You do not have the authentication to do this action",
@@ -472,5 +476,11 @@
         "primaryCare": "Chăm sóc ban đầu",
         "sportsAndRehab": "Thể thao và phục hồi",
         "womensHealth": "Sức khỏe phụ nữ"
+    },
+    "noteInputField": {
+      "optional": "(optional)"
+    },
+    "modInputField": {
+        "optional": "Optional"
     }
 }
