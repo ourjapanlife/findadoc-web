@@ -43,6 +43,9 @@
                     </div>
                 </div>
             </div>
+            <p class="ml-2 text-gray-500">
+                {{ formattedUpdatedDate }}
+            </p>
         </div>
     </div>
 </template>
@@ -54,6 +57,8 @@ import SVGChatBubblesIcon from '~/assets/icons/chat-bubbles.svg'
 import { useLocaleStore } from '~/stores/localeStore.js'
 import { useSpecialtiesStore } from '~/stores/specialtiesStore.js'
 import type { Locale } from '~/typedefs/gqlTypes'
+
+const { t } = useI18n()
 
 const localeStore = useLocaleStore()
 const specialtiesStore = useSpecialtiesStore()
@@ -78,6 +83,10 @@ const props = defineProps({
     spokenLanguages: {
         type: Array<Locale>,
         required: true
+    },
+    updatedDate: {
+        type: String,
+        required: true
     }
 })
 
@@ -94,4 +103,10 @@ const formattedSpecialties = computed(() => {
 })
 
 const formattedLanguages = computed(() => localeStore.formatLanguages(props.spokenLanguages, localeStore.localeDisplayOptions))
+
+const formattedUpdatedDate = computed(() => {
+    const updatedDateObj = new Date(props.updatedDate)
+    const formattedUpdatedDate = updatedDateObj.toDateString()
+    return t('searchResultsItem.lastUpdate') + formattedUpdatedDate
+})
 </script>

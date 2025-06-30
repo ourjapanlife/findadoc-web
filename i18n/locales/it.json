@@ -488,5 +488,8 @@
   },
   "modInputField": {
     "optional": "Optional"
+  },
+  "searchResultsItem": {
+    "lastUpdate": "Last update: "
   }
 }
