@@ -1,128 +1,132 @@
 <template>
-    <div class="result-details landscape:min-w-[480px]">
-        <div class="header flex flex-1 bg-primary bg-gradient-to-r from-primary to-secondary">
-            <SVGDoctorsBanner
-                role="img"
-                alt="Facility Banner Image"
-                title="banner image"
-                class="w-48 h-48 fill-primary-text-inverted ml-8"
-            />
-        </div>
-        <div class="result-content ml-2">
-            <div class="result-header mt-7 ml-4">
-                <span class="w-4 text-3xl font-bold pl-2 self-center">{{
-                    healthcareProfessionalName
-                }}, </span>
-                <span class="w-4 text-2xl font-semibold pl-2 self-center">{{
-                    healthcareProfessionalDegrees
-                }}</span>
+    <BottomSheet ref="searchResultDetailsBottomSheet">
+        <div class="result-details landscape:min-w-[480px]">
+            <div class="header flex flex-1 bg-primary bg-gradient-to-r from-primary to-secondary">
+                <SVGDoctorsBanner
+                    role="img"
+                    alt="Facility Banner Image"
+                    title="banner image"
+                    class="w-48 h-48 fill-primary-text-inverted ml-8"
+                />
             </div>
-            <div class="result-details flex flex-col mb-1 ml-4 pl-2 mt-2 text-sm">
-                <span class="px-3 text-primary/90 font-medium text-lg">{{
-                    facilityName
-                }}</span>
-                <div
-                    v-for="(specialty, index) in specialties"
-                    :key="index"
-                    class="flex"
-                >
-                    <span class="px-3 italic">{{ specialty }}</span>
+            <div class="result-content ml-2">
+                <div class="result-header mt-7 ml-4">
+                    <span class="w-4 text-3xl font-bold pl-2 self-center">{{
+                        healthcareProfessionalName
+                    }}, </span>
+                    <span class="w-4 text-2xl font-semibold pl-2 self-center">{{
+                        healthcareProfessionalDegrees
+                    }}</span>
                 </div>
-            </div>
-            <div>
-                <div class="ml-9 mt-2 font-bold text-sm">
-                    <span>{{ t("searchResultsDetails.speaks") }}:</span>
-                </div>
-                <div class="result-tags flex flex-wrap w-64 mb-6 mt-1 ml-6 pl-2">
+                <div class="result-details flex flex-col mb-1 ml-4 pl-2 mt-2 text-sm">
+                    <span class="px-3 text-primary/90 font-medium text-lg">{{
+                        facilityName
+                    }}</span>
                     <div
-                        v-for="(spokenLanguage, index) in spokenLanguages"
+                        v-for="(specialty, index) in specialties"
                         :key="index"
-                        class="pl-2 pr-2 py-px mr-2 border-2 border-primary/40 rounded-full shadow-sm text-md
-                  text-primary hover:bg-primary/20 transition-all"
+                        class="flex"
                     >
-                        {{ spokenLanguage }}
+                        <span class="px-3 italic">{{ specialty }}</span>
                     </div>
                 </div>
-            </div>
-            <div class="about ml-4 pl-2">
-                <span class="font-semibold">{{
-                    t("searchResultsDetails.contact")
-                }}</span>
-                <div class="address flex my-4">
-                    <SVGMapPinIcon
-                        role="img"
-                        alt="Facility Banner Image"
-                        title="banner image"
-                        class="w-6 h-6 stroke-primary mr-2 self-center"
-                    />
-                    <div class="flex flex-col">
+                <div>
+                    <div class="ml-9 mt-2 font-bold text-sm">
+                        <span>{{ t("searchResultsDetails.speaks") }}:</span>
+                    </div>
+                    <div class="result-tags flex flex-wrap w-64 mb-6 mt-1 ml-6 pl-2">
+                        <div
+                            v-for="(spokenLanguage, index) in spokenLanguages"
+                            :key="index"
+                            class="pl-2 pr-2 py-px mr-2 border-2 border-primary/40 rounded-full shadow-sm text-md
+                  text-primary hover:bg-primary/20 transition-all"
+                        >
+                            {{ spokenLanguage }}
+                        </div>
+                    </div>
+                </div>
+                <div class="about ml-4 pl-2">
+                    <span class="font-semibold">{{
+                        t("searchResultsDetails.contact")
+                    }}</span>
+                    <div class="address flex my-4">
+                        <SVGMapPinIcon
+                            role="img"
+                            alt="Facility Banner Image"
+                            title="banner image"
+                            class="w-6 h-6 stroke-primary mr-2 self-center"
+                        />
+                        <div class="flex flex-col">
+                            <a
+                                :href="addressLink"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="underline text-blue"
+                            >
+                                <div>{{ addressLine1 }}</div>
+                                <div v-if="addressLine2">
+                                    {{ addressLine2 }}
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="website flex my-4">
+                        <SVGGlobeIcon
+                            role="img"
+                            alt="Facility Banner Image"
+                            title="banner image"
+                            class="banner-icon w-6 h-6 stroke-primary mr-2 self-center"
+                        />
                         <a
-                            :href="addressLink"
+                            v-if="website"
+                            :href="website"
                             target="_blank"
                             rel="noopener noreferrer"
                             class="underline text-blue"
-                        >
-                            <div>{{ addressLine1 }}</div>
-                            <div v-if="addressLine2">
-                                {{ addressLine2 }}
-                            </div>
-                        </a>
+                        >{{ website }}</a>
                     </div>
-                </div>
-                <div class="website flex my-4">
-                    <SVGGlobeIcon
-                        role="img"
-                        alt="Facility Banner Image"
-                        title="banner image"
-                        class="banner-icon w-6 h-6 stroke-primary mr-2 self-center"
-                    />
-                    <a
-                        v-if="website"
-                        :href="website"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="underline text-blue"
-                    >{{ website }}</a>
-                </div>
-                <div class="phone flex my-4">
-                    <SVGPhoneIcon
-                        role="img"
-                        alt="Facility Banner Image"
-                        title="banner image"
-                        class="banner-icon w-6 h-6 stroke-primary mr-2 self-center"
-                    />
-                    <a
-                        v-if="phone"
-                        :href="`tel:${phone}`"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="underline text-blue"
-                    >{{ phone }}</a>
-                </div>
-                <div
-                    v-if="email && !excludedEmailAddresses.includes(email)"
-                    class="email flex my-4"
-                >
-                    <SVGEmailIcon
-                        role="img"
-                        alt="Facility Banner Image"
-                        title="banner image"
-                        class="banner-icon w-6 h-6 stroke-primary mr-2 self-center"
-                    />
-                    <a
-                        :href="`mailto:${email}`"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="underline text-blue"
-                    >{{ email }}</a>
+                    <div class="phone flex my-4">
+                        <SVGPhoneIcon
+                            role="img"
+                            alt="Facility Banner Image"
+                            title="banner image"
+                            class="banner-icon w-6 h-6 stroke-primary mr-2 self-center"
+                        />
+                        <a
+                            v-if="phone"
+                            :href="`tel:${phone}`"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="underline text-blue"
+                        >{{ phone }}</a>
+                    </div>
+                    <div
+                        v-if="email && !excludedEmailAddresses.includes(email)"
+                        class="email flex my-4"
+                    >
+                        <SVGEmailIcon
+                            role="img"
+                            alt="Facility Banner Image"
+                            title="banner image"
+                            class="banner-icon w-6 h-6 stroke-primary mr-2 self-center"
+                        />
+                        <a
+                            :href="`mailto:${email}`"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="underline text-blue"
+                        >{{ email }}</a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </BottomSheet>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
+import type BottomSheet from '~/components/BottomSheet.vue'
 import SVGDoctorsBanner from '~/assets/icons/doctors-banner.svg'
 import SVGMapPinIcon from '~/assets/icons/map-pin-icon.svg'
 import SVGGlobeIcon from '~/assets/icons/globe-icon.svg'
@@ -133,12 +137,34 @@ import { useSpecialtiesStore } from '~/stores/specialtiesStore.js'
 import { useSearchResultsStore } from '~/stores/searchResultsStore'
 import { Locale } from '~/typedefs/gqlTypes.js'
 import { formatHealthcareProfessionalName } from '~/utils/nameUtils'
+import { BottomSheetType, useBottomSheetStore } from '~/stores/bottomSheetStore'
 
 const { t } = useI18n()
 
 const resultsStore = useSearchResultsStore()
 const localeStore = useLocaleStore()
 const specialtiesStore = useSpecialtiesStore()
+const bottomSheetStore = useBottomSheetStore()
+
+const searchResultDetailsBottomSheet = ref<typeof BottomSheet | null>(null)
+
+watch(() => bottomSheetStore.isOpen, newVal => {
+    if (newVal && bottomSheetStore.bottomSheetType === BottomSheetType.SearchResultDetails) {
+        openPanel()
+    } else if (!newVal && bottomSheetStore.bottomSheetType === BottomSheetType.SearchResultDetails) {
+        closePanel()
+    }
+})
+
+const openPanel = () => {
+    searchResultDetailsBottomSheet.value?.open()
+}
+
+const closePanel = () => {
+    searchResultDetailsBottomSheet.value?.close()
+}
+
+// Form Data
 
 const healthcareProfessionalName = computed(() => {
     const name = formatHealthcareProfessionalName(

@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col landscape:p-4 portrait:px-4 mt-4  bg-primary-bg/85 rounded-b-lg ">
+    <div class="flex flex-col landscape:p-4 portrait:px-6 bg-primary-bg/90 rounded-b-lg">
         <div
             class="flex justify-between items-center"
         >
@@ -7,7 +7,7 @@
             <div
                 id="mobile-site-icon"
                 class="landscape:hidden flex justify-between items-start font-semibold text-xl
-                group transition-colors p-2 bg-primary-inverted/10 rounded-2xl"
+                group transition-colors py-2 pr-2 bg-primary-inverted/10 rounded-2xl"
             >
                 <SVGSiteLogo
                     role="img"

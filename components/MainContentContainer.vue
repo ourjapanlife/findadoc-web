@@ -8,7 +8,7 @@
             v-if="onboardingState === OnboardingState.Completed"
             id="search-container"
         >
-            <TopNav class="relative top-0 left-0 z-10" />
+            <TopNav class="absolute top-0 left-0 right-0 z-10 mx-2" />
             <!-- Landscape / Desktop Mode -->
             <div
                 v-if="$viewport.isGreaterThan('tablet')"
@@ -27,13 +27,11 @@
             <div
                 v-else
                 id="search-portrait"
-                class="h-[calc(100vh)]"
+                class="h-dvh"
             >
                 <Loader />
-                <BottomSheet ref="searchResultDetailsBottomSheet">
-                    <SearchResultDetails />
-                </BottomSheet>
-                <MapContainer class="h-full" />
+                <SearchResultDetails />
+                <MapContainer class="h-[calc(100vh)]" />
                 <SearchResultsList class="relative bottom-1/2 z-20 h-1/2 mx-2 rounded-t-lg" />
             </div>
             <Footer class="z-10" />
@@ -43,30 +41,8 @@
 
 <script lang="ts" setup>
 import { storeToRefs } from 'pinia'
-import { ref, watch } from 'vue'
-import BottomSheet from '~/components/BottomSheet.vue'
 import { useOnboardingStore } from '@/stores/onboardingStore'
-import { BottomSheetType, useBottomSheetStore } from '@/stores/bottomSheetStore'
 
-const bottomSheetStore = useBottomSheetStore()
 const onboardingStore = useOnboardingStore()
 const { onboardingState } = storeToRefs(onboardingStore)
-
-const searchResultDetailsBottomSheet = ref<typeof BottomSheet | null>(null)
-
-watch(() => bottomSheetStore.isOpen, newVal => {
-    if (newVal && bottomSheetStore.bottomSheetType === BottomSheetType.SearchResultDetails) {
-        openPanel()
-    } else if (!newVal && bottomSheetStore.bottomSheetType === BottomSheetType.SearchResultDetails) {
-        closePanel()
-    }
-})
-
-const openPanel = () => {
-    searchResultDetailsBottomSheet.value?.open()
-}
-
-const closePanel = () => {
-    searchResultDetailsBottomSheet.value?.close()
-}
 </script>
