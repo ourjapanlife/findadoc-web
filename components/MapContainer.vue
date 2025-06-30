@@ -44,8 +44,8 @@ const center = computed(() => {
     const lat = useSearchResultsStore().activeResult?.facilities[0]?.mapLatitude ?? defaultLocation.lat
     const locationExists = lng && lat
 
-    // Since the map is slightly offset vertically, we need to offset the location by 0.002 to center it
-    return locationExists ? { lat: lat + 0.002, lng } : defaultLocation
+    // Since the map is slightly offset vertically, we need to offset the location by 0.01 to center it
+    return locationExists ? { lat: lat + 0.01, lng } : defaultLocation
 })
 
 const searchResultsStore = useSearchResultsStore()
