@@ -45,7 +45,7 @@ const center = computed(() => {
     const locationExists = lng && lat
 
     // Since the map is slightly offset vertically, we need to offset the location by 0.01 to center it
-    return locationExists ? { lat: lat + 0.01, lng } : defaultLocation
+    return locationExists ? { lat: lat - 0.01, lng } : defaultLocation
 })
 
 const searchResultsStore = useSearchResultsStore()
