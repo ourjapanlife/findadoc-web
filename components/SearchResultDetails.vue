@@ -100,7 +100,7 @@
                     >{{ phone }}</a>
                 </div>
                 <div
-                    v-if="!excludedEmailAddresses.includes(email)"
+                    v-if="email && !excludedEmailAddresses.includes(email)"
                     class="email flex my-4"
                 >
                     <SVGEmailIcon
@@ -111,7 +111,9 @@
                     />
                     <a
                         :href="`mailto:${email}`"
-                        class="email-link"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="underline text-blue"
                     >{{ email }}</a>
                 </div>
             </div>
