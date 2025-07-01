@@ -8,9 +8,9 @@
             <!-- Top half of screen -->
             <div
                 class="flex flex-col justify-center pt-8
-                min-h-[65vh] bg-primary relative
+                min-h-[70vh] bg-primary relative
                 transition-all duration-700 ease-out"
-                :class="{ 'min-h-[100vh]': isBackgroundExpanding }"
+                :class="{ 'min-h-svh': isBackgroundExpanding }"
             >
                 <!-- Header text -->
                 <div
@@ -66,7 +66,7 @@
                 <div class="w-full absolute bottom-0">
                     <svg
                         viewBox="0 0 375 56"
-                        class="w-full z-10 transition-all duration-500ease-out block"
+                        class="w-full transition-all duration-500 ease-out block"
                         :class="{ 'h-0': isBackgroundExpanding }"
                         width="100%"
                         height="56"
