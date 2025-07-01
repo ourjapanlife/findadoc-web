@@ -36,13 +36,6 @@ jobs:
       - name: Run unused keys script
         run: yarn lint:cleanlocales
 
-      - name: Commit and push if changed (automated by create-pull-request)
-        run: |
-             git config user.name "i18n-bot"
-             git config user.email "i18n-bot@example.com"
-             git add potentially_unused_keys.txt
-             git diff --cached --quiet || git commit -m "chore(i18n): update unused translation keys"
-
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
         with:
@@ -50,7 +43,7 @@ jobs:
           commit-message: "chore(i18n): update unused translation keys"
           committer: GitHub <noreply@github.com>
           author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
-          title: "🔄 chore(i18n): update unused translation keys"
+          title: "chore(i18n): update unused translation keys"
           body: |
             This PR was automatically generated to update the list of unused translation keys.
             Please review the changes before merging.
