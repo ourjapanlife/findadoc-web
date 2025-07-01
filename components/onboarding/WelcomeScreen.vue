@@ -63,7 +63,7 @@
                     </button>
                 </div>
                 <!-- Background wave svg -->
-                <div class="w-full absolute bottom-0">
+                <div class="w-full absolute bottom-0 -mb-1">
                     <svg
                         viewBox="0 0 375 56"
                         class="w-full z-10 transition-all duration-500ease-out block"
