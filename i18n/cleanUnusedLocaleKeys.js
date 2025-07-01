@@ -1,7 +1,6 @@
 import fs from 'fs'
 import path from 'path'
 import { fileURLToPath } from 'url'
-import glob from 'fast-glob'
 
 // eslint-disable-next-line no-underscore-dangle
 const __filename = fileURLToPath(import.meta.url)
@@ -15,13 +14,33 @@ const translationFilePaths = fs.readdirSync(localesDir)
     .filter(file => file.endsWith('.json'))
     .map(file => path.join(localesDir, file))
 
+function getFilesRecursively(dir, exts = [], ignoreDirectories = []) {
+    // Read the contents of the directory 'dir' and get an array of Dirent objects
+    const list = fs.readdirSync(dir, { withFileTypes: true })
+    return list.reduce((results, dirent) => {
+        // Accumulate matching file paths in the 'results' array, starting from an empty array []
+        const fullPath = path.join(dir, dirent.name)
+
+        if (dirent.isDirectory()) {
+            if (!ignoreDirectories.includes(dirent.name)) {
+                // Recursively call getFilesRecursively on this directory,
+                // Then concatenate the returned array of file paths with 'results'
+                return results.concat(getFilesRecursively(fullPath, exts, ignoreDirectories))
+            }
+            return results
+        }
+        // Check if the current item is a file and its name ends with one of the extensions we're interested in
+        if (dirent.isFile() && exts.some(ext => dirent.name.endsWith(ext))) {
+            return results.concat(fullPath)
+        }
+
+        return results
+    }, [])
+}
+
 // 🔍 Extract used translation keys from code
 const extractUsedTranslationKeys = async () => {
-    const files = await glob(['**/*.{ts,vue}'], {
-        cwd: sourceCodeDir,
-        absolute: true,
-        ignore: ['node_modules/**', 'dist/**']
-    })
+    const files = getFilesRecursively(sourceCodeDir, ['.ts', '.vue'], ['node_modules', 'dist'])
 
     const keyRegex = /(?:\$t|t)\(\s*['"`]([^'"`]+)['"`]\s*\)/g
 
