@@ -8250,7 +8250,6 @@ __metadata:
     eslint-plugin-cypress: "npm:^3.4.0"
     eslint-plugin-json: "npm:^4.0.1"
     eslint-plugin-vue: "npm:^9.27.0"
-    flat: "npm:^6.0.1"
     globby: "npm:^14.1.0"
     graphql: "npm:^16.9.0"
     graphql-request: "npm:^7.1.0"
@@ -8298,15 +8297,6 @@ __metadata:
     flatted: "npm:^3.2.9"
     keyv: "npm:^4.5.4"
   checksum: 10/58ce851d9045fffc7871ce2bd718bc485ad7e777bf748c054904b87c351ff1080c2c11da00788d78738bfb51b71e4d5ea12d13b98eb36e3358851ffe495b62dc
-  languageName: node
-  linkType: hard
-
-"flat@npm:^6.0.1":
-  version: 6.0.1
-  resolution: "flat@npm:6.0.1"
-  bin:
-    flat: cli.js
-  checksum: 10/c7a5f2e7e3ba0bec28b9c3aca27e68ff74df446df15cdb77ddef9e3d4fd0e9321ca52e49ca8b861c46157215006666b0dad25457f231083fc7bd2f7fcb67d7eb
   languageName: node
   linkType: hard
 

@@ -17,7 +17,7 @@ const translationFilePaths = fs.readdirSync(localesDir)
 
 // 🔍 Extract used translation keys from code
 const extractUsedTranslationKeys = async () => {
-    const files = await glob(['**/*.{js,ts,vue,tsx}'], {
+    const files = await glob(['**/*.{ts,vue}'], {
         cwd: sourceCodeDir,
         absolute: true,
         ignore: ['node_modules/**', 'dist/**']
@@ -57,11 +57,9 @@ const run = async () => {
     )
 
     if (Object.keys(unusedKeysByLocale).length === 0) {
-        //console.log('✅ No unused translation keys found.')
+        console.info('✅ No unused translation keys found.')
         return
     }
-
-    //console.log('\n📋 Potentially unused translation keys:\n')
 
     const output = Object.entries(unusedKeysByLocale)
         .map(([file, keys]) => {
@@ -72,7 +70,7 @@ const run = async () => {
         .join('\n')
 
     fs.writeFileSync('potentially_unused_keys.txt', output, 'utf-8')
-    //console.log('\n📝 Report saved to: potentially_unused_keys.txt\n')
+    console.info('\n📝 Report saved to: potentially_unused_keys.txt\n')
 }
 
 run()
