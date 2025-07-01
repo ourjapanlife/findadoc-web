@@ -61,19 +61,59 @@ const extractAllKeysFromJson = (obj, prefix = '') =>
             : [fullKey]
     })
 
+function removeKeysFromJson(obj, keysToRemove) {
+    // Recursive helper function to remove a nested key specified by an array of keys (keyParts)
+    const removeKeyAtPath = (currentObj, keyParts) => {
+        if (keyParts.length === 1) {
+            // Base case: remove the last key from the current object and return a new object without that key
+            const keyToRemove = keyParts[0]
+            // Use object destructuring with computed property name to extract the property named by 'keyToRemove'
+            // And ignore it (_), while collecting the rest of the properties into a new object called 'rest'.
+            // This effectively creates a new object 'rest' without the property 'keyToRemove'.
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            const { [keyToRemove]: _unused, ...rest } = currentObj
+            return rest
+        }
+        const [firstKey, ...remainingKeys] = keyParts
+        // If the first key exists and is an object, recursively remove the nested key
+        if (currentObj[firstKey] && typeof currentObj[firstKey] === 'object' && currentObj[firstKey] !== null) {
+            return {
+                // Return a new object copying all properties from `currentObj`,
+                // But replace the property at `firstKey` with the result of
+                // Recursively removing the key from the nested object at that path.
+                ...currentObj,
+                [firstKey]: removeKeyAtPath(currentObj[firstKey], remainingKeys)
+            }
+        }
+
+        // If the key path does not exist or is not an object, return the object unchanged
+        return currentObj
+    }
+
+    // For each key path to remove, split it into parts and call the recursive function to remove it
+    return keysToRemove.reduce((updatedObj, keyPath) => {
+        const keyParts = keyPath.split('.')
+        return removeKeyAtPath(updatedObj, keyParts)
+    }, obj)
+}
+
 const run = async () => {
     const usedKeys = await extractUsedTranslationKeys()
 
-    const unusedKeysByLocale = Object.fromEntries(
-        translationFilePaths
-            .map(filePath => {
-                const content = JSON.parse(fs.readFileSync(filePath, 'utf-8'))
-                const allKeys = extractAllKeysFromJson(content)
-                const unusedKeys = allKeys.filter(key => !usedKeys.has(key))
-                return [path.basename(filePath), unusedKeys]
-            })
-            .filter(([, unusedKeys]) => unusedKeys.length > 0)
-    )
+    const unusedKeysByLocale = translationFilePaths.reduce((acc, filePath) => {
+        const content = JSON.parse(fs.readFileSync(filePath, 'utf-8'))
+        const allKeys = extractAllKeysFromJson(content)
+        const unusedKeys = allKeys.filter(key => !usedKeys.has(key))
+
+        if (unusedKeys.length > 0) {
+            // Clean JSON
+            const cleanedContent = removeKeysFromJson(content, unusedKeys)
+            // Rewrite file
+            fs.writeFileSync(filePath, JSON.stringify(cleanedContent, null, 2), 'utf-8')
+            acc[path.basename(filePath)] = unusedKeys
+        }
+        return acc
+    }, {})
 
     if (Object.keys(unusedKeysByLocale).length === 0) {
         console.info('✅ No unused translation keys found.')
