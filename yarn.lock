@@ -3795,6 +3795,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/hammerjs@npm:^2":
+  version: 2.0.46
+  resolution: "@types/hammerjs@npm:2.0.46"
+  checksum: 10/1b6502d668f45ca49fb488c01f7938d3aa75e989d70c64801c8feded7d659ca1a118f745c1b604d220efe344c93231767d5cc68c05e00e069c14539b6143cfd9
+  languageName: node
+  linkType: hard
+
 "@types/html-minifier-terser@npm:7.0.2":
   version: 7.0.2
   resolution: "@types/html-minifier-terser@npm:7.0.2"
@@ -4633,6 +4640,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@vueform/multiselect@npm:^2.6.11":
+  version: 2.6.11
+  resolution: "@vueform/multiselect@npm:2.6.11"
+  checksum: 10/51cdddf1b919fb2f6074182baf258525fe0f4d5f4800d50ea9eb8d16bdf7da23762b9424cfb7c36fef53f1a299dca8e26bc80bd7cf8dcc07159fa3970ef4a6bd
+  languageName: node
+  linkType: hard
+
 "@webassemblyjs/ast@npm:1.14.1, @webassemblyjs/ast@npm:^1.14.1":
   version: 1.14.1
   resolution: "@webassemblyjs/ast@npm:1.14.1"
@@ -4781,6 +4795,15 @@ __metadata:
     "@webassemblyjs/ast": "npm:1.14.1"
     "@xtuc/long": "npm:4.2.2"
   checksum: 10/cef09aad2fcd291bfcf9efdae2ea1e961a1ba0f925d1d9dcdd8c746d32fbaf431b6d26a0241699c0e39f82139018aa720b4ceb84ac6f4c78f13072747480db69
+  languageName: node
+  linkType: hard
+
+"@webzlodimir/vue-bottom-sheet@npm:^3.0.5":
+  version: 3.0.5
+  resolution: "@webzlodimir/vue-bottom-sheet@npm:3.0.5"
+  dependencies:
+    hammerjs: "npm:^2.0.8"
+  checksum: 10/d2d0b7642cb3480a4a6ba504a254734639998098c24fcbb81d9aa97b9779c409ce6485ecbc5c72eb1699e6e8fc6462d8b7952b555a07e126b58e319a7ba6a8ff
   languageName: node
   linkType: hard
 
@@ -8236,10 +8259,13 @@ __metadata:
     "@stylistic/eslint-plugin": "npm:^2.6.1"
     "@swc/core": "npm:^1.7.6"
     "@testing-library/vue": "npm:^8.1.0"
+    "@types/hammerjs": "npm:^2"
     "@vitejs/plugin-vue": "npm:^5.1.2"
     "@vitest/coverage-v8": "npm:^2.1.3"
     "@vitest/eslint-plugin": "npm:^1.1.27"
     "@vue/test-utils": "npm:^2.4.6"
+    "@vueform/multiselect": "npm:^2.6.11"
+    "@webzlodimir/vue-bottom-sheet": "npm:^3.0.5"
     all-contributors-cli: "npm:^6.26.1"
     autoprefixer: "npm:^10.4.20"
     cypress: "npm:^13.13.2"
@@ -8252,6 +8278,7 @@ __metadata:
     eslint-plugin-vue: "npm:^9.27.0"
     graphql: "npm:^16.9.0"
     graphql-request: "npm:^7.1.0"
+    hammerjs: "npm:^2.0.8"
     husky: "npm:^9.1.4"
     jsdom: "npm:^24.1.1"
     nuxt: "npm:^3.15.2"
@@ -8865,6 +8892,13 @@ __metadata:
     ufo: "npm:^1.5.4"
     uncrypto: "npm:^0.1.3"
   checksum: 10/5348ef68a80f1916fa0ec2ae82ecb701d7b1b58b416dc5bf1431972f0baa32e3eb0d8b7750c4c4ee1a76bc2edc5b353d9799400b0bfa9ab60b52a02ff641b5aa
+  languageName: node
+  linkType: hard
+
+"hammerjs@npm:^2.0.8":
+  version: 2.0.8
+  resolution: "hammerjs@npm:2.0.8"
+  checksum: 10/9155d056f252ef35e8ca258dbb5ee2c9d8794f6805d083da7d1d9763d185e3e149459ecc2b36ccce584e3cd5f099fd9fa55056e3bcc7724046390f2e5ae25815
   languageName: node
   linkType: hard
 

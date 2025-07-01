@@ -92,7 +92,6 @@
     },
     "searchResultsList": {
         "doctorsNearby": "Mga kalapit na Doktor",
-        "filters": "Mga Filter",
         "noResults": "Walang natagpuang resulta",
         "noResultsSubtext": "Paki-subukang gumamit ng ibang kombinasyon ng filter."
     },

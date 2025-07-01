@@ -92,7 +92,6 @@
     },
     "searchResultsList": {
         "doctorsNearby": "Bác sĩ gần đây",
-        "filters": "Bộ lọc",
         "noResults": "Không tìm thấy kết quả",
         "noResultsSubtext": "Vui lòng thử kết hợp bộ lọc khác."
     },
