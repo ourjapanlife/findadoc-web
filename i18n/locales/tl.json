@@ -273,6 +273,7 @@
     "errorMessageFacilityInputsInvalid": "Ang ilan sa mga impormasyon ng pasilidad ay hindi nakumpleto ng tama.",
     "errorMessageFacilityId": "Kinakailangan ang ID ng Pasilidad upang ma-update ang pasilidad.",
     "errorMessageHealthcareInputsInvalid": "Ang ilan sa mga impormasyon ng Propesyonal sa Pangangalagang Pangkalusugan ay hindi nakumpleto ng tama.",
+    "errorMessageEnglishNameRequired": "Ang propesyonal sa Pangangalagang Pangkalusugan ay kailangang may pangalan sa Ingles",
     "errorMessageUpdated": "Hindi na-update ang submisyon form",
     "facilityHeading": "Impormasyon ng Pasilidad",
     "googleMapsInformation": "Impormasyon sa Google maps",

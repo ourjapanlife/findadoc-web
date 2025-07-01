@@ -316,6 +316,7 @@
     "errorMessageFacilityInputsInvalid": "Một số trường thông tin cơ sở vật chất chưa được điền chính xác.",
     "errorMessageFacilityId": "Mã cơ sở vật chất là bắt buộc để cập nhật cơ sở vật chất.",
     "errorMessageHealthcareInputsInvalid": "Một số trường thông tin về chuyên gia y tế chưa được điền chính xác.",
+    "errorMessageEnglishNameRequired": "Chuyên gia y tế phải có tên tiếng Anh",
     "errorMessageUpdated": "Cập nhật mẫu đơn không thành công.",
     "facilityHeading": "Thông tin cơ sở vật chất",
     "googleMapsInformation": "Thông tin Google Maps",
@@ -487,3 +488,4 @@
     "lastUpdate": "Last update: "
   }
 }
+

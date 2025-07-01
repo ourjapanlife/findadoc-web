@@ -377,6 +377,7 @@
         "errorMessageFacilityInputsInvalid": "Some of the Facility Fields were not filled in correctly",
         "errorMessageFacilityId": "Facility ID is required for updating the Facility",
         "errorMessageHealthcareInputsInvalid": "Some of the Healthcare Professional Fields were not filled in correctly",
+        "errorMessageEnglishNameRequired": "The healthcare professional must have an English name",
         "errorMessageUpdated": "Failed to update submission form",
         "facilityHeading": "Facility Information",
         "facilitySuccessfullyRejected": "Facility rejected successfully",
