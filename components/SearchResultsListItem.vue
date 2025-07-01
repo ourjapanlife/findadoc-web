@@ -57,6 +57,7 @@ import SVGChatBubblesIcon from '~/assets/icons/chat-bubbles.svg'
 import { useLocaleStore } from '~/stores/localeStore.js'
 import { useSpecialtiesStore } from '~/stores/specialtiesStore.js'
 import type { Locale } from '~/typedefs/gqlTypes'
+import { formatToReadableDate } from '~/utils/dateUtils'
 
 const { t } = useI18n()
 
@@ -104,9 +105,5 @@ const formattedSpecialties = computed(() => {
 
 const formattedLanguages = computed(() => localeStore.formatLanguages(props.spokenLanguages, localeStore.localeDisplayOptions))
 
-const formattedUpdatedDate = computed(() => {
-    const updatedDateObj = new Date(props.updatedDate)
-    const formattedUpdatedDate = updatedDateObj.toDateString()
-    return t('searchResultsItem.lastUpdate') + formattedUpdatedDate
-})
+const formattedUpdatedDate = computed(() => t('searchResultsItem.lastUpdate') + formatToReadableDate(props.updatedDate))
 </script>
