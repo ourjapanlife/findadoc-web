@@ -1,10 +1,12 @@
 <!-- From https://github.com/vaban-ru/vue-bottom-sheet?tab=readme-ov-file,
  but copied due to it no longer being maintained -->
+ <!-- It's been customized to allow for a z-index changes -->
 <template>
     <Teleport to="body">
         <div
             ref="bottomSheet"
             class="bottom-sheet"
+            :style="{ zIndex: zIndex }"
             :aria-hidden="!showSheet"
             role="dialog"
         >
@@ -66,6 +68,7 @@ interface IProps {
     transitionDuration?: number
     overlayClickClose?: boolean
     canSwipe?: boolean
+    zIndex?: number
 }
 
 /**
@@ -87,7 +90,8 @@ const props = withDefaults(defineProps<IProps>(), {
     maxWidth: 640,
     transitionDuration: 0.5,
     overlayClickClose: true,
-    canSwipe: true
+    canSwipe: true,
+    zIndex: 99999
 })
 
 /**
@@ -333,7 +337,6 @@ defineExpose({ open, close })
 
 <style scoped>
 .bottom-sheet {
-  z-index: 99999;
   display: flex;
   flex-direction: column;
   align-items: center;

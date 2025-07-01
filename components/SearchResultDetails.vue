@@ -1,6 +1,31 @@
 <template>
     <BottomSheet ref="searchResultDetailsBottomSheet">
-        <div class="result-details landscape:min-w-[480px]">
+        <!-- Close button -->
+        <button
+            data-testid="filters-panel-close-button"
+            class="absolute top-4 right-2 px-2 py-.5 mr-2"
+            @click="closePanel()"
+        >
+            <svg
+                class="stroke-primary/60"
+                width="20"
+                heigh="20"
+                viewBox="4 0 15 25"
+            >
+                <path
+                    stroke-width="3"
+                    fill="none"
+                    d="M6.25,6.25,17.75,17.75"
+                />
+                <path
+                    stroke-width="3"
+                    fill="none"
+                    d="M6.25,17.75,17.75,6.25"
+                />
+            </svg>
+        </button>
+        <!-- Result Details -->
+        <div class="result-details landscape:min-w-[480px] pt-5 landscape:pt-0">
             <div class="header flex flex-1 bg-primary bg-gradient-to-r from-primary to-secondary">
                 <SVGDoctorsBanner
                     role="img"

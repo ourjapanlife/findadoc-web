@@ -32,7 +32,7 @@
                 <Loader />
                 <SearchResultDetails />
                 <MapContainer class="h-[calc(100vh)]" />
-                <SearchResultsList class="relative bottom-1/2 z-20 h-1/2 mx-2 rounded-t-lg" />
+                <SearchResultsList />
             </div>
             <Footer class="z-10" />
         </div>
