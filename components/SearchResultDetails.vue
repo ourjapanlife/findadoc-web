@@ -100,7 +100,7 @@
                     >{{ phone }}</a>
                 </div>
                 <div
-                    v-if="!excludedEmailAddresses.includes(email)"
+                    v-if="email && !excludedEmailAddresses.includes(email)"
                     class="email flex my-4"
                 >
                     <SVGEmailIcon
@@ -111,7 +111,9 @@
                     />
                     <a
                         :href="`mailto:${email}`"
-                        class="email-link"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="underline text-blue"
                     >{{ email }}</a>
                 </div>
             </div>
@@ -130,6 +132,7 @@ import { useLocaleStore } from '~/stores/localeStore.js'
 import { useSpecialtiesStore } from '~/stores/specialtiesStore.js'
 import { useSearchResultsStore } from '~/stores/searchResultsStore'
 import { Locale } from '~/typedefs/gqlTypes.js'
+import { formatHealthcareProfessionalName } from '~/utils/nameUtils'
 
 const { t } = useI18n()
 
@@ -138,35 +141,21 @@ const localeStore = useLocaleStore()
 const specialtiesStore = useSpecialtiesStore()
 
 const healthcareProfessionalName = computed(() => {
-    const englishName
-        = resultsStore.$state.activeResult?.professional.names.find(
-            n => n.locale === Locale.EnUs
-        )
-    const japaneseName
-        = resultsStore.$state.activeResult?.professional.names.find(
-            n => n.locale === Locale.JaJp
-        )
-
-    const englishFullName = `${englishName?.firstName} ${englishName?.lastName}`
-    const japaneseFullName = `${japaneseName?.lastName} ${japaneseName?.firstName}`
-
-    switch (localeStore.activeLocale.code) {
-        case Locale.EnUs:
-            return englishFullName ? englishFullName : japaneseFullName
-        case Locale.JaJp:
-            return japaneseFullName ? japaneseFullName : englishFullName
-        default:
-            return englishFullName ? englishFullName : japaneseFullName
-    }
+    const name = formatHealthcareProfessionalName(
+        resultsStore.activeResult?.professional.names,
+        localeStore.activeLocale.code as Locale
+    )
+    return name
 })
+
 const healthcareProfessionalDegrees = computed(() => {
     const healthcareProfessionalDegreesText
-        = resultsStore.$state.activeResult?.professional.degrees.join(', ')
+        = resultsStore.activeResult?.professional.degrees.join(', ')
     return healthcareProfessionalDegreesText
 })
 const specialties = computed(() => {
     const specialties
-        = resultsStore.$state.activeResult?.professional.specialties
+        = resultsStore.activeResult?.professional.specialties
 
     const specialtiesDisplayText = specialties?.map(specialty => {
         const specialtyDisplayText
@@ -179,14 +168,14 @@ const specialties = computed(() => {
     return specialtiesDisplayText
 })
 const facilityName = computed(() => {
-    const englishName = resultsStore.$state.activeResult?.facilities[0].nameEn
-    const japaneseName = resultsStore.$state.activeResult?.facilities[0].nameJa
+    const englishName = resultsStore.activeResult?.facilities[0].nameEn
+    const japaneseName = resultsStore.activeResult?.facilities[0].nameJa
     return localeStore.activeLocale.code === Locale.JaJp ? japaneseName : englishName
 })
 
 const spokenLanguages = computed(() => {
     const languagesDisplayText
-        = resultsStore.$state.activeResult?.professional.spokenLanguages?.map(
+        = resultsStore.activeResult?.professional.spokenLanguages?.map(
             s => {
                 const languageDisplayText
                     = localeStore.localeDisplayOptions.find(
@@ -201,7 +190,7 @@ const spokenLanguages = computed(() => {
 
 const addressLine1 = computed(() => {
     const addressObj
-        = resultsStore.$state.activeResult?.facilities[0].contact.address
+        = resultsStore.activeResult?.facilities[0].contact.address
 
     const englishAddress = `${addressObj?.addressLine1En} ${addressObj?.addressLine2En}`
     const japaneseAddress = `${addressObj?.postalCode} ${addressObj?.prefectureJa}${addressObj?.cityJa}${addressObj?.addressLine1Ja}${addressObj?.addressLine2Ja}`
@@ -211,22 +200,22 @@ const addressLine1 = computed(() => {
 })
 const addressLine2 = computed(() => {
     const addressObj
-        = resultsStore.$state.activeResult?.facilities[0].contact.address
+        = resultsStore.activeResult?.facilities[0].contact.address
 
     const englishAddress = `${addressObj?.cityEn}, ${addressObj?.prefectureEn} ${addressObj?.postalCode}`
     return localeStore.activeLocale.code !== Locale.JaJp ? englishAddress : ''
 })
 const addressLink = computed(
-    () => resultsStore.$state.activeResult?.facilities[0].contact.googleMapsUrl
+    () => resultsStore.activeResult?.facilities[0].contact.googleMapsUrl
 )
 const website = computed(
-    () => resultsStore.$state.activeResult?.facilities[0]?.contact?.website
+    () => resultsStore.activeResult?.facilities[0]?.contact?.website
 )
 const phone = computed(
-    () => resultsStore.$state.activeResult?.facilities[0]?.contact?.phone
+    () => resultsStore.activeResult?.facilities[0]?.contact?.phone
 )
 const email = computed(
-    () => resultsStore.$state.activeResult?.facilities[0]?.contact?.email ?? ''
+    () => resultsStore.activeResult?.facilities[0]?.contact?.email ?? ''
 )
 
 const excludedEmailAddresses = ['none', 'email@email.com']
