@@ -245,6 +245,7 @@ const getSubmissionsGqlQuery = gql`
       degrees
       specialties
       acceptedInsurance
+      additionalInfoForPatients
       facilityIds
     }
     isUnderReview
@@ -300,6 +301,7 @@ mutation Mutation($id: ID!, $input: UpdateSubmissionInput!) {
       degrees
       specialties
       acceptedInsurance
+      additionalInfoForPatients
       facilityIds
     }
     isUnderReview

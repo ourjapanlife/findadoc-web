@@ -238,6 +238,12 @@
                         {{ localesStore.formatLanguageCodeToSimpleText(locale) }}
                     </li>
                 </ol>
+                <NoteInputField
+                    v-model="healthcareProfessionalsStore.healthcareProfessionalSectionFields.additionalInfoForPatients"
+                    :label="t('modHealthcareProfessionalSection.labelAdditionalNotesForPatients')"
+                    :placeholder="t('modHealthcareProfessionalSection.placeholderAdditionalNotesForPatients')"
+                    :required="false"
+                />
             </div>
             <div v-if="moderationScreenStore.editHealthcareProfessionalScreenIsActive()">
                 <h2

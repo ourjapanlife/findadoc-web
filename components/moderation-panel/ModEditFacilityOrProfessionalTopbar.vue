@@ -242,6 +242,7 @@ const healthcareProfessionalHasUnsavedChanges = () => {
     healthcareProfessionalSections.acceptedInsurance,
     originalHealthcareProfessional.acceptedInsurance
 )
+|| healthcareProfessionalSections.additionalInfoForPatients !== originalHealthcareProfessional.additionalInfoForPatients
 || healthcareProfessionalSections.createdDate
 !== originalHealthcareProfessional.createdDate
 || !arraysAreEqual(
