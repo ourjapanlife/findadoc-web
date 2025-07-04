@@ -1,0 +1,53 @@
+name: Check Unused i18n Keys
+
+on:
+  schedule:
+  # Run the workflow every Monday at midnight (UTC)
+  - cron: '0 0 * * MON'
+
+permissions:
+  contents: write
+  actions: write
+  pull-requests: write
+
+jobs:
+  check-unused-keys:
+    name: Checking unused i18n keys
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [21.3.0]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install Yarn/Node ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'yarn'
+
+      - name: Install Dependencies
+        run: yarn install --immutable
+
+      - name: Run unused keys script
+        run: yarn lint:cleanlocales
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "chore(i18n): update unused translation keys"
+          committer: GitHub <noreply@github.com>
+          author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+          title: "chore(i18n): update unused translation keys"
+          body: |
+            This PR was automatically generated to update the list of unused translation keys.
+            Please review the changes before merging.
+          branch: chore/remove-unused-i18n-keys
+          base: main
+          delete-branch: true
+
