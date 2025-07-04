@@ -238,6 +238,7 @@
     "errorMessageFacilityInputsInvalid": "Ang ilan sa mga impormasyon ng pasilidad ay hindi nakumpleto ng tama.",
     "errorMessageFacilityId": "Kinakailangan ang ID ng Pasilidad upang ma-update ang pasilidad.",
     "errorMessageHealthcareInputsInvalid": "Ang ilan sa mga impormasyon ng Propesyonal sa Pangangalagang Pangkalusugan ay hindi nakumpleto ng tama.",
+    "errorMessageEnglishNameRequired": "Ang propesyonal sa Pangangalagang Pangkalusugan ay kailangang may pangalan sa Ingles",
     "healthcareProfessionalId": "Mga ID ng propesyonal sa Pangangalagang Pangkalusugan",
     "infoMessageAlreadyApproved": "Ang Isinumite ay aprubado na",
     "infoMessageUpdateNeeded": "Kailangang i-update ito bago maaprubahan",
@@ -297,7 +298,9 @@
     "oneNameNecessary": "At least one name is required for a Healthcare Professional",
     "save": "Save",
     "update": "Update",
-    "charactersOfLanguageDoNotMatchNameLocale": "The characters of the Healthcare Professional's name are invalid in the chosen language"
+    "charactersOfLanguageDoNotMatchNameLocale": "The characters of the Healthcare Professional's name are invalid in the chosen language",
+    "labelAdditionalNotesForPatients": "Additional Notes for Patients",
+    "placeholderAdditionalNotesForPatients": "e.g. English speaking doctors only available from 2-4"
   },
   "modHealthcareProfessionalCard": {},
   "modDashboardHealthcareProfessionalCard": {

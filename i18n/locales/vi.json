@@ -208,7 +208,9 @@
     "oneNameNecessary": "At least one name is required for a Healthcare Professional",
     "save": "Save",
     "update": "Update",
-    "charactersOfLanguageDoNotMatchNameLocale": "The characters of the Healthcare Professional's name are invalid in the chosen language"
+    "charactersOfLanguageDoNotMatchNameLocale": "The characters of the Healthcare Professional's name are invalid in the chosen language",
+    "labelAdditionalNotesForPatients": "Additional Notes for Patients",
+    "placeholderAdditionalNotesForPatients": "e.g. English speaking doctors only available from 2-4"
   },
   "modFacilitySection": {
     "addresses": "Địa chỉ.",
@@ -276,6 +278,7 @@
     "errorMessageFacilityInputsInvalid": "Một số trường thông tin cơ sở vật chất chưa được điền chính xác.",
     "errorMessageFacilityId": "Mã cơ sở vật chất là bắt buộc để cập nhật cơ sở vật chất.",
     "errorMessageHealthcareInputsInvalid": "Một số trường thông tin về chuyên gia y tế chưa được điền chính xác.",
+    "errorMessageEnglishNameRequired": "Chuyên gia y tế phải có tên tiếng Anh",
     "healthcareProfessionalId": "Mã số chuyên gia y tế",
     "infoMessageAlreadyApproved": "Đơn đăng ký này đã được phê duyệt.",
     "infoMessageUpdateNeeded": "Cần cập nhật thông tin này trước khi phê duyệt.",
