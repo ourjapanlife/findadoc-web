@@ -131,6 +131,14 @@
             >
                 <ModEditHealthcareProfessionalSection />
             </div>
+            <NoteInputField
+                v-model="currentSubmissionNotes"
+                data-testid="submission-form-notes"
+                :label="t('modSubmissionForm.labelModNoteInput')"
+                :placeholder="t('modSubmissionForm.placeholderTextNoteInput')"
+                :required="false"
+                :text-size="'text-2xl'"
+            />
         </div>
     </div>
 </template>
@@ -172,6 +180,8 @@ const screenStore = useModerationScreenStore()
 const loadingStore = useLoadingStore()
 const facilitiesStore = useFacilitiesStore()
 const healthcareProfessionalsStore = useHealthcareProfessionalsStore()
+
+const currentSubmissionNotes = ref('')
 
 const syntheticEvent = new Event('submit', { bubbles: false, cancelable: true })
 
@@ -305,6 +315,16 @@ const validateHealthcareProfessionalFields = () => {
     return areAllFieldsValid
 }
 
+const validateHealthcareProfessionalEnglishName = () => {
+    const healthcareProfessionalFields = healthcareProfessionalsStore.healthcareProfessionalSectionFields
+    const names = healthcareProfessionalFields.names
+
+    // Check if the healthcare professional has a name in the 'en_US' locale (assumed to be in Romaji)
+    const hasEnglishName = names.some(name => name.locale == 'en_US')
+
+    return hasEnglishName
+}
+
 // Manual deep copy function for submission data
 function createSubmissionDeepCopy(submissionData: Submission): Submission {
     return {
@@ -343,6 +363,10 @@ function initializeSubmissionFormValues(submissionData: Submission | undefined) 
 
     const submittedHealthcareProfessionalName
     = submissionData?.healthcareProfessionalName?.split(' ') ?? []
+
+    if (submissionData && submissionData.notes) {
+        currentSubmissionNotes.value = submissionData.notes
+    }
 
     const facilitySectionFields = facilitiesStore.facilitySectionFields
     const healthcareProfessionalSections
@@ -424,6 +448,8 @@ function initializeSubmissionFormValues(submissionData: Submission | undefined) 
 
     healthcareProfessionalSections.acceptedInsurance
     = submissionData?.healthcareProfessionals?.[0]?.acceptedInsurance ?? []
+    healthcareProfessionalSections.additionalInfoForPatients
+    = submissionData?.healthcareProfessionals?.[0]?.additionalInfoForPatients ?? ''
     healthcareProfessionalSections.degrees
     = submissionData?.healthcareProfessionals?.[0]?.degrees ?? []
     healthcareProfessionalSections.specialties
@@ -553,6 +579,8 @@ async function submitUpdatedSubmission(e: Event) {
                 )
                     ? healthcareProfessionalsStore.healthcareProfessionalSectionFields.acceptedInsurance
                     : undefined,
+                additionalInfoForPatients:
+                    healthcareProfessionalsStore.healthcareProfessionalSectionFields.additionalInfoForPatients,
                 degrees: !arraysAreEqual(
                     submissionBeforeChangesComparison?.healthcareProfessionals?.[0]?.degrees ?? [],
                     healthcareProfessionalsStore.healthcareProfessionalSectionFields.degrees
@@ -579,7 +607,8 @@ async function submitUpdatedSubmission(e: Event) {
         input: {
             isUnderReview: true,
             facility: facilitySubmissionUpdate,
-            healthcareProfessionals: healthcareProfessionalUpdate
+            healthcareProfessionals: healthcareProfessionalUpdate,
+            notes: currentSubmissionNotes.value
         }
     }
 
@@ -627,6 +656,7 @@ async function submitCompletedForm(e: Event) {
 
     const isValidFacility = validateFacilityFields()
     const isValidHealthcareProfessional = validateHealthcareProfessionalFields()
+    const hasEnglishName = validateHealthcareProfessionalEnglishName()
 
     // This shows a toast and returns if the facility fields arent valid
     if (!isValidFacility && !currentFacilityRelations.value.length) {
@@ -637,6 +667,12 @@ async function submitCompletedForm(e: Event) {
 
     if (!isValidHealthcareProfessional && !currentExistingHealthcareProfessionals.value.length) {
         toast.error(t('modSubmissionForm.errorMessageHealthcareInputsInvalid'))
+        await resetModalRefs()
+        return
+    }
+
+    if (!hasEnglishName) {
+        toast.error(t('modSubmissionForm.errorMessageEnglishNameRequired'))
         await resetModalRefs()
         return
     }
