@@ -159,6 +159,7 @@ async function queryFacilities(healthcareProfessionalIds: string[], searchCity?:
 
 const searchProfessionalsQuery = gql`query searchHealthcareProfessionals($filters: HealthcareProfessionalSearchFilters!) {
     healthcareProfessionals(filters: $filters) {
+      nodes {
         id
         names {
             lastName
@@ -173,34 +174,39 @@ const searchProfessionalsQuery = gql`query searchHealthcareProfessionals($filter
         acceptedInsurance
         createdDate
         updatedDate
+      }
+      totalCount
     }
 }`
 
 const searchFacilitiesQuery = gql`query QueryFacilities($filters: FacilitySearchFilters!) {
     facilities(filters: $filters) {
-      id
-      nameEn
-      nameJa
-      mapLatitude
-      mapLongitude
-      healthcareProfessionalIds
-      contact {
-        address {
-          addressLine1En
-          addressLine2En
-          addressLine1Ja
-          addressLine2Ja
-          cityJa
-          cityEn
+      nodes {
+        id
+        nameEn
+        nameJa
+        mapLatitude
+        mapLongitude
+        healthcareProfessionalIds
+        contact {
+          address {
+            addressLine1En
+            addressLine2En
+            addressLine1Ja
+            addressLine2Ja
+            cityJa
+            cityEn
             prefectureJa
             prefectureEn
             postalCode
+          }
+          email
+          googleMapsUrl
+          phone
+          website
         }
-        email
-        googleMapsUrl
-        phone
-        website
       }
+      totalCount
     }
   }
   `

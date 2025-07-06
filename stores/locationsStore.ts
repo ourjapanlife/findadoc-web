@@ -60,13 +60,16 @@ async function queryFacilities(): Promise<Facility[]> {
 
 const searchFacilitiesQuery = gql`query QueryFacilities($filters: FacilitySearchFilters!) {
     facilities(filters: $filters) {
-      id
-      contact {
-        address {
-          cityJa
-          cityEn
+      nodes {
+        id
+        contact {
+          address {
+            cityJa
+            cityEn
+          }
         }
       }
+      totalCount
     }
   }
   `
