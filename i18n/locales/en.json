@@ -95,6 +95,7 @@
         "noResultsSubtext": "Please try a different filter combination."
     },
     "searchResultsDetails": {
+        "additionalInfo": "Additional Info",
         "speaks": "This doctor speaks",
         "contact": "Contact",
         "lastUpdate": "Last updated"

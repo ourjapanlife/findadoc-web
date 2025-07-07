@@ -99,7 +99,8 @@
   "searchResultsDetails": {
     "speaks": "Ce médecin parle",
     "contact": "Contact",
-    "lastUpdate": "Last updated"
+    "lastUpdate": "Last updated",
+    "additionalInfo": "Additional Info"
   },
   "thankYouPage": {
     "heading": "Merci !",

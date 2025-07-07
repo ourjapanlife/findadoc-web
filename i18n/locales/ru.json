@@ -99,7 +99,8 @@
   "searchResultsDetails": {
     "speaks": " Этот доктор говорит на ",
     "contact": "Связаться",
-    "lastUpdate": "Last updated"
+    "lastUpdate": "Last updated",
+    "additionalInfo": "Additional Info"
   },
   "thankYouPage": {
     "heading": "Спасибо!",
