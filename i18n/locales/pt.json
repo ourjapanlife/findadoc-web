@@ -99,7 +99,8 @@
   },
   "searchResultsDetails": {
     "speaks": "Este profissional fala",
-    "contact": "Contato"
+    "contact": "Contato",
+    "lastUpdate": "Last updated"
   },
   "thankYouPage": {
     "heading": "Obrigado!",

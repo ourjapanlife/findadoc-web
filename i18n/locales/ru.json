@@ -98,7 +98,8 @@
   },
   "searchResultsDetails": {
     "speaks": " Этот доктор говорит на ",
-    "contact": "Связаться"
+    "contact": "Связаться",
+    "lastUpdate": "Last updated"
   },
   "thankYouPage": {
     "heading": "Спасибо!",

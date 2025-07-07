@@ -105,7 +105,8 @@
   },
   "searchResultsDetails": {
     "speaks": "Questo medico parla",
-    "contact": "Contatta"
+    "contact": "Contatta",
+    "lastUpdate": "Last updated"
   },
   "thankYouPage": {
     "heading": "Grazie!",

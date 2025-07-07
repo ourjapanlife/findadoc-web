@@ -98,7 +98,8 @@
   },
   "searchResultsDetails": {
     "speaks": "この医師は話す",
-    "contact": "アクセス"
+    "contact": "アクセス",
+    "lastUpdate": "Last updated"
   },
   "thankYouPage": {
     "heading": "Thank you!",
