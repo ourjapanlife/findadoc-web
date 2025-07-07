@@ -116,6 +116,9 @@
                         class="underline text-blue"
                     >{{ email }}</a>
                 </div>
+                <div class="mr-3 mb-1 flex flex-row-reverse">
+                    <p>{{ formattedLastUpdate }}</p>
+                </div>
             </div>
         </div>
     </div>
@@ -133,6 +136,7 @@ import { useSpecialtiesStore } from '~/stores/specialtiesStore.js'
 import { useSearchResultsStore } from '~/stores/searchResultsStore'
 import { Locale } from '~/typedefs/gqlTypes.js'
 import { formatHealthcareProfessionalName } from '~/utils/nameUtils'
+import { formatToReadableDate } from '~/utils/dateUtils'
 
 const { t } = useI18n()
 
@@ -217,6 +221,14 @@ const phone = computed(
 const email = computed(
     () => resultsStore.activeResult?.facilities[0]?.contact?.email ?? ''
 )
+
+const formattedLastUpdate = computed(() => {
+    const unformattedDate = resultsStore.activeResult?.professional.updatedDate
+    if (unformattedDate) {
+        return t('searchResultsDetails.lastUpdate') + ': ' + formatToReadableDate(unformattedDate)
+    }
+    return ''
+})
 
 const excludedEmailAddresses = ['none', 'email@email.com']
 </script>

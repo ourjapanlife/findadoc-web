@@ -99,7 +99,8 @@
   },
   "searchResultsDetails": {
     "speaks": "Este profissional fala",
-    "contact": "Contato"
+    "contact": "Contato",
+    "lastUpdate": "Last update"
   },
   "thankYouPage": {
     "heading": "Obrigado!",
@@ -494,9 +495,6 @@
   },
   "modInputField": {
     "optional": "Optional"
-  },
-  "searchResultsItem": {
-    "lastUpdate": "Last update: "
   }
 }
 

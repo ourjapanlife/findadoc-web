@@ -105,7 +105,8 @@
   },
   "searchResultsDetails": {
     "speaks": "Questo medico parla",
-    "contact": "Contatta"
+    "contact": "Contatta",
+    "lastUpdate": "Last update"
   },
   "thankYouPage": {
     "heading": "Grazie!",
@@ -489,8 +490,5 @@
   },
   "modInputField": {
     "optional": "Optional"
-  },
-  "searchResultsItem": {
-    "lastUpdate": "Last update: "
   }
 }

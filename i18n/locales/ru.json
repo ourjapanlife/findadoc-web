@@ -98,7 +98,8 @@
   },
   "searchResultsDetails": {
     "speaks": " Этот доктор говорит на ",
-    "contact": "Связаться"
+    "contact": "Связаться",
+    "lastUpdate": "Last update"
   },
   "thankYouPage": {
     "heading": "Спасибо!",
@@ -492,9 +493,6 @@
   },
   "modInputField": {
     "optional": "Optional"
-  },
-  "searchResultsItem": {
-    "lastUpdate": "Last update: "
   }
 }
 

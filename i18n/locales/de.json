@@ -99,7 +99,8 @@
   },
   "searchResultsDetails": {
     "speaks": "Dieser Arzt spricht",
-    "contact": "Kontakt"
+    "contact": "Kontakt",
+    "lastUpdate": "Last Update"
   },
   "thankYouPage": {
     "heading": "Vielen Dank!",
@@ -493,8 +494,5 @@
   },
   "modInputField": {
     "optional": "Optional"
-  },
-  "searchResultsItem": {
-    "lastUpdate": "Last update: "
   }
 }

@@ -98,7 +98,8 @@
   },
   "searchResultsDetails": {
     "speaks": "Itong Doktor ay nakakapagsalita ng",
-    "contact": "Kontakt"
+    "contact": "Kontakt",
+    "lastUpdate": "Last update"
   },
   "thankYouPage": {
     "heading": "Maraming Salamat!",
@@ -483,8 +484,5 @@
   },
   "modInputField": {
     "optional": "Opsyonal"
-  },
-  "searchResultsItem": {
-    "lastUpdate": "Last update: "
   }
 }

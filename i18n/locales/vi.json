@@ -98,7 +98,8 @@
   },
   "searchResultsDetails": {
     "speaks": "Bác sĩ này nói",
-    "contact": "Liên hệ"
+    "contact": "Liên hệ",
+    "lastUpdate": "Last update"
   },
   "thankYouPage": {
     "heading": "Cảm ơn bạn!",
@@ -483,9 +484,6 @@
   },
   "modInputField": {
     "optional": "Optional"
-  },
-  "searchResultsItem": {
-    "lastUpdate": "Last update: "
   }
 }
 
