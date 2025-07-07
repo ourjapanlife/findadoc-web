@@ -116,7 +116,7 @@
                         class="underline text-blue"
                     >{{ email }}</a>
                 </div>
-                <div class="mr-3 mb-1 flex flex-row-reverse text-primary-text-muted">
+                <div class="mr-3 mb-1 flex flex-row-reverse text-sm text-primary-text-muted">
                     <p>{{ formattedLastUpdate }}</p>
                 </div>
             </div>
