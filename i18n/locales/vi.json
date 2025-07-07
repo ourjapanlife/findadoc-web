@@ -244,7 +244,9 @@
     "oneNameNecessary": "At least one name is required for a Healthcare Professional",
     "save": "Save",
     "update": "Update",
-    "charactersOfLanguageDoNotMatchNameLocale": "The characters of the Healthcare Professional's name are invalid in the chosen language"
+    "charactersOfLanguageDoNotMatchNameLocale": "The characters of the Healthcare Professional's name are invalid in the chosen language",
+    "labelAdditionalNotesForPatients": "Additional Notes for Patients",
+    "placeholderAdditionalNotesForPatients": "e.g. English speaking doctors only available from 2-4"
   },
   "modFacilitySection": {
     "addresses": "Địa chỉ.",
@@ -486,4 +488,3 @@
     "optional": "Optional"
   }
 }
-
