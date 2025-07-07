@@ -8258,7 +8258,7 @@ __metadata:
     nuxt-gtag: "npm:3.0.2"
     nuxt-svgo: "npm:^4.0.2"
     nuxt-viewport: "npm:^2.1.5"
-    pinia: "npm:^2.2.0"
+    pinia: "npm:^2.3.1"
     postcss: "npm:^8.4.41"
     postcss-html: "npm:^1.7.0"
     start-server-and-test: "npm:^2.0.8"
@@ -12089,7 +12089,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pinia@npm:^2.2.0, pinia@npm:^2.2.3":
+"pinia@npm:^2.2.3, pinia@npm:^2.3.1":
   version: 2.3.1
   resolution: "pinia@npm:2.3.1"
   dependencies:
