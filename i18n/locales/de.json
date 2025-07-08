@@ -100,7 +100,8 @@
   "searchResultsDetails": {
     "speaks": "Dieser Arzt spricht",
     "contact": "Kontakt",
-    "lastUpdate": "Last updated"
+    "lastUpdate": "Last updated",
+    "additionalInfo": "Additional Info"
   },
   "thankYouPage": {
     "heading": "Vielen Dank!",

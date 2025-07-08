@@ -100,7 +100,8 @@
   "searchResultsDetails": {
     "speaks": "这位医师可以说",
     "contact": "联系",
-    "lastUpdate": "Last updated"
+    "lastUpdate": "Last updated",
+    "additionalInfo": "Additional Info"
   },
   "thankYouPage": {
     "heading": "谢谢！",

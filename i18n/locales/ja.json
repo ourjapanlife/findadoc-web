@@ -99,7 +99,8 @@
   "searchResultsDetails": {
     "speaks": "この医師は話す",
     "contact": "アクセス",
-    "lastUpdate": "Last updated"
+    "lastUpdate": "Last updated",
+    "additionalInfo": "Additional Info"
   },
   "thankYouPage": {
     "heading": "Thank you!",

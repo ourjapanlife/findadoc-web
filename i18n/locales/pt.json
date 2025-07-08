@@ -100,7 +100,8 @@
   "searchResultsDetails": {
     "speaks": "Este profissional fala",
     "contact": "Contato",
-    "lastUpdate": "Last updated"
+    "lastUpdate": "Last updated",
+    "additionalInfo": "Additional Info"
   },
   "thankYouPage": {
     "heading": "Obrigado!",

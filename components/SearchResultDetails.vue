@@ -33,7 +33,7 @@
                 <div class="ml-9 mt-2 font-bold text-sm">
                     <span>{{ t("searchResultsDetails.speaks") }}:</span>
                 </div>
-                <div class="result-tags flex flex-wrap w-64 mb-6 mt-1 ml-6 pl-2">
+                <div class="result-tags flex flex-wrap w-64 mb-2 mt-1 ml-6 pl-2">
                     <div
                         v-for="(spokenLanguage, index) in spokenLanguages"
                         :key="index"
@@ -42,6 +42,16 @@
                     >
                         {{ spokenLanguage }}
                     </div>
+                </div>
+            </div>
+            <div v-show="additionalInfoForPatients">
+                <div
+                    class="ml-9 mt-2 font-bold text-sm"
+                >
+                    <span>{{ t("searchResultsDetails.additionalInfo") }}:</span>
+                </div>
+                <div class="ml-9 mb-4 text-primary-text">
+                    <p>{{ additionalInfoForPatients }}</p>
                 </div>
             </div>
             <div class="about ml-4 pl-2">
@@ -191,6 +201,8 @@ const spokenLanguages = computed(() => {
 
     return languagesDisplayText
 })
+
+const additionalInfoForPatients = computed(() => resultsStore.activeResult?.professional.additionalInfoForPatients)
 
 const addressLine1 = computed(() => {
     const addressObj
