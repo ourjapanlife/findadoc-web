@@ -128,7 +128,7 @@ const run = async () => {
         })
         .join('\n')
 
-    fs.writeFileSync('potentially_unused_keys.txt', output, 'utf-8')
+    fs.writeFileSync('potentially_unused_locales_keys.txt', output, 'utf-8')
     console.info('\n📝 Report saved to: potentially_unused_keys.txt\n')
 }
 
