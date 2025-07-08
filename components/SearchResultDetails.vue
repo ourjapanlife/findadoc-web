@@ -33,7 +33,7 @@
                 <div class="ml-9 mt-2 font-bold text-sm">
                     <span>{{ t("searchResultsDetails.speaks") }}:</span>
                 </div>
-                <div class="result-tags flex flex-wrap w-64 mb-6 mt-1 ml-6 pl-2">
+                <div class="result-tags flex flex-wrap w-64 mb-2 mt-1 ml-6 pl-2">
                     <div
                         v-for="(spokenLanguage, index) in spokenLanguages"
                         :key="index"
@@ -42,6 +42,16 @@
                     >
                         {{ spokenLanguage }}
                     </div>
+                </div>
+            </div>
+            <div v-show="additionalInfoForPatients">
+                <div
+                    class="ml-9 mt-2 font-bold text-sm"
+                >
+                    <span>{{ t("searchResultsDetails.additionalInfo") }}:</span>
+                </div>
+                <div class="ml-9 mb-4 text-primary-text">
+                    <p>{{ additionalInfoForPatients }}</p>
                 </div>
             </div>
             <div class="about ml-4 pl-2">
@@ -116,6 +126,9 @@
                         class="underline text-blue"
                     >{{ email }}</a>
                 </div>
+                <div class="mr-3 mb-1 flex flex-row-reverse text-sm text-primary-text-muted">
+                    <p>{{ formattedLastUpdate }}</p>
+                </div>
             </div>
         </div>
     </div>
@@ -133,6 +146,7 @@ import { useSpecialtiesStore } from '~/stores/specialtiesStore.js'
 import { useSearchResultsStore } from '~/stores/searchResultsStore'
 import { Locale } from '~/typedefs/gqlTypes.js'
 import { formatHealthcareProfessionalName } from '~/utils/nameUtils'
+import { formatToReadableDate } from '~/utils/dateUtils'
 
 const { t } = useI18n()
 
@@ -188,6 +202,8 @@ const spokenLanguages = computed(() => {
     return languagesDisplayText
 })
 
+const additionalInfoForPatients = computed(() => resultsStore.activeResult?.professional.additionalInfoForPatients)
+
 const addressLine1 = computed(() => {
     const addressObj
         = resultsStore.activeResult?.facilities[0].contact.address
@@ -217,6 +233,14 @@ const phone = computed(
 const email = computed(
     () => resultsStore.activeResult?.facilities[0]?.contact?.email ?? ''
 )
+
+const formattedLastUpdate = computed(() => {
+    const unformattedDate = resultsStore.activeResult?.professional.updatedDate
+    if (unformattedDate) {
+        return t('searchResultsDetails.lastUpdate') + ': ' + formatToReadableDate(unformattedDate)
+    }
+    return ''
+})
 
 const excludedEmailAddresses = ['none', 'email@email.com']
 </script>

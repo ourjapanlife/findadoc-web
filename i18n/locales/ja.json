@@ -92,7 +92,9 @@
   },
   "searchResultsDetails": {
     "speaks": "この医師は話す",
-    "contact": "アクセス"
+    "contact": "アクセス",
+    "lastUpdate": "Last updated",
+    "additionalInfo": "Additional Info"
   },
   "thankYouPage": {
     "heading": "Thank you!",

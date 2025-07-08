@@ -92,7 +92,9 @@
   },
   "searchResultsDetails": {
     "speaks": "Itong Doktor ay nakakapagsalita ng",
-    "contact": "Kontakt"
+    "contact": "Kontakt",
+    "lastUpdate": "Last updated",
+    "additionalInfo": "Additional Info"
   },
   "thankYouPage": {
     "heading": "Maraming Salamat!",

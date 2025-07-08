@@ -92,7 +92,9 @@
   },
   "searchResultsDetails": {
     "speaks": "Bác sĩ này nói",
-    "contact": "Liên hệ"
+    "contact": "Liên hệ",
+    "lastUpdate": "Last updated",
+    "additionalInfo": "Additional Info"
   },
   "thankYouPage": {
     "heading": "Cảm ơn bạn!",
