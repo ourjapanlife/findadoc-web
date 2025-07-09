@@ -100,13 +100,15 @@ Promise<HealthcareProfessional[]> {
             } satisfies HealthcareProfessionalSearchFilters
         }
 
+        // *** MODIFICA EFFETTUATA QUI per queryProfessionals ***
         const serverResponse = await graphQLClientRequestWithRetry<Query['healthcareProfessionals']>(
             gqlClient.request.bind(gqlClient),
             searchProfessionalsQuery,
             searchProfessionalsData
         )
+        console.info("Response from queryProfessionals:", serverResponse)
 
-        const professionalsSearchResult = serverResponse?.data ?? []
+        const professionalsSearchResult = serverResponse?.data?.nodes ?? []
         return professionalsSearchResult
     } catch (error) {
         console.error(`Error getting professionals: ${JSON.stringify(error)}`)
@@ -140,7 +142,9 @@ async function queryFacilities(healthcareProfessionalIds: string[], searchCity?:
             searchFacilitiesData
         )
 
-        const facilitiesSearchResults = serverResponse?.data ?? []
+        console.info('Response from queryFacilities:', serverResponse)
+
+        const facilitiesSearchResults = serverResponse?.data?.nodes ?? []
 
         //filter the search results by location if a location is selected
         const locationFilteredSearchResults = searchCity
