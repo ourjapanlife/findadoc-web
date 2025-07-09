@@ -186,11 +186,7 @@ const currentSubmissionNotes = ref('')
 const syntheticEvent = new Event('submit', { bubbles: false, cancelable: true })
 
 const isEditSubmissionFormInitialized: Ref<boolean> = ref(false)
-const submissionBeforeChanges: Ref<Submission | undefined> = computed(() => moderationSubmissionStore.selectedSubmissionData
-    ? {
-        ...moderationSubmissionStore.selectedSubmissionData
-    }
-    : undefined)
+const submissionBeforeChanges: Ref<Submission | undefined> = ref(undefined)
 
 // Keeps track of existing facilities related to new healthcare professional submission
 const currentFacilityRelations: Ref<Facility[]> = ref([])
@@ -329,7 +325,42 @@ const validateHealthcareProfessionalEnglishName = () => {
     return hasEnglishName
 }
 
+// Manual deep copy function for submission data
+function createSubmissionDeepCopy(submissionData: Submission): Submission {
+    return {
+        ...submissionData,
+        facility: submissionData.facility
+            ? {
+                ...submissionData.facility,
+                contact: submissionData.facility.contact
+                    ? {
+                        ...submissionData.facility.contact,
+                        address: {
+                            ...submissionData.facility.contact.address
+                        }
+                    }
+                    : undefined,
+                healthcareProfessionalIds: [...submissionData.facility.healthcareProfessionalIds]
+            }
+            : undefined,
+        healthcareProfessionals: submissionData.healthcareProfessionals?.map(hp => ({
+            ...hp,
+            names: hp.names.map(name => ({ ...name })),
+            acceptedInsurance: hp.acceptedInsurance ? [...hp.acceptedInsurance] : [],
+            degrees: hp.degrees ? [...hp.degrees] : [],
+            specialties: hp.specialties ? [...hp.specialties] : [],
+            spokenLanguages: hp.spokenLanguages ? [...hp.spokenLanguages] : [],
+            facilityIds: hp.facilityIds ? [...hp.facilityIds] : []
+        })) || []
+    }
+}
+
 function initializeSubmissionFormValues(submissionData: Submission | undefined) {
+    // Create a deep copy of the submission data to preserve the original state
+    if (submissionData) {
+        submissionBeforeChanges.value = createSubmissionDeepCopy(submissionData)
+    }
+
     const submittedHealthcareProfessionalName
     = submissionData?.healthcareProfessionalName?.split(' ') ?? []
 
@@ -433,17 +464,12 @@ function initializeSubmissionFormValues(submissionData: Submission | undefined) 
 // • facilitiesStore.facilitySectionFields → facility
 // • healthcareProfessionalsStore.healthcareProfessionalSectionFields → hp
 // • arraysAreEqual
-const formHasUnsavedChanges = () => {
+const hasFacilityChanges = (submissionBeforeChangesComparison: Submission | undefined) => {
     const facilitySectionFields = facilitiesStore.facilitySectionFields
-    const hpSectionFields = healthcareProfessionalsStore.healthcareProfessionalSectionFields
-    const submissionBeforeChangesComparison = submissionBeforeChanges.value
 
-    if (!submissionBeforeChangesComparison) {
-        return false
-    }
+    if (!submissionBeforeChangesComparison) return false
 
-    // Check the diffs in the facility section
-    const facilityChanged = (
+    return (
         submissionBeforeChangesComparison?.facility?.nameEn !== facilitySectionFields.nameEn
         || submissionBeforeChangesComparison?.facility?.nameJa !== facilitySectionFields.nameJa
         || submissionBeforeChangesComparison?.facility?.contact?.phone !== facilitySectionFields.phone
@@ -455,39 +481,43 @@ const formHasUnsavedChanges = () => {
         || !arraysAreEqual(submissionBeforeChangesComparison?.facility?.healthcareProfessionalIds,
                            facilitySectionFields.healthcareProfessionalIds)
     )
-
-    // Check the diffs in the healthcare professional section
-    const hpChanged = (
-        (submissionBeforeChangesComparison?.healthcareProfessionals?.[0]?.names
-            ? !arraysAreEqual(
-                submissionBeforeChangesComparison?.healthcareProfessionals?.[0]?.names,
-                hpSectionFields.names
-            )
-            : false)
-          || (submissionBeforeChangesComparison?.healthcareProfessionals?.[0]?.acceptedInsurance
-              ? !arraysAreEqual(
-                  submissionBeforeChangesComparison?.healthcareProfessionals?.[0]?.acceptedInsurance,
-                  hpSectionFields.acceptedInsurance
-              )
-              : false)
-            || (submissionBeforeChangesComparison?.healthcareProfessionals?.[0]?.degrees
-                ? !arraysAreEqual(
-                    submissionBeforeChangesComparison?.healthcareProfessionals?.[0]?.degrees,
-                    hpSectionFields.degrees
-                )
-                : false)
-              || (submissionBeforeChangesComparison?.healthcareProfessionals?.[0]?.specialties
-                  ? !arraysAreEqual(submissionBeforeChangesComparison?.healthcareProfessionals?.[0]?.specialties,
-                                    hpSectionFields.specialties)
-                  : false)
-                || (submissionBeforeChangesComparison?.healthcareProfessionals?.[0]?.spokenLanguages
-                    ? !arraysAreEqual(submissionBeforeChangesComparison?.healthcareProfessionals?.[0]?.spokenLanguages,
-                                      hpSectionFields.spokenLanguages)
-                    : false)
-    )
-
-    return facilityChanged || hpChanged
 }
+
+const hasHealthcareProfessionalChanges = (submissionBeforeChangesComparison: Submission | undefined) => {
+    const hpSectionFields = healthcareProfessionalsStore.healthcareProfessionalSectionFields
+
+    if (!submissionBeforeChangesComparison) return false
+
+    return (
+        !arraysAreEqual(
+            submissionBeforeChangesComparison?.healthcareProfessionals?.[0]?.names || [],
+            hpSectionFields.names
+        )
+        || !arraysAreEqual(
+            submissionBeforeChangesComparison?.healthcareProfessionals?.[0]?.acceptedInsurance || [],
+            hpSectionFields.acceptedInsurance
+        )
+        || !arraysAreEqual(
+            submissionBeforeChangesComparison?.healthcareProfessionals?.[0]?.degrees || [],
+            hpSectionFields.degrees
+        )
+        || !arraysAreEqual(
+            submissionBeforeChangesComparison?.healthcareProfessionals?.[0]?.specialties || [],
+            hpSectionFields.specialties
+        )
+        || !arraysAreEqual(
+            submissionBeforeChangesComparison?.healthcareProfessionals?.[0]?.spokenLanguages || [],
+            hpSectionFields.spokenLanguages
+        )
+        || !arraysAreEqual(
+            submissionBeforeChangesComparison?.healthcareProfessionals?.[0]?.facilityIds || [],
+            hpSectionFields.facilityIds
+        )
+    )
+}
+
+const formHasUnsavedChanges = () => hasFacilityChanges(submissionBeforeChanges.value)
+  || hasHealthcareProfessionalChanges(submissionBeforeChanges.value)
 
 async function submitUpdatedSubmission(e: Event) {
     // Prevent form submission before validation is completed.
@@ -502,16 +532,24 @@ async function submitUpdatedSubmission(e: Event) {
         return
     }
 
-    const facilitySubmissionUpdate = currentFacilityRelations.value.length
-        ? undefined
-        : {
+    const submissionBeforeChangesComparison = submissionBeforeChanges.value
+
+    // Only include facility update if there are no existing facilities and there are changes
+    const facilitySubmissionUpdate = currentFacilityRelations.value.length == 0
+      && hasFacilityChanges(submissionBeforeChangesComparison)
+        ? {
             nameEn: facilitiesStore.facilitySectionFields.nameEn,
             nameJa: facilitiesStore.facilitySectionFields.nameJa,
             contact: {
                 googleMapsUrl: facilitiesStore.facilitySectionFields.googlemapsURL,
-                email: facilitiesStore.facilitySectionFields.email,
+                email: submissionBeforeChangesComparison?.facility?.contact?.email !== facilitiesStore.facilitySectionFields.email
+                    ? facilitiesStore.facilitySectionFields.email
+                    : undefined,
                 phone: facilitiesStore.facilitySectionFields.phone,
-                website: facilitiesStore.facilitySectionFields.website,
+                website: submissionBeforeChangesComparison?.facility?.contact?.website
+                  !== facilitiesStore.facilitySectionFields.website
+                    ? facilitiesStore.facilitySectionFields.website
+                    : undefined,
                 address: {
                     postalCode: facilitiesStore.facilitySectionFields.postalCode,
                     prefectureEn: facilitiesStore.facilitySectionFields.prefectureEn,
@@ -528,19 +566,33 @@ async function submitUpdatedSubmission(e: Event) {
             mapLatitude: parseFloat(facilitiesStore.facilitySectionFields.mapLatitude) || 0,
             mapLongitude: parseFloat(facilitiesStore.facilitySectionFields.mapLongitude) || 0
         }
+        : undefined
 
-    const healthcareProfessionalUpdate = currentExistingHealthcareProfessionals.value.length
-        ? undefined
-        : [
+    // Only include healthcare professional update if there are no existing healthcare professionals and there are changes
+    const healthcareProfessionalUpdate = currentExistingHealthcareProfessionals.value.length == 0
+      && hasHealthcareProfessionalChanges(submissionBeforeChangesComparison)
+        ? [
             {
-                acceptedInsurance: healthcareProfessionalsStore.healthcareProfessionalSectionFields
-                    .acceptedInsurance,
+                acceptedInsurance: !arraysAreEqual(
+                    submissionBeforeChangesComparison?.healthcareProfessionals?.[0]?.acceptedInsurance ?? [],
+                    healthcareProfessionalsStore.healthcareProfessionalSectionFields.acceptedInsurance
+                )
+                    ? healthcareProfessionalsStore.healthcareProfessionalSectionFields.acceptedInsurance
+                    : undefined,
                 additionalInfoForPatients:
                     healthcareProfessionalsStore.healthcareProfessionalSectionFields.additionalInfoForPatients,
-                degrees: healthcareProfessionalsStore.healthcareProfessionalSectionFields
-                    .degrees,
-                specialties: healthcareProfessionalsStore.healthcareProfessionalSectionFields
-                    .specialties,
+                degrees: !arraysAreEqual(
+                    submissionBeforeChangesComparison?.healthcareProfessionals?.[0]?.degrees ?? [],
+                    healthcareProfessionalsStore.healthcareProfessionalSectionFields.degrees
+                )
+                    ? healthcareProfessionalsStore.healthcareProfessionalSectionFields.degrees
+                    : undefined,
+                specialties: !arraysAreEqual(
+                    submissionBeforeChangesComparison?.healthcareProfessionals?.[0]?.specialties ?? [],
+                    healthcareProfessionalsStore.healthcareProfessionalSectionFields.specialties
+                )
+                    ? healthcareProfessionalsStore.healthcareProfessionalSectionFields.specialties
+                    : undefined,
                 spokenLanguages: healthcareProfessionalsStore.healthcareProfessionalSectionFields
                     .spokenLanguages,
                 names: healthcareProfessionalsStore.healthcareProfessionalSectionFields
@@ -548,6 +600,7 @@ async function submitUpdatedSubmission(e: Event) {
                 facilityIds: healthcareProfessionalsStore.healthcareProfessionalSectionFields.facilityIds
             }
         ]
+        : undefined
 
     const submissionInputVariables: MutationUpdateSubmissionArgs = {
         id: moderationSubmissionStore.selectedSubmissionId,
