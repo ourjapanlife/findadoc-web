@@ -8,6 +8,7 @@ import type { DeleteResult, Facility,
     MutationDeleteFacilityArgs,
     MutationUpdateFacilityArgs,
     FacilityConnection,
+    Query,
     Relationship } from '~/typedefs/gqlTypes'
 import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql'
 import type { ServerResponse } from '~/typedefs/serverResponse'
@@ -126,15 +127,15 @@ async function queryFacilities(totalFacilitiesCountRef: Ref<number>): Promise<Fa
         }
     }
     try {
-        const response = await graphQLClientRequestWithRetry<{ facilities: FacilityConnection }>(
+        const response = await graphQLClientRequestWithRetry<Query['facilities']>(
             gqlClient.request.bind(gqlClient),
             getAllFacilitiesForModeration,
             searchFacilitiesData
         )
 
-        if (response.data?.facilities) {
-            totalFacilitiesCountRef.value = response.data.facilities.totalCount
-            return response.data.facilities.nodes ?? []
+        if (response.data?.nodes) {
+            totalFacilitiesCountRef.value = response.data.totalCount
+            return response.data.nodes ?? []
         }
         return []
     } catch (error) {

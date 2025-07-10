@@ -14,8 +14,7 @@ import { type Insurance,
     RelationshipAction,
     type CreateHealthcareProfessionalInput,
     type MutationCreateHealthcareProfessionalArgs,
-    type Query,
-    type HealthcareProfessionalConnection } from '~/typedefs/gqlTypes'
+    type Query } from '~/typedefs/gqlTypes'
 import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql'
 import { useLocaleStore } from '~/stores/localeStore'
 import { ErrorCode, type ServerError, type ServerResponse } from '~/typedefs/serverResponse'
@@ -328,15 +327,15 @@ Promise<HealthcareProfessional[]> {
         }
     }
     try {
-        const response = await graphQLClientRequestWithRetry<{ healthcareProfessionals: HealthcareProfessionalConnection }>(
+        const response = await graphQLClientRequestWithRetry<Query['healthcareProfessionals']>(
             gqlClient.request.bind(gqlClient),
             getAllHealthcareProfessionalsData,
             searchHealthcareProfessionalsData
         )
 
-        if (response.data?.healthcareProfessionals) {
-            totalHealthcareProfessionalsCountRef.value = response.data.healthcareProfessionals.totalCount
-            return response.data.healthcareProfessionals.nodes ?? []
+        if (response.data?.nodes) {
+            totalHealthcareProfessionalsCountRef.value = response.data.totalCount
+            return response.data.nodes ?? []
         }
         return []
     } catch (error) {
