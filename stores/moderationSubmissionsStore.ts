@@ -194,7 +194,7 @@ async function querySubmissions(): Promise<Submission[]> {
             submissionsFilters
         )
 
-        return serverResponse?.data ?? []
+        return serverResponse?.data.nodes ?? []
     } catch (error) {
         console.error(`Error querying the submissions: ${JSON.stringify(error)}`)
         return []
@@ -202,60 +202,63 @@ async function querySubmissions(): Promise<Submission[]> {
 }
 
 const getSubmissionsGqlQuery = gql`
-   query Submissions($filters: SubmissionSearchFilters!) {
-  submissions(filters: $filters) {
-    id
-    googleMapsUrl
-    healthcareProfessionalName
-    spokenLanguages
-    facility {
-      id
-      mapLatitude
-      mapLongitude
-      nameEn
-      nameJa
-      contact {
-        googleMapsUrl
-        email
-        phone
-        website
-        address {
-          postalCode
-          prefectureEn
-          cityEn
-          addressLine1En
-          addressLine2En
-          prefectureJa
-          cityJa
-          addressLine1Ja
-          addressLine2Ja
+    query Submissions($filters: SubmissionSearchFilters!) {
+        submissions(filters: $filters) {
+            nodes {
+                id
+                googleMapsUrl
+                healthcareProfessionalName
+                spokenLanguages
+                facility {
+                    id
+                    mapLatitude
+                    mapLongitude
+                    nameEn
+                    nameJa
+                    contact {
+                        googleMapsUrl
+                        email
+                        phone
+                        website
+                        address {
+                            postalCode
+                            prefectureEn
+                            cityEn
+                            addressLine1En
+                            addressLine2En
+                            prefectureJa
+                            cityJa
+                            addressLine1Ja
+                            addressLine2Ja
+                        }
+                    }
+                    healthcareProfessionalIds
+                }
+                healthcareProfessionals {
+                    id
+                    names {
+                        firstName
+                        middleName
+                        lastName
+                        locale
+                    }
+                    spokenLanguages
+                    degrees
+                    specialties
+                    acceptedInsurance
+                    additionalInfoForPatients
+                    facilityIds
+                }
+                isUnderReview
+                isApproved
+                isRejected
+                createdDate
+                updatedDate
+                notes
+            }
+            totalCount
         }
-      }
-      healthcareProfessionalIds
-    }
-    healthcareProfessionals {
-      id
-      names {
-        firstName
-        middleName
-        lastName
-        locale
-      }
-      spokenLanguages
-      degrees
-      specialties
-      acceptedInsurance
-      additionalInfoForPatients
-      facilityIds
-    }
-    isUnderReview
-    isApproved
-    isRejected
-    createdDate
-    updatedDate
-    notes
-  }
-}`
+    }`
 
 const updateFacilitySubmissionGqlMutation = gql`
 mutation Mutation($id: ID!, $input: UpdateSubmissionInput!) {

@@ -14,7 +14,8 @@ import { type Insurance,
     RelationshipAction,
     type CreateHealthcareProfessionalInput,
     type MutationCreateHealthcareProfessionalArgs,
-    type Query } from '~/typedefs/gqlTypes'
+    type Query,
+    type HealthcareProfessionalConnection } from '~/typedefs/gqlTypes'
 import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql'
 import { useLocaleStore } from '~/stores/localeStore'
 import { ErrorCode, type ServerError, type ServerResponse } from '~/typedefs/serverResponse'
@@ -29,6 +30,7 @@ export const useHealthcareProfessionalsStore = defineStore(
         = ref([])
         const selectedHealthcareProfessionalId: Ref<string> = ref('')
         const selectedHealthcareProfessionalData: Ref<HealthcareProfessional | undefined> = ref()
+        const totalHealthcareProfessionalsCount: Ref<number> = ref(0)
         const healthcareProfessionalSectionFields = reactive<HealthcareProfessional>({
             __typename: 'HealthcareProfessional', // Optional if you're working with GraphQL
             acceptedInsurance: [],
@@ -95,7 +97,7 @@ export const useHealthcareProfessionalsStore = defineStore(
             healthcareProfessionalSectionFields.updatedDate = ''
         }
         async function getHealthcareProfessionals() {
-            const healthcareProfessionalResults = await queryHealthcareProfessionals()
+            const healthcareProfessionalResults = await queryHealthcareProfessionals(totalHealthcareProfessionalsCount)
             healthcareProfessionalsData.value = healthcareProfessionalResults
         }
 
@@ -318,20 +320,25 @@ export const useHealthcareProfessionalsStore = defineStore(
     }
 )
 
-async function queryHealthcareProfessionals(): Promise<HealthcareProfessional[]> {
+async function queryHealthcareProfessionals(totalHealthcareProfessionalsCountRef: Ref<number>):
+Promise<HealthcareProfessional[]> {
     const searchHealthcareProfessionalsData = {
         filters: {
             limit: 400
         }
     }
     try {
-        const response = await graphQLClientRequestWithRetry<Query['healthcareProfessionals']>(
+        const response = await graphQLClientRequestWithRetry<{ healthcareProfessionals: HealthcareProfessionalConnection }>(
             gqlClient.request.bind(gqlClient),
             getAllHealthcareProfessionalsData,
             searchHealthcareProfessionalsData
         )
 
-        return response?.data ?? []
+        if (response.data?.healthcareProfessionals) {
+            totalHealthcareProfessionalsCountRef.value = response.data.healthcareProfessionals.totalCount
+            return response.data.healthcareProfessionals.nodes ?? []
+        }
+        return []
     } catch (error) {
         console.error(`Error querying the healthcare professionals: ${JSON.stringify(error)}`)
         return []
@@ -343,16 +350,17 @@ export async function getHealthcareProfessionalById(id: string): Promise<Healthc
         const queryData = {
             healthcareProfessionalId: id
         }
-        const result = await graphQLClientRequestWithRetry<Query['healthcareProfessionals']>(
+        const result = await graphQLClientRequestWithRetry<Query>(
             gqlClient.request.bind(gqlClient),
             getHealthcareProfessionalByIdGqlQuery,
             queryData
         )
 
-        if (!result.data) {
+        if (!result.data?.healthcareProfessional) {
             throw new Error('The Healthcare Professional ID doesn\'t exist')
         }
-        return result.data
+
+        return [result.data.healthcareProfessional]
     } catch (error: unknown) {
         console.error(`Error retrieving healthcare professional by id: ${id}: ${JSON.stringify(error)}`)
         return []
@@ -362,21 +370,24 @@ export async function getHealthcareProfessionalById(id: string): Promise<Healthc
 const getAllHealthcareProfessionalsData = gql`
 query Query($filters: HealthcareProfessionalSearchFilters!) {
   healthcareProfessionals(filters: $filters) {
-    id
-    names {
-      firstName
-      middleName
-      lastName
-      locale
+    nodes {
+      id
+      names {
+        firstName
+        middleName
+        lastName
+        locale
+      }
+      spokenLanguages
+      degrees
+      specialties
+      acceptedInsurance
+      additionalInfoForPatients
+      facilityIds
+      createdDate
+      updatedDate
     }
-    spokenLanguages
-    degrees
-    specialties
-    acceptedInsurance
-    additionalInfoForPatients
-    facilityIds
-    createdDate
-    updatedDate
+    totalCount
   }
 }`
 

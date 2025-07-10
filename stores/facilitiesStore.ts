@@ -7,11 +7,141 @@ import type { DeleteResult, Facility,
     MutationCreateFacilityArgs,
     MutationDeleteFacilityArgs,
     MutationUpdateFacilityArgs,
-    Query,
+    FacilityConnection,
     Relationship } from '~/typedefs/gqlTypes'
 import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql'
 import type { ServerResponse } from '~/typedefs/serverResponse'
 import { arraysAreEqual } from '~/utils/arrayUtils'
+
+const getAllFacilitiesForModeration = gql`
+query Facilities($filters: FacilitySearchFilters!) {
+    facilities(filters: $filters) {
+         nodes {
+            id
+            nameEn
+            nameJa
+            contact {
+                googleMapsUrl
+                email
+                phone
+                website
+                address {
+                    postalCode
+                    prefectureEn
+                    cityEn
+                    addressLine1En
+                    addressLine2En
+                    prefectureJa
+                    cityJa
+                    addressLine1Ja
+                    addressLine2Ja
+                }
+            }
+            mapLatitude
+            mapLongitude
+            healthcareProfessionalIds
+            createdDate
+            updatedDate
+        }
+        totalCount
+    }
+}
+`
+
+const updateExistingFacilityGqlMutation = gql`
+mutation Mutation($id: ID!, $input: UpdateFacilityInput!) {
+  updateFacility(id: $id, input: $input) {
+    id
+    nameEn
+    nameJa
+    contact {
+      googleMapsUrl
+      email
+      phone
+      website
+      address {
+        postalCode
+        prefectureEn
+        cityEn
+        addressLine1En
+        addressLine2En
+        prefectureJa
+        cityJa
+        addressLine1Ja
+        addressLine2Ja
+      }
+    }
+    mapLatitude
+    mapLongitude
+    healthcareProfessionalIds
+    createdDate
+    updatedDate
+  }
+}
+`
+
+const deleteExistingFacilityGqlMutation = gql`
+mutation Mutation($id: ID!) {
+  deleteFacility(id: $id) {
+    isSuccessful
+  }
+}
+`
+const createFacilityGqlMutation = gql`
+mutation Mutation($input: CreateFacilityInput!) {
+  createFacility(input: $input) {
+    id
+    nameEn
+    nameJa
+    contact {
+      googleMapsUrl
+      email
+      phone
+      website
+      address {
+        postalCode
+        prefectureEn
+        cityEn
+        addressLine1En
+        addressLine2En
+        prefectureJa
+        cityJa
+        addressLine1Ja
+        addressLine2Ja
+      }
+    }
+    mapLatitude
+    mapLongitude
+    healthcareProfessionalIds
+    createdDate
+    updatedDate
+  }
+}
+`
+
+async function queryFacilities(totalFacilitiesCountRef: Ref<number>): Promise<Facility[]> {
+    const searchFacilitiesData = {
+        filters: {
+            limit: 400
+        }
+    }
+    try {
+        const response = await graphQLClientRequestWithRetry<{ facilities: FacilityConnection }>(
+            gqlClient.request.bind(gqlClient),
+            getAllFacilitiesForModeration,
+            searchFacilitiesData
+        )
+
+        if (response.data?.facilities) {
+            totalFacilitiesCountRef.value = response.data.facilities.totalCount
+            return response.data.facilities.nodes ?? []
+        }
+        return []
+    } catch (error) {
+        console.error(`Error querying the facilities: ${JSON.stringify(error)}`)
+        return []
+    }
+}
 
 export const useFacilitiesStore = defineStore(
     'facilitiesStore',
@@ -19,6 +149,7 @@ export const useFacilitiesStore = defineStore(
         const facilityData: Ref<Facility[]> = ref([])
         const selectedFacilityId: Ref<string> = ref('')
         const selectedFacilityData: Ref<Facility | undefined> = ref()
+        const totalFacilitiesCount: Ref<number> = ref(0)
         // This reactive object is used to share data changes of the updated facility or submission across the components
         const facilitySectionFields = reactive({
             // contactFields
@@ -126,7 +257,7 @@ export const useFacilitiesStore = defineStore(
         }
 
         async function getFacilities() {
-            const facilityResults = await queryFacilities()
+            const facilityResults = await queryFacilities(totalFacilitiesCount)
             facilityData.value = facilityResults
         }
 
@@ -267,6 +398,7 @@ export const useFacilitiesStore = defineStore(
             createFacility,
             createFacilityFields,
             facilityData,
+            totalFacilitiesCount,
             updateFacility,
             facilitySectionFields,
             selectedFacilityId,
@@ -280,126 +412,3 @@ export const useFacilitiesStore = defineStore(
         }
     }
 )
-
-async function queryFacilities(): Promise<Facility[]> {
-    const searchFacilitiesData = {
-        filters: {
-            limit: 400
-        }
-    }
-    try {
-        const response = await graphQLClientRequestWithRetry<Query['facilities']>(
-            gqlClient.request.bind(gqlClient),
-            getAllFacilitiesForModeration,
-            searchFacilitiesData
-        )
-
-        return response.data ?? []
-    } catch (error) {
-        console.error(`Error querying the facilities: ${JSON.stringify(error)}`)
-        return []
-    }
-}
-
-const getAllFacilitiesForModeration = gql`
-query Facilities($filters: FacilitySearchFilters!) {
-    facilities(filters: $filters) {
-        id
-        nameEn
-        nameJa
-        contact {
-            googleMapsUrl
-            email
-            phone
-            website
-            address {
-                postalCode
-                prefectureEn
-                cityEn
-                addressLine1En
-                addressLine2En
-                prefectureJa
-                cityJa
-                addressLine1Ja
-                addressLine2Ja
-            }
-        }
-        mapLatitude
-        mapLongitude
-        healthcareProfessionalIds
-        createdDate
-        updatedDate
-    }
-}
-`
-
-const updateExistingFacilityGqlMutation = gql`
-mutation Mutation($id: ID!, $input: UpdateFacilityInput!) {
-  updateFacility(id: $id, input: $input) {
-    id
-    nameEn
-    nameJa
-    contact {
-      googleMapsUrl
-      email
-      phone
-      website
-      address {
-        postalCode
-        prefectureEn
-        cityEn
-        addressLine1En
-        addressLine2En
-        prefectureJa
-        cityJa
-        addressLine1Ja
-        addressLine2Ja
-      }
-    }
-    mapLatitude
-    mapLongitude
-    healthcareProfessionalIds
-    createdDate
-    updatedDate
-  }
-}
-`
-
-const deleteExistingFacilityGqlMutation = gql`
-mutation Mutation($id: ID!) {
-  deleteFacility(id: $id) {
-    isSuccessful
-  }
-}
-`
-const createFacilityGqlMutation = gql`
-mutation Mutation($input: CreateFacilityInput!) {
-  createFacility(input: $input) {
-    id
-    nameEn
-    nameJa
-    contact {
-      googleMapsUrl
-      email
-      phone
-      website
-      address {
-        postalCode
-        prefectureEn
-        cityEn
-        addressLine1En
-        addressLine2En
-        prefectureJa
-        cityJa
-        addressLine1Ja
-        addressLine2Ja
-      }
-    }
-    mapLatitude
-    mapLongitude
-    healthcareProfessionalIds
-    createdDate
-    updatedDate
-  }
-}
-`

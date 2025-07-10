@@ -106,7 +106,6 @@ Promise<HealthcareProfessional[]> {
             searchProfessionalsQuery,
             searchProfessionalsData
         )
-        console.info("Response from queryProfessionals:", serverResponse)
 
         const professionalsSearchResult = serverResponse?.data?.nodes ?? []
         return professionalsSearchResult
@@ -141,8 +140,6 @@ async function queryFacilities(healthcareProfessionalIds: string[], searchCity?:
             searchFacilitiesQuery,
             searchFacilitiesData
         )
-
-        console.info('Response from queryFacilities:', serverResponse)
 
         const facilitiesSearchResults = serverResponse?.data?.nodes ?? []
 
