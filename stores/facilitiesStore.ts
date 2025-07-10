@@ -7,7 +7,6 @@ import type { DeleteResult, Facility,
     MutationCreateFacilityArgs,
     MutationDeleteFacilityArgs,
     MutationUpdateFacilityArgs,
-    FacilityConnection,
     Query,
     Relationship } from '~/typedefs/gqlTypes'
 import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql'
