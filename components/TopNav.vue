@@ -103,14 +103,16 @@
                             {{ t('topNav.logout') }}
                         </div>
                     </NuxtLink>
-                    <SVGProfileIcon
-                        role="img"
-                        alt="profile icon"
-                        title="profile icon"
-                        class="profile-icon w-7 stroke-primary inline stroke-2"
-                    />
-                    <div class="text-primary font-bold">
-                        {{ authStore.userId }}
+                    <div class="flex">
+                        <img
+                            :src="authStore.userProfileImage || '~/assets/icons/profile-icon.svg'"
+                            alt="profile icon"
+                            title="profile icon"
+                            class="profile-icon w-7 stroke-primary inline stroke-2 rounded-full mx-1"
+                        >
+                        <div class="text-primary font-bold">
+                            {{ authStore.userId }}
+                        </div>
                     </div>
                 </div>
             </nav>
@@ -124,7 +126,6 @@
 import { useRoute } from 'vue-router'
 import { computed } from 'vue'
 import HamburgerMenu from './HamburgerMenu.vue'
-import SVGProfileIcon from '~/assets/icons/profile-icon.svg'
 import SVGSiteLogo from '~/assets/icons/site-logo.svg'
 import { useAuthStore } from '~/stores/authStore'
 
