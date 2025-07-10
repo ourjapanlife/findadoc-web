@@ -14,7 +14,8 @@ import { type Insurance,
     RelationshipAction,
     type CreateHealthcareProfessionalInput,
     type MutationCreateHealthcareProfessionalArgs,
-    type Query } from '~/typedefs/gqlTypes'
+    type Query,
+    type HealthcareProfessionalSearchFilters } from '~/typedefs/gqlTypes'
 import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql'
 import { useLocaleStore } from '~/stores/localeStore'
 import { ErrorCode, type ServerError, type ServerResponse } from '~/typedefs/serverResponse'
@@ -30,6 +31,8 @@ export const useHealthcareProfessionalsStore = defineStore(
         const selectedHealthcareProfessionalId: Ref<string> = ref('')
         const selectedHealthcareProfessionalData: Ref<HealthcareProfessional | undefined> = ref()
         const totalHealthcareProfessionalsCount: Ref<number> = ref(0)
+        const currentPage: Ref<number> = ref(1)
+        const itemsPerPage: Ref<number> = ref(20)
         const healthcareProfessionalSectionFields = reactive<HealthcareProfessional>({
             __typename: 'HealthcareProfessional', // Optional if you're working with GraphQL
             acceptedInsurance: [],
@@ -95,9 +98,20 @@ export const useHealthcareProfessionalsStore = defineStore(
             healthcareProfessionalSectionFields.spokenLanguages = []
             healthcareProfessionalSectionFields.updatedDate = ''
         }
+
         async function getHealthcareProfessionals() {
-            const healthcareProfessionalResults = await queryHealthcareProfessionals(totalHealthcareProfessionalsCount)
-            healthcareProfessionalsData.value = healthcareProfessionalResults
+            const calculatedOffset = (currentPage.value - 1) * itemsPerPage.value
+            const calculatedLimit = itemsPerPage.value
+            const { nodes, totalCount } = await queryHealthcareProfessionals(calculatedOffset, calculatedLimit)
+            healthcareProfessionalsData.value = nodes
+            totalHealthcareProfessionalsCount.value = totalCount
+        }
+
+        function setCurrentPage(page: number) {
+            if (currentPage.value !== page) {
+                currentPage.value = page
+                getHealthcareProfessionals()
+            }
         }
 
         async function updateHealthcareProfessional():
@@ -314,18 +328,26 @@ export const useHealthcareProfessionalsStore = defineStore(
             createHealthcareProfessional,
             createHealthcareProfessionalSectionFields,
             resetCreateHealthcareProfessionalFields,
-            resetHealthcareProfessionalSectionFields
+            resetHealthcareProfessionalSectionFields,
+            totalHealthcareProfessionalsCount,
+            currentPage,
+            itemsPerPage,
+            setCurrentPage
         }
     }
 )
 
-async function queryHealthcareProfessionals(totalHealthcareProfessionalsCountRef: Ref<number>):
-Promise<HealthcareProfessional[]> {
-    const searchHealthcareProfessionalsData = {
+async function queryHealthcareProfessionals(
+    offset: number,
+    limit: number
+): Promise<{ nodes: HealthcareProfessional[], totalCount: number }> {
+    const searchHealthcareProfessionalsData: { filters: HealthcareProfessionalSearchFilters } = {
         filters: {
-            limit: 400
+            limit: limit,
+            offset: offset
         }
     }
+
     try {
         const response = await graphQLClientRequestWithRetry<Query['healthcareProfessionals']>(
             gqlClient.request.bind(gqlClient),
@@ -333,14 +355,16 @@ Promise<HealthcareProfessional[]> {
             searchHealthcareProfessionalsData
         )
 
-        if (response.data?.nodes) {
-            totalHealthcareProfessionalsCountRef.value = response.data.totalCount
-            return response.data.nodes ?? []
+        if (response.data) {
+            return {
+                nodes: response.data.nodes ?? [],
+                totalCount: response.data.totalCount ?? 0
+            }
         }
-        return []
+        return { nodes: [], totalCount: 0 }
     } catch (error) {
         console.error(`Error querying the healthcare professionals: ${JSON.stringify(error)}`)
-        return []
+        return { nodes: [], totalCount: 0 }
     }
 }
 

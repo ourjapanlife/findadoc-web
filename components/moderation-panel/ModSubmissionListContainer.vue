@@ -3,25 +3,18 @@
         :style="submissionListItemTableColumns"
         :class="`grid grid-cols-4 p-2`"
     >
-        <div class="font-bold text-left p-1">
-            #
-        </div>
-        <div class="font-bold text-left p-1">
-            {{ t("modPanelSubmissionList.name") }}
-        </div>
-        <div class="font-bold text-left p-1">
-            {{ t("modPanelSubmissionList.modified") }}
-        </div>
-        <div class="font-bold text-left p-1">
-            {{ t("modPanelSubmissionList.submitted") }}
-        </div>
+        <div class="font-bold text-left p-1">#</div>
+        <div class="font-bold text-left p-1">{{ t("modPanelSubmissionList.name") }}</div>
+        <div class="font-bold text-left p-1">{{ t("modPanelSubmissionList.modified") }}</div>
+        <div class="font-bold text-left p-1">{{ t("modPanelSubmissionList.submitted") }}</div>
+
         <div
-            v-if="hasSubmissions
-                && modSubmissionsListStore.selectedModerationListViewChosen === SelectedModerationListView.Submissions"
+            v-if="hasSubmissions && modSubmissionsListStore.selectedModerationListViewChosen
+                === SelectedModerationListView.Submissions"
             class="grid grid-cols-subgrid col-span-4"
         >
             <div
-                v-for="(submission, index) in paginatedSubmissions"
+                v-for="(submission, index) in modSubmissionsListStore.submissionsData"
                 :key="index"
                 class="grid grid-cols-subgrid col-span-4 bg-accent-bg"
             >
@@ -35,7 +28,8 @@
                         class="grid grid-cols-subgrid col-span-4 p-1 hover:bg-primary"
                     >
                         <span class="text-skip">
-                            {{ getGlobalRowNumber(currentSubmissionsPage, submissionsPerPage, index) }}
+                            {{ getGlobalRowNumber(modSubmissionsListStore.currentPage,
+                                                  modSubmissionsListStore.itemsPerPage, index) }}
                         </span>
                         <span class="text-skip">
                             {{ submission.healthcareProfessionalName || t("modPanelSubmissionList.facilityNameUnknown") }}
@@ -45,20 +39,14 @@
                     </NuxtLink>
                 </div>
             </div>
-            <Pagination
-                :current-page="currentSubmissionsPage"
-                :total-items="totalSubmissions"
-                :items-per-page="submissionsPerPage"
-                @update:current-page="updateSubmissionsPage"
-            />
         </div>
         <div
-            v-else-if="hasFacilities
-                && modSubmissionsListStore.selectedModerationListViewChosen === SelectedModerationListView.Facilities"
+            v-else-if="hasFacilities && modSubmissionsListStore.selectedModerationListViewChosen
+                === SelectedModerationListView.Facilities"
             class="grid grid-cols-subgrid col-span-4"
         >
             <div
-                v-for="(facility, index) in paginatedFacilities"
+                v-for="(facility, index) in facilitiesStore.facilityData"
                 :key="index"
                 class="grid grid-cols-subgrid col-span-4 bg-accent-bg"
             >
@@ -71,7 +59,7 @@
                         class="grid grid-cols-subgrid col-span-4 p-1 hover:bg-primary"
                     >
                         <span class="text-skip">
-                            {{ getGlobalRowNumber(currentFacilitiesPage, facilitiesPerPage, index) }}
+                            {{ getGlobalRowNumber(facilitiesStore.currentPage, facilitiesStore.itemsPerPage, index) }}
                         </span>
                         <span class="text-skip">
                             {{ facility?.nameEn }}
@@ -81,21 +69,14 @@
                     </NuxtLink>
                 </div>
             </div>
-            <Pagination
-                :current-page="currentFacilitiesPage"
-                :total-items="totalFacilities"
-                :items-per-page="facilitiesPerPage"
-                @update:current-page="updateFacilitiesPage"
-            />
         </div>
         <div
-            v-else-if="hasHealthcareProfessionals
-                && modSubmissionsListStore.selectedModerationListViewChosen
-                    === SelectedModerationListView.HealthcareProfessionals"
+            v-else-if="hasHealthcareProfessionals && modSubmissionsListStore.selectedModerationListViewChosen
+                === SelectedModerationListView.HealthcareProfessionals"
             class="grid grid-cols-subgrid col-span-4"
         >
             <div
-                v-for="(healthcareProfessional, index) in paginatedHealthcareProfessionals"
+                v-for="(healthcareProfessional, index) in healthcareProfessionalsStore.healthcareProfessionalsData"
                 :key="index"
                 class="grid grid-cols-subgrid col-span-4 bg-accent-bg"
             >
@@ -108,7 +89,8 @@
                         class="grid grid-cols-subgrid col-span-4 p-1 hover:bg-primary"
                     >
                         <span class="text-skip">
-                            {{ getGlobalRowNumber(currentHealthcarePage, healthcarePerPage, index) }}
+                            {{ getGlobalRowNumber(healthcareProfessionalsStore.currentPage,
+                                                  healthcareProfessionalsStore.itemsPerPage, index) }}
                         </span>
                         <span class="text-skip">
                             {{ healthcareProfessional.names[0].firstName }} {{ healthcareProfessional.names[0].lastName }}
@@ -118,21 +100,40 @@
                     </NuxtLink>
                 </div>
             </div>
-            <Pagination
-                :current-page="currentHealthcarePage"
-                :total-items="totalHealthcareProfessionals"
-                :items-per-page="healthcarePerPage"
-                @update:current-page="updateHealthcarePage"
-            />
         </div>
         <div v-else>
             {{ t("modPanelSubmissionList.noSubmissions") }}
         </div>
     </div>
+
+    <div class="w-full flex justify-center mt-4">
+        <Pagination
+            v-if="modSubmissionsListStore.selectedModerationListViewChosen === SelectedModerationListView.Submissions"
+            :current-page="modSubmissionsListStore.currentPage"
+            :total-items="modSubmissionsListStore.totalSubmissionsCount"
+            :items-per-page="modSubmissionsListStore.itemsPerPage"
+            @update:current-page="modSubmissionsListStore.setCurrentPage"
+        />
+        <Pagination
+            v-else-if="modSubmissionsListStore.selectedModerationListViewChosen === SelectedModerationListView.Facilities"
+            :current-page="facilitiesStore.currentPage"
+            :total-items="facilitiesStore.totalFacilitiesCount"
+            :items-per-page="facilitiesStore.itemsPerPage"
+            @update:current-page="facilitiesStore.setCurrentPage"
+        />
+        <Pagination
+            v-else-if="modSubmissionsListStore.selectedModerationListViewChosen
+                === SelectedModerationListView.HealthcareProfessionals"
+            :current-page="healthcareProfessionalsStore.currentPage"
+            :total-items="healthcareProfessionalsStore.totalHealthcareProfessionalsCount"
+            :items-per-page="healthcareProfessionalsStore.itemsPerPage"
+            @update:current-page="healthcareProfessionalsStore.setCurrentPage"
+        />
+    </div>
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref, type Ref } from 'vue'
+import { computed, onMounted } from 'vue'
 import { SelectedModerationListView, useModerationSubmissionsStore } from '~/stores/moderationSubmissionsStore'
 import { useHealthcareProfessionalsStore } from '~/stores/healthcareProfessionalsStore'
 import { useFacilitiesStore } from '~/stores/facilitiesStore'
@@ -142,15 +143,6 @@ const { t } = useI18n()
 const modSubmissionsListStore = useModerationSubmissionsStore()
 const healthcareProfessionalsStore = useHealthcareProfessionalsStore()
 const facilitiesStore = useFacilitiesStore()
-
-const currentHealthcarePage: Ref<number> = ref(1)
-const healthcarePerPage = 20
-
-const currentFacilitiesPage: Ref<number> = ref(1)
-const facilitiesPerPage = 20
-
-const currentSubmissionsPage: Ref<number> = ref(1)
-const submissionsPerPage = 20
 
 onMounted(async () => {
     await modSubmissionsListStore.getSubmissions()
@@ -176,44 +168,8 @@ const handleClickToSubmissionForm = (id: string) => {
     modSubmissionsListStore.selectedSubmissionId = id
 }
 
-const paginatedHealthcareProfessionals = computed(() => {
-    const skip = (currentHealthcarePage.value - 1) * healthcarePerPage
-    const take = skip + healthcarePerPage
-    return healthcareProfessionalsStore.healthcareProfessionalsData.slice(skip, take)
-})
-const totalHealthcareProfessionals = computed(() =>
-    healthcareProfessionalsStore.healthcareProfessionalsData.length)
-
-const paginatedFacilities = computed(() => {
-    const skip = (currentFacilitiesPage.value - 1) * facilitiesPerPage
-    const take = skip + facilitiesPerPage
-    return facilitiesStore.facilityData.slice(skip, take)
-})
-const totalFacilities = computed(() =>
-    facilitiesStore.facilityData.length)
-
-const paginatedSubmissions = computed(() => {
-    const skip = (currentSubmissionsPage.value - 1) * submissionsPerPage
-    const take = skip + submissionsPerPage
-    return modSubmissionsListStore.filteredSubmissionDataForListComponent.slice(skip, take)
-})
-const totalSubmissions = computed(() =>
-    modSubmissionsListStore.filteredSubmissionDataForListComponent.length)
-
 function getGlobalRowNumber(page: number, perPage: number, index: number): number {
     return (page - 1) * perPage + index + 1
-}
-
-function updateHealthcarePage(value: number) {
-    currentHealthcarePage.value = value
-}
-
-function updateFacilitiesPage(value: number) {
-    currentFacilitiesPage.value = value
-}
-
-function updateSubmissionsPage(value: number) {
-    currentSubmissionsPage.value = value
 }
 </script>
 

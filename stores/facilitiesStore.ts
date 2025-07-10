@@ -8,6 +8,7 @@ import type { DeleteResult, Facility,
     MutationDeleteFacilityArgs,
     MutationUpdateFacilityArgs,
     Query,
+    FacilitySearchFilters,
     Relationship } from '~/typedefs/gqlTypes'
 import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql'
 import type { ServerResponse } from '~/typedefs/serverResponse'
@@ -119,10 +120,14 @@ mutation Mutation($input: CreateFacilityInput!) {
 }
 `
 
-async function queryFacilities(totalFacilitiesCountRef: Ref<number>): Promise<Facility[]> {
-    const searchFacilitiesData = {
+async function queryFacilities(
+    offset: number,
+    limit: number
+): Promise<{ nodes: Facility[], totalCount: number }> {
+    const searchFacilitiesData: { filters: FacilitySearchFilters } = {
         filters: {
-            limit: 400
+            limit: limit,
+            offset: offset
         }
     }
     try {
@@ -132,14 +137,16 @@ async function queryFacilities(totalFacilitiesCountRef: Ref<number>): Promise<Fa
             searchFacilitiesData
         )
 
-        if (response.data?.nodes) {
-            totalFacilitiesCountRef.value = response.data.totalCount
-            return response.data.nodes ?? []
+        if (response.data) {
+            return {
+                nodes: response.data.nodes ?? [],
+                totalCount: response.data.totalCount ?? 0
+            }
         }
-        return []
+        return { nodes: [], totalCount: 0 }
     } catch (error) {
         console.error(`Error querying the facilities: ${JSON.stringify(error)}`)
-        return []
+        return { nodes: [], totalCount: 0 }
     }
 }
 
@@ -150,6 +157,8 @@ export const useFacilitiesStore = defineStore(
         const selectedFacilityId: Ref<string> = ref('')
         const selectedFacilityData: Ref<Facility | undefined> = ref()
         const totalFacilitiesCount: Ref<number> = ref(0)
+        const currentPage: Ref<number> = ref(1)
+        const itemsPerPage: Ref<number> = ref(20)
         // This reactive object is used to share data changes of the updated facility or submission across the components
         const facilitySectionFields = reactive({
             // contactFields
@@ -204,6 +213,7 @@ export const useFacilitiesStore = defineStore(
         const healthProfessionalsRelationsForDisplay: Ref<HealthcareProfessional[]> = ref([])
 
         function setSelectedFacilityData(facilityId: string) {
+            selectedFacilityId.value = facilityId //Perchè?
             selectedFacilityData.value = facilityData.value
                 .find((facility: Facility) => facility.id === facilityId)
         }
@@ -257,8 +267,18 @@ export const useFacilitiesStore = defineStore(
         }
 
         async function getFacilities() {
-            const facilityResults = await queryFacilities(totalFacilitiesCount)
-            facilityData.value = facilityResults
+            const calculatedOffset = (currentPage.value - 1) * itemsPerPage.value
+            const calculatedLimit = itemsPerPage.value
+            const { nodes, totalCount } = await queryFacilities(calculatedOffset, calculatedLimit)
+            facilityData.value = nodes
+            totalFacilitiesCount.value = totalCount
+        }
+
+        function setCurrentPage(page: number) {
+            if (currentPage.value !== page) {
+                currentPage.value = page
+                getFacilities()
+            }
         }
 
         async function createFacility():
@@ -296,6 +316,7 @@ export const useFacilitiesStore = defineStore(
             )
 
             if (!serverResponse.errors?.length) {
+                await getFacilities()
                 selectedFacilityData.value = serverResponse.data!
                 initializeFacilitySectionValues(serverResponse.data!)
             }
@@ -343,6 +364,7 @@ export const useFacilitiesStore = defineStore(
             )
 
             if (!serverResponse.errors?.length) {
+                await getFacilities()
                 selectedFacilityData.value = serverResponse.data
                 initializeFacilitySectionValues(serverResponse.data)
 
@@ -390,6 +412,14 @@ export const useFacilitiesStore = defineStore(
                 facilityId
             )
 
+            if (!serverResponse.errors?.length && serverResponse.data?.isSuccessful) {
+                await getFacilities()
+                if (selectedFacilityId.value === facilityId.id) {
+                    selectedFacilityId.value = ''
+                    selectedFacilityData.value = undefined
+                }
+            }
+
             return serverResponse
         }
 
@@ -408,7 +438,10 @@ export const useFacilitiesStore = defineStore(
             initializeFacilitySectionValues,
             healthProfessionalsRelationsForDisplay,
             resetFacilitySectionFields,
-            resetCreateFacilityFields
+            resetCreateFacilityFields,
+            currentPage,
+            itemsPerPage,
+            setCurrentPage
         }
     }
 )
