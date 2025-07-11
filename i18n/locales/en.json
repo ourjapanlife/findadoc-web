@@ -89,7 +89,8 @@
   },
   "searchResultsDetails": {
     "speaks": "This doctor speaks",
-    "contact": "Contact"
+    "contact": "Contact",
+    "lastUpdate": "Last updated"
   },
   "thankYouPage": {
     "heading": "Thank you!",
