@@ -1,68 +1,63 @@
 <template>
     <div class="flex items-center justify-center gap-2 mt-4">
-        <!-- First page -->
         <button
             :disabled="currentPage === 1"
-            class="w-10 h-10 flex items-center justify-center rounded text-primary
-                disabled:opacity-30 disabled:cursor-not-allowed"
+            class="w-10 h-10 flex items-center justify-center rounded text-primary disabled:opacity-30
+            disabled:cursor-not-allowed hover:bg-bg-accent transition-colors"
             @click="goToPage(1)"
         >
             <SVGFirstPage class="w-4 h-4 text-primary" />
         </button>
 
-        <!-- Prev page -->
         <button
             :disabled="currentPage === 1"
-            class="w-10 h-10 flex items-center justify-center rounded text-primary
-                disabled:opacity-30 disabled:cursor-not-allowed"
+            class="w-10 h-10 flex items-center justify-center rounded text-primary disabled:opacity-30
+            disabled:cursor-not-allowed hover:bg-bg-accent transition-colors"
             @click="goToPage(currentPage - 1)"
         >
             <SVGLeftArrow class="w-4 h-4 text-primary" />
         </button>
 
-        <!-- Page numbers -->
         <span
-            v-for="page in visiblePages"
-            :key="page"
+            v-for="(page, index) in visiblePages"
+            :key="page === ellipsisToShowMoreContent ? `ellipsis-${index}` : page"
             class="mx-1"
         >
             <button
                 v-if="typeof page === 'number'"
                 :class="[
-                    'w-8 h-8 rounded flex items-center justify-center font-semibold text-primary',
-                    currentPage === Number(page)
-                        ? 'bg-rimary text-primary border border-primary'
-                        : 'bg-primary text-primary hover:bg-primary',
+                    'w-8 h-8 rounded flex items-center justify-center font-semibold',
+                    currentPage === page
+                        ? 'bg-primary text-primary-inverted'
+                        : `bg-bg-secondary text-primary border border-primary hover:bg-primary-hover
+                           hover:text-primary-invertedtransition-colors`,
                 ]"
-
-                :disabled="currentPage === Number(page)"
+                :disabled="currentPage === page"
                 @click="goToPage(Number(page))"
             >
                 {{ page }}
             </button>
             <span
                 v-else
-                class="px-1 text-gray-500"
+                class="px-1 text-text-muted"
             >
                 {{ ellipsisToShowMoreContent }}
             </span>
         </span>
 
-        <!-- Next page -->
         <button
             :disabled="currentPage === totalPages"
             class="w-10 h-10 flex items-center justify-center rounded text-primary
-                disabled:opacity-30 disabled:cursor-not-allowed"
+            disabled:opacity-30 disabled:cursor-not-allowed hover:bg-bg-accent transition-colors"
             @click="goToPage(currentPage + 1)"
         >
             <SVGRightArrow class="w-4 h-4 text-primary" />
         </button>
 
-        <!-- Last page -->
         <button
             :disabled="currentPage === totalPages"
             class="w-10 h-10 flex items-center justify-center rounded text-primary
-                disabled:opacity-30 disabled:cursor-not-allowed"
+            disabled:opacity-30 disabled:cursor-not-allowed hover:bg-bg-accent transition-colors"
             @click="goToPage(totalPages)"
         >
             <SVGLastPage class="w-4 h-4 text-primary" />

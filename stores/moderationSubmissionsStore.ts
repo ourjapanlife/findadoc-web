@@ -39,6 +39,10 @@ export const useModerationSubmissionsStore = defineStore(
         const selectedModerationListViewTabChosen: Ref<SelectedSubmissionListViewTab>
         = ref(SelectedSubmissionListViewTab.ForReview)
 
+        const totalSubmissionsCount: Ref<number> = ref(0)
+        const currentPage: Ref<number> = ref(1)
+        const itemsPerPage: Ref<number> = ref(20)
+
         function setUpdatingSubmissionFromTopBarAndExiting(newValue: boolean) {
             updatingSubmissionFromTopBarAndExiting.value = newValue
         }
@@ -60,8 +64,18 @@ export const useModerationSubmissionsStore = defineStore(
         }
 
         async function getSubmissions() {
-            const submissionsSearchResults = await querySubmissions()
-            submissionsData.value = submissionsSearchResults
+            const calculatedOffset = (currentPage.value - 1) * itemsPerPage.value
+            const calculatedLimit = itemsPerPage.value
+            const { nodes, totalCount } = await querySubmissions(calculatedOffset, calculatedLimit)
+            submissionsData.value = nodes
+            totalSubmissionsCount.value = totalCount
+        }
+
+        function setCurrentPage(page: number) {
+            if (currentPage.value !== page) {
+                currentPage.value = page
+                getSubmissions()
+            }
         }
 
         function setSelectedModerationListViewChosen(selectedOption: SelectedModerationListView) {
@@ -175,16 +189,21 @@ export const useModerationSubmissionsStore = defineStore(
             setSelectedModerationListViewTabChosen,
             updateSubmission,
             approveSubmission,
-            rejectSubmission }
+            rejectSubmission,
+            totalSubmissionsCount,
+            currentPage,
+            itemsPerPage,
+            setCurrentPage }
     }
 )
 
-async function querySubmissions(): Promise<Submission[]> {
+async function querySubmissions(offset: number, limit: number): Promise<{ nodes: Submission[], totalCount: number }> {
     try {
         const submissionsFilters = {
             filters: {
                 id: undefined,
-                limit: 100
+                limit: limit,
+                offset: offset
             }
         }
 
@@ -194,68 +213,77 @@ async function querySubmissions(): Promise<Submission[]> {
             submissionsFilters
         )
 
-        return serverResponse?.data ?? []
+        if (serverResponse.data) {
+            return {
+                nodes: serverResponse.data.nodes ?? [],
+                totalCount: serverResponse.data.totalCount ?? 0
+            }
+        }
+        return { nodes: [], totalCount: 0 }
     } catch (error) {
         console.error(`Error querying the submissions: ${JSON.stringify(error)}`)
-        return []
+        return { nodes: [], totalCount: 0 }
     }
 }
 
 const getSubmissionsGqlQuery = gql`
-   query Submissions($filters: SubmissionSearchFilters!) {
-  submissions(filters: $filters) {
-    id
-    googleMapsUrl
-    healthcareProfessionalName
-    spokenLanguages
-    facility {
-      id
-      mapLatitude
-      mapLongitude
-      nameEn
-      nameJa
-      contact {
-        googleMapsUrl
-        email
-        phone
-        website
-        address {
-          postalCode
-          prefectureEn
-          cityEn
-          addressLine1En
-          addressLine2En
-          prefectureJa
-          cityJa
-          addressLine1Ja
-          addressLine2Ja
+    query Submissions($filters: SubmissionSearchFilters!) {
+        submissions(filters: $filters) {
+            nodes {
+                id
+                googleMapsUrl
+                healthcareProfessionalName
+                spokenLanguages
+                facility {
+                    id
+                    mapLatitude
+                    mapLongitude
+                    nameEn
+                    nameJa
+                    contact {
+                        googleMapsUrl
+                        email
+                        phone
+                        website
+                        address {
+                            postalCode
+                            prefectureEn
+                            cityEn
+                            addressLine1En
+                            addressLine2En
+                            prefectureJa
+                            cityJa
+                            addressLine1Ja
+                            addressLine2Ja
+                        }
+                    }
+                    healthcareProfessionalIds
+                }
+                healthcareProfessionals {
+                    id
+                    names {
+                        firstName
+                        middleName
+                        lastName
+                        locale
+                    }
+                    spokenLanguages
+                    degrees
+                    specialties
+                    acceptedInsurance
+                    additionalInfoForPatients
+                    facilityIds
+                }
+                isUnderReview
+                isApproved
+                isRejected
+                createdDate
+                updatedDate
+                notes
+            }
+            totalCount
         }
-      }
-      healthcareProfessionalIds
-    }
-    healthcareProfessionals {
-      id
-      names {
-        firstName
-        middleName
-        lastName
-        locale
-      }
-      spokenLanguages
-      degrees
-      specialties
-      acceptedInsurance
-      additionalInfoForPatients
-      facilityIds
-    }
-    isUnderReview
-    isApproved
-    isRejected
-    createdDate
-    updatedDate
-    notes
-  }
-}`
+    }`
 
 const updateFacilitySubmissionGqlMutation = gql`
 mutation Mutation($id: ID!, $input: UpdateSubmissionInput!) {
