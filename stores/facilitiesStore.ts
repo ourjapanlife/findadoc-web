@@ -98,8 +98,6 @@ export const useFacilitiesStore = defineStore(
             facilitySectionFields.healthcareProfessionalIds = data.healthcareProfessionalIds
             facilitySectionFields.mapLatitude = data.mapLatitude.toString()
             facilitySectionFields.mapLongitude = data.mapLongitude.toString()
-
-            Object.assign(facilitySectionFieldsBeforeMutation, facilitySectionFields)
         }
 
         function resetFacilitySectionFields() {
@@ -174,64 +172,10 @@ export const useFacilitiesStore = defineStore(
             return serverResponse
         }
 
-        const facilitySectionFieldsBeforeMutation = reactive({ ...facilitySectionFields })
-
-        async function updateFacility(): Promise<ServerResponse<Facility>> {
-            const input: MutationUpdateFacilityArgs['input'] = {}
-
-            if (facilitySectionFields.nameEn !== facilitySectionFieldsBeforeMutation.nameEn)
-                input.nameEn = facilitySectionFields.nameEn
-
-            if (facilitySectionFields.nameJa !== facilitySectionFieldsBeforeMutation.nameJa)
-                input.nameJa = facilitySectionFields.nameJa
-
-            if (
-                parseFloat(facilitySectionFields.mapLatitude) !== parseFloat(facilitySectionFieldsBeforeMutation.mapLatitude)
-            )
-                input.mapLatitude = parseFloat(facilitySectionFields.mapLatitude)
-
-            if (
-                parseFloat(facilitySectionFields.mapLongitude) !== parseFloat(facilitySectionFieldsBeforeMutation.mapLongitude)
-            )
-                input.mapLongitude = parseFloat(facilitySectionFields.mapLongitude)
-
-            if (!arraysAreEqual(facilitySectionFields.healthProfessionalsRelations,
-                                facilitySectionFieldsBeforeMutation.healthProfessionalsRelations))
-                input.healthcareProfessionalIds = facilitySectionFields.healthProfessionalsRelations
-
-            if (
-                facilitySectionFields.email !== facilitySectionFieldsBeforeMutation.email
-                || facilitySectionFields.phone !== facilitySectionFieldsBeforeMutation.phone
-                || facilitySectionFields.website !== facilitySectionFieldsBeforeMutation.website
-                || facilitySectionFields.googlemapsURL !== facilitySectionFieldsBeforeMutation.googlemapsURL
-                || facilitySectionFields.postalCode !== facilitySectionFieldsBeforeMutation.postalCode
-                || facilitySectionFields.prefectureEn !== facilitySectionFieldsBeforeMutation.prefectureEn
-                || facilitySectionFields.cityEn !== facilitySectionFieldsBeforeMutation.cityEn
-                || facilitySectionFields.addressLine1En !== facilitySectionFieldsBeforeMutation.addressLine1En
-                || facilitySectionFields.addressLine2En !== facilitySectionFieldsBeforeMutation.addressLine2En
-                || facilitySectionFields.prefectureJa !== facilitySectionFieldsBeforeMutation.prefectureJa
-                || facilitySectionFields.cityJa !== facilitySectionFieldsBeforeMutation.cityJa
-                || facilitySectionFields.addressLine1Ja !== facilitySectionFieldsBeforeMutation.addressLine1Ja
-                || facilitySectionFields.addressLine2Ja !== facilitySectionFieldsBeforeMutation.addressLine2Ja
-            ) {
-                input.contact = {
-                    phone: facilitySectionFields.phone,
-                    googleMapsUrl: facilitySectionFields.googlemapsURL,
-                    email: facilitySectionFields.email,
-                    website: facilitySectionFields.website,
-                    address: {
-                        postalCode: facilitySectionFields.postalCode,
-                        prefectureEn: facilitySectionFields.prefectureEn,
-                        cityEn: facilitySectionFields.cityEn,
-                        addressLine1En: facilitySectionFields.addressLine1En,
-                        addressLine2En: facilitySectionFields.addressLine2En,
-                        prefectureJa: facilitySectionFields.prefectureJa,
-                        cityJa: facilitySectionFields.cityJa,
-                        addressLine1Ja: facilitySectionFields.addressLine1Ja,
-                        addressLine2Ja: facilitySectionFields.addressLine2Ja
-                    }
-                }
-            }
+        async function updateFacility(
+            input: MutationUpdateFacilityArgs['input']
+        ): Promise<ServerResponse<Facility>> {
+            const healthProfessionalRelationsBeforeMutation = facilitySectionFields.healthProfessionalsRelations
 
             const updateFacilityInput: MutationUpdateFacilityArgs = {
                 id: selectedFacilityId.value,
@@ -248,12 +192,10 @@ export const useFacilitiesStore = defineStore(
                 selectedFacilityData.value = serverResponse.data
                 initializeFacilitySectionValues(serverResponse.data)
 
-                if (
-                    arraysAreEqual(
-                        facilitySectionFields.healthProfessionalsRelations,
-                        facilitySectionFieldsBeforeMutation.healthProfessionalsRelations
-                    )
-                ) {
+                if (arraysAreEqual(
+                    facilitySectionFields.healthProfessionalsRelations,
+                    healthProfessionalRelationsBeforeMutation
+                )) {
                     facilitySectionFields.healthProfessionalsRelations = []
                 }
             }

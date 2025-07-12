@@ -121,7 +121,8 @@ import { useHealthcareProfessionalsStore } from '~/stores/healthcareProfessional
 import { useModerationScreenStore, ModerationScreen } from '~/stores/moderationScreenStore'
 import { useModalStore, ModalType } from '~/stores/modalStore'
 import { handleServerErrorMessaging } from '~/composables/handleServerErrorMessaging'
-import type { Facility, HealthcareProfessional } from '~/typedefs/gqlTypes'
+import type { Contact, ContactInput, Facility, HealthcareProfessional,
+    MutationUpdateFacilityArgs, PhysicalAddress, PhysicalAddressInput } from '~/typedefs/gqlTypes'
 import { arraysAreEqual } from '~/utils/arrayUtils'
 import { onBeforeRouteLeave } from '#app'
 
@@ -172,38 +173,93 @@ function setSelectedId() {
     }
 }
 
-const facilityHasUnsavedChanges = () => {
+function mapFacilityAddressToInput(address: PhysicalAddress): PhysicalAddressInput {
+    return {
+        postalCode: address.postalCode ?? '',
+        prefectureEn: address.prefectureEn ?? '',
+        cityEn: address.cityEn ?? '',
+        addressLine1En: address.addressLine1En ?? '',
+        addressLine2En: address.addressLine2En ?? '',
+        prefectureJa: address.prefectureJa ?? '',
+        cityJa: address.cityJa ?? '',
+        addressLine1Ja: address.addressLine1Ja ?? '',
+        addressLine2Ja: address.addressLine2Ja ?? ''
+    }
+}
+
+function mapFacilityContactToInput(contact: Contact): ContactInput {
+    return {
+        phone: contact.phone ?? '',
+        email: contact.email ?? '',
+        website: contact.website ?? '',
+        googleMapsUrl: contact.googleMapsUrl ?? '',
+        address: mapFacilityAddressToInput(contact.address ?? {} as PhysicalAddress)
+    }
+}
+
+const facilityHasUnsavedChanges = (): boolean => {
     if (!originalFacilityRefsValue.value) return false
 
-    const facilityBeforeChange = originalFacilityRefsValue.value
+    const currentFacilityFields = facilitiesStore.facilitySectionFields
+    const originalFacilityData = originalFacilityRefsValue.value
 
-    /** This needs to be converted because to access the values of this object we do not need value.
-    But to keep their reactivity in the store we keep them as Refs **/
-    const facilitySections = facilitiesStore.facilitySectionFields
+    const changedFields = getChangedFacilityFieldsForUpdate(currentFacilityFields, originalFacilityData)
 
-    const areThereUnsavedFacilityChanges
-        = facilityBeforeChange.nameEn !== facilitySections.nameEn
-          || facilityBeforeChange.nameJa !== facilitySections.nameJa
-          || facilityBeforeChange.contact.phone !== facilitySections.phone
-          || facilityBeforeChange.contact.website !== facilitySections.website
-          || facilityBeforeChange.contact.email !== facilitySections.email
-          || facilityBeforeChange.contact.address.postalCode !== facilitySections.postalCode
-          || facilityBeforeChange.contact.address.prefectureEn !== facilitySections.prefectureEn
-          || facilityBeforeChange.contact.address.cityEn !== facilitySections.cityEn
-          || facilityBeforeChange.contact.address.addressLine1En !== facilitySections.addressLine1En
-          || facilityBeforeChange.contact.address.addressLine2En !== facilitySections.addressLine2En
-          || facilityBeforeChange.contact.address.prefectureJa !== facilitySections.prefectureJa
-          || facilityBeforeChange.contact.address.cityJa !== facilitySections.cityJa
-          || facilityBeforeChange.contact.address.addressLine1Ja !== facilitySections.addressLine1Ja
-          || facilityBeforeChange.contact.address.addressLine2Ja !== facilitySections.addressLine2Ja
-          || facilityBeforeChange.contact.googleMapsUrl !== facilitySections.googlemapsURL
-          || facilityBeforeChange.mapLatitude.toString() !== facilitySections.mapLatitude
-          || facilityBeforeChange.mapLongitude.toString() !== facilitySections.mapLongitude
-          || JSON.stringify(facilityBeforeChange.healthcareProfessionalIds)
-          !== JSON.stringify(facilitySections.healthcareProfessionalIds)
-          || facilitySections.healthProfessionalsRelations.length > 0
+    return Object.keys(changedFields).length > 0
+}
 
-    return areThereUnsavedFacilityChanges
+function getChangedFacilityFieldsForUpdate(
+  current: typeof facilitiesStore.facilitySectionFields,
+  original: Facility
+): MutationUpdateFacilityArgs['input'] {
+    const updatedFields: MutationUpdateFacilityArgs['input'] = {}
+
+    if (current.nameEn !== original.nameEn) updatedFields.nameEn = current.nameEn
+    if (current.nameJa !== original.nameJa) updatedFields.nameJa = current.nameJa
+
+    const currentLatitude = parseFloat(current.mapLatitude)
+    if (currentLatitude !== original.mapLatitude) updatedFields.mapLatitude = currentLatitude
+
+    const currentLongitude = parseFloat(current.mapLongitude)
+    if (currentLongitude !== original.mapLongitude) updatedFields.mapLongitude = currentLongitude
+
+    if (current.healthProfessionalsRelations.length > 0) {
+        updatedFields.healthcareProfessionalIds = current.healthProfessionalsRelations
+    }
+
+    const originalContactInput = mapFacilityContactToInput(original.contact as Contact)
+
+    const updatedContact: ContactInput = {
+        phone: current.phone || originalContactInput.phone,
+        email: current.email || originalContactInput.email,
+        website: current.website || originalContactInput.website,
+        googleMapsUrl: current.googlemapsURL || originalContactInput.googleMapsUrl,
+        address: { ...originalContactInput.address }
+    }
+
+    const facilityAddressKeys: (keyof PhysicalAddressInput)[] = [
+        'postalCode', 'prefectureEn', 'cityEn', 'addressLine1En', 'addressLine2En',
+        'prefectureJa', 'cityJa', 'addressLine1Ja', 'addressLine2Ja'
+    ]
+
+    for (const addressKey of facilityAddressKeys) {
+        if (current[addressKey] && current[addressKey] !== originalContactInput.address[addressKey]) {
+            updatedContact.address[addressKey] = current[addressKey]
+        }
+    }
+
+    const contactWasModified
+        = updatedContact.phone !== originalContactInput.phone
+          || updatedContact.email !== originalContactInput.email
+          || updatedContact.website !== originalContactInput.website
+          || updatedContact.googleMapsUrl !== originalContactInput.googleMapsUrl
+          || facilityAddressKeys.some(key => updatedContact.address[key] !== originalContactInput.address[key])
+
+    if (contactWasModified) {
+        updatedFields.contact = updatedContact
+    }
+
+    return updatedFields
 }
 
 const healthcareProfessionalHasUnsavedChanges = () => {
@@ -267,10 +323,15 @@ const hasUnsavedChanges = () => {
 
 const updateFacilityOrHealthcareProfessional = async () => {
     if (moderationScreenStore.editFacilityScreenIsActive()) {
-        // Prevent sending an unnecessary request if the user has not made changes
-        if (!facilityHasUnsavedChanges()) return
+        if (!originalFacilityRefsValue.value) return
 
-        const response = await facilitiesStore.updateFacility()
+        const facilityHasChanges = getChangedFacilityFieldsForUpdate(
+            facilitiesStore.facilitySectionFields, originalFacilityRefsValue.value
+        )
+
+        if (Object.keys(facilityHasChanges).length === 0) return
+
+        const response = await facilitiesStore.updateFacility(facilityHasChanges)
 
         if (response.errors?.length) {
             handleServerErrorMessaging(response.errors, toast, t)
