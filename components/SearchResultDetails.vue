@@ -33,7 +33,7 @@
                 <div class="ml-9 mt-2 font-bold text-sm">
                     <span>{{ t("searchResultsDetails.speaks") }}:</span>
                 </div>
-                <div class="result-tags flex flex-wrap w-64 mb-6 mt-1 ml-6 pl-2">
+                <div class="result-tags flex flex-wrap w-64 mb-2 mt-1 ml-6 pl-2">
                     <div
                         v-for="(spokenLanguage, index) in spokenLanguages"
                         :key="index"
@@ -42,6 +42,16 @@
                     >
                         {{ spokenLanguage }}
                     </div>
+                </div>
+            </div>
+            <div v-show="additionalInfoForPatients">
+                <div
+                    class="ml-9 mt-2 font-bold text-sm"
+                >
+                    <span>{{ t("searchResultsDetails.additionalInfo") }}:</span>
+                </div>
+                <div class="ml-9 mb-4 text-primary-text">
+                    <p>{{ additionalInfoForPatients }}</p>
                 </div>
             </div>
             <div class="about ml-4 pl-2">
@@ -100,7 +110,7 @@
                     >{{ phone }}</a>
                 </div>
                 <div
-                    v-if="!excludedEmailAddresses.includes(email)"
+                    v-if="email && !excludedEmailAddresses.includes(email)"
                     class="email flex my-4"
                 >
                     <SVGEmailIcon
@@ -111,8 +121,13 @@
                     />
                     <a
                         :href="`mailto:${email}`"
-                        class="email-link"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="underline text-blue"
                     >{{ email }}</a>
+                </div>
+                <div class="mr-3 mb-1 flex flex-row-reverse text-sm text-primary-text-muted">
+                    <p>{{ formattedLastUpdate }}</p>
                 </div>
             </div>
         </div>
@@ -130,6 +145,8 @@ import { useLocaleStore } from '~/stores/localeStore.js'
 import { useSpecialtiesStore } from '~/stores/specialtiesStore.js'
 import { useSearchResultsStore } from '~/stores/searchResultsStore'
 import { Locale } from '~/typedefs/gqlTypes.js'
+import { formatHealthcareProfessionalName } from '~/utils/nameUtils'
+import { formatToReadableDate } from '~/utils/dateUtils'
 
 const { t } = useI18n()
 
@@ -138,35 +155,21 @@ const localeStore = useLocaleStore()
 const specialtiesStore = useSpecialtiesStore()
 
 const healthcareProfessionalName = computed(() => {
-    const englishName
-        = resultsStore.$state.activeResult?.professional.names.find(
-            n => n.locale === Locale.EnUs
-        )
-    const japaneseName
-        = resultsStore.$state.activeResult?.professional.names.find(
-            n => n.locale === Locale.JaJp
-        )
-
-    const englishFullName = `${englishName?.firstName} ${englishName?.lastName}`
-    const japaneseFullName = `${japaneseName?.lastName} ${japaneseName?.firstName}`
-
-    switch (localeStore.locale.code) {
-        case Locale.EnUs:
-            return englishFullName ? englishFullName : japaneseFullName
-        case Locale.JaJp:
-            return japaneseFullName ? japaneseFullName : englishFullName
-        default:
-            return englishFullName ? englishFullName : japaneseFullName
-    }
+    const name = formatHealthcareProfessionalName(
+        resultsStore.activeResult?.professional.names,
+        localeStore.activeLocale.code as Locale
+    )
+    return name
 })
+
 const healthcareProfessionalDegrees = computed(() => {
     const healthcareProfessionalDegreesText
-        = resultsStore.$state.activeResult?.professional.degrees.join(', ')
+        = resultsStore.activeResult?.professional.degrees.join(', ')
     return healthcareProfessionalDegreesText
 })
 const specialties = computed(() => {
     const specialties
-        = resultsStore.$state.activeResult?.professional.specialties
+        = resultsStore.activeResult?.professional.specialties
 
     const specialtiesDisplayText = specialties?.map(specialty => {
         const specialtyDisplayText
@@ -179,14 +182,14 @@ const specialties = computed(() => {
     return specialtiesDisplayText
 })
 const facilityName = computed(() => {
-    const englishName = resultsStore.$state.activeResult?.facilities[0].nameEn
-    const japaneseName = resultsStore.$state.activeResult?.facilities[0].nameJa
-    return localeStore.locale.code === Locale.JaJp ? japaneseName : englishName
+    const englishName = resultsStore.activeResult?.facilities[0].nameEn
+    const japaneseName = resultsStore.activeResult?.facilities[0].nameJa
+    return localeStore.activeLocale.code === Locale.JaJp ? japaneseName : englishName
 })
 
 const spokenLanguages = computed(() => {
     const languagesDisplayText
-        = resultsStore.$state.activeResult?.professional.spokenLanguages?.map(
+        = resultsStore.activeResult?.professional.spokenLanguages?.map(
             s => {
                 const languageDisplayText
                     = localeStore.localeDisplayOptions.find(
@@ -199,35 +202,45 @@ const spokenLanguages = computed(() => {
     return languagesDisplayText
 })
 
+const additionalInfoForPatients = computed(() => resultsStore.activeResult?.professional.additionalInfoForPatients)
+
 const addressLine1 = computed(() => {
     const addressObj
-        = resultsStore.$state.activeResult?.facilities[0].contact.address
+        = resultsStore.activeResult?.facilities[0].contact.address
 
     const englishAddress = `${addressObj?.addressLine1En} ${addressObj?.addressLine2En}`
     const japaneseAddress = `${addressObj?.postalCode} ${addressObj?.prefectureJa}${addressObj?.cityJa}${addressObj?.addressLine1Ja}${addressObj?.addressLine2Ja}`
-    return localeStore.locale.code === Locale.JaJp
+    return localeStore.activeLocale.code === Locale.JaJp
         ? japaneseAddress
         : englishAddress
 })
 const addressLine2 = computed(() => {
     const addressObj
-        = resultsStore.$state.activeResult?.facilities[0].contact.address
+        = resultsStore.activeResult?.facilities[0].contact.address
 
     const englishAddress = `${addressObj?.cityEn}, ${addressObj?.prefectureEn} ${addressObj?.postalCode}`
-    return localeStore.locale.code !== Locale.JaJp ? englishAddress : ''
+    return localeStore.activeLocale.code !== Locale.JaJp ? englishAddress : ''
 })
 const addressLink = computed(
-    () => resultsStore.$state.activeResult?.facilities[0].contact.googleMapsUrl
+    () => resultsStore.activeResult?.facilities[0].contact.googleMapsUrl
 )
 const website = computed(
-    () => resultsStore.$state.activeResult?.facilities[0]?.contact?.website
+    () => resultsStore.activeResult?.facilities[0]?.contact?.website
 )
 const phone = computed(
-    () => resultsStore.$state.activeResult?.facilities[0]?.contact?.phone
+    () => resultsStore.activeResult?.facilities[0]?.contact?.phone
 )
 const email = computed(
-    () => resultsStore.$state.activeResult?.facilities[0]?.contact?.email ?? ''
+    () => resultsStore.activeResult?.facilities[0]?.contact?.email ?? ''
 )
+
+const formattedLastUpdate = computed(() => {
+    const unformattedDate = resultsStore.activeResult?.professional.updatedDate
+    if (unformattedDate) {
+        return t('searchResultsDetails.lastUpdate') + ': ' + formatToReadableDate(unformattedDate)
+    }
+    return ''
+})
 
 const excludedEmailAddresses = ['none', 'email@email.com']
 </script>

@@ -102,14 +102,14 @@
                             v-if="authStore.isLoggedIn"
                             class="text-primary"
                         >
-                            <div class="flex">
-                                <SVGProfileIcon
-                                    role="img"
+                            <div class="flex mb-1">
+                                <img
+                                    :src="authStore.userProfileImage || '~/assets/icons/profile-icon.svg'"
                                     alt="profile icon"
                                     title="profile icon"
-                                    class="inline stroke-2 profile-icon w-7 stroke-primary"
-                                />
-                                <div class="font-bold text-primary">
+                                    class="profile-icon w-7 stroke-primary inline stroke-2 rounded-full mr-1"
+                                >
+                                <div class="text-primary font-bold">
                                     {{ authStore.userId }}
                                 </div>
                             </div>
@@ -282,7 +282,6 @@
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue'
 import { vCloseOnOutsideClick } from '~/composables/closeOnOutsideClick'
-import SVGProfileIcon from '~/assets/icons/profile-icon.svg'
 import SVGHamburgerMenuIcon from '~/assets/icons/hamburger-menu.svg'
 import SVGGithubIcon from '~/assets/icons/social-github.svg'
 import { useAuthStore } from '~/stores/authStore'

@@ -6,7 +6,7 @@
         >
             <div class="search-specialty col-span-1 inline-block w-1/3 py-4">
                 <select
-                    v-model="selectedSpecialty"
+                    v-model="selectedSpecialties"
                     class="rounded-l-full rounded-r-none w-full px-1 border-2 border-primary/60
                     py-1.5 drop-shadow-md text-primary-text bg-primary-bg hover:bg-primary-hover/10 transition-all"
                 >
@@ -20,8 +20,8 @@
                     </option>
                     <option
                         v-for="(specialty) in specialtyDropdownOptions"
-                        :key="specialty.code"
-                        :value="specialty.code"
+                        :key="specialty.value"
+                        :value="specialty.value"
                     >
                         {{ specialty.displayText }}
                     </option>
@@ -29,7 +29,7 @@
             </div>
             <div class="search-location col-span-1 inline-block w-1/3 py-4">
                 <select
-                    v-model="selectedLocation"
+                    v-model="selectedLocations"
                     class="w-full px-1 border-y-2 border-primary/60 py-1.5 drop-shadow-md
                         text-primary-text bg-primary-bg hover:bg-primary-hover/10 transition-all"
                 >
@@ -41,37 +41,28 @@
                     >
                         {{ t('searchBar.selectLocation') }}
                     </option>
-                    <option>{{ placeHolderTextDisplay }}</option>
                     <option
                         v-for="(cityDetails) in locationDropdownOptions"
-                        :key="cityDetails.cityDisplayText"
-                        :value="cityDetails.cityDisplayText"
+                        :key="cityDetails.value"
+                        :value="cityDetails.value"
                     >
-                        {{ cityDetails.cityDisplayText }}: ({{ cityDetails.cityOccurrenceCount }})
+                        {{ cityDetails.displayText }}: ({{ cityDetails.cityOccurrenceCount }})
                     </option>
                 </select>
             </div>
             <div class="search-language col-span-1 inline-block w-1/3 py-4">
                 <select
-                    v-model="selectedLanguage"
-                    class="rounded-r-full rounded-l-none w-full px-1 border-2 border-primary/60 py-1.5
-                        drop-shadow-md text-primary-text bg-primary-bg hover:bg-primary-hover/10 transition-all"
+                    v-model="selectedLanguages"
+                    class="rounded-r-full rounded-l-none w-full px-1 border-2 border-primary/60
+                        py-1.5 drop-shadow-md text-primary-text bg-primary-bg hover:bg-primary-hover/10 transition-all"
                     data-testid="search-bar-language"
                 >
                     <option
-                        value=""
-                        class="text-primary-text-muted hidden"
-                        disabled
-                        selected
-                    >
-                        {{ t('searchBar.selectLanguage') }}
-                    </option>
-                    <option
                         v-for="(language) in languageDropdownOptions"
-                        :key="language.code"
-                        :value="language.code"
+                        :key="language.value"
+                        :value="language.value"
                     >
-                        {{ language.simpleText }}
+                        {{ language.displayText }}
                     </option>
                 </select>
             </div>
@@ -104,9 +95,9 @@ import { ref, type Ref, onMounted } from 'vue'
 import SVGSearchIcon from '~/assets/icons/search-icon.svg'
 import { useSearchResultsStore } from '~/stores/searchResultsStore.js'
 import { useLocationsStore } from '~/stores/locationsStore.js'
-import { useSpecialtiesStore, type SpecialtyDisplayOption } from '~/stores/specialtiesStore.js'
-import type { Locale, Specialty } from '~/typedefs/gqlTypes.js'
-import { useLocaleStore, type LocaleDisplay } from '~/stores/localeStore.js'
+import { useSpecialtiesStore } from '~/stores/specialtiesStore.js'
+import { useLocaleStore } from '~/stores/localeStore.js'
+import { type Specialty, Locale } from '~/typedefs/gqlTypes.js'
 
 const { t } = useI18n()
 
@@ -115,66 +106,104 @@ const locationsStore = useLocationsStore()
 const searchResultsStore = useSearchResultsStore()
 const specialtiesStore = useSpecialtiesStore()
 
-const languageOptions = localeStore.localeDisplayOptions
-const languageOptionsWithPlaceHolder = setSearchBarLanguageDropdownOptions()
+const locationDropdownOptions: Ref<LocationDropdownOption[]> = ref([])
+const specialtyDropdownOptions: Ref<DropdownOption[]> = ref([])
+const languageDropdownOptions: Ref<DropdownOption[]> = ref([])
 
-const locationDropdownOptions: ComputedRef<CityDisplayItems> = computed(() =>
-    createLocationDropdownOptions(locationsStore.citiesDisplayOptions))
-const specialtyDropdownOptions: Ref<SpecialtyDisplayOption[]> = ref(specialtiesStore.specialtyDisplayOptions)
-const languageDropdownOptions: Ref<LocaleDisplay[]> = ref(languageOptionsWithPlaceHolder)
+const selectedSpecialties: Ref<string> = ref('')
+const selectedLocations: Ref<string> = ref('')
+const selectedLanguages: Ref<string> = ref(localeStore.activeLocale.code)
 
-const selectedSpecialty: Ref<Specialty | string> = ref('')
-const selectedLocation: Ref<string> = ref('')
-const selectedLanguage: Ref<Locale | string> = ref('')
+interface DropdownOption {
+    displayText: string
+    value: string
+}
 
-const placeHolderTextDisplay = '----Any----'
+interface LocationDropdownOption extends DropdownOption {
+    cityOccurrenceCount: number
+}
 
 onMounted(async () => {
     // Initialize locations when component is mounted. The dropdown options are reactive, so they will update automatically
-    await locationsStore.fetchLocations()
+    await createLocationDropdownOptions()
+    createLanguageDropdownOptions()
+    createSpecialtyDropdownOptions()
 })
 
-function setSearchBarLanguageDropdownOptions() {
+function createLanguageDropdownOptions() {
     // This will remove any codes code that is falsy
-    const localeOptionsWithLocaleCodes = languageOptions.filter(locale => locale.code)
-    // This will add the placeholder text
-    localeOptionsWithLocaleCodes
-        .unshift({ code: '', simpleText: placeHolderTextDisplay, displayText: placeHolderTextDisplay })
+    const dropdownOptions = localeStore.localeDisplayOptions.map(locale => ({
+        displayText: locale.displayText,
+        value: locale.code
+    })) as DropdownOption[]
 
-    return localeOptionsWithLocaleCodes
+    // Remove any options that have a falsy code
+    dropdownOptions.filter(locale => locale.value)
+
+    languageDropdownOptions.value = dropdownOptions
 }
 
-interface CityDisplayItems {
-    [cityName: string]: {
-        cityDisplayText: string
-        cityOccurrenceCount: number
-    }
-}
-function createLocationDropdownOptions(cities: string[]) {
-    const cityDisplayTextObject: CityDisplayItems = {}
+function createSpecialtyDropdownOptions() {
+    const dropdownOptions = specialtiesStore.specialtyDisplayOptions.map(specialty => ({
+        displayText: specialty.displayText,
+        value: specialty.code
+    })) as DropdownOption[]
 
-    cities.forEach(city => {
-        if (city === placeHolderTextDisplay) {
-            return
-        }
-        if (cityDisplayTextObject[city]) {
-            cityDisplayTextObject[city].cityOccurrenceCount += 1
+    // Add the "All" option to the top of the list
+    dropdownOptions.unshift({ displayText: t('searchBar.allSpecialties'), value: '' })
+
+    specialtyDropdownOptions.value = dropdownOptions
+}
+
+async function createLocationDropdownOptions(): Promise<void> {
+    // Show an interim loading state while we fetch the locations
+    locationDropdownOptions.value = [{ displayText: t('searchBar.selectLocation'), value: '', cityOccurrenceCount: 0 }]
+
+    await locationsStore.fetchLocations()
+
+    const localeStore = useLocaleStore()
+
+    const allCities = localeStore.activeLocale.code === Locale.EnUs
+        ? locationsStore.allCitiesEnglishList
+        : locationsStore.allCitiesJapaneseList
+
+    const newLocationDropdownOptions: LocationDropdownOption[] = []
+
+    // Add the cities to the dropdown and add a count for each city
+    allCities.forEach(city => {
+        const matchingLocation = newLocationDropdownOptions.find(option => option.displayText === city)
+
+        if (matchingLocation) {
+            matchingLocation.cityOccurrenceCount += 1
         } else {
-            cityDisplayTextObject[city] = {
-                cityDisplayText: city,
-                cityOccurrenceCount: 1
-            }
+            newLocationDropdownOptions.push({ displayText: city, value: city, cityOccurrenceCount: 1 })
         }
     })
 
-    return cityDisplayTextObject
+    // Add the "All" option to the top of the list
+    newLocationDropdownOptions.unshift({ displayText: t('searchBar.allLocations'),
+        value: '',
+        cityOccurrenceCount: allCities.length })
+
+    locationDropdownOptions.value = newLocationDropdownOptions
 }
 
-async function search() {
-    const blankRemovedLocation = selectedLocation.value == '----Any----' ? '' : selectedLocation.value
-    const blankRemovedSpecialty = selectedSpecialty.value == '----Any----' ? undefined : selectedSpecialty.value as Specialty
-    const blankRemovedLanguage = selectedLanguage.value == '----Any----' ? undefined : selectedLanguage.value as Locale
+watch(selectedSpecialties, () => {
+    // If the selected specialty is empty, clear the selected specialties
+    searchResultsStore.selectedSpecialties = selectedSpecialties.value === ''
+        ? []
+        : [selectedSpecialties.value as Specialty]
+})
 
-    await searchResultsStore.search(blankRemovedLocation, blankRemovedSpecialty, blankRemovedLanguage)
+watch(selectedLocations, () => {
+    searchResultsStore.selectedCity = selectedLocations.value ? selectedLocations.value : undefined
+})
+
+watch(selectedLanguages, () => {
+    searchResultsStore.selectedLanguages = selectedLanguages.value ? [selectedLanguages.value as Locale] : []
+})
+
+async function search() {
+    await searchResultsStore.search()
 }
 </script>

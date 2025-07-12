@@ -32,6 +32,7 @@ export const useHealthcareProfessionalsStore = defineStore(
         const healthcareProfessionalSectionFields = reactive<HealthcareProfessional>({
             __typename: 'HealthcareProfessional', // Optional if you're working with GraphQL
             acceptedInsurance: [],
+            additionalInfoForPatients: '',
             createdDate: '',
             degrees: [],
             facilityIds: [],
@@ -68,6 +69,7 @@ export const useHealthcareProfessionalsStore = defineStore(
             // eslint-disable-next-line no-underscore-dangle
             healthcareProfessionalSectionFields.__typename = 'HealthcareProfessional'
             healthcareProfessionalSectionFields.acceptedInsurance = healthcareProfessional.acceptedInsurance
+            healthcareProfessionalSectionFields.additionalInfoForPatients = healthcareProfessional.additionalInfoForPatients
             healthcareProfessionalSectionFields.createdDate = healthcareProfessional.createdDate
             healthcareProfessionalSectionFields.degrees = healthcareProfessional.degrees
             healthcareProfessionalSectionFields.facilityIds = healthcareProfessional.facilityIds
@@ -82,6 +84,7 @@ export const useHealthcareProfessionalsStore = defineStore(
             // eslint-disable-next-line no-underscore-dangle
             healthcareProfessionalSectionFields.__typename = 'HealthcareProfessional'
             healthcareProfessionalSectionFields.acceptedInsurance = []
+            healthcareProfessionalSectionFields.additionalInfoForPatients = ''
             healthcareProfessionalSectionFields.createdDate = ''
             healthcareProfessionalSectionFields.degrees = []
             healthcareProfessionalSectionFields.facilityIds = []
@@ -112,6 +115,7 @@ export const useHealthcareProfessionalsStore = defineStore(
                 return {
                     data: {
                         acceptedInsurance: [],
+                        additionalInfoForPatients: '',
                         createdDate: '',
                         degrees: [],
                         facilityIds: [],
@@ -146,6 +150,10 @@ export const useHealthcareProfessionalsStore = defineStore(
                     )
                         ? undefined
                         : healthcareProfessionalSectionFields.acceptedInsurance,
+                    additionalInfoForPatients: healthcareProfessionalSectionFields.additionalInfoForPatients
+                      === currentProfessionalDataCopy.additionalInfoForPatients
+                        ? undefined
+                        : healthcareProfessionalSectionFields.additionalInfoForPatients,
                     degrees: !arraysAreEqual(
                         healthcareProfessionalSectionFields.degrees,
                         currentProfessionalDataCopy.degrees
@@ -238,6 +246,7 @@ export const useHealthcareProfessionalsStore = defineStore(
             const createHealthcareProfessionalInput: MutationCreateHealthcareProfessionalArgs = {
                 input: {
                     acceptedInsurance: createHealthcareProfessionalSectionFields.acceptedInsurance,
+                    additionalInfoForPatients: createHealthcareProfessionalSectionFields.additionalInfoForPatients,
                     degrees: createHealthcareProfessionalSectionFields.degrees,
                     facilityIds: createHealthcareProfessionalSectionFields.facilityIds,
                     names: createHealthcareProfessionalSectionFields.names,
@@ -260,6 +269,7 @@ export const useHealthcareProfessionalsStore = defineStore(
 
         function resetCreateHealthcareProfessionalFields() {
             createHealthcareProfessionalSectionFields.acceptedInsurance = []
+            createHealthcareProfessionalSectionFields.additionalInfoForPatients = ''
             createHealthcareProfessionalSectionFields.degrees = []
             createHealthcareProfessionalSectionFields.facilityIds = []
             createHealthcareProfessionalSectionFields.names = []
@@ -282,7 +292,8 @@ export const useHealthcareProfessionalsStore = defineStore(
             healthcareProfessional: HealthcareProfessional | CreateHealthcareProfessionalInput
         ) => {
             // find the name of the healthcare professional from the chosen display locale
-            const nameFromChosenLocaleDisplay = healthcareProfessional.names.find(name => name.locale === localeStore.locale.code)
+            const nameFromChosenLocaleDisplay = healthcareProfessional.names.find(name =>
+                name.locale === localeStore.activeLocale.code)
             // return the name of the healthcare professional of chosen locale or default to the 0 indexed recorded name
             return nameFromChosenLocaleDisplay ? nameFromChosenLocaleDisplay : healthcareProfessional.names[0]
         }
@@ -362,6 +373,7 @@ query Query($filters: HealthcareProfessionalSearchFilters!) {
     degrees
     specialties
     acceptedInsurance
+    additionalInfoForPatients
     facilityIds
     createdDate
     updatedDate
@@ -394,6 +406,7 @@ mutation Mutation($id: ID!, $input: UpdateHealthcareProfessionalInput!) {
     degrees
     specialties
     acceptedInsurance
+    additionalInfoForPatients
     facilityIds
     createdDate
     updatedDate
@@ -423,6 +436,7 @@ mutation Mutation($input: CreateHealthcareProfessionalInput!) {
     degrees
     specialties
     acceptedInsurance
+    additionalInfoForPatients
     facilityIds
     createdDate
     updatedDate

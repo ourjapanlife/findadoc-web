@@ -86,21 +86,40 @@
                             {{ t('modSubmissionForm.confirmationButton') }}
                         </button>
                     </div>
-                    <div v-if="modalType === ModalType.DeleteConfirmation">
-                        <div
-                            v-show="moderationScreenStore.editFacilityScreenIsActive()"
-                            class="font-bold text-3xl"
-                        >
-                            {{ t('modEditFacilityOrHPTopbar.deleteConfirmationFacility',
-                                 { id: selectedId, facility: facilitiesStore.selectedFacilityData?.nameEn }) }}
+                    <div v-if="modalType === ModalType.DeleteConfirmation && moderationScreenStore.editFacilityScreenIsActive()">
+                        <div class="font-bold text-3xl">
+                            {{ t('modEditFacilityOrHPTopbar.deleteConfirmationFacility', {
+                                id: selectedId,
+                                facility: facilitiesStore.selectedFacilityData?.nameEn,
+                            }) }}
                         </div>
                         <button
                             class="bg-primary p-4 rounded-full my-8 font-semibold text-xl"
                             type="button"
                             @click="deleteFacilityOrHealthcareProfessional"
                         >
-                            {{
-                                t('modEditFacilityOrHPTopbar.deleteButtonText') }}
+                            {{ t('modEditFacilityOrHPTopbar.deleteButtonText') }}
+                        </button>
+                    </div>
+
+                    <div
+                        v-if="modalType === ModalType.DeleteConfirmation
+                            && moderationScreenStore.editHealthcareProfessionalScreenIsActive()"
+                    >
+                        <div class="font-bold text-3xl">
+                            {{ t('modEditFacilityOrHPTopbar.deleteConfirmationHealthcareProfessional', {
+                                id: selectedId,
+                                healthcareProfessional: `${healthcareProfessionalsStore.selectedHealthcareProfessionalData
+                                    ?.names[0]?.firstName} ${healthcareProfessionalsStore.selectedHealthcareProfessionalData
+                                    ?.names[0]?.lastName}`,
+                            }) }}
+                        </div>
+                        <button
+                            class="bg-primary p-4 rounded-full my-8 font-semibold text-xl"
+                            type="button"
+                            @click="deleteFacilityOrHealthcareProfessional"
+                        >
+                            {{ t('modEditFacilityOrHPTopbar.deleteButtonText') }}
                         </button>
                     </div>
                 </div>
@@ -110,8 +129,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref, watch, type ComputedRef, type Ref } from 'vue'
-import { type ToastInterface, useToast } from 'vue-toastification'
+import { computed, ref, watch, type ComputedRef, type Ref } from 'vue'
+import { useToast } from 'vue-toastification'
 import { useRouter } from 'vue-router'
 import { useI18n } from '#imports'
 import SVGCopyContent from '~/assets/icons/content-copy.svg'
@@ -142,7 +161,7 @@ const modalType = ref<ModalType.UnsavedChanges | ModalType.DeleteConfirmation | 
 // Disable the buttons if there are no changes
 const enableUpdateButtons = computed(() => hasUnsavedChanges())
 
-let toast: ToastInterface
+const toast = useToast()
 
 const { t } = useI18n()
 
@@ -223,6 +242,7 @@ const healthcareProfessionalHasUnsavedChanges = () => {
     healthcareProfessionalSections.acceptedInsurance,
     originalHealthcareProfessional.acceptedInsurance
 )
+|| healthcareProfessionalSections.additionalInfoForPatients !== originalHealthcareProfessional.additionalInfoForPatients
 || healthcareProfessionalSections.createdDate
 !== originalHealthcareProfessional.createdDate
 || !arraysAreEqual(
@@ -340,6 +360,8 @@ const deleteFacilityOrHealthcareProfessional = async () => {
             handleServerErrorMessaging(response.errors, toast, t)
             return response
         }
+        // Wipe the data of the now deleted facility from the ref to prevent the UnsavedChanges modal from triggering
+        originalFacilityRefsValue.value = undefined
 
         toast.success(t('modEditFacilityOrHPTopbar.facilityDeletedSuccessfully'))
         // Redirect to the dashboard since the facility no longer exists
@@ -379,10 +401,6 @@ const exitWithoutSavingUpdates = () => {
     modalType.value = ModalType.UnsavedChanges
     modalStore.showModal()
 }
-
-onMounted(() => {
-    toast = useToast()
-})
 
 watch(() => facilitiesStore.selectedFacilityData, (newValue, oldValue) => {
     if (newValue !== oldValue) {
