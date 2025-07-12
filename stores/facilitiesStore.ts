@@ -172,37 +172,14 @@ export const useFacilitiesStore = defineStore(
             return serverResponse
         }
 
-        async function updateFacility(): Promise<ServerResponse<Facility>> {
+        async function updateFacility(
+            input: MutationUpdateFacilityArgs['input']
+        ): Promise<ServerResponse<Facility>> {
             const healthProfessionalRelationsBeforeMutation = facilitySectionFields.healthProfessionalsRelations
 
             const updateFacilityInput: MutationUpdateFacilityArgs = {
                 id: selectedFacilityId.value,
-                input: {
-                    contact: {
-                        address: {
-                            addressLine1En: facilitySectionFields.addressLine1En,
-                            addressLine1Ja: facilitySectionFields.addressLine1Ja,
-                            addressLine2En: facilitySectionFields.addressLine2En,
-                            addressLine2Ja: facilitySectionFields.addressLine2Ja,
-                            cityEn: facilitySectionFields.cityEn,
-                            cityJa: facilitySectionFields.cityJa,
-                            postalCode: facilitySectionFields.postalCode,
-                            prefectureEn: facilitySectionFields.prefectureEn,
-                            prefectureJa: facilitySectionFields.prefectureJa
-                        },
-                        email: facilitySectionFields.email,
-                        googleMapsUrl: facilitySectionFields.googlemapsURL,
-                        phone: facilitySectionFields.phone,
-                        website: facilitySectionFields.website
-                    },
-                    healthcareProfessionalIds: facilitySectionFields.healthProfessionalsRelations.length > 0
-                        ? facilitySectionFields.healthProfessionalsRelations
-                        : undefined,
-                    mapLatitude: parseFloat(facilitySectionFields.mapLatitude),
-                    mapLongitude: parseFloat(facilitySectionFields.mapLongitude),
-                    nameEn: facilitySectionFields.nameEn,
-                    nameJa: facilitySectionFields.nameJa
-                }
+                input
             }
 
             const serverResponse = await graphQLClientRequestWithRetry<Mutation['updateFacility']>(
