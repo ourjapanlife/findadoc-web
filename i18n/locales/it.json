@@ -7,8 +7,6 @@
     "paragraph2": "Siamo un'organizzazione non profit guidata dall'ideale che tutti dovrebbero avere accesso alle informazioni sanitarie come parte di una vita prospera. Le nostre attività sono guidate da un senso di giustizia sociale, sensibilità culturale e innovazione. Siamo sempre felici di collaborare con partner nelle comunità governative, non profit e mediche. Insieme ai nostri partner, speriamo di creare un Giappone in cui tutti abbiano accesso all'assistenza sanitaria, si sentano inclusi e possano vivere bene."
   },
   "serverErrorMessages": {
-    "UNAUTHENTICATED": "Non sei autenticato per eseguire questa azione",
-    "BAD_USER_INPUT": "Uno o più dei dati inseriti non sono validi, riprova",
     "errorCodeMessagingNeeded": "Il codice di errore del server non ha un messaggio per l'utente. Si prega di aggiungerne uno.",
     "genericErrorMessage": "Si è verificato un errore nell'invio del modulo, riprova"
   },
@@ -28,14 +26,9 @@
     "contact": "Contatto",
     "submit": "Aggiungi un medico",
     "moderation": "Moderazione",
-    "login": "Accedi",
     "logout": "Esci",
     "theme": "Tema",
-    "privacy": "Privacy",
-    "terms": "Termini",
-    "github": "Github",
     "languageDropdownTitle": "Lingua:",
-    "netlify": "Offerto da Netlify",
     "copyright": "Find a Doc, Japan"
   },
   "privacyPage": {
@@ -58,6 +51,13 @@
     "paragraph14": "7. Modifiche all'informativa sulla privacy",
     "paragraph15": "Ci riserviamo il diritto di aggiornare questa Informativa sulla privacy per riflettere i cambiamenti nelle nostre pratiche e nei nostri servizi. Ti informeremo di eventuali modifiche significative pubblicando l'informativa aggiornata sul nostro sito web.",
     "paragraph16": "Utilizzando il nostro servizio, accetti i termini descritti in questa Informativa sulla privacy."
+  },
+  "onboarding": {
+    "letsGoButtonText": "Trova un medico!",
+    "welcometo": "Benvenuto su",
+    "selectcategory": "Seleziona una categoria per iniziare.",
+    "notsurebutton": "Non sono sicuro o altro",
+    "searchloading": "Il tuo viaggio inizia qui"
   },
   "submitPage": {
     "firstName": "Nome",
@@ -84,7 +84,8 @@
   "searchBar": {
     "selectSpecialty": "Seleziona una specialità...",
     "selectLocation": "Seleziona una posizione...",
-    "selectLanguage": "Seleziona una lingua...",
+    "allLocations": "Tutte le località",
+    "allSpecialties": "Tutte le specialità",
     "search": "Cerca"
   },
   "searchResultsList": {
@@ -95,12 +96,13 @@
   },
   "searchResultsDetails": {
     "speaks": "Questo medico parla",
-    "contact": "Contatta"
+    "contact": "Contatta",
+    "lastUpdate": "Last updated",
+    "additionalInfo": "Additional Info"
   },
   "thankYouPage": {
     "heading": "Grazie!",
     "submission": "La tua segnalazione sarà esaminata a breve dai nostri moderatori.",
-    "feedback": "Il tuo feedback è stato inviato e sarà esaminato dal nostro team.",
     "home": "Torna alla home",
     "submitAnotherDoctor": "Aggiungi un altro medico"
   },
@@ -109,17 +111,9 @@
     "home": "Home",
     "moderation": "Moderazione",
     "submit": "Aggiungi un medico",
-    "login": "Accedi",
     "logout": "Esci"
   },
   "login": {
-    "heading": "Accedi al tuo account",
-    "usernamelabel": "Nome utente",
-    "passwordlabel": "Password",
-    "loginButton": "Accedi",
-    "invalidUsernameValidation": "Per favore inserisci un nome utente valido",
-    "invalidPasswordValidation": "Per favore inserisci una password valida",
-    "invalidLoginValidation": "Il nome utente o la password non sono corretti",
     "checkingauth": "Verifica autenticazione...",
     "redirectingtoauth0": "Ti stiamo reindirizzando ad Auth0 per l'autenticazione",
     "unauthorizedline1": "Sembra che non hai i permessi necessari per accedere a questa pagina. Verrai reindirizzato tra 10 secondi...",
@@ -143,12 +137,7 @@
     "submissions": "Inoltrato"
   },
   "modPanelSubmissionLeftNavbar": {
-    "addresses": "Indirizzi",
-    "changeLog": "Registro modifiche",
-    "contactInformation": "Informazioni di contatto",
     "facilityNameUnknown": "Nome struttura sconosciuto",
-    "googleMapsInformation": "Informazioni Google Maps",
-    "healthcareProfessionalIds": "ID professionista sanitario",
     "healthcareProfessionalName": "Nome del professionista sanitario",
     "healthcareProfessionalMedicalInfo": "Healthcare Professional Details",
     "healthcareProfessionalFacilities": "Strutture collegate ai medici"
@@ -167,7 +156,6 @@
     "copyFailure": "Copiatura ID fallita",
     "delete": "Elimina",
     "deleteButtonText": "ELIMINA DEFINITIVAMENTE",
-    "deleteConfirmationFacility": "Sei sicuro di voler eliminare la struttura: {facility}, con ID: {id}?",
     "update": "Aggiorna",
     "updateAndExit": "Aggiorna & Esci",
     "facilityDeletedSuccessfully": "Struttura eliminata con successo",
@@ -175,43 +163,27 @@
     "healthcareProfessionalDeletedSuccessfully": "Professionista sanitario eliminato con successo",
     "healthcareProfessionalUpdatedSuccessfully": "Professionista sanitario aggiornato con successo",
     "back": "Back",
-    "confirmationButton": "Leave Page",
     "hasUnsavedChanges": "You have unsaved changes. Are you sure you want to leave?"
   },
   "modEditSubmissionTopNav": {
     "updateAndExit": "Aggiorna & Esci",
-    "saving": "Salvataggio...",
-    "retryMessage": "Qualcosa non sta funzionando. Riprova tra {seconds}s...",
     "approve": "Approva",
     "reject": "Rifiuta",
     "update": "Aggiorna"
   },
   "modPanelSubmissionList": {
-    "approved": "Approvato",
     "facilityNameUnknown": "Nome struttura sconosciuto",
     "modified": "Modificato",
     "name": "Nome",
-    "new": "Nuovo",
     "noSubmissions": "Non ci sono richieste in attesa",
-    "rejected": "Rifiutato",
-    "status": "Stato",
-    "submitted": "Inoltrato",
-    "underReview": "In revisione"
+    "submitted": "Inoltrato"
   },
-  "modHealthcareProfessionalCard": {
-    "editName": "Modifica",
-    "saveName": "Salva"
-  },
+  "modHealthcareProfessionalCard": {},
   "modHealthcareProfessionalSection": {
     "addHealthCareProfessionalLocaleName": "Aggiungi nome per località",
     "errorMessageHealthcareProfessionalId": "ID professionista sanitario non trovato",
-    "healthcareProfessionalHeading": "Informazioni sul professionista sanitario",
-    "healthcareProfessionalId": "ID professionista sanitario",
     "healthcareProfessionalMedicalInfoHeading": "Informazioni mediche del professionista sanitario",
     "healthcareProfessionalNameHeading": "Nome del professionista sanitario",
-    "inputErrorMessageHealthcareProfessionalFirstName": "Nome non valido",
-    "inputErrorMessageHealthcareProfessionalLastName": "Cognome non valido",
-    "inputErrorMessageHealthcareProfessionalMiddleName": "Nome intermedio non valido",
     "labelHealthcareProfessionalFirstName": "Nome",
     "labelHealthcareProfessionalLastName": "Cognome",
     "labelHealthcareProfessionalMiddleName": "Nome intermedio",
@@ -243,7 +215,9 @@
     "oneNameNecessary": "At least one name is required for a Healthcare Professional",
     "save": "Save",
     "update": "Update",
-    "charactersOfLanguageDoNotMatchNameLocale": "The characters of the Healthcare Professional's name are invalid in the chosen language"
+    "charactersOfLanguageDoNotMatchNameLocale": "The characters of the Healthcare Professional's name are invalid in the chosen language",
+    "labelAdditionalNotesForPatients": "Additional Notes for Patients",
+    "placeholderAdditionalNotesForPatients": "e.g. English speaking doctors only available from 2-4"
   },
   "modFacilitySection": {
     "addresses": "Indirizzi",
@@ -302,119 +276,34 @@
     "placeholderTextFacilityPhoneNumber": "es. 08xxxxxxxxx",
     "placeholderTextFacilityPostalCode": "es. 186-0000",
     "placeholderTextFacilityWebsite": "es. http://www.example.com/",
-    "updateButtonText": "Aggiorna",
     "noHealthcareProfessionalFound": "No matching Healthcare Professionals found"
   },
   "modSubmissionForm": {
-    "addHealthCareProfessionalLocaleName": "Aggiungi nome per località",
-    "addresses": "Indirizzi",
     "confirmationButton": "Lascia la pagina",
     "hasUnsavedChanges": "Hai delle modifiche non salvate. Sei sicuro di voler uscire?",
-    "contactInformation": "Informazioni di contatto",
-    "delete": "Elimina",
     "errorMessageCompletedForm": "Tentativo di inviare il modulo completato fallito",
     "errorMessageFacilityInputsInvalid": "Alcuni campi della struttura non sono stati compilati correttamente",
     "errorMessageFacilityId": "L'ID della struttura è obbligatiorio per aggiornare la struttura",
     "errorMessageHealthcareInputsInvalid": "Alcuni campi del professionista sanitario non sono stati compilati correttamente",
-    "errorMessageUpdated": "Impossibile aggiornare il modulo di sottomissione",
-    "facilityHeading": "Informazioni della struttura",
+    "errorMessageEnglishNameRequired": "Il professionista sanitario deve avere un nome in inglese",
     "facilitySuccessfullyRejected": "Struttura rifiutata con successo",
-    "googleMapsInformation": "Informazioni Google Maps",
-    "healthcareProfessionalHeading": "Informazioni professionista sanitario",
-    "healthcareProfessionalMedicalInfoHeading": "Info mediche professionista sanitario",
-    "healthcareProfessionalNameHeading": "Nome professionista sanitario",
     "healthcareProfessionalId": "ID professionista sanitario",
     "infoMessageAlreadyApproved": "Questa richiesta è già stata approvata",
     "infoMessageUpdateNeeded": "Deve essere aggiornato prima dell'approvazione",
-    "inputErrorMessageHealthcareProfessionalFirstName": "Nome non valido",
-    "inputErrorMessageHealthcareProfessionalLastName": "Cognome non valido",
-    "inputErrorMessageHealthcareProfessionalMiddleName": "Nome intermedio non valido",
-    "inputErrorMessageFacilityAddressLine1Ja": "Indirizzo giapponese non valido",
-    "inputErrorMessageFacilityAddressLine2Ja": "Indirizzo giapponese non valido",
-    "inputErrorMessageFacilityAddressLine1En": "Indirizzo inglese non valido",
-    "inputErrorMessageFacilityAddressLine2En": "Indirizzo inglese non valido",
-    "inputErrorMessageFacilityCityEn": "Nome città non inglese non valido",
-    "inputErrorMessageFacilityCityJa": "Nome città in giapponese non valido",
-    "inputErrorMessageFacilityEmail": "Indirizzo email non valido",
-    "inputErrorMessageFacilityGoogleMapsUrl": "URL Google Maps non valido",
-    "inputErrorMessageFacilityMapLatitude": "Latitudine non valida",
-    "inputErrorMessageFacilityMapLongitude": "Longitudine non valida",
-    "inputErrorMessageFacilityNameEn": "Nome in inglese non valido",
-    "inputErrorMessageFacilityNameJa": "Nome in giapponese non valido",
-    "inputErrorMessageFacilityPhoneNumber": "Numero di telefono non valido",
-    "inputErrorMessageFacilityPostalCode": "Codice postale no valido",
-    "inputErrorMessageFacilityWebsite": "URL sito web non valido",
     "labelHealthcareProfessionalFirstName": "Nome",
     "labelHealthcareProfessionalLastName": "Cognome",
     "labelHealthcareProfessionalMiddleName": "Nome intermedio",
-    "labelHealthcareProfessionalNameLocale": "Name Language",
-    "labelFacilityNameEn": "English Name Facility",
-    "labelFacilityNameJa": "Japanese Name Facility",
-    "labelFacilityPhoneNumber": "Phone",
-    "labelFacilityEmail": "Email",
-    "labelFacilityWebsite": "Website",
-    "labelFacilityPostalCode": "Postal Code",
-    "labelFacilityPrefectureEn": "English Name Prefecture",
-    "labelFacilityPrefectureJa": "Japanese Name Prefecture",
-    "labelFacilityCityEn": "English Name City",
-    "labelFacilityCityJa": "Japanese Name City",
-    "labelFacilityAddressLine1En": "English Address Line 1",
-    "labelFacilityAddressLine2En": "English Address Line 2",
-    "labelFacilityAddressLine1Ja": "Japanese Address Line 1",
-    "labelFacilityAddressLine2Ja": "Japanese Address Line 2",
-    "labelFacilityGoogleMapsUrl": "URL Google Maps",
-    "labelFacilityMapLatitude": "Latitudine mappa",
-    "labelFacilityMapLongitude": "Longitudine mappa",
-    "placeholderTextFacilityAddressLine1En": "Indirizzo stradale",
-    "placeholderTextFacilityAddressLine2En": "Appartamento, edificio, stanza...",
-    "placeholderTextFacilityAddressLine1Ja": "Indirizzo stradale",
-    "placeholderTextFacilityAddressLine2Ja": "Appartamento della strada",
-    "placeholderTextFacilityCityEn": "es. Shibuya",
-    "placeholderTextFacilityCityJa": "es. 渋谷区",
-    "placeholderTextFacilityEmail": "es. example{'@'}mail.com",
-    "placeholderTextFacilityGoogleMapsUrl": "es. https://www.google.co.jp/maps/",
     "placeholderTextHealthcareProfessionalSearchbar": "Cerca per nome o ID per aggiungere un medico",
-    "placeholderTextFacilityMapLatitude": "es. 5.76137",
-    "placeholderTextFacilityMapLongitude": "es. 178.45229",
-    "placeholderTextFacilityNameEn": "es. Tachikawa Central Hospital",
-    "placeholderTextFacilityNameJa": "es. 立川中央病院",
-    "placeholderTextFacilityPhoneNumber": "es. 08xxxxxxxxx",
-    "placeholderTextFacilityPostalCode": "es. 186-0000",
-    "placeholderTextFacilityWebsite": "es. http://www.example.com/",
-    "placeholderTextHealthcareProfessionalFirstName": "es. John",
-    "placeholderTextHealthcareProfessionalLastName": "es. Doe",
-    "placeholderTextHealthcareProfessionalMiddleName": "es. Bronson",
-    "selectDegrees": "Titoli di studio",
-    "selectInsurances": "Assicurazioni accettate",
-    "selectLocales": "Seleziona le lingue parlate",
-    "selectSpecialties": "Specializzazioni",
     "submissionConfirmationAcceptanceButton": "Si, invia",
-    "submissionConfirmationBackButton": "No, ritorna indietro",
     "submissionConfirmationMessage": "Sei sicuro di inviare questo form?",
     "successMessageUpdated": "Avvio aggiornato con successo",
     "successMessageApproved": "Invio approvato e creato con successo",
-    "updateButtonText": "Aggiorna",
     "rejectSubmissionConfirmationMessage": "Are you sure you want to reject this submission?",
     "rejectSubmissionConfirmationButton": "Yes, reject the submission",
-    "placeholderTextAcceptedInsurances": "Search by insurance",
-    "placeholderTextSpecialties": "Search by specialty",
-    "placeholderTextDegrees": "Search by degree",
-    "placeholderTextLocales": "Search by language",
-    "placeholderTextFacilitySearchBar": "Search by Facility name or ID",
-    "noFacilitiesWereFound": "No Facilities were found",
-    "noSpecialtiesWereFound": "No specialties were found",
-    "noInsurancesWereFound": "No insurance was found",
-    "noDegreesWereFound": "No degrees were found",
-    "noLocalesWereFound": "No languages were found",
-    "searchExistingFacilities": "Search for existing Facility",
-    "searchExistingHealthcareProfessionals": "Search for existing Healthcare Professionals"
-  },
-  "modDashboardHealthcareProfessionalCard": {
-    "spokenLanguages": "Spoken languages",
-    "lastName": "Last name",
-    "firstName": "First name",
-    "middleName": "Middle name",
-    "nameLocale": "Name language"
+    "searchExistingFacilities": "Search for existing facility",
+    "searchExistingHealthcareProfessionals": "Search for existing healthcare professionals",
+    "labelModNoteInput": "Moderator Notes",
+    "placeholderTextNoteInput": "e.g. waiting for call back from clinic"
   },
   "specialties": {
     "allergyAndImmunology": "Allergologo/Allergologa",
@@ -426,7 +315,9 @@
     "entSpecialist": "Otorinolaringoiatra (ORL)",
     "emergencyMedicine": "Medicina d'urgenza",
     "infectiousDiseases": "Malattie infettive",
-    "generalPractitioner": "Medico di medicina generale",
+    "internalMedicine": "Internal Medicine",
+    "familyMedicine": "Family Medicine",
+    "generalMedicine": "Medico di medicina generale",
     "medicalGenetics": "Genetista medico",
     "neurology": "Neurologo/Neurologa",
     "nuclearMedicine": "Medicina nucleare",
@@ -444,7 +335,33 @@
     "physicalMedicineAndRehabilitation": "Medicina fisica e riabilitativa",
     "traumatology": "Traumatologia",
     "urology": "Urologo/Urologa",
-    "internalMedicine": "Internal Medicine",
-    "familyMedicine": "Family Medicine"
+    "surgery": "Chirurgia"
+  },
+  "specialtyCategories": {
+    "childrensHealth": "Salute dei bambini",
+    "cosmeticAndPlasticSurgery": "Chirurgia estetica e plastica",
+    "dental": "Dentale",
+    "dermatology": "Dermatologia",
+    "ent": "ORL (Orecchio, Naso e Gola)",
+    "eyeAndVision": "Occhi e vista",
+    "mensHealth": "Salute maschile",
+    "mentalHealth": "Salute mentale",
+    "physicalTherapy": "Fisioterapia",
+    "primaryCare": "Cure primarie",
+    "sportsAndRehab": "Sport e riabilitazione",
+    "womensHealth": "Salute femminile"
+  },
+  "modDashboardHealthcareProfessionalCard": {
+    "spokenLanguages": "Spoken languages",
+    "lastName": "Last name",
+    "firstName": "First name",
+    "middleName": "Middle name",
+    "nameLocale": "Name language"
+  },
+  "noteInputField": {
+    "optional": "(optional)"
+  },
+  "modInputField": {
+    "optional": "Optional"
   }
 }

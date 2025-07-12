@@ -277,7 +277,7 @@
 
 <script lang="ts" setup>
 import { type Ref, ref, onBeforeMount, nextTick, watch } from 'vue'
-import { type ToastInterface, useToast } from 'vue-toastification'
+import { useToast } from 'vue-toastification'
 import { useRoute } from 'vue-router'
 import { useModerationScreenStore } from '~/stores/moderationScreenStore'
 import { useFacilitiesStore } from '~/stores/facilitiesStore'
@@ -297,8 +297,7 @@ import { validateAddressLineEn,
 import { RelationshipAction, type HealthcareProfessional } from '~/typedefs/gqlTypes'
 import { listPrefectureJapanEn, listPrefectureJapanJa } from '~/stores/locationsStore'
 
-// Initialize the variable that will be used to mount the toast library
-let toast: ToastInterface
+const toast = useToast()
 const route = useRoute()
 const { t } = useI18n()
 const loadingStore = useLoadingStore()
@@ -357,13 +356,6 @@ const healthcareProfessionalsToDisplayCallback = (healthcareProfessional: Health
     [healthcareProfessional.names[0].firstName + ' ' + healthcareProfessional.names[0].lastName]
 
 onBeforeMount(async () => {
-    /**
-    Set the variable to useToast when the before the component mounts
-    since vue-taostification is only available on the client.
-    If not done this way the build fails
-     */
-    toast = useToast()
-
     // This onBeforeMount can be skipped on other screens since this logic is handled there when active
     if (moderationScreenStore.editSubmissionScreenIsActive()) {
         isFacilitySectionInitialized.value = true

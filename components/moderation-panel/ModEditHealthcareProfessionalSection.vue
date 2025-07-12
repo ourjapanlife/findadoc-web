@@ -238,6 +238,12 @@
                         {{ localesStore.formatLanguageCodeToSimpleText(locale) }}
                     </li>
                 </ol>
+                <NoteInputField
+                    v-model="healthcareProfessionalsStore.healthcareProfessionalSectionFields.additionalInfoForPatients"
+                    :label="t('modHealthcareProfessionalSection.labelAdditionalNotesForPatients')"
+                    :placeholder="t('modHealthcareProfessionalSection.placeholderAdditionalNotesForPatients')"
+                    :required="false"
+                />
             </div>
             <div v-if="moderationScreenStore.editHealthcareProfessionalScreenIsActive()">
                 <h2
@@ -272,7 +278,7 @@
 <script lang="ts" setup>
 import { nextTick, onBeforeMount, reactive, type Ref, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
-import { type ToastInterface, useToast } from 'vue-toastification'
+import { useToast } from 'vue-toastification'
 import { useHealthcareProfessionalsStore } from '~/stores/healthcareProfessionalsStore'
 import { useFacilitiesStore } from '~/stores/facilitiesStore'
 import { useModerationScreenStore } from '~/stores/moderationScreenStore'
@@ -282,7 +288,7 @@ import { useI18n } from '#imports'
 import { validateNameLocaleMatchesLanguage } from '~/utils/formValidations'
 // Keeps track of if the search bar inputs have been autofilled with existing facilities
 
-let toast: ToastInterface
+const toast = useToast()
 
 const route = useRoute()
 
@@ -563,13 +569,6 @@ const insurancesToDisplayCallback = (insurance: Insurance) => [insurance]
 const localesToDisplayCallback = (locale: Locale) => [localesStore.formatLanguageCodeToSimpleText(locale)]
 
 onBeforeMount(async () => {
-    /**
-    Set the variable to useToast when the before the component mounts
-    since vue-taostification is only available on the client.
-    If not done this way the build fails
-     */
-    toast = useToast()
-
     if (moderationScreenStore.editSubmissionScreenIsActive()) {
         isHealthcareProfessionalInitialized.value = true
         return
