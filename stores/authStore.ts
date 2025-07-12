@@ -12,14 +12,14 @@ export const useAuthStore = defineStore('authStore', () => {
         if (isTestingMode)
             //we use the id_token cookie name for testing, but it's long so we just use the first 5 characters
             return useCookie('id_token').value?.substring(0, 5) ?? 'unknown user'
-        return auth0?.user.value?.name ?? 'unknown user'
+        return auth0.user.value?.['https://findadoc.jp/user_metadata']?.displayName ?? auth0?.user.value?.name ?? 'unknown user'
     })
 
     const userProfileImage = computed(() => {
         // If no source is returned, return an empty string so we can display the placeholder profile icon
         if (isTestingMode)
             return useCookie('id_token').value?.substring(0, 5) ?? ''
-        return auth0?.user.value?.picture ?? ''
+        return auth0?.user.value?.['https://findadoc.jp/user_metadata']?.displayImage ?? auth0?.user.value?.picture ?? ''
     })
 
     const isLoadingAuth = computed(() => auth0?.isLoading.value ?? true)
