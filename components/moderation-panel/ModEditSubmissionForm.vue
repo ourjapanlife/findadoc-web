@@ -466,17 +466,19 @@ function initializeSubmissionFormValues(submissionData: Submission | undefined) 
 
         // This constant holds the initial state of the submission form values.
         // It serves as the baseline to detect if any unsaved changes have occurred
-        const snapshotBase: Submission = {
+        const initialSubmissionFormValueSnapshot: Submission = {
             ...submissionData,
             healthcareProfessionalName: submissionData.healthcareProfessionalName ?? '',
             googleMapsUrl: submissionData.googleMapsUrl ?? '',
             spokenLanguages: submissionData.spokenLanguages ? [...submissionData.spokenLanguages] : []
         }
 
-        // Reconstruct the FacilitySubmission object from the current form field values
-        // (facilitySectionFields) instead of using submissionData.facility directly.
-        // This ensures that we capture the latest edited state for comparison or submission.
-        const reconstructedFacility: FacilitySubmission = {
+        /**
+         * Reconstruct the FacilitySubmission object from the current form field values
+         * (facilitySectionFields) instead of using submissionData.facility directly.
+         * This ensures that we capture the latest edited state for comparison or submission.
+         */
+        const reconstructedFacilitySubmission: FacilitySubmission = {
             id: submissionData?.facility?.id || '',
             nameEn: facilitiesStore.facilitySectionFields.nameEn || '',
             nameJa: facilitiesStore.facilitySectionFields.nameJa || '',
@@ -505,10 +507,12 @@ function initializeSubmissionFormValues(submissionData: Submission | undefined) 
             __typename: 'FacilitySubmission' as const
         }
 
-        // Reconstruct the HealthcareProfessionalSubmission object from the current form field values
-        // (healthcareProfessionalSections) instead of using submissionData.healthcareProfessional directly.
-        // This ensures that we capture the latest edited state for comparison or submission.
-        const reconstructedHealthcareProfessionals: HealthcareProfessionalSubmission[] = [{
+        /**
+         * Reconstruct the HealthcareProfessionalSubmission object from the current form field values
+         * (healthcareProfessionalSections) instead of using submissionData.healthcareProfessional directly.
+         * This ensures that we capture the latest edited state for comparison or submission.
+         */
+        const reconstructedHealthcareProfessionalSubmission: HealthcareProfessionalSubmission[] = [{
             id: healthcareProfessionalSections.id || undefined,
             names: healthcareProfessionalSections.names.map(name => ({ ...name })),
             acceptedInsurance: [...healthcareProfessionalSections.acceptedInsurance],
@@ -520,10 +524,10 @@ function initializeSubmissionFormValues(submissionData: Submission | undefined) 
             __typename: 'HealthcareProfessionalSubmission' as const
         }]
 
-        snapshotBase.facility = reconstructedFacility
-        snapshotBase.healthcareProfessionals = reconstructedHealthcareProfessionals
+        initialSubmissionFormValueSnapshot.facility = reconstructedFacilitySubmission
+        initialSubmissionFormValueSnapshot.healthcareProfessionals = reconstructedHealthcareProfessionalSubmission
 
-        submissionBeforeChanges.value = snapshotBase
+        submissionBeforeChanges.value = initialSubmissionFormValueSnapshot
         isEditSubmissionFormInitialized.value = true
     })
 }
