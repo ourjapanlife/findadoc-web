@@ -5,21 +5,30 @@
     <Teleport to="body">
         <div
             ref="bottomSheet"
-            class="bottom-sheet"
-            :style="{ zIndex: zIndex }"
+            class="fixed inset-0 flex flex-col items-center justify-end transition-[visibility]"
+            :style="{ zIndex: zIndex, visibility: showSheet ? 'visible' : 'hidden', pointerEvents: showSheet ? 'auto' : 'none' }"
             :aria-hidden="!showSheet"
             role="dialog"
         >
             <transition>
                 <div
                     v-show="overlay && showSheet"
-                    class="bottom-sheet__overlay"
+                    class="absolute inset-0 -z-10"
+                    :style="{ background: props.overlayColor }"
                     @click="clickOnOverlayHandler"
                 />
             </transition>
             <div
                 ref="bottomSheetContent"
-                :class="sheetContentClasses"
+                :class="
+                    'flex flex-col rounded-t-2xl bg-white overflow-y-hidden w-full box-border pointer-events-auto'"
+                :style="{
+                    transform: `translate3d(0, ${translateValueString}, 0)`,
+                    height: sheetHeightString,
+                    maxWidth: maxWidthString,
+                    maxHeight: maxHeightString,
+                    transition: !isDragging ? `${transitionDurationString} ease` : undefined,
+                }"
             >
                 <header
                     ref="bottomSheetHeader"
@@ -27,21 +36,21 @@
                 >
                     <div
                         ref="bottomSheetDraggableArea"
-                        class="bottom-sheet__draggable-area"
+                        class="w-full mx-auto p-4 cursor-grab"
                     >
-                        <div class="bottom-sheet__draggable-thumb" />
+                        <div class="w-10 h-1 bg-neutral-800 rounded-lg mx-auto" />
                     </div>
                     <slot name="header" />
                 </header>
                 <main
                     ref="bottomSheetMain"
-                    class="bottom-sheet__main"
+                    class="flex flex-col overflow-y-scroll box-border touch-auto"
                 >
                     <slot />
                 </main>
                 <footer
+                    v-if="$slots.footer"
                     ref="bottomSheetFooter"
-                    class="bottom-sheet__footer"
                 >
                     <slot name="footer" />
                 </footer>
@@ -152,13 +161,6 @@ window.addEventListener('keyup', (event: KeyboardEvent) => {
 /**
    * Return all classes for bottom sheet content
    */
-const sheetContentClasses = computed(() => [
-    'bottom-sheet__content',
-    {
-        'bottom-sheet__content--fullscreen': sheetHeight.value >= window.innerHeight,
-        'bottom-sheet__content--dragging': isDragging.value
-    }
-])
 
 /**
    * Return transition duration value with seconds
@@ -334,120 +336,3 @@ const pixelToVh = (pixel: number) => {
    */
 defineExpose({ open, close })
 </script>
-
-<style scoped>
-.bottom-sheet {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-end;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  transition: visibility var(--transitionDurationString);
-}
-
-.bottom-sheet * {
-  box-sizing: border-box;
-}
-
-.bottom-sheet[aria-hidden='false'] {
-  visibility: visible;
-}
-
-.bottom-sheet[aria-hidden='true'] {
-  visibility: hidden;
-  pointer-events: none;
-}
-
-.bottom-sheet__overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: -1;
-  background: v-bind('props.overlayColor');
-}
-
-.bottom-sheet__content {
-  display: flex;
-  flex-direction: column;
-  border-radius: 16px 16px 0 0;
-  background: #ffffff;
-  overflow-y: hidden;
-  transform: translate3d(0, v-bind('translateValueString'), 0);
-  height: v-bind('sheetHeightString');
-  max-width: v-bind('maxWidthString');
-  width: 100%;
-  max-height: v-bind('maxHeightString');
-  box-sizing: border-box;
-  pointer-events: all;
-
-  &--fullscreen {
-    border-radius: 0;
-  }
-
-  &:not(.bottom-sheet__content--dragging) {
-    transition: v-bind('transitionDurationString') ease;
-  }
-}
-
-.bottom-sheet__draggable-area {
-  width: 100%;
-  margin: auto;
-  padding: 16px;
-  cursor: grab;
-}
-
-.bottom-sheet__draggable-thumb {
-  width: 40px;
-  height: 4px;
-  background: #333333;
-  border-radius: 8px;
-  margin: 0 auto;
-}
-
-.bottom-sheet__main {
-  display: flex;
-  flex-direction: column;
-  overflow-y: scroll;
-  box-sizing: border-box;
-  -webkit-overflow-scrolling: touch;
-  touch-action: auto !important;
-
-  &::-webkit-scrollbar {
-    height: 8px;
-    width: 8px;
-  }
-
-  &::-webkit-scrollbar-corner {
-    display: none;
-  }
-
-  &:hover::-webkit-scrollbar-thumb {
-    background-color: rgba(0, 0, 0, 0.2);
-    border-radius: 8px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background-color: rgba(0, 0, 0, 0);
-  }
-}
-
-.bottom-sheet__footer:empty {
-  display: none;
-}
-
-.v-enter-active,
-.v-leave-active {
-    transition: opacity v-bind('transitionDurationString') ease;
-}
-
-.v-enter-from,
-.v-leave-to {
-    opacity: 0;
-  }
-  </style>

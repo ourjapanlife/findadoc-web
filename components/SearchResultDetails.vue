@@ -310,10 +310,3 @@ const formattedLastUpdate = computed(() => {
 
 const excludedEmailAddresses = ['none', 'email@email.com']
 </script>
-
-<style>
-.hamburger-list-icon {
-    --background-color: transparent;
-    --second-background-color: --color-bg-secondary;
-}
-</style>
