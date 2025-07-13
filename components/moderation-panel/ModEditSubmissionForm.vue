@@ -460,17 +460,14 @@ function initializeSubmissionFormValues(submissionData: Submission | undefined) 
     = submissionData?.spokenLanguages ?? []
 
     nextTick(() => {
-        let snapshotBase: Submission
-
-        if (submissionData) {
-            snapshotBase = {
-                ...submissionData,
-                healthcareProfessionalName: submissionData.healthcareProfessionalName ?? '',
-                googleMapsUrl: submissionData.googleMapsUrl ?? '',
-                spokenLanguages: submissionData.spokenLanguages ? [...submissionData.spokenLanguages] : []
-            }
-        } else {
+        if (!submissionData) {
             return
+        }
+        const snapshotBase: Submission = {
+            ...submissionData,
+            healthcareProfessionalName: submissionData.healthcareProfessionalName ?? '',
+            googleMapsUrl: submissionData.googleMapsUrl ?? '',
+            spokenLanguages: submissionData.spokenLanguages ? [...submissionData.spokenLanguages] : []
         }
 
         // Now we recreate Facilities and HCProfessionals object inside snaphsto
