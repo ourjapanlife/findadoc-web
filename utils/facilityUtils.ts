@@ -1,5 +1,8 @@
-import type { Contact, ContactInput, Facility, MutationUpdateFacilityArgs,
-    PhysicalAddress, PhysicalAddressInput } from '~/typedefs/gqlTypes'
+import type {
+    Contact, ContactInput, Facility,
+    MutationUpdateFacilityArgs, PhysicalAddress,
+    PhysicalAddressInput
+} from '~/typedefs/gqlTypes'
 import type { useFacilitiesStore } from '~/stores/facilitiesStore'
 
 export function mapFacilityAddressToInput(address: PhysicalAddress): PhysicalAddressInput {
@@ -48,31 +51,40 @@ export function getChangedFacilityFieldsForUpdate(
     const originalContactInput = mapFacilityContactToInput(original.contact as Contact)
 
     const updatedContact: ContactInput = {
-        phone: current.phone || originalContactInput.phone,
-        email: current.email || originalContactInput.email,
-        website: current.website || originalContactInput.website,
-        googleMapsUrl: current.googlemapsURL || originalContactInput.googleMapsUrl,
-        address: { ...originalContactInput.address }
+        phone: current.phone,
+        googleMapsUrl: current.googlemapsURL,
+        address: {} as PhysicalAddressInput
     }
 
-    const addressKeys: (keyof PhysicalAddressInput)[] = [
-        'postalCode', 'prefectureEn', 'cityEn', 'addressLine1En', 'addressLine2En',
-        'prefectureJa', 'cityJa', 'addressLine1Ja', 'addressLine2Ja'
+    if (current.email !== originalContactInput.email) {
+        updatedContact.email = current.email
+    }
+
+    if (current.website !== originalContactInput.website) {
+        updatedContact.website = current.website
+    }
+
+    const requiredAddressKeys: (keyof PhysicalAddressInput)[] = [
+        'postalCode', 'prefectureEn', 'cityEn', 'addressLine1En',
+        'prefectureJa', 'cityJa', 'addressLine1Ja',
+        'addressLine2En', 'addressLine2Ja'
     ]
 
-    for (const key of addressKeys) {
-        if (current[key] && current[key] !== originalContactInput.address[key]) {
-            updatedContact.address[key] = current[key]
-        }
+    const updatedAddress: Partial<PhysicalAddressInput> = {}
+    for (const key of requiredAddressKeys) {
+        updatedAddress[key] = current[key] ?? ''
     }
 
-    const contactChanged = (
-        updatedContact.phone !== originalContactInput.phone
-        || updatedContact.email !== originalContactInput.email
-        || updatedContact.website !== originalContactInput.website
-        || updatedContact.googleMapsUrl !== originalContactInput.googleMapsUrl
-        || addressKeys.some(key => updatedContact.address[key] !== originalContactInput.address[key])
-    )
+    updatedContact.address = updatedAddress as PhysicalAddressInput
+
+    const contactChanged
+    = current.phone !== originalContactInput.phone
+      || current.googlemapsURL !== originalContactInput.googleMapsUrl
+      || current.email !== originalContactInput.email
+      || current.website !== originalContactInput.website
+      || requiredAddressKeys.some(
+          key => updatedAddress[key] !== originalContactInput.address[key]
+      )
 
     if (contactChanged) {
         updatedFields.contact = updatedContact
