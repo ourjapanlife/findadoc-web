@@ -64,6 +64,7 @@
                                 </svg>
                             </button>
                         </div>
+                        <!-- Language Selector -->
                         <div
                             data-testid="hamburger-menu-language-section"
                             class="flex px-5 mt-2"
@@ -72,26 +73,18 @@
                             }}</span>
                             <LocaleSelector class="py-1.5 text-primary-text bg-primary-bg" />
                         </div>
+                        <!-- Menu Links -->
                         <div
                             data-testid="hamburger-menu-items"
-                            class="flex flex-col gap-6 px-5 mt-10"
+                            class="flex flex-col gap-6 px-5 mt-10 mb-1"
                         >
-                            <div class="flex mb-1">
-                                <img
-                                    :src="authStore.userProfileImage || '~/assets/icons/profile-icon.svg'"
-                                    alt="profile icon"
-                                    title="profile icon"
-                                    class="profile-icon w-7 stroke-primary inline stroke-2 rounded-full mr-1"
-                                >
-                                <div class="text-primary font-bold">
-                                    {{ authStore.userId }}
-                                </div>
-                            </NuxtLink>
+                            <!-- About Link -->
                             <NuxtLink to="/about">
                                 <div @click="closeMenu()">
                                     {{ t('hamburgerMenu.about') }}
                                 </div>
                             </NuxtLink>
+                            <!-- Contact us Link -->
                             <NuxtLink
                                 to="https://forms.gle/4E763qfaq46kEsn99"
                                 target="_blank"
@@ -100,6 +93,7 @@
                                     {{ t('hamburgerMenu.contact') }}
                                 </div>
                             </NuxtLink>
+                            <!-- Add a doctor Link -->
                             <NuxtLink to="/submit">
                                 <div @click="closeMenu()">
                                     {{ t('hamburgerMenu.submit') }}
@@ -110,13 +104,14 @@
                                 class="text-primary"
                             >
                                 <div class="flex">
-                                    <SVGProfileIcon
-                                        role="img"
+                                    <!-- Profile Image -->
+                                    <img
+                                        :src="authStore.userProfileImage || '~/assets/icons/profile-icon.svg'"
                                         alt="profile icon"
                                         title="profile icon"
-                                        class="inline stroke-2 profile-icon w-7 stroke-primary"
-                                    />
-                                    <div class="font-bold text-primary">
+                                        class="profile-icon w-7 stroke-primary inline stroke-2 rounded-full mr-1"
+                                    >
+                                    <div class="text-primary font-bold">
                                         {{ authStore.userId }}
                                     </div>
                                 </div>

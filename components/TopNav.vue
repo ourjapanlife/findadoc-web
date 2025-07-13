@@ -116,27 +116,18 @@
                                 {{ t('topNav.logout') }}
                             </div>
                         </NuxtLink>
-                        <!-- Profile Icon -->
-                        <SVGProfileIcon
-                            role="img"
-                            alt="profile icon"
-                            title="profile icon"
-                            class="profile-icon w-7 stroke-primary inline stroke-2"
-                        />
-                        <!-- User ID -->
-                        <div class="text-primary font-bold">
-                            {{ authStore.userId }}
-                        </div>
-                    </NuxtLink>
-                    <div class="flex">
-                        <img
-                            :src="authStore.userProfileImage || '~/assets/icons/profile-icon.svg'"
-                            alt="profile icon"
-                            title="profile icon"
-                            class="profile-icon w-7 stroke-primary inline stroke-2 rounded-full mx-1"
-                        >
-                        <div class="text-primary font-bold">
-                            {{ authStore.userId }}
+                        <div class="flex">
+                            <!-- Profile Icon -->
+                            <img
+                                :src="authStore.userProfileImage || '~/assets/icons/profile-icon.svg'"
+                                alt="profile icon"
+                                title="profile icon"
+                                class="profile-icon w-7 stroke-primary inline stroke-2 rounded-full mx-1"
+                            >
+                            <!-- User ID -->
+                            <div class="text-primary font-bold">
+                                {{ authStore.userId }}
+                            </div>
                         </div>
                     </div>
                 </nav>
