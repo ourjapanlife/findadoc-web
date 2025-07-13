@@ -527,7 +527,6 @@ function initializeSubmissionFormValues(submissionData: Submission | undefined) 
         initialSubmissionFormValueSnapshot.notes = currentSubmissionNotes.value
 
         submissionBeforeChanges.value = initialSubmissionFormValueSnapshot
-        isEditSubmissionFormInitialized.value = true
     })
 }
 
@@ -541,6 +540,31 @@ const hasFacilityChanges = (submissionBeforeChangesComparison: Submission | unde
     const facilitySectionFields = facilitiesStore.facilitySectionFields
 
     if (!submissionBeforeChangesComparison) return false
+
+    /**
+    * Normalizes a given value to a number.
+    * It handles various input types (number, string, undefined, null)
+    * and converts empty strings or non-numeric strings to 0, ensuring consistent numeric comparisons.
+    *
+    * @param value The input value, which can be a string, number, undefined, or null.
+    * @returns The normalized numeric representation of the input value.
+    */
+    const normalizeToNumberForComparison = (value: string | number | undefined | null): number => {
+        // If the value is already a number, return it directly.
+        if (typeof value === 'number') {
+            return value
+        }
+
+        // If the value is a string and is empty or consists only of whitespace, treat it as 0.
+        if (typeof value === 'string' && value.trim() === '') {
+            return 0
+        }
+
+        // Attempt to parse the value as a float.
+        // If parsing results in NaN (e.g., for non-numeric strings or undefined/null after type assertion),
+        // default to 0 to ensure a numeric comparison.
+        return parseFloat(value as string) || 0
+    }
 
     return (
         (submissionBeforeChangesComparison?.facility?.nameEn ?? '') !== (facilitySectionFields.nameEn ?? '')
@@ -568,12 +592,10 @@ const hasFacilityChanges = (submissionBeforeChangesComparison: Submission | unde
         !== (facilitySectionFields.addressLine1Ja ?? '')
         || (submissionBeforeChangesComparison?.facility?.contact?.address?.addressLine2Ja ?? '')
         !== (facilitySectionFields.addressLine2Ja ?? '')
-        || ((submissionBeforeChangesComparison?.facility?.mapLatitude ?? 0).toString()
-          !== facilitySectionFields.mapLatitude && parseFloat(facilitySectionFields.mapLatitude)
-          !== (submissionBeforeChangesComparison?.facility?.mapLatitude ?? 0))
-        || ((submissionBeforeChangesComparison?.facility?.mapLongitude ?? 0).toString()
-          !== facilitySectionFields.mapLongitude && parseFloat(facilitySectionFields.mapLongitude)
-          !== (submissionBeforeChangesComparison?.facility?.mapLongitude ?? 0))
+        || normalizeToNumberForComparison(submissionBeforeChangesComparison?.facility?.mapLatitude)
+        !== normalizeToNumberForComparison(facilitySectionFields.mapLatitude)
+        || normalizeToNumberForComparison(submissionBeforeChangesComparison?.facility?.mapLongitude)
+        !== normalizeToNumberForComparison(facilitySectionFields.mapLongitude)
         || !arraysAreEqual(submissionBeforeChangesComparison?.facility?.healthcareProfessionalIds ?? [],
                            facilitySectionFields.healthcareProfessionalIds)
     )
