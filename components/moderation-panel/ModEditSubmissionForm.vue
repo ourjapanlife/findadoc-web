@@ -152,7 +152,9 @@ import { Locale,
     type Submission,
     type MutationUpdateSubmissionArgs,
     type Facility,
-    type HealthcareProfessional } from '~/typedefs/gqlTypes'
+    type HealthcareProfessional,
+    type FacilitySubmission,
+    type HealthcareProfessionalSubmission } from '~/typedefs/gqlTypes'
 import { validateAddressLineEn,
     validateAddressLineJa,
     validateNameEn,
@@ -456,6 +458,72 @@ function initializeSubmissionFormValues(submissionData: Submission | undefined) 
     = submissionData?.healthcareProfessionals?.[0]?.specialties ?? []
     healthcareProfessionalSections.spokenLanguages
     = submissionData?.spokenLanguages ?? []
+
+    nextTick(() => {
+        let snapshotBase: Submission
+
+        if (submissionData) {
+            snapshotBase = {
+                ...submissionData,
+                healthcareProfessionalName: submissionData.healthcareProfessionalName ?? '',
+                googleMapsUrl: submissionData.googleMapsUrl ?? '',
+                spokenLanguages: submissionData.spokenLanguages ? [...submissionData.spokenLanguages] : []
+            }
+        } else {
+            return
+        }
+
+        // Now we recreate Facilities and HCProfessionals object inside snaphsto
+        // And we are exactly taking value that are on `sectionFields`
+        const reconstructedFacility: FacilitySubmission = {
+            //id: submissionData?.facility?.id || '', // Take id from submissionData
+            //id: facilitiesStore.facilitySectionFields.id || '', //There is no id on facilitySectionFields
+            id: submissionData?.facility?.id || '',
+            nameEn: facilitiesStore.facilitySectionFields.nameEn || '',
+            nameJa: facilitiesStore.facilitySectionFields.nameJa || '',
+            mapLatitude: parseFloat(facilitiesStore.facilitySectionFields.mapLatitude) || 0,
+            mapLongitude: parseFloat(facilitiesStore.facilitySectionFields.mapLongitude) || 0,
+            contact: {
+                phone: facilitiesStore.facilitySectionFields.phone || '',
+                email: facilitiesStore.facilitySectionFields.email || '',
+                website: facilitiesStore.facilitySectionFields.website || '',
+                googleMapsUrl: facilitiesStore.facilitySectionFields.googlemapsURL || '',
+                address: {
+                    postalCode: facilitiesStore.facilitySectionFields.postalCode || '',
+                    prefectureEn: facilitiesStore.facilitySectionFields.prefectureEn || '',
+                    cityEn: facilitiesStore.facilitySectionFields.cityEn || '',
+                    addressLine1En: facilitiesStore.facilitySectionFields.addressLine1En || '',
+                    addressLine2En: facilitiesStore.facilitySectionFields.addressLine2En || '',
+                    prefectureJa: facilitiesStore.facilitySectionFields.prefectureJa || '',
+                    cityJa: facilitiesStore.facilitySectionFields.cityJa || '',
+                    addressLine1Ja: facilitiesStore.facilitySectionFields.addressLine1Ja || '',
+                    addressLine2Ja: facilitiesStore.facilitySectionFields.addressLine2Ja || '',
+                    __typename: 'PhysicalAddress' as const
+                },
+                __typename: 'Contact' as const
+            },
+            healthcareProfessionalIds: [...facilitiesStore.facilitySectionFields.healthcareProfessionalIds],
+            __typename: 'FacilitySubmission' as const
+        }
+
+        const reconstructedHealthcareProfessionals: HealthcareProfessionalSubmission[] = [{
+            id: healthcareProfessionalSections.id || undefined,
+            names: healthcareProfessionalSections.names.map(name => ({ ...name })),
+            acceptedInsurance: [...healthcareProfessionalSections.acceptedInsurance],
+            additionalInfoForPatients: healthcareProfessionalSections.additionalInfoForPatients || undefined,
+            degrees: [...healthcareProfessionalSections.degrees],
+            specialties: [...healthcareProfessionalSections.specialties],
+            spokenLanguages: [...healthcareProfessionalSections.spokenLanguages],
+            facilityIds: [...healthcareProfessionalSections.facilityIds],
+            __typename: 'HealthcareProfessionalSubmission' as const
+        }]
+
+        snapshotBase.facility = reconstructedFacility
+        snapshotBase.healthcareProfessionals = reconstructedHealthcareProfessionals
+
+        submissionBeforeChanges.value = snapshotBase
+        isEditSubmissionFormInitialized.value = true
+    })
 }
 
 // Assume you already have:
