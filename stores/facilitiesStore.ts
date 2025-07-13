@@ -12,6 +12,7 @@ import type { DeleteResult, Facility,
 import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql'
 import type { ServerResponse } from '~/typedefs/serverResponse'
 import { arraysAreEqual } from '~/utils/arrayUtils'
+import { getChangedFacilityFieldsForUpdate } from '~/utils/facilityUtils'
 
 export const useFacilitiesStore = defineStore(
     'facilitiesStore',
@@ -172,14 +173,14 @@ export const useFacilitiesStore = defineStore(
             return serverResponse
         }
 
-        async function updateFacility(
-            input: MutationUpdateFacilityArgs['input']
-        ): Promise<ServerResponse<Facility>> {
+        async function updateFacility(): Promise<ServerResponse<Facility>> {
+            const updatedFields = getChangedFacilityFieldsForUpdate(facilitySectionFields, selectedFacilityData.value!)
+
             const healthProfessionalRelationsBeforeMutation = facilitySectionFields.healthProfessionalsRelations
 
             const updateFacilityInput: MutationUpdateFacilityArgs = {
                 id: selectedFacilityId.value,
-                input
+                input: updatedFields
             }
 
             const serverResponse = await graphQLClientRequestWithRetry<Mutation['updateFacility']>(
