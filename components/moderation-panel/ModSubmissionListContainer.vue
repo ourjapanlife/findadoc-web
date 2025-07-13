@@ -3,10 +3,18 @@
         :style="submissionListItemTableColumns"
         :class="`grid grid-cols-4 p-2`"
     >
-        <div class="font-bold text-left p-1">#</div>
-        <div class="font-bold text-left p-1">{{ t("modPanelSubmissionList.name") }}</div>
-        <div class="font-bold text-left p-1">{{ t("modPanelSubmissionList.modified") }}</div>
-        <div class="font-bold text-left p-1">{{ t("modPanelSubmissionList.submitted") }}</div>
+        <div class="font-bold text-left p-1">
+            #
+        </div>
+        <div class="font-bold text-left p-1">
+            {{ t("modPanelSubmissionList.name") }}
+        </div>
+        <div class="font-bold text-left p-1">
+            {{ t("modPanelSubmissionList.modified") }}
+        </div>
+        <div class="font-bold text-left p-1">
+            {{ t("modPanelSubmissionList.submitted") }}
+        </div>
 
         <div
             v-if="hasSubmissions && modSubmissionsListStore.selectedModerationListViewChosen
