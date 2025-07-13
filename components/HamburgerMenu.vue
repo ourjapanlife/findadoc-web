@@ -76,9 +76,15 @@
                             data-testid="hamburger-menu-items"
                             class="flex flex-col gap-6 px-5 mt-10"
                         >
-                            <NuxtLink to="/">
-                                <div @click="closeMenu()">
-                                    {{ t('hamburgerMenu.home') }}
+                            <div class="flex mb-1">
+                                <img
+                                    :src="authStore.userProfileImage || '~/assets/icons/profile-icon.svg'"
+                                    alt="profile icon"
+                                    title="profile icon"
+                                    class="profile-icon w-7 stroke-primary inline stroke-2 rounded-full mr-1"
+                                >
+                                <div class="text-primary font-bold">
+                                    {{ authStore.userId }}
                                 </div>
                             </NuxtLink>
                             <NuxtLink to="/about">
@@ -284,7 +290,6 @@
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue'
 import { vCloseOnOutsideClick } from '~/composables/closeOnOutsideClick'
-import SVGProfileIcon from '~/assets/icons/profile-icon.svg'
 import SVGHamburgerMenuIcon from '~/assets/icons/hamburger-menu.svg'
 import SVGGithubIcon from '~/assets/icons/social-github.svg'
 import { useAuthStore } from '~/stores/authStore'

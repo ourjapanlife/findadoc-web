@@ -167,6 +167,7 @@ const searchProfessionalsQuery = gql`query searchHealthcareProfessionals($filter
         facilityIds
         spokenLanguages
         acceptedInsurance
+        additionalInfoForPatients
         createdDate
         updatedDate
     }

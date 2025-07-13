@@ -43,10 +43,12 @@
                         healthcareProfessionalDegrees
                     }}</span>
                 </div>
-                <div class="result-details flex flex-col mb-1 ml-4 pl-2 mt-2 text-sm">
-                    <span class="px-3 text-primary/90 font-medium text-lg">{{
-                        facilityName
-                    }}</span>
+            </div>
+            <div>
+                <div class="ml-9 mt-2 font-bold text-sm">
+                    <span>{{ t("searchResultsDetails.speaks") }}:</span>
+                </div>
+                <div class="result-tags flex flex-wrap w-64 mb-2 mt-1 ml-6 pl-2">
                     <div
                         v-for="(specialty, index) in specialties"
                         :key="index"
@@ -55,53 +57,29 @@
                         <span class="px-3 italic">{{ specialty }}</span>
                     </div>
                 </div>
-                <div>
-                    <div class="ml-9 mt-2 font-bold text-sm">
-                        <span>{{ t("searchResultsDetails.speaks") }}:</span>
-                    </div>
-                    <div class="result-tags flex flex-wrap w-64 mb-6 mt-1 ml-6 pl-2">
-                        <div
-                            v-for="(spokenLanguage, index) in spokenLanguages"
-                            :key="index"
-                            class="pl-2 pr-2 py-px mr-2 border-2 border-primary/40 rounded-full shadow-sm text-md
-                  text-primary hover:bg-primary/20 transition-all"
-                        >
-                            {{ spokenLanguage }}
-                        </div>
-                    </div>
+            </div>
+            <div v-show="additionalInfoForPatients">
+                <div
+                    class="ml-9 mt-2 font-bold text-sm"
+                >
+                    <span>{{ t("searchResultsDetails.additionalInfo") }}:</span>
                 </div>
-                <div class="about ml-4 pl-2">
-                    <span class="font-semibold">{{
-                        t("searchResultsDetails.contact")
-                    }}</span>
-                    <div class="address flex my-4">
-                        <SVGMapPinIcon
-                            role="img"
-                            alt="Facility Banner Image"
-                            title="banner image"
-                            class="w-6 h-6 stroke-primary mr-2 self-center"
-                        />
-                        <div class="flex flex-col">
-                            <a
-                                :href="addressLink"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                class="underline text-blue"
-                            >
-                                <div>{{ addressLine1 }}</div>
-                                <div v-if="addressLine2">
-                                    {{ addressLine2 }}
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="website flex my-4">
-                        <SVGGlobeIcon
-                            role="img"
-                            alt="Facility Banner Image"
-                            title="banner image"
-                            class="banner-icon w-6 h-6 stroke-primary mr-2 self-center"
-                        />
+                <div class="ml-9 mb-4 text-primary-text">
+                    <p>{{ additionalInfoForPatients }}</p>
+                </div>
+            </div>
+            <div class="about ml-4 pl-2">
+                <span class="font-semibold">{{
+                    t("searchResultsDetails.contact")
+                }}</span>
+                <div class="address flex my-4">
+                    <SVGMapPinIcon
+                        role="img"
+                        alt="Facility Banner Image"
+                        title="banner image"
+                        class="w-6 h-6 stroke-primary mr-2 self-center"
+                    />
+                    <div class="flex flex-col">
                         <a
                             v-if="website"
                             :href="website"
@@ -143,6 +121,56 @@
                         >{{ email }}</a>
                     </div>
                 </div>
+                <div class="website flex my-4">
+                    <SVGGlobeIcon
+                        role="img"
+                        alt="Facility Banner Image"
+                        title="banner image"
+                        class="banner-icon w-6 h-6 stroke-primary mr-2 self-center"
+                    />
+                    <a
+                        v-if="website"
+                        :href="website"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="underline text-blue"
+                    >{{ website }}</a>
+                </div>
+                <div class="phone flex my-4">
+                    <SVGPhoneIcon
+                        role="img"
+                        alt="Facility Banner Image"
+                        title="banner image"
+                        class="banner-icon w-6 h-6 stroke-primary mr-2 self-center"
+                    />
+                    <a
+                        v-if="phone"
+                        :href="`tel:${phone}`"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="underline text-blue"
+                    >{{ phone }}</a>
+                </div>
+                <div
+                    v-if="email && !excludedEmailAddresses.includes(email)"
+                    class="email flex my-4"
+                >
+                    <SVGEmailIcon
+                        role="img"
+                        alt="Facility Banner Image"
+                        title="banner image"
+                        class="banner-icon w-6 h-6 stroke-primary mr-2 self-center"
+                    />
+                    <a
+                        :href="`mailto:${email}`"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="underline text-blue"
+                    >{{ email }}</a>
+                </div>
+                <div class="mr-3 mb-1 flex flex-row-reverse text-sm text-primary-text-muted">
+                    <p>{{ formattedLastUpdate }}</p>
+                </div>
             </div>
         </div>
     </BottomSheet>
@@ -162,6 +190,7 @@ import { useSpecialtiesStore } from '~/stores/specialtiesStore.js'
 import { useSearchResultsStore } from '~/stores/searchResultsStore'
 import { Locale } from '~/typedefs/gqlTypes.js'
 import { formatHealthcareProfessionalName } from '~/utils/nameUtils'
+import { formatToReadableDate } from '~/utils/dateUtils'
 import { BottomSheetType, useBottomSheetStore } from '~/stores/bottomSheetStore'
 
 const { t } = useI18n()
@@ -239,6 +268,8 @@ const spokenLanguages = computed(() => {
     return languagesDisplayText
 })
 
+const additionalInfoForPatients = computed(() => resultsStore.activeResult?.professional.additionalInfoForPatients)
+
 const addressLine1 = computed(() => {
     const addressObj
         = resultsStore.activeResult?.facilities[0].contact.address
@@ -268,6 +299,14 @@ const phone = computed(
 const email = computed(
     () => resultsStore.activeResult?.facilities[0]?.contact?.email ?? ''
 )
+
+const formattedLastUpdate = computed(() => {
+    const unformattedDate = resultsStore.activeResult?.professional.updatedDate
+    if (unformattedDate) {
+        return t('searchResultsDetails.lastUpdate') + ': ' + formatToReadableDate(unformattedDate)
+    }
+    return ''
+})
 
 const excludedEmailAddresses = ['none', 'email@email.com']
 </script>

@@ -2,7 +2,10 @@
 <template>
     <div class="flex flex-col items-start">
         <div class="flex justify-start items-center">
-            <label class="mb-2 mr-2 text-center text-primary-text text-2xl font-bold font-sans">
+            <label
+                class="mb-2 mr-2 text-center text-primary-text font-bold font-sans"
+                :class="`${textSize}`"
+            >
                 {{ label }}
             </label>
             <label v-if="!required">{{ t('noteInputField.optional') }}</label>
@@ -17,17 +20,16 @@
 </template>
 
 <script setup lang="ts">
+import type { TextSize } from '~/typedefs/tailwindTypes'
 import { useI18n } from '#imports'
 
 const { t } = useI18n()
 const model = defineModel<string>()
 
-defineProps({
-    label: {
-        type: String,
-        required: true
-    },
-    placeholder: String,
-    required: Boolean
-})
+defineProps<{
+    label: string
+    placeholder?: string
+    required: boolean
+    textSize?: TextSize
+}>()
 </script>

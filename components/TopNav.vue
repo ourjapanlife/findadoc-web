@@ -127,6 +127,17 @@
                         <div class="text-primary font-bold">
                             {{ authStore.userId }}
                         </div>
+                    </NuxtLink>
+                    <div class="flex">
+                        <img
+                            :src="authStore.userProfileImage || '~/assets/icons/profile-icon.svg'"
+                            alt="profile icon"
+                            title="profile icon"
+                            class="profile-icon w-7 stroke-primary inline stroke-2 rounded-full mx-1"
+                        >
+                        <div class="text-primary font-bold">
+                            {{ authStore.userId }}
+                        </div>
                     </div>
                 </nav>
                 <LocaleSelector class="portrait:hidden" />
@@ -138,7 +149,6 @@
 
 <script lang="ts" setup>
 import HamburgerMenu from './HamburgerMenu.vue'
-import SVGProfileIcon from '~/assets/icons/profile-icon.svg'
 import SVGSiteLogo from '~/assets/icons/site-logo.svg'
 import { useAuthStore } from '~/stores/authStore'
 
