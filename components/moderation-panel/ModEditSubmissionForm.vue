@@ -366,9 +366,7 @@ function initializeSubmissionFormValues(submissionData: Submission | undefined) 
     const submittedHealthcareProfessionalName
     = submissionData?.healthcareProfessionalName?.split(' ') ?? []
 
-    if (submissionData && submissionData.notes) {
-        currentSubmissionNotes.value = submissionData.notes
-    }
+    currentSubmissionNotes.value = submissionData?.notes ?? ''
 
     const facilitySectionFields = facilitiesStore.facilitySectionFields
     const healthcareProfessionalSections
@@ -516,7 +514,7 @@ function initializeSubmissionFormValues(submissionData: Submission | undefined) 
             id: healthcareProfessionalSections.id || undefined,
             names: healthcareProfessionalSections.names.map(name => ({ ...name })),
             acceptedInsurance: [...healthcareProfessionalSections.acceptedInsurance],
-            additionalInfoForPatients: healthcareProfessionalSections.additionalInfoForPatients || undefined,
+            additionalInfoForPatients: healthcareProfessionalSections.additionalInfoForPatients ?? '',
             degrees: [...healthcareProfessionalSections.degrees],
             specialties: [...healthcareProfessionalSections.specialties],
             spokenLanguages: [...healthcareProfessionalSections.spokenLanguages],
@@ -526,6 +524,7 @@ function initializeSubmissionFormValues(submissionData: Submission | undefined) 
 
         initialSubmissionFormValueSnapshot.facility = reconstructedFacilitySubmission
         initialSubmissionFormValueSnapshot.healthcareProfessionals = reconstructedHealthcareProfessionalSubmission
+        initialSubmissionFormValueSnapshot.notes = currentSubmissionNotes.value
 
         submissionBeforeChanges.value = initialSubmissionFormValueSnapshot
         isEditSubmissionFormInitialized.value = true
@@ -544,15 +543,38 @@ const hasFacilityChanges = (submissionBeforeChangesComparison: Submission | unde
     if (!submissionBeforeChangesComparison) return false
 
     return (
-        submissionBeforeChangesComparison?.facility?.nameEn !== facilitySectionFields.nameEn
-        || submissionBeforeChangesComparison?.facility?.nameJa !== facilitySectionFields.nameJa
-        || submissionBeforeChangesComparison?.facility?.contact?.phone !== facilitySectionFields.phone
-        || (submissionBeforeChangesComparison?.facility?.contact?.email
-          && submissionBeforeChangesComparison?.facility?.contact?.email !== facilitySectionFields.email)
-        || (submissionBeforeChangesComparison?.facility?.contact?.website
-          && submissionBeforeChangesComparison?.facility?.contact?.website !== facilitySectionFields.website)
-        || submissionBeforeChangesComparison?.facility?.contact?.address?.postalCode !== facilitySectionFields.postalCode
-        || !arraysAreEqual(submissionBeforeChangesComparison?.facility?.healthcareProfessionalIds,
+        (submissionBeforeChangesComparison?.facility?.nameEn ?? '') !== (facilitySectionFields.nameEn ?? '')
+        || (submissionBeforeChangesComparison?.facility?.nameJa ?? '') !== (facilitySectionFields.nameJa ?? '')
+        || (submissionBeforeChangesComparison?.facility?.contact?.phone ?? '') !== (facilitySectionFields.phone ?? '')
+        || (submissionBeforeChangesComparison?.facility?.contact?.email ?? '') !== (facilitySectionFields.email ?? '')
+        || (submissionBeforeChangesComparison?.facility?.contact?.website ?? '') !== (facilitySectionFields.website ?? '')
+        || (submissionBeforeChangesComparison?.facility?.contact?.googleMapsUrl ?? '')
+        !== (facilitySectionFields.googlemapsURL ?? '')
+        || (submissionBeforeChangesComparison?.facility?.contact?.address?.postalCode ?? '')
+        !== (facilitySectionFields.postalCode ?? '')
+        || (submissionBeforeChangesComparison?.facility?.contact?.address?.prefectureEn ?? '')
+        !== (facilitySectionFields.prefectureEn ?? '')
+        || (submissionBeforeChangesComparison?.facility?.contact?.address?.cityEn ?? '')
+        !== (facilitySectionFields.cityEn ?? '')
+        || (submissionBeforeChangesComparison?.facility?.contact?.address?.addressLine1En ?? '')
+        !== (facilitySectionFields.addressLine1En ?? '')
+        || (submissionBeforeChangesComparison?.facility?.contact?.address?.addressLine2En ?? '')
+        !== (facilitySectionFields.addressLine2En ?? '')
+        || (submissionBeforeChangesComparison?.facility?.contact?.address?.prefectureJa ?? '')
+        !== (facilitySectionFields.prefectureJa ?? '')
+        || (submissionBeforeChangesComparison?.facility?.contact?.address?.cityJa ?? '')
+        !== (facilitySectionFields.cityJa ?? '')
+        || (submissionBeforeChangesComparison?.facility?.contact?.address?.addressLine1Ja ?? '')
+        !== (facilitySectionFields.addressLine1Ja ?? '')
+        || (submissionBeforeChangesComparison?.facility?.contact?.address?.addressLine2Ja ?? '')
+        !== (facilitySectionFields.addressLine2Ja ?? '')
+        || ((submissionBeforeChangesComparison?.facility?.mapLatitude ?? 0).toString()
+          !== facilitySectionFields.mapLatitude && parseFloat(facilitySectionFields.mapLatitude)
+          !== (submissionBeforeChangesComparison?.facility?.mapLatitude ?? 0))
+        || ((submissionBeforeChangesComparison?.facility?.mapLongitude ?? 0).toString()
+          !== facilitySectionFields.mapLongitude && parseFloat(facilitySectionFields.mapLongitude)
+          !== (submissionBeforeChangesComparison?.facility?.mapLongitude ?? 0))
+        || !arraysAreEqual(submissionBeforeChangesComparison?.facility?.healthcareProfessionalIds ?? [],
                            facilitySectionFields.healthcareProfessionalIds)
     )
 }
@@ -587,11 +609,23 @@ const hasHealthcareProfessionalChanges = (submissionBeforeChangesComparison: Sub
             submissionBeforeChangesComparison?.healthcareProfessionals?.[0]?.facilityIds || [],
             hpSectionFields.facilityIds
         )
+        || ((submissionBeforeChangesComparison?.healthcareProfessionals?.[0]?.additionalInfoForPatients ?? '')
+          !== (hpSectionFields.additionalInfoForPatients ?? ''))
     )
 }
 
-const formHasUnsavedChanges = () => hasFacilityChanges(submissionBeforeChanges.value)
-  || hasHealthcareProfessionalChanges(submissionBeforeChanges.value)
+const formHasUnsavedChanges = () => {
+    const initialSubmission = submissionBeforeChanges.value
+    if (!initialSubmission) {
+        return false
+    }
+
+    const hasNotesChanges = (initialSubmission.notes ?? '') !== currentSubmissionNotes.value
+    const facilityChanges = hasFacilityChanges(initialSubmission)
+    const hpChanges = hasHealthcareProfessionalChanges(initialSubmission)
+
+    return facilityChanges || hpChanges || hasNotesChanges
+}
 
 async function submitUpdatedSubmission(e: Event) {
     // Prevent form submission before validation is completed.
