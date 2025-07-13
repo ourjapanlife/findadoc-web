@@ -463,6 +463,9 @@ function initializeSubmissionFormValues(submissionData: Submission | undefined) 
         if (!submissionData) {
             return
         }
+
+        // This constant holds the initial state of the submission form values.
+        // It serves as the baseline to detect if any unsaved changes have occurred
         const snapshotBase: Submission = {
             ...submissionData,
             healthcareProfessionalName: submissionData.healthcareProfessionalName ?? '',
@@ -470,11 +473,10 @@ function initializeSubmissionFormValues(submissionData: Submission | undefined) 
             spokenLanguages: submissionData.spokenLanguages ? [...submissionData.spokenLanguages] : []
         }
 
-        // Now we recreate Facilities and HCProfessionals object inside snaphsto
-        // And we are exactly taking value that are on `sectionFields`
+        // Reconstruct the FacilitySubmission object from the current form field values
+        // (facilitySectionFields) instead of using submissionData.facility directly.
+        // This ensures that we capture the latest edited state for comparison or submission.
         const reconstructedFacility: FacilitySubmission = {
-            //id: submissionData?.facility?.id || '', // Take id from submissionData
-            //id: facilitiesStore.facilitySectionFields.id || '', //There is no id on facilitySectionFields
             id: submissionData?.facility?.id || '',
             nameEn: facilitiesStore.facilitySectionFields.nameEn || '',
             nameJa: facilitiesStore.facilitySectionFields.nameJa || '',
@@ -503,6 +505,9 @@ function initializeSubmissionFormValues(submissionData: Submission | undefined) 
             __typename: 'FacilitySubmission' as const
         }
 
+        // Reconstruct the HealthcareProfessionalSubmission object from the current form field values
+        // (healthcareProfessionalSections) instead of using submissionData.healthcareProfessional directly.
+        // This ensures that we capture the latest edited state for comparison or submission.
         const reconstructedHealthcareProfessionals: HealthcareProfessionalSubmission[] = [{
             id: healthcareProfessionalSections.id || undefined,
             names: healthcareProfessionalSections.names.map(name => ({ ...name })),
