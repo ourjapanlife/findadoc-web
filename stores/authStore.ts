@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { computed } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import { auth0 } from '../utils/auth0.js'
 import { useLoadingStore } from './loadingStore.js'
 import { useCookie, useRuntimeConfig } from '#app'
@@ -7,6 +8,8 @@ import { useCookie, useRuntimeConfig } from '#app'
 export const useAuthStore = defineStore('authStore', () => {
     const runtimeConfig = useRuntimeConfig()
     const isTestingMode = !!runtimeConfig.public.isTestingMode
+    const route = useRoute()
+    const router = useRouter()
 
     const userId = computed(() => {
         if (isTestingMode)
@@ -109,5 +112,35 @@ export const useAuthStore = defineStore('authStore', () => {
         })
     }
 
-    return { userId, userProfileImage, isLoggedIn, isLoadingAuth, login, logout, getAuthBearerToken }
+    const redirectIfUnauthenticatedUser = async (
+        routePath: string,
+        doesTheUserHaveAccess: Ref<boolean>
+    ) => {
+        // This promise is here to make the Suspense component work.
+        // It doesn't do anything, but <Suspense> requires an awaited setup method
+        await new Promise(resolve => {
+            //ignore if route change is unrelated to moderation
+            const needsRedirectDueToAccess = route.path.startsWith(routePath)
+              && !isLoggedIn.value && !isLoadingAuth.value
+            if (needsRedirectDueToAccess) {
+                // give the user a bit of time to read the message before redirecting
+                doesTheUserHaveAccess.value = false
+                setTimeout(() => {
+                    // Redirect to login page if user is not logged in
+                    router.push('/')
+                }, 10000)
+            }
+
+            resolve(true)
+        })
+    }
+
+    return { userId,
+        userProfileImage,
+        isLoggedIn,
+        isLoadingAuth,
+        login,
+        logout,
+        getAuthBearerToken,
+        redirectIfUnauthenticatedUser }
 })
