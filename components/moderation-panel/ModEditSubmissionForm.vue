@@ -462,8 +462,9 @@ function initializeSubmissionFormValues(submissionData: Submission | undefined) 
             return
         }
 
-        // This constant holds the initial state of the submission form values.
-        // It serves as the baseline to detect if any unsaved changes have occurred
+        /* This constant holds the initial state of the submission form values.
+        *  It serves as the baseline to detect if any unsaved changes have occurred
+        */
         const initialSubmissionFormValueSnapshot: Submission = {
             ...submissionData,
             healthcareProfessionalName: submissionData.healthcareProfessionalName ?? '',
@@ -530,12 +531,13 @@ function initializeSubmissionFormValues(submissionData: Submission | undefined) 
     })
 }
 
-// Assume you already have:
-// • isEditSubmissionFormInitialized
-// • submissionFormFieldsBeforeChanges (“before” snapshot)
-// • facilitiesStore.facilitySectionFields → facility
-// • healthcareProfessionalsStore.healthcareProfessionalSectionFields → hp
-// • arraysAreEqual
+/* Assume you already have:
+* isEditSubmissionFormInitialized
+* submissionFormFieldsBeforeChanges (“before” snapshot)
+* facilitiesStore.facilitySectionFields → facility
+* healthcareProfessionalsStore.healthcareProfessionalSectionFields → hp
+* arraysAreEqual
+*/
 const hasFacilityChanges = (submissionBeforeChangesComparison: Submission | undefined) => {
     const facilitySectionFields = facilitiesStore.facilitySectionFields
 
@@ -545,9 +547,6 @@ const hasFacilityChanges = (submissionBeforeChangesComparison: Submission | unde
     * Normalizes a given value to a number.
     * It handles various input types (number, string, undefined, null)
     * and converts empty strings or non-numeric strings to 0, ensuring consistent numeric comparisons.
-    *
-    * @param value The input value, which can be a string, number, undefined, or null.
-    * @returns The normalized numeric representation of the input value.
     */
     const normalizeToNumberForComparison = (value: string | number | undefined | null): number => {
         // If the value is already a number, return it directly.
