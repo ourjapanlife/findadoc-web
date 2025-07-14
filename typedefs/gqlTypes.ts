@@ -145,7 +145,7 @@ export type FacilitySubmission = {
 export type HealthcareProfessional = {
   __typename?: 'HealthcareProfessional';
   acceptedInsurance: Array<Insurance>;
-  additionalInfoForPatients?: Scalars['String']['output'];
+  additionalInfoForPatients?: Maybe<Scalars['String']['output']>;
   createdDate: Scalars['String']['output'];
   degrees: Array<Degree>;
   facilityIds: Array<Scalars['ID']['output']>;
@@ -158,7 +158,6 @@ export type HealthcareProfessional = {
 
 export type HealthcareProfessionalSearchFilters = {
   acceptedInsurance?: InputMaybe<Array<Insurance>>;
-  additionalInfoForPatients?: InputMaybe<Scalars['String']['output']>;
   createdDate?: InputMaybe<Scalars['String']['input']>;
   degrees?: InputMaybe<Array<Degree>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
