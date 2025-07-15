@@ -5,8 +5,10 @@
         ref="searchResultsListBottomSheet"
         :overlay="false"
         :overlay-click-close="false"
+        :can-swipe-close="false"
         :z-index="0"
-        :height="bottomSheetHeight"
+        :initial-position="75"
+        :custom-positions="[20, 50, 75]"
         @dragging-up="maximizeResultsListBottomSheet"
         @dragging-down="minimizeResultsListBottomSheet"
     >

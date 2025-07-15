@@ -1,58 +1,36 @@
 <!-- From https://github.com/vaban-ru/vue-bottom-sheet?tab=readme-ov-file,
  but copied due to it no longer being maintained -->
- <!-- It's been customized to allow for a z-index changes -->
+<!-- It's been customized to allow for a z-index changes -->
 <template>
     <Teleport to="body">
-        <div
-            ref="bottomSheet"
-            class="fixed inset-0 flex flex-col items-center justify-end transition-[visibility]"
-            :style="{ zIndex: zIndex,
-                      visibility: showSheet ? 'visible' : 'hidden',
-                      pointerEvents: showSheet ? 'auto' : 'none' }"
-            :aria-hidden="!showSheet"
-            role="dialog"
-        >
+        <div ref="bottomSheet" class="fixed inset-0 flex flex-col items-center justify-end transition-[visibility] mx-1"
+            :style="{
+                zIndex: zIndex,
+                visibility: showSheet ? 'visible' : 'hidden',
+                pointerEvents: showSheet ? 'auto' : 'none'
+            }" :aria-hidden="!showSheet" role="dialog">
             <transition>
-                <div
-                    v-show="overlay && showSheet"
-                    class="absolute inset-0 -z-10"
-                    :style="{ background: props.overlayColor }"
-                    @click="clickOnOverlayHandler"
-                />
+                <div v-show="overlay && showSheet" class="absolute inset-0 -z-10"
+                    :style="{ background: props.overlayColor }" @click="clickOnOverlayHandler" />
             </transition>
-            <div
-                ref="bottomSheetContent"
-                :class="
-                    'flex flex-col rounded-t-2xl bg-white overflow-y-hidden w-full box-border pointer-events-auto'"
+            <div ref="bottomSheetContent"
+                :class="'flex flex-col rounded-t-2xl bg-white overflow-y-hidden w-full box-border pointer-events-auto'"
                 :style="{
                     transform: `translate3d(0, ${translateValueString}, 0)`,
                     height: sheetHeight,
                     maxWidth: maxWidthString,
                     transition: !isDragging ? `${transitionDurationString} ease` : undefined,
-                }"
-            >
-                <header
-                    ref="bottomSheetHeader"
-                    class="bottom-sheet__header"
-                >
-                    <div
-                        ref="bottomSheetDraggableArea"
-                        class="w-full mx-auto p-4 cursor-grab"
-                    >
+                }">
+                <header ref="bottomSheetHeader" class="bottom-sheet__header">
+                    <div ref="bottomSheetDraggableArea" class="w-full mx-auto p-4 cursor-grab">
                         <div class="w-10 h-1 bg-neutral-800 rounded-lg mx-auto" />
                     </div>
                     <slot name="header" />
                 </header>
-                <main
-                    ref="bottomSheetMain"
-                    class="flex flex-col overflow-y-scroll box-border touch-auto"
-                >
+                <main ref="bottomSheetMain" class="flex flex-col overflow-y-scroll box-border touch-auto">
                     <slot />
                 </main>
-                <footer
-                    v-if="$slots.footer"
-                    ref="bottomSheetFooter"
-                >
+                <footer v-if="$slots.footer" ref="bottomSheetFooter">
                     <slot name="footer" />
                 </footer>
             </div>
@@ -74,11 +52,12 @@ interface IProps {
     overlay?: boolean
     overlayColor?: string
     maxWidth?: number
-    height?: string
+    initialPosition?: number
     customPositions?: number[]
     transitionDuration?: number
     overlayClickClose?: boolean
     canSwipe?: boolean
+    canSwipeClose?: boolean
     zIndex?: number
 }
 
@@ -101,11 +80,12 @@ const props = withDefaults(defineProps<IProps>(), {
     overlay: true,
     overlayColor: '#0000004D',
     maxWidth: 640,
-    height: 'calc(70vh)',
+    initialPosition: 75,
     customPositions: [75],
     transitionDuration: 0.5,
     overlayClickClose: true,
     canSwipe: true,
+    canSwipeClose: true,
     zIndex: 99999
 })
 
@@ -137,7 +117,7 @@ const contentScroll = ref(0)
 /**
    * Return sheet height
    */
-const sheetHeight = ref('calc(70vh)')
+const sheetHeight = ref('calc(100vh)')
 
 const enabledPositions = computed(() => props.customPositions)
 
@@ -155,7 +135,7 @@ const bottomSheetDraggableArea = ref<HTMLElement | null>(null)
 const isFocused = (element: HTMLElement) => document.activeElement === element
 window.addEventListener('keyup', (event: KeyboardEvent) => {
     const isSheetElementFocused
-      = bottomSheet.value && bottomSheet.value.contains(event.target as HTMLElement)
+        = bottomSheet.value && bottomSheet.value.contains(event.target as HTMLElement)
         && isFocused(event.target as HTMLElement)
 
     if (event.key === 'Escape' && !isSheetElementFocused) {
@@ -181,8 +161,9 @@ const maxWidthString = computed(() => `${props.maxWidth}px`)
 // Functions
 
 function initHeight() {
-    if (props.height) {
-        sheetHeight.value = props.height
+    if (props.initialPosition) {
+        const invertedPosition = 100 - props.initialPosition
+        translateValue.value = invertedPosition
     }
 }
 
@@ -238,11 +219,31 @@ const dragHandler = (event: HammerInput | IEvent, type: 'area' | 'main') => {
             }
             isDragging.value = false
 
-            // Closes the sheet if the user swipes down
-            enabledPositions
+            // Move the sheet to the nearest enabledPosition
+            if (enabledPositions && enabledPositions.value && enabledPositions.value.length > 0) {
+                // Sort enabledPositions descending and invert the values. (translateValue is a negative value)
+                const invertedScreenPositions = enabledPositions.value.map((pos) => 100 - pos)
+                // The lowest enabledPosition nearest the bottom of the screen
+                const minPosition = invertedScreenPositions[invertedScreenPositions.length - 1]
 
+                // Find the nearest enabledPosition (closest value)
+                const nearest = invertedScreenPositions.reduce((prev, curr) =>
+                    Math.abs(curr - translateValue.value) < Math.abs(prev - translateValue.value) ? curr : prev
+                    , invertedScreenPositions[0])
 
-            if (translateValue.value >= 10) {
+                // If translateValue is beyond the last enabledPosition, close()
+                if (translateValue.value > minPosition && props.canSwipeClose) {
+                    close()
+                } else {
+                    // Otherwise, move the sheet to the nearest enabledPosition
+                    translateValue.value = nearest
+                }
+
+                return
+            }
+
+            // If the sheet is dragged down, close it
+            if (translateValue.value >= 10 && props.canSwipeClose) {
                 close()
             }
             // Otherwise, reset the sheet position to original height
