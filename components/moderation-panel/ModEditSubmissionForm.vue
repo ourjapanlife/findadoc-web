@@ -543,28 +543,6 @@ const hasFacilityChanges = (submissionBeforeChangesComparison: Submission | unde
 
     if (!submissionBeforeChangesComparison) return false
 
-    /**
-    * Normalizes a given value to a number.
-    * It handles various input types (number, string, undefined, null)
-    * and converts empty strings or non-numeric strings to 0, ensuring consistent numeric comparisons.
-    */
-    const normalizeToNumberForComparison = (value: string | number | undefined | null): number => {
-        // If the value is already a number, return it directly.
-        if (typeof value === 'number') {
-            return value
-        }
-
-        // If the value is a string and is empty or consists only of whitespace, treat it as 0.
-        if (typeof value === 'string' && value.trim() === '') {
-            return 0
-        }
-
-        // Attempt to parse the value as a float.
-        // If parsing results in NaN (e.g., for non-numeric strings or undefined/null after type assertion),
-        // default to 0 to ensure a numeric comparison.
-        return parseFloat(value as string) || 0
-    }
-
     return (
         (submissionBeforeChangesComparison?.facility?.nameEn ?? '') !== (facilitySectionFields.nameEn ?? '')
         || (submissionBeforeChangesComparison?.facility?.nameJa ?? '') !== (facilitySectionFields.nameJa ?? '')
@@ -591,10 +569,10 @@ const hasFacilityChanges = (submissionBeforeChangesComparison: Submission | unde
         !== (facilitySectionFields.addressLine1Ja ?? '')
         || (submissionBeforeChangesComparison?.facility?.contact?.address?.addressLine2Ja ?? '')
         !== (facilitySectionFields.addressLine2Ja ?? '')
-        || normalizeToNumberForComparison(submissionBeforeChangesComparison?.facility?.mapLatitude)
-        !== normalizeToNumberForComparison(facilitySectionFields.mapLatitude)
-        || normalizeToNumberForComparison(submissionBeforeChangesComparison?.facility?.mapLongitude)
-        !== normalizeToNumberForComparison(facilitySectionFields.mapLongitude)
+        || ((parseFloat(submissionBeforeChangesComparison?.facility?.mapLatitude as unknown as string) || 0)
+          !== (parseFloat(facilitySectionFields.mapLatitude) || 0))
+        || ((parseFloat(submissionBeforeChangesComparison?.facility?.mapLongitude as unknown as string) || 0)
+          !== (parseFloat(facilitySectionFields.mapLongitude) || 0))
         || !arraysAreEqual(submissionBeforeChangesComparison?.facility?.healthcareProfessionalIds ?? [],
                            facilitySectionFields.healthcareProfessionalIds)
     )
