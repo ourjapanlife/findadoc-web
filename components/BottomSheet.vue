@@ -6,7 +6,9 @@
         <div
             ref="bottomSheet"
             class="fixed inset-0 flex flex-col items-center justify-end transition-[visibility]"
-            :style="{ zIndex: zIndex, visibility: showSheet ? 'visible' : 'hidden', pointerEvents: showSheet ? 'auto' : 'none' }"
+            :style="{ zIndex: zIndex,
+                      visibility: showSheet ? 'visible' : 'hidden',
+                      pointerEvents: showSheet ? 'auto' : 'none' }"
             :aria-hidden="!showSheet"
             role="dialog"
         >
@@ -24,9 +26,8 @@
                     'flex flex-col rounded-t-2xl bg-white overflow-y-hidden w-full box-border pointer-events-auto'"
                 :style="{
                     transform: `translate3d(0, ${translateValueString}, 0)`,
-                    height: sheetHeightString,
+                    height: sheetHeight,
                     maxWidth: maxWidthString,
-                    maxHeight: maxHeightString,
                     transition: !isDragging ? `${transitionDurationString} ease` : undefined,
                 }"
             >
@@ -73,7 +74,8 @@ interface IProps {
     overlay?: boolean
     overlayColor?: string
     maxWidth?: number
-    maxHeight?: number
+    height?: string
+    customPositions?: number[]
     transitionDuration?: number
     overlayClickClose?: boolean
     canSwipe?: boolean
@@ -92,11 +94,15 @@ interface IEvent {
 
 /**
    * Bottom sheet props interface
+   * @param height String corresponding to screen height. Passed in as-is
+   * @param customPositions Array of numbers between 0 and 100 corresponding to screen height percentage
    */
 const props = withDefaults(defineProps<IProps>(), {
     overlay: true,
     overlayColor: '#0000004D',
     maxWidth: 640,
+    height: 'calc(70vh)',
+    customPositions: [75],
     transitionDuration: 0.5,
     overlayClickClose: true,
     canSwipe: true,
@@ -114,11 +120,6 @@ const emit = defineEmits(['opened', 'closed', 'dragging-up', 'dragging-down'])
 const showSheet = ref(false)
 
 /**
-   * Sheet height value
-   */
-const sheetHeight = ref(0)
-
-/**
    * Dynamic translate value
    */
 const translateValue = ref(100)
@@ -134,12 +135,16 @@ const isDragging = ref(false)
 const contentScroll = ref(0)
 
 /**
+   * Return sheet height
+   */
+const sheetHeight = ref('calc(70vh)')
+
+const enabledPositions = computed(() => props.customPositions)
+
+/**
    * Refs to all sheet HTML elements
    */
 const bottomSheet = ref<HTMLElement | null>(null)
-const bottomSheetHeader = ref<HTMLElement | null>(null)
-const bottomSheetMain = ref<HTMLElement | null>(null)
-const bottomSheetFooter = ref<HTMLElement | null>(null)
 const bottomSheetContent = ref<HTMLElement | null>(null)
 const bottomSheetDraggableArea = ref<HTMLElement | null>(null)
 
@@ -159,23 +164,9 @@ window.addEventListener('keyup', (event: KeyboardEvent) => {
 })
 
 /**
-   * Return all classes for bottom sheet content
-   */
-
-/**
    * Return transition duration value with seconds
    */
 const transitionDurationString = computed(() => `${props.transitionDuration}s`)
-
-/**
-   * Return sheet height string with px
-   */
-const sheetHeightString = computed(() => sheetHeight.value && sheetHeight.value > 0 ? `${sheetHeight.value + 1}px` : 'auto')
-
-/**
-   * Return max height string
-   */
-const maxHeightString = computed(() => props.maxHeight ? `${props.maxHeight}px` : 'inherit')
 
 /**
    * Return current translate value string with percents
@@ -187,15 +178,12 @@ const translateValueString = computed(() => `${translateValue.value}%`)
    */
 const maxWidthString = computed(() => `${props.maxWidth}px`)
 
-/**
-   * Calculate sheet height
-   */
-const initHeight = async () => {
-    await nextTick()
-    sheetHeight.value
-      = bottomSheetHeader.value!.offsetHeight
-        + bottomSheetMain.value!.clientHeight
-        + bottomSheetFooter.value!.offsetHeight
+// Functions
+
+function initHeight() {
+    if (props.height) {
+        sheetHeight.value = props.height
+    }
 }
 
 /**
@@ -214,22 +202,22 @@ const dragHandler = (event: HammerInput | IEvent, type: 'area' | 'main') => {
 
         if (event.deltaY > 0) {
             if (type === 'main' && event.type === 'panup') {
-                translateValue.value = pixelToVh(event.deltaY)
+                translateValue.value = event.deltaY
                 if ('cancelable' in event && event.cancelable) {
-                    bottomSheetMain.value!.addEventListener('touchmove', preventDefault)
+                    bottomSheetContent.value!.addEventListener('touchmove', preventDefault)
                 }
             }
 
             if (type === 'main' && event.type === 'pandown' && contentScroll.value === 0) {
                 // HammerInput has deltaY, DOM events may not
                 if ('deltaY' in event) {
-                    translateValue.value = pixelToVh(event.deltaY)
+                    translateValue.value = event.deltaY
                 }
             }
 
             if (type === 'area') {
                 if ('deltaY' in event) {
-                    translateValue.value = pixelToVh(event.deltaY)
+                    translateValue.value = event.deltaY
                 }
             }
 
@@ -241,16 +229,24 @@ const dragHandler = (event: HammerInput | IEvent, type: 'area' | 'main') => {
             }
         }
 
+        // Triggers when the user "lets go" of the sheet
         if ('isFinal' in event && event.isFinal) {
-            bottomSheetMain.value!.removeEventListener('touchmove', preventDefault)
+            bottomSheetContent.value!.removeEventListener('touchmove', preventDefault)
 
             if (type === 'main') {
-                contentScroll.value = bottomSheetMain.value!.scrollTop
+                contentScroll.value = bottomSheetContent.value!.scrollTop
             }
             isDragging.value = false
+
+            // Closes the sheet if the user swipes down
+            enabledPositions
+
+
             if (translateValue.value >= 10) {
                 close()
-            } else {
+            }
+            // Otherwise, reset the sheet position to original height
+            else {
                 translateValue.value = 0
             }
         }
@@ -258,9 +254,6 @@ const dragHandler = (event: HammerInput | IEvent, type: 'area' | 'main') => {
 }
 
 nextTick(() => {
-    /**
-     * Set initial card height
-     */
     initHeight()
 
     /**
@@ -276,8 +269,8 @@ nextTick(() => {
         })
     }
 
-    if (bottomSheetMain.value) {
-        const hammerMainInstance = new Hammer(bottomSheetMain.value, {
+    if (bottomSheetContent.value) {
+        const hammerMainInstance = new Hammer(bottomSheetContent.value, {
             inputClass: Hammer.TouchMouseInput,
             recognizers: [[Hammer.Pan, { direction: Hammer.DIRECTION_VERTICAL }]]
         })
@@ -319,16 +312,6 @@ const clickOnOverlayHandler = () => {
     if (props.overlayClickClose) {
         close()
     }
-}
-
-/**
-   * Convert pixels to vh
-   * @param pixel
-   */
-const pixelToVh = (pixel: number) => {
-    const height
-      = props.maxHeight && props.maxHeight <= sheetHeight.value ? props.maxHeight : sheetHeight.value
-    return (pixel / height) * 100
 }
 
 /**

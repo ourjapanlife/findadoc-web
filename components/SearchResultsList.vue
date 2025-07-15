@@ -3,16 +3,15 @@
     <!-- z-index is set to 0 to allow the results list to be behind the details sheet -->
     <BottomSheet
         ref="searchResultsListBottomSheet"
-        :can-swipe="false"
         :overlay="false"
         :overlay-click-close="false"
         :z-index="0"
+        :height="bottomSheetHeight"
         @dragging-up="maximizeResultsListBottomSheet"
         @dragging-down="minimizeResultsListBottomSheet"
     >
         <div
             class="flex flex-col bg-primary-bg overflow-y-auto mx-2"
-            :class="`h-[${bottomSheetHeight}]`"
         >
             <!-- Search Filters Bar -->
             <div
@@ -110,7 +109,7 @@ const route = useRoute()
 const isSearchPage = computed(() => route.path === '/')
 
 const searchResultsListBottomSheet = ref<typeof BottomSheet | null>(null)
-const bottomSheetHeight = ref('50vh')
+const bottomSheetHeight = ref('')
 
 onMounted(() => {
     resultsStore.search()
