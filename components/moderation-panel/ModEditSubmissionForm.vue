@@ -569,12 +569,20 @@ const hasFacilityChanges = (submissionBeforeChangesComparison: Submission | unde
         !== (facilitySectionFields.addressLine1Ja ?? '')
         || (submissionBeforeChangesComparison?.facility?.contact?.address?.addressLine2Ja ?? '')
         !== (facilitySectionFields.addressLine2Ja ?? '')
-        || ((parseFloat(submissionBeforeChangesComparison?.facility?.mapLatitude as unknown as string) || 0)
-          !== (parseFloat(facilitySectionFields.mapLatitude) || 0))
-        || ((parseFloat(submissionBeforeChangesComparison?.facility?.mapLongitude as unknown as string) || 0)
-          !== (parseFloat(facilitySectionFields.mapLongitude) || 0))
-        || !arraysAreEqual(submissionBeforeChangesComparison?.facility?.healthcareProfessionalIds ?? [],
-                           facilitySectionFields.healthcareProfessionalIds)
+        || (submissionBeforeChangesComparison?.facility?.mapLatitude
+            ? submissionBeforeChangesComparison?.facility?.mapLatitude.toString()
+            : '')
+          !== (facilitySectionFields.mapLatitude
+              ? facilitySectionFields.mapLatitude.toString()
+              : '')
+            || (submissionBeforeChangesComparison?.facility?.mapLongitude
+                ? submissionBeforeChangesComparison?.facility?.mapLongitude.toString()
+                : '')
+              !== (facilitySectionFields.mapLongitude
+                  ? facilitySectionFields.mapLongitude.toString()
+                  : '')
+                || !arraysAreEqual(submissionBeforeChangesComparison?.facility?.healthcareProfessionalIds ?? [],
+                                   facilitySectionFields.healthcareProfessionalIds)
     )
 }
 
