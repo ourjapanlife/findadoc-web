@@ -43,13 +43,13 @@ async function queryFacilities(): Promise<Facility[]> {
             } satisfies FacilitySearchFilters
         }
 
-        const result = await graphQLClientRequestWithRetry<Query['facilities']>(
+        const result = await graphQLClientRequestWithRetry<Query>(
             gqlClient.request.bind(gqlClient),
             searchFacilitiesQuery,
             searchFacilitiesData
         )
 
-        return result.data ?? []
+        return result.data?.facilities?.nodes ?? []
     } catch (error) {
         console.error(`Error getting facilities for dropdown: ${JSON.stringify(error)}`)
         // eslint-disable-next-line no-alert
@@ -60,13 +60,16 @@ async function queryFacilities(): Promise<Facility[]> {
 
 const searchFacilitiesQuery = gql`query QueryFacilities($filters: FacilitySearchFilters!) {
     facilities(filters: $filters) {
-      id
-      contact {
-        address {
-          cityJa
-          cityEn
+      nodes {
+        id
+        contact {
+          address {
+            cityJa
+            cityEn
+          }
         }
       }
+      totalCount
     }
   }
   `

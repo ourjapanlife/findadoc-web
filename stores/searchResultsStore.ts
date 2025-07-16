@@ -100,13 +100,14 @@ Promise<HealthcareProfessional[]> {
             } satisfies HealthcareProfessionalSearchFilters
         }
 
+        // *** MODIFICA EFFETTUATA QUI per queryProfessionals ***
         const serverResponse = await graphQLClientRequestWithRetry<Query['healthcareProfessionals']>(
             gqlClient.request.bind(gqlClient),
             searchProfessionalsQuery,
             searchProfessionalsData
         )
 
-        const professionalsSearchResult = serverResponse?.data ?? []
+        const professionalsSearchResult = serverResponse?.data?.nodes ?? []
         return professionalsSearchResult
     } catch (error) {
         console.error(`Error getting professionals: ${JSON.stringify(error)}`)
@@ -140,7 +141,7 @@ async function queryFacilities(healthcareProfessionalIds: string[], searchCity?:
             searchFacilitiesData
         )
 
-        const facilitiesSearchResults = serverResponse?.data ?? []
+        const facilitiesSearchResults = serverResponse?.data?.nodes ?? []
 
         //filter the search results by location if a location is selected
         const locationFilteredSearchResults = searchCity
@@ -159,6 +160,7 @@ async function queryFacilities(healthcareProfessionalIds: string[], searchCity?:
 
 const searchProfessionalsQuery = gql`query searchHealthcareProfessionals($filters: HealthcareProfessionalSearchFilters!) {
     healthcareProfessionals(filters: $filters) {
+      nodes {
         id
         names {
             lastName
@@ -174,34 +176,39 @@ const searchProfessionalsQuery = gql`query searchHealthcareProfessionals($filter
         additionalInfoForPatients
         createdDate
         updatedDate
+      }
+      totalCount
     }
 }`
 
 const searchFacilitiesQuery = gql`query QueryFacilities($filters: FacilitySearchFilters!) {
     facilities(filters: $filters) {
-      id
-      nameEn
-      nameJa
-      mapLatitude
-      mapLongitude
-      healthcareProfessionalIds
-      contact {
-        address {
-          addressLine1En
-          addressLine2En
-          addressLine1Ja
-          addressLine2Ja
-          cityJa
-          cityEn
+      nodes {
+        id
+        nameEn
+        nameJa
+        mapLatitude
+        mapLongitude
+        healthcareProfessionalIds
+        contact {
+          address {
+            addressLine1En
+            addressLine2En
+            addressLine1Ja
+            addressLine2Ja
+            cityJa
+            cityEn
             prefectureJa
             prefectureEn
             postalCode
+          }
+          email
+          googleMapsUrl
+          phone
+          website
         }
-        email
-        googleMapsUrl
-        phone
-        website
       }
+      totalCount
     }
   }
   `
