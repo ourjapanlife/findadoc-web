@@ -40,8 +40,10 @@ export const useModerationSubmissionsStore = defineStore(
         = ref(SelectedSubmissionListViewTab.ForReview)
 
         const totalSubmissionsCount: Ref<number> = ref(0)
-        const currentPage: Ref<number> = ref(1)
-        const itemsPerPage: Ref<number> = ref(20)
+        const currentOffset: Ref<number> = ref(0)
+        const itemsPerPage: Ref<number> = ref(25)
+        const hasNextPage = computed(() => currentOffset.value + itemsPerPage.value < totalSubmissionsCount.value)
+        const hasPrevPage = computed(() => currentOffset.value > 0)
 
         function setUpdatingSubmissionFromTopBarAndExiting(newValue: boolean) {
             updatingSubmissionFromTopBarAndExiting.value = newValue
@@ -64,18 +66,16 @@ export const useModerationSubmissionsStore = defineStore(
         }
 
         async function getSubmissions() {
-            const calculatedOffset = (currentPage.value - 1) * itemsPerPage.value
+            const calculatedOffset = currentOffset.value
             const calculatedLimit = itemsPerPage.value
             const { nodes, totalCount } = await querySubmissions(calculatedOffset, calculatedLimit)
             submissionsData.value = nodes
             totalSubmissionsCount.value = totalCount
         }
 
-        function setCurrentPage(page: number) {
-            if (currentPage.value !== page) {
-                currentPage.value = page
-                getSubmissions()
-            }
+        function setOffset(newOffset: number) {
+            currentOffset.value = newOffset
+            getSubmissions()
         }
 
         function setSelectedModerationListViewChosen(selectedOption: SelectedModerationListView) {
@@ -166,7 +166,12 @@ export const useModerationSubmissionsStore = defineStore(
             return updateSubmission(facilityInputVariables)
         }
 
-        return { getSubmissions,
+        function setItemsPerPage(newLimit: number) {
+            itemsPerPage.value = newLimit
+        }
+
+        return {
+            getSubmissions,
             submissionsData,
             filterSubmissionByStatus,
             filteredSubmissionDataForListComponent,
@@ -191,9 +196,13 @@ export const useModerationSubmissionsStore = defineStore(
             approveSubmission,
             rejectSubmission,
             totalSubmissionsCount,
-            currentPage,
+            currentOffset,
             itemsPerPage,
-            setCurrentPage }
+            setOffset,
+            hasNextPage,
+            hasPrevPage,
+            setItemsPerPage
+        }
     }
 )
 

@@ -31,8 +31,10 @@ export const useHealthcareProfessionalsStore = defineStore(
         const selectedHealthcareProfessionalId: Ref<string> = ref('')
         const selectedHealthcareProfessionalData: Ref<HealthcareProfessional | undefined> = ref()
         const totalHealthcareProfessionalsCount: Ref<number> = ref(0)
-        const currentPage: Ref<number> = ref(1)
-        const itemsPerPage: Ref<number> = ref(20)
+        const currentOffset: Ref<number> = ref(0)
+        const itemsPerPage: Ref<number> = ref(25)
+        const hasNextPage = computed(() => currentOffset.value + itemsPerPage.value < totalHealthcareProfessionalsCount.value)
+        const hasPrevPage = computed(() => currentOffset.value > 0)
         const healthcareProfessionalSectionFields = reactive<HealthcareProfessional>({
             __typename: 'HealthcareProfessional', // Optional if you're working with GraphQL
             acceptedInsurance: [],
@@ -100,18 +102,16 @@ export const useHealthcareProfessionalsStore = defineStore(
         }
 
         async function getHealthcareProfessionals() {
-            const calculatedOffset = (currentPage.value - 1) * itemsPerPage.value
+            const calculatedOffset = (currentOffset.value)
             const calculatedLimit = itemsPerPage.value
             const { nodes, totalCount } = await queryHealthcareProfessionals(calculatedOffset, calculatedLimit)
             healthcareProfessionalsData.value = nodes
             totalHealthcareProfessionalsCount.value = totalCount
         }
 
-        function setCurrentPage(page: number) {
-            if (currentPage.value !== page) {
-                currentPage.value = page
-                getHealthcareProfessionals()
-            }
+        function setOffset(newOffset: number) {
+            currentOffset.value = newOffset
+            getHealthcareProfessionals()
         }
 
         async function updateHealthcareProfessional():
@@ -313,6 +313,10 @@ export const useHealthcareProfessionalsStore = defineStore(
             return nameFromChosenLocaleDisplay ? nameFromChosenLocaleDisplay : healthcareProfessional.names[0]
         }
 
+        function setItemsPerPage(newLimit: number) {
+            itemsPerPage.value = newLimit
+        }
+
         return {
             getHealthcareProfessionals,
             healthcareProfessionalsData,
@@ -330,9 +334,12 @@ export const useHealthcareProfessionalsStore = defineStore(
             resetCreateHealthcareProfessionalFields,
             resetHealthcareProfessionalSectionFields,
             totalHealthcareProfessionalsCount,
-            currentPage,
+            currentOffset,
             itemsPerPage,
-            setCurrentPage
+            setOffset,
+            hasNextPage,
+            hasPrevPage,
+            setItemsPerPage
         }
     }
 )

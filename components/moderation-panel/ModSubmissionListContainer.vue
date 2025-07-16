@@ -35,15 +35,14 @@
                         :to="`/moderation/edit-submission/${submission.id}`"
                         class="grid grid-cols-subgrid col-span-4 p-1 hover:bg-primary"
                     >
-                        <span class="text-skip">
-                            {{ getGlobalRowNumber(modSubmissionsListStore.currentPage,
-                                                  modSubmissionsListStore.itemsPerPage, index) }}
+                        <span>
+                            {{ getGlobalRowNumber(modSubmissionsListStore.currentOffset, index) }}
                         </span>
-                        <span class="text-skip">
+                        <span>
                             {{ submission.healthcareProfessionalName || t("modPanelSubmissionList.facilityNameUnknown") }}
                         </span>
-                        <span class="text-skip">{{ convertDateToLocalTime(submission.updatedDate) }}</span>
-                        <span class="text-skip">{{ convertDateToLocalTime(submission.createdDate) }}</span>
+                        <span>{{ convertDateToLocalTime(submission.updatedDate) }}</span>
+                        <span>{{ convertDateToLocalTime(submission.createdDate) }}</span>
                     </NuxtLink>
                 </div>
             </div>
@@ -66,14 +65,14 @@
                         :to="`/moderation/edit-facility/${facility.id}`"
                         class="grid grid-cols-subgrid col-span-4 p-1 hover:bg-primary"
                     >
-                        <span class="text-skip">
-                            {{ getGlobalRowNumber(facilitiesStore.currentPage, facilitiesStore.itemsPerPage, index) }}
+                        <span>
+                            {{ getGlobalRowNumber(facilitiesStore.currentOffset, index) }}
                         </span>
-                        <span class="text-skip">
+                        <span>
                             {{ facility?.nameEn }}
                         </span>
-                        <span class="text-skip">{{ convertDateToLocalTime(facility.updatedDate) }}</span>
-                        <span class="text-skip">{{ convertDateToLocalTime(facility.createdDate) }}</span>
+                        <span>{{ convertDateToLocalTime(facility.updatedDate) }}</span>
+                        <span>{{ convertDateToLocalTime(facility.createdDate) }}</span>
                     </NuxtLink>
                 </div>
             </div>
@@ -96,15 +95,14 @@
                         :to="`/moderation/edit-healthcare-professional/${healthcareProfessional.id}`"
                         class="grid grid-cols-subgrid col-span-4 p-1 hover:bg-primary"
                     >
-                        <span class="text-skip">
-                            {{ getGlobalRowNumber(healthcareProfessionalsStore.currentPage,
-                                                  healthcareProfessionalsStore.itemsPerPage, index) }}
+                        <span>
+                            {{ getGlobalRowNumber(healthcareProfessionalsStore.currentOffset, index) }}
                         </span>
-                        <span class="text-skip">
+                        <span>
                             {{ healthcareProfessional.names[0].firstName }} {{ healthcareProfessional.names[0].lastName }}
                         </span>
-                        <span class="text-skip">{{ convertDateToLocalTime(healthcareProfessional.updatedDate) }}</span>
-                        <span class="text-skip">{{ convertDateToLocalTime(healthcareProfessional.createdDate) }}</span>
+                        <span>{{ convertDateToLocalTime(healthcareProfessional.updatedDate) }}</span>
+                        <span>{{ convertDateToLocalTime(healthcareProfessional.createdDate) }}</span>
                     </NuxtLink>
                 </div>
             </div>
@@ -114,28 +112,52 @@
         </div>
     </div>
 
-    <div class="w-full flex justify-center mt-4">
+    <div class="w-full flex justify-between items-center mt-4">
+        <div class="flex items-center mr-4">
+            <label
+                for="items-per-page-select"
+                class="text-sm text-gray-700 mr-2"
+            >{{ $t('modSubmissionListContainer.resultsPerPage') }}
+            </label>
+            <select
+                id="items-per-page-select"
+                :value="getCurrentItemsPerPage()"
+                class="border border-gray-300 rounded px-2 py-1 text-sm bg-white focus:ring-primary focus:border-primary"
+                @change="handleItemsPerPageChange"
+            >
+                <option value="10">
+                    10
+                </option>
+                <option value="25">
+                    25
+                </option>
+                <option value="50">
+                    50
+                </option>
+            </select>
+        </div>
+
         <Pagination
             v-if="modSubmissionsListStore.selectedModerationListViewChosen === SelectedModerationListView.Submissions"
-            :current-page="modSubmissionsListStore.currentPage"
+            :current-offset="modSubmissionsListStore.currentOffset"
             :total-items="modSubmissionsListStore.totalSubmissionsCount"
             :items-per-page="modSubmissionsListStore.itemsPerPage"
-            @update:current-page="modSubmissionsListStore.setCurrentPage"
+            @update:offset="modSubmissionsListStore.setOffset"
         />
         <Pagination
             v-else-if="modSubmissionsListStore.selectedModerationListViewChosen === SelectedModerationListView.Facilities"
-            :current-page="facilitiesStore.currentPage"
+            :current-offset="facilitiesStore.currentOffset"
             :total-items="facilitiesStore.totalFacilitiesCount"
             :items-per-page="facilitiesStore.itemsPerPage"
-            @update:current-page="facilitiesStore.setCurrentPage"
+            @update:offset="facilitiesStore.setOffset"
         />
         <Pagination
             v-else-if="modSubmissionsListStore.selectedModerationListViewChosen
                 === SelectedModerationListView.HealthcareProfessionals"
-            :current-page="healthcareProfessionalsStore.currentPage"
+            :current-offset="healthcareProfessionalsStore.currentOffset"
             :total-items="healthcareProfessionalsStore.totalHealthcareProfessionalsCount"
             :items-per-page="healthcareProfessionalsStore.itemsPerPage"
-            @update:current-page="healthcareProfessionalsStore.setCurrentPage"
+            @update:offset="healthcareProfessionalsStore.setOffset"
         />
     </div>
 </template>
@@ -176,8 +198,42 @@ const handleClickToSubmissionForm = (id: string) => {
     modSubmissionsListStore.selectedSubmissionId = id
 }
 
-function getGlobalRowNumber(page: number, perPage: number, index: number): number {
-    return (page - 1) * perPage + index + 1
+function getGlobalRowNumber(offset: number, index: number): number {
+    return offset + index + 1
+}
+
+function getCurrentItemsPerPage(): number {
+    switch (modSubmissionsListStore.selectedModerationListViewChosen) {
+        case SelectedModerationListView.Submissions:
+            return modSubmissionsListStore.itemsPerPage
+        case SelectedModerationListView.Facilities:
+            return facilitiesStore.itemsPerPage
+        case SelectedModerationListView.HealthcareProfessionals:
+            return healthcareProfessionalsStore.itemsPerPage
+        default:
+            return 25 // Default fallback
+    }
+}
+
+async function handleItemsPerPageChange(event: Event) {
+    const newItemsPerPage = Number((event.target as HTMLSelectElement).value)
+    switch (modSubmissionsListStore.selectedModerationListViewChosen) {
+        case SelectedModerationListView.Submissions:
+            modSubmissionsListStore.setItemsPerPage(newItemsPerPage)
+            modSubmissionsListStore.setOffset(0)
+            await modSubmissionsListStore.getSubmissions()
+            break
+        case SelectedModerationListView.Facilities:
+            facilitiesStore.setItemsPerPage(newItemsPerPage)
+            facilitiesStore.setOffset(0)
+            await facilitiesStore.getFacilities()
+            break
+        case SelectedModerationListView.HealthcareProfessionals:
+            healthcareProfessionalsStore.setItemsPerPage(newItemsPerPage)
+            healthcareProfessionalsStore.setOffset(0)
+            await healthcareProfessionalsStore.getHealthcareProfessionals()
+            break
+    }
 }
 </script>
 

@@ -364,5 +364,12 @@
   },
   "modInputField": {
     "optional": "Optional"
+  },
+  "pagination": {
+    "of": "of",
+    "results": "results"
+  },
+  "modSubmissionListContainer": {
+    "resultsPerPage": "Results per page"
   }
 }

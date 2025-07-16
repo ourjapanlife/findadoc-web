@@ -56,8 +56,10 @@ export const useFacilitiesStore = defineStore('facilitiesStore', () => {
     const selectedFacilityId: Ref<string> = ref('')
     const selectedFacilityData: Ref<Facility | undefined> = ref()
     const totalFacilitiesCount: Ref<number> = ref(0)
-    const currentPage: Ref<number> = ref(1)
-    const itemsPerPage: Ref<number> = ref(20)
+    const currentOffset: Ref<number> = ref(0)
+    const itemsPerPage: Ref<number> = ref(25)
+    const hasNextPage = computed(() => currentOffset.value + itemsPerPage.value < totalFacilitiesCount.value)
+    const hasPrevPage = computed(() => currentOffset.value > 0)
     // This reactive object is used to share data changes of the updated facility or submission across the components
     const facilitySectionFields = reactive({
         // contactFields
@@ -176,7 +178,7 @@ export const useFacilitiesStore = defineStore('facilitiesStore', () => {
     }
 
     async function getFacilities() {
-        const calculatedOffset = (currentPage.value - 1) * itemsPerPage.value
+        const calculatedOffset = currentOffset.value
         const calculatedLimit = itemsPerPage.value
         const { nodes, totalCount } = await queryFacilities(
             calculatedOffset,
@@ -186,11 +188,9 @@ export const useFacilitiesStore = defineStore('facilitiesStore', () => {
         totalFacilitiesCount.value = totalCount
     }
 
-    function setCurrentPage(page: number) {
-        if (currentPage.value !== page) {
-            currentPage.value = page
-            getFacilities()
-        }
+    function setOffset(newOffset: number) {
+        currentOffset.value = newOffset
+        getFacilities()
     }
 
     async function createFacility(): Promise<ServerResponse<Facility>> {
@@ -357,6 +357,10 @@ export const useFacilitiesStore = defineStore('facilitiesStore', () => {
         return serverResponse
     }
 
+    function setItemsPerPage(newLimit: number) {
+        itemsPerPage.value = newLimit
+    }
+
     return {
         getFacilities,
         createFacility,
@@ -373,9 +377,12 @@ export const useFacilitiesStore = defineStore('facilitiesStore', () => {
         healthProfessionalsRelationsForDisplay,
         resetFacilitySectionFields,
         resetCreateFacilityFields,
-        currentPage,
+        currentOffset,
         itemsPerPage,
-        setCurrentPage
+        setOffset,
+        hasNextPage,
+        hasPrevPage,
+        setItemsPerPage
     }
 })
 
