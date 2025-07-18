@@ -12,6 +12,7 @@ import type { DeleteResult, Facility,
 import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql'
 import type { ServerResponse } from '~/typedefs/serverResponse'
 import { arraysAreEqual } from '~/utils/arrayUtils'
+import { getChangedFacilityFieldsForUpdate } from '~/utils/facilityUtils'
 
 export const useFacilitiesStore = defineStore(
     'facilitiesStore',
@@ -173,36 +174,14 @@ export const useFacilitiesStore = defineStore(
         }
 
         async function updateFacility(): Promise<ServerResponse<Facility>> {
+            const facilitySectionFieldsBeforeMutation = selectedFacilityData.value!
             const healthProfessionalRelationsBeforeMutation = facilitySectionFields.healthProfessionalsRelations
+
+            const updatedFields = getChangedFacilityFieldsForUpdate(facilitySectionFields, facilitySectionFieldsBeforeMutation)
 
             const updateFacilityInput: MutationUpdateFacilityArgs = {
                 id: selectedFacilityId.value,
-                input: {
-                    contact: {
-                        address: {
-                            addressLine1En: facilitySectionFields.addressLine1En,
-                            addressLine1Ja: facilitySectionFields.addressLine1Ja,
-                            addressLine2En: facilitySectionFields.addressLine2En,
-                            addressLine2Ja: facilitySectionFields.addressLine2Ja,
-                            cityEn: facilitySectionFields.cityEn,
-                            cityJa: facilitySectionFields.cityJa,
-                            postalCode: facilitySectionFields.postalCode,
-                            prefectureEn: facilitySectionFields.prefectureEn,
-                            prefectureJa: facilitySectionFields.prefectureJa
-                        },
-                        email: facilitySectionFields.email,
-                        googleMapsUrl: facilitySectionFields.googlemapsURL,
-                        phone: facilitySectionFields.phone,
-                        website: facilitySectionFields.website
-                    },
-                    healthcareProfessionalIds: facilitySectionFields.healthProfessionalsRelations.length > 0
-                        ? facilitySectionFields.healthProfessionalsRelations
-                        : undefined,
-                    mapLatitude: parseFloat(facilitySectionFields.mapLatitude),
-                    mapLongitude: parseFloat(facilitySectionFields.mapLongitude),
-                    nameEn: facilitySectionFields.nameEn,
-                    nameJa: facilitySectionFields.nameJa
-                }
+                input: updatedFields
             }
 
             const serverResponse = await graphQLClientRequestWithRetry<Mutation['updateFacility']>(
@@ -212,13 +191,18 @@ export const useFacilitiesStore = defineStore(
             )
 
             if (!serverResponse.errors?.length) {
-                selectedFacilityData.value = serverResponse.data
+                if (selectedFacilityData.value === facilitySectionFieldsBeforeMutation) {
+                    selectedFacilityData.value = serverResponse.data
+                }
+
                 initializeFacilitySectionValues(serverResponse.data)
 
-                if (arraysAreEqual(
-                    facilitySectionFields.healthProfessionalsRelations,
-                    healthProfessionalRelationsBeforeMutation
-                )) {
+                if (
+                    arraysAreEqual(
+                        facilitySectionFields.healthProfessionalsRelations,
+                        healthProfessionalRelationsBeforeMutation
+                    )
+                ) {
                     facilitySectionFields.healthProfessionalsRelations = []
                 }
             }
