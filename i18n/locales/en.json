@@ -74,6 +74,14 @@
     "optional": "optional",
     "otherNotes": "Other notes"
   },
+  "settingsPage": {
+    "heading": "Settings",
+    "subheading": "Manage your account settings",
+    "firstName": "Display Name",
+    "healthcareProfessionalName": "Profile Image",
+    "updateButton": "Update Settings"
+  },
+
   "searchBar": {
     "selectSpecialty": "Select a specialty...",
     "selectLocation": "Select a location...",
