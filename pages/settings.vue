@@ -8,15 +8,6 @@
   
         <div class="bg-secondary-bg rounded-lg shadow p-6 mb-8">
           <div class="mb-6">
-            <h2 class="text-xl font-semibold text-primary mb-3">{{ t('settingsPage.firstName') }}</h2>
-            <input
-              type="text"
-              v-model="displayName"
-              class="w-full px-4 py-3 border border-primary-text-muted rounded-lg bg-secondary-bg text-primary-text placeholder-primary-text-muted"
-            />
-          </div>
-  
-          <div class="mb-6">
             <h2 class="text-xl font-semibold text-primary mb-3">{{ t('settingsPage.healthcareProfessionalName') }}</h2>
             <div class="flex items-center gap-6">
               <div class="w-20 h-20 rounded-full border-2 border-primary-text-muted overflow-hidden flex items-center justify-center">
@@ -28,6 +19,15 @@
                 />
               </div>
             </div>
+          </div>
+  
+          <div class="mb-6">
+            <h2 class="text-xl font-semibold text-primary mb-3">{{ t('settingsPage.firstName') }}</h2>
+            <input
+              type="text"
+              v-model="displayName"
+              class="w-full px-4 py-3 border border-primary-text-muted rounded-lg bg-secondary-bg text-primary-text placeholder-primary-text-muted"
+            />
           </div>
   
           <div class="flex justify-end">
