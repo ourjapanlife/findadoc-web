@@ -195,14 +195,12 @@ function setSelectedId() {
 const facilityHasUnsavedChanges = (): boolean => {
     if (!originalFacilityRefsValue.value) return false
 
-    const facilityBeforeChange = originalFacilityRefsValue.value
-    const facilitySections = facilitiesStore.facilitySectionFields
+    const updatedFields = getChangedFacilityFieldsForUpdate(
+        facilitiesStore.facilitySectionFields,
+        originalFacilityRefsValue.value
+    )
 
-    const updatedFields = getChangedFacilityFieldsForUpdate(facilitySections, facilityBeforeChange)
-
-    const areThereUnsavedFacilityChanges = Object.keys(updatedFields).length > 0
-
-    return areThereUnsavedFacilityChanges
+    return Object.keys(updatedFields).length > 0
 }
 
 const healthcareProfessionalHasUnsavedChanges = () => {

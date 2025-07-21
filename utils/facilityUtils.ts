@@ -50,20 +50,6 @@ export function getChangedFacilityFieldsForUpdate(
 
     const originalContactInput = mapFacilityContactToInput(original.contact as Contact)
 
-    const updatedContact: ContactInput = {
-        phone: current.phone,
-        googleMapsUrl: current.googlemapsURL,
-        address: {} as PhysicalAddressInput
-    }
-
-    if (current.email !== originalContactInput.email) {
-        updatedContact.email = current.email
-    }
-
-    if (current.website !== originalContactInput.website) {
-        updatedContact.website = current.website
-    }
-
     const requiredAddressKeys: (keyof PhysicalAddressInput)[] = [
         'postalCode', 'prefectureEn', 'cityEn', 'addressLine1En',
         'prefectureJa', 'cityJa', 'addressLine1Ja',
@@ -75,8 +61,6 @@ export function getChangedFacilityFieldsForUpdate(
         updatedAddress[key] = current[key] ?? ''
     }
 
-    updatedContact.address = updatedAddress as PhysicalAddressInput
-
     const contactChanged
     = current.phone !== originalContactInput.phone
       || current.googlemapsURL !== originalContactInput.googleMapsUrl
@@ -87,6 +71,20 @@ export function getChangedFacilityFieldsForUpdate(
       )
 
     if (contactChanged) {
+        const updatedContact: ContactInput = {
+            phone: current.phone,
+            googleMapsUrl: current.googlemapsURL,
+            address: updatedAddress as PhysicalAddressInput
+        }
+
+        if (current.email !== originalContactInput.email) {
+            updatedContact.email = current.email
+        }
+
+        if (current.website !== originalContactInput.website) {
+            updatedContact.website = current.website
+        }
+
         updatedFields.contact = updatedContact
     }
 
