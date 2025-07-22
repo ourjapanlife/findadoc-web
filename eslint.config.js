@@ -5,6 +5,8 @@ import stylistic from '@stylistic/eslint-plugin'
 import pluginCypress from 'eslint-plugin-cypress/flat'
 import pluginVitest from '@vitest/eslint-plugin'
 import pluginVue from 'eslint-plugin-vue'
+import vueParser from 'vue-eslint-parser'
+import noForbiddenColor from './eslint-rules/no-forbidden-color.js'
 import withNuxt from './.nuxt/eslint.config.mjs'
 
 export default withNuxt(
@@ -94,6 +96,33 @@ export default withNuxt(
         rules: {
             'vue/multi-word-component-names': 'off',
             'vue/html-indent': ['error', 4]
+        }
+    },
+    {
+        files: ['**/*.vue'],
+        languageOptions: {
+            parser: vueParser,
+            parserOptions: {
+                parser: tseslint.parser,
+                project: true,
+                ecmaVersion: 'latest',
+                sourceType: 'module',
+                extraFileExtensions: ['.vue']
+            }
+        },
+        plugins: {
+            '@typescript-eslint': tseslint.plugin,
+            custom: { rules: { 'no-forbidden-color': noForbiddenColor } } // custom-plugin
+        },
+        rules: {
+            'custom/no-forbidden-color': ['error', {
+                forbiddenWords: [
+                    'gray', 'red', 'blue', 'green', 'yellow', 'indigo', 'purple', 'pink', 'orange',
+                    'teal', 'cyan', 'emerald', 'fuchsia', 'rose', 'sky', 'lime', 'violet',
+                    'zinc', 'stone', 'neutral', 'slate', 'black', 'white'
+                ]
+            }]
+            // ... altre regole vue/*
         }
     },
     // Linting for Cypress (https://www.npmjs.com/package/eslint-plugin-cypress)

@@ -70,7 +70,7 @@
                             :href="addressLink"
                             target="_blank"
                             rel="noopener noreferrer"
-                            class="underline text-blue"
+                            class="underline text-hyperlink"
                         >
                             <div>{{ addressLine1 }}</div>
                             <div v-if="addressLine2">
@@ -91,7 +91,7 @@
                         :href="website"
                         target="_blank"
                         rel="noopener noreferrer"
-                        class="underline text-blue"
+                        class="underline text-hyperlink"
                     >{{ website }}</a>
                 </div>
                 <div class="phone flex my-4">
@@ -106,7 +106,7 @@
                         :href="`tel:${phone}`"
                         target="_blank"
                         rel="noopener noreferrer"
-                        class="underline text-blue"
+                        class="underline text-hyperlink"
                     >{{ phone }}</a>
                 </div>
                 <div
@@ -123,7 +123,7 @@
                         :href="`mailto:${email}`"
                         target="_blank"
                         rel="noopener noreferrer"
-                        class="underline text-blue"
+                        class="underline text-hyperlink"
                     >{{ email }}</a>
                 </div>
                 <div class="mr-3 mb-1 flex flex-row-reverse text-sm text-primary-text-muted">

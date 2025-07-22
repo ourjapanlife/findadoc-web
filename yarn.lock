@@ -8268,6 +8268,7 @@ __metadata:
     vite: "npm:^5.3.5"
     vitest: "npm:^2.1.3"
     vue: "npm:^3.4.35"
+    vue-eslint-parser: "npm:^10.2.0"
     vue-gtag: "npm:^2.0.1"
     vue-router: "npm:^4.4.2"
     vue-server-renderer: "npm:^2.7.16"
@@ -15662,6 +15663,22 @@ __metadata:
   version: 0.1.0
   resolution: "vue-devtools-stub@npm:0.1.0"
   checksum: 10/a0b674b8758ba1ba0877ead8d55362906f2f29e79b0f2bd8149180284ae068920e1849fbb0d06bbc61fb8c525f61af047b88bef2f4718015868b57b1bcf6a45b
+  languageName: node
+  linkType: hard
+
+"vue-eslint-parser@npm:^10.2.0":
+  version: 10.2.0
+  resolution: "vue-eslint-parser@npm:10.2.0"
+  dependencies:
+    debug: "npm:^4.4.0"
+    eslint-scope: "npm:^8.2.0"
+    eslint-visitor-keys: "npm:^4.2.0"
+    espree: "npm:^10.3.0"
+    esquery: "npm:^1.6.0"
+    semver: "npm:^7.6.3"
+  peerDependencies:
+    eslint: ^8.57.0 || ^9.0.0
+  checksum: 10/53673fd5df42e79e834809ce552f53972f2e03bae08ef7cc66e679e88e9ad3b939ac12f9332ed33e14c953649616ca17698169719670b6a752d219685015aa87
   languageName: node
   linkType: hard
 
