@@ -239,7 +239,7 @@
                     </li>
                 </ol>
                 <NoteInputField
-                    v-model="healthcareProfessionalsStore.healthcareProfessionalSectionFields.additionalInfoForPatients"
+                    v-model="healthcareProfessionalsStore.healthcareProfessionalSectionFields.additionalInfoForPatients as string"
                     :label="t('modHealthcareProfessionalSection.labelAdditionalNotesForPatients')"
                     :placeholder="t('modHealthcareProfessionalSection.placeholderAdditionalNotesForPatients')"
                     :required="false"
@@ -345,7 +345,7 @@ const handleCloseAddingNewLocalizedName = () => {
 // Opens the locale being added name inputs
 const handleOpenAddNewNameWithReset = () => {
     // Allows for the inputs to completely transition before resetting the fields
-    setTimeout(() => resetNameLocaleInputs, 300)
+    resetNameLocaleInputs()
     addingLocaleName.value = true
     // Makes sure both values cannot be true
     editingLocaleName.value = false
@@ -456,6 +456,7 @@ const handleDeleteExistingName = () => {
 }
 
 const handleAddLocalizedName = () => {
+    resetNameLocaleInputs()
     const localizedNameToAdd: LocalizedNameInput = {
         firstName: nameLocaleInputs.firstName,
         lastName: nameLocaleInputs.lastName,
