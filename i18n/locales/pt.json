@@ -375,12 +375,21 @@
     "of": "of",
     "results": "results"
   },
-  "modSubmissionListContainer": {
+  "modListContainer": {
     "resultsPerPage": "Results per page"
   },
   "errorPage": {
     "title": "404 - Diagnóstico: Página não encontrada",
     "description": "Esta página não passou no seu exame de saúde. Vamos levá-lo a uma página saudável!",
     "returnHome": "Voltar ao início"
+  },
+  "modListContainerItem": {
+    "newSubmission": "New",
+    "underReviewSubmission": "Under Review",
+    "approvedSubmission": "Approved",
+    "rejectedSubmission": "Rejected",
+    "review": "Review",
+    "createdDate": "Created on",
+    "updatedDate": "Updated last"
   }
 }
