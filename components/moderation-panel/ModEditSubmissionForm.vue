@@ -648,12 +648,6 @@ async function submitCompletedForm(e: Event) {
         return
     }
 
-    if (selectedSubmissionData && !selectedSubmissionData.isUnderReview) {
-        toast.info(t('modSubmissionForm.infoMessageUpdateNeeded'))
-        await resetModalRefs()
-        return
-    }
-
     const isValidFacility = validateFacilityFields()
     const isValidHealthcareProfessional = validateHealthcareProfessionalFields()
     const hasEnglishName = validateHealthcareProfessionalEnglishName()
