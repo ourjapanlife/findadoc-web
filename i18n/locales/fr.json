@@ -374,5 +374,14 @@
     "title": "404 - Diagnostic : Page non trouvée",
     "description": "Cette page n'a pas réussi son examen de santé. Dirigeons-vous vers une page saine à la place !",
     "returnHome": "Retour à l'accueil"
+  },
+  "modListContainerItem": {
+    "newSubmission": "New",
+    "underReviewSubmission": "Under Review",
+    "approvedSubmission": "Approved",
+    "rejectedSubmission": "Rejected",
+    "review": "Review",
+    "createdDate": "Created on",
+    "updatedDate": "Updated last"
   }
 }

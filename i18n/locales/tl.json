@@ -374,5 +374,14 @@
     "title": "404 - Diagnosis: Hindi Nahanap ang Pahina",
     "description": "Hindi nakapasa ang pahinang ito sa wellness exam. Dalhin ka namin sa malusog na pahina!",
     "returnHome": "Bumalik sa home"
+  },
+  "modListContainerItem": {
+    "newSubmission": "New",
+    "underReviewSubmission": "Under Review",
+    "approvedSubmission": "Approved",
+    "rejectedSubmission": "Rejected",
+    "review": "Review",
+    "createdDate": "Created on",
+    "updatedDate": "Updated last"
   }
 }

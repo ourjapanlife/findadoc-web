@@ -380,7 +380,7 @@
     "approvedSubmission": "Approved",
     "rejectedSubmission": "Rejected",
     "review": "Review",
-    "createdDate": "Created Date",
-    "updatedDate": "Updated Date"
+    "createdDate": "Created on",
+    "updatedDate": "Updated last"
   }
 }
