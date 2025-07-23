@@ -169,7 +169,8 @@
     "facilityCreatedSuccessfully": "Einrichtung erfolgreich erstellt.",
     "heathcareProfessionalCreatedSuccessfully": "Gesundheitsfachkraft erfolgreich erstellt.",
     "unsavedChangesMessage": "Die Seite wird verlassen, ohne das Ihr Eintrag gespeichert wird. Alle nicht gespeicherten Daten gehen verloren.",
-    "healthcareProfessionalEnglishNameRequired": "Healthcare Professional must have an English name"
+    "healthcareProfessionalEnglishNameRequired": "Healthcare Professional must have an English name",
+    "hasEmptyFields": "All fields are required for creating a healthcare professional"
   },
   "modDashboardLeftNav": {
     "facilities": "Einrichtungen",
