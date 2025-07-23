@@ -315,6 +315,8 @@ const nameLocaleInputs: LocalizedNameInput = reactive(
         middleName: '',
         locale: Locale.Und }
 )
+// This keeps track of the original locale of the name being edited for validation
+const originalNameLocale: Ref<Locale> = ref(Locale.Und)
 
 // Sets the locale being edited name value
 const setEditingLocaleName = (newValue: boolean) => {
@@ -355,6 +357,7 @@ const autofillNameLocaleInputWithChosenHealthcareProfessional = (localizedNameIn
     nameLocaleInputs.lastName = localizedNameInput.lastName
     nameLocaleInputs.middleName = localizedNameInput.middleName || ''
     nameLocaleInputs.locale = localizedNameInput.locale
+    originalNameLocale.value = localizedNameInput.locale
 }
 
 //This will set the name that needs to be autofilled and move it to the zero index
@@ -393,7 +396,8 @@ const handleUpdateExistingName = () => {
     }
 
     // Checks to keep user from adding a name with same locale instead of editing
-    const existingNameForLocale = healthcareProfessionalsStore.createHealthcareProfessionalSectionFields.names
+    const existingNameForLocale = healthcareProfessionalsStore.healthcareProfessionalSectionFields.names
+        .filter(name => name.locale !== originalNameLocale.value)
         .find(name => name.locale === nameLocaleInputs.locale)
 
     // Displays message if user is trying to add a locale for name that exists and they aren't editing a healthcare professional
@@ -444,6 +448,7 @@ const handleDeleteExistingName = () => {
 }
 
 const handleAddLocalizedName = () => {
+    const originalNameLocale = nameLocaleInputs.locale
     const localizedNameToAdd: LocalizedNameInput = {
         firstName: nameLocaleInputs.firstName,
         lastName: nameLocaleInputs.lastName,
@@ -454,7 +459,7 @@ const handleAddLocalizedName = () => {
     const existingNameForLocale = checkIfHealthcareProfessionalHasAnExistingNameForLocale()
 
     // Displays message if user is trying to add a locale for name that exists and they aren't editing a healthcare professional
-    if (existingNameForLocale) {
+    if (existingNameForLocale && originalNameLocale !== nameLocaleInputs.locale) {
         toast.error(t('modHealthcareProfessionalSection.nameForLocaleAlreadyExists'))
         return
     }
