@@ -10,11 +10,6 @@
     "errorCodeMessagingNeeded": "The server error code does not have a message for the user. Please add one.",
     "genericErrorMessage": "There was an error submitting your form, please try again"
   },
-  "errorPage": {
-    "title": "404 - Diagnosis: Page Not Found",
-    "description": "This page didn't pass its wellness exam. Let's get you to a healthy page instead!",
-    "returnHome": "Return home"
-  },
   "footer": {
     "terms": "Terms",
     "privacy": "Privacy",
@@ -389,5 +384,12 @@
   },
   "modListContainer": {
     "resultsPerPage": "Results per page"
+  },
+  "settingsPage": {
+    "heading": "Settings",
+    "subheading": "Manage your account settings",
+    "displayName": "Display Name",
+    "healthcareProfessionalName": "Profile Image",
+    "updateButton": "Update Settings"
   }
 }

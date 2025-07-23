@@ -378,9 +378,9 @@
     "resultsPerPage": "Results per page"
   },
   "errorPage": {
-    "title": "404 - Diagnosis: Hindi Nahanap ang Pahina",
-    "description": "Hindi nakapasa ang pahinang ito sa wellness exam. Dalhin ka namin sa malusog na pahina!",
-    "returnHome": "Bumalik sa home"
+      "title": "404 - Diagnosis: Hindi Nahanap ang Pahina",
+      "description": "Hindi nakapasa ang pahinang ito sa wellness exam. Dalhin ka namin sa malusog na pahina!",
+      "returnHome": "Bumalik sa home"
   },
   "modListContainerItem": {
     "newSubmission": "New",
@@ -390,5 +390,12 @@
     "review": "Review",
     "createdDate": "Created on",
     "updatedDate": "Updated last"
-  }
+  },
+  "settingsPage": {
+    "heading": "Settings",
+    "subheading": "Manage your account settings",
+    "displayName": "Display Name",
+    "healthcareProfessionalName": "Profile Image",
+    "updateButton": "Update Settings"
+   }
 }
