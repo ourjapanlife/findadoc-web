@@ -76,6 +76,13 @@ const { t } = useI18n()
 
 const createFacilityOrHealthcareProfessional = async () => {
     if (moderationScreenStore.createHealthcareProfessionalScreenIsActive()) {
+        const hasEnglishName
+            = healthcareProfessionalsStore.createHealthcareProfessionalSectionFields.names.some(name => name.locale === 'en_US')
+
+        if (!hasEnglishName) {
+            toast.error(t('modCreateFacilityOrHPTopbar.healthcareProfessionalEnglishNameRequired'))
+            return
+        }
         const response = await healthcareProfessionalsStore.createHealthcareProfessional()
 
         if (response.errors?.length) {
