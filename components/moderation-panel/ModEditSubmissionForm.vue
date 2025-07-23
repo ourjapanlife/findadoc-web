@@ -470,7 +470,7 @@ function initializeSubmissionFormValues(submissionData: Submission | undefined) 
             healthcareProfessionalName: submissionData.healthcareProfessionalName ?? '',
             googleMapsUrl: submissionData.googleMapsUrl ?? '',
             spokenLanguages: submissionData.spokenLanguages ? [...submissionData.spokenLanguages] : []
-        }
+        } as Submission
 
         /**
          * Reconstruct the FacilitySubmission object from the current form field values
@@ -631,7 +631,9 @@ const formHasUnsavedChanges = () => {
     const facilityChanges = hasFacilityChanges(initialSubmission)
     const hpChanges = hasHealthcareProfessionalChanges(initialSubmission)
 
-    return facilityChanges || hpChanges || hasNotesChanges
+    const hasChanges = facilityChanges || hpChanges || hasNotesChanges
+
+    return hasChanges
 }
 
 async function submitUpdatedSubmission(e: Event) {
