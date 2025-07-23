@@ -1,5 +1,5 @@
 <template>
-    <div class="flex items-center justify-center gap-2 mt-4">
+    <div class="flex items-center justify-center gap-0 mt-4">
         <button
             :disabled="!hasPrev"
             class="w-10 h-10 flex items-center justify-center rounded text-primary disabled:opacity-30
@@ -18,7 +18,7 @@
             <SVGLeftArrow class="w-4 h-4 text-primary" />
         </button>
 
-        <span class="text-sm text-gray-700 px-4 h-10 flex items-center">
+        <span class="text-sm text-primary-700 px-4 h-10 flex items-center">
             {{ startIndex }}-{{ endIndex }} {{ $t('pagination.of') }} {{ totalItems }} {{ $t('pagination.results') }}
         </span>
 

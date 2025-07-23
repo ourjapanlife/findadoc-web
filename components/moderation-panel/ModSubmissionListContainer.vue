@@ -111,32 +111,7 @@
             {{ t("modPanelSubmissionList.noSubmissions") }}
         </div>
     </div>
-
     <div class="w-full flex justify-between items-center mt-4">
-        <div class="flex items-center mr-4">
-            <label
-                for="items-per-page-select"
-                class="text-sm text-gray-700 mr-2"
-            >{{ $t('modSubmissionListContainer.resultsPerPage') }}
-            </label>
-            <select
-                id="items-per-page-select"
-                :value="getCurrentItemsPerPage()"
-                class="border border-gray-300 rounded px-2 py-1 text-sm bg-white focus:ring-primary focus:border-primary"
-                @change="handleItemsPerPageChange"
-            >
-                <option value="10">
-                    10
-                </option>
-                <option value="25">
-                    25
-                </option>
-                <option value="50">
-                    50
-                </option>
-            </select>
-        </div>
-
         <Pagination
             v-if="modSubmissionsListStore.selectedModerationListViewChosen === SelectedModerationListView.Submissions"
             :current-offset="modSubmissionsListStore.currentOffset"
@@ -159,6 +134,30 @@
             :items-per-page="healthcareProfessionalsStore.itemsPerPage"
             @update:offset="healthcareProfessionalsStore.setOffset"
         />
+
+        <div class="flex items-center mr-4 pl-4">
+            <label
+                for="items-per-page-select"
+                class="text-sm text-primary-700 mr-2"
+            >{{ $t('modSubmissionListContainer.resultsPerPage') }}
+            </label>
+            <select
+                id="items-per-page-select"
+                :value="getCurrentItemsPerPage()"
+                class="border border-gray-300 rounded px-2 py-1 text-sm bg-white focus:ring-primary focus:border-primary"
+                @change="handleItemsPerPageChange"
+            >
+                <option value="10">
+                    10
+                </option>
+                <option value="25">
+                    25
+                </option>
+                <option value="50">
+                    50
+                </option>
+            </select>
+        </div>
     </div>
 </template>
 
