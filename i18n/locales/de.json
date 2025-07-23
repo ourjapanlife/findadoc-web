@@ -366,8 +366,15 @@
     "optional": "Optional"
   },
   "errorPage": {
-  "title": "404 - Diagnose: Seite nicht gefunden",
-  "description": "Diese Seite hat ihre Gesundheitsprüfung nicht bestanden. Lassen Sie uns Sie stattdessen zu einer gesunden Seite bringen!",
-  "returnHome": "Zur Startseite"
- }
+    "title": "404 - Diagnose: Seite nicht gefunden",
+    "description": "Diese Seite hat ihre Gesundheitsprüfung nicht bestanden. Lassen Sie uns Sie stattdessen zu einer gesunden Seite bringen!",
+    "returnHome": "Zur Startseite"
+  },
+  "settingsPage": {
+    "heading": "Settings",
+    "subheading": "Manage your account settings",
+    "firstName": "Display Name",
+    "healthcareProfessionalName": "Profile Image",
+    "updateButton": "Update Settings"
+  }
 }

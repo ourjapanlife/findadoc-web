@@ -366,8 +366,15 @@
     "optional": "Optional"
   },
   "errorPage": {
-  "title": "404 - 診断：ページが見つかりません",
-  "description": "このページは健康診断に合格しませんでした。代わりに健康なページにご案内します！",
-  "returnHome": "ホームに戻る"
- }
+    "title": "404 - 診断：ページが見つかりません",
+    "description": "このページは健康診断に合格しませんでした。代わりに健康なページにご案内します！",
+    "returnHome": "ホームに戻る"
+  },
+  "settingsPage": {
+    "heading": "Settings",
+    "subheading": "Manage your account settings",
+    "firstName": "Display Name",
+    "healthcareProfessionalName": "Profile Image",
+    "updateButton": "Update Settings"
+  }
 }
