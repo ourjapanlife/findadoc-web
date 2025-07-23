@@ -650,27 +650,32 @@ async function submitCompletedForm(e: Event) {
         return
     }
 
-    const isValidFacility = validateFacilityFields()
-    const isValidHealthcareProfessional = validateHealthcareProfessionalFields()
-    const hasEnglishName = validateHealthcareProfessionalEnglishName()
+    const faciliyAlreadyExistsInOurDatabase = currentFacilityRelations.value.length
+    const healthcareProfessionalAlreadyExistsInOurDatabase = currentExistingHealthcareProfessionals.value.length
 
     // This shows a toast and returns if the facility fields arent valid
-    if (!isValidFacility && !currentFacilityRelations.value.length) {
-        toast.error(t('modSubmissionForm.errorMessageFacilityInputsInvalid'))
-        await resetModalRefs()
-        return
+    if (!faciliyAlreadyExistsInOurDatabase) {
+        const isValidFacility = validateFacilityFields()
+        if (!isValidFacility) {
+            toast.error(t('modSubmissionForm.errorMessageFacilityInputsInvalid'))
+            await resetModalRefs()
+            return
+        }
     }
 
-    if (!isValidHealthcareProfessional && !currentExistingHealthcareProfessionals.value.length) {
-        toast.error(t('modSubmissionForm.errorMessageHealthcareInputsInvalid'))
-        await resetModalRefs()
-        return
-    }
-
-    if (!hasEnglishName) {
-        toast.error(t('modSubmissionForm.errorMessageEnglishNameRequired'))
-        await resetModalRefs()
-        return
+    if (!healthcareProfessionalAlreadyExistsInOurDatabase) {
+        const isValidHealthcareProfessional = validateHealthcareProfessionalFields()
+        if (!isValidHealthcareProfessional) {
+            toast.error(t('modSubmissionForm.errorMessageHealthcareInputsInvalid'))
+            await resetModalRefs()
+            return
+        }
+        const hasEnglishName = validateHealthcareProfessionalEnglishName()
+        if (!hasEnglishName) {
+            toast.error(t('modSubmissionForm.errorMessageEnglishNameRequired'))
+            await resetModalRefs()
+            return
+        }
     }
 
     try {
