@@ -47,10 +47,10 @@ export default {
         // 'messages' defines the error messages to be reported.
         // We use placeholders like '{{ color }}' which will be filled dynamically.
         messages: {
-            forbiddenColor: 'Color "{{ color }}" is forbidden. Use design tokens or semantic utility classes instead.',
-            forbiddenHardcodedHex: 'Hardcoded hex color "{{ color }}" in style attribute is forbidden. Use design tokens.',
-            forbiddenHardcodedRgb: 'Hardcoded RGB color "{{ color }}" in style attribute is forbidden. Use design tokens.',
-            forbiddenHardcodedHsl: 'Hardcoded HSL color "{{ color }}" in style attribute is forbidden. Use design tokens.'
+            forbiddenColor: 'Color "{{ color }}" is forbidden. Check our docs https://documentation.findadoc.jp/design/ui-ux-guides-and-rules/theme-colors.',
+            forbiddenHardcodedHex: 'Hardcoded hex color "{{ color }}" in style attribute is forbidden. Check our docs https://documentation.findadoc.jp/design/ui-ux-guides-and-rules/theme-colors.',
+            forbiddenHardcodedRgb: 'Hardcoded RGB color "{{ color }}" in style attribute is forbidden. Check our docs https://documentation.findadoc.jp/design/ui-ux-guides-and-rules/theme-colors.',
+            forbiddenHardcodedHsl: 'Hardcoded HSL color "{{ color }}" in style attribute is forbidden. Check our docs https://documentation.findadoc.jp/design/ui-ux-guides-and-rules/theme-colors.'
         }
     },
 

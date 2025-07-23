@@ -48,7 +48,6 @@
     --color-error: /* #ef4444 */ 239 68 68;
     --color-warning: /* #f59e0b */ 245 158 11;
     --color-info: /* #3b82f6 */ 59 130 246;
-    --color-hyperlink: /* #1e293b */ 30 41 59 / 1;
   }
 
   .theme-coral {
@@ -71,7 +70,6 @@
     --color-error: /* #d1523f */ 209 82 63;
     --color-warning: /* #f59e0b */ 245 158 11;
     --color-info: /* #3b82f6 */ 59 130 246;
-    --color-hyperlink: /* #1e293b */ 30 41 59 / 1;
   }
 
   .theme-violet {
@@ -94,7 +92,6 @@
     --color-error: /* #d1523f */ 209 82 63;
     --color-warning: /* #f59e0b */ 245 158 11;
     --color-info: /* #3b82f6 */ 59 130 246;
-    --color-hyperlink: /* #1e293b */ 30 41 59 / 1;
   }
 
   .theme-ocean {
@@ -117,7 +114,6 @@
     --color-error: /* #d1523f */ 209 82 63;
     --color-warning: /* #f59e0b */ 245 158 11;
     --color-info: /* #3b82f6 */ 59 130 246;
-    --color-hyperlink: /* #1e293b */ 30 41 59 / 1;
   }
 
   .theme-neon {
@@ -140,7 +136,6 @@
     --color-error: /* #525252 */ 209 82 63;
     --color-warning: /* #f59e0b */ 245 158 11;
     --color-info: /* #3b82f6 */ 59 130 246;
-    --color-hyperlink: /* #1e293b */ 30 41 59 / 1;
     }
 
     /* MARK: Accessible Themes */
@@ -168,7 +163,6 @@
   --color-error: /* #FF4500 */ 255 69 0;
   --color-warning: /* #f59e0b */ 245 158 11;
   --color-info: /* #3b82f6 */ 59 130 246;
-  --color-hyperlink: /* #1e293b */ 30 41 59 / 1;
 }
 
 /* accessible r-g color blindness friendly theme (daltonism) */
@@ -194,6 +188,5 @@
   --color-error: /* #F97316 */ 249 115 22;
   --color-warning: /* #f59e0b */ 245 158 11;
   --color-info: /* #3b82f6 */ 59 130 246;
-  --color-hyperlink: /* #1e293b */ 30 41 59 / 1;
 }
 }

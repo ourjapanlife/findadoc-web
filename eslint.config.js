@@ -122,7 +122,6 @@ export default withNuxt(
                     'zinc', 'stone', 'neutral', 'slate', 'black', 'white'
                 ]
             }]
-            // ... altre regole vue/*
         }
     },
     // Linting for Cypress (https://www.npmjs.com/package/eslint-plugin-cypress)
