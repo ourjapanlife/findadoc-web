@@ -75,22 +75,24 @@ const toast = useToast()
 const { t } = useI18n()
 
 const createFacilityOrHealthcareProfessional = async () => {
-    const hasEnglishName
-        = healthcareProfessionalsStore.createHealthcareProfessionalSectionFields.names.some(name => name.locale === 'en_US')
-
-    if (!hasEnglishName) {
-        toast.error(t('modCreateFacilityOrHPTopbar.healthcareProfessionalEnglishNameRequired'))
-        return
-    }
-
     if (moderationScreenStore.createHealthcareProfessionalScreenIsActive()) {
+        const healthcareProfessionalCreationSectionFields = healthcareProfessionalsStore.createHealthcareProfessionalSectionFields
         const hasEnglishName
-            = healthcareProfessionalsStore.createHealthcareProfessionalSectionFields.names.some(name => name.locale === 'en_US')
+            = healthcareProfessionalCreationSectionFields.names.some(name => name.locale === 'en_US')
+
+        const healthcareProfessionalCreationValues = Object.values(healthcareProfessionalCreationSectionFields)
+        const hasEmptyFields = healthcareProfessionalCreationValues.some(value => !value || !value.length)
 
         if (!hasEnglishName) {
             toast.error(t('modCreateFacilityOrHPTopbar.healthcareProfessionalEnglishNameRequired'))
             return
         }
+
+        if (hasEmptyFields) {
+            toast.error(t('modCreateFacilityOrHPTopbar.hasEmptyFields'))
+            return
+        }
+
         const response = await healthcareProfessionalsStore.createHealthcareProfessional()
 
         if (response.errors?.length) {
