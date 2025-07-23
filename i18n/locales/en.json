@@ -208,6 +208,8 @@
     "deleteButtonText": "DELETE FOREVER",
     "update": "Update",
     "updateAndExit": "Update & Exit",
+    "deleteConfirmationFacility": "Are you sure you want to delete the Facility: {facility}, with ID: {id}?",
+    "deleteConfirmationHealthcareProfessional": "Are you sure you want to delete the Healthcare Professional: {healthcareProfessional}, with ID: {id}?",
     "facilityDeletedSuccessfully": "Facility deleted successfully",
     "facilityUpdatedSuccessfully": "Facility updated successfully",
     "healthcareProfessionalDeletedSuccessfully": "Healthcare Professional deleted successfully",

@@ -345,7 +345,9 @@
     "healthcareProfessionalDeletedSuccessfully": "Healthcare Professional deleted successfully",
     "healthcareProfessionalUpdatedSuccessfully": "Healthcare Professional updated successfully",
     "back": "Back",
-    "hasUnsavedChanges": "You have unsaved changes. Are you sure you want to leave?"
+    "hasUnsavedChanges": "You have unsaved changes. Are you sure you want to leave?",
+    "deleteConfirmationFacility": "Are you sure you want to delete the Facility: {facility}, with ID: {id}?",
+    "deleteConfirmationHealthcareProfessional": "Are you sure you want to delete the Healthcare Professional: {healthcareProfessional}, with ID: {id}?"
   },
   "serverErrorMessages": {
     "genericErrorMessage": "There was an error submitting your form, please try again",
@@ -366,8 +368,8 @@
     "optional": "Optional"
   },
   "errorPage": {
-  "title": "404 - Diagnose: Seite nicht gefunden",
-  "description": "Diese Seite hat ihre Gesundheitsprüfung nicht bestanden. Lassen Sie uns Sie stattdessen zu einer gesunden Seite bringen!",
-  "returnHome": "Zur Startseite"
- }
+    "title": "404 - Diagnose: Seite nicht gefunden",
+    "description": "Diese Seite hat ihre Gesundheitsprüfung nicht bestanden. Lassen Sie uns Sie stattdessen zu einer gesunden Seite bringen!",
+    "returnHome": "Zur Startseite"
+  }
 }
