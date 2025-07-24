@@ -60,8 +60,9 @@
                         <option
                             v-for="(locale, index) in Locale"
                             :key="`${locale}-${index}`"
+                            :value="locale"
                         >
-                            {{ locale }}
+                            {{ localesStore.formatLanguageCodeToSimpleText(locale) }}
                         </option>
                     </select>
                     <div

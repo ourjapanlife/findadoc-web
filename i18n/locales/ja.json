@@ -122,7 +122,8 @@
     "exit": "Exit",
     "facilityCreatedSuccessfully": "Facility created successfully.",
     "heathcareProfessionalCreatedSuccessfully": "Healthcare Professional created successfully.",
-    "unsavedChangesMessage": "This will exit without saving your entry. All unsaved data will be lost."
+    "unsavedChangesMessage": "This will exit without saving your entry. All unsaved data will be lost.",
+    "healthcareProfessionalEnglishNameRequired": "Healthcare Professional must have an English name"
   },
   "modDashboardLeftNav": {
     "facilities": "Facilities",
@@ -301,7 +302,8 @@
     "back": "戻る",
     "hasUnsavedChanges": "You have unsaved changes. Are you sure you want to leave?",
     "deleteConfirmationFacility": "Are you sure you want to delete the Facility: {facility}, with ID: {id}?",
-    "deleteConfirmationHealthcareProfessional": "Are you sure you want to delete the Healthcare Professional: {healthcareProfessional}, with ID: {id}?"
+    "deleteConfirmationHealthcareProfessional": "Are you sure you want to delete the Healthcare Professional: {healthcareProfessional}, with ID: {id}?",
+    "healthcareProfessionalEnglishNameRequired": "Healthcare Professional must have an English name"
   },
   "serverErrorMessages": {
     "genericErrorMessage": "There was an error submitting your form, please try again",

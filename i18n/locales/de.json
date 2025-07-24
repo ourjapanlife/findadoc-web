@@ -168,7 +168,8 @@
     "exit": "Verlassen",
     "facilityCreatedSuccessfully": "Einrichtung erfolgreich erstellt.",
     "heathcareProfessionalCreatedSuccessfully": "Gesundheitsfachkraft erfolgreich erstellt.",
-    "unsavedChangesMessage": "Die Seite wird verlassen, ohne das Ihr Eintrag gespeichert wird. Alle nicht gespeicherten Daten gehen verloren."
+    "unsavedChangesMessage": "Die Seite wird verlassen, ohne das Ihr Eintrag gespeichert wird. Alle nicht gespeicherten Daten gehen verloren.",
+    "healthcareProfessionalEnglishNameRequired": "Healthcare Professional must have an English name"
   },
   "modDashboardLeftNav": {
     "facilities": "Einrichtungen",
@@ -347,7 +348,8 @@
     "back": "Back",
     "hasUnsavedChanges": "You have unsaved changes. Are you sure you want to leave?",
     "deleteConfirmationFacility": "Are you sure you want to delete the Facility: {facility}, with ID: {id}?",
-    "deleteConfirmationHealthcareProfessional": "Are you sure you want to delete the Healthcare Professional: {healthcareProfessional}, with ID: {id}?"
+    "deleteConfirmationHealthcareProfessional": "Are you sure you want to delete the Healthcare Professional: {healthcareProfessional}, with ID: {id}?",
+    "healthcareProfessionalEnglishNameRequired": "Healthcare Professional must have an English name"
   },
   "serverErrorMessages": {
     "genericErrorMessage": "There was an error submitting your form, please try again",

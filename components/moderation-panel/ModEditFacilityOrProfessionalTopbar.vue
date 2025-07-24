@@ -314,6 +314,14 @@ const updateFacilityOrHealthcareProfessional = async () => {
         // This prevents us from sending a requested unnecessarily if the user has not made changes
         if (!healthcareProfessionalHasUnsavedChanges()) return
 
+        const hasEnglishName
+            = healthcareProfessionalsStore.healthcareProfessionalSectionFields.names.some(name => name.locale === 'en_US')
+
+        if (!hasEnglishName) {
+            toast.error(t('modEditFacilityOrHPTopbar.healthcareProfessionalEnglishNameRequired'))
+            return
+        }
+
         const response = await healthcareProfessionalsStore.updateHealthcareProfessional()
 
         if (response.errors?.length) {
