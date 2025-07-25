@@ -123,7 +123,8 @@
     "facilityCreatedSuccessfully": "Facility created successfully.",
     "heathcareProfessionalCreatedSuccessfully": "Healthcare Professional created successfully.",
     "unsavedChangesMessage": "This will exit without saving your entry. All unsaved data will be lost.",
-    "healthcareProfessionalEnglishNameRequired": "Healthcare Professional must have an English name"
+    "healthcareProfessionalEnglishNameRequired": "Healthcare Professional must have an English name",
+    "hasEmptyFields": "All fields are required for creating a healthcare professional"
   },
   "modDashboardLeftNav": {
     "facilities": "机构",
