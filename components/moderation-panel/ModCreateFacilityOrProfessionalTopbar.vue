@@ -74,6 +74,53 @@ const toast = useToast()
 
 const { t } = useI18n()
 
+const validateFacilityFields = () => {
+    const createFacilitySections = facilitiesStore.createFacilityFields
+    // Required fields
+    const isNameEnValid: boolean = validateNameEn(createFacilitySections.nameEn)
+    const isNameJaValid: boolean = validateNameJa(createFacilitySections.nameJa)
+    const isPhoneValid: boolean = validatePhoneNumber(createFacilitySections.contact.phone)
+    const isAddressLine1EnValid: boolean = validateAddressLineEn(createFacilitySections.contact.address.addressLine1En)
+    const isAddressLine1JaValid: boolean = validateAddressLineJa(createFacilitySections.contact.address.addressLine1Ja)
+    const isCityEnValid: boolean = validateCityEn(createFacilitySections.contact.address.cityEn)
+    const isCityJaValid: boolean = validateCityJa(createFacilitySections.contact.address.cityJa)
+    const isPostalCodeValid: boolean = validatePostalCode(createFacilitySections.contact.address.postalCode)
+    const isLatitudeValid: boolean = validateFloat(createFacilitySections.mapLatitude)
+    const isLongitudeValid: boolean = validateFloat(createFacilitySections.mapLongitude)
+
+    // Optional fields: only validate if present
+    const isEmailValid: boolean = !createFacilitySections.contact.email || validateEmail(createFacilitySections.contact.email)
+    const isWebsiteValid: boolean = !createFacilitySections.contact.website
+      || validateWebsite(createFacilitySections.contact.website)
+    const isAddressLine2EnValid: boolean = !createFacilitySections.contact.address.addressLine2En
+      || validateAddressLineEn(createFacilitySections.contact.address.addressLine2En)
+    const isAddressLine2JaValid: boolean = !createFacilitySections.contact.address.addressLine2Ja
+      || validateAddressLineJa(createFacilitySections.contact.address.addressLine2Ja)
+
+    triggerFormValidationErrorMessages('mod-input-field')
+
+    // Only required fields are strictly validated; optional fields only if present
+    const areAllTheFacilityFieldsValid
+        = isNameEnValid
+          && isNameJaValid
+          && isPhoneValid
+          && isAddressLine1EnValid
+          && isAddressLine1JaValid
+          && isCityEnValid
+          && isCityJaValid
+          && isPostalCodeValid
+          && isLatitudeValid
+          && isLongitudeValid
+          && isEmailValid
+          && isWebsiteValid
+          && isAddressLine2EnValid
+          && isAddressLine2JaValid
+            ? true
+            : false
+
+    return areAllTheFacilityFieldsValid
+}
+
 const createFacilityOrHealthcareProfessional = async () => {
     if (moderationScreenStore.createHealthcareProfessionalScreenIsActive()) {
         const healthcareProfessionalCreationSectionFields = healthcareProfessionalsStore.createHealthcareProfessionalSectionFields
@@ -89,7 +136,7 @@ const createFacilityOrHealthcareProfessional = async () => {
         }
 
         if (hasEmptyFields) {
-            toast.error(t('modCreateFacilityOrHPTopbar.hasEmptyFields'))
+            toast.error(t('modCreateFacilityOrHPTopbar.hasEmptyFieldsHealthcareProfessional'))
             return
         }
 
@@ -108,6 +155,11 @@ const createFacilityOrHealthcareProfessional = async () => {
     }
 
     if (moderationScreenStore.createFacilityScreenIsActive()) {
+        const validateCreateFacilityFields = validateFacilityFields()
+        if (!validateCreateFacilityFields) {
+            toast.error(t('modCreateFacilityOrHPTopbar.hasEmptyFieldsFacility'))
+            return
+        }
         const response = await facilitiesStore.createFacility()
 
         if (response.errors?.length) {
