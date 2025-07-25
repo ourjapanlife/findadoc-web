@@ -624,7 +624,9 @@ async function submitUpdatedSubmission(e: Event) {
 
     // This updates the submission in the form with the values stored in the db on success
     if (submissionResult) initializeSubmissionFormValues(submissionResult)
-    toast.success(t('modSubmissionForm.successMessageUpdated'))
+    if (!moderationSubmissionStore.approvingSubmissionFromTopBar) {
+        toast.success(t('modSubmissionForm.successMessageUpdated'))
+    }
     if (moderationSubmissionStore.updatingSubmissionFromTopBarAndExiting) {
         // reset all modal refs to prevent unintended side effects
         router.push('/moderation')
