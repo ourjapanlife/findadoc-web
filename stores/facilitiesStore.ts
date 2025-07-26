@@ -361,6 +361,55 @@ export const useFacilitiesStore = defineStore('facilitiesStore', () => {
         itemsPerPage.value = newLimit
     }
 
+    async function getFacilitiesByName(
+        searchTerm: string,
+        limit: number = 100,
+        offset: number = 0,
+        additionalFilters: Omit<FacilitySearchFilters, 'limit' | 'offset' | 'nameEn' | 'nameJa'> = {}
+    ): Promise<{ nodes: Facility[], totalCount: number }> {
+        if (!searchTerm.trim()) {
+            return { nodes: [], totalCount: 0 }
+        }
+
+        /*Prepare a single filters object for the backend call
+        * Pass the searchTerm for both nameEn
+        * and nameJa. The backend will use OR logic.
+        * */
+        const filters: FacilitySearchFilters = {
+            ...additionalFilters,
+            nameEn: searchTerm,
+            nameJa: searchTerm,
+            limit: limit,
+            offset: offset
+        }
+
+        try {
+            // Make a single call to the backend
+            const response = await graphQLClientRequestWithRetry<Query['facilities']>(
+                gqlClient.request.bind(gqlClient),
+                // We use the general 'getAllFacilitiesForModeration' query
+                // because the backend now handles name search via generic filters.
+                getAllFacilitiesForModeration,
+                { filters: filters }
+            )
+
+            if (!response.errors?.length && response.data) {
+                return {
+                    nodes: response.data.nodes ?? [],
+                    totalCount: response.data.totalCount ?? 0
+                }
+            } else if (response.errors?.length) {
+                console.error(`Error searching facilities by name: ${JSON.stringify(response.errors)}`)
+            }
+            return { nodes: [], totalCount: 0 }
+        } catch (error) {
+            console.error(
+                `Error searching facilities by name (single backend call): ${JSON.stringify(error)}`
+            )
+            return { nodes: [], totalCount: 0 }
+        }
+    }
+
     return {
         getFacilities,
         createFacility,
@@ -382,7 +431,8 @@ export const useFacilitiesStore = defineStore('facilitiesStore', () => {
         setOffset,
         hasNextPage,
         hasPrevPage,
-        setItemsPerPage
+        setItemsPerPage,
+        getFacilitiesByName
     }
 })
 

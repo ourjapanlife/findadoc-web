@@ -24,34 +24,45 @@
             >
                 {{ t('modDashboardTopbar.addFacility') }}
             </NuxtLink>
-            <div class="justify-start items-start flex">
-                <input
-                    type="text"
-                    :placeholder="t('modDashboardTopbar.placeholderText')"
-                    class=" px-3 py-3.5 w-96 h-12 bg-secondary-bg rounded-lg border border-primary-text-muted
-                    text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
-                >
-                <SVGLookingGlass
-                    role="img"
-                    title="searching icon"
-                    class="relative right-8 top-3 w-6 h-6"
-                />
-            </div>
+            <ModSearchbarFilterName
+                :place-holder-text="searchPlaceholderText"
+                :fields-to-display-callback="searchFieldsToDisplay"
+                :entity-type="selectedSearchEntityType"
+                data-test-id="dashboard-search-bar"
+                @item-selected="handleItemSelected"
+                @search-cleared="handleSearchCleared"
+            />
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
+import { computed, ref } from 'vue'
+import { navigateTo } from '#app'
 import {
     SelectedModerationListView,
     SelectedSubmissionListViewTab,
     useModerationSubmissionsStore
 } from '~/stores/moderationSubmissionsStore'
 import { useI18n } from '#imports'
-import SVGLookingGlass from '~/assets/icons/looking-glass.svg'
+import ModSearchbarFilterName from '~/components/moderation-panel/ModSearchBarFilterName.vue'
+import type { Facility, HealthcareProfessional } from '~/typedefs/gqlTypes'
+
+import { Locale } from '~/typedefs/gqlTypes'
 
 const { t } = useI18n()
 const moderationSubmissionsStore = useModerationSubmissionsStore()
+
+const searchSelectedEntity = ref<SearchResultItem | null>(null)
+
+interface SearchResultItem {
+    id: string
+    nameEn?: string
+    nameJa?: string
+    names?: Array<{ firstName: string, lastName: string, locale: Locale }>
+    // We will use when we search also submissions
+    healthcareProfessionalName?: string
+}
 
 const updateTextForModerationDashboard = (
     selectedView: SelectedModerationListView,
@@ -61,8 +72,17 @@ const updateTextForModerationDashboard = (
         case SelectedModerationListView.Submissions:
             return updateTextForSubmissionDashboard(selectedTab)
         case SelectedModerationListView.Facilities:
+            if (searchSelectedEntity.value && isFacility.value) {
+                const facility = searchSelectedEntity.value as Facility
+                return facility.nameEn || facility.nameJa || facility.id
+            }
             return t('modDashboardTopbar.facilities')
         case SelectedModerationListView.HealthcareProfessionals:
+            if (searchSelectedEntity.value && isHealthcareProfessionals.value) {
+                const hp = searchSelectedEntity.value as HealthcareProfessional
+                const name = hp.names?.find(n => n.locale === Locale.EnUs) || hp.names?.[0]
+                return name ? `${name.firstName} ${name.lastName}` : hp.id
+            }
             return t('modDashboardTopbar.healthcareProfessionals')
         default:
             return ''
@@ -86,4 +106,58 @@ const isHealthcareProfessionals = computed(() => moderationSubmissionsStore.sele
   === SelectedModerationListView.HealthcareProfessionals)
 const isFacility = computed(() => moderationSubmissionsStore.selectedModerationListViewChosen
   === SelectedModerationListView.Facilities)
+
+const selectedSearchEntityType = computed(() => {
+    switch (moderationSubmissionsStore.selectedModerationListViewChosen) {
+        case SelectedModerationListView.Facilities:
+            return 'facilities'
+        case SelectedModerationListView.HealthcareProfessionals:
+            return 'healthcareProfessionals'
+        case SelectedModerationListView.Submissions:
+            return 'submissions'
+        default:
+            return 'healthcareProfessionals'
+    }
+})
+
+const searchPlaceholderText = computed(() => t('modDashboardTopbar.placeholderText'))
+
+const searchFieldsToDisplay = (item: SearchResultItem): string[] => {
+    if (moderationSubmissionsStore.selectedModerationListViewChosen === SelectedModerationListView.Facilities) {
+        const facility = item as Facility
+        return [facility.nameEn || '', facility.nameJa || ''].filter(Boolean)
+    } else if (moderationSubmissionsStore.selectedModerationListViewChosen
+      === SelectedModerationListView.HealthcareProfessionals) {
+        const hp = item as HealthcareProfessional
+        const displayNames: string[] = []
+
+        const nameEn = hp.names?.find(name => name.locale === Locale.EnUs)
+        if (nameEn) {
+            displayNames.push(`${nameEn.firstName} ${nameEn.lastName}`)
+        } else if (hp.names && hp.names.length > 0) {
+            displayNames.push(`${hp.names[0].firstName} ${hp.names[0].lastName}`)
+        }
+
+        if (hp.specialties && hp.specialties.length > 0) {
+            displayNames.push(...hp.specialties)
+        }
+        return displayNames.filter(Boolean)
+    }
+    return []
+}
+
+const handleItemSelected = (item: SearchResultItem | null) => {
+    searchSelectedEntity.value = item
+    if (item) {
+        if (isHealthcareProfessionals.value) {
+            navigateTo(`/moderation/edit-healthcare-professional/${item.id}`)
+        } else if (isFacility.value) {
+            navigateTo(`/moderation/edit-facility/${item.id}`)
+        }
+    }
+}
+
+const handleSearchCleared = () => {
+    searchSelectedEntity.value = null
+}
 </script>
