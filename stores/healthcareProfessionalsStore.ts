@@ -5,7 +5,8 @@ import { gql } from 'graphql-request'
 import { type Insurance,
     type Degree,
     type Specialty,
-    type Locale, type Facility, type DeleteResult, type HealthcareProfessional,
+    Locale,
+    type Facility, type DeleteResult, type HealthcareProfessional,
     type LocalizedNameInput,
     type Mutation,
     type MutationDeleteHealthcareProfessionalArgs,
@@ -317,6 +318,55 @@ export const useHealthcareProfessionalsStore = defineStore(
             itemsPerPage.value = newLimit
         }
 
+        async function getHealthcareProfessionalsByName(
+            searchTerm: string,
+            limit: number = 100,
+            offset: number = 0
+        ): Promise<{ nodes: HealthcareProfessional[], totalCount: number }> {
+            if (!searchTerm.trim()) {
+                return { nodes: [], totalCount: 0 }
+            }
+
+            const filters: HealthcareProfessionalSearchFilters = {
+                limit: limit,
+                offset: offset,
+                names: [
+                    {
+                        firstName: searchTerm,
+                        lastName: searchTerm,
+                        locale: Locale.EnUs
+                    },
+                    {
+                        firstName: searchTerm,
+                        lastName: searchTerm,
+                        locale: Locale.JaJp
+                    }
+                ]
+            }
+
+            try {
+                const response = await graphQLClientRequestWithRetry<
+                    Query['healthcareProfessionals']
+                >(
+                    gqlClient.request.bind(gqlClient),
+                    getHealthcareProfessionalsByNameGqlQuery,
+                    { filters: filters }
+                )
+
+                if (response.data) {
+                    return {
+                        nodes: response.data.nodes ?? [],
+                        totalCount: response.data.totalCount ?? 0
+                    }
+                }
+                return { nodes: [], totalCount: 0 }
+            } catch (error) {
+                console.error(
+                    `Error searching healthcare professionals by name: ${JSON.stringify(error)}`
+                )
+                return { nodes: [], totalCount: 0 }
+            }
+        }
         return {
             getHealthcareProfessionals,
             healthcareProfessionalsData,
@@ -339,7 +389,8 @@ export const useHealthcareProfessionalsStore = defineStore(
             setOffset,
             hasNextPage,
             hasPrevPage,
-            setItemsPerPage
+            setItemsPerPage,
+            getHealthcareProfessionalsByName
         }
     }
 )
@@ -432,6 +483,25 @@ const getHealthcareProfessionalByIdGqlQuery = gql`
         specialties
     }
 }`
+
+const getHealthcareProfessionalsByNameGqlQuery = gql`
+    query HealthcareProfessionalsByName($filters: HealthcareProfessionalSearchFilters!) {
+        healthcareProfessionals(filters: $filters) {
+            nodes {
+                id
+                names {
+                    firstName
+                    lastName
+                    locale
+                }
+                # Includi qui gli altri campi che ti servono per la visualizzazione
+                # dei risultati nella search bar (es. specialties, etc.)
+                specialties
+            }
+            totalCount
+        }
+    }
+`
 
 const updateHealthcareProfessionalGqlMutation = gql`
 mutation Mutation($id: ID!, $input: UpdateHealthcareProfessionalInput!) {

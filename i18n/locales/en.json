@@ -368,5 +368,9 @@
   },
   "modSubmissionListContainer": {
     "resultsPerPage": "Results per page"
+  },
+  "modSearchBarFilterName": {
+    "noTextMatch": "No matching names found.",
+    "loading": "Loading..."
   }
 }
