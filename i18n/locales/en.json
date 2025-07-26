@@ -77,7 +77,7 @@
   "settingsPage": {
     "heading": "Settings",
     "subheading": "Manage your account settings",
-    "firstName": "Display Name",
+    "displayName": "Display Name",
     "healthcareProfessionalName": "Profile Image",
     "updateButton": "Update Settings"
   },
