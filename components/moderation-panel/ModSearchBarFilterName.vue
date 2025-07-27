@@ -29,7 +29,7 @@
                 @focus="handleSearchInputFocus"
             >
             <span
-                v-if="isInputFocused && searchResultCount > 0"
+                v-if="isInputFocused && searchResultCount > 0 && searchInputValue.length >= 2"
                 class="pl-2"
             >
                 {{ searchResultCount }}
@@ -47,7 +47,8 @@
         </div>
         <div class="container relative">
             <ul
-                v-if="searchTriggered || loading || filteredItems.length > 0"
+                v-if="isInputFocused && (loading || (searchInputValue.length >= 2 && filteredItems.length > 0)
+                    || (searchTriggered && searchInputValue.length >= 2 && filteredItems.length === 0))"
                 id="search-list"
                 class="bg-primary-bg shadow-md border-2 border-primary/50 rounded-lg absolute
                 w-full flex flex-col divide-y-2 max-h-64 overflow-y-auto overflow-x-hidden
@@ -102,7 +103,7 @@
                 </li>
 
                 <li
-                    v-if="!loading && searchTriggered && searchInputValue.length > 0 && !filteredItems.length"
+                    v-if="!loading && searchTriggered && searchInputValue.length > 2 && !filteredItems.length"
                     data-testid="mod-search-bar-search-no-match"
                     class="m-3 cursor-default"
                 >
@@ -122,6 +123,7 @@ import type {
     HealthcareProfessional,
     Locale
 } from '../../typedefs/gqlTypes'
+import { debounce } from '../../utils/debounce'
 import { useI18n } from '#imports'
 import SVGCheckMark from '~/assets/icons/check-mark.svg'
 import SVGLookingGlass from '~/assets/icons/looking-glass.svg'
@@ -133,6 +135,7 @@ interface SearchResultItem {
     nameEn?: string
     nameJa?: string
     names?: Array<{ firstName: string, lastName: string, locale: Locale }>
+    // We will use when we search also submissions
     healthcareProfessionalName?: string
 }
 
@@ -153,7 +156,7 @@ const emit = defineEmits<{
 const searchInputElement = ref<HTMLInputElement | null>(null)
 const searchInputValue = ref('')
 const filteredItems = ref<SearchResultItem[]>([])
-const selectedItemIndex = ref(0)
+const selectedItemIndex = ref(-1)
 const searchResultCount = computed(() => filteredItems.value.length)
 const isInputFocused = ref(false)
 const loading = ref(false)
@@ -161,20 +164,6 @@ const searchTriggered = ref(false)
 
 const healthcareProfessionalsStore = useHealthcareProfessionalsStore()
 const facilitiesStore = useFacilitiesStore()
-
-const triggerSearch = async () => {
-    const inputValue = searchInputValue.value.trim()
-    if (inputValue.length > 0) {
-        searchTriggered.value = true
-        const results = await executeSearchQuery(inputValue)
-        filteredItems.value = results
-        selectedItemIndex.value = 0
-    } else {
-        filteredItems.value = []
-        searchTriggered.value = false
-        emit('searchCleared')
-    }
-}
 
 const executeSearchQuery = async (term: string): Promise<SearchResultItem[]> => {
     loading.value = true
@@ -211,20 +200,51 @@ const executeSearchQuery = async (term: string): Promise<SearchResultItem[]> => 
     }
 }
 
-const handleListScroll = () => {
-    const selectedElement = document.getElementById(`search-list-item-${selectedItemIndex.value}`)
-    if (!selectedElement) return
-    selectedElement.scrollIntoView({
-        block: 'nearest',
-        inline: 'nearest'
-    })
+// --- FUNZIONE DI RICERCA DEBOUNCED (per l'evento @input) ---
+// Questa è la funzione che viene chiamata dall'handler dell'input.
+// Applica il controllo della lunghezza minima e il debounce.
+const debouncedExecuteSearchQuery = debounce(async (term: string) => {
+    const trimmedTerm = term.trim()
+    if (trimmedTerm.length >= 2) { // La ricerca parte solo con 2 o più caratteri
+        searchTriggered.value = true
+        const results = await executeSearchQuery(trimmedTerm)
+        filteredItems.value = results
+        //If there are item pick first one
+        selectedItemIndex.value = results.length > 0 ? 0 : -1
+    } else {
+        filteredItems.value = []
+        searchTriggered.value = false
+        loading.value = false
+    }
+}, 300)
+
+const triggerSearch = async () => {
+    const inputValue = searchInputValue.value.trim()
+    if (inputValue.length >= 2) {
+        searchTriggered.value = true
+        const results = await executeSearchQuery(inputValue)
+        filteredItems.value = results
+        selectedItemIndex.value = results.length > 0 ? 0 : -1
+    } else {
+        filteredItems.value = []
+        searchTriggered.value = false
+    }
 }
 
+const handleSearchInputChange = () => {
+    debouncedExecuteSearchQuery(searchInputValue.value)
+}
+
+// Gestisce il click su un elemento della lista dei risultati
 const handleListItemClick = (item: SearchResultItem) => {
     emit('itemSelected', item)
+    // Aggiorna l'input con il testo dell'elemento selezionato per coerenza
+    searchInputValue.value = props.fieldsToDisplayCallback(item).join(' ').trim()
     filteredItems.value = []
     isInputFocused.value = false
     searchTriggered.value = false
+    //reset selection
+    selectedItemIndex.value = -1
 }
 
 const handleListItemMouseOver = (index: number) => {
@@ -236,37 +256,58 @@ const handleListItemMouseDown = (event: MouseEvent) => {
 }
 
 const handleSearchInputBlur = () => {
-    isInputFocused.value = false
-    searchInputValue.value = ''
-    filteredItems.value = []
-    searchTriggered.value = false
-    emit('searchCleared')
+    setTimeout(() => {
+        isInputFocused.value = false
+        filteredItems.value = []
+        searchTriggered.value = false
+    }, 150)
+}
+
+const handleSearchInputFocus = () => {
+    isInputFocused.value = true
+    if (searchInputValue.value.trim().length >= 2) {
+        debouncedExecuteSearchQuery(searchInputValue.value)
+    }
 }
 
 const handleSearchInputArrowUp = (event: KeyboardEvent) => {
     event.preventDefault()
-    if (selectedItemIndex.value > 0) {
-        --selectedItemIndex.value
+    if (filteredItems.value.length > 0) {
+        // If selectedItemIndex is -1 (no one selected), go to last element
+        selectedItemIndex.value = selectedItemIndex.value <= 0 ? filteredItems.value.length - 1 : selectedItemIndex.value - 1
         handleListScroll()
     }
 }
 
 const handleSearchInputArrowDown = (event: KeyboardEvent) => {
     event.preventDefault()
-    if (selectedItemIndex.value < filteredItems.value.length - 1) {
-        ++selectedItemIndex.value
+    if (filteredItems.value.length > 0) {
+        // If selectedItemIndex is the last one return to 0
+        selectedItemIndex.value = selectedItemIndex.value >= filteredItems.value.length - 1 ? 0 : selectedItemIndex.value + 1
         handleListScroll()
     }
 }
 
-const handleSearchInputChange = () => {
-    searchTriggered.value = false
-    filteredItems.value = []
+const handleListScroll = () => {
+    const selectedElement = document.getElementById(`search-list-item-${selectedItemIndex.value}`)
+    if (selectedElement) {
+        selectedElement.scrollIntoView({
+            block: 'nearest',
+            inline: 'nearest'
+        })
+    }
 }
 
-const handleSearchInputFocus = () => {
-    isInputFocused.value = true
-}
+/*
+// Funzione per pulire esplicitamente la search bar (se hai un pulsante "X")
+const handleSearchCleared = () => {
+    searchInputValue.value = ''
+    filteredItems.value = []
+    searchTriggered.value = false
+    selectedItemIndex.value = -1
+    isInputFocused.value = false // Per nascondere la dropdown
+    emit('searchCleared') // Emetti al componente padre
+}*/
 
 const isNearPageBottom = computed(() => {
     if (!searchInputElement.value) return false
