@@ -2,6 +2,7 @@ import { gql } from 'graphql-request'
 import { defineStore } from 'pinia'
 import { ref, type Ref } from 'vue'
 import { fetchSubmissionsWithCount } from '../utils/graphqlHepers'
+import { useI18n } from 'vue-i18n'
 import type { Submission, MutationUpdateSubmissionArgs, Mutation, SubmissionSearchFilters } from '~/typedefs/gqlTypes.js'
 import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql.js'
 import type { ServerResponse } from '~/typedefs/serverResponse'
@@ -23,6 +24,8 @@ export enum SelectedModerationListView {
     HealthcareProfessionals = 'HEALTHCARE_PROFESSIONALS',
     Submissions = 'SUBMISSIONS'
 }
+
+const { t } = useI18n()
 
 export const useModerationSubmissionsStore = defineStore(
     'modSubmissionsStore',
@@ -152,7 +155,7 @@ export const useModerationSubmissionsStore = defineStore(
 
         async function approveSubmission() {
             if (!selectedSubmissionId.value) {
-                console.error('Unable to approve submission. Submission ID is required.')
+                console.error(t('moderationSubmissionErrors.unableToApprove'))
                 return
             }
 
@@ -167,7 +170,7 @@ export const useModerationSubmissionsStore = defineStore(
 
         async function rejectSubmission() {
             if (!selectedSubmissionId.value) {
-                console.error('Unable to reject submission. Submission ID is required.')
+                console.error(t('moderationSubmissionErrors.unableToReject'))
                 return
             }
 
