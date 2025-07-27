@@ -9,9 +9,8 @@ export type LocaleDisplay = {
     code: string
 }
 
-const { t } = useI18n()
-
 export const useLocaleStore = defineStore('locale', () => {
+    const { t } = useI18n()
     const enUsLocale = localeDisplayOptions.find(currentLocale => currentLocale.code === Locale.EnUs) as LocaleDisplay
     const activeLocale: Ref<LocaleDisplay> = ref(enUsLocale)
 
