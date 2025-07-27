@@ -1,6 +1,7 @@
 import type { Maybe } from 'graphql/jsutils/Maybe'
 import { defineStore } from 'pinia'
 import { reactive, ref, type Ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { gql } from 'graphql-request'
 import { type Insurance,
     type Degree,
@@ -19,6 +20,8 @@ import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql'
 import { useLocaleStore } from '~/stores/localeStore'
 import { ErrorCode, type ServerError, type ServerResponse } from '~/typedefs/serverResponse'
 import { arraysAreEqual } from '~/utils/arrayUtils'
+
+const { t } = useI18n()
 
 export const useHealthcareProfessionalsStore = defineStore(
     'healthcareProfessionalsStore',
@@ -111,7 +114,7 @@ export const useHealthcareProfessionalsStore = defineStore(
 
             // return out if no current professional data found
             if (!currentProfessionalData) {
-                console.error(`No data found for currentProfessionalData with id ${selectedHealthcareProfessionalId.value}`)
+                console.error(t('healthcareProfessionalsErrors.noCurrentProfessionalDataFound'), `${selectedHealthcareProfessionalId.value}`)
                 return {
                     data: {
                         acceptedInsurance: [],
@@ -191,7 +194,7 @@ export const useHealthcareProfessionalsStore = defineStore(
                     data: currentProfessionalData,
                     hasErrors: true,
                     errors: [{
-                        message: 'No updates found',
+                        message: t('healthcareProfessionalsErrors.noUpdatesFound'),
                         fieldWithError: undefined,
                         code: ErrorCode.NO_UPDATES_FOUND
                     }]
@@ -333,7 +336,7 @@ async function queryHealthcareProfessionals(): Promise<HealthcareProfessional[]>
 
         return response?.data ?? []
     } catch (error) {
-        console.error(`Error querying the healthcare professionals: ${JSON.stringify(error)}`)
+        console.error(t('healthcareProfessionalsErrors.queryError'), `${JSON.stringify(error)}`)
         return []
     }
 }
@@ -350,11 +353,11 @@ export async function getHealthcareProfessionalById(id: string): Promise<Healthc
         )
 
         if (!result.data) {
-            throw new Error('The Healthcare Professional ID doesn\'t exist')
+            throw new Error(t('healthcareProfessionalsErrors.idDoesNotExist'))
         }
         return result.data
     } catch (error: unknown) {
-        console.error(`Error retrieving healthcare professional by id: ${id}: ${JSON.stringify(error)}`)
+        console.error(t('healthcareProfessionalsErrors.retrievingById'), `${id}: ${JSON.stringify(error)}`)
         return []
     }
 }

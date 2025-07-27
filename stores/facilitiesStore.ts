@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref, type Ref, reactive } from 'vue'
 import { gql } from 'graphql-request'
+import { useI18n } from 'vue-i18n'
 import type { DeleteResult, Facility,
     HealthcareProfessional,
     Mutation,
@@ -12,6 +13,8 @@ import type { DeleteResult, Facility,
 import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql'
 import type { ServerResponse } from '~/typedefs/serverResponse'
 import { arraysAreEqual } from '~/utils/arrayUtils'
+
+const { t } = useI18n()
 
 export const useFacilitiesStore = defineStore(
     'facilitiesStore',
@@ -296,7 +299,7 @@ async function queryFacilities(): Promise<Facility[]> {
 
         return response.data ?? []
     } catch (error) {
-        console.error(`Error querying the facilities: ${JSON.stringify(error)}`)
+        console.error(t('facilitiesErrors.facilityQuery'), `${JSON.stringify(error)}`)
         return []
     }
 }
