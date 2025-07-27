@@ -17,8 +17,6 @@ type SearchResult = {
     facilities: Facility[]
 }
 
-const { t } = useI18n()
-
 export const useSearchResultsStore = defineStore('searchResultsStore', () => {
     const activeResultId: Ref<string | undefined> = ref()
     const activeResult: Ref<SearchResult | undefined> = ref()
@@ -86,6 +84,7 @@ export const useSearchResultsStore = defineStore('searchResultsStore', () => {
 
 async function queryProfessionals(searchSpecialties: Specialty[], searchLanguages: Locale[]):
 Promise<HealthcareProfessional[]> {
+    const { t } = useI18n()
     try {
         const searchProfessionalsData = {
             filters: {
@@ -121,6 +120,7 @@ Promise<HealthcareProfessional[]> {
 }
 
 async function queryFacilities(healthcareProfessionalIds: string[], searchCity?: string): Promise<Facility[]> {
+    const { t } = useI18n()
     try {
         const searchFacilitiesData = {
             filters: {

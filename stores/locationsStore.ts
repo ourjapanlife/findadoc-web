@@ -6,8 +6,6 @@ import { gqlClient } from '../utils/graphql.js'
 import { useLoadingStore } from './loadingStore.js'
 import type { Facility, FacilitySearchFilters } from '~/typedefs/gqlTypes.js'
 
-const { t } = useI18n()
-
 export const useLocationsStore = defineStore('locationsStore', () => {
     const allCitiesEnglishList = ref<string[]>([])
     const allCitiesJapaneseList = ref<string[]>([])
@@ -30,6 +28,7 @@ export const useLocationsStore = defineStore('locationsStore', () => {
 })
 
 async function queryFacilities(): Promise<Facility[]> {
+    const { t } = useI18n()
     try {
         const searchFacilitiesData = {
             filters: {
