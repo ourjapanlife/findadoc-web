@@ -320,7 +320,9 @@ const nameLocaleInputs: LocalizedNameInput = reactive(
 const originalNameLocale: Ref<Locale> = ref(Locale.Und)
 
 // Sets the locale being edited name value
-const setEditingLocaleName = (newValue: boolean) => {
+const setEditingLocaleName = async (newValue: boolean) => {
+    // This allows the dom to change so the position of the name locale is correct before trying to edit
+    await nextTick()
     editingLocaleName.value = newValue
     // Makes sure both values cannot be true
     addingLocaleName.value = false
@@ -329,7 +331,7 @@ const setEditingLocaleName = (newValue: boolean) => {
 // Closes the locale being added name inputs
 const handleCloseAddingNewLocalizedName = () => {
     // Allows for the inputs to completely transition before resetting the fields
-    setTimeout(() => resetNameLocaleInputs, 300)
+    setTimeout(resetNameLocaleInputs, 300)
     addingLocaleName.value = false
     // Makes sure both values cannot be true
     editingLocaleName.value = false
@@ -338,7 +340,7 @@ const handleCloseAddingNewLocalizedName = () => {
 // Opens the locale being added name inputs
 const handleOpenAddNewNameWithReset = () => {
     // Allows for the inputs to completely transition before resetting the fields
-    setTimeout(() => resetNameLocaleInputs, 300)
+    resetNameLocaleInputs()
     addingLocaleName.value = true
     // Makes sure both values cannot be true
     editingLocaleName.value = false
@@ -389,6 +391,7 @@ const setChosenLocaleNameInput = (index: number) => {
 }
 
 const handleUpdateExistingName = () => {
+    const originalNameLocale = nameLocaleInputs.locale
     const localizedNameToAdd: LocalizedNameInput = {
         firstName: nameLocaleInputs.firstName,
         lastName: nameLocaleInputs.lastName,
@@ -398,7 +401,7 @@ const handleUpdateExistingName = () => {
 
     // Checks to keep user from adding a name with same locale instead of editing
     const existingNameForLocale = healthcareProfessionalsStore.healthcareProfessionalSectionFields.names
-        .filter(name => name.locale !== originalNameLocale.value)
+        .filter(name => name.locale !== originalNameLocale)
         .find(name => name.locale === nameLocaleInputs.locale)
 
     // Displays message if user is trying to add a locale for name that exists and they aren't editing a healthcare professional
@@ -449,7 +452,6 @@ const handleDeleteExistingName = () => {
 }
 
 const handleAddLocalizedName = () => {
-    const originalNameLocale = nameLocaleInputs.locale
     const localizedNameToAdd: LocalizedNameInput = {
         firstName: nameLocaleInputs.firstName,
         lastName: nameLocaleInputs.lastName,
@@ -460,7 +462,7 @@ const handleAddLocalizedName = () => {
     const existingNameForLocale = checkIfHealthcareProfessionalHasAnExistingNameForLocale()
 
     // Displays message if user is trying to add a locale for name that exists and they aren't editing a healthcare professional
-    if (existingNameForLocale && originalNameLocale !== nameLocaleInputs.locale) {
+    if (existingNameForLocale) {
         toast.error(t('modHealthcareProfessionalSection.nameForLocaleAlreadyExists'))
         return
     }

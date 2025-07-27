@@ -330,7 +330,9 @@ const nameLocaleInputs: LocalizedNameInput = reactive(
 const originalNameLocale: Ref<Locale> = ref(Locale.Und)
 
 // Sets the locale being edited name value
-const setEditingLocaleName = (newValue: boolean) => {
+const setEditingLocaleName = async (newValue: boolean) => {
+    // This allows the dom to change so the position of the name locale is correct before trying to edit
+    await nextTick()
     editingLocaleName.value = newValue
     // Makes sure both values cannot be true
     addingLocaleName.value = false
@@ -339,7 +341,7 @@ const setEditingLocaleName = (newValue: boolean) => {
 // Closes the locale being added name inputs
 const handleCloseAddingNewLocalizedName = () => {
     // Allows for the inputs to completely transition before resetting the fields
-    setTimeout(() => resetNameLocaleInputs, 300)
+    setTimeout(resetNameLocaleInputs, 300)
     addingLocaleName.value = false
     // Makes sure both values cannot be true
     editingLocaleName.value = false
@@ -461,13 +463,13 @@ const handleDeleteExistingName = () => {
 }
 
 const handleAddLocalizedName = () => {
-    resetNameLocaleInputs()
     const localizedNameToAdd: LocalizedNameInput = {
         firstName: nameLocaleInputs.firstName,
         lastName: nameLocaleInputs.lastName,
         locale: nameLocaleInputs.locale || Locale.Und,
         middleName: nameLocaleInputs.middleName
     }
+
     // Checks to keep user from adding a name with same locale instead of editing
     const existingNameForLocale = healthcareProfessionalsStore.healthcareProfessionalSectionFields.names
         .find(name => name.locale === nameLocaleInputs.locale)
