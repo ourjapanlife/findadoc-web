@@ -1,20 +1,7 @@
 import { setActivePinia, createPinia } from 'pinia'
 import { expect } from 'chai'
-import { vi } from 'vitest'
 import { useLocaleStore } from '@/stores/localeStore'
 import { Locale } from '~/typedefs/gqlTypes.js'
-
-vi.mock('vue-i18n', () => ({
-    useI18n: () => ({
-        t: (key: string) => {
-            const translations: Record<string, string> = {
-                'localeErrors.notSpecified': 'Not Specified',
-                'localeErrors.notFound': 'Language not found'
-            }
-            return translations[key] || key // Return the translation if it exists, otherwise return the key
-        }
-    })
-}))
 
 describe('LocalStore', () => {
     beforeEach(() => {
