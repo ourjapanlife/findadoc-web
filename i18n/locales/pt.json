@@ -409,5 +409,38 @@
     "displayName": "Nome de exibição",
     "healthcareProfessionalName": "Profile Image",
     "updateButton": "Update Settings"
+  },
+  "authErrors": {
+    "loggingIn": "Error logging in:",
+    "authBearerToken": "Error getting auth bearer token:",
+    "tenSecondTimeout": "Auth0 loading timed out after 10 seconds"
+  },
+  "facilitiesErrors": {
+    "facilityQuery": "Error querying the facilities:"
+  },
+  "healthcareProfessionalsErrors": {
+    "noCurrentProfessionalDataFound": "No data found for currentProfessionalData with id",
+    "noUpdatesFound": "No updates found",
+    "queryError": "Error querying the healthcare professionals:",
+    "idDoesNotExist": "The Healthcare Professional ID doesn't exist",
+    "retrievingById": "Error retrieving healthcare professional by id: "
+  },
+  "localeErrors": {
+    "notFound": "Language not found",
+    "notSpecified": "Not Specified"
+  },
+  "locationErrors": {
+    "facilitiesDropdown": "Error getting facilities for dropdown:",
+    "gettingData": "Error getting data! Please contact our support team by clicking the bottom right link on the page!"
+  },
+  "moderationSubmissionsErrors": {
+    "unableToApprove": "Unable to approve submission. Submission ID is required.",
+    "unableToReject": "Unable to reject submission. Submission ID is required.",
+    "queryError": "Error querying the submissions:"
+  },
+  "searchResultsErrors": {
+    "gettingProfessionals": "Error getting professionals:",
+    "gettingData": "Error getting data! Please contact our support team by clicking the bottom right link on the page!",
+    "gettingfacilities": "Error getting facilities:"
   }
 }

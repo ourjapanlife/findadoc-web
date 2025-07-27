@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref, type Ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { Locale } from '~/typedefs/gqlTypes.js'
 
 export type LocaleDisplay = {
@@ -7,6 +8,8 @@ export type LocaleDisplay = {
     simpleText: string
     code: string
 }
+
+const { t } = useI18n()
 
 export const useLocaleStore = defineStore('locale', () => {
     const enUsLocale = localeDisplayOptions.find(currentLocale => currentLocale.code === Locale.EnUs) as LocaleDisplay
@@ -18,7 +21,7 @@ export const useLocaleStore = defineStore('locale', () => {
 
     function formatLanguageCodeToSimpleText(selectedLocale: string) {
         const language = localeDisplayOptions.find(currentLocale => currentLocale.code === selectedLocale)
-        return language?.simpleText || 'Language not found'
+        return language?.simpleText || t('localeErrors.notFound')
     }
 
     function formatLanguages(
@@ -26,7 +29,7 @@ export const useLocaleStore = defineStore('locale', () => {
     ) {
         return spokenLanguages?.map(languageCode =>
             localeDisplayOptions.find(option =>
-                option.code === languageCode)?.simpleText || 'Not Specified')
+                option.code === languageCode)?.simpleText || t('localeErrors.notSpecified'))
               ?? []
     }
 

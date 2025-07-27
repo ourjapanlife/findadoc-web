@@ -1,6 +1,7 @@
 import { gql } from 'graphql-request'
 import { defineStore } from 'pinia'
 import { ref, type Ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { gqlClient } from '../utils/graphql.js'
 import { useLoadingStore } from './loadingStore.js'
 import type { Locale,
@@ -13,6 +14,8 @@ import type { Locale,
 type FacilitySearchResult = Facility & {
     healthcareProfessionals: HealthcareProfessional[]
 }
+
+const { t } = useI18n()
 
 export const useSearchResultsStore = defineStore('searchResultsStore', () => {
     const activeFacilityId: Ref<string | undefined> = ref()
@@ -134,9 +137,9 @@ Promise<HealthcareProfessional[]> {
         const professionalsSearchResult = serverResponse.data.healthcareProfessionals ?? []
         return professionalsSearchResult
     } catch (error) {
-        console.error(`Error getting professionals: ${JSON.stringify(error)}`)
+        console.error(t('searchResultsErrors.gettingProfessionals'), ` ${JSON.stringify(error)}`)
         // eslint-disable-next-line no-alert
-        alert('Error getting data! Please contact our support team by clicking the bottom right link on the page!')
+        alert(t('searchResultsErrors.gettingData'))
         return []
     }
 }
@@ -175,9 +178,9 @@ async function queryFacilities(healthcareProfessionalIds: string[], searchCity?:
 
         return locationFilteredSearchResults
     } catch (error) {
-        console.error(`Error getting facilities: ${JSON.stringify(error)}`)
+        console.error(t('searchResultsErrors.gettingFacilities'), `${JSON.stringify(error)}`)
         // eslint-disable-next-line no-alert
-        alert('Error getting data! Please contact our support team by clicking the bottom right link on the page!')
+        alert(t('searchResultsErrors.gettingData'))
         return []
     }
 }

@@ -148,6 +148,8 @@ export function getChangedFacilityFieldsForUpdate(
     return updatedFields
 }
 
+const { t } = useI18n()
+
 export const useFacilitiesStore = defineStore('facilitiesStore', () => {
     const facilityData: Ref<Facility[]> = ref([])
     const selectedFacilityId: Ref<string> = ref('')
