@@ -50,7 +50,7 @@
         "@graphql-codegen/typescript": "^4.0.9",
         "@graphql-codegen/typescript-resolvers": "^4.2.1",
         "@microsoft/eslint-formatter-sarif": "^3.1.0",
-        "@nuxt/eslint": "^0.5.0",
+        "@nuxt/eslint": "^1.5.2",
         "@nuxt/test-utils": "^3.14.3",
         "@nuxt/types": "^2.18.1",
         "@nuxtjs/i18n": "^9.1.0",
