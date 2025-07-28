@@ -109,7 +109,7 @@
             </select>
             <span
                 class="mb-2 text-primary-text text-sm font-normal font-sans"
-            >{{ t('submitPage.spokenLanguage2') }}</span>
+            >{{ t('submitPage.spokenLanguage2') + " (" + t('submitPage.optional') + ")" }}</span>
             <p
                 v-show="!isValidInput.secondarySpokenLanguage.value"
                 class="text-error text-xs font-sans"
@@ -122,7 +122,7 @@
                 class="mb-5 px-3 py-3.5 w-96 h-12 bg-primary-text-inverted rounded-lg border border-primary-text-muted
                         text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
                 :placeholder="t('submitPage.selectLanguage2')"
-                @change="initialValidationCheck(selectLanguage1, 'secondaryLanguage')"
+                @change="selectLanguage2 ? initialValidationCheck(selectLanguage2, 'secondaryLanguage') : null"
             >
                 <option
                     v-for="(locale, index) in localeStore.localeDisplayOptions"
@@ -207,8 +207,9 @@ const validateFields = () => {
     validationCheckedPreviously.primarySpokenLangauge.value = true
     isValidInput.primarySpokenLangauge.value = validations.validateFirstSpokenLanguage(selectLanguage1.value)
     validationCheckedPreviously.secondarySpokenLanguage.value = true
-    isValidInput.secondarySpokenLanguage.value
-        = validations.validateUserSubmittedLastName(selectLanguage2.value)
+    isValidInput.secondarySpokenLanguage.value = selectLanguage2.value
+        ? validations.validateUserSubmittedLastName(selectLanguage2.value)
+        : true
 
     if (
         !isValidInput.googleMapsUrl.value
