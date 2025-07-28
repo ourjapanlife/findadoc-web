@@ -163,8 +163,6 @@
     "healthcareProfessionalUpdatedSuccessfully": "Healthcare Professional updated successfully",
     "back": "Bumalik",
     "hasUnsavedChanges": "You have unsaved changes. Are you sure you want to leave?",
-    "deleteConfirmationFacility": "Are you sure you want to delete the Facility: {facility}, with ID: {id}?",
-    "deleteConfirmationHealthcareProfessional": "Are you sure you want to delete the Healthcare Professional: {healthcareProfessional}, with ID: {id}?",
     "healthcareProfessionalEnglishNameRequired": "Healthcare Professional must have an English name"
   },
   "modEditSubmissionTopNav": {
@@ -186,9 +184,7 @@
     "facilityHeading": "Impormasyon ng Pasilidad",
     "googleMapsInformation": "Impormasyon sa Google maps",
     "inputErrorMessageFacilityAddressLine1Ja": "Hindi wastong address sa Hapon",
-    "inputErrorMessageFacilityAddressLine2Ja": "Hindi wastong address sa Hapon",
     "inputErrorMessageFacilityAddressLine1En": "Hindi wastong address sa Ingles",
-    "inputErrorMessageFacilityAddressLine2En": "Hindi wastong address sa Ingles",
     "inputErrorMessageFacilityCityEn": "Hindi wastong pangalan ng Lungsod sa Ingles",
     "inputErrorMessageFacilityCityJa": "Hindi wastong pangalan ng Lungsod sa Hapon",
     "inputErrorMessageFacilityEmail": "Hindi wastong Email Address",
@@ -249,7 +245,6 @@
     "errorMessageEnglishNameRequired": "Ang propesyonal sa Pangangalagang Pangkalusugan ay kailangang may pangalan sa Ingles",
     "healthcareProfessionalId": "Mga ID ng propesyonal sa Pangangalagang Pangkalusugan",
     "infoMessageAlreadyApproved": "Ang Isinumite ay aprubado na",
-    "infoMessageUpdateNeeded": "Kailangang i-update ito bago maaprubahan",
     "labelHealthcareProfessionalFirstName": "Pangalan",
     "labelHealthcareProfessionalLastName": "Apelyido",
     "labelHealthcareProfessionalMiddleName": "Pangalawang pangalan",
