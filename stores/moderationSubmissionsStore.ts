@@ -1,7 +1,6 @@
 import { gql } from 'graphql-request'
 import { defineStore } from 'pinia'
 import { ref, type Ref } from 'vue'
-import { useI18n } from 'vue-i18n'
 import type { Submission, MutationUpdateSubmissionArgs, Mutation, Query } from '~/typedefs/gqlTypes.js'
 import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql.js'
 import type { ServerResponse } from '~/typedefs/serverResponse'
@@ -23,8 +22,6 @@ export enum SelectedModerationListView {
     HealthcareProfessionals = 'HEALTHCARE_PROFESSIONALS',
     Submissions = 'SUBMISSIONS'
 }
-
-const { t } = useI18n()
 
 export const useModerationSubmissionsStore = defineStore(
     'modSubmissionsStore',
@@ -125,7 +122,7 @@ export const useModerationSubmissionsStore = defineStore(
 
         async function approveSubmission() {
             if (!selectedSubmissionId.value) {
-                console.error(t('moderationSubmissionErrors.unableToApprove'))
+                console.error(useNuxtApp().$i18n.t('moderationSubmissionErrors.unableToApprove'))
                 return
             }
 
@@ -140,7 +137,7 @@ export const useModerationSubmissionsStore = defineStore(
 
         async function rejectSubmission() {
             if (!selectedSubmissionId.value) {
-                console.error(t('moderationSubmissionErrors.unableToReject'))
+                console.error(useNuxtApp().$i18n.t('moderationSubmissionErrors.unableToReject'))
                 return
             }
 
@@ -199,7 +196,7 @@ async function querySubmissions(): Promise<Submission[]> {
 
         return serverResponse?.data ?? []
     } catch (error) {
-        console.error(t('moderationSubmissionsErrors.queryError'), ` ${JSON.stringify(error)}`)
+        console.error(useNuxtApp().$i18n.t('moderationSubmissionsErrors.queryError'), ` ${JSON.stringify(error)}`)
         return []
     }
 }
