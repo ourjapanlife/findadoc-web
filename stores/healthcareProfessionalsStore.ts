@@ -22,8 +22,6 @@ import { useLocaleStore } from '~/stores/localeStore'
 import { ErrorCode, type ServerError, type ServerResponse } from '~/typedefs/serverResponse'
 import { arraysAreEqual } from '~/utils/arrayUtils'
 
-const { t } = useI18n()
-
 export const useHealthcareProfessionalsStore = defineStore(
     'healthcareProfessionalsStore',
     () => {
@@ -143,7 +141,7 @@ export const useHealthcareProfessionalsStore = defineStore(
 
             // return out if no current professional data found
             if (!currentProfessionalData) {
-                console.error(t('healthcareProfessionalsErrors.noCurrentProfessionalDataFound'), `${selectedHealthcareProfessionalId.value}`)
+                console.error(useNuxtApp().$i18n.t('healthcareProfessionalsErrors.noCurrentProfessionalDataFound'), `${selectedHealthcareProfessionalId.value}`)
                 return {
                     data: {
                         acceptedInsurance: [],
@@ -223,7 +221,7 @@ export const useHealthcareProfessionalsStore = defineStore(
                     data: currentProfessionalData,
                     hasErrors: true,
                     errors: [{
-                        message: t('healthcareProfessionalsErrors.noUpdatesFound'),
+                        message: useNuxtApp().$i18n.t('healthcareProfessionalsErrors.noUpdatesFound'),
                         fieldWithError: undefined,
                         code: ErrorCode.NO_UPDATES_FOUND
                     }]
@@ -378,7 +376,7 @@ export async function getHealthcareProfessionalById(id: string): Promise<Healthc
 
         return [result.data.healthcareProfessional]
     } catch (error: unknown) {
-        console.error(t('healthcareProfessionalsErrors.retrievingById'), `${id}: ${JSON.stringify(error)}`)
+        console.error(useNuxtApp().$i18n.t('healthcareProfessionalsErrors.retrievingById'), `${id}: ${JSON.stringify(error)}`)
         return []
     }
 }
