@@ -1,7 +1,6 @@
 import { defineStore } from 'pinia'
 import { computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { useI18n } from 'vue-i18n'
 import { auth0 } from '../utils/auth0.js'
 import { useLoadingStore } from './loadingStore.js'
 import { useCookie, useRuntimeConfig } from '#app'
@@ -11,7 +10,6 @@ export const useAuthStore = defineStore('authStore', () => {
     const isTestingMode = !!runtimeConfig.public.isTestingMode
     const route = useRoute()
     const router = useRouter()
-    const { t } = useI18n()
 
     const userId = computed(() => {
         if (isTestingMode)
@@ -50,7 +48,7 @@ export const useAuthStore = defineStore('authStore', () => {
         } catch (error) {
             //set the loading visual state back to normal
             loadingStore.setIsLoading(false)
-            console.error(t('authErrors.loggingIn'), `${JSON.stringify(error)}`)
+            console.error(useNuxtApp().$i18n.t('authErrors.loggingIn'), `${JSON.stringify(error)}`)
         }
     }
 
@@ -87,7 +85,7 @@ export const useAuthStore = defineStore('authStore', () => {
 
             return token
         } catch (error) {
-            console.error(t('authErrors.authBearerToken'), `${JSON.stringify(error)}`)
+            console.error(useNuxtApp().$i18n.t('authErrors.authBearerToken'), `${JSON.stringify(error)}`)
         }
     }
 
@@ -105,8 +103,8 @@ export const useAuthStore = defineStore('authStore', () => {
                     if (!isAuthStillLoading) {
                         resolve()
                     } else if (Date.now() - startTime > timeoutMs) {
-                        console.error(t('authErrors.tenSecondTimeout'))
-                        reject(new Error(t('authErrors.tenSecondTimeout')))
+                        console.error(useNuxtApp().$i18n.t('authErrors.tenSecondTimeout'))
+                        reject(new Error(useNuxtApp().$i18n.t('authErrors.tenSecondTimeout')))
                     }
                 },
                 { immediate: true }

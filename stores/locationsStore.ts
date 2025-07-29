@@ -1,7 +1,6 @@
 import { gql } from 'graphql-request'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import { useI18n } from 'vue-i18n'
 import { gqlClient } from '../utils/graphql.js'
 import { useLoadingStore } from './loadingStore.js'
 import type { Facility, FacilitySearchFilters } from '~/typedefs/gqlTypes.js'
@@ -28,7 +27,6 @@ export const useLocationsStore = defineStore('locationsStore', () => {
 })
 
 async function queryFacilities(): Promise<Facility[]> {
-    const { t } = useI18n()
     try {
         const searchFacilitiesData = {
             filters: {
@@ -53,9 +51,9 @@ async function queryFacilities(): Promise<Facility[]> {
 
         return result.data.facilities ?? []
     } catch (error) {
-        console.error(t('locationErrors.facilitiesDropdown'), ` ${JSON.stringify(error)}`)
+        console.error(useNuxtApp().$i18n.t('locationErrors.facilitiesDropdown'), ` ${JSON.stringify(error)}`)
         // eslint-disable-next-line no-alert
-        alert(t('locationErrors.gettingData'))
+        alert(useNuxtApp().$i18n.t('locationErrors.gettingData'))
         return []
     }
 }

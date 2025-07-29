@@ -1,7 +1,6 @@
 import { gql } from 'graphql-request'
 import { defineStore } from 'pinia'
 import { ref, type Ref } from 'vue'
-import { useI18n } from 'vue-i18n'
 import { gqlClient } from '../utils/graphql.js'
 import { useLoadingStore } from './loadingStore.js'
 import type { Locale,
@@ -108,7 +107,6 @@ export const useSearchResultsStore = defineStore('searchResultsStore', () => {
 
 async function queryProfessionals(searchSpecialties: Specialty[], searchLanguages: Locale[]):
 Promise<HealthcareProfessional[]> {
-    const { t } = useI18n()
     try {
         const searchProfessionalsData = {
             filters: {
@@ -136,15 +134,14 @@ Promise<HealthcareProfessional[]> {
         const professionalsSearchResult = serverResponse.data.healthcareProfessionals ?? []
         return professionalsSearchResult
     } catch (error) {
-        console.error(t('searchResultsErrors.gettingProfessionals'), ` ${JSON.stringify(error)}`)
+        console.error(useNuxtApp().$i18n.t('searchResultsErrors.gettingProfessionals'), ` ${JSON.stringify(error)}`)
         // eslint-disable-next-line no-alert
-        alert(t('searchResultsErrors.gettingData'))
+        alert(useNuxtApp().$i18n.t('searchResultsErrors.gettingData'))
         return []
     }
 }
 
 async function queryFacilities(healthcareProfessionalIds: string[], searchCity?: string): Promise<Facility[]> {
-    const { t } = useI18n()
     try {
         const searchFacilitiesData = {
             filters: {
@@ -178,9 +175,9 @@ async function queryFacilities(healthcareProfessionalIds: string[], searchCity?:
 
         return locationFilteredSearchResults
     } catch (error) {
-        console.error(t('searchResultsErrors.gettingFacilities'), `${JSON.stringify(error)}`)
+        console.error(useNuxtApp().$i18n.t('searchResultsErrors.gettingFacilities'), `${JSON.stringify(error)}`)
         // eslint-disable-next-line no-alert
-        alert(t('searchResultsErrors.gettingData'))
+        alert(useNuxtApp().$i18n.t('searchResultsErrors.gettingData'))
         return []
     }
 }

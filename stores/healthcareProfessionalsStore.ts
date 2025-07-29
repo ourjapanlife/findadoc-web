@@ -21,8 +21,6 @@ import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql'
 import { useLocaleStore } from '~/stores/localeStore'
 import type { ServerResponse } from '~/typedefs/serverResponse'
 
-const { t } = useI18n()
-
 export const useHealthcareProfessionalsStore = defineStore(
     'healthcareProfessionalsStore',
     () => {
@@ -147,7 +145,7 @@ export const useHealthcareProfessionalsStore = defineStore(
             )
 
             if (!currentProfessionalData) {
-                console.error(t('healthcareProfessionalsErrors.noCurrentProfessionalDataFound'), `${selectedHealthcareProfessionalId.value}`)
+                console.error(useNuxtApp().$i18n.t('healthcareProfessionalsErrors.noCurrentProfessionalDataFound'), `${selectedHealthcareProfessionalId.value}`)
                 return {
                     data: {
                         acceptedInsurance: [],
@@ -325,12 +323,12 @@ export async function getHealthcareProfessionalById(id: string): Promise<Healthc
         )
 
         if (!result.data?.healthcareProfessional) {
-            throw new Error(t('healthcareProfessionalsErrors.idDoesNotExist'))
+            throw new Error(useNuxtApp().$i18n.t('healthcareProfessionalsErrors.idDoesNotExist'))
         }
 
         return [result.data.healthcareProfessional]
     } catch (error: unknown) {
-        console.error(t('healthcareProfessionalsErrors.retrievingById'), `${id}: ${JSON.stringify(error)}`)
+        console.error(useNuxtApp().$i18n.t('healthcareProfessionalsErrors.retrievingById'), `${id}: ${JSON.stringify(error)}`)
         return []
     }
 }

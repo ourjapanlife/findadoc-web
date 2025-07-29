@@ -25,8 +25,6 @@ export enum SelectedModerationListView {
     Submissions = 'SUBMISSIONS'
 }
 
-const { t } = useI18n()
-
 export const useModerationSubmissionsStore = defineStore(
     'modSubmissionsStore',
     () => {
@@ -166,7 +164,7 @@ export const useModerationSubmissionsStore = defineStore(
 
         async function approveSubmission() {
             if (!selectedSubmissionId.value) {
-                console.error(t('moderationSubmissionErrors.unableToApprove'))
+                console.error(useNuxtApp().$i18n.t('moderationSubmissionErrors.unableToApprove'))
                 return
             }
 
@@ -181,7 +179,7 @@ export const useModerationSubmissionsStore = defineStore(
 
         async function rejectSubmission() {
             if (!selectedSubmissionId.value) {
-                console.error(t('moderationSubmissionErrors.unableToReject'))
+                console.error(useNuxtApp().$i18n.t('moderationSubmissionErrors.unableToReject'))
                 return
             }
 
