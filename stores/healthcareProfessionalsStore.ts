@@ -49,7 +49,8 @@ export const useHealthcareProfessionalsStore = defineStore(
             facilityIds: [] as string[],
             names: [] as LocalizedNameInput[],
             specialties: [] as Specialty[],
-            spokenLanguages: [] as Locale[]
+            spokenLanguages: [] as Locale[],
+            additionalInfoForPatients: ''
         })
 
         const selectedFacilities: Ref<Facility[]> = ref([])

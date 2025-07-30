@@ -60,6 +60,7 @@ import { useModerationScreenStore, ModerationScreen } from '~/stores/moderationS
 import { useModalStore } from '~/stores/modalStore'
 import { useModerationSubmissionsStore, SelectedModerationListView } from '~/stores/moderationSubmissionsStore'
 import { handleServerErrorMessaging } from '~/composables/handleServerErrorMessaging'
+import { Locale } from '~/typedefs/gqlTypes'
 
 const router = useRouter()
 
@@ -121,21 +122,36 @@ const validateFacilityFields = () => {
     return areAllTheFacilityFieldsValid
 }
 
+const validateHealthcareProfessionalFields = () => {
+    const healthcareProfessionalFields = healthcareProfessionalsStore.createHealthcareProfessionalSectionFields
+
+    const areFacilityIdsAdded = !!healthcareProfessionalFields.facilityIds.length
+    const areInsurancesSelected = !!healthcareProfessionalFields.acceptedInsurance!.length
+    const areDegreesSelected = !!healthcareProfessionalFields.degrees!.length
+    const areSpecialtiesSelected = !!healthcareProfessionalFields.spokenLanguages!.length
+    const areLocalesSelected = !!healthcareProfessionalFields.spokenLanguages!.length
+
+    const areAllFieldsValid = areFacilityIdsAdded
+      && areInsurancesSelected && areDegreesSelected
+      && areSpecialtiesSelected && areLocalesSelected
+
+    return areAllFieldsValid
+}
+
 const createFacilityOrHealthcareProfessional = async () => {
     if (moderationScreenStore.createHealthcareProfessionalScreenIsActive()) {
         const healthcareProfessionalCreationSectionFields = healthcareProfessionalsStore.createHealthcareProfessionalSectionFields
         const hasEnglishName
-            = healthcareProfessionalCreationSectionFields.names.some(name => name.locale === 'en_US')
+            = healthcareProfessionalCreationSectionFields.names.some(name => name.locale === Locale.EnUs)
 
-        const healthcareProfessionalCreationValues = Object.values(healthcareProfessionalCreationSectionFields)
-        const hasEmptyFields = healthcareProfessionalCreationValues.some(value => !value || !value.length)
+        const hasEmptyRequiredFields = validateHealthcareProfessionalFields()
 
         if (!hasEnglishName) {
             toast.error(t('modCreateFacilityOrHPTopbar.healthcareProfessionalEnglishNameRequired'))
             return
         }
 
-        if (hasEmptyFields) {
+        if (!hasEmptyRequiredFields) {
             toast.error(t('modCreateFacilityOrHPTopbar.hasEmptyFieldsHealthcareProfessional'))
             return
         }
