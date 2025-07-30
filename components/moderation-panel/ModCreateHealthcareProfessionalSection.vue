@@ -240,6 +240,12 @@
                 </li>
             </ol>
         </div>
+        <NoteInputField
+            v-model="createHealthcareProfessionalSectionFields.additionalInfoForPatients!"
+            :label="t('modHealthcareProfessionalSection.labelAdditionalNotesForPatients')"
+            :placeholder="t('modHealthcareProfessionalSection.placeholderAdditionalNotesForPatients')"
+            :required="false"
+        />
         <h2
             class="mod-healthcare-professional-section
                  my-3.5 text-start text-primary-text text-2xl font-bold font-sans leading-normal"
