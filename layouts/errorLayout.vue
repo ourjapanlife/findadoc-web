@@ -21,10 +21,12 @@
         />
         <SVGCharactersSachiQuestioning
             v-if="randomCharacter === CharacterOptions.SachiQuestioning"
-            class="mt-16 w-7/12 landscape:w-72 landscape:max-w-2xl" />
+            class="mt-16 w-7/12 landscape:w-72 landscape:max-w-2xl"
+        />
         <SVGCharactersChikoTherapyDogPrimary
             v-if="randomCharacter === CharacterOptions.ChikoTherapyDogPrimary"
-            class="mt-16 w-11/12 landscape:w-80 landscape:max-w-2xl" />
+            class="mt-16 w-11/12 landscape:w-80 landscape:max-w-2xl"
+        />
     </div>
 </template>
 
