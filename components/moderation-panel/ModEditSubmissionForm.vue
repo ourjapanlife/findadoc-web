@@ -152,7 +152,9 @@ import { Locale,
     type Submission,
     type MutationUpdateSubmissionArgs,
     type Facility,
-    type HealthcareProfessional } from '~/typedefs/gqlTypes'
+    type HealthcareProfessional,
+    type FacilitySubmission,
+    type HealthcareProfessionalSubmission } from '~/typedefs/gqlTypes'
 import { validateAddressLineEn,
     validateAddressLineJa,
     validateNameEn,
@@ -364,9 +366,7 @@ function initializeSubmissionFormValues(submissionData: Submission | undefined) 
     const submittedHealthcareProfessionalName
     = submissionData?.healthcareProfessionalName?.split(' ') ?? []
 
-    if (submissionData && submissionData.notes) {
-        currentSubmissionNotes.value = submissionData.notes
-    }
+    currentSubmissionNotes.value = submissionData?.notes ?? ''
 
     const facilitySectionFields = facilitiesStore.facilitySectionFields
     const healthcareProfessionalSections
@@ -456,30 +456,133 @@ function initializeSubmissionFormValues(submissionData: Submission | undefined) 
     = submissionData?.healthcareProfessionals?.[0]?.specialties ?? []
     healthcareProfessionalSections.spokenLanguages
     = submissionData?.spokenLanguages ?? []
+
+    nextTick(() => {
+        if (!submissionData) {
+            return
+        }
+
+        /* This constant holds the initial state of the submission form values.
+        *  It serves as the baseline to detect if any unsaved changes have occurred
+        */
+        const initialSubmissionFormValueSnapshot: Submission = {
+            ...submissionData,
+            healthcareProfessionalName: submissionData.healthcareProfessionalName ?? '',
+            googleMapsUrl: submissionData.googleMapsUrl ?? '',
+            spokenLanguages: submissionData.spokenLanguages ? [...submissionData.spokenLanguages] : []
+        } as Submission
+
+        /**
+         * Reconstruct the FacilitySubmission object from the current form field values
+         * (facilitySectionFields) instead of using submissionData.facility directly.
+         * This ensures that we capture the latest edited state for comparison or submission.
+         */
+        const reconstructedFacilitySubmission: FacilitySubmission = {
+            id: submissionData?.facility?.id || '',
+            nameEn: facilitiesStore.facilitySectionFields.nameEn || '',
+            nameJa: facilitiesStore.facilitySectionFields.nameJa || '',
+            mapLatitude: parseFloat(facilitiesStore.facilitySectionFields.mapLatitude) || 0,
+            mapLongitude: parseFloat(facilitiesStore.facilitySectionFields.mapLongitude) || 0,
+            contact: {
+                phone: facilitiesStore.facilitySectionFields.phone || '',
+                email: facilitiesStore.facilitySectionFields.email || '',
+                website: facilitiesStore.facilitySectionFields.website || '',
+                googleMapsUrl: facilitiesStore.facilitySectionFields.googlemapsURL || '',
+                address: {
+                    postalCode: facilitiesStore.facilitySectionFields.postalCode || '',
+                    prefectureEn: facilitiesStore.facilitySectionFields.prefectureEn || '',
+                    cityEn: facilitiesStore.facilitySectionFields.cityEn || '',
+                    addressLine1En: facilitiesStore.facilitySectionFields.addressLine1En || '',
+                    addressLine2En: facilitiesStore.facilitySectionFields.addressLine2En || '',
+                    prefectureJa: facilitiesStore.facilitySectionFields.prefectureJa || '',
+                    cityJa: facilitiesStore.facilitySectionFields.cityJa || '',
+                    addressLine1Ja: facilitiesStore.facilitySectionFields.addressLine1Ja || '',
+                    addressLine2Ja: facilitiesStore.facilitySectionFields.addressLine2Ja || '',
+                    __typename: 'PhysicalAddress' as const
+                },
+                __typename: 'Contact' as const
+            },
+            healthcareProfessionalIds: [...facilitiesStore.facilitySectionFields.healthcareProfessionalIds],
+            __typename: 'FacilitySubmission' as const
+        }
+
+        /**
+         * Reconstruct the HealthcareProfessionalSubmission object from the current form field values
+         * (healthcareProfessionalSections) instead of using submissionData.healthcareProfessional directly.
+         * This ensures that we capture the latest edited state for comparison or submission.
+         */
+        const reconstructedHealthcareProfessionalSubmission: HealthcareProfessionalSubmission[] = [{
+            id: healthcareProfessionalSections.id || undefined,
+            names: healthcareProfessionalSections.names.map(name => ({ ...name })),
+            acceptedInsurance: [...healthcareProfessionalSections.acceptedInsurance],
+            additionalInfoForPatients: healthcareProfessionalSections.additionalInfoForPatients ?? '',
+            degrees: [...healthcareProfessionalSections.degrees],
+            specialties: [...healthcareProfessionalSections.specialties],
+            spokenLanguages: [...healthcareProfessionalSections.spokenLanguages],
+            facilityIds: [...healthcareProfessionalSections.facilityIds],
+            __typename: 'HealthcareProfessionalSubmission' as const
+        }]
+
+        initialSubmissionFormValueSnapshot.facility = reconstructedFacilitySubmission
+        initialSubmissionFormValueSnapshot.healthcareProfessionals = reconstructedHealthcareProfessionalSubmission
+        initialSubmissionFormValueSnapshot.notes = currentSubmissionNotes.value
+
+        submissionBeforeChanges.value = initialSubmissionFormValueSnapshot
+    })
 }
 
-// Assume you already have:
-// • isEditSubmissionFormInitialized
-// • submissionFormFieldsBeforeChanges (“before” snapshot)
-// • facilitiesStore.facilitySectionFields → facility
-// • healthcareProfessionalsStore.healthcareProfessionalSectionFields → hp
-// • arraysAreEqual
+/* Assume you already have:
+* isEditSubmissionFormInitialized
+* submissionFormFieldsBeforeChanges (“before” snapshot)
+* facilitiesStore.facilitySectionFields → facility
+* healthcareProfessionalsStore.healthcareProfessionalSectionFields → hp
+* arraysAreEqual
+*/
 const hasFacilityChanges = (submissionBeforeChangesComparison: Submission | undefined) => {
     const facilitySectionFields = facilitiesStore.facilitySectionFields
 
     if (!submissionBeforeChangesComparison) return false
 
     return (
-        submissionBeforeChangesComparison?.facility?.nameEn !== facilitySectionFields.nameEn
-        || submissionBeforeChangesComparison?.facility?.nameJa !== facilitySectionFields.nameJa
-        || submissionBeforeChangesComparison?.facility?.contact?.phone !== facilitySectionFields.phone
-        || (submissionBeforeChangesComparison?.facility?.contact?.email
-          && submissionBeforeChangesComparison?.facility?.contact?.email !== facilitySectionFields.email)
-        || (submissionBeforeChangesComparison?.facility?.contact?.website
-          && submissionBeforeChangesComparison?.facility?.contact?.website !== facilitySectionFields.website)
-        || submissionBeforeChangesComparison?.facility?.contact?.address?.postalCode !== facilitySectionFields.postalCode
-        || !arraysAreEqual(submissionBeforeChangesComparison?.facility?.healthcareProfessionalIds,
-                           facilitySectionFields.healthcareProfessionalIds)
+        (submissionBeforeChangesComparison?.facility?.nameEn ?? '') !== (facilitySectionFields.nameEn ?? '')
+        || (submissionBeforeChangesComparison?.facility?.nameJa ?? '') !== (facilitySectionFields.nameJa ?? '')
+        || (submissionBeforeChangesComparison?.facility?.contact?.phone ?? '') !== (facilitySectionFields.phone ?? '')
+        || (submissionBeforeChangesComparison?.facility?.contact?.email ?? '') !== (facilitySectionFields.email ?? '')
+        || (submissionBeforeChangesComparison?.facility?.contact?.website ?? '') !== (facilitySectionFields.website ?? '')
+        || (submissionBeforeChangesComparison?.facility?.contact?.googleMapsUrl ?? '')
+        !== (facilitySectionFields.googlemapsURL ?? '')
+        || (submissionBeforeChangesComparison?.facility?.contact?.address?.postalCode ?? '')
+        !== (facilitySectionFields.postalCode ?? '')
+        || (submissionBeforeChangesComparison?.facility?.contact?.address?.prefectureEn ?? '')
+        !== (facilitySectionFields.prefectureEn ?? '')
+        || (submissionBeforeChangesComparison?.facility?.contact?.address?.cityEn ?? '')
+        !== (facilitySectionFields.cityEn ?? '')
+        || (submissionBeforeChangesComparison?.facility?.contact?.address?.addressLine1En ?? '')
+        !== (facilitySectionFields.addressLine1En ?? '')
+        || (submissionBeforeChangesComparison?.facility?.contact?.address?.addressLine2En ?? '')
+        !== (facilitySectionFields.addressLine2En ?? '')
+        || (submissionBeforeChangesComparison?.facility?.contact?.address?.prefectureJa ?? '')
+        !== (facilitySectionFields.prefectureJa ?? '')
+        || (submissionBeforeChangesComparison?.facility?.contact?.address?.cityJa ?? '')
+        !== (facilitySectionFields.cityJa ?? '')
+        || (submissionBeforeChangesComparison?.facility?.contact?.address?.addressLine1Ja ?? '')
+        !== (facilitySectionFields.addressLine1Ja ?? '')
+        || (submissionBeforeChangesComparison?.facility?.contact?.address?.addressLine2Ja ?? '')
+        !== (facilitySectionFields.addressLine2Ja ?? '')
+        || (submissionBeforeChangesComparison?.facility?.mapLatitude
+            ? submissionBeforeChangesComparison?.facility?.mapLatitude.toString()
+            : '')
+          !== (facilitySectionFields.mapLatitude
+              ? facilitySectionFields.mapLatitude.toString()
+              : '')
+            || (submissionBeforeChangesComparison?.facility?.mapLongitude
+                ? submissionBeforeChangesComparison?.facility?.mapLongitude.toString()
+                : '')
+              !== (facilitySectionFields.mapLongitude
+                  ? facilitySectionFields.mapLongitude.toString()
+                  : '')
+                || !arraysAreEqual(submissionBeforeChangesComparison?.facility?.healthcareProfessionalIds ?? [],
+                                   facilitySectionFields.healthcareProfessionalIds)
     )
 }
 
@@ -513,11 +616,25 @@ const hasHealthcareProfessionalChanges = (submissionBeforeChangesComparison: Sub
             submissionBeforeChangesComparison?.healthcareProfessionals?.[0]?.facilityIds || [],
             hpSectionFields.facilityIds
         )
+        || ((submissionBeforeChangesComparison?.healthcareProfessionals?.[0]?.additionalInfoForPatients ?? '')
+          !== (hpSectionFields.additionalInfoForPatients ?? ''))
     )
 }
 
-const formHasUnsavedChanges = () => hasFacilityChanges(submissionBeforeChanges.value)
-  || hasHealthcareProfessionalChanges(submissionBeforeChanges.value)
+const formHasUnsavedChanges = () => {
+    const initialSubmission = submissionBeforeChanges.value
+    if (!initialSubmission) {
+        return false
+    }
+
+    const hasNotesChanges = (initialSubmission.notes ?? '') !== currentSubmissionNotes.value
+    const facilityChanges = hasFacilityChanges(initialSubmission)
+    const hpChanges = hasHealthcareProfessionalChanges(initialSubmission)
+
+    const hasChanges = facilityChanges || hpChanges || hasNotesChanges
+
+    return hasChanges
+}
 
 async function submitUpdatedSubmission(e: Event) {
     // Prevent form submission before validation is completed.
