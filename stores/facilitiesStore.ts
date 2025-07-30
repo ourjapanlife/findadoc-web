@@ -296,7 +296,7 @@ async function queryFacilities(): Promise<Facility[]> {
 
         return response.data ?? []
     } catch (error) {
-        console.error(`Error querying the facilities: ${JSON.stringify(error)}`)
+        console.error(useNuxtApp().$i18n.t('facilitiesErrors.facilityQuery'), `${JSON.stringify(error)}`)
         return []
     }
 }

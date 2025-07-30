@@ -122,7 +122,7 @@ export const useModerationSubmissionsStore = defineStore(
 
         async function approveSubmission() {
             if (!selectedSubmissionId.value) {
-                console.error('Unable to approve submission. Submission ID is required.')
+                console.error(useNuxtApp().$i18n.t('moderationSubmissionErrors.unableToApprove'))
                 return
             }
 
@@ -137,7 +137,7 @@ export const useModerationSubmissionsStore = defineStore(
 
         async function rejectSubmission() {
             if (!selectedSubmissionId.value) {
-                console.error('Unable to reject submission. Submission ID is required.')
+                console.error(useNuxtApp().$i18n.t('moderationSubmissionErrors.unableToReject'))
                 return
             }
 
@@ -196,7 +196,7 @@ async function querySubmissions(): Promise<Submission[]> {
 
         return serverResponse?.data ?? []
     } catch (error) {
-        console.error(`Error querying the submissions: ${JSON.stringify(error)}`)
+        console.error(useNuxtApp().$i18n.t('moderationSubmissionsErrors.queryError'), ` ${JSON.stringify(error)}`)
         return []
     }
 }

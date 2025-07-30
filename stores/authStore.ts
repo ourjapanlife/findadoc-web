@@ -48,7 +48,7 @@ export const useAuthStore = defineStore('authStore', () => {
         } catch (error) {
             //set the loading visual state back to normal
             loadingStore.setIsLoading(false)
-            console.error(`Error logging in: ${JSON.stringify(error)}`)
+            console.error(useNuxtApp().$i18n.t('authErrors.loggingIn'), `${JSON.stringify(error)}`)
         }
     }
 
@@ -85,7 +85,7 @@ export const useAuthStore = defineStore('authStore', () => {
 
             return token
         } catch (error) {
-            console.error(`Error getting auth bearer token: ${JSON.stringify(error)}`)
+            console.error(useNuxtApp().$i18n.t('authErrors.authBearerToken'), `${JSON.stringify(error)}`)
         }
     }
 
@@ -103,8 +103,8 @@ export const useAuthStore = defineStore('authStore', () => {
                     if (!isAuthStillLoading) {
                         resolve()
                     } else if (Date.now() - startTime > timeoutMs) {
-                        console.error('Auth0 loading timed out after 10 seconds')
-                        reject(new Error('Auth0 loading timed out after 10 seconds'))
+                        console.error(useNuxtApp().$i18n.t('authErrors.tenSecondTimeout'))
+                        reject(new Error(useNuxtApp().$i18n.t('authErrors.tenSecondTimeout')))
                     }
                 },
                 { immediate: true }
