@@ -374,5 +374,14 @@
     "title": "404 - Chẩn đoán: Không tìm thấy trang",
     "description": "Trang này đã không vượt qua kiểm tra sức khỏe. Hãy để chúng tôi đưa bạn đến một trang khỏe mạnh!",
     "returnHome": "Về trang chủ"
+  },
+  "modListContainerItem": {
+    "newSubmission": "New",
+    "underReviewSubmission": "Under Review",
+    "approvedSubmission": "Approved",
+    "rejectedSubmission": "Rejected",
+    "review": "Review",
+    "createdDate": "Created on",
+    "updatedDate": "Updated last"
   }
 }

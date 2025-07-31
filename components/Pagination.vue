@@ -1,5 +1,5 @@
 <template>
-    <div class="flex items-center justify-center gap-2 mt-4">
+    <div class="flex items-center justify-center gap-2 py-2">
         <!-- First page -->
         <button
             :disabled="currentPage === 1"
