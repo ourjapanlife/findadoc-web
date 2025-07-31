@@ -11,6 +11,14 @@ export function hasLatinCharacters(name: string) {
     return /[a-zA-Z]/g.test(name)
 }
 
+export function hasOnlyValidJapaneseAndLatinCharacters(name: string): boolean {
+    const compat = name.normalize('NFKC')
+    const normalized = compat.normalize('NFC')
+
+    const validChars = /^[A-Za-z0-9 \-\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FFF]+$/
+    return validChars.test(normalized)
+}
+
 export function isInvalidName(name: string) {
     // eslint-disable-next-line no-useless-escape
     return /[~!#$%&*+=[\]\\;/{}|:<>\?0-9]+/g.test(name)

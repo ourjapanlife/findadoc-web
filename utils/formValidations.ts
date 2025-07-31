@@ -1,5 +1,5 @@
 import { hasJapaneseCharacters,
-    hasLatinCharacters,
+    hasOnlyValidJapaneseAndLatinCharacters,
     isValidEmail,
     isValidPhoneNumber,
     isValidWebsite,
@@ -22,13 +22,17 @@ export function validateNameEn(nameEn: string): boolean {
 }
 
 export function validateNameJa(nameJa: string): boolean {
-    if (nameJa.length < 1 || nameJa.length > 128) {
+    // 1) Compatibility‐normalize (NFKC) folds full-width ↔ ASCII
+    // 2) Canonical‐normalize (NFC) composes any decomposed sequences
+    const normalized = nameJa.normalize('NFKC').normalize('NFC')
+
+    // 3) Length check on the *normalized* text
+    if (normalized.length < 1 || normalized.length > 128) {
         return false
     }
 
-    const containsLatinCharacters: boolean = hasLatinCharacters(nameJa)
-
-    if (containsLatinCharacters) {
+    // 4) Character‐set check on that same normalized text
+    if (!hasOnlyValidJapaneseAndLatinCharacters(normalized)) {
         return false
     }
 
