@@ -69,7 +69,7 @@ describe('Moderation create facility form', () => {
 
         it('should be able to type in all input fields and update the store values', () => {
             cy.get('[data-testid="mod-facility-section-nameEn"]').find('input').clear().type('Hospital')
-            cy.get('[data-testid="mod-facility-section-nameJa"]').find('input').clear().type('立川中央病院')
+            cy.get('[data-testid="mod-facility-section-nameJa"]').find('input').clear().type('ヒー 荒美 Sakura-3')
             cy.get('[data-testid="mod-facility-section-phone"]').find('input').clear().type('08080939393')
             cy.get('[data-testid="mod-facility-section-email"]').find('input').clear().type('example@mail.com')
             cy.get('[data-testid="mod-facility-section-website"]').find('input').clear().type('http://example.com')
@@ -91,7 +91,7 @@ describe('Moderation create facility form', () => {
 
         it('should have updated the store values', () => {
             expect(facilitiesStore.createFacilityFields.nameEn).to.equal('Hospital')
-            expect(facilitiesStore.createFacilityFields.nameJa).to.equal('立川中央病院')
+            expect(facilitiesStore.createFacilityFields.nameJa).to.equal('ヒー 荒美 Sakura-3')
             expect(facilitiesStore.createFacilityFields.contact.phone).to.equal('08080939393')
             expect(facilitiesStore.createFacilityFields.contact.email).to.equal('example@mail.com')
             expect(facilitiesStore.createFacilityFields.contact.website).to.equal('http://example.com')
@@ -146,7 +146,7 @@ describe('Moderation create facility form', () => {
                 .contains('Invalid English Name')
 
             cy.get('[data-testid="mod-facility-section-nameJa"]')
-                .find('input').clear().type('Tachikawa Hospital').realPress('Tab')
+                .find('input').clear().type('Tachikawa Hospital!').realPress('Tab')
             cy.get('[data-testid="mod-facility-section-nameJa"]')
                 .find('p').should('exist').contains('Invalid Japanese Name')
 
