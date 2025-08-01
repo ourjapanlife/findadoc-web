@@ -94,11 +94,11 @@ export const useFacilitiesStore = defineStore('facilitiesStore', () => {
         facilitySectionFields.value.prefectureEn = data.contact?.address.prefectureEn
         facilitySectionFields.value.cityEn = data.contact?.address.cityEn
         facilitySectionFields.value.addressLine1En = data.contact?.address.addressLine1En
-        facilitySectionFields.value.addressLine2En = data.contact?.address.addressLine2En
+        facilitySectionFields.value.addressLine2En = data.contact?.address.addressLine2En ?? ''
         facilitySectionFields.value.prefectureJa = data.contact?.address.prefectureJa
         facilitySectionFields.value.cityJa = data.contact?.address.cityJa
         facilitySectionFields.value.addressLine1Ja = data.contact?.address.addressLine1Ja
-        facilitySectionFields.value.addressLine2Ja = data.contact?.address.addressLine2Ja
+        facilitySectionFields.value.addressLine2Ja = data.contact?.address.addressLine2Ja ?? ''
         facilitySectionFields.value.googlemapsURL = data.contact?.googleMapsUrl
         facilitySectionFields.value.healthcareProfessionalIds = data.healthcareProfessionalIds
         facilitySectionFields.value.mapLatitude = data.mapLatitude.toString()
