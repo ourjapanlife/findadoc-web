@@ -200,7 +200,7 @@ const facilityHasUnsavedChanges = (): boolean => {
         originalFacilityRefsValue.value
     )
 
-    return Object.keys(updatedFields).length > 0
+    return !!Object.keys(updatedFields).length
 }
 
 const healthcareProfessionalHasUnsavedChanges = () => {
