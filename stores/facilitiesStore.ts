@@ -198,11 +198,6 @@ export const useFacilitiesStore = defineStore('facilitiesStore', () => {
         )
 
         if (!serverResponse.errors?.length) {
-            // This block prevents a race condition
-            if (selectedFacilityData.value === facilitySectionFieldsBeforeMutation) {
-                selectedFacilityData.value = serverResponse.data
-            }
-
             initializeFacilitySectionValues(serverResponse.data)
 
             // This block prevents a race condition: clear the array only if relations haven't changed while awaiting response
