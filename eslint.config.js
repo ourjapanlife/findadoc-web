@@ -5,6 +5,7 @@ import stylistic from '@stylistic/eslint-plugin'
 import pluginCypress from 'eslint-plugin-cypress/flat'
 import pluginVitest from '@vitest/eslint-plugin'
 import pluginVue from 'eslint-plugin-vue'
+import pluginJest from 'eslint-plugin-jest'
 import withNuxt from './.nuxt/eslint.config.mjs'
 
 export default withNuxt(
@@ -113,7 +114,25 @@ export default withNuxt(
             '@typescript-eslint/no-unused-expressions': 'off',
             'no-unused-expressions': 'off'
         }
+    },
+    // Linting for Jest (https://github.com/jest-community/eslint-plugin-jest)
+    {
+        files: ['test/jest/**/*'],
+        plugins: {
+            jest: pluginJest
+        },
+        languageOptions: {
+            globals: {
+                ...globals.jest
+            }
+        },
+        rules: {
+            ...pluginJest.configs.recommended.rules,
+            '@typescript-eslint/no-unused-expressions': 'off',
+            'no-unused-expressions': 'off'
+        }
     }
+
 )
     .override('nuxt/stylistic', {
         ignores: ['./i18n/index.ts'],
