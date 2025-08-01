@@ -2,7 +2,6 @@
   "compilerOptions": {
     "composite": true,
      "noEmit": false,
-    "types": ["jest", "node"]
   },
   "include": ["**/*.jest.test.ts"]
 }
