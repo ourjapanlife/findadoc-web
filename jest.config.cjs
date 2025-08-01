@@ -1,6 +1,5 @@
-import type { Config } from 'jest'
-
-const config: Config = {
+Object.defineProperty(exports, '__esModule', { value: true })
+const config = {
     preset: 'ts-jest/presets/js-with-ts-esm',
     testEnvironment: 'jsdom',
     transform: {
@@ -29,5 +28,4 @@ const config: Config = {
         customExportConditions: ['node', 'node-addons']
     }
 }
-
-export default config
+exports.default = config
