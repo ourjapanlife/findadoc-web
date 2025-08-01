@@ -1,9 +1,37 @@
 import type {
     Contact, ContactInput, Facility,
     MutationUpdateFacilityArgs, PhysicalAddress,
-    PhysicalAddressInput
+    PhysicalAddressInput,
+    Relationship
 } from '~/typedefs/gqlTypes'
-import type { useFacilitiesStore } from '~/stores/facilitiesStore'
+
+export type FacilitySectionFields = {
+    // contactFields
+    nameEn: string
+    nameJa: string
+    phone: string
+    website?: string
+    email?: string
+
+    // addressFields
+    postalCode: string
+    prefectureEn: string
+    cityEn: string
+    addressLine1En: string
+    addressLine2En: string
+    prefectureJa: string
+    cityJa: string
+    addressLine1Ja: string
+    addressLine2Ja: string
+
+    // googleMapsFields
+    googlemapsURL: string
+    mapLatitude: string
+    mapLongitude: string
+
+    healthcareProfessionalIds: string[]
+    healthProfessionalsRelations: Relationship[]
+}
 
 export function mapFacilityAddressToInput(address: PhysicalAddress): PhysicalAddressInput {
     return {
@@ -30,7 +58,7 @@ export function mapFacilityContactToInput(contact: Contact): ContactInput {
 }
 
 export function getChangedFacilityFieldsForUpdate(
-  current: ReturnType<typeof useFacilitiesStore>['facilitySectionFields'],
+  current: FacilitySectionFields,
   original: Facility
 ): MutationUpdateFacilityArgs['input'] {
     const updatedFields: MutationUpdateFacilityArgs['input'] = {}
@@ -39,10 +67,14 @@ export function getChangedFacilityFieldsForUpdate(
     if (current.nameJa !== original.nameJa) updatedFields.nameJa = current.nameJa
 
     const currentLatitude = parseFloat(current.mapLatitude)
-    if (currentLatitude !== original.mapLatitude) updatedFields.mapLatitude = currentLatitude
+    if (!isNaN(currentLatitude) && currentLatitude !== original.mapLatitude) {
+        updatedFields.mapLatitude = currentLatitude
+    }
 
     const currentLongitude = parseFloat(current.mapLongitude)
-    if (currentLongitude !== original.mapLongitude) updatedFields.mapLongitude = currentLongitude
+    if (!isNaN(currentLongitude) && currentLongitude !== original.mapLongitude) {
+        updatedFields.mapLongitude = currentLongitude
+    }
 
     if (current.healthProfessionalsRelations?.length) {
         updatedFields.healthcareProfessionalIds = current.healthProfessionalsRelations
@@ -61,6 +93,20 @@ export function getChangedFacilityFieldsForUpdate(
         updatedAddress[key] = current[key] ?? ''
     }
 
+    /**
+ * Checks if there is any contact or address information filled out.
+ * Returns true if at least one of the contact fields or address fields is not empty.
+ * This helps prevent sending an unnecessary Contact object in the update
+ * when all fields are empty or unchanged.
+ */
+    function isContactInfoPresent(contact: FacilitySectionFields): boolean {
+        return (contact.phone ?? '') !== ''
+          || (contact.email ?? '') !== ''
+          || (contact.website ?? '') !== ''
+          || (contact.googlemapsURL ?? '') !== ''
+          || requiredAddressKeys.some(key => (contact[key] ?? '') !== '')
+    }
+
     const contactChanged
     = current.phone !== originalContactInput.phone
       || current.googlemapsURL !== originalContactInput.googleMapsUrl
@@ -70,7 +116,7 @@ export function getChangedFacilityFieldsForUpdate(
           key => updatedAddress[key] !== originalContactInput.address[key]
       )
 
-    if (contactChanged) {
+    if (contactChanged && isContactInfoPresent(current)) {
         const updatedContact: ContactInput = {
             phone: current.phone,
             googleMapsUrl: current.googlemapsURL,
