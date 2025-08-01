@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { computed } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import { auth0 } from '../utils/auth0.js'
 import { useLoadingStore } from './loadingStore.js'
 import { useCookie, useRuntimeConfig } from '#app'
@@ -7,10 +8,21 @@ import { useCookie, useRuntimeConfig } from '#app'
 export const useAuthStore = defineStore('authStore', () => {
     const runtimeConfig = useRuntimeConfig()
     const isTestingMode = !!runtimeConfig.public.isTestingMode
+    const route = useRoute()
+    const router = useRouter()
 
     const userId = computed(() => {
-        if (isTestingMode) return useCookie('id_token').value ?? 'unknown user'
-        return auth0?.user.value?.nickname ?? 'unknown user'
+        if (isTestingMode)
+            //we use the id_token cookie name for testing, but it's long so we just use the first 5 characters
+            return useCookie('id_token').value?.substring(0, 5) ?? 'unknown user'
+        return auth0.user.value?.['https://findadoc.jp/user_metadata']?.displayName ?? auth0?.user.value?.name ?? 'unknown user'
+    })
+
+    const userProfileImage = computed(() => {
+        // If no source is returned, return an empty string so we can display the placeholder profile icon
+        if (isTestingMode)
+            return useCookie('id_token').value?.substring(0, 5) ?? ''
+        return auth0?.user.value?.['https://findadoc.jp/user_metadata']?.displayImage ?? auth0?.user.value?.picture ?? ''
     })
 
     const isLoadingAuth = computed(() => auth0?.isLoading.value ?? true)
@@ -100,5 +112,35 @@ export const useAuthStore = defineStore('authStore', () => {
         })
     }
 
-    return { userId, isLoggedIn, isLoadingAuth, login, logout, getAuthBearerToken }
+    const redirectIfUnauthenticatedUser = async (
+        routePath: string,
+        doesTheUserHaveAccess: Ref<boolean>
+    ) => {
+        // This promise is here to make the Suspense component work.
+        // It doesn't do anything, but <Suspense> requires an awaited setup method
+        await new Promise(resolve => {
+            //ignore if route change is unrelated to moderation
+            const needsRedirectDueToAccess = route.path.startsWith(routePath)
+              && !isLoggedIn.value && !isLoadingAuth.value
+            if (needsRedirectDueToAccess) {
+                // give the user a bit of time to read the message before redirecting
+                doesTheUserHaveAccess.value = false
+                setTimeout(() => {
+                    // Redirect to login page if user is not logged in
+                    router.push('/')
+                }, 10000)
+            }
+
+            resolve(true)
+        })
+    }
+
+    return { userId,
+        userProfileImage,
+        isLoggedIn,
+        isLoadingAuth,
+        login,
+        logout,
+        getAuthBearerToken,
+        redirectIfUnauthenticatedUser }
 })

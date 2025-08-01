@@ -4,7 +4,7 @@
             <ModDashboardLeftNavbar />
         </div>
         <div v-if="moderationScreenStore.editSubmissionScreenIsActive()">
-            <ModSubmissionLeftNavbar />
+            NAVBAR EDIT SUBMISSION PLACEHOLDER
         </div>
         <div v-if="moderationScreenStore.editHealthcareProfessionalScreenIsActive()">
             <p class="text-xl font-bold">
@@ -13,7 +13,7 @@
         </div>
         <div v-if="moderationScreenStore.editFacilityScreenIsActive()">
             <p class="text-xl font-bold">
-                NAVBAR REVIEW FACILITY PLACEHOLDER
+                NAVBAR EDIT FACILITY PLACEHOLDER
             </p>
         </div>
         <div v-if="moderationScreenStore.createHealthcareProfessionalScreenIsActive()">

@@ -54,7 +54,7 @@
 import { ref, type Ref, onMounted, onUnmounted } from 'vue'
 import { useModerationSubmissionsStore } from '~/stores/moderationSubmissionsStore'
 import { ModHealthcareProfessionalsLeftNavbarSections } from '~/stores/moderationScreenStore'
-import { handleScroll, observeFormSections, scrollToSectionOfForm, type SectionInformation } from '~/utils/handleScroll'
+import { handleScroll, observeFormSections, scrollToSectionOfForm, type SectionInformation } from '~/composables/handleScroll'
 
 const { t } = useI18n()
 

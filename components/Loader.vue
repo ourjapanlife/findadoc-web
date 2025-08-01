@@ -1,6 +1,6 @@
 <template>
     <div
-        v-show="store.isLoading"
+        v-show="loadingStore.isLoading"
         class="h-full w-full bg-gray-200/70 z-10 absolute"
     >
         <div class="flex justify-center align-middle mt-12">
@@ -21,5 +21,5 @@
 import { useLoadingStore } from '../stores/loadingStore.js'
 import SVGLoadingIcon from '~/assets/icons/loading.svg'
 
-const store = useLoadingStore()
+const loadingStore = useLoadingStore()
 </script>

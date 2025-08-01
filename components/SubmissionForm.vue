@@ -109,7 +109,7 @@
             </select>
             <span
                 class="mb-2 text-primary-text text-sm font-normal font-sans"
-            >{{ t('submitPage.spokenLanguage2') }}</span>
+            >{{ t('submitPage.spokenLanguage2') + " (" + t('submitPage.optional') + ")" }}</span>
             <p
                 v-show="!isValidInput.secondarySpokenLanguage.value"
                 class="text-error text-xs font-sans"
@@ -122,7 +122,7 @@
                 class="mb-5 px-3 py-3.5 w-96 h-12 bg-primary-text-inverted rounded-lg border border-primary-text-muted
                         text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
                 :placeholder="t('submitPage.selectLanguage2')"
-                @change="initialValidationCheck(selectLanguage1, 'secondaryLanguage')"
+                @change="selectLanguage2 ? initialValidationCheck(selectLanguage2, 'secondaryLanguage') : null"
             >
                 <option
                     v-for="(locale, index) in localeStore.localeDisplayOptions"
@@ -134,7 +134,7 @@
             </select>
             <span
                 class="mb-2 text-primary-text text-sm font-normal font-sans"
-            >{{ t('submitPage.otherNotes') }}({{ t('submitPage.optional') }})</span>
+            >{{ t('submitPage.otherNotes') + " (" + t('submitPage.optional') + ")" }}</span>
             <textarea
                 v-model="otherNotes"
                 data-testid="submit-input-notes"
@@ -157,21 +157,15 @@
 
 <script lang="ts" setup>
 import { ref, watch, nextTick, type Ref, onMounted } from 'vue'
-import { type ToastInterface, useToast } from 'vue-toastification'
+import { useToast } from 'vue-toastification'
 import * as validations from '../utils/formValidations'
 import { useSubmissionStore } from '~/stores/submissionStore'
 import type { Locale, MutationCreateSubmissionArgs } from '~/typedefs/gqlTypes'
 import { useLocaleStore } from '~/stores/localeStore'
 import { useI18n } from '#imports'
-import { handleServerErrorMessaging } from '~/utils/handleServerErrorMessaging'
+import { handleServerErrorMessaging } from '~/composables/handleServerErrorMessaging'
 
-/**
-This initalizes the variable that needs to be set on mount.
-If this is set as a const the build will fail since the plugin
-for vue-toastification is only available onMounted of the component
-through Nuxt
- */
-let toast: ToastInterface
+const toast = useToast()
 const { t } = useI18n()
 
 const submissionStore = useSubmissionStore()
@@ -213,8 +207,9 @@ const validateFields = () => {
     validationCheckedPreviously.primarySpokenLangauge.value = true
     isValidInput.primarySpokenLangauge.value = validations.validateFirstSpokenLanguage(selectLanguage1.value)
     validationCheckedPreviously.secondarySpokenLanguage.value = true
-    isValidInput.secondarySpokenLanguage.value
-        = validations.validateUserSubmittedLastName(selectLanguage2.value)
+    isValidInput.secondarySpokenLanguage.value = selectLanguage2.value
+        ? validations.validateUserSubmittedLastName(selectLanguage2.value)
+        : true
 
     if (
         !isValidInput.googleMapsUrl.value
@@ -329,13 +324,6 @@ watch(() => selectLanguage2.value, newValue => {
 })
 
 onMounted(async () => {
-    /**
-    Set the variable to useToast when the compoenet mounts
-    since vue-taostification is only available on the client.
-    If not done this way the build fails
-     */
-    toast = useToast()
-
     resetForm()
 
     /**  `await nextTick()` waits until the next DOM update cycle, allowing any changes made to reactive data to be applied

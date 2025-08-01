@@ -11,18 +11,18 @@ describe('LocalStore', () => {
     it('should initialize with default values', () => {
         const localeStore = useLocaleStore()
 
-        expect(localeStore.locale.code).to.equal(Locale.EnUs)
-        expect(localeStore.locale.simpleText).to.equal('English')
-        expect(localeStore.locale.displayText).to.equal('English (US)')
+        expect(localeStore.activeLocale.code).to.equal(Locale.EnUs)
+        expect(localeStore.activeLocale.simpleText).to.equal('English')
+        expect(localeStore.activeLocale.displayText).to.equal('English (US)')
     })
 
     it('should update locale when new locale is passed in setLocale', () => {
         const localeStore = useLocaleStore()
         localeStore.setLocale(Locale.JaJp)
 
-        expect(localeStore.locale.code).to.equal(Locale.JaJp)
-        expect(localeStore.locale.simpleText).to.equal('日本語')
-        expect(localeStore.locale.displayText).to.equal('日本語 (Japan)')
+        expect(localeStore.activeLocale.code).to.equal(Locale.JaJp)
+        expect(localeStore.activeLocale.simpleText).to.equal('日本語')
+        expect(localeStore.activeLocale.displayText).to.equal('日本語 (Japan)')
     })
 
     it('should return formatted language text when spokenLanguages are provided', () => {

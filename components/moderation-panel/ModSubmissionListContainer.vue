@@ -21,7 +21,7 @@
             class="grid grid-cols-subgrid col-span-4"
         >
             <div
-                v-for="(submission, index) in modSubmissionsListStore.filteredSubmissionDataForListComponent"
+                v-for="(submission, index) in paginatedSubmissions"
                 :key="index"
                 class="grid grid-cols-subgrid col-span-4 bg-accent-bg"
             >
@@ -32,17 +32,25 @@
                 >
                     <NuxtLink
                         :to="`/moderation/edit-submission/${submission.id}`"
-                        class="grid grid-cols-subgrid col-span-4 bg-primary-text-muted p-1 hover:bg-primary"
+                        class="grid grid-cols-subgrid col-span-4 p-1 hover:bg-primary"
                     >
-                        <span class="text-start">{{ index + 1 }}</span>
-                        <span class="text-start">
+                        <span class="text-skip">
+                            {{ getGlobalRowNumber(currentSubmissionsPage, submissionsPerPage, index) }}
+                        </span>
+                        <span class="text-skip">
                             {{ submission.healthcareProfessionalName || t("modPanelSubmissionList.facilityNameUnknown") }}
                         </span>
-                        <span class="text-start">{{ convertDateToLocalTime(submission.updatedDate) }}</span>
-                        <span class="text-start">{{ convertDateToLocalTime(submission.createdDate) }}</span>
+                        <span class="text-skip">{{ convertDateToLocalTime(submission.updatedDate) }}</span>
+                        <span class="text-skip">{{ convertDateToLocalTime(submission.createdDate) }}</span>
                     </NuxtLink>
                 </div>
             </div>
+            <Pagination
+                :current-page="currentSubmissionsPage"
+                :total-items="totalSubmissions"
+                :items-per-page="submissionsPerPage"
+                @update:current-page="updateSubmissionsPage"
+            />
         </div>
         <div
             v-else-if="hasFacilities
@@ -50,7 +58,7 @@
             class="grid grid-cols-subgrid col-span-4"
         >
             <div
-                v-for="(facility, index) in facilitiesStore.facilityData"
+                v-for="(facility, index) in paginatedFacilities"
                 :key="index"
                 class="grid grid-cols-subgrid col-span-4 bg-accent-bg"
             >
@@ -62,15 +70,23 @@
                         :to="`/moderation/edit-facility/${facility.id}`"
                         class="grid grid-cols-subgrid col-span-4 p-1 hover:bg-primary"
                     >
-                        <span class="text-start">{{ index + 1 }}</span>
-                        <span class="text-start">
+                        <span class="text-skip">
+                            {{ getGlobalRowNumber(currentFacilitiesPage, facilitiesPerPage, index) }}
+                        </span>
+                        <span class="text-skip">
                             {{ facility?.nameEn }}
                         </span>
-                        <span class="text-start">{{ convertDateToLocalTime(facility.updatedDate) }}</span>
-                        <span class="text-start">{{ convertDateToLocalTime(facility.createdDate) }}</span>
+                        <span class="text-skip">{{ convertDateToLocalTime(facility.updatedDate) }}</span>
+                        <span class="text-skip">{{ convertDateToLocalTime(facility.createdDate) }}</span>
                     </NuxtLink>
                 </div>
             </div>
+            <Pagination
+                :current-page="currentFacilitiesPage"
+                :total-items="totalFacilities"
+                :items-per-page="facilitiesPerPage"
+                @update:current-page="updateFacilitiesPage"
+            />
         </div>
         <div
             v-else-if="hasHealthcareProfessionals
@@ -79,7 +95,7 @@
             class="grid grid-cols-subgrid col-span-4"
         >
             <div
-                v-for="(healthcareProfessional, index) in healthcareProfessionalsStore.healthcareProfessionalsData"
+                v-for="(healthcareProfessional, index) in paginatedHealthcareProfessionals"
                 :key="index"
                 class="grid grid-cols-subgrid col-span-4 bg-accent-bg"
             >
@@ -91,15 +107,23 @@
                         :to="`/moderation/edit-healthcare-professional/${healthcareProfessional.id}`"
                         class="grid grid-cols-subgrid col-span-4 p-1 hover:bg-primary"
                     >
-                        <span class="text-start">{{ index + 1 }}</span>
-                        <span class="text-start">
+                        <span class="text-skip">
+                            {{ getGlobalRowNumber(currentHealthcarePage, healthcarePerPage, index) }}
+                        </span>
+                        <span class="text-skip">
                             {{ healthcareProfessional.names[0].firstName }} {{ healthcareProfessional.names[0].lastName }}
                         </span>
-                        <span class="text-start">{{ convertDateToLocalTime(healthcareProfessional.updatedDate) }}</span>
-                        <span class="text-start">{{ convertDateToLocalTime(healthcareProfessional.createdDate) }}</span>
+                        <span class="text-skip">{{ convertDateToLocalTime(healthcareProfessional.updatedDate) }}</span>
+                        <span class="text-skip">{{ convertDateToLocalTime(healthcareProfessional.createdDate) }}</span>
                     </NuxtLink>
                 </div>
             </div>
+            <Pagination
+                :current-page="currentHealthcarePage"
+                :total-items="totalHealthcareProfessionals"
+                :items-per-page="healthcarePerPage"
+                @update:current-page="updateHealthcarePage"
+            />
         </div>
         <div v-else>
             {{ t("modPanelSubmissionList.noSubmissions") }}
@@ -108,7 +132,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted } from 'vue'
+import { computed, onMounted, ref, type Ref } from 'vue'
 import { SelectedModerationListView, useModerationSubmissionsStore } from '~/stores/moderationSubmissionsStore'
 import { useHealthcareProfessionalsStore } from '~/stores/healthcareProfessionalsStore'
 import { useFacilitiesStore } from '~/stores/facilitiesStore'
@@ -118,6 +142,15 @@ const { t } = useI18n()
 const modSubmissionsListStore = useModerationSubmissionsStore()
 const healthcareProfessionalsStore = useHealthcareProfessionalsStore()
 const facilitiesStore = useFacilitiesStore()
+
+const currentHealthcarePage: Ref<number> = ref(1)
+const healthcarePerPage = 20
+
+const currentFacilitiesPage: Ref<number> = ref(1)
+const facilitiesPerPage = 20
+
+const currentSubmissionsPage: Ref<number> = ref(1)
+const submissionsPerPage = 20
 
 onMounted(async () => {
     await modSubmissionsListStore.getSubmissions()
@@ -142,4 +175,45 @@ const submissionListItemTableColumns = computed(() => {
 const handleClickToSubmissionForm = (id: string) => {
     modSubmissionsListStore.selectedSubmissionId = id
 }
+
+const paginatedHealthcareProfessionals = computed(() => {
+    const skip = (currentHealthcarePage.value - 1) * healthcarePerPage
+    const take = skip + healthcarePerPage
+    return healthcareProfessionalsStore.healthcareProfessionalsData.slice(skip, take)
+})
+const totalHealthcareProfessionals = computed(() =>
+    healthcareProfessionalsStore.healthcareProfessionalsData.length)
+
+const paginatedFacilities = computed(() => {
+    const skip = (currentFacilitiesPage.value - 1) * facilitiesPerPage
+    const take = skip + facilitiesPerPage
+    return facilitiesStore.facilityData.slice(skip, take)
+})
+const totalFacilities = computed(() =>
+    facilitiesStore.facilityData.length)
+
+const paginatedSubmissions = computed(() => {
+    const skip = (currentSubmissionsPage.value - 1) * submissionsPerPage
+    const take = skip + submissionsPerPage
+    return modSubmissionsListStore.filteredSubmissionDataForListComponent.slice(skip, take)
+})
+const totalSubmissions = computed(() =>
+    modSubmissionsListStore.filteredSubmissionDataForListComponent.length)
+
+function getGlobalRowNumber(page: number, perPage: number, index: number): number {
+    return (page - 1) * perPage + index + 1
+}
+
+function updateHealthcarePage(value: number) {
+    currentHealthcarePage.value = value
+}
+
+function updateFacilitiesPage(value: number) {
+    currentFacilitiesPage.value = value
+}
+
+function updateSubmissionsPage(value: number) {
+    currentSubmissionsPage.value = value
+}
 </script>
+

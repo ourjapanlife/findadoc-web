@@ -32,11 +32,16 @@ export const useModerationSubmissionsStore = defineStore(
         const selectedSubmissionData: Ref<Submission | undefined> = ref()
         const filteredSubmissionDataForListComponent: Ref<Submission[]> = ref([])
         const didMutationFail: Ref<boolean> = ref(false)
+        const updatingSubmissionFromTopBarAndExiting: Ref<boolean> = ref(false)
         const updatingSubmissionFromTopBar: Ref<boolean> = ref(false)
         const approvingSubmissionFromTopBar: Ref<boolean> = ref(false)
         const showRejectSubmissionConfirmation: Ref<boolean> = ref(false)
         const selectedModerationListViewTabChosen: Ref<SelectedSubmissionListViewTab>
         = ref(SelectedSubmissionListViewTab.ForReview)
+
+        function setUpdatingSubmissionFromTopBarAndExiting(newValue: boolean) {
+            updatingSubmissionFromTopBarAndExiting.value = newValue
+        }
 
         function setUpdatingSubmissionFromTopBar(newValue: boolean) {
             updatingSubmissionFromTopBar.value = newValue
@@ -91,18 +96,26 @@ export const useModerationSubmissionsStore = defineStore(
             }
         }
 
-        async function updateSubmission(submission: MutationUpdateSubmissionArgs):
+        async function updateSubmission(updateSubmissionInput: MutationUpdateSubmissionArgs):
         Promise<ServerResponse<Submission>> {
             const serverResponse = await graphQLClientRequestWithRetry<Mutation['updateSubmission']>(
                 gqlClient.request.bind(gqlClient),
                 updateFacilitySubmissionGqlMutation,
-                submission
+                updateSubmissionInput
             )
 
             if (serverResponse.errors?.length) {
                 setDidMutationFail(true)
-                setUpdatingSubmissionFromTopBar(false)
+                return serverResponse
             }
+
+            // Update the submission in the submissionsData array
+            const updatedSubmission = serverResponse.data
+            const indexOfOutdatedSubmissionData = submissionsData.value
+                .findIndex(submission => submission.id === updatedSubmission.id)
+            submissionsData.value[indexOfOutdatedSubmissionData] = updatedSubmission
+
+            selectedSubmissionData.value = updatedSubmission
 
             return serverResponse
         }
@@ -152,6 +165,8 @@ export const useModerationSubmissionsStore = defineStore(
             setSelectedModerationListViewChosen,
             updatingSubmissionFromTopBar,
             setUpdatingSubmissionFromTopBar,
+            updatingSubmissionFromTopBarAndExiting,
+            setUpdatingSubmissionFromTopBarAndExiting,
             showRejectSubmissionConfirmation,
             setShowRejectSubmissionConfirmation,
             approvingSubmissionFromTopBar,
@@ -230,6 +245,7 @@ const getSubmissionsGqlQuery = gql`
       degrees
       specialties
       acceptedInsurance
+      additionalInfoForPatients
       facilityIds
     }
     isUnderReview
@@ -285,6 +301,7 @@ mutation Mutation($id: ID!, $input: UpdateSubmissionInput!) {
       degrees
       specialties
       acceptedInsurance
+      additionalInfoForPatients
       facilityIds
     }
     isUnderReview

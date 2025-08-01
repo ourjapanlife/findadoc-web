@@ -129,9 +129,7 @@
                 :label="t('modFacilitySection.labelFacilityAddressLine2En')"
                 type="text"
                 :placeholder="t('modFacilitySection.placeholderTextFacilityAddressLine2En')"
-                :required="true"
-                :input-validation-check="validateAddressLineEn"
-                :invalid-input-error-message="t('modFacilitySection.inputErrorMessageFacilityAddressLine2En')"
+                :required="false"
             />
             <div class="flex flex-col mt-4">
                 <label
@@ -182,9 +180,7 @@
                 :label="t('modFacilitySection.labelFacilityAddressLine2Ja')"
                 type="text"
                 :placeholder="t('modFacilitySection.placeholderTextFacilityAddressLine2Ja')"
-                :required="true"
-                :input-validation-check="validateAddressLineJa"
-                :invalid-input-error-message="t('modFacilitySection.inputErrorMessageFacilityAddressLine2Ja')"
+                :required="false"
             />
         </div>
         <div
@@ -281,7 +277,7 @@
 
 <script lang="ts" setup>
 import { type Ref, ref, onBeforeMount, nextTick, watch } from 'vue'
-import { type ToastInterface, useToast } from 'vue-toastification'
+import { useToast } from 'vue-toastification'
 import { useRoute } from 'vue-router'
 import { useModerationScreenStore } from '~/stores/moderationScreenStore'
 import { useFacilitiesStore } from '~/stores/facilitiesStore'
@@ -301,8 +297,7 @@ import { validateAddressLineEn,
 import { RelationshipAction, type HealthcareProfessional } from '~/typedefs/gqlTypes'
 import { listPrefectureJapanEn, listPrefectureJapanJa } from '~/stores/locationsStore'
 
-// Initialize the variable that will be used to mount the toast library
-let toast: ToastInterface
+const toast = useToast()
 const route = useRoute()
 const { t } = useI18n()
 const loadingStore = useLoadingStore()
@@ -362,18 +357,12 @@ const healthcareProfessionalsToDisplayCallback = (healthcareProfessional: Health
 
 onBeforeMount(async () => {
     // This onBeforeMount can be skipped on other screens since this logic is handled there when active
-    if (!moderationScreenStore.editFacilityScreenIsActive()) {
+    if (moderationScreenStore.editSubmissionScreenIsActive()) {
         isFacilitySectionInitialized.value = true
         return
     }
 
     isFacilitySectionInitialized.value = false
-    /**
-    Set the variable to useToast when the before the component mounts
-    since vue-taostification is only available on the client.
-    If not done this way the build fails
-     */
-    toast = useToast()
     // Wait for the route to be fully resolved
 
     loadingStore.setIsLoading(true)

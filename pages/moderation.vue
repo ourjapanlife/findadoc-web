@@ -57,10 +57,10 @@
 </template>
 
 <script setup lang="ts">
-import { useRoute, useRouter } from 'vue-router'
-import { watch, ref, type Ref, onMounted } from 'vue'
+import { ref, type Ref, onMounted, watch } from 'vue'
+import { useRoute } from 'vue-router'
 import { useAuthStore } from '~/stores/authStore'
-import { definePageMeta } from '#imports'
+import { definePageMeta, useI18n } from '#imports'
 
 // tell nuxt to our moderation layout
 definePageMeta({
@@ -71,30 +71,10 @@ const { t } = useI18n()
 
 const authStore = useAuthStore()
 const route = useRoute()
-const router = useRouter()
-
 const doesTheUserHaveAccess: Ref<boolean> = ref(true)
 
-const checkIfUserIsLoggedIn = async () => {
-    // This promise is here to make the Suspense component work.
-    // It doesn't do anything, but <Suspense> requires an awaited setup method
-    await new Promise(resolve => {
-        //ignore if route change is unrelated to moderation
-        const needsRedirectDueToAccess = route.path.startsWith('/moderation') && !authStore.isLoggedIn && !authStore.isLoadingAuth
-        if (needsRedirectDueToAccess) {
-            // give the user a bit of time to read the message before redirecting
-            doesTheUserHaveAccess.value = false
-            setTimeout(() => {
-                // Redirect to login page if user is not logged in
-                router.push('/')
-            }, 10000)
-        }
+const redirectIfUnauthenticatedUser = authStore.redirectIfUnauthenticatedUser('/moderation', doesTheUserHaveAccess)
 
-        resolve(true)
-    })
-}
-
-watch(route, checkIfUserIsLoggedIn)
-
-onMounted(checkIfUserIsLoggedIn)
+watch(() => route.path, () => redirectIfUnauthenticatedUser)
+onMounted(() => redirectIfUnauthenticatedUser)
 </script>

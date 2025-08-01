@@ -7,6 +7,7 @@ import { aliasQuery } from '../utils'
 let facilitiesStore: StateTree
 
 before(() => {
+    cy.skipOnboardingFlow()
     cy.login()
 })
 
@@ -171,10 +172,6 @@ describe('Moderation create facility form', () => {
 
             cy.get('[data-testid="mod-facility-section-addressLine1En"]').find('input').clear().type('道の駅').realPress('Tab')
             cy.get('[data-testid="mod-facility-section-addressLine1En"]')
-                .find('p').should('exist').contains('Invalid English Address')
-
-            cy.get('[data-testid="mod-facility-section-addressLine2En"]').find('input').clear().type('道の駅').realPress('Tab')
-            cy.get('[data-testid="mod-facility-section-addressLine2En"]')
                 .find('p').should('exist').contains('Invalid English Address')
 
             cy.get('[data-testid=mod-facility-section-cityJa]').find('input').clear().type('Shibuya').realPress('Tab')

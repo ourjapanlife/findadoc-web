@@ -17,7 +17,7 @@ import { type Insurance,
     type Query } from '~/typedefs/gqlTypes'
 import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql'
 import { useLocaleStore } from '~/stores/localeStore'
-import type { ServerError, ServerResponse } from '~/typedefs/serverResponse'
+import { ErrorCode, type ServerError, type ServerResponse } from '~/typedefs/serverResponse'
 import { arraysAreEqual } from '~/utils/arrayUtils'
 
 export const useHealthcareProfessionalsStore = defineStore(
@@ -32,6 +32,7 @@ export const useHealthcareProfessionalsStore = defineStore(
         const healthcareProfessionalSectionFields = reactive<HealthcareProfessional>({
             __typename: 'HealthcareProfessional', // Optional if you're working with GraphQL
             acceptedInsurance: [],
+            additionalInfoForPatients: '',
             createdDate: '',
             degrees: [],
             facilityIds: [],
@@ -48,7 +49,8 @@ export const useHealthcareProfessionalsStore = defineStore(
             facilityIds: [] as string[],
             names: [] as LocalizedNameInput[],
             specialties: [] as Specialty[],
-            spokenLanguages: [] as Locale[]
+            spokenLanguages: [] as Locale[],
+            additionalInfoForPatients: ''
         })
 
         const selectedFacilities: Ref<Facility[]> = ref([])
@@ -68,6 +70,7 @@ export const useHealthcareProfessionalsStore = defineStore(
             // eslint-disable-next-line no-underscore-dangle
             healthcareProfessionalSectionFields.__typename = 'HealthcareProfessional'
             healthcareProfessionalSectionFields.acceptedInsurance = healthcareProfessional.acceptedInsurance
+            healthcareProfessionalSectionFields.additionalInfoForPatients = healthcareProfessional.additionalInfoForPatients
             healthcareProfessionalSectionFields.createdDate = healthcareProfessional.createdDate
             healthcareProfessionalSectionFields.degrees = healthcareProfessional.degrees
             healthcareProfessionalSectionFields.facilityIds = healthcareProfessional.facilityIds
@@ -82,6 +85,7 @@ export const useHealthcareProfessionalsStore = defineStore(
             // eslint-disable-next-line no-underscore-dangle
             healthcareProfessionalSectionFields.__typename = 'HealthcareProfessional'
             healthcareProfessionalSectionFields.acceptedInsurance = []
+            healthcareProfessionalSectionFields.additionalInfoForPatients = ''
             healthcareProfessionalSectionFields.createdDate = ''
             healthcareProfessionalSectionFields.degrees = []
             healthcareProfessionalSectionFields.facilityIds = []
@@ -105,12 +109,14 @@ export const useHealthcareProfessionalsStore = defineStore(
                 (hp: HealthcareProfessional) =>
                     hp.id === selectedHealthcareProfessionalId.value
             )
+
             // return out if no current professional data found
             if (!currentProfessionalData) {
                 console.error(`No data found for currentProfessionalData with id ${selectedHealthcareProfessionalId.value}`)
                 return {
                     data: {
                         acceptedInsurance: [],
+                        additionalInfoForPatients: '',
                         createdDate: '',
                         degrees: [],
                         facilityIds: [],
@@ -123,6 +129,8 @@ export const useHealthcareProfessionalsStore = defineStore(
                     hasErrors: true
                 }
             }
+
+            const currentProfessionalDataCopy = { ...currentProfessionalData }
 
             // This is the array to be sent to the backend if there is a change in the relations
             let facilitiesRelationsToSelectedHealthcareProfessional: Relationship[] = []
@@ -137,39 +145,57 @@ export const useHealthcareProfessionalsStore = defineStore(
             const updateHealthcareProfessionalInput: MutationUpdateHealthcareProfessionalArgs = {
                 id: selectedHealthcareProfessionalId.value,
                 input: {
-                    acceptedInsurance: arraysAreEqual(
+                    acceptedInsurance: !arraysAreEqual(
                         healthcareProfessionalSectionFields.acceptedInsurance,
-                        currentProfessionalData.acceptedInsurance
+                        currentProfessionalDataCopy.acceptedInsurance
                     )
                         ? undefined
                         : healthcareProfessionalSectionFields.acceptedInsurance,
-                    degrees: arraysAreEqual(
+                    additionalInfoForPatients: healthcareProfessionalSectionFields.additionalInfoForPatients
+                      === currentProfessionalDataCopy.additionalInfoForPatients
+                        ? undefined
+                        : healthcareProfessionalSectionFields.additionalInfoForPatients,
+                    degrees: !arraysAreEqual(
                         healthcareProfessionalSectionFields.degrees,
-                        currentProfessionalData.degrees
+                        currentProfessionalDataCopy.degrees
                     )
                         ? undefined
                         : healthcareProfessionalSectionFields.degrees,
                     facilityIds: facilitiesRelationsToSelectedHealthcareProfessional.length
                         ? facilitiesRelationsToSelectedHealthcareProfessional
                         : undefined,
-                    names: arraysAreEqual(
+                    names: !arraysAreEqual(
                         healthcareProfessionalSectionFields.names,
-                        currentProfessionalData.names
+                        currentProfessionalDataCopy.names
                     )
                         ? undefined
                         : healthcareProfessionalSectionFields.names,
-                    specialties: arraysAreEqual(
+                    specialties: !arraysAreEqual(
                         healthcareProfessionalSectionFields.specialties,
-                        currentProfessionalData.specialties
+                        currentProfessionalDataCopy.specialties
                     )
                         ? undefined
                         : healthcareProfessionalSectionFields.specialties,
-                    spokenLanguages: arraysAreEqual(
+                    spokenLanguages: !arraysAreEqual(
                         healthcareProfessionalSectionFields.spokenLanguages,
-                        currentProfessionalData.spokenLanguages
+                        currentProfessionalDataCopy.spokenLanguages
                     )
                         ? undefined
                         : healthcareProfessionalSectionFields.spokenLanguages
+                }
+            }
+
+            const hasUpdates = !!Object.values(updateHealthcareProfessionalInput.input).find(value => value !== undefined)
+
+            if (!hasUpdates) {
+                return {
+                    data: currentProfessionalData,
+                    hasErrors: true,
+                    errors: [{
+                        message: 'No updates found',
+                        fieldWithError: undefined,
+                        code: ErrorCode.NO_UPDATES_FOUND
+                    }]
                 }
             }
 
@@ -221,6 +247,7 @@ export const useHealthcareProfessionalsStore = defineStore(
             const createHealthcareProfessionalInput: MutationCreateHealthcareProfessionalArgs = {
                 input: {
                     acceptedInsurance: createHealthcareProfessionalSectionFields.acceptedInsurance,
+                    additionalInfoForPatients: createHealthcareProfessionalSectionFields.additionalInfoForPatients,
                     degrees: createHealthcareProfessionalSectionFields.degrees,
                     facilityIds: createHealthcareProfessionalSectionFields.facilityIds,
                     names: createHealthcareProfessionalSectionFields.names,
@@ -243,6 +270,7 @@ export const useHealthcareProfessionalsStore = defineStore(
 
         function resetCreateHealthcareProfessionalFields() {
             createHealthcareProfessionalSectionFields.acceptedInsurance = []
+            createHealthcareProfessionalSectionFields.additionalInfoForPatients = ''
             createHealthcareProfessionalSectionFields.degrees = []
             createHealthcareProfessionalSectionFields.facilityIds = []
             createHealthcareProfessionalSectionFields.names = []
@@ -265,7 +293,8 @@ export const useHealthcareProfessionalsStore = defineStore(
             healthcareProfessional: HealthcareProfessional | CreateHealthcareProfessionalInput
         ) => {
             // find the name of the healthcare professional from the chosen display locale
-            const nameFromChosenLocaleDisplay = healthcareProfessional.names.find(name => name.locale === localeStore.locale.code)
+            const nameFromChosenLocaleDisplay = healthcareProfessional.names.find(name =>
+                name.locale === localeStore.activeLocale.code)
             // return the name of the healthcare professional of chosen locale or default to the 0 indexed recorded name
             return nameFromChosenLocaleDisplay ? nameFromChosenLocaleDisplay : healthcareProfessional.names[0]
         }
@@ -345,6 +374,7 @@ query Query($filters: HealthcareProfessionalSearchFilters!) {
     degrees
     specialties
     acceptedInsurance
+    additionalInfoForPatients
     facilityIds
     createdDate
     updatedDate
@@ -377,6 +407,7 @@ mutation Mutation($id: ID!, $input: UpdateHealthcareProfessionalInput!) {
     degrees
     specialties
     acceptedInsurance
+    additionalInfoForPatients
     facilityIds
     createdDate
     updatedDate
@@ -406,6 +437,7 @@ mutation Mutation($input: CreateHealthcareProfessionalInput!) {
     degrees
     specialties
     acceptedInsurance
+    additionalInfoForPatients
     facilityIds
     createdDate
     updatedDate
