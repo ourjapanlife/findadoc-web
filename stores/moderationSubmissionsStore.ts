@@ -1,7 +1,8 @@
 import { gql } from 'graphql-request'
 import { defineStore } from 'pinia'
 import { ref, type Ref } from 'vue'
-import type { Submission, MutationUpdateSubmissionArgs, Mutation, Query } from '~/typedefs/gqlTypes.js'
+import { fetchSubmissionsWithCount } from '../utils/graphqlHepers'
+import type { Submission, MutationUpdateSubmissionArgs, Mutation, SubmissionSearchFilters } from '~/typedefs/gqlTypes.js'
 import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql.js'
 import type { ServerResponse } from '~/typedefs/serverResponse'
 
@@ -66,11 +67,24 @@ export const useModerationSubmissionsStore = defineStore(
         }
 
         async function getSubmissions() {
-            const calculatedOffset = currentOffset.value
-            const calculatedLimit = itemsPerPage.value
-            const { nodes, totalCount } = await querySubmissions(calculatedOffset, calculatedLimit)
-            submissionsData.value = nodes
-            totalSubmissionsCount.value = totalCount
+            const filters: SubmissionSearchFilters = {
+                offset: currentOffset.value,
+                limit: itemsPerPage.value
+            }
+            try {
+                // Call the utility function to fetch the paginated data and the total count.
+                const { nodes, totalCount } = await fetchSubmissionsWithCount(filters)
+                submissionsData.value = nodes
+                totalSubmissionsCount.value = totalCount
+                // Apply a secondary filter on the fetched data based on the currently selected tab.
+                filterSubmissionByStatus(selectedModerationListViewTabChosen.value as unknown as SubmissionStatus)
+            } catch (error) {
+                console.error(`Error fetching submissions: ${JSON.stringify(error)}`)
+                //eslint-disable-next-line
+                alert('Error loading submissions. Please try again later.')
+                submissionsData.value = []
+                totalSubmissionsCount.value = 0
+            }
         }
 
         function setOffset(newOffset: number) {
@@ -205,94 +219,6 @@ export const useModerationSubmissionsStore = defineStore(
         }
     }
 )
-
-async function querySubmissions(offset: number, limit: number): Promise<{ nodes: Submission[], totalCount: number }> {
-    try {
-        const submissionsFilters = {
-            filters: {
-                id: undefined,
-                limit: limit,
-                offset: offset
-            }
-        }
-
-        const serverResponse = await graphQLClientRequestWithRetry<Query['submissions']>(
-            gqlClient.request.bind(gqlClient),
-            getSubmissionsGqlQuery,
-            submissionsFilters
-        )
-
-        if (serverResponse.data) {
-            return {
-                nodes: serverResponse.data.nodes ?? [],
-                totalCount: serverResponse.data.totalCount ?? 0
-            }
-        }
-        return { nodes: [], totalCount: 0 }
-    } catch (error) {
-        console.error(`Error querying the submissions: ${JSON.stringify(error)}`)
-        return { nodes: [], totalCount: 0 }
-    }
-}
-
-const getSubmissionsGqlQuery = gql`
-    query Submissions($filters: SubmissionSearchFilters!) {
-        submissions(filters: $filters) {
-            nodes {
-                id
-                googleMapsUrl
-                healthcareProfessionalName
-                spokenLanguages
-                facility {
-                    id
-                    mapLatitude
-                    mapLongitude
-                    nameEn
-                    nameJa
-                    contact {
-                        googleMapsUrl
-                        email
-                        phone
-                        website
-                        address {
-                            postalCode
-                            prefectureEn
-                            cityEn
-                            addressLine1En
-                            addressLine2En
-                            prefectureJa
-                            cityJa
-                            addressLine1Ja
-                            addressLine2Ja
-                        }
-                    }
-                    healthcareProfessionalIds
-                }
-                healthcareProfessionals {
-                    id
-                    names {
-                        firstName
-                        middleName
-                        lastName
-                        locale
-                    }
-                    spokenLanguages
-                    degrees
-                    specialties
-                    acceptedInsurance
-                    additionalInfoForPatients
-                    facilityIds
-                }
-                isUnderReview
-                isApproved
-                isRejected
-                createdDate
-                updatedDate
-                notes
-            }
-            totalCount
-        }
-    }`
 
 const updateFacilitySubmissionGqlMutation = gql`
 mutation Mutation($id: ID!, $input: UpdateSubmissionInput!) {

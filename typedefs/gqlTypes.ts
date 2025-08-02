@@ -116,12 +116,6 @@ export type Facility = {
   updatedDate: Scalars['String']['output'];
 };
 
-export type FacilityConnection = {
-  __typename?: 'FacilityConnection';
-  nodes: Array<Facility>;
-  totalCount: Scalars['Int']['output'];
-};
-
 export type FacilitySearchFilters = {
   contact?: InputMaybe<ContactInput>;
   createdDate?: InputMaybe<Scalars['String']['input']>;
@@ -158,12 +152,6 @@ export type HealthcareProfessional = {
   specialties: Array<Specialty>;
   spokenLanguages: Array<Locale>;
   updatedDate: Scalars['String']['output'];
-};
-
-export type HealthcareProfessionalConnection = {
-  __typename?: 'HealthcareProfessionalConnection';
-  nodes: Array<HealthcareProfessional>;
-  totalCount: Scalars['Int']['output'];
 };
 
 export type HealthcareProfessionalSearchFilters = {
@@ -389,12 +377,15 @@ export type PhysicalAddressInput = {
 export type Query = {
   __typename?: 'Query';
   auditLog?: Maybe<AuditLog>;
-  facilities: FacilityConnection;
+  facilities: Array<Facility>;
+  facilitiesTotalCount: Scalars['Int']['output'];
   facility?: Maybe<Facility>;
   healthcareProfessional?: Maybe<HealthcareProfessional>;
-  healthcareProfessionals: HealthcareProfessionalConnection;
+  healthcareProfessionals: Array<HealthcareProfessional>;
+  healthcareProfessionalsTotalCount: Scalars['Int']['output'];
   submission?: Maybe<Submission>;
-  submissions: SubmissionConnection;
+  submissions: Array<Submission>;
+  submissionsTotalCount: Scalars['Int']['output'];
 };
 
 
@@ -404,6 +395,11 @@ export type QueryAuditLogArgs = {
 
 
 export type QueryFacilitiesArgs = {
+  filters: FacilitySearchFilters;
+};
+
+
+export type QueryFacilitiesTotalCountArgs = {
   filters: FacilitySearchFilters;
 };
 
@@ -423,12 +419,22 @@ export type QueryHealthcareProfessionalsArgs = {
 };
 
 
+export type QueryHealthcareProfessionalsTotalCountArgs = {
+  filters: HealthcareProfessionalSearchFilters;
+};
+
+
 export type QuerySubmissionArgs = {
   id: Scalars['ID']['input'];
 };
 
 
 export type QuerySubmissionsArgs = {
+  filters: SubmissionSearchFilters;
+};
+
+
+export type QuerySubmissionsTotalCountArgs = {
   filters: SubmissionSearchFilters;
 };
 
@@ -514,12 +520,6 @@ export type Submission = {
   notes?: Maybe<Scalars['String']['output']>;
   spokenLanguages: Array<Locale>;
   updatedDate: Scalars['String']['output'];
-};
-
-export type SubmissionConnection = {
-  __typename?: 'SubmissionConnection';
-  nodes: Array<Submission>;
-  totalCount: Scalars['Int']['output'];
 };
 
 export type SubmissionSearchFilters = {
