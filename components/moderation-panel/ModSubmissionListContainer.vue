@@ -210,24 +210,29 @@ function getCurrentItemsPerPage(): number {
         case SelectedModerationListView.HealthcareProfessionals:
             return healthcareProfessionalsStore.itemsPerPage
         default:
-            return 25 // Default fallback
+            return 25
     }
 }
 
 async function handleItemsPerPageChange(event: Event) {
+    // Extract the new selected value from the event target and convert it to a number.
     const newItemsPerPage = Number((event.target as HTMLSelectElement).value)
+    // Use a switch statement to perform the correct action based on the currently active moderation view.
     switch (modSubmissionsListStore.selectedModerationListViewChosen) {
         case SelectedModerationListView.Submissions:
+            // Update the itemsPerPage and reset the offset to 0 for submissions.
             modSubmissionsListStore.setItemsPerPage(newItemsPerPage)
             modSubmissionsListStore.setOffset(0)
             await modSubmissionsListStore.getSubmissions()
             break
         case SelectedModerationListView.Facilities:
+            // Update the itemsPerPage and reset the offset to 0 for facilities.
             facilitiesStore.setItemsPerPage(newItemsPerPage)
             facilitiesStore.setOffset(0)
             await facilitiesStore.getFacilities()
             break
         case SelectedModerationListView.HealthcareProfessionals:
+            // Update the itemsPerPage and reset the offset to 0 for healtchare professionals.
             healthcareProfessionalsStore.setItemsPerPage(newItemsPerPage)
             healthcareProfessionalsStore.setOffset(0)
             await healthcareProfessionalsStore.getHealthcareProfessionals()

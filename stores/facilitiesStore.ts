@@ -21,7 +21,9 @@ export const useFacilitiesStore = defineStore('facilitiesStore', () => {
     const facilityData: Ref<Facility[]> = ref([])
     const selectedFacilityId: Ref<string> = ref('')
     const selectedFacilityData: Ref<Facility | undefined> = ref()
+    // Used for store the total number of facility found by the current search query.
     const totalFacilitiesCount: Ref<number> = ref(0)
+    // Used for store the starting index (offset) for the current page of results.
     const currentOffset: Ref<number> = ref(0)
     const itemsPerPage: Ref<number> = ref(25)
     const hasNextPage = computed(() => currentOffset.value + itemsPerPage.value < totalFacilitiesCount.value)

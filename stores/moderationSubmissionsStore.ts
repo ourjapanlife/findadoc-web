@@ -40,7 +40,9 @@ export const useModerationSubmissionsStore = defineStore(
         const selectedModerationListViewTabChosen: Ref<SelectedSubmissionListViewTab>
         = ref(SelectedSubmissionListViewTab.ForReview)
 
+        // Used for store the total number of submissions found by the current search query.
         const totalSubmissionsCount: Ref<number> = ref(0)
+        // Used for store the starting index (offset) for the current page of results.
         const currentOffset: Ref<number> = ref(0)
         const itemsPerPage: Ref<number> = ref(25)
         const hasNextPage = computed(() => currentOffset.value + itemsPerPage.value < totalSubmissionsCount.value)

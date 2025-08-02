@@ -30,7 +30,9 @@ export const useHealthcareProfessionalsStore = defineStore(
         = ref([])
         const selectedHealthcareProfessionalId: Ref<string> = ref('')
         const selectedHealthcareProfessionalData: Ref<HealthcareProfessional | undefined> = ref()
+        // Used for store the total number of healthcare professionals found by the current search query.
         const totalHealthcareProfessionalsCount: Ref<number> = ref(0)
+        // Used for store the starting index (offset) for the current page of results.
         const currentOffset: Ref<number> = ref(0)
         const itemsPerPage: Ref<number> = ref(25)
         const hasNextPage = computed(() => currentOffset.value + itemsPerPage.value < totalHealthcareProfessionalsCount.value)
@@ -114,9 +116,9 @@ export const useHealthcareProfessionalsStore = defineStore(
             } catch (error) {
                 console.error(`Error fetching healthcare professionals: ${JSON.stringify(error)}`)
                 // eslint-disable-next-line no-alert
-                alert('Errore durante il caricamento dei professionisti sanitari. Riprova più tardi.')
-                healthcareProfessionalsData.value = [] // Resetta i dati in caso di errore
-                totalHealthcareProfessionalsCount.value = 0 // Resetta il conteggio in caso di errore
+                alert('Error loading submissions. Please try again later.')
+                healthcareProfessionalsData.value = []
+                totalHealthcareProfessionalsCount.value = 0
             }
         }
 
