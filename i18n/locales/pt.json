@@ -115,7 +115,10 @@
     "exit": "Exit",
     "facilityCreatedSuccessfully": "Facility created successfully.",
     "heathcareProfessionalCreatedSuccessfully": "Healthcare Professional created successfully.",
-    "unsavedChangesMessage": "This will exit without saving your entry. All unsaved data will be lost."
+    "unsavedChangesMessage": "This will exit without saving your entry. All unsaved data will be lost.",
+    "healthcareProfessionalEnglishNameRequired": "Healthcare Professional must have an English name",
+    "hasEmptyFieldsHealthcareProfessional": "All fields are required for creating a healthcare professional",
+    "hasEmptyFieldsFacility": "Some required fields are missing for creating a facility"
   },
   "modDashboardLeftNav": {
     "facilities": "Instalações",
@@ -299,7 +302,10 @@
     "healthcareProfessionalDeletedSuccessfully": "Healthcare Professional deleted successfully",
     "healthcareProfessionalUpdatedSuccessfully": "Healthcare Professional updated successfully",
     "back": "Back",
-    "hasUnsavedChanges": "You have unsaved changes. Are you sure you want to leave?"
+    "hasUnsavedChanges": "You have unsaved changes. Are you sure you want to leave?",
+    "deleteConfirmationFacility": "Are you sure you want to delete the Facility: {facility}, with ID: {id}?",
+    "deleteConfirmationHealthcareProfessional": "Are you sure you want to delete the Healthcare Professional: {healthcareProfessional}, with ID: {id}?",
+    "healthcareProfessionalEnglishNameRequired": "Healthcare Professional must have an English name"
   },
   "serverErrorMessages": {
     "genericErrorMessage": "There was an error submitting your form, please try again",
@@ -371,5 +377,9 @@
   },
   "modSubmissionListContainer": {
     "resultsPerPage": "Results per page"
+  "errorPage": {
+    "title": "404 - Diagnóstico: Página não encontrada",
+    "description": "Esta página não passou no seu exame de saúde. Vamos levá-lo a uma página saudável!",
+    "returnHome": "Voltar ao início"
   }
 }

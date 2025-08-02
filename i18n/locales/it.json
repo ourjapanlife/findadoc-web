@@ -126,7 +126,10 @@
     "exit": "Exit",
     "facilityCreatedSuccessfully": "Facility created successfully.",
     "heathcareProfessionalCreatedSuccessfully": "Healthcare Professional created successfully.",
-    "unsavedChangesMessage": "This will exit without saving your entry. All unsaved data will be lost."
+    "unsavedChangesMessage": "This will exit without saving your entry. All unsaved data will be lost.",
+    "healthcareProfessionalEnglishNameRequired": "Healthcare Professional must have an English name",
+    "hasEmptyFieldsHealthcareProfessional": "All fields are required for creating a healthcare professional",
+    "hasEmptyFieldsFacility": "Some required fields are missing for creating a facility"
   },
   "modDashboardLeftNav": {
     "facilities": "Strutture",
@@ -163,7 +166,10 @@
     "healthcareProfessionalDeletedSuccessfully": "Professionista sanitario eliminato con successo",
     "healthcareProfessionalUpdatedSuccessfully": "Professionista sanitario aggiornato con successo",
     "back": "Back",
-    "hasUnsavedChanges": "You have unsaved changes. Are you sure you want to leave?"
+    "hasUnsavedChanges": "You have unsaved changes. Are you sure you want to leave?",
+    "deleteConfirmationFacility": "Are you sure you want to delete the Facility: {facility}, with ID: {id}?",
+    "deleteConfirmationHealthcareProfessional": "Are you sure you want to delete the Healthcare Professional: {healthcareProfessional}, with ID: {id}?",
+    "healthcareProfessionalEnglishNameRequired": "Healthcare Professional must have an English name"
   },
   "modEditSubmissionTopNav": {
     "updateAndExit": "Aggiorna & Esci",
@@ -353,8 +359,8 @@
   },
   "modDashboardHealthcareProfessionalCard": {
     "spokenLanguages": "Spoken languages",
-    "lastName": "Last name",
-    "firstName": "First name",
+    "lastName": "Nome",
+    "firstName": "Cognome",
     "middleName": "Middle name",
     "nameLocale": "Name language"
   },
@@ -365,10 +371,14 @@
     "optional": "Optional"
   },
   "pagination": {
-    "of": "of",
-    "results": "results"
+    "of": "di",
+    "results": "risultati"
   },
   "modSubmissionListContainer": {
-    "resultsPerPage": "Results per page"
+    "resultsPerPage": "Risultati per pagagina"
+  "errorPage": {
+    "title": "404 - Diagnosi: Pagina non trovata",
+    "description": "Questa pagina non ha superato il suo esame di salute. Portiamoti invece a una pagina sana!",
+    "returnHome": "Torna alla home"
   }
 }

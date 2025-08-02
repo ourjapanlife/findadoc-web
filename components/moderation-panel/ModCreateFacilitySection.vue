@@ -122,9 +122,7 @@
                         :label="t('modFacilitySection.labelFacilityAddressLine2En')"
                         type="text"
                         :placeholder="t('modFacilitySection.placeholderTextFacilityAddressLine2En')"
-                        :required="true"
-                        :input-validation-check="validateAddressLineEn"
-                        :invalid-input-error-message="t('modFacilitySection.inputErrorMessageFacilityAddressLine2En')"
+                        :required="false"
                     />
                     <div class="flex flex-col mt-4">
                         <label
@@ -175,9 +173,7 @@
                         :label="t('modFacilitySection.labelFacilityAddressLine2Ja')"
                         type="text"
                         :placeholder="t('modFacilitySection.placeholderTextFacilityAddressLine2Ja')"
-                        :required="true"
-                        :input-validation-check="validateAddressLineJa"
-                        :invalid-input-error-message="t('modFacilitySection.inputErrorMessageFacilityAddressLine2Ja')"
+                        :required="false"
                     />
                 </div>
                 <div
