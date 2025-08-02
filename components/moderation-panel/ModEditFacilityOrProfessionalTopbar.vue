@@ -72,9 +72,12 @@
         >
             <Modal>
                 <div
-                    class="flex flex-col aspect-square h-96 items-center justify-around bg-primary-inverted p-10 rounded"
+                    class="flex flex-col aspect-square h-96 items-center justify-center bg-primary-inverted p-10 rounded"
                 >
-                    <div v-if="modalType === ModalType.UnsavedChanges">
+                    <div
+                        v-if="modalType === ModalType.UnsavedChanges"
+                        class="flex flex-col items-center"
+                    >
                         <div class="font-bold text-3xl">
                             {{ t('modEditFacilityOrHPTopbar.hasUnsavedChanges') }}
                         </div>
@@ -86,7 +89,10 @@
                             {{ t('modSubmissionForm.confirmationButton') }}
                         </button>
                     </div>
-                    <div v-if="modalType === ModalType.DeleteConfirmation && moderationScreenStore.editFacilityScreenIsActive()">
+                    <div
+                        v-if="modalType === ModalType.DeleteConfirmation && moderationScreenStore.editFacilityScreenIsActive()"
+                        class="flex flex-col items-center"
+                    >
                         <div class="font-bold text-3xl">
                             {{ t('modEditFacilityOrHPTopbar.deleteConfirmationFacility', {
                                 id: selectedId,
@@ -105,6 +111,7 @@
                     <div
                         v-if="modalType === ModalType.DeleteConfirmation
                             && moderationScreenStore.editHealthcareProfessionalScreenIsActive()"
+                        class="flex flex-col items-center"
                     >
                         <div class="font-bold text-3xl">
                             {{ t('modEditFacilityOrHPTopbar.deleteConfirmationHealthcareProfessional', {
@@ -306,6 +313,14 @@ const updateFacilityOrHealthcareProfessional = async () => {
     if (moderationScreenStore.editHealthcareProfessionalScreenIsActive()) {
         // This prevents us from sending a requested unnecessarily if the user has not made changes
         if (!healthcareProfessionalHasUnsavedChanges()) return
+
+        const hasEnglishName
+            = healthcareProfessionalsStore.healthcareProfessionalSectionFields.names.some(name => name.locale === 'en_US')
+
+        if (!hasEnglishName) {
+            toast.error(t('modEditFacilityOrHPTopbar.healthcareProfessionalEnglishNameRequired'))
+            return
+        }
 
         const response = await healthcareProfessionalsStore.updateHealthcareProfessional()
 

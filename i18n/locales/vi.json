@@ -122,7 +122,10 @@
     "exit": "Exit",
     "facilityCreatedSuccessfully": "Facility created successfully.",
     "heathcareProfessionalCreatedSuccessfully": "Healthcare Professional created successfully.",
-    "unsavedChangesMessage": "This will exit without saving your entry. All unsaved data will be lost."
+    "unsavedChangesMessage": "This will exit without saving your entry. All unsaved data will be lost.",
+    "healthcareProfessionalEnglishNameRequired": "Healthcare Professional must have an English name",
+    "hasEmptyFieldsHealthcareProfessional": "All fields are required for creating a healthcare professional",
+    "hasEmptyFieldsFacility": "Some required fields are missing for creating a facility"
   },
   "modDashboardLeftNav": {
     "facilities": "Cơ sở vật chất",
@@ -159,7 +162,10 @@
     "healthcareProfessionalDeletedSuccessfully": "Healthcare Professional deleted successfully",
     "healthcareProfessionalUpdatedSuccessfully": "Healthcare Professional updated successfully",
     "back": "Back",
-    "hasUnsavedChanges": "You have unsaved changes. Are you sure you want to leave?"
+    "hasUnsavedChanges": "You have unsaved changes. Are you sure you want to leave?",
+    "deleteConfirmationFacility": "Are you sure you want to delete the Facility: {facility}, with ID: {id}?",
+    "deleteConfirmationHealthcareProfessional": "Are you sure you want to delete the Healthcare Professional: {healthcareProfessional}, with ID: {id}?",
+    "healthcareProfessionalEnglishNameRequired": "Healthcare Professional must have an English name"
   },
   "modEditSubmissionTopNav": {
     "updateAndExit": "Lưu và thoát.",
@@ -374,5 +380,9 @@
   "modSearchBarFilterName": {
     "noTextMatch": "No matching names found.",
     "loading": "Loading..."
+  "errorPage": {
+    "title": "404 - Chẩn đoán: Không tìm thấy trang",
+    "description": "Trang này đã không vượt qua kiểm tra sức khỏe. Hãy để chúng tôi đưa bạn đến một trang khỏe mạnh!",
+    "returnHome": "Về trang chủ"
   }
 }

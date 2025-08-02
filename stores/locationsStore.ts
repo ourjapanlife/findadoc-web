@@ -3,7 +3,7 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { gqlClient } from '../utils/graphql.js'
 import { useLoadingStore } from './loadingStore.js'
-import type { Facility, FacilitySearchFilters, Query } from '~/typedefs/gqlTypes.js'
+import type { Facility, FacilitySearchFilters } from '~/typedefs/gqlTypes.js'
 
 export const useLocationsStore = defineStore('locationsStore', () => {
     const allCitiesEnglishList = ref<string[]>([])
@@ -43,13 +43,13 @@ async function queryFacilities(): Promise<Facility[]> {
             } satisfies FacilitySearchFilters
         }
 
-        const result = await graphQLClientRequestWithRetry<Query>(
+        const result = await graphQLClientRequestWithRetry<{ facilities: Facility[] }>(
             gqlClient.request.bind(gqlClient),
             searchFacilitiesQuery,
             searchFacilitiesData
         )
 
-        return result.data?.facilities?.nodes ?? []
+        return result.data.facilities ?? []
     } catch (error) {
         console.error(`Error getting facilities for dropdown: ${JSON.stringify(error)}`)
         // eslint-disable-next-line no-alert
@@ -60,19 +60,16 @@ async function queryFacilities(): Promise<Facility[]> {
 
 const searchFacilitiesQuery = gql`query QueryFacilities($filters: FacilitySearchFilters!) {
     facilities(filters: $filters) {
-      nodes {
-        id
-        contact {
-          address {
-            cityJa
-            cityEn
+    id
+    contact {
+        address {
+          cityJa
+          cityEn
           }
         }
-      }
-      totalCount
     }
-  }
-  `
+}
+`
 export const listPrefectureJapanEn: string[] = [
     'Hokkaido', 'Aomori', 'Iwate', 'Miyagi', 'Akita', 'Yamagata', 'Fukushima',
     'Ibaraki', 'Tochigi', 'Gunma', 'Saitama', 'Chiba', 'Tokyo', 'Kanagawa',

@@ -1,7 +1,8 @@
 import type { Maybe } from 'graphql/jsutils/Maybe'
 import { defineStore } from 'pinia'
-import { reactive, ref, type Ref } from 'vue'
+import { reactive, ref, type Ref, computed } from 'vue'
 import { gql } from 'graphql-request'
+import { fetchHealthcareProfessionalsWithCount } from '../utils/graphqlHepers'
 import { type Insurance,
     type Degree,
     type Specialty,
@@ -15,8 +16,7 @@ import { type Insurance,
     RelationshipAction,
     type CreateHealthcareProfessionalInput,
     type MutationCreateHealthcareProfessionalArgs,
-    type Query,
-    type HealthcareProfessionalSearchFilters } from '~/typedefs/gqlTypes'
+    type Query } from '~/typedefs/gqlTypes'
 import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql'
 import { useLocaleStore } from '~/stores/localeStore'
 import { ErrorCode, type ServerError, type ServerResponse } from '~/typedefs/serverResponse'
@@ -31,7 +31,9 @@ export const useHealthcareProfessionalsStore = defineStore(
         = ref([])
         const selectedHealthcareProfessionalId: Ref<string> = ref('')
         const selectedHealthcareProfessionalData: Ref<HealthcareProfessional | undefined> = ref()
+        // Used for store the total number of healthcare professionals found by the current search query.
         const totalHealthcareProfessionalsCount: Ref<number> = ref(0)
+        // Used for store the starting index (offset) for the current page of results.
         const currentOffset: Ref<number> = ref(0)
         const itemsPerPage: Ref<number> = ref(25)
         const hasNextPage = computed(() => currentOffset.value + itemsPerPage.value < totalHealthcareProfessionalsCount.value)
@@ -56,7 +58,8 @@ export const useHealthcareProfessionalsStore = defineStore(
             facilityIds: [] as string[],
             names: [] as LocalizedNameInput[],
             specialties: [] as Specialty[],
-            spokenLanguages: [] as Locale[]
+            spokenLanguages: [] as Locale[],
+            additionalInfoForPatients: ''
         })
 
         const selectedFacilities: Ref<Facility[]> = ref([])
@@ -103,11 +106,22 @@ export const useHealthcareProfessionalsStore = defineStore(
         }
 
         async function getHealthcareProfessionals() {
-            const calculatedOffset = (currentOffset.value)
-            const calculatedLimit = itemsPerPage.value
-            const { nodes, totalCount } = await queryHealthcareProfessionals(calculatedOffset, calculatedLimit)
-            healthcareProfessionalsData.value = nodes
-            totalHealthcareProfessionalsCount.value = totalCount
+            const filters = {
+                offset: currentOffset.value,
+                limit: itemsPerPage.value
+            }
+            try {
+                // Call the utility function to fetch the paginated data and the total count
+                const { nodes, totalCount } = await fetchHealthcareProfessionalsWithCount(filters)
+                healthcareProfessionalsData.value = nodes
+                totalHealthcareProfessionalsCount.value = totalCount
+            } catch (error) {
+                console.error(`Error fetching healthcare professionals: ${JSON.stringify(error)}`)
+                // eslint-disable-next-line no-alert
+                alert('Error loading submissions. Please try again later.')
+                healthcareProfessionalsData.value = []
+                totalHealthcareProfessionalsCount.value = 0
+            }
         }
 
         function setOffset(newOffset: number) {
@@ -395,37 +409,6 @@ export const useHealthcareProfessionalsStore = defineStore(
     }
 )
 
-async function queryHealthcareProfessionals(
-    offset: number,
-    limit: number
-): Promise<{ nodes: HealthcareProfessional[], totalCount: number }> {
-    const searchHealthcareProfessionalsData: { filters: HealthcareProfessionalSearchFilters } = {
-        filters: {
-            limit: limit,
-            offset: offset
-        }
-    }
-
-    try {
-        const response = await graphQLClientRequestWithRetry<Query['healthcareProfessionals']>(
-            gqlClient.request.bind(gqlClient),
-            getAllHealthcareProfessionalsData,
-            searchHealthcareProfessionalsData
-        )
-
-        if (response.data) {
-            return {
-                nodes: response.data.nodes ?? [],
-                totalCount: response.data.totalCount ?? 0
-            }
-        }
-        return { nodes: [], totalCount: 0 }
-    } catch (error) {
-        console.error(`Error querying the healthcare professionals: ${JSON.stringify(error)}`)
-        return { nodes: [], totalCount: 0 }
-    }
-}
-
 export async function getHealthcareProfessionalById(id: string): Promise<HealthcareProfessional[]> {
     try {
         const queryData = {
@@ -447,30 +430,6 @@ export async function getHealthcareProfessionalById(id: string): Promise<Healthc
         return []
     }
 }
-
-const getAllHealthcareProfessionalsData = gql`
-query Query($filters: HealthcareProfessionalSearchFilters!) {
-  healthcareProfessionals(filters: $filters) {
-    nodes {
-      id
-      names {
-        firstName
-        middleName
-        lastName
-        locale
-      }
-      spokenLanguages
-      degrees
-      specialties
-      acceptedInsurance
-      additionalInfoForPatients
-      facilityIds
-      createdDate
-      updatedDate
-    }
-    totalCount
-  }
-}`
 
 const getHealthcareProfessionalByIdGqlQuery = gql`
     query HealthcareProfessionals($healthcareProfessionalId: ID!) {

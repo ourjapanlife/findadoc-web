@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref, type Ref, reactive } from 'vue'
 import { gql } from 'graphql-request'
+import { fetchFacilitiesWithCount } from '../utils/graphqlHepers'
 import type {
     DeleteResult,
     Facility,
@@ -9,53 +10,20 @@ import type {
     MutationCreateFacilityArgs,
     MutationDeleteFacilityArgs,
     MutationUpdateFacilityArgs,
-    Query,
-    FacilitySearchFilters,
-    Relationship
+    Relationship,
+    FacilitySearchFilters
 } from '~/typedefs/gqlTypes'
 import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql'
 import type { ServerResponse } from '~/typedefs/serverResponse'
 import { arraysAreEqual } from '~/utils/arrayUtils'
 
-async function queryFacilities(
-    offset: number,
-    limit: number
-): Promise<{ nodes: Facility[], totalCount: number }> {
-    const searchFacilitiesData: { filters: FacilitySearchFilters } = {
-        filters: {
-            limit: limit,
-            offset: offset
-        }
-    }
-    try {
-        const response = await graphQLClientRequestWithRetry<
-            Query['facilities']
-        >(
-            gqlClient.request.bind(gqlClient),
-            getAllFacilitiesForModeration,
-            searchFacilitiesData
-        )
-
-        if (response.data) {
-            return {
-                nodes: response.data.nodes ?? [],
-                totalCount: response.data.totalCount ?? 0
-            }
-        }
-        return { nodes: [], totalCount: 0 }
-    } catch (error) {
-        console.error(
-            `Error querying the facilities: ${JSON.stringify(error)}`
-        )
-        return { nodes: [], totalCount: 0 }
-    }
-}
-
 export const useFacilitiesStore = defineStore('facilitiesStore', () => {
     const facilityData: Ref<Facility[]> = ref([])
     const selectedFacilityId: Ref<string> = ref('')
     const selectedFacilityData: Ref<Facility | undefined> = ref()
+    // Used for store the total number of facility found by the current search query.
     const totalFacilitiesCount: Ref<number> = ref(0)
+    // Used for store the starting index (offset) for the current page of results.
     const currentOffset: Ref<number> = ref(0)
     const itemsPerPage: Ref<number> = ref(25)
     const hasNextPage = computed(() => currentOffset.value + itemsPerPage.value < totalFacilitiesCount.value)
@@ -124,33 +92,26 @@ export const useFacilitiesStore = defineStore('facilitiesStore', () => {
 
     function initializeFacilitySectionValues(data: Facility | undefined) {
         if (!data) return
-
-        facilitySectionFields.nameEn = data.nameEn
-        facilitySectionFields.nameJa = data.nameJa
-        facilitySectionFields.phone = data?.contact?.phone
-        facilitySectionFields.email = data?.contact?.email || undefined
-        facilitySectionFields.website = data?.contact?.website || undefined
-        facilitySectionFields.postalCode = data.contact?.address.postalCode
-        facilitySectionFields.prefectureEn
-            = data?.contact?.address?.prefectureEn
-        facilitySectionFields.cityEn = data?.contact?.address?.cityEn
-        facilitySectionFields.addressLine1En
-            = data?.contact?.address?.addressLine1En
-        facilitySectionFields.addressLine2En
-            = data?.contact?.address?.addressLine2En
-        facilitySectionFields.prefectureJa
-            = data?.contact?.address?.prefectureJa
-        facilitySectionFields.cityJa = data?.contact?.address?.cityJa
-        facilitySectionFields.addressLine1Ja
-            = data?.contact?.address?.addressLine1Ja
-        facilitySectionFields.addressLine2Ja
-            = data?.contact?.address?.addressLine2Ja
-        facilitySectionFields.googlemapsURL = data?.contact?.googleMapsUrl
-        facilitySectionFields.healthcareProfessionalIds
-            = data.healthcareProfessionalIds
-        facilitySectionFields.mapLatitude = data.mapLatitude.toString()
-        facilitySectionFields.mapLongitude = data.mapLongitude.toString()
-    }
+      
+            facilitySectionFields.nameEn = data.nameEn
+            facilitySectionFields.nameJa = data.nameJa
+            facilitySectionFields.phone = data?.contact?.phone
+            facilitySectionFields.email = data?.contact?.email || undefined
+            facilitySectionFields.website = data?.contact?.website || undefined
+            facilitySectionFields.postalCode = data.contact?.address.postalCode
+            facilitySectionFields.prefectureEn = data?.contact?.address?.prefectureEn
+            facilitySectionFields.cityEn = data?.contact?.address?.cityEn
+            facilitySectionFields.addressLine1En = data?.contact?.address?.addressLine1En
+            facilitySectionFields.addressLine2En = data?.contact?.address?.addressLine2En ?? ''
+            facilitySectionFields.prefectureJa = data?.contact?.address?.prefectureJa
+            facilitySectionFields.cityJa = data?.contact?.address?.cityJa
+            facilitySectionFields.addressLine1Ja = data?.contact?.address?.addressLine1Ja
+            facilitySectionFields.addressLine2Ja = data?.contact?.address?.addressLine2Ja ?? ''
+            facilitySectionFields.googlemapsURL = data?.contact?.googleMapsUrl
+            facilitySectionFields.healthcareProfessionalIds = data.healthcareProfessionalIds
+            facilitySectionFields.mapLatitude = data.mapLatitude.toString()
+            facilitySectionFields.mapLongitude = data.mapLongitude.toString()
+        }
 
     function resetFacilitySectionFields() {
         facilitySectionFields.nameEn = ''
@@ -178,14 +139,22 @@ export const useFacilitiesStore = defineStore('facilitiesStore', () => {
     }
 
     async function getFacilities() {
-        const calculatedOffset = currentOffset.value
-        const calculatedLimit = itemsPerPage.value
-        const { nodes, totalCount } = await queryFacilities(
-            calculatedOffset,
-            calculatedLimit
-        )
-        facilityData.value = nodes
-        totalFacilitiesCount.value = totalCount
+        const filters: FacilitySearchFilters = {
+            offset: currentOffset.value,
+            limit: itemsPerPage.value
+        }
+        try {
+            // Call the utility function to fetch the paginated data and the total count.
+            const { nodes, totalCount } = await fetchFacilitiesWithCount(filters)
+            facilityData.value = nodes
+            totalFacilitiesCount.value = totalCount
+        } catch (error) {
+            console.error(`Error fetching facilities: ${JSON.stringify(error)}`)
+            // eslint-disable-next-line no-alert
+            alert('Error during loading data of Facility, try again')
+            facilityData.value = []
+            totalFacilitiesCount.value = 0
+        }
     }
 
     function setOffset(newOffset: number) {
@@ -435,41 +404,6 @@ export const useFacilitiesStore = defineStore('facilitiesStore', () => {
         getFacilitiesByName
     }
 })
-
-const getAllFacilitiesForModeration = gql`
-    query Facilities($filters: FacilitySearchFilters!) {
-        facilities(filters: $filters) {
-            nodes {
-                id
-                nameEn
-                nameJa
-                contact {
-                    googleMapsUrl
-                    email
-                    phone
-                    website
-                    address {
-                        postalCode
-                        prefectureEn
-                        cityEn
-                        addressLine1En
-                        addressLine2En
-                        prefectureJa
-                        cityJa
-                        addressLine1Ja
-                        addressLine2Ja
-                    }
-                }
-                mapLatitude
-                mapLongitude
-                healthcareProfessionalIds
-                createdDate
-                updatedDate
-            }
-            totalCount
-        }
-    }
-`
 
 const updateExistingFacilityGqlMutation = gql`
     mutation Mutation($id: ID!, $input: UpdateFacilityInput!) {
