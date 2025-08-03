@@ -12,9 +12,18 @@ export function hasLatinCharacters(name: string) {
 }
 
 export function hasOnlyValidJapaneseAndLatinCharacters(name: string): boolean {
+    // 1) Compatibility‐normalize (NFKC) folds full-width ↔ ASCII
     const compat = name.normalize('NFKC')
+    // 2) Canonical‐normalize (NFC) composes any decomposed sequences
     const normalized = compat.normalize('NFC')
 
+    /* This regex checks to make sure that the string after being normalized only contains
+        1. Hiragana, Katakan, and Kanji for Japanese
+        2. Romaji for English letters
+        3. Hyphens of both double and single with since the hypen in Japanese is different than Romaji
+        4. Spaces
+        5. Digits
+    */
     const validChars = /^[A-Za-z0-9 \-\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FFF]+$/
     return validChars.test(normalized)
 }
