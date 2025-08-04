@@ -163,8 +163,6 @@
     "healthcareProfessionalUpdatedSuccessfully": "Healthcare Professional updated successfully",
     "back": "Back",
     "hasUnsavedChanges": "You have unsaved changes. Are you sure you want to leave?",
-    "deleteConfirmationFacility": "Are you sure you want to delete the Facility: {facility}, with ID: {id}?",
-    "deleteConfirmationHealthcareProfessional": "Are you sure you want to delete the Healthcare Professional: {healthcareProfessional}, with ID: {id}?",
     "healthcareProfessionalEnglishNameRequired": "Healthcare Professional must have an English name"
   },
   "modEditSubmissionTopNav": {
@@ -226,9 +224,7 @@
     "facilityHeading": "Thông tin cơ sở",
     "googleMapsInformation": "Thông tin Google Maps",
     "inputErrorMessageFacilityAddressLine1Ja": "Địa chỉ Nhật Bản không hợp lệ",
-    "inputErrorMessageFacilityAddressLine2Ja": "Địa chỉ Nhật Bản không hợp lệ",
     "inputErrorMessageFacilityAddressLine1En": "Địa chỉ tiếng Anh không hợp lệ",
-    "inputErrorMessageFacilityAddressLine2En": "Địa chỉ tiếng Anh không hợp lệ",
     "inputErrorMessageFacilityCityEn": "Tên thành phố tiếng Anh không hợp lệ",
     "inputErrorMessageFacilityCityJa": "Tên thành phố tiếng Nhật không hợp lệ",
     "inputErrorMessageFacilityEmail": "Địa chỉ email không hợp lệ",
@@ -289,7 +285,6 @@
     "errorMessageEnglishNameRequired": "Chuyên gia y tế phải có tên tiếng Anh",
     "healthcareProfessionalId": "Mã số chuyên gia y tế",
     "infoMessageAlreadyApproved": "Đơn đăng ký này đã được phê duyệt.",
-    "infoMessageUpdateNeeded": "Cần cập nhật thông tin này trước khi phê duyệt.",
     "labelHealthcareProfessionalFirstName": "Tên đầu tiên",
     "labelHealthcareProfessionalLastName": "Họ",
     "labelHealthcareProfessionalMiddleName": "Tên đệm",

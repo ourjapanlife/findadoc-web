@@ -1,0 +1,69 @@
+cn.json:
+- modSubmissionForm.infoMessageUpdateNeeded
+- modFacilitySection.inputErrorMessageFacilityAddressLine2Ja
+- modFacilitySection.inputErrorMessageFacilityAddressLine2En
+- modEditFacilityOrHPTopbar.deleteConfirmationFacility
+- modEditFacilityOrHPTopbar.deleteConfirmationHealthcareProfessional
+
+de.json:
+- modSubmissionForm.infoMessageUpdateNeeded
+- modFacilitySection.inputErrorMessageFacilityAddressLine2Ja
+- modFacilitySection.inputErrorMessageFacilityAddressLine2En
+- modEditFacilityOrHPTopbar.deleteConfirmationFacility
+- modEditFacilityOrHPTopbar.deleteConfirmationHealthcareProfessional
+
+en.json:
+- modEditFacilityOrHPTopbar.deleteConfirmationFacility
+- modEditFacilityOrHPTopbar.deleteConfirmationHealthcareProfessional
+- modFacilitySection.inputErrorMessageFacilityAddressLine2Ja
+- modFacilitySection.inputErrorMessageFacilityAddressLine2En
+- modSubmissionForm.infoMessageUpdateNeeded
+
+fr.json:
+- modSubmissionForm.infoMessageUpdateNeeded
+- modFacilitySection.inputErrorMessageFacilityAddressLine2Ja
+- modFacilitySection.inputErrorMessageFacilityAddressLine2En
+- modEditFacilityOrHPTopbar.deleteConfirmationFacility
+- modEditFacilityOrHPTopbar.deleteConfirmationHealthcareProfessional
+
+it.json:
+- modEditFacilityOrHPTopbar.deleteConfirmationFacility
+- modEditFacilityOrHPTopbar.deleteConfirmationHealthcareProfessional
+- modFacilitySection.inputErrorMessageFacilityAddressLine2Ja
+- modFacilitySection.inputErrorMessageFacilityAddressLine2En
+- modSubmissionForm.infoMessageUpdateNeeded
+
+ja.json:
+- modSubmissionForm.infoMessageUpdateNeeded
+- modFacilitySection.inputErrorMessageFacilityAddressLine2Ja
+- modFacilitySection.inputErrorMessageFacilityAddressLine2En
+- modEditFacilityOrHPTopbar.deleteConfirmationFacility
+- modEditFacilityOrHPTopbar.deleteConfirmationHealthcareProfessional
+
+pt.json:
+- modSubmissionForm.infoMessageUpdateNeeded
+- modFacilitySection.inputErrorMessageFacilityAddressLine2Ja
+- modFacilitySection.inputErrorMessageFacilityAddressLine2En
+- modEditFacilityOrHPTopbar.deleteConfirmationFacility
+- modEditFacilityOrHPTopbar.deleteConfirmationHealthcareProfessional
+
+ru.json:
+- modSubmissionForm.infoMessageUpdateNeeded
+- modFacilitySection.inputErrorMessageFacilityAddressLine2Ja
+- modFacilitySection.inputErrorMessageFacilityAddressLine2En
+- modEditFacilityOrHPTopbar.deleteConfirmationFacility
+- modEditFacilityOrHPTopbar.deleteConfirmationHealthcareProfessional
+
+tl.json:
+- modEditFacilityOrHPTopbar.deleteConfirmationFacility
+- modEditFacilityOrHPTopbar.deleteConfirmationHealthcareProfessional
+- modFacilitySection.inputErrorMessageFacilityAddressLine2Ja
+- modFacilitySection.inputErrorMessageFacilityAddressLine2En
+- modSubmissionForm.infoMessageUpdateNeeded
+
+vi.json:
+- modEditFacilityOrHPTopbar.deleteConfirmationFacility
+- modEditFacilityOrHPTopbar.deleteConfirmationHealthcareProfessional
+- modFacilitySection.inputErrorMessageFacilityAddressLine2Ja
+- modFacilitySection.inputErrorMessageFacilityAddressLine2En
+- modSubmissionForm.infoMessageUpdateNeeded
