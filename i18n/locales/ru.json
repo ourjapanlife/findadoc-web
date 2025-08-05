@@ -375,5 +375,14 @@
     "title": "404 - Диагноз: Страница не найдена",
     "description": "Эта страница не прошла медосмотр. Давайте направим вас на здоровую страницу!",
     "returnHome": "Вернуться домой"
+  },
+  "modListContainerItem": {
+    "newSubmission": "New",
+    "underReviewSubmission": "Under Review",
+    "approvedSubmission": "Approved",
+    "rejectedSubmission": "Rejected",
+    "review": "Review",
+    "createdDate": "Created on",
+    "updatedDate": "Updated last"
   }
 }
