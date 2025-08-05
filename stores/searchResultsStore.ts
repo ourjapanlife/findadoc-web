@@ -109,9 +109,9 @@ Promise<HealthcareProfessional[]> {
         const professionalsSearchResult = serverResponse?.data ?? []
         return professionalsSearchResult
     } catch (error) {
-        console.error(`Error getting professionals: ${JSON.stringify(error)}`)
+        console.error(useNuxtApp().$i18n.t('searchResultsErrors.gettingProfessionals'), ` ${JSON.stringify(error)}`)
         // eslint-disable-next-line no-alert
-        alert('Error getting data! Please contact our support team by clicking the bottom right link on the page!')
+        alert(useNuxtApp().$i18n.t('searchResultsErrors.gettingData'))
         return []
     }
 }
@@ -150,9 +150,9 @@ async function queryFacilities(healthcareProfessionalIds: string[], searchCity?:
 
         return locationFilteredSearchResults
     } catch (error) {
-        console.error(`Error getting facilities: ${JSON.stringify(error)}`)
+        console.error(useNuxtApp().$i18n.t('searchResultsErrors.gettingFacilities'), `${JSON.stringify(error)}`)
         // eslint-disable-next-line no-alert
-        alert('Error getting data! Please contact our support team by clicking the bottom right link on the page!')
+        alert(useNuxtApp().$i18n.t('searchResultsErrors.gettingData'))
         return []
     }
 }
