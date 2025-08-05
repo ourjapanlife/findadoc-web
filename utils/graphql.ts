@@ -61,7 +61,6 @@ export const graphQLClientRequestWithRetry = async <T>(
                 if (attempts > 1) {
                     await new Promise(resolve => setTimeout(resolve, requestTimeoutInMilliseconds))
                 }
-                //recursive call, issue line 61 is due for this
                 return executeGQLClientRequest()
             }
             const serverErrorResponse = error as ServerErrorResponse
