@@ -158,6 +158,8 @@ export const facilitiesAndCountGqlQuery = gql`
                 phone
                 website
             }
+            createdDate
+            updatedDate
         }
         facilitiesTotalCount(filters: $countFilters)
     }
