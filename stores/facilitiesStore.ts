@@ -92,26 +92,25 @@ export const useFacilitiesStore = defineStore('facilitiesStore', () => {
 
     function initializeFacilitySectionValues(data: Facility | undefined) {
         if (!data) return
-      
-            facilitySectionFields.nameEn = data.nameEn
-            facilitySectionFields.nameJa = data.nameJa
-            facilitySectionFields.phone = data?.contact?.phone
-            facilitySectionFields.email = data?.contact?.email || undefined
-            facilitySectionFields.website = data?.contact?.website || undefined
-            facilitySectionFields.postalCode = data.contact?.address.postalCode
-            facilitySectionFields.prefectureEn = data?.contact?.address?.prefectureEn
-            facilitySectionFields.cityEn = data?.contact?.address?.cityEn
-            facilitySectionFields.addressLine1En = data?.contact?.address?.addressLine1En
-            facilitySectionFields.addressLine2En = data?.contact?.address?.addressLine2En ?? ''
-            facilitySectionFields.prefectureJa = data?.contact?.address?.prefectureJa
-            facilitySectionFields.cityJa = data?.contact?.address?.cityJa
-            facilitySectionFields.addressLine1Ja = data?.contact?.address?.addressLine1Ja
-            facilitySectionFields.addressLine2Ja = data?.contact?.address?.addressLine2Ja ?? ''
-            facilitySectionFields.googlemapsURL = data?.contact?.googleMapsUrl
-            facilitySectionFields.healthcareProfessionalIds = data.healthcareProfessionalIds
-            facilitySectionFields.mapLatitude = data.mapLatitude.toString()
-            facilitySectionFields.mapLongitude = data.mapLongitude.toString()
-        }
+        facilitySectionFields.nameEn = data.nameEn
+        facilitySectionFields.nameJa = data.nameJa
+        facilitySectionFields.phone = data?.contact?.phone
+        facilitySectionFields.email = data?.contact?.email || undefined
+        facilitySectionFields.website = data?.contact?.website || undefined
+        facilitySectionFields.postalCode = data.contact?.address.postalCode
+        facilitySectionFields.prefectureEn = data?.contact?.address?.prefectureEn
+        facilitySectionFields.cityEn = data?.contact?.address?.cityEn
+        facilitySectionFields.addressLine1En = data?.contact?.address?.addressLine1En
+        facilitySectionFields.addressLine2En = data?.contact?.address?.addressLine2En ?? ''
+        facilitySectionFields.prefectureJa = data?.contact?.address?.prefectureJa
+        facilitySectionFields.cityJa = data?.contact?.address?.cityJa
+        facilitySectionFields.addressLine1Ja = data?.contact?.address?.addressLine1Ja
+        facilitySectionFields.addressLine2Ja = data?.contact?.address?.addressLine2Ja ?? ''
+        facilitySectionFields.googlemapsURL = data?.contact?.googleMapsUrl
+        facilitySectionFields.healthcareProfessionalIds = data.healthcareProfessionalIds
+        facilitySectionFields.mapLatitude = data.mapLatitude.toString()
+        facilitySectionFields.mapLongitude = data.mapLongitude.toString()
+    }
 
     function resetFacilitySectionFields() {
         facilitySectionFields.nameEn = ''
@@ -331,19 +330,15 @@ export const useFacilitiesStore = defineStore('facilitiesStore', () => {
     }
 
     async function getFacilitiesByName(
-        searchTerm: string,
-        limit: number = 100,
-        offset: number = 0,
-        additionalFilters: Omit<FacilitySearchFilters, 'limit' | 'offset' | 'nameEn' | 'nameJa'> = {}
+    searchTerm: string,
+    limit: number = 100,
+    offset: number = 0,
+    additionalFilters: Omit<FacilitySearchFilters, 'limit' | 'offset' | 'nameEn' | 'nameJa'> = {}
     ): Promise<{ nodes: Facility[], totalCount: number }> {
         if (!searchTerm.trim()) {
             return { nodes: [], totalCount: 0 }
         }
 
-        /*Prepare a single filters object for the backend call
-        * Pass the searchTerm for both nameEn
-        * and nameJa. The backend will use OR logic.
-        * */
         const filters: FacilitySearchFilters = {
             ...additionalFilters,
             nameEn: searchTerm,
@@ -353,27 +348,13 @@ export const useFacilitiesStore = defineStore('facilitiesStore', () => {
         }
 
         try {
-            // Make a single call to the backend
-            const response = await graphQLClientRequestWithRetry<Query['facilities']>(
-                gqlClient.request.bind(gqlClient),
-                // We use the general 'getAllFacilitiesForModeration' query
-                // because the backend now handles name search via generic filters.
-                getAllFacilitiesForModeration,
-                { filters: filters }
-            )
+            // Ora chiamiamo il tuo helper `fetchFacilitiesWithCount` originale
+            const { nodes, totalCount } = await fetchFacilitiesWithCount(filters)
 
-            if (!response.errors?.length && response.data) {
-                return {
-                    nodes: response.data.nodes ?? [],
-                    totalCount: response.data.totalCount ?? 0
-                }
-            } else if (response.errors?.length) {
-                console.error(`Error searching facilities by name: ${JSON.stringify(response.errors)}`)
-            }
-            return { nodes: [], totalCount: 0 }
+            return { nodes, totalCount }
         } catch (error) {
             console.error(
-                `Error searching facilities by name (single backend call): ${JSON.stringify(error)}`
+                `Error searching facilities by name: ${error instanceof Error ? error.message : JSON.stringify(error)}`
             )
             return { nodes: [], totalCount: 0 }
         }

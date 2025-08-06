@@ -453,9 +453,6 @@ const getHealthcareProfessionalsByNameGqlQuery = gql`
                     lastName
                     locale
                 }
-                # Includi qui gli altri campi che ti servono per la visualizzazione
-                # dei risultati nella search bar (es. specialties, etc.)
-                specialties
             }
             totalCount
         }
