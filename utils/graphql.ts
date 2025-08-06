@@ -40,8 +40,10 @@ export const graphQLClientRequestWithRetry = async <T>(
 
     const executeGQLClientRequest = async (): Promise<ServerResponse<T>> => {
         try {
+            // get the auth0 token from the auth store
             const authstore = useAuthStore()
             const authToken = await authstore.getAuthBearerToken()
+            // Set the auth token in the request headers. This is used to authenticate the user with the API
             const requestHeaders = {
                 authorization: authToken ? `Bearer ${authToken}` : ''
             } satisfies HeadersInit
@@ -63,6 +65,8 @@ export const graphQLClientRequestWithRetry = async <T>(
                 }
                 return executeGQLClientRequest()
             }
+            // This is a consistent error messaging no matter the type of query or mutation
+            console.error(`There was an error executing the request: ${error}`)
             const serverErrorResponse = error as ServerErrorResponse
             const errors = serverErrorResponse.response?.errors?.map(errorResponse => ({
                 message: errorResponse.message,
