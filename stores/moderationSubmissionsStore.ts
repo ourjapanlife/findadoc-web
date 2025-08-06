@@ -75,8 +75,8 @@ export const useModerationSubmissionsStore = defineStore(
             }
             try {
                 // Call the utility function to fetch the paginated data and the total count.
-                const { nodes, totalCount } = await fetchSubmissionsWithCount(filters)
-                submissionsData.value = nodes
+                const { filteredSearchResults, totalCount } = await fetchSubmissionsWithCount(filters)
+                submissionsData.value = filteredSearchResults
                 totalSubmissionsCount.value = totalCount
                 // Apply a secondary filter on the fetched data based on the currently selected tab.
                 filterSubmissionByStatus(selectedModerationListViewTabChosen.value as unknown as SubmissionStatus)

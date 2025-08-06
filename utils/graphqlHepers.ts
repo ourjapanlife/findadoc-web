@@ -13,11 +13,12 @@ import type { HealthcareProfessional,
  * type for the response that includes both the list and the total count.
  *
  * @param filters An object containing search and pagination filters.
- * @returns A Promise that resolves to an object containing an array of healthcare professionals (`nodes`) and the total count.
+ * @returns A Promise that resolves to an object containing an array
+ * of healthcare professionals (`filteredSearchResults`) and the total count.
  */
 export async function fetchHealthcareProfessionalsWithCount(
     filters: HealthcareProfessionalSearchFilters
-): Promise<{ nodes: HealthcareProfessional[], totalCount: number }> {
+): Promise<{ filteredSearchResults: HealthcareProfessional[], totalCount: number }> {
     try {
         // We define the expected type of the GraphQL response here:
         // an object containing the list of professionals and the total count.
@@ -33,10 +34,10 @@ export async function fetchHealthcareProfessionalsWithCount(
         )
 
         // Extract the list of professionals and the total count from the response data.
-        const nodes = response.data?.healthcareProfessionals ?? []
+        const filteredSearchResults = response.data?.healthcareProfessionals ?? []
         const totalCount = response.data?.healthcareProfessionalsTotalCount ?? 0
 
-        return { nodes, totalCount }
+        return { filteredSearchResults, totalCount }
     } catch (error) {
         console.error(`Error retrieving healthcare professionals: ${JSON.stringify(error)}`)
         throw new Error('Failed to retrieve healthcare professional data.')
@@ -49,7 +50,7 @@ export async function fetchHealthcareProfessionalsWithCount(
  */
 export async function fetchFacilitiesWithCount(
     filters: FacilitySearchFilters
-): Promise<{ nodes: Facility[], totalCount: number }> {
+): Promise<{ filteredSearchResults: Facility[], totalCount: number }> {
     try {
         // Object containthe list of facility and the total count.
         const response = await graphQLClientRequestWithRetry<
@@ -63,10 +64,10 @@ export async function fetchFacilitiesWithCount(
             }
         )
 
-        const nodes = response.data?.facilities ?? []
+        const filteredSearchResults = response.data?.facilities ?? []
         const totalCount = response.data?.facilitiesTotalCount ?? 0
 
-        return { nodes, totalCount }
+        return { filteredSearchResults, totalCount }
     } catch (error) {
         console.error(`Error retrieving facilities with count: ${JSON.stringify(error)}`)
         throw new Error('Failed to retrieve facility data.')
@@ -79,7 +80,7 @@ export async function fetchFacilitiesWithCount(
  */
 export async function fetchSubmissionsWithCount(
     filters: SubmissionSearchFilters
-): Promise<{ nodes: Submission[], totalCount: number }> {
+): Promise<{ filteredSearchResults: Submission[], totalCount: number }> {
     try {
         const response = await graphQLClientRequestWithRetry<
             { submissions: Submission[], submissionsTotalCount: number }
@@ -92,10 +93,10 @@ export async function fetchSubmissionsWithCount(
             }
         )
 
-        const nodes = response.data?.submissions ?? []
+        const filteredSearchResults = response.data?.submissions ?? []
         const totalCount = response.data?.submissionsTotalCount ?? 0
 
-        return { nodes, totalCount }
+        return { filteredSearchResults, totalCount }
     } catch (error) {
         console.error(`Error retrieving submissions with count: ${JSON.stringify(error)}`)
         throw new Error('Failed to retrieve submission data.')

@@ -92,7 +92,7 @@ export const useFacilitiesStore = defineStore('facilitiesStore', () => {
 
     function initializeFacilitySectionValues(data: Facility | undefined) {
         if (!data) return
-      
+
             facilitySectionFields.nameEn = data.nameEn
             facilitySectionFields.nameJa = data.nameJa
             facilitySectionFields.phone = data?.contact?.phone
@@ -145,8 +145,8 @@ export const useFacilitiesStore = defineStore('facilitiesStore', () => {
         }
         try {
             // Call the utility function to fetch the paginated data and the total count.
-            const { nodes, totalCount } = await fetchFacilitiesWithCount(filters)
-            facilityData.value = nodes
+            const { filteredSearchResults, totalCount } = await fetchFacilitiesWithCount(filters)
+            facilityData.value = filteredSearchResults
             totalFacilitiesCount.value = totalCount
         } catch (error) {
             console.error(`Error fetching facilities: ${JSON.stringify(error)}`)

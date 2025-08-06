@@ -24,7 +24,6 @@ export const initializeGqlClient = () => {
 }
 
 export const graphQLClientRequestWithRetry = async <T>(
-    //we are returning Promise<T> instead of Promise<ServerResponse<T>>
     gqlClientRequestFunction: (
         queryOrMutation: RequestDocument,
         variables?: unknown,
@@ -68,6 +67,7 @@ export const graphQLClientRequestWithRetry = async <T>(
             // This is a consistent error messaging no matter the type of query or mutation
             console.error(`There was an error executing the request: ${error}`)
             const serverErrorResponse = error as ServerErrorResponse
+            // This map transforms errors if they exist
             const errors = serverErrorResponse.response?.errors?.map(errorResponse => ({
                 message: errorResponse.message,
                 fieldWithError: errorResponse.locations,
@@ -77,10 +77,8 @@ export const graphQLClientRequestWithRetry = async <T>(
             return { data: {} as T, errors, hasErrors: true }
         }
     }
-
-    return executeGQLClientRequest()
+    return executeGQLClientRequest() // retry request
 }
-
 export interface graphQLClientRequestWithRetryOptions {
     requestTimeoutInMilliseconds?: number
     retryAmount?: number

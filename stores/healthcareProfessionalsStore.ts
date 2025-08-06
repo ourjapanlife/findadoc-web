@@ -111,8 +111,8 @@ export const useHealthcareProfessionalsStore = defineStore(
             }
             try {
                 // Call the utility function to fetch the paginated data and the total count
-                const { nodes, totalCount } = await fetchHealthcareProfessionalsWithCount(filters)
-                healthcareProfessionalsData.value = nodes
+                const { filteredSearchResults, totalCount } = await fetchHealthcareProfessionalsWithCount(filters)
+                healthcareProfessionalsData.value = filteredSearchResults
                 totalHealthcareProfessionalsCount.value = totalCount
             } catch (error) {
                 console.error(`Error fetching healthcare professionals: ${JSON.stringify(error)}`)
