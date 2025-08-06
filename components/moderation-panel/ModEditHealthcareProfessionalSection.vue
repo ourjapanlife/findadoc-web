@@ -65,8 +65,9 @@
                             <option
                                 v-for="(locale, index) in Locale"
                                 :key="`${locale}-${index}`"
+                                :value="locale"
                             >
-                                {{ locale }}
+                                {{ localesStore.formatLanguageCodeToSimpleText(locale) }}
                             </option>
                         </select>
                         <div
@@ -239,7 +240,7 @@
                     </li>
                 </ol>
                 <NoteInputField
-                    v-model="healthcareProfessionalsStore.healthcareProfessionalSectionFields.additionalInfoForPatients"
+                    v-model="healthcareProfessionalsStore.healthcareProfessionalSectionFields.additionalInfoForPatients as string"
                     :label="t('modHealthcareProfessionalSection.labelAdditionalNotesForPatients')"
                     :placeholder="t('modHealthcareProfessionalSection.placeholderAdditionalNotesForPatients')"
                     :required="false"
@@ -325,9 +326,13 @@ const nameLocaleInputs: LocalizedNameInput = reactive(
         middleName: '',
         locale: Locale.Und }
 )
+// This keeps track of the original locale of the name being edited for validation
+const originalNameLocale: Ref<Locale> = ref(Locale.Und)
 
 // Sets the locale being edited name value
-const setEditingLocaleName = (newValue: boolean) => {
+const setEditingLocaleName = async (newValue: boolean) => {
+    // This allows the dom to change so the position of the name locale is correct before trying to edit
+    await nextTick()
     editingLocaleName.value = newValue
     // Makes sure both values cannot be true
     addingLocaleName.value = false
@@ -336,7 +341,7 @@ const setEditingLocaleName = (newValue: boolean) => {
 // Closes the locale being added name inputs
 const handleCloseAddingNewLocalizedName = () => {
     // Allows for the inputs to completely transition before resetting the fields
-    setTimeout(() => resetNameLocaleInputs, 300)
+    setTimeout(resetNameLocaleInputs, 300)
     addingLocaleName.value = false
     // Makes sure both values cannot be true
     editingLocaleName.value = false
@@ -345,7 +350,7 @@ const handleCloseAddingNewLocalizedName = () => {
 // Opens the locale being added name inputs
 const handleOpenAddNewNameWithReset = () => {
     // Allows for the inputs to completely transition before resetting the fields
-    setTimeout(() => resetNameLocaleInputs, 300)
+    resetNameLocaleInputs()
     addingLocaleName.value = true
     // Makes sure both values cannot be true
     editingLocaleName.value = false
@@ -365,6 +370,7 @@ const autofillNameLocaleInputWithChosenHealthcareProfessional = (localizedNameIn
     nameLocaleInputs.lastName = localizedNameInput.lastName
     nameLocaleInputs.middleName = localizedNameInput.middleName || ''
     nameLocaleInputs.locale = localizedNameInput.locale
+    originalNameLocale.value = localizedNameInput.locale
 }
 
 //This will set the name that needs to be autofilled and move it to the zero index
@@ -403,6 +409,7 @@ const handleUpdateExistingName = () => {
 
     // Checks to keep user from adding a name with same locale instead of editing
     const existingNameForLocale = healthcareProfessionalsStore.healthcareProfessionalSectionFields.names
+        .filter(name => name.locale !== originalNameLocale.value)
         .find(name => name.locale === nameLocaleInputs.locale)
 
     // Displays message if user is trying to add a locale for name that exists and they aren't editing a healthcare professional
@@ -462,6 +469,7 @@ const handleAddLocalizedName = () => {
         locale: nameLocaleInputs.locale || Locale.Und,
         middleName: nameLocaleInputs.middleName
     }
+
     // Checks to keep user from adding a name with same locale instead of editing
     const existingNameForLocale = healthcareProfessionalsStore.healthcareProfessionalSectionFields.names
         .find(name => name.locale === nameLocaleInputs.locale)
