@@ -228,6 +228,7 @@ export enum Locale {
   LagTz = 'lag_TZ',
   LgUg = 'lg_UG',
   LvLv = 'lv_LV',
+  MnMn = 'mn_MN',
   NbNo = 'nb_NO',
   NeNp = 'ne_NP',
   NlBe = 'nl_BE',
