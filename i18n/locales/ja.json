@@ -371,6 +371,12 @@
   "modInputField": {
     "optional": "Optional"
   },
+  "pagination": {
+    "of": "of",
+    "results": "results"
+  },
+  "modSubmissionListContainer": {
+    "resultsPerPage": "Results per page"
   "errorPage": {
     "title": "404 - 診断：ページが見つかりません",
     "description": "このページは健康診断に合格しませんでした。代わりに健康なページにご案内します！",

@@ -370,6 +370,12 @@
   "modInputField": {
     "optional": "Optional"
   },
+  "pagination": {
+    "of": "of",
+    "results": "results"
+  },
+  "modSubmissionListContainer": {
+    "resultsPerPage": "Results per page"
   "errorPage": {
     "title": "404 - Diagnostic : Page non trouvée",
     "description": "Cette page n'a pas réussi son examen de santé. Dirigeons-vous vers une page saine à la place !",
