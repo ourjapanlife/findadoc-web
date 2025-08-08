@@ -2,7 +2,6 @@ import type { Maybe } from 'graphql/jsutils/Maybe'
 import { defineStore } from 'pinia'
 import { reactive, ref, type Ref, computed } from 'vue'
 import { gql } from 'graphql-request'
-import { fetchHealthcareProfessionalsWithCount } from '../utils/graphqlHepers'
 import { type Insurance,
     type Degree,
     type Specialty,
@@ -15,7 +14,8 @@ import { type Insurance,
     RelationshipAction,
     type CreateHealthcareProfessionalInput,
     type MutationCreateHealthcareProfessionalArgs,
-    type Query } from '~/typedefs/gqlTypes'
+    type Query,
+    type HealthcareProfessionalSearchFilters } from '~/typedefs/gqlTypes'
 import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql'
 import { useLocaleStore } from '~/stores/localeStore'
 import { ErrorCode, type ServerError, type ServerResponse } from '~/typedefs/serverResponse'
@@ -123,7 +123,7 @@ export const useHealthcareProfessionalsStore = defineStore(
             }
         }
 
-        function setOffset(newOffset: number) {
+        function changePage(newOffset: number) {
             currentOffset.value = newOffset
             getHealthcareProfessionals()
         }
@@ -327,8 +327,42 @@ export const useHealthcareProfessionalsStore = defineStore(
             return nameFromChosenLocaleDisplay ? nameFromChosenLocaleDisplay : healthcareProfessional.names[0]
         }
 
-        function setItemsPerPage(newLimit: number) {
-            itemsPerPage.value = newLimit
+        /**
+         * Fetches a paginated list of healthcare professionals along with their total count.
+         * It uses the generic `graphQLClientRequestWithRetry` function, providing a specific
+         * type for the response that includes both the list and the total count.
+         *
+         * @param filters An object containing search and pagination filters.
+         * @returns A Promise that resolves to an object containing an array
+         * of healthcare professionals (`filteredSearchResults`) and the total count.
+         */
+        async function fetchHealthcareProfessionalsWithCount(
+            filters: HealthcareProfessionalSearchFilters
+        ): Promise<{ filteredSearchResults: HealthcareProfessional[], totalCount: number }> {
+            try {
+                // an object containing the list of professionals and the total count.
+                const response = await graphQLClientRequestWithRetry<{
+                    healthcareProfessionals: {
+                        healthcareProfessionals: HealthcareProfessional[]
+                        totalCount: number
+                    }
+                }>(
+                    gqlClient.request.bind(gqlClient),
+                    GetPaginatedHealthcareProfessionalsQuery,
+                    { filters }
+                )
+
+                const paginatedHealthcareProfessionals = response.data?.healthcareProfessionals
+
+                // Extract the list of professionals and the total count from the response data.
+                const filteredSearchResults = paginatedHealthcareProfessionals.healthcareProfessionals ?? []
+                const totalCount = paginatedHealthcareProfessionals?.totalCount ?? 0
+
+                return { filteredSearchResults, totalCount }
+            } catch (error) {
+                console.error(`Error retrieving healthcare professionals: ${JSON.stringify(error)}`)
+                throw new Error('Failed to retrieve healthcare professional data.')
+            }
         }
 
         return {
@@ -350,10 +384,9 @@ export const useHealthcareProfessionalsStore = defineStore(
             totalHealthcareProfessionalsCount,
             currentOffset,
             itemsPerPage,
-            setOffset,
+            changePage,
             hasNextPage,
-            hasPrevPage,
-            setItemsPerPage
+            hasPrevPage
         }
     }
 )
@@ -363,17 +396,16 @@ export async function getHealthcareProfessionalById(id: string): Promise<Healthc
         const queryData = {
             healthcareProfessionalId: id
         }
-        const result = await graphQLClientRequestWithRetry<Query>(
+        const result = await graphQLClientRequestWithRetry<Query['healthcareProfessionals']>(
             gqlClient.request.bind(gqlClient),
             getHealthcareProfessionalByIdGqlQuery,
             queryData
         )
 
-        if (!result.data?.healthcareProfessional) {
+        if (!result.data.healthcareProfessionals) {
             throw new Error('The Healthcare Professional ID doesn\'t exist')
         }
-
-        return [result.data.healthcareProfessional]
+        return result.data.healthcareProfessionals
     } catch (error: unknown) {
         console.error(`Error retrieving healthcare professional by id: ${id}: ${JSON.stringify(error)}`)
         return []
@@ -391,6 +423,31 @@ const getHealthcareProfessionalByIdGqlQuery = gql`
         specialties
     }
 }`
+
+const GetPaginatedHealthcareProfessionalsQuery = gql`
+  query HealthcareProfessionalsAndCount($filters: HealthcareProfessionalSearchFilters!) {
+    healthcareProfessionals(filters: $filters) {
+    totalCount
+    healthcareProfessionals {
+        id
+        names {
+          firstName
+          middleName
+          lastName
+          locale
+        }
+        spokenLanguages
+        degrees
+        specialties
+        acceptedInsurance
+        additionalInfoForPatients
+        facilityIds
+        createdDate
+        updatedDate
+      }
+    }
+  }
+`
 
 const updateHealthcareProfessionalGqlMutation = gql`
 mutation Mutation($id: ID!, $input: UpdateHealthcareProfessionalInput!) {

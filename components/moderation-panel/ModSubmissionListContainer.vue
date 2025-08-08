@@ -117,14 +117,14 @@
             :current-offset="modSubmissionsListStore.currentOffset"
             :total-items="modSubmissionsListStore.totalSubmissionsCount"
             :items-per-page="modSubmissionsListStore.itemsPerPage"
-            @update:offset="modSubmissionsListStore.setOffset"
+            @update:offset="modSubmissionsListStore.changePage"
         />
         <Pagination
             v-else-if="modSubmissionsListStore.selectedModerationListViewChosen === SelectedModerationListView.Facilities"
             :current-offset="facilitiesStore.currentOffset"
             :total-items="facilitiesStore.totalFacilitiesCount"
             :items-per-page="facilitiesStore.itemsPerPage"
-            @update:offset="facilitiesStore.setOffset"
+            @update:offset="facilitiesStore.changePage"
         />
         <Pagination
             v-else-if="modSubmissionsListStore.selectedModerationListViewChosen
@@ -132,7 +132,7 @@
             :current-offset="healthcareProfessionalsStore.currentOffset"
             :total-items="healthcareProfessionalsStore.totalHealthcareProfessionalsCount"
             :items-per-page="healthcareProfessionalsStore.itemsPerPage"
-            @update:offset="healthcareProfessionalsStore.setOffset"
+            @update:offset="healthcareProfessionalsStore.changePage"
         />
 
         <div class="flex items-center mr-4 pl-4">
@@ -221,20 +221,20 @@ async function handleItemsPerPageChange(event: Event) {
     switch (modSubmissionsListStore.selectedModerationListViewChosen) {
         case SelectedModerationListView.Submissions:
             // Update the itemsPerPage and reset the offset to 0 for submissions.
-            modSubmissionsListStore.setItemsPerPage(newItemsPerPage)
-            modSubmissionsListStore.setOffset(0)
+            modSubmissionsListStore.itemsPerPage = newItemsPerPage
+            modSubmissionsListStore.changePage(0)
             await modSubmissionsListStore.getSubmissions()
             break
         case SelectedModerationListView.Facilities:
             // Update the itemsPerPage and reset the offset to 0 for facilities.
-            facilitiesStore.setItemsPerPage(newItemsPerPage)
-            facilitiesStore.setOffset(0)
+            facilitiesStore.itemsPerPage = newItemsPerPage
+            facilitiesStore.changePage(0)
             await facilitiesStore.getFacilities()
             break
         case SelectedModerationListView.HealthcareProfessionals:
             // Update the itemsPerPage and reset the offset to 0 for healtchare professionals.
-            healthcareProfessionalsStore.setItemsPerPage(newItemsPerPage)
-            healthcareProfessionalsStore.setOffset(0)
+            healthcareProfessionalsStore.itemsPerPage = newItemsPerPage
+            healthcareProfessionalsStore.changePage(0)
             await healthcareProfessionalsStore.getHealthcareProfessionals()
             break
     }

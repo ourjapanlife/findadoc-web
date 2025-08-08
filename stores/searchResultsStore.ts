@@ -99,15 +99,18 @@ Promise<HealthcareProfessional[]> {
             } satisfies HealthcareProfessionalSearchFilters
         }
 
-        const serverResponse = await graphQLClientRequestWithRetry<
-            { healthcareProfessionals: HealthcareProfessional[] }
-        >(
+        const serverResponse = await graphQLClientRequestWithRetry<{
+            healthcareProfessionals: {
+                healthcareProfessionals: HealthcareProfessional[]
+                totalCount: number
+            }
+        }>(
             gqlClient.request.bind(gqlClient),
             searchProfessionalsQuery,
             searchProfessionalsData
         )
 
-        const professionalsSearchResult = serverResponse.data.healthcareProfessionals ?? []
+        const professionalsSearchResult = serverResponse.data?.healthcareProfessionals?.healthcareProfessionals ?? []
         return professionalsSearchResult
     } catch (error) {
         console.error(`Error getting professionals: ${JSON.stringify(error)}`)
@@ -134,15 +137,18 @@ async function queryFacilities(healthcareProfessionalIds: string[], searchCity?:
             } satisfies FacilitySearchFilters
         }
 
-        const serverResponse = await graphQLClientRequestWithRetry<
-            { facilities: Facility[] }
-        >(
+        const serverResponse = await graphQLClientRequestWithRetry<{
+            facilities: {
+                facilities: Facility[]
+                totalCount: number
+            }
+        }>(
             gqlClient.request.bind(gqlClient),
             searchFacilitiesQuery,
             searchFacilitiesData
         )
 
-        const facilitiesSearchResults = serverResponse.data.facilities ?? []
+        const facilitiesSearchResults = serverResponse.data.facilities.facilities ?? []
 
         const locationFilteredSearchResults = searchCity
             ? facilitiesSearchResults.filter(facility =>
@@ -159,53 +165,59 @@ async function queryFacilities(healthcareProfessionalIds: string[], searchCity?:
 }
 
 const searchProfessionalsQuery = gql`
-    query searchHealthcareProfessionals($filters: HealthcareProfessionalSearchFilters!) {
-        healthcareProfessionals(filters: $filters) {
-            id
-            names {
-                lastName
-                firstName
-                middleName
-                locale
-            }
-            degrees
-            specialties
-            facilityIds
-            spokenLanguages
-            acceptedInsurance
-            additionalInfoForPatients
-            createdDate
-            updatedDate
+  query searchHealthcareProfessionals($filters: HealthcareProfessionalSearchFilters!) {
+    healthcareProfessionals(filters: $filters) {
+      healthcareProfessionals {
+        id
+        names {
+          lastName
+          firstName
+          middleName
+          locale
         }
+        degrees
+        specialties
+        facilityIds
+        spokenLanguages
+        acceptedInsurance
+        additionalInfoForPatients
+        createdDate
+        updatedDate
+      }
+      totalCount
     }
+  }
 `
 
 const searchFacilitiesQuery = gql`
-    query QueryFacilities($filters: FacilitySearchFilters!) {
-        facilities(filters: $filters) {
-            id
-            nameEn
-            nameJa
-            mapLatitude
-            mapLongitude
-            healthcareProfessionalIds
-            contact {
-                address {
-                    addressLine1En
-                    addressLine2En
-                    addressLine1Ja
-                    addressLine2Ja
-                    cityJa
-                    cityEn
-                    prefectureJa
-                    prefectureEn
-                    postalCode
-                }
-                email
-                googleMapsUrl
-                phone
-                website
-            }
+  query QueryFacilities($filters: FacilitySearchFilters!) {
+    facilities(filters: $filters) {
+      facilities {
+        id
+        nameEn
+        nameJa
+        mapLatitude
+        mapLongitude
+        healthcareProfessionalIds
+        contact {
+          address {
+            addressLine1En
+            addressLine2En
+            addressLine1Ja
+            addressLine2Ja
+            cityJa
+            cityEn
+            prefectureJa
+            prefectureEn
+            postalCode
+          }
+          email
+          googleMapsUrl
+          phone
+          website
         }
+      }
+      totalCount
     }
+  }
 `
