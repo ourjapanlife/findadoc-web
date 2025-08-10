@@ -377,7 +377,7 @@
   },
   "modSubmissionListContainer": {
     "resultsPerPage": "Results per page"
-    },
+  },
   "errorPage": {
     "title": "404 - Диагноз: Страница не найдена",
     "description": "Эта страница не прошла медосмотр. Давайте направим вас на здоровую страницу!",

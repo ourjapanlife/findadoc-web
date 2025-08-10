@@ -376,7 +376,7 @@
   },
   "modSubmissionListContainer": {
     "resultsPerPage": "Risultati per pagagina"
-    },
+  },
   "errorPage": {
     "title": "404 - Diagnosi: Pagina non trovata",
     "description": "Questa pagina non ha superato il suo esame di salute. Portiamoti invece a una pagina sana!",
