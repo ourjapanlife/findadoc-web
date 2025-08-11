@@ -33,7 +33,7 @@ export const useFacilitiesStore = defineStore('facilitiesStore', () => {
     const hasNextPage = computed(() => currentOffset.value + itemsPerPage.value < totalFacilitiesCount.value)
     const hasPrevPage = computed(() => currentOffset.value > 0)
     // This reactive object is used to share data changes of the updated facility or submission across the components
-    const facilitySectionFields = reactive({
+    const facilitySectionFields = ref<FacilitySectionFields>({
         // contactFields
         nameEn: '',
         nameJa: '',
@@ -122,8 +122,8 @@ export const useFacilitiesStore = defineStore('facilitiesStore', () => {
             nameEn: '',
             nameJa: '',
             phone: '',
-            website: undefined,
-            email: undefined,
+            website: '' as string | undefined,
+            email: '' as string | undefined,
             postalCode: '',
             prefectureEn: '',
             cityEn: '',
@@ -136,8 +136,8 @@ export const useFacilitiesStore = defineStore('facilitiesStore', () => {
             googlemapsURL: '',
             mapLatitude: '',
             mapLongitude: '',
-            healthcareProfessionalIds: [],
-            healthProfessionalsRelations: []
+            healthcareProfessionalIds: [] as string[],
+            healthProfessionalsRelations: [] as Relationship[]
         }
     }
 
@@ -241,9 +241,6 @@ export const useFacilitiesStore = defineStore('facilitiesStore', () => {
         if (!serverResponse.errors?.length) {
             initializeFacilitySectionValues(serverResponse.data)
 
-            if (
-                arraysAreEqual(
-                    facilitySectionFields.healthProfessionalsRelations,
             // This block prevents a race condition: clear the array only if relations haven't changed while awaiting response
             if (
                 arraysAreEqual(
