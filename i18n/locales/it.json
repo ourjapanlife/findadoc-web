@@ -378,10 +378,17 @@
     "resultsPerPage": "Risultati per pagagina"
   },
   "errorPage": {
-    "title": "404 - Diagnosi: Pagina non trovata",
-    "description": "Questa pagina non ha superato il suo esame di salute. Portiamoti invece a una pagina sana!",
-    "returnHome": "Torna alla home"
+      "title": "404 - Diagnosi: Pagina non trovata",
+      "description": "Questa pagina non ha superato il suo esame di salute. Portiamoti invece a una pagina sana!",
+      "returnHome": "Torna alla home"
   },
+  "settingsPage": {
+    "heading": "Settings",
+    "subheading": "Manage your account settings",
+    "displayName": "Nome visualizzato",
+    "healthcareProfessionalName": "Profile Image",
+    "updateButton": "Update Settings"
+   },
   "modListContainerItem": {
     "newSubmission": "New",
     "underReviewSubmission": "Under Review",
@@ -391,4 +398,4 @@
     "createdDate": "Created on",
     "updatedDate": "Updated last"
   }
-}
+  }
