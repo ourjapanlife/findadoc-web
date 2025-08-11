@@ -30,25 +30,18 @@
                 <!-- Facilities -->
                 <div
                     v-else-if="hasFacilities && facilitiesModerationListViewChosen"
-                    class="grid grid-cols-2 gap-4 items-start mx-2 mt-2 mb-44"
+                    class="grid grid-cols-1 md:grid-cols-2 gap-4 items-start justify-start mx-2 mt-2 mb-44"
                 >
                     <div
                         v-for="(facility, index) in facilitiesStore.facilityData"
                         :key="index"
-                        class="grid grid-cols-subgrid col-span-4 bg-accent-bg"
                     >
-                        <NuxtLink
-                            :to="`/moderation/edit-facility/${facility.id}`"
-                            class="grid grid-cols-subgrid col-span-4 p-1 hover:bg-primary"
-                            :data-testid="`mod-facility-list-item-${index + 1}`"
-                        >
-                            <span>
-                                {{ getGlobalRowNumber(facilitiesStore.currentOffset, index) }}
-                            </span>
-                            <span class="text-skip">{{ facility?.nameEn }}</span>
-                            <span class="text-skip">{{ formatToReadableDate(facility.updatedDate) }}</span>
-                            <span class="text-skip">{{ formatToReadableDate(facility.createdDate) }}</span>
-                        </NuxtLink>
+                        <ModListContainerItem
+                            :facility="facility"
+                            :pagination-global-row-value-function="getGlobalRowNumber"
+                            :current-offset="facilitiesStore.currentOffset"
+                            :index="index"
+                        />
                     </div>
                 </div>
 
