@@ -21,18 +21,12 @@
                     maxWidth: maxWidthString,
                     transition: !isDragging ? `${transitionDurationString} ease` : undefined,
                 }">
-                <header ref="bottomSheetHeader" class="bottom-sheet__header">
-                    <div ref="bottomSheetDraggableArea" class="w-full mx-auto p-4 cursor-grab">
-                        <div class="w-10 h-1 bg-neutral-800 rounded-lg mx-auto" />
-                    </div>
-                    <slot name="header" />
+                <header ref="bottomSheetDraggableArea" class="w-full mx-auto p-4 cursor-grab">
+                    <div class="w-10 h-1 bg-accent/30 rounded-lg mx-auto" />
                 </header>
                 <main ref="bottomSheetMain" class="flex flex-col overflow-y-scroll box-border touch-auto">
                     <slot />
                 </main>
-                <footer v-if="$slots.footer" ref="bottomSheetFooter">
-                    <slot name="footer" />
-                </footer>
             </div>
         </div>
     </Teleport>
@@ -68,6 +62,7 @@ interface IEvent {
     type: string
     deltaY: number
     isFinal: boolean
+    isFirst: boolean
     cancelable: boolean
 }
 
@@ -126,6 +121,7 @@ const enabledPositions = computed(() => props.customPositions)
    */
 const bottomSheet = ref<HTMLElement | null>(null)
 const bottomSheetContent = ref<HTMLElement | null>(null)
+const bottomSheetMain = ref<HTMLElement | null>(null)
 const bottomSheetDraggableArea = ref<HTMLElement | null>(null)
 
 /**
@@ -173,7 +169,7 @@ function initHeight() {
    * @param type
    */
 
-const dragHandler = (event: HammerInput | IEvent, type: 'area' | 'main') => {
+const dragHandler = (event: HammerInput | IEvent, type: 'draghandle' | 'main') => {
     if (props.canSwipe) {
         isDragging.value = true
 
@@ -181,25 +177,31 @@ const dragHandler = (event: HammerInput | IEvent, type: 'area' | 'main') => {
             e.preventDefault()
         }
 
-        if (event.deltaY > 0) {
-            if (type === 'main' && event.type === 'panup') {
-                translateValue.value = event.deltaY
+        let newDeltaY = event.deltaY
+
+        // on the first event, we want the transition to start from the current position, not the top of the sheet
+        if (event.type === 'panstart') {
+            const currentDeltaY = translateValue.value
+            newDeltaY = currentDeltaY + event.deltaY
+        }
+
+        if (!event.isFinal) {
+            // If the content area is dragged up, move the sheet up
+            if (type === 'main' && event.type === 'panup' && contentScroll.value === 0) {
+                translateValue.value = newDeltaY
                 if ('cancelable' in event && event.cancelable) {
-                    bottomSheetContent.value!.addEventListener('touchmove', preventDefault)
+                    bottomSheetMain.value!.addEventListener('touchmove', preventDefault)
                 }
             }
 
+            // If the content area is dragged down, move the sheet down
             if (type === 'main' && event.type === 'pandown' && contentScroll.value === 0) {
-                // HammerInput has deltaY, DOM events may not
-                if ('deltaY' in event) {
-                    translateValue.value = event.deltaY
-                }
+                translateValue.value = newDeltaY
             }
 
-            if (type === 'area') {
-                if ('deltaY' in event) {
-                    translateValue.value = event.deltaY
-                }
+            // If the draggable area is dragged up, move the sheet up
+            if (type === 'draghandle') {
+                translateValue.value = newDeltaY
             }
 
             if ('type' in event && event.type === 'panup') {
@@ -212,10 +214,11 @@ const dragHandler = (event: HammerInput | IEvent, type: 'area' | 'main') => {
 
         // Triggers when the user "lets go" of the sheet
         if ('isFinal' in event && event.isFinal) {
-            bottomSheetContent.value!.removeEventListener('touchmove', preventDefault)
+            bottomSheetMain.value!.removeEventListener('touchmove', preventDefault)
 
             if (type === 'main') {
-                contentScroll.value = bottomSheetContent.value!.scrollTop
+                // Check if content is scrolled
+                contentScroll.value = bottomSheetMain.value!.scrollTop
             }
             isDragging.value = false
 
@@ -266,7 +269,7 @@ nextTick(() => {
             recognizers: [[Hammer.Pan, { direction: Hammer.DIRECTION_VERTICAL }]]
         })
         hammerAreaInstance.on('panstart panup pandown panend', (e: HammerInput) => {
-            dragHandler(e, 'area')
+            dragHandler(e, 'draghandle')
         })
     }
 

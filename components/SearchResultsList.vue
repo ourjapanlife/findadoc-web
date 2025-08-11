@@ -9,8 +9,6 @@
         :z-index="0"
         :initial-position="75"
         :custom-positions="[20, 50, 75]"
-        @dragging-up="maximizeResultsListBottomSheet"
-        @dragging-down="minimizeResultsListBottomSheet"
     >
         <div
             class="flex flex-col bg-primary-bg overflow-y-auto mx-2"
