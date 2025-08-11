@@ -93,25 +93,25 @@ export const useFacilitiesStore = defineStore('facilitiesStore', () => {
     function initializeFacilitySectionValues(data: Facility | undefined) {
         if (!data) return
 
-            facilitySectionFields.nameEn = data.nameEn
-            facilitySectionFields.nameJa = data.nameJa
-            facilitySectionFields.phone = data?.contact?.phone
-            facilitySectionFields.email = data?.contact?.email || undefined
-            facilitySectionFields.website = data?.contact?.website || undefined
-            facilitySectionFields.postalCode = data.contact?.address.postalCode
-            facilitySectionFields.prefectureEn = data?.contact?.address?.prefectureEn
-            facilitySectionFields.cityEn = data?.contact?.address?.cityEn
-            facilitySectionFields.addressLine1En = data?.contact?.address?.addressLine1En
-            facilitySectionFields.addressLine2En = data?.contact?.address?.addressLine2En ?? ''
-            facilitySectionFields.prefectureJa = data?.contact?.address?.prefectureJa
-            facilitySectionFields.cityJa = data?.contact?.address?.cityJa
-            facilitySectionFields.addressLine1Ja = data?.contact?.address?.addressLine1Ja
-            facilitySectionFields.addressLine2Ja = data?.contact?.address?.addressLine2Ja ?? ''
-            facilitySectionFields.googlemapsURL = data?.contact?.googleMapsUrl
-            facilitySectionFields.healthcareProfessionalIds = data.healthcareProfessionalIds
-            facilitySectionFields.mapLatitude = data.mapLatitude.toString()
-            facilitySectionFields.mapLongitude = data.mapLongitude.toString()
-        }
+        facilitySectionFields.nameEn = data.nameEn
+        facilitySectionFields.nameJa = data.nameJa
+        facilitySectionFields.phone = data?.contact?.phone
+        facilitySectionFields.email = data?.contact?.email || undefined
+        facilitySectionFields.website = data?.contact?.website || undefined
+        facilitySectionFields.postalCode = data.contact?.address.postalCode
+        facilitySectionFields.prefectureEn = data?.contact?.address?.prefectureEn
+        facilitySectionFields.cityEn = data?.contact?.address?.cityEn
+        facilitySectionFields.addressLine1En = data?.contact?.address?.addressLine1En
+        facilitySectionFields.addressLine2En = data?.contact?.address?.addressLine2En ?? ''
+        facilitySectionFields.prefectureJa = data?.contact?.address?.prefectureJa
+        facilitySectionFields.cityJa = data?.contact?.address?.cityJa
+        facilitySectionFields.addressLine1Ja = data?.contact?.address?.addressLine1Ja
+        facilitySectionFields.addressLine2Ja = data?.contact?.address?.addressLine2Ja ?? ''
+        facilitySectionFields.googlemapsURL = data?.contact?.googleMapsUrl
+        facilitySectionFields.healthcareProfessionalIds = data.healthcareProfessionalIds
+        facilitySectionFields.mapLatitude = data.mapLatitude.toString()
+        facilitySectionFields.mapLongitude = data.mapLongitude.toString()
+    }
 
     function resetFacilitySectionFields() {
         facilitySectionFields.nameEn = ''
