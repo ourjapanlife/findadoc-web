@@ -1,7 +1,6 @@
 import type { Maybe } from 'graphql/jsutils/Maybe'
 import { defineStore } from 'pinia'
 import { reactive, ref, type Ref, computed } from 'vue'
-import { useI18n } from 'vue-i18n'
 import { gql } from 'graphql-request'
 import { fetchHealthcareProfessionalsWithCount } from '../utils/graphqlHelpers'
 import { type Insurance,
