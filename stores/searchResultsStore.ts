@@ -1,9 +1,11 @@
 import { gql } from 'graphql-request'
 import { defineStore } from 'pinia'
 import { ref, type Ref } from 'vue'
+import { useToast } from 'vue-toastification'
 import { gqlClient } from '../utils/graphql.js'
 import { useModalStore } from './modalStore'
 import { useLoadingStore } from './loadingStore.js'
+import { handleServerErrorMessaging } from '#imports'
 import type { Locale,
     Specialty,
     Facility,
@@ -15,6 +17,7 @@ type SearchResult = {
     professional: HealthcareProfessional
     facilities: Facility[]
 }
+const toast = useToast()
 
 export const useSearchResultsStore = defineStore('searchResultsStore', () => {
     const activeResultId: Ref<string | undefined> = ref()
@@ -107,12 +110,16 @@ Promise<HealthcareProfessional[]> {
             searchProfessionalsData
         )
 
+        if (serverResponse.errors?.length) {
+            handleServerErrorMessaging(serverResponse.errors, toast, useTranslation)
+        }
+
         const professionalsSearchResult = serverResponse.data.healthcareProfessionals ?? []
         return professionalsSearchResult
     } catch (error) {
-        console.error(`Error getting professionals: ${JSON.stringify(error)}`)
+        console.error(useTranslation('searchResultsErrors.gettingProfessionals'), ` ${JSON.stringify(error)}`)
         // eslint-disable-next-line no-alert
-        alert('Error getting data! Please contact our support team by clicking the bottom right link on the page!')
+        alert(useTranslation('searchResultsErrors.gettingData'))
         return []
     }
 }
@@ -141,6 +148,9 @@ async function queryFacilities(healthcareProfessionalIds: string[], searchCity?:
             searchFacilitiesQuery,
             searchFacilitiesData
         )
+        if (serverResponse.errors?.length) {
+            handleServerErrorMessaging(serverResponse.errors, toast, useTranslation)
+        }
 
         const facilitiesSearchResults = serverResponse.data.facilities ?? []
 
@@ -151,9 +161,9 @@ async function queryFacilities(healthcareProfessionalIds: string[], searchCity?:
 
         return locationFilteredSearchResults
     } catch (error) {
-        console.error(`Error getting facilities: ${JSON.stringify(error)}`)
+        console.error(useTranslation('searchResultsErrors.gettingFacilities'), `${JSON.stringify(error)}`)
         // eslint-disable-next-line no-alert
-        alert('Error getting data! Please contact our support team by clicking the bottom right link on the page!')
+        alert(useTranslation('searchResultsErrors.gettingData'))
         return []
     }
 }

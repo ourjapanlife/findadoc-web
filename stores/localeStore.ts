@@ -18,7 +18,7 @@ export const useLocaleStore = defineStore('locale', () => {
 
     function formatLanguageCodeToSimpleText(selectedLocale: string) {
         const language = localeDisplayOptions.find(currentLocale => currentLocale.code === selectedLocale)
-        return language?.simpleText || 'Language not found'
+        return language?.simpleText || useTranslation('localeErrors.notFound')
     }
 
     function formatLanguages(
@@ -26,7 +26,7 @@ export const useLocaleStore = defineStore('locale', () => {
     ) {
         return spokenLanguages?.map(languageCode =>
             localeDisplayOptions.find(option =>
-                option.code === languageCode)?.simpleText || 'Not Specified')
+                option.code === languageCode)?.simpleText || useTranslation('localeErrors.notSpecified'))
               ?? []
     }
 

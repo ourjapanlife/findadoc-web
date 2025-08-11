@@ -152,7 +152,7 @@ export const useModerationSubmissionsStore = defineStore(
 
         async function approveSubmission() {
             if (!selectedSubmissionId.value) {
-                console.error('Unable to approve submission. Submission ID is required.')
+                console.error(useTranslation('moderationSubmissionErrors.unableToApprove'))
                 return
             }
 
@@ -167,7 +167,7 @@ export const useModerationSubmissionsStore = defineStore(
 
         async function rejectSubmission() {
             if (!selectedSubmissionId.value) {
-                console.error('Unable to reject submission. Submission ID is required.')
+                console.error(useTranslation('moderationSubmissionErrors.unableToReject'))
                 return
             }
 
