@@ -377,6 +377,7 @@
   },
   "modSubmissionListContainer": {
     "resultsPerPage": "Results per page"
+  },
   "errorPage": {
     "title": "404 - 诊断：页面未找到",
     "description": "此页面未通过健康检查。让我们带您到一个健康的页面吧！",
