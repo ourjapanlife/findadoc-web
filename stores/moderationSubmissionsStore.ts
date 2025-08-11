@@ -152,7 +152,7 @@ export const useModerationSubmissionsStore = defineStore(
 
         async function approveSubmission() {
             if (!selectedSubmissionId.value) {
-                console.error(useNuxtApp().$i18n.t('moderationSubmissionErrors.unableToApprove'))
+                console.error(useTranslation('moderationSubmissionErrors.unableToApprove'))
                 return
             }
 
@@ -167,7 +167,7 @@ export const useModerationSubmissionsStore = defineStore(
 
         async function rejectSubmission() {
             if (!selectedSubmissionId.value) {
-                console.error(useNuxtApp().$i18n.t('moderationSubmissionErrors.unableToReject'))
+                console.error(useTranslation('moderationSubmissionErrors.unableToReject'))
                 return
             }
 

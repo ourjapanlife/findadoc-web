@@ -140,7 +140,7 @@ export const useHealthcareProfessionalsStore = defineStore(
 
             // return out if no current professional data found
             if (!currentProfessionalData) {
-                console.error(useNuxtApp().$i18n.t('healthcareProfessionalsErrors.noCurrentProfessionalDataFound'), `${selectedHealthcareProfessionalId.value}`)
+                console.error(useTranslation('healthcareProfessionalsErrors.noCurrentProfessionalDataFound'), `${selectedHealthcareProfessionalId.value}`)
                 return {
                     data: {
                         acceptedInsurance: [],
@@ -220,7 +220,7 @@ export const useHealthcareProfessionalsStore = defineStore(
                     data: currentProfessionalData,
                     hasErrors: true,
                     errors: [{
-                        message: useNuxtApp().$i18n.t('healthcareProfessionalsErrors.noUpdatesFound'),
+                        message: useTranslation('healthcareProfessionalsErrors.noUpdatesFound'),
                         fieldWithError: undefined,
                         code: ErrorCode.NO_UPDATES_FOUND
                     }]
@@ -370,12 +370,12 @@ export async function getHealthcareProfessionalById(id: string): Promise<Healthc
         )
 
         if (!result.data?.healthcareProfessional) {
-            throw new Error(useNuxtApp().$i18n.t('healthcareProfessionalsErrors.idDoesNotExist'))
+            throw new Error(useTranslation('healthcareProfessionalsErrors.idDoesNotExist'))
         }
 
         return [result.data.healthcareProfessional]
     } catch (error: unknown) {
-        console.error(useNuxtApp().$i18n.t('healthcareProfessionalsErrors.retrievingById'), `${id}: ${JSON.stringify(error)}`)
+        console.error(useTranslation('healthcareProfessionalsErrors.retrievingById'), `${id}: ${JSON.stringify(error)}`)
         return []
     }
 }

@@ -51,9 +51,9 @@ async function queryFacilities(): Promise<Facility[]> {
 
         return result.data.facilities ?? []
     } catch (error) {
-        console.error(useNuxtApp().$i18n.t('locationErrors.facilitiesDropdown'), ` ${JSON.stringify(error)}`)
+        console.error(useTranslation('locationErrors.facilitiesDropdown'), ` ${JSON.stringify(error)}`)
         // eslint-disable-next-line no-alert
-        alert(useNuxtApp().$i18n.t('locationErrors.gettingData'))
+        alert(useTranslation('locationErrors.gettingData'))
         return []
     }
 }
