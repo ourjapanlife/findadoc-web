@@ -117,10 +117,68 @@
             </div>
         </NuxtLink>
     </div>
+
+    <!-- HP view -->
+    <div
+        v-if="props.healthcareProfessional && healthcareProfessionalsModerationListViewChosen"
+        class="h-full max-w-4xl mx-2"
+    >
+        <NuxtLink
+            class="block h-full mx-2"
+            :to="`/moderation/edit-healthcare-professional/${props.healthcareProfessional.id}`"
+            :data-testid="`mod-healthcare-professional-list-item-${index + 1}`"
+            @click="handleClickToHPForm(props.healthcareProfessional.id)"
+        >
+            <div
+                class="flex flex-col justify-between my-2 mx-1 bg-primary-inverted border-2 border-primary/50 rounded-lg
+       p-4 h-64 max-w-4xl
+       shadow-md hover:shadow-2xl
+       transform hover:scale-105
+       transition ease-in-out duration-200"
+            >
+                <div class="flex items-center">
+                    <span class="font-bold text-primary-text-muted">
+                        # {{ props.paginationGlobalRowValueFunction(currentOffset, index) }}
+                    </span>
+                </div>
+
+                <div class="flex items-center gap-3 my-4">
+                    <div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center">
+                        <SVGHPPersonIcon class="w-10 h-10 text-primary-inverted rounded-full" />
+                    </div>
+                    <div class="flex-1">
+                        <span class="block text-lg font-bold">
+                            <!-- TO DO: use function to default name to selected locale or English -->
+                            {{ props.healthcareProfessional.names[0].lastName
+                                + ' '
+                                + props.healthcareProfessional.names[0].firstName
+                            }}
+                            {{ props.healthcareProfessional.names[0].middleName
+                                ? props.healthcareProfessional.names[0].middleName
+                                : '' }}
+                        </span>
+                    </div>
+                </div>
+
+                <div class="flex flex-col items-end justify-end mt-2 text-primary-text-muted">
+                    <span class="text-sm text">
+                        {{ t('modListContainerItem.createdDate') + ': '
+                            + formatToReadableDate(props.healthcareProfessional.createdDate)
+                        }}
+                    </span>
+                    <span class="text-sm">
+                        {{ t('modListContainerItem.updatedDate') + ': '
+                            + formatToReadableDate(props.healthcareProfessional.updatedDate)
+                        }}
+                    </span>
+                </div>
+            </div>
+        </NuxtLink>
+    </div>
 </template>
 
 <script setup lang="ts">
-import type { Facility, Submission } from '~/typedefs/gqlTypes'
+import type { Facility, HealthcareProfessional, Submission } from '~/typedefs/gqlTypes'
 import { useModerationSubmissionsStore, SelectedModerationListView } from '~/stores/moderationSubmissionsStore'
 import { formatToReadableDate } from '~/utils/dateUtils'
 import SVGHPPersonIcon from '~/assets/icons/hp-person-icon.svg'
@@ -130,14 +188,18 @@ const { t } = useI18n()
 
 const modSubmissionsStore = useModerationSubmissionsStore()
 const facilitiesStore = useFacilitiesStore()
+const healthcareProfessionalsStore = useHealthcareProfessionalsStore()
 
 const submissionsModerationListViewChosen = computed(() => modSubmissionsStore.selectedModerationListViewChosen
   === SelectedModerationListView.Submissions)
 const facilitiesModerationListViewChosen = computed(() => modSubmissionsStore.selectedModerationListViewChosen
   === SelectedModerationListView.Facilities)
+const healthcareProfessionalsModerationListViewChosen = computed(() => modSubmissionsStore.selectedModerationListViewChosen
+  === SelectedModerationListView.HealthcareProfessionals)
 
 const props = defineProps<{ submission?: Submission
     facility?: Facility
+    healthcareProfessional?: HealthcareProfessional
     paginationGlobalRowValueFunction: (offset: number, index: number) => number
     currentOffset: number
     index: number }>()
@@ -148,6 +210,10 @@ const handleClickToSubmissionForm = (id: string) => {
 
 const handleClickToFacilityForm = (id: string) => {
     facilitiesStore.selectedFacilityId = id
+}
+
+const handleClickToHPForm = (id: string) => {
+    healthcareProfessionalsStore.selectedHealthcareProfessionalId = id
 }
 
 const isNewSubmission = computed(() => {
