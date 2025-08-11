@@ -350,6 +350,24 @@ export enum OrderDirection {
   Desc = 'desc'
 }
 
+export type PaginatedFacilities = {
+  __typename?: 'PaginatedFacilities';
+  facilities: Array<Facility>;
+  totalCount: Scalars['Int']['output'];
+};
+
+export type PaginatedHealthcareProfessionals = {
+  __typename?: 'PaginatedHealthcareProfessionals';
+  healthcareProfessionals: Array<HealthcareProfessional>;
+  totalCount: Scalars['Int']['output'];
+};
+
+export type PaginatedSubmissions = {
+  __typename?: 'PaginatedSubmissions';
+  submissions: Array<Submission>;
+  totalCount: Scalars['Int']['output'];
+};
+
 export type PhysicalAddress = {
   __typename?: 'PhysicalAddress';
   addressLine1En: Scalars['String']['output'];
@@ -378,15 +396,12 @@ export type PhysicalAddressInput = {
 export type Query = {
   __typename?: 'Query';
   auditLog?: Maybe<AuditLog>;
-  facilities: Array<Facility>;
-  facilitiesTotalCount: Scalars['Int']['output'];
+  facilities: PaginatedFacilities;
   facility?: Maybe<Facility>;
   healthcareProfessional?: Maybe<HealthcareProfessional>;
-  healthcareProfessionals: Array<HealthcareProfessional>;
-  healthcareProfessionalsTotalCount: Scalars['Int']['output'];
+  healthcareProfessionals: PaginatedHealthcareProfessionals;
   submission?: Maybe<Submission>;
-  submissions: Array<Submission>;
-  submissionsTotalCount: Scalars['Int']['output'];
+  submissions: PaginatedSubmissions;
 };
 
 
@@ -396,11 +411,6 @@ export type QueryAuditLogArgs = {
 
 
 export type QueryFacilitiesArgs = {
-  filters: FacilitySearchFilters;
-};
-
-
-export type QueryFacilitiesTotalCountArgs = {
   filters: FacilitySearchFilters;
 };
 
@@ -420,22 +430,12 @@ export type QueryHealthcareProfessionalsArgs = {
 };
 
 
-export type QueryHealthcareProfessionalsTotalCountArgs = {
-  filters: HealthcareProfessionalSearchFilters;
-};
-
-
 export type QuerySubmissionArgs = {
   id: Scalars['ID']['input'];
 };
 
 
 export type QuerySubmissionsArgs = {
-  filters: SubmissionSearchFilters;
-};
-
-
-export type QuerySubmissionsTotalCountArgs = {
   filters: SubmissionSearchFilters;
 };
 

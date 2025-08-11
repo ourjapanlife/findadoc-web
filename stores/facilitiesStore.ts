@@ -1,7 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref, type Ref, reactive } from 'vue'
 import { gql } from 'graphql-request'
-import { fetchFacilitiesWithCount } from '../utils/graphqlHepers'
 import type {
     DeleteResult,
     Facility,
@@ -157,7 +156,7 @@ export const useFacilitiesStore = defineStore('facilitiesStore', () => {
         }
     }
 
-    function setOffset(newOffset: number) {
+    function changePage(newOffset: number) {
         currentOffset.value = newOffset
         getFacilities()
     }
@@ -326,8 +325,37 @@ export const useFacilitiesStore = defineStore('facilitiesStore', () => {
         return serverResponse
     }
 
-    function setItemsPerPage(newLimit: number) {
-        itemsPerPage.value = newLimit
+    /**
+     * Fetches a paginated list of facilities along with their total count.
+     * This function follows the same pattern as the others two fetcher.
+     */
+    async function fetchFacilitiesWithCount(
+        filters: FacilitySearchFilters
+    ): Promise<{ filteredSearchResults: Facility[], totalCount: number }> {
+        try {
+            // Object containthe list of facility and the total count.
+            const response = await graphQLClientRequestWithRetry<{
+                facilities: {
+                    facilities: Facility[]
+                    totalCount: number
+                }
+            }>(
+                gqlClient.request.bind(gqlClient),
+                GetPaginatedFacilitiesQuery,
+                { filters }
+            )
+
+            const paginatedFacilities = response.data?.facilities
+
+            // Extract nested facilities array and totalCount
+            const filteredSearchResults = paginatedFacilities?.facilities ?? []
+            const totalCount = paginatedFacilities?.totalCount ?? 0
+
+            return { filteredSearchResults, totalCount }
+        } catch (error) {
+            console.error(`Error retrieving facilities with count: ${JSON.stringify(error)}`)
+            throw new Error('Failed to retrieve facility data.')
+        }
     }
 
     return {
@@ -348,10 +376,9 @@ export const useFacilitiesStore = defineStore('facilitiesStore', () => {
         resetCreateFacilityFields,
         currentOffset,
         itemsPerPage,
-        setOffset,
+        changePage,
         hasNextPage,
-        hasPrevPage,
-        setItemsPerPage
+        hasPrevPage
     }
 })
 
@@ -385,6 +412,41 @@ const updateExistingFacilityGqlMutation = gql`
             updatedDate
         }
     }
+`
+
+const GetPaginatedFacilitiesQuery = gql`
+  query GetPaginatedFacilities($filters: FacilitySearchFilters!) {
+    facilities(filters: $filters) {
+      totalCount
+      facilities {
+        id
+        nameEn
+        nameJa
+        mapLatitude
+        mapLongitude
+        healthcareProfessionalIds
+        contact {
+          address {
+            addressLine1En
+            addressLine2En
+            addressLine1Ja
+            addressLine2Ja
+            cityJa
+            cityEn
+            prefectureJa
+            prefectureEn
+            postalCode
+          }
+          email
+          googleMapsUrl
+          phone
+          website
+        }
+        createdDate
+        updatedDate
+      }
+    }
+  }
 `
 
 const deleteExistingFacilityGqlMutation = gql`

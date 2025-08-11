@@ -62,7 +62,7 @@ export const graphQLClientRequestWithRetry = async <T>(
                 if (attempts > 1) {
                     await new Promise(resolve => setTimeout(resolve, requestTimeoutInMilliseconds))
                 }
-                return executeGQLClientRequest()
+                return executeGQLClientRequest() // retry request
             }
             // This is a consistent error messaging no matter the type of query or mutation
             console.error(`There was an error executing the request: ${error}`)

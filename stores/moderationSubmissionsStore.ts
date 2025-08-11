@@ -1,7 +1,6 @@
 import { gql } from 'graphql-request'
 import { defineStore } from 'pinia'
 import { ref, type Ref } from 'vue'
-import { fetchSubmissionsWithCount } from '../utils/graphqlHepers'
 import type { Submission, MutationUpdateSubmissionArgs, Mutation, SubmissionSearchFilters } from '~/typedefs/gqlTypes.js'
 import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql.js'
 import type { ServerResponse } from '~/typedefs/serverResponse'
@@ -89,7 +88,7 @@ export const useModerationSubmissionsStore = defineStore(
             }
         }
 
-        function setOffset(newOffset: number) {
+        function changePage(newOffset: number) {
             currentOffset.value = newOffset
             getSubmissions()
         }
@@ -182,8 +181,36 @@ export const useModerationSubmissionsStore = defineStore(
             return updateSubmission(facilityInputVariables)
         }
 
-        function setItemsPerPage(newLimit: number) {
-            itemsPerPage.value = newLimit
+        /**
+        * Fetches a paginated list of facilities along with their total count.
+        * This function follows the same pattern as the others two fetcher.
+        */
+        async function fetchSubmissionsWithCount(
+            filters: SubmissionSearchFilters
+        ): Promise<{ filteredSearchResults: Submission[], totalCount: number }> {
+            try {
+                const response = await graphQLClientRequestWithRetry<{
+                    submissions: {
+                        submissions: Submission[]
+                        totalCount: number
+                    }
+                }>(
+                    gqlClient.request.bind(gqlClient),
+                    GetPaginatedSubmissionsQuery,
+                    { filters }
+                )
+
+                const paginatedSubmissions = response.data?.submissions
+
+                //extract nested submissions and totalCount
+                const filteredSearchResults = paginatedSubmissions?.submissions ?? []
+                const totalCount = paginatedSubmissions?.totalCount ?? 0
+
+                return { filteredSearchResults, totalCount }
+            } catch (error) {
+                console.error(`Error retrieving submissions with count: ${JSON.stringify(error)}`)
+                throw new Error('Failed to retrieve submission data.')
+            }
         }
 
         return {
@@ -214,13 +241,72 @@ export const useModerationSubmissionsStore = defineStore(
             totalSubmissionsCount,
             currentOffset,
             itemsPerPage,
-            setOffset,
+            changePage,
             hasNextPage,
-            hasPrevPage,
-            setItemsPerPage
+            hasPrevPage
         }
     }
 )
+
+const GetPaginatedSubmissionsQuery = gql`
+    query GetPaginatedSubmissions($filters: SubmissionSearchFilters!) {
+    submissions(filters: $filters) {
+    totalCount
+    submissions {
+       id
+       googleMapsUrl
+       healthcareProfessionalName
+       spokenLanguages
+       facility {
+             id
+             mapLatitude
+             mapLongitude
+             nameEn
+             nameJa
+             contact {
+                googleMapsUrl
+                email
+                phone
+                website
+                address {
+                     postalCode
+                     prefectureEn
+                     cityEn
+                     addressLine1En
+                     addressLine2En
+                     prefectureJa
+                     cityJa
+                     addressLine1Ja
+                     addressLine2Ja
+                }
+             }
+             healthcareProfessionalIds
+       }
+       healthcareProfessionals {
+             id
+             names {
+                firstName
+                middleName
+                lastName
+                locale
+             }
+             spokenLanguages
+             degrees
+             specialties
+             acceptedInsurance
+             additionalInfoForPatients
+             facilityIds
+       }
+       isUnderReview
+       isApproved
+       isRejected
+       createdDate
+       updatedDate
+       notes
+    }
+   }
+  }
+`
 
 const updateFacilitySubmissionGqlMutation = gql`
 mutation Mutation($id: ID!, $input: UpdateSubmissionInput!) {
