@@ -374,11 +374,20 @@
   "modInputField": {
     "optional": "Optional"
   },
+  "modListContainerItem": {
+    "newSubmission": "New",
+    "underReviewSubmission": "Under Review",
+    "approvedSubmission": "Approved",
+    "rejectedSubmission": "Rejected",
+    "review": "Review",
+    "createdDate": "Created on",
+    "updatedDate": "Updated last"
+  },
   "pagination": {
     "of": "of",
     "results": "results"
   },
-  "modSubmissionListContainer": {
+  "modListContainer": {
     "resultsPerPage": "Results per page"
   }
 }

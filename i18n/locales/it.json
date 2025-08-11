@@ -374,12 +374,21 @@
     "of": "di",
     "results": "risultati"
   },
-  "modSubmissionListContainer": {
+  "modListContainer": {
     "resultsPerPage": "Risultati per pagagina"
   },
   "errorPage": {
     "title": "404 - Diagnosi: Pagina non trovata",
     "description": "Questa pagina non ha superato il suo esame di salute. Portiamoti invece a una pagina sana!",
     "returnHome": "Torna alla home"
+  },
+  "modListContainerItem": {
+    "newSubmission": "New",
+    "underReviewSubmission": "Under Review",
+    "approvedSubmission": "Approved",
+    "rejectedSubmission": "Rejected",
+    "review": "Review",
+    "createdDate": "Created on",
+    "updatedDate": "Updated last"
   }
 }
