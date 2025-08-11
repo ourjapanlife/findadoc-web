@@ -371,6 +371,13 @@
   "modInputField": {
     "optional": "Optional"
   },
+  "pagination": {
+    "of": "of",
+    "results": "results"
+  },
+  "modSubmissionListContainer": {
+    "resultsPerPage": "Results per page"
+  },
   "errorPage": {
     "title": "404 - Diagnose: Seite nicht gefunden",
     "description": "Diese Seite hat ihre Gesundheitsprüfung nicht bestanden. Lassen Sie uns Sie stattdessen zu einer gesunden Seite bringen!",

@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref, type Ref, reactive } from 'vue'
 import { gql } from 'graphql-request'
+import { fetchFacilitiesWithCount } from '../utils/graphqlHepers'
 import type {
     DeleteResult,
     Facility,
@@ -9,8 +10,8 @@ import type {
     MutationCreateFacilityArgs,
     MutationDeleteFacilityArgs,
     MutationUpdateFacilityArgs,
-    Query,
-    Relationship
+    Relationship,
+    FacilitySearchFilters
 } from '~/typedefs/gqlTypes'
 import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql'
 import type { ServerResponse } from '~/typedefs/serverResponse'
@@ -24,8 +25,16 @@ export const useFacilitiesStore = defineStore('facilitiesStore', () => {
     const facilityData: Ref<Facility[]> = ref([])
     const selectedFacilityId: Ref<string> = ref('')
     const selectedFacilityData: Ref<Facility | undefined> = ref()
-
-    const facilitySectionFields = ref<FacilitySectionFields>({
+    // Used for store the total number of facility found by the current search query.
+    const totalFacilitiesCount: Ref<number> = ref(0)
+    // Used for store the starting index (offset) for the current page of results.
+    const currentOffset: Ref<number> = ref(0)
+    const itemsPerPage: Ref<number> = ref(25)
+    const hasNextPage = computed(() => currentOffset.value + itemsPerPage.value < totalFacilitiesCount.value)
+    const hasPrevPage = computed(() => currentOffset.value > 0)
+    // This reactive object is used to share data changes of the updated facility or submission across the components
+    const facilitySectionFields = reactive({
+        // contactFields
         nameEn: '',
         nameJa: '',
         phone: '',
@@ -74,9 +83,12 @@ export const useFacilitiesStore = defineStore('facilitiesStore', () => {
         healthcareProfessionalIds: [] as string[]
     })
 
-    const healthProfessionalsRelationsForDisplay: Ref<HealthcareProfessional[]> = ref([])
+    const healthProfessionalsRelationsForDisplay: Ref<
+        HealthcareProfessional[]
+    > = ref([])
 
     function setSelectedFacilityData(facilityId: string) {
+        selectedFacilityId.value = facilityId
         selectedFacilityData.value = facilityData.value.find(
             (facility: Facility) => facility.id === facilityId
         )
@@ -130,8 +142,27 @@ export const useFacilitiesStore = defineStore('facilitiesStore', () => {
     }
 
     async function getFacilities() {
-        const facilityResults = await queryFacilities()
-        facilityData.value = facilityResults
+        const filters: FacilitySearchFilters = {
+            offset: currentOffset.value,
+            limit: itemsPerPage.value
+        }
+        try {
+            // Call the utility function to fetch the paginated data and the total count.
+            const { filteredSearchResults, totalCount } = await fetchFacilitiesWithCount(filters)
+            facilityData.value = filteredSearchResults
+            totalFacilitiesCount.value = totalCount
+        } catch (error) {
+            console.error(`Error fetching facilities: ${JSON.stringify(error)}`)
+            // eslint-disable-next-line no-alert
+            alert('Error during loading data of Facility, try again')
+            facilityData.value = []
+            totalFacilitiesCount.value = 0
+        }
+    }
+
+    function setOffset(newOffset: number) {
+        currentOffset.value = newOffset
+        getFacilities()
     }
 
     async function createFacility(): Promise<ServerResponse<Facility>> {
@@ -141,15 +172,22 @@ export const useFacilitiesStore = defineStore('facilitiesStore', () => {
                 nameJa: createFacilityFields.nameJa,
                 contact: {
                     address: {
-                        addressLine1En: createFacilityFields.contact.address.addressLine1En,
-                        addressLine1Ja: createFacilityFields.contact.address.addressLine1Ja,
-                        addressLine2En: createFacilityFields.contact.address.addressLine2En,
-                        addressLine2Ja: createFacilityFields.contact.address.addressLine2Ja,
+                        addressLine1En:
+                            createFacilityFields.contact.address.addressLine1En,
+                        addressLine1Ja:
+                            createFacilityFields.contact.address.addressLine1Ja,
+                        addressLine2En:
+                            createFacilityFields.contact.address.addressLine2En,
+                        addressLine2Ja:
+                            createFacilityFields.contact.address.addressLine2Ja,
                         cityEn: createFacilityFields.contact.address.cityEn,
                         cityJa: createFacilityFields.contact.address.cityJa,
-                        postalCode: createFacilityFields.contact.address.postalCode,
-                        prefectureEn: createFacilityFields.contact.address.prefectureEn,
-                        prefectureJa: createFacilityFields.contact.address.prefectureJa
+                        postalCode:
+                            createFacilityFields.contact.address.postalCode,
+                        prefectureEn:
+                            createFacilityFields.contact.address.prefectureEn,
+                        prefectureJa:
+                            createFacilityFields.contact.address.prefectureJa
                     },
                     email: createFacilityFields.contact.email,
                     phone: createFacilityFields.contact.phone,
@@ -158,17 +196,20 @@ export const useFacilitiesStore = defineStore('facilitiesStore', () => {
                 },
                 mapLatitude: parseFloat(createFacilityFields.mapLatitude),
                 mapLongitude: parseFloat(createFacilityFields.mapLongitude),
-                healthcareProfessionalIds: createFacilityFields.healthcareProfessionalIds
+                healthcareProfessionalIds:
+                    createFacilityFields.healthcareProfessionalIds
             }
         }
-
-        const serverResponse = await graphQLClientRequestWithRetry<Mutation['createFacility']>(
+        const serverResponse = await graphQLClientRequestWithRetry<
+            Mutation['createFacility']
+        >(
             gqlClient.request.bind(gqlClient),
             createFacilityGqlMutation,
             CreateFacilityInput
         )
 
         if (!serverResponse.errors?.length) {
+            await getFacilities()
             selectedFacilityData.value = serverResponse.data!
             initializeFacilitySectionValues(serverResponse.data!)
         }
@@ -200,6 +241,9 @@ export const useFacilitiesStore = defineStore('facilitiesStore', () => {
         if (!serverResponse.errors?.length) {
             initializeFacilitySectionValues(serverResponse.data)
 
+            if (
+                arraysAreEqual(
+                    facilitySectionFields.healthProfessionalsRelations,
             // This block prevents a race condition: clear the array only if relations haven't changed while awaiting response
             if (
                 arraysAreEqual(
@@ -242,13 +286,30 @@ export const useFacilitiesStore = defineStore('facilitiesStore', () => {
     async function deleteFacility(
         facilityId: MutationDeleteFacilityArgs
     ): Promise<ServerResponse<DeleteResult>> {
-        const serverResponse = await graphQLClientRequestWithRetry<Mutation['deleteFacility']>(
+        const serverResponse = await graphQLClientRequestWithRetry<
+            Mutation['deleteFacility']
+        >(
             gqlClient.request.bind(gqlClient),
             deleteExistingFacilityGqlMutation,
             facilityId
         )
 
+        if (
+            !serverResponse.errors?.length
+            && serverResponse.data?.isSuccessful
+        ) {
+            await getFacilities()
+            if (selectedFacilityId.value === facilityId.id) {
+                selectedFacilityId.value = ''
+                selectedFacilityData.value = undefined
+            }
+        }
+
         return serverResponse
+    }
+
+    function setItemsPerPage(newLimit: number) {
+        itemsPerPage.value = newLimit
     }
 
     return {
@@ -256,6 +317,7 @@ export const useFacilitiesStore = defineStore('facilitiesStore', () => {
         createFacility,
         createFacilityFields,
         facilityData,
+        totalFacilitiesCount,
         updateFacility,
         facilitySectionFields,
         selectedFacilityId,
@@ -265,129 +327,83 @@ export const useFacilitiesStore = defineStore('facilitiesStore', () => {
         initializeFacilitySectionValues,
         healthProfessionalsRelationsForDisplay,
         resetFacilitySectionFields,
-        resetCreateFacilityFields
+        resetCreateFacilityFields,
+        currentOffset,
+        itemsPerPage,
+        setOffset,
+        hasNextPage,
+        hasPrevPage,
+        setItemsPerPage
     }
 })
 
-async function queryFacilities(): Promise<Facility[]> {
-    const searchFacilitiesData = {
-        filters: {
-            limit: 400
-        }
-    }
-    try {
-        const response = await graphQLClientRequestWithRetry<Query['facilities']>(
-            gqlClient.request.bind(gqlClient),
-            getAllFacilitiesForModeration,
-            searchFacilitiesData
-        )
-
-        return response.data ?? []
-    } catch (error) {
-        console.error(`Error querying the facilities: ${JSON.stringify(error)}`)
-        return []
-    }
-}
-
-const getAllFacilitiesForModeration = gql`
-query Facilities($filters: FacilitySearchFilters!) {
-    facilities(filters: $filters) {
-        id
-        nameEn
-        nameJa
-        contact {
-            googleMapsUrl
-            email
-            phone
-            website
-            address {
-                postalCode
-                prefectureEn
-                cityEn
-                addressLine1En
-                addressLine2En
-                prefectureJa
-                cityJa
-                addressLine1Ja
-                addressLine2Ja
-            }
-        }
-        mapLatitude
-        mapLongitude
-        healthcareProfessionalIds
-        createdDate
-        updatedDate
-    }
-}
-`
-
 const updateExistingFacilityGqlMutation = gql`
-mutation Mutation($id: ID!, $input: UpdateFacilityInput!) {
-  updateFacility(id: $id, input: $input) {
-    id
-    nameEn
-    nameJa
-    contact {
-      googleMapsUrl
-      email
-      phone
-      website
-      address {
-        postalCode
-        prefectureEn
-        cityEn
-        addressLine1En
-        addressLine2En
-        prefectureJa
-        cityJa
-        addressLine1Ja
-        addressLine2Ja
-      }
+    mutation Mutation($id: ID!, $input: UpdateFacilityInput!) {
+        updateFacility(id: $id, input: $input) {
+            id
+            nameEn
+            nameJa
+            contact {
+                googleMapsUrl
+                email
+                phone
+                website
+                address {
+                    postalCode
+                    prefectureEn
+                    cityEn
+                    addressLine1En
+                    addressLine2En
+                    prefectureJa
+                    cityJa
+                    addressLine1Ja
+                    addressLine2Ja
+                }
+            }
+            mapLatitude
+            mapLongitude
+            healthcareProfessionalIds
+            createdDate
+            updatedDate
+        }
     }
-    mapLatitude
-    mapLongitude
-    healthcareProfessionalIds
-    createdDate
-    updatedDate
-  }
-}
 `
 
 const deleteExistingFacilityGqlMutation = gql`
-mutation Mutation($id: ID!) {
-  deleteFacility(id: $id) {
-    isSuccessful
-  }
-}
+    mutation Mutation($id: ID!) {
+        deleteFacility(id: $id) {
+            isSuccessful
+        }
+    }
 `
 const createFacilityGqlMutation = gql`
-mutation Mutation($input: CreateFacilityInput!) {
-  createFacility(input: $input) {
-    id
-    nameEn
-    nameJa
-    contact {
-      googleMapsUrl
-      email
-      phone
-      website
-      address {
-        postalCode
-        prefectureEn
-        cityEn
-        addressLine1En
-        addressLine2En
-        prefectureJa
-        cityJa
-        addressLine1Ja
-        addressLine2Ja
-      }
+    mutation Mutation($input: CreateFacilityInput!) {
+        createFacility(input: $input) {
+            id
+            nameEn
+            nameJa
+            contact {
+                googleMapsUrl
+                email
+                phone
+                website
+                address {
+                    postalCode
+                    prefectureEn
+                    cityEn
+                    addressLine1En
+                    addressLine2En
+                    prefectureJa
+                    cityJa
+                    addressLine1Ja
+                    addressLine2Ja
+                }
+            }
+            mapLatitude
+            mapLongitude
+            healthcareProfessionalIds
+            createdDate
+            updatedDate
+        }
     }
-    mapLatitude
-    mapLongitude
-    healthcareProfessionalIds
-    createdDate
-    updatedDate
-  }
-}
 `
