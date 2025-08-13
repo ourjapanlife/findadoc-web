@@ -1,7 +1,7 @@
 <template>
-    <div class="h-full overflow-y-auto">
+    <div class="h-full overflow-hidden">
         <div v-if="moderationScreenStore.dashboardScreenIsActive()">
-            <ModSubmissionListContainer />
+            <ModListContainer />
         </div>
         <div
             v-if="moderationScreenStore.editSubmissionScreenIsActive()"
