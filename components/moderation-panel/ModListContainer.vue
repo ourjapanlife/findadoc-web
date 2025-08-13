@@ -48,29 +48,18 @@
                 <!-- Healthcare Professionals -->
                 <div
                     v-else-if="hasHealthcareProfessionals && healthcareProfessionalsModerationListViewChosen"
-                    class="grid grid-cols-2 gap-4 items-start mx-2 mt-2 mb-44"
+                    class="grid grid-cols-1 md:grid-cols-2 gap-4 items-start justify-start mx-2 mt-2 mb-44"
                 >
                     <div
                         v-for="(healthcareProfessional, index) in healthcareProfessionalsStore.healthcareProfessionalsData"
                         :key="index"
-                        class="grid grid-cols-subgrid col-span-4 bg-accent-bg"
                     >
-                        <NuxtLink
-                            :to="`/moderation/edit-healthcare-professional/${healthcareProfessional.id}`"
-                            class="grid grid-cols-subgrid col-span-4 p-1 hover:bg-primary"
-                            :data-testid="`mod-healthcare-professional-list-item-${index + 1}`"
-                        >
-                            <span>
-                                {{ getGlobalRowNumber(healthcareProfessionalsStore.currentOffset, index) }}
-                            </span>
-                            <span class="text-skip">
-                                {{ healthcareProfessional.names[0].firstName }}
-                                {{ healthcareProfessional.names[0].lastName }}
-                            </span>
-                            <span class="text-skip">{{ healthcareProfessional.updatedDate
-                                ? formatToReadableDate(healthcareProfessional.updatedDate)
-                                : formatToReadableDate(healthcareProfessional.createdDate) }}</span>
-                        </NuxtLink>
+                        <ModListContainerItem
+                            :healthcare-professional="healthcareProfessional"
+                            :pagination-global-row-value-function="getGlobalRowNumber"
+                            :current-offset="healthcareProfessionalsStore.currentOffset"
+                            :index="index"
+                        />
                     </div>
                 </div>
 
@@ -145,7 +134,6 @@ import { SelectedModerationListView, useModerationSubmissionsStore } from '~/sto
 import { useHealthcareProfessionalsStore } from '~/stores/healthcareProfessionalsStore'
 import { useFacilitiesStore } from '~/stores/facilitiesStore'
 import SVGCharactersTogetherWelcomeScreen from '~/assets/icons/characters-together-welcomescreen.svg'
-import { formatToReadableDate } from '~/utils/dateUtils'
 
 const { t } = useI18n()
 
