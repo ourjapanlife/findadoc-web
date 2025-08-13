@@ -623,7 +623,7 @@ async function submitUpdatedSubmission(e: Event) {
     const submissionResult = result.data
 
     // This updates the submission in the form with the values stored in the db on success
-    if (submissionResult) initializeSubmissionFormValues(submissionResult)
+    if (submissionResult) initializeSubmissionFormValues(submissionResult.updateSubmission)
     if (!moderationSubmissionStore.approvingSubmissionFromTopBar) {
         toast.success(t('modSubmissionForm.successMessageUpdated'))
     }
