@@ -57,8 +57,7 @@
                         hover:border-transparent hover:bg-primary/5 transition-all hover:cursor-pointer"
                     >
                         <SearchResultsListItem
-                            :name="`${searchResult.professional.names[0].firstName}
-                            ${searchResult.professional.names[0].lastName}`"
+                            :name="getLocalizedName(searchResult.professional.names)"
                             :degrees="searchResult.professional.degrees"
                             :facility-name="localeStore.activeLocale.code == Locale.JaJp
                                 ? searchResult.facilities[0]?.nameJa
@@ -104,4 +103,18 @@ onMounted(() => {
 })
 
 const hasResults = computed(() => resultsStore.searchResultsList.length > 0)
+
+function getLocalizedName(
+  names: Array<{ locale: string, firstName: string, lastName: string }>
+) {
+    const currentLocale = localeStore.activeLocale.code
+    const localePrefix = currentLocale.split('-')[0]
+
+    const selectedName
+    = names.find(name => name.locale === currentLocale)
+      || names.find(name => name.locale.startsWith(localePrefix))
+      || names[0]
+
+    return `${selectedName.firstName} ${selectedName.lastName}`
+}
 </script>
