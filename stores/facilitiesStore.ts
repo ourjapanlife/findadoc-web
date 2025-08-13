@@ -16,6 +16,10 @@ import type {
 import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql'
 import type { ServerResponse } from '~/typedefs/serverResponse'
 import { arraysAreEqual } from '~/utils/arrayUtils'
+import {
+    getChangedFacilityFieldsForUpdate,
+    type FacilitySectionFields
+} from '~/utils/facilityUtils'
 
 export const useFacilitiesStore = defineStore('facilitiesStore', () => {
     const facilityData: Ref<Facility[]> = ref([])
@@ -29,7 +33,7 @@ export const useFacilitiesStore = defineStore('facilitiesStore', () => {
     const hasNextPage = computed(() => currentOffset.value + itemsPerPage.value < totalFacilitiesCount.value)
     const hasPrevPage = computed(() => currentOffset.value > 0)
     // This reactive object is used to share data changes of the updated facility or submission across the components
-    const facilitySectionFields = reactive({
+    const facilitySectionFields = ref<FacilitySectionFields>({
         // contactFields
         nameEn: '',
         nameJa: '',
@@ -93,49 +97,48 @@ export const useFacilitiesStore = defineStore('facilitiesStore', () => {
     function initializeFacilitySectionValues(data: Facility | undefined) {
         if (!data) return
 
-        facilitySectionFields.nameEn = data.nameEn
-        facilitySectionFields.nameJa = data.nameJa
-        facilitySectionFields.phone = data?.contact?.phone
-        facilitySectionFields.email = data?.contact?.email || undefined
-        facilitySectionFields.website = data?.contact?.website || undefined
-        facilitySectionFields.postalCode = data.contact?.address.postalCode
-        facilitySectionFields.prefectureEn = data?.contact?.address?.prefectureEn
-        facilitySectionFields.cityEn = data?.contact?.address?.cityEn
-        facilitySectionFields.addressLine1En = data?.contact?.address?.addressLine1En
-        facilitySectionFields.addressLine2En = data?.contact?.address?.addressLine2En ?? ''
-        facilitySectionFields.prefectureJa = data?.contact?.address?.prefectureJa
-        facilitySectionFields.cityJa = data?.contact?.address?.cityJa
-        facilitySectionFields.addressLine1Ja = data?.contact?.address?.addressLine1Ja
-        facilitySectionFields.addressLine2Ja = data?.contact?.address?.addressLine2Ja ?? ''
-        facilitySectionFields.googlemapsURL = data?.contact?.googleMapsUrl
-        facilitySectionFields.healthcareProfessionalIds = data.healthcareProfessionalIds
-        facilitySectionFields.mapLatitude = data.mapLatitude.toString()
-        facilitySectionFields.mapLongitude = data.mapLongitude.toString()
+        facilitySectionFields.value.nameEn = data.nameEn
+        facilitySectionFields.value.nameJa = data.nameJa
+        facilitySectionFields.value.phone = data.contact?.phone
+        facilitySectionFields.value.email = data.contact?.email || undefined
+        facilitySectionFields.value.website = data.contact?.website || undefined
+        facilitySectionFields.value.postalCode = data.contact?.address.postalCode
+        facilitySectionFields.value.prefectureEn = data.contact?.address.prefectureEn
+        facilitySectionFields.value.cityEn = data.contact?.address.cityEn
+        facilitySectionFields.value.addressLine1En = data.contact?.address.addressLine1En
+        facilitySectionFields.value.addressLine2En = data.contact?.address.addressLine2En ?? ''
+        facilitySectionFields.value.prefectureJa = data.contact?.address.prefectureJa
+        facilitySectionFields.value.cityJa = data.contact?.address.cityJa
+        facilitySectionFields.value.addressLine1Ja = data.contact?.address.addressLine1Ja
+        facilitySectionFields.value.addressLine2Ja = data.contact?.address.addressLine2Ja ?? ''
+        facilitySectionFields.value.googlemapsURL = data.contact?.googleMapsUrl
+        facilitySectionFields.value.healthcareProfessionalIds = data.healthcareProfessionalIds
+        facilitySectionFields.value.mapLatitude = data.mapLatitude.toString()
+        facilitySectionFields.value.mapLongitude = data.mapLongitude.toString()
     }
 
     function resetFacilitySectionFields() {
-        facilitySectionFields.nameEn = ''
-        facilitySectionFields.nameJa = ''
-        facilitySectionFields.phone = ''
-        facilitySectionFields.website = undefined
-        facilitySectionFields.email = undefined
-
-        facilitySectionFields.postalCode = ''
-        facilitySectionFields.prefectureEn = ''
-        facilitySectionFields.cityEn = ''
-        facilitySectionFields.addressLine1En = ''
-        facilitySectionFields.addressLine2En = ''
-        facilitySectionFields.prefectureJa = ''
-        facilitySectionFields.cityJa = ''
-        facilitySectionFields.addressLine1Ja = ''
-        facilitySectionFields.addressLine2Ja = ''
-
-        facilitySectionFields.googlemapsURL = ''
-        facilitySectionFields.mapLatitude = ''
-        facilitySectionFields.mapLongitude = ''
-
-        facilitySectionFields.healthcareProfessionalIds = []
-        facilitySectionFields.healthProfessionalsRelations = []
+        facilitySectionFields.value = {
+            nameEn: '',
+            nameJa: '',
+            phone: '',
+            website: '' as string | undefined,
+            email: '' as string | undefined,
+            postalCode: '',
+            prefectureEn: '',
+            cityEn: '',
+            addressLine1En: '',
+            addressLine2En: '',
+            prefectureJa: '',
+            cityJa: '',
+            addressLine1Ja: '',
+            addressLine2Ja: '',
+            googlemapsURL: '',
+            mapLatitude: '',
+            mapLongitude: '',
+            healthcareProfessionalIds: [] as string[],
+            healthProfessionalsRelations: [] as Relationship[]
+        }
     }
 
     async function getFacilities() {
@@ -215,61 +218,37 @@ export const useFacilitiesStore = defineStore('facilitiesStore', () => {
     }
 
     async function updateFacility(): Promise<ServerResponse<Facility>> {
+        const facilitySectionFieldsBeforeMutation = selectedFacilityData.value!
         const healthProfessionalRelationsBeforeMutation
-            = facilitySectionFields.healthProfessionalsRelations
+        = facilitySectionFields.value.healthProfessionalsRelations
+
+        const updatedFields = getChangedFacilityFieldsForUpdate(
+            facilitySectionFields.value,
+            facilitySectionFieldsBeforeMutation
+        )
 
         const updateFacilityInput: MutationUpdateFacilityArgs = {
             id: selectedFacilityId.value,
-            input: {
-                contact: {
-                    address: {
-                        addressLine1En: facilitySectionFields.addressLine1En,
-                        addressLine1Ja: facilitySectionFields.addressLine1Ja,
-                        addressLine2En: facilitySectionFields.addressLine2En,
-                        addressLine2Ja: facilitySectionFields.addressLine2Ja,
-                        cityEn: facilitySectionFields.cityEn,
-                        cityJa: facilitySectionFields.cityJa,
-                        postalCode: facilitySectionFields.postalCode,
-                        prefectureEn: facilitySectionFields.prefectureEn,
-                        prefectureJa: facilitySectionFields.prefectureJa
-                    },
-                    email: facilitySectionFields.email,
-                    googleMapsUrl: facilitySectionFields.googlemapsURL,
-                    phone: facilitySectionFields.phone,
-                    website: facilitySectionFields.website
-                },
-                healthcareProfessionalIds:
-                    facilitySectionFields.healthProfessionalsRelations.length
-                    > 0
-                        ? facilitySectionFields.healthProfessionalsRelations
-                        : undefined,
-                mapLatitude: parseFloat(facilitySectionFields.mapLatitude),
-                mapLongitude: parseFloat(facilitySectionFields.mapLongitude),
-                nameEn: facilitySectionFields.nameEn,
-                nameJa: facilitySectionFields.nameJa
-            }
+            input: updatedFields
         }
 
-        const serverResponse = await graphQLClientRequestWithRetry<
-            Mutation['updateFacility']
-        >(
+        const serverResponse = await graphQLClientRequestWithRetry<Mutation['updateFacility']>(
             gqlClient.request.bind(gqlClient),
             updateExistingFacilityGqlMutation,
             updateFacilityInput
         )
 
         if (!serverResponse.errors?.length) {
-            await getFacilities()
-            selectedFacilityData.value = serverResponse.data
             initializeFacilitySectionValues(serverResponse.data)
 
+            // This block prevents a race condition: clear the array only if relations haven't changed while awaiting response
             if (
                 arraysAreEqual(
-                    facilitySectionFields.healthProfessionalsRelations,
+                    facilitySectionFields.value.healthProfessionalsRelations,
                     healthProfessionalRelationsBeforeMutation
                 )
             ) {
-                facilitySectionFields.healthProfessionalsRelations = []
+                facilitySectionFields.value.healthProfessionalsRelations = []
             }
         }
 
