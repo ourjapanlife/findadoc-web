@@ -36,7 +36,7 @@
                         </span>
                         <span
                             v-if="props.submission.isApproved"
-                            class="text-xs px-2 py-1 rounded-full bg-success/80 text-primary-inverted ml-2"
+                            class="text-xs px-2 py-1 rounded-full bg-warning/80 text-primary-inverted ml-2"
                         >
                             {{ t('modListContainerItem.approvedSubmission') }}
                         </span>
