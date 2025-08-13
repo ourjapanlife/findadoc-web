@@ -113,7 +113,6 @@ function getLocalizedName(
     const selectedName
     = names.find(name => name.locale === currentLocale)
       || names.find(name => name.locale.startsWith(localePrefix))
-      || names.find(name => name.locale === 'en')
       || names[0]
 
     return `${selectedName.firstName} ${selectedName.lastName}`
