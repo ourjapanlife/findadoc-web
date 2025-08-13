@@ -446,16 +446,29 @@ function initializeSubmissionFormValues(submissionData: Submission | undefined) 
                 facilitiesStore.facilityData.find(facility => facility.id === facilityId))
             .filter((facility): facility is NonNullable<typeof facility> => facility !== undefined)
 
-    healthcareProfessionalSections.acceptedInsurance
-    = submissionData?.healthcareProfessionals?.[0]?.acceptedInsurance ?? []
-    healthcareProfessionalSections.additionalInfoForPatients
-    = submissionData?.healthcareProfessionals?.[0]?.additionalInfoForPatients ?? ''
-    healthcareProfessionalSections.degrees
-    = submissionData?.healthcareProfessionals?.[0]?.degrees ?? []
-    healthcareProfessionalSections.specialties
-    = submissionData?.healthcareProfessionals?.[0]?.specialties ?? []
-    healthcareProfessionalSections.spokenLanguages
-    = submissionData?.spokenLanguages ?? []
+    if (submissionData?.healthcareProfessionals?.[0]?.acceptedInsurance) {
+        healthcareProfessionalSections.acceptedInsurance
+    = submissionData.healthcareProfessionals[0].acceptedInsurance
+    }
+
+    if (submissionData?.healthcareProfessionals?.[0]?.additionalInfoForPatients) {
+        healthcareProfessionalSections.additionalInfoForPatients
+    = submissionData.healthcareProfessionals[0].additionalInfoForPatients
+    }
+
+    if (submissionData?.healthcareProfessionals?.[0]?.degrees) {
+        healthcareProfessionalSections.degrees
+    = submissionData.healthcareProfessionals[0].degrees
+    }
+    if (submissionData?.healthcareProfessionals?.[0]?.specialties) {
+        healthcareProfessionalSections.specialties
+    = submissionData.healthcareProfessionals[0].specialties
+    }
+
+    if (submissionData?.healthcareProfessionals?.[0].spokenLanguages) {
+        healthcareProfessionalSections.spokenLanguages
+    = submissionData?.healthcareProfessionals?.[0].spokenLanguages
+    }
 }
 
 // Assume you already have:
@@ -520,11 +533,9 @@ const formHasUnsavedChanges = () => hasFacilityChanges(submissionBeforeChanges.v
   || hasHealthcareProfessionalChanges(submissionBeforeChanges.value)
 
 async function submitUpdatedSubmission(e: Event) {
-    // Prevent form submission before validation is completed.
     e.preventDefault()
 
     const id = moderationSubmissionStore.selectedSubmissionId || ''
-
     if (!id) {
         toast.error(t('modSubmissionForm.errorMessageFacilityId'))
         console.error(t('modSubmissionForm.errorMessageFacilityId'))
@@ -532,78 +543,45 @@ async function submitUpdatedSubmission(e: Event) {
         return
     }
 
-    const submissionBeforeChangesComparison = submissionBeforeChanges.value
-
-    // Only include facility update if there are no existing facilities and there are changes
-    const facilitySubmissionUpdate = currentFacilityRelations.value.length == 0
-      && hasFacilityChanges(submissionBeforeChangesComparison)
-        ? {
-            nameEn: facilitiesStore.facilitySectionFields.nameEn,
-            nameJa: facilitiesStore.facilitySectionFields.nameJa,
-            contact: {
-                googleMapsUrl: facilitiesStore.facilitySectionFields.googlemapsURL,
-                email: submissionBeforeChangesComparison?.facility?.contact?.email !== facilitiesStore.facilitySectionFields.email
-                    ? facilitiesStore.facilitySectionFields.email
-                    : undefined,
-                phone: facilitiesStore.facilitySectionFields.phone,
-                website: submissionBeforeChangesComparison?.facility?.contact?.website
-                  !== facilitiesStore.facilitySectionFields.website
-                    ? facilitiesStore.facilitySectionFields.website
-                    : undefined,
-                address: {
-                    postalCode: facilitiesStore.facilitySectionFields.postalCode,
-                    prefectureEn: facilitiesStore.facilitySectionFields.prefectureEn,
-                    cityEn: facilitiesStore.facilitySectionFields.cityEn,
-                    addressLine1En: facilitiesStore.facilitySectionFields.addressLine1En,
-                    addressLine2En: facilitiesStore.facilitySectionFields.addressLine2En,
-                    prefectureJa: facilitiesStore.facilitySectionFields.prefectureJa,
-                    cityJa: facilitiesStore.facilitySectionFields.cityJa,
-                    addressLine1Ja: facilitiesStore.facilitySectionFields.addressLine1Ja,
-                    addressLine2Ja: facilitiesStore.facilitySectionFields.addressLine2Ja
-                }
-            },
-            healthcareProfessionalIds: facilitiesStore.facilitySectionFields.healthcareProfessionalIds,
-            mapLatitude: parseFloat(facilitiesStore.facilitySectionFields.mapLatitude) || 0,
-            mapLongitude: parseFloat(facilitiesStore.facilitySectionFields.mapLongitude) || 0
-        }
-        : undefined
-
-    // Only include healthcare professional update if there are no existing healthcare professionals and there are changes
-    const healthcareProfessionalUpdate = currentExistingHealthcareProfessionals.value.length == 0
-      && hasHealthcareProfessionalChanges(submissionBeforeChangesComparison)
-        ? [
-            {
-                acceptedInsurance: !arraysAreEqual(
-                    submissionBeforeChangesComparison?.healthcareProfessionals?.[0]?.acceptedInsurance ?? [],
-                    healthcareProfessionalsStore.healthcareProfessionalSectionFields.acceptedInsurance
-                )
-                    ? healthcareProfessionalsStore.healthcareProfessionalSectionFields.acceptedInsurance
-                    : undefined,
-                additionalInfoForPatients:
-                    healthcareProfessionalsStore.healthcareProfessionalSectionFields.additionalInfoForPatients,
-                degrees: !arraysAreEqual(
-                    submissionBeforeChangesComparison?.healthcareProfessionals?.[0]?.degrees ?? [],
-                    healthcareProfessionalsStore.healthcareProfessionalSectionFields.degrees
-                )
-                    ? healthcareProfessionalsStore.healthcareProfessionalSectionFields.degrees
-                    : undefined,
-                specialties: !arraysAreEqual(
-                    submissionBeforeChangesComparison?.healthcareProfessionals?.[0]?.specialties ?? [],
-                    healthcareProfessionalsStore.healthcareProfessionalSectionFields.specialties
-                )
-                    ? healthcareProfessionalsStore.healthcareProfessionalSectionFields.specialties
-                    : undefined,
-                spokenLanguages: healthcareProfessionalsStore.healthcareProfessionalSectionFields
-                    .spokenLanguages,
-                names: healthcareProfessionalsStore.healthcareProfessionalSectionFields
-                    .names,
-                facilityIds: healthcareProfessionalsStore.healthcareProfessionalSectionFields.facilityIds
+    const facilitySubmissionUpdate = {
+        nameEn: facilitiesStore.facilitySectionFields.nameEn,
+        nameJa: facilitiesStore.facilitySectionFields.nameJa,
+        contact: {
+            googleMapsUrl: facilitiesStore.facilitySectionFields.googlemapsURL,
+            email: facilitiesStore.facilitySectionFields.email,
+            phone: facilitiesStore.facilitySectionFields.phone,
+            website: facilitiesStore.facilitySectionFields.website,
+            address: {
+                postalCode: facilitiesStore.facilitySectionFields.postalCode,
+                prefectureEn: facilitiesStore.facilitySectionFields.prefectureEn,
+                cityEn: facilitiesStore.facilitySectionFields.cityEn,
+                addressLine1En: facilitiesStore.facilitySectionFields.addressLine1En,
+                addressLine2En: facilitiesStore.facilitySectionFields.addressLine2En,
+                prefectureJa: facilitiesStore.facilitySectionFields.prefectureJa,
+                cityJa: facilitiesStore.facilitySectionFields.cityJa,
+                addressLine1Ja: facilitiesStore.facilitySectionFields.addressLine1Ja,
+                addressLine2Ja: facilitiesStore.facilitySectionFields.addressLine2Ja
             }
-        ]
-        : undefined
+        },
+        healthcareProfessionalIds: facilitiesStore.facilitySectionFields.healthcareProfessionalIds,
+        mapLatitude: parseFloat(facilitiesStore.facilitySectionFields.mapLatitude) || 0,
+        mapLongitude: parseFloat(facilitiesStore.facilitySectionFields.mapLongitude) || 0
+    }
+
+    const healthcareProfessionalUpdate = [
+        {
+            acceptedInsurance: healthcareProfessionalsStore.healthcareProfessionalSectionFields.acceptedInsurance,
+            additionalInfoForPatients: healthcareProfessionalsStore.healthcareProfessionalSectionFields.additionalInfoForPatients,
+            degrees: healthcareProfessionalsStore.healthcareProfessionalSectionFields.degrees,
+            specialties: healthcareProfessionalsStore.healthcareProfessionalSectionFields.specialties,
+            spokenLanguages: healthcareProfessionalsStore.healthcareProfessionalSectionFields.spokenLanguages,
+            names: healthcareProfessionalsStore.healthcareProfessionalSectionFields.names,
+            facilityIds: healthcareProfessionalsStore.healthcareProfessionalSectionFields.facilityIds
+        }
+    ]
 
     const submissionInputVariables: MutationUpdateSubmissionArgs = {
-        id: moderationSubmissionStore.selectedSubmissionId,
+        id,
         input: {
             isUnderReview: true,
             facility: facilitySubmissionUpdate,
@@ -613,7 +591,6 @@ async function submitUpdatedSubmission(e: Event) {
     }
 
     const result = await moderationSubmissionStore.updateSubmission(submissionInputVariables)
-    // This is used in the component and not graphQL call as it is user messaging and needs the mounted toast library
     if (result?.errors?.length) {
         handleServerErrorMessaging(result.errors, toast, t)
         await resetModalRefs()
@@ -621,14 +598,12 @@ async function submitUpdatedSubmission(e: Event) {
     }
 
     const submissionResult = result.data
-
-    // This updates the submission in the form with the values stored in the db on success
     if (submissionResult) initializeSubmissionFormValues(submissionResult.updateSubmission)
+
     if (!moderationSubmissionStore.approvingSubmissionFromTopBar) {
         toast.success(t('modSubmissionForm.successMessageUpdated'))
     }
     if (moderationSubmissionStore.updatingSubmissionFromTopBarAndExiting) {
-        // reset all modal refs to prevent unintended side effects
         router.push('/moderation')
         return
     }
