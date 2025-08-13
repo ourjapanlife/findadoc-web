@@ -8,8 +8,7 @@ import type { Locale,
     Facility,
     FacilitySearchFilters,
     HealthcareProfessional,
-    HealthcareProfessionalSearchFilters,
-    Query } from '~/typedefs/gqlTypes.js'
+    HealthcareProfessionalSearchFilters } from '~/typedefs/gqlTypes.js'
 
 type SearchResult = {
     professional: HealthcareProfessional
@@ -96,13 +95,15 @@ Promise<HealthcareProfessional[]> {
             } satisfies HealthcareProfessionalSearchFilters
         }
 
-        const serverResponse = await graphQLClientRequestWithRetry<Query['healthcareProfessionals']>(
+        const serverResponse = await graphQLClientRequestWithRetry<
+            { healthcareProfessionals: HealthcareProfessional[] }
+        >(
             gqlClient.request.bind(gqlClient),
             searchProfessionalsQuery,
             searchProfessionalsData
         )
 
-        const professionalsSearchResult = serverResponse?.data ?? []
+        const professionalsSearchResult = serverResponse.data.healthcareProfessionals ?? []
         return professionalsSearchResult
     } catch (error) {
         console.error(`Error getting professionals: ${JSON.stringify(error)}`)
@@ -114,7 +115,6 @@ Promise<HealthcareProfessional[]> {
 
 async function queryFacilities(healthcareProfessionalIds: string[], searchCity?: string): Promise<Facility[]> {
     try {
-        //TODO: add search by location
         const searchFacilitiesData = {
             filters: {
                 limit: 100,
@@ -130,15 +130,16 @@ async function queryFacilities(healthcareProfessionalIds: string[], searchCity?:
             } satisfies FacilitySearchFilters
         }
 
-        const serverResponse = await graphQLClientRequestWithRetry<Query['facilities']>(
+        const serverResponse = await graphQLClientRequestWithRetry<
+            { facilities: Facility[] }
+        >(
             gqlClient.request.bind(gqlClient),
             searchFacilitiesQuery,
             searchFacilitiesData
         )
 
-        const facilitiesSearchResults = serverResponse?.data ?? []
+        const facilitiesSearchResults = serverResponse.data.facilities ?? []
 
-        //filter the search results by location if a location is selected
         const locationFilteredSearchResults = searchCity
             ? facilitiesSearchResults.filter(facility =>
                 facility.contact?.address.cityEn === searchCity || facility.contact?.address.cityJa === searchCity)
@@ -153,51 +154,54 @@ async function queryFacilities(healthcareProfessionalIds: string[], searchCity?:
     }
 }
 
-const searchProfessionalsQuery = gql`query searchHealthcareProfessionals($filters: HealthcareProfessionalSearchFilters!) {
-    healthcareProfessionals(filters: $filters) {
-        id
-        names {
-            lastName
-            firstName
-            middleName
-            locale
+const searchProfessionalsQuery = gql`
+    query searchHealthcareProfessionals($filters: HealthcareProfessionalSearchFilters!) {
+        healthcareProfessionals(filters: $filters) {
+            id
+            names {
+                lastName
+                firstName
+                middleName
+                locale
+            }
+            degrees
+            specialties
+            facilityIds
+            spokenLanguages
+            acceptedInsurance
+            additionalInfoForPatients
+            createdDate
+            updatedDate
         }
-        degrees
-        specialties
-        facilityIds
-        spokenLanguages
-        acceptedInsurance
-        additionalInfoForPatients
-        createdDate
-        updatedDate
     }
-}`
+`
 
-const searchFacilitiesQuery = gql`query QueryFacilities($filters: FacilitySearchFilters!) {
-    facilities(filters: $filters) {
-      id
-      nameEn
-      nameJa
-      mapLatitude
-      mapLongitude
-      healthcareProfessionalIds
-      contact {
-        address {
-          addressLine1En
-          addressLine2En
-          addressLine1Ja
-          addressLine2Ja
-          cityJa
-          cityEn
-            prefectureJa
-            prefectureEn
-            postalCode
+const searchFacilitiesQuery = gql`
+    query QueryFacilities($filters: FacilitySearchFilters!) {
+        facilities(filters: $filters) {
+            id
+            nameEn
+            nameJa
+            mapLatitude
+            mapLongitude
+            healthcareProfessionalIds
+            contact {
+                address {
+                    addressLine1En
+                    addressLine2En
+                    addressLine1Ja
+                    addressLine2Ja
+                    cityJa
+                    cityEn
+                    prefectureJa
+                    prefectureEn
+                    postalCode
+                }
+                email
+                googleMapsUrl
+                phone
+                website
+            }
         }
-        email
-        googleMapsUrl
-        phone
-        website
-      }
     }
-  }
-  `
+`

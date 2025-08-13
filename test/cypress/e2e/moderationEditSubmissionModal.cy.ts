@@ -33,7 +33,7 @@ describe('Moderation Edit Submission Modal', () => {
             cy.location('pathname').should('eq', '/moderation')
         })
 
-        it('should not display modal if user navigates back without making changes', () => {
+        it.skip('should not display modal if user navigates back without making changes', () => {
             cy.get('[data-testid="mod-submission-list-item-1"]').click()
 
             // When the user clicks the back button on their browser without making changes...

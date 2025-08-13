@@ -59,7 +59,7 @@
                     bg-primary-bg hover:bg-primary-hover/50 drop-shadow-md transition-all cursor-pointer"
                         >
                             <SearchResultsListItem
-                                :name="`${searchResult.professional.names[0].firstName}
+                                :name="getLocalizedName(searchResult.professional.names)"
                             ${searchResult.professional.names[0].lastName}`"
                                 :degrees="searchResult.professional.degrees"
                                 :facility-name="localeStore.activeLocale.code == Locale.JaJp
@@ -70,6 +70,7 @@
                                 :data-testid="`search-result-list-item-${index}`"
                             />
                         </div>
+                            
                     </div>
                 </div>
             </div>
@@ -142,5 +143,19 @@ const hasResults = computed(() => resultsStore.searchResultsList.length > 0)
 function resultClicked(resultId: string) {
     resultsStore.setActiveSearchResult(resultId)
     bottomSheetStore.showBottomSheet(BottomSheetType.SearchResultDetails)
+}
+
+function getLocalizedName(
+  names: Array<{ locale: string, firstName: string, lastName: string }>
+) {
+    const currentLocale = localeStore.activeLocale.code
+    const localePrefix = currentLocale.split('-')[0]
+
+    const selectedName
+    = names.find(name => name.locale === currentLocale)
+      || names.find(name => name.locale.startsWith(localePrefix))
+      || names[0]
+
+    return `${selectedName.firstName} ${selectedName.lastName}`
 }
 </script>

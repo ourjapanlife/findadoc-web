@@ -1,7 +1,8 @@
 import { gql } from 'graphql-request'
 import { defineStore } from 'pinia'
 import { ref, type Ref } from 'vue'
-import type { Submission, MutationUpdateSubmissionArgs, Mutation, Query } from '~/typedefs/gqlTypes.js'
+import { fetchSubmissionsWithCount } from '../utils/graphqlHepers'
+import type { Submission, MutationUpdateSubmissionArgs, Mutation, SubmissionSearchFilters } from '~/typedefs/gqlTypes.js'
 import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql.js'
 import type { ServerResponse } from '~/typedefs/serverResponse'
 
@@ -39,6 +40,14 @@ export const useModerationSubmissionsStore = defineStore(
         const selectedModerationListViewTabChosen: Ref<SelectedSubmissionListViewTab>
         = ref(SelectedSubmissionListViewTab.ForReview)
 
+        // Used for store the total number of submissions found by the current search query.
+        const totalSubmissionsCount: Ref<number> = ref(0)
+        // Used for store the starting index (offset) for the current page of results.
+        const currentOffset: Ref<number> = ref(0)
+        const itemsPerPage: Ref<number> = ref(25)
+        const hasNextPage = computed(() => currentOffset.value + itemsPerPage.value < totalSubmissionsCount.value)
+        const hasPrevPage = computed(() => currentOffset.value > 0)
+
         function setUpdatingSubmissionFromTopBarAndExiting(newValue: boolean) {
             updatingSubmissionFromTopBarAndExiting.value = newValue
         }
@@ -60,8 +69,29 @@ export const useModerationSubmissionsStore = defineStore(
         }
 
         async function getSubmissions() {
-            const submissionsSearchResults = await querySubmissions()
-            submissionsData.value = submissionsSearchResults
+            const filters: SubmissionSearchFilters = {
+                offset: currentOffset.value,
+                limit: itemsPerPage.value
+            }
+            try {
+                // Call the utility function to fetch the paginated data and the total count.
+                const { filteredSearchResults, totalCount } = await fetchSubmissionsWithCount(filters)
+                submissionsData.value = filteredSearchResults
+                totalSubmissionsCount.value = totalCount
+                // Apply a secondary filter on the fetched data based on the currently selected tab.
+                filterSubmissionByStatus(selectedModerationListViewTabChosen.value as unknown as SubmissionStatus)
+            } catch (error) {
+                console.error(`Error fetching submissions: ${JSON.stringify(error)}`)
+                //eslint-disable-next-line
+                alert('Error loading submissions. Please try again later.')
+                submissionsData.value = []
+                totalSubmissionsCount.value = 0
+            }
+        }
+
+        function setOffset(newOffset: number) {
+            currentOffset.value = newOffset
+            getSubmissions()
         }
 
         function setSelectedModerationListViewChosen(selectedOption: SelectedModerationListView) {
@@ -152,7 +182,12 @@ export const useModerationSubmissionsStore = defineStore(
             return updateSubmission(facilityInputVariables)
         }
 
-        return { getSubmissions,
+        function setItemsPerPage(newLimit: number) {
+            itemsPerPage.value = newLimit
+        }
+
+        return {
+            getSubmissions,
             submissionsData,
             filterSubmissionByStatus,
             filteredSubmissionDataForListComponent,
@@ -175,87 +210,17 @@ export const useModerationSubmissionsStore = defineStore(
             setSelectedModerationListViewTabChosen,
             updateSubmission,
             approveSubmission,
-            rejectSubmission }
+            rejectSubmission,
+            totalSubmissionsCount,
+            currentOffset,
+            itemsPerPage,
+            setOffset,
+            hasNextPage,
+            hasPrevPage,
+            setItemsPerPage
+        }
     }
 )
-
-async function querySubmissions(): Promise<Submission[]> {
-    try {
-        const submissionsFilters = {
-            filters: {
-                id: undefined,
-                limit: 100
-            }
-        }
-
-        const serverResponse = await graphQLClientRequestWithRetry<Query['submissions']>(
-            gqlClient.request.bind(gqlClient),
-            getSubmissionsGqlQuery,
-            submissionsFilters
-        )
-
-        return serverResponse?.data ?? []
-    } catch (error) {
-        console.error(`Error querying the submissions: ${JSON.stringify(error)}`)
-        return []
-    }
-}
-
-const getSubmissionsGqlQuery = gql`
-   query Submissions($filters: SubmissionSearchFilters!) {
-  submissions(filters: $filters) {
-    id
-    googleMapsUrl
-    healthcareProfessionalName
-    spokenLanguages
-    facility {
-      id
-      mapLatitude
-      mapLongitude
-      nameEn
-      nameJa
-      contact {
-        googleMapsUrl
-        email
-        phone
-        website
-        address {
-          postalCode
-          prefectureEn
-          cityEn
-          addressLine1En
-          addressLine2En
-          prefectureJa
-          cityJa
-          addressLine1Ja
-          addressLine2Ja
-        }
-      }
-      healthcareProfessionalIds
-    }
-    healthcareProfessionals {
-      id
-      names {
-        firstName
-        middleName
-        lastName
-        locale
-      }
-      spokenLanguages
-      degrees
-      specialties
-      acceptedInsurance
-      additionalInfoForPatients
-      facilityIds
-    }
-    isUnderReview
-    isApproved
-    isRejected
-    createdDate
-    updatedDate
-    notes
-  }
-}`
 
 const updateFacilitySubmissionGqlMutation = gql`
 mutation Mutation($id: ID!, $input: UpdateSubmissionInput!) {

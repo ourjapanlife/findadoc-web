@@ -171,7 +171,10 @@
     "exit": "Exit",
     "facilityCreatedSuccessfully": "Facility created successfully.",
     "heathcareProfessionalCreatedSuccessfully": "Healthcare Professional created successfully.",
-    "unsavedChangesMessage": "This will exit without saving your entry. All unsaved data will be lost."
+    "unsavedChangesMessage": "This will exit without saving your entry. All unsaved data will be lost.",
+    "healthcareProfessionalEnglishNameRequired": "Healthcare Professional must have an English name",
+    "hasEmptyFieldsHealthcareProfessional": "All fields are required for creating a healthcare professional",
+    "hasEmptyFieldsFacility": "Some required fields are missing for creating a facility"
   },
   "modDashboardLeftNav": {
     "facilities": "Facilities",
@@ -203,12 +206,15 @@
     "deleteButtonText": "DELETE FOREVER",
     "update": "Update",
     "updateAndExit": "Update & Exit",
+    "deleteConfirmationFacility": "Are you sure you want to delete the Facility: {facility}, with ID: {id}?",
+    "deleteConfirmationHealthcareProfessional": "Are you sure you want to delete the Healthcare Professional: {healthcareProfessional}, with ID: {id}?",
     "facilityDeletedSuccessfully": "Facility deleted successfully",
     "facilityUpdatedSuccessfully": "Facility updated successfully",
     "healthcareProfessionalDeletedSuccessfully": "Healthcare Professional deleted successfully",
     "healthcareProfessionalUpdatedSuccessfully": "Healthcare Professional updated successfully",
     "back": "Back",
-    "hasUnsavedChanges": "You have unsaved changes. Are you sure you want to leave?"
+    "hasUnsavedChanges": "You have unsaved changes. Are you sure you want to leave?",
+    "healthcareProfessionalEnglishNameRequired": "Healthcare Professional must have an English name"
   },
   "modEditSubmissionTopNav": {
     "update": "Update",
@@ -362,5 +368,28 @@
   },
   "modInputField": {
     "optional": "Optional"
+  },
+  "modListContainerItem": {
+    "newSubmission": "New",
+    "underReviewSubmission": "Under Review",
+    "approvedSubmission": "Approved",
+    "rejectedSubmission": "Rejected",
+    "review": "Review",
+    "createdDate": "Created on",
+    "updatedDate": "Updated last"
+  },
+  "pagination": {
+    "of": "of",
+    "results": "results"
+  },
+  "modListContainer": {
+    "resultsPerPage": "Results per page"
+  },
+  "settingsPage": {
+    "heading": "Settings",
+    "subheading": "Manage your account settings",
+    "displayName": "Display Name",
+    "healthcareProfessionalName": "Profile Image",
+    "updateButton": "Update Settings"
   }
 }

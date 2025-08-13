@@ -1,7 +1,8 @@
 import type { Maybe } from 'graphql/jsutils/Maybe'
 import { defineStore } from 'pinia'
-import { reactive, ref, type Ref } from 'vue'
+import { reactive, ref, type Ref, computed } from 'vue'
 import { gql } from 'graphql-request'
+import { fetchHealthcareProfessionalsWithCount } from '../utils/graphqlHepers'
 import { type Insurance,
     type Degree,
     type Specialty,
@@ -29,6 +30,13 @@ export const useHealthcareProfessionalsStore = defineStore(
         = ref([])
         const selectedHealthcareProfessionalId: Ref<string> = ref('')
         const selectedHealthcareProfessionalData: Ref<HealthcareProfessional | undefined> = ref()
+        // Used for store the total number of healthcare professionals found by the current search query.
+        const totalHealthcareProfessionalsCount: Ref<number> = ref(0)
+        // Used for store the starting index (offset) for the current page of results.
+        const currentOffset: Ref<number> = ref(0)
+        const itemsPerPage: Ref<number> = ref(25)
+        const hasNextPage = computed(() => currentOffset.value + itemsPerPage.value < totalHealthcareProfessionalsCount.value)
+        const hasPrevPage = computed(() => currentOffset.value > 0)
         const healthcareProfessionalSectionFields = reactive<HealthcareProfessional>({
             __typename: 'HealthcareProfessional', // Optional if you're working with GraphQL
             acceptedInsurance: [],
@@ -49,7 +57,8 @@ export const useHealthcareProfessionalsStore = defineStore(
             facilityIds: [] as string[],
             names: [] as LocalizedNameInput[],
             specialties: [] as Specialty[],
-            spokenLanguages: [] as Locale[]
+            spokenLanguages: [] as Locale[],
+            additionalInfoForPatients: ''
         })
 
         const selectedFacilities: Ref<Facility[]> = ref([])
@@ -94,9 +103,29 @@ export const useHealthcareProfessionalsStore = defineStore(
             healthcareProfessionalSectionFields.spokenLanguages = []
             healthcareProfessionalSectionFields.updatedDate = ''
         }
+
         async function getHealthcareProfessionals() {
-            const healthcareProfessionalResults = await queryHealthcareProfessionals()
-            healthcareProfessionalsData.value = healthcareProfessionalResults
+            const filters = {
+                offset: currentOffset.value,
+                limit: itemsPerPage.value
+            }
+            try {
+                // Call the utility function to fetch the paginated data and the total count
+                const { filteredSearchResults, totalCount } = await fetchHealthcareProfessionalsWithCount(filters)
+                healthcareProfessionalsData.value = filteredSearchResults
+                totalHealthcareProfessionalsCount.value = totalCount
+            } catch (error) {
+                console.error(`Error fetching healthcare professionals: ${JSON.stringify(error)}`)
+                // eslint-disable-next-line no-alert
+                alert('Error loading submissions. Please try again later.')
+                healthcareProfessionalsData.value = []
+                totalHealthcareProfessionalsCount.value = 0
+            }
+        }
+
+        function setOffset(newOffset: number) {
+            currentOffset.value = newOffset
+            getHealthcareProfessionals()
         }
 
         async function updateHealthcareProfessional():
@@ -298,6 +327,10 @@ export const useHealthcareProfessionalsStore = defineStore(
             return nameFromChosenLocaleDisplay ? nameFromChosenLocaleDisplay : healthcareProfessional.names[0]
         }
 
+        function setItemsPerPage(newLimit: number) {
+            itemsPerPage.value = newLimit
+        }
+
         return {
             getHealthcareProfessionals,
             healthcareProfessionalsData,
@@ -313,72 +346,39 @@ export const useHealthcareProfessionalsStore = defineStore(
             createHealthcareProfessional,
             createHealthcareProfessionalSectionFields,
             resetCreateHealthcareProfessionalFields,
-            resetHealthcareProfessionalSectionFields
+            resetHealthcareProfessionalSectionFields,
+            totalHealthcareProfessionalsCount,
+            currentOffset,
+            itemsPerPage,
+            setOffset,
+            hasNextPage,
+            hasPrevPage,
+            setItemsPerPage
         }
     }
 )
-
-async function queryHealthcareProfessionals(): Promise<HealthcareProfessional[]> {
-    const searchHealthcareProfessionalsData = {
-        filters: {
-            limit: 400
-        }
-    }
-    try {
-        const response = await graphQLClientRequestWithRetry<Query['healthcareProfessionals']>(
-            gqlClient.request.bind(gqlClient),
-            getAllHealthcareProfessionalsData,
-            searchHealthcareProfessionalsData
-        )
-
-        return response?.data ?? []
-    } catch (error) {
-        console.error(`Error querying the healthcare professionals: ${JSON.stringify(error)}`)
-        return []
-    }
-}
 
 export async function getHealthcareProfessionalById(id: string): Promise<HealthcareProfessional[]> {
     try {
         const queryData = {
             healthcareProfessionalId: id
         }
-        const result = await graphQLClientRequestWithRetry<Query['healthcareProfessionals']>(
+        const result = await graphQLClientRequestWithRetry<Query>(
             gqlClient.request.bind(gqlClient),
             getHealthcareProfessionalByIdGqlQuery,
             queryData
         )
 
-        if (!result.data) {
+        if (!result.data?.healthcareProfessional) {
             throw new Error('The Healthcare Professional ID doesn\'t exist')
         }
-        return result.data
+
+        return [result.data.healthcareProfessional]
     } catch (error: unknown) {
         console.error(`Error retrieving healthcare professional by id: ${id}: ${JSON.stringify(error)}`)
         return []
     }
 }
-
-const getAllHealthcareProfessionalsData = gql`
-query Query($filters: HealthcareProfessionalSearchFilters!) {
-  healthcareProfessionals(filters: $filters) {
-    id
-    names {
-      firstName
-      middleName
-      lastName
-      locale
-    }
-    spokenLanguages
-    degrees
-    specialties
-    acceptedInsurance
-    additionalInfoForPatients
-    facilityIds
-    createdDate
-    updatedDate
-  }
-}`
 
 const getHealthcareProfessionalByIdGqlQuery = gql`
     query HealthcareProfessionals($healthcareProfessionalId: ID!) {
