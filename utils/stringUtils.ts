@@ -42,7 +42,7 @@ export function isValidPhoneNumber(phoneNumber: string) {
 }
 
 export function isValidWebsite(website: string) {
-    return /^((https?:\/\/)?([\w-]+\.)+[\w-]{2,}(\/[\w\-._~:/?#[\]@!$&'()*+,;=]*)?)?$/i.test(website)
+    return /^((https?:\/\/)?([a-z0-9-]+\.)+[a-z0-9-]{2,}(\/[a-z0-9\-._~:/?#[\]@!$&'()*+,;=]*)?)?$/.test(website)
 }
 
 export function isFloat(float: string) {
