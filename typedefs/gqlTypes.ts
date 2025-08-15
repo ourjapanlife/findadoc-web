@@ -94,10 +94,11 @@ export enum Degree {
   Md = 'MD',
   Mph = 'MPH',
   Np = 'NP',
+  OD = 'OD',
   Pa = 'PA',
   PhD = 'PhD',
   PharmD = 'PharmD',
-  PsyD = 'PsyD'
+  PsyD = 'PsyD',
 }
 
 export type DeleteResult = {
