@@ -382,6 +382,11 @@
     "of": "of",
     "results": "results"
   },
+  "errorPage": {
+      "title": "404 - Diagnosis : Page not Found",
+      "description": "This page has failed its health check. Let's head to a healthy page instead!",
+      "returnHome": "Return to Home"
+  },
   "modListContainer": {
     "resultsPerPage": "Results per page"
   },
