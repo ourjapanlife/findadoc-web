@@ -7,7 +7,7 @@
         :overlay-click-close="false"
         :can-swipe-close="false"
         :z-index="0"
-        :initial-position="75"
+        :initial-position="50"
         :custom-positions="[20, 50, 75]"
     >
         <div
@@ -17,8 +17,9 @@
             <div
                 v-show="isSearchPage"
                 data-testid="searchbar"
-                class="results-header flex justify-center grow"
+                class="results-header flex flex-col justify-center grow"
             >
+                <SearchSelection class="" />
                 <SearchBar class="mx-4" />
             </div>
             <!-- Divider line -->
@@ -60,7 +61,6 @@
                         >
                             <SearchResultsListItem
                                 :name="getLocalizedName(searchResult.professional.names)"
-                            ${searchResult.professional.names[0].lastName}`"
                                 :degrees="searchResult.professional.degrees"
                                 :facility-name="localeStore.activeLocale.code == Locale.JaJp
                                     ? searchResult.facilities[0]?.nameJa
@@ -70,7 +70,6 @@
                                 :data-testid="`search-result-list-item-${index}`"
                             />
                         </div>
-                            
                     </div>
                 </div>
             </div>
