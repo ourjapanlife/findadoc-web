@@ -6,6 +6,7 @@
             data-testid="map-of-japan"
             :api-key="runtimeConfig.public.GOOGLE_MAPS_API_KEY as string ?? undefined"
             map-id="153d718018a2577e"
+            :disable-default-ui="true"
             class="h-full w-full"
             :center="center"
             :zoom="9"
@@ -39,11 +40,12 @@ import SVGSVGBlueMapPin from '~/assets/icons/blue-map-pin.svg'
 const defaultLocation = { lat: 35.6804, lng: 139.769 }
 
 const center = computed(() => {
-    const lng = useSearchResultsStore().activeResult?.facilities[0]?.mapLongitude
-    const lat = useSearchResultsStore().activeResult?.facilities[0]?.mapLatitude
+    const lng = useSearchResultsStore().activeResult?.facilities[0]?.mapLongitude ?? defaultLocation.lng
+    const lat = useSearchResultsStore().activeResult?.facilities[0]?.mapLatitude ?? defaultLocation.lat
     const locationExists = lng && lat
 
-    return locationExists ? { lat, lng } : defaultLocation
+    // Since the map is slightly offset vertically, we need to offset the location by 0.01 to center it
+    return locationExists ? { lat: lat - 0.01, lng } : defaultLocation
 })
 
 const searchResultsStore = useSearchResultsStore()
