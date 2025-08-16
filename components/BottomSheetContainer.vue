@@ -1,0 +1,90 @@
+<template>
+    <!-- We want to hide the overlay since SearchResults will be shown with the map -->
+    <!-- z-index is set to 0 to allow the results list to be behind the details sheet -->
+    <BottomSheet
+        ref="bottomSheetRef"
+        :overlay="false"
+        :overlay-click-close="false"
+        :can-swipe-close="false"
+        :z-index="10"
+        :initial-position="50"
+        :custom-positions="[20, 50, 75]"
+    >
+        <!-- Close button -->
+        <button
+            v-if="showCloseButton"
+            data-testid="filters-panel-close-button"
+            class="absolute top-4 right-2 px-2 py-.5 mr-2"
+            @click="minimizePanel()"
+        >
+            <svg
+                class="stroke-primary/60"
+                width="20"
+                heigh="20"
+                viewBox="4 0 15 25"
+            >
+                <path
+                    stroke-width="3"
+                    fill="none"
+                    d="M6.25,6.25,17.75,17.75"
+                />
+                <path
+                    stroke-width="3"
+                    fill="none"
+                    d="M6.25,17.75,17.75,6.25"
+                />
+            </svg>
+        </button>
+        <!-- Bottom Sheet Content -->
+        <!-- We want to share the same bottom sheet to keep the UX smooth -->
+        <SearchResultDetails v-if="bottomSheetStore.bottomSheetType === BottomSheetType.SearchResultDetails" />
+        <SearchResultsList v-if="bottomSheetStore.bottomSheetType === BottomSheetType.SearchResultsList" />
+        <FiltersPanel v-if="bottomSheetStore.bottomSheetType === BottomSheetType.FiltersPanel" />
+    </BottomSheet>
+</template>
+
+<script setup lang="ts">
+import { ref, watch } from 'vue'
+import type BottomSheet from '~/components/BottomSheet.vue'
+import SearchResultDetails from '~/components/SearchResultDetails.vue'
+import SearchResultsList from '~/components/SearchResultsList.vue'
+import FiltersPanel from '~/components/FiltersPanel.vue'
+import { BottomSheetType, useBottomSheetStore } from '~/stores/bottomSheetStore'
+
+const bottomSheetStore = useBottomSheetStore()
+
+// Refs
+const bottomSheetRef = ref<typeof BottomSheet | null>(null)
+const showCloseButton = ref(false)
+
+//Vue Event Handlers
+onMounted(() => {
+    bottomSheetRef.value?.open()
+    bottomSheetRef.value?.setPosition(50)
+})
+
+watch(() => bottomSheetStore.bottomSheetType, () => {
+    switch (bottomSheetStore.bottomSheetType) {
+        case BottomSheetType.SearchResultsList:
+            bottomSheetRef.value?.setPosition(50)
+            showCloseButton.value = false
+            break
+        case BottomSheetType.FiltersPanel:
+            // Set position to 100 when showing filters panel, since this is the main, focused content
+            bottomSheetRef.value?.setPosition(100)
+            showCloseButton.value = true
+            break
+        case BottomSheetType.SearchResultDetails:
+            // Set position to 75% when showing search result details, since this is the main, focused content
+            // However, we still want to use the map and show where the result is located
+            bottomSheetRef.value?.setPosition(75)
+            showCloseButton.value = true
+            break
+    }
+})
+
+//Functions
+const minimizePanel = () => {
+    bottomSheetStore.bottomSheetType = BottomSheetType.SearchResultsList
+}
+</script>

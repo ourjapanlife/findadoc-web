@@ -1,7 +1,7 @@
 <template>
     <div
         class="flex justify-center py-1 rounded-b w-full border-1 border-primary/20 text-xs
-                    bg-secondary-bg hover:bg-secondary-hover/50 transition-all"
+                    bg-secondary-bg transition-all"
     >
         <!-- Selected Languages -->
         <div class="search-language">

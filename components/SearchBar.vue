@@ -86,8 +86,6 @@
                 </div>
             </button>
         </div>
-        <!-- Filters Panel -->
-        <FiltersPanel />
     </div>
 </template>
 

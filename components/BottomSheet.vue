@@ -49,7 +49,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, nextTick, ref } from 'vue'
+import { nextTick, ref } from 'vue'
 import Hammer from 'hammerjs'
 import { useBottomSheetStore } from '@/stores/bottomSheetStore'
 
@@ -229,11 +229,15 @@ const dragHandler = (event: HammerInput | IEvent, type: 'draghandle' | 'main') =
             originalTranslateValueBeforeDrag.value = translateValue.value
         }
 
-        // If the content area is dragged up, move the sheet up
         // Not sure why the deltaYChange moves the sheet so intensely, so we divide it by 8 to make it more manageable
         const newDeltaY = originalTranslateValueBeforeDrag.value + (deltaYChange / 8)
-        console.log('newDeltaY', newDeltaY)
-        translateValue.value = newDeltaY
+        // We don't want the sheet to move outside of the screen
+        const isInScreenBounds = newDeltaY < 100 && newDeltaY > 0
+
+        if (isInScreenBounds) {
+            // If the content area is dragged up, move the sheet up
+            translateValue.value = newDeltaY
+        }
 
         //We don't want let the sheet move higher than the top of the screen
         if (type === 'main' && event.type === 'panup' && contentScroll.value === 0) {
@@ -313,7 +317,18 @@ const clickOnOverlayHandler = () => {
 }
 
 /**
+   * Set current position method
+   * @param position - Position percentage (0-100)
+   */
+const setPosition = (position: number) => {
+    if (position >= 0 && position <= 100) {
+        const invertedPosition = 100 - position
+        translateValue.value = invertedPosition
+    }
+}
+
+/**
    * Define public methods
    */
-defineExpose({ open, close })
+defineExpose({ open, close, setPosition })
 </script>

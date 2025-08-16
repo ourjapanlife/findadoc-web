@@ -30,9 +30,8 @@
                 class="h-dvh"
             >
                 <Loader />
-                <SearchResultDetails />
+                <BottomSheetContainer />
                 <MapContainer class="h-[calc(100vh)]" />
-                <SearchResultsList />
             </div>
             <Footer class="z-10" />
         </div>
