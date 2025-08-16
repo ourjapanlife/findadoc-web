@@ -375,12 +375,28 @@
     "of": "of",
     "results": "results"
   },
-  "modSubmissionListContainer": {
+  "modListContainer": {
     "resultsPerPage": "Results per page"
   },
   "errorPage": {
-    "title": "404 - 診断：ページが見つかりません",
-    "description": "このページは健康診断に合格しませんでした。代わりに健康なページにご案内します！",
-    "returnHome": "ホームに戻る"
-  }
+      "title": "404 - 診断：ページが見つかりません",
+      "description": "このページは健康診断に合格しませんでした。代わりに健康なページにご案内します！",
+      "returnHome": "ホームに戻る"
+  },
+  "modListContainerItem": {
+    "newSubmission": "New",
+    "underReviewSubmission": "Under Review",
+    "approvedSubmission": "Approved",
+    "rejectedSubmission": "Rejected",
+    "review": "Review",
+    "createdDate": "Created on",
+    "updatedDate": "Updated last"
+  },
+  "settingsPage": {
+    "heading": "Settings",
+    "subheading": "Manage your account settings",
+    "displayName": "表示名",
+    "healthcareProfessionalName": "Profile Image",
+    "updateButton": "Update Settings"
+   }
 }

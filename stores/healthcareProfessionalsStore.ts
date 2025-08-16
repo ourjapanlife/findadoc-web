@@ -18,16 +18,14 @@ import { type Insurance,
     type Query } from '~/typedefs/gqlTypes'
 import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql'
 import { useLocaleStore } from '~/stores/localeStore'
-import { ErrorCode, type ServerError, type ServerResponse } from '~/typedefs/serverResponse'
-import { arraysAreEqual } from '~/utils/arrayUtils'
+import type { ServerResponse } from '~/typedefs/serverResponse'
 
 export const useHealthcareProfessionalsStore = defineStore(
     'healthcareProfessionalsStore',
     () => {
         const localeStore = useLocaleStore()
 
-        const healthcareProfessionalsData: Ref<HealthcareProfessional[]>
-        = ref([])
+        const healthcareProfessionalsData: Ref<HealthcareProfessional[]> = ref([])
         const selectedHealthcareProfessionalId: Ref<string> = ref('')
         const selectedHealthcareProfessionalData: Ref<HealthcareProfessional | undefined> = ref()
         // Used for store the total number of healthcare professionals found by the current search query.
@@ -38,7 +36,7 @@ export const useHealthcareProfessionalsStore = defineStore(
         const hasNextPage = computed(() => currentOffset.value + itemsPerPage.value < totalHealthcareProfessionalsCount.value)
         const hasPrevPage = computed(() => currentOffset.value > 0)
         const healthcareProfessionalSectionFields = reactive<HealthcareProfessional>({
-            __typename: 'HealthcareProfessional', // Optional if you're working with GraphQL
+            __typename: 'HealthcareProfessional',
             acceptedInsurance: [],
             additionalInfoForPatients: '',
             createdDate: '',
@@ -128,17 +126,23 @@ export const useHealthcareProfessionalsStore = defineStore(
             getHealthcareProfessionals()
         }
 
-        async function updateHealthcareProfessional():
-        Promise<ServerResponse<HealthcareProfessional>> {
+        // helper — create the relationship object to send to the API
+        function createFacilityRelation(facility: Facility): Relationship {
+            return {
+                otherEntityId: facility.id,
+                action: healthcareProfessionalSectionFields.facilityIds.includes(facility.id)
+                    ? RelationshipAction.Delete
+                    : RelationshipAction.Create
+            }
+        }
+
+        async function updateHealthcareProfessional(): Promise<ServerResponse<HealthcareProfessional>> {
             const facilitiesForRelationshipCreationArray = selectedFacilities.value
 
-            // Fetch the current healthcare professional data for comparison
             const currentProfessionalData = healthcareProfessionalsData.value.find(
-                (hp: HealthcareProfessional) =>
-                    hp.id === selectedHealthcareProfessionalId.value
+                hp => hp.id === selectedHealthcareProfessionalId.value
             )
 
-            // return out if no current professional data found
             if (!currentProfessionalData) {
                 console.error(`No data found for currentProfessionalData with id ${selectedHealthcareProfessionalId.value}`)
                 return {
@@ -158,119 +162,51 @@ export const useHealthcareProfessionalsStore = defineStore(
                 }
             }
 
-            const currentProfessionalDataCopy = { ...currentProfessionalData }
+            // Map facilities to relationships, but send full array even if empty
+            const facilitiesRelationsToSelectedHealthcareProfessional: Relationship[]
+            = facilitiesForRelationshipCreationArray.map(createFacilityRelation)
 
-            // This is the array to be sent to the backend if there is a change in the relations
-            let facilitiesRelationsToSelectedHealthcareProfessional: Relationship[] = []
-
-            if (facilitiesForRelationshipCreationArray.length) {
-                facilitiesRelationsToSelectedHealthcareProfessional = facilitiesForRelationshipCreationArray
-                    .map(createFacilityRelation)
-            }
-
-            //if section field and current value are the same (no updates), use undefined in payload
-            // otherwise, use new section field value to update that field
-            const updateHealthcareProfessionalInput: MutationUpdateHealthcareProfessionalArgs = {
+            const updateInput: MutationUpdateHealthcareProfessionalArgs = {
                 id: selectedHealthcareProfessionalId.value,
                 input: {
-                    acceptedInsurance: !arraysAreEqual(
-                        healthcareProfessionalSectionFields.acceptedInsurance,
-                        currentProfessionalDataCopy.acceptedInsurance
-                    )
-                        ? undefined
-                        : healthcareProfessionalSectionFields.acceptedInsurance,
-                    additionalInfoForPatients: healthcareProfessionalSectionFields.additionalInfoForPatients
-                      === currentProfessionalDataCopy.additionalInfoForPatients
-                        ? undefined
-                        : healthcareProfessionalSectionFields.additionalInfoForPatients,
-                    degrees: !arraysAreEqual(
-                        healthcareProfessionalSectionFields.degrees,
-                        currentProfessionalDataCopy.degrees
-                    )
-                        ? undefined
-                        : healthcareProfessionalSectionFields.degrees,
-                    facilityIds: facilitiesRelationsToSelectedHealthcareProfessional.length
-                        ? facilitiesRelationsToSelectedHealthcareProfessional
-                        : undefined,
-                    names: !arraysAreEqual(
-                        healthcareProfessionalSectionFields.names,
-                        currentProfessionalDataCopy.names
-                    )
-                        ? undefined
-                        : healthcareProfessionalSectionFields.names,
-                    specialties: !arraysAreEqual(
-                        healthcareProfessionalSectionFields.specialties,
-                        currentProfessionalDataCopy.specialties
-                    )
-                        ? undefined
-                        : healthcareProfessionalSectionFields.specialties,
-                    spokenLanguages: !arraysAreEqual(
-                        healthcareProfessionalSectionFields.spokenLanguages,
-                        currentProfessionalDataCopy.spokenLanguages
-                    )
-                        ? undefined
-                        : healthcareProfessionalSectionFields.spokenLanguages
+                    acceptedInsurance: healthcareProfessionalSectionFields.acceptedInsurance ?? [],
+                    additionalInfoForPatients: healthcareProfessionalSectionFields.additionalInfoForPatients ?? '',
+                    degrees: healthcareProfessionalSectionFields.degrees ?? [],
+                    facilityIds: facilitiesRelationsToSelectedHealthcareProfessional,
+                    names: healthcareProfessionalSectionFields.names ?? [],
+                    specialties: healthcareProfessionalSectionFields.specialties ?? [],
+                    spokenLanguages: healthcareProfessionalSectionFields.spokenLanguages ?? []
                 }
             }
 
-            const hasUpdates = !!Object.values(updateHealthcareProfessionalInput.input).find(value => value !== undefined)
-
-            if (!hasUpdates) {
-                return {
-                    data: currentProfessionalData,
-                    hasErrors: true,
-                    errors: [{
-                        message: 'No updates found',
-                        fieldWithError: undefined,
-                        code: ErrorCode.NO_UPDATES_FOUND
-                    }]
-                }
-            }
-
-            const serverResponse = await graphQLClientRequestWithRetry<Mutation['updateHealthcareProfessional']>(
+            const serverResponse = await graphQLClientRequestWithRetry<Mutation>(
                 gqlClient.request.bind(gqlClient),
                 updateHealthcareProfessionalGqlMutation,
-                updateHealthcareProfessionalInput
+                updateInput
             )
 
-            const responseData = serverResponse.data
+            const responseData = serverResponse.data?.updateHealthcareProfessional
 
-            if (!serverResponse.errors?.length && serverResponse.data) {
-                //This finds the index of the healthcare professional so we can replace the ones we have already queried
-                const outdatedHealthcareProfessionalIndex = healthcareProfessionalsData.value.findIndex(
-                    (healthcareProfessional: HealthcareProfessional) => healthcareProfessional.id === responseData!.id
-                )
-
-                //This will replace the data we had from the index with the new data
-                if (outdatedHealthcareProfessionalIndex !== -1) {
-                    healthcareProfessionalsData.value[outdatedHealthcareProfessionalIndex] = responseData!
-                }
-
-                //This will update the data with what was returned from the server and is in our database
-                updateHealthcareProfessionalSectionFields(responseData!)
-
-                /*This resets the names we removed and kept track of in
-                order to change Locales if the wrong name for a locale was chosen */
+            if (!serverResponse.errors?.length && responseData) {
+                const index = healthcareProfessionalsData.value.findIndex(hp => hp.id === responseData.id)
+                if (index !== -1) healthcareProfessionalsData.value[index] = responseData
+                updateHealthcareProfessionalSectionFields(responseData)
                 removedHealthcareProfessionalNames.value = []
             }
 
-            return serverResponse
-        }
-
-        /* This function will create the relationships that need to be sent in the backend for
-        updating facilities the healthcare professional works at */
-        function createFacilityRelation(facility: Facility): Relationship {
             return {
-                otherEntityId: facility.id,
-                action: healthcareProfessionalSectionFields.facilityIds.includes(facility.id)
-                    ? RelationshipAction.Delete
-                    : RelationshipAction.Create
+                ...serverResponse,
+                data: responseData
             }
         }
 
         async function createHealthcareProfessional():
         Promise<ServerResponse<Maybe<HealthcareProfessional>>> {
-            const serverResponse = { data: {} as Maybe<HealthcareProfessional>, errors: [] as ServerError[], hasErrors: false }
+            const serverResponse: ServerResponse<Maybe<HealthcareProfessional>> = {
+                data: null,
+                errors: [],
+                hasErrors: false
+            }
 
             const createHealthcareProfessionalInput: MutationCreateHealthcareProfessionalArgs = {
                 input: {
@@ -289,9 +225,9 @@ export const useHealthcareProfessionalsStore = defineStore(
                 createHealthcareProfessionalInput
             )
 
-            serverResponse.data = response.data?.createHealthcareProfessional
-            serverResponse.errors = response.errors ? response.errors : []
-            serverResponse.hasErrors = response.hasErrors
+            serverResponse.data = response.data?.createHealthcareProfessional ?? null
+            serverResponse.errors = response.errors ?? []
+            serverResponse.hasErrors = response.hasErrors ?? !!serverResponse.errors.length
 
             return serverResponse
         }
@@ -306,24 +242,40 @@ export const useHealthcareProfessionalsStore = defineStore(
             createHealthcareProfessionalSectionFields.spokenLanguages = []
         }
 
-        async function deleteHealthcareProfessional(healthcareProfessionalId: MutationDeleteHealthcareProfessionalArgs):
-        Promise<ServerResponse<DeleteResult>> {
-            const serverResponse = await graphQLClientRequestWithRetry<Mutation['deleteHealthcareProfessional']>(
+        async function deleteHealthcareProfessional(
+      healthcareProfessionalId: MutationDeleteHealthcareProfessionalArgs
+        ): Promise<ServerResponse<DeleteResult>> {
+            const serverResponse = await graphQLClientRequestWithRetry<Mutation>(
                 gqlClient.request.bind(gqlClient),
                 deleteHealthcareProfessionalGqlMutation,
                 healthcareProfessionalId
             )
 
-            return serverResponse
+            const deleteResult = serverResponse.data?.deleteHealthcareProfessional as DeleteResult | undefined
+
+            const mappedResponse: ServerResponse<DeleteResult> = {
+                ...serverResponse,
+                data: deleteResult as DeleteResult
+            }
+
+            if (!serverResponse.errors?.length && deleteResult?.isSuccessful) {
+                await getHealthcareProfessionals()
+                if (selectedHealthcareProfessionalId.value === healthcareProfessionalId.id) {
+                    selectedHealthcareProfessionalId.value = ''
+                    selectedHealthcareProfessionalData.value = undefined
+                }
+            }
+
+            return mappedResponse
         }
 
         const displayChosenLocaleForHealthcareProfessional = (
             healthcareProfessional: HealthcareProfessional | CreateHealthcareProfessionalInput
         ) => {
-            // find the name of the healthcare professional from the chosen display locale
+            // Find the name of the healthcare professional from the chosen display locale
             const nameFromChosenLocaleDisplay = healthcareProfessional.names.find(name =>
                 name.locale === localeStore.activeLocale.code)
-            // return the name of the healthcare professional of chosen locale or default to the 0 indexed recorded name
+            // Return the name of the healthcare professional of chosen locale or default to the 0 indexed recorded name
             return nameFromChosenLocaleDisplay ? nameFromChosenLocaleDisplay : healthcareProfessional.names[0]
         }
 

@@ -1,5 +1,6 @@
 <template>
-    <div class="flex items-center justify-center gap-0 mt-4">
+    <div class="flex items-center justify-center gap-2 py-2">
+        <!-- First page -->
         <button
             :disabled="!hasPrev"
             class="w-10 h-10 flex items-center justify-center rounded text-primary disabled:opacity-30

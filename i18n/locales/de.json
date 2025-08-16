@@ -375,12 +375,28 @@
     "of": "of",
     "results": "results"
   },
-  "modSubmissionListContainer": {
+  "modListContainer": {
     "resultsPerPage": "Results per page"
   },
   "errorPage": {
-    "title": "404 - Diagnose: Seite nicht gefunden",
-    "description": "Diese Seite hat ihre Gesundheitsprüfung nicht bestanden. Lassen Sie uns Sie stattdessen zu einer gesunden Seite bringen!",
-    "returnHome": "Zur Startseite"
+      "title": "404 - Diagnose: Seite nicht gefunden",
+      "description": "Diese Seite hat ihre Gesundheitsprüfung nicht bestanden. Lassen Sie uns Sie stattdessen zu einer gesunden Seite bringen!",
+      "returnHome": "Zur Startseite"
+  },
+  "modListContainerItem": {
+    "newSubmission": "New",
+    "underReviewSubmission": "Under Review",
+    "approvedSubmission": "Approved",
+    "rejectedSubmission": "Rejected",
+    "review": "Review",
+    "createdDate": "Created on",
+    "updatedDate": "Updated last"
+  },
+  "settingsPage": {
+    "heading": "Einstellungen",
+    "subheading": "Verwalten Sie Ihre Kontoeinstellungen",
+    "displayName": "Anzeigename",
+    "healthcareProfessionalName": "Profilbild",
+    "updateButton": "Einstellungen aktualisieren"
   }
 }

@@ -375,12 +375,28 @@
     "of": "of",
     "results": "results"
   },
-  "modSubmissionListContainer": {
+  "modListContainer": {
     "resultsPerPage": "Results per page"
   },
   "errorPage": {
-    "title": "404 - 诊断：页面未找到",
-    "description": "此页面未通过健康检查。让我们带您到一个健康的页面吧！",
-    "returnHome": "返回首页"
+      "title": "404 - 诊断：页面未找到",
+      "description": "此页面未通过健康检查。让我们带您到一个健康的页面吧！",
+      "returnHome": "返回首页"
+  },
+  "modListContainerItem": {
+    "newSubmission": "New",
+    "underReviewSubmission": "Under Review",
+    "approvedSubmission": "Approved",
+    "rejectedSubmission": "Rejected",
+    "review": "Review",
+    "createdDate": "Created on",
+    "updatedDate": "Updated last"
+  },
+  "settingsPage": {
+    "heading": "设置",
+    "subheading": "管理您的账户设置",
+    "displayName": "显示名称",
+    "healthcareProfessionalName": "个人资料图片",
+    "updateButton": "更新设置"
   }
 }
