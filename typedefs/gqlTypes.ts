@@ -94,6 +94,7 @@ export enum Degree {
   Md = 'MD',
   Mph = 'MPH',
   Np = 'NP',
+  Od = 'OD',
   Pa = 'PA',
   PhD = 'PhD',
   PharmD = 'PharmD',
