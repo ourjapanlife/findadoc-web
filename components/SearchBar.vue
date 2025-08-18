@@ -1,8 +1,8 @@
 <template>
-    <div class="w-full my-2">
+    <div class="my-2">
         <!-- Search Bar -->
         <button
-            class="flex my-2 py-1 rounded w-full border-1 border-primary/20
+            class="flex w-full mb-2 py-1 rounded border-1 border-primary/20
                     drop-shadow-md text-xs
                     bg-secondary-bg hover:bg-secondary-hover/50 transition-all
                     cursor-pointer"

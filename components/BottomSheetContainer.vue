@@ -6,9 +6,9 @@
         :overlay="false"
         :overlay-click-close="false"
         :can-swipe-close="false"
-        :z-index="10"
+        :z-index="0"
         :initial-position="50"
-        :custom-positions="[20, 50, 75]"
+        :custom-positions="[20, 50, 75, 90]"
     >
         <!-- Close button -->
         <button
@@ -37,9 +37,10 @@
         </button>
         <!-- Bottom Sheet Content -->
         <!-- We want to share the same bottom sheet to keep the UX smooth -->
+        <!-- We use v-show here for components that we don't re-running queries every time  -->
         <SearchResultDetails v-if="bottomSheetStore.bottomSheetType === BottomSheetType.SearchResultDetails" />
-        <SearchResultsList v-if="bottomSheetStore.bottomSheetType === BottomSheetType.SearchResultsList" />
-        <FiltersPanel v-if="bottomSheetStore.bottomSheetType === BottomSheetType.FiltersPanel" />
+        <SearchResultsList v-show="bottomSheetStore.bottomSheetType === BottomSheetType.SearchResultsList" />
+        <FiltersPanel v-show="bottomSheetStore.bottomSheetType === BottomSheetType.FiltersPanel" />
     </BottomSheet>
 </template>
 
@@ -71,7 +72,7 @@ watch(() => bottomSheetStore.bottomSheetType, () => {
             break
         case BottomSheetType.FiltersPanel:
             // Set position to 100 when showing filters panel, since this is the main, focused content
-            bottomSheetRef.value?.setPosition(100)
+            bottomSheetRef.value?.setPosition(90)
             showCloseButton.value = true
             break
         case BottomSheetType.SearchResultDetails:
@@ -85,6 +86,11 @@ watch(() => bottomSheetStore.bottomSheetType, () => {
 
 //Functions
 const minimizePanel = () => {
+    bottomSheetStore.bottomSheetType = BottomSheetType.SearchResultsList
+    bottomSheetRef.value?.setPosition(20)
+}
+
+const resetPanel = () => {
     bottomSheetStore.bottomSheetType = BottomSheetType.SearchResultsList
 }
 </script>

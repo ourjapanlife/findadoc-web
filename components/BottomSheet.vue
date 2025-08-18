@@ -1,11 +1,11 @@
 <!-- From https://github.com/vaban-ru/vue-bottom-sheet?tab=readme-ov-file,
  but copied due to it no longer being maintained -->
-<!-- It's been customized to allow for a z-index changes -->
+<!-- It's been customized to allow for a z-index changes, multiple positions, simplified the code, and added a few features -->
 <template>
     <Teleport to="body">
         <div
             ref="bottomSheet"
-            class="fixed inset-0 flex flex-col items-center justify-end transition-[visibility] mx-1"
+            class="transition-[visibility] mx-1 z-0"
             :style="{
                 zIndex: zIndex,
                 visibility: showSheet ? 'visible' : 'hidden',
@@ -17,14 +17,15 @@
             <transition>
                 <div
                     v-show="overlay && showSheet"
-                    class="absolute inset-0 -z-10"
+                    class="absolute inset-0 z-10"
                     :style="{ background: props.overlayColor }"
                     @click="clickOnOverlayHandler"
                 />
             </transition>
             <div
                 ref="bottomSheetContent"
-                :class="'flex flex-col rounded-t-2xl bg-white overflow-y-hidden w-full box-border pointer-events-auto'"
+                class="fixed inset-0 flex flex-col rounded-t-2xl bg-primary-bg overflow-y-hidden
+                    w-full box-border pointer-events-auto"
                 :style="{
                     transform: `translate3d(0, ${translateValue}%, 0)`,
                     height: sheetHeight,
