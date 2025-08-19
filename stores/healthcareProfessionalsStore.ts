@@ -2,7 +2,7 @@ import type { Maybe } from 'graphql/jsutils/Maybe'
 import { defineStore } from 'pinia'
 import { reactive, ref, type Ref, computed } from 'vue'
 import { gql } from 'graphql-request'
-import { fetchHealthcareProfessionalsWithCount } from '../utils/graphqlHepers'
+import { fetchHealthcareProfessionalsWithCount } from '../utils/graphqlHelpers'
 import { type Insurance,
     type Degree,
     type Specialty,
