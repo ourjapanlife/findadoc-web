@@ -31,7 +31,10 @@
             >
                 <Loader />
                 <BottomSheetContainer />
-                <MapContainer class="h-[calc(100vh)]" />
+                <MapContainer
+                    class="h-[calc(100vh)]"
+                    @map-moved="handleMapMoved"
+                />
             </div>
             <Footer class="z-10" />
         </div>
@@ -41,7 +44,17 @@
 <script lang="ts" setup>
 import { storeToRefs } from 'pinia'
 import { useOnboardingStore } from '@/stores/onboardingStore'
+import { BottomSheetType, useBottomSheetStore } from '@/stores/bottomSheetStore'
 
 const onboardingStore = useOnboardingStore()
 const { onboardingState } = storeToRefs(onboardingStore)
+
+const bottomSheetStore = useBottomSheetStore()
+
+// Handle map movement by calling the store's minimize function
+const handleMapMoved = () => {
+    if (bottomSheetStore.bottomSheetType === BottomSheetType.SearchResultsList && bottomSheetStore.isMinimized === false) {
+        bottomSheetStore.isMinimized = true
+    }
+}
 </script>

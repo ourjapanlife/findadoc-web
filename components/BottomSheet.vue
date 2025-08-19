@@ -5,7 +5,7 @@
     <Teleport to="body">
         <div
             ref="bottomSheet"
-            class="transition-[visibility] mx-1 z-0"
+            class="transition-[visibility]"
             :style="{
                 zIndex: zIndex,
                 visibility: showSheet ? 'visible' : 'hidden',
@@ -24,8 +24,8 @@
             </transition>
             <div
                 ref="bottomSheetContent"
-                class="fixed inset-0 flex flex-col rounded-t-2xl bg-primary-bg overflow-y-hidden
-                    w-full box-border pointer-events-auto"
+                class="fixed inset-0 flex flex-col mx-1 rounded-t-2xl bg-primary-bg overflow-y-hidden
+                    box-border pointer-events-auto"
                 :style="{
                     transform: `translate3d(0, ${translateValue}%, 0)`,
                     height: sheetHeight,

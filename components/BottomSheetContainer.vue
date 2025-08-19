@@ -15,7 +15,7 @@
             v-if="showCloseButton"
             data-testid="filters-panel-close-button"
             class="absolute top-4 right-2 px-2 py-.5 mr-2"
-            @click="minimizePanel()"
+            @click="resetSheet()"
         >
             <svg
                 class="stroke-primary/60"
@@ -64,33 +64,38 @@ onMounted(() => {
     bottomSheetRef.value?.setPosition(50)
 })
 
-watch(() => bottomSheetStore.bottomSheetType, () => {
-    switch (bottomSheetStore.bottomSheetType) {
+watch(() => bottomSheetStore.bottomSheetType, newType => {
+    switch (newType) {
         case BottomSheetType.SearchResultsList:
             bottomSheetRef.value?.setPosition(50)
             showCloseButton.value = false
+            bottomSheetStore.isMinimized = false
             break
         case BottomSheetType.FiltersPanel:
             // Set position to 100 when showing filters panel, since this is the main, focused content
             bottomSheetRef.value?.setPosition(90)
             showCloseButton.value = true
+            bottomSheetStore.isMinimized = false
             break
         case BottomSheetType.SearchResultDetails:
             // Set position to 75% when showing search result details, since this is the main, focused content
             // However, we still want to use the map and show where the result is located
             bottomSheetRef.value?.setPosition(75)
             showCloseButton.value = true
+            bottomSheetStore.isMinimized = false
             break
     }
 })
 
-//Functions
-const minimizePanel = () => {
-    bottomSheetStore.bottomSheetType = BottomSheetType.SearchResultsList
-    bottomSheetRef.value?.setPosition(20)
-}
+watch(() => bottomSheetStore.isMinimized, isMinimized => {
+    if (isMinimized) {
+        bottomSheetRef.value?.setPosition(20)
+    }
+})
 
-const resetPanel = () => {
-    bottomSheetStore.bottomSheetType = BottomSheetType.SearchResultsList
+// Functions
+const resetSheet = () => {
+    bottomSheetStore.isMinimized = false
+    bottomSheetStore.showBottomSheet(BottomSheetType.SearchResultsList)
 }
 </script>

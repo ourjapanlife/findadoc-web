@@ -10,6 +10,9 @@
             class="h-full w-full"
             :center="center"
             :zoom="9"
+            @bounds_changed="handleMapMovement"
+            @drag="handleMapMovement"
+            @zoom_changed="handleMapMovement"
         >
             <CustomMarker
                 v-for="(location, index) in searchResultsStore.searchResultsList"
@@ -53,6 +56,14 @@ const mapRef = ref(null)
 const runtimeConfig = useRuntimeConfig()
 
 const isMapReady = ref(false)
+
+// Emit events for map movement
+const emit = defineEmits(['map-moved'])
+
+// Handle map movement events
+const handleMapMovement = () => {
+    emit('map-moved')
+}
 
 onMounted(() => {
     // This Google Maps Library Component will try to render before the component and throw a JS error.

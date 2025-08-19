@@ -7,9 +7,10 @@ export enum BottomSheetType {
     SearchResultsList = 'SEARCH_RESULTS_LIST'
 }
 
-export const useBottomSheetStore = defineStore('bottom-sheet-store', () => {
+export const useBottomSheetStore = defineStore('bottomSheet', () => {
     const isOpen: Ref<boolean> = ref(false)
     const bottomSheetType: Ref<BottomSheetType> = ref(BottomSheetType.SearchResultsList)
+    const isMinimized: Ref<boolean> = ref(false)
 
     function showBottomSheet(type: BottomSheetType) {
         isOpen.value = true
@@ -20,5 +21,5 @@ export const useBottomSheetStore = defineStore('bottom-sheet-store', () => {
         isOpen.value = false
     }
 
-    return { isOpen, showBottomSheet, hideBottomSheet, bottomSheetType }
+    return { isOpen, showBottomSheet, hideBottomSheet, bottomSheetType, isMinimized }
 })
