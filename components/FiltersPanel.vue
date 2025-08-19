@@ -113,6 +113,7 @@ import { useLocationsStore } from '~/stores/locationsStore.js'
 import { useSpecialtiesStore } from '~/stores/specialtiesStore.js'
 import { useLocaleStore } from '~/stores/localeStore.js'
 import { type Specialty, Locale } from '~/typedefs/gqlTypes.js'
+import { BottomSheetType, useBottomSheetStore } from '~/stores/bottomSheetStore'
 
 const { t } = useI18n()
 
@@ -120,6 +121,7 @@ const localeStore = useLocaleStore()
 const locationsStore = useLocationsStore()
 const searchResultsStore = useSearchResultsStore()
 const specialtiesStore = useSpecialtiesStore()
+const bottomSheetStore = useBottomSheetStore()
 
 const locationDropdownOptions: Ref<LocationDropdownOption[]> = ref([])
 const specialtyDropdownOptions: Ref<DropdownOption[]> = ref([])
@@ -222,5 +224,6 @@ watch(selectedLanguages, () => {
 
 async function search() {
     await searchResultsStore.search()
+    bottomSheetStore.showBottomSheet(BottomSheetType.SearchResultsList)
 }
 </script>
