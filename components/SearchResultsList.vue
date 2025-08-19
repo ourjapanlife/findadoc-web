@@ -29,8 +29,10 @@
         <!-- Results List -->
         <div
             v-else-if="hasResults"
-            class="overflow-y-auto"
+            ref="resultsContainerRef"
             data-testid="search-results-list-container"
+            class="overflow-y-auto"
+            @scroll="handleScroll"
         >
             <div
                 id="searchResults"
@@ -91,10 +93,18 @@ const loadingStore = useLoadingStore()
 const bottomSheetStore = useBottomSheetStore()
 
 const hasResults = computed(() => resultsStore.searchResultsList.length > 0)
+const resultsContainerRef = ref<HTMLElement | null>(null)
+
+// Emit events
+const emit = defineEmits(['scrolled'])
 
 onMounted(() => {
     resultsStore.search()
 })
+
+function handleScroll() {
+    emit('scrolled')
+}
 
 function resultClicked(resultId: string) {
     resultsStore.setActiveSearchResult(resultId)

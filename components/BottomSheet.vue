@@ -91,7 +91,7 @@ const props = withDefaults(defineProps<IProps>(), {
     overlay: true,
     overlayColor: '#0000004D',
     initialPosition: 75,
-    customPositions: () => [75],
+    customPositions: () => [],
     transitionDuration: 0.5,
     overlayClickClose: true,
     canSwipe: true,
@@ -102,7 +102,7 @@ const props = withDefaults(defineProps<IProps>(), {
 /**
    * Bottom sheet emit interface
    */
-const emit = defineEmits(['opened', 'closed', 'dragging-up', 'dragging-down'])
+const emit = defineEmits(['opened', 'closed', 'dragging-up', 'dragging-down', 'dragging-content'])
 
 /**
    * Show or hide sheet
@@ -118,11 +118,6 @@ const translateValue = ref(100)
    * Flag to check if sheet is being dragged
    */
 const isDragging = ref(false)
-
-/**
-   * Content scrolled value
-   */
-const contentScroll = ref(0)
 
 /**
    * Return sheet height
@@ -169,90 +164,94 @@ function initHeight() {
    * @param type
    */
 
-const dragHandler = (event: HammerInput | IEvent, type: 'draghandle' | 'main') => {
-    if (props.canSwipe) {
-        isDragging.value = true
+const dragHandler = (event: HammerInput | IEvent, type: 'draghandle' | 'dragcontent') => {
+    if (!props.canSwipe) {
+        return
+    }
 
-        const preventDefault = (e: Event) => {
-            e.preventDefault()
-        }
+    // If the user is dragging the content, emit an event so the parent can handle it
+    // We don't handle content dragging or scrolling here because it can have nested scrollable content
+    if (type === 'dragcontent') {
+        emit('dragging-content')
+        return
+    }
 
-        const deltaYChange = event.deltaY
+    const preventDefault = (e: Event) => {
+        e.preventDefault()
+    }
 
-        // Triggers when the user "lets go" of the sheet
-        if ('isFinal' in event && event.isFinal) {
-            bottomSheetMain.value!.removeEventListener('touchmove', preventDefault)
+    isDragging.value = true
+    const deltaYChange = event.deltaY
 
-            if (type === 'main') {
-                // Check if content is scrolled
-                contentScroll.value = bottomSheetMain.value!.scrollTop
-            }
-            isDragging.value = false
+    // Triggers when the user "lets go" of the sheet
+    if ('isFinal' in event && event.isFinal) {
+        bottomSheetMain.value!.removeEventListener('touchmove', preventDefault)
 
-            const enabledPositions = props.customPositions
+        isDragging.value = false
 
-            // Move the sheet to the nearest enabledPosition
-            if (enabledPositions && enabledPositions.length) {
-                // Sort enabledPositions descending and invert the values. (translateValue is a negative value)
-                const invertedScreenPositions = enabledPositions.map(pos => 100 - pos)
-                // The lowest enabledPosition nearest the bottom of the screen
-                const minPosition = invertedScreenPositions[invertedScreenPositions.length - 1]
+        const enabledPositions = props.customPositions
 
-                // Find the nearest enabledPosition (closest value)
-                const nearest = invertedScreenPositions.reduce((prev, curr) =>
-                    Math.abs(curr - translateValue.value) < Math.abs(prev - translateValue.value) ? curr : prev
-                , invertedScreenPositions[0])
+        // Move the sheet to the nearest enabledPosition
+        if (enabledPositions && enabledPositions.length) {
+            // Sort enabledPositions descending and invert the values. (translateValue is a negative value)
+            const invertedScreenPositions = enabledPositions.map(pos => 100 - pos)
+            // The lowest enabledPosition nearest the bottom of the screen
+            const minPosition = invertedScreenPositions[invertedScreenPositions.length - 1]
 
-                // If translateValue is beyond the last enabledPosition, close()
-                if (translateValue.value > minPosition && props.canSwipeClose) {
-                    close()
-                } else {
-                    // Otherwise, move the sheet to the nearest enabledPosition
-                    translateValue.value = nearest
-                }
+            // Find the nearest enabledPosition (closest value)
+            const nearest = invertedScreenPositions.reduce((prev, curr) =>
+                Math.abs(curr - translateValue.value) < Math.abs(prev - translateValue.value) ? curr : prev
+            , invertedScreenPositions[0])
 
-                return
-            }
-
-            // If the sheet is dragged down, close it
-            if (translateValue.value >= 10 && props.canSwipeClose) {
+            // If translateValue is beyond the last enabledPosition, close()
+            if (translateValue.value > minPosition && props.canSwipeClose) {
                 close()
             } else {
-                // Otherwise, reset the sheet position to original height
-                translateValue.value = 0
+                // Otherwise, move the sheet to the nearest enabledPosition
+                translateValue.value = nearest
             }
 
             return
         }
 
-        if (event.type === 'panstart') {
-            //we want the transition to start from the current position, not the top of the sheet
-            originalTranslateValueBeforeDrag.value = translateValue.value
+        // If the sheet is dragged down, close it
+        if (translateValue.value >= 10 && props.canSwipeClose) {
+            close()
+        } else {
+            // Otherwise, reset the sheet position to original height
+            translateValue.value = 0
         }
 
-        // Not sure why the deltaYChange moves the sheet so intensely, so we divide it by 8 to make it more manageable
-        const newDeltaY = originalTranslateValueBeforeDrag.value + (deltaYChange / 8)
-        // We don't want the sheet to move outside of the screen
-        const isInScreenBounds = newDeltaY < 100 && newDeltaY > 0
+        return
+    }
 
-        if (isInScreenBounds) {
-            // If the content area is dragged up, move the sheet up
-            translateValue.value = newDeltaY
-        }
+    if (event.type === 'panstart') {
+        //we want the transition to start from the current position, not the top of the sheet
+        originalTranslateValueBeforeDrag.value = translateValue.value
+    }
 
-        //We don't want let the sheet move higher than the top of the screen
-        if (type === 'main' && event.type === 'panup' && contentScroll.value === 0) {
-            if ('cancelable' in event && event.cancelable) {
-                bottomSheetMain.value!.addEventListener('touchmove', preventDefault)
-            }
-        }
+    // Not sure why the deltaYChange moves the sheet so intensely, so we divide it by 8 to make it more manageable
+    const newDeltaY = originalTranslateValueBeforeDrag.value + (deltaYChange / 8)
+    // We don't want the sheet to move outside of the screen
+    const isInScreenBounds = newDeltaY < 100 && newDeltaY > 0
 
-        if ('type' in event && event.type === 'panup') {
-            emit('dragging-up')
+    if (isInScreenBounds) {
+        // If the content area is dragged up, move the sheet up
+        translateValue.value = newDeltaY
+    }
+
+    //We don't want let the sheet move higher than the top of the screen
+    if (event.type === 'panup') {
+        if ('cancelable' in event && event.cancelable) {
+            bottomSheetMain.value!.addEventListener('touchmove', preventDefault)
         }
-        if ('type' in event && event.type === 'pandown') {
-            emit('dragging-down')
-        }
+    }
+
+    if ('type' in event && event.type === 'panup') {
+        emit('dragging-up')
+    }
+    if ('type' in event && event.type === 'pandown') {
+        emit('dragging-down')
     }
 }
 
@@ -272,15 +271,15 @@ nextTick(() => {
         })
     }
 
-    // if (bottomSheetContent.value) {
-    //     const hammerMainInstance = new Hammer(bottomSheetContent.value, {
-    //         inputClass: Hammer.TouchMouseInput,
-    //         recognizers: [[Hammer.Pan, { direction: Hammer.DIRECTION_VERTICAL }]]
-    //     })
-    //     hammerMainInstance.on('panstart panup pandown panend', (e: HammerInput) => {
-    //         dragHandler(e, 'main')
-    //     })
-    // }
+    if (bottomSheetContent.value) {
+        const hammerMainInstance = new Hammer(bottomSheetContent.value, {
+            inputClass: Hammer.TouchMouseInput,
+            recognizers: [[Hammer.Pan, { direction: Hammer.DIRECTION_VERTICAL }]]
+        })
+        hammerMainInstance.on('panstart panup pandown panend', (e: HammerInput) => {
+            dragHandler(e, 'dragcontent')
+        })
+    }
 })
 
 /**

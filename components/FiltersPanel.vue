@@ -13,10 +13,10 @@
                 class="grid-cols-3 mx-4"
             >
                 <!-- Specialty dropdown -->
-                <div class="search-specialty col-span-1 inline-block w-full py-4">
+                <div class="search-specialty col-span-1 w-full py-4">
                     <select
                         v-model="selectedSpecialties"
-                        class="px-1 py-1.5 border-2 border-primary/60 rounded-md text-primary-text
+                        class="w-full px-1 py-1.5 border-2 border-primary/60 rounded-md text-primary-text
                                     drop-shadow-md bg-primary-bg/10 transition-all"
                     >
                         <option
@@ -37,10 +37,10 @@
                     </select>
                 </div>
                 <!-- Location dropdown -->
-                <div class="search-location col-span-1 inline-block w-full py-4">
+                <div class="search-location col-span-2 py-4">
                     <select
                         v-model="selectedLocations"
-                        class="px-1 py-1.5 border-2 border-primary/60 rounded-md text-primary-text
+                        class="w-full px-1 py-1.5 border-2 border-primary/60 rounded-md text-primary-text
                                     drop-shadow-md bg-primary-bg/10 transition-all"
                     >
                         <option
@@ -61,10 +61,10 @@
                     </select>
                 </div>
                 <!-- Language dropdown -->
-                <div class="search-language col-span-1 inline-block w-full py-4">
+                <div class="search-language col-span-1 w-full py-4">
                     <select
                         v-model="selectedLanguages"
-                        class="px-1 py-1.5 border-2 border-primary/60 rounded-md text-primary-text
+                        class="w-full px-1 py-1.5 border-2 border-primary/60 rounded-md text-primary-text
                                     drop-shadow-md bg-primary-bg/10 transition-all"
                         data-testid="search-bar-language"
                     >

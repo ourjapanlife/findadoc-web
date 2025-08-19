@@ -9,6 +9,7 @@
         :z-index="0"
         :initial-position="50"
         :custom-positions="[20, 50, 75, 90]"
+        @dragging-content="handleDraggingContent"
     >
         <!-- Close button -->
         <button
@@ -39,7 +40,10 @@
         <!-- We want to share the same bottom sheet to keep the UX smooth -->
         <!-- We use v-show here for components that we don't re-running queries every time  -->
         <SearchResultDetails v-if="bottomSheetStore.bottomSheetType === BottomSheetType.SearchResultDetails" />
-        <SearchResultsList v-show="bottomSheetStore.bottomSheetType === BottomSheetType.SearchResultsList" />
+        <SearchResultsList
+            v-show="bottomSheetStore.bottomSheetType === BottomSheetType.SearchResultsList"
+            @scrolled="handleDraggingContent"
+        />
         <FiltersPanel v-show="bottomSheetStore.bottomSheetType === BottomSheetType.FiltersPanel" />
     </BottomSheet>
 </template>
@@ -57,23 +61,25 @@ const bottomSheetStore = useBottomSheetStore()
 // Refs
 const bottomSheetRef = ref<typeof BottomSheet | null>(null)
 const showCloseButton = ref(false)
+const beforeMinimizedPosition = ref(75)
 
 //Vue Event Handlers
 onMounted(() => {
     bottomSheetRef.value?.open()
-    bottomSheetRef.value?.setPosition(50)
 })
 
 watch(() => bottomSheetStore.bottomSheetType, newType => {
     switch (newType) {
         case BottomSheetType.SearchResultsList:
             bottomSheetRef.value?.setPosition(50)
+            beforeMinimizedPosition.value = 50
             showCloseButton.value = false
             bottomSheetStore.isMinimized = false
             break
         case BottomSheetType.FiltersPanel:
             // Set position to 100 when showing filters panel, since this is the main, focused content
             bottomSheetRef.value?.setPosition(90)
+            beforeMinimizedPosition.value = 90
             showCloseButton.value = true
             bottomSheetStore.isMinimized = false
             break
@@ -81,6 +87,7 @@ watch(() => bottomSheetStore.bottomSheetType, newType => {
             // Set position to 75% when showing search result details, since this is the main, focused content
             // However, we still want to use the map and show where the result is located
             bottomSheetRef.value?.setPosition(75)
+            beforeMinimizedPosition.value = 75
             showCloseButton.value = true
             bottomSheetStore.isMinimized = false
             break
@@ -90,12 +97,20 @@ watch(() => bottomSheetStore.bottomSheetType, newType => {
 watch(() => bottomSheetStore.isMinimized, isMinimized => {
     if (isMinimized) {
         bottomSheetRef.value?.setPosition(20)
+    } else {
+        bottomSheetRef.value?.setPosition(beforeMinimizedPosition.value)
     }
 })
 
 // Functions
 const resetSheet = () => {
-    bottomSheetStore.isMinimized = false
     bottomSheetStore.showBottomSheet(BottomSheetType.SearchResultsList)
+}
+
+const handleDraggingContent = () => {
+    // If the user is dragging up on minimized sheet, expand the sheet so they can see more
+    bottomSheetStore.isMinimized = false
+    bottomSheetRef.value?.setPosition(75)
+    beforeMinimizedPosition.value = 75
 }
 </script>

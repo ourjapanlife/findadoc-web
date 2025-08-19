@@ -53,7 +53,7 @@ const bottomSheetStore = useBottomSheetStore()
 
 // Handle map movement by calling the store's minimize function
 const handleMapMoved = () => {
-    if (bottomSheetStore.bottomSheetType === BottomSheetType.SearchResultsList && bottomSheetStore.isMinimized === false) {
+    if (bottomSheetStore.isMinimized === false) {
         bottomSheetStore.isMinimized = true
     }
 }
