@@ -7,7 +7,7 @@
             <div
                 id="mobile-site-icon"
                 class="landscape:hidden flex justify-between items-start font-semibold text-xl
-                group transition-colors pr-2 bg-primary-inverted/10 rounded-2xl"
+                group transition-colors pr-2 rounded-2xl"
             >
                 <SVGSiteLogo
                     role="img"
