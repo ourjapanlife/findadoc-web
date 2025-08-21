@@ -1,20 +1,20 @@
-import { defineStore } from 'pinia'
-import { ref, type Ref, reactive } from 'vue'
 import { gql } from 'graphql-request'
+import { defineStore } from 'pinia'
+import { reactive, ref, type Ref } from 'vue'
 import { fetchFacilitiesWithCount } from '../utils/graphqlHepers'
 import type {
     Facility,
+    FacilitySearchFilters,
     HealthcareProfessional,
     Mutation,
     MutationCreateFacilityArgs,
     MutationDeleteFacilityArgs,
     MutationUpdateFacilityArgs,
-    Relationship,
-    FacilitySearchFilters
+    Relationship
 } from '~/typedefs/gqlTypes'
-import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql'
 import type { ServerResponse } from '~/typedefs/serverResponse'
 import { arraysAreEqual } from '~/utils/arrayUtils'
+import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql'
 
 export const useFacilitiesStore = defineStore('facilitiesStore', () => {
     const facilityData: Ref<Facility[]> = ref([])
@@ -27,6 +27,20 @@ export const useFacilitiesStore = defineStore('facilitiesStore', () => {
     const itemsPerPage: Ref<number> = ref(25)
     const hasNextPage = computed(() => currentOffset.value + itemsPerPage.value < totalFacilitiesCount.value)
     const hasPrevPage = computed(() => currentOffset.value > 0)
+
+    // Error states
+    const errorMessage: Ref<string> = ref('')
+    const validationErrors: Ref<string[]> = ref([])
+    const clearErrors = () => {
+        errorMessage.value = ''
+        validationErrors.value = []
+    }
+    const setError = (error: string | Error) => {
+        const message = typeof error === 'string' ? error : error.message
+        errorMessage.value = message
+        console.error('Facilities store error:', error)
+    }
+
     // This reactive object is used to share data changes of the updated facility or submission across the components
     const facilitySectionFields = reactive({
         // contactFields
@@ -83,83 +97,107 @@ export const useFacilitiesStore = defineStore('facilitiesStore', () => {
     > = ref([])
 
     function setSelectedFacilityData(facilityId: string) {
-        selectedFacilityId.value = facilityId
-        selectedFacilityData.value = facilityData.value.find(
-            (facility: Facility) => facility.id === facilityId
-        )
+        try {
+            selectedFacilityId.value = facilityId
+            selectedFacilityData.value = facilityData.value.find(
+                (facility: Facility) => facility.id === facilityId
+            )
+            if (!selectedFacilityData.value) {
+                console.warn(`Facility with ID ${facilityId} cannot be found in current data.`)
+            }
+        } catch (error) {
+            setError(`Failed to set selected facility data: ${error}`)
+        }
     }
 
-    // eslint-disable-next-line complexity
     function initializeFacilitySectionValues(data: Facility | undefined) {
-        if (!data) return
+        try {
+            if (!data) {
+                resetFacilitySectionFields()
+                return
+            }
 
-        facilitySectionFields.nameEn = data.nameEn
-        facilitySectionFields.nameJa = data.nameJa
-        facilitySectionFields.phone = data?.contact?.phone ?? ''
-        facilitySectionFields.email = data?.contact?.email || undefined
-        facilitySectionFields.website = data?.contact?.website || undefined
+            // safely access properties of data, checks for undefined data values
+            facilitySectionFields.nameEn = data.nameEn || ''
+            facilitySectionFields.nameJa = data.nameJa || ''
+            facilitySectionFields.phone = data.contact?.phone || ''
+            facilitySectionFields.email = data.contact?.email || undefined
+            facilitySectionFields.website = data.contact?.website || undefined
 
-        facilitySectionFields.postalCode = data.contact?.address.postalCode ?? ''
-        facilitySectionFields.prefectureEn = data?.contact?.address?.prefectureEn ?? ''
-        facilitySectionFields.cityEn = data.contact?.address?.cityEn ?? ''
-        facilitySectionFields.addressLine1En = data?.contact?.address?.addressLine1En ?? ''
-        facilitySectionFields.addressLine2En = data?.contact?.address?.addressLine2En ?? ''
-        facilitySectionFields.prefectureJa = data?.contact?.address?.prefectureJa ?? ''
-        facilitySectionFields.cityJa = data?.contact?.address?.cityJa ?? ''
-        facilitySectionFields.addressLine1Ja = data?.contact?.address?.addressLine1Ja ?? ''
-        facilitySectionFields.addressLine2Ja = data?.contact?.address?.addressLine2Ja ?? ''
-        facilitySectionFields.googlemapsURL = data?.contact?.googleMapsUrl ?? ''
+            const address = data.contact?.address
+            facilitySectionFields.postalCode = address?.postalCode || ''
+            facilitySectionFields.prefectureEn = address?.prefectureEn || ''
+            facilitySectionFields.cityEn = address?.cityEn || ''
+            facilitySectionFields.addressLine1En = address?.addressLine1En || ''
+            facilitySectionFields.addressLine2En = address?.addressLine2En || ''
+            facilitySectionFields.prefectureJa = address?.prefectureJa || ''
+            facilitySectionFields.cityJa = address?.cityJa || ''
+            facilitySectionFields.addressLine1Ja = address?.addressLine1Ja || ''
+            facilitySectionFields.addressLine2Ja = address?.addressLine2Ja || ''
 
-        facilitySectionFields.healthcareProfessionalIds = data.healthcareProfessionalIds ?? []
-        facilitySectionFields.mapLatitude = data.mapLatitude?.toString() ?? ''
-        facilitySectionFields.mapLongitude = data.mapLongitude?.toString() ?? ''
+            facilitySectionFields.googlemapsURL = data.contact?.googleMapsUrl || ''
+            facilitySectionFields.healthcareProfessionalIds = data.healthcareProfessionalIds || []
+            facilitySectionFields.mapLatitude = data.mapLatitude?.toString() || ''
+            facilitySectionFields.mapLongitude = data.mapLongitude?.toString() || ''
+        } catch (error) {
+            setError(`Failed to initialize facility section values: ${error}`)
+            resetFacilitySectionFields()
+        }
     }
 
     function resetFacilitySectionFields() {
-        facilitySectionFields.nameEn = ''
-        facilitySectionFields.nameJa = ''
-        facilitySectionFields.phone = ''
-        facilitySectionFields.website = undefined
-        facilitySectionFields.email = undefined
-
-        facilitySectionFields.postalCode = ''
-        facilitySectionFields.prefectureEn = ''
-        facilitySectionFields.cityEn = ''
-        facilitySectionFields.addressLine1En = ''
-        facilitySectionFields.addressLine2En = ''
-        facilitySectionFields.prefectureJa = ''
-        facilitySectionFields.cityJa = ''
-        facilitySectionFields.addressLine1Ja = ''
-        facilitySectionFields.addressLine2Ja = ''
-
-        facilitySectionFields.googlemapsURL = ''
-        facilitySectionFields.mapLatitude = ''
-        facilitySectionFields.mapLongitude = ''
-
-        facilitySectionFields.healthcareProfessionalIds = []
-        facilitySectionFields.healthProfessionalsRelations = []
+        Object.assign(facilitySectionFields, {
+            nameEn: '',
+            nameJa: '',
+            phone: '',
+            website: undefined,
+            email: undefined,
+            postalCode: '',
+            prefectureEn: '',
+            cityEn: '',
+            addressLine1En: '',
+            addressLine2En: '',
+            prefectureJa: '',
+            cityJa: '',
+            addressLine1Ja: '',
+            addressLine2Ja: '',
+            googlemapsURL: '',
+            mapLatitude: '',
+            mapLongitude: '',
+            healthcareProfessionalIds: [],
+            healthProfessionalsRelations: []
+        })
     }
 
-    async function getFacilities() {
-        const filters: FacilitySearchFilters = {
-            offset: currentOffset.value,
-            limit: itemsPerPage.value
-        }
+    async function getFacilities(): Promise<boolean> {
+        clearErrors()
+
         try {
-            // Call the utility function to fetch the paginated data and the total count.
+            const filters: FacilitySearchFilters = {
+                offset: currentOffset.value,
+                limit: itemsPerPage.value
+            }
+
             const { filteredSearchResults, totalCount } = await fetchFacilitiesWithCount(filters)
+
+            if (!Array.isArray(filteredSearchResults)) {
+                throw new Error('Invalid response format: expected array of facilities')
+            }
+
             facilityData.value = filteredSearchResults
-            totalFacilitiesCount.value = totalCount
+            totalFacilitiesCount.value = totalCount || 0
+
+            return true
         } catch (error) {
-            console.error(`Error fetching facilities: ${JSON.stringify(error)}`)
-            // eslint-disable-next-line no-alert
-            alert('Error during loading data of Facility, try again')
+            setError(`Failed to fetch facilities: ${error}`)
             facilityData.value = []
             totalFacilitiesCount.value = 0
+            return false
         }
     }
 
     function setOffset(newOffset: number) {
+        // TODO: new offset should not be negative?
         currentOffset.value = newOffset
         getFacilities()
     }
