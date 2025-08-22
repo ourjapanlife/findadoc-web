@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref, type Ref, reactive } from 'vue'
 import { gql } from 'graphql-request'
-import { fetchFacilitiesWithCount } from '../utils/graphqlHepers'
+import { fetchFacilitiesWithCount } from '../utils/graphqlHelpers'
 import type {
     Facility,
     HealthcareProfessional,
