@@ -1,28 +1,17 @@
 <template>
     <div
-        class="h-full flex flex-col"
+        class="flex flex-col bg-primary-bg overflow-y-auto mx-2"
     >
-        <div class="results-header flex flex-row ml-9 mr-5 mb-6 pt-5">
-            <span class="flex-1 w-1/2 font-bold self-center">
-                {{ t('searchResultsList.doctorsNearby') }}
-            </span>
-            <button
-                role="button"
-                aria="filters"
-                class="filters py-1 px-2 border border-primary/40 rounded-xl flex flex-row flex-0
-                group hover:bg-primary/50 hover:border-primary/10 hover:transition-all"
-            >
-                <SVGHamburgerListIcon
-                    role="img"
-                    alt="hamburger menu icon"
-                    title="hamburger list icon"
-                    class="fill-primary/50 h-5 w-5 self-center group-hover:fill-primary-text-inverted/50"
-                />
-                <span class="text-primary-text/50 pl-1 font-bold self-center group-hover:text-primary-text-inverted/50">
-                    {{ t('searchResultsList.filters') }}
-                </span>
-            </button>
+        <!-- Search Filters Bar -->
+        <div
+            data-testid="searchbar"
+            class="results-header flex flex-col justify-center grow"
+        >
+            <SearchBar class="mx-4" />
         </div>
+        <!-- Divider line -->
+        <div class="h-px border border-accent/10 my-2 mx-auto w-20" />
+        <!-- Loading List Placeholder -->
         <div v-if="loadingStore.isLoading">
             <div class="h-full flex justify-center items-center w-full">
                 <div class="flex flex-col justify-center align-middle">
@@ -36,10 +25,13 @@
                 </div>
             </div>
         </div>
+        <!-- Results List -->
         <div
             v-else-if="hasResults"
-            class="overflow-y-auto"
+            ref="resultsContainerRef"
             data-testid="search-results-list-container"
+            class="overflow-y-auto"
+            @scroll="handleScroll"
         >
             <div
                 id="searchResults"
@@ -50,11 +42,11 @@
                     :key="index"
                     class="results-list flex flex-col"
                     data-testid="search-results-list"
-                    @click="resultsStore.setActiveSearchResult(searchResult.professional.id)"
+                    @click="resultClicked(searchResult.professional.id)"
                 >
                     <div
-                        class="flex-1 h-24 w-6/8 border-b-2 border-primary/20 p-3
-                        hover:border-transparent hover:bg-primary/5 transition-all hover:cursor-pointer"
+                        class="flex flex-col my-4 mx-4 py-1 min-h-36 rounded-sm border-t-2 border-primary/10
+                    bg-primary-bg hover:bg-primary-hover/50 drop-shadow-md transition-all cursor-pointer"
                     >
                         <SearchResultsListItem
                             :name="getLocalizedName(searchResult.professional.names)"
@@ -87,22 +79,36 @@ import { computed, onMounted } from 'vue'
 import { useSearchResultsStore } from '../stores/searchResultsStore'
 import { useLocaleStore } from '../stores/localeStore'
 import { useLoadingStore } from '../stores/loadingStore'
+import { useBottomSheetStore } from '../stores/bottomSheetStore'
 import { Locale } from '~/typedefs/gqlTypes.js'
 import SVGLoadingIcon from '~/assets/icons/loading.svg'
 import SVGNoSearchResults from '~/assets/icons/no-search-results-graphic.svg'
-import SVGHamburgerListIcon from '~/assets/icons/hamburger-list-icon.svg'
 
 const { t } = useI18n()
 
 const resultsStore = useSearchResultsStore()
 const localeStore = useLocaleStore()
 const loadingStore = useLoadingStore()
+const bottomSheetStore = useBottomSheetStore()
+
+const hasResults = computed(() => resultsStore.searchResultsList.length > 0)
+const resultsContainerRef = ref<HTMLElement | null>(null)
+
+// Emit events
+const emit = defineEmits(['scrolled'])
 
 onMounted(() => {
     resultsStore.search()
 })
 
-const hasResults = computed(() => resultsStore.searchResultsList.length > 0)
+function handleScroll() {
+    emit('scrolled')
+}
+
+function resultClicked(resultId: string) {
+    resultsStore.setActiveSearchResult(resultId)
+    bottomSheetStore.showBottomSheet(BottomSheetType.SearchResultDetails)
+}
 
 function getLocalizedName(
   names: Array<{ locale: string, firstName: string, lastName: string }>
