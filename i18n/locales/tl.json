@@ -82,7 +82,9 @@
     "selectLocation": "Pumili ng lokasyon...",
     "allLocations": "Lahat ng Lokasyon",
     "allSpecialties": "Lahat ng Espesyalidad",
-    "search": "Maghanap"
+    "search": "Maghanap",
+    "resultsFound": "Natagpuan ang {count} na resulta",
+    "searchAndFilterDoctors": "Maghanap at mag-filter ng mga doktor"
   },
   "searchResultsList": {
     "doctorsNearby": "Mga kalapit na Doktor",

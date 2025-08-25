@@ -7,7 +7,6 @@
             data-testid="searchbar"
             class="results-header flex flex-col justify-center grow"
         >
-            <SearchSelection class="" />
             <SearchBar class="mx-4" />
         </div>
         <!-- Divider line -->

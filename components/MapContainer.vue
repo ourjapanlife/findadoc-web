@@ -104,7 +104,7 @@ const recenterMap = () => {
         return
 
     const center = calculateCenter(allCoordinates)
-    setLocation(center.lat, center.lng)
+    setLocation(center.lat - 0.10, center.lng)
 
     // Calculate and set appropriate zoom level
     currentZoom.value = calculateZoomLevel(allCoordinates)

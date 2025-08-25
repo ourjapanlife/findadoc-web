@@ -1,6 +1,6 @@
 <template>
     <div class="my-2">
-        <!-- Search Bar -->
+        <!-- Search Button -->
         <button
             class="flex w-full mb-2 py-1 rounded border-1 border-primary/20
                     drop-shadow-md text-xs
@@ -10,8 +10,7 @@
             data-testid="filters-panel-summary"
             @click="openFiltersPanel()"
         >
-            <!-- Selected Specialties -->
-            <div class="search-specialty flex pl-4">
+            <div class="flex pl-4">
                 <FiltersIcon
                     role="img"
                     alt="filters icon"
@@ -19,73 +18,38 @@
                     class="filters-icon w-6 mr-1 fill-accent"
                 />
                 <span class="block text-start text-lg pl-2 text-accent">
-                    Search and filter doctors
+                    {{ t('searchBar.searchAndFilterDoctors') }}
                 </span>
             </div>
         </button>
-        <!-- Alternative Search Bar -->
-        <div class="hidden">
-            <button
-                class="flex flex-col my-2 py-1 rounded w-full border-2 border-primary/20
-                    drop-shadow-md text-primary-text-muted text-xs
-                    bg-primary-bg hover:bg-primary-hover/50 transition-all
-                    cursor-pointer"
-                alt="filters panel"
-                data-testid="filters-panel-summary"
-                @click="openFiltersPanel()"
-            >
-                <!-- <Multiselect
-                v-model="selectedSearchFilters"
-                :multiple="true"
-                mode="tags"
-                :close-on-select="false"
-                :clear-on-select="false"
-                :preserve-search="true"
-                placeholder="Select specialties"
-                label="displayText"
-                track-by="code"
-                class="w-full"
-            /> -->
-                <!-- Selected Specialties -->
-                <div class="search-specialty">
-                    <span class="block text-start pl-2">
-                        • {{ selectedSpecialtyText }}
-                    </span>
-                </div>
-            </button>
-            <button
-                class="flex flex-col my-2 py-1 rounded w-full border-2 border-primary/20
-                    drop-shadow-md text-primary-text-muted text-xs
-                    bg-primary-bg hover:bg-primary-hover/50 transition-all
-                    cursor-pointer"
-                alt="filters panel"
-                data-testid="filters-panel-summary"
-                @click="openFiltersPanel()"
-            >
-                <!-- Selected Locations -->
-                <div class="search-location">
-                    <span class="block text-start pl-2">
-                        • {{ selectedLocationText }}
-                    </span>
-                </div>
-            </button>
-            <button
-                class="flex flex-col my-2 py-1 rounded w-full border-2 border-primary/20
-                    drop-shadow-md text-primary-text-muted text-xs
-                    bg-primary-bg hover:bg-primary-hover/50 transition-all
-                    cursor-pointer"
-                alt="filters panel"
-                data-testid="filters-panel-summary"
-                @click="openFiltersPanel()"
-            >
-                <!-- Selected Languages -->
-                <div class="search-language">
-                    <span class="block text-start pl-2">
-                        • {{ selectedLanguageText }}
-                    </span>
-                </div>
-            </button>
+        <!-- Search Bar -->
+        <div
+            class="flex justify-center py-2 rounded-b w-full border-1 border-primary/20 text-xs text-accent
+                    bg-primary-bg transition-all"
+        >
+            <!-- Selected Languages -->
+            <div class="search-language">
+                <span class="block text-start pl-2 max-w-1/3 overflow-hidden text-ellipsis whitespace-nowrap">
+                    {{ selectedLanguageText }}
+                </span>
+            </div>
+            <!-- Selected Specialties -->
+            <div class="search-specialty">
+                <span class="block text-start pl-2 max-w-1/3 overflow-hidden text-ellipsis whitespace-nowrap">
+                    • {{ selectedSpecialtyText }}
+                </span>
+            </div>
+            <!-- Selected Locations -->
+            <div class="search-location">
+                <span class="block text-start pl-2 max-w-1/3 overflow-hidden text-ellipsis whitespace-nowrap">
+                    • {{ selectedLocationText }}
+                </span>
+            </div>
         </div>
+        <!-- Results count -->
+        <span class="text-sm text-center block mb-1 text-primary-text-muted">
+            {{ t('searchBar.resultsFound', searchResultsStore.totalResults) }}
+        </span>
     </div>
 </template>
 

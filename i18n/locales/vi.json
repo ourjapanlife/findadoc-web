@@ -82,7 +82,9 @@
     "selectLocation": "Chọn vị trí...",
     "allLocations": "Tất cả địa điểm",
     "allSpecialties": "Tất cả chuyên khoa",
-    "search": "Tìm kiếm"
+    "search": "Tìm kiếm",
+    "resultsFound": "Đã tìm thấy {count} kết quả",
+    "searchAndFilterDoctors": "Tìm kiếm và lọc bác sĩ"
   },
   "searchResultsList": {
     "doctorsNearby": "Bác sĩ gần đây",
