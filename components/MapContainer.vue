@@ -9,7 +9,7 @@
             :disable-default-ui="true"
             class="h-full w-full"
             :center="currentLocation"
-            :zoom="9"
+            :zoom="currentZoom"
             @drag="handleMapMovement"
             @zoom_changed="handleMapMovement"
         >
@@ -42,6 +42,7 @@ import { BottomSheetType, useBottomSheetStore } from '~/stores/bottomSheetStore'
 
 const defaultLocation = { lat: 35.6804, lng: 139.769 }
 const currentLocation = ref(defaultLocation)
+const currentZoom = ref(9)
 
 const searchResultsStore = useSearchResultsStore()
 const mapRef = ref(null)
@@ -82,7 +83,11 @@ watch(() => searchResultsStore.activeResult, newActiveResult => {
     }
 })
 
-// Handle map movement events
+// Center map when search results list changes
+watch(() => searchResultsStore.searchResultsList, () => {
+    recenterMap()
+}, { deep: true })
+
 const handleMapMovement = () => {
     emit('map-moved')
 }
@@ -91,5 +96,66 @@ const setLocation = (lat: number, lng: number) => {
     const locationExists = lng && lat
 
     currentLocation.value = locationExists ? { lat, lng } : defaultLocation
+}
+
+const recenterMap = () => {
+    const allCoordinates = getAllCurrentCoordinates()
+    if (!allCoordinates || !allCoordinates.length)
+        return
+
+    const center = calculateCenter(allCoordinates)
+    setLocation(center.lat, center.lng)
+
+    // Calculate and set appropriate zoom level
+    currentZoom.value = calculateZoomLevel(allCoordinates)
+}
+
+const getAllCurrentCoordinates = () => {
+    const currentLocations = searchResultsStore.searchResultsList
+    if (!currentLocations || !currentLocations.length)
+        return
+
+    const allCoordinates = currentLocations
+        .map(result => result.facilities[0])
+        .filter(facility => facility?.mapLatitude && facility?.mapLongitude)
+        .map(facility => ({
+            lat: facility.mapLatitude!,
+            lng: facility.mapLongitude!
+        }))
+
+    return allCoordinates
+}
+
+const calculateCenter = (coordinates: { lat: number, lng: number }[]) => {
+    if (coordinates.length === 0) return defaultLocation
+    if (coordinates.length === 1) return coordinates[0]
+
+    const avgLat = coordinates.reduce((sum, coord) => sum + coord.lat, 0) / coordinates.length
+    const avgLng = coordinates.reduce((sum, coord) => sum + coord.lng, 0) / coordinates.length
+
+    return { lat: avgLat, lng: avgLng }
+}
+
+const calculateZoomLevel = (coordinates: { lat: number, lng: number }[]) => {
+    if (coordinates.length <= 1) return 12
+
+    const allLats = coordinates.map(coord => coord.lat)
+    const allLngs = coordinates.map(coord => coord.lng)
+
+    const latDiff = Math.max(...allLats) - Math.min(...allLats)
+    const lngDiff = Math.max(...allLngs) - Math.min(...allLngs)
+
+    const maxDiff = Math.max(latDiff, lngDiff)
+
+    // Zoom levels based on coordinate span
+    switch (true) {
+        case maxDiff > 5: return 6
+        case maxDiff > 2: return 7
+        case maxDiff > 1: return 8
+        case maxDiff > 0.5: return 9
+        case maxDiff > 0.1: return 10
+        case maxDiff > 0.05: return 11
+        default: return 12
+    }
 }
 </script>
