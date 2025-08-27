@@ -78,8 +78,8 @@ watch(() => bottomSheetStore.bottomSheetType, newType => {
             break
         case BottomSheetType.FiltersPanel:
             // Set position to 100 when showing filters panel, since this is the main, focused content
-            bottomSheetRef.value?.setPosition(10)
-            beforeMinimizedPosition.value = 10
+            bottomSheetRef.value?.setPosition(25)
+            beforeMinimizedPosition.value = 25
             showCloseButton.value = true
             bottomSheetStore.isMinimized = false
             break
