@@ -176,6 +176,7 @@ const dragHandler = (event: HammerInput | IEvent, type: 'draghandle' | 'dragcont
         // If the user is dragging the content, emit an event so the parent can handle it
         // We don't handle content dragging or scrolling here because it can have nested scrollable content
         emit('dragging-content')
+        return
     }
 
     if ('type' in event && event.type === 'panup') {
