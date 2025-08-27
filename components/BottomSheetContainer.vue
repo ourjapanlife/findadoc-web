@@ -8,7 +8,7 @@
         :can-swipe-close="false"
         :z-index="0"
         :initial-position="50"
-        :custom-positions="[20, 50, 75, 90]"
+        :custom-positions="[80, 50, 25]"
         @dragging-content="handleDraggingContent"
     >
         <!-- Close button -->
@@ -78,16 +78,16 @@ watch(() => bottomSheetStore.bottomSheetType, newType => {
             break
         case BottomSheetType.FiltersPanel:
             // Set position to 100 when showing filters panel, since this is the main, focused content
-            bottomSheetRef.value?.setPosition(90)
-            beforeMinimizedPosition.value = 90
+            bottomSheetRef.value?.setPosition(10)
+            beforeMinimizedPosition.value = 10
             showCloseButton.value = true
             bottomSheetStore.isMinimized = false
             break
         case BottomSheetType.SearchResultDetails:
             // Set position to 75% when showing search result details, since this is the main, focused content
             // However, we still want to use the map and show where the result is located
-            bottomSheetRef.value?.setPosition(75)
-            beforeMinimizedPosition.value = 75
+            bottomSheetRef.value?.setPosition(25)
+            beforeMinimizedPosition.value = 25
             showCloseButton.value = true
             bottomSheetStore.isMinimized = false
             break
@@ -96,7 +96,7 @@ watch(() => bottomSheetStore.bottomSheetType, newType => {
 
 watch(() => bottomSheetStore.isMinimized, isMinimized => {
     if (isMinimized) {
-        bottomSheetRef.value?.setPosition(20)
+        bottomSheetRef.value?.setPosition(80)
     } else {
         bottomSheetRef.value?.setPosition(beforeMinimizedPosition.value)
     }
@@ -110,7 +110,7 @@ const resetSheet = () => {
 const handleDraggingContent = () => {
     // If the user is dragging up on minimized sheet, expand the sheet so they can see more
     bottomSheetStore.isMinimized = false
-    bottomSheetRef.value?.setPosition(75)
-    beforeMinimizedPosition.value = 75
+    beforeMinimizedPosition.value = 25
+    bottomSheetRef.value?.setPosition(25)
 }
 </script>
