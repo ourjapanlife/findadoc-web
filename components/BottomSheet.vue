@@ -40,7 +40,7 @@
                 </header>
                 <main
                     ref="bottomSheetMain"
-                    class="flex flex-col overflow-y-scroll box-border touch-auto"
+                    class="flex flex-col grow overflow-y-scroll box-border touch-auto"
                 >
                     <slot />
                 </main>

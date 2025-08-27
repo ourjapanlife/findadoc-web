@@ -1,105 +1,101 @@
 <template>
+    <!-- Filters panel -->
     <div
+        class="flex flex-col justify-between h-[65vh] w-full pt-6"
         data-testid="filters-panel-container"
-        class="flex w-full"
     >
-        <!-- Filters panel -->
+        <!-- Search fields -->
         <div
-            class="flex flex-col justify-between w-full h-[80vh] pt-6 pb-2"
+            id="search-fields"
+            class="grid-cols-3 mx-4"
         >
-            <!-- Search fields -->
-            <div
-                id="search-fields"
-                class="grid-cols-3 mx-4"
-            >
-                <!-- Specialty dropdown -->
-                <div class="search-specialty col-span-1 w-full py-4">
-                    <select
-                        v-model="selectedSpecialties"
-                        class="w-full px-1 py-1.5 border-2 border-primary/60 rounded-md text-primary-text
+            <!-- Specialty dropdown -->
+            <div class="search-specialty col-span-1 w-full py-4">
+                <select
+                    v-model="selectedSpecialties"
+                    class="w-full px-1 py-1.5 border-2 border-primary/60 rounded-md text-primary-text
                                     drop-shadow-md bg-primary-bg/10 transition-all"
+                >
+                    <option
+                        value=""
+                        class="text-primary-text-muted hidden"
+                        disabled
+                        selected
                     >
-                        <option
-                            value=""
-                            class="text-primary-text-muted hidden"
-                            disabled
-                            selected
-                        >
-                            {{ t('searchBar.selectSpecialty') }}
-                        </option>
-                        <option
-                            v-for="(specialty) in specialtyDropdownOptions"
-                            :key="specialty.value"
-                            :value="specialty.value"
-                        >
-                            {{ specialty.displayText }}
-                        </option>
-                    </select>
-                </div>
-                <!-- Location dropdown -->
-                <div class="search-location col-span-2 py-4">
-                    <select
-                        v-model="selectedLocations"
-                        class="w-full px-1 py-1.5 border-2 border-primary/60 rounded-md text-primary-text
-                                    drop-shadow-md bg-primary-bg/10 transition-all"
+                        {{ t('searchBar.selectSpecialty') }}
+                    </option>
+                    <option
+                        v-for="(specialty) in specialtyDropdownOptions"
+                        :key="specialty.value"
+                        :value="specialty.value"
                     >
-                        <option
-                            value=""
-                            class="text-primary-text-muted hidden"
-                            disabled
-                            selected
-                        >
-                            {{ t('searchBar.selectLocation') }}
-                        </option>
-                        <option
-                            v-for="(cityDetails) in locationDropdownOptions"
-                            :key="cityDetails.value"
-                            :value="cityDetails.value"
-                        >
-                            {{ cityDetails.displayText }}: ({{ cityDetails.cityOccurrenceCount }})
-                        </option>
-                    </select>
-                </div>
-                <!-- Language dropdown -->
-                <div class="search-language col-span-1 w-full py-4">
-                    <select
-                        v-model="selectedLanguages"
-                        class="w-full px-1 py-1.5 border-2 border-primary/60 rounded-md text-primary-text
-                                    drop-shadow-md bg-primary-bg/10 transition-all"
-                        data-testid="search-bar-language"
-                    >
-                        <option
-                            v-for="(language) in languageDropdownOptions"
-                            :key="language.value"
-                            :value="language.value"
-                        >
-                            {{ language.displayText }}
-                        </option>
-                    </select>
-                </div>
+                        {{ specialty.displayText }}
+                    </option>
+                </select>
             </div>
-            <!-- Search button -->
-            <div
-                id="search-button"
-                class="flex items-center"
-            >
-                <button
-                    id="searchButton"
-                    class="flex flex-0 flex-row rounded-md
+            <!-- Location dropdown -->
+            <div class="search-location col-span-2 py-4">
+                <select
+                    v-model="selectedLocations"
+                    class="w-full px-1 py-1.5 border-2 border-primary/60 rounded-md text-primary-text
+                                    drop-shadow-md bg-primary-bg/10 transition-all"
+                >
+                    <option
+                        value=""
+                        class="text-primary-text-muted hidden"
+                        disabled
+                        selected
+                    >
+                        {{ t('searchBar.selectLocation') }}
+                    </option>
+                    <option
+                        v-for="(cityDetails) in locationDropdownOptions"
+                        :key="cityDetails.value"
+                        :value="cityDetails.value"
+                    >
+                        {{ cityDetails.displayText }}: ({{ cityDetails.cityOccurrenceCount }})
+                    </option>
+                </select>
+            </div>
+            <!-- Language dropdown -->
+            <div class="search-language col-span-1 w-full py-4">
+                <select
+                    v-model="selectedLanguages"
+                    class="w-full px-1 py-1.5 border-2 border-primary/60 rounded-md text-primary-text
+                                    drop-shadow-md bg-primary-bg/10 transition-all"
+                    data-testid="search-bar-language"
+                >
+                    <option
+                        v-for="(language) in languageDropdownOptions"
+                        :key="language.value"
+                        :value="language.value"
+                    >
+                        {{ language.displayText }}
+                    </option>
+                </select>
+            </div>
+        </div>
+        <!-- Search button -->
+        <div
+            id="search-button"
+            class="flex items-center"
+        >
+            <button
+                id="searchButton"
+                class="flex flex-0 flex-row rounded-md
                                 w-full mx-4 pl-1 pr-2 py-4 text-sm align-middle justify-center
                                 bg-accent hover:bg-accent-hover transition-all"
-                    data-testid="search-button"
-                    @click="search"
-                >
-                    <SVGSearchIcon
-                        role="img"
-                        alt="search icon"
-                        title="search icon"
-                        class="search-icon w-5 h-5 mr-1 fill-primary-text-inverted"
-                    />
-                    <span class="self-center text-primary-text-inverted">{{ t('searchBar.search') }}</span>
-                </button>
-            </div>
+                data-testid="search-button"
+                @click="search"
+            >
+                <SVGSearchIcon
+                    role="img"
+                    alt="search icon"
+                    title="search icon"
+                    class="search-icon w-5 h-5 mr-1 fill-primary-text-inverted"
+                />
+                <span class="self-center text-primary-text-inverted">{{ t('searchBar.search') }}</span>
+            </button>
         </div>
     </div>
 </template>
