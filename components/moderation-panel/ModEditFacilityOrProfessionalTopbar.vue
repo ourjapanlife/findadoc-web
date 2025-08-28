@@ -142,7 +142,7 @@ import { useRouter } from 'vue-router'
 import { useI18n } from '#imports'
 import SVGCopyContent from '~/assets/icons/content-copy.svg'
 import SVGSuccessCheckMark from '~/assets/icons/checkmark-square.svg'
-import { useFacilitiesStore } from '~/stores/facilitiesStore'
+import { useFacilitiesStore, getChangedFacilityFieldsForUpdate } from '~/stores/facilitiesStore'
 import { useHealthcareProfessionalsStore } from '~/stores/healthcareProfessionalsStore'
 import { useModerationScreenStore, ModerationScreen } from '~/stores/moderationScreenStore'
 import { useModalStore, ModalType } from '~/stores/modalStore'
@@ -150,7 +150,6 @@ import { handleServerErrorMessaging } from '~/composables/handleServerErrorMessa
 import type { Facility, HealthcareProfessional } from '~/typedefs/gqlTypes'
 import { arraysAreEqual } from '~/utils/arrayUtils'
 import { onBeforeRouteLeave } from '#app'
-import { getChangedFacilityFieldsForUpdate } from '~/utils/facilityUtils'
 
 const router = useRouter()
 

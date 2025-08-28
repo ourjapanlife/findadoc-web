@@ -72,7 +72,7 @@ function mapFacilityContactToInput(contact: Contact): ContactInput {
     }
 }
 
-function getChangedFacilityFieldsForUpdate(
+export function getChangedFacilityFieldsForUpdate(
     current: FacilitySectionFields,
     original: Facility
 ): MutationUpdateFacilityArgs['input'] {
