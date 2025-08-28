@@ -368,10 +368,12 @@ export const useFacilitiesStore = defineStore('facilitiesStore', () => {
 
         if (!serverResponse.errors?.length && responseData) {
             await getFacilities()
-            const facility = responseData
 
-            selectedFacilityData.value = facility
-            initializeFacilitySectionValues(facility)
+            selectedFacilityData.value = {
+                ...selectedFacilityData.value,
+                ...responseData
+            }
+            initializeFacilitySectionValues(responseData)
             // This block prevents a race condition: clear the array only if relations haven't changed while awaiting response
             if (
                 arraysAreEqual(
