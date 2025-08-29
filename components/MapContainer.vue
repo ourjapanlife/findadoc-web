@@ -25,7 +25,14 @@
                 @click="handlePinClick(location.professional.id)"
             >
                 <div style="text-align: center">
-                    <SVGSVGBlueMapPin class="w-[45px] h-[73px]" />
+                    <SVGMapPin
+                        :class="[
+                            'w-[45px] h-[73px]',
+                            searchResultsStore.activeResult?.professional.id === location.professional.id
+                                ?'text-secondary fill-secondary'
+                                : 'text-primary fill-primary',
+                        ]"
+                    />
                 </div>
             </CustomMarker>
         </GoogleMap>
@@ -37,7 +44,7 @@ import { ref } from 'vue'
 import { GoogleMap, CustomMarker } from 'vue3-google-map'
 import { useSearchResultsStore } from '../stores/searchResultsStore'
 import { useRuntimeConfig } from '#imports'
-import SVGSVGBlueMapPin from '~/assets/icons/blue-map-pin.svg'
+import SVGMapPin from '~/assets/icons/map-pin.svg'
 import { BottomSheetType, useBottomSheetStore } from '~/stores/bottomSheetStore'
 
 const defaultLocation = { lat: 35.6804, lng: 139.769 }
