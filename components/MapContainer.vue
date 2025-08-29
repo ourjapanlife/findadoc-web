@@ -11,7 +11,7 @@
             :center="currentLocation"
             :zoom="currentZoom"
             @drag="handleMapMovement"
-            @zoom_changed="handleMapMovement"
+            @zoom_changed="handleZoomChanged"
         >
             <CustomMarker
                 v-for="(location, index) in searchResultsStore.searchResultsList"
@@ -45,7 +45,7 @@ const currentLocation = ref(defaultLocation)
 const currentZoom = ref(9)
 
 const searchResultsStore = useSearchResultsStore()
-const mapRef = ref(null)
+const mapRef = ref<{ map: google.maps.Map } | null>(null)
 const runtimeConfig = useRuntimeConfig()
 const bottomSheetStore = useBottomSheetStore()
 
@@ -76,8 +76,15 @@ watch(() => searchResultsStore.activeResult, newActiveResult => {
     if (newActiveResult) {
         const activeResultLocation = newActiveResult.facilities[0]
         const lng = activeResultLocation?.mapLongitude ?? defaultLocation.lng
-        // Since the map is slightly offset vertically, we need to offset the location by 0.30 to center it
-        const lat = activeResultLocation?.mapLatitude ? activeResultLocation.mapLatitude - 0.30 : defaultLocation.lat
+
+        // Calculate proper latitude offset based on zoom level
+        // Use a gentler scaling factor that provides more consistent visual positioning
+        const baseLatOffset = 0.075 // Base offset at zoom 12 to position at 25% from top
+        const zoomDiff = 12 - currentZoom.value
+        const scalingFactor = Math.pow(2, zoomDiff) // Even gentler scaling for better consistency
+        const latOffset = baseLatOffset * scalingFactor
+
+        const lat = activeResultLocation?.mapLatitude ? activeResultLocation.mapLatitude - latOffset : defaultLocation.lat
 
         setLocation(lat, lng)
     }
@@ -89,6 +96,15 @@ watch(() => searchResultsStore.searchResultsList, () => {
 }, { deep: true })
 
 const handleMapMovement = () => {
+    emit('map-moved')
+}
+
+const handleZoomChanged = () => {
+    const zoom = mapRef.value?.map?.getZoom()
+    if (typeof zoom === 'number') {
+        currentZoom.value = zoom
+    }
+
     emit('map-moved')
 }
 
@@ -104,6 +120,7 @@ const recenterMap = () => {
         return
 
     const center = calculateCenter(allCoordinates)
+    // Offset the center slightly south to account for bottom sheet overlay
     setLocation(center.lat - 0.10, center.lng)
 
     // Calculate and set appropriate zoom level
