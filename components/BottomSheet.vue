@@ -1,6 +1,6 @@
-<!-- From https://github.com/vaban-ru/vue-bottom-sheet?tab=readme-ov-file,
- but copied due to it no longer being maintained -->
-<!-- It's been customized to allow for a z-index changes, multiple positions, simplified the code, and added a few features -->
+<!-- Inspired by https://github.com/vaban-ru/vue-bottom-sheet?tab=readme-ov-file,
+ but rewritten due to it no longer being maintained -->
+<!-- It's been customized to allow for multiple positions, simplified the code, and added a few features -->
 <template>
     <Teleport to="body">
         <div
