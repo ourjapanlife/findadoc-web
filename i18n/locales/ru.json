@@ -82,7 +82,9 @@
     "selectLocation": " Выбрать локацию...",
     "allLocations": "Все места",
     "allSpecialties": "Все специальности",
-    "search": "Поиск"
+    "search": "Поиск",
+    "resultsFound": "Найдено {count} результатов",
+    "searchAndFilterDoctors": "Поиск и фильтрация врачей"
   },
   "searchResultsList": {
     "doctorsNearby": "Врачи рядом",

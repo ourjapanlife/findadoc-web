@@ -2,7 +2,6 @@ import { gql } from 'graphql-request'
 import { defineStore } from 'pinia'
 import { ref, type Ref } from 'vue'
 import { gqlClient } from '../utils/graphql.js'
-import { useModalStore } from './modalStore'
 import { useLoadingStore } from './loadingStore.js'
 import type { Locale,
     Specialty,
@@ -20,6 +19,7 @@ export const useSearchResultsStore = defineStore('searchResultsStore', () => {
     const activeResultId: Ref<string | undefined> = ref()
     const activeResult: Ref<SearchResult | undefined> = ref()
     const searchResultsList: Ref<SearchResult[]> = ref([])
+    const totalResults = ref(0)
 
     const selectedCity: Ref<string | undefined> = ref()
     const selectedSpecialties: Ref<Specialty[] | undefined> = ref()
@@ -50,6 +50,9 @@ export const useSearchResultsStore = defineStore('searchResultsStore', () => {
         //update the state with the new results
         searchResultsList.value = combinedResults
 
+        //update the total results count
+        totalResults.value = combinedResults.length
+
         //set the loading visual state back to normal
         loadingStore.setIsLoading(false)
     }
@@ -59,9 +62,6 @@ export const useSearchResultsStore = defineStore('searchResultsStore', () => {
 
         activeResult.value = newResult
         activeResultId.value = newResult?.professional.id
-
-        //show the search result details in a modal
-        useModalStore().showModal()
     }
 
     function clearActiveSearchResult() {
@@ -77,7 +77,8 @@ export const useSearchResultsStore = defineStore('searchResultsStore', () => {
         clearActiveSearchResult,
         selectedCity,
         selectedSpecialties,
-        selectedLanguages
+        selectedLanguages,
+        totalResults
     }
 })
 

@@ -1,209 +1,87 @@
 <template>
-    <div class="flex flex-0 max-w-4xl">
-        <div
-            id="search-fields"
-            class="grid-cols-3 mx-4"
+    <div class="my-2">
+        <!-- Search Button -->
+        <button
+            class="flex w-full mb-2 py-1 rounded border-1 border-primary/20
+                    drop-shadow-md text-xs
+                    bg-secondary-bg hover:bg-secondary-hover/50 transition-all
+                    cursor-pointer"
+            alt="filters panel"
+            data-testid="filters-panel-summary"
+            @click="openFiltersPanel()"
         >
-            <div class="search-specialty col-span-1 inline-block w-1/3 py-4">
-                <select
-                    v-model="selectedSpecialties"
-                    class="rounded-l-full rounded-r-none w-full px-1 border-2 border-primary/60
-                    py-1.5 drop-shadow-md text-primary-text bg-primary-bg hover:bg-primary-hover/10 transition-all"
-                >
-                    <option
-                        value=""
-                        class="text-primary-text-muted hidden"
-                        disabled
-                        selected
-                    >
-                        {{ t('searchBar.selectSpecialty') }}
-                    </option>
-                    <option
-                        v-for="(specialty) in specialtyDropdownOptions"
-                        :key="specialty.value"
-                        :value="specialty.value"
-                    >
-                        {{ specialty.displayText }}
-                    </option>
-                </select>
-            </div>
-            <div class="search-location col-span-1 inline-block w-1/3 py-4">
-                <select
-                    v-model="selectedLocations"
-                    class="w-full px-1 border-y-2 border-primary/60 py-1.5 drop-shadow-md
-                        text-primary-text bg-primary-bg hover:bg-primary-hover/10 transition-all"
-                >
-                    <option
-                        value=""
-                        class="text-primary-text-muted hidden"
-                        disabled
-                        selected
-                    >
-                        {{ t('searchBar.selectLocation') }}
-                    </option>
-                    <option
-                        v-for="(cityDetails) in locationDropdownOptions"
-                        :key="cityDetails.value"
-                        :value="cityDetails.value"
-                    >
-                        {{ cityDetails.displayText }}: ({{ cityDetails.cityOccurrenceCount }})
-                    </option>
-                </select>
-            </div>
-            <div class="search-language col-span-1 inline-block w-1/3 py-4">
-                <select
-                    v-model="selectedLanguages"
-                    class="rounded-r-full rounded-l-none w-full px-1 border-2 border-primary/60
-                        py-1.5 drop-shadow-md text-primary-text bg-primary-bg hover:bg-primary-hover/10 transition-all"
-                    data-testid="search-bar-language"
-                >
-                    <option
-                        v-for="(language) in languageDropdownOptions"
-                        :key="language.value"
-                        :value="language.value"
-                    >
-                        {{ language.displayText }}
-                    </option>
-                </select>
-            </div>
-        </div>
-        <div
-            id="search-button"
-            class="flex items-center"
-        >
-            <button
-                id="searchButton"
-                class="flex flex-0 flex-row rounded-full bg-primary w-28 pl-1 pr-2 py-2 text-sm align-middle justify-center
-                    hover:bg-primary-hover transition-all"
-                data-testid="search-button"
-                @click="search"
-            >
-                <SVGSearchIcon
+            <div class="flex pl-4">
+                <FiltersIcon
                     role="img"
-                    alt="search icon"
-                    title="search icon"
-                    class="search-icon w-5 h-5 mr-1 fill-primary-text-inverted"
+                    alt="filters icon"
+                    title="filters icon"
+                    class="filters-icon w-6 mr-1 fill-accent"
                 />
-                <span class="self-center text-primary-text-inverted">{{ t('searchBar.search') }}</span>
-            </button>
+                <span class="block text-start text-lg pl-2 text-accent">
+                    {{ t('searchBar.searchAndFilterDoctors') }}
+                </span>
+            </div>
+        </button>
+        <!-- Search Bar -->
+        <div
+            class="flex justify-center py-2 rounded-b w-full border-1 border-primary/20 text-xs text-accent
+                    bg-primary-bg transition-all"
+        >
+            <!-- Selected Languages -->
+            <div class="search-language">
+                <span class="block text-start pl-2 max-w-1/3 overflow-hidden text-ellipsis whitespace-nowrap">
+                    {{ selectedLanguageText }}
+                </span>
+            </div>
+            <!-- Selected Specialties -->
+            <div class="search-specialty">
+                <span class="block text-start pl-2 max-w-1/3 overflow-hidden text-ellipsis whitespace-nowrap">
+                    • {{ selectedSpecialtyText }}
+                </span>
+            </div>
+            <!-- Selected Locations -->
+            <div class="search-location">
+                <span class="block text-start pl-2 max-w-1/3 overflow-hidden text-ellipsis whitespace-nowrap">
+                    • {{ selectedLocationText }}
+                </span>
+            </div>
         </div>
+        <!-- Results count -->
+        <span class="text-sm text-center block mb-1 text-primary-text-muted">
+            {{ t('searchBar.resultsFound', searchResultsStore.totalResults) }}
+        </span>
     </div>
 </template>
 
 <script setup lang="ts">
-import { ref, type Ref, onMounted } from 'vue'
-import SVGSearchIcon from '~/assets/icons/search-icon.svg'
+import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
+import FiltersIcon from '~/assets/icons/equalizer-icon.svg'
 import { useSearchResultsStore } from '~/stores/searchResultsStore.js'
-import { useLocationsStore } from '~/stores/locationsStore.js'
-import { useSpecialtiesStore } from '~/stores/specialtiesStore.js'
 import { useLocaleStore } from '~/stores/localeStore.js'
-import { type Specialty, Locale } from '~/typedefs/gqlTypes.js'
+import { useSpecialtiesStore } from '~/stores/specialtiesStore.js'
 
 const { t } = useI18n()
 
-const localeStore = useLocaleStore()
-const locationsStore = useLocationsStore()
 const searchResultsStore = useSearchResultsStore()
+const localeStore = useLocaleStore()
 const specialtiesStore = useSpecialtiesStore()
 
-const locationDropdownOptions: Ref<LocationDropdownOption[]> = ref([])
-const specialtyDropdownOptions: Ref<DropdownOption[]> = ref([])
-const languageDropdownOptions: Ref<DropdownOption[]> = ref([])
-
-const selectedSpecialties: Ref<string> = ref('')
-const selectedLocations: Ref<string> = ref('')
-const selectedLanguages: Ref<string> = ref(localeStore.activeLocale.code)
-
-interface DropdownOption {
-    displayText: string
-    value: string
-}
-
-interface LocationDropdownOption extends DropdownOption {
-    cityOccurrenceCount: number
-}
-
-onMounted(async () => {
-    // Initialize locations when component is mounted. The dropdown options are reactive, so they will update automatically
-    await createLocationDropdownOptions()
-    createLanguageDropdownOptions()
-    createSpecialtyDropdownOptions()
+const selectedSpecialtyText = computed(() => {
+    const specialty = (searchResultsStore.selectedSpecialties && searchResultsStore.selectedSpecialties.length > 0)
+        ? specialtiesStore.specialtyDisplayOptions.find(opt => opt.code === searchResultsStore.selectedSpecialties?.[0])
+        : null
+    return specialty ? specialty.displayText : t('searchBar.allSpecialties')
 })
 
-function createLanguageDropdownOptions() {
-    // This will remove any codes code that is falsy
-    const dropdownOptions = localeStore.localeDisplayOptions.map(locale => ({
-        displayText: locale.displayText,
-        value: locale.code
-    })) as DropdownOption[]
+const selectedLocationText = computed(() => searchResultsStore.selectedCity || t('searchBar.allLocations'))
 
-    // Remove any options that have a falsy code
-    dropdownOptions.filter(locale => locale.value)
-
-    languageDropdownOptions.value = dropdownOptions
-}
-
-function createSpecialtyDropdownOptions() {
-    const dropdownOptions = specialtiesStore.specialtyDisplayOptions.map(specialty => ({
-        displayText: specialty.displayText,
-        value: specialty.code
-    })) as DropdownOption[]
-
-    // Add the "All" option to the top of the list
-    dropdownOptions.unshift({ displayText: t('searchBar.allSpecialties'), value: '' })
-
-    specialtyDropdownOptions.value = dropdownOptions
-}
-
-async function createLocationDropdownOptions(): Promise<void> {
-    // Show an interim loading state while we fetch the locations
-    locationDropdownOptions.value = [{ displayText: t('searchBar.selectLocation'), value: '', cityOccurrenceCount: 0 }]
-
-    await locationsStore.fetchLocations()
-
-    const localeStore = useLocaleStore()
-
-    const allCities = localeStore.activeLocale.code === Locale.EnUs
-        ? locationsStore.allCitiesEnglishList
-        : locationsStore.allCitiesJapaneseList
-
-    const newLocationDropdownOptions: LocationDropdownOption[] = []
-
-    // Add the cities to the dropdown and add a count for each city
-    allCities.forEach(city => {
-        const matchingLocation = newLocationDropdownOptions.find(option => option.displayText === city)
-
-        if (matchingLocation) {
-            matchingLocation.cityOccurrenceCount += 1
-        } else {
-            newLocationDropdownOptions.push({ displayText: city, value: city, cityOccurrenceCount: 1 })
-        }
-    })
-
-    // Add the "All" option to the top of the list
-    newLocationDropdownOptions.unshift({ displayText: t('searchBar.allLocations'),
-        value: '',
-        cityOccurrenceCount: allCities.length })
-
-    locationDropdownOptions.value = newLocationDropdownOptions
-}
-
-watch(selectedSpecialties, () => {
-    // If the selected specialty is empty, clear the selected specialties
-    searchResultsStore.selectedSpecialties = selectedSpecialties.value === ''
-        ? []
-        : [selectedSpecialties.value as Specialty]
+const selectedLanguageText = computed(() => {
+    const selectedLanguage = localeStore.activeLocale
+    return selectedLanguage.displayText
 })
 
-watch(selectedLocations, () => {
-    searchResultsStore.selectedCity = selectedLocations.value ? selectedLocations.value : undefined
-})
-
-watch(selectedLanguages, () => {
-    searchResultsStore.selectedLanguages = selectedLanguages.value ? [selectedLanguages.value as Locale] : []
-})
-
-async function search() {
-    await searchResultsStore.search()
+function openFiltersPanel() {
+    useBottomSheetStore().showBottomSheet(BottomSheetType.FiltersPanel)
 }
 </script>

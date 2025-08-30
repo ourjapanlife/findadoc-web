@@ -82,7 +82,9 @@
     "selectLocation": "请选择一个地点...",
     "allLocations": "所有地点",
     "allSpecialties": "所有专科",
-    "search": "搜索"
+    "search": "搜索",
+    "resultsFound": "找到{count}个结果",
+    "searchAndFilterDoctors": "搜索和筛选医生"
   },
   "searchResultsList": {
     "doctorsNearby": "附近的医师",

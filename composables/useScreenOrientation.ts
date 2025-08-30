@@ -26,6 +26,7 @@ export const useScreenOrientation = () => {
     })
 
     const isPortrait = computed(() => width.value <= height.value)
+    const isLandscape = computed(() => width.value > height.value)
 
-    return { isPortrait }
+    return { isPortrait, isLandscape }
 }
