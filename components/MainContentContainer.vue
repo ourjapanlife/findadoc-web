@@ -44,7 +44,7 @@
 <script lang="ts" setup>
 import { storeToRefs } from 'pinia'
 import { useOnboardingStore } from '@/stores/onboardingStore'
-import { BottomSheetType, useBottomSheetStore } from '@/stores/bottomSheetStore'
+import { useBottomSheetStore } from '@/stores/bottomSheetStore'
 
 const onboardingStore = useOnboardingStore()
 const { onboardingState } = storeToRefs(onboardingStore)

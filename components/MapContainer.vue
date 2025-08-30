@@ -7,6 +7,7 @@
             :api-key="runtimeConfig.public.GOOGLE_MAPS_API_KEY as string ?? undefined"
             map-id="153d718018a2577e"
             :disable-default-ui="true"
+            :options="{ gestureHandling: 'greedy' }"
             class="h-full w-full"
             :center="currentLocation"
             :zoom="currentZoom"
