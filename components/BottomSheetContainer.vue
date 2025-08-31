@@ -86,8 +86,8 @@ watch(() => bottomSheetStore.bottomSheetType, newType => {
         case BottomSheetType.SearchResultDetails:
             // Set position to 75% when showing search result details, since this is the main, focused content
             // However, we still want to use the map and show where the result is located
-            bottomSheetRef.value?.setPosition(25)
-            beforeMinimizedPosition.value = 25
+            bottomSheetRef.value?.setPosition(50)
+            beforeMinimizedPosition.value = 50
             showCloseButton.value = true
             bottomSheetStore.isMinimized = false
             break

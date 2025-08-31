@@ -89,7 +89,7 @@ watch(() => searchResultsStore.activeResult, newActiveResult => {
 
         // Calculate proper latitude offset based on zoom level
         // Use a gentler scaling factor that provides more consistent visual positioning
-        const baseLatOffset = 0.075 // Base offset at zoom 12 to position at 25% from top
+        const baseLatOffset = 0.05 // Base offset at zoom 12 to position at 40% from top
         const zoomDiff = 12 - currentZoom.value
         const scalingFactor = Math.pow(2, zoomDiff) // Even gentler scaling for better consistency
         const latOffset = baseLatOffset * scalingFactor
