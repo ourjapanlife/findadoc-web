@@ -27,7 +27,7 @@
             <div
                 v-else
                 id="search-portrait"
-                class="h-dvh"
+                class="h-svh"
             >
                 <Loader />
                 <BottomSheetContainer />

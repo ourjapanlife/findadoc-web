@@ -13,6 +13,7 @@
             class="h-full w-full"
             :center="currentLocation"
             :zoom="currentZoom"
+            :gesture-handling="'greedy'"
             @drag="handleMapMovement"
             @zoom_changed="handleZoomChanged"
         >
