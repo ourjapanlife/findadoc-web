@@ -371,4 +371,13 @@ watch(
     },
     { immediate: true }
 )
+
+watch(
+    () => facilityStore.createFacilityFields.contact.address.prefectureEn,
+    newEn => {
+        if (newEn && prefectureLanguageMatch[newEn]) {
+            facilityStore.createFacilityFields.contact.address.prefectureJa = prefectureLanguageMatch[newEn]
+        }
+    }
+)
 </script>
