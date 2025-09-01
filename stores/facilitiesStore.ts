@@ -15,6 +15,7 @@ import type {
 import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql'
 import type { ServerResponse } from '~/typedefs/serverResponse'
 import { arraysAreEqual } from '~/utils/arrayUtils'
+import { validatePrefectureMatch } from '~/utils/facilitiesUtils'
 
 export const useFacilitiesStore = defineStore('facilitiesStore', () => {
     const facilityData: Ref<Facility[]> = ref([])
@@ -165,6 +166,11 @@ export const useFacilitiesStore = defineStore('facilitiesStore', () => {
     }
 
     async function createFacility(): Promise<ServerResponse<Facility>> {
+        const { prefectureEn, prefectureJa } = createFacilityFields.contact.address
+        if (!validatePrefectureMatch(prefectureEn, prefectureJa)) {
+            throw new Error('Prefecture mismatch: English and Japanese names must match.')
+        }
+
         const CreateFacilityInput: MutationCreateFacilityArgs = {
             input: {
                 nameEn: createFacilityFields.nameEn,
@@ -178,8 +184,8 @@ export const useFacilitiesStore = defineStore('facilitiesStore', () => {
                         cityEn: createFacilityFields.contact.address.cityEn,
                         cityJa: createFacilityFields.contact.address.cityJa,
                         postalCode: createFacilityFields.contact.address.postalCode,
-                        prefectureEn: createFacilityFields.contact.address.prefectureEn,
-                        prefectureJa: createFacilityFields.contact.address.prefectureJa
+                        prefectureEn,
+                        prefectureJa
                     },
                     email: createFacilityFields.contact.email,
                     phone: createFacilityFields.contact.phone,
@@ -215,6 +221,11 @@ export const useFacilitiesStore = defineStore('facilitiesStore', () => {
     }
 
     async function updateFacility(): Promise<ServerResponse<Facility>> {
+        const { prefectureEn, prefectureJa } = facilitySectionFields
+        if (!validatePrefectureMatch(prefectureEn, prefectureJa)) {
+            throw new Error('Prefecture mismatch: English and Japanese names must match.')
+        }
+
         const healthProfessionalRelationsBeforeMutation = facilitySectionFields.healthProfessionalsRelations
 
         const updateFacilityInput: MutationUpdateFacilityArgs = {
@@ -229,8 +240,8 @@ export const useFacilitiesStore = defineStore('facilitiesStore', () => {
                         cityEn: facilitySectionFields.cityEn,
                         cityJa: facilitySectionFields.cityJa,
                         postalCode: facilitySectionFields.postalCode,
-                        prefectureEn: facilitySectionFields.prefectureEn,
-                        prefectureJa: facilitySectionFields.prefectureJa
+                        prefectureEn,
+                        prefectureJa
                     },
                     email: facilitySectionFields.email,
                     googleMapsUrl: facilitySectionFields.googlemapsURL,
@@ -238,9 +249,9 @@ export const useFacilitiesStore = defineStore('facilitiesStore', () => {
                     website: facilitySectionFields.website
                 },
                 healthcareProfessionalIds:
-        facilitySectionFields.healthProfessionalsRelations.length > 0
-            ? facilitySectionFields.healthProfessionalsRelations
-            : undefined,
+                    facilitySectionFields.healthProfessionalsRelations.length > 0
+                        ? facilitySectionFields.healthProfessionalsRelations
+                        : undefined,
                 mapLatitude: parseFloat(facilitySectionFields.mapLatitude),
                 mapLongitude: parseFloat(facilitySectionFields.mapLongitude),
                 nameEn: facilitySectionFields.nameEn,

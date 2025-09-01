@@ -87,6 +87,15 @@
                 >
                     {{ t('modFacilitySection.labelFacilityPrefectureEn') }}
                 </label>
+                <p
+                    v-if="!checkPrefectureNameMatch({
+                        prefectureEn: facilityStore.facilitySectionFields.prefectureEn,
+                        prefectureJa: facilityStore.facilitySectionFields.prefectureJa,
+                    })"
+                    class="text-error text-xs font-sans mt-1"
+                >
+                    {{ t('modFacilitySection.inputErrorMessagePrefectureMismatch') }}
+                </p>
                 <select
                     id="mod-edit-facility-section-prefecture-select-en"
                     v-model="facilityStore.facilitySectionFields.prefectureEn"
@@ -138,6 +147,15 @@
                 >
                     {{ t('modFacilitySection.labelFacilityPrefectureJa') }}
                 </label>
+                <p
+                    v-if="!checkPrefectureNameMatch({
+                        prefectureEn: facilityStore.facilitySectionFields.prefectureEn,
+                        prefectureJa: facilityStore.facilitySectionFields.prefectureJa,
+                    })"
+                    class="text-error text-xs font-sans mt-1"
+                >
+                    {{ t('modFacilitySection.inputErrorMessagePrefectureMismatch') }}
+                </p>
                 <select
                     id="mod-edit-facility-section-prefecture-select-ja"
                     v-model="facilityStore.facilitySectionFields.prefectureJa"
@@ -296,6 +314,7 @@ import { validateAddressLineEn,
     validateCityJa } from '~/utils/formValidations'
 import { RelationshipAction, type HealthcareProfessional } from '~/typedefs/gqlTypes'
 import { listPrefectureJapanEn, listPrefectureJapanJa } from '~/stores/locationsStore'
+import { checkPrefectureNameMatch } from '~/utils/facilitiesUtils'
 
 const toast = useToast()
 const route = useRoute()
@@ -354,6 +373,8 @@ const handleHealthcareProfessionalsInputChange = (filteredItems: Ref<HealthcareP
 
 const healthcareProfessionalsToDisplayCallback = (healthcareProfessional: HealthcareProfessional) =>
     [healthcareProfessional.names[0].firstName + ' ' + healthcareProfessional.names[0].lastName]
+
+const prefectureNameMatchError = ref(false)
 
 onBeforeMount(async () => {
     // This onBeforeMount can be skipped on other screens since this logic is handled there when active
@@ -447,4 +468,17 @@ watch(() => healthcareProfessionalsToAddToFacility.value, newValue => {
         = relationshipCreationArrayFromSelectedHealthcareProfessionalsToAdd
     }
 }, { deep: true })
+
+/** Watches and updates the facility sections fields regarding the prefecture name of the address (Japanese and English).
+If one of them does not match with the other language, it will throw an error. **/
+watch(
+    () => [
+        facilityStore.facilitySectionFields.prefectureEn,
+        facilityStore.facilitySectionFields.prefectureJa
+    ],
+    ([en, ja]) => {
+        prefectureNameMatchError.value = !checkPrefectureNameMatch({ prefectureEn: en, prefectureJa: ja })
+    },
+    { immediate: true }
+)
 </script>
