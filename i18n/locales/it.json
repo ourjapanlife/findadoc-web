@@ -167,8 +167,6 @@
     "healthcareProfessionalUpdatedSuccessfully": "Professionista sanitario aggiornato con successo",
     "back": "Back",
     "hasUnsavedChanges": "You have unsaved changes. Are you sure you want to leave?",
-    "deleteConfirmationFacility": "Are you sure you want to delete the Facility: {facility}, with ID: {id}?",
-    "deleteConfirmationHealthcareProfessional": "Are you sure you want to delete the Healthcare Professional: {healthcareProfessional}, with ID: {id}?",
     "healthcareProfessionalEnglishNameRequired": "Healthcare Professional must have an English name"
   },
   "modEditSubmissionTopNav": {
@@ -178,11 +176,7 @@
     "update": "Aggiorna"
   },
   "modPanelSubmissionList": {
-    "facilityNameUnknown": "Nome struttura sconosciuto",
-    "modified": "Modificato",
-    "name": "Nome",
-    "noSubmissions": "Non ci sono richieste in attesa",
-    "submitted": "Inoltrato"
+    "noSubmissions": "Non ci sono richieste in attesa"
   },
   "modHealthcareProfessionalCard": {},
   "modHealthcareProfessionalSection": {
@@ -234,9 +228,7 @@
     "googleMapsInformation": "Informazioni Google Maps",
     "addHealthcareProfessional": "Professionista sanitario da aggiungere",
     "inputErrorMessageFacilityAddressLine1Ja": "Indirizzo giapponese non valido",
-    "inputErrorMessageFacilityAddressLine2Ja": "Indirizzo giapponese non valido",
     "inputErrorMessageFacilityAddressLine1En": "Indirizzo inglese non valido",
-    "inputErrorMessageFacilityAddressLine2En": "Indirizzo inglese non valido",
     "inputErrorMessageFacilityCityEn": "Nome città in inglese non valido",
     "inputErrorMessageFacilityCityJa": "Nome città in giapponese non valido",
     "inputErrorMessageFacilityEmail": "Indirizzo email non valido",
@@ -295,7 +287,6 @@
     "facilitySuccessfullyRejected": "Struttura rifiutata con successo",
     "healthcareProfessionalId": "ID professionista sanitario",
     "infoMessageAlreadyApproved": "Questa richiesta è già stata approvata",
-    "infoMessageUpdateNeeded": "Deve essere aggiornato prima dell'approvazione",
     "labelHealthcareProfessionalFirstName": "Nome",
     "labelHealthcareProfessionalLastName": "Cognome",
     "labelHealthcareProfessionalMiddleName": "Nome intermedio",
@@ -378,9 +369,9 @@
     "resultsPerPage": "Risultati per pagagina"
   },
   "errorPage": {
-      "title": "404 - Diagnosi: Pagina non trovata",
-      "description": "Questa pagina non ha superato il suo esame di salute. Portiamoti invece a una pagina sana!",
-      "returnHome": "Torna alla home"
+    "title": "404 - Diagnosi: Pagina non trovata",
+    "description": "Questa pagina non ha superato il suo esame di salute. Portiamoti invece a una pagina sana!",
+    "returnHome": "Torna alla home"
   },
   "settingsPage": {
     "heading": "Settings",
@@ -388,14 +379,12 @@
     "displayName": "Nome visualizzato",
     "healthcareProfessionalName": "Profile Image",
     "updateButton": "Update Settings"
-   },
+  },
   "modListContainerItem": {
     "newSubmission": "New",
     "underReviewSubmission": "Under Review",
     "approvedSubmission": "Approved",
-    "rejectedSubmission": "Rejected",
-    "review": "Review",
     "createdDate": "Created on",
     "updatedDate": "Updated last"
   }
-  }
+}
