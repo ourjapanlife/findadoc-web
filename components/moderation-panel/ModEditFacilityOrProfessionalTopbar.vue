@@ -142,7 +142,7 @@ import { useRouter } from 'vue-router'
 import { useI18n } from '#imports'
 import SVGCopyContent from '~/assets/icons/content-copy.svg'
 import SVGSuccessCheckMark from '~/assets/icons/checkmark-square.svg'
-import { useFacilitiesStore } from '~/stores/facilitiesStore'
+import { useFacilitiesStore, getChangedFacilityFieldsForUpdate } from '~/stores/facilitiesStore'
 import { useHealthcareProfessionalsStore } from '~/stores/healthcareProfessionalsStore'
 import { useModerationScreenStore, ModerationScreen } from '~/stores/moderationScreenStore'
 import { useModalStore, ModalType } from '~/stores/modalStore'
@@ -198,38 +198,15 @@ function setSelectedId() {
     }
 }
 
-const facilityHasUnsavedChanges = () => {
+const facilityHasUnsavedChanges = (): boolean => {
     if (!originalFacilityRefsValue.value) return false
 
-    const facilityBeforeChange = originalFacilityRefsValue.value
+    const updatedFields = getChangedFacilityFieldsForUpdate(
+        facilitiesStore.facilitySectionFields,
+        originalFacilityRefsValue.value
+    )
 
-    /** This needs to be converted because to access the values of this object we do not need value.
-    But to keep their reactivity in the store we keep them as Refs **/
-    const facilitySections = facilitiesStore.facilitySectionFields
-
-    const areThereUnsavedFacilityChanges
-        = facilityBeforeChange.nameEn !== facilitySections.nameEn
-          || facilityBeforeChange.nameJa !== facilitySections.nameJa
-          || facilityBeforeChange.contact.phone !== facilitySections.phone
-          || facilityBeforeChange.contact.website !== facilitySections.website
-          || facilityBeforeChange.contact.email !== facilitySections.email
-          || facilityBeforeChange.contact.address.postalCode !== facilitySections.postalCode
-          || facilityBeforeChange.contact.address.prefectureEn !== facilitySections.prefectureEn
-          || facilityBeforeChange.contact.address.cityEn !== facilitySections.cityEn
-          || facilityBeforeChange.contact.address.addressLine1En !== facilitySections.addressLine1En
-          || facilityBeforeChange.contact.address.addressLine2En !== facilitySections.addressLine2En
-          || facilityBeforeChange.contact.address.prefectureJa !== facilitySections.prefectureJa
-          || facilityBeforeChange.contact.address.cityJa !== facilitySections.cityJa
-          || facilityBeforeChange.contact.address.addressLine1Ja !== facilitySections.addressLine1Ja
-          || facilityBeforeChange.contact.address.addressLine2Ja !== facilitySections.addressLine2Ja
-          || facilityBeforeChange.contact.googleMapsUrl !== facilitySections.googlemapsURL
-          || facilityBeforeChange.mapLatitude.toString() !== facilitySections.mapLatitude
-          || facilityBeforeChange.mapLongitude.toString() !== facilitySections.mapLongitude
-          || JSON.stringify(facilityBeforeChange.healthcareProfessionalIds)
-          !== JSON.stringify(facilitySections.healthcareProfessionalIds)
-          || facilitySections.healthProfessionalsRelations.length > 0
-
-    return areThereUnsavedFacilityChanges
+    return !!Object.keys(updatedFields).length
 }
 
 const healthcareProfessionalHasUnsavedChanges = () => {
@@ -294,7 +271,8 @@ const hasUnsavedChanges = () => {
 
 const updateFacilityOrHealthcareProfessional = async () => {
     if (moderationScreenStore.editFacilityScreenIsActive()) {
-        // Prevent sending an unnecessary request if the user has not made changes
+        if (!originalFacilityRefsValue.value) return
+
         if (!facilityHasUnsavedChanges()) return
 
         const response = await facilitiesStore.updateFacility()
