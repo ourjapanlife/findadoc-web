@@ -62,6 +62,11 @@ const bottomSheetStore = useBottomSheetStore()
 
 const isMapReady = ref(false)
 
+// UX hack: When the map is moved from search results, we don't want to minimize the bottom sheet
+// This is because the map movement is triggered by the search results list changing,
+// which is also triggered by the bottom sheet opening
+const isMapMovingFromSearchResults = ref(false)
+
 // Emit events for map movement
 const emit = defineEmits(['map-moved'])
 
@@ -103,10 +108,20 @@ watch(() => searchResultsStore.activeResult, newActiveResult => {
 
 // Center map when search results list changes
 watch(() => searchResultsStore.searchResultsList, () => {
+    isMapMovingFromSearchResults.value = true
     recenterMap()
+    // Reset flag after a short delay to allow map events to process
+    nextTick(() => {
+        setTimeout(() => {
+            isMapMovingFromSearchResults.value = false
+        }, 100)
+    })
 }, { deep: true })
 
 const handleMapMovement = () => {
+    if (isMapMovingFromSearchResults.value) {
+        return
+    }
     emit('map-moved')
 }
 
@@ -116,6 +131,9 @@ const handleZoomChanged = () => {
         currentZoom.value = zoom
     }
 
+    if (isMapMovingFromSearchResults.value) {
+        return
+    }
     emit('map-moved')
 }
 
