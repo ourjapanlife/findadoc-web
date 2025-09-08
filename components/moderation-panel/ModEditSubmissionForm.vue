@@ -423,7 +423,7 @@ function initializeSubmissionFormValues(submissionData: Submission | undefined) 
               {
                   firstName: submittedHealthcareProfessionalName[0] || '',
                   lastName: submittedHealthcareProfessionalName[1] || '',
-                  locale: submissionData?.spokenLanguages?.[0] ?? Locale.Und
+                  locale: Locale.Und
               }
           ]
           : submittedHealthcareProfessionalName.length === 3
@@ -432,7 +432,7 @@ function initializeSubmissionFormValues(submissionData: Submission | undefined) 
                       firstName: submittedHealthcareProfessionalName[0] || '',
                       middleName: submittedHealthcareProfessionalName[1] || '',
                       lastName: submittedHealthcareProfessionalName[2] || '',
-                      locale: submissionData?.spokenLanguages?.[0] ?? Locale.Und
+                      locale: Locale.Und
                   }
               ]
               : [])
