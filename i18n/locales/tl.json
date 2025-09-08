@@ -163,8 +163,6 @@
     "healthcareProfessionalUpdatedSuccessfully": "Healthcare Professional updated successfully",
     "back": "Bumalik",
     "hasUnsavedChanges": "You have unsaved changes. Are you sure you want to leave?",
-    "deleteConfirmationFacility": "Are you sure you want to delete the Facility: {facility}, with ID: {id}?",
-    "deleteConfirmationHealthcareProfessional": "Are you sure you want to delete the Healthcare Professional: {healthcareProfessional}, with ID: {id}?",
     "healthcareProfessionalEnglishNameRequired": "Healthcare Professional must have an English name"
   },
   "modEditSubmissionTopNav": {
@@ -174,11 +172,7 @@
     "update": "Update"
   },
   "modPanelSubmissionList": {
-    "facilityNameUnknown": "Walang impormasyon sa pangalan ng pasilidad",
-    "modified": "Binago",
-    "name": "Pangalan",
-    "noSubmissions": "Walang nakabinbing mga isinumite.",
-    "submitted": "Isinumite"
+    "noSubmissions": "Walang nakabinbing mga isinumite."
   },
   "modFacilitySection": {
     "addresses": "Mga Address",
@@ -186,9 +180,7 @@
     "facilityHeading": "Impormasyon ng Pasilidad",
     "googleMapsInformation": "Impormasyon sa Google maps",
     "inputErrorMessageFacilityAddressLine1Ja": "Hindi wastong address sa Hapon",
-    "inputErrorMessageFacilityAddressLine2Ja": "Hindi wastong address sa Hapon",
     "inputErrorMessageFacilityAddressLine1En": "Hindi wastong address sa Ingles",
-    "inputErrorMessageFacilityAddressLine2En": "Hindi wastong address sa Ingles",
     "inputErrorMessageFacilityCityEn": "Hindi wastong pangalan ng Lungsod sa Ingles",
     "inputErrorMessageFacilityCityJa": "Hindi wastong pangalan ng Lungsod sa Hapon",
     "inputErrorMessageFacilityEmail": "Hindi wastong Email Address",
@@ -249,7 +241,6 @@
     "errorMessageEnglishNameRequired": "Ang propesyonal sa Pangangalagang Pangkalusugan ay kailangang may pangalan sa Ingles",
     "healthcareProfessionalId": "Mga ID ng propesyonal sa Pangangalagang Pangkalusugan",
     "infoMessageAlreadyApproved": "Ang Isinumite ay aprubado na",
-    "infoMessageUpdateNeeded": "Kailangang i-update ito bago maaprubahan",
     "labelHealthcareProfessionalFirstName": "Pangalan",
     "labelHealthcareProfessionalLastName": "Apelyido",
     "labelHealthcareProfessionalMiddleName": "Pangalawang pangalan",
@@ -378,16 +369,14 @@
     "resultsPerPage": "Results per page"
   },
   "errorPage": {
-      "title": "404 - Diagnosis: Hindi Nahanap ang Pahina",
-      "description": "Hindi nakapasa ang pahinang ito sa wellness exam. Dalhin ka namin sa malusog na pahina!",
-      "returnHome": "Bumalik sa home"
+    "title": "404 - Diagnosis: Hindi Nahanap ang Pahina",
+    "description": "Hindi nakapasa ang pahinang ito sa wellness exam. Dalhin ka namin sa malusog na pahina!",
+    "returnHome": "Bumalik sa home"
   },
   "modListContainerItem": {
     "newSubmission": "New",
     "underReviewSubmission": "Under Review",
     "approvedSubmission": "Approved",
-    "rejectedSubmission": "Rejected",
-    "review": "Review",
     "createdDate": "Created on",
     "updatedDate": "Updated last"
   },
@@ -397,5 +386,5 @@
     "displayName": "Display Name",
     "healthcareProfessionalName": "Profile Image",
     "updateButton": "Update Settings"
-   }
+  }
 }

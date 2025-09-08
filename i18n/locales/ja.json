@@ -143,11 +143,7 @@
     "update": "Update"
   },
   "modPanelSubmissionList": {
-    "facilityNameUnknown": "Facility Name Unknown",
-    "modified": "Modified",
-    "name": "Name",
-    "noSubmissions": "There are no pending submissions",
-    "submitted": "Submitted"
+    "noSubmissions": "There are no pending submissions"
   },
   "modHealthcareProfessionalSection": {
     "addHealthCareProfessionalLocaleName": "Add Name by Language",
@@ -205,7 +201,6 @@
     "errorMessageHealthcareInputsInvalid": "Some of the Healthcare Professional Fields were not filled in correctly",
     "errorMessageEnglishNameRequired": "The healthcare professional must have an English name",
     "infoMessageAlreadyApproved": "This submission has already been approved",
-    "infoMessageUpdateNeeded": "This needs to be updated before approval",
     "successMessageUpdated": "Submission updated successfully",
     "successMessageApproved": "Submission approved and created successfully",
     "facilitySuccessfullyRejected": "Facility rejected successfully",
@@ -238,9 +233,7 @@
     "facilityHeading": "Facility Information",
     "googleMapsInformation": "Google Maps Information",
     "inputErrorMessageFacilityAddressLine1Ja": "Invalid Japanese Address",
-    "inputErrorMessageFacilityAddressLine2Ja": "Invalid Japanese Address",
     "inputErrorMessageFacilityAddressLine1En": "Invalid English Address",
-    "inputErrorMessageFacilityAddressLine2En": "Invalid English Address",
     "inputErrorMessageFacilityCityEn": "Invalid English City Name",
     "inputErrorMessageFacilityCityJa": "Invalid Japanese City Name",
     "inputErrorMessageFacilityEmail": "Invalid Email Address",
@@ -303,8 +296,6 @@
     "healthcareProfessionalUpdatedSuccessfully": "Healthcare Professional updated successfully",
     "back": "戻る",
     "hasUnsavedChanges": "You have unsaved changes. Are you sure you want to leave?",
-    "deleteConfirmationFacility": "Are you sure you want to delete the Facility: {facility}, with ID: {id}?",
-    "deleteConfirmationHealthcareProfessional": "Are you sure you want to delete the Healthcare Professional: {healthcareProfessional}, with ID: {id}?",
     "healthcareProfessionalEnglishNameRequired": "Healthcare Professional must have an English name"
   },
   "serverErrorMessages": {
@@ -379,16 +370,14 @@
     "resultsPerPage": "Results per page"
   },
   "errorPage": {
-      "title": "404 - 診断：ページが見つかりません",
-      "description": "このページは健康診断に合格しませんでした。代わりに健康なページにご案内します！",
-      "returnHome": "ホームに戻る"
+    "title": "404 - 診断：ページが見つかりません",
+    "description": "このページは健康診断に合格しませんでした。代わりに健康なページにご案内します！",
+    "returnHome": "ホームに戻る"
   },
   "modListContainerItem": {
     "newSubmission": "New",
     "underReviewSubmission": "Under Review",
     "approvedSubmission": "Approved",
-    "rejectedSubmission": "Rejected",
-    "review": "Review",
     "createdDate": "Created on",
     "updatedDate": "Updated last"
   },
@@ -398,5 +387,5 @@
     "displayName": "表示名",
     "healthcareProfessionalName": "Profile Image",
     "updateButton": "Update Settings"
-   }
+  }
 }
