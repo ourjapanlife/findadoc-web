@@ -416,8 +416,10 @@ function initializeSubmissionFormValues(submissionData: Submission | undefined) 
             .filter((hp): hp is NonNullable<typeof hp> => hp !== undefined)
 
     // Healthcare Professionals fields
+    const hp = submissionData?.healthcareProfessionals?.[0]
+
     healthcareProfessionalSections.names
-    = submissionData?.healthcareProfessionals?.[0]?.names
+    = hp?.names
       ?? (submittedHealthcareProfessionalName.length === 2
           ? [
               {
@@ -437,11 +439,9 @@ function initializeSubmissionFormValues(submissionData: Submission | undefined) 
               ]
               : [])
 
-    const hpFacilityIds
-    = submissionData?.healthcareProfessionals?.[0]?.facilityIds ?? []
-    healthcareProfessionalSections.facilityIds = [...hpFacilityIds]
+    healthcareProfessionalSections.facilityIds = [...(hp?.facilityIds ?? [])]
     currentFacilityRelations.value
-    = hpFacilityIds
+        = healthcareProfessionalSections.facilityIds
             .map(facilityId =>
                 facilitiesStore.facilityData.find(facility => facility.id === facilityId))
             .filter((facility): facility is NonNullable<typeof facility> => facility !== undefined)
@@ -465,10 +465,11 @@ function initializeSubmissionFormValues(submissionData: Submission | undefined) 
     = submissionData.healthcareProfessionals[0].specialties
     }
 
-    if (submissionData?.healthcareProfessionals?.[0].spokenLanguages) {
-        healthcareProfessionalSections.spokenLanguages
-    = submissionData?.healthcareProfessionals?.[0].spokenLanguages
-    }
+    // Always include submissionData.spokenLanguages, append hp.spokenLanguages, remove duplicates
+    healthcareProfessionalSections.spokenLanguages = [
+        ...(submissionData?.spokenLanguages ?? []),
+        ...(hp?.spokenLanguages ?? [])
+    ].filter((value, index, self) => self.indexOf(value) === index)
 }
 
 // Assume you already have:
