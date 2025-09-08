@@ -1,0 +1,129 @@
+cn.json:
+- modPanelSubmissionList.facilityNameUnknown
+- modPanelSubmissionList.modified
+- modPanelSubmissionList.name
+- modPanelSubmissionList.submitted
+- modSubmissionForm.infoMessageUpdateNeeded
+- modFacilitySection.inputErrorMessageFacilityAddressLine2Ja
+- modFacilitySection.inputErrorMessageFacilityAddressLine2En
+- modEditFacilityOrHPTopbar.deleteConfirmationFacility
+- modEditFacilityOrHPTopbar.deleteConfirmationHealthcareProfessional
+- modListContainerItem.rejectedSubmission
+- modListContainerItem.review
+
+de.json:
+- modPanelSubmissionList.facilityNameUnknown
+- modPanelSubmissionList.modified
+- modPanelSubmissionList.name
+- modPanelSubmissionList.submitted
+- modSubmissionForm.infoMessageUpdateNeeded
+- modFacilitySection.inputErrorMessageFacilityAddressLine2Ja
+- modFacilitySection.inputErrorMessageFacilityAddressLine2En
+- modEditFacilityOrHPTopbar.deleteConfirmationFacility
+- modEditFacilityOrHPTopbar.deleteConfirmationHealthcareProfessional
+- modListContainerItem.rejectedSubmission
+- modListContainerItem.review
+
+en.json:
+- modEditFacilityOrHPTopbar.deleteConfirmationFacility
+- modEditFacilityOrHPTopbar.deleteConfirmationHealthcareProfessional
+- modPanelSubmissionList.facilityNameUnknown
+- modPanelSubmissionList.modified
+- modPanelSubmissionList.name
+- modPanelSubmissionList.submitted
+- modFacilitySection.inputErrorMessageFacilityAddressLine2Ja
+- modFacilitySection.inputErrorMessageFacilityAddressLine2En
+- modSubmissionForm.infoMessageUpdateNeeded
+- modListContainerItem.rejectedSubmission
+- modListContainerItem.review
+
+fr.json:
+- modPanelSubmissionList.modified
+- modPanelSubmissionList.name
+- modPanelSubmissionList.submitted
+- modPanelSubmissionList.facilityNameUnknown
+- modSubmissionForm.infoMessageUpdateNeeded
+- modFacilitySection.inputErrorMessageFacilityAddressLine2Ja
+- modFacilitySection.inputErrorMessageFacilityAddressLine2En
+- modEditFacilityOrHPTopbar.deleteConfirmationFacility
+- modEditFacilityOrHPTopbar.deleteConfirmationHealthcareProfessional
+- modListContainerItem.rejectedSubmission
+- modListContainerItem.review
+
+it.json:
+- modEditFacilityOrHPTopbar.deleteConfirmationFacility
+- modEditFacilityOrHPTopbar.deleteConfirmationHealthcareProfessional
+- modPanelSubmissionList.facilityNameUnknown
+- modPanelSubmissionList.modified
+- modPanelSubmissionList.name
+- modPanelSubmissionList.submitted
+- modFacilitySection.inputErrorMessageFacilityAddressLine2Ja
+- modFacilitySection.inputErrorMessageFacilityAddressLine2En
+- modSubmissionForm.infoMessageUpdateNeeded
+- modListContainerItem.rejectedSubmission
+- modListContainerItem.review
+
+ja.json:
+- modPanelSubmissionList.facilityNameUnknown
+- modPanelSubmissionList.modified
+- modPanelSubmissionList.name
+- modPanelSubmissionList.submitted
+- modSubmissionForm.infoMessageUpdateNeeded
+- modFacilitySection.inputErrorMessageFacilityAddressLine2Ja
+- modFacilitySection.inputErrorMessageFacilityAddressLine2En
+- modEditFacilityOrHPTopbar.deleteConfirmationFacility
+- modEditFacilityOrHPTopbar.deleteConfirmationHealthcareProfessional
+- modListContainerItem.rejectedSubmission
+- modListContainerItem.review
+
+pt.json:
+- modPanelSubmissionList.modified
+- modPanelSubmissionList.name
+- modPanelSubmissionList.submitted
+- modPanelSubmissionList.facilityNameUnknown
+- modSubmissionForm.infoMessageUpdateNeeded
+- modFacilitySection.inputErrorMessageFacilityAddressLine2Ja
+- modFacilitySection.inputErrorMessageFacilityAddressLine2En
+- modEditFacilityOrHPTopbar.deleteConfirmationFacility
+- modEditFacilityOrHPTopbar.deleteConfirmationHealthcareProfessional
+- modListContainerItem.rejectedSubmission
+- modListContainerItem.review
+
+ru.json:
+- modPanelSubmissionList.modified
+- modPanelSubmissionList.name
+- modPanelSubmissionList.submitted
+- modPanelSubmissionList.facilityNameUnknown
+- modSubmissionForm.infoMessageUpdateNeeded
+- modFacilitySection.inputErrorMessageFacilityAddressLine2Ja
+- modFacilitySection.inputErrorMessageFacilityAddressLine2En
+- modEditFacilityOrHPTopbar.deleteConfirmationFacility
+- modEditFacilityOrHPTopbar.deleteConfirmationHealthcareProfessional
+- modListContainerItem.rejectedSubmission
+- modListContainerItem.review
+
+tl.json:
+- modEditFacilityOrHPTopbar.deleteConfirmationFacility
+- modEditFacilityOrHPTopbar.deleteConfirmationHealthcareProfessional
+- modPanelSubmissionList.facilityNameUnknown
+- modPanelSubmissionList.modified
+- modPanelSubmissionList.name
+- modPanelSubmissionList.submitted
+- modFacilitySection.inputErrorMessageFacilityAddressLine2Ja
+- modFacilitySection.inputErrorMessageFacilityAddressLine2En
+- modSubmissionForm.infoMessageUpdateNeeded
+- modListContainerItem.rejectedSubmission
+- modListContainerItem.review
+
+vi.json:
+- modEditFacilityOrHPTopbar.deleteConfirmationFacility
+- modEditFacilityOrHPTopbar.deleteConfirmationHealthcareProfessional
+- modPanelSubmissionList.facilityNameUnknown
+- modPanelSubmissionList.modified
+- modPanelSubmissionList.name
+- modPanelSubmissionList.submitted
+- modFacilitySection.inputErrorMessageFacilityAddressLine2Ja
+- modFacilitySection.inputErrorMessageFacilityAddressLine2En
+- modSubmissionForm.infoMessageUpdateNeeded
+- modListContainerItem.rejectedSubmission
+- modListContainerItem.review
