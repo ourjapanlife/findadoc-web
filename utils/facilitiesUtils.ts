@@ -3,7 +3,9 @@ import { prefectureLanguageMatch } from '~/stores/locationsStore'
 export function validatePrefectureMatch(prefectureEn: string, prefectureJa: string): boolean {
     if (!prefectureEn && !prefectureJa) return true
     if (!prefectureEn || !prefectureJa) return false
-    return prefectureLanguageMatch[prefectureEn] === prefectureJa
+
+    const lowercasePrefectureEn = prefectureEn.toLowerCase()
+    return prefectureLanguageMatch[lowercasePrefectureEn] === prefectureJa
 }
 
 // Checks if a pair of prefecture values match, taking in an object with the fields.

@@ -477,17 +477,20 @@ watch(
         facilityStore.facilitySectionFields.prefectureJa
     ],
     ([en, ja]) => {
-        prefectureNameMatchError.value = !checkPrefectureNameMatch({ prefectureEn: en, prefectureJa: ja })
+        prefectureNameMatchError.value = !checkPrefectureNameMatch({
+            prefectureEn: en,
+            prefectureJa: ja
+        })
+
+        const lowercasePrefectureEn = en.trim().toLowerCase()
+
+        if (typeof lowercasePrefectureEn === 'string' && prefectureLanguageMatch[lowercasePrefectureEn]) {
+            const prefectureJaFromEn = prefectureLanguageMatch[lowercasePrefectureEn]
+            if (facilityStore.facilitySectionFields.prefectureJa !== prefectureJaFromEn) {
+                facilityStore.facilitySectionFields.prefectureJa = prefectureJaFromEn
+            }
+        }
     },
     { immediate: true }
-)
-
-watch(
-    () => facilityStore.facilitySectionFields.prefectureEn,
-    newEn => {
-        if (newEn && prefectureLanguageMatch[newEn]) {
-            facilityStore.facilitySectionFields.prefectureJa = prefectureLanguageMatch[newEn]
-        }
-    }
 )
 </script>
