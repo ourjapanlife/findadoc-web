@@ -25,7 +25,8 @@
     "balancesheet": "Balance Sheet",
     "moderation": "Moderation",
     "logout": "Log out",
-    "theme": "Thème"
+    "theme": "Thème",
+    "login": "Login"
   },
   "privacyPage": {
     "heading": "Politique de Confidentialité",
@@ -107,7 +108,8 @@
     "home": "Accueil",
     "submit": "Ajouter un médecin",
     "moderation": "Moderation",
-    "logout": "Log out"
+    "logout": "Log out",
+    "login": "Login"
   },
   "modCreateFacilityOrHPTopbar": {
     "confirmExit": "Exit without saving",
@@ -378,9 +380,9 @@
     "resultsPerPage": "Results per page"
   },
   "errorPage": {
-      "title": "404 - Diagnostic : Page non trouvée",
-      "description": "Cette page n'a pas réussi son examen de santé. Dirigeons-vous vers une page saine à la place !",
-      "returnHome": "Retour à l'accueil"
+    "title": "404 - Diagnostic : Page non trouvée",
+    "description": "Cette page n'a pas réussi son examen de santé. Dirigeons-vous vers une page saine à la place !",
+    "returnHome": "Retour à l'accueil"
   },
   "modListContainerItem": {
     "newSubmission": "New",
@@ -397,5 +399,5 @@
     "displayName": "Nom d'affichage",
     "healthcareProfessionalName": "Profile Image",
     "updateButton": "Update Settings"
-   }
+  }
 }

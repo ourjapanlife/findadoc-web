@@ -25,7 +25,8 @@
     "moderation": "Moderation",
     "logout": "Log out",
     "balancesheet": "Balance Sheet",
-    "theme": "тема"
+    "theme": "тема",
+    "login": "Login"
   },
   "privacyPage": {
     "heading": "Настоящая Политика конфиденциальности предназначена для того, чтобы помочь вам понять, какую информацию мы собираем, почему мы собираем ее, и как вы можете обновлять, управлять, экспортировать и удалять вашу информацию.",
@@ -107,7 +108,8 @@
     "home": "Главная страница",
     "submit": "Добавить доктора",
     "moderation": "Moderation",
-    "logout": "Log out"
+    "logout": "Log out",
+    "login": "Login"
   },
   "modCreateFacilityOrHPTopbar": {
     "confirmExit": "Exit without saving",
@@ -379,9 +381,9 @@
     "resultsPerPage": "Results per page"
   },
   "errorPage": {
-      "title": "404 - Диагноз: Страница не найдена",
-      "description": "Эта страница не прошла медосмотр. Давайте направим вас на здоровую страницу!",
-      "returnHome": "Вернуться домой"
+    "title": "404 - Диагноз: Страница не найдена",
+    "description": "Эта страница не прошла медосмотр. Давайте направим вас на здоровую страницу!",
+    "returnHome": "Вернуться домой"
   },
   "modListContainerItem": {
     "newSubmission": "New",
@@ -398,5 +400,5 @@
     "displayName": "Отображаемое имя",
     "healthcareProfessionalName": "Profile Image",
     "updateButton": "Update Settings"
-   }
+  }
 }

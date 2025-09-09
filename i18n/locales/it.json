@@ -29,7 +29,8 @@
     "logout": "Esci",
     "theme": "Tema",
     "languageDropdownTitle": "Lingua:",
-    "copyright": "Find a Doc, Japan"
+    "copyright": "Find a Doc, Japan",
+    "login": "Login"
   },
   "privacyPage": {
     "heading": "Informazioni sulla privacy",
@@ -111,7 +112,8 @@
     "home": "Home",
     "moderation": "Moderazione",
     "submit": "Aggiungi un medico",
-    "logout": "Esci"
+    "logout": "Esci",
+    "login": "Login"
   },
   "login": {
     "checkingauth": "Verifica autenticazione...",
@@ -378,9 +380,9 @@
     "resultsPerPage": "Risultati per pagagina"
   },
   "errorPage": {
-      "title": "404 - Diagnosi: Pagina non trovata",
-      "description": "Questa pagina non ha superato il suo esame di salute. Portiamoti invece a una pagina sana!",
-      "returnHome": "Torna alla home"
+    "title": "404 - Diagnosi: Pagina non trovata",
+    "description": "Questa pagina non ha superato il suo esame di salute. Portiamoti invece a una pagina sana!",
+    "returnHome": "Torna alla home"
   },
   "settingsPage": {
     "heading": "Settings",
@@ -388,7 +390,7 @@
     "displayName": "Nome visualizzato",
     "healthcareProfessionalName": "Profile Image",
     "updateButton": "Update Settings"
-   },
+  },
   "modListContainerItem": {
     "newSubmission": "New",
     "underReviewSubmission": "Under Review",
@@ -398,4 +400,4 @@
     "createdDate": "Created on",
     "updatedDate": "Updated last"
   }
-  }
+}
