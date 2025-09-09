@@ -366,7 +366,7 @@ watch(
         facilityStore.createFacilityFields.contact.address.prefectureEn,
         facilityStore.createFacilityFields.contact.address.prefectureJa
     ],
-    ([en, ja]) => {
+    ([en, _]) => {
         const lowercasePrefectureEn = en.trim().toLowerCase()
         const prefectureJaFromEn = prefectureLanguageMatch[lowercasePrefectureEn]
 
