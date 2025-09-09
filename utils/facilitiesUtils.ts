@@ -4,7 +4,7 @@ export function validatePrefectureMatch(prefectureEn: string, prefectureJa: stri
     if (!prefectureEn && !prefectureJa) return true
     if (!prefectureEn || !prefectureJa) return false
 
-    const lowercasePrefectureEn = prefectureEn.toLowerCase()
+    const lowercasePrefectureEn = prefectureEn.trim().toLowerCase()
     return prefectureLanguageMatch[lowercasePrefectureEn] === prefectureJa
 }
 

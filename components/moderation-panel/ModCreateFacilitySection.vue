@@ -367,19 +367,18 @@ watch(
         facilityStore.createFacilityFields.contact.address.prefectureJa
     ],
     ([en, ja]) => {
-        prefectureNameMatchError.value = !checkPrefectureNameMatch({
-            prefectureEn: en,
-            prefectureJa: ja
-        })
-
         const lowercasePrefectureEn = en.trim().toLowerCase()
+        const prefectureJaFromEn = prefectureLanguageMatch[lowercasePrefectureEn]
 
-        if (typeof lowercasePrefectureEn === 'string' && prefectureLanguageMatch[lowercasePrefectureEn]) {
-            const prefectureJaFromEn = prefectureLanguageMatch[lowercasePrefectureEn]
-            if (facilityStore.createFacilityFields.contact.address.prefectureJa !== prefectureJaFromEn) {
-                facilityStore.createFacilityFields.contact.address.prefectureJa = prefectureJaFromEn
-            }
+        if (prefectureJaFromEn && !facilityStore.createFacilityFields.contact.address.prefectureJa) {
+            facilityStore.createFacilityFields.contact.address.prefectureJa = prefectureJaFromEn
         }
+
+        const { prefectureEn, prefectureJa } = facilityStore.createFacilityFields.contact.address
+        prefectureNameMatchError.value = !checkPrefectureNameMatch({
+            prefectureEn,
+            prefectureJa
+        })
     },
     { immediate: true }
 )
