@@ -115,6 +115,15 @@
                         </div>
                     </div>
                 </div>
+                <div
+                    v-if="!authStore.isLoggedIn"
+                    data-testid="topnav-login"
+                    class="flex text-primary"
+                >
+                    <NuxtLink to="/login">
+                        {{ t('topNav.login') }}
+                    </NuxtLink>
+                </div>
             </nav>
             <LocaleSelector class="portrait:hidden" />
             <HamburgerMenu class="landscape:hidden justify-end" />
