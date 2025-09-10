@@ -88,34 +88,13 @@ onMounted(() => {
     setTimeout(() => { isMapReady.value = true }, 10)
 })
 
-watch(() => searchResultsStore.activeResult, newActiveResult => {
-    if (newActiveResult) {
-        const activeResultLocation = newActiveResult.facilities[0]
-        const lng = activeResultLocation?.mapLongitude ?? defaultLocation.lng
-
-        // Calculate proper latitude offset based on zoom level
-        // Use a gentler scaling factor that provides more consistent visual positioning
-        const baseLatOffset = 0.05 // Base offset at zoom 12 to position at 40% from top
-        const zoomDiff = 12 - currentZoom.value
-        const scalingFactor = Math.pow(2, zoomDiff) // Even gentler scaling for better consistency
-        const latOffset = baseLatOffset * scalingFactor
-
-        const lat = activeResultLocation?.mapLatitude ? activeResultLocation.mapLatitude - latOffset : defaultLocation.lat
-
-        setLocation(lat, lng)
-    }
+watch(() => searchResultsStore.activeResult, () => {
+    adjustMapToActiveResult()
 })
 
 // Center map when search results list changes
 watch(() => searchResultsStore.searchResultsList, () => {
-    isMapMovingFromSearchResults.value = true
-    recenterMap()
-    // Reset flag after a short delay to allow map events to process
-    nextTick(() => {
-        setTimeout(() => {
-            isMapMovingFromSearchResults.value = false
-        }, 100)
-    })
+    adjustMapToSearchResults()
 }, { deep: true })
 
 const handleMapMovement = () => {
@@ -137,6 +116,45 @@ const handleZoomChanged = () => {
     emit('map-moved')
 }
 
+const adjustMapToActiveResult = () => {
+    isMapMovingFromSearchResults.value = true
+
+    // We want to prevent the emit of the map-moved event when the user selects a location
+    // because this wasn't a real movement of the map by the user
+    nextTick(() => {
+        setTimeout(() => {
+            isMapMovingFromSearchResults.value = false
+        }, 100)
+    })
+
+    // When the user selects a location, let's zoom in a bit to make it easier to see the location
+    if (currentZoom.value < 8) {
+        currentZoom.value = 10
+    }
+
+    const activeResultLocation = searchResultsStore.activeResult?.facilities[0]
+    const lng = activeResultLocation?.mapLongitude ?? defaultLocation.lng
+    // Offset the center slightly south to account for bottom sheet overlay
+    const latOffset = calculateOffset(currentZoom.value)
+    const lat = activeResultLocation?.mapLatitude ? activeResultLocation.mapLatitude - latOffset : defaultLocation.lat
+
+    setLocation(lat, lng)
+}
+
+const adjustMapToSearchResults = () => {
+    isMapMovingFromSearchResults.value = true
+
+    // We want to prevent the emit of the map-moved event when the user selects a location
+    // because this wasn't a real movement of the map by the user
+    nextTick(() => {
+        setTimeout(() => {
+            isMapMovingFromSearchResults.value = false
+        }, 100)
+    })
+
+    recenterMap()
+}
+
 const setLocation = (lat: number, lng: number) => {
     const locationExists = lng && lat
 
@@ -148,12 +166,13 @@ const recenterMap = () => {
     if (!allCoordinates || !allCoordinates.length)
         return
 
-    const center = calculateCenter(allCoordinates)
-    // Offset the center slightly south to account for bottom sheet overlay
-    setLocation(center.lat - 0.10, center.lng)
-
     // Calculate and set appropriate zoom level
     currentZoom.value = calculateZoomLevel(allCoordinates)
+
+    const center = calculateAvgCenter(allCoordinates)
+    // Offset the center slightly south to account for bottom sheet overlay
+    const latOffset = calculateOffset(currentZoom.value)
+    setLocation(center.lat - latOffset, center.lng)
 }
 
 const getAllCurrentCoordinates = () => {
@@ -172,7 +191,17 @@ const getAllCurrentCoordinates = () => {
     return allCoordinates
 }
 
-const calculateCenter = (coordinates: { lat: number, lng: number }[]) => {
+const calculateOffset = (zoomLevel: number) => {
+    // Calculate proper latitude offset based on zoom level
+    // Use a gentler scaling factor that provides more consistent visual positioning
+    const baseLatOffset = 0.05 // Base offset at zoom 12 to position at 40% from top
+    const zoomDiff = 12 - zoomLevel
+    const scalingFactor = Math.pow(2, zoomDiff) // Even gentler scaling for better consistency
+    const latOffset = baseLatOffset * scalingFactor
+    return latOffset
+}
+
+const calculateAvgCenter = (coordinates: { lat: number, lng: number }[]) => {
     if (coordinates.length === 0) return defaultLocation
     if (coordinates.length === 1) return coordinates[0]
 
@@ -195,7 +224,7 @@ const calculateZoomLevel = (coordinates: { lat: number, lng: number }[]) => {
 
     // Zoom levels based on coordinate span
     switch (true) {
-        case maxDiff > 5: return 6
+        case maxDiff > 5: return 5
         case maxDiff > 2: return 7
         case maxDiff > 1: return 8
         case maxDiff > 0.5: return 9
