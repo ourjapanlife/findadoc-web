@@ -5,20 +5,18 @@
     <Teleport to="body">
         <div
             ref="bottomSheet"
-            class="transition-[visibility]"
-            :style="{
-                zIndex: zIndex,
-                visibility: showSheet ? 'visible' : 'hidden',
-                pointerEvents: showSheet ? 'auto' : 'none',
-            }"
-            :aria-hidden="!showSheet"
+            :class="[
+                'transition-[visibility]',
+                showSheet ? 'visible pointer-events-auto' : 'invisible pointer-events-none',
+                `z-${zIndex}`,
+                `aria-hidden:${showSheet ? 'true' : 'false'}`,
+            ]"
             role="dialog"
         >
             <transition>
                 <div
                     v-show="overlay && showSheet"
-                    class="absolute inset-0 z-10"
-                    :style="{ background: props.overlayColor }"
+                    class="absolute inset-0 z-10 bg-primary-bg/20"
                     @click="clickOnOverlayHandler"
                 />
             </transition>

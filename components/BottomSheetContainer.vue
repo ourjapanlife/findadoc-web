@@ -71,6 +71,8 @@ onMounted(() => {
 watch(() => bottomSheetStore.bottomSheetType, newType => {
     switch (newType) {
         case BottomSheetType.SearchResultsList:
+            // We start at 50% to show result details, but also can still see where it is on the map
+            // The user can expand to see more details and hide the map later
             bottomSheetRef.value?.setPosition(50)
             beforeMinimizedPosition.value = 50
             showCloseButton.value = false
@@ -84,8 +86,7 @@ watch(() => bottomSheetStore.bottomSheetType, newType => {
             bottomSheetStore.isMinimized = false
             break
         case BottomSheetType.SearchResultDetails:
-            // Set position to 75% when showing search result details, since this is the main, focused content
-            // However, we still want to use the map and show where the result is located
+            // Since this is the default view, we want it at 50% to show both the results and the map
             bottomSheetRef.value?.setPosition(50)
             beforeMinimizedPosition.value = 50
             showCloseButton.value = true
