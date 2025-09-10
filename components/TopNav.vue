@@ -80,41 +80,20 @@
                     class="hover:text-primary-hover transition-colors"
                 >{{ t('topNav.submit') }}
                 </NuxtLink>
-                <div
+                <LocaleSelector class="portrait:hidden" />
+                <button
                     v-if="authStore.isLoggedIn"
                     data-testid="topnav-profile-section"
                     class="flex text-primary"
+                    @click="toggleProfileMenu"
                 >
-                    <NuxtLink
-                        to="/moderation"
-                        class="hover:text-primary-hover transition-colors text-wrap mr-4"
-                        data-testid="top-nav-mod-link"
-                    >{{
-                        t('topNav.moderation') }}
-                    </NuxtLink>
-                    <NuxtLink
-                        to="/"
-                        class="mr-4"
+                    <img
+                        :src="authStore.userProfileImage || '~/assets/icons/profile-icon.svg'"
+                        alt="profile icon"
+                        title="profile icon"
+                        class="profile-icon w-10 stroke-primary inline stroke-2 rounded-full mx-1"
                     >
-                        <div
-                            class="text-primary"
-                            @click="logout()"
-                        >
-                            {{ t('topNav.logout') }}
-                        </div>
-                    </NuxtLink>
-                    <div class="flex">
-                        <img
-                            :src="authStore.userProfileImage || '~/assets/icons/profile-icon.svg'"
-                            alt="profile icon"
-                            title="profile icon"
-                            class="profile-icon w-7 stroke-primary inline stroke-2 rounded-full mx-1"
-                        >
-                        <div class="text-primary font-bold">
-                            {{ authStore.userId }}
-                        </div>
-                    </div>
-                </div>
+                </button>
                 <div
                     v-if="!authStore.isLoggedIn"
                     data-testid="topnav-login"
@@ -125,24 +104,55 @@
                     </NuxtLink>
                 </div>
             </nav>
-            <LocaleSelector class="portrait:hidden" />
             <HamburgerMenu class="landscape:hidden justify-end" />
+        </div>
+        <div
+            v-if="profileMenuIsOpen"
+            v-close-on-outside-click="toggleProfileMenu"
+            class="absolute border border-secondary-bg/10 top-20 right-4 z-10 bg-white rounded-xl p-3 bg-gradient-to-t"
+        >
+            <div class="text-primary font-bold mb-1">
+                {{ authStore.userId }}
+            </div>
+            <NuxtLink
+                to="/moderation"
+                class="hover:text-primary-hover transition-colors text-wrap mr-4"
+                data-testid="top-nav-mod-link"
+            >{{
+                t('topNav.moderation') }}
+            </NuxtLink>
+            <NuxtLink
+                to="/"
+            >
+                <div
+                    class="text-primary"
+                    @click="logout()"
+                >
+                    {{ t('topNav.logout') }}
+                </div>
+            </NuxtLink>
         </div>
     </div>
 </template>
 
 <script lang="ts" setup>
 import { useRoute } from 'vue-router'
-import { computed } from 'vue'
+import { ref, computed } from 'vue'
 import HamburgerMenu from './HamburgerMenu.vue'
 import SVGSiteLogo from '~/assets/icons/site-logo.svg'
 import { useAuthStore } from '~/stores/authStore'
+import { vCloseOnOutsideClick } from '~/composables/closeOnOutsideClick'
 
 const { t } = useI18n()
 
+const profileMenuIsOpen = ref(false)
 const authStore = useAuthStore()
 const route = useRoute()
 const isHomepage = computed(() => route.path === '/')
+
+function toggleProfileMenu() {
+    profileMenuIsOpen.value = !profileMenuIsOpen.value
+}
 
 async function logout() {
     await authStore.logout()
