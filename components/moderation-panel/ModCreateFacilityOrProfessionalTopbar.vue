@@ -195,7 +195,12 @@ const createFacilityOrHealthcareProfessional = async () => {
 
 const navigateBackToDashboardWithoutCreation = async () => {
     router.push('/moderation')
-    healthcareProfessionalsStore.resetCreateHealthcareProfessionalFields()
+    if (moderationScreenStore.createHealthcareProfessionalScreenIsActive()) {
+        healthcareProfessionalsStore.resetCreateHealthcareProfessionalFields()
+    }
+    if (moderationScreenStore.createFacilityScreenIsActive()) {
+        facilitiesStore.resetCreateFacilityFields()
+    }
     moderationScreenStore.setActiveScreen(ModerationScreen.Dashboard)
     modalStore.hideModal()
 }
