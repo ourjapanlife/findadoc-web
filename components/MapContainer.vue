@@ -117,6 +117,10 @@ const handleZoomChanged = () => {
 }
 
 const adjustMapToActiveResult = () => {
+    if (!searchResultsStore.activeResult) {
+        return
+    }
+
     isMapMovingFromSearchResults.value = true
 
     // We want to prevent the emit of the map-moved event when the user selects a location

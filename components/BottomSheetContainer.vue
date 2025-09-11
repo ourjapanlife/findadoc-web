@@ -55,8 +55,10 @@ import SearchResultDetails from '~/components/SearchResultDetails.vue'
 import SearchResultsList from '~/components/SearchResultsList.vue'
 import FiltersPanel from '~/components/FiltersPanel.vue'
 import { BottomSheetType, useBottomSheetStore } from '~/stores/bottomSheetStore'
+import { useSearchResultsStore } from '~/stores/searchResultsStore'
 
 const bottomSheetStore = useBottomSheetStore()
+const searchResultsStore = useSearchResultsStore()
 
 // Refs
 const bottomSheetRef = ref<typeof BottomSheet | null>(null)
@@ -106,6 +108,8 @@ watch(() => bottomSheetStore.isMinimized, isMinimized => {
 // Functions
 const resetSheet = () => {
     bottomSheetStore.showBottomSheet(BottomSheetType.SearchResultsList)
+    // We want to clear the active result on the map and list
+    searchResultsStore.clearActiveSearchResult()
 }
 
 const handleDraggingContent = () => {

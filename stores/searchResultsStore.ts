@@ -47,6 +47,9 @@ export const useSearchResultsStore = defineStore('searchResultsStore', () => {
             return { professional, facilities: matchingFacilities } satisfies SearchResult
         }).filter(result => result.facilities.length > 0) satisfies SearchResult[]
 
+        //clear any active result when new search results are loaded
+        clearActiveSearchResult()
+
         //update the state with the new results
         searchResultsList.value = combinedResults
 
@@ -66,6 +69,7 @@ export const useSearchResultsStore = defineStore('searchResultsStore', () => {
 
     function clearActiveSearchResult() {
         activeResultId.value = undefined
+        activeResult.value = undefined
     }
 
     return {
