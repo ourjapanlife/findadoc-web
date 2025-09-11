@@ -79,7 +79,9 @@
     "selectLocation": "Select a location...",
     "allLocations": "All Locations",
     "allSpecialties": "All Specialties",
-    "search": "Search"
+    "search": "Search",
+    "resultsFound": "{count} results found",
+    "searchAndFilterDoctors": "Search and filter doctors"
   },
   "searchResultsList": {
     "doctorsNearby": "Doctors Nearby",

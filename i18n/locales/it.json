@@ -86,13 +86,15 @@
     "selectLocation": "Seleziona una posizione...",
     "allLocations": "Tutte le località",
     "allSpecialties": "Tutte le specialità",
-    "search": "Cerca"
+    "search": "Cerca",
+    "resultsFound": "{count} risultati trovati",
+    "searchAndFilterDoctors": "Cerca e filtra i medici"
   },
   "searchResultsList": {
     "doctorsNearby": "Medici validi",
-    "filters": "Filtri",
     "noResults": "Nessun risultato trovato",
-    "noResultsSubtext": "Prova con una combinazione di filtri diversa"
+    "noResultsSubtext": "Prova con una combinazione di filtri diversa",
+    "filters": "Filters"
   },
   "searchResultsDetails": {
     "speaks": "Questo medico parla",
@@ -378,9 +380,9 @@
     "resultsPerPage": "Risultati per pagagina"
   },
   "errorPage": {
-      "title": "404 - Diagnosi: Pagina non trovata",
-      "description": "Questa pagina non ha superato il suo esame di salute. Portiamoti invece a una pagina sana!",
-      "returnHome": "Torna alla home"
+    "title": "404 - Diagnosi: Pagina non trovata",
+    "description": "Questa pagina non ha superato il suo esame di salute. Portiamoti invece a una pagina sana!",
+    "returnHome": "Torna alla home"
   },
   "settingsPage": {
     "heading": "Settings",
@@ -388,7 +390,7 @@
     "displayName": "Nome visualizzato",
     "healthcareProfessionalName": "Profile Image",
     "updateButton": "Update Settings"
-   },
+  },
   "modListContainerItem": {
     "newSubmission": "New",
     "underReviewSubmission": "Under Review",
@@ -398,4 +400,4 @@
     "createdDate": "Created on",
     "updatedDate": "Updated last"
   }
-  }
+}

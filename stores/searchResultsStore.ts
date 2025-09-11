@@ -2,7 +2,6 @@ import { gql } from 'graphql-request'
 import { defineStore } from 'pinia'
 import { ref, type Ref } from 'vue'
 import { gqlClient } from '../utils/graphql.js'
-import { useModalStore } from './modalStore'
 import { useLoadingStore } from './loadingStore.js'
 import type { Locale,
     Specialty,
@@ -20,6 +19,7 @@ export const useSearchResultsStore = defineStore('searchResultsStore', () => {
     const activeResultId: Ref<string | undefined> = ref()
     const activeResult: Ref<SearchResult | undefined> = ref()
     const searchResultsList: Ref<SearchResult[]> = ref([])
+    const totalResults = ref(0)
 
     const selectedCity: Ref<string | undefined> = ref()
     const selectedSpecialties: Ref<Specialty[] | undefined> = ref()
@@ -47,8 +47,14 @@ export const useSearchResultsStore = defineStore('searchResultsStore', () => {
             return { professional, facilities: matchingFacilities } satisfies SearchResult
         }).filter(result => result.facilities.length > 0) satisfies SearchResult[]
 
+        //clear any active result when new search results are loaded
+        clearActiveSearchResult()
+
         //update the state with the new results
         searchResultsList.value = combinedResults
+
+        //update the total results count
+        totalResults.value = combinedResults.length
 
         //set the loading visual state back to normal
         loadingStore.setIsLoading(false)
@@ -59,13 +65,11 @@ export const useSearchResultsStore = defineStore('searchResultsStore', () => {
 
         activeResult.value = newResult
         activeResultId.value = newResult?.professional.id
-
-        //show the search result details in a modal
-        useModalStore().showModal()
     }
 
     function clearActiveSearchResult() {
         activeResultId.value = undefined
+        activeResult.value = undefined
     }
 
     return {
@@ -77,7 +81,8 @@ export const useSearchResultsStore = defineStore('searchResultsStore', () => {
         clearActiveSearchResult,
         selectedCity,
         selectedSpecialties,
-        selectedLanguages
+        selectedLanguages,
+        totalResults
     }
 })
 
