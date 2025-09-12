@@ -1,5 +1,7 @@
 <template>
-    <div class="result-details landscape:min-w-[480px]">
+    <!-- Result Details -->
+    <div class="result-details landscape:min-w-[480px] pt-5 landscape:pt-0">
+        <!-- Banner -->
         <div class="header flex flex-1 bg-primary bg-gradient-to-r from-primary to-secondary">
             <SVGDoctorsBanner
                 role="img"
@@ -9,6 +11,7 @@
             />
         </div>
         <div class="result-content ml-2">
+            <!-- Header -->
             <div class="result-header mt-7 ml-4">
                 <span class="w-4 text-3xl font-bold pl-2 self-center">{{
                     healthcareProfessionalName
@@ -17,10 +20,12 @@
                     healthcareProfessionalDegrees
                 }}</span>
             </div>
+            <!-- Facility Or Hp Details -->
             <div class="result-details flex flex-col mb-1 ml-4 pl-2 mt-2 text-sm">
                 <span class="px-3 text-primary/90 font-medium text-lg">{{
                     facilityName
                 }}</span>
+                <!-- Specialties -->
                 <div
                     v-for="(specialty, index) in specialties"
                     :key="index"
@@ -29,6 +34,7 @@
                     <span class="px-3 italic">{{ specialty }}</span>
                 </div>
             </div>
+            <!-- Languages -->
             <div>
                 <div class="ml-9 mt-2 font-bold text-sm">
                     <span>{{ t("searchResultsDetails.speaks") }}:</span>
@@ -44,6 +50,7 @@
                     </div>
                 </div>
             </div>
+            <!-- Additional Info -->
             <div v-show="additionalInfoForPatients">
                 <div
                     class="ml-9 mt-2 font-bold text-sm"
@@ -54,10 +61,12 @@
                     <p>{{ additionalInfoForPatients }}</p>
                 </div>
             </div>
+            <!-- Contact Details -->
             <div class="about ml-4 pl-2">
                 <span class="font-semibold">{{
                     t("searchResultsDetails.contact")
                 }}</span>
+                <!-- Address -->
                 <div class="address flex my-4">
                     <SVGMapPinIcon
                         role="img"
@@ -79,6 +88,7 @@
                         </a>
                     </div>
                 </div>
+                <!-- Website -->
                 <div class="website flex my-4">
                     <SVGGlobeIcon
                         role="img"
@@ -94,6 +104,7 @@
                         class="underline text-blue"
                     >{{ website }}</a>
                 </div>
+                <!-- Phone -->
                 <div class="phone flex my-4">
                     <SVGPhoneIcon
                         role="img"
@@ -109,6 +120,7 @@
                         class="underline text-blue"
                     >{{ phone }}</a>
                 </div>
+                <!-- Email -->
                 <div
                     v-if="email && !excludedEmailAddresses.includes(email)"
                     class="email flex my-4"
@@ -126,6 +138,7 @@
                         class="underline text-blue"
                     >{{ email }}</a>
                 </div>
+                <!-- Last Updated Time -->
                 <div class="mr-3 mb-1 flex flex-row-reverse text-sm text-primary-text-muted">
                     <p>{{ formattedLastUpdate }}</p>
                 </div>
@@ -136,6 +149,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import SVGDoctorsBanner from '~/assets/icons/doctors-banner.svg'
 import SVGMapPinIcon from '~/assets/icons/map-pin-icon.svg'
 import SVGGlobeIcon from '~/assets/icons/globe-icon.svg'
@@ -153,6 +167,8 @@ const { t } = useI18n()
 const resultsStore = useSearchResultsStore()
 const localeStore = useLocaleStore()
 const specialtiesStore = useSpecialtiesStore()
+
+// Form Data
 
 const healthcareProfessionalName = computed(() => {
     const name = formatHealthcareProfessionalName(
@@ -244,10 +260,3 @@ const formattedLastUpdate = computed(() => {
 
 const excludedEmailAddresses = ['none', 'email@email.com']
 </script>
-
-<style>
-.hamburger-list-icon {
-    --background-color: transparent;
-    --second-background-color: --color-bg-secondary;
-}
-</style>

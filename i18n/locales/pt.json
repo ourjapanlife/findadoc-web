@@ -83,7 +83,9 @@
     "selectLocation": "Escolha uma localização...",
     "allLocations": "Todos os locais",
     "allSpecialties": "Todas as especialidades",
-    "search": "Procurar"
+    "search": "Procurar",
+    "resultsFound": "{count} resultados encontrados",
+    "searchAndFilterDoctors": "Pesquisar e filtrar médicos"
   },
   "searchResultsList": {
     "doctorsNearby": "Profissionais de saúde na região",

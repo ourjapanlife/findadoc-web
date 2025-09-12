@@ -83,7 +83,9 @@
     "selectLocation": "場所を選択",
     "allLocations": "すべての場所",
     "allSpecialties": "すべての専門分野",
-    "search": "検索"
+    "search": "検索",
+    "resultsFound": "{count}件の結果が見つかりました",
+    "searchAndFilterDoctors": "医師を検索・フィルター"
   },
   "searchResultsList": {
     "doctorsNearby": "近隣の医師",

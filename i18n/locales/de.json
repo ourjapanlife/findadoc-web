@@ -83,7 +83,9 @@
     "selectLocation": "Wählen Sie einen Standort...",
     "search": "Suchen",
     "allLocations": "All Locations",
-    "allSpecialties": "All Specialties"
+    "allSpecialties": "All Specialties",
+    "resultsFound": "{count} Ergebnisse gefunden",
+    "searchAndFilterDoctors": "Ärzte suchen und filtern"
   },
   "searchResultsList": {
     "doctorsNearby": "Ärzte in der Nähe",
