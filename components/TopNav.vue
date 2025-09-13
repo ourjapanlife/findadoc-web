@@ -90,6 +90,16 @@
                         class="hover:text-primary-hover transition-colors"
                     >{{ t('topNav.submit') }}
                     </NuxtLink>
+                    <!-- Login Link -->
+                    <div
+                        v-if="!authStore.isLoggedIn"
+                        data-testid="topnav-login"
+                        class="flex text-primary"
+                    >
+                        <NuxtLink to="/login">
+                            {{ t('topNav.login') }}
+                        </NuxtLink>
+                    </div>
                     <!-- Profile Section -->
                     <div
                         v-if="authStore.isLoggedIn"
