@@ -126,6 +126,16 @@
                                     </div>
                                 </NuxtLink>
                             </div>
+                            <div
+                                v-if="!authStore.isLoggedIn"
+                                class="text-primary"
+                            >
+                                <NuxtLink to="/login">
+                                    <div @click="closeMenu()">
+                                        {{ t('hamburgerMenu.login') }}
+                                    </div>
+                                </NuxtLink>
+                            </div>
                         </div>
                     </div>
 
