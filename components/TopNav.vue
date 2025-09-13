@@ -90,45 +90,82 @@
                         class="hover:text-primary-hover transition-colors"
                     >{{ t('topNav.submit') }}
                     </NuxtLink>
-                    <!-- Profile Section -->
-                    <div
+                    <!-- Profile Picture (if logged in) -->
+                    <button
                         v-if="authStore.isLoggedIn"
                         data-testid="topnav-profile-section"
                         class="flex text-primary"
+                        @click="toggleProfileMenu"
                     >
-                        <!-- Moderation Link -->
+                        <img
+                            :src="authStore.userProfileImage || '~/assets/icons/profile-icon.svg'"
+                            alt="profile icon"
+                            title="profile icon"
+                            class="profile-icon w-10 stroke-primary inline stroke-2 rounded-full mx-1"
+                        >
+                    </button>
+                    <!-- Login Button (if logged out)  -->
+                    <div
+                        v-if="!authStore.isLoggedIn"
+                        data-testid="topnav-login"
+                        class="flex text-primary"
+                    >
+                        <NuxtLink to="/login">
+                            {{ t('topNav.login') }}
+                        </NuxtLink>
+                    </div>
+                    <!-- Profile Dropdown Menu Options (if logged in) -->
+                    <div
+                        v-if="profileMenuIsOpen"
+                        v-close-on-outside-click="toggleProfileMenu"
+                        class="absolute border border-black/10 w-40 top-20 right-16
+                        z-10 bg-white rounded-xl p-2 shadow-xl"
+                    >
+                        <div class="flex mb-2 border-b-2 p-1 pb-1 items-center">
+                            <img
+                                :src="authStore.userProfileImage || '~/assets/icons/profile-icon.svg'"
+                                alt="profile icon"
+                                title="profile icon"
+                                class="profile-icon w-7 h-7 stroke-primary inline stroke-2 rounded-full"
+                            >
+                            <div class="ml-2 text-primary-text font-bold mb-1">
+                                {{ authStore.userId }}
+                            </div>
+                        </div>
+
                         <NuxtLink
                             to="/moderation"
-                            class="hover:text-primary-hover transition-colors text-wrap mr-4"
                             data-testid="top-nav-mod-link"
-                        >{{
-                            t('topNav.moderation') }}
+                            class="flex items-center text-primary-text hover:bg-primary-bg
+                            hover:text-primary hover:fill-primary-hover rounded-xl p-2"
+                        >
+                            <SVGModerationIcon
+                                role="img"
+                                title="moderation icon"
+                                class="w-6 h-6 mr-2"
+                            />
+                            <div class="">
+                                {{ t('topNav.moderation') }}
+                            </div>
                         </NuxtLink>
-                        <!-- Logout Link -->
+
                         <NuxtLink
                             to="/"
-                            class="mr-4"
+                            class="flex items-center text-primary-text hover:bg-primary-bg
+                            hover:text-primary hover:fill-primary-hover rounded-xl p-2"
                         >
+                            <SVGSignOutIcon
+                                role="img"
+                                title="log out icon"
+                                class="w-6 h-6 mr-2"
+                            />
                             <div
-                                class="text-primary"
+                                class=""
                                 @click="logout()"
                             >
                                 {{ t('topNav.logout') }}
                             </div>
                         </NuxtLink>
-                        <div class="flex">
-                            <!-- Profile Icon -->
-                            <img
-                                :src="authStore.userProfileImage || '~/assets/icons/profile-icon.svg'"
-                                alt="profile icon"
-                                title="profile icon"
-                                class="profile-icon w-7 stroke-primary inline stroke-2 rounded-full mx-1"
-                            >
-                            <!-- User ID -->
-                            <div class="text-primary font-bold">
-                                {{ authStore.userId }}
-                            </div>
-                        </div>
                     </div>
                 </nav>
                 <LocaleSelector class="portrait:hidden" />
@@ -141,10 +178,14 @@
 <script lang="ts" setup>
 import HamburgerMenu from './HamburgerMenu.vue'
 import SVGSiteLogo from '~/assets/icons/site-logo.svg'
+import SVGModerationIcon from '~/assets/icons/moderation-icon.svg'
+import SVGSignOutIcon from '~/assets/icons/sign-out-icon.svg'
 import { useAuthStore } from '~/stores/authStore'
+import { vCloseOnOutsideClick } from '~/composables/closeOnOutsideClick'
 
 const { t } = useI18n()
 
+const profileMenuIsOpen = ref(false)
 const authStore = useAuthStore()
 
 const showLogoText = ref(false)
@@ -154,6 +195,10 @@ function toggleLogoText() {
     setTimeout(() => {
         showLogoText.value = false
     }, 2000)
+}
+
+function toggleProfileMenu() {
+    profileMenuIsOpen.value = !profileMenuIsOpen.value
 }
 
 async function logout() {
