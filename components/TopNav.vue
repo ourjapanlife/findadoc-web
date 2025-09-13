@@ -114,37 +114,63 @@
                             {{ t('topNav.login') }}
                         </NuxtLink>
                     </div>
+                    <!-- Profile Dropdown Menu Options (if logged in) -->
+                    <div
+                        v-if="profileMenuIsOpen"
+                        v-close-on-outside-click="toggleProfileMenu"
+                        class="absolute border border-black/10 w-40 top-20 right-16
+                        z-10 bg-white rounded-xl p-2 shadow-xl"
+                    >
+                        <div class="flex mb-2 border-b-2 p-1 pb-1 items-center">
+                            <img
+                                :src="authStore.userProfileImage || '~/assets/icons/profile-icon.svg'"
+                                alt="profile icon"
+                                title="profile icon"
+                                class="profile-icon w-7 h-7 stroke-primary inline stroke-2 rounded-full"
+                            >
+                            <div class="ml-2 text-primary-text font-bold mb-1">
+                                {{ authStore.userId }}
+                            </div>
+                        </div>
+
+                        <NuxtLink
+                            to="/moderation"
+                            data-testid="top-nav-mod-link"
+                            class="flex items-center text-primary-text hover:bg-primary-bg
+                            hover:text-primary hover:fill-primary-hover rounded-xl p-2"
+                        >
+                            <SVGModerationIcon
+                                role="img"
+                                title="moderation icon"
+                                class="w-6 h-6 mr-2"
+                            />
+                            <div class="">
+                                {{ t('topNav.moderation') }}
+                            </div>
+                        </NuxtLink>
+
+                        <NuxtLink
+                            to="/"
+                            class="flex items-center text-primary-text hover:bg-primary-bg
+                            hover:text-primary hover:fill-primary-hover rounded-xl p-2"
+                        >
+                            <SVGSignOutIcon
+                                role="img"
+                                title="log out icon"
+                                class="w-6 h-6 mr-2"
+                            />
+                            <div
+                                class=""
+                                @click="logout()"
+                            >
+                                {{ t('topNav.logout') }}
+                            </div>
+                        </NuxtLink>
+                    </div>
                 </nav>
                 <LocaleSelector class="portrait:hidden" />
                 <HamburgerMenu class="landscape:hidden justify-end z-20 p-2 bg-primary-bg/20 rounded-2xl" />
             </div>
-        </div>
-        <!-- Profile Dropdown Menu Options (if logged in) -->
-        <div
-            v-if="profileMenuIsOpen"
-            v-close-on-outside-click="toggleProfileMenu"
-            class="absolute border border-secondary-bg/10 top-20 right-4 z-10 bg-white rounded-xl p-3 bg-gradient-to-t"
-        >
-            <div class="text-primary font-bold mb-1">
-                {{ authStore.userId }}
-            </div>
-            <NuxtLink
-                to="/moderation"
-                class="hover:text-primary-hover transition-colors text-wrap mr-4"
-                data-testid="top-nav-mod-link"
-            >{{
-                t('topNav.moderation') }}
-            </NuxtLink>
-            <NuxtLink
-                to="/"
-            >
-                <div
-                    class="text-primary"
-                    @click="logout()"
-                >
-                    {{ t('topNav.logout') }}
-                </div>
-            </NuxtLink>
         </div>
     </div>
 </template>
@@ -152,6 +178,8 @@
 <script lang="ts" setup>
 import HamburgerMenu from './HamburgerMenu.vue'
 import SVGSiteLogo from '~/assets/icons/site-logo.svg'
+import SVGModerationIcon from '~/assets/icons/moderation-icon.svg'
+import SVGSignOutIcon from '~/assets/icons/sign-out-icon.svg'
 import { useAuthStore } from '~/stores/authStore'
 import { vCloseOnOutsideClick } from '~/composables/closeOnOutsideClick'
 
