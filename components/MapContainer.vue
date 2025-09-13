@@ -196,6 +196,11 @@ const getAllCurrentCoordinates = () => {
 }
 
 const calculateOffset = (zoomLevel: number) => {
+    // We don't need to offset landscape mode
+    if (useScreenOrientation().isLandscape.value) {
+        return 0
+    }
+
     // Calculate proper latitude offset based on zoom level
     // Use a gentler scaling factor that provides more consistent visual positioning
     const baseLatOffset = 0.05 // Base offset at zoom 12 to position at 40% from top
