@@ -107,7 +107,8 @@
     "moderation": "Moderation",
     "submit": "Add a Doctor",
     "logout": "Log out",
-    "login": "Login"
+    "login": "Login",
+    "settings": "Settings"
   },
   "login": {
     "checkingauth": "Checking Authentication...",

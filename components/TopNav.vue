@@ -101,7 +101,7 @@
                             :src="authStore.userProfileImage || '~/assets/icons/profile-icon.svg'"
                             alt="profile icon"
                             title="profile icon"
-                            class="profile-icon w-10 stroke-primary inline stroke-2 rounded-full mx-1"
+                            class="profile-icon w-10 stroke-primary inline stroke-2 rounded-full mx-1 hover:scale-105"
                         >
                     </button>
                     <!-- Login Button (if logged out)  -->
@@ -114,25 +114,24 @@
                             {{ t('topNav.login') }}
                         </NuxtLink>
                     </div>
-                    <!-- Profile Dropdown Menu Options (if logged in) -->
+                    <!-- Profile Dropdown Menu Options (if profile pic clicked) -->
                     <div
                         v-if="profileMenuIsOpen"
                         v-close-on-outside-click="toggleProfileMenu"
-                        class="absolute border border-black/10 w-40 top-20 right-16
+                        class="absolute border border-black/10 w-40 top-20 right-[4.8rem]
                         z-10 bg-white rounded-xl p-2 shadow-xl"
                     >
-                        <div class="flex mb-2 border-b-2 p-1 pb-1 items-center">
+                        <div class="flex mb-3 border-b-2 p-1 pb-1 items-center">
                             <img
                                 :src="authStore.userProfileImage || '~/assets/icons/profile-icon.svg'"
                                 alt="profile icon"
                                 title="profile icon"
-                                class="profile-icon w-7 h-7 stroke-primary inline stroke-2 rounded-full"
+                                class="w-7 h-7 stroke-primary inline stroke-2 rounded-full"
                             >
-                            <div class="ml-2 text-primary-text font-bold mb-1">
+                            <div class="ml-2 text-primary-text font-bold mb-1 text-wrap">
                                 {{ authStore.userId }}
                             </div>
                         </div>
-
                         <NuxtLink
                             to="/moderation"
                             data-testid="top-nav-mod-link"
@@ -146,6 +145,21 @@
                             />
                             <div class="">
                                 {{ t('topNav.moderation') }}
+                            </div>
+                        </NuxtLink>
+                        <NuxtLink
+                            to="/settings"
+                            data-testid="top-nav-mod-link"
+                            class="flex items-center text-primary-text hover:bg-primary-bg
+                            hover:text-primary hover:fill-primary-hover rounded-xl p-2"
+                        >
+                            <SVGSettingsIcon
+                                role="img"
+                                title="moderation icon"
+                                class="w-6 h-6 mr-2"
+                            />
+                            <div class="">
+                                {{ t('topNav.settings') }}
                             </div>
                         </NuxtLink>
 
@@ -179,6 +193,7 @@
 import HamburgerMenu from './HamburgerMenu.vue'
 import SVGSiteLogo from '~/assets/icons/site-logo.svg'
 import SVGModerationIcon from '~/assets/icons/moderation-icon.svg'
+import SVGSettingsIcon from '~/assets/icons/settings-icon.svg'
 import SVGSignOutIcon from '~/assets/icons/sign-out-icon.svg'
 import { useAuthStore } from '~/stores/authStore'
 import { vCloseOnOutsideClick } from '~/composables/closeOnOutsideClick'
