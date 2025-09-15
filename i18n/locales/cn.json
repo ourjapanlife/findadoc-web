@@ -17,7 +17,6 @@
   },
   "hamburgerMenu": {
     "about": "关于 Find a Doc, Japan",
-    "home": "主页",
     "contact": "联系我们",
     "submit": "添加一位医师",
     "moderation": "审核",
@@ -83,12 +82,9 @@
     "allLocations": "所有地点",
     "allSpecialties": "所有专科",
     "search": "搜索",
-    "resultsFound": "找到{count}个结果",
     "searchAndFilterDoctors": "搜索和筛选医生"
   },
   "searchResultsList": {
-    "doctorsNearby": "附近的医师",
-    "filters": "筛选条件",
     "noResults": "无符合条件的结果",
     "noResultsSubtext": "请使用不同的筛选条件"
   },
@@ -145,11 +141,7 @@
     "update": "Update"
   },
   "modPanelSubmissionList": {
-    "facilityNameUnknown": "未知机构名称",
-    "modified": "已修改",
-    "name": "名称",
-    "noSubmissions": "暂无待审核的已提交项目",
-    "submitted": "已提交"
+    "noSubmissions": "暂无待审核的已提交项目"
   },
   "modHealthcareProfessionalSection": {
     "addHealthCareProfessionalLocaleName": "Add Name by Language",
@@ -207,7 +199,6 @@
     "errorMessageHealthcareInputsInvalid": "Some of the Healthcare Professional Fields were not filled in correctly",
     "errorMessageEnglishNameRequired": "The healthcare professional must have an English name",
     "infoMessageAlreadyApproved": "This submission has already been approved",
-    "infoMessageUpdateNeeded": "This needs to be updated before approval",
     "successMessageUpdated": "Submission updated successfully",
     "successMessageApproved": "Submission approved and created successfully",
     "facilitySuccessfullyRejected": "Facility rejected successfully",
@@ -240,9 +231,7 @@
     "facilityHeading": "Facility Information",
     "googleMapsInformation": "Google Maps Information",
     "inputErrorMessageFacilityAddressLine1Ja": "Invalid Japanese Address",
-    "inputErrorMessageFacilityAddressLine2Ja": "Invalid Japanese Address",
     "inputErrorMessageFacilityAddressLine1En": "Invalid English Address",
-    "inputErrorMessageFacilityAddressLine2En": "Invalid English Address",
     "inputErrorMessageFacilityCityEn": "Invalid English City Name",
     "inputErrorMessageFacilityCityJa": "Invalid Japanese City Name",
     "inputErrorMessageFacilityEmail": "Invalid Email Address",
@@ -305,8 +294,6 @@
     "healthcareProfessionalUpdatedSuccessfully": "Healthcare Professional updated successfully",
     "back": "Back",
     "hasUnsavedChanges": "You have unsaved changes. Are you sure you want to leave?",
-    "deleteConfirmationFacility": "Are you sure you want to delete the Facility: {facility}, with ID: {id}?",
-    "deleteConfirmationHealthcareProfessional": "Are you sure you want to delete the Healthcare Professional: {healthcareProfessional}, with ID: {id}?",
     "healthcareProfessionalEnglishNameRequired": "Healthcare Professional must have an English name"
   },
   "serverErrorMessages": {
@@ -381,16 +368,14 @@
     "resultsPerPage": "Results per page"
   },
   "errorPage": {
-      "title": "404 - 诊断：页面未找到",
-      "description": "此页面未通过健康检查。让我们带您到一个健康的页面吧！",
-      "returnHome": "返回首页"
+    "title": "404 - 诊断：页面未找到",
+    "description": "此页面未通过健康检查。让我们带您到一个健康的页面吧！",
+    "returnHome": "返回首页"
   },
   "modListContainerItem": {
     "newSubmission": "New",
     "underReviewSubmission": "Under Review",
     "approvedSubmission": "Approved",
-    "rejectedSubmission": "Rejected",
-    "review": "Review",
     "createdDate": "Created on",
     "updatedDate": "Updated last"
   },

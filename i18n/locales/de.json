@@ -17,7 +17,6 @@
   },
   "hamburgerMenu": {
     "about": "Über Find a Doc, Japan",
-    "home": "Startseite",
     "contact": "Kontakt",
     "submit": "Arzt hinzufügen",
     "moderation": "Moderation",
@@ -83,12 +82,9 @@
     "search": "Suchen",
     "allLocations": "All Locations",
     "allSpecialties": "All Specialties",
-    "resultsFound": "{count} Ergebnisse gefunden",
     "searchAndFilterDoctors": "Ärzte suchen und filtern"
   },
   "searchResultsList": {
-    "doctorsNearby": "Ärzte in der Nähe",
-    "filters": "Filter",
     "noResults": "Keine Ergebnisse gefunden",
     "noResultsSubtext": "Bitte versuchen Sie eine andere Filterkombination."
   },
@@ -191,11 +187,7 @@
     "update": "Update"
   },
   "modPanelSubmissionList": {
-    "facilityNameUnknown": "Facility Name Unknown",
-    "modified": "Geändert",
-    "name": "Name",
-    "noSubmissions": "Es gibt keine ausstehenden Einreichungen",
-    "submitted": "Eingereicht"
+    "noSubmissions": "Es gibt keine ausstehenden Einreichungen"
   },
   "modHealthcareProfessionalSection": {
     "addHealthCareProfessionalLocaleName": "Add Name by Language",
@@ -253,7 +245,6 @@
     "errorMessageHealthcareInputsInvalid": "Some of the Healthcare Professional Fields were not filled in correctly",
     "errorMessageEnglishNameRequired": "The healthcare professional must have an English name",
     "infoMessageAlreadyApproved": "This submission has already been approved",
-    "infoMessageUpdateNeeded": "This needs to be updated before approval",
     "successMessageUpdated": "Submission updated successfully",
     "successMessageApproved": "Submission approved and created successfully",
     "facilitySuccessfullyRejected": "Facility rejected successfully",
@@ -286,9 +277,7 @@
     "facilityHeading": "Facility Information",
     "googleMapsInformation": "Google Maps information",
     "inputErrorMessageFacilityAddressLine1Ja": "Invalid Japanese Address",
-    "inputErrorMessageFacilityAddressLine2Ja": "Invalid Japanese Address",
     "inputErrorMessageFacilityAddressLine1En": "Invalid English Address",
-    "inputErrorMessageFacilityAddressLine2En": "Invalid English Address",
     "inputErrorMessageFacilityCityEn": "Invalid English City Name",
     "inputErrorMessageFacilityCityJa": "Invalid Japanese City Name",
     "inputErrorMessageFacilityEmail": "Invalid Email Address",
@@ -351,8 +340,6 @@
     "healthcareProfessionalUpdatedSuccessfully": "Healthcare Professional updated successfully",
     "back": "Back",
     "hasUnsavedChanges": "You have unsaved changes. Are you sure you want to leave?",
-    "deleteConfirmationFacility": "Are you sure you want to delete the Facility: {facility}, with ID: {id}?",
-    "deleteConfirmationHealthcareProfessional": "Are you sure you want to delete the Healthcare Professional: {healthcareProfessional}, with ID: {id}?",
     "healthcareProfessionalEnglishNameRequired": "Healthcare Professional must have an English name"
   },
   "serverErrorMessages": {
@@ -381,16 +368,14 @@
     "resultsPerPage": "Results per page"
   },
   "errorPage": {
-      "title": "404 - Diagnose: Seite nicht gefunden",
-      "description": "Diese Seite hat ihre Gesundheitsprüfung nicht bestanden. Lassen Sie uns Sie stattdessen zu einer gesunden Seite bringen!",
-      "returnHome": "Zur Startseite"
+    "title": "404 - Diagnose: Seite nicht gefunden",
+    "description": "Diese Seite hat ihre Gesundheitsprüfung nicht bestanden. Lassen Sie uns Sie stattdessen zu einer gesunden Seite bringen!",
+    "returnHome": "Zur Startseite"
   },
   "modListContainerItem": {
     "newSubmission": "New",
     "underReviewSubmission": "Under Review",
     "approvedSubmission": "Approved",
-    "rejectedSubmission": "Rejected",
-    "review": "Review",
     "createdDate": "Created on",
     "updatedDate": "Updated last"
   },
