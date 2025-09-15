@@ -26,7 +26,8 @@
     "languageDropdownTitle": "対応言語:",
     "copyright": "Find a Doc, Japan",
     "balancesheet": "Balance Sheet",
-    "login": "Login"
+    "login": "Login",
+    "settings": "Settings"
   },
   "privacyPage": {
     "heading": "Privacy Policy",
@@ -111,7 +112,8 @@
     "moderation": "モデレータ",
     "submit": "医師情報の追加",
     "logout": "ログアウト",
-    "login": "Login"
+    "login": "Login",
+    "settings": "Settings"
   },
   "login": {
     "checkingauth": "認証の確認...",

@@ -26,7 +26,8 @@
     "languageDropdownTitle": "Lengwahe:",
     "copyright": "Find a Doc, Japan",
     "theme": "Tema",
-    "login": "Login"
+    "login": "Login",
+    "settings": "Settings"
   },
   "privacyPage": {
     "heading": "Patakaran sa Pribasiya",
@@ -111,7 +112,8 @@
     "moderation": "Moderasyon",
     "submit": "Magdagdag ng Doktor",
     "logout": "Log out",
-    "login": "Login"
+    "login": "Login",
+    "settings": "Settings"
   },
   "login": {
     "checkingauth": "Sinusuri ang Authentication...",

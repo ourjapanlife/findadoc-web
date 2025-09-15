@@ -26,7 +26,8 @@
     "moderation": "Moderation",
     "logout": "Log out",
     "theme": "Thème",
-    "login": "Login"
+    "login": "Login",
+    "settings": "Settings"
   },
   "privacyPage": {
     "heading": "Politique de Confidentialité",
@@ -111,7 +112,8 @@
     "submit": "Ajouter un médecin",
     "moderation": "Moderation",
     "logout": "Log out",
-    "login": "Login"
+    "login": "Login",
+    "settings": "Settings"
   },
   "modCreateFacilityOrHPTopbar": {
     "confirmExit": "Exit without saving",

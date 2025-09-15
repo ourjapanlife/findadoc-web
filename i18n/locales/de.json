@@ -26,7 +26,8 @@
     "languageDropdownTitle": "Sprache:",
     "copyright": "Find a Doc, Japan",
     "balancesheet": "Balance Sheet",
-    "login": "Login"
+    "login": "Login",
+    "settings": "Settings"
   },
   "privacyPage": {
     "heading": "Datenschutzerklärung",
@@ -111,7 +112,8 @@
     "moderation": "Moderation",
     "submit": "Arzt hinzufügen",
     "logout": "Abmelden",
-    "login": "Login"
+    "login": "Login",
+    "settings": "Settings"
   },
   "login": {
     "checkingauth": "Authentifizierung wird überprüft...",

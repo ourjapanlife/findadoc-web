@@ -101,9 +101,9 @@
                             </NuxtLink>
                             <div
                                 v-if="authStore.isLoggedIn"
-                                class="text-primary"
+                                class="text-primary-text"
                             >
-                                <div class="flex">
+                                <div class="flex mb-4 pb-1 border-b-2 w-[10rem]">
                                     <!-- Profile Image -->
                                     <img
                                         :src="authStore.userProfileImage || '~/assets/icons/profile-icon.svg'"
@@ -111,16 +111,45 @@
                                         title="profile icon"
                                         class="profile-icon w-7 stroke-primary inline stroke-2 rounded-full mr-1"
                                     >
-                                    <div class="text-primary font-bold">
+                                    <div class="font-bold">
                                         {{ authStore.userId }}
                                     </div>
                                 </div>
-                                <NuxtLink to="/moderation">
+                                <NuxtLink
+                                    to="/moderation"
+                                    class="flex ml-0.3 mb-4"
+                                >
+                                    <SVGModerationIcon
+                                        role="img"
+                                        title="moderation icon"
+                                        class="w-6 h-6 mr-2"
+                                    />
                                     <div @click="closeMenu()">
                                         {{ t('hamburgerMenu.moderation') }}
                                     </div>
                                 </NuxtLink>
-                                <NuxtLink to="/">
+                                <NuxtLink
+                                    to="/settings"
+                                    class="flex ml-0.3 mb-4"
+                                >
+                                    <SVGSettingsIcon
+                                        role="img"
+                                        title="setting icon"
+                                        class="w-6 h-6 mr-2"
+                                    />
+                                    <div @click="closeMenu()">
+                                        {{ t('hamburgerMenu.settings') }}
+                                    </div>
+                                </NuxtLink>
+                                <NuxtLink
+                                    to="/"
+                                    class="flex"
+                                >
+                                    <SVGSignOutIcon
+                                        role="img"
+                                        title="setting icon"
+                                        class="w-6 h-6 mr-2"
+                                    />
                                     <div @click="logout()">
                                         {{ t('hamburgerMenu.logout') }}
                                     </div>
@@ -297,6 +326,9 @@ import { ref, onMounted } from 'vue'
 import { vCloseOnOutsideClick } from '~/composables/closeOnOutsideClick'
 import SVGHamburgerMenuIcon from '~/assets/icons/hamburger-menu.svg'
 import SVGGithubIcon from '~/assets/icons/social-github.svg'
+import SVGModerationIcon from '~/assets/icons/moderation-icon.svg'
+import SVGSettingsIcon from '~/assets/icons/settings-icon.svg'
+import SVGSignOutIcon from '~/assets/icons/sign-out-icon.svg'
 import { useAuthStore } from '~/stores/authStore'
 import { convertStringToTitleCase } from '~/utils/stringUtils'
 

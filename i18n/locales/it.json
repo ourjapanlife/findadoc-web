@@ -30,7 +30,8 @@
     "theme": "Tema",
     "languageDropdownTitle": "Lingua:",
     "copyright": "Find a Doc, Japan",
-    "login": "Login"
+    "login": "Login",
+    "settings": "Settings"
   },
   "privacyPage": {
     "heading": "Informazioni sulla privacy",
@@ -115,7 +116,8 @@
     "moderation": "Moderazione",
     "submit": "Aggiungi un medico",
     "logout": "Esci",
-    "login": "Login"
+    "login": "Login",
+    "settings": "Settings"
   },
   "login": {
     "checkingauth": "Verifica autenticazione...",

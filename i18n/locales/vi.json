@@ -26,7 +26,8 @@
     "languageDropdownTitle": "Ngôn Ngữ:",
     "copyright": "Find a Doc, Japan",
     "theme": "Chủ đề",
-    "login": "Login"
+    "login": "Login",
+    "settings": "Settings"
   },
   "privacyPage": {
     "heading": "Chính Sách Bảo Mật",
@@ -111,7 +112,8 @@
     "moderation": "Quản trị viên",
     "submit": "Thêm bác sĩ",
     "logout": "Đăng xuất",
-    "login": "Login"
+    "login": "Login",
+    "settings": "Settings"
   },
   "login": {
     "checkingauth": "Đang kiểm tra xác thực...",

@@ -26,7 +26,8 @@
     "logout": "Log out",
     "balancesheet": "Balance Sheet",
     "theme": "тема",
-    "login": "Login"
+    "login": "Login",
+    "settings": "Settings"
   },
   "privacyPage": {
     "heading": "Настоящая Политика конфиденциальности предназначена для того, чтобы помочь вам понять, какую информацию мы собираем, почему мы собираем ее, и как вы можете обновлять, управлять, экспортировать и удалять вашу информацию.",
@@ -111,7 +112,8 @@
     "submit": "Добавить доктора",
     "moderation": "Moderation",
     "logout": "Log out",
-    "login": "Login"
+    "login": "Login",
+    "settings": "Settings"
   },
   "modCreateFacilityOrHPTopbar": {
     "confirmExit": "Exit without saving",

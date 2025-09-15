@@ -70,7 +70,7 @@
             >
                 <nav
                     id="desktop-menu-items"
-                    class="portrait:hidden flex gap-4 mx-6 self-center whitespace-nowrap"
+                    class="portrait:hidden flex gap-4 mx-6 self-center items-center whitespace-nowrap"
                 >
                     <!-- About Link -->
                     <NuxtLink
@@ -101,7 +101,7 @@
                             :src="authStore.userProfileImage || '~/assets/icons/profile-icon.svg'"
                             alt="profile icon"
                             title="profile icon"
-                            class="profile-icon w-10 stroke-primary inline stroke-2 rounded-full mx-1 hover:scale-105"
+                            class="w-8 h-8 stroke-primary inline stroke-2 rounded-full mx-1 hover:scale-105"
                         >
                     </button>
                     <!-- Login Button (if logged out)  -->

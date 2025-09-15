@@ -30,7 +30,8 @@
     "theme": "Theme",
     "languageDropdownTitle": "Language:",
     "copyright": "Find a Doc, Japan",
-    "login": "Login"
+    "login": "Login",
+    "settings": "Settings"
   },
   "privacyPage": {
     "heading": "Privacy Policy",

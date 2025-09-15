@@ -26,7 +26,8 @@
     "logout": "Log out",
     "balancesheet": "Balance Sheet",
     "theme": "Tema",
-    "login": "Login"
+    "login": "Login",
+    "settings": "Settings"
   },
   "privacyPage": {
     "heading": "Política de privacidade",
@@ -111,7 +112,8 @@
     "submit": "Adicionar um profissional de saúde",
     "moderation": "Moderation",
     "logout": "Log out",
-    "login": "Login"
+    "login": "Login",
+    "settings": "Settings"
   },
   "modCreateFacilityOrHPTopbar": {
     "confirmExit": "Exit without saving",
