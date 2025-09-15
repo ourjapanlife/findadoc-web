@@ -31,7 +31,8 @@
     "languageDropdownTitle": "Lingua:",
     "copyright": "Find a Doc, Japan",
     "login": "Login",
-    "settings": "Settings"
+    "settings": "Settings",
+    "logoutToast": "Successfully logged out"
   },
   "privacyPage": {
     "heading": "Informazioni sulla privacy",
@@ -117,7 +118,8 @@
     "submit": "Aggiungi un medico",
     "logout": "Esci",
     "login": "Login",
-    "settings": "Settings"
+    "settings": "Settings",
+    "logoutToast": "Successfully logged out"
   },
   "login": {
     "checkingauth": "Verifica autenticazione...",

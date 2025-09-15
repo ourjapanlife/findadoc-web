@@ -128,19 +128,19 @@
                                         {{ t('hamburgerMenu.settings') }}
                                     </div>
                                 </NuxtLink>
-                                <NuxtLink
-                                    to="/"
+                                <button
                                     class="flex"
+                                    @click="logout()"
                                 >
                                     <SVGSignOutIcon
                                         role="img"
                                         title="setting icon"
                                         class="w-6 h-6 mr-2"
                                     />
-                                    <div @click="logout()">
+                                    <div>
                                         {{ t('hamburgerMenu.logout') }}
                                     </div>
-                                </NuxtLink>
+                                </button>
                             </div>
                             <div
                                 v-if="!authStore.isLoggedIn"
@@ -309,6 +309,8 @@
 </template>
 
 <script lang="ts" setup>
+import { useToast } from 'vue-toastification'
+import { useRouter } from 'vue-router'
 import { ref, onMounted } from 'vue'
 import { vCloseOnOutsideClick } from '~/composables/closeOnOutsideClick'
 import SVGHamburgerMenuIcon from '~/assets/icons/hamburger-menu.svg'
@@ -319,6 +321,8 @@ import { useAuthStore } from '~/stores/authStore'
 import { convertStringToTitleCase } from '~/utils/stringUtils'
 
 const authStore = useAuthStore()
+const toast = useToast()
+const router = useRouter()
 
 const isMenuOpen = ref(false)
 
@@ -334,9 +338,14 @@ function closeMenu() {
     isMenuOpen.value = false
 }
 
-function logout() {
-    authStore.logout()
-    closeMenu()
+async function logout() {
+    try {
+        await authStore.logout()
+        toast.success(t('hamburgerMenu.logoutToast'))
+        router.push('/')
+    } catch (error) {
+        toast.error(error)
+    }
 }
 
 function setTheme(newTheme: string) {

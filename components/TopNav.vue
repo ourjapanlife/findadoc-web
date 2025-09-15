@@ -118,12 +118,12 @@
                     <div
                         v-if="profileMenuIsOpen"
                         v-close-on-outside-click="toggleProfileMenu"
-                        class="absolute border border-black/10 w-40 top-20 right-[4.8rem]
+                        class="absolute border border-black/10 w-[8rem] top-20 right-[5.5rem]
                         z-10 bg-white rounded-xl p-2 shadow-xl"
                     >
                         <div class="flex mb-3 border-b-2 p-1 pb-1 items-center">
                             <img
-                                :src="authStore.userProfileImage || '~/assets/icons/profile-icon.svg'"
+                                :src="authStore.userProfileImage"
                                 alt="profile icon"
                                 title="profile icon"
                                 class="w-7 h-7 stroke-primary inline stroke-2 rounded-full"
@@ -148,23 +148,20 @@
                             </div>
                         </NuxtLink>
 
-                        <NuxtLink
-                            to="/"
+                        <button
                             class="flex items-center text-primary-text hover:bg-primary-bg
                             hover:text-primary hover:fill-primary-hover rounded-xl p-2"
+                            @click="logout()"
                         >
                             <SVGSignOutIcon
                                 role="img"
                                 title="log out icon"
                                 class="w-6 h-6 mr-2"
                             />
-                            <div
-                                class=""
-                                @click="logout()"
-                            >
+                            <div>
                                 {{ t('topNav.logout') }}
                             </div>
-                        </NuxtLink>
+                        </button>
                     </div>
                 </nav>
                 <LocaleSelector class="portrait:hidden" />
@@ -175,6 +172,8 @@
 </template>
 
 <script lang="ts" setup>
+import { useToast } from 'vue-toastification'
+import { useRouter } from 'vue-router'
 import HamburgerMenu from './HamburgerMenu.vue'
 import SVGSiteLogo from '~/assets/icons/site-logo.svg'
 import SVGSettingsIcon from '~/assets/icons/settings-icon.svg'
@@ -183,6 +182,8 @@ import { useAuthStore } from '~/stores/authStore'
 import { vCloseOnOutsideClick } from '~/composables/closeOnOutsideClick'
 
 const { t } = useI18n()
+const toast = useToast()
+const router = useRouter()
 
 const profileMenuIsOpen = ref(false)
 const authStore = useAuthStore()
@@ -201,7 +202,13 @@ function toggleProfileMenu() {
 }
 
 async function logout() {
-    await authStore.logout()
+    try {
+        await authStore.logout()
+        toast.success(t('topNav.logoutToast'))
+        router.push('/')
+    } catch (error) {
+        toast.error(error)
+    }
 }
 </script>
 

@@ -27,7 +27,8 @@
     "copyright": "Find a Doc, Japan",
     "balancesheet": "Balance Sheet",
     "login": "Login",
-    "settings": "Settings"
+    "settings": "Settings",
+    "logoutToast": "Successfully logged out"
   },
   "privacyPage": {
     "heading": "隐私政策",
@@ -113,7 +114,8 @@
     "submit": "添加医师",
     "logout": "退出登录",
     "login": "Login",
-    "settings": "Settings"
+    "settings": "Settings",
+    "logoutToast": "Successfully logged out"
   },
   "login": {
     "checkingauth": "正在认证...",

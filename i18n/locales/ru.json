@@ -27,7 +27,8 @@
     "balancesheet": "Balance Sheet",
     "theme": "тема",
     "login": "Login",
-    "settings": "Settings"
+    "settings": "Settings",
+    "logoutToast": "Successfully logged out"
   },
   "privacyPage": {
     "heading": "Настоящая Политика конфиденциальности предназначена для того, чтобы помочь вам понять, какую информацию мы собираем, почему мы собираем ее, и как вы можете обновлять, управлять, экспортировать и удалять вашу информацию.",
@@ -113,7 +114,8 @@
     "moderation": "Moderation",
     "logout": "Log out",
     "login": "Login",
-    "settings": "Settings"
+    "settings": "Settings",
+    "logoutToast": "Successfully logged out"
   },
   "modCreateFacilityOrHPTopbar": {
     "confirmExit": "Exit without saving",

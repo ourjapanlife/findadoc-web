@@ -27,7 +27,8 @@
     "balancesheet": "Balance Sheet",
     "theme": "Tema",
     "login": "Login",
-    "settings": "Settings"
+    "settings": "Settings",
+    "logoutToast": "Successfully logged out"
   },
   "privacyPage": {
     "heading": "Política de privacidade",
@@ -113,7 +114,8 @@
     "moderation": "Moderation",
     "logout": "Log out",
     "login": "Login",
-    "settings": "Settings"
+    "settings": "Settings",
+    "logoutToast": "Successfully logged out"
   },
   "modCreateFacilityOrHPTopbar": {
     "confirmExit": "Exit without saving",
