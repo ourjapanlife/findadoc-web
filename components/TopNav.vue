@@ -98,7 +98,7 @@
                         @click="toggleProfileMenu"
                     >
                         <img
-                            :src="authStore.userProfileImage || '~/assets/icons/profile-icon.svg'"
+                            :src="authStore.userProfileImage"
                             alt="profile icon"
                             title="profile icon"
                             class="w-8 h-8 stroke-primary inline stroke-2 rounded-full mx-1 hover:scale-105"
@@ -132,21 +132,6 @@
                                 {{ authStore.userId }}
                             </div>
                         </div>
-                        <NuxtLink
-                            to="/moderation"
-                            data-testid="top-nav-mod-link"
-                            class="flex items-center text-primary-text hover:bg-primary-bg
-                            hover:text-primary hover:fill-primary-hover rounded-xl p-2"
-                        >
-                            <SVGModerationIcon
-                                role="img"
-                                title="moderation icon"
-                                class="w-6 h-6 mr-2"
-                            />
-                            <div class="">
-                                {{ t('topNav.moderation') }}
-                            </div>
-                        </NuxtLink>
                         <NuxtLink
                             to="/settings"
                             data-testid="top-nav-mod-link"
@@ -192,7 +177,6 @@
 <script lang="ts" setup>
 import HamburgerMenu from './HamburgerMenu.vue'
 import SVGSiteLogo from '~/assets/icons/site-logo.svg'
-import SVGModerationIcon from '~/assets/icons/moderation-icon.svg'
 import SVGSettingsIcon from '~/assets/icons/settings-icon.svg'
 import SVGSignOutIcon from '~/assets/icons/sign-out-icon.svg'
 import { useAuthStore } from '~/stores/authStore'
