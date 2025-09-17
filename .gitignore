@@ -30,6 +30,9 @@ eslint-results.sarif
 # VS Code
 .vscode
 
+# Jetbrains IDEs
+.idea
+
 # txt file added when linting files
 *missing_keys.txt
 *potentially_unused_keys.txt
