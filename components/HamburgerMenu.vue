@@ -102,29 +102,56 @@
                             </NuxtLink>
                             <div
                                 v-if="authStore.isLoggedIn"
-                                class="text-primary"
+                                class="text-primary-text"
                             >
-                                <div class="flex">
+                                <div class="flex mb-4 pb-1 border-b-2">
                                     <!-- Profile Image -->
                                     <img
-                                        :src="authStore.userProfileImage || '~/assets/icons/profile-icon.svg'"
+                                        :src="authStore.userProfileImage"
                                         alt="profile icon"
                                         title="profile icon"
-                                        class="profile-icon w-7 stroke-primary inline stroke-2 rounded-full mr-1"
+                                        class="profile-icon w-7 h-7 stroke-primary inline stroke-2 rounded-full mr-1"
                                     >
-                                    <div class="text-primary font-bold">
+                                    <div class="font-bold">
                                         {{ authStore.userId }}
                                     </div>
                                 </div>
-                                <NuxtLink to="/moderation">
+                                <NuxtLink
+                                    to="/settings"
+                                    class="flex ml-0.3 mb-4"
+                                >
+                                    <SVGSettingsIcon
+                                        role="img"
+                                        title="setting icon"
+                                        class="w-6 h-6 mr-2"
+                                    />
                                     <div @click="closeMenu()">
-                                        {{ t('hamburgerMenu.moderation') }}
+                                        {{ t('hamburgerMenu.settings') }}
                                     </div>
                                 </NuxtLink>
-                                <NuxtLink to="/">
-                                    <div @click="logout()">
+                                <button
+                                    class="flex"
+                                    @click="logout()"
+                                >
+                                    <SVGSignOutIcon
+                                        role="img"
+                                        title="setting icon"
+                                        class="w-6 h-6 mr-2"
+                                    />
+                                    <div>
                                         {{ t('hamburgerMenu.logout') }}
                                     </div>
+                                </button>
+                            </div>
+                            <div
+                                v-if="!authStore.isLoggedIn"
+                                class="text-primary"
+                            >
+                                <NuxtLink
+                                    to="/login"
+                                    @click="closeMenu()"
+                                >
+                                    {{ t('hamburgerMenu.login') }}
                                 </NuxtLink>
                             </div>
                         </div>
@@ -284,14 +311,20 @@
 </template>
 
 <script lang="ts" setup>
+import { useToast } from 'vue-toastification'
+import { useRouter } from 'vue-router'
 import { ref, onMounted } from 'vue'
 import { vCloseOnOutsideClick } from '~/composables/closeOnOutsideClick'
 import SVGHamburgerMenuIcon from '~/assets/icons/hamburger-menu.svg'
 import SVGGithubIcon from '~/assets/icons/social-github.svg'
+import SVGSettingsIcon from '~/assets/icons/settings-icon.svg'
+import SVGSignOutIcon from '~/assets/icons/sign-out-icon.svg'
 import { useAuthStore } from '~/stores/authStore'
 import { convertStringToTitleCase } from '~/utils/stringUtils'
 
 const authStore = useAuthStore()
+const toast = useToast()
+const router = useRouter()
 
 const isMenuOpen = ref(false)
 
@@ -307,9 +340,14 @@ function closeMenu() {
     isMenuOpen.value = false
 }
 
-function logout() {
-    authStore.logout()
-    closeMenu()
+async function logout() {
+    try {
+        await authStore.logout()
+        toast.success(t('hamburgerMenu.logoutToast'))
+        router.push('/')
+    } catch (error) {
+        toast.error(error)
+    }
 }
 
 function setTheme(newTheme: string) {

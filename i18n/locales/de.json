@@ -25,7 +25,10 @@
     "theme": "Thema",
     "languageDropdownTitle": "Sprache:",
     "copyright": "Find a Doc, Japan",
-    "balancesheet": "Balance Sheet"
+    "balancesheet": "Balance Sheet",
+    "login": "Login",
+    "settings": "Settings",
+    "logoutToast": "Successfully logged out"
   },
   "privacyPage": {
     "heading": "Datenschutzerklärung",
@@ -109,7 +112,10 @@
     "home": "Startseite",
     "moderation": "Moderation",
     "submit": "Arzt hinzufügen",
-    "logout": "Abmelden"
+    "logout": "Abmelden",
+    "login": "Login",
+    "settings": "Settings",
+    "logoutToast": "Successfully logged out"
   },
   "login": {
     "checkingauth": "Authentifizierung wird überprüft...",
@@ -381,9 +387,9 @@
     "resultsPerPage": "Results per page"
   },
   "errorPage": {
-      "title": "404 - Diagnose: Seite nicht gefunden",
-      "description": "Diese Seite hat ihre Gesundheitsprüfung nicht bestanden. Lassen Sie uns Sie stattdessen zu einer gesunden Seite bringen!",
-      "returnHome": "Zur Startseite"
+    "title": "404 - Diagnose: Seite nicht gefunden",
+    "description": "Diese Seite hat ihre Gesundheitsprüfung nicht bestanden. Lassen Sie uns Sie stattdessen zu einer gesunden Seite bringen!",
+    "returnHome": "Zur Startseite"
   },
   "modListContainerItem": {
     "newSubmission": "New",
