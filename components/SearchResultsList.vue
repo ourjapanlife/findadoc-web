@@ -1,28 +1,29 @@
 <template>
     <div
-        class="flex flex-col bg-primary-bg overflow-y-auto mx-2"
+        class="flex flex-col bg-primary-bg overflow-y-auto mx-2 h-full"
     >
         <!-- Search Filters Bar -->
         <div
             data-testid="searchbar"
-            class="results-header flex flex-col justify-center grow"
+            class="results-header flex flex-col justify-center flex-shrink-0"
         >
             <SearchBar class="mx-4" />
         </div>
         <!-- Divider line -->
-        <div class="h-px border border-accent/10 my-2 mx-auto w-20" />
+        <div class="h-px border border-accent/10 my-2 mx-auto w-20 flex-shrink-0" />
         <!-- Loading List Placeholder -->
-        <div v-if="loadingStore.isLoading">
-            <div class="h-full flex justify-center items-center w-full">
-                <div class="flex flex-col justify-center align-middle">
-                    <SVGLoadingIcon
-                        data-testid="svg-loading-icon"
-                        role="img"
-                        alt="loading animation"
-                        title="loading animation"
-                        class="flex h-12"
-                    />
-                </div>
+        <div
+            v-if="loadingStore.isLoading"
+            class="flex-1 flex justify-center items-center"
+        >
+            <div class="flex flex-col justify-center align-middle">
+                <SVGLoadingIcon
+                    data-testid="svg-loading-icon"
+                    role="img"
+                    alt="loading animation"
+                    title="loading animation"
+                    class="flex h-12"
+                />
             </div>
         </div>
         <!-- Results List -->
@@ -30,39 +31,43 @@
             v-else-if="hasResults"
             ref="resultsContainerRef"
             data-testid="search-results-list-container"
-            class="overflow-y-auto"
+            class="flex-1 overflow-y-auto"
             @scroll="handleScroll"
         >
             <div
                 id="searchResults"
-                class="flex flex-col h-full mb-40 landscape:mb-0"
+                class="results-list flex flex-col pb-40 landscape:pb-4"
+                data-testid="search-results-list"
             >
                 <div
                     v-for="(searchResult, index) in resultsStore.searchResultsList"
                     :key="index"
-                    class="results-list flex flex-col"
-                    data-testid="search-results-list"
+                    class="flex flex-col drop-shadow-md my-4 mx-4 py-1 min-h-36 rounded-md border-t-2
+                            border-primary/10 transition-all cursor-pointer"
+                    :class="[
+                        resultsStore.activeResult?.professional.id === searchResult.professional.id
+                            ? 'bg-secondary/10 hover:bg-secondary/30 border-2 border-secondary/10'
+                            : 'bg-primary-bg hover:bg-primary-hover/50',
+                    ]"
                     @click="resultClicked(searchResult.professional.id)"
                 >
-                    <div
-                        class="flex flex-col my-4 mx-4 py-1 min-h-36 rounded-sm border-t-2 border-primary/10
-                    bg-primary-bg hover:bg-primary-hover/50 drop-shadow-md transition-all cursor-pointer"
-                    >
-                        <SearchResultsListItem
-                            :name="getLocalizedName(searchResult.professional.names)"
-                            :degrees="searchResult.professional.degrees"
-                            :facility-name="localeStore.activeLocale.code == Locale.JaJp
-                                ? searchResult.facilities[0]?.nameJa
-                                : searchResult.facilities[0]?.nameEn"
-                            :specialties="searchResult.professional.specialties"
-                            :spoken-languages="searchResult.professional.spokenLanguages"
-                            :data-testid="`search-result-list-item-${index}`"
-                        />
-                    </div>
+                    <SearchResultsListItem
+                        :name="getLocalizedName(searchResult.professional.names)"
+                        :degrees="searchResult.professional.degrees"
+                        :facility-name="localeStore.activeLocale.code == Locale.JaJp
+                            ? searchResult.facilities[0]?.nameJa
+                            : searchResult.facilities[0]?.nameEn"
+                        :specialties="searchResult.professional.specialties"
+                        :spoken-languages="searchResult.professional.spokenLanguages"
+                        :data-testid="`search-result-list-item-${index}`"
+                    />
                 </div>
             </div>
         </div>
-        <div v-else>
+        <div
+            v-else
+            class="flex-1 flex justify-center items-center"
+        >
             <div class="flex flex-col">
                 <SVGNoSearchResults class="portrait:px-4 h-12" />
                 <span class="text-primary-text px-1 font-bold self-center group-hover:text-primary-text-inverted/50">{{
