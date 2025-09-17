@@ -197,6 +197,7 @@
     "inputErrorMessageFacilityAddressLine2Ja": "Hindi wastong address sa Hapon",
     "inputErrorMessageFacilityAddressLine1En": "Hindi wastong address sa Ingles",
     "inputErrorMessageFacilityAddressLine2En": "Hindi wastong address sa Ingles",
+    "inputErrorMessagePrefectureMismatch": "Japanese and/or English Name Prefecture do not match",
     "inputErrorMessageFacilityCityEn": "Hindi wastong pangalan ng Lungsod sa Ingles",
     "inputErrorMessageFacilityCityJa": "Hindi wastong pangalan ng Lungsod sa Hapon",
     "inputErrorMessageFacilityEmail": "Hindi wastong Email Address",

@@ -19,6 +19,7 @@ import type {
 import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql'
 import type { ServerResponse } from '~/typedefs/serverResponse'
 import { arraysAreEqual } from '~/utils/arrayUtils'
+import { validatePrefectureMatch } from '~/utils/facilitiesUtils'
 
 export type FacilitySectionFields = {
     // contactFields
@@ -294,6 +295,11 @@ export const useFacilitiesStore = defineStore('facilitiesStore', () => {
     }
 
     async function createFacility(): Promise<ServerResponse<Facility>> {
+        const { prefectureEn, prefectureJa } = createFacilityFields.contact.address
+        if (!validatePrefectureMatch(prefectureEn, prefectureJa)) {
+            throw new Error('Prefecture mismatch: English and Japanese names must match.')
+        }
+
         const CreateFacilityInput: MutationCreateFacilityArgs = {
             input: {
                 nameEn: createFacilityFields.nameEn,
@@ -307,8 +313,8 @@ export const useFacilitiesStore = defineStore('facilitiesStore', () => {
                         cityEn: createFacilityFields.contact.address.cityEn,
                         cityJa: createFacilityFields.contact.address.cityJa,
                         postalCode: createFacilityFields.contact.address.postalCode,
-                        prefectureEn: createFacilityFields.contact.address.prefectureEn,
-                        prefectureJa: createFacilityFields.contact.address.prefectureJa
+                        prefectureEn,
+                        prefectureJa
                     },
                     email: createFacilityFields.contact.email,
                     phone: createFacilityFields.contact.phone,
@@ -344,6 +350,11 @@ export const useFacilitiesStore = defineStore('facilitiesStore', () => {
     }
 
     async function updateFacility(): Promise<ServerResponse<Facility>> {
+        const { prefectureEn, prefectureJa } = facilitySectionFields.value
+        if (!validatePrefectureMatch(prefectureEn, prefectureJa)) {
+            throw new Error('Prefecture mismatch: English and Japanese names must match.')
+        }
+
         const facilitySectionFieldsBeforeMutation = selectedFacilityData.value!
         const healthProfessionalRelationsBeforeMutation
         = facilitySectionFields.value.healthProfessionalsRelations
