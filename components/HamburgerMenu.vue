@@ -103,7 +103,7 @@
                                 v-if="authStore.isLoggedIn"
                                 class="text-primary-text"
                             >
-                                <div class="flex mb-4 pb-1 border-b-2 w-[10rem]">
+                                <div class="flex mb-4 pb-1 border-b-2">
                                     <!-- Profile Image -->
                                     <img
                                         :src="authStore.userProfileImage"

@@ -118,8 +118,8 @@
                     <div
                         v-if="profileMenuIsOpen"
                         v-close-on-outside-click="toggleProfileMenu"
-                        class="absolute border border-black/10 w-[8rem] top-20 right-[5.5rem]
-                        z-10 bg-white rounded-xl p-2 shadow-xl"
+                        class="absolute border-2 border-primary/60 top-20 right-24
+                        z-10 bg-primary-bg rounded-xl p-2 shadow-xl"
                     >
                         <div class="flex mb-3 border-b-2 p-1 pb-1 items-center">
                             <img
@@ -135,8 +135,8 @@
                         <NuxtLink
                             to="/settings"
                             data-testid="top-nav-mod-link"
-                            class="flex items-center text-primary-text hover:bg-primary-bg
-                            hover:text-primary hover:fill-primary-hover rounded-xl p-2"
+                            class="flex mb-1 items-center text-primary-text hover:bg-primary-hover/10
+                            rounded-xl p-2 transition-colors"
                         >
                             <SVGSettingsIcon
                                 role="img"
@@ -149,8 +149,8 @@
                         </NuxtLink>
 
                         <button
-                            class="flex items-center text-primary-text hover:bg-primary-bg
-                            hover:text-primary hover:fill-primary-hover rounded-xl p-2"
+                            class="flex items-center text-primary-text hover:bg-primary-hover/10
+                            rounded-xl p-2"
                             @click="logout()"
                         >
                             <SVGSignOutIcon
