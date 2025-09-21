@@ -7,7 +7,7 @@ describe('Submit page', () => {
             cy.skipOnboardingFlow()
             cy.visit('/submit')
 
-             cy.get('[data-testid="locale-selector"]:visible select')
+            cy.get('[data-testid="locale-selector"]:visible select')
                 .should('exist')
                 .select('en_US')
         })
