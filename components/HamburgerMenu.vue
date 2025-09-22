@@ -79,6 +79,12 @@
                             data-testid="hamburger-menu-items"
                             class="flex flex-col gap-6 px-5 mt-10 mb-1"
                         >
+                            <!-- Home Link -->
+                            <NuxtLink to="/">
+                                <div @click="closeMenu()">
+                                    {{ t('topNav.home') }}
+                                </div>
+                            </NuxtLink>
                             <!-- About Link -->
                             <NuxtLink to="/about">
                                 <div @click="closeMenu()">
