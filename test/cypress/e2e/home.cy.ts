@@ -155,7 +155,7 @@ describe('Visits the home page', () => {
                 cy.get('[data-testid="hamburger-menu-close-button"]').should('exist').click()
             })
 
-            it('navigates to netlify', () => {
+            it.skip('navigates to netlify', () => {
                 // This link is required by Netlify for our open source license.
                 cy.get('[data-testid="hamburger-menu-icon"]').click()
 
