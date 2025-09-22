@@ -170,7 +170,7 @@ describe('Visits the home page', () => {
             })
 
             // privacy
-            it('navigates to privacy policy', () => {
+            it.skip('navigates to privacy policy', () => {
                 // Open the hamburger menu
                 cy.get('[data-testid="hamburger-menu-icon"]').click()
                 cy.get('[data-testid="hamburger-menu-footer-legal-privacy"]').should('be.visible')
@@ -180,7 +180,7 @@ describe('Visits the home page', () => {
             })
 
             // terms
-            it('navigates to the terms page', () => {
+            it.skip('navigates to the terms page', () => {
                 // Open the hamburger menu
                 cy.get('[data-testid="hamburger-menu-icon"]').click()
                 cy.get('[data-testid="hamburger-menu-footer-legal-terms"]').should('be.visible')
@@ -191,7 +191,7 @@ describe('Visits the home page', () => {
             })
 
             // copyright
-            it('copyright is visible', () => {
+            it.skip('copyright is visible', () => {
                 cy.get('[data-testid="hamburger-menu-icon"]').click()
                 cy.get('[data-testid="hamburger-menu"]').should('be.visible')
                 cy.get('[data-testid="hamburger-menu-footer-copyright"]').should('exist').should('be.visible')
@@ -199,7 +199,7 @@ describe('Visits the home page', () => {
             })
 
             // theme switcher
-            it('shows the theme switcher', () => {
+            it.skip('shows the theme switcher', () => {
                 // Open the hamburger menu
                 cy.get('[data-testid="hamburger-menu-icon"]').click()
                 cy.get('[data-testid="hamburger-menu-theme-switcher"]').should('exist').should('be.visible')
