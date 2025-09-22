@@ -22,10 +22,8 @@
   "hamburgerMenu": {
     "about": "About Find a Doc, Japan",
     "balancesheet": "Balance Sheet",
-    "home": "Home",
     "contact": "Contact",
     "submit": "Add a Doctor",
-    "moderation": "Moderation",
     "logout": "Log out",
     "theme": "Theme",
     "languageDropdownTitle": "Language:",
@@ -83,12 +81,9 @@
     "allLocations": "All Locations",
     "allSpecialties": "All Specialties",
     "search": "Search",
-    "resultsFound": "{count} results found",
     "searchAndFilterDoctors": "Search and filter doctors"
   },
   "searchResultsList": {
-    "doctorsNearby": "Doctors Nearby",
-    "filters": "Filters",
     "noResults": "No Results Found",
     "noResultsSubtext": "Please try a different filter combination."
   },
@@ -106,7 +101,6 @@
   "topNav": {
     "about": "About",
     "home": "Home",
-    "moderation": "Moderation",
     "submit": "Add a Doctor",
     "logout": "Log out",
     "login": "Login",
@@ -214,8 +208,6 @@
     "deleteButtonText": "DELETE FOREVER",
     "update": "Update",
     "updateAndExit": "Update & Exit",
-    "deleteConfirmationFacility": "Are you sure you want to delete the Facility: {facility}, with ID: {id}?",
-    "deleteConfirmationHealthcareProfessional": "Are you sure you want to delete the Healthcare Professional: {healthcareProfessional}, with ID: {id}?",
     "facilityDeletedSuccessfully": "Facility deleted successfully",
     "facilityUpdatedSuccessfully": "Facility updated successfully",
     "healthcareProfessionalDeletedSuccessfully": "Healthcare Professional deleted successfully",
@@ -231,11 +223,7 @@
     "reject": "Reject"
   },
   "modPanelSubmissionList": {
-    "facilityNameUnknown": "Facility Name Unknown",
-    "modified": "Modified",
-    "name": "Name",
-    "noSubmissions": "There are no pending submissions",
-    "submitted": "Submitted"
+    "noSubmissions": "There are no pending submissions"
   },
   "modHealthcareProfessionalCard": {},
   "modHealthcareProfessionalSection": {
@@ -287,9 +275,7 @@
     "googleMapsInformation": "Google Maps Information",
     "addHealthcareProfessional": "Add existing Healthcare Professional",
     "inputErrorMessageFacilityAddressLine1Ja": "Invalid Japanese Address",
-    "inputErrorMessageFacilityAddressLine2Ja": "Invalid Japanese Address",
     "inputErrorMessageFacilityAddressLine1En": "Invalid English Address",
-    "inputErrorMessageFacilityAddressLine2En": "Invalid English Address",
     "inputErrorMessageFacilityCityEn": "Invalid English City Name",
     "inputErrorMessageFacilityCityJa": "Invalid Japanese City Name",
     "inputErrorMessageFacilityEmail": "Invalid Email Address",
@@ -348,7 +334,6 @@
     "facilitySuccessfullyRejected": "Facility rejected successfully",
     "healthcareProfessionalId": "Healthcare Professional IDs",
     "infoMessageAlreadyApproved": "This submission has already been approved",
-    "infoMessageUpdateNeeded": "This needs to be updated before approval",
     "labelHealthcareProfessionalFirstName": "First Name",
     "labelHealthcareProfessionalLastName": "Last Name",
     "labelHealthcareProfessionalMiddleName": "Middle Name",
@@ -381,8 +366,6 @@
     "newSubmission": "New",
     "underReviewSubmission": "Under Review",
     "approvedSubmission": "Approved",
-    "rejectedSubmission": "Rejected",
-    "review": "Review",
     "createdDate": "Created on",
     "updatedDate": "Updated last"
   },
@@ -391,9 +374,9 @@
     "results": "results"
   },
   "errorPage": {
-      "title": "404 - Diagnosis : Page not Found",
-      "description": "This page has failed its health check. Let's head to a healthy page instead!",
-      "returnHome": "Return to Home"
+    "title": "404 - Diagnosis : Page not Found",
+    "description": "This page has failed its health check. Let's head to a healthy page instead!",
+    "returnHome": "Return to Home"
   },
   "modListContainer": {
     "resultsPerPage": "Results per page"
