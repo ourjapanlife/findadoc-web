@@ -1,11 +1,15 @@
 <template>
-    <div class="flex flex-col mt-2 landscape:p-4 portrait:px-5 portrait:py-1  bg-primary-bg/90 rounded-lg">
+    <div
+        data-testid="top-nav"
+        class="flex flex-col mt-2 landscape:p-4 portrait:px-5 portrait:py-1  bg-primary-bg/90 rounded-lg"
+    >
         <div
             class="flex justify-between items-center"
         >
             <!-- Mobile Site Icon -->
             <div
                 id="mobile-site-icon"
+                data-testid="portrait-logo"
                 class="landscape:hidden flex justify-between items-start font-semibold text-xl
                 group transition-colors pr-2 rounded-2xl"
             >

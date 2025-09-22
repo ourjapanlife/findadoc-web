@@ -21,10 +21,10 @@
             >
                 <div
                     v-show="isMenuOpen"
-                    @click.stop
                     data-testid="hamburger-menu"
                     class="fixed top-0 right-0 z-30 flex flex-col
                   justify-between w-2/3 h-dvh pt-6 pb-2 border-l-2 border-primary/20 rounded bg-primary-bg "
+                    @click.stop
                 >
                     <div data-testid="hamburger-upper-section">
                         <div
