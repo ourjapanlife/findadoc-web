@@ -14,7 +14,6 @@ import type {
     ContactInput,
     PhysicalAddress,
     PhysicalAddressInput,
-    CreateFacilityInput,
     UpdateFacilityInput,
     MutationCreateFacilityArgs
 } from '~/typedefs/gqlTypes'
