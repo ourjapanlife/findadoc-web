@@ -178,7 +178,11 @@ export default defineNuxtConfig({
 
             NUXT_PUBLIC_LOAD_STORES: process.env.NUXT_PUBLIC_LOAD_STORES,
 
-            NUXT_USE_LOCAL_API: process.env.NUXT_USE_LOCAL_API
+            NUXT_USE_LOCAL_API: process.env.NUXT_USE_LOCAL_API,
+
+            UMAMI_URL: process.env.NUXT_PUBLIC_UMAMI_URL,
+
+            UMAMI_SITE_ID: process.env.NUXT_PUBLIC_UMAMI_SITE_ID
         }
     },
     telemetry: false,
