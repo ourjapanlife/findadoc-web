@@ -326,7 +326,7 @@ export const useFacilitiesStore = defineStore('facilitiesStore', () => {
             }
         }
 
-                /**
+        /**
          * Validation on the client-side
          * (to prevent sending the data to the backend even though the prefecture names are mismatched)
          */
@@ -366,10 +366,10 @@ export const useFacilitiesStore = defineStore('facilitiesStore', () => {
          * Validation on the client-side
          * (to prevent sending the data to the backend even though the prefecture names are mismatched)
          */
-            const validation = validateUpdateFacility(updatedFields as UpdateFacilityInput)
-            if (!validation.valid) {
-                throw new Error(validation.errors.join('; '))
-            }
+        const validation = validateUpdateFacility(updatedFields as UpdateFacilityInput)
+        if (!validation.valid) {
+            throw new Error(validation.errors.join('; '))
+        }
 
         const updateFacilityInput: MutationUpdateFacilityArgs = {
             id: selectedFacilityId.value,
