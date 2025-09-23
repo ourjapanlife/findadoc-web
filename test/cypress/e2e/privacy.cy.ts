@@ -6,8 +6,8 @@ describe('Privacy Policy page', () => {
             cy.visit('/privacypolicy')
         })
 
-        it('shows the landscape top nav', () => {
-            cy.get('[data-testid="landscape-searchbar"]').should('exist').should('not.be.visible')
+        it('shows the desktop top nav', () => {
+            cy.get('[data-testid="top-nav"]').should('exist')
         })
 
         it('does not show the hamburger component', () => {
@@ -39,7 +39,7 @@ describe('Privacy Policy page', () => {
         })
 
         it('does not show the landscape searchbar', () => {
-            cy.get('[data-testid="landscape-searchbar"]').should('not.be.visible')
+            cy.get('[data-testid="search-landscape"]').should('not.exist')
         })
 
         it('does not show the footer', () => {

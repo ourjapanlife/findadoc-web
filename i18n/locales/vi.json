@@ -25,7 +25,10 @@
     "logout": "Đăng xuất",
     "languageDropdownTitle": "Ngôn Ngữ:",
     "copyright": "Find a Doc, Japan",
-    "theme": "Chủ đề"
+    "theme": "Chủ đề",
+    "login": "Login",
+    "settings": "Settings",
+    "logoutToast": "Successfully logged out"
   },
   "privacyPage": {
     "heading": "Chính Sách Bảo Mật",
@@ -109,7 +112,10 @@
     "home": "Trang chủ",
     "moderation": "Quản trị viên",
     "submit": "Thêm bác sĩ",
-    "logout": "Đăng xuất"
+    "logout": "Đăng xuất",
+    "login": "Login",
+    "settings": "Settings",
+    "logoutToast": "Successfully logged out"
   },
   "login": {
     "checkingauth": "Đang kiểm tra xác thực...",
@@ -381,9 +387,9 @@
     "resultsPerPage": "Results per page"
   },
   "errorPage": {
-      "title": "404 - Chẩn đoán: Không tìm thấy trang",
-      "description": "Trang này đã không vượt qua kiểm tra sức khỏe. Hãy để chúng tôi đưa bạn đến một trang khỏe mạnh!",
-      "returnHome": "Về trang chủ"
+    "title": "404 - Chẩn đoán: Không tìm thấy trang",
+    "description": "Trang này đã không vượt qua kiểm tra sức khỏe. Hãy để chúng tôi đưa bạn đến một trang khỏe mạnh!",
+    "returnHome": "Về trang chủ"
   },
   "modListContainerItem": {
     "newSubmission": "New",
@@ -400,5 +406,5 @@
     "displayName": "Tên hiển thị",
     "healthcareProfessionalName": "Profile Image",
     "updateButton": "Update Settings"
-   }
+  }
 }

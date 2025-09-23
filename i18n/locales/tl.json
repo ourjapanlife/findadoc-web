@@ -25,7 +25,10 @@
     "logout": "Log out",
     "languageDropdownTitle": "Lengwahe:",
     "copyright": "Find a Doc, Japan",
-    "theme": "Tema"
+    "theme": "Tema",
+    "login": "Login",
+    "settings": "Settings",
+    "logoutToast": "Successfully logged out"
   },
   "privacyPage": {
     "heading": "Patakaran sa Pribasiya",
@@ -109,7 +112,10 @@
     "home": "Home",
     "moderation": "Moderasyon",
     "submit": "Magdagdag ng Doktor",
-    "logout": "Log out"
+    "logout": "Log out",
+    "login": "Login",
+    "settings": "Settings",
+    "logoutToast": "Successfully logged out"
   },
   "login": {
     "checkingauth": "Sinusuri ang Authentication...",
@@ -381,9 +387,9 @@
     "resultsPerPage": "Results per page"
   },
   "errorPage": {
-      "title": "404 - Diagnosis: Hindi Nahanap ang Pahina",
-      "description": "Hindi nakapasa ang pahinang ito sa wellness exam. Dalhin ka namin sa malusog na pahina!",
-      "returnHome": "Bumalik sa home"
+    "title": "404 - Diagnosis: Hindi Nahanap ang Pahina",
+    "description": "Hindi nakapasa ang pahinang ito sa wellness exam. Dalhin ka namin sa malusog na pahina!",
+    "returnHome": "Bumalik sa home"
   },
   "modListContainerItem": {
     "newSubmission": "New",
@@ -400,5 +406,5 @@
     "displayName": "Display Name",
     "healthcareProfessionalName": "Profile Image",
     "updateButton": "Update Settings"
-   }
+  }
 }

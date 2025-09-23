@@ -25,7 +25,10 @@
     "theme": "テーマ",
     "languageDropdownTitle": "対応言語:",
     "copyright": "Find a Doc, Japan",
-    "balancesheet": "Balance Sheet"
+    "balancesheet": "Balance Sheet",
+    "login": "Login",
+    "settings": "Settings",
+    "logoutToast": "Successfully logged out"
   },
   "privacyPage": {
     "heading": "Privacy Policy",
@@ -109,7 +112,10 @@
     "about": "私たちについて",
     "moderation": "モデレータ",
     "submit": "医師情報の追加",
-    "logout": "ログアウト"
+    "logout": "ログアウト",
+    "login": "Login",
+    "settings": "Settings",
+    "logoutToast": "Successfully logged out"
   },
   "login": {
     "checkingauth": "認証の確認...",
@@ -382,9 +388,9 @@
     "resultsPerPage": "Results per page"
   },
   "errorPage": {
-      "title": "404 - 診断：ページが見つかりません",
-      "description": "このページは健康診断に合格しませんでした。代わりに健康なページにご案内します！",
-      "returnHome": "ホームに戻る"
+    "title": "404 - 診断：ページが見つかりません",
+    "description": "このページは健康診断に合格しませんでした。代わりに健康なページにご案内します！",
+    "returnHome": "ホームに戻る"
   },
   "modListContainerItem": {
     "newSubmission": "New",
@@ -401,5 +407,5 @@
     "displayName": "表示名",
     "healthcareProfessionalName": "Profile Image",
     "updateButton": "Update Settings"
-   }
+  }
 }

@@ -25,7 +25,10 @@
     "moderation": "Moderation",
     "logout": "Log out",
     "balancesheet": "Balance Sheet",
-    "theme": "Tema"
+    "theme": "Tema",
+    "login": "Login",
+    "settings": "Settings",
+    "logoutToast": "Successfully logged out"
   },
   "privacyPage": {
     "heading": "Política de privacidade",
@@ -109,7 +112,10 @@
     "home": "Início",
     "submit": "Adicionar um profissional de saúde",
     "moderation": "Moderation",
-    "logout": "Log out"
+    "logout": "Log out",
+    "login": "Login",
+    "settings": "Settings",
+    "logoutToast": "Successfully logged out"
   },
   "modCreateFacilityOrHPTopbar": {
     "confirmExit": "Exit without saving",
@@ -382,9 +388,9 @@
     "resultsPerPage": "Results per page"
   },
   "errorPage": {
-      "title": "404 - Diagnóstico: Página não encontrada",
-      "description": "Esta página não passou no seu exame de saúde. Vamos levá-lo a uma página saudável!",
-      "returnHome": "Voltar ao início"
+    "title": "404 - Diagnóstico: Página não encontrada",
+    "description": "Esta página não passou no seu exame de saúde. Vamos levá-lo a uma página saudável!",
+    "returnHome": "Voltar ao início"
   },
   "modListContainerItem": {
     "newSubmission": "New",
@@ -401,5 +407,5 @@
     "displayName": "Nome de exibição",
     "healthcareProfessionalName": "Profile Image",
     "updateButton": "Update Settings"
-   }
+  }
 }
