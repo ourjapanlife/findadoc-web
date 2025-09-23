@@ -10,9 +10,14 @@ Connecting people in Japan to the healthcare services they need, in the language
 
 We want to provide free, accessible, and quality healthcare information in multiple languages.
 
+## Newcomers
+- Join our **[Slack](https://find-a-doc.slack.com/join/shared_invite/zt-2lb3j2t1z-O9F4thzcFktqsIXNzzjzHw#/shared-invite/email)** and introduce yourself in the [general](https://find-a-doc.slack.com/archives/C025N4D525P) channel!
+- Join our **[👩‍💻 standup](https://documentation.findadoc.jp/development/standups)** where we can help get you started and answer any questions you might have.
+
 ## What is this repo?
 
 This is the open-source, public repository for the [findadoc.jp](https://findadoc.jp) website! We welcome support and contributions :)
+
 
 ### Documentation:
 - [📒 **Welcome to Find a Doc, Japan!**](https://documentation.findadoc.jp/development)
