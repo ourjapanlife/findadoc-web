@@ -13,12 +13,17 @@
                 class="landscape:hidden flex justify-between items-start font-semibold text-xl
                 group transition-colors pr-2 rounded-2xl"
             >
-                <SVGSiteLogo
-                    role="img"
-                    title="site icon"
-                    class="mt-1 mr-1 w-10 h-10 flex-shrink-0 align-middle fill-primary group-hover:fill-primary-hover"
-                    @click="toggleLogoText()"
-                />
+                <NuxtLink
+                    to="/"
+                    @click="handleMobileLogoClick"
+                >
+                    <SVGSiteLogo
+                        role="img"
+                        title="site icon"
+                        class="mt-1 mr-1 w-10 h-10 flex-shrink-0 align-middle fill-primary group-hover:fill-primary-hover"
+                        @click="toggleLogoText()"
+                    />
+                </NuxtLink>
                 <Transition
                     name="slide-left"
                     mode="out-in"
@@ -211,6 +216,12 @@ function toggleProfileMenu() {
     profileMenuIsOpen.value = !profileMenuIsOpen.value
 }
 
+function handleMobileLogoClick(e: Event) {
+    if (router.currentRoute.value.path === '/') {
+        e.preventDefault()
+        toggleLogoText()
+    }
+}
 async function logout() {
     try {
         await authStore.logout()
