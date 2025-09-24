@@ -172,77 +172,54 @@
                                     {{ t('hamburgerMenu.login') }}
                                 </NuxtLink>
                             </div>
-                        </div>
-                    </div>
+                            <div data-testid="hamburger-menu-theme-switcher">
+                                <p class="mb-1">
+                                    {{ t('hamburgerMenu.theme') }}: {{ convertStringToTitleCase(currentTheme) }}
+                                </p>
+                                <div class="flex">
+                                    <div
+                                        class="w-10 h-10 mr-1 rounded-full"
+                                        title="Original Theme"
+                                        style="background-color:#0EB0C0"
+                                        :class="getSelectedTheme('original')"
+                                        @click="setTheme('original')"
+                                    />
+                                    <div
+                                        class="w-10 h-10 mr-1 bg-primary rounded-full"
+                                        title="Coral Theme"
+                                        style="background-color: #ED6C5A;"
+                                        :class="getSelectedTheme('coral')"
+                                        @click="setTheme('coral')"
+                                    />
+                                    <div
+                                        class="w-10 h-10 mr-1 rounded-full"
+                                        title="Violet Theme"
+                                        style="background-color: #A45D9A;"
+                                        :class="getSelectedTheme('violet')"
+                                        @click="setTheme('violet')"
+                                    />
+                                    <!-- <div
+                                        class="w-10 h-10 mr-1 rounded-full"
+                                        title="Original Theme Dark"
+                                        style="background-color:#00FFFF"
+                                        :class="getSelectedTheme('dark')"
+                                        @click="setTheme('dark')"
+                                    />
+                                    <div
+                                        class="w-10 h-10 mr-1 bg-primary rounded-full"
+                                        title="Coral Theme Dark"
+                                        style="background-color: #FF1F00;"
+                                        :class="getSelectedTheme('coral-dark')"
+                                        @click="setTheme('coral-dark')"
+                                    />
+                                    <div
+                                        class="w-10 h-10 mr-1 rounded-full"
+                                        title="Violet Theme Dark"
+                                        style="background-color: #FF00DB;"
+                                        :class="getSelectedTheme('violet-dark')"
+                                        @click="setTheme('violet-dark')"
+                                    /> -->
 
-                    <!-- Contact us Link -->
-                    <div
-                        data-testid="hamburger-menu-footer-section"
-                        class="flex flex-col gap-5 px-5"
-                    >
-                        <div data-testid="hamburger-menu-theme-switcher">
-                            <p class="mb-1">
-                                {{ t('hamburgerMenu.theme') }}: {{ convertStringToTitleCase(currentTheme) }}
-                            </p>
-                            <div class="flex">
-                                <div
-                                    class="w-10 h-10 mr-1 rounded-md"
-                                    title="Original Theme"
-                                    style="background-color:#EB7100"
-                                    :class="getSelectedTheme('original')"
-                                    @click="setTheme('original')"
-                                />
-                                <div
-                                    class="w-10 h-10 mr-1 bg-primary rounded-md"
-                                    title="Coral Theme"
-                                    style="background-color: #ED6C5A;"
-                                    :class="getSelectedTheme('coral')"
-                                    @click="setTheme('coral')"
-                                />
-                                <div
-                                    class="w-10 h-10 mr-1 rounded-md"
-                                    title="Violet Theme"
-                                    style="background-color: #A45D9A;"
-                                    :class="getSelectedTheme('violet')"
-                                    @click="setTheme('violet')"
-                                />
-                                <div
-                                    class="w-10 h-10 mr-1 rounded-md"
-                                    title="Original Theme Dark"
-                                    style="background-color:#EB7100"
-                                    :class="getSelectedTheme('dark')"
-                                    @click="setTheme('dark')"
-                                />
-                                <div
-                                    class="w-10 h-10 mr-1 bg-primary rounded-md"
-                                    title="Coral Theme Dark"
-                                    style="background-color: #ED6C5A;"
-                                    :class="getSelectedTheme('coral-dark')"
-                                    @click="setTheme('coral-dark')"
-                                />
-                                <div
-                                    class="w-10 h-10 mr-1 rounded-md"
-                                    title="Violet Theme Dark"
-                                    style="background-color: #A45D9A;"
-                                    :class="getSelectedTheme('violet-dark')"
-                                    @click="setTheme('violet-dark')"
-                                />
-                                <div
-                                    class="w-10 h-10 mr-1 rounded-md"
-                                    title="Default Theme"
-                                    style="background-color: #EEFF02FF;"
-                                    :class="getSelectedTheme('accessible-high-contrast')"
-                                    alt="Accessible: High Contrast Theme"
-                                    @click="setTheme('accessible-high-contrast')"
-                                />
-                                <div
-                                    class="w-10 h-10 mr-1 rounded-md"
-                                    title="Accessible: Daltonian Color Blindness"
-                                    style="background-color: #FF0000FF;"
-                                    :class="getSelectedTheme('accessible-red-green')"
-                                    alt="Accessible: Daltonian Color Blindness"
-                                    @click="setTheme('accessible-red-green')"
-                                />
                                 <!-- <div
                                     class="w-10 h-10 mr-1 rounded-md"
                                     title="Ocean Theme"
@@ -250,8 +227,49 @@
                                     :class="getSelectedTheme('ocean')"
                                     @click="setTheme('ocean')"
                                 /> -->
+                                </div>
+                            </div>
+                            <div data-testid="hamburger-menu-theme-switcher">
+                                <p class="mb-1">
+                                    {{ t('hamburgerMenu.theme') }}: {{ convertStringToTitleCase(currentTheme) }}
+                                </p>
+                                <div class="flex">
+                                    <div
+                                        class="w-10 h-10 mr-1 rounded-full"
+                                        title="Default Theme"
+                                        style="background-color: #EEFF02FF;"
+                                        :class="getSelectedTheme('accessible-high-contrast')"
+                                        alt="Accessible: High Contrast Theme"
+                                        @click="setTheme('accessible-high-contrast')"
+                                    />
+                                    <div
+                                        class="w-10 h-10 mr-1 rounded-full"
+                                        title="Accessible: Daltonian Color Blindness"
+                                        style="background-color: #FF0000FF;"
+                                        :class="getSelectedTheme('accessible-red-green')"
+                                        alt="Accessible: Daltonian Color Blindness"
+                                        @click="setTheme('accessible-red-green')"
+                                    />
+                                </div>
+                            </div>
+                            <div
+                                data-testid="hamburger-menu-theme-switcher"
+                            >
+                                <p
+                                    class="mb-1"
+                                >
+                                    Dark Mode
+                                </p>
+                                <Toggle />
                             </div>
                         </div>
+                    </div>
+
+                    <!-- Footer Section -->
+                    <div
+                        data-testid="hamburger-menu-footer-section"
+                        class="flex flex-col gap-5 px-5"
+                    >
                         <div
                             data-testid="hamburger-menu-footer-legal"
                             class="flex gap-4"
@@ -347,6 +365,7 @@
 import { useToast } from 'vue-toastification'
 import { useRouter } from 'vue-router'
 import { ref, onMounted } from 'vue'
+import Toggle from './Toggle.vue'
 import { vCloseOnOutsideClick } from '~/composables/closeOnOutsideClick'
 import SVGHamburgerMenuIcon from '~/assets/icons/hamburger-menu.svg'
 import SVGGithubIcon from '~/assets/icons/social-github.svg'
@@ -361,7 +380,7 @@ const router = useRouter()
 
 const isMenuOpen = ref(false)
 
-const currentTheme = ref('orange')
+const currentTheme = ref('original')
 
 const { t } = useI18n()
 
@@ -385,17 +404,19 @@ async function logout() {
 
 function setTheme(newTheme: string) {
     document.documentElement.classList.remove(
-        'theme-orange',
+        'theme-original',
         'theme-coral',
         'theme-violet',
-        'theme-ocean',
-        'theme-dark',
+        // 'theme-dark',
+        // 'theme-coral-dark',
+        // 'theme-violet-dark',
         'theme-accessible-high-contrast',
         'theme-accessible-red-green'
     )
     document.documentElement.classList.add(`theme-${newTheme}`)
     localStorage.setItem('theme', newTheme)
     currentTheme.value = newTheme
+    console.log(currentTheme)
 }
 
 // This gives a black border to the currently selected theme
