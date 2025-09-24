@@ -1,53 +1,68 @@
 <template>
-    <div class="my-2">
+    <div class="my-2 landscape:flex landscape:flex-row landscape:w-full landscape:gap-2 landscape:items-center">
         <!-- Search Button -->
         <button
-            class="flex w-full mb-2 py-1 rounded border-1 border-primary/20
-                    drop-shadow-md text-xs
-                    bg-secondary-bg hover:bg-secondary-hover/50 transition-all
-                    cursor-pointer"
+            class="flex items-center w-full mb-2 landscape:mb-0 landscape:w-auto
+                   landscape:flex-none h-10 px-4 rounded border-1 border-primary/20
+                   drop-shadow-md
+                   bg-secondary-bg hover:bg-secondary-hover/50 transition-all
+                   cursor-pointer"
             alt="filters panel"
             data-testid="filters-panel-summary"
             @click="openFiltersPanel()"
         >
-            <div class="flex pl-4">
+            <div class="flex items-center gap-2">
                 <FiltersIcon
                     role="img"
                     alt="filters icon"
                     title="filters icon"
-                    class="filters-icon w-6 mr-1 fill-accent"
+                    class="filters-icon w-5 h-5 fill-accent"
                 />
-                <span class="block text-start text-lg pl-2 text-accent">
+                <span class="block text-start text-base leading-normal text-accent">
                     {{ t('searchBar.searchAndFilterDoctors') }}
                 </span>
             </div>
         </button>
         <!-- Search Bar -->
         <div
-            class="flex justify-center py-2 rounded-b w-full border-1 border-primary/20 text-xs text-accent
-                    bg-primary-bg transition-all"
+            class="flex items-center justify-center h-10 rounded-b w-full landscape:flex-1 landscape:rounded
+             border-1 border-primary/20 text-xs text-accent
+              transition-all"
         >
             <!-- Selected Languages -->
-            <div class="search-language">
-                <span class="block text-start pl-2 max-w-1/3 overflow-hidden text-ellipsis whitespace-nowrap">
+            <div class="search-language flex-1 landscape:flex-1">
+                <span
+                    class="block text-start pl-2 max-w-full landscape:max-w-full overflow-hidden text-ellipsis
+                           whitespace-nowrap"
+                >
                     {{ selectedLanguageText }}
                 </span>
             </div>
             <!-- Selected Specialties -->
-            <div class="search-specialty">
-                <span class="block text-start pl-2 max-w-1/3 overflow-hidden text-ellipsis whitespace-nowrap">
+            <div class="search-specialty flex-1 landscape:flex-1">
+                <span
+                    class="block text-start pl-2 max-w-full landscape:max-w-full overflow-hidden text-ellipsis
+                           whitespace-nowrap"
+                >
                     • {{ selectedSpecialtyText }}
                 </span>
             </div>
             <!-- Selected Locations -->
-            <div class="search-location">
-                <span class="block text-start pl-2 max-w-1/3 overflow-hidden text-ellipsis whitespace-nowrap">
+            <div class="search-location flex-1 landscape:flex-1">
+                <span
+                    class="block text-start pl-2 max-w-full landscape:max-w-full overflow-hidden text-ellipsis
+                           whitespace-nowrap"
+                >
                     • {{ selectedLocationText }}
                 </span>
             </div>
         </div>
         <!-- Results count -->
-        <span class="text-sm text-center block mb-1 text-primary-text-muted">
+        <span
+            class="block text-sm text-center
+                   text-primary-text-muted self-center
+                   landscape:ml-auto"
+        >
             {{ t('searchBar.resultsFound', searchResultsStore.totalResults) }}
         </span>
     </div>

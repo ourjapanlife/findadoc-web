@@ -95,7 +95,8 @@
   "searchResultsDetails": {
     "speaks": "This doctor speaks",
     "contact": "Contact",
-    "lastUpdate": "Last updated"
+    "lastUpdate": "Last updated",
+    "additionalInfo": "Additional Info"
   },
   "thankYouPage": {
     "heading": "Thank you!",

@@ -1,7 +1,7 @@
 <template>
     <!-- Filters panel -->
     <div
-        class="flex flex-col justify-between h-[65vh] w-full pt-6"
+        class="flex flex-col w-full landscape:h-full portrait:max-h-[70svh] pt-6"
         data-testid="filters-panel-container"
     >
         <!-- Search fields -->
@@ -78,12 +78,12 @@
         <!-- Search button -->
         <div
             id="search-button"
-            class="flex items-center"
+            class="flex items-center flex-shrink-0 px-4 pt-3 pb-4"
         >
             <button
                 id="searchButton"
                 class="flex flex-0 flex-row rounded-md
-                                w-full mx-4 pl-1 pr-2 py-4 text-sm align-middle justify-center
+                                w-full pl-1 pr-2 py-4 text-sm align-middle justify-center
                                 bg-accent hover:bg-accent-hover transition-all"
                 data-testid="search-button"
                 @click="search"

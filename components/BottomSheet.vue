@@ -32,13 +32,13 @@
             >
                 <header
                     ref="bottomSheetDraggableArea"
-                    class="w-full mx-auto p-4 cursor-grab"
+                    class="w-full mx-auto p-6 cursor-grab touch-none select-none"
                 >
                     <div class="w-10 h-1 bg-accent/30 rounded-lg mx-auto" />
                 </header>
                 <main
                     ref="bottomSheetMain"
-                    class="flex flex-col grow overflow-y-scroll box-border touch-auto"
+                    class="flex flex-col grow overflow-y-auto box-border touch-pan-y"
                 >
                     <slot />
                 </main>
@@ -48,7 +48,7 @@
 </template>
 
 <script setup lang="ts">
-import { nextTick, ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import Hammer from 'hammerjs'
 import { useBottomSheetStore } from '@/stores/bottomSheetStore'
 
@@ -109,8 +109,9 @@ const showSheet = ref(false)
 
 /**
    * Dynamic translate value
+   * Start at the provided initialPosition so the sheet opens at that height
    */
-const translateValue = ref(100)
+const translateValue = ref(props.initialPosition)
 
 /**
    * Flag to check if sheet is being dragged
@@ -232,7 +233,8 @@ const dragHandler = (event: HammerInput | IEvent, type: 'draghandle' | 'dragcont
    * Open bottom sheet method
    */
 const open = () => {
-    translateValue.value = 0
+    // Honor the initialPosition (already set by initHeight) when opening
+    // Do not force to 0, or the sheet will cover the whole screen
     document.documentElement.style.overflowY = 'hidden'
     document.documentElement.style.overscrollBehavior = 'none'
     showSheet.value = true
@@ -272,7 +274,7 @@ const setPosition = (position: number) => {
     }
 }
 
-nextTick(() => {
+onMounted(() => {
     initHeight()
 
     /**
