@@ -29,7 +29,10 @@
     "logout": "Esci",
     "theme": "Tema",
     "languageDropdownTitle": "Lingua:",
-    "copyright": "Find a Doc, Japan"
+    "copyright": "Find a Doc, Japan",
+    "login": "Login",
+    "settings": "Settings",
+    "logoutToast": "Successfully logged out"
   },
   "privacyPage": {
     "heading": "Informazioni sulla privacy",
@@ -113,7 +116,10 @@
     "home": "Home",
     "moderation": "Moderazione",
     "submit": "Aggiungi un medico",
-    "logout": "Esci"
+    "logout": "Esci",
+    "login": "Login",
+    "settings": "Settings",
+    "logoutToast": "Successfully logged out"
   },
   "login": {
     "checkingauth": "Verifica autenticazione...",

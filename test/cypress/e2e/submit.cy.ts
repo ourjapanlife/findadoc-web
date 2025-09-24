@@ -6,6 +6,10 @@ describe('Submit page', () => {
         before(() => {
             cy.skipOnboardingFlow()
             cy.visit('/submit')
+
+            cy.get('[data-testid="locale-selector"]:visible select')
+                .should('exist')
+                .select('en_US')
         })
 
         beforeEach(() => {
@@ -16,7 +20,7 @@ describe('Submit page', () => {
         })
 
         it('shows the desktop top nav', () => {
-            cy.get('[data-testid="landscape-searchbar"]').should('exist').should('not.be.visible')
+            cy.get('[data-testid="top-nav"]').should('exist')
         })
 
         it('does not show the hamburger component', () => {
@@ -119,7 +123,7 @@ describe('Submit page', () => {
         })
 
         it('does not show the landscape searchbar', () => {
-            cy.get('[data-testid="landscape-searchbar"]').should('not.be.visible')
+            cy.get('[data-testid="search-landscape"]').should('not.exist')
         })
 
         it('does not show the footer', () => {

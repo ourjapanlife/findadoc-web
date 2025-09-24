@@ -83,7 +83,18 @@ export default defineNuxtConfig({
                     content: 'https://www.findadoc.jp'
                 }
             ],
-            link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.svg' }]
+            link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.svg' }],
+            script:
+            process.env.NUXT_PUBLIC_UMAMI_URL && process.env.NUXT_PUBLIC_UMAMI_SITE_ID && process.env.NODE_ENV === 'production'
+                ? [
+                    {
+                        src: `${process.env.NUXT_PUBLIC_UMAMI_URL}`,
+                        async: true,
+                        defer: true,
+                        'data-website-id': process.env.NUXT_PUBLIC_UMAMI_SITE_ID
+                    }
+                ]
+                : []
         }
     },
 
