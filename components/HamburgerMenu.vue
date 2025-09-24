@@ -81,13 +81,19 @@
                         >
                             <!-- Home Link -->
                             <NuxtLink to="/">
-                                <div @click="closeMenu()">
+                                <div
+                                    class="text-primary"
+                                    @click="closeMenu()"
+                                >
                                     {{ t('topNav.home') }}
                                 </div>
                             </NuxtLink>
                             <!-- About Link -->
                             <NuxtLink to="/about">
-                                <div @click="closeMenu()">
+                                <div
+                                    class="text-primary"
+                                    @click="closeMenu()"
+                                >
                                     {{ t('hamburgerMenu.about') }}
                                 </div>
                             </NuxtLink>
@@ -96,13 +102,19 @@
                                 to="https://forms.gle/4E763qfaq46kEsn99"
                                 target="_blank"
                             >
-                                <div @click="closeMenu()">
+                                <div
+                                    class="text-primary"
+                                    @click="closeMenu()"
+                                >
                                     {{ t('hamburgerMenu.contact') }}
                                 </div>
                             </NuxtLink>
                             <!-- Add a doctor Link -->
                             <NuxtLink to="/submit">
-                                <div @click="closeMenu()">
+                                <div
+                                    class="text-primary"
+                                    @click="closeMenu()"
+                                >
                                     {{ t('hamburgerMenu.submit') }}
                                 </div>
                             </NuxtLink>
@@ -163,6 +175,7 @@
                         </div>
                     </div>
 
+                    <!-- Contact us Link -->
                     <div
                         data-testid="hamburger-menu-footer-section"
                         class="flex flex-col gap-5 px-5"
@@ -173,42 +186,49 @@
                             </p>
                             <div class="flex">
                                 <div
-                                    class="w-10 h-10 mr-1"
+                                    class="w-10 h-10 mr-1 rounded-md"
                                     title="Original Theme"
                                     style="background-color:#EB7100"
                                     :class="getSelectedTheme('original')"
                                     @click="setTheme('original')"
                                 />
                                 <div
-                                    class="w-10 h-10 mr-1 bg-primary"
+                                    class="w-10 h-10 mr-1 bg-primary rounded-md"
                                     title="Coral Theme"
                                     style="background-color: #ED6C5A;"
                                     :class="getSelectedTheme('coral')"
                                     @click="setTheme('coral')"
                                 />
                                 <div
-                                    class="w-10 h-10 mr-1"
+                                    class="w-10 h-10 mr-1 rounded-md"
                                     title="Violet Theme"
                                     style="background-color: #A45D9A;"
                                     :class="getSelectedTheme('violet')"
                                     @click="setTheme('violet')"
                                 />
                                 <div
-                                    class="w-10 h-10 mr-1"
-                                    title="Ocean Theme"
-                                    style="background-color: #245A7D;"
-                                    :class="getSelectedTheme('ocean')"
-                                    @click="setTheme('ocean')"
+                                    class="w-10 h-10 mr-1 rounded-md"
+                                    title="Original Theme Dark"
+                                    style="background-color:#EB7100"
+                                    :class="getSelectedTheme('dark')"
+                                    @click="setTheme('dark')"
                                 />
                                 <div
-                                    class="w-10 h-10 mr-1"
-                                    title="Neon Theme"
-                                    style="background-color: #1bdb9b;"
-                                    :class="getSelectedTheme('neon')"
-                                    @click="setTheme('neon')"
+                                    class="w-10 h-10 mr-1 bg-primary rounded-md"
+                                    title="Coral Theme Dark"
+                                    style="background-color: #ED6C5A;"
+                                    :class="getSelectedTheme('coral-dark')"
+                                    @click="setTheme('coral-dark')"
                                 />
                                 <div
-                                    class="w-10 h-10 mr-1"
+                                    class="w-10 h-10 mr-1 rounded-md"
+                                    title="Violet Theme Dark"
+                                    style="background-color: #A45D9A;"
+                                    :class="getSelectedTheme('violet-dark')"
+                                    @click="setTheme('violet-dark')"
+                                />
+                                <div
+                                    class="w-10 h-10 mr-1 rounded-md"
                                     title="Default Theme"
                                     style="background-color: #EEFF02FF;"
                                     :class="getSelectedTheme('accessible-high-contrast')"
@@ -216,13 +236,20 @@
                                     @click="setTheme('accessible-high-contrast')"
                                 />
                                 <div
-                                    class="w-10 h-10 mr-1"
+                                    class="w-10 h-10 mr-1 rounded-md"
                                     title="Accessible: Daltonian Color Blindness"
                                     style="background-color: #FF0000FF;"
                                     :class="getSelectedTheme('accessible-red-green')"
                                     alt="Accessible: Daltonian Color Blindness"
                                     @click="setTheme('accessible-red-green')"
                                 />
+                                <!-- <div
+                                    class="w-10 h-10 mr-1 rounded-md"
+                                    title="Ocean Theme"
+                                    style="background-color: #245A7D;"
+                                    :class="getSelectedTheme('ocean')"
+                                    @click="setTheme('ocean')"
+                                /> -->
                             </div>
                         </div>
                         <div
@@ -362,7 +389,7 @@ function setTheme(newTheme: string) {
         'theme-coral',
         'theme-violet',
         'theme-ocean',
-        'theme-neon',
+        'theme-dark',
         'theme-accessible-high-contrast',
         'theme-accessible-red-green'
     )
@@ -374,7 +401,7 @@ function setTheme(newTheme: string) {
 // This gives a black border to the currently selected theme
 function getSelectedTheme(theme: string) {
     if (currentTheme.value === theme) {
-        return 'border-4 border-black'
+        return 'border-4 border-primary'
     }
     return 'border border-gray-300'
 }
