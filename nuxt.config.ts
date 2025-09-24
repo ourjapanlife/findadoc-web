@@ -171,7 +171,7 @@ export default defineNuxtConfig({
 
     // Google analytics configuration
     gtag: {
-        enabled: process.env.NODE_ENV === 'production',
+        enabled: process.env.NODE_ENV === 'production' && process.env.ENABLE_GOOGLE_ANALYTICS === 'true',
         id: 'G-T0RE9B3PRG'
     },
 
@@ -185,6 +185,7 @@ export default defineNuxtConfig({
     runtimeConfig: {
         public: {
             isTestingMode: process.env.NUXT_IS_TESTING_MODE,
+
             GOOGLE_MAPS_API_KEY: process.env.GOOGLE_MAPS_API_KEY,
 
             NUXT_PUBLIC_LOAD_STORES: process.env.NUXT_PUBLIC_LOAD_STORES,
