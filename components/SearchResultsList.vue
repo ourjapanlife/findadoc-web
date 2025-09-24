@@ -4,7 +4,7 @@
     >
         <!-- Search Filters Bar -->
         <div
-            v-if="useScreenOrientation().isPortrait.value"
+            v-if="isPortrait"
             data-testid="searchbar"
             class="results-header flex flex-col justify-center flex-shrink-0"
         >
@@ -12,7 +12,7 @@
         </div>
         <!-- Divider line -->
         <div
-            v-if="useScreenOrientation().isPortrait.value"
+            v-if="isPortrait"
             class="h-px border border-accent/10 my-2 mx-auto w-20 flex-shrink-0"
         />
         <!-- Loading List Placeholder -->
@@ -92,6 +92,7 @@ import { useBottomSheetStore } from '../stores/bottomSheetStore'
 import { Locale } from '~/typedefs/gqlTypes.js'
 import SVGLoadingIcon from '~/assets/icons/loading.svg'
 import SVGNoSearchResults from '~/assets/icons/no-search-results-graphic.svg'
+import { useScreenOrientation } from '~/composables/useScreenOrientation'
 
 const { t } = useI18n()
 
@@ -99,6 +100,7 @@ const resultsStore = useSearchResultsStore()
 const localeStore = useLocaleStore()
 const loadingStore = useLoadingStore()
 const bottomSheetStore = useBottomSheetStore()
+const { isPortrait } = useScreenOrientation()
 
 const hasResults = computed(() => resultsStore.searchResultsList.length > 0)
 const resultsContainerRef = ref<HTMLElement | null>(null)

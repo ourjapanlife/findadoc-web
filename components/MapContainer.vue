@@ -50,6 +50,7 @@ import { useSearchResultsStore } from '../stores/searchResultsStore'
 import { useRuntimeConfig } from '#imports'
 import SVGMapPin from '~/assets/icons/map-pin.svg'
 import { BottomSheetType, useBottomSheetStore } from '~/stores/bottomSheetStore'
+import { useScreenOrientation } from '~/composables/useScreenOrientation'
 
 const defaultLocation = { lat: 35.6804, lng: 139.769 }
 const currentLocation = ref(defaultLocation)
@@ -61,6 +62,7 @@ const runtimeConfig = useRuntimeConfig()
 const bottomSheetStore = useBottomSheetStore()
 
 const isMapReady = ref(false)
+const { isLandscape } = useScreenOrientation()
 
 // UX hack: When the map is moved from search results, we don't want to minimize the bottom sheet
 // This is because the map movement is triggered by the search results list changing,
@@ -197,7 +199,7 @@ const getAllCurrentCoordinates = () => {
 
 const calculateOffset = (zoomLevel: number) => {
     // We don't need to offset landscape mode
-    if (useScreenOrientation().isLandscape.value) {
+    if (isLandscape.value) {
         return 0
     }
 

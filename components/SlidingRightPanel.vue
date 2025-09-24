@@ -3,15 +3,15 @@
         <div
             v-if="shouldShowPanel"
             v-close-on-outside-click="closePanelHandler"
-            class="absolute left-0 inset-y-6 ml-1 bg-primary-bg
-            border-l border-secondary-bg/40 shadow-lg z-20 rounded-lg"
+            class="absolute left-96 inset-y-24 ml-1 bg-primary-bg
+            border-l border-secondary-bg/40 shadow-lg z-10 rounded-lg"
             :class="[
                 panelWidth,
             ]"
         >
             <!-- Close button -->
             <button
-                class="absolute top-4 right-4 p-2 hover:bg-secondary-bg/20 rounded-full transition-colors z-30"
+                class="absolute top-4 right-4 p-2 hover:bg-secondary-bg/20 rounded-full transition-colors z-10"
                 @click="closePanelHandler"
             >
                 <svg

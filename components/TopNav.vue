@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col mt-2 landscape:p-4 portrait:px-5 portrait:py-1  bg-primary-bg/90 rounded-lg">
+    <div class="flex flex-col mt-2 landscape:px-5 landscape:py-1 portrait:px-5 portrait:py-1  bg-primary-bg/90 rounded-lg">
         <div
             class="flex justify-between items-center"
         >
@@ -38,7 +38,7 @@
             <div
                 id="desktop-site-icon"
                 class="portrait:hidden w-52 font-semibold text-xl
-                group transition-colors items-start p-2 bg-primary-bg/60 rounded-2xl"
+                group transition-colors items-start p-2 rounded-2xl"
             >
                 <NuxtLink
                     class="flex"
@@ -64,7 +64,7 @@
                 </NuxtLink>
             </div>
             <!-- Search Bar -->
-            <div v-if="useScreenOrientation().isLandscape.value">
+            <div v-if="isLandscape">
                 <SearchBar class="mx-4" />
             </div>
             <!-- Right Section -->
@@ -146,10 +146,12 @@
 import HamburgerMenu from './HamburgerMenu.vue'
 import SVGSiteLogo from '~/assets/icons/site-logo.svg'
 import { useAuthStore } from '~/stores/authStore'
+import { useScreenOrientation } from '~/composables/useScreenOrientation'
 
 const { t } = useI18n()
 
 const authStore = useAuthStore()
+const { isLandscape } = useScreenOrientation()
 
 const showLogoText = ref(false)
 

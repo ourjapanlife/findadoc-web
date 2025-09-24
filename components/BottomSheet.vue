@@ -109,8 +109,9 @@ const showSheet = ref(false)
 
 /**
    * Dynamic translate value
+   * Start at the provided initialPosition so the sheet opens at that height
    */
-const translateValue = ref(100)
+const translateValue = ref(props.initialPosition)
 
 /**
    * Flag to check if sheet is being dragged
@@ -232,7 +233,8 @@ const dragHandler = (event: HammerInput | IEvent, type: 'draghandle' | 'dragcont
    * Open bottom sheet method
    */
 const open = () => {
-    translateValue.value = 0
+    // Honor the initialPosition (already set by initHeight) when opening
+    // Do not force to 0, or the sheet will cover the whole screen
     document.documentElement.style.overflowY = 'hidden'
     document.documentElement.style.overscrollBehavior = 'none'
     showSheet.value = true

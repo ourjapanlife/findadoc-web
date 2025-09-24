@@ -50,6 +50,7 @@
 
 <script setup lang="ts">
 import { ref, watch } from 'vue'
+import { useScreenOrientation } from '~/composables/useScreenOrientation'
 import type BottomSheet from '~/components/BottomSheet.vue'
 import SearchResultDetails from '~/components/SearchResultDetails.vue'
 import SearchResultsList from '~/components/SearchResultsList.vue'
@@ -59,6 +60,7 @@ import { useSearchResultsStore } from '~/stores/searchResultsStore'
 
 const bottomSheetStore = useBottomSheetStore()
 const searchResultsStore = useSearchResultsStore()
+const { isPortrait } = useScreenOrientation()
 
 // Refs
 const bottomSheetRef = ref<typeof BottomSheet | null>(null)

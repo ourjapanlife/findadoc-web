@@ -1,6 +1,6 @@
 <template>
     <div
-        class="h-full min-h-0 flex flex-col border-r overflow-hidden"
+        class="h-full flex flex-col border-r overflow-hidden"
         :class="[
             'border-secondary-bg/40',
             'hover:shadow-inner',
@@ -8,7 +8,7 @@
             'transition-shadow',
         ]"
     >
-        <div class="flex-1 min-h-0">
+        <div class="flex-1 overflow-y-auto">
             <SearchResultsList />
         </div>
     </div>

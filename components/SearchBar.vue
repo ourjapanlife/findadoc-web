@@ -27,7 +27,7 @@
         <div
             class="flex items-center justify-center h-10 rounded-b w-full landscape:flex-1 landscape:rounded
              border-1 border-primary/20 text-xs text-accent
-             bg-primary-bg transition-all"
+              transition-all"
         >
             <!-- Selected Languages -->
             <div class="search-language flex-1 landscape:flex-1">

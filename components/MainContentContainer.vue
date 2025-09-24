@@ -12,14 +12,17 @@
             <TopNav class="absolute top-0 left-0 right-0 z-10 mx-2" />
             <!-- Landscape / Desktop Mode -->
             <div
-                v-if="useScreenOrientation().isLandscape.value"
+                v-if="isLandscape"
                 id="search-landscape"
-                class="flex flex-col flex-1 min-h-0 overflow-hidden pt-24"
+                class="flex flex-col flex-1 overflow-hidden "
             >
                 <Loader />
-                <div class="flex flex-1 min-h-0 overflow-hidden">
-                    <LeftNavbar class="bg-primary-bg w-96 flex-shrink-0 h-full" />
-                    <div class="flex-1 relative min-h-0">
+                <div class="flex flex-1 overflow-hidden">
+                    <LeftNavbar
+                        class="bg-primary-bg w-96 z-20
+                    fixed top-24 left-0 bottom-16 rounded-r-md"
+                    />
+                    <div class="flex-1 relative">
                         <MapContainer class="h-full" />
                         <SlidingRightPanel />
                     </div>
@@ -38,7 +41,7 @@
                     @map-moved="handleMapMoved"
                 />
             </div>
-            <Footer class="z-10 flex-shrink-0" />
+            <Footer class="z-10 absolute bottom-0 left-0 right-0 mx-2" />
         </div>
     </div>
 </template>
@@ -48,11 +51,13 @@ import { storeToRefs } from 'pinia'
 import { useOnboardingStore } from '@/stores/onboardingStore'
 import { useBottomSheetStore } from '@/stores/bottomSheetStore'
 import SlidingRightPanel from '~/components/SlidingRightPanel.vue'
+import { useScreenOrientation } from '~/composables/useScreenOrientation'
 
 const onboardingStore = useOnboardingStore()
 const { onboardingState } = storeToRefs(onboardingStore)
 
 const bottomSheetStore = useBottomSheetStore()
+const { isLandscape } = useScreenOrientation()
 
 // Handle map movement by calling the store's minimize function
 const handleMapMoved = () => {
