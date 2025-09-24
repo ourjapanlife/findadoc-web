@@ -7,20 +7,22 @@
         <div
             v-if="onboardingState === OnboardingState.Completed"
             id="search-container"
+            class="flex flex-col h-svh overflow-hidden"
         >
             <TopNav class="absolute top-0 left-0 right-0 z-10 mx-2" />
             <!-- Landscape / Desktop Mode -->
             <div
-                v-if="$viewport.isGreaterThan('tablet')"
+                v-if="useScreenOrientation().isLandscape.value"
                 id="search-landscape"
+                class="flex flex-col flex-1 min-h-0 overflow-hidden pt-24"
             >
                 <Loader />
-                <Modal class="max-h-[calc(100vh-10rem)] mt-12 overflow-y-auto">
-                    <SearchResultDetails />
-                </Modal>
-                <div class="flex h-[calc(100vh-10rem)]">
-                    <LeftNavbar class="bg-primary-bg w-96" />
-                    <MapContainer class="grow" />
+                <div class="flex flex-1 min-h-0 overflow-hidden">
+                    <LeftNavbar class="bg-primary-bg w-96 flex-shrink-0 h-full" />
+                    <div class="flex-1 relative min-h-0">
+                        <MapContainer class="h-full" />
+                        <SlidingRightPanel />
+                    </div>
                 </div>
             </div>
             <!-- Portrait / Mobile Mode -->
@@ -36,7 +38,7 @@
                     @map-moved="handleMapMoved"
                 />
             </div>
-            <Footer class="z-10" />
+            <Footer class="z-10 flex-shrink-0" />
         </div>
     </div>
 </template>
@@ -45,6 +47,7 @@
 import { storeToRefs } from 'pinia'
 import { useOnboardingStore } from '@/stores/onboardingStore'
 import { useBottomSheetStore } from '@/stores/bottomSheetStore'
+import SlidingRightPanel from '~/components/SlidingRightPanel.vue'
 
 const onboardingStore = useOnboardingStore()
 const { onboardingState } = storeToRefs(onboardingStore)

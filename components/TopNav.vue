@@ -63,6 +63,10 @@
                     </div>
                 </NuxtLink>
             </div>
+            <!-- Search Bar -->
+            <div v-if="useScreenOrientation().isLandscape.value">
+                <SearchBar class="mx-4" />
+            </div>
             <!-- Right Section -->
             <div
                 id="right-section"

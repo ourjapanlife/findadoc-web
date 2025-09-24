@@ -1,16 +1,20 @@
 <template>
     <div
-        class="flex flex-col bg-primary-bg overflow-y-auto mx-2 h-full"
+        class="flex flex-col bg-primary-bg mx-2 h-full overflow-hidden landscape:pt-6"
     >
         <!-- Search Filters Bar -->
         <div
+            v-if="useScreenOrientation().isPortrait.value"
             data-testid="searchbar"
             class="results-header flex flex-col justify-center flex-shrink-0"
         >
             <SearchBar class="mx-4" />
         </div>
         <!-- Divider line -->
-        <div class="h-px border border-accent/10 my-2 mx-auto w-20 flex-shrink-0" />
+        <div
+            v-if="useScreenOrientation().isPortrait.value"
+            class="h-px border border-accent/10 my-2 mx-auto w-20 flex-shrink-0"
+        />
         <!-- Loading List Placeholder -->
         <div
             v-if="loadingStore.isLoading"
