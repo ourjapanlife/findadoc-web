@@ -20,7 +20,7 @@
                 <div class="flex flex-1 overflow-hidden">
                     <LeftNavbar
                         class="bg-primary-bg w-96 z-20
-                    fixed top-24 left-0 bottom-16 rounded-r-md"
+                    fixed top-24 left-0 h-[calc(95vh-96px)] rounded-r-md"
                     />
                     <div class="flex-1 relative">
                         <MapContainer class="h-full" />
