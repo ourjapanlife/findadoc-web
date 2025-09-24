@@ -49,7 +49,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { ref, watch, nextTick } from 'vue'
 import type BottomSheet from '~/components/BottomSheet.vue'
 import SearchResultDetails from '~/components/SearchResultDetails.vue'
 import SearchResultsList from '~/components/SearchResultsList.vue'
@@ -66,8 +66,12 @@ const showCloseButton = ref(false)
 const beforeMinimizedPosition = ref(75)
 
 //Vue Event Handlers
-onMounted(() => {
+onMounted(async () => {
+    // Defer until the BottomSheet is fully mounted and Hammer handlers are attached
+    await nextTick()
     bottomSheetRef.value?.open()
+    // Explicitly set initial position to 50 to avoid any race with init
+    bottomSheetRef.value?.setPosition(50)
 })
 
 watch(() => bottomSheetStore.bottomSheetType, newType => {
