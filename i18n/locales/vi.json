@@ -237,6 +237,7 @@
     "inputErrorMessageFacilityAddressLine2Ja": "Địa chỉ Nhật Bản không hợp lệ",
     "inputErrorMessageFacilityAddressLine1En": "Địa chỉ tiếng Anh không hợp lệ",
     "inputErrorMessageFacilityAddressLine2En": "Địa chỉ tiếng Anh không hợp lệ",
+    "inputErrorMessagePrefectureMismatch": "Japanese and/or English Name Prefecture do not match",
     "inputErrorMessageFacilityCityEn": "Tên thành phố tiếng Anh không hợp lệ",
     "inputErrorMessageFacilityCityJa": "Tên thành phố tiếng Nhật không hợp lệ",
     "inputErrorMessageFacilityEmail": "Địa chỉ email không hợp lệ",

@@ -295,6 +295,7 @@
     "inputErrorMessageFacilityAddressLine2Ja": "Invalid Japanese Address",
     "inputErrorMessageFacilityAddressLine1En": "Invalid English Address",
     "inputErrorMessageFacilityAddressLine2En": "Invalid English Address",
+    "inputErrorMessagePrefectureMismatch": "Japanese and/or English Name Prefecture do not match",
     "inputErrorMessageFacilityCityEn": "Invalid English City Name",
     "inputErrorMessageFacilityCityJa": "Invalid Japanese City Name",
     "inputErrorMessageFacilityEmail": "Invalid Email Address",

@@ -245,6 +245,7 @@
     "inputErrorMessageFacilityAddressLine2Ja": "Indirizzo giapponese non valido",
     "inputErrorMessageFacilityAddressLine1En": "Indirizzo inglese non valido",
     "inputErrorMessageFacilityAddressLine2En": "Indirizzo inglese non valido",
+    "inputErrorMessagePrefectureMismatch": "Japanese and/or English Name Prefecture do not match",
     "inputErrorMessageFacilityCityEn": "Nome città in inglese non valido",
     "inputErrorMessageFacilityCityJa": "Nome città in giapponese non valido",
     "inputErrorMessageFacilityEmail": "Indirizzo email non valido",

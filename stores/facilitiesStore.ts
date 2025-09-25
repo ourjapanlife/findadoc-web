@@ -6,7 +6,6 @@ import type {
     Facility,
     HealthcareProfessional,
     Mutation,
-    MutationCreateFacilityArgs,
     MutationDeleteFacilityArgs,
     MutationUpdateFacilityArgs,
     Relationship,
@@ -14,11 +13,14 @@ import type {
     Contact,
     ContactInput,
     PhysicalAddress,
-    PhysicalAddressInput
+    PhysicalAddressInput,
+    UpdateFacilityInput,
+    MutationCreateFacilityArgs
 } from '~/typedefs/gqlTypes'
 import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql'
 import type { ServerResponse } from '~/typedefs/serverResponse'
 import { arraysAreEqual } from '~/utils/arrayUtils'
+import { validateCreateFacility, validateUpdateFacility } from '~/utils/facilitiesUtils'
 
 export type FacilitySectionFields = {
     // contactFields
@@ -294,6 +296,8 @@ export const useFacilitiesStore = defineStore('facilitiesStore', () => {
     }
 
     async function createFacility(): Promise<ServerResponse<Facility>> {
+        const { prefectureEn, prefectureJa } = createFacilityFields.contact.address
+
         const CreateFacilityInput: MutationCreateFacilityArgs = {
             input: {
                 nameEn: createFacilityFields.nameEn,
@@ -307,18 +311,27 @@ export const useFacilitiesStore = defineStore('facilitiesStore', () => {
                         cityEn: createFacilityFields.contact.address.cityEn,
                         cityJa: createFacilityFields.contact.address.cityJa,
                         postalCode: createFacilityFields.contact.address.postalCode,
-                        prefectureEn: createFacilityFields.contact.address.prefectureEn,
-                        prefectureJa: createFacilityFields.contact.address.prefectureJa
+                        prefectureEn,
+                        prefectureJa
                     },
                     email: createFacilityFields.contact.email,
                     phone: createFacilityFields.contact.phone,
                     website: createFacilityFields.contact.website,
                     googleMapsUrl: createFacilityFields.contact.googleMapsUrl
                 },
-                mapLatitude: parseFloat(createFacilityFields.mapLatitude),
-                mapLongitude: parseFloat(createFacilityFields.mapLongitude),
+                mapLatitude: Number(createFacilityFields.mapLatitude),
+                mapLongitude: Number(createFacilityFields.mapLongitude),
                 healthcareProfessionalIds: createFacilityFields.healthcareProfessionalIds
             }
+        }
+
+        /**
+         * Validation on the client-side
+         * (to prevent sending the data to the backend even though the prefecture names are mismatched)
+         */
+        const validation = validateCreateFacility(CreateFacilityInput.input)
+        if (!validation.valid) {
+            throw new Error(validation.errors.join('; '))
         }
 
         const serverResponse = await graphQLClientRequestWithRetry<Mutation>(
@@ -334,7 +347,6 @@ export const useFacilitiesStore = defineStore('facilitiesStore', () => {
             selectedFacilityData.value = responseData
             initializeFacilitySectionValues(responseData)
         }
-
         const mappedResponse: ServerResponse<Facility> = {
             ...serverResponse,
             data: responseData
@@ -344,14 +356,19 @@ export const useFacilitiesStore = defineStore('facilitiesStore', () => {
     }
 
     async function updateFacility(): Promise<ServerResponse<Facility>> {
-        const facilitySectionFieldsBeforeMutation = selectedFacilityData.value!
-        const healthProfessionalRelationsBeforeMutation
-        = facilitySectionFields.value.healthProfessionalsRelations
-
         const updatedFields = getChangedFacilityFieldsForUpdate(
             facilitySectionFields.value,
-            facilitySectionFieldsBeforeMutation
+            selectedFacilityData.value!
         )
+
+        /**
+         * Validation on the client-side
+         * (to prevent sending the data to the backend even though the prefecture names are mismatched)
+         */
+        const validation = validateUpdateFacility(updatedFields as UpdateFacilityInput)
+        if (!validation.valid) {
+            throw new Error(validation.errors.join('; '))
+        }
 
         const updateFacilityInput: MutationUpdateFacilityArgs = {
             id: selectedFacilityId.value,
@@ -378,7 +395,7 @@ export const useFacilitiesStore = defineStore('facilitiesStore', () => {
             if (
                 arraysAreEqual(
                     facilitySectionFields.value.healthProfessionalsRelations,
-                    healthProfessionalRelationsBeforeMutation
+                    updatedFields.contact?.address ? facilitySectionFields.value.healthProfessionalsRelations : []
                 )
             ) {
                 facilitySectionFields.value.healthProfessionalsRelations = []
