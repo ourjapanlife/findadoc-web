@@ -178,6 +178,7 @@
                                 </p>
                                 <div class="flex">
                                     <div
+                                        v-if="lightDarkMode == 'LIGHT'"
                                         class="w-10 h-10 mr-1 rounded-full"
                                         title="Original Theme"
                                         style="background-color:#0EB0C0"
@@ -185,6 +186,15 @@
                                         @click="setTheme('original')"
                                     />
                                     <div
+                                        v-if="lightDarkMode == 'DARK'"
+                                        class="w-10 h-10 mr-1 rounded-full"
+                                        title="Original Theme Dark"
+                                        style="background-color:#00FFFF"
+                                        :class="getSelectedTheme('original')"
+                                        @click="setTheme('dark')"
+                                    />
+                                    <div
+                                        v-if="lightDarkMode == 'LIGHT'"
                                         class="w-10 h-10 mr-1 bg-primary rounded-full"
                                         title="Coral Theme"
                                         style="background-color: #ED6C5A;"
@@ -192,33 +202,29 @@
                                         @click="setTheme('coral')"
                                     />
                                     <div
+                                        v-if="lightDarkMode == 'DARK'"
+                                        class="w-10 h-10 mr-1 bg-primary rounded-full"
+                                        title="Coral Theme Dark"
+                                        style="background-color: #FF1F00;"
+                                        :class="getSelectedTheme('coral')"
+                                        @click="setTheme('coral-dark')"
+                                    />
+                                    <div
+                                        v-if="lightDarkMode == 'LIGHT'"
                                         class="w-10 h-10 mr-1 rounded-full"
                                         title="Violet Theme"
                                         style="background-color: #A45D9A;"
                                         :class="getSelectedTheme('violet')"
                                         @click="setTheme('violet')"
                                     />
-                                    <!-- <div
-                                        class="w-10 h-10 mr-1 rounded-full"
-                                        title="Original Theme Dark"
-                                        style="background-color:#00FFFF"
-                                        :class="getSelectedTheme('dark')"
-                                        @click="setTheme('dark')"
-                                    />
                                     <div
-                                        class="w-10 h-10 mr-1 bg-primary rounded-full"
-                                        title="Coral Theme Dark"
-                                        style="background-color: #FF1F00;"
-                                        :class="getSelectedTheme('coral-dark')"
-                                        @click="setTheme('coral-dark')"
-                                    />
-                                    <div
+                                        v-if="lightDarkMode == 'DARK'"
                                         class="w-10 h-10 mr-1 rounded-full"
                                         title="Violet Theme Dark"
                                         style="background-color: #FF00DB;"
-                                        :class="getSelectedTheme('violet-dark')"
+                                        :class="getSelectedTheme('violet')"
                                         @click="setTheme('violet-dark')"
-                                    /> -->
+                                    />
 
                                 <!-- <div
                                     class="w-10 h-10 mr-1 rounded-md"
@@ -260,7 +266,8 @@
                                 >
                                     Dark Mode
                                 </p>
-                                <Toggle />
+                                <!-- <Toggle @theme-change="(i) => (lightDarkMode = i)" /> -->
+                                <Toggle @theme-change="logMode" />
                             </div>
                         </div>
                     </div>
@@ -384,6 +391,50 @@ const currentTheme = ref('original')
 
 const { t } = useI18n()
 
+// enum ColorMode {
+//     Light = 'LIGHT',
+//     Dark = 'DARK'
+// }
+
+const lightDarkMode = ref('LIGHT')
+
+const original = {
+    LIGHT: 'theme-original',
+    DARK: 'theme-dark'
+}
+
+const coral = {
+    LIGHT: 'theme-coral',
+    DARK: 'theme-coral-dark'
+}
+
+const violet = {
+    LIGHT: 'theme-violet',
+    DARK: 'theme-violet-dark'
+}
+
+function logMode(passedValue) {
+    document.documentElement.classList.remove(
+        'theme-original',
+        'theme-coral',
+        'theme-violet',
+        'theme-dark',
+        'theme-coral-dark',
+        'theme-violet-dark',
+        'theme-accessible-high-contrast',
+        'theme-accessible-red-green'
+    )
+    if (currentTheme.value == 'original') {
+        document.documentElement.classList.add(original[passedValue])
+    } else if (currentTheme.value == 'coral') {
+        document.documentElement.classList.add(coral[passedValue])
+    } else if (currentTheme.value == 'violet') {
+        document.documentElement.classList.add(violet[passedValue])
+    }
+    localStorage.setItem('theme', passedValue)
+    lightDarkMode.value = passedValue
+}
+
 function openMenu() {
     isMenuOpen.value = true
 }
@@ -407,16 +458,15 @@ function setTheme(newTheme: string) {
         'theme-original',
         'theme-coral',
         'theme-violet',
-        // 'theme-dark',
-        // 'theme-coral-dark',
-        // 'theme-violet-dark',
+        'theme-dark',
+        'theme-coral-dark',
+        'theme-violet-dark',
         'theme-accessible-high-contrast',
         'theme-accessible-red-green'
     )
     document.documentElement.classList.add(`theme-${newTheme}`)
     localStorage.setItem('theme', newTheme)
     currentTheme.value = newTheme
-    console.log(currentTheme)
 }
 
 // This gives a black border to the currently selected theme
@@ -426,6 +476,21 @@ function getSelectedTheme(theme: string) {
     }
     return 'border border-gray-300'
 }
+
+// 1. Create themes as objects
+// 2. Have toggle call function
+// 3. Function will swap one of two options for dark or light
+// 4. that option will then get added to to the class list
+
+// function toggleDarkLight() {
+//     if (mode.value == colorMode.Light) {
+//         mode.value = colorMode.Dark
+//         console.log(currentTheme)
+//     } else {
+//         mode.value = colorMode.Light
+//         console.log(currentTheme)
+//     }
+// }
 
 onMounted(() => {
     const saveTheme = localStorage.getItem('theme')
