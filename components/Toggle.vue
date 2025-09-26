@@ -2,12 +2,24 @@
     <label class="switch">
         <input
             type="checkbox"
+            @input="toggleDarkLightMode"
         >
         <span class="slider round" />
     </label>
 </template>
 
-<script setup>
+<script setup lang="ts">
+enum ColorMode {
+    Light = 'LIGHT',
+    Dark = 'DARK'
+}
+const theme = ref(ColorMode.Light)
+const emit = defineEmits(['theme-change'])
+
+const toggleDarkLightMode = () => {
+    theme.value = theme.value === ColorMode.Light ? ColorMode.Dark : ColorMode.Light
+    emit('theme-change', theme.value)
+}
 </script>
 
 <style>
