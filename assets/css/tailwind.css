@@ -39,7 +39,7 @@
     /* These colors are using a syntax special to tailwind. Uncomment hex value for reference */
     /* https://tailwindcss.com/docs/customizing-colors#using-css-variables */
 
-    /* general branding colors 🫡*/
+    /* general branding colors*/
     --color-primary:
       /* #0EB0C0 */
       14 176 192;
@@ -99,7 +99,7 @@
 
 
   .theme-coral {
-    /* coral - branding colors 🫡*/
+    /* coral - branding colors*/
     --color-primary:
       /* #ED6C5A */
       237 108 90;
@@ -159,7 +159,7 @@
 
 
   .theme-violet {
-    /* violet - branding colors 🫡*/
+    /* violet - branding colors*/
     --color-primary:
       /* #A45D9A */
       164 93 154;
@@ -220,7 +220,7 @@
   /* MARK: Dark Mode Themes */
 
   .theme-dark {
-    /* branding colors - dark mode 🫡*/
+    /* branding colors - dark mode*/
     --color-primary:
       /* #00FFFF */
       0 255 255;
@@ -279,7 +279,7 @@
   }
 
   .theme-coral-dark {
-    /* coral - branding colors 🫡*/
+    /* coral - branding colors*/
     --color-primary:
       /* #FF1F00 */
       255 31 0;
@@ -338,7 +338,7 @@
   }
 
   .theme-violet-dark {
-    /* violet - branding colors 🫡*/
+    /* violet - branding colors */
     --color-primary:
       /* #FF00DB */
       255 0 219;
@@ -401,7 +401,7 @@
   /* accessible high contrast theme */
 
   .theme-accessible-high-contrast {
-    /* high contrast - general branding colors 🫡*/
+    /* high contrast - general branding colors */
     --color-primary:
       /* #00FFFF */
       0 255 255;
@@ -462,7 +462,7 @@
   /* accessible r-g color blindness friendly theme (daltonism) */
 
   .theme-accessible-red-green {
-    /* red green - general branding colors 🫡*/
+    /* red green - general branding colors */
     --color-primary:
       /* #007BFF */
       0 123 255;
