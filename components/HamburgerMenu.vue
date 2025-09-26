@@ -173,7 +173,7 @@
                                 </NuxtLink>
                             </div>
                             <div data-testid="hamburger-menu-theme-switcher">
-                                <p class="mb-1">
+                                <p class="mb-1 text-primary-text">
                                     {{ t('hamburgerMenu.theme') }}: {{ convertStringToTitleCase(currentTheme) }}
                                 </p>
                                 <div class="flex">
@@ -236,8 +236,8 @@
                                 </div>
                             </div>
                             <div data-testid="hamburger-menu-theme-switcher">
-                                <p class="mb-1">
-                                    {{ t('hamburgerMenu.theme') }}: {{ convertStringToTitleCase(currentTheme) }}
+                                <p class="mb-1 text-primary-text">
+                                    Accessible colors
                                 </p>
                                 <div class="flex">
                                     <div
@@ -262,12 +262,12 @@
                                 data-testid="hamburger-menu-theme-switcher"
                             >
                                 <p
-                                    class="mb-1"
+                                    class="mb-1 text-primary-text"
                                 >
                                     Dark Mode
                                 </p>
                                 <!-- <Toggle @theme-change="(i) => (lightDarkMode = i)" /> -->
-                                <Toggle @theme-change="logMode" />
+                                <Toggle @theme-change="lightDarkModeSwitcher" />
                             </div>
                         </div>
                     </div>
@@ -285,7 +285,10 @@
                                 to="/terms"
                                 data-testid="hamburger-menu-footer-legal-terms"
                             >
-                                <span @click="closeMenu()">
+                                <span
+                                    class="text-primary-text"
+                                    @click="closeMenu()"
+                                >
                                     {{ t('footer.terms') }}
                                 </span>
                             </NuxtLink>
@@ -293,7 +296,10 @@
                                 to="/privacypolicy"
                                 data-testid="hamburger-menu-footer-legal-privacy"
                             >
-                                <span @click="closeMenu()">
+                                <span
+                                    class="text-primary-text"
+                                    @click="closeMenu()"
+                                >
                                     {{ t('footer.privacy') }}
                                 </span>
                             </NuxtLink>
@@ -413,7 +419,7 @@ const violet = {
     DARK: 'theme-violet-dark'
 }
 
-function logMode(passedValue) {
+function lightDarkModeSwitcher(passedValue) {
     document.documentElement.classList.remove(
         'theme-original',
         'theme-coral',
