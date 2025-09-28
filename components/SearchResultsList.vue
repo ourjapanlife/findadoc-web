@@ -54,6 +54,7 @@
                             : 'bg-primary-bg hover:bg-primary-hover/50',
                     ]"
                     data-umami-event="Search results list item"
+                    :data-umami-event-healthcareprofessional="getLocalizedName(searchResult.professional.names)"
                     @click="resultClicked(searchResult.professional.id)"
                 >
                     <SearchResultsListItem
