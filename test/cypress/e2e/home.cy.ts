@@ -98,16 +98,16 @@ describe('Visits the home page', () => {
             })
 
             // privacy - this link is being covered in the UI
-            it.skip('naviagtes to private policy', () => {
+            it.skip('navigates to private policy', () => {
                 cy.get('[data-testid="privacy-link"]').should('be.visible')
-                cy.get('[data-testid="privacy-link').click()
+                cy.get('[data-testid="privacy-link"]').click()
                 cy.url().should('include', '/privacypolicy')
             })
 
             // terms
             it('navigates to the terms page', () => {
                 cy.get('[data-testid="terms-link"]').should('be.visible')
-                cy.get('[data-testid="terms-link').click()
+                cy.get('[data-testid="terms-link"]').click()
                 cy.url().should('include', '/terms')
             })
         })
