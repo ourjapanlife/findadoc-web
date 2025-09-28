@@ -53,6 +53,7 @@
                             ? 'bg-secondary/10 hover:bg-secondary/30 border-2 border-secondary/10'
                             : 'bg-primary-bg hover:bg-primary-hover/50',
                     ]"
+                    data-umami-event="Search results list item"
                     @click="resultClicked(searchResult.professional.id)"
                 >
                     <SearchResultsListItem
