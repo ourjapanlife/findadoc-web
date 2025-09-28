@@ -53,9 +53,7 @@
                             ? 'bg-secondary/10 hover:bg-secondary/30 border-2 border-secondary/10'
                             : 'bg-primary-bg hover:bg-primary-hover/50',
                     ]"
-                    data-umami-event="Search results list item"
-                    :data-umami-event-hp="getLocalizedName(searchResult.professional.names)"
-                    @click="resultClicked(searchResult.professional.id)"
+                    @click="resultClicked(searchResult.professional.id, getLocalizedName(searchResult.professional.names))"
                 >
                     <SearchResultsListItem
                         :name="getLocalizedName(searchResult.professional.names)"
@@ -95,6 +93,7 @@ import { Locale } from '~/typedefs/gqlTypes.js'
 import SVGLoadingIcon from '~/assets/icons/loading.svg'
 import SVGNoSearchResults from '~/assets/icons/no-search-results-graphic.svg'
 import { useScreenOrientation } from '~/composables/useScreenOrientation'
+import { useUmami } from '~/composables/useUmamiTracking'
 
 const { t } = useI18n()
 
@@ -103,6 +102,7 @@ const localeStore = useLocaleStore()
 const loadingStore = useLoadingStore()
 const bottomSheetStore = useBottomSheetStore()
 const { isPortrait } = useScreenOrientation()
+const { track } = useUmami()
 
 const hasResults = computed(() => resultsStore.searchResultsList.length > 0)
 const resultsContainerRef = ref<HTMLElement | null>(null)
@@ -118,9 +118,11 @@ function handleScroll() {
     emit('scrolled')
 }
 
-function resultClicked(resultId: string) {
+function resultClicked(resultId: string, hp: string) {
     resultsStore.setActiveSearchResult(resultId)
     bottomSheetStore.showBottomSheet(BottomSheetType.SearchResultDetails)
+
+    track('Search results list item', { hp })
 }
 
 function getLocalizedName(
