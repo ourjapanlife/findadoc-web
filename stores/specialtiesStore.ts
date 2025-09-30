@@ -39,6 +39,7 @@ export const useSpecialtiesStore = defineStore('specialtiesStore', () => {
         { code: Specialty.Ophthalmology, displayText: t('specialties.ophthalmology') },
         { code: Specialty.Optometry, displayText: t('specialties.optometry') },
         { code: Specialty.OrthopedicSurgery, displayText: t('specialties.orthopedicSurgery') },
+        { code: Specialty.Otolaryngology, displayText: t('specialties.otolaryngology')},
         { code: Specialty.Pathology, displayText: t('specialties.pathology') },
         { code: Specialty.Pediatrics, displayText: t('specialties.pediatrics') },
         { code: Specialty.Physiotherapy, displayText: t('specialties.physiotherapy') },
@@ -74,6 +75,7 @@ export const useSpecialtiesStore = defineStore('specialtiesStore', () => {
             Specialty.NuclearMedicine,
             Specialty.Pathology,
             Specialty.PreventiveMedicine,
+            Specialty.Otolaryngology,
             Specialty.RadiationOncology
         ],
         [SpecialtyCategory.MentalHealth]: [Specialty.Psychiatry],

@@ -539,6 +539,7 @@ export enum Specialty {
   Optometry = 'OPTOMETRY',
   Orthodontics = 'ORTHODONTICS',
   OrthopedicSurgery = 'ORTHOPEDIC_SURGERY',
+  Otolaryngology = 'OTOLARYNGOLOGY',
   Pathology = 'PATHOLOGY',
   Pediatrics = 'PEDIATRICS',
   Pharmacy = 'PHARMACY',
