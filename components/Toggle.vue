@@ -26,8 +26,8 @@ const toggleDarkLightMode = () => {
   .switch {
     position: relative;
     display: inline-block;
-    width: 60px;
-    height: 34px;
+    width: 48px;
+    height: 26px;
   }
 
   .switch input {
@@ -51,8 +51,8 @@ const toggleDarkLightMode = () => {
   .slider:before {
     position: absolute;
     content: "";
-    height: 26px;
-    width: 26px;
+    height: 18px;
+    width: 18px;
     left: 4px;
     bottom: 4px;
     background-color: white;
