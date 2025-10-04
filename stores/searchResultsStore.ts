@@ -10,15 +10,15 @@ import type { Locale,
     HealthcareProfessional,
     HealthcareProfessionalSearchFilters } from '~/typedefs/gqlTypes.js'
 
-type SearchResult = {
-    professional: HealthcareProfessional
-    facilities: Facility[]
+type FacilitySearchResult = Facility & {
+    healthcareProfessionals: HealthcareProfessional[]
 }
 
 export const useSearchResultsStore = defineStore('searchResultsStore', () => {
-    const activeResultId: Ref<string | undefined> = ref()
-    const activeResult: Ref<SearchResult | undefined> = ref()
-    const searchResultsList: Ref<SearchResult[]> = ref([])
+    const activeFacilityId: Ref<string | undefined> = ref()
+    const activeFacility: Ref<FacilitySearchResult | undefined> = ref()
+    const activeProfessional: Ref<HealthcareProfessional | undefined> = ref()
+    const searchResultsList: Ref<FacilitySearchResult[]> = ref([])
     const totalResults = ref(0)
 
     const selectedCity: Ref<string | undefined> = ref()
@@ -38,21 +38,29 @@ export const useSearchResultsStore = defineStore('searchResultsStore', () => {
         //get the facilities that match the professionals we found
         const facilitiesSearchResults = await queryFacilities(professionalIds, selectedCity.value)
 
+        const facilityMap = new Map<string, FacilitySearchResult>()
+
+        facilitiesSearchResults.forEach(facility => {
+            const professionalsAtFacility = professionalsSearchResults.filter(professional =>
+                professional.facilityIds.includes(facility.id))
+
+            if (professionalsAtFacility.length > 0) {
+                facilityMap.set(facility.id, {
+                    ...facility,
+                    healthcareProfessionals: professionalsAtFacility
+                })
+            }
+        })
+
         //combine the professionals and facilities into a single search result
         //then filter out any results that don't have any facilities
-        const combinedResults = professionalsSearchResults.map(professional => {
-            const matchingFacilities = facilitiesSearchResults?.filter(facility =>
-                facility.healthcareProfessionalIds.includes(professional.id)) ?? []
-
-            return { professional, facilities: matchingFacilities } satisfies SearchResult
-        }).filter(result => result.facilities.length > 0) satisfies SearchResult[]
+        const combinedResults = Array.from(facilityMap.values()) satisfies FacilitySearchResult[]
 
         //clear any active result when new search results are loaded
         clearActiveSearchResult()
 
         //update the state with the new results
         searchResultsList.value = combinedResults
-
         //update the total results count
         totalResults.value = combinedResults.length
 
@@ -60,24 +68,39 @@ export const useSearchResultsStore = defineStore('searchResultsStore', () => {
         loadingStore.setIsLoading(false)
     }
 
-    function setActiveSearchResult(selectedResultId: string) {
-        const newResult = searchResultsList.value.find(resultItem => resultItem.professional.id === selectedResultId)
+    function setActiveFacility(facilityId: string) {
+        const newFacility = searchResultsList.value.find(facilityItem => facilityItem.id === facilityId)
 
-        activeResult.value = newResult
-        activeResultId.value = newResult?.professional.id
+        activeFacility.value = newFacility
+        activeFacilityId.value = newFacility?.id
+
+        activeProfessional.value = undefined
+    }
+
+    function setActiveProfessional(professionalId: string) {
+        if (!activeFacility.value) return
+
+        const newProfessional = activeFacility.value.healthcareProfessionals.find(
+            professional => professional.id === professionalId
+        )
+
+        activeProfessional.value = newProfessional
     }
 
     function clearActiveSearchResult() {
-        activeResultId.value = undefined
-        activeResult.value = undefined
+        activeFacilityId.value = undefined
+        activeFacility.value = undefined
+        activeProfessional.value = undefined
     }
 
     return {
-        activeResultId,
-        activeResult,
+        activeFacilityId,
+        activeFacility,
+        activeProfessional,
         searchResultsList,
         search,
-        setActiveSearchResult,
+        setActiveFacility,
+        setActiveProfessional,
         clearActiveSearchResult,
         selectedCity,
         selectedSpecialties,

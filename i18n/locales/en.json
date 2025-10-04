@@ -96,7 +96,8 @@
     "speaks": "This doctor speaks",
     "contact": "Contact",
     "lastUpdate": "Last updated",
-    "additionalInfo": "Additional Info"
+    "additionalInfo": "Additional Info",
+    "healthcareProfessionals": "Healthcare Professionals"
   },
   "thankYouPage": {
     "heading": "Thank you!",
