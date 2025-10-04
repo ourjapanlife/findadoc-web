@@ -63,7 +63,10 @@
                             alt="Healthcare Professional Icon"
                             class="w-5 h-5 stroke-primary mr-3"
                         />
-                        <span class="underline">{{ hp.displayName }}</span>
+                        <span class="underline">
+                            {{ hp.displayName }}
+                            ({{ hp.degrees.join(', ') }})
+                        </span>
                     </button>
                 </div>
             </div>
@@ -192,7 +195,7 @@ import SVGHPPersonIcon from '~/assets/icons/hp-person-icon.svg'
 import { useLocaleStore } from '~/stores/localeStore.js'
 import { useSpecialtiesStore } from '~/stores/specialtiesStore.js'
 import { useSearchResultsStore } from '~/stores/searchResultsStore'
-import { Locale } from '~/typedefs/gqlTypes.js'
+import { Locale, type HealthcareProfessional } from '~/typedefs/gqlTypes.js'
 import { formatHealthcareProfessionalName } from '~/utils/nameUtils'
 import { formatToReadableDate } from '~/utils/dateUtils'
 
@@ -239,37 +242,40 @@ const facilityName = computed(() => {
     return localeStore.activeLocale.code === Locale.JaJp ? japaneseName : englishName
 })
 
+type MappedProfessional = {
+    id: string
+    displayName: string
+    degrees: string[]
+}
+
 const facilityProfessionals = computed(() => {
     const allProfessionals = activeFacility.value?.healthcareProfessionals
     const currentProfessionalId = activeProfessional.value?.id
 
     if (!allProfessionals || allProfessionals.length === 0) return []
 
+    const mapProfessional = (hp: HealthcareProfessional): MappedProfessional => ({
+        id: hp.id,
+        displayName: formatHealthcareProfessionalName(
+            hp.names,
+            localeStore.activeLocale.code as Locale
+        ),
+        degrees: hp.degrees || []
+    })
+
     if (currentProfessionalId) {
         return allProfessionals
             .filter(hp => hp.id !== currentProfessionalId)
-            .map(hp => ({
-                id: hp.id,
-                displayName: formatHealthcareProfessionalName(
-                    hp.names,
-                    localeStore.activeLocale.code as Locale
-                )
-            }))
+            .map(mapProfessional)
             .filter(hp => hp.displayName)
     }
 
     return allProfessionals
-        .map(hp => ({
-            id: hp.id,
-            displayName: formatHealthcareProfessionalName(
-                hp.names,
-                localeStore.activeLocale.code as Locale
-            )
-        }))
+        .map(mapProfessional)
         .filter(hp => hp.displayName)
 })
 
-function showProfessionalProfile(hp: { id: string, displayName: string }) {
+function showProfessionalProfile(hp: MappedProfessional) {
     resultsStore.setActiveProfessional(hp.id)
 }
 
