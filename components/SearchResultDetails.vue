@@ -58,10 +58,10 @@
                                text-primary hover:bg-primary/10 transition-colors cursor-pointer rounded-lg"
                         @click.stop="showProfessionalProfile(hp)"
                     >
-                        <SVGHPPersonIcon
+                        <SVGProfileIcon
                             role="img"
                             alt="Healthcare Professional Icon"
-                            class="w-5 h-5 stroke-primary mr-3"
+                            class="w-7 h-7 stroke-primary mr-1"
                         />
                         <span class="underline">
                             {{ hp.displayName }}
@@ -191,7 +191,7 @@ import SVGMapPinIcon from '~/assets/icons/map-pin-icon.svg'
 import SVGGlobeIcon from '~/assets/icons/globe-icon.svg'
 import SVGPhoneIcon from '~/assets/icons/phone-icon.svg'
 import SVGEmailIcon from '~/assets/icons/email-icon.svg'
-import SVGHPPersonIcon from '~/assets/icons/hp-person-icon.svg'
+import SVGProfileIcon from '~/assets/icons/profile-icon.svg'
 import { useLocaleStore } from '~/stores/localeStore.js'
 import { useSpecialtiesStore } from '~/stores/specialtiesStore.js'
 import { useSearchResultsStore } from '~/stores/searchResultsStore'
