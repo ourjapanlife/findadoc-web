@@ -18,21 +18,21 @@
             @zoom_changed="handleZoomChanged"
         >
             <CustomMarker
-                v-for="(location, index) in searchResultsStore.searchResultsList"
-                :key="index"
+                v-for="location in searchResultsStore.searchResultsList"
+                :key="location.id"
                 :options="{
                     position: {
-                        lat: location.facilities[0]?.mapLatitude ?? defaultLocation.lat,
-                        lng: location.facilities[0]?.mapLongitude ?? defaultLocation.lng,
+                        lat: location.mapLatitude ?? defaultLocation.lat,
+                        lng: location.mapLongitude ?? defaultLocation.lng,
                     },
                 }"
-                @click="handlePinClick(location.professional.id)"
+                @click="handlePinClick(location.id)"
             >
                 <div style="text-align: center">
                     <SVGMapPin
                         :class="[
                             'w-[45px] h-[73px]',
-                            searchResultsStore.activeResult?.professional.id === location.professional.id
+                            searchResultsStore.activeFacilityId === location.id
                                 ? 'text-secondary fill-secondary'
                                 : 'text-primary fill-primary',
                         ]"
@@ -44,7 +44,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, nextTick, watch, onMounted, defineExpose } from 'vue'
 import { GoogleMap, CustomMarker } from 'vue3-google-map'
 import { useSearchResultsStore } from '../stores/searchResultsStore'
 import { useRuntimeConfig } from '#imports'
@@ -74,7 +74,7 @@ const emit = defineEmits(['map-moved'])
 
 const handlePinClick = (resultId: string) => {
     //Let's show the result details
-    searchResultsStore.setActiveSearchResult(resultId)
+    searchResultsStore.setActiveFacility(resultId)
     bottomSheetStore.showBottomSheet(BottomSheetType.SearchResultDetails)
     bottomSheetStore.isMinimized = false
 
@@ -84,13 +84,18 @@ const handlePinClick = (resultId: string) => {
     })
 }
 
+const handleProfessionalClick = (professionalId: string) => {
+    searchResultsStore.setActiveProfessional(professionalId)
+    bottomSheetStore.isMinimized = false
+}
+
 onMounted(() => {
     // This Google Maps Library Component will try to render before the component and throw a JS error.
     // This is a trick to prevent it from rendering until the component is mounted.
     setTimeout(() => { isMapReady.value = true }, 10)
 })
 
-watch(() => searchResultsStore.activeResult, () => {
+watch(() => searchResultsStore.activeFacility, () => {
     adjustMapToActiveResult()
 })
 
@@ -119,7 +124,9 @@ const handleZoomChanged = () => {
 }
 
 const adjustMapToActiveResult = () => {
-    if (!searchResultsStore.activeResult) {
+    const activeResultLocation = searchResultsStore.activeFacility
+
+    if (!activeResultLocation) {
         return
     }
 
@@ -138,7 +145,6 @@ const adjustMapToActiveResult = () => {
         currentZoom.value = 10
     }
 
-    const activeResultLocation = searchResultsStore.activeResult?.facilities[0]
     const lng = activeResultLocation?.mapLongitude ?? defaultLocation.lng
     // Offset the center slightly south to account for bottom sheet overlay
     const latOffset = calculateOffset(currentZoom.value)
@@ -187,8 +193,7 @@ const getAllCurrentCoordinates = () => {
         return
 
     const allCoordinates = currentLocations
-        .map(result => result.facilities[0])
-        .filter(facility => facility?.mapLatitude && facility?.mapLongitude)
+        .filter(facility => facility.mapLatitude && facility.mapLongitude)
         .map(facility => ({
             lat: facility.mapLatitude!,
             lng: facility.mapLongitude!
@@ -244,4 +249,8 @@ const calculateZoomLevel = (coordinates: { lat: number, lng: number }[]) => {
         default: return 12
     }
 }
+
+defineExpose({
+    handleProfessionalClick
+})
 </script>
