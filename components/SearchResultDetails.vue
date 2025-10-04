@@ -47,14 +47,14 @@
             </div>
 
             <div v-if="!activeProfessional && facilityProfessionals.length > 0">
-                <div class="ml-9 mt-2 font-bold text-sm">
-                    <span>{{ t("searchResultsDetails.healthcareProfessionals") }}:</span>
+                <div class="about ml-4 pl-2">
+                    <span class="font-semibold">{{ t("searchResultsDetails.healthcareProfessionals") }}:</span>
                 </div>
                 <div class="result-tags flex flex-col mb-2 mt-1 ml-6 pl-2">
                     <button
                         v-for="hp in facilityProfessionals"
                         :key="hp.id"
-                        class="flex items-center text-left py-2 px-3 my-0.5 w-full
+                        class="flex items-center text-left py-1 px-3 w-full
                                text-primary hover:bg-primary/10 transition-colors cursor-pointer rounded-lg"
                         @click.stop="showProfessionalProfile(hp)"
                     >
