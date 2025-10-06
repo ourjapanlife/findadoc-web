@@ -1,7 +1,7 @@
 <template>
     <div class="container mx-auto p-4 max-w-lg">
         <h1 class="text-2xl font-bold mb-6">
-            Edit Profile
+            {{ t('profile.edit') }}
         </h1>
         <form
             class="space-y-6"
@@ -11,7 +11,7 @@
                 <label
                     for="username"
                     class="block mb-1 font-semibold"
-                >Username</label>
+                >{{ t('profile.username') }}</label>
                 <input
                     id="username"
                     v-model="username"
@@ -25,7 +25,7 @@
                 <label
                     for="email"
                     class="block mb-1 font-semibold"
-                >Email</label>
+                >{{ t('profile.email') }}</label>
                 <input
                     id="email"
                     v-model="email"
@@ -35,7 +35,7 @@
                 >
             </div>
             <div>
-                <label class="block mb-1 font-semibold">Profile Photo</label>
+                <label class="block mb-1 font-semibold">{{ t('profile.profilePhoto') }}</label>
                 <div class="flex items-center gap-4">
                     <img
                         :src="profilePhotoPreview || profilePhoto"
@@ -53,20 +53,20 @@
                 type="submit"
                 class="text-primary py-2 px-4 rounded hover:bg-blue-700 transition w-full"
             >
-                Save Changes
+                {{ t('profile.save') }}
             </button>
         </form>
         <div
             v-if="successMessage"
             class="mt-4 text-success"
         >
-            {{ successMessage }}
+            {{ t('profile.updatedSuccessfully') }}
         </div>
         <div
             v-if="errorMessage"
             class="mt-4 text-error"
         >
-            {{ errorMessage }}
+            {{ t('profile.updateFailed') }}
         </div>
     </div>
 </template>
@@ -74,8 +74,10 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { useAuthStore } from '~/stores/authStore'
+import { useI18n } from 'vue-i18n'
 
 const authStore = useAuthStore()
+const { t } = useI18n()
 const username = ref('')
 const email = ref('')
 const profilePhoto = ref('')
@@ -115,9 +117,9 @@ async function submitProfile() {
     errorMessage.value = ''
     try {
     // This is a placeholder for demonstration
-        successMessage.value = 'Profile updated successfully!'
+        successMessage.value = t('profile.updatedSuccessfully')
     } catch (e: unknown) {
-        errorMessage.value = (e as Error).message || 'Failed to update profile.'
+        errorMessage.value = (e as Error).message || t('profile.updateFailed')
     }
 }
 </script>
