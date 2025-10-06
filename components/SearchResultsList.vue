@@ -53,8 +53,8 @@
                             ? 'bg-secondary/10 hover:bg-secondary/30 border-2 border-secondary/10'
                             : 'bg-primary-bg hover:bg-primary-hover/50',
                     ]"
-                    @click="resultClicked(searchResult.id, searchResult.healthcareProfessionals[0].id, getLocalizedName(searchResult.healthcareProfessionals[0]?.names))"
-
+                    @click="resultClicked(searchResult.id, searchResult.healthcareProfessionals[0].id,
+                                          getLocalizedName(searchResult.healthcareProfessionals[0]?.names))"
                 >
                     <SearchResultsListItem
                         :name="getLocalizedName(searchResult.healthcareProfessionals[0]?.names)"
