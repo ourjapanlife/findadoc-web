@@ -45,14 +45,14 @@
                     <span class="px-3 italic">{{ specialty }}</span>
                 </div>
             </div>
-
-            <div v-if="!activeProfessional && facilityProfessionals.length > 0">
+            <!-- Healthcare Professionals Related to Facility -->
+            <div v-if="!activeProfessional && hpNamesInFacility.length">
                 <div class="about ml-4 pl-2">
                     <span class="font-semibold">{{ t("searchResultsDetails.healthcareProfessionals") }}:</span>
                 </div>
                 <div class="result-tags flex flex-col mb-2 mt-1 ml-6 pl-2">
                     <button
-                        v-for="hp in facilityProfessionals"
+                        v-for="hp in hpNamesInFacility"
                         :key="hp.id"
                         class="flex items-center text-left py-1 px-3 w-full
                                text-primary hover:bg-primary/10 transition-colors cursor-pointer rounded-lg"
@@ -195,7 +195,7 @@ import SVGProfileIcon from '~/assets/icons/profile-icon.svg'
 import { useLocaleStore } from '~/stores/localeStore.js'
 import { useSpecialtiesStore } from '~/stores/specialtiesStore.js'
 import { useSearchResultsStore } from '~/stores/searchResultsStore'
-import { Locale, type HealthcareProfessional } from '~/typedefs/gqlTypes.js'
+import { Locale } from '~/typedefs/gqlTypes.js'
 import { formatHealthcareProfessionalName } from '~/utils/nameUtils'
 import { formatToReadableDate } from '~/utils/dateUtils'
 
@@ -204,6 +204,7 @@ const { t } = useI18n()
 const resultsStore = useSearchResultsStore()
 const localeStore = useLocaleStore()
 const specialtiesStore = useSpecialtiesStore()
+const bottomSheetStore = useBottomSheetStore()
 
 // Form Data
 const activeProfessional = computed(() => resultsStore.activeProfessional)
@@ -222,13 +223,12 @@ const healthcareProfessionalDegrees = computed(() => activeProfessional.value?.d
 const specialties = computed(() => {
     const specialtiesList = activeProfessional.value?.specialties
 
-    if (!specialtiesList || specialtiesList.length === 0) return []
+    if (!specialtiesList || specialtiesList.length) return []
 
     const specialtiesDisplayText = specialtiesList
         .map(specialty => specialtiesStore.specialtyDisplayOptions.find(
             options => options.code === specialty
         )?.displayText)
-        .filter((text): text is string => !!text)
 
     return specialtiesDisplayText
 })
@@ -248,35 +248,28 @@ type MappedProfessional = {
     degrees: string[]
 }
 
-const facilityProfessionals = computed(() => {
+const hpNamesInFacility = computed(() => {
     const allProfessionals = activeFacility.value?.healthcareProfessionals
     const currentProfessionalId = activeProfessional.value?.id
 
-    if (!allProfessionals || allProfessionals.length === 0) return []
+    if (!allProfessionals || !allProfessionals.length) return []
 
-    const mapProfessional = (hp: HealthcareProfessional): MappedProfessional => ({
-        id: hp.id,
-        displayName: formatHealthcareProfessionalName(
-            hp.names,
-            localeStore.activeLocale.code as Locale
-        ),
-        degrees: hp.degrees || []
-    })
-
-    if (currentProfessionalId) {
-        return allProfessionals
-            .filter(hp => hp.id !== currentProfessionalId)
-            .map(mapProfessional)
-            .filter(hp => hp.displayName)
-    }
+    const localeCode = localeStore.activeLocale.code as Locale
 
     return allProfessionals
-        .map(mapProfessional)
+        .filter(hp => hp.id !== currentProfessionalId)
+        .map(hp => ({
+            id: hp.id,
+            displayName: formatHealthcareProfessionalName(hp.names, localeCode),
+            degrees: hp.degrees
+        }))
         .filter(hp => hp.displayName)
 })
 
 function showProfessionalProfile(hp: MappedProfessional) {
     resultsStore.setActiveProfessional(hp.id)
+    bottomSheetStore.showBottomSheet(BottomSheetType.SearchResultDetails)
+    bottomSheetStore.isMinimized = false
 }
 
 const spokenLanguages = computed(() => {

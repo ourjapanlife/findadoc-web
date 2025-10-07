@@ -44,7 +44,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, nextTick, watch, onMounted, defineExpose } from 'vue'
+import { ref, nextTick, watch, onMounted } from 'vue'
 import { GoogleMap, CustomMarker } from 'vue3-google-map'
 import { useSearchResultsStore } from '../stores/searchResultsStore'
 import { useRuntimeConfig } from '#imports'
@@ -84,11 +84,6 @@ const handlePinClick = (resultId: string) => {
     })
 }
 
-const handleProfessionalClick = (professionalId: string) => {
-    searchResultsStore.setActiveProfessional(professionalId)
-    bottomSheetStore.isMinimized = false
-}
-
 onMounted(() => {
     // This Google Maps Library Component will try to render before the component and throw a JS error.
     // This is a trick to prevent it from rendering until the component is mounted.
@@ -124,9 +119,7 @@ const handleZoomChanged = () => {
 }
 
 const adjustMapToActiveResult = () => {
-    const activeResultLocation = searchResultsStore.activeFacility
-
-    if (!activeResultLocation) {
+    if (!searchResultsStore.activeFacility) {
         return
     }
 
@@ -145,10 +138,12 @@ const adjustMapToActiveResult = () => {
         currentZoom.value = 10
     }
 
-    const lng = activeResultLocation?.mapLongitude ?? defaultLocation.lng
+    const lng = searchResultsStore.activeFacility.mapLongitude ?? defaultLocation.lng
     // Offset the center slightly south to account for bottom sheet overlay
     const latOffset = calculateOffset(currentZoom.value)
-    const lat = activeResultLocation?.mapLatitude ? activeResultLocation.mapLatitude - latOffset : defaultLocation.lat
+    const lat = searchResultsStore.activeFacility.mapLatitude
+        ? searchResultsStore.activeFacility.mapLatitude - latOffset
+        : defaultLocation.lat
 
     setLocation(lat, lng)
 }
@@ -249,8 +244,4 @@ const calculateZoomLevel = (coordinates: { lat: number, lng: number }[]) => {
         default: return 12
     }
 }
-
-defineExpose({
-    handleProfessionalClick
-})
 </script>
