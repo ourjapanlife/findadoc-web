@@ -55,7 +55,7 @@ const extractUsedTranslationKeys = async () => {
         // v-t="'key.path'" (string literal form)
         /\bv-t\s*=\s*['"`]([^'"`]+)['"`]/g,
         // v-t="{ path: 'key.path' }" (object syntax)
-        /\bv-t\s*=\s*"\{[^}\n]*?['\"]path['\"]\s*:\s*['\"]([^'\"}]+)['\"][^}]*\}"/g
+        /\bv-t\s*=\s*"\{[^}\n]*?['"]path['"]\s*:\s*['"]([^'"}]+)['"][^}]*\}"/g
     ]
 
     const usedKeys = new Set()
