@@ -45,20 +45,24 @@
                         alt="Profile Photo"
                         class="w-16 h-16 rounded-full object-cover border"
                     >
-                    <input
-                        type="file"
-                        accept="image/*"
-                        @change="onPhotoChange"
-                    >
+                    <template v-if="props.isOwner ?? true">
+                        <input
+                            type="file"
+                            accept="image/*"
+                            @change="onPhotoChange"
+                        >
+                    </template>
                 </div>
             </div>
 
-            <button
-                type="submit"
-                class="text-primary py-2 px-4 rounded hover:bg-blue-700 transition w-full"
-            >
-                {{ t('profile.save') }}
-            </button>
+            <template v-if="props.isOwner ?? true">
+                <button
+                    type="submit"
+                    class="text-primary py-2 px-4 rounded hover:bg-blue-700 transition w-full"
+                >
+                    {{ t('profile.save') }}
+                </button>
+            </template>
         </form>
 
         <div
@@ -81,7 +85,7 @@ import { ref, onMounted, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useAuthStore } from '~/stores/authStore'
 
-const props = defineProps<{ usernameProp?: string }>()
+const props = defineProps<{ usernameProp?: string, isOwner?: boolean }>()
 
 const authStore = useAuthStore()
 const { t } = useI18n()
