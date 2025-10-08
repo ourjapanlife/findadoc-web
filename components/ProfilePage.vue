@@ -3,6 +3,7 @@
         <h1 class="text-2xl font-bold mb-6">
             {{ t('profile.edit') }}
         </h1>
+
         <form
             class="space-y-6"
             @submit.prevent="submitProfile"
@@ -21,6 +22,7 @@
                     autocomplete="username"
                 >
             </div>
+
             <div>
                 <label
                     for="email"
@@ -34,6 +36,7 @@
                     required
                 >
             </div>
+
             <div>
                 <label class="block mb-1 font-semibold">{{ t('profile.profilePhoto') }}</label>
                 <div class="flex items-center gap-4">
@@ -49,6 +52,7 @@
                     >
                 </div>
             </div>
+
             <button
                 type="submit"
                 class="text-primary py-2 px-4 rounded hover:bg-blue-700 transition w-full"
@@ -56,6 +60,7 @@
                 {{ t('profile.save') }}
             </button>
         </form>
+
         <div
             v-if="successMessage"
             class="mt-4 text-success"
@@ -72,12 +77,15 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
-import { useAuthStore } from '~/stores/authStore'
+import { ref, onMounted, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { useAuthStore } from '~/stores/authStore'
+
+const props = defineProps<{ usernameProp?: string }>()
 
 const authStore = useAuthStore()
 const { t } = useI18n()
+
 const username = ref('')
 const email = ref('')
 const profilePhoto = ref('')
@@ -85,29 +93,34 @@ const profilePhotoPreview = ref('')
 const successMessage = ref('')
 const errorMessage = ref('')
 
-onMounted(() => {
-    // Populate fields with current user info
-    const user = authStore.userProfileImage?.value
-        ? {
-            picture: authStore.userProfileImage.value,
-            name: authStore.userId?.value || '',
-            email: '' // Add logic to get email if available in your store
-            // Add other user fields as needed
-        }
-        : {}
+function populateFromStoreOrParam(usernameParam?: string) {
+    // If usernameParam is provided, treat this as a public profile view for that username.
+    // Replace the placeholder below with an actual API call to fetch public profile data by username when available.
+    if (usernameParam) {
+        username.value = usernameParam
+        email.value = ''
+        profilePhoto.value = ''
+        return
+    }
 
-    username.value = user.name || ''
-    email.value = user.email || ''
-    profilePhoto.value = user.picture || ''
-})
+    // Otherwise populate fields from the authenticated user's store data
+    const nameFromStore = authStore.userId?.value ?? ''
+    const pictureFromStore = authStore.userProfileImage?.value ?? ''
+
+    username.value = nameFromStore || ''
+    email.value = ''
+    profilePhoto.value = pictureFromStore || ''
+}
+
+onMounted(() => populateFromStoreOrParam(props.usernameProp))
+
+watch(() => props.usernameProp, v => populateFromStoreOrParam(v))
 
 function onPhotoChange(e: Event) {
     const file = (e.target as HTMLInputElement).files?.[0]
     if (file) {
         const reader = new FileReader()
-        reader.onload = ev => {
-            profilePhotoPreview.value = ev.target?.result as string
-        }
+        reader.onload = ev => { profilePhotoPreview.value = ev.target?.result as string }
         reader.readAsDataURL(file)
     }
 }
@@ -116,7 +129,7 @@ async function submitProfile() {
     successMessage.value = ''
     errorMessage.value = ''
     try {
-    // This is a placeholder for demonstration
+    // Only a placeholder here — implement actual update logic restricted to the current authenticated user.
         successMessage.value = t('profile.updatedSuccessfully')
     } catch (e: unknown) {
         errorMessage.value = (e as Error).message || t('profile.updateFailed')
@@ -124,3 +137,6 @@ async function submitProfile() {
 }
 </script>
 
+<style scoped>
+/* small visual tweaks can go here */
+</style>
