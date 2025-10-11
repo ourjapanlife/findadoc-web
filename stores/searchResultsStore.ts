@@ -40,22 +40,17 @@ export const useSearchResultsStore = defineStore('searchResultsStore', () => {
 
         //combine the professionals and facilities into a single search result
         //then filter out any results that don't have any facilities
-        const combinedResults = facilitiesSearchResults
-            .map(facilityResult => {
-                const associatedProfessionals = professionalsSearchResults.filter(professionalResult =>
-                    professionalResult.facilityIds.includes(facilityResult.id))
+        const combinedResults = facilitiesSearchResults.flatMap(facilityResult => {
+            const associatedProfessionals = professionalsSearchResults.filter(professionalResult =>
+                professionalResult.facilityIds.includes(facilityResult.id))
 
-                if (associatedProfessionals.length) return null
-
-                return {
+            return associatedProfessionals.length
+                ? [{
                     ...facilityResult,
                     healthcareProfessionals: associatedProfessionals
-                }
-            })
-            .filter(
-                (result): result is FacilitySearchResult =>
-                    result !== null
-            )
+                }]
+                : []
+        })
 
         //clear any active result when new search results are loaded
         clearActiveSearchResult()

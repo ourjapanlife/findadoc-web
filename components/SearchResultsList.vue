@@ -130,7 +130,7 @@ function resultClicked(facilityId: string, professionalId: string, hp: string) {
 function getLocalizedName(
 names: Array<LocalizedName> | undefined
 ) {
-    if (!names || names.length === 0) return ''
+    if (!names || !names.length) return ''
 
     const currentLocale = localeStore.activeLocale.code
     const localePrefix = currentLocale.split('-')[0]

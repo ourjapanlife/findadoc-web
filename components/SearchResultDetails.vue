@@ -263,7 +263,6 @@ const hpNamesInFacility = computed(() => {
             displayName: formatHealthcareProfessionalName(hp.names, localeCode),
             degrees: hp.degrees
         }))
-        .filter(hp => hp.displayName)
 })
 
 function showProfessionalProfile(hp: MappedProfessional) {
