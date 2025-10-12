@@ -91,7 +91,7 @@ Promise<HealthcareProfessional[]> {
     try {
         const searchProfessionalsData = {
             filters: {
-                limit: 100,
+                limit: 1000,
                 offset: 0,
                 specialties: searchSpecialties,
                 spokenLanguages: searchLanguages,
@@ -126,7 +126,7 @@ async function queryFacilities(healthcareProfessionalIds: string[], searchCity?:
     try {
         const searchFacilitiesData = {
             filters: {
-                limit: 100,
+                limit: 1000,
                 offset: 0,
                 healthcareProfessionalIds: healthcareProfessionalIds,
                 contact: undefined,
