@@ -17,12 +17,10 @@
   },
   "hamburgerMenu": {
     "about": "Sobre Find a Doc, Japão",
-    "home": "Início",
     "contact": "Contato",
     "submit": "Addicionar um Médico",
     "languageDropdownTitle": "Idioma:",
     "copyright": "Find a Doc, Japão",
-    "moderation": "Moderation",
     "logout": "Log out",
     "balancesheet": "Balance Sheet",
     "theme": "Tema",
@@ -86,12 +84,9 @@
     "allLocations": "Todos os locais",
     "allSpecialties": "Todas as especialidades",
     "search": "Procurar",
-    "resultsFound": "{count} resultados encontrados",
     "searchAndFilterDoctors": "Pesquisar e filtrar médicos"
   },
   "searchResultsList": {
-    "doctorsNearby": "Profissionais de saúde na região",
-    "filters": "Filtros",
     "noResults": "Nenhum resultado foi encontrado",
     "noResultsSubtext": "Por favor, tente outra combinação de filtros"
   },
@@ -111,7 +106,6 @@
     "about": "Sobre",
     "home": "Início",
     "submit": "Adicionar um profissional de saúde",
-    "moderation": "Moderation",
     "logout": "Log out",
     "login": "Login",
     "settings": "Settings",
@@ -144,11 +138,7 @@
     "updateAndExit": "Update & Exit"
   },
   "modPanelSubmissionList": {
-    "modified": "Alterado",
-    "name": "Nome",
-    "noSubmissions": "Não existem novos envios",
-    "submitted": "Enviado",
-    "facilityNameUnknown": "Facility Name Unknown"
+    "noSubmissions": "Não existem novos envios"
   },
   "modHealthcareProfessionalSection": {
     "addHealthCareProfessionalLocaleName": "Add Name by Language",
@@ -206,7 +196,6 @@
     "errorMessageHealthcareInputsInvalid": "Some of the Healthcare Professional Fields were not filled in correctly",
     "errorMessageEnglishNameRequired": "The healthcare professional must have an English name",
     "infoMessageAlreadyApproved": "This submission has already been approved",
-    "infoMessageUpdateNeeded": "This needs to be updated before approval",
     "successMessageUpdated": "Submission updated successfully",
     "successMessageApproved": "Submission approved and created successfully",
     "facilitySuccessfullyRejected": "Facility rejected successfully",
@@ -246,9 +235,7 @@
     "facilityHeading": "Facility Information",
     "googleMapsInformation": "Google Maps Information",
     "inputErrorMessageFacilityAddressLine1Ja": "Invalid Japanese Address",
-    "inputErrorMessageFacilityAddressLine2Ja": "Invalid Japanese Address",
     "inputErrorMessageFacilityAddressLine1En": "Invalid English Address",
-    "inputErrorMessageFacilityAddressLine2En": "Invalid English Address",
     "inputErrorMessagePrefectureMismatch": "Japanese and/or English Name Prefecture do not match",
     "inputErrorMessageFacilityCityEn": "Invalid English City Name",
     "inputErrorMessageFacilityCityJa": "Invalid Japanese City Name",
@@ -312,8 +299,6 @@
     "healthcareProfessionalUpdatedSuccessfully": "Healthcare Professional updated successfully",
     "back": "Back",
     "hasUnsavedChanges": "You have unsaved changes. Are you sure you want to leave?",
-    "deleteConfirmationFacility": "Are you sure you want to delete the Facility: {facility}, with ID: {id}?",
-    "deleteConfirmationHealthcareProfessional": "Are you sure you want to delete the Healthcare Professional: {healthcareProfessional}, with ID: {id}?",
     "healthcareProfessionalEnglishNameRequired": "Healthcare Professional must have an English name"
   },
   "serverErrorMessages": {
@@ -397,8 +382,6 @@
     "newSubmission": "New",
     "underReviewSubmission": "Under Review",
     "approvedSubmission": "Approved",
-    "rejectedSubmission": "Rejected",
-    "review": "Review",
     "createdDate": "Created on",
     "updatedDate": "Updated last"
   },
