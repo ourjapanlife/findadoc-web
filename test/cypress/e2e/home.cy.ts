@@ -99,12 +99,12 @@ describe('Visits the home page', () => {
 
             // privacy
             it('navigates to private policy', () => {
-                cy.get('[data-testid="privacy-link"]', {timeout: 15000})
-                  .scrollIntoView()
-                  .should('be.visible')
-                  .click({ force: true});
+                cy.get('[data-testid="privacy-link"]', { timeout: 15000 })
+                    .scrollIntoView()
+                    .should('be.visible')
+                    .click({ force: true })
 
-                  cy.url({ timeout:20000 }).should('include', '/privacypolicy')
+                cy.url({ timeout: 20000 }).should('include', '/privacypolicy')
             })
 
             // terms
