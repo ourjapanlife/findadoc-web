@@ -408,5 +408,14 @@
     "displayName": "Anzeigename",
     "healthcareProfessionalName": "Profilbild",
     "updateButton": "Einstellungen aktualisieren"
+  },
+  "profile": {
+    "edit": "Edit Profile",
+    "username": "Username",
+    "email": "Email",
+    "profilePhoto": "Profile Photo",
+    "save": "Save Changes",
+    "updatedSuccessfully": "Profile updated successfully",
+    "updateFailed": "Profile update failed"
   }
 }

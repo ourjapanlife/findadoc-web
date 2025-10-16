@@ -407,5 +407,14 @@
     "review": "Review",
     "createdDate": "Created on",
     "updatedDate": "Updated last"
+  },
+  "profile": {
+    "edit": "Edit Profile",
+    "username": "Username",
+    "email": "Email",
+    "profilePhoto": "Profile Photo",
+    "save": "Save Changes",
+    "updatedSuccessfully": "Profile updated successfully",
+    "updateFailed": "Profile update failed"
   }
 }
