@@ -175,7 +175,7 @@
                                 <div
                                     class="w-10 h-10 mr-1"
                                     title="Original Theme"
-                                    style="background-color:#EB7100"
+                                    style="background-color:#0EB0C0"
                                     :class="getSelectedTheme('original')"
                                     @click="setTheme('original')"
                                 />
@@ -196,14 +196,14 @@
                                 <div
                                     class="w-10 h-10 mr-1"
                                     title="Ocean Theme"
-                                    style="background-color: #245A7D;"
+                                    style="background-color: #77A6CD;"
                                     :class="getSelectedTheme('ocean')"
                                     @click="setTheme('ocean')"
                                 />
                                 <div
                                     class="w-10 h-10 mr-1"
                                     title="Neon Theme"
-                                    style="background-color: #1bdb9b;"
+                                    style="background-color: #006D6A;"
                                     :class="getSelectedTheme('neon')"
                                     @click="setTheme('neon')"
                                 />
