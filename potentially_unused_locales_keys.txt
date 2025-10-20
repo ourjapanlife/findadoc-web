@@ -1,0 +1,159 @@
+cn.json:
+- hamburgerMenu.home
+- hamburgerMenu.moderation
+- searchResultsList.doctorsNearby
+- searchResultsList.filters
+- topNav.moderation
+- modPanelSubmissionList.facilityNameUnknown
+- modPanelSubmissionList.modified
+- modPanelSubmissionList.name
+- modPanelSubmissionList.submitted
+- modSubmissionForm.infoMessageUpdateNeeded
+- modFacilitySection.inputErrorMessageFacilityAddressLine2Ja
+- modFacilitySection.inputErrorMessageFacilityAddressLine2En
+- modListContainerItem.rejectedSubmission
+- modListContainerItem.review
+
+de.json:
+- hamburgerMenu.home
+- hamburgerMenu.moderation
+- searchResultsList.doctorsNearby
+- searchResultsList.filters
+- topNav.moderation
+- modPanelSubmissionList.facilityNameUnknown
+- modPanelSubmissionList.modified
+- modPanelSubmissionList.name
+- modPanelSubmissionList.submitted
+- modSubmissionForm.infoMessageUpdateNeeded
+- modFacilitySection.inputErrorMessageFacilityAddressLine2Ja
+- modFacilitySection.inputErrorMessageFacilityAddressLine2En
+- modListContainerItem.rejectedSubmission
+- modListContainerItem.review
+
+en.json:
+- hamburgerMenu.home
+- hamburgerMenu.moderation
+- searchResultsList.doctorsNearby
+- searchResultsList.filters
+- topNav.moderation
+- modPanelSubmissionList.facilityNameUnknown
+- modPanelSubmissionList.modified
+- modPanelSubmissionList.name
+- modPanelSubmissionList.submitted
+- modFacilitySection.inputErrorMessageFacilityAddressLine2Ja
+- modFacilitySection.inputErrorMessageFacilityAddressLine2En
+- modSubmissionForm.infoMessageUpdateNeeded
+- modListContainerItem.rejectedSubmission
+- modListContainerItem.review
+
+fr.json:
+- hamburgerMenu.home
+- hamburgerMenu.moderation
+- searchResultsList.doctorsNearby
+- searchResultsList.filters
+- topNav.moderation
+- modPanelSubmissionList.modified
+- modPanelSubmissionList.name
+- modPanelSubmissionList.submitted
+- modPanelSubmissionList.facilityNameUnknown
+- modSubmissionForm.infoMessageUpdateNeeded
+- modFacilitySection.inputErrorMessageFacilityAddressLine2Ja
+- modFacilitySection.inputErrorMessageFacilityAddressLine2En
+- modListContainerItem.rejectedSubmission
+- modListContainerItem.review
+
+it.json:
+- hamburgerMenu.home
+- hamburgerMenu.moderation
+- searchResultsList.doctorsNearby
+- searchResultsList.filters
+- topNav.moderation
+- modPanelSubmissionList.facilityNameUnknown
+- modPanelSubmissionList.modified
+- modPanelSubmissionList.name
+- modPanelSubmissionList.submitted
+- modFacilitySection.inputErrorMessageFacilityAddressLine2Ja
+- modFacilitySection.inputErrorMessageFacilityAddressLine2En
+- modSubmissionForm.infoMessageUpdateNeeded
+- modListContainerItem.rejectedSubmission
+- modListContainerItem.review
+
+ja.json:
+- hamburgerMenu.home
+- hamburgerMenu.moderation
+- searchResultsList.doctorsNearby
+- searchResultsList.filters
+- topNav.moderation
+- modPanelSubmissionList.facilityNameUnknown
+- modPanelSubmissionList.modified
+- modPanelSubmissionList.name
+- modPanelSubmissionList.submitted
+- modSubmissionForm.infoMessageUpdateNeeded
+- modFacilitySection.inputErrorMessageFacilityAddressLine2Ja
+- modFacilitySection.inputErrorMessageFacilityAddressLine2En
+- modListContainerItem.rejectedSubmission
+- modListContainerItem.review
+
+pt.json:
+- hamburgerMenu.home
+- hamburgerMenu.moderation
+- searchResultsList.doctorsNearby
+- searchResultsList.filters
+- topNav.moderation
+- modPanelSubmissionList.modified
+- modPanelSubmissionList.name
+- modPanelSubmissionList.submitted
+- modPanelSubmissionList.facilityNameUnknown
+- modSubmissionForm.infoMessageUpdateNeeded
+- modFacilitySection.inputErrorMessageFacilityAddressLine2Ja
+- modFacilitySection.inputErrorMessageFacilityAddressLine2En
+- modListContainerItem.rejectedSubmission
+- modListContainerItem.review
+
+ru.json:
+- hamburgerMenu.home
+- hamburgerMenu.moderation
+- searchResultsList.doctorsNearby
+- searchResultsList.filters
+- topNav.moderation
+- modPanelSubmissionList.modified
+- modPanelSubmissionList.name
+- modPanelSubmissionList.submitted
+- modPanelSubmissionList.facilityNameUnknown
+- modSubmissionForm.infoMessageUpdateNeeded
+- modFacilitySection.inputErrorMessageFacilityAddressLine2Ja
+- modFacilitySection.inputErrorMessageFacilityAddressLine2En
+- modListContainerItem.rejectedSubmission
+- modListContainerItem.review
+
+tl.json:
+- hamburgerMenu.home
+- hamburgerMenu.moderation
+- searchResultsList.doctorsNearby
+- searchResultsList.filters
+- topNav.moderation
+- modPanelSubmissionList.facilityNameUnknown
+- modPanelSubmissionList.modified
+- modPanelSubmissionList.name
+- modPanelSubmissionList.submitted
+- modFacilitySection.inputErrorMessageFacilityAddressLine2Ja
+- modFacilitySection.inputErrorMessageFacilityAddressLine2En
+- modSubmissionForm.infoMessageUpdateNeeded
+- modListContainerItem.rejectedSubmission
+- modListContainerItem.review
+
+vi.json:
+- hamburgerMenu.home
+- hamburgerMenu.moderation
+- searchResultsList.doctorsNearby
+- searchResultsList.filters
+- topNav.moderation
+- modPanelSubmissionList.facilityNameUnknown
+- modPanelSubmissionList.modified
+- modPanelSubmissionList.name
+- modPanelSubmissionList.submitted
+- modFacilitySection.inputErrorMessageFacilityAddressLine2Ja
+- modFacilitySection.inputErrorMessageFacilityAddressLine2En
+- modSubmissionForm.infoMessageUpdateNeeded
+- modListContainerItem.rejectedSubmission
+- modListContainerItem.review

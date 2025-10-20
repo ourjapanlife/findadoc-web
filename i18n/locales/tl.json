@@ -18,10 +18,8 @@
   "hamburgerMenu": {
     "about": "Tungkol sa Find a Doc, Japan",
     "balancesheet": "Balanseng Pahayag",
-    "home": "Home",
     "contact": "Kontakt",
     "submit": "Magdagdag ng Doktor",
-    "moderation": "Moderasyon",
     "logout": "Log out",
     "languageDropdownTitle": "Lengwahe:",
     "copyright": "Find a Doc, Japan",
@@ -90,8 +88,6 @@
     "searchAndFilterDoctors": "Maghanap at mag-filter ng mga doktor"
   },
   "searchResultsList": {
-    "doctorsNearby": "Mga kalapit na Doktor",
-    "filters": "Mga Filter",
     "noResults": "Walang natagpuang resulta",
     "noResultsSubtext": "Paki-subukang gumamit ng ibang kombinasyon ng filter."
   },
@@ -111,7 +107,6 @@
   "topNav": {
     "about": "About",
     "home": "Home",
-    "moderation": "Moderasyon",
     "submit": "Magdagdag ng Doktor",
     "logout": "Log out",
     "login": "Login",
@@ -183,11 +178,7 @@
     "update": "Update"
   },
   "modPanelSubmissionList": {
-    "facilityNameUnknown": "Walang impormasyon sa pangalan ng pasilidad",
-    "modified": "Binago",
-    "name": "Pangalan",
-    "noSubmissions": "Walang nakabinbing mga isinumite.",
-    "submitted": "Isinumite"
+    "noSubmissions": "Walang nakabinbing mga isinumite."
   },
   "modFacilitySection": {
     "addresses": "Mga Address",
@@ -195,9 +186,7 @@
     "facilityHeading": "Impormasyon ng Pasilidad",
     "googleMapsInformation": "Impormasyon sa Google maps",
     "inputErrorMessageFacilityAddressLine1Ja": "Hindi wastong address sa Hapon",
-    "inputErrorMessageFacilityAddressLine2Ja": "Hindi wastong address sa Hapon",
     "inputErrorMessageFacilityAddressLine1En": "Hindi wastong address sa Ingles",
-    "inputErrorMessageFacilityAddressLine2En": "Hindi wastong address sa Ingles",
     "inputErrorMessagePrefectureMismatch": "Japanese and/or English Name Prefecture do not match",
     "inputErrorMessageFacilityCityEn": "Hindi wastong pangalan ng Lungsod sa Ingles",
     "inputErrorMessageFacilityCityJa": "Hindi wastong pangalan ng Lungsod sa Hapon",
@@ -259,7 +248,6 @@
     "errorMessageEnglishNameRequired": "Ang propesyonal sa Pangangalagang Pangkalusugan ay kailangang may pangalan sa Ingles",
     "healthcareProfessionalId": "Mga ID ng propesyonal sa Pangangalagang Pangkalusugan",
     "infoMessageAlreadyApproved": "Ang Isinumite ay aprubado na",
-    "infoMessageUpdateNeeded": "Kailangang i-update ito bago maaprubahan",
     "labelHealthcareProfessionalFirstName": "Pangalan",
     "labelHealthcareProfessionalLastName": "Apelyido",
     "labelHealthcareProfessionalMiddleName": "Pangalawang pangalan",
@@ -397,8 +385,6 @@
     "newSubmission": "New",
     "underReviewSubmission": "Under Review",
     "approvedSubmission": "Approved",
-    "rejectedSubmission": "Rejected",
-    "review": "Review",
     "createdDate": "Created on",
     "updatedDate": "Updated last"
   },

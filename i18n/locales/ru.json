@@ -17,12 +17,10 @@
   },
   "hamburgerMenu": {
     "about": "О \"Найди своего доктора, Япония\"",
-    "home": "Главная страница",
     "contact": "Контакты",
     "submit": "Добавить доктора",
     "languageDropdownTitle": "Язык:",
     "copyright": "Найди своего доктора, Япония",
-    "moderation": "Moderation",
     "logout": "Log out",
     "balancesheet": "Balance Sheet",
     "theme": "тема",
@@ -90,8 +88,6 @@
     "searchAndFilterDoctors": "Поиск и фильтрация врачей"
   },
   "searchResultsList": {
-    "doctorsNearby": "Врачи рядом",
-    "filters": "Фильтр",
     "noResults": " Ничего не найдено ",
     "noResultsSubtext": " Попробуйте другую комбинацию фильтров."
   },
@@ -112,7 +108,6 @@
     "about": "О нас",
     "home": "Главная страница",
     "submit": "Добавить доктора",
-    "moderation": "Moderation",
     "logout": "Log out",
     "login": "Login",
     "settings": "Settings",
@@ -145,11 +140,7 @@
     "update": "Update"
   },
   "modPanelSubmissionList": {
-    "modified": "Изменено",
-    "name": "Имя",
-    "noSubmissions": "Нет заявок на рассмотрении",
-    "submitted": " Представлено на рассмотрение",
-    "facilityNameUnknown": "Facility Name Unknown"
+    "noSubmissions": "Нет заявок на рассмотрении"
   },
   "modHealthcareProfessionalSection": {
     "addHealthCareProfessionalLocaleName": "Add Name by Language",
@@ -207,7 +198,6 @@
     "errorMessageHealthcareInputsInvalid": "Some of the Healthcare Professional Fields were not filled in correctly",
     "errorMessageEnglishNameRequired": "The healthcare professional must have an English name",
     "infoMessageAlreadyApproved": "This submission has already been approved",
-    "infoMessageUpdateNeeded": "This needs to be updated before approval",
     "successMessageUpdated": "Submission updated successfully",
     "successMessageApproved": "Submission approved and created successfully",
     "facilitySuccessfullyRejected": "Facility rejected successfully",
@@ -247,9 +237,7 @@
     "facilityHeading": "Facility Information",
     "googleMapsInformation": "Google Maps Information",
     "inputErrorMessageFacilityAddressLine1Ja": "Invalid Japanese Address",
-    "inputErrorMessageFacilityAddressLine2Ja": "Invalid Japanese Address",
     "inputErrorMessageFacilityAddressLine1En": "Invalid English Address",
-    "inputErrorMessageFacilityAddressLine2En": "Invalid English Address",
     "inputErrorMessagePrefectureMismatch": "Japanese and/or English Name Prefecture do not match",
     "inputErrorMessageFacilityCityEn": "Invalid English City Name",
     "inputErrorMessageFacilityCityJa": "Invalid Japanese City Name",
@@ -398,8 +386,6 @@
     "newSubmission": "New",
     "underReviewSubmission": "Under Review",
     "approvedSubmission": "Approved",
-    "rejectedSubmission": "Rejected",
-    "review": "Review",
     "createdDate": "Created on",
     "updatedDate": "Updated last"
   },
