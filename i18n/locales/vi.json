@@ -18,10 +18,8 @@
   "hamburgerMenu": {
     "about": "Về Find a Doc, Japan",
     "balancesheet": "Bảng Cân Đối Kế Toán",
-    "home": "Trang Chủ",
     "contact": "Liên Hệ",
     "submit": "Thêm Bác Sĩ",
-    "moderation": "Điều hành",
     "logout": "Đăng xuất",
     "languageDropdownTitle": "Ngôn Ngữ:",
     "copyright": "Find a Doc, Japan",
@@ -90,8 +88,6 @@
     "searchAndFilterDoctors": "Tìm kiếm và lọc bác sĩ"
   },
   "searchResultsList": {
-    "doctorsNearby": "Bác sĩ gần đây",
-    "filters": "Bộ lọc",
     "noResults": "Không tìm thấy kết quả",
     "noResultsSubtext": "Vui lòng thử kết hợp bộ lọc khác."
   },
@@ -111,7 +107,6 @@
   "topNav": {
     "about": "Về chúng tôi",
     "home": "Trang chủ",
-    "moderation": "Quản trị viên",
     "submit": "Thêm bác sĩ",
     "logout": "Đăng xuất",
     "login": "Login",
@@ -183,11 +178,7 @@
     "update": "Save"
   },
   "modPanelSubmissionList": {
-    "facilityNameUnknown": "Tên cơ sở không xác định",
-    "modified": "Đã sửa đổi",
-    "name": "Tên",
-    "noSubmissions": "Không có bài gửi nào đang chờ xử lý",
-    "submitted": "Đã nộp"
+    "noSubmissions": "Không có bài gửi nào đang chờ xử lý"
   },
   "modHealthcareProfessionalSection": {
     "addHealthCareProfessionalLocaleName": "Thêm tên theo địa phương",
@@ -235,9 +226,7 @@
     "facilityHeading": "Thông tin cơ sở",
     "googleMapsInformation": "Thông tin Google Maps",
     "inputErrorMessageFacilityAddressLine1Ja": "Địa chỉ Nhật Bản không hợp lệ",
-    "inputErrorMessageFacilityAddressLine2Ja": "Địa chỉ Nhật Bản không hợp lệ",
     "inputErrorMessageFacilityAddressLine1En": "Địa chỉ tiếng Anh không hợp lệ",
-    "inputErrorMessageFacilityAddressLine2En": "Địa chỉ tiếng Anh không hợp lệ",
     "inputErrorMessagePrefectureMismatch": "Japanese and/or English Name Prefecture do not match",
     "inputErrorMessageFacilityCityEn": "Tên thành phố tiếng Anh không hợp lệ",
     "inputErrorMessageFacilityCityJa": "Tên thành phố tiếng Nhật không hợp lệ",
@@ -299,7 +288,6 @@
     "errorMessageEnglishNameRequired": "Chuyên gia y tế phải có tên tiếng Anh",
     "healthcareProfessionalId": "Mã số chuyên gia y tế",
     "infoMessageAlreadyApproved": "Đơn đăng ký này đã được phê duyệt.",
-    "infoMessageUpdateNeeded": "Cần cập nhật thông tin này trước khi phê duyệt.",
     "labelHealthcareProfessionalFirstName": "Tên đầu tiên",
     "labelHealthcareProfessionalLastName": "Họ",
     "labelHealthcareProfessionalMiddleName": "Tên đệm",
@@ -397,8 +385,6 @@
     "newSubmission": "New",
     "underReviewSubmission": "Under Review",
     "approvedSubmission": "Approved",
-    "rejectedSubmission": "Rejected",
-    "review": "Review",
     "createdDate": "Created on",
     "updatedDate": "Updated last"
   },
