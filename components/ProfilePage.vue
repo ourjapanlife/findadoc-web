@@ -139,6 +139,3 @@ async function submitProfile() {
 }
 </script>
 
-<style scoped>
-/* small visual tweaks can go here */
-</style>
