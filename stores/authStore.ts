@@ -4,6 +4,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { auth0 } from '../utils/auth0.js'
 import { useLoadingStore } from './loadingStore.js'
 import { useCookie, useRuntimeConfig } from '#app'
+import { useTranslation } from '~/composables/useTranslation.js'
 
 export const useAuthStore = defineStore('authStore', () => {
     const runtimeConfig = useRuntimeConfig()

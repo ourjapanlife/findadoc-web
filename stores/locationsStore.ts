@@ -4,6 +4,7 @@ import { ref } from 'vue'
 import { gqlClient } from '../utils/graphql.js'
 import { useLoadingStore } from './loadingStore.js'
 import type { Facility, FacilitySearchFilters } from '~/typedefs/gqlTypes.js'
+import { useTranslation } from '~/composables/useTranslation.js'
 
 export const useLocationsStore = defineStore('locationsStore', () => {
     const allCitiesEnglishList = ref<string[]>([])

@@ -19,6 +19,7 @@ import { type Insurance,
 import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql'
 import { useLocaleStore } from '~/stores/localeStore'
 import type { ServerResponse } from '~/typedefs/serverResponse'
+import { useTranslation } from '~/composables/useTranslation'
 
 export const useHealthcareProfessionalsStore = defineStore(
     'healthcareProfessionalsStore',

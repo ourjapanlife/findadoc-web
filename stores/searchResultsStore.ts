@@ -5,6 +5,7 @@ import { useToast } from 'vue-toastification'
 import { gqlClient } from '../utils/graphql.js'
 import { useLoadingStore } from './loadingStore.js'
 import { handleServerErrorMessaging } from '#imports'
+import { useTranslation } from '~/composables/useTranslation.js'
 import type { Locale,
     Specialty,
     Facility,
