@@ -28,7 +28,7 @@
                 }"
                 @click="handlePinClick(location.id)"
             >
-                <div style="text-align: center">
+                <div class="text-center">
                     <SVGMapPin
                         :class="[
                             'w-[45px] h-[73px]',
