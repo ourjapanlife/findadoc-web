@@ -1,7 +1,7 @@
 <template>
     <div
         data-testid="top-nav"
-        class="flex flex-col mt-2 landscape:px-5 landscape:py-1 portrait:px-5 portrait:py-1  bg-primary-bg/90 rounded-lg"
+        class="flex flex-col mt-2 landscape:px-3 landscape:py-1 portrait:px-5 portrait:py-1  bg-primary-bg/90 rounded-lg"
     >
         <div
             class="flex justify-between items-center"
@@ -43,47 +43,50 @@
                     </div>
                 </Transition>
             </div>
-            <!-- Desktop Site Icon -->
-            <div
-                id="desktop-site-icon"
-                class="portrait:hidden w-52 font-semibold text-xl
+            <!-- Desktop Left Section -->
+            <div class="flex">
+                <!-- Desktop Site Icon -->
+                <div
+                    id="desktop-site-icon"
+                    class="portrait:hidden mr-5 w-50 font-semibold text-xl
                 group transition-colors items-start p-2 rounded-2xl"
-            >
-                <NuxtLink
-                    class="flex"
-                    to="/"
                 >
-                    <SVGSiteLogo
-                        role="img"
-                        title="site icon"
-                        class="mr-1 w-10 h-10 flex-shrink-0 align-middle fill-primary group-hover:fill-primary-hover"
-                    />
-                    <!-- Find a Doc, Japan Logo Text -->
-                    <div
-                        class="title-text flex flex-col flex-shrink-0"
-                        data-testid="landscape-logo"
+                    <NuxtLink
+                        class="flex"
+                        to="/"
                     >
-                        <div class="text-lg text-primary group-hover:text-primary-hover">
-                            Find a Doc
+                        <SVGSiteLogo
+                            role="img"
+                            title="site icon"
+                            class="mr-1 w-10 h-10 flex-shrink-0 align-middle fill-primary group-hover:fill-primary-hover"
+                        />
+                        <!-- Find a Doc, Japan Logo Text -->
+                        <div
+                            class="title-text flex flex-col flex-shrink-0"
+                            data-testid="landscape-logo"
+                        >
+                            <div class="text-lg text-primary group-hover:text-primary-hover">
+                                Find a Doc
+                            </div>
+                            <div class="text-sm text-primary leading-none group-hover:text-primary-hover">
+                                Japan
+                            </div>
                         </div>
-                        <div class="text-sm text-primary leading-none group-hover:text-primary-hover">
-                            Japan
-                        </div>
-                    </div>
-                </NuxtLink>
+                    </NuxtLink>
+                </div>
+                <!-- Search Bar -->
+                <div v-if="isLandscape">
+                    <SearchBar />
+                </div>
             </div>
-            <!-- Search Bar -->
-            <div v-if="isLandscape">
-                <SearchBar class="mx-4" />
-            </div>
-            <!-- Right Section -->
+            <!-- Desktop Right Section -->
             <div
                 id="right-section"
                 class="flex"
             >
                 <nav
                     id="desktop-menu-items"
-                    class="portrait:hidden flex gap-4 mx-6 self-center items-center whitespace-nowrap"
+                    class="portrait:hidden flex gap-3 mx-6 self-center items-center whitespace-nowrap"
                 >
                     <!-- About Link -->
                     <NuxtLink
