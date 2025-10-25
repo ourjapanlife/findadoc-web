@@ -77,7 +77,7 @@
                         <!-- Subtly morph the wave path when hovered -->
                         <path
                             :d="waveHover
-                                ? 'M375 0V56H0V25C50 33 125 70 187.5 50C250 30 320 -10 375 25Z'
+                                ? 'M 375 0 V 56 H 0 V 25 C 51 4 112 8 185 29 C 262 47 323 43 375 25 Z'
                                 : 'M375 0V56H0V18.5C46.5 33 120 59 187.5 45C255 31 328.5 -13.5 375 18.5Z'"
                             class="fill-primary-bg"
                             :style="{ transition: 'd 0.4s cubic-bezier(.6,0,.4,1)' }"
