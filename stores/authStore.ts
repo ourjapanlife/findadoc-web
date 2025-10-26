@@ -4,6 +4,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { auth0 } from '../utils/auth0.js'
 import { useLoadingStore } from './loadingStore.js'
 import { useCookie, useRuntimeConfig } from '#app'
+import { useTranslation } from '~/composables/useTranslation.js'
 
 export const useAuthStore = defineStore('authStore', () => {
     const runtimeConfig = useRuntimeConfig()
@@ -48,7 +49,7 @@ export const useAuthStore = defineStore('authStore', () => {
         } catch (error) {
             //set the loading visual state back to normal
             loadingStore.setIsLoading(false)
-            console.error(`Error logging in: ${JSON.stringify(error)}`)
+            console.error(useTranslation('authErrors.loggingIn'), `${JSON.stringify(error)}`)
         }
     }
 
@@ -85,7 +86,7 @@ export const useAuthStore = defineStore('authStore', () => {
 
             return token
         } catch (error) {
-            console.error(`Error getting auth bearer token: ${JSON.stringify(error)}`)
+            console.error(useTranslation('authErrors.authBearerToken'), `${JSON.stringify(error)}`)
         }
     }
 
@@ -103,8 +104,8 @@ export const useAuthStore = defineStore('authStore', () => {
                     if (!isAuthStillLoading) {
                         resolve()
                     } else if (Date.now() - startTime > timeoutMs) {
-                        console.error('Auth0 loading timed out after 10 seconds')
-                        reject(new Error('Auth0 loading timed out after 10 seconds'))
+                        console.error(useTranslation('authErrors.tenSecondTimeout'))
+                        reject(new Error(useTranslation('authErrors.tenSecondTimeout')))
                     }
                 },
                 { immediate: true }
