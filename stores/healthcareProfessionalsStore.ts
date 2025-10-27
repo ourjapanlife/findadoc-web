@@ -19,6 +19,7 @@ import { type Insurance,
 import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql'
 import { useLocaleStore } from '~/stores/localeStore'
 import type { ServerResponse } from '~/typedefs/serverResponse'
+import { useTranslation } from '~/composables/useTranslation'
 
 export const useHealthcareProfessionalsStore = defineStore(
     'healthcareProfessionalsStore',
@@ -144,7 +145,7 @@ export const useHealthcareProfessionalsStore = defineStore(
             )
 
             if (!currentProfessionalData) {
-                console.error(`No data found for currentProfessionalData with id ${selectedHealthcareProfessionalId.value}`)
+                console.error(useTranslation('healthcareProfessionalsErrors.noCurrentProfessionalDataFound'), `${selectedHealthcareProfessionalId.value}`)
                 return {
                     data: {
                         acceptedInsurance: [],
@@ -322,12 +323,12 @@ export async function getHealthcareProfessionalById(id: string): Promise<Healthc
         )
 
         if (!result.data?.healthcareProfessional) {
-            throw new Error('The Healthcare Professional ID doesn\'t exist')
+            throw new Error(useTranslation('healthcareProfessionalsErrors.idDoesNotExist'))
         }
 
         return [result.data.healthcareProfessional]
     } catch (error: unknown) {
-        console.error(`Error retrieving healthcare professional by id: ${id}: ${JSON.stringify(error)}`)
+        console.error(useTranslation('healthcareProfessionalsErrors.retrievingById'), `${id}: ${JSON.stringify(error)}`)
         return []
     }
 }

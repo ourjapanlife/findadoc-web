@@ -13,16 +13,27 @@
         <div class="result-content ml-2">
             <!-- Header -->
             <div class="result-header mt-7 ml-4">
-                <span class="w-4 text-3xl font-bold pl-2 self-center">{{
-                    healthcareProfessionalName
-                }}, </span>
-                <span class="w-4 text-2xl font-semibold pl-2 self-center">{{
-                    healthcareProfessionalDegrees
-                }}</span>
+                <template v-if="activeProfessional">
+                    <span class="w-4 text-3xl font-bold pl-2 self-center">{{
+                        healthcareProfessionalName
+                    }}, </span>
+                    <span class="w-4 text-2xl font-semibold pl-2 self-center">{{
+                        healthcareProfessionalDegrees
+                    }}</span>
+                </template>
+                <span
+                    v-else
+                    class="w-4 text-3xl font-bold pl-2 self-center"
+                >
+                    {{ facilityName }}
+                </span>
             </div>
             <!-- Facility Or Hp Details -->
             <div class="result-details flex flex-col mb-1 ml-4 pl-2 mt-2 text-sm">
-                <span class="px-3 text-primary/90 font-medium text-lg">{{
+                <span
+                    v-if="activeProfessional"
+                    class="px-3 text-primary/90 font-medium text-lg"
+                >{{
                     facilityName
                 }}</span>
                 <!-- Specialties -->
@@ -34,8 +45,33 @@
                     <span class="px-3 italic">{{ specialty }}</span>
                 </div>
             </div>
+            <!-- Healthcare Professionals Related to Facility -->
+            <div v-if="!activeProfessional && hpNamesInFacility.length">
+                <div class="about ml-4 pl-2">
+                    <span class="font-semibold">{{ t("searchResultsDetails.healthcareProfessionals") }}:</span>
+                </div>
+                <div class="result-tags flex flex-col mb-2 mt-1 ml-6 pl-2">
+                    <button
+                        v-for="hp in hpNamesInFacility"
+                        :key="hp.id"
+                        class="flex items-center text-left py-1 px-3 w-full
+                               text-primary hover:bg-primary/10 transition-colors cursor-pointer rounded-lg"
+                        @click.stop="showProfessionalProfile(hp)"
+                    >
+                        <SVGProfileIcon
+                            role="img"
+                            alt="Healthcare Professional Icon"
+                            class="w-7 h-7 stroke-primary mr-1"
+                        />
+                        <span class="underline">
+                            {{ hp.displayName }}
+                            ({{ hp.degrees.join(', ') }})
+                        </span>
+                    </button>
+                </div>
+            </div>
             <!-- Languages -->
-            <div>
+            <div v-if="activeProfessional">
                 <div class="ml-9 mt-2 font-bold text-sm">
                     <span>{{ t("searchResultsDetails.speaks") }}:</span>
                 </div>
@@ -44,7 +80,7 @@
                         v-for="(spokenLanguage, index) in spokenLanguages"
                         :key="index"
                         class="pl-2 pr-2 py-px mr-2 border-2 border-primary/40 rounded-full shadow-sm text-md
-                  text-primary hover:bg-primary/20 transition-all"
+                    text-primary hover:bg-primary/20 transition-all"
                     >
                         {{ spokenLanguage }}
                     </div>
@@ -155,6 +191,7 @@ import SVGMapPinIcon from '~/assets/icons/map-pin-icon.svg'
 import SVGGlobeIcon from '~/assets/icons/globe-icon.svg'
 import SVGPhoneIcon from '~/assets/icons/phone-icon.svg'
 import SVGEmailIcon from '~/assets/icons/email-icon.svg'
+import SVGProfileIcon from '~/assets/icons/profile-icon.svg'
 import { useLocaleStore } from '~/stores/localeStore.js'
 import { useSpecialtiesStore } from '~/stores/specialtiesStore.js'
 import { useSearchResultsStore } from '~/stores/searchResultsStore'
@@ -167,45 +204,76 @@ const { t } = useI18n()
 const resultsStore = useSearchResultsStore()
 const localeStore = useLocaleStore()
 const specialtiesStore = useSpecialtiesStore()
+const bottomSheetStore = useBottomSheetStore()
 
 // Form Data
+const activeProfessional = computed(() => resultsStore.activeProfessional)
+const activeFacility = computed(() => resultsStore.activeFacility)
 
 const healthcareProfessionalName = computed(() => {
     const name = formatHealthcareProfessionalName(
-        resultsStore.activeResult?.professional.names,
+        activeProfessional.value?.names,
         localeStore.activeLocale.code as Locale
     )
     return name
 })
 
-const healthcareProfessionalDegrees = computed(() => {
-    const healthcareProfessionalDegreesText
-        = resultsStore.activeResult?.professional.degrees.join(', ')
-    return healthcareProfessionalDegreesText
-})
-const specialties = computed(() => {
-    const specialties
-        = resultsStore.activeResult?.professional.specialties
+const healthcareProfessionalDegrees = computed(() => activeProfessional.value?.degrees?.join(', '))
 
-    const specialtiesDisplayText = specialties?.map(specialty => {
-        const specialtyDisplayText
-            = specialtiesStore.specialtyDisplayOptions.find(
-                options => options.code === specialty
-            )?.displayText
-        return specialtyDisplayText
-    })
+const specialties = computed(() => {
+    const specialtiesList = activeProfessional.value?.specialties
+
+    if (!specialtiesList || specialtiesList.length) return []
+
+    const specialtiesDisplayText = specialtiesList
+        .map(specialty => specialtiesStore.specialtyDisplayOptions.find(
+            options => options.code === specialty
+        )?.displayText)
 
     return specialtiesDisplayText
 })
+
 const facilityName = computed(() => {
-    const englishName = resultsStore.activeResult?.facilities[0].nameEn
-    const japaneseName = resultsStore.activeResult?.facilities[0].nameJa
+    const facility = activeFacility.value
+    if (!facility) return ''
+
+    const englishName = facility.nameEn
+    const japaneseName = facility.nameJa
     return localeStore.activeLocale.code === Locale.JaJp ? japaneseName : englishName
 })
 
+type MappedProfessional = {
+    id: string
+    displayName: string
+    degrees: string[]
+}
+
+const hpNamesInFacility = computed(() => {
+    const allProfessionals = activeFacility.value?.healthcareProfessionals
+    const currentProfessionalId = activeProfessional.value?.id
+
+    if (!allProfessionals || !allProfessionals.length) return []
+
+    const localeCode = localeStore.activeLocale.code as Locale
+
+    return allProfessionals
+        .filter(hp => hp.id !== currentProfessionalId)
+        .map(hp => ({
+            id: hp.id,
+            displayName: formatHealthcareProfessionalName(hp.names, localeCode),
+            degrees: hp.degrees
+        }))
+})
+
+function showProfessionalProfile(hp: MappedProfessional) {
+    resultsStore.setActiveProfessional(hp.id)
+    bottomSheetStore.showBottomSheet(BottomSheetType.SearchResultDetails)
+    bottomSheetStore.isMinimized = false
+}
+
 const spokenLanguages = computed(() => {
     const languagesDisplayText
-        = resultsStore.activeResult?.professional.spokenLanguages?.map(
+        = resultsStore.activeProfessional?.spokenLanguages?.map(
             s => {
                 const languageDisplayText
                     = localeStore.localeDisplayOptions.find(
@@ -218,40 +286,35 @@ const spokenLanguages = computed(() => {
     return languagesDisplayText
 })
 
-const additionalInfoForPatients = computed(() => resultsStore.activeResult?.professional.additionalInfoForPatients)
+const additionalInfoForPatients = computed(() => activeProfessional.value?.additionalInfoForPatients)
+
+const addressObj = computed(() => activeFacility.value?.contact?.address)
+const isJapaneseLocale = computed(() => localeStore.activeLocale.code === Locale.JaJp)
 
 const addressLine1 = computed(() => {
-    const addressObj
-        = resultsStore.activeResult?.facilities[0].contact.address
+    const address = addressObj.value
+    if (!address) return ''
 
-    const englishAddress = `${addressObj?.addressLine1En} ${addressObj?.addressLine2En}`
-    const japaneseAddress = `${addressObj?.postalCode} ${addressObj?.prefectureJa}${addressObj?.cityJa}${addressObj?.addressLine1Ja}${addressObj?.addressLine2Ja}`
-    return localeStore.activeLocale.code === Locale.JaJp
-        ? japaneseAddress
-        : englishAddress
+    const englishAddress = `${address.addressLine1En ?? ''} ${address.addressLine2En ?? ''}`
+
+    const japaneseAddress = `${address.postalCode ?? ''} ${address.prefectureJa ?? ''}${address.cityJa ?? ''}${address.addressLine1Ja ?? ''}${address.addressLine2Ja ?? ''}`
+
+    return isJapaneseLocale.value ? japaneseAddress : englishAddress
 })
+
 const addressLine2 = computed(() => {
-    const addressObj
-        = resultsStore.activeResult?.facilities[0].contact.address
+    const address = addressObj.value
+    if (!address || isJapaneseLocale.value) return ''
 
-    const englishAddress = `${addressObj?.cityEn}, ${addressObj?.prefectureEn} ${addressObj?.postalCode}`
-    return localeStore.activeLocale.code !== Locale.JaJp ? englishAddress : ''
+    return `${address.cityEn ?? ''}, ${address.prefectureEn ?? ''} ${address.postalCode ?? ''}`
 })
-const addressLink = computed(
-    () => resultsStore.activeResult?.facilities[0].contact.googleMapsUrl
-)
-const website = computed(
-    () => resultsStore.activeResult?.facilities[0]?.contact?.website
-)
-const phone = computed(
-    () => resultsStore.activeResult?.facilities[0]?.contact?.phone
-)
-const email = computed(
-    () => resultsStore.activeResult?.facilities[0]?.contact?.email ?? ''
-)
+const addressLink = computed(() => activeFacility.value?.contact?.googleMapsUrl)
+const website = computed(() => activeFacility.value?.contact?.website)
+const phone = computed(() => activeFacility.value?.contact?.phone)
+const email = computed(() => activeFacility.value?.contact?.email ?? '')
 
 const formattedLastUpdate = computed(() => {
-    const unformattedDate = resultsStore.activeResult?.professional.updatedDate
+    const unformattedDate = activeProfessional.value?.updatedDate
     if (unformattedDate) {
         return t('searchResultsDetails.lastUpdate') + ': ' + formatToReadableDate(unformattedDate)
     }
