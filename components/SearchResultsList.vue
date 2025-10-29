@@ -40,7 +40,7 @@
         >
             <div
                 id="searchResults"
-                class="results-list flex flex-col pb-40 landscape:pb-4"
+                class="results-list flex flex-col pb-40 mb-40 landscape:pb-22 landscape:mb-0"
                 data-testid="search-results-list"
             >
                 <div
