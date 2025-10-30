@@ -549,6 +549,7 @@ export enum Specialty {
   Physiotherapy = 'PHYSIOTHERAPY',
   PlasticSurgery = 'PLASTIC_SURGERY',
   PreventiveMedicine = 'PREVENTIVE_MEDICINE',
+  Proctology = 'PROCTOLOGY',
   Psychiatry = 'PSYCHIATRY',
   RadiationOncology = 'RADIATION_ONCOLOGY',
   SportsMedicine = 'SPORTS_MEDICINE',

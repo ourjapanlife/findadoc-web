@@ -215,7 +215,8 @@
     "surgery": "Chirurgien",
     "physicalMedicineAndRehabilitation": "Médecine physique et réadaptation",
     "urology": "Urologue",
-    "traumatology": "Traumatologue"
+    "traumatology": "Traumatologue",
+    "proctology": "Proctologist"
   },
   "specialtyCategories": {
     "childrensHealth": "Santé des enfants",
