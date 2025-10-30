@@ -360,7 +360,8 @@
     "urology": "泌尿科医生",
     "traumatology": "创伤学",
     "generalMedicine": "全科医生",
-    "surgery": "外科医生"
+    "surgery": "外科医生",
+    "proctology": "直肠科医生"
   },
   "specialtyCategories": {
     "childrensHealth": "儿童健康",

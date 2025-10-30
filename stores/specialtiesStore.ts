@@ -44,6 +44,7 @@ export const useSpecialtiesStore = defineStore('specialtiesStore', () => {
         { code: Specialty.Pediatrics, displayText: t('specialties.pediatrics') },
         { code: Specialty.Physiotherapy, displayText: t('specialties.physiotherapy') },
         { code: Specialty.PreventiveMedicine, displayText: t('specialties.preventiveMedicine') },
+        { code: Specialty.Proctology, displayText: t('specialties.proctology') },
         { code: Specialty.Psychiatry, displayText: t('specialties.psychiatry') },
         { code: Specialty.PhysicalMedicineAndRehabilitation, displayText: t('specialties.physicalMedicineAndRehabilitation') },
         { code: Specialty.RadiationOncology, displayText: t('specialties.radiationOncology') },
