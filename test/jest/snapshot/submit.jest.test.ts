@@ -6,16 +6,16 @@ import Submit from '~/pages/submit.vue'
 
 const mockSubmissionStore = {
     submissionCompleted: false,
-    createNewSubmission: jest.fn(),
+    createNewSubmission: jest.fn()
 }
 
 jest.mock('~/stores/submissionStore', () => ({
-    useSubmissionStore: () => mockSubmissionStore,
+    useSubmissionStore: () => mockSubmissionStore
 }))
 
 const NuxtLinkStub = {
     template: '<a><slot /></a>',
-    props: ['to'],
+    props: ['to']
 }
 
 const i18n = createI18n({
@@ -26,7 +26,7 @@ const i18n = createI18n({
 
 describe('submit.vue', () => {
     const pinia = createTestingPinia({
-        createSpy: jest.fn,
+        createSpy: jest.fn
     })
 
     it('renders correctly', () => {
@@ -36,8 +36,8 @@ describe('submit.vue', () => {
                 stubs: {
                     SubmissionCompleted: true,
                     Loader: true,
-                    NuxtLink: NuxtLinkStub,
-                },
+                    NuxtLink: NuxtLinkStub
+                }
             }
         })
         expect(wrapper.element).toMatchSnapshot()
