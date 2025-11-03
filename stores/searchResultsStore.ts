@@ -150,13 +150,13 @@ Promise<HealthcareProfessional[]> {
     }
 }
 
-async function queryFacilities(searchCity?: string): Promise<Facility[]> {
+async function queryFacilities(searchCity?: string, heathcareProfessinalIDs?: string[]): Promise<Facility[]> {
     try {
         const searchFacilitiesData = {
             filters: {
                 limit: 1000,
                 offset: 0,
-                healthcareProfessionalIds: undefined,
+                healthcareProfessionalIds: heathcareProfessinalIDs ?? undefined,
                 contact: undefined,
                 createdDate: undefined,
                 healthcareProfessionalName: undefined,
