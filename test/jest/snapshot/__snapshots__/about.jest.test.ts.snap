@@ -2,37 +2,40 @@
 
 exports[`about.vue renders correctly 1`] = `
 <div
-  class="overflow-y-auto w-full"
+  class="overflow-y-auto w-full bg-primary-bg"
 >
+  <!-- About findadoc section -->
   <div
     class="flex flex-col items-center px-10 md:px-32"
   >
     <!---->
     <h1
-      class="mb-12 font-bold text-4xl"
+      class="mb-12 font-bold text-4xl text-primary-text"
       data-testid="about-heading"
     >
       about.heading
     </h1>
     <p
-      class="mb-12 text-2xl"
+      class="mb-12 text-2xl text-primary-text"
       data-testid="about-subheading"
     >
       about.subheading
     </p>
     <p
-      class="mb-6 text-md text-primary-text-muted"
+      class="mb-6 text-md text-primary-text"
       data-testid="about-paragraph1"
     >
       about.paragraph1
     </p>
     <p
-      class="text-md text-primary-text-muted"
+      class="text-md text-primary-text"
       data-testid="about-paragraph2"
     >
       about.paragraph2
     </p>
   </div>
+  <!-- Member Section -->
+  <!-- Member Heading -->
   <div
     class="flex justify-center items-center"
     data-testid="members-header-container"
@@ -47,22 +50,580 @@ exports[`about.vue renders correctly 1`] = `
         class="flex-1 border-currentColor/70 border self-center"
       />
       <div
-        class="text-primary/80 text-xl font-semibold mx-4 p-2 whitespace-nowrap"
+        class="text-primary-text text-2xl font-bold mx-4 p-2 whitespace-nowrap"
       >
-        about.members
+         Our Team 
       </div>
       <div
         class="flex-1 border-currentColor/70 border self-center"
       />
     </div>
   </div>
+  <!-- Member Tabs -->
+  <div
+    class="w-full flex justify-center mb-10"
+  >
+    <div
+      class="inline-flex gap-4 border-b mr-8"
+    >
+      
+      <button
+        class="pb-2 px-1 text-md font-medium transition text-primary-text underline"
+      >
+        Contributors
+      </button>
+      <button
+        class="pb-2 px-1 text-md font-medium transition text-primary-text-muted hover:text-primary-hover"
+      >
+        NPO Board
+      </button>
+      <button
+        class="pb-2 px-1 text-md font-medium transition text-primary-text-muted hover:text-primary-hover"
+      >
+        Mascots
+      </button>
+      
+    </div>
+  </div>
+  <!-- Member Contributor Content -->
+  <div>
+    <div
+      class="flex justify-center items-center"
+      data-testid="members-container"
+      id="members-container"
+    >
+      <div
+        class="grid grid-cols-2 md:grid-cols-5 mx-4 gap-16 pb-10 md:pb-12"
+        data-testid="members"
+        id="members"
+      >
+        
+        <div
+          class="members-list grid"
+          data-testid="member"
+        >
+          <div
+            class="member flex flex-col items-center text-center"
+          >
+            <fadeintransitionimage
+              alt="Davide Ghezzo"
+              border-radius="rounded-full"
+              data-test-id="member-avatar-0"
+              height="h-32"
+              img-src="/avatars/davide_ghezzo.jpg"
+              object-styling="object-cover"
+              width="w-32"
+            />
+            <div
+              class="member-name mt-1 text-xl font-bold"
+              data-testid="member-name"
+            >
+              Davide Ghezzo
+            </div>
+            <div
+              class="member-title text-md text-primary-text-muted"
+              data-testid="member-title"
+            >
+              Developer
+            </div>
+            <div
+              class="member-social flex flex-row mt-2"
+            >
+              <a
+                class="social-link"
+                data-testid="member-linkedin"
+                href="https://www.linkedin.com/in/davide-ghezzo-a91587206/"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                <!---->
+              </a>
+              <a
+                class="social-link"
+                data-testid="member-github"
+                href="https://github.com/Ghezz9"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                <!---->
+              </a>
+            </div>
+          </div>
+        </div>
+        <div
+          class="members-list grid"
+          data-testid="member"
+        >
+          <div
+            class="member flex flex-col items-center text-center"
+          >
+            <fadeintransitionimage
+              alt="Trent Shimamura"
+              border-radius="rounded-full"
+              data-test-id="member-avatar-1"
+              height="h-32"
+              img-src="/avatars/trent_shimamura.jpg"
+              object-styling="object-cover"
+              width="w-32"
+            />
+            <div
+              class="member-name mt-1 text-xl font-bold"
+              data-testid="member-name"
+            >
+              Trent Shimamura
+            </div>
+            <div
+              class="member-title text-md text-primary-text-muted"
+              data-testid="member-title"
+            >
+              Moderation Lead
+            </div>
+            <div
+              class="member-social flex flex-row mt-2"
+            >
+              <a
+                class="social-link"
+                data-testid="member-linkedin"
+                href="https://www.linkedin.com/in/trent-golden-58811b129/"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                <!---->
+              </a>
+              <!--v-if-->
+            </div>
+          </div>
+        </div>
+        <div
+          class="members-list grid"
+          data-testid="member"
+        >
+          <div
+            class="member flex flex-col items-center text-center"
+          >
+            <fadeintransitionimage
+              alt="Lisa Broerson"
+              border-radius="rounded-full"
+              data-test-id="member-avatar-2"
+              height="h-32"
+              img-src="/avatars/lisa_broersen.jpg"
+              object-styling="object-cover"
+              width="w-32"
+            />
+            <div
+              class="member-name mt-1 text-xl font-bold"
+              data-testid="member-name"
+            >
+              Lisa Broerson
+            </div>
+            <div
+              class="member-title text-md text-primary-text-muted"
+              data-testid="member-title"
+            >
+              Developer
+            </div>
+            <div
+              class="member-social flex flex-row mt-2"
+            >
+              <a
+                class="social-link"
+                data-testid="member-linkedin"
+                href="https://www.linkedin.com/in/lisa-broersen/"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                <!---->
+              </a>
+              <a
+                class="social-link"
+                data-testid="member-github"
+                href="https://github.com/ljbroersen"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                <!---->
+              </a>
+            </div>
+          </div>
+        </div>
+        <div
+          class="members-list grid"
+          data-testid="member"
+        >
+          <div
+            class="member flex flex-col items-center text-center"
+          >
+            <fadeintransitionimage
+              alt="Matthew Kurtti"
+              border-radius="rounded-full"
+              data-test-id="member-avatar-3"
+              height="h-32"
+              img-src="/avatars/matthew_kurtti.jpg"
+              object-styling="object-cover"
+              width="w-32"
+            />
+            <div
+              class="member-name mt-1 text-xl font-bold"
+              data-testid="member-name"
+            >
+              Matthew Kurtti
+            </div>
+            <div
+              class="member-title text-md text-primary-text-muted"
+              data-testid="member-title"
+            >
+              Developer
+            </div>
+            <div
+              class="member-social flex flex-row mt-2"
+            >
+              <a
+                class="social-link"
+                data-testid="member-linkedin"
+                href="https://www.linkedin.com/in/matthew-kurtti-737ab2123/"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                <!---->
+              </a>
+              <a
+                class="social-link"
+                data-testid="member-github"
+                href="https://github.com/matthewkurtti"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                <!---->
+              </a>
+            </div>
+          </div>
+        </div>
+        <div
+          class="members-list grid"
+          data-testid="member"
+        >
+          <div
+            class="member flex flex-col items-center text-center"
+          >
+            <fadeintransitionimage
+              alt="Sulaymane Sillah"
+              border-radius="rounded-full"
+              data-test-id="member-avatar-4"
+              height="h-32"
+              img-src="/avatars/sulaymane_sillah.jpg"
+              object-styling="object-cover"
+              width="w-32"
+            />
+            <div
+              class="member-name mt-1 text-xl font-bold"
+              data-testid="member-name"
+            >
+              Sulaymane Sillah
+            </div>
+            <div
+              class="member-title text-md text-primary-text-muted"
+              data-testid="member-title"
+            >
+              Developer
+            </div>
+            <div
+              class="member-social flex flex-row mt-2"
+            >
+              <a
+                class="social-link"
+                data-testid="member-linkedin"
+                href="https://www.linkedin.com/in/sulaymanesillah/"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                <!---->
+              </a>
+              <a
+                class="social-link"
+                data-testid="member-github"
+                href="https://github.com/Tch4lla"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                <!---->
+              </a>
+            </div>
+          </div>
+        </div>
+        <div
+          class="members-list grid"
+          data-testid="member"
+        >
+          <div
+            class="member flex flex-col items-center text-center"
+          >
+            <fadeintransitionimage
+              alt="Anissa Chadouli"
+              border-radius="rounded-full"
+              data-test-id="member-avatar-5"
+              height="h-32"
+              img-src="/avatars/anissa_chadouli.jpg"
+              object-styling="object-cover"
+              width="w-32"
+            />
+            <div
+              class="member-name mt-1 text-xl font-bold"
+              data-testid="member-name"
+            >
+              Anissa Chadouli
+            </div>
+            <div
+              class="member-title text-md text-primary-text-muted"
+              data-testid="member-title"
+            >
+              Developer
+            </div>
+            <div
+              class="member-social flex flex-row mt-2"
+            >
+              <a
+                class="social-link"
+                data-testid="member-linkedin"
+                href="https://www.linkedin.com/in/anissa-chadouli/"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                <!---->
+              </a>
+              <a
+                class="social-link"
+                data-testid="member-github"
+                href="https://github.com/Anissa3005"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                <!---->
+              </a>
+            </div>
+          </div>
+        </div>
+        <div
+          class="members-list grid"
+          data-testid="member"
+        >
+          <div
+            class="member flex flex-col items-center text-center"
+          >
+            <fadeintransitionimage
+              alt="Aaron Culbert"
+              border-radius="rounded-full"
+              data-test-id="member-avatar-6"
+              height="h-32"
+              img-src="/avatars/aaron_culbert.jpg"
+              object-styling="object-cover"
+              width="w-32"
+            />
+            <div
+              class="member-name mt-1 text-xl font-bold"
+              data-testid="member-name"
+            >
+              Aaron Culbert
+            </div>
+            <div
+              class="member-title text-md text-primary-text-muted"
+              data-testid="member-title"
+            >
+              Developer
+            </div>
+            <div
+              class="member-social flex flex-row mt-2"
+            >
+              <a
+                class="social-link"
+                data-testid="member-linkedin"
+                href="https://www.linkedin.com/in/aculbert/"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                <!---->
+              </a>
+              <a
+                class="social-link"
+                data-testid="member-github"
+                href="https://github.com/aaronculbert"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                <!---->
+              </a>
+            </div>
+          </div>
+        </div>
+        <div
+          class="members-list grid"
+          data-testid="member"
+        >
+          <div
+            class="member flex flex-col items-center text-center"
+          >
+            <fadeintransitionimage
+              alt="Bruno Uemura"
+              border-radius="rounded-full"
+              data-test-id="member-avatar-7"
+              height="h-32"
+              img-src="/avatars/bruno_uemura.jpg"
+              object-styling="object-cover"
+              width="w-32"
+            />
+            <div
+              class="member-name mt-1 text-xl font-bold"
+              data-testid="member-name"
+            >
+              Bruno Uemura
+            </div>
+            <div
+              class="member-title text-md text-primary-text-muted"
+              data-testid="member-title"
+            >
+              Developer
+            </div>
+            <div
+              class="member-social flex flex-row mt-2"
+            >
+              <a
+                class="social-link"
+                data-testid="member-linkedin"
+                href="https://www.linkedin.com/in/bruno-nogima-uemura-21124a321/"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                <!---->
+              </a>
+              <a
+                class="social-link"
+                data-testid="member-github"
+                href="https://github.com/bnogimauemura"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                <!---->
+              </a>
+            </div>
+          </div>
+        </div>
+        <div
+          class="members-list grid"
+          data-testid="member"
+        >
+          <div
+            class="member flex flex-col items-center text-center"
+          >
+            <fadeintransitionimage
+              alt="Ann Kilzer"
+              border-radius="rounded-full"
+              data-test-id="member-avatar-8"
+              height="h-32"
+              img-src="/avatars/ann_kilzer.jpg"
+              object-styling="object-cover"
+              width="w-32"
+            />
+            <div
+              class="member-name mt-1 text-xl font-bold"
+              data-testid="member-name"
+            >
+              Ann Kilzer
+            </div>
+            <div
+              class="member-title text-md text-primary-text-muted"
+              data-testid="member-title"
+            >
+              Developer
+            </div>
+            <div
+              class="member-social flex flex-row mt-2"
+            >
+              <!--v-if-->
+              <a
+                class="social-link"
+                data-testid="member-github"
+                href="https://github.com/ann-kilzer"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                <!---->
+              </a>
+            </div>
+          </div>
+        </div>
+        <div
+          class="members-list grid"
+          data-testid="member"
+        >
+          <div
+            class="member flex flex-col items-center text-center"
+          >
+            <fadeintransitionimage
+              alt="Chris Bowman"
+              border-radius="rounded-full"
+              data-test-id="member-avatar-9"
+              height="h-32"
+              img-src="/avatars/chris_bowman.jpg"
+              object-styling="object-cover"
+              width="w-32"
+            />
+            <div
+              class="member-name mt-1 text-xl font-bold"
+              data-testid="member-name"
+            >
+              Chris Bowman
+            </div>
+            <div
+              class="member-title text-md text-primary-text-muted"
+              data-testid="member-title"
+            >
+              Developer
+            </div>
+            <div
+              class="member-social flex flex-row mt-2"
+            >
+              <a
+                class="social-link"
+                data-testid="member-linkedin"
+                href="https://www.linkedin.com/in/bowman-chris/"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                <!---->
+              </a>
+              <a
+                class="social-link"
+                data-testid="member-github"
+                href="https://github.com/ProgressChris88"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                <!---->
+              </a>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+    <div
+      class="flex flex-col items-center"
+    >
+      <button
+        class="outline rounded-xl bg-primary text-primary-text hover:bg-primary-hover font-bold p-4 mb-5"
+      >
+        Show All
+      </button>
+    </div>
+  </div>
+  <!-- Member NPO Board Content  -->
   <div
     class="flex justify-center items-center"
     data-testid="members-container"
     id="members-container"
+    style="display: none;"
   >
     <div
-      class="grid grid-cols-2 md:grid-cols-3 mx-4 gap-8 pb-12 md:pb-32"
+      class="grid grid-cols-2 md:grid-cols-4 mx-4 gap-8 pb-10 md:pb-12"
       data-testid="members"
       id="members"
     >
@@ -75,9 +636,149 @@ exports[`about.vue renders correctly 1`] = `
           class="member flex flex-col items-center text-center"
         >
           <fadeintransitionimage
-            alt="LaShawn Toyoda"
+            alt="William Brammer"
             border-radius="rounded-full"
             data-test-id="member-avatar-0"
+            height="h-32"
+            img-src="/avatars/william_brammer.jpg"
+            object-styling="object-cover"
+            width="w-32"
+          />
+          <div
+            class="member-name mt-1 text-xl font-bold"
+            data-testid="member-name"
+          >
+            William Brammer
+          </div>
+          <div
+            class="member-title text-md text-primary-text-muted"
+            data-testid="member-title"
+          >
+            CEO
+          </div>
+          <div
+            class="member-social flex flex-row mt-2"
+          >
+            <a
+              class="social-link"
+              data-testid="member-linkedin"
+              href="https://www.linkedin.com/in/william-brammer/"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <!---->
+            </a>
+            <a
+              class="social-link"
+              data-testid="member-github"
+              href="https://github.com/NabbeunNabi"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <!---->
+            </a>
+          </div>
+        </div>
+      </div>
+      <div
+        class="members-list grid"
+        data-testid="member"
+      >
+        <div
+          class="member flex flex-col items-center text-center"
+        >
+          <fadeintransitionimage
+            alt="Russell Miller"
+            border-radius="rounded-full"
+            data-test-id="member-avatar-1"
+            height="h-32"
+            img-src="/avatars/russell_miller.jpg"
+            object-styling="object-cover"
+            width="w-32"
+          />
+          <div
+            class="member-name mt-1 text-xl font-bold"
+            data-testid="member-name"
+          >
+            Russell Miller
+          </div>
+          <div
+            class="member-title text-md text-primary-text-muted"
+            data-testid="member-title"
+          >
+            President
+          </div>
+          <div
+            class="member-social flex flex-row mt-2"
+          >
+            <a
+              class="social-link"
+              data-testid="member-linkedin"
+              href="https://www.linkedin.com/in/russell-miller-51a5136b/"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <!---->
+            </a>
+            <!--v-if-->
+          </div>
+        </div>
+      </div>
+      <div
+        class="members-list grid"
+        data-testid="member"
+      >
+        <div
+          class="member flex flex-col items-center text-center"
+        >
+          <fadeintransitionimage
+            alt="Niaya Harper Igarashi"
+            border-radius="rounded-full"
+            data-test-id="member-avatar-2"
+            height="h-32"
+            img-src="/avatars/niaya_harper_igarashi.jpg"
+            object-styling="object-cover"
+            width="w-32"
+          />
+          <div
+            class="member-name mt-1 text-xl font-bold"
+            data-testid="member-name"
+          >
+            Niaya Harper Igarashi
+          </div>
+          <div
+            class="member-title text-md text-primary-text-muted"
+            data-testid="member-title"
+          >
+            Vice President
+          </div>
+          <div
+            class="member-social flex flex-row mt-2"
+          >
+            <a
+              class="social-link"
+              data-testid="member-linkedin"
+              href="https://www.linkedin.com/in/niayaharper/r"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <!---->
+            </a>
+            <!--v-if-->
+          </div>
+        </div>
+      </div>
+      <div
+        class="members-list grid"
+        data-testid="member"
+      >
+        <div
+          class="member flex flex-col items-center text-center"
+        >
+          <fadeintransitionimage
+            alt="LaShawn Toyoda"
+            border-radius="rounded-full"
+            data-test-id="member-avatar-3"
             height="h-32"
             img-src="/avatars/lashawn_toyoda.jpg"
             object-styling="object-cover"
@@ -93,7 +794,7 @@ exports[`about.vue renders correctly 1`] = `
             class="member-title text-md text-primary-text-muted"
             data-testid="member-title"
           >
-            Founder & Executive Director
+            Secretary
           </div>
           <div
             class="member-social flex flex-row mt-2"
@@ -129,7 +830,7 @@ exports[`about.vue renders correctly 1`] = `
           <fadeintransitionimage
             alt="Philip Ermish"
             border-radius="rounded-full"
-            data-test-id="member-avatar-1"
+            data-test-id="member-avatar-4"
             height="h-32"
             img-src="/avatars/philip_ermish.jpg"
             object-styling="object-cover"
@@ -179,53 +880,9 @@ exports[`about.vue renders correctly 1`] = `
           class="member flex flex-col items-center text-center"
         >
           <fadeintransitionimage
-            alt="Russell Miller"
-            border-radius="rounded-full"
-            data-test-id="member-avatar-2"
-            height="h-32"
-            img-src="/avatars/russell_miller.jpg"
-            object-styling="object-cover"
-            width="w-32"
-          />
-          <div
-            class="member-name mt-1 text-xl font-bold"
-            data-testid="member-name"
-          >
-            Russell Miller
-          </div>
-          <div
-            class="member-title text-md text-primary-text-muted"
-            data-testid="member-title"
-          >
-            Healthcare Content Lead
-          </div>
-          <div
-            class="member-social flex flex-row mt-2"
-          >
-            <a
-              class="social-link"
-              data-testid="member-linkedin"
-              href="https://www.linkedin.com/in/russell-miller-51a5136b/"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              <!---->
-            </a>
-            <!--v-if-->
-          </div>
-        </div>
-      </div>
-      <div
-        class="members-list grid"
-        data-testid="member"
-      >
-        <div
-          class="member flex flex-col items-center text-center"
-        >
-          <fadeintransitionimage
             alt="Kuniko Arita"
             border-radius="rounded-full"
-            data-test-id="member-avatar-3"
+            data-test-id="member-avatar-5"
             height="h-32"
             img-src="/avatars/kuniko_arita.jpg"
             object-styling="object-cover"
@@ -261,7 +918,7 @@ exports[`about.vue renders correctly 1`] = `
           <fadeintransitionimage
             alt="Aya Yumino, MD"
             border-radius="rounded-full"
-            data-test-id="member-avatar-4"
+            data-test-id="member-avatar-6"
             height="h-32"
             img-src="/avatars/aya_yumino.jpg"
             object-styling="object-cover"
@@ -287,315 +944,187 @@ exports[`about.vue renders correctly 1`] = `
           </div>
         </div>
       </div>
-      <div
-        class="members-list grid"
-        data-testid="member"
-      >
-        <div
-          class="member flex flex-col items-center text-center"
-        >
-          <fadeintransitionimage
-            alt="Niaya Harper Igarashi"
-            border-radius="rounded-full"
-            data-test-id="member-avatar-5"
-            height="h-32"
-            img-src="/avatars/niaya_harper_igarashi.jpg"
-            object-styling="object-cover"
-            width="w-32"
-          />
-          <div
-            class="member-name mt-1 text-xl font-bold"
-            data-testid="member-name"
-          >
-            Niaya Harper Igarashi
-          </div>
-          <div
-            class="member-title text-md text-primary-text-muted"
-            data-testid="member-title"
-          >
-            Access, Community Outreach
-          </div>
-          <div
-            class="member-social flex flex-row mt-2"
-          >
-            <a
-              class="social-link"
-              data-testid="member-linkedin"
-              href="https://www.linkedin.com/in/niayaharper/r"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              <!---->
-            </a>
-            <!--v-if-->
-          </div>
-        </div>
-      </div>
-      <div
-        class="members-list grid"
-        data-testid="member"
-      >
-        <div
-          class="member flex flex-col items-center text-center"
-        >
-          <fadeintransitionimage
-            alt="Kei Yumino"
-            border-radius="rounded-full"
-            data-test-id="member-avatar-6"
-            height="h-32"
-            img-src="/avatars/kei_yumino.jpg"
-            object-styling="object-cover"
-            width="w-32"
-          />
-          <div
-            class="member-name mt-1 text-xl font-bold"
-            data-testid="member-name"
-          >
-            Kei Yumino
-          </div>
-          <div
-            class="member-title text-md text-primary-text-muted"
-            data-testid="member-title"
-          >
-            Design Lead
-          </div>
-          <div
-            class="member-social flex flex-row mt-2"
-          >
-            <a
-              class="social-link"
-              data-testid="member-linkedin"
-              href="https://www.linkedin.com/in/kei-yumino-86299861/"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              <!---->
-            </a>
-            <!--v-if-->
-          </div>
-        </div>
-      </div>
-      <div
-        class="members-list grid"
-        data-testid="member"
-      >
-        <div
-          class="member flex flex-col items-center text-center"
-        >
-          <fadeintransitionimage
-            alt="Emanuele Monica"
-            border-radius="rounded-full"
-            data-test-id="member-avatar-7"
-            height="h-32"
-            img-src="/avatars/emanuele_monica.jpg"
-            object-styling="object-cover"
-            width="w-32"
-          />
-          <div
-            class="member-name mt-1 text-xl font-bold"
-            data-testid="member-name"
-          >
-            Emanuele Monica
-          </div>
-          <div
-            class="member-title text-md text-primary-text-muted"
-            data-testid="member-title"
-          >
-            Language Support
-          </div>
-          <div
-            class="member-social flex flex-row mt-2"
-          >
-            <a
-              class="social-link"
-              data-testid="member-linkedin"
-              href="https://www.linkedin.com/in/emanuele-monica-59b93949/"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              <!---->
-            </a>
-            <!--v-if-->
-          </div>
-        </div>
-      </div>
-      <div
-        class="members-list grid"
-        data-testid="member"
-      >
-        <div
-          class="member flex flex-col items-center text-center"
-        >
-          <fadeintransitionimage
-            alt="Chunyan Li"
-            border-radius="rounded-full"
-            data-test-id="member-avatar-8"
-            height="h-32"
-            img-src="/avatars/chunyan_li.jpg"
-            object-styling="object-cover"
-            width="w-32"
-          />
-          <div
-            class="member-name mt-1 text-xl font-bold"
-            data-testid="member-name"
-          >
-            Chunyan Li
-          </div>
-          <div
-            class="member-title text-md text-primary-text-muted"
-            data-testid="member-title"
-          >
-            Public Health Expert
-          </div>
-          <div
-            class="member-social flex flex-row mt-2"
-          >
-            <a
-              class="social-link"
-              data-testid="member-linkedin"
-              href="https://www.linkedin.com/in/chunyan-li-10/"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              <!---->
-            </a>
-            <!--v-if-->
-          </div>
-        </div>
-      </div>
-      <div
-        class="members-list grid"
-        data-testid="member"
-      >
-        <div
-          class="member flex flex-col items-center text-center"
-        >
-          <fadeintransitionimage
-            alt="Andrew Leemhuis"
-            border-radius="rounded-full"
-            data-test-id="member-avatar-9"
-            height="h-32"
-            img-src="/avatars/andrew_leemhuis.jpg"
-            object-styling="object-cover"
-            width="w-32"
-          />
-          <div
-            class="member-name mt-1 text-xl font-bold"
-            data-testid="member-name"
-          >
-            Andrew Leemhuis
-          </div>
-          <div
-            class="member-title text-md text-primary-text-muted"
-            data-testid="member-title"
-          >
-            Design
-          </div>
-          <div
-            class="member-social flex flex-row mt-2"
-          >
-            <a
-              class="social-link"
-              data-testid="member-linkedin"
-              href="https://www.linkedin.com/in/andrew-leemhuis-01482718/"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              <!---->
-            </a>
-            <!--v-if-->
-          </div>
-        </div>
-      </div>
-      <div
-        class="members-list grid"
-        data-testid="member"
-      >
-        <div
-          class="member flex flex-col items-center text-center"
-        >
-          <fadeintransitionimage
-            alt="Shingo Toyoda"
-            border-radius="rounded-full"
-            data-test-id="member-avatar-10"
-            height="h-32"
-            img-src="/avatars/shingo_toyoda.jpg"
-            object-styling="object-cover"
-            width="w-32"
-          />
-          <div
-            class="member-name mt-1 text-xl font-bold"
-            data-testid="member-name"
-          >
-            Shingo Toyoda
-          </div>
-          <div
-            class="member-title text-md text-primary-text-muted"
-            data-testid="member-title"
-          >
-            Language Support
-          </div>
-          <div
-            class="member-social flex flex-row mt-2"
-          >
-            <!--v-if-->
-            <!--v-if-->
-          </div>
-        </div>
-      </div>
-      <div
-        class="members-list grid"
-        data-testid="member"
-      >
-        <div
-          class="member flex flex-col items-center text-center"
-        >
-          <fadeintransitionimage
-            alt="Natalja Dembek"
-            border-radius="rounded-full"
-            data-test-id="member-avatar-11"
-            height="h-32"
-            img-src="/avatars/natalja_dembek.jpg"
-            object-styling="object-cover"
-            width="w-32"
-          />
-          <div
-            class="member-name mt-1 text-xl font-bold"
-            data-testid="member-name"
-          >
-            Natalja Dembek
-          </div>
-          <div
-            class="member-title text-md text-primary-text-muted"
-            data-testid="member-title"
-          >
-            UI/UX Designer
-          </div>
-          <div
-            class="member-social flex flex-row mt-2"
-          >
-            <a
-              class="social-link"
-              data-testid="member-linkedin"
-              href="https://www.linkedin.com/in/nataljadembek/"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              <!---->
-            </a>
-            <a
-              class="social-link"
-              data-testid="member-github"
-              href="https://github.com/Ntlja"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              <!---->
-            </a>
-          </div>
-        </div>
-      </div>
       
+    </div>
+  </div>
+  <!-- Mascot Section  -->
+  <div
+    class="grid grid-cols-1 md:grid-cols-5"
+    style="display: none;"
+  >
+    <div
+      class="flex flex-col items-center my-8 md:my-0"
+    >
+      <h1>
+        Awa
+      </h1>
+      <!---->
+    </div>
+    <div
+      class="flex flex-col items-center my-8 md:my-0"
+    >
+      <h1>
+        Michael
+      </h1>
+      <!---->
+    </div>
+    <div
+      class="flex flex-col items-center my-8 md:my-0"
+    >
+      <h1>
+        Tamika
+      </h1>
+      <!---->
+    </div>
+    <div
+      class="flex flex-col items-center my-8 md:my-0"
+    >
+      <h1>
+        Sachi
+      </h1>
+      <!---->
+    </div>
+    <div
+      class="flex flex-col items-center my-8 md:my-0 md:mt-10"
+    >
+      <h1>
+        Chiko
+      </h1>
+      <!---->
+    </div>
+  </div>
+  <!-- Impact Section  -->
+  <div
+    class="flex justify-center items-center"
+    data-testid="members-header-container"
+    id="members-header-container"
+  >
+    <div
+      class="flex w-4/5 my-14"
+      data-testid="members-header"
+      id="members-header"
+    >
+      <div
+        class="flex-1 border-currentColor/70 border self-center"
+      />
+      <div
+        class="text-primary-text text-2xl font-bold mx-4 p-2 whitespace-nowrap"
+      >
+         Our Impact 
+      </div>
+      <div
+        class="flex-1 border-currentColor/70 border self-center"
+      />
+    </div>
+  </div>
+  <div
+    class="grid grid-cols-1 md:grid-cols-3 my-0 md:my-12"
+  >
+    <div
+      class="flex flex-col items-center my-6 md:my-0"
+    >
+      <!---->
+      <p
+        class="font-semibold text-xl text-primary-text"
+      >
+         300+ Doctors Registered 
+      </p>
+    </div>
+    <div
+      class="flex flex-col items-center my-6 md:my-0"
+    >
+      <!---->
+      <p
+        class="font-semibold text-xl text-primary-text"
+      >
+         100+ Monthly Users 
+      </p>
+    </div>
+    <div
+      class="flex flex-col items-center my-6 md:my-0"
+    >
+      <!---->
+      <p
+        class="font-semibold text-xl text-primary-text"
+      >
+         Volunteer and Community Driven 
+      </p>
+    </div>
+  </div>
+  <!-- Join us section  -->
+  <div
+    class="flex justify-center items-center"
+    data-testid="members-header-container"
+    id="members-header-container"
+  >
+    <div
+      class="flex w-4/5 my-14"
+      data-testid="members-header"
+      id="members-header"
+    >
+      <div
+        class="flex-1 border-currentColor/70 border self-center"
+      />
+      <div
+        class="text-primary-text text-2xl font-bold mx-4 p-2 whitespace-nowrap"
+      >
+         Get Involved 
+      </div>
+      <div
+        class="flex-1 border-currentColor/70 border self-center"
+      />
+    </div>
+  </div>
+  <div
+    class="mb-12 grid grid-cols-1 md:grid-cols-4"
+  >
+    <div
+      class="flex flex-col items-center my-6 md:my-0"
+    >
+      <!---->
+      <!-- Submit a new Doctor Link -->
+      <nuxtlink
+        class="hover:text-primary-hover text-xl font-bold underline transition-colors"
+        to="/submit"
+      >
+        Add a Doctor 
+      </nuxtlink>
+    </div>
+    <div
+      class="flex flex-col items-center my-6 md:my-0"
+    >
+      <!---->
+      <a
+        class="underline font-bold hover:text-primary-hover text-xl transition-colors"
+        href="https://github.com/ourjapanlife"
+        target="_blank"
+      >
+        Contribute on Github
+      </a>
+    </div>
+    <div
+      class="flex flex-col items-center my-6 md:my-0"
+    >
+      <!---->
+      <a
+        class="underline font-bold hover:text-primary-hover text-xl transition-colors"
+        href="https://www.linkedin.com/company/find-a-doc-japan/"
+        target="_blank"
+      >
+        Follow us on LinkedIn
+      </a>
+    </div>
+    <div
+      class="flex flex-col items-center my-6 md:my-0"
+    >
+      <!---->
+      <a
+        class="underline font-bold hover:text-primary-hover text-xl transition-colors"
+        href="https://docs.google.com/forms/d/e/1FAIpQLScx9cXurA6BhbBPUFH2nFAVWPP6Pm3yqXQj-NvJiaI2CUhh0Q/viewform"
+        target="_blank"
+      >
+        Give us feedback
+      </a>
     </div>
   </div>
 </div>
