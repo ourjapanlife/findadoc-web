@@ -34,13 +34,13 @@ export const useSearchResultsStore = defineStore('searchResultsStore', () => {
         const loadingStore = useLoadingStore()
         loadingStore.setIsLoading(true)
 
-        const professionalsSearchResults = await queryProfessionals(selectedSpecialties.value ?? [],
-                                                                    selectedLanguages.value ?? [])
-
-        const professionalIds = professionalsSearchResults.map(professional => professional.id)
-
         //get the facilities that match the professionals we found
-        const facilitiesSearchResults = await queryFacilities(professionalIds, selectedCity.value)
+        const facilitiesSearchResults = await queryFacilities(selectedCity.value)
+
+        const professionalIds = facilitiesSearchResults.map(facility => facility.healthcareProfessionalIds).flat()
+
+        const professionalsSearchResults = await queryProfessionals(selectedSpecialties.value ?? [],
+                                                                    selectedLanguages.value ?? [], professionalIds)
 
         //combine the professionals and facilities into a single search result
         //then filter out any results that don't have any facilities
@@ -109,13 +109,14 @@ export const useSearchResultsStore = defineStore('searchResultsStore', () => {
     }
 })
 
-async function queryProfessionals(searchSpecialties: Specialty[], searchLanguages: Locale[]):
+async function queryProfessionals(searchSpecialties: Specialty[], searchLanguages: Locale[], professionalIDs?: string[]):
 Promise<HealthcareProfessional[]> {
     try {
         const searchProfessionalsData = {
             filters: {
                 limit: 1000,
                 offset: 0,
+                ids: professionalIDs ?? undefined,
                 specialties: searchSpecialties,
                 spokenLanguages: searchLanguages,
                 acceptedInsurance: undefined,
@@ -149,13 +150,13 @@ Promise<HealthcareProfessional[]> {
     }
 }
 
-async function queryFacilities(healthcareProfessionalIds: string[], searchCity?: string): Promise<Facility[]> {
+async function queryFacilities(searchCity?: string, heathcareProfessinalIDs?: string[]): Promise<Facility[]> {
     try {
         const searchFacilitiesData = {
             filters: {
                 limit: 1000,
                 offset: 0,
-                healthcareProfessionalIds: healthcareProfessionalIds,
+                healthcareProfessionalIds: heathcareProfessinalIDs ?? undefined,
                 contact: undefined,
                 createdDate: undefined,
                 healthcareProfessionalName: undefined,
