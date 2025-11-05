@@ -33,7 +33,8 @@
                 {{ t("about.paragraph2") }}
             </p>
         </div>
-        <!-- Contributor Section -->
+        <!-- Member Section -->
+        <!-- Member Heading -->
         <div
             id="members-header-container"
             data-testid="members-header-container"
@@ -45,66 +46,69 @@
                 class="flex w-4/5 my-14"
             >
                 <div class="flex-1 border-currentColor/70 border self-center" />
-                <div class="text-primary/80 text-2xl font-bold mx-4 p-2 whitespace-nowrap">
-                    Contributors
+                <div class="text-primary-text text-2xl font-bold mx-4 p-2 whitespace-nowrap">
+                    Our Team
                 </div>
                 <div class="flex-1 border-currentColor/70 border self-center" />
             </div>
         </div>
-        <div
-            id="members-container"
-            data-testid="members-container"
-            class="flex justify-center items-center"
-        >
+        <!-- Member Tabs -->
+        <div class="w-full flex justify-center mb-10">
+            <div class="inline-flex gap-4 border-b mr-8">
+                <button
+                    v-for="tab in tabs"
+                    :key="tab.key"
+                    class="pb-2 px-1 text-md font-medium transition"
+                    :class="activeTab === tab.key
+                        ? 'text-primary-text underline'
+                        : 'text-primary-text-muted hover:text-primary-hover'"
+                    @click="selectTab(tab.key)"
+                >
+                    {{ tab.label }}
+                </button>
+            </div>
+        </div>
+        <!-- Member Contributor Content -->
+        <div v-show="activeTab === 'contributors'">
             <div
-                id="members"
-                data-testid="members"
-                class="grid grid-cols-2 md:grid-cols-4 mx-4 gap-16 pb-10 md:pb-12"
+                id="members-container"
+                data-testid="members-container"
+                class="flex justify-center items-center"
             >
                 <div
-                    v-for="(member, index) in visibleContributors"
-                    :key="member.avatarImg"
-                    data-testid="member"
-                    class="members-list grid"
+                    id="members"
+                    data-testid="members"
+                    class="grid grid-cols-2 md:grid-cols-5 mx-4 gap-16 pb-10 md:pb-12"
                 >
-                    <MemberComponent
-                        :avatar-img="member.avatarImg"
-                        :github-url="member.githubUrl"
-                        :linked-in-url="member.linkedInUrl"
-                        :name="member.name"
-                        :data-test-id="index"
-                        :title="member.title"
-                    />
+                    <div
+                        v-for="(member, index) in visibleContributors"
+                        :key="member.avatarImg"
+                        data-testid="member"
+                        class="members-list grid"
+                    >
+                        <MemberComponent
+                            :avatar-img="member.avatarImg"
+                            :github-url="member.githubUrl"
+                            :linked-in-url="member.linkedInUrl"
+                            :name="member.name"
+                            :data-test-id="index"
+                            :title="member.title"
+                        />
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="flex flex-col items-center">
-            <button
-                class="outline rounded-xl bg-primary text-primary-text hover:bg-primary-hover font-bold p-4 mb-5"
-                @click="toggleShowAll"
-            >
-                {{ showAll ? 'Show Less' : 'Show All' }}
-            </button>
-        </div>
-        <!-- NPO Board Section  -->
-        <div
-            id="members-header-container"
-            data-testid="members-header-container"
-            class="flex justify-center items-center"
-        >
-            <div
-                id="members-header"
-                data-testid="members-header"
-                class="flex w-4/5 my-14"
-            >
-                <div class="flex-1 border-currentColor/70 border self-center" />
-                <div class="text-primary/80 text-2xl font-bold mx-4 p-2 whitespace-nowrap">
-                    NPO Board
-                </div>
-                <div class="flex-1 border-currentColor/70 border self-center" />
+            <div class="flex flex-col items-center">
+                <button
+                    class="outline rounded-xl bg-primary text-primary-text hover:bg-primary-hover font-bold p-4 mb-5"
+                    @click="toggleShowAll"
+                >
+                    {{ showAll ? 'Show Less' : 'Show All' }}
+                </button>
             </div>
         </div>
+        <!-- Member NPO Board Content  -->
         <div
+            v-show="activeTab === 'board'"
             id="members-container"
             data-testid="members-container"
             class="flex justify-center items-center"
@@ -133,23 +137,9 @@
         </div>
         <!-- Mascot Section  -->
         <div
-            id="members-header-container"
-            data-testid="members-header-container"
-            class="flex justify-center items-center"
+            v-show="activeTab === 'mascots'"
+            class="grid grid-cols-1 md:grid-cols-5"
         >
-            <div
-                id="members-header"
-                data-testid="members-header"
-                class="flex w-4/5 my-14"
-            >
-                <div class="flex-1 border-currentColor/70 border self-center" />
-                <div class="text-primary/80 text-2xl font-bold mx-4 p-2 whitespace-nowrap">
-                    Mascots
-                </div>
-                <div class="flex-1 border-currentColor/70 border self-center" />
-            </div>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-5">
             <div class="flex flex-col items-center my-8 md:my-0">
                 <h1>Awa</h1>
                 <SvgAwa
@@ -208,7 +198,7 @@
                 class="flex w-4/5 my-14"
             >
                 <div class="flex-1 border-currentColor/70 border self-center" />
-                <div class="text-primary/80 text-2xl font-bold mx-4 p-2 whitespace-nowrap">
+                <div class="text-primary-text text-2xl font-bold mx-4 p-2 whitespace-nowrap">
                     Our Impact
                 </div>
                 <div class="flex-1 border-currentColor/70 border self-center" />
@@ -263,7 +253,7 @@
                 class="flex w-4/5 my-14"
             >
                 <div class="flex-1 border-currentColor/70 border self-center" />
-                <div class="text-primary/80 text-2xl font-bold mx-4 p-2 whitespace-nowrap">
+                <div class="text-primary-text text-2xl font-bold mx-4 p-2 whitespace-nowrap">
                     Get Involved
                 </div>
                 <div class="flex-1 border-currentColor/70 border self-center" />
@@ -359,9 +349,22 @@ const { t } = useI18n()
 const showAll = ref(false)
 const contributors = ref<Member[]>(data.members)
 const boardMembers = ref<Member[]>(data.board)
+const tabs = [
+    { key: 'contributors', label: 'Contributors' },
+    { key: 'board', label: 'NPO Board' },
+    { key: 'mascots', label: 'Mascots' }
+]
+const activeTab = ref<string>('contributors')
+
+const selectTab = (tab: typeof activeTab.value) => {
+    activeTab.value = tab
+    if (showAll.value) {
+        toggleShowAll()
+    }
+}
 
 const visibleContributors = computed(() =>
-    showAll.value ? contributors.value : contributors.value.slice(0, 8))
+    showAll.value ? contributors.value : contributors.value.slice(0, 10))
 
 const toggleShowAll = () => {
     showAll.value = !showAll.value
