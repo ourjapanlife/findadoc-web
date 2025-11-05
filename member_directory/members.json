@@ -8,11 +8,11 @@
             "githubUrl": "https://github.com/Ghezz9"
         },
         {
-            "avatarImg": "/avatars/anissa_chadouli.jpg",
-            "name": "Anissa Chadouli",
-            "title": "Developer",
-            "linkedInUrl": "https://www.linkedin.com/in/anissa-chadouli/",
-            "githubUrl": "https://github.com/Anissa3005"
+            "avatarImg": "/avatars/trent_shimamura.jpg",
+            "name": "Trent Shimamura",
+            "title": "Moderation Lead",
+            "linkedInUrl": "https://www.linkedin.com/in/trent-golden-58811b129/",
+            "githubUrl": null
         },
         {
             "avatarImg": "/avatars/lisa_broersen.jpg",
@@ -36,11 +36,11 @@
             "githubUrl": "https://github.com/Tch4lla"
         },
         {
-            "avatarImg": "/avatars/trent_shimamura.jpg",
-            "name": "Trent Shimamura",
-            "title": "Moderation Lead",
-            "linkedInUrl": "https://www.linkedin.com/in/trent-golden-58811b129/",
-            "githubUrl": null
+            "avatarImg": "/avatars/anissa_chadouli.jpg",
+            "name": "Anissa Chadouli",
+            "title": "Developer",
+            "linkedInUrl": "https://www.linkedin.com/in/anissa-chadouli/",
+            "githubUrl": "https://github.com/Anissa3005"
         },
         {
             "avatarImg": "/avatars/aaron_culbert.jpg",
@@ -50,18 +50,18 @@
             "githubUrl": "https://github.com/aaronculbert"
         },
         {
-            "avatarImg": "/avatars/ann_kilzer.jpg",
-            "name": "Ann Kilzer",
-            "title": "Developer",
-            "linkedInUrl": null,
-            "githubUrl": "https://github.com/ann-kilzer"
-        },
-        {
             "avatarImg": "/avatars/bruno_uemura.jpg",
             "name": "Bruno Uemura",
             "title": "Developer",
             "linkedInUrl": "https://www.linkedin.com/in/bruno-nogima-uemura-21124a321/",
             "githubUrl": "https://github.com/bnogimauemura"
+        },
+        {
+            "avatarImg": "/avatars/ann_kilzer.jpg",
+            "name": "Ann Kilzer",
+            "title": "Developer",
+            "linkedInUrl": null,
+            "githubUrl": "https://github.com/ann-kilzer"
         },
         {
             "avatarImg": "/avatars/chris_bowman.jpg",
