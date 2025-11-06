@@ -17,7 +17,7 @@
             @drag="handleMapMovement"
             @zoom_changed="handleZoomChanged"
         >
-        <MarkerCluster
+            <MarkerCluster
                 :options="{
                     renderer: clusterRenderer,
                 }"
@@ -27,17 +27,17 @@
                     :key="index"
                     :options="{
                         position: {
-                            lat: location.facilities[0]?.mapLatitude ?? defaultLocation.lat,
-                            lng: location.facilities[0]?.mapLongitude ?? defaultLocation.lng,
+                            lat: location.mapLatitude ?? defaultLocation.lat,
+                            lng: location.mapLongitude ?? defaultLocation.lng,
                         },
                     }"
-                    @click="handlePinClick(location.professional.id)"
+                    @click="handlePinClick(location.id)"
                 >
                     <div style="text-align: center">
                         <SVGMapPin
                             :class="[
                                 'w-[45px] h-[73px]',
-                                searchResultsStore.activeResult?.professional.id === location.professional.id
+                                searchResultsStore.activeFacility?.id === location.id
                                     ? 'text-secondary fill-secondary'
                                     : 'text-primary fill-primary',
                             ]"
@@ -70,9 +70,8 @@ const bottomSheetStore = useBottomSheetStore()
 const isMapReady = ref(false)
 const { isLandscape } = useScreenOrientation()
 
-// Cluster renderer with teal color theme
 const clusterRenderer = {
-    render: ({ count, position }: { count: number, position: any }) => {
+    render: ({ count, position }: { count: number, position: google.maps.LatLng | google.maps.LatLngLiteral }) => {
         // Use fixed size for all clusters
         const size = 45
 
