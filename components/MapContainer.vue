@@ -17,35 +17,41 @@
             @drag="handleMapMovement"
             @zoom_changed="handleZoomChanged"
         >
-            <CustomMarker
-                v-for="location in searchResultsStore.searchResultsList"
-                :key="location.id"
+        <MarkerCluster
                 :options="{
-                    position: {
-                        lat: location.mapLatitude ?? defaultLocation.lat,
-                        lng: location.mapLongitude ?? defaultLocation.lng,
-                    },
+                    renderer: clusterRenderer,
                 }"
-                @click="handlePinClick(location.id)"
             >
-                <div style="text-align: center">
-                    <SVGMapPin
-                        :class="[
-                            'w-[45px] h-[73px]',
-                            searchResultsStore.activeFacilityId === location.id
-                                ? 'text-secondary fill-secondary'
-                                : 'text-primary fill-primary',
-                        ]"
-                    />
-                </div>
-            </CustomMarker>
+                <CustomMarker
+                    v-for="(location, index) in searchResultsStore.searchResultsList"
+                    :key="index"
+                    :options="{
+                        position: {
+                            lat: location.facilities[0]?.mapLatitude ?? defaultLocation.lat,
+                            lng: location.facilities[0]?.mapLongitude ?? defaultLocation.lng,
+                        },
+                    }"
+                    @click="handlePinClick(location.professional.id)"
+                >
+                    <div style="text-align: center">
+                        <SVGMapPin
+                            :class="[
+                                'w-[45px] h-[73px]',
+                                searchResultsStore.activeResult?.professional.id === location.professional.id
+                                    ? 'text-secondary fill-secondary'
+                                    : 'text-primary fill-primary',
+                            ]"
+                        />
+                    </div>
+                </CustomMarker>
+            </MarkerCluster>
         </GoogleMap>
     </div>
 </template>
 
 <script setup lang="ts">
-import { ref, nextTick, watch, onMounted } from 'vue'
-import { GoogleMap, CustomMarker } from 'vue3-google-map'
+import { ref, watch, nextTick, onMounted } from 'vue'
+import { GoogleMap, CustomMarker, MarkerCluster } from 'vue3-google-map'
 import { useSearchResultsStore } from '../stores/searchResultsStore'
 import { useRuntimeConfig } from '#imports'
 import SVGMapPin from '~/assets/icons/map-pin.svg'
@@ -63,6 +69,38 @@ const bottomSheetStore = useBottomSheetStore()
 
 const isMapReady = ref(false)
 const { isLandscape } = useScreenOrientation()
+
+// Cluster renderer with teal color theme
+const clusterRenderer = {
+    render: ({ count, position }: { count: number, position: any }) => {
+        // Use fixed size for all clusters
+        const size = 45
+
+        return new window.google.maps.Marker({
+            position,
+            icon: {
+                url: createClusterIcon(size),
+                scaledSize: new window.google.maps.Size(size, size),
+                anchor: new window.google.maps.Point(size / 2, size / 2)
+            },
+            label: {
+                text: String(count),
+                color: 'white',
+                fontSize: '12px',
+                fontWeight: 'bold'
+            },
+            zIndex: Number(window.google.maps.Marker.MAX_ZINDEX) + count
+        })
+    }
+}
+
+// Helper function to create teal cluster icons
+const createClusterIcon = (size: number) => {
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${size} ${size}">
+        <circle cx="${size / 2}" cy="${size / 2}" r="${(size / 2) - 2}" fill="#0EB0C0" stroke="white" stroke-width="2"/>
+    </svg>`
+    return `data:image/svg+xml;base64,${window.btoa(svg)}`
+}
 
 // UX hack: When the map is moved from search results, we don't want to minimize the bottom sheet
 // This is because the map movement is triggered by the search results list changing,
