@@ -40,29 +40,30 @@
         >
             <div
                 id="searchResults"
-                class="results-list flex flex-col pb-40 landscape:pb-4"
+                class="results-list flex flex-col pb-40 mb-40 landscape:pb-22 landscape:mb-0"
                 data-testid="search-results-list"
             >
                 <div
-                    v-for="(searchResult, index) in resultsStore.searchResultsList"
-                    :key="index"
+                    v-for="(searchResult, index) in searchResultsStore.searchResultsList"
+                    :key="searchResult.id"
                     class="flex flex-col drop-shadow-md my-4 mx-4 py-1 min-h-36 rounded-md border-t-2
                             border-primary/10 transition-all cursor-pointer"
                     :class="[
-                        resultsStore.activeResult?.professional.id === searchResult.professional.id
+                        searchResultsStore.activeFacilityId === searchResult.id
                             ? 'bg-secondary/10 hover:bg-secondary/30 border-2 border-secondary/10'
                             : 'bg-primary-bg hover:bg-primary-hover/50',
                     ]"
-                    @click="resultClicked(searchResult.professional.id, getLocalizedName(searchResult.professional.names))"
+                    @click="resultClicked(searchResult.id, searchResult.healthcareProfessionals[0].id,
+                                          getLocalizedName(searchResult.healthcareProfessionals[0]?.names))"
                 >
                     <SearchResultsListItem
-                        :name="getLocalizedName(searchResult.professional.names)"
-                        :degrees="searchResult.professional.degrees"
+                        :name="getLocalizedName(searchResult.healthcareProfessionals[0]?.names)"
+                        :degrees="searchResult.healthcareProfessionals[0]?.degrees"
                         :facility-name="localeStore.activeLocale.code == Locale.JaJp
-                            ? searchResult.facilities[0]?.nameJa
-                            : searchResult.facilities[0]?.nameEn"
-                        :specialties="searchResult.professional.specialties"
-                        :spoken-languages="searchResult.professional.spokenLanguages"
+                            ? searchResult.nameJa
+                            : searchResult.nameEn"
+                        :specialties="searchResult.healthcareProfessionals[0]?.specialties"
+                        :spoken-languages="searchResult.healthcareProfessionals[0]?.spokenLanguages"
                         :data-testid="`search-result-list-item-${index}`"
                     />
                 </div>
@@ -84,12 +85,12 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useSearchResultsStore } from '../stores/searchResultsStore'
 import { useLocaleStore } from '../stores/localeStore'
 import { useLoadingStore } from '../stores/loadingStore'
-import { useBottomSheetStore } from '../stores/bottomSheetStore'
-import { Locale } from '~/typedefs/gqlTypes.js'
+import { useBottomSheetStore, BottomSheetType } from '../stores/bottomSheetStore'
+import { Locale, type LocalizedName } from '~/typedefs/gqlTypes.js'
 import SVGLoadingIcon from '~/assets/icons/loading.svg'
 import SVGNoSearchResults from '~/assets/icons/no-search-results-graphic.svg'
 import { useScreenOrientation } from '~/composables/useScreenOrientation'
@@ -97,37 +98,40 @@ import { useUmami } from '~/composables/useUmamiTracking'
 
 const { t } = useI18n()
 
-const resultsStore = useSearchResultsStore()
+const searchResultsStore = useSearchResultsStore()
 const localeStore = useLocaleStore()
 const loadingStore = useLoadingStore()
 const bottomSheetStore = useBottomSheetStore()
 const { isPortrait } = useScreenOrientation()
 const { track } = useUmami()
 
-const hasResults = computed(() => resultsStore.searchResultsList.length > 0)
+const hasResults = computed(() => searchResultsStore.searchResultsList.length > 0)
 const resultsContainerRef = ref<HTMLElement | null>(null)
 
 // Emit events
 const emit = defineEmits(['scrolled'])
 
 onMounted(() => {
-    resultsStore.search()
+    searchResultsStore.search()
 })
 
 function handleScroll() {
     emit('scrolled')
 }
 
-function resultClicked(resultId: string, hp: string) {
-    resultsStore.setActiveSearchResult(resultId)
+function resultClicked(facilityId: string, professionalId: string, hp: string) {
+    searchResultsStore.setActiveFacility(facilityId)
+    searchResultsStore.setActiveProfessional(professionalId)
     bottomSheetStore.showBottomSheet(BottomSheetType.SearchResultDetails)
 
     track('Search results list item', { hp })
 }
 
 function getLocalizedName(
-  names: Array<{ locale: string, firstName: string, lastName: string }>
+names: Array<LocalizedName> | undefined
 ) {
+    if (!names || !names.length) return ''
+
     const currentLocale = localeStore.activeLocale.code
     const localePrefix = currentLocale.split('-')[0]
 

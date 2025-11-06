@@ -4,6 +4,7 @@ import { ref } from 'vue'
 import { gqlClient } from '../utils/graphql.js'
 import { useLoadingStore } from './loadingStore.js'
 import type { Facility, FacilitySearchFilters } from '~/typedefs/gqlTypes.js'
+import { useTranslation } from '~/composables/useTranslation.js'
 
 export const useLocationsStore = defineStore('locationsStore', () => {
     const allCitiesEnglishList = ref<string[]>([])
@@ -51,9 +52,9 @@ async function queryFacilities(): Promise<Facility[]> {
 
         return result.data.facilities ?? []
     } catch (error) {
-        console.error(`Error getting facilities for dropdown: ${JSON.stringify(error)}`)
+        console.error(useTranslation('locationErrors.facilitiesDropdown'), ` ${JSON.stringify(error)}`)
         // eslint-disable-next-line no-alert
-        alert('Error getting data! Please contact our support team by clicking the bottom right link on the page!')
+        alert(useTranslation('locationErrors.gettingData'))
         return []
     }
 }

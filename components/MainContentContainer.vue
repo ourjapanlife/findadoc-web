@@ -41,7 +41,7 @@
                     @map-moved="handleMapMoved"
                 />
             </div>
-            <Footer class="z-10 absolute bottom-0 left-0 right-0 mx-2" />
+            <Footer class="z-20 absolute bottom-0 left-0 right-0 mx-2" />
         </div>
     </div>
 </template>

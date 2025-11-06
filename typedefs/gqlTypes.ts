@@ -170,6 +170,7 @@ export type HealthcareProfessionalSearchFilters = {
   acceptedInsurance?: InputMaybe<Array<Insurance>>;
   createdDate?: InputMaybe<Scalars['String']['input']>;
   degrees?: InputMaybe<Array<Degree>>;
+  ids?: InputMaybe<Array<Scalars['ID']['input']>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
   names?: InputMaybe<Array<LocalizedNameInput>>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -548,6 +549,7 @@ export enum Specialty {
   Physiotherapy = 'PHYSIOTHERAPY',
   PlasticSurgery = 'PLASTIC_SURGERY',
   PreventiveMedicine = 'PREVENTIVE_MEDICINE',
+  Proctology = 'PROCTOLOGY',
   Psychiatry = 'PSYCHIATRY',
   RadiationOncology = 'RADIATION_ONCOLOGY',
   SportsMedicine = 'SPORTS_MEDICINE',
