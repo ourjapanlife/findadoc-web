@@ -23,8 +23,8 @@
                 }"
             >
                 <CustomMarker
-                    v-for="(location, index) in searchResultsStore.searchResultsList"
-                    :key="index"
+                    v-for="location in searchResultsStore.searchResultsList"
+                    :key="location.id"
                     :options="{
                         position: {
                             lat: location.mapLatitude ?? defaultLocation.lat,
@@ -50,7 +50,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, nextTick, onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
 import { GoogleMap, CustomMarker, MarkerCluster } from 'vue3-google-map'
 import { useSearchResultsStore } from '../stores/searchResultsStore'
 import { useRuntimeConfig } from '#imports'
