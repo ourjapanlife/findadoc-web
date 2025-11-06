@@ -88,6 +88,7 @@ const handleNavClick = (sectionId: string) => {
 
 onMounted(() => {
     observeFormSections(modLeftNavElementIdArray, isScrolling, activeSection)
+
     window.addEventListener('scroll', onScroll)
 })
 

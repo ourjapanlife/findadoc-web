@@ -48,7 +48,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { onMounted, onUnmounted, ref, computed } from 'vue'
 import Hammer from 'hammerjs'
 import { useBottomSheetStore } from '@/stores/bottomSheetStore'
 
@@ -67,6 +67,8 @@ interface IProps {
     canSwipe?: boolean
     canSwipeClose?: boolean
     zIndex?: number
+    minimizeOnEsc?: boolean
+    peekPosition?: number
 }
 
 /**
@@ -94,13 +96,15 @@ const props = withDefaults(defineProps<IProps>(), {
     overlayClickClose: true,
     canSwipe: true,
     canSwipeClose: true,
-    zIndex: 99999
+    zIndex: 99999,
+    minimizeOnEsc: true,
+    peekPosition: 93
 })
 
 /**
    * Bottom sheet emit interface
    */
-const emit = defineEmits(['opened', 'closed', 'dragging-up', 'dragging-down', 'dragging-content'])
+const emit = defineEmits(['opened', 'closed', 'minimized', 'dragging-up', 'dragging-down', 'dragging-content'])
 
 /**
    * Show or hide sheet
@@ -138,19 +142,46 @@ const bottomSheetMain = ref<HTMLElement | null>(null)
 const bottomSheetDraggableArea = ref<HTMLElement | null>(null)
 
 /**
-   * Close bottom sheet when escape key is pressed
-   * @param element
+   * Helpers for peek/minimize behavior
    */
-const isFocused = (element: HTMLElement) => document.activeElement === element
-window.addEventListener('keyup', (event: KeyboardEvent) => {
-    const isSheetElementFocused
-        = bottomSheet.value && bottomSheet.value.contains(event.target as HTMLElement)
-          && isFocused(event.target as HTMLElement)
+const clamp = (v: number) => Math.max(0, Math.min(100, v))
 
-    if (event.key === 'Escape' && !isSheetElementFocused) {
+const minimize = () => {
+    // ensure sheet is visible but mostly off-screen so a small handle remains
+    showSheet.value = true
+    translateValue.value = clamp(props.peekPosition ?? 93)
+    emit('minimized')
+}
+
+/**
+   * Close bottom sheet when escape key is pressed
+   * (uses document.activeElement rather than event.target for correctness)
+   */
+const onKeyboardEventListener = (event: KeyboardEvent) => {
+    if (event.key !== 'Escape') return
+
+    // use the active element (more reliable than event.target)
+    const active = document.activeElement as HTMLElement | null
+    const isSheetElementFocused
+        = bottomSheet.value && active && bottomSheet.value.contains(active)
+
+    // If focus is inside the sheet, ignore ESC (so form inputs still work)
+    if (isSheetElementFocused) return
+
+    if (!props.minimizeOnEsc) {
+        close()
+        return
+    }
+
+    // If already minimized (near peekPosition), ESC again will close fully
+    const alreadyMinimized = showSheet.value && translateValue.value >= clamp(props.peekPosition ?? 93) - 1
+
+    if (!alreadyMinimized) {
+        minimize()
+    } else {
         close()
     }
-})
+}
 
 // Functions
 
@@ -237,6 +268,8 @@ const open = () => {
     // Do not force to 0, or the sheet will cover the whole screen
     document.documentElement.style.overflowY = 'hidden'
     document.documentElement.style.overscrollBehavior = 'none'
+    // restore to initial position when opening
+    translateValue.value = props.initialPosition ?? 25
     showSheet.value = true
     emit('opened')
 }
@@ -259,7 +292,12 @@ const close = async () => {
    * Click on overlay handler
    */
 const clickOnOverlayHandler = () => {
-    if (props.overlayClickClose) {
+    if (!props.overlayClickClose) return
+
+    // minimize instead of full close
+    if (props.minimizeOnEsc) {
+        minimize()
+    } else {
         close()
     }
 }
@@ -299,6 +337,12 @@ onMounted(() => {
             dragHandler(e, 'dragcontent')
         })
     }
+
+    window.addEventListener('keyup', onKeyboardEventListener)
+})
+
+onUnmounted(() => {
+    window.removeEventListener('keyup', onKeyboardEventListener)
 })
 
 /**
