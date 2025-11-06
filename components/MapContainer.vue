@@ -93,7 +93,6 @@ const clusterRenderer = {
     }
 }
 
-// Helper function to create teal cluster icons
 const createClusterIcon = (size: number) => {
     const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${size} ${size}">
         <circle cx="${size / 2}" cy="${size / 2}" r="${(size / 2) - 2}" fill="#0EB0C0" stroke="white" stroke-width="2"/>
