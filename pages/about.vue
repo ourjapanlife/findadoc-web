@@ -410,7 +410,7 @@
             </div>
         </div>
         <!-- Back to Top Button  -->
-        <!-- <Transition
+        <Transition
             enter-from-class="opacity-0 translate-y-3"
             enter-active-class="transition ease-out duration-300"
             enter-to-class="opacity-100 translate-y-0"
@@ -430,7 +430,7 @@
                     @click="scrollTo('button-section')"
                 />
             </a>
-        </Transition> -->
+        </Transition>
     </div>
 </template>
 
