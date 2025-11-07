@@ -45,8 +45,9 @@ export const useSearchResultsStore = defineStore('searchResultsStore', () => {
         //combine the professionals and facilities into a single search result
         //then filter out any results that don't have any facilities
         const combinedResults = facilitiesSearchResults.flatMap(facilityResult => {
+            //check from the facility perspective as data is populated in a one-way relationship (facility -> professionals)
             const associatedProfessionals = professionalsSearchResults.filter(professionalResult =>
-                professionalResult.facilityIds.includes(facilityResult.id))
+                facilityResult.healthcareProfessionalIds.includes(professionalResult.id))
 
             return associatedProfessionals.length
                 ? [{
