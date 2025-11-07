@@ -1,7 +1,7 @@
 <template>
     <div class="overflow-y-auto w-full bg-primary-bg">
-        <!-- About findadoc section -->
-        <div class="flex flex-col items-center px-10 md:px-32">
+        <!-- Hero Section  -->
+        <div class="flex flex-col items-center p-10">
             <SvgHeartPlus
                 role="img"
                 alt="pink heart with a white plus in the middle to symbolize health"
@@ -12,7 +12,7 @@
                 data-testid="about-heading"
                 class="mb-12 font-bold text-4xl text-primary-text"
             >
-                {{ t("about.heading") }}
+                Find a Doc, Japan
             </h1>
             <p
                 data-testid="about-subheading"
@@ -20,6 +20,51 @@
             >
                 {{ t("about.subheading") }}
             </p>
+            <div class="flex gap-8">
+                <NuxtLink
+                    to="/"
+                    class="outline outline-1 rounded-xl p-4 bg-primary text-primary-text-inverted
+                    text-lg font-bold transition-colors"
+                >Get Started
+                </NuxtLink>
+                <button
+                    class="outline outline-1 outline-primary/70 rounded-xl text-primary
+                    font-bold text-xl p-4 shadow-lg"
+                    @click="scrollTo('about-findadoc-section')"
+                >
+                    Learn More
+                </button>
+            </div>
+            <img
+                src="~/assets/images/find_a_doc_japan_cover.jpg"
+                alt="hero banner"
+                class="m-8 outline outline-1 rounded-xl shadow-xl opacity-80"
+            >
+        </div>
+
+        <!-- Our Story section -->
+        <div
+            id="about-header-container"
+            data-testid="about-header-container"
+            class="flex justify-center items-center my-4"
+        >
+            <div
+                id="about-header"
+                data-testid="about-header"
+                class="flex w-4/5 my-14"
+            >
+                <div class="flex-1 border-currentColor/70 border self-center" />
+                <div class="text-primary-text text-2xl font-bold mx-4 p-2 whitespace-nowrap">
+                    Our Story
+                </div>
+                <div class="flex-1 border-currentColor/70 border self-center" />
+            </div>
+        </div>
+        <div
+            id="about-findadoc-section"
+            ref="aboutSectionRef"
+            class="flex flex-col items-center px-10 md:px-32"
+        >
             <p
                 data-testid="about-paragraph1"
                 class="mb-6 text-md text-primary-text"
@@ -32,91 +77,127 @@
             >
                 {{ t("about.paragraph2") }}
             </p>
+            <!-- Scroll buttons -->
+            <nav
+                id="button-section"
+                class="w-full flex justify-center my-6 p-10"
+            >
+                <div class="md:w-4/5 grid grid-cols-2 gap-4 gap-y-8 md:flex md:justify-around mt-10 mr-8">
+                    <button
+                        class="outline outline-1 outline-primary/70 rounded-xl text-primary hover:text-primary-text-inverted
+                    hover:bg-primary font-bold text-xl p-4 shadow-lg"
+                        @click="scrollTo('contributor-header-container')"
+                    >
+                        Contributors
+                    </button>
+
+                    <button
+                        class="outline outline-1 outline-primary/70 rounded-xl text-primary hover:text-primary-text-inverted
+                    hover:bg-primary font-bold text-xl p-4 shadow-lg"
+                        @click="scrollTo('npo-header-container')"
+                    >
+                        NPO Board
+                    </button>
+
+                    <button
+                        class="outline outline-1 outline-primary/70 rounded-xl text-primary hover:text-primary-text-inverted
+                    hover:bg-primary font-bold text-xl p-4 shadow-lg"
+                        @click="scrollTo('mascot-header-container')"
+                    >
+                        Mascots
+                    </button>
+
+                    <button
+                        class="outline outline-1 outline-primary/70 rounded-xl text-primary hover:text-primary-text-inverted
+                    hover:bg-primary font-bold text-xl p-4 shadow-lg"
+                        @click="scrollTo('impact-header-container')"
+                    >
+                        Impact
+                    </button>
+
+                    <button
+                        class="outline outline-1 outline-primary/70 rounded-xl text-primary hover:text-primary-text-inverted
+                    hover:bg-primary font-bold text-xl p-4 shadow-lg"
+                        @click="scrollTo('involve-header-container')"
+                    >
+                        Get Involved
+                    </button>
+                </div>
+            </nav>
         </div>
-        <!-- Member Section -->
-        <!-- Member Heading -->
+
+        <!-- Contributor Section -->
         <div
-            id="members-header-container"
-            data-testid="members-header-container"
-            class="flex justify-center items-center"
+            id="contributor-header-container"
+            data-testid="contributor-header-container"
+            class="flex justify-center items-center my-4"
         >
             <div
-                id="members-header"
+                id="contributor-header"
                 data-testid="members-header"
                 class="flex w-4/5 my-14"
             >
                 <div class="flex-1 border-currentColor/70 border self-center" />
                 <div class="text-primary-text text-2xl font-bold mx-4 p-2 whitespace-nowrap">
-                    Our Team
+                    Contributors
                 </div>
                 <div class="flex-1 border-currentColor/70 border self-center" />
             </div>
         </div>
-        <!-- Member Tabs -->
-        <div class="w-full flex justify-center mb-10">
-            <div class="inline-flex gap-4 border-b mr-8">
-                <button
-                    v-for="tab in tabs"
-                    :key="tab.key"
-                    class="pb-2 px-1 text-md font-medium transition"
-                    :class="activeTab === tab.key
-                        ? 'text-primary-text underline'
-                        : 'text-primary-text-muted hover:text-primary-hover'"
-                    @click="selectTab(tab.key)"
-                >
-                    {{ tab.label }}
-                </button>
-            </div>
-        </div>
-        <!-- Member Contributor Content -->
-        <div v-show="activeTab === 'contributors'">
-            <div
-                id="members-container"
-                data-testid="members-container"
-                class="flex justify-center items-center"
-            >
-                <div
-                    id="members"
-                    data-testid="members"
-                    class="grid grid-cols-2 md:grid-cols-5 mx-4 gap-16 pb-10 md:pb-12"
-                >
-                    <div
-                        v-for="(member, index) in visibleContributors"
-                        :key="member.avatarImg"
-                        data-testid="member"
-                        class="members-list grid"
-                    >
-                        <MemberComponent
-                            :avatar-img="member.avatarImg"
-                            :github-url="member.githubUrl"
-                            :linked-in-url="member.linkedInUrl"
-                            :name="member.name"
-                            :data-test-id="index"
-                            :title="member.title"
-                        />
-                    </div>
-                </div>
-            </div>
-            <div class="flex flex-col items-center">
-                <button
-                    class="outline rounded-xl bg-primary text-primary-text hover:bg-primary-hover font-bold p-4 mb-5"
-                    @click="toggleShowAll"
-                >
-                    {{ showAll ? 'Show Less' : 'Show All' }}
-                </button>
-            </div>
-        </div>
-        <!-- Member NPO Board Content  -->
         <div
-            v-show="activeTab === 'board'"
-            id="members-container"
-            data-testid="members-container"
+            id="contributor-container"
+            data-testid="contributor-container"
             class="flex justify-center items-center"
         >
             <div
-                id="members"
-                data-testid="members"
-                class="grid grid-cols-2 md:grid-cols-4 mx-4 gap-8 pb-10 md:pb-12"
+                id="contributors"
+                data-testid="contributors"
+                class="grid grid-cols-2 md:grid-cols-5 mx-4 gap-16 pb-10 md:pb-12"
+            >
+                <div
+                    v-for="(member, index) in contributors"
+                    :key="member.avatarImg"
+                    data-testid="member"
+                    class="members-list grid"
+                >
+                    <MemberComponent
+                        :avatar-img="member.avatarImg"
+                        :github-url="member.githubUrl"
+                        :linked-in-url="member.linkedInUrl"
+                        :name="member.name"
+                        :data-test-id="index"
+                        :title="member.title"
+                    />
+                </div>
+            </div>
+        </div>
+        <!-- NPO Board Section  -->
+        <div
+            id="npo-header-container"
+            data-testid="npo-header-container"
+            class="flex justify-center items-center"
+        >
+            <div
+                id="npo-header"
+                data-testid="npo-header"
+                class="flex w-4/5 my-14"
+            >
+                <div class="flex-1 border-currentColor/70 border self-center" />
+                <div class="text-primary-text text-2xl font-bold mx-4 p-2 whitespace-nowrap">
+                    NPO Board
+                </div>
+                <div class="flex-1 border-currentColor/70 border self-center" />
+            </div>
+        </div>
+        <div
+            id="npo-container"
+            data-testid="npo-container"
+            class="flex justify-center items-center"
+        >
+            <div
+                id="npo"
+                data-testid="npo"
+                class="grid grid-cols-2 md:grid-cols-4 mx-4 gap-16 pb-10 md:pb-12"
             >
                 <div
                     v-for="(member, index) in boardMembers"
@@ -137,9 +218,23 @@
         </div>
         <!-- Mascot Section  -->
         <div
-            v-show="activeTab === 'mascots'"
-            class="grid grid-cols-1 md:grid-cols-5"
+            id="mascot-header-container"
+            data-testid="mascot-header-container"
+            class="flex justify-center items-center"
         >
+            <div
+                id="mascot-header"
+                data-testid="mascot-header"
+                class="flex w-4/5 my-14"
+            >
+                <div class="flex-1 border-currentColor/70 border self-center" />
+                <div class="text-primary-text text-2xl font-bold mx-4 p-2 whitespace-nowrap">
+                    Mascots
+                </div>
+                <div class="flex-1 border-currentColor/70 border self-center" />
+            </div>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-5 my-0 md:my-12">
             <div class="flex flex-col items-center my-8 md:my-0">
                 <h1>Awa</h1>
                 <SvgAwa
@@ -188,13 +283,13 @@
         </div>
         <!-- Impact Section  -->
         <div
-            id="members-header-container"
-            data-testid="members-header-container"
+            id="impact-header-container"
+            data-testid="impact-header-container"
             class="flex justify-center items-center"
         >
             <div
-                id="members-header"
-                data-testid="members-header"
+                id="impact-header"
+                data-testid="impact-header"
                 class="flex w-4/5 my-14"
             >
                 <div class="flex-1 border-currentColor/70 border self-center" />
@@ -241,15 +336,15 @@
                 </p>
             </div>
         </div>
-        <!-- Join us section  -->
+        <!-- Get Involved section  -->
         <div
-            id="members-header-container"
-            data-testid="members-header-container"
+            id="involve-header-container"
+            data-testid="involve-header-container"
             class="flex justify-center items-center"
         >
             <div
-                id="members-header"
-                data-testid="members-header"
+                id="involve-header"
+                data-testid="involve-header"
                 class="flex w-4/5 my-14"
             >
                 <div class="flex-1 border-currentColor/70 border self-center" />
@@ -259,18 +354,18 @@
                 <div class="flex-1 border-currentColor/70 border self-center" />
             </div>
         </div>
-        <div class="mb-12 grid grid-cols-1 md:grid-cols-4">
+        <div class="mb-14 grid grid-cols-2 pb-32 md:grid-cols-4 md:gap-0 md:pb-16">
             <div class="flex flex-col items-center my-6 md:my-0">
                 <SvgAdd
                     role="img"
                     alt="Add Doctor SVG Icon"
                     title="Add Doctor Icon"
-                    class="my-4 h-32"
+                    class="my-4 w-20"
                 />
                 <!-- Submit a new Doctor Link -->
                 <NuxtLink
                     to="/submit"
-                    class="hover:text-primary-hover text-xl font-bold underline transition-colors"
+                    class="hover:text-primary-hover text-lg font-bold underline transition-colors"
                 >Add a Doctor
                 </NuxtLink>
             </div>
@@ -279,46 +374,68 @@
                     role="img"
                     alt="GitHub SVG Icon"
                     title="Github Icon"
-                    class="my-4 h-32"
+                    class="my-4 w-20"
                 />
                 <a
                     href="https://github.com/ourjapanlife"
-                    class="underline font-bold hover:text-primary-hover text-xl transition-colors"
+                    class="underline font-bold hover:text-primary-hover text-lg transition-colors"
                     target="_blank"
-                >Contribute on Github</a>
+                >Contribute</a>
             </div>
             <div class="flex flex-col items-center my-6 md:my-0">
                 <SvgLinkedin
                     role="img"
                     alt="LinkedIn SVG Icon"
                     title="LinkedIn Icon"
-                    class="my-4 h-32"
+                    class="my-4 w-20"
                 />
                 <a
                     href="https://www.linkedin.com/company/find-a-doc-japan/"
-                    class="underline font-bold hover:text-primary-hover text-xl transition-colors"
+                    class="underline font-bold hover:text-primary-hover text-lg transition-colors"
                     target="_blank"
-                >Follow us on LinkedIn</a>
+                >Follow us</a>
             </div>
             <div class="flex flex-col items-center my-6 md:my-0">
                 <SvgFeedback
                     role="img"
                     alt="LinkedIn SVG Icon"
                     title="LinkedIn Icon"
-                    class="ml-4 my-4 h-32"
+                    class="ml-4 my-4 w-20"
                 />
                 <a
                     href="https://docs.google.com/forms/d/e/1FAIpQLScx9cXurA6BhbBPUFH2nFAVWPP6Pm3yqXQj-NvJiaI2CUhh0Q/viewform"
-                    class="underline font-bold hover:text-primary-hover text-xl transition-colors"
+                    class="underline font-bold hover:text-primary-hover text-lg transition-colors"
                     target="_blank"
-                >Give us feedback</a>
+                >Give feedback</a>
             </div>
         </div>
+        <!-- Back to Top Button  -->
+        <!-- <Transition
+            enter-from-class="opacity-0 translate-y-3"
+            enter-active-class="transition ease-out duration-300"
+            enter-to-class="opacity-100 translate-y-0"
+            leave-from-class="opacity-100 translate-y-0"
+            leave-active-class="transition ease-in duration-200"
+            leave-to-class="opacity-0 translate-y-3"
+        >
+            <a
+                v-show="showArrow"
+                class="fixed bottom-0 left-1/2 -translate-x-1/2 z-50 md:bottom-2"
+            >
+                <SvgArrow
+                    role="img"
+                    alt="Arrow SVG Icon"
+                    title="Arrow Icon"
+                    class="my-8 h-24 fill-primary cursor-pointer"
+                    @click="scrollTo('button-section')"
+                />
+            </a>
+        </Transition> -->
     </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import data from '../member_directory/members.json'
 import MemberComponent from '~/components/MemberComponent.vue'
@@ -335,6 +452,7 @@ import SvgAwa from '~/assets/icons/characters-awa.svg'
 import SvgMichael from '~/assets/icons/characters-michael.svg'
 import SvgSachi from '~/assets/icons/characters-sachi.svg'
 import SvgTamika from '~/assets/icons/characters-tamika.svg'
+import SvgArrow from '~/assets/icons/arrow-icon.svg'
 
 interface Member {
     avatarImg: string
@@ -346,27 +464,51 @@ interface Member {
 }
 
 const { t } = useI18n()
-const showAll = ref(false)
 const contributors = ref<Member[]>(data.members)
 const boardMembers = ref<Member[]>(data.board)
-const tabs = [
-    { key: 'contributors', label: 'Contributors' },
-    { key: 'board', label: 'NPO Board' },
-    { key: 'mascots', label: 'Mascots' }
-]
-const activeTab = ref<string>('contributors')
+const showArrow = ref(false)
+const aboutSectionRef = ref<HTMLElement | null>(null)
+let observer: IntersectionObserver
 
-const selectTab = (tab: typeof activeTab.value) => {
-    activeTab.value = tab
-    if (showAll.value) {
-        toggleShowAll()
+function scrollTo(id: string) {
+    const target = document.getElementById(id)
+    if (!target) return
+
+    const start = window.scrollY
+    const end = target.getBoundingClientRect().top + window.scrollY
+    const duration = 1000 // ms
+    const startTime = performance.now()
+
+    function animateScroll(currentTime: number) {
+        const elapsed = currentTime - startTime
+        const progress = Math.min(elapsed / duration, 1)
+
+        const ease = 0.5 * (1 - Math.cos(Math.PI * progress))
+
+        window.scrollTo(0, start + (end - start) * ease)
+
+        if (progress < 1) requestAnimationFrame(animateScroll)
     }
+
+    requestAnimationFrame(animateScroll)
 }
 
-const visibleContributors = computed(() =>
-    showAll.value ? contributors.value : contributors.value.slice(0, 10))
+onMounted(() => {
+    observer = new IntersectionObserver(
+        entries => {
+            const entry = entries[0]
+            // Show button if hero is NOT visible
+            showArrow.value = !entry.isIntersecting
+        },
+        { threshold: 0 } // triggers as soon as it leaves
+    )
 
-const toggleShowAll = () => {
-    showAll.value = !showAll.value
-}
+    if (aboutSectionRef.value) {
+        observer.observe(aboutSectionRef.value)
+    }
+})
+
+onUnmounted(() => {
+    if (aboutSectionRef.value) observer.unobserve(aboutSectionRef.value)
+})
 </script>
