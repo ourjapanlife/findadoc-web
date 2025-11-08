@@ -419,6 +419,7 @@
     "save": "Save Changes",
     "updatedSuccessfully": "Profile updated successfully",
     "updateFailed": "Profile update failed"
+  },
   "authErrors": {
     "loggingIn": "Error logging in:",
     "authBearerToken": "Error getting auth bearer token:",
