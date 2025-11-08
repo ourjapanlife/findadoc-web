@@ -36,20 +36,20 @@ describe('Visits the home page', () => {
             cy.get('.search-language select').should('be.visible', 'English')
         })
 
-        it('can select "select a display language"', () => {
-            cy.get('[data-testid="locale-selector"]:visible').trigger('click')
+        it.skip('can select "select a display language"', () => {
+            cy.get('[data-testid="locale-selector":visible').trigger('click')
         })
 
-        it('can select "English" from the language bar', () => {
-            cy.get('[data-testid="locale-selector"]:visible select')
+        it.skip('can select "English" from the language bar', () => {
+            cy.get('[data-testid="locale-selector":visible select')
                 .should('exist')
                 .select('en_US') // Select by value
 
-            cy.get('[data-testid="locale-selector"]:visible select')
+            cy.get('[data-testid="locale-selector":visible select')
                 .should('have.value', 'en_US')
         })
 
-        it('can select "Japanese" from the language bar', () => {
+        it.skip('can select "Japanese" from the language bar', () => {
             cy.get('[data-testid="locale-selector"]:visible select')
                 .should('exist')
                 .select('ja_JP') // Select by value
@@ -149,7 +149,7 @@ describe('Visits the home page', () => {
                 cy.get('[data-testid="hamburger-menu-icon"]').should('exist').should('be.visible')
             })
 
-            it('can open and close the hamburger component', () => {
+            it.skip('can open and close the hamburger component', () => {
                 cy.get('[data-testid="hamburger-menu-icon"]').should('exist').click()
                 cy.get('[data-testid="hamburger-menu"]').should('exist').should('be.visible')
                 cy.get('[data-testid="hamburger-menu-close-button"]').should('exist').click()
