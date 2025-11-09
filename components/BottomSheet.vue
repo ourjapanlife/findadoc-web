@@ -98,7 +98,7 @@ const props = withDefaults(defineProps<IProps>(), {
     canSwipeClose: true,
     zIndex: 99999,
     minimizeOnEsc: true,
-    peekPosition: 93
+    peekPosition: 90
 })
 
 /**
@@ -149,7 +149,7 @@ const clamp = (v: number) => Math.max(0, Math.min(100, v))
 const minimize = () => {
     // ensure sheet is visible but mostly off-screen so a small handle remains
     showSheet.value = true
-    translateValue.value = clamp(props.peekPosition ?? 93)
+    translateValue.value = clamp(props.peekPosition ?? 90)
     emit('minimized')
 }
 
@@ -174,7 +174,7 @@ const onKeyboardEventListener = (event: KeyboardEvent) => {
     }
 
     // If already minimized (near peekPosition), ESC again will close fully
-    const alreadyMinimized = showSheet.value && translateValue.value >= clamp(props.peekPosition ?? 93) - 1
+    const alreadyMinimized = showSheet.value && translateValue.value >= clamp(props.peekPosition ?? 90) - 1
 
     if (!alreadyMinimized) {
         minimize()
