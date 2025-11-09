@@ -40,11 +40,11 @@
                 </button>
             </div>
             <SvgCharactersTogether
-                    role="img"
-                    alt="Characters Together SVG Icon"
-                    title="Characters Together"
-                    class="md:w-1/3 md:mr-4"
-                />
+                role="img"
+                alt="Characters Together SVG Icon"
+                title="Characters Together"
+                class="md:w-1/3 md:mr-4"
+            />
         </div>
         <!-- Our Story section -->
         <div
@@ -87,7 +87,6 @@
                 class="w-full flex justify-center my-6 md:p-10"
             >
                 <div class="grid grid-cols-1 gap-4 gap-y-8 mt-10 md:grid-cols-5 md:mr-8 md:w-4/5 md:flex md:justify-around">
-
                     <button
                         class="outline outline-1 outline-primary/70 rounded-xl text-primary hover:text-primary-text-inverted
                     hover:bg-primary font-bold text-xl p-4 shadow-lg text-center"
@@ -481,21 +480,21 @@ const heroVisible = ref(true)
 let scrollUpButtonObserver: IntersectionObserver
 
 onMounted(() => {
-  scrollUpButtonObserver = new IntersectionObserver((entries) => {
-    for (const entry of entries) {
-      if (entry.target === aboutSectionRef.value) {
-        aboutVisible.value = entry.isIntersecting
-      }
-      if (entry.target === heroSectionRef.value) {
-        heroVisible.value = entry.isIntersecting
-      }
-    }
+    scrollUpButtonObserver = new IntersectionObserver(entries => {
+        for (const entry of entries) {
+            if (entry.target === aboutSectionRef.value) {
+                aboutVisible.value = entry.isIntersecting
+            }
+            if (entry.target === heroSectionRef.value) {
+                heroVisible.value = entry.isIntersecting
+            }
+        }
 
-    showScrollUpButton.value = !aboutVisible.value && !heroVisible.value
-  })
+        showScrollUpButton.value = !aboutVisible.value && !heroVisible.value
+    })
 
-  if (aboutSectionRef.value) scrollUpButtonObserver.observe(aboutSectionRef.value)
-  if (heroSectionRef.value) scrollUpButtonObserver.observe(heroSectionRef.value)
+    if (aboutSectionRef.value) scrollUpButtonObserver.observe(aboutSectionRef.value)
+    if (heroSectionRef.value) scrollUpButtonObserver.observe(heroSectionRef.value)
 })
 
 onUnmounted(() => {
