@@ -29,6 +29,19 @@ export function arraysAreEqual<T>(array1: T[],
     return true
 }
 
+// this function takes an array and returns a copied array with the elements in a random order
+export function shuffleArray<T>(inputArray: T[]): T[] {
+    // make copied array to avoid altering original array
+    const copiedArray = [...inputArray]
+
+    // Fisher-Yates shuffle algorithm
+    for (let i = copiedArray.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copiedArray[i], copiedArray[j]] = [copiedArray[j], copiedArray[i]];
+    }
+    return copiedArray;
+}
+
 //This function helps sort elements in an array
 function compareElements<T>(ele1: T, ele2: T): number {
     const ele1Str = canonicalize(ele1)

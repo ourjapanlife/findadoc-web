@@ -1,57 +1,61 @@
 <template>
     <div class="overflow-y-auto w-full bg-primary-bg">
         <!-- Hero Section  -->
-        <div class="flex flex-col items-center p-10">
+        <div
+            ref="heroSectionRef"
+            class="relative flex flex-col items-center p-10 md:p-14"
+        >
+            <!-- <div class="absolute inset-0 bg-black/30"></div> -->
             <SvgHeartPlus
                 role="img"
                 alt="pink heart with a white plus in the middle to symbolize health"
                 title="heart icon"
-                class="my-4 h-32"
+                class="my-4 h-32 z-10"
             />
             <h1
                 data-testid="about-heading"
-                class="mb-12 font-bold text-4xl text-primary-text"
+                class="mb-12 font-bold text-4xl text-primary-text text-center z-10"
             >
                 Find a Doc, Japan
             </h1>
             <p
                 data-testid="about-subheading"
-                class="mb-12 text-2xl text-primary-text"
+                class="mb-12 text-2xl text-primary-text text-center z-10"
             >
                 {{ t("about.subheading") }}
             </p>
-            <div class="flex gap-8">
+            <div class="flex gap-8 mb-4 z-10">
                 <NuxtLink
                     to="/"
                     class="outline outline-1 rounded-xl p-4 bg-primary text-primary-text-inverted
-                    text-lg font-bold transition-colors"
+                    text-lg font-bold transition-colors text-center"
                 >Get Started
                 </NuxtLink>
                 <button
                     class="outline outline-1 outline-primary/70 rounded-xl text-primary
-                    font-bold text-xl p-4 shadow-lg"
-                    @click="scrollTo('about-findadoc-section')"
+                    font-bold text-xl p-4 shadow-lg text-center"
+                    @click="scrollTo('about-header-container')"
                 >
                     Learn More
                 </button>
             </div>
-            <img
-                src="~/assets/images/find_a_doc_japan_cover.jpg"
-                alt="hero banner"
-                class="m-8 outline outline-1 rounded-xl shadow-xl opacity-80"
-            >
+            <SvgCharactersTogether
+                    role="img"
+                    alt="Characters Together SVG Icon"
+                    title="Characters Together"
+                    class="md:w-1/3 md:mr-4"
+                />
         </div>
-
         <!-- Our Story section -->
         <div
             id="about-header-container"
             data-testid="about-header-container"
-            class="flex justify-center items-center my-4"
+            class="flex justify-center items-center"
         >
             <div
                 id="about-header"
                 data-testid="about-header"
-                class="flex w-4/5 my-14"
+                class="flex w-4/5 my-12"
             >
                 <div class="flex-1 border-currentColor/70 border self-center" />
                 <div class="text-primary-text text-2xl font-bold mx-4 p-2 whitespace-nowrap">
@@ -67,22 +71,31 @@
         >
             <p
                 data-testid="about-paragraph1"
-                class="mb-6 text-md text-primary-text"
+                class="mb-6 text-md text-primary-text text-center"
             >
                 {{ t("about.paragraph1") }}
             </p>
             <p
                 data-testid="about-paragraph2"
-                class="text-md text-primary-text"
+                class="text-md text-primary-text text-center"
             >
                 {{ t("about.paragraph2") }}
             </p>
             <!-- Scroll buttons -->
             <nav
                 id="button-section"
-                class="w-full flex justify-center my-6 p-10"
+                class="w-full flex justify-center my-6 md:p-10"
             >
-                <div class="md:w-4/5 grid grid-cols-2 gap-4 gap-y-8 md:flex md:justify-around mt-10 mr-8">
+                <div class="grid grid-cols-1 gap-4 gap-y-8 mt-10 md:grid-cols-5 md:mr-8 md:w-4/5 md:flex md:justify-around">
+
+                    <button
+                        class="outline outline-1 outline-primary/70 rounded-xl text-primary hover:text-primary-text-inverted
+                    hover:bg-primary font-bold text-xl p-4 shadow-lg text-center"
+                        @click="scrollTo('impact-header-container')"
+                    >
+                        Our Impact So Far
+                    </button>
+
                     <button
                         class="outline outline-1 outline-primary/70 rounded-xl text-primary hover:text-primary-text-inverted
                     hover:bg-primary font-bold text-xl p-4 shadow-lg"
@@ -110,20 +123,67 @@
                     <button
                         class="outline outline-1 outline-primary/70 rounded-xl text-primary hover:text-primary-text-inverted
                     hover:bg-primary font-bold text-xl p-4 shadow-lg"
-                        @click="scrollTo('impact-header-container')"
-                    >
-                        Impact
-                    </button>
-
-                    <button
-                        class="outline outline-1 outline-primary/70 rounded-xl text-primary hover:text-primary-text-inverted
-                    hover:bg-primary font-bold text-xl p-4 shadow-lg"
                         @click="scrollTo('involve-header-container')"
                     >
                         Get Involved
                     </button>
                 </div>
             </nav>
+        </div>
+        <!-- Impact Section  -->
+        <div
+            id="impact-header-container"
+            data-testid="impact-header-container"
+            class="flex justify-center items-center"
+        >
+            <div
+                id="impact-header"
+                data-testid="impact-header"
+                class="flex w-4/5 my-14"
+            >
+                <div class="flex-1 border-currentColor/70 border self-center" />
+                <div class="text-primary-text text-2xl font-bold mx-4 p-2 whitespace-nowrap">
+                    Our Impact So Far
+                </div>
+                <div class="flex-1 border-currentColor/70 border self-center" />
+            </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 my-0 md:my-12">
+            <div class="flex flex-col items-center my-6 md:my-0">
+                <SvgDoctor
+                    role="img"
+                    alt="Doctor SVG Icon"
+                    title="Doctor Icon"
+                    class="my-4 h-32 fill-primary"
+                />
+                <p class="font-semibold text-xl text-primary-text">
+                    300+ Doctors Registered
+                </p>
+            </div>
+
+            <div class="flex flex-col items-center my-6 md:my-0">
+                <SvgUser
+                    role="img"
+                    alt="User SVG Icon"
+                    title="User Icon"
+                    class="my-4 h-32 fill-primary"
+                />
+                <p class="font-semibold text-xl text-primary-text">
+                    100+ Monthly Users
+                </p>
+            </div>
+
+            <div class="flex flex-col items-center my-6 md:my-0">
+                <SvgVolunteer
+                    role="img"
+                    alt="Volunteer SVG Icon"
+                    title="Volunteer Icon"
+                    class="my-4 h-32 fill-primary"
+                />
+                <p class="font-semibold text-xl text-primary-text">
+                    Volunteer and Community Driven
+                </p>
+            </div>
         </div>
 
         <!-- Contributor Section -->
@@ -281,61 +341,6 @@
                 />
             </div>
         </div>
-        <!-- Impact Section  -->
-        <div
-            id="impact-header-container"
-            data-testid="impact-header-container"
-            class="flex justify-center items-center"
-        >
-            <div
-                id="impact-header"
-                data-testid="impact-header"
-                class="flex w-4/5 my-14"
-            >
-                <div class="flex-1 border-currentColor/70 border self-center" />
-                <div class="text-primary-text text-2xl font-bold mx-4 p-2 whitespace-nowrap">
-                    Our Impact
-                </div>
-                <div class="flex-1 border-currentColor/70 border self-center" />
-            </div>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 my-0 md:my-12">
-            <div class="flex flex-col items-center my-6 md:my-0">
-                <SvgDoctor
-                    role="img"
-                    alt="Doctor SVG Icon"
-                    title="Doctor Icon"
-                    class="my-4 h-32 fill-primary"
-                />
-                <p class="font-semibold text-xl text-primary-text">
-                    300+ Doctors Registered
-                </p>
-            </div>
-
-            <div class="flex flex-col items-center my-6 md:my-0">
-                <SvgUser
-                    role="img"
-                    alt="User SVG Icon"
-                    title="User Icon"
-                    class="my-4 h-32 fill-primary"
-                />
-                <p class="font-semibold text-xl text-primary-text">
-                    100+ Monthly Users
-                </p>
-            </div>
-
-            <div class="flex flex-col items-center my-6 md:my-0">
-                <SvgVolunteer
-                    role="img"
-                    alt="Volunteer SVG Icon"
-                    title="Volunteer Icon"
-                    class="my-4 h-32 fill-primary"
-                />
-                <p class="font-semibold text-xl text-primary-text">
-                    Volunteer and Community Driven
-                </p>
-            </div>
-        </div>
         <!-- Get Involved section  -->
         <div
             id="involve-header-container"
@@ -419,7 +424,7 @@
             leave-to-class="opacity-0 translate-y-3"
         >
             <a
-                v-show="showArrow"
+                v-show="showScrollUpButton"
                 class="fixed bottom-0 left-1/2 -translate-x-1/2 z-50 md:bottom-2"
             >
                 <SvgArrow
@@ -427,7 +432,7 @@
                     alt="Arrow SVG Icon"
                     title="Arrow Icon"
                     class="my-8 h-24 fill-primary cursor-pointer"
-                    @click="scrollTo('button-section')"
+                    @click="scrollTo('about-header-container')"
                 />
             </a>
         </Transition>
@@ -439,6 +444,7 @@ import { ref, onMounted, onUnmounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import data from '../member_directory/members.json'
 import MemberComponent from '~/components/MemberComponent.vue'
+import { useSmoothScroll } from '~/composables/useSmoothScroll'
 import SvgHeartPlus from '~/assets/icons/heart-plus.svg'
 import SvgDoctor from '~/assets/icons/doctor-icon.svg'
 import SvgUser from '~/assets/icons/user-icon.svg'
@@ -452,6 +458,7 @@ import SvgAwa from '~/assets/icons/characters-awa.svg'
 import SvgMichael from '~/assets/icons/characters-michael.svg'
 import SvgSachi from '~/assets/icons/characters-sachi.svg'
 import SvgTamika from '~/assets/icons/characters-tamika.svg'
+import SvgCharactersTogether from '~/assets/icons/characters-together-welcomescreen.svg'
 import SvgArrow from '~/assets/icons/arrow-icon.svg'
 
 interface Member {
@@ -464,51 +471,36 @@ interface Member {
 }
 
 const { t } = useI18n()
-const contributors = ref<Member[]>(data.members)
+const { scrollTo } = useSmoothScroll()
+const contributors = ref<Member[]>(shuffleArray(data.members))
 const boardMembers = ref<Member[]>(data.board)
-const showArrow = ref(false)
+const showScrollUpButton = ref(false)
 const aboutSectionRef = ref<HTMLElement | null>(null)
-let observer: IntersectionObserver
-
-function scrollTo(id: string) {
-    const target = document.getElementById(id)
-    if (!target) return
-
-    const start = window.scrollY
-    const end = target.getBoundingClientRect().top + window.scrollY
-    const duration = 1000 // ms
-    const startTime = performance.now()
-
-    function animateScroll(currentTime: number) {
-        const elapsed = currentTime - startTime
-        const progress = Math.min(elapsed / duration, 1)
-
-        const ease = 0.5 * (1 - Math.cos(Math.PI * progress))
-
-        window.scrollTo(0, start + (end - start) * ease)
-
-        if (progress < 1) requestAnimationFrame(animateScroll)
-    }
-
-    requestAnimationFrame(animateScroll)
-}
+const heroSectionRef = ref<HTMLElement | null>(null)
+const aboutVisible = ref(true)
+const heroVisible = ref(true)
+let scrollUpButtonObserver: IntersectionObserver
 
 onMounted(() => {
-    observer = new IntersectionObserver(
-        entries => {
-            const entry = entries[0]
-            // Show button if hero is NOT visible
-            showArrow.value = !entry.isIntersecting
-        },
-        { threshold: 0 } // triggers as soon as it leaves
-    )
-
-    if (aboutSectionRef.value) {
-        observer.observe(aboutSectionRef.value)
+  scrollUpButtonObserver = new IntersectionObserver((entries) => {
+    for (const entry of entries) {
+      if (entry.target === aboutSectionRef.value) {
+        aboutVisible.value = entry.isIntersecting
+      }
+      if (entry.target === heroSectionRef.value) {
+        heroVisible.value = entry.isIntersecting
+      }
     }
+
+    showScrollUpButton.value = !aboutVisible.value && !heroVisible.value
+  })
+
+  if (aboutSectionRef.value) scrollUpButtonObserver.observe(aboutSectionRef.value)
+  if (heroSectionRef.value) scrollUpButtonObserver.observe(heroSectionRef.value)
 })
 
 onUnmounted(() => {
-    if (aboutSectionRef.value) observer.unobserve(aboutSectionRef.value)
+    if (aboutSectionRef.value) scrollUpButtonObserver.unobserve(aboutSectionRef.value)
+    if (heroSectionRef.value) scrollUpButtonObserver.unobserve(heroSectionRef.value)
 })
 </script>
