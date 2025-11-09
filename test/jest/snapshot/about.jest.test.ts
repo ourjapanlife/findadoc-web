@@ -3,15 +3,18 @@ import { createI18n } from 'vue-i18n'
 import About from '~/pages/about.vue'
 
 beforeAll(() => {
-  global.IntersectionObserver = class {
-    constructor(callback: any, options?: any) {
-      this.callback = callback
-      this.options = options
+    class MockIntersectionObserver {
+        constructor(
+            public callback: IntersectionObserverCallback,
+            public options?: IntersectionObserverInit
+        ) {}
+
+        observe(_target: Element) {}
+        unobserve(_target: Element) {}
+        disconnect() {}
     }
-    observe() {}
-    unobserve() {}
-    disconnect() {}
-  }
+
+    global.IntersectionObserver = MockIntersectionObserver as unknown as typeof IntersectionObserver
 })
 
 const i18n = createI18n({
@@ -27,7 +30,7 @@ describe('about.vue', () => {
                 plugins: [i18n],
                 stubs: {
                     NuxtLink: true, // stub NuxtLink
-                    SvgAwa: true    // stub your custom SVG
+                    SvgAwa: true // stub your custom SVG
                 }
             }
         })

@@ -214,9 +214,113 @@ exports[`about.vue renders correctly 1`] = `
           class="member flex flex-col items-center text-center"
         >
           <fadeintransitionimage
-            alt="Olivier Lechevalier"
+            alt="Natalja Dembek"
             border-radius="rounded-full"
             data-test-id="member-avatar-0"
+            height="h-32"
+            img-src="/avatars/natalja_dembek.jpg"
+            object-styling="object-cover"
+            width="w-32"
+          />
+          <div
+            class="member-name mt-1 text-xl font-bold"
+            data-testid="member-name"
+          >
+            Natalja Dembek
+          </div>
+          <div
+            class="member-title text-md text-primary-text-muted"
+            data-testid="member-title"
+          >
+            UI/UX Designer
+          </div>
+          <div
+            class="member-social flex flex-row mt-2"
+          >
+            <a
+              class="social-link"
+              data-testid="member-linkedin"
+              href="https://www.linkedin.com/in/nataljadembek/"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <!---->
+            </a>
+            <a
+              class="social-link"
+              data-testid="member-github"
+              href="https://github.com/Ntlja"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <!---->
+            </a>
+          </div>
+        </div>
+      </div>
+      <div
+        class="members-list grid"
+        data-testid="member"
+      >
+        <div
+          class="member flex flex-col items-center text-center"
+        >
+          <fadeintransitionimage
+            alt="Shashank Dangi"
+            border-radius="rounded-full"
+            data-test-id="member-avatar-1"
+            height="h-32"
+            img-src="/avatars/shashank_dangi.jpg"
+            object-styling="object-cover"
+            width="w-32"
+          />
+          <div
+            class="member-name mt-1 text-xl font-bold"
+            data-testid="member-name"
+          >
+            Shashank Dangi
+          </div>
+          <div
+            class="member-title text-md text-primary-text-muted"
+            data-testid="member-title"
+          >
+            Developer
+          </div>
+          <div
+            class="member-social flex flex-row mt-2"
+          >
+            <a
+              class="social-link"
+              data-testid="member-linkedin"
+              href="https://www.linkedin.com/in/shashank-dangi/"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <!---->
+            </a>
+            <a
+              class="social-link"
+              data-testid="member-github"
+              href="https://github.com/shashankdangi"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <!---->
+            </a>
+          </div>
+        </div>
+      </div>
+      <div
+        class="members-list grid"
+        data-testid="member"
+      >
+        <div
+          class="member flex flex-col items-center text-center"
+        >
+          <fadeintransitionimage
+            alt="Olivier Lechevalier"
+            border-radius="rounded-full"
+            data-test-id="member-avatar-2"
             height="h-32"
             img-src="/avatars/olivier_lechevalier.jpg"
             object-styling="object-cover"
@@ -266,9 +370,333 @@ exports[`about.vue renders correctly 1`] = `
           class="member flex flex-col items-center text-center"
         >
           <fadeintransitionimage
+            alt="Emanuele Monica"
+            border-radius="rounded-full"
+            data-test-id="member-avatar-3"
+            height="h-32"
+            img-src="/avatars/emanuele_monica.jpg"
+            object-styling="object-cover"
+            width="w-32"
+          />
+          <div
+            class="member-name mt-1 text-xl font-bold"
+            data-testid="member-name"
+          >
+            Emanuele Monica
+          </div>
+          <div
+            class="member-title text-md text-primary-text-muted"
+            data-testid="member-title"
+          >
+            Language Support
+          </div>
+          <div
+            class="member-social flex flex-row mt-2"
+          >
+            <a
+              class="social-link"
+              data-testid="member-linkedin"
+              href="https://www.linkedin.com/in/emanuele-monica-59b93949/"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <!---->
+            </a>
+            <!--v-if-->
+          </div>
+        </div>
+      </div>
+      <div
+        class="members-list grid"
+        data-testid="member"
+      >
+        <div
+          class="member flex flex-col items-center text-center"
+        >
+          <fadeintransitionimage
+            alt="Aaron Culbert"
+            border-radius="rounded-full"
+            data-test-id="member-avatar-4"
+            height="h-32"
+            img-src="/avatars/aaron_culbert.jpg"
+            object-styling="object-cover"
+            width="w-32"
+          />
+          <div
+            class="member-name mt-1 text-xl font-bold"
+            data-testid="member-name"
+          >
+            Aaron Culbert
+          </div>
+          <div
+            class="member-title text-md text-primary-text-muted"
+            data-testid="member-title"
+          >
+            Developer
+          </div>
+          <div
+            class="member-social flex flex-row mt-2"
+          >
+            <a
+              class="social-link"
+              data-testid="member-linkedin"
+              href="https://www.linkedin.com/in/aculbert/"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <!---->
+            </a>
+            <a
+              class="social-link"
+              data-testid="member-github"
+              href="https://github.com/aaronculbert"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <!---->
+            </a>
+          </div>
+        </div>
+      </div>
+      <div
+        class="members-list grid"
+        data-testid="member"
+      >
+        <div
+          class="member flex flex-col items-center text-center"
+        >
+          <fadeintransitionimage
+            alt="Trent Shimamura"
+            border-radius="rounded-full"
+            data-test-id="member-avatar-5"
+            height="h-32"
+            img-src="/avatars/trent_shimamura.jpg"
+            object-styling="object-cover"
+            width="w-32"
+          />
+          <div
+            class="member-name mt-1 text-xl font-bold"
+            data-testid="member-name"
+          >
+            Trent Shimamura
+          </div>
+          <div
+            class="member-title text-md text-primary-text-muted"
+            data-testid="member-title"
+          >
+            Moderation Lead
+          </div>
+          <div
+            class="member-social flex flex-row mt-2"
+          >
+            <a
+              class="social-link"
+              data-testid="member-linkedin"
+              href="https://www.linkedin.com/in/trent-golden-58811b129/"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <!---->
+            </a>
+            <!--v-if-->
+          </div>
+        </div>
+      </div>
+      <div
+        class="members-list grid"
+        data-testid="member"
+      >
+        <div
+          class="member flex flex-col items-center text-center"
+        >
+          <fadeintransitionimage
+            alt="Shingo Toyoda"
+            border-radius="rounded-full"
+            data-test-id="member-avatar-6"
+            height="h-32"
+            img-src="/avatars/shingo_toyoda.jpg"
+            object-styling="object-cover"
+            width="w-32"
+          />
+          <div
+            class="member-name mt-1 text-xl font-bold"
+            data-testid="member-name"
+          >
+            Shingo Toyoda
+          </div>
+          <div
+            class="member-title text-md text-primary-text-muted"
+            data-testid="member-title"
+          >
+            Language Support
+          </div>
+          <div
+            class="member-social flex flex-row mt-2"
+          >
+            <!--v-if-->
+            <!--v-if-->
+          </div>
+        </div>
+      </div>
+      <div
+        class="members-list grid"
+        data-testid="member"
+      >
+        <div
+          class="member flex flex-col items-center text-center"
+        >
+          <fadeintransitionimage
+            alt="Karen Miyazawa"
+            border-radius="rounded-full"
+            data-test-id="member-avatar-7"
+            height="h-32"
+            img-src="/avatars/karen_miyazawa.jpg"
+            object-styling="object-cover"
+            width="w-32"
+          />
+          <div
+            class="member-name mt-1 text-xl font-bold"
+            data-testid="member-name"
+          >
+            Karen Miyazawa
+          </div>
+          <div
+            class="member-title text-md text-primary-text-muted"
+            data-testid="member-title"
+          >
+            Developer
+          </div>
+          <div
+            class="member-social flex flex-row mt-2"
+          >
+            <a
+              class="social-link"
+              data-testid="member-linkedin"
+              href="https://www.linkedin.com/in/ks-miyazawa/"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <!---->
+            </a>
+            <a
+              class="social-link"
+              data-testid="member-github"
+              href="https://github.com/KSmiyazawa"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <!---->
+            </a>
+          </div>
+        </div>
+      </div>
+      <div
+        class="members-list grid"
+        data-testid="member"
+      >
+        <div
+          class="member flex flex-col items-center text-center"
+        >
+          <fadeintransitionimage
+            alt="Matthew Kurtti"
+            border-radius="rounded-full"
+            data-test-id="member-avatar-8"
+            height="h-32"
+            img-src="/avatars/matthew_kurtti.jpg"
+            object-styling="object-cover"
+            width="w-32"
+          />
+          <div
+            class="member-name mt-1 text-xl font-bold"
+            data-testid="member-name"
+          >
+            Matthew Kurtti
+          </div>
+          <div
+            class="member-title text-md text-primary-text-muted"
+            data-testid="member-title"
+          >
+            Developer
+          </div>
+          <div
+            class="member-social flex flex-row mt-2"
+          >
+            <a
+              class="social-link"
+              data-testid="member-linkedin"
+              href="https://www.linkedin.com/in/matthew-kurtti-737ab2123/"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <!---->
+            </a>
+            <a
+              class="social-link"
+              data-testid="member-github"
+              href="https://github.com/matthewkurtti"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <!---->
+            </a>
+          </div>
+        </div>
+      </div>
+      <div
+        class="members-list grid"
+        data-testid="member"
+      >
+        <div
+          class="member flex flex-col items-center text-center"
+        >
+          <fadeintransitionimage
+            alt="Kei Yumino"
+            border-radius="rounded-full"
+            data-test-id="member-avatar-9"
+            height="h-32"
+            img-src="/avatars/kei_yumino.jpg"
+            object-styling="object-cover"
+            width="w-32"
+          />
+          <div
+            class="member-name mt-1 text-xl font-bold"
+            data-testid="member-name"
+          >
+            Kei Yumino
+          </div>
+          <div
+            class="member-title text-md text-primary-text-muted"
+            data-testid="member-title"
+          >
+            Design
+          </div>
+          <div
+            class="member-social flex flex-row mt-2"
+          >
+            <a
+              class="social-link"
+              data-testid="member-linkedin"
+              href="https://www.linkedin.com/in/kei-yumino-86299861/"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <!---->
+            </a>
+            <!--v-if-->
+          </div>
+        </div>
+      </div>
+      <div
+        class="members-list grid"
+        data-testid="member"
+      >
+        <div
+          class="member flex flex-col items-center text-center"
+        >
+          <fadeintransitionimage
             alt="Bruno Uemura"
             border-radius="rounded-full"
-            data-test-id="member-avatar-1"
+            data-test-id="member-avatar-10"
             height="h-32"
             img-src="/avatars/bruno_uemura.jpg"
             object-styling="object-cover"
@@ -320,7 +748,7 @@ exports[`about.vue renders correctly 1`] = `
           <fadeintransitionimage
             alt="Reezan"
             border-radius="rounded-full"
-            data-test-id="member-avatar-2"
+            data-test-id="member-avatar-11"
             height="h-32"
             img-src="/avatars/reezan.jpg"
             object-styling="object-cover"
@@ -362,11 +790,11 @@ exports[`about.vue renders correctly 1`] = `
           class="member flex flex-col items-center text-center"
         >
           <fadeintransitionimage
-            alt="Kei Yumino"
+            alt="Evan Peterson"
             border-radius="rounded-full"
-            data-test-id="member-avatar-3"
+            data-test-id="member-avatar-12"
             height="h-32"
-            img-src="/avatars/kei_yumino.jpg"
+            img-src="/avatars/evan_peterson.jpg"
             object-styling="object-cover"
             width="w-32"
           />
@@ -374,51 +802,7 @@ exports[`about.vue renders correctly 1`] = `
             class="member-name mt-1 text-xl font-bold"
             data-testid="member-name"
           >
-            Kei Yumino
-          </div>
-          <div
-            class="member-title text-md text-primary-text-muted"
-            data-testid="member-title"
-          >
-            Design
-          </div>
-          <div
-            class="member-social flex flex-row mt-2"
-          >
-            <a
-              class="social-link"
-              data-testid="member-linkedin"
-              href="https://www.linkedin.com/in/kei-yumino-86299861/"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              <!---->
-            </a>
-            <!--v-if-->
-          </div>
-        </div>
-      </div>
-      <div
-        class="members-list grid"
-        data-testid="member"
-      >
-        <div
-          class="member flex flex-col items-center text-center"
-        >
-          <fadeintransitionimage
-            alt="Nathaniel Smith"
-            border-radius="rounded-full"
-            data-test-id="member-avatar-4"
-            height="h-32"
-            img-src="/avatars/nathaniel_smith.jpg"
-            object-styling="object-cover"
-            width="w-32"
-          />
-          <div
-            class="member-name mt-1 text-xl font-bold"
-            data-testid="member-name"
-          >
-            Nathaniel Smith
+            Evan Peterson
           </div>
           <div
             class="member-title text-md text-primary-text-muted"
@@ -432,7 +816,7 @@ exports[`about.vue renders correctly 1`] = `
             <a
               class="social-link"
               data-testid="member-linkedin"
-              href="https://www.linkedin.com/in/nathaniel-damien-smith/"
+              href="https://www.linkedin.com/in/evan-peterson-desu/"
               rel="noopener noreferrer"
               target="_blank"
             >
@@ -441,7 +825,7 @@ exports[`about.vue renders correctly 1`] = `
             <a
               class="social-link"
               data-testid="member-github"
-              href="https://github.com/NathanielDSmith"
+              href="https://github.com/evan-desu"
               rel="noopener noreferrer"
               target="_blank"
             >
@@ -458,11 +842,11 @@ exports[`about.vue renders correctly 1`] = `
           class="member flex flex-col items-center text-center"
         >
           <fadeintransitionimage
-            alt="Jason Sagalow"
+            alt="Nasira Nebi"
             border-radius="rounded-full"
-            data-test-id="member-avatar-5"
+            data-test-id="member-avatar-13"
             height="h-32"
-            img-src="/avatars/jason_sagalow.jpg"
+            img-src="/avatars/nasira_nebi.jpg"
             object-styling="object-cover"
             width="w-32"
           />
@@ -470,7 +854,7 @@ exports[`about.vue renders correctly 1`] = `
             class="member-name mt-1 text-xl font-bold"
             data-testid="member-name"
           >
-            Jason Sagalow
+            Nasira Nebi
           </div>
           <div
             class="member-title text-md text-primary-text-muted"
@@ -484,7 +868,7 @@ exports[`about.vue renders correctly 1`] = `
             <a
               class="social-link"
               data-testid="member-linkedin"
-              href="https://www.linkedin.com/in/jason-sagalow-76047614b/"
+              href="https://www.linkedin.com/in/nasira-nebi/"
               rel="noopener noreferrer"
               target="_blank"
             >
@@ -493,103 +877,7 @@ exports[`about.vue renders correctly 1`] = `
             <a
               class="social-link"
               data-testid="member-github"
-              href="https://github.com/ConwayDecker"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              <!---->
-            </a>
-          </div>
-        </div>
-      </div>
-      <div
-        class="members-list grid"
-        data-testid="member"
-      >
-        <div
-          class="member flex flex-col items-center text-center"
-        >
-          <fadeintransitionimage
-            alt="Gustavo Minetoma"
-            border-radius="rounded-full"
-            data-test-id="member-avatar-6"
-            height="h-32"
-            img-src="/avatars/gustavo_minetoma.jpg"
-            object-styling="object-cover"
-            width="w-32"
-          />
-          <div
-            class="member-name mt-1 text-xl font-bold"
-            data-testid="member-name"
-          >
-            Gustavo Minetoma
-          </div>
-          <div
-            class="member-title text-md text-primary-text-muted"
-            data-testid="member-title"
-          >
-            Developer
-          </div>
-          <div
-            class="member-social flex flex-row mt-2"
-          >
-            <a
-              class="social-link"
-              data-testid="member-linkedin"
-              href="https://www.linkedin.com/in/gustavommalves/"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              <!---->
-            </a>
-            <a
-              class="social-link"
-              data-testid="member-github"
-              href="https://github.com/gminetoma"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              <!---->
-            </a>
-          </div>
-        </div>
-      </div>
-      <div
-        class="members-list grid"
-        data-testid="member"
-      >
-        <div
-          class="member flex flex-col items-center text-center"
-        >
-          <fadeintransitionimage
-            alt="Jake Anderson"
-            border-radius="rounded-full"
-            data-test-id="member-avatar-7"
-            height="h-32"
-            img-src="/avatars/jake_anderson.jpg"
-            object-styling="object-cover"
-            width="w-32"
-          />
-          <div
-            class="member-name mt-1 text-xl font-bold"
-            data-testid="member-name"
-          >
-            Jake Anderson
-          </div>
-          <div
-            class="member-title text-md text-primary-text-muted"
-            data-testid="member-title"
-          >
-            Developer
-          </div>
-          <div
-            class="member-social flex flex-row mt-2"
-          >
-            <!--v-if-->
-            <a
-              class="social-link"
-              data-testid="member-github"
-              href="https://github.com/jd-anderson88"
+              href="https://github.com/nasiranebi914"
               rel="noopener noreferrer"
               target="_blank"
             >
@@ -608,7 +896,7 @@ exports[`about.vue renders correctly 1`] = `
           <fadeintransitionimage
             alt="Davide Ghezzo"
             border-radius="rounded-full"
-            data-test-id="member-avatar-8"
+            data-test-id="member-avatar-14"
             height="h-32"
             img-src="/avatars/davide_ghezzo.jpg"
             object-styling="object-cover"
@@ -658,11 +946,11 @@ exports[`about.vue renders correctly 1`] = `
           class="member flex flex-col items-center text-center"
         >
           <fadeintransitionimage
-            alt="Natalja Dembek"
+            alt="Nathaniel Smith"
             border-radius="rounded-full"
-            data-test-id="member-avatar-9"
+            data-test-id="member-avatar-15"
             height="h-32"
-            img-src="/avatars/natalja_dembek.jpg"
+            img-src="/avatars/nathaniel_smith.jpg"
             object-styling="object-cover"
             width="w-32"
           />
@@ -670,59 +958,7 @@ exports[`about.vue renders correctly 1`] = `
             class="member-name mt-1 text-xl font-bold"
             data-testid="member-name"
           >
-            Natalja Dembek
-          </div>
-          <div
-            class="member-title text-md text-primary-text-muted"
-            data-testid="member-title"
-          >
-            UI/UX Designer
-          </div>
-          <div
-            class="member-social flex flex-row mt-2"
-          >
-            <a
-              class="social-link"
-              data-testid="member-linkedin"
-              href="https://www.linkedin.com/in/nataljadembek/"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              <!---->
-            </a>
-            <a
-              class="social-link"
-              data-testid="member-github"
-              href="https://github.com/Ntlja"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              <!---->
-            </a>
-          </div>
-        </div>
-      </div>
-      <div
-        class="members-list grid"
-        data-testid="member"
-      >
-        <div
-          class="member flex flex-col items-center text-center"
-        >
-          <fadeintransitionimage
-            alt="Sulaymane Sillah"
-            border-radius="rounded-full"
-            data-test-id="member-avatar-10"
-            height="h-32"
-            img-src="/avatars/sulaymane_sillah.jpg"
-            object-styling="object-cover"
-            width="w-32"
-          />
-          <div
-            class="member-name mt-1 text-xl font-bold"
-            data-testid="member-name"
-          >
-            Sulaymane Sillah
+            Nathaniel Smith
           </div>
           <div
             class="member-title text-md text-primary-text-muted"
@@ -736,7 +972,7 @@ exports[`about.vue renders correctly 1`] = `
             <a
               class="social-link"
               data-testid="member-linkedin"
-              href="https://www.linkedin.com/in/sulaymanesillah/"
+              href="https://www.linkedin.com/in/nathaniel-damien-smith/"
               rel="noopener noreferrer"
               target="_blank"
             >
@@ -745,59 +981,7 @@ exports[`about.vue renders correctly 1`] = `
             <a
               class="social-link"
               data-testid="member-github"
-              href="https://github.com/Tch4lla"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              <!---->
-            </a>
-          </div>
-        </div>
-      </div>
-      <div
-        class="members-list grid"
-        data-testid="member"
-      >
-        <div
-          class="member flex flex-col items-center text-center"
-        >
-          <fadeintransitionimage
-            alt="Shashank Dangi"
-            border-radius="rounded-full"
-            data-test-id="member-avatar-11"
-            height="h-32"
-            img-src="/avatars/shashank_dangi.jpg"
-            object-styling="object-cover"
-            width="w-32"
-          />
-          <div
-            class="member-name mt-1 text-xl font-bold"
-            data-testid="member-name"
-          >
-            Shashank Dangi
-          </div>
-          <div
-            class="member-title text-md text-primary-text-muted"
-            data-testid="member-title"
-          >
-            Developer
-          </div>
-          <div
-            class="member-social flex flex-row mt-2"
-          >
-            <a
-              class="social-link"
-              data-testid="member-linkedin"
-              href="https://www.linkedin.com/in/shashank-dangi/"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              <!---->
-            </a>
-            <a
-              class="social-link"
-              data-testid="member-github"
-              href="https://github.com/shashankdangi"
+              href="https://github.com/NathanielDSmith"
               rel="noopener noreferrer"
               target="_blank"
             >
@@ -816,7 +1000,7 @@ exports[`about.vue renders correctly 1`] = `
           <fadeintransitionimage
             alt="Eri Yawata"
             border-radius="rounded-full"
-            data-test-id="member-avatar-12"
+            data-test-id="member-avatar-16"
             height="h-32"
             img-src="/avatars/eri_yawata.jpg"
             object-styling="object-cover"
@@ -866,105 +1050,9 @@ exports[`about.vue renders correctly 1`] = `
           class="member flex flex-col items-center text-center"
         >
           <fadeintransitionimage
-            alt="Julian Schoenfeld"
-            border-radius="rounded-full"
-            data-test-id="member-avatar-13"
-            height="h-32"
-            img-src="/avatars/julian_schoenfeld.jpg"
-            object-styling="object-cover"
-            width="w-32"
-          />
-          <div
-            class="member-name mt-1 text-xl font-bold"
-            data-testid="member-name"
-          >
-            Julian Schoenfeld
-          </div>
-          <div
-            class="member-title text-md text-primary-text-muted"
-            data-testid="member-title"
-          >
-            Developer
-          </div>
-          <div
-            class="member-social flex flex-row mt-2"
-          >
-            <!--v-if-->
-            <a
-              class="social-link"
-              data-testid="member-github"
-              href="https://github.com/carved-duck"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              <!---->
-            </a>
-          </div>
-        </div>
-      </div>
-      <div
-        class="members-list grid"
-        data-testid="member"
-      >
-        <div
-          class="member flex flex-col items-center text-center"
-        >
-          <fadeintransitionimage
-            alt="Anissa Chadouli"
-            border-radius="rounded-full"
-            data-test-id="member-avatar-14"
-            height="h-32"
-            img-src="/avatars/anissa_chadouli.jpg"
-            object-styling="object-cover"
-            width="w-32"
-          />
-          <div
-            class="member-name mt-1 text-xl font-bold"
-            data-testid="member-name"
-          >
-            Anissa Chadouli
-          </div>
-          <div
-            class="member-title text-md text-primary-text-muted"
-            data-testid="member-title"
-          >
-            Developer
-          </div>
-          <div
-            class="member-social flex flex-row mt-2"
-          >
-            <a
-              class="social-link"
-              data-testid="member-linkedin"
-              href="https://www.linkedin.com/in/anissa-chadouli/"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              <!---->
-            </a>
-            <a
-              class="social-link"
-              data-testid="member-github"
-              href="https://github.com/Anissa3005"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              <!---->
-            </a>
-          </div>
-        </div>
-      </div>
-      <div
-        class="members-list grid"
-        data-testid="member"
-      >
-        <div
-          class="member flex flex-col items-center text-center"
-        >
-          <fadeintransitionimage
             alt="Derek Cameron"
             border-radius="rounded-full"
-            data-test-id="member-avatar-15"
+            data-test-id="member-avatar-17"
             height="h-32"
             img-src="/avatars/derek_cameron.jpg"
             object-styling="object-cover"
@@ -1016,7 +1104,7 @@ exports[`about.vue renders correctly 1`] = `
           <fadeintransitionimage
             alt="Chris Bowman"
             border-radius="rounded-full"
-            data-test-id="member-avatar-16"
+            data-test-id="member-avatar-18"
             height="h-32"
             img-src="/avatars/chris_bowman.jpg"
             object-styling="object-cover"
@@ -1066,11 +1154,11 @@ exports[`about.vue renders correctly 1`] = `
           class="member flex flex-col items-center text-center"
         >
           <fadeintransitionimage
-            alt="Matthew Kurtti"
+            alt="Jake Anderson"
             border-radius="rounded-full"
-            data-test-id="member-avatar-17"
+            data-test-id="member-avatar-19"
             height="h-32"
-            img-src="/avatars/matthew_kurtti.jpg"
+            img-src="/avatars/jake_anderson.jpg"
             object-styling="object-cover"
             width="w-32"
           />
@@ -1078,7 +1166,7 @@ exports[`about.vue renders correctly 1`] = `
             class="member-name mt-1 text-xl font-bold"
             data-testid="member-name"
           >
-            Matthew Kurtti
+            Jake Anderson
           </div>
           <div
             class="member-title text-md text-primary-text-muted"
@@ -1089,71 +1177,11 @@ exports[`about.vue renders correctly 1`] = `
           <div
             class="member-social flex flex-row mt-2"
           >
-            <a
-              class="social-link"
-              data-testid="member-linkedin"
-              href="https://www.linkedin.com/in/matthew-kurtti-737ab2123/"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              <!---->
-            </a>
+            <!--v-if-->
             <a
               class="social-link"
               data-testid="member-github"
-              href="https://github.com/matthewkurtti"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              <!---->
-            </a>
-          </div>
-        </div>
-      </div>
-      <div
-        class="members-list grid"
-        data-testid="member"
-      >
-        <div
-          class="member flex flex-col items-center text-center"
-        >
-          <fadeintransitionimage
-            alt="Aaron Culbert"
-            border-radius="rounded-full"
-            data-test-id="member-avatar-18"
-            height="h-32"
-            img-src="/avatars/aaron_culbert.jpg"
-            object-styling="object-cover"
-            width="w-32"
-          />
-          <div
-            class="member-name mt-1 text-xl font-bold"
-            data-testid="member-name"
-          >
-            Aaron Culbert
-          </div>
-          <div
-            class="member-title text-md text-primary-text-muted"
-            data-testid="member-title"
-          >
-            Developer
-          </div>
-          <div
-            class="member-social flex flex-row mt-2"
-          >
-            <a
-              class="social-link"
-              data-testid="member-linkedin"
-              href="https://www.linkedin.com/in/aculbert/"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              <!---->
-            </a>
-            <a
-              class="social-link"
-              data-testid="member-github"
-              href="https://github.com/aaronculbert"
+              href="https://github.com/jd-anderson88"
               rel="noopener noreferrer"
               target="_blank"
             >
@@ -1172,7 +1200,7 @@ exports[`about.vue renders correctly 1`] = `
           <fadeintransitionimage
             alt="Karl Komeya"
             border-radius="rounded-full"
-            data-test-id="member-avatar-19"
+            data-test-id="member-avatar-20"
             height="h-32"
             img-src="/avatars/karl_komeya.jpg"
             object-styling="object-cover"
@@ -1222,333 +1250,9 @@ exports[`about.vue renders correctly 1`] = `
           class="member flex flex-col items-center text-center"
         >
           <fadeintransitionimage
-            alt="Preston Boardman"
-            border-radius="rounded-full"
-            data-test-id="member-avatar-20"
-            height="h-32"
-            img-src="/avatars/preston_boardman.jpg"
-            object-styling="object-cover"
-            width="w-32"
-          />
-          <div
-            class="member-name mt-1 text-xl font-bold"
-            data-testid="member-name"
-          >
-            Preston Boardman
-          </div>
-          <div
-            class="member-title text-md text-primary-text-muted"
-            data-testid="member-title"
-          >
-            Developer
-          </div>
-          <div
-            class="member-social flex flex-row mt-2"
-          >
-            <a
-              class="social-link"
-              data-testid="member-linkedin"
-              href="https://www.linkedin.com/in/preston-boardman-8210a671/"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              <!---->
-            </a>
-            <a
-              class="social-link"
-              data-testid="member-github"
-              href="https://github.com/prestonb91"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              <!---->
-            </a>
-          </div>
-        </div>
-      </div>
-      <div
-        class="members-list grid"
-        data-testid="member"
-      >
-        <div
-          class="member flex flex-col items-center text-center"
-        >
-          <fadeintransitionimage
-            alt="Emanuele Monica"
-            border-radius="rounded-full"
-            data-test-id="member-avatar-21"
-            height="h-32"
-            img-src="/avatars/emanuele_monica.jpg"
-            object-styling="object-cover"
-            width="w-32"
-          />
-          <div
-            class="member-name mt-1 text-xl font-bold"
-            data-testid="member-name"
-          >
-            Emanuele Monica
-          </div>
-          <div
-            class="member-title text-md text-primary-text-muted"
-            data-testid="member-title"
-          >
-            Language Support
-          </div>
-          <div
-            class="member-social flex flex-row mt-2"
-          >
-            <a
-              class="social-link"
-              data-testid="member-linkedin"
-              href="https://www.linkedin.com/in/emanuele-monica-59b93949/"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              <!---->
-            </a>
-            <!--v-if-->
-          </div>
-        </div>
-      </div>
-      <div
-        class="members-list grid"
-        data-testid="member"
-      >
-        <div
-          class="member flex flex-col items-center text-center"
-        >
-          <fadeintransitionimage
-            alt="Shingo Toyoda"
-            border-radius="rounded-full"
-            data-test-id="member-avatar-22"
-            height="h-32"
-            img-src="/avatars/shingo_toyoda.jpg"
-            object-styling="object-cover"
-            width="w-32"
-          />
-          <div
-            class="member-name mt-1 text-xl font-bold"
-            data-testid="member-name"
-          >
-            Shingo Toyoda
-          </div>
-          <div
-            class="member-title text-md text-primary-text-muted"
-            data-testid="member-title"
-          >
-            Language Support
-          </div>
-          <div
-            class="member-social flex flex-row mt-2"
-          >
-            <!--v-if-->
-            <!--v-if-->
-          </div>
-        </div>
-      </div>
-      <div
-        class="members-list grid"
-        data-testid="member"
-      >
-        <div
-          class="member flex flex-col items-center text-center"
-        >
-          <fadeintransitionimage
-            alt="Evan Peterson"
-            border-radius="rounded-full"
-            data-test-id="member-avatar-23"
-            height="h-32"
-            img-src="/avatars/evan_peterson.jpg"
-            object-styling="object-cover"
-            width="w-32"
-          />
-          <div
-            class="member-name mt-1 text-xl font-bold"
-            data-testid="member-name"
-          >
-            Evan Peterson
-          </div>
-          <div
-            class="member-title text-md text-primary-text-muted"
-            data-testid="member-title"
-          >
-            Developer
-          </div>
-          <div
-            class="member-social flex flex-row mt-2"
-          >
-            <a
-              class="social-link"
-              data-testid="member-linkedin"
-              href="https://www.linkedin.com/in/evan-peterson-desu/"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              <!---->
-            </a>
-            <a
-              class="social-link"
-              data-testid="member-github"
-              href="https://github.com/evan-desu"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              <!---->
-            </a>
-          </div>
-        </div>
-      </div>
-      <div
-        class="members-list grid"
-        data-testid="member"
-      >
-        <div
-          class="member flex flex-col items-center text-center"
-        >
-          <fadeintransitionimage
-            alt="Andrew Leemhuis"
-            border-radius="rounded-full"
-            data-test-id="member-avatar-24"
-            height="h-32"
-            img-src="/avatars/andrew_leemhuis.jpg"
-            object-styling="object-cover"
-            width="w-32"
-          />
-          <div
-            class="member-name mt-1 text-xl font-bold"
-            data-testid="member-name"
-          >
-            Andrew Leemhuis
-          </div>
-          <div
-            class="member-title text-md text-primary-text-muted"
-            data-testid="member-title"
-          >
-            Design
-          </div>
-          <div
-            class="member-social flex flex-row mt-2"
-          >
-            <a
-              class="social-link"
-              data-testid="member-linkedin"
-              href="https://www.linkedin.com/in/andrew-leemhuis-01482718/"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              <!---->
-            </a>
-            <!--v-if-->
-          </div>
-        </div>
-      </div>
-      <div
-        class="members-list grid"
-        data-testid="member"
-      >
-        <div
-          class="member flex flex-col items-center text-center"
-        >
-          <fadeintransitionimage
-            alt="Karen Miyazawa"
-            border-radius="rounded-full"
-            data-test-id="member-avatar-25"
-            height="h-32"
-            img-src="/avatars/karen_miyazawa.jpg"
-            object-styling="object-cover"
-            width="w-32"
-          />
-          <div
-            class="member-name mt-1 text-xl font-bold"
-            data-testid="member-name"
-          >
-            Karen Miyazawa
-          </div>
-          <div
-            class="member-title text-md text-primary-text-muted"
-            data-testid="member-title"
-          >
-            Developer
-          </div>
-          <div
-            class="member-social flex flex-row mt-2"
-          >
-            <a
-              class="social-link"
-              data-testid="member-linkedin"
-              href="https://www.linkedin.com/in/ks-miyazawa/"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              <!---->
-            </a>
-            <a
-              class="social-link"
-              data-testid="member-github"
-              href="https://github.com/KSmiyazawa"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              <!---->
-            </a>
-          </div>
-        </div>
-      </div>
-      <div
-        class="members-list grid"
-        data-testid="member"
-      >
-        <div
-          class="member flex flex-col items-center text-center"
-        >
-          <fadeintransitionimage
-            alt="Ann Kilzer"
-            border-radius="rounded-full"
-            data-test-id="member-avatar-26"
-            height="h-32"
-            img-src="/avatars/ann_kilzer.jpg"
-            object-styling="object-cover"
-            width="w-32"
-          />
-          <div
-            class="member-name mt-1 text-xl font-bold"
-            data-testid="member-name"
-          >
-            Ann Kilzer
-          </div>
-          <div
-            class="member-title text-md text-primary-text-muted"
-            data-testid="member-title"
-          >
-            Developer
-          </div>
-          <div
-            class="member-social flex flex-row mt-2"
-          >
-            <!--v-if-->
-            <a
-              class="social-link"
-              data-testid="member-github"
-              href="https://github.com/ann-kilzer"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              <!---->
-            </a>
-          </div>
-        </div>
-      </div>
-      <div
-        class="members-list grid"
-        data-testid="member"
-      >
-        <div
-          class="member flex flex-col items-center text-center"
-        >
-          <fadeintransitionimage
             alt="Dominik"
             border-radius="rounded-full"
-            data-test-id="member-avatar-27"
+            data-test-id="member-avatar-21"
             height="h-32"
             img-src="/avatars/dominik.jpg"
             object-styling="object-cover"
@@ -1590,61 +1294,9 @@ exports[`about.vue renders correctly 1`] = `
           class="member flex flex-col items-center text-center"
         >
           <fadeintransitionimage
-            alt="Lisa Broerson"
-            border-radius="rounded-full"
-            data-test-id="member-avatar-28"
-            height="h-32"
-            img-src="/avatars/lisa_broersen.jpg"
-            object-styling="object-cover"
-            width="w-32"
-          />
-          <div
-            class="member-name mt-1 text-xl font-bold"
-            data-testid="member-name"
-          >
-            Lisa Broerson
-          </div>
-          <div
-            class="member-title text-md text-primary-text-muted"
-            data-testid="member-title"
-          >
-            Developer
-          </div>
-          <div
-            class="member-social flex flex-row mt-2"
-          >
-            <a
-              class="social-link"
-              data-testid="member-linkedin"
-              href="https://www.linkedin.com/in/lisa-broersen/"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              <!---->
-            </a>
-            <a
-              class="social-link"
-              data-testid="member-github"
-              href="https://github.com/ljbroersen"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              <!---->
-            </a>
-          </div>
-        </div>
-      </div>
-      <div
-        class="members-list grid"
-        data-testid="member"
-      >
-        <div
-          class="member flex flex-col items-center text-center"
-        >
-          <fadeintransitionimage
             alt="Chunyan Li"
             border-radius="rounded-full"
-            data-test-id="member-avatar-29"
+            data-test-id="member-avatar-22"
             height="h-32"
             img-src="/avatars/chunyan_li.jpg"
             object-styling="object-cover"
@@ -1686,11 +1338,11 @@ exports[`about.vue renders correctly 1`] = `
           class="member flex flex-col items-center text-center"
         >
           <fadeintransitionimage
-            alt="Lucy Gelderloos"
+            alt="Andrew Leemhuis"
             border-radius="rounded-full"
-            data-test-id="member-avatar-30"
+            data-test-id="member-avatar-23"
             height="h-32"
-            img-src="/avatars/lucy_gelderloos.jpg"
+            img-src="/avatars/andrew_leemhuis.jpg"
             object-styling="object-cover"
             width="w-32"
           />
@@ -1698,57 +1350,13 @@ exports[`about.vue renders correctly 1`] = `
             class="member-name mt-1 text-xl font-bold"
             data-testid="member-name"
           >
-            Lucy Gelderloos
+            Andrew Leemhuis
           </div>
           <div
             class="member-title text-md text-primary-text-muted"
             data-testid="member-title"
           >
-            Developer
-          </div>
-          <div
-            class="member-social flex flex-row mt-2"
-          >
-            <!--v-if-->
-            <a
-              class="social-link"
-              data-testid="member-github"
-              href="https://github.com/lucy-gelderloos"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              <!---->
-            </a>
-          </div>
-        </div>
-      </div>
-      <div
-        class="members-list grid"
-        data-testid="member"
-      >
-        <div
-          class="member flex flex-col items-center text-center"
-        >
-          <fadeintransitionimage
-            alt="Trent Shimamura"
-            border-radius="rounded-full"
-            data-test-id="member-avatar-31"
-            height="h-32"
-            img-src="/avatars/trent_shimamura.jpg"
-            object-styling="object-cover"
-            width="w-32"
-          />
-          <div
-            class="member-name mt-1 text-xl font-bold"
-            data-testid="member-name"
-          >
-            Trent Shimamura
-          </div>
-          <div
-            class="member-title text-md text-primary-text-muted"
-            data-testid="member-title"
-          >
-            Moderation Lead
+            Design
           </div>
           <div
             class="member-social flex flex-row mt-2"
@@ -1756,57 +1364,13 @@ exports[`about.vue renders correctly 1`] = `
             <a
               class="social-link"
               data-testid="member-linkedin"
-              href="https://www.linkedin.com/in/trent-golden-58811b129/"
+              href="https://www.linkedin.com/in/andrew-leemhuis-01482718/"
               rel="noopener noreferrer"
               target="_blank"
             >
               <!---->
             </a>
             <!--v-if-->
-          </div>
-        </div>
-      </div>
-      <div
-        class="members-list grid"
-        data-testid="member"
-      >
-        <div
-          class="member flex flex-col items-center text-center"
-        >
-          <fadeintransitionimage
-            alt="Lily"
-            border-radius="rounded-full"
-            data-test-id="member-avatar-32"
-            height="h-32"
-            img-src="/avatars/lily.jpg"
-            object-styling="object-cover"
-            width="w-32"
-          />
-          <div
-            class="member-name mt-1 text-xl font-bold"
-            data-testid="member-name"
-          >
-            Lily
-          </div>
-          <div
-            class="member-title text-md text-primary-text-muted"
-            data-testid="member-title"
-          >
-            Developer
-          </div>
-          <div
-            class="member-social flex flex-row mt-2"
-          >
-            <!--v-if-->
-            <a
-              class="social-link"
-              data-testid="member-github"
-              href="https://github.com/Kumaguro3"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              <!---->
-            </a>
           </div>
         </div>
       </div>
@@ -1820,7 +1384,7 @@ exports[`about.vue renders correctly 1`] = `
           <fadeintransitionimage
             alt="Jacob Chae"
             border-radius="rounded-full"
-            data-test-id="member-avatar-33"
+            data-test-id="member-avatar-24"
             height="h-32"
             img-src="/avatars/jacob_chae.jpg"
             object-styling="object-cover"
@@ -1870,11 +1434,11 @@ exports[`about.vue renders correctly 1`] = `
           class="member flex flex-col items-center text-center"
         >
           <fadeintransitionimage
-            alt="Anthony Lavizzo"
+            alt="Lily"
             border-radius="rounded-full"
-            data-test-id="member-avatar-34"
+            data-test-id="member-avatar-25"
             height="h-32"
-            img-src="/avatars/anthony_lavizzo.jpg"
+            img-src="/avatars/lily.jpg"
             object-styling="object-cover"
             width="w-32"
           />
@@ -1882,7 +1446,7 @@ exports[`about.vue renders correctly 1`] = `
             class="member-name mt-1 text-xl font-bold"
             data-testid="member-name"
           >
-            Anthony Lavizzo
+            Lily
           </div>
           <div
             class="member-title text-md text-primary-text-muted"
@@ -1893,19 +1457,11 @@ exports[`about.vue renders correctly 1`] = `
           <div
             class="member-social flex flex-row mt-2"
           >
-            <a
-              class="social-link"
-              data-testid="member-linkedin"
-              href="https://www.linkedin.com/in/anthonylavizzo/"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              <!---->
-            </a>
+            <!--v-if-->
             <a
               class="social-link"
               data-testid="member-github"
-              href="https://github.com/sylentwulf81"
+              href="https://github.com/Kumaguro3"
               rel="noopener noreferrer"
               target="_blank"
             >
@@ -1922,11 +1478,11 @@ exports[`about.vue renders correctly 1`] = `
           class="member flex flex-col items-center text-center"
         >
           <fadeintransitionimage
-            alt="Nasira Nebi"
+            alt="Jason Sagalow"
             border-radius="rounded-full"
-            data-test-id="member-avatar-35"
+            data-test-id="member-avatar-26"
             height="h-32"
-            img-src="/avatars/nasira_nebi.jpg"
+            img-src="/avatars/jason_sagalow.jpg"
             object-styling="object-cover"
             width="w-32"
           />
@@ -1934,7 +1490,7 @@ exports[`about.vue renders correctly 1`] = `
             class="member-name mt-1 text-xl font-bold"
             data-testid="member-name"
           >
-            Nasira Nebi
+            Jason Sagalow
           </div>
           <div
             class="member-title text-md text-primary-text-muted"
@@ -1948,7 +1504,7 @@ exports[`about.vue renders correctly 1`] = `
             <a
               class="social-link"
               data-testid="member-linkedin"
-              href="https://www.linkedin.com/in/nasira-nebi/"
+              href="https://www.linkedin.com/in/jason-sagalow-76047614b/"
               rel="noopener noreferrer"
               target="_blank"
             >
@@ -1957,7 +1513,7 @@ exports[`about.vue renders correctly 1`] = `
             <a
               class="social-link"
               data-testid="member-github"
-              href="https://github.com/nasiranebi914"
+              href="https://github.com/ConwayDecker"
               rel="noopener noreferrer"
               target="_blank"
             >
@@ -1976,7 +1532,7 @@ exports[`about.vue renders correctly 1`] = `
           <fadeintransitionimage
             alt="Diego Mendez"
             border-radius="rounded-full"
-            data-test-id="member-avatar-36"
+            data-test-id="member-avatar-27"
             height="h-32"
             img-src="/avatars/diego_mendez.jpg"
             object-styling="object-cover"
@@ -2010,6 +1566,450 @@ exports[`about.vue renders correctly 1`] = `
               class="social-link"
               data-testid="member-github"
               href="https://github.com/Diego-Bittencourt"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <!---->
+            </a>
+          </div>
+        </div>
+      </div>
+      <div
+        class="members-list grid"
+        data-testid="member"
+      >
+        <div
+          class="member flex flex-col items-center text-center"
+        >
+          <fadeintransitionimage
+            alt="Preston Boardman"
+            border-radius="rounded-full"
+            data-test-id="member-avatar-28"
+            height="h-32"
+            img-src="/avatars/preston_boardman.jpg"
+            object-styling="object-cover"
+            width="w-32"
+          />
+          <div
+            class="member-name mt-1 text-xl font-bold"
+            data-testid="member-name"
+          >
+            Preston Boardman
+          </div>
+          <div
+            class="member-title text-md text-primary-text-muted"
+            data-testid="member-title"
+          >
+            Developer
+          </div>
+          <div
+            class="member-social flex flex-row mt-2"
+          >
+            <a
+              class="social-link"
+              data-testid="member-linkedin"
+              href="https://www.linkedin.com/in/preston-boardman-8210a671/"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <!---->
+            </a>
+            <a
+              class="social-link"
+              data-testid="member-github"
+              href="https://github.com/prestonb91"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <!---->
+            </a>
+          </div>
+        </div>
+      </div>
+      <div
+        class="members-list grid"
+        data-testid="member"
+      >
+        <div
+          class="member flex flex-col items-center text-center"
+        >
+          <fadeintransitionimage
+            alt="Julian Schoenfeld"
+            border-radius="rounded-full"
+            data-test-id="member-avatar-29"
+            height="h-32"
+            img-src="/avatars/julian_schoenfeld.jpg"
+            object-styling="object-cover"
+            width="w-32"
+          />
+          <div
+            class="member-name mt-1 text-xl font-bold"
+            data-testid="member-name"
+          >
+            Julian Schoenfeld
+          </div>
+          <div
+            class="member-title text-md text-primary-text-muted"
+            data-testid="member-title"
+          >
+            Developer
+          </div>
+          <div
+            class="member-social flex flex-row mt-2"
+          >
+            <!--v-if-->
+            <a
+              class="social-link"
+              data-testid="member-github"
+              href="https://github.com/carved-duck"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <!---->
+            </a>
+          </div>
+        </div>
+      </div>
+      <div
+        class="members-list grid"
+        data-testid="member"
+      >
+        <div
+          class="member flex flex-col items-center text-center"
+        >
+          <fadeintransitionimage
+            alt="Gustavo Minetoma"
+            border-radius="rounded-full"
+            data-test-id="member-avatar-30"
+            height="h-32"
+            img-src="/avatars/gustavo_minetoma.jpg"
+            object-styling="object-cover"
+            width="w-32"
+          />
+          <div
+            class="member-name mt-1 text-xl font-bold"
+            data-testid="member-name"
+          >
+            Gustavo Minetoma
+          </div>
+          <div
+            class="member-title text-md text-primary-text-muted"
+            data-testid="member-title"
+          >
+            Developer
+          </div>
+          <div
+            class="member-social flex flex-row mt-2"
+          >
+            <a
+              class="social-link"
+              data-testid="member-linkedin"
+              href="https://www.linkedin.com/in/gustavommalves/"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <!---->
+            </a>
+            <a
+              class="social-link"
+              data-testid="member-github"
+              href="https://github.com/gminetoma"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <!---->
+            </a>
+          </div>
+        </div>
+      </div>
+      <div
+        class="members-list grid"
+        data-testid="member"
+      >
+        <div
+          class="member flex flex-col items-center text-center"
+        >
+          <fadeintransitionimage
+            alt="Lucy Gelderloos"
+            border-radius="rounded-full"
+            data-test-id="member-avatar-31"
+            height="h-32"
+            img-src="/avatars/lucy_gelderloos.jpg"
+            object-styling="object-cover"
+            width="w-32"
+          />
+          <div
+            class="member-name mt-1 text-xl font-bold"
+            data-testid="member-name"
+          >
+            Lucy Gelderloos
+          </div>
+          <div
+            class="member-title text-md text-primary-text-muted"
+            data-testid="member-title"
+          >
+            Developer
+          </div>
+          <div
+            class="member-social flex flex-row mt-2"
+          >
+            <!--v-if-->
+            <a
+              class="social-link"
+              data-testid="member-github"
+              href="https://github.com/lucy-gelderloos"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <!---->
+            </a>
+          </div>
+        </div>
+      </div>
+      <div
+        class="members-list grid"
+        data-testid="member"
+      >
+        <div
+          class="member flex flex-col items-center text-center"
+        >
+          <fadeintransitionimage
+            alt="Lisa Broerson"
+            border-radius="rounded-full"
+            data-test-id="member-avatar-32"
+            height="h-32"
+            img-src="/avatars/lisa_broersen.jpg"
+            object-styling="object-cover"
+            width="w-32"
+          />
+          <div
+            class="member-name mt-1 text-xl font-bold"
+            data-testid="member-name"
+          >
+            Lisa Broerson
+          </div>
+          <div
+            class="member-title text-md text-primary-text-muted"
+            data-testid="member-title"
+          >
+            Developer
+          </div>
+          <div
+            class="member-social flex flex-row mt-2"
+          >
+            <a
+              class="social-link"
+              data-testid="member-linkedin"
+              href="https://www.linkedin.com/in/lisa-broersen/"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <!---->
+            </a>
+            <a
+              class="social-link"
+              data-testid="member-github"
+              href="https://github.com/ljbroersen"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <!---->
+            </a>
+          </div>
+        </div>
+      </div>
+      <div
+        class="members-list grid"
+        data-testid="member"
+      >
+        <div
+          class="member flex flex-col items-center text-center"
+        >
+          <fadeintransitionimage
+            alt="Ann Kilzer"
+            border-radius="rounded-full"
+            data-test-id="member-avatar-33"
+            height="h-32"
+            img-src="/avatars/ann_kilzer.jpg"
+            object-styling="object-cover"
+            width="w-32"
+          />
+          <div
+            class="member-name mt-1 text-xl font-bold"
+            data-testid="member-name"
+          >
+            Ann Kilzer
+          </div>
+          <div
+            class="member-title text-md text-primary-text-muted"
+            data-testid="member-title"
+          >
+            Developer
+          </div>
+          <div
+            class="member-social flex flex-row mt-2"
+          >
+            <!--v-if-->
+            <a
+              class="social-link"
+              data-testid="member-github"
+              href="https://github.com/ann-kilzer"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <!---->
+            </a>
+          </div>
+        </div>
+      </div>
+      <div
+        class="members-list grid"
+        data-testid="member"
+      >
+        <div
+          class="member flex flex-col items-center text-center"
+        >
+          <fadeintransitionimage
+            alt="Sulaymane Sillah"
+            border-radius="rounded-full"
+            data-test-id="member-avatar-34"
+            height="h-32"
+            img-src="/avatars/sulaymane_sillah.jpg"
+            object-styling="object-cover"
+            width="w-32"
+          />
+          <div
+            class="member-name mt-1 text-xl font-bold"
+            data-testid="member-name"
+          >
+            Sulaymane Sillah
+          </div>
+          <div
+            class="member-title text-md text-primary-text-muted"
+            data-testid="member-title"
+          >
+            Developer
+          </div>
+          <div
+            class="member-social flex flex-row mt-2"
+          >
+            <a
+              class="social-link"
+              data-testid="member-linkedin"
+              href="https://www.linkedin.com/in/sulaymanesillah/"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <!---->
+            </a>
+            <a
+              class="social-link"
+              data-testid="member-github"
+              href="https://github.com/Tch4lla"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <!---->
+            </a>
+          </div>
+        </div>
+      </div>
+      <div
+        class="members-list grid"
+        data-testid="member"
+      >
+        <div
+          class="member flex flex-col items-center text-center"
+        >
+          <fadeintransitionimage
+            alt="Anissa Chadouli"
+            border-radius="rounded-full"
+            data-test-id="member-avatar-35"
+            height="h-32"
+            img-src="/avatars/anissa_chadouli.jpg"
+            object-styling="object-cover"
+            width="w-32"
+          />
+          <div
+            class="member-name mt-1 text-xl font-bold"
+            data-testid="member-name"
+          >
+            Anissa Chadouli
+          </div>
+          <div
+            class="member-title text-md text-primary-text-muted"
+            data-testid="member-title"
+          >
+            Developer
+          </div>
+          <div
+            class="member-social flex flex-row mt-2"
+          >
+            <a
+              class="social-link"
+              data-testid="member-linkedin"
+              href="https://www.linkedin.com/in/anissa-chadouli/"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <!---->
+            </a>
+            <a
+              class="social-link"
+              data-testid="member-github"
+              href="https://github.com/Anissa3005"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <!---->
+            </a>
+          </div>
+        </div>
+      </div>
+      <div
+        class="members-list grid"
+        data-testid="member"
+      >
+        <div
+          class="member flex flex-col items-center text-center"
+        >
+          <fadeintransitionimage
+            alt="Anthony Lavizzo"
+            border-radius="rounded-full"
+            data-test-id="member-avatar-36"
+            height="h-32"
+            img-src="/avatars/anthony_lavizzo.jpg"
+            object-styling="object-cover"
+            width="w-32"
+          />
+          <div
+            class="member-name mt-1 text-xl font-bold"
+            data-testid="member-name"
+          >
+            Anthony Lavizzo
+          </div>
+          <div
+            class="member-title text-md text-primary-text-muted"
+            data-testid="member-title"
+          >
+            Developer
+          </div>
+          <div
+            class="member-social flex flex-row mt-2"
+          >
+            <a
+              class="social-link"
+              data-testid="member-linkedin"
+              href="https://www.linkedin.com/in/anthonylavizzo/"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <!---->
+            </a>
+            <a
+              class="social-link"
+              data-testid="member-github"
+              href="https://github.com/sylentwulf81"
               rel="noopener noreferrer"
               target="_blank"
             >
