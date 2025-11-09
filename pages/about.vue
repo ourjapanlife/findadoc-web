@@ -13,13 +13,13 @@
                 class="my-4 h-32 z-10"
             />
             <h1
-                data-testid="about-heading"
+                data-testid="about-hero-heading"
                 class="mb-12 font-bold text-4xl text-primary-text text-center z-10"
             >
                 {{ t("about.heroHeading") }}
             </h1>
             <p
-                data-testid="about-subheading"
+                data-testid="about-hero-subheading"
                 class="mb-12 text-2xl text-primary-text text-center z-10"
             >
                 {{ t("about.heroSubheading") }}
