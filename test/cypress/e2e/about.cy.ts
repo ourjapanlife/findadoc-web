@@ -22,23 +22,15 @@ describe('About page', () => {
         })
 
         it('has a heading', () => {
-            cy.get('[data-testid="about-heading"]').contains(enUS.about.heading)
+            cy.get('[data-testid="about-hero-heading"]').contains(enUS.about.heroHeading)
         })
 
         it('has a subheading', () => {
-            cy.get('[data-testid="about-subheading"]').contains(enUS.about.subheading)
+            cy.get('[data-testid="about-hero-subheading"]').contains(enUS.about.heroSubheading)
         })
 
         it('has an about paragraph', () => {
             cy.get('[data-testid="about-paragraph1"]').should('exist')
-        })
-
-        it('has members header container', () => {
-            cy.get('[data-testid="members-header-container"]').should('have.class', 'justify-center items-center')
-        })
-
-        it('has members container', () => {
-            cy.get('[data-testid="members-container"]').should('have.class', 'justify-center items-center')
         })
 
         it('shows member details', () => {
