@@ -2,7 +2,6 @@
     <Transition name="slide-left">
         <div
             v-if="shouldShowPanel"
-            v-close-on-outside-click="closePanelHandler"
             class="absolute left-96 inset-y-24 ml-1 bg-primary-bg
             border-l border-secondary-bg/40 shadow-lg z-10 rounded-lg"
             :class="[
@@ -50,7 +49,6 @@ import SearchResultDetails from '~/components/SearchResultDetails.vue'
 import FiltersPanel from '~/components/FiltersPanel.vue'
 import { BottomSheetType, useBottomSheetStore } from '~/stores/bottomSheetStore'
 import { useSearchResultsStore } from '~/stores/searchResultsStore'
-import { vCloseOnOutsideClick } from '~/composables/closeOnOutsideClick'
 
 const bottomSheetStore = useBottomSheetStore()
 const searchResultsStore = useSearchResultsStore()
