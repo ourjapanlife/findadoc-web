@@ -16,27 +16,27 @@
                 data-testid="about-heading"
                 class="mb-12 font-bold text-4xl text-primary-text text-center z-10"
             >
-                Find a Doc, Japan
+                {{ t("about.heroHeading") }}
             </h1>
             <p
                 data-testid="about-subheading"
                 class="mb-12 text-2xl text-primary-text text-center z-10"
             >
-                {{ t("about.subheading") }}
+                {{ t("about.heroSubheading") }}
             </p>
             <div class="flex gap-8 mb-4 z-10">
                 <NuxtLink
                     to="/"
                     class="outline outline-1 rounded-xl p-4 bg-primary text-primary-text-inverted
                     text-lg font-bold transition-colors text-center"
-                >Get Started
+                >{{ t("about.heroGetStarted") }}
                 </NuxtLink>
                 <button
                     class="outline outline-1 outline-primary/70 rounded-xl text-primary
                     font-bold text-xl p-4 shadow-lg text-center"
                     @click="scrollTo('about-header-container')"
                 >
-                    Learn More
+                    {{ t("about.heroLearnMore") }}
                 </button>
             </div>
             <SvgCharactersTogether
@@ -59,7 +59,7 @@
             >
                 <div class="flex-1 border-currentColor/70 border self-center" />
                 <div class="text-primary-text text-2xl font-bold mx-4 p-2 whitespace-nowrap">
-                    Our Story
+                    {{ t("about.storyHeader") }}
                 </div>
                 <div class="flex-1 border-currentColor/70 border self-center" />
             </div>
@@ -73,13 +73,13 @@
                 data-testid="about-paragraph1"
                 class="mb-6 text-md text-primary-text text-center"
             >
-                {{ t("about.paragraph1") }}
+                {{ t("about.storyParagraph1") }}
             </p>
             <p
                 data-testid="about-paragraph2"
                 class="text-md text-primary-text text-center"
             >
-                {{ t("about.paragraph2") }}
+                {{ t("about.storyParagraph2") }}
             </p>
             <!-- Scroll buttons -->
             <nav
@@ -93,7 +93,7 @@
                     hover:bg-primary font-bold text-xl p-4 shadow-lg text-center"
                         @click="scrollTo('impact-header-container')"
                     >
-                        Our Impact So Far
+                        {{ t("about.btnImpact") }}
                     </button>
 
                     <button
@@ -101,7 +101,7 @@
                     hover:bg-primary font-bold text-xl p-4 shadow-lg"
                         @click="scrollTo('contributor-header-container')"
                     >
-                        Contributors
+                        {{ t("about.btnContributors") }}
                     </button>
 
                     <button
@@ -109,7 +109,7 @@
                     hover:bg-primary font-bold text-xl p-4 shadow-lg"
                         @click="scrollTo('npo-header-container')"
                     >
-                        NPO Board
+                        {{ t("about.btnBoard") }}
                     </button>
 
                     <button
@@ -117,7 +117,7 @@
                     hover:bg-primary font-bold text-xl p-4 shadow-lg"
                         @click="scrollTo('mascot-header-container')"
                     >
-                        Mascots
+                        {{ t("about.btnMascots") }}
                     </button>
 
                     <button
@@ -125,7 +125,7 @@
                     hover:bg-primary font-bold text-xl p-4 shadow-lg"
                         @click="scrollTo('involve-header-container')"
                     >
-                        Get Involved
+                        {{ t("about.btnInvolve") }}
                     </button>
                 </div>
             </nav>
@@ -143,7 +143,7 @@
             >
                 <div class="flex-1 border-currentColor/70 border self-center" />
                 <div class="text-primary-text text-2xl font-bold mx-4 p-2 whitespace-nowrap">
-                    Our Impact So Far
+                    {{ t("about.impactHeader") }}
                 </div>
                 <div class="flex-1 border-currentColor/70 border self-center" />
             </div>
@@ -157,7 +157,7 @@
                     class="my-4 h-32 fill-primary"
                 />
                 <p class="font-semibold text-xl text-primary-text">
-                    300+ Doctors Registered
+                    {{ t("about.impactDoctors") }}
                 </p>
             </div>
 
@@ -169,7 +169,7 @@
                     class="my-4 h-32 fill-primary"
                 />
                 <p class="font-semibold text-xl text-primary-text">
-                    100+ Monthly Users
+                    {{ t("about.impactUsers") }}
                 </p>
             </div>
 
@@ -181,7 +181,7 @@
                     class="my-4 h-32 fill-primary"
                 />
                 <p class="font-semibold text-xl text-primary-text">
-                    Volunteer and Community Driven
+                    {{ t("about.impactVolunteer") }}
                 </p>
             </div>
         </div>
@@ -199,7 +199,7 @@
             >
                 <div class="flex-1 border-currentColor/70 border self-center" />
                 <div class="text-primary-text text-2xl font-bold mx-4 p-2 whitespace-nowrap">
-                    Contributors
+                    {{ t("about.contributorsHeader") }}
                 </div>
                 <div class="flex-1 border-currentColor/70 border self-center" />
             </div>
@@ -244,7 +244,7 @@
             >
                 <div class="flex-1 border-currentColor/70 border self-center" />
                 <div class="text-primary-text text-2xl font-bold mx-4 p-2 whitespace-nowrap">
-                    NPO Board
+                    {{ t("about.boardHeader") }}
                 </div>
                 <div class="flex-1 border-currentColor/70 border self-center" />
             </div>
@@ -289,14 +289,14 @@
             >
                 <div class="flex-1 border-currentColor/70 border self-center" />
                 <div class="text-primary-text text-2xl font-bold mx-4 p-2 whitespace-nowrap">
-                    Mascots
+                    {{ t("about.mascotsHeader") }}
                 </div>
                 <div class="flex-1 border-currentColor/70 border self-center" />
             </div>
         </div>
         <div class="grid grid-cols-2 md:grid-cols-5 my-0 md:my-12">
             <div class="flex flex-col items-center my-8 md:my-0">
-                <h1>Awa</h1>
+                <h1>{{ t("about.mascotsAwa") }}</h1>
                 <SvgAwa
                     role="img"
                     alt="Awa SVG Icon"
@@ -305,7 +305,7 @@
                 />
             </div>
             <div class="flex flex-col items-center my-8 md:my-0">
-                <h1>Michael</h1>
+                <h1>{{ t("about.mascotsMichael") }}</h1>
                 <SvgMichael
                     role="img"
                     alt="Michael SVG Icon"
@@ -314,7 +314,7 @@
                 />
             </div>
             <div class="flex flex-col items-center my-8 md:my-0">
-                <h1>Tamika</h1>
+                <h1>{{ t("about.mascotsTamika") }}</h1>
                 <SvgTamika
                     role="img"
                     alt="Tamika SVG Icon"
@@ -323,7 +323,7 @@
                 />
             </div>
             <div class="flex flex-col items-center my-8 md:my-0">
-                <h1>Sachi</h1>
+                <h1>{{ t("about.mascotsSachi") }}</h1>
                 <SvgSachi
                     role="img"
                     alt="Sachi SVG Icon"
@@ -332,7 +332,7 @@
                 />
             </div>
             <div class="flex flex-col items-center my-8 md:my-0 md:mt-10">
-                <h1>Chiko</h1>
+                <h1>{{ t("about.mascotsChiko") }}</h1>
                 <SvgChiko
                     role="img"
                     alt="Chiko SVG Icon"
@@ -354,7 +354,7 @@
             >
                 <div class="flex-1 border-currentColor/70 border self-center" />
                 <div class="text-primary-text text-2xl font-bold mx-4 p-2 whitespace-nowrap">
-                    Get Involved
+                    {{ t("about.involveHeader") }}
                 </div>
                 <div class="flex-1 border-currentColor/70 border self-center" />
             </div>
@@ -367,11 +367,10 @@
                     title="Add Doctor Icon"
                     class="my-4 w-20"
                 />
-                <!-- Submit a new Doctor Link -->
                 <NuxtLink
                     to="/submit"
                     class="hover:text-primary-hover text-lg font-bold underline transition-colors"
-                >Add a Doctor
+                >{{ t("about.involveAdd") }}
                 </NuxtLink>
             </div>
             <div class="flex flex-col items-center my-6 md:my-0">
@@ -385,7 +384,7 @@
                     href="https://github.com/ourjapanlife"
                     class="underline font-bold hover:text-primary-hover text-lg transition-colors"
                     target="_blank"
-                >Contribute</a>
+                >{{ t("about.involveGit") }}</a>
             </div>
             <div class="flex flex-col items-center my-6 md:my-0">
                 <SvgLinkedin
@@ -398,7 +397,7 @@
                     href="https://www.linkedin.com/company/find-a-doc-japan/"
                     class="underline font-bold hover:text-primary-hover text-lg transition-colors"
                     target="_blank"
-                >Follow us</a>
+                >{{ t("about.involveLinkedin") }}</a>
             </div>
             <div class="flex flex-col items-center my-6 md:my-0">
                 <SvgFeedback
@@ -411,7 +410,7 @@
                     href="https://docs.google.com/forms/d/e/1FAIpQLScx9cXurA6BhbBPUFH2nFAVWPP6Pm3yqXQj-NvJiaI2CUhh0Q/viewform"
                     class="underline font-bold hover:text-primary-hover text-lg transition-colors"
                     target="_blank"
-                >Give feedback</a>
+                >{{ t("about.involveFeedback") }}</a>
             </div>
         </div>
         <!-- Back to Top Button  -->
