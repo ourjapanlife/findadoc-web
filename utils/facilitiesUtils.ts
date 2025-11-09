@@ -62,3 +62,18 @@ export function validateCreateFacility(input: CreateFacilityInput): FacilityVali
 export function validateUpdateFacility(input: UpdateFacilityInput): FacilityValidationResult {
     return validateAddress(input.contact?.address)
 }
+
+/**
+ * Validation specific to required fields (facility update).
+ */
+export function validateRequiredNotEmpty(
+  fields: FacilitySectionFields
+): FacilityValidationResult {
+    const errors: string[] = []
+
+    if (!fields.nameEn?.trim() || !fields.nameJa?.trim()) {
+        errors.push('Required fields cannot be empty: nameEn, nameJa.')
+    }
+
+    return { valid: errors.length === 0, errors }
+}

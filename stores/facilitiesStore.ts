@@ -20,7 +20,7 @@ import type {
 import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql'
 import type { ServerResponse } from '~/typedefs/serverResponse'
 import { arraysAreEqual } from '~/utils/arrayUtils'
-import { validateCreateFacility, validateUpdateFacility } from '~/utils/facilitiesUtils'
+import { validateCreateFacility, validateUpdateFacility, validateRequiredNotEmpty } from '~/utils/facilitiesUtils'
 
 export type FacilitySectionFields = {
     // contactFields
@@ -356,6 +356,11 @@ export const useFacilitiesStore = defineStore('facilitiesStore', () => {
     }
 
     async function updateFacility(): Promise<ServerResponse<Facility>> {
+        const requiredValidation = validateRequiredNotEmpty(facilitySectionFields.value)
+        if (!requiredValidation.valid) {
+            throw new Error(requiredValidation.errors.join('; '))
+        }
+
         const updatedFields = getChangedFacilityFieldsForUpdate(
             facilitySectionFields.value,
             selectedFacilityData.value!
