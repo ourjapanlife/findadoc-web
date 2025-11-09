@@ -1,6 +1,20 @@
+import { beforeAll, describe, it, expect, jest } from '@jest/globals'
 import { mount } from '@vue/test-utils'
 import { createI18n } from 'vue-i18n'
 import About from '~/pages/about.vue'
+
+type MemberData = {
+    avatarImg: string
+    name: string
+    title: string
+    linkedInUrl: string | null
+    githubUrl: string | null
+    personalWebsite?: string
+}
+
+jest.mock('~/utils/arrayUtils', () => ({
+    shuffleArray: (arr: MemberData[]) => [...arr]
+}))
 
 beforeAll(() => {
     class MockIntersectionObserver {
@@ -29,8 +43,11 @@ describe('about.vue', () => {
             global: {
                 plugins: [i18n],
                 stubs: {
-                    NuxtLink: true, // stub NuxtLink
-                    SvgAwa: true // stub your custom SVG
+                    NuxtLink: true,
+                    FadeInTransitionImage: true,
+                    SVGLinkedinIcon: true,
+                    SVGGithubIcon: true
+
                 }
             }
         })
