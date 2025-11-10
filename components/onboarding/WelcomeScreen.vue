@@ -22,7 +22,7 @@
                         <span class="block mt-2">Find a Doc, Japan!</span>
                     </h1>
                     <p class="landscape:text-2xl text-lg mt-3 max-w-md">
-                        {{ t('about.subheading') }}
+                        {{ t('about.heroSubheading') }}
                     </p>
                 </div>
                 <!-- Bouncing arrow button -->
