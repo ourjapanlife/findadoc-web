@@ -71,8 +71,22 @@ export function validateRequiredNotEmpty(
 ): FacilityValidationResult {
     const errors: string[] = []
 
-    if (!fields.nameEn?.trim() || !fields.nameJa?.trim()) {
-        errors.push('Required fields cannot be empty: nameEn, nameJa.')
+    // List of required keys that must not be empty
+    const requiredKeys: (keyof FacilitySectionFields)[] = [
+        'nameEn', 'nameJa',
+        'phone',
+        'postalCode',
+        'prefectureEn', 'cityEn', 'addressLine1En',
+        'prefectureJa', 'cityJa', 'addressLine1Ja',
+        'googlemapsURL',
+        'mapLatitude', 'mapLongitude'
+    ]
+
+    for (const key of requiredKeys) {
+        const value = fields[key]
+        if (typeof value === 'string' && !value.trim()) {
+            errors.push('Required fields cannot be empty.')
+        }
     }
 
     return { valid: errors.length === 0, errors }
