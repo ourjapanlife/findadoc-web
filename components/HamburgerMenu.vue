@@ -23,7 +23,7 @@
                     v-show="isMenuOpen"
                     data-testid="hamburger-menu"
                     class="fixed top-0 right-0 z-30 flex flex-col
-                  justify-between w-2/3 h-dvh pt-6 pb-2 border-l-2 border-primary/20 rounded bg-primary-bg "
+                    justify-between w-2/3 h-dvh pt-6 pb-2 border-l-2 border-primary/20 rounded bg-primary-bg "
                     @click.stop
                 >
                     <div data-testid="hamburger-upper-section">
@@ -90,16 +90,16 @@
                                         title="Original Theme"
                                         style="background-color:#0EB0C0"
                                         :class="getSelectedTheme('original')"
-                                        @click="setTheme('original')"
+                                        @click="setTheme('original', lightDarkMode)"
                                     />
-                                    <div
+                                    <!-- <div
                                         v-if="lightDarkMode == 'DARK'"
                                         class="w-7 h-7 mr-1 rounded-full"
                                         title="Original Theme Dark"
                                         style="background-color:#00FFFF"
                                         :class="getSelectedTheme('dark')"
                                         @click="setTheme('dark')"
-                                    />
+                                    /> -->
                                     <div
                                         v-if="lightDarkMode == 'LIGHT'"
                                         class="w-7 h-7 mr-1 bg-primary rounded-full"
@@ -108,14 +108,14 @@
                                         :class="getSelectedTheme('coral')"
                                         @click="setTheme('coral')"
                                     />
-                                    <div
+                                    <!-- <div
                                         v-if="lightDarkMode == 'DARK'"
                                         class="w-7 h-7 mr-1 bg-primary rounded-full"
                                         title="Coral Theme Dark"
                                         style="background-color: #FF1F00;"
                                         :class="getSelectedTheme('coral')"
                                         @click="setTheme('coral-dark')"
-                                    />
+                                    /> -->
                                     <div
                                         v-if="lightDarkMode == 'LIGHT'"
                                         class="w-7 h-7 mr-1 rounded-full"
@@ -124,14 +124,14 @@
                                         :class="getSelectedTheme('violet')"
                                         @click="setTheme('violet')"
                                     />
-                                    <div
+                                    <!-- <div
                                         v-if="lightDarkMode == 'DARK'"
                                         class="w-7 h-7 mr-1 rounded-full"
                                         title="Violet Theme Dark"
                                         style="background-color: #FF00DB;"
                                         :class="getSelectedTheme('violet')"
                                         @click="setTheme('violet-dark')"
-                                    />
+                                    /> -->
 
                                 <!-- <div
                                     class="w-7 h-7 mr-1 rounded-md"
@@ -141,6 +141,17 @@
                                     @click="setTheme('ocean')"
                                 /> -->
                                 </div>
+                            </div>
+                            <div
+                                data-testid="hamburger-menu-theme-switcher"
+                            >
+                                <p
+                                    class="mb-1 text-primary-text"
+                                >
+                                    Dark Mode
+                                </p>
+                                <!-- <Toggle @theme-change="(i) => (lightDarkMode = i)" /> -->
+                                <Toggle @theme-change="changeLightDark" />
                             </div>
                             <div data-testid="hamburger-menu-theme-switcher">
                                 <p class="mb-1 text-primary-text">
@@ -165,17 +176,7 @@
                                     />
                                 </div>
                             </div>
-                            <div
-                                data-testid="hamburger-menu-theme-switcher"
-                            >
-                                <p
-                                    class="mb-1 text-primary-text"
-                                >
-                                    Dark Mode
-                                </p>
-                                <!-- <Toggle @theme-change="(i) => (lightDarkMode = i)" /> -->
-                                <Toggle @theme-change="lightDarkModeSwitcher" />
-                            </div>
+
                             <!-- Home Link -->
                             <NuxtLink to="/">
                                 <div
@@ -399,45 +400,49 @@ const { t } = useI18n()
 
 const lightDarkMode = ref('LIGHT')
 
-const original = {
-    LIGHT: 'theme-original',
-    DARK: 'theme-dark'
-}
+const lightMode = ref(true)
 
-const coral = {
-    LIGHT: 'theme-coral',
-    DARK: 'theme-coral-dark'
-}
+// const original = {
+//     LIGHT: 'theme-original',
+//     DARK: 'theme-dark'
+// }
 
-const violet = {
-    LIGHT: 'theme-violet',
-    DARK: 'theme-violet-dark'
-}
+// const coral = {
+//     LIGHT: 'theme-coral',
+//     DARK: 'theme-coral-dark'
+// }
 
-function lightDarkModeSwitcher(passedValue) {
-    document.documentElement.classList.remove(
-        'theme-original',
-        'theme-coral',
-        'theme-violet',
-        'theme-dark',
-        'theme-coral-dark',
-        'theme-violet-dark',
-        'theme-accessible-high-contrast',
-        'theme-accessible-red-green'
-    )
-    if (currentTheme.value == 'original') {
-        document.documentElement.classList.add(original[passedValue])
-        const themeMode = original[passedValue]
-        console.log(original[passedValue])
-        console.log(themeMode)
-    } else if (currentTheme.value == 'coral') {
-        document.documentElement.classList.add(coral[passedValue])
-    } else if (currentTheme.value == 'violet') {
-        document.documentElement.classList.add(violet[passedValue])
-    }
-    localStorage.setItem('theme', themeMode)
-    lightDarkMode.value = passedValue
-}
+// const violet = {
+//     LIGHT: 'theme-violet',
+//     DARK: 'theme-violet-dark'
+// }
+
+// function lightDarkModeSwitcher(passedValue) {
+//     document.documentElement.classList.remove(
+//         'theme-original',
+//         'theme-coral',
+//         'theme-violet',
+//         'theme-original-dark',
+//         'theme-coral-dark',
+//         'theme-violet-dark',
+//         'theme-accessible-high-contrast',
+//         'theme-accessible-red-green'
+//     )
+//     if (currentTheme.value == 'original') {
+//         document.documentElement.classList.add(original[passedValue])
+//         const themeMode = original[passedValue]
+//         console.log(original[passedValue])
+//         console.log(themeMode)
+//     } else if (currentTheme.value == 'coral') {
+//         document.documentElement.classList.add(coral[passedValue])
+//     } else if (currentTheme.value == 'violet') {
+//         document.documentElement.classList.add(violet[passedValue])
+//     }
+//     localStorage.setItem('theme', themeMode)
+//     localStorage.setItem('colorMode', lightOrDark)
+//     lightDarkMode.value = passedValue
+//     console.log(passedValue)
+// }
 
 function openMenu() {
     isMenuOpen.value = true
@@ -457,20 +462,38 @@ async function logout() {
     }
 }
 
+function changeLightDark() {
+    lightMode.value = !lightMode.value
+    localStorage.setItem('lightMode', `${lightMode.value}`)
+    setTheme(currentTheme.value)
+}
+
 function setTheme(newTheme: string) {
+    console.log(`Light mode is ${lightMode.value}`)
+
+    const addTheme = function(theme) {
+        localStorage.setItem('theme', theme)
+        currentTheme.value = theme
+    }
+
     document.documentElement.classList.remove(
         'theme-original',
         'theme-coral',
         'theme-violet',
-        'theme-dark',
+        'theme-original-dark',
         'theme-coral-dark',
         'theme-violet-dark',
         'theme-accessible-high-contrast',
         'theme-accessible-red-green'
     )
-    document.documentElement.classList.add(`theme-${newTheme}`)
-    localStorage.setItem('theme', newTheme)
-    currentTheme.value = newTheme
+    if (lightMode.value) {
+        console.log('Light theme!')
+        document.documentElement.classList.add(`theme-${newTheme}`)
+        addTheme(newTheme)
+    } else {
+        document.documentElement.classList.add(`theme-${newTheme}-dark`)
+        addTheme(newTheme)
+    }
 }
 
 // This gives a black border to the currently selected theme
@@ -499,9 +522,16 @@ function getSelectedTheme(theme: string) {
 onMounted(() => {
     const saveTheme = localStorage.getItem('theme')
     if (saveTheme) {
+        const saveColorMode = localStorage.getItem('lightMode') === 'true'
+        if (saveColorMode) {
+            lightDarkMode.value = 'LIGHT'
+        } else {
+            lightDarkMode.value = 'DARK'
+        }
         currentTheme.value = saveTheme
+        lightMode.value = saveColorMode
         setTheme(saveTheme)
+        console.log(`Current theme is ${saveTheme} ${saveColorMode}`)
     }
-    console.log('Current theme is ' + saveTheme)
 })
 </script>
