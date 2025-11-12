@@ -151,7 +151,10 @@
                                     Dark Mode
                                 </p>
                                 <!-- <Toggle @theme-change="(i) => (lightDarkMode = i)" /> -->
-                                <Toggle @theme-change="changeLightDark" />
+                                <Toggle
+                                    :state="lightMode"
+                                    @theme-change="changeLightDark"
+                                />
                             </div>
                             <div data-testid="hamburger-menu-theme-switcher">
                                 <p class="mb-1 text-primary-text">

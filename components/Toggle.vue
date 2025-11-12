@@ -1,7 +1,15 @@
 <template>
     <label class="switch">
         <input
+            v-if="state"
             type="checkbox"
+            @input="toggleDarkLightMode"
+        >
+
+        <input
+            v-else
+            type="checkbox"
+            checked
             @input="toggleDarkLightMode"
         >
         <span class="slider round" />
@@ -9,6 +17,10 @@
 </template>
 
 <script setup lang="ts">
+defineProps({
+    state: Boolean
+})
+
 enum ColorMode {
     Light = 'LIGHT',
     Dark = 'DARK'
@@ -69,9 +81,9 @@ const toggleDarkLightMode = () => {
   }
 
   input:checked + .slider:before {
-    -webkit-transform: translateX(26px);
-    -ms-transform: translateX(26px);
-    transform: translateX(26px);
+    -webkit-transform: translateX(22px);
+    -ms-transform: translateX(22px);
+    transform: translateX(22px);
   }
 
   /* Rounded sliders */
