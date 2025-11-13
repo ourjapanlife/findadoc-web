@@ -35,20 +35,20 @@ const toggleDarkLightMode = () => {
 </script>
 
 <style>
-  .switch {
+    .switch {
     position: relative;
     display: inline-block;
     width: 48px;
     height: 26px;
-  }
+    }
 
-  .switch input {
+    .switch input {
     opacity: 0;
     width: 0;
     height: 0;
-  }
+    }
 
-  .slider {
+    .slider {
     position: absolute;
     cursor: pointer;
     top: 0;
@@ -58,9 +58,9 @@ const toggleDarkLightMode = () => {
     background-color: #ccc;
     -webkit-transition: .4s;
     transition: .4s;
-  }
+    }
 
-  .slider:before {
+    .slider:before {
     position: absolute;
     content: "";
     height: 18px;
@@ -70,28 +70,28 @@ const toggleDarkLightMode = () => {
     background-color: white;
     -webkit-transition: .4s;
     transition: .4s;
-  }
+    }
 
-  input:checked + .slider {
+    input:checked + .slider {
     background-color: #0EB0C0;
-  }
+    }
 
-  input:focus + .slider {
+    input:focus + .slider {
     box-shadow: 0 0 1px #2196F3;
-  }
+    }
 
-  input:checked + .slider:before {
+    input:checked + .slider:before {
     -webkit-transform: translateX(22px);
     -ms-transform: translateX(22px);
     transform: translateX(22px);
-  }
+    }
 
   /* Rounded sliders */
-  .slider.round {
+    .slider.round {
     border-radius: 34px;
-  }
+    }
 
-  .slider.round:before {
+    .slider.round:before {
     border-radius: 50%;
-  }
+    }
 </style>

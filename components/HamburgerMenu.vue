@@ -77,109 +77,8 @@
                         <!-- Menu Links -->
                         <div
                             data-testid="hamburger-menu-items"
-                            class="flex flex-col gap-6 px-5 mt-10 mb-1"
+                            class="flex flex-col gap-6 px-5 mt-6 mb-1"
                         >
-                            <div data-testid="hamburger-menu-theme-switcher">
-                                <p class="mb-1 text-primary-text">
-                                    {{ t('hamburgerMenu.theme') }}: {{ convertStringToTitleCase(currentTheme) }}
-                                </p>
-                                <div class="flex">
-                                    <div
-                                        v-if="lightDarkMode == 'LIGHT'"
-                                        class="w-7 h-7 mr-1 rounded-full"
-                                        title="Original Theme"
-                                        style="background-color:#0EB0C0"
-                                        :class="getSelectedTheme('original')"
-                                        @click="setTheme('original', lightDarkMode)"
-                                    />
-                                    <!-- <div
-                                        v-if="lightDarkMode == 'DARK'"
-                                        class="w-7 h-7 mr-1 rounded-full"
-                                        title="Original Theme Dark"
-                                        style="background-color:#00FFFF"
-                                        :class="getSelectedTheme('dark')"
-                                        @click="setTheme('dark')"
-                                    /> -->
-                                    <div
-                                        v-if="lightDarkMode == 'LIGHT'"
-                                        class="w-7 h-7 mr-1 bg-primary rounded-full"
-                                        title="Coral Theme"
-                                        style="background-color: #ED6C5A;"
-                                        :class="getSelectedTheme('coral')"
-                                        @click="setTheme('coral')"
-                                    />
-                                    <!-- <div
-                                        v-if="lightDarkMode == 'DARK'"
-                                        class="w-7 h-7 mr-1 bg-primary rounded-full"
-                                        title="Coral Theme Dark"
-                                        style="background-color: #FF1F00;"
-                                        :class="getSelectedTheme('coral')"
-                                        @click="setTheme('coral-dark')"
-                                    /> -->
-                                    <div
-                                        v-if="lightDarkMode == 'LIGHT'"
-                                        class="w-7 h-7 mr-1 rounded-full"
-                                        title="Violet Theme"
-                                        style="background-color: #A45D9A;"
-                                        :class="getSelectedTheme('violet')"
-                                        @click="setTheme('violet')"
-                                    />
-                                    <!-- <div
-                                        v-if="lightDarkMode == 'DARK'"
-                                        class="w-7 h-7 mr-1 rounded-full"
-                                        title="Violet Theme Dark"
-                                        style="background-color: #FF00DB;"
-                                        :class="getSelectedTheme('violet')"
-                                        @click="setTheme('violet-dark')"
-                                    /> -->
-
-                                <!-- <div
-                                    class="w-7 h-7 mr-1 rounded-md"
-                                    title="Ocean Theme"
-                                    style="background-color: #245A7D;"
-                                    :class="getSelectedTheme('ocean')"
-                                    @click="setTheme('ocean')"
-                                /> -->
-                                </div>
-                            </div>
-                            <div
-                                data-testid="hamburger-menu-theme-switcher"
-                            >
-                                <p
-                                    class="mb-1 text-primary-text"
-                                >
-                                    Dark Mode
-                                </p>
-                                <!-- <Toggle @theme-change="(i) => (lightDarkMode = i)" /> -->
-                                <Toggle
-                                    :state="lightMode"
-                                    @theme-change="changeLightDark"
-                                />
-                            </div>
-                            <div data-testid="hamburger-menu-theme-switcher">
-                                <p class="mb-1 text-primary-text">
-                                    Accessible colors
-                                </p>
-                                <div class="flex">
-                                    <div
-                                        class="w-7 h-7 mr-1 rounded-full"
-                                        title="Default Theme"
-                                        style="background-color: #EEFF02FF;"
-                                        :class="getSelectedTheme('accessible-high-contrast')"
-                                        alt="Accessible: High Contrast Theme"
-                                        @click="setTheme('accessible-high-contrast')"
-                                    />
-                                    <div
-                                        class="w-7 h-7 mr-1 rounded-full"
-                                        title="Accessible: Daltonian Color Blindness"
-                                        style="background-color: #FF0000FF;"
-                                        :class="getSelectedTheme('accessible-red-green')"
-                                        alt="Accessible: Daltonian Color Blindness"
-                                        @click="setTheme('accessible-red-green')"
-                                    />
-                                </div>
-                            </div>
-
                             <!-- Home Link -->
                             <NuxtLink to="/">
                                 <div
@@ -272,6 +171,107 @@
                                 >
                                     {{ t('hamburgerMenu.login') }}
                                 </NuxtLink>
+                            </div>
+
+                            <div data-testid="hamburger-menu-theme-switcher">
+                                <p class="mb-1 text-primary-text">
+                                    {{ t('hamburgerMenu.theme') }}: {{ convertStringToTitleCase(currentTheme) }}
+                                </p>
+                                <div class="flex">
+                                    <div
+
+                                        class="w-7 h-7 mr-1 rounded-full"
+                                        title="Original Theme"
+                                        style="background-color:#0EB0C0"
+                                        :class="getSelectedTheme('original')"
+                                        @click="setTheme('original')"
+                                    />
+                                    <!-- <div
+                                        v-if="lightDarkMode == 'DARK'"
+                                        class="w-7 h-7 mr-1 rounded-full"
+                                        title="Original Theme Dark"
+                                        style="background-color:#00FFFF"
+                                        :class="getSelectedTheme('dark')"
+                                        @click="setTheme('dark')"
+                                    /> -->
+                                    <div
+
+                                        class="w-7 h-7 mr-1 bg-primary rounded-full"
+                                        title="Coral Theme"
+                                        style="background-color: #ED6C5A;"
+                                        :class="getSelectedTheme('coral')"
+                                        @click="setTheme('coral')"
+                                    />
+                                    <!-- <div
+                                        v-if="lightDarkMode == 'DARK'"
+                                        class="w-7 h-7 mr-1 bg-primary rounded-full"
+                                        title="Coral Theme Dark"
+                                        style="background-color: #FF1F00;"
+                                        :class="getSelectedTheme('coral')"
+                                        @click="setTheme('coral-dark')"
+                                    /> -->
+                                    <div
+
+                                        class="w-7 h-7 mr-1 rounded-full"
+                                        title="Violet Theme"
+                                        style="background-color: #A45D9A;"
+                                        :class="getSelectedTheme('violet')"
+                                        @click="setTheme('violet')"
+                                    />
+                                    <!-- <div
+                                        v-if="lightDarkMode == 'DARK'"
+                                        class="w-7 h-7 mr-1 rounded-full"
+                                        title="Violet Theme Dark"
+                                        style="background-color: #FF00DB;"
+                                        :class="getSelectedTheme('violet')"
+                                        @click="setTheme('violet-dark')"
+                                    /> -->
+
+                                <!-- <div
+                                    class="w-7 h-7 mr-1 rounded-md"
+                                    title="Ocean Theme"
+                                    style="background-color: #245A7D;"
+                                    :class="getSelectedTheme('ocean')"
+                                    @click="setTheme('ocean')"
+                                /> -->
+                                </div>
+                            </div>
+                            <div
+                                data-testid="hamburger-menu-theme-switcher"
+                            >
+                                <p
+                                    class="mb-1 text-primary-text"
+                                >
+                                    Dark Mode
+                                </p>
+                                <!-- <Toggle @theme-change="(i) => (lightDarkMode = i)" /> -->
+                                <Toggle
+                                    :state="lightMode"
+                                    @theme-change="changeLightDark"
+                                />
+                            </div>
+                            <div data-testid="hamburger-menu-theme-switcher">
+                                <p class="mb-1 text-primary-text">
+                                    Accessible colors
+                                </p>
+                                <div class="flex">
+                                    <div
+                                        class="w-7 h-7 mr-1 rounded-full"
+                                        title="Default Theme"
+                                        style="background-color: #EEFF02FF;"
+                                        :class="getSelectedTheme('accessible-high-contrast')"
+                                        alt="Accessible: High Contrast Theme"
+                                        @click="setTheme('accessible-high-contrast')"
+                                    />
+                                    <div
+                                        class="w-7 h-7 mr-1 rounded-full"
+                                        title="Accessible: Daltonian Color Blindness"
+                                        style="background-color: #FF0000FF;"
+                                        :class="getSelectedTheme('accessible-red-green')"
+                                        alt="Accessible: Daltonian Color Blindness"
+                                        @click="setTheme('accessible-red-green')"
+                                    />
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -401,7 +401,7 @@ const currentTheme = ref('original')
 
 const { t } = useI18n()
 
-const lightDarkMode = ref('LIGHT')
+// const lightDarkMode = ref('LIGHT')
 
 const lightMode = ref(true)
 
@@ -466,9 +466,11 @@ async function logout() {
 }
 
 function changeLightDark() {
-    lightMode.value = !lightMode.value
-    localStorage.setItem('lightMode', `${lightMode.value}`)
-    setTheme(currentTheme.value)
+    if (currentTheme.value != 'accessible-high-contrast' || currentTheme.value != 'accessible-red-green') {
+        lightMode.value = !lightMode.value
+        localStorage.setItem('lightMode', `${lightMode.value}`)
+        setTheme(currentTheme.value)
+    }
 }
 
 function setTheme(newTheme: string) {
@@ -489,8 +491,9 @@ function setTheme(newTheme: string) {
         'theme-accessible-high-contrast',
         'theme-accessible-red-green'
     )
-    if (lightMode.value) {
+    if (lightMode.value || newTheme === 'accessible-high-contrast' || newTheme === 'accessible-red-green') {
         console.log('Light theme!')
+        lightMode.value = true
         document.documentElement.classList.add(`theme-${newTheme}`)
         addTheme(newTheme)
     } else {
@@ -526,11 +529,11 @@ onMounted(() => {
     const saveTheme = localStorage.getItem('theme')
     if (saveTheme) {
         const saveColorMode = localStorage.getItem('lightMode') === 'true'
-        if (saveColorMode) {
-            lightDarkMode.value = 'LIGHT'
-        } else {
-            lightDarkMode.value = 'DARK'
-        }
+        // if (saveColorMode) {
+        //     lightDarkMode.value = 'LIGHT'
+        // } else {
+        //     lightDarkMode.value = 'DARK'
+        // }
         currentTheme.value = saveTheme
         lightMode.value = saveColorMode
         setTheme(saveTheme)
