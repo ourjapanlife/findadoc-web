@@ -806,53 +806,9 @@ exports[`about.vue renders correctly 1`] = `
           class="member flex flex-col items-center text-center"
         >
           <fade-in-transition-image-stub
-            alt="Emanuele Monica"
-            border-radius="rounded-full"
-            data-test-id="member-avatar-12"
-            height="h-32"
-            img-src="/avatars/emanuele_monica.jpg"
-            object-styling="object-cover"
-            width="w-32"
-          />
-          <div
-            class="member-name mt-1 text-xl font-bold"
-            data-testid="member-name"
-          >
-            Emanuele Monica
-          </div>
-          <div
-            class="member-title text-md text-primary-text-muted"
-            data-testid="member-title"
-          >
-            Language Support
-          </div>
-          <div
-            class="member-social flex flex-row mt-2"
-          >
-            <a
-              class="social-link"
-              data-testid="member-linkedin"
-              href="https://www.linkedin.com/in/emanuele-monica-59b93949/"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              <!---->
-            </a>
-            <!--v-if-->
-          </div>
-        </div>
-      </div>
-      <div
-        class="members-list grid"
-        data-testid="member"
-      >
-        <div
-          class="member flex flex-col items-center text-center"
-        >
-          <fade-in-transition-image-stub
             alt="Eri Yawata"
             border-radius="rounded-full"
-            data-test-id="member-avatar-13"
+            data-test-id="member-avatar-12"
             height="h-32"
             img-src="/avatars/eri_yawata.jpg"
             object-styling="object-cover"
@@ -904,7 +860,7 @@ exports[`about.vue renders correctly 1`] = `
           <fade-in-transition-image-stub
             alt="Evan Peterson"
             border-radius="rounded-full"
-            data-test-id="member-avatar-14"
+            data-test-id="member-avatar-13"
             height="h-32"
             img-src="/avatars/evan_peterson.jpg"
             object-styling="object-cover"
@@ -956,7 +912,7 @@ exports[`about.vue renders correctly 1`] = `
           <fade-in-transition-image-stub
             alt="Gustavo Minetoma"
             border-radius="rounded-full"
-            data-test-id="member-avatar-15"
+            data-test-id="member-avatar-14"
             height="h-32"
             img-src="/avatars/gustavo_minetoma.jpg"
             object-styling="object-cover"
@@ -1008,7 +964,7 @@ exports[`about.vue renders correctly 1`] = `
           <fade-in-transition-image-stub
             alt="Jacob Chae"
             border-radius="rounded-full"
-            data-test-id="member-avatar-16"
+            data-test-id="member-avatar-15"
             height="h-32"
             img-src="/avatars/jacob_chae.jpg"
             object-styling="object-cover"
@@ -1060,7 +1016,7 @@ exports[`about.vue renders correctly 1`] = `
           <fade-in-transition-image-stub
             alt="Jake Anderson"
             border-radius="rounded-full"
-            data-test-id="member-avatar-17"
+            data-test-id="member-avatar-16"
             height="h-32"
             img-src="/avatars/jake_anderson.jpg"
             object-styling="object-cover"
@@ -1104,7 +1060,7 @@ exports[`about.vue renders correctly 1`] = `
           <fade-in-transition-image-stub
             alt="Jason Sagalow"
             border-radius="rounded-full"
-            data-test-id="member-avatar-18"
+            data-test-id="member-avatar-17"
             height="h-32"
             img-src="/avatars/jason_sagalow.jpg"
             object-styling="object-cover"
@@ -1156,7 +1112,7 @@ exports[`about.vue renders correctly 1`] = `
           <fade-in-transition-image-stub
             alt="Julian Schoenfeld"
             border-radius="rounded-full"
-            data-test-id="member-avatar-19"
+            data-test-id="member-avatar-18"
             height="h-32"
             img-src="/avatars/julian_schoenfeld.jpg"
             object-styling="object-cover"
@@ -1200,7 +1156,7 @@ exports[`about.vue renders correctly 1`] = `
           <fade-in-transition-image-stub
             alt="Karen Miyazawa"
             border-radius="rounded-full"
-            data-test-id="member-avatar-20"
+            data-test-id="member-avatar-19"
             height="h-32"
             img-src="/avatars/karen_miyazawa.jpg"
             object-styling="object-cover"
@@ -1252,7 +1208,7 @@ exports[`about.vue renders correctly 1`] = `
           <fade-in-transition-image-stub
             alt="Karl Komeya"
             border-radius="rounded-full"
-            data-test-id="member-avatar-21"
+            data-test-id="member-avatar-20"
             height="h-32"
             img-src="/avatars/karl_komeya.jpg"
             object-styling="object-cover"
@@ -1304,7 +1260,7 @@ exports[`about.vue renders correctly 1`] = `
           <fade-in-transition-image-stub
             alt="Kei Yumino"
             border-radius="rounded-full"
-            data-test-id="member-avatar-22"
+            data-test-id="member-avatar-21"
             height="h-32"
             img-src="/avatars/kei_yumino.jpg"
             object-styling="object-cover"
@@ -1348,7 +1304,7 @@ exports[`about.vue renders correctly 1`] = `
           <fade-in-transition-image-stub
             alt="Lily"
             border-radius="rounded-full"
-            data-test-id="member-avatar-23"
+            data-test-id="member-avatar-22"
             height="h-32"
             img-src="/avatars/lily.jpg"
             object-styling="object-cover"
@@ -1392,7 +1348,7 @@ exports[`about.vue renders correctly 1`] = `
           <fade-in-transition-image-stub
             alt="Lisa Broerson"
             border-radius="rounded-full"
-            data-test-id="member-avatar-24"
+            data-test-id="member-avatar-23"
             height="h-32"
             img-src="/avatars/lisa_broersen.jpg"
             object-styling="object-cover"
@@ -1444,7 +1400,7 @@ exports[`about.vue renders correctly 1`] = `
           <fade-in-transition-image-stub
             alt="Lucy Gelderloos"
             border-radius="rounded-full"
-            data-test-id="member-avatar-25"
+            data-test-id="member-avatar-24"
             height="h-32"
             img-src="/avatars/lucy_gelderloos.jpg"
             object-styling="object-cover"
@@ -1488,7 +1444,7 @@ exports[`about.vue renders correctly 1`] = `
           <fade-in-transition-image-stub
             alt="Matthew Kurtti"
             border-radius="rounded-full"
-            data-test-id="member-avatar-26"
+            data-test-id="member-avatar-25"
             height="h-32"
             img-src="/avatars/matthew_kurtti.jpg"
             object-styling="object-cover"
@@ -1540,7 +1496,7 @@ exports[`about.vue renders correctly 1`] = `
           <fade-in-transition-image-stub
             alt="Nasira Nebi"
             border-radius="rounded-full"
-            data-test-id="member-avatar-27"
+            data-test-id="member-avatar-26"
             height="h-32"
             img-src="/avatars/nasira_nebi.jpg"
             object-styling="object-cover"
@@ -1592,7 +1548,7 @@ exports[`about.vue renders correctly 1`] = `
           <fade-in-transition-image-stub
             alt="Natalja Dembek"
             border-radius="rounded-full"
-            data-test-id="member-avatar-28"
+            data-test-id="member-avatar-27"
             height="h-32"
             img-src="/avatars/natalja_dembek.jpg"
             object-styling="object-cover"
@@ -1644,7 +1600,7 @@ exports[`about.vue renders correctly 1`] = `
           <fade-in-transition-image-stub
             alt="Nathaniel Smith"
             border-radius="rounded-full"
-            data-test-id="member-avatar-29"
+            data-test-id="member-avatar-28"
             height="h-32"
             img-src="/avatars/nathaniel_smith.jpg"
             object-styling="object-cover"
@@ -1696,7 +1652,7 @@ exports[`about.vue renders correctly 1`] = `
           <fade-in-transition-image-stub
             alt="Olivier Lechevalier"
             border-radius="rounded-full"
-            data-test-id="member-avatar-30"
+            data-test-id="member-avatar-29"
             height="h-32"
             img-src="/avatars/olivier_lechevalier.jpg"
             object-styling="object-cover"
@@ -1748,7 +1704,7 @@ exports[`about.vue renders correctly 1`] = `
           <fade-in-transition-image-stub
             alt="Preston Boardman"
             border-radius="rounded-full"
-            data-test-id="member-avatar-31"
+            data-test-id="member-avatar-30"
             height="h-32"
             img-src="/avatars/preston_boardman.jpg"
             object-styling="object-cover"
@@ -1800,7 +1756,7 @@ exports[`about.vue renders correctly 1`] = `
           <fade-in-transition-image-stub
             alt="Reezan"
             border-radius="rounded-full"
-            data-test-id="member-avatar-32"
+            data-test-id="member-avatar-31"
             height="h-32"
             img-src="/avatars/reezan.jpg"
             object-styling="object-cover"
@@ -1844,7 +1800,7 @@ exports[`about.vue renders correctly 1`] = `
           <fade-in-transition-image-stub
             alt="Shashank Dangi"
             border-radius="rounded-full"
-            data-test-id="member-avatar-33"
+            data-test-id="member-avatar-32"
             height="h-32"
             img-src="/avatars/shashank_dangi.jpg"
             object-styling="object-cover"
@@ -1896,7 +1852,7 @@ exports[`about.vue renders correctly 1`] = `
           <fade-in-transition-image-stub
             alt="Shingo Toyoda"
             border-radius="rounded-full"
-            data-test-id="member-avatar-34"
+            data-test-id="member-avatar-33"
             height="h-32"
             img-src="/avatars/shingo_toyoda.jpg"
             object-styling="object-cover"
@@ -1932,7 +1888,7 @@ exports[`about.vue renders correctly 1`] = `
           <fade-in-transition-image-stub
             alt="Sulaymane Sillah"
             border-radius="rounded-full"
-            data-test-id="member-avatar-35"
+            data-test-id="member-avatar-34"
             height="h-32"
             img-src="/avatars/sulaymane_sillah.jpg"
             object-styling="object-cover"
@@ -1984,7 +1940,7 @@ exports[`about.vue renders correctly 1`] = `
           <fade-in-transition-image-stub
             alt="Trent Shimamura"
             border-radius="rounded-full"
-            data-test-id="member-avatar-36"
+            data-test-id="member-avatar-35"
             height="h-32"
             img-src="/avatars/trent_shimamura.jpg"
             object-styling="object-cover"
