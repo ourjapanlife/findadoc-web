@@ -423,7 +423,9 @@
         >
             <a
                 v-show="showScrollUpButton"
-                class="fixed bottom-0 right-0 z-50 md:bottom-2"
+                class="fixed bottom-4 left-1/2 -translate-x-1/2
+                    md:bottom-4 md:left-auto md:right-6
+                     z-50"
             >
                 <SvgArrow
                     role="img"
