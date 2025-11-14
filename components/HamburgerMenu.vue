@@ -173,52 +173,50 @@
                             </p>
                             <div class="flex">
                                 <div
-                                    class="w-10 h-10 mr-1"
+                                    class="w-10 h-10 mr-1 bg-primary"
                                     title="Original Theme"
-                                    style="background-color:#0EB0C0"
                                     :class="getSelectedTheme('original')"
+                                    alt="Original Theme"
                                     @click="setTheme('original')"
                                 />
                                 <div
-                                    class="w-10 h-10 mr-1 bg-primary"
+                                    class="theme-coral w-10 h-10 mr-1 bg-primary"
                                     title="Coral Theme"
-                                    style="background-color: #ED6C5A;"
                                     :class="getSelectedTheme('coral')"
+                                    alt="Coral Theme"
                                     @click="setTheme('coral')"
                                 />
                                 <div
-                                    class="w-10 h-10 mr-1"
+                                    class="theme-violet w-10 h-10 mr-1 bg-primary"
                                     title="Violet Theme"
-                                    style="background-color: #A45D9A;"
                                     :class="getSelectedTheme('violet')"
+                                    alt="Violet Theme"
                                     @click="setTheme('violet')"
                                 />
                                 <div
-                                    class="w-10 h-10 mr-1"
+                                    class="theme-ocean w-10 h-10 mr-1 bg-primary"
                                     title="Ocean Theme"
-                                    style="background-color: #77A6CD;"
                                     :class="getSelectedTheme('ocean')"
+                                    alt="Ocean Theme"
                                     @click="setTheme('ocean')"
                                 />
                                 <div
-                                    class="w-10 h-10 mr-1"
+                                    class="theme-neon w-10 h-10 mr-1 bg-primary"
                                     title="Neon Theme"
-                                    style="background-color: #006D6A;"
                                     :class="getSelectedTheme('neon')"
+                                    alt="Neon Theme"
                                     @click="setTheme('neon')"
                                 />
                                 <div
-                                    class="w-10 h-10 mr-1"
-                                    title="Default Theme"
-                                    style="background-color: #EEFF02FF;"
+                                    class="theme-accessible-high-contrast w-10 h-10 mr-1 bg-primary"
+                                    title="Accessible: High Contrast Theme"
                                     :class="getSelectedTheme('accessible-high-contrast')"
                                     alt="Accessible: High Contrast Theme"
                                     @click="setTheme('accessible-high-contrast')"
                                 />
                                 <div
-                                    class="w-10 h-10 mr-1"
+                                    class="theme-accessible-red-green w-10 h-10 mr-1 bg-primary"
                                     title="Accessible: Daltonian Color Blindness"
-                                    style="background-color: #FF0000FF;"
                                     :class="getSelectedTheme('accessible-red-green')"
                                     alt="Accessible: Daltonian Color Blindness"
                                     @click="setTheme('accessible-red-green')"
