@@ -368,7 +368,7 @@ export const useFacilitiesStore = defineStore('facilitiesStore', () => {
             facilitySectionFields.value,
             updatedFields as UpdateFacilityInput
         )
-        
+
         if (!validation.valid) {
             throw new Error(validation.errors.join('; '))
         }
