@@ -20,7 +20,7 @@ import type {
 import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql'
 import type { ServerResponse } from '~/typedefs/serverResponse'
 import { arraysAreEqual } from '~/utils/arrayUtils'
-import { validateCreateFacility, validateUpdateFacility, validateRequiredNotEmpty } from '~/utils/facilitiesUtils'
+import { validateCreateFacility, validateUpdateFacility } from '~/utils/facilitiesUtils'
 
 export type FacilitySectionFields = {
     // contactFields
@@ -356,11 +356,6 @@ export const useFacilitiesStore = defineStore('facilitiesStore', () => {
     }
 
     async function updateFacility(): Promise<ServerResponse<Facility>> {
-        const requiredValidation = validateRequiredNotEmpty(facilitySectionFields.value)
-        if (!requiredValidation.valid) {
-            throw new Error(requiredValidation.errors.join('; '))
-        }
-
         const updatedFields = getChangedFacilityFieldsForUpdate(
             facilitySectionFields.value,
             selectedFacilityData.value!
@@ -368,9 +363,12 @@ export const useFacilitiesStore = defineStore('facilitiesStore', () => {
 
         /**
          * Validation on the client-side
-         * (to prevent sending the data to the backend even though the prefecture names are mismatched)
          */
-        const validation = validateUpdateFacility(updatedFields as UpdateFacilityInput)
+        const validation = validateUpdateFacility(
+            facilitySectionFields.value,
+            updatedFields as UpdateFacilityInput
+        )
+        
         if (!validation.valid) {
             throw new Error(validation.errors.join('; '))
         }
