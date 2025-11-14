@@ -2485,7 +2485,7 @@ exports[`about.vue renders correctly 1`] = `
     persisted="true"
   >
     <a
-      class="fixed bottom-0 left-1/2 -translate-x-1/2 z-50 md:bottom-2"
+      class="fixed bottom-4 left-1/2 -translate-x-1/2 md:bottom-4 md:left-auto md:right-6 z-50"
       style="display: none;"
     >
       <!---->
