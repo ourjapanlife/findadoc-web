@@ -173,20 +173,23 @@
                                 </NuxtLink>
                             </div>
 
-                            <div data-testid="hamburger-menu-theme-switcher">
-                                <p class="mb-1 text-primary-text">
-                                    {{ t('hamburgerMenu.theme') }}: {{ convertStringToTitleCase(currentTheme) }}
-                                </p>
-                                <div class="flex">
-                                    <div
+                            <div class="flex justify-between">
+                                <!-- Theme Selector -->
+                                <div data-testid="hamburger-menu-theme-switcher">
+                                    <p class="mb-1 text-primary-text">
+                                        {{ convertStringToTitleCase(currentTheme) }}
+                                    </p>
+                                    <div class="flex">
+                                        <div
 
-                                        class="w-7 h-7 mr-1 rounded-full"
-                                        title="Original Theme"
-                                        style="background-color:#0EB0C0"
-                                        :class="getSelectedTheme('original')"
-                                        @click="setTheme('original')"
-                                    />
-                                    <!-- <div
+                                            class="w-7 h-7 mr-1 rounded-full"
+                                            title="Original Theme"
+                                            style="background-color:#0EB0C0"
+                                            :class="getSelectedTheme('original')"
+                                            @click="setTheme('original')"
+                                        />
+
+                                        <!-- <div
                                         v-if="lightDarkMode == 'DARK'"
                                         class="w-7 h-7 mr-1 rounded-full"
                                         title="Original Theme Dark"
@@ -194,15 +197,15 @@
                                         :class="getSelectedTheme('dark')"
                                         @click="setTheme('dark')"
                                     /> -->
-                                    <div
+                                        <div
 
-                                        class="w-7 h-7 mr-1 bg-primary rounded-full"
-                                        title="Coral Theme"
-                                        style="background-color: #ED6C5A;"
-                                        :class="getSelectedTheme('coral')"
-                                        @click="setTheme('coral')"
-                                    />
-                                    <!-- <div
+                                            class="w-7 h-7 mr-1 bg-primary rounded-full"
+                                            title="Coral Theme"
+                                            style="background-color: #ED6C5A;"
+                                            :class="getSelectedTheme('coral')"
+                                            @click="setTheme('coral')"
+                                        />
+                                        <!-- <div
                                         v-if="lightDarkMode == 'DARK'"
                                         class="w-7 h-7 mr-1 bg-primary rounded-full"
                                         title="Coral Theme Dark"
@@ -210,14 +213,14 @@
                                         :class="getSelectedTheme('coral')"
                                         @click="setTheme('coral-dark')"
                                     /> -->
-                                    <div
+                                        <div
 
-                                        class="w-7 h-7 mr-1 rounded-full"
-                                        title="Violet Theme"
-                                        style="background-color: #A45D9A;"
-                                        :class="getSelectedTheme('violet')"
-                                        @click="setTheme('violet')"
-                                    />
+                                            class="w-7 h-7 mr-1 rounded-full"
+                                            title="Violet Theme"
+                                            style="background-color: #A45D9A;"
+                                            :class="getSelectedTheme('violet')"
+                                            @click="setTheme('violet')"
+                                        />
                                     <!-- <div
                                         v-if="lightDarkMode == 'DARK'"
                                         class="w-7 h-7 mr-1 rounded-full"
@@ -227,50 +230,135 @@
                                         @click="setTheme('violet-dark')"
                                     /> -->
 
-                                <!-- <div
+                                        <!-- <div
                                     class="w-7 h-7 mr-1 rounded-md"
                                     title="Ocean Theme"
                                     style="background-color: #245A7D;"
                                     :class="getSelectedTheme('ocean')"
                                     @click="setTheme('ocean')"
                                 /> -->
+                                    </div>
+                                </div>
+
+                                <!-- Mode Selector -->
+
+                                <div
+                                    data-testid="hamburger-menu-theme-switcher"
+                                >
+                                    <p
+                                        class="mb-1 text-primary-text"
+                                    >
+                                        Dark Mode
+                                    </p>
+                                    <!-- <Toggle @theme-change="(i) => (lightDarkMode = i)" /> -->
+                                    <Toggle
+                                        :state="lightMode"
+                                        @theme-change="changeLightDark"
+                                    />
                                 </div>
                             </div>
-                            <div
-                                data-testid="hamburger-menu-theme-switcher"
-                            >
-                                <p
-                                    class="mb-1 text-primary-text"
-                                >
-                                    Dark Mode
-                                </p>
-                                <!-- <Toggle @theme-change="(i) => (lightDarkMode = i)" /> -->
-                                <Toggle
-                                    :state="lightMode"
-                                    @theme-change="changeLightDark"
-                                />
-                            </div>
+
+                            <!-- Accessible Theme Selector -->
+                            <ColorChanger
+                                :id="'original'"
+                                :dot-color="'#0EB0C0'"
+                                :name="'Original'"
+                                :selected="true"
+                                :light-dark-toggle="true"
+                                @click="setTheme('original')"
+                            />
+                            <ColorChanger
+                                :id="'coral'"
+                                :dot-color="'#ED6C5A'"
+                                :name="'Coral'"
+                                :selected="true"
+                                :light-dark-toggle="true"
+                                @click="setTheme('coral')"
+                            />
+                            <ColorChanger
+                                :id="'violet'"
+                                :dot-color="'#A45D9A'"
+                                :name="'Violet'"
+                                :selected="true"
+                                :light-dark-toggle="true"
+                                @click="setTheme('violet')"
+                            />
+                            <ColorChanger
+                                :id="'accessible-high-contrast'"
+                                :dot-color="'#EEFF02FF'"
+                                :name="'High Contrast'"
+                                :selected="true"
+                                :light-dark-toggle="false"
+                                @click="setTheme('accessible-high-contrast')"
+                            />
+                            <ColorChanger
+                                :id="'accessible-high-contrast'"
+                                :dot-color="'#FF0000FF'"
+                                :name="'Red-Green Color Blindness'"
+                                :selected="true"
+                                :light-dark-toggle="false"
+                                @click="setTheme('accessible-red-green')"
+                            />
                             <div data-testid="hamburger-menu-theme-switcher">
-                                <p class="mb-1 text-primary-text">
-                                    Accessible colors
-                                </p>
-                                <div class="flex">
-                                    <div
-                                        class="w-7 h-7 mr-1 rounded-full"
-                                        title="Default Theme"
-                                        style="background-color: #EEFF02FF;"
-                                        :class="getSelectedTheme('accessible-high-contrast')"
-                                        alt="Accessible: High Contrast Theme"
-                                        @click="setTheme('accessible-high-contrast')"
-                                    />
-                                    <div
-                                        class="w-7 h-7 mr-1 rounded-full"
-                                        title="Accessible: Daltonian Color Blindness"
-                                        style="background-color: #FF0000FF;"
-                                        :class="getSelectedTheme('accessible-red-green')"
-                                        alt="Accessible: Daltonian Color Blindness"
-                                        @click="setTheme('accessible-red-green')"
-                                    />
+                                <div class="flex flex-col gap-3">
+                                    <div class="flex items-center gap-3">
+                                        <div
+                                            class="w-7 h-7 mr-1 rounded-full"
+                                            title="Original Theme"
+                                            style="background-color:#0EB0C0"
+                                            :class="getSelectedTheme('original')"
+                                            @click="setTheme('original')"
+                                        />
+                                        <p>Original</p>
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <div
+                                            class="w-7 h-7 mr-1 bg-primary rounded-full"
+                                            title="Coral Theme"
+                                            style="background-color: #ED6C5A;"
+                                            :class="getSelectedTheme('coral')"
+                                            @click="setTheme('coral')"
+                                        />
+                                        <p>Coral</p>
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <div
+
+                                            class="w-7 h-7 mr-1 rounded-full"
+                                            title="Violet Theme"
+                                            style="background-color: #A45D9A;"
+                                            :class="getSelectedTheme('violet')"
+                                            @click="setTheme('violet')"
+                                        />
+                                        <p>Violet</p>
+                                    </div>
+
+                                    <p class="mb-1 text-primary-text">
+                                        Accessible colors
+                                    </p>
+                                    <div class="flex items-center gap-3">
+                                        <div
+                                            class="w-7 h-7 mr-1 rounded-full"
+                                            title="Default Theme"
+                                            style="background-color: #EEFF02FF;"
+                                            :class="getSelectedTheme('accessible-high-contrast')"
+                                            alt="Accessible: High Contrast Theme"
+                                            @click="setTheme('accessible-high-contrast')"
+                                        />
+                                        <p>High Contrast</p>
+                                    </div>
+
+                                    <div class="flex items-center gap-3">
+                                        <div
+                                            class="w-7 h-7 mr-1 rounded-full"
+                                            title="Accessible: Daltonian Color Blindness"
+                                            style="background-color: #FF0000FF;"
+                                            :class="getSelectedTheme('accessible-red-green')"
+                                            alt="Accessible: Daltonian Color Blindness"
+                                            @click="setTheme('accessible-red-green')"
+                                        />
+                                        <p>Red Green Blindness</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
