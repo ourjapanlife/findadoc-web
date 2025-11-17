@@ -2,7 +2,7 @@
     <div class="flex items-center gap-3">
         <div
             v-if="selected && lightDarkToggle"
-            class="flex items-center gap-3 object-fill bg-secondary-bg size-full"
+            class="flex items-center gap-3 object-fill bg-secondary-bg size-full p-3"
         >
             <div
                 class="w-7 h-7 mr-1 rounded-full"
@@ -11,13 +11,13 @@
             />
             <p>{{ name }}</p>
             <Toggle
-                :state="lightMode"
-                @theme-change="changeLightDark"
+                :state="state"
+                @theme-change="changeLight"
             />
         </div>
         <div
             v-else-if="selected"
-            class="flex items-center gap-3 object-fill bg-secondary-bg size-full"
+            class="flex items-center gap-3 object-fill bg-secondary-bg size-full p-3"
         >
             <div
                 class="w-7 h-7 mr-1 rounded-full"
@@ -34,15 +34,19 @@
         /> -->
         <div
             v-else
-            class="w-7 h-7 mr-1 rounded-full"
-            title="Original Theme"
-        />
+            class="flex items-center gap-3 object-fill size-full p-3"
+        >
+            <div
+                class="w-7 h-7 mr-1 rounded-full"
+                title="Original Theme"
+                :style="{ backgroundColor: dotColor }"
+            />
+            <p>{{ name }}</p>
+        </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import { defineProps } from 'vue'
-
 defineProps({
     id: {
         type: String,
@@ -63,6 +67,18 @@ defineProps({
     lightDarkToggle: {
         type: Boolean,
         required: true
+    },
+    state: {
+        type: Boolean
     }
 })
+
+const emit = defineEmits(['theme-change'])
+
+const changeLight = isLightMode => {
+    console.log(isLightMode)
+    emit('theme-change', isLightMode)
+}
+
+console.log('The current light mode is')
 </script>

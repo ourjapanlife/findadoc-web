@@ -12,7 +12,14 @@
             checked
             @input="toggleDarkLightMode"
         >
-        <span class="slider round" />
+        <span
+            v-if="state"
+            class="slider round bg-neutral-500"
+        />
+        <span
+            v-else
+            class="slider round bg-primary"
+        />
     </label>
 </template>
 
@@ -55,7 +62,7 @@ const toggleDarkLightMode = () => {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #ccc;
+    /* background-color: #ccc; */
     -webkit-transition: .4s;
     transition: .4s;
     }
@@ -73,7 +80,7 @@ const toggleDarkLightMode = () => {
     }
 
     input:checked + .slider {
-    background-color: #0EB0C0;
+    /* background-color: red; */
     }
 
     input:focus + .slider {

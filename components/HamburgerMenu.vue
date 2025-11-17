@@ -172,24 +172,24 @@
                                     {{ t('hamburgerMenu.login') }}
                                 </NuxtLink>
                             </div>
+                        </div>
+                        <div class="flex justify-between">
+                            <!-- Theme Selector -->
+                            <div data-testid="hamburger-menu-theme-switcher">
+                                <p class="mb-1 text-primary-text">
+                                    {{ convertStringToTitleCase(currentTheme) }}
+                                </p>
+                                <div class="flex">
+                                    <div
 
-                            <div class="flex justify-between">
-                                <!-- Theme Selector -->
-                                <div data-testid="hamburger-menu-theme-switcher">
-                                    <p class="mb-1 text-primary-text">
-                                        {{ convertStringToTitleCase(currentTheme) }}
-                                    </p>
-                                    <div class="flex">
-                                        <div
+                                        class="w-7 h-7 mr-1 rounded-full"
+                                        title="Original Theme"
+                                        style="background-color:#0EB0C0"
+                                        :class="getSelectedTheme('original')"
+                                        @click="setTheme('original')"
+                                    />
 
-                                            class="w-7 h-7 mr-1 rounded-full"
-                                            title="Original Theme"
-                                            style="background-color:#0EB0C0"
-                                            :class="getSelectedTheme('original')"
-                                            @click="setTheme('original')"
-                                        />
-
-                                        <!-- <div
+                                    <!-- <div
                                         v-if="lightDarkMode == 'DARK'"
                                         class="w-7 h-7 mr-1 rounded-full"
                                         title="Original Theme Dark"
@@ -197,15 +197,15 @@
                                         :class="getSelectedTheme('dark')"
                                         @click="setTheme('dark')"
                                     /> -->
-                                        <div
+                                    <div
 
-                                            class="w-7 h-7 mr-1 bg-primary rounded-full"
-                                            title="Coral Theme"
-                                            style="background-color: #ED6C5A;"
-                                            :class="getSelectedTheme('coral')"
-                                            @click="setTheme('coral')"
-                                        />
-                                        <!-- <div
+                                        class="w-7 h-7 mr-1 bg-primary rounded-full"
+                                        title="Coral Theme"
+                                        style="background-color: #ED6C5A;"
+                                        :class="getSelectedTheme('coral')"
+                                        @click="setTheme('coral')"
+                                    />
+                                    <!-- <div
                                         v-if="lightDarkMode == 'DARK'"
                                         class="w-7 h-7 mr-1 bg-primary rounded-full"
                                         title="Coral Theme Dark"
@@ -213,14 +213,14 @@
                                         :class="getSelectedTheme('coral')"
                                         @click="setTheme('coral-dark')"
                                     /> -->
-                                        <div
+                                    <div
 
-                                            class="w-7 h-7 mr-1 rounded-full"
-                                            title="Violet Theme"
-                                            style="background-color: #A45D9A;"
-                                            :class="getSelectedTheme('violet')"
-                                            @click="setTheme('violet')"
-                                        />
+                                        class="w-7 h-7 mr-1 rounded-full"
+                                        title="Violet Theme"
+                                        style="background-color: #A45D9A;"
+                                        :class="getSelectedTheme('violet')"
+                                        @click="setTheme('violet')"
+                                    />
                                     <!-- <div
                                         v-if="lightDarkMode == 'DARK'"
                                         class="w-7 h-7 mr-1 rounded-full"
@@ -230,233 +230,145 @@
                                         @click="setTheme('violet-dark')"
                                     /> -->
 
-                                        <!-- <div
+                                    <!-- <div
                                     class="w-7 h-7 mr-1 rounded-md"
                                     title="Ocean Theme"
                                     style="background-color: #245A7D;"
                                     :class="getSelectedTheme('ocean')"
                                     @click="setTheme('ocean')"
                                 /> -->
-                                    </div>
-                                </div>
-
-                                <!-- Mode Selector -->
-
-                                <div
-                                    data-testid="hamburger-menu-theme-switcher"
-                                >
-                                    <p
-                                        class="mb-1 text-primary-text"
-                                    >
-                                        Dark Mode
-                                    </p>
-                                    <!-- <Toggle @theme-change="(i) => (lightDarkMode = i)" /> -->
-                                    <Toggle
-                                        :state="lightMode"
-                                        @theme-change="changeLightDark"
-                                    />
                                 </div>
                             </div>
 
-                            <!-- Accessible Theme Selector -->
-                            <ColorChanger
-                                :id="'original'"
-                                :dot-color="'#0EB0C0'"
-                                :name="'Original'"
-                                :selected="true"
-                                :light-dark-toggle="true"
-                                @click="setTheme('original')"
-                            />
-                            <ColorChanger
-                                :id="'coral'"
-                                :dot-color="'#ED6C5A'"
-                                :name="'Coral'"
-                                :selected="true"
-                                :light-dark-toggle="true"
-                                @click="setTheme('coral')"
-                            />
-                            <ColorChanger
-                                :id="'violet'"
-                                :dot-color="'#A45D9A'"
-                                :name="'Violet'"
-                                :selected="true"
-                                :light-dark-toggle="true"
-                                @click="setTheme('violet')"
-                            />
-                            <ColorChanger
-                                :id="'accessible-high-contrast'"
-                                :dot-color="'#EEFF02FF'"
-                                :name="'High Contrast'"
-                                :selected="true"
-                                :light-dark-toggle="false"
-                                @click="setTheme('accessible-high-contrast')"
-                            />
-                            <ColorChanger
-                                :id="'accessible-high-contrast'"
-                                :dot-color="'#FF0000FF'"
-                                :name="'Red-Green Color Blindness'"
-                                :selected="true"
-                                :light-dark-toggle="false"
-                                @click="setTheme('accessible-red-green')"
-                            />
-                            <div data-testid="hamburger-menu-theme-switcher">
-                                <div class="flex flex-col gap-3">
-                                    <div class="flex items-center gap-3">
-                                        <div
-                                            class="w-7 h-7 mr-1 rounded-full"
-                                            title="Original Theme"
-                                            style="background-color:#0EB0C0"
-                                            :class="getSelectedTheme('original')"
-                                            @click="setTheme('original')"
-                                        />
-                                        <p>Original</p>
-                                    </div>
-                                    <div class="flex items-center gap-3">
-                                        <div
-                                            class="w-7 h-7 mr-1 bg-primary rounded-full"
-                                            title="Coral Theme"
-                                            style="background-color: #ED6C5A;"
-                                            :class="getSelectedTheme('coral')"
-                                            @click="setTheme('coral')"
-                                        />
-                                        <p>Coral</p>
-                                    </div>
-                                    <div class="flex items-center gap-3">
-                                        <div
+                            <!-- Mode Selector -->
 
-                                            class="w-7 h-7 mr-1 rounded-full"
-                                            title="Violet Theme"
-                                            style="background-color: #A45D9A;"
-                                            :class="getSelectedTheme('violet')"
-                                            @click="setTheme('violet')"
-                                        />
-                                        <p>Violet</p>
-                                    </div>
-
-                                    <p class="mb-1 text-primary-text">
-                                        Accessible colors
-                                    </p>
-                                    <div class="flex items-center gap-3">
-                                        <div
-                                            class="w-7 h-7 mr-1 rounded-full"
-                                            title="Default Theme"
-                                            style="background-color: #EEFF02FF;"
-                                            :class="getSelectedTheme('accessible-high-contrast')"
-                                            alt="Accessible: High Contrast Theme"
-                                            @click="setTheme('accessible-high-contrast')"
-                                        />
-                                        <p>High Contrast</p>
-                                    </div>
-
-                                    <div class="flex items-center gap-3">
-                                        <div
-                                            class="w-7 h-7 mr-1 rounded-full"
-                                            title="Accessible: Daltonian Color Blindness"
-                                            style="background-color: #FF0000FF;"
-                                            :class="getSelectedTheme('accessible-red-green')"
-                                            alt="Accessible: Daltonian Color Blindness"
-                                            @click="setTheme('accessible-red-green')"
-                                        />
-                                        <p>Red Green Blindness</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Footer Section -->
-                    <div
-                        data-testid="hamburger-menu-footer-section"
-                        class="flex flex-col gap-5 px-5"
-                    >
-                        <div
-                            data-testid="hamburger-menu-footer-legal"
-                            class="flex gap-4"
-                        >
-                            <NuxtLink
-                                to="/terms"
-                                data-testid="hamburger-menu-footer-legal-terms"
+                            <div
+                                data-testid="hamburger-menu-theme-switcher"
                             >
-                                <span
-                                    class="text-primary-text"
-                                    @click="closeMenu()"
+                                <p
+                                    class="mb-1 text-primary-text"
                                 >
-                                    {{ t('footer.terms') }}
-                                </span>
-                            </NuxtLink>
-                            <NuxtLink
-                                to="/privacypolicy"
-                                data-testid="hamburger-menu-footer-legal-privacy"
-                            >
-                                <span
-                                    class="text-primary-text"
-                                    @click="closeMenu()"
-                                >
-                                    {{ t('footer.privacy') }}
-                                </span>
-                            </NuxtLink>
-                        </div>
-                        <div
-                            data-testid="hamburger-menu-footer-dev-links"
-                            class="flex gap-6"
-                        >
-                            <NuxtLink
-                                to="https://github.com/ourjapanlife"
-                                target="_blank"
-                            >
-                                <SVGGithubIcon
-                                    data-testid="hamburger-menu-github-icon"
-                                    alt="hamburger menu"
-                                    class="w-8 h-10"
+                                    Dark Mode
+                                </p>
+                                <!-- <Toggle @theme-change="(i) => (lightDarkMode = i)" /> -->
+                                <Toggle
+                                    :state="lightMode"
+                                    @theme-change="changeLightDark"
                                 />
-                            </NuxtLink>
-                            <!-- Netlify Icons are available here: https://www.netlify.com/press/#badges -->
-                            <NuxtLink
-                                to="https://www.netlify.com"
-                                target="_blank"
-                                data-testid="hamburger-menu-footer-dev-links-netlify"
-                            >
-                                <img
-                                    src="https://www.netlify.com/v3/img/components/netlify-light.svg"
-                                    alt="Deploys by Netlify"
-                                    class="w-20 h-10 "
-                                >
-                            </NuxtLink>
-                        </div>
-                        <div
-                            data-testid="hamburger-menu-footer-copyright"
-                            class="text-xs text-primary-text-muted"
-                        >
-                            <div>
-                                © {{ new Date().getUTCFullYear() }} {{ t('hamburgerMenu.copyright') }}
                             </div>
+                        </div>
+
+                        <!-- Accessible Theme Selector -->
+
+                        <!-- light-dark-toggle should be hasLightDarkToggleEnabled -->
+
+                        <ColorChanger
+                            v-for="theme in themes"
+                            :id="theme.id"
+                            :key="theme.id"
+                            :dot-color="theme.dotColor"
+                            :name="theme.name"
+                            :selected="theme.selected"
+                            :light-dark-toggle="theme.lightDarkToggle"
+                            :state="lightMode"
+                            @click="setTheme(theme.id)"
+                            @theme-change="changeLightDark"
+                        />
+
+                        <!-- Footer Section -->
+                        <div
+                            data-testid="hamburger-menu-footer-section"
+                            class="flex flex-col gap-5 px-5"
+                        >
                             <div
                                 data-testid="hamburger-menu-footer-legal"
-                                class="flex"
+                                class="flex gap-4"
                             >
-                                <span
-                                    data-testid="npo-link"
-                                    class="mt-0.5"
+                                <NuxtLink
+                                    to="/terms"
+                                    data-testid="hamburger-menu-footer-legal-terms"
                                 >
-                                    NPO
-                                    <NuxtLink
-                                        to="https://www.npo-hiroba.or.jp/search/zoom.php?pk=121289"
-                                        target="_blank"
-                                        class="underline"
-                                    >#9011005010215
-                                    </NuxtLink>
-                                </span>
-                                <span
-                                    data-testid="npo-balance-sheet-link"
-                                    class="ml-2 mt-0.5"
+                                    <span
+                                        class="text-primary-text"
+                                        @click="closeMenu()"
+                                    >
+                                        {{ t('footer.terms') }}
+                                    </span>
+                                </NuxtLink>
+                                <NuxtLink
+                                    to="/privacypolicy"
+                                    data-testid="hamburger-menu-footer-legal-privacy"
                                 >
-                                    <NuxtLink
-                                        to="https://docs.google.com/spreadsheets/d/1CafQoHn1NNNoRy35QSt_nUZcgKL8QN2M"
-                                        target="_blank"
-                                        class="underline"
-                                    >{{ t('hamburgerMenu.balancesheet') }}
-                                    </NuxtLink>
-                                </span>
+                                    <span
+                                        class="text-primary-text"
+                                        @click="closeMenu()"
+                                    >
+                                        {{ t('footer.privacy') }}
+                                    </span>
+                                </NuxtLink>
+                            </div>
+                            <div
+                                data-testid="hamburger-menu-footer-dev-links"
+                                class="flex gap-6"
+                            >
+                                <NuxtLink
+                                    to="https://github.com/ourjapanlife"
+                                    target="_blank"
+                                >
+                                    <SVGGithubIcon
+                                        data-testid="hamburger-menu-github-icon"
+                                        alt="hamburger menu"
+                                        class="w-8 h-10"
+                                    />
+                                </NuxtLink>
+                                <!-- Netlify Icons are available here: https://www.netlify.com/press/#badges -->
+                                <NuxtLink
+                                    to="https://www.netlify.com"
+                                    target="_blank"
+                                    data-testid="hamburger-menu-footer-dev-links-netlify"
+                                >
+                                    <img
+                                        src="https://www.netlify.com/v3/img/components/netlify-light.svg"
+                                        alt="Deploys by Netlify"
+                                        class="w-20 h-10 "
+                                    >
+                                </NuxtLink>
+                            </div>
+                            <div
+                                data-testid="hamburger-menu-footer-copyright"
+                                class="text-xs text-primary-text-muted"
+                            >
+                                <div>
+                                    © {{ new Date().getUTCFullYear() }} {{ t('hamburgerMenu.copyright') }}
+                                </div>
+                                <div
+                                    data-testid="hamburger-menu-footer-legal"
+                                    class="flex"
+                                >
+                                    <span
+                                        data-testid="npo-link"
+                                        class="mt-0.5"
+                                    >
+                                        NPO
+                                        <NuxtLink
+                                            to="https://www.npo-hiroba.or.jp/search/zoom.php?pk=121289"
+                                            target="_blank"
+                                            class="underline"
+                                        >#9011005010215
+                                        </NuxtLink>
+                                    </span>
+                                    <span
+                                        data-testid="npo-balance-sheet-link"
+                                        class="ml-2 mt-0.5"
+                                    >
+                                        <NuxtLink
+                                            to="https://docs.google.com/spreadsheets/d/1CafQoHn1NNNoRy35QSt_nUZcgKL8QN2M"
+                                            target="_blank"
+                                            class="underline"
+                                        >{{ t('hamburgerMenu.balancesheet') }}
+                                        </NuxtLink>
+                                    </span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -470,6 +382,7 @@
 import { useToast } from 'vue-toastification'
 import { useRouter } from 'vue-router'
 import { ref, onMounted } from 'vue'
+import { current } from 'tailwindcss/colors'
 import Toggle from './Toggle.vue'
 import { vCloseOnOutsideClick } from '~/composables/closeOnOutsideClick'
 import SVGHamburgerMenuIcon from '~/assets/icons/hamburger-menu.svg'
@@ -491,7 +404,51 @@ const { t } = useI18n()
 
 // const lightDarkMode = ref('LIGHT')
 
+// change to isLightMode
 const lightMode = ref(true)
+
+const themes = [
+    {
+        id: 'original',
+        dotColor: '#0EB0C0',
+        name: 'Original',
+        selected: true,
+        lightDarkToggle: true,
+        state: lightMode
+    },
+    {
+        id: 'coral',
+        dotColor: '#ED6C5A',
+        name: 'Coral',
+        selected: false,
+        lightDarkToggle: true,
+        state: lightMode
+    },
+    {
+        id: 'violet',
+        dotColor: '#A45D9A',
+        name: 'Violet',
+        selected: false,
+        lightDarkToggle: true,
+        state: lightMode
+    },
+    {
+        id: 'accessible-high-contrast',
+        dotColor: '#EEFF02FF',
+        name: 'High Contrast',
+        selected: false,
+        lightDarkToggle: false,
+        state: lightMode
+    },
+    {
+        id: 'accessible-red-green',
+        dotColor: '#FF0000FF',
+        name: 'Red-Green Color Blindness',
+        selected: false,
+        lightDarkToggle: false,
+        state: lightMode
+    }
+]
 
 // const original = {
 //     LIGHT: 'theme-original',
@@ -552,17 +509,23 @@ async function logout() {
         toast.error(error)
     }
 }
-
+//change changeLightDark to toggleLightDarkMode
 function changeLightDark() {
-    if (currentTheme.value != 'accessible-high-contrast' || currentTheme.value != 'accessible-red-green') {
-        lightMode.value = !lightMode.value
-        localStorage.setItem('lightMode', `${lightMode.value}`)
-        setTheme(currentTheme.value)
-    }
+    lightMode.value = !lightMode.value
+    localStorage.setItem('lightMode', `${lightMode.value}`)
+    setTheme(currentTheme.value)
 }
 
 function setTheme(newTheme: string) {
-    console.log(`Light mode is ${lightMode.value}`)
+    // ---Remove selected from previous theme
+    const selectedTheme = themes.find(theme => theme.selected)
+
+    selectedTheme.selected = !selectedTheme.selected
+
+    // ---Set theme to selected---
+    const identifiedTheme = themes.find(theme => theme.id === newTheme)
+
+    identifiedTheme.selected = !identifiedTheme.selected
 
     const addTheme = function(theme) {
         localStorage.setItem('theme', theme)
@@ -579,7 +542,10 @@ function setTheme(newTheme: string) {
         'theme-accessible-high-contrast',
         'theme-accessible-red-green'
     )
-    if (lightMode.value || newTheme === 'accessible-high-contrast' || newTheme === 'accessible-red-green') {
+
+    const isAccessibleTheme = lightMode.value || newTheme === 'accessible-high-contrast' || newTheme === 'accessible-red-green'
+
+    if (isAccessibleTheme) {
         console.log('Light theme!')
         lightMode.value = true
         document.documentElement.classList.add(`theme-${newTheme}`)
