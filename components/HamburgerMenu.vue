@@ -173,90 +173,6 @@
                                 </NuxtLink>
                             </div>
                         </div>
-                        <div class="flex justify-between">
-                            <!-- Theme Selector -->
-                            <div data-testid="hamburger-menu-theme-switcher">
-                                <p class="mb-1 text-primary-text">
-                                    {{ convertStringToTitleCase(currentTheme) }}
-                                </p>
-                                <div class="flex">
-                                    <div
-
-                                        class="w-7 h-7 mr-1 rounded-full"
-                                        title="Original Theme"
-                                        style="background-color:#0EB0C0"
-                                        :class="getSelectedTheme('original')"
-                                        @click="setTheme('original')"
-                                    />
-
-                                    <!-- <div
-                                        v-if="lightDarkMode == 'DARK'"
-                                        class="w-7 h-7 mr-1 rounded-full"
-                                        title="Original Theme Dark"
-                                        style="background-color:#00FFFF"
-                                        :class="getSelectedTheme('dark')"
-                                        @click="setTheme('dark')"
-                                    /> -->
-                                    <div
-
-                                        class="w-7 h-7 mr-1 bg-primary rounded-full"
-                                        title="Coral Theme"
-                                        style="background-color: #ED6C5A;"
-                                        :class="getSelectedTheme('coral')"
-                                        @click="setTheme('coral')"
-                                    />
-                                    <!-- <div
-                                        v-if="lightDarkMode == 'DARK'"
-                                        class="w-7 h-7 mr-1 bg-primary rounded-full"
-                                        title="Coral Theme Dark"
-                                        style="background-color: #FF1F00;"
-                                        :class="getSelectedTheme('coral')"
-                                        @click="setTheme('coral-dark')"
-                                    /> -->
-                                    <div
-
-                                        class="w-7 h-7 mr-1 rounded-full"
-                                        title="Violet Theme"
-                                        style="background-color: #A45D9A;"
-                                        :class="getSelectedTheme('violet')"
-                                        @click="setTheme('violet')"
-                                    />
-                                    <!-- <div
-                                        v-if="lightDarkMode == 'DARK'"
-                                        class="w-7 h-7 mr-1 rounded-full"
-                                        title="Violet Theme Dark"
-                                        style="background-color: #FF00DB;"
-                                        :class="getSelectedTheme('violet')"
-                                        @click="setTheme('violet-dark')"
-                                    /> -->
-
-                                    <!-- <div
-                                    class="w-7 h-7 mr-1 rounded-md"
-                                    title="Ocean Theme"
-                                    style="background-color: #245A7D;"
-                                    :class="getSelectedTheme('ocean')"
-                                    @click="setTheme('ocean')"
-                                /> -->
-                                </div>
-                            </div>
-
-                            <!-- Mode Selector -->
-
-                            <div
-                                data-testid="hamburger-menu-theme-switcher"
-                            >
-                                <p
-                                    class="mb-1 text-primary-text"
-                                >
-                                    Dark Mode
-                                </p>
-                                <!-- <Toggle @theme-change="(i) => (lightDarkMode = i)" /> -->
-                                <Toggle
-                                    :state="lightMode"
-                                    @theme-change="changeLightDark"
-                                />
-                            </div>
-                        </div>
 
                         <!-- Accessible Theme Selector -->
 
@@ -407,7 +323,7 @@ const { t } = useI18n()
 // change to isLightMode
 const lightMode = ref(true)
 
-const themes = [
+const themes = reactive([
     {
         id: 'original',
         dotColor: '#0EB0C0',
@@ -448,7 +364,7 @@ const themes = [
         lightDarkToggle: false,
         state: lightMode
     }
-]
+])
 
 // const original = {
 //     LIGHT: 'theme-original',
@@ -519,9 +435,9 @@ function changeLightDark() {
 function setTheme(newTheme: string) {
     // ---Remove selected from previous theme
     const selectedTheme = themes.find(theme => theme.selected)
-
+    console.log(selectedTheme)
     selectedTheme.selected = !selectedTheme.selected
-
+    console.log(selectedTheme)
     // ---Set theme to selected---
     const identifiedTheme = themes.find(theme => theme.id === newTheme)
 

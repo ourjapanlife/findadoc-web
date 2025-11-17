@@ -9,7 +9,9 @@
                 title="Original Theme"
                 :style="{ backgroundColor: dotColor }"
             />
-            <p>{{ name }}</p>
+            <p class="text-primary">
+                {{ name }}
+            </p>
             <Toggle
                 :state="state"
                 @theme-change="changeLight"
@@ -24,7 +26,9 @@
                 title="Original Theme"
                 :style="{ backgroundColor: dotColor }"
             />
-            <p>{{ name }}</p>
+            <p class="text-primary">
+                {{ name }}
+            </p>
         </div>
         <!-- <div
             v-else-if="selected"
@@ -41,7 +45,9 @@
                 title="Original Theme"
                 :style="{ backgroundColor: dotColor }"
             />
-            <p>{{ name }}</p>
+            <p class="text-primary">
+                {{ name }}
+            </p>
         </div>
     </div>
 </template>
