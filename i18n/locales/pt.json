@@ -1,10 +1,34 @@
 {
   "about": {
-    "heading": "Sobre Find a Doc, Japan",
-    "members": "Membros",
-    "subheading": "Conectando pessoas no Japão aos serviços de saúde que eles precisam, no idioma que eles precisam.",
-    "paragraph1": "Em Find a Doc, Japão, nossa missão é promover uma sociedade mais saudável e inclusiva. Nós fornecemos informações de qualidade na área da saúde sem custo em muitos idiomas para todos, incluindo estrangeiros e profissionais de saúde. Nós almejamos um Japão onde todos, independentemente de nacionalidade ou idioma, possa utilizar o sistema de saúde de forma confiável, e possa encontrar os profissionais certos e conseguir o atendimento médico necessário.",
-    "paragraph2": "Somos uma organização sem fins lucrativos motivada pelo propósito de que todos deveriam ter acesso à informações de saúde como parte de uma vida próspera. Nossas atividades são guiadas por um senso de justiça social, sensibilidade cultural e inovação. Estamos sempre felizes em nos conectar com parceiros no âmbito governamental, iniciativas sem fins lucrativos e comunidade médica. Juntamente aos nossos parceiros, desejamos criar um Japão onde todos tenham acesso a cuidados de saúde, se sintam incluídos e possam viver bem."
+    "heroHeading": "Find a Doc, Japan",
+    "heroSubheading": "Conectando você aos serviços de saúde de que precisa, no seu idioma",
+    "heroGetStarted": "Começar",
+    "heroLearnMore": "Saiba mais",
+    "storyHeader": "Nossa história",
+    "storyParagraph1": "Fundada em 2020 durante a pandemia, nossa missão é promover uma sociedade mais saudável e inclusiva. Oferecemos gratuitamente informações de saúde de qualidade em vários idiomas para todos, incluindo estrangeiros e profissionais de saúde. Buscamos um Japão onde todas as pessoas, independentemente da nacionalidade ou do idioma, possam navegar com confiança pelo sistema de saúde, encontrar os médicos certos e receber os cuidados necessários.",
+    "storyParagraph2": "Somos uma organização sem fins lucrativos movida pelo ideal de que todos devem ter acesso a informações de saúde como parte de uma vida plena. Nossas atividades são guiadas pela justiça social, sensibilidade cultural e inovação. Estamos sempre abertos a colaborar com parceiros governamentais, organizações sem fins lucrativos e profissionais da saúde. Juntos, esperamos construir um Japão onde todos tenham acesso aos cuidados médicos, se sintam incluídos e possam viver bem.",
+    "btnImpact": "Nosso impacto",
+    "btnContributors": "Contribuidores",
+    "btnBoard": "Diretoria da ONG",
+    "btnMascots": "Mascotes",
+    "btnInvolve": "Participe",
+    "impactHeader": "Nosso impacto",
+    "impactDoctors": "300+ médicos cadastrados",
+    "impactUsers": "100+ usuários mensais",
+    "impactVolunteer": "Movido por voluntários e pela comunidade",
+    "contributorsHeader": "Contribuidores",
+    "boardHeader": "Diretoria da ONG",
+    "mascotsHeader": "Mascotes",
+    "mascotsAwa": "Awa",
+    "mascotsMichael": "Michael",
+    "mascotsTamika": "Tamika",
+    "mascotsSachi": "Sachi",
+    "mascotsChiko": "Chiko",
+    "involveHeader": "Participe",
+    "involveAdd": "Adicionar um médico",
+    "involveGit": "Contribuir",
+    "involveLinkedin": "Siga-nos",
+    "involveFeedback": "Enviar feedback"
   },
   "footer": {
     "terms": "Termos",
@@ -410,6 +434,15 @@
     "displayName": "Nome de exibição",
     "healthcareProfessionalName": "Profile Image",
     "updateButton": "Update Settings"
+  },
+  "profile": {
+    "edit": "Edit Profile",
+    "username": "Username",
+    "email": "Email",
+    "profilePhoto": "Profile Photo",
+    "save": "Save Changes",
+    "updatedSuccessfully": "Profile updated successfully",
+    "updateFailed": "Profile update failed"
   },
   "authErrors": {
     "loggingIn": "Error logging in:",

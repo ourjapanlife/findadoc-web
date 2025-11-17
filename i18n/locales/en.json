@@ -1,10 +1,34 @@
 {
   "about": {
-    "heading": "About Find a Doc, Japan",
-    "members": "Members",
-    "subheading": "Connecting you to the healthcare services you need, in your language",
-    "paragraph1": "At Find a Doc, Japan, our mission is to promote a healthier and more inclusive society. We offer quality health information for free in many languages for everyone, including foreigners and medical professionals. We aim for a Japan where all people, regardless of nationality or language, can confidently navigate the healthcare system, find the right doctors and get the healthcare they need.",
-    "paragraph2": "We are a non-profit organization driven by the ideal that everyone should have access to health information as part of a flourishing life. Our activities are guided by a sense of social justice, cultural sensitivity and innovation. We are always happy to connect with partners in the governmental, non-profit and medical communities. Together with our partners, we hope to create a Japan where everyone has access to healthcare, feels included and can live well."
+    "heroHeading": "Find a Doc, Japan",
+    "heroSubheading": "Connecting you to the healthcare services you need, in your language",
+    "heroGetStarted": "Get Started",
+    "heroLearnMore": "Learn More",
+    "storyHeader": "Our Story",
+    "storyParagraph1": "Founded in 2020 during the pandemic, our mission is to promote a healthier and more inclusive society. We offer quality health information for free in many languages for everyone, including foreigners and medical professionals. We aim for a Japan where all people, regardless of nationality or language, can confidently navigate the healthcare system, find the right doctors and get the healthcare they need.",
+    "storyParagraph2": "We are a non-profit organization driven by the ideal that everyone should have access to health information as part of a flourishing life. Our activities are guided by a sense of social justice, cultural sensitivity and innovation. We are always happy to connect with partners in the governmental, non-profit and medical communities. Together with our partners, we hope to create a Japan where everyone has access to healthcare, feels included and can live well.",
+    "btnImpact": "Our Impact So Far",
+    "btnContributors": "Contributors",
+    "btnBoard": "NPO Board",
+    "btnMascots": "Mascots",
+    "btnInvolve": "Get Involved",
+    "impactHeader": "Our Impact So Far",
+    "impactDoctors": "300+ Doctors Registered",
+    "impactUsers": "100+ Monthly Users",
+    "impactVolunteer": "Volunteer and Community Driven",
+    "contributorsHeader": "Contributors",
+    "boardHeader": "NPO Board",
+    "mascotsHeader": "Mascots",
+    "mascotsAwa": "Awa",
+    "mascotsMichael": "Michael",
+    "mascotsTamika": "Tamika",
+    "mascotsSachi": "Sachi",
+    "mascotsChiko": "Chiko",
+    "involveHeader": "Get Involved",
+    "involveAdd": "Add a Doctor",
+    "involveGit": "Contribute",
+    "involveLinkedin": "Follow Us",
+    "involveFeedback": "Give Feedback"
   },
   "authErrors":{
     "loggingIn": "Error logging in:",
@@ -442,5 +466,14 @@
     "displayName": "Display Name",
     "healthcareProfessionalName": "Profile Image",
     "updateButton": "Update Settings"
+  },
+  "profile": {
+    "edit": "Edit Profile",
+    "username": "Username",
+    "email": "Email",
+    "profilePhoto": "Profile Photo",
+    "save": "Save Changes",
+    "updatedSuccessfully": "Profile updated successfully",
+    "updateFailed": "Profile update failed"
   }
 }

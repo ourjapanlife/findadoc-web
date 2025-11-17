@@ -1,10 +1,34 @@
 {
   "about": {
-    "heading": "Informazioni su Find a Doc, Japan",
-    "members": "Membri",
-    "subheading": "Collegare le persone in Giappone ai servizi sanitari di cui hanno bisogno, nelle lingue di cui hanno bisogno.",
-    "paragraph1": "In Find a Doc, Japan, la nostra missione è promuovere una società più sana e inclusiva. Offriamo informazioni sanitarie di qualità gratuitamente in molte lingue per tutti, inclusi stranieri e professionisti medici. Puntiamo a un Giappone in cui tutte le persone, indipendentemente dalla nazionalità o dalla lingua, possano navigare con fiducia nel sistema sanitario, trovare i medici giusti e ottenere le cure di cui hanno bisogno.",
-    "paragraph2": "Siamo un'organizzazione non profit guidata dall'ideale che tutti dovrebbero avere accesso alle informazioni sanitarie come parte di una vita prospera. Le nostre attività sono guidate da un senso di giustizia sociale, sensibilità culturale e innovazione. Siamo sempre felici di collaborare con partner nelle comunità governative, non profit e mediche. Insieme ai nostri partner, speriamo di creare un Giappone in cui tutti abbiano accesso all'assistenza sanitaria, si sentano inclusi e possano vivere bene."
+    "heroHeading": "Find a Doc, Japan",
+    "heroSubheading": "Ti mettiamo in contatto con i servizi sanitari di cui hai bisogno, nella tua lingua",
+    "heroGetStarted": "Inizia",
+    "heroLearnMore": "Scopri di più",
+    "storyHeader": "La nostra storia",
+    "storyParagraph1": "Fondata nel 2020 durante la pandemia, la nostra missione è promuovere una società più sana e inclusiva. Offriamo informazioni sanitarie di qualità gratuitamente e in molte lingue per tutti, inclusi stranieri e professionisti sanitari. Il nostro obiettivo è un Giappone in cui tutte le persone, indipendentemente da nazionalità o lingua, possano orientarsi nel sistema sanitario, trovare i medici giusti e ottenere l’assistenza necessaria.",
+    "storyParagraph2": "Siamo un’organizzazione non profit guidata dall’idea che tutti dovrebbero avere accesso alle informazioni sanitarie per vivere una vita piena. Le nostre attività sono guidate dalla giustizia sociale, dalla sensibilità culturale e dall’innovazione. Siamo sempre felici di collaborare con partner governativi, non profit e del settore medico. Insieme speriamo di creare un Giappone in cui tutti possano accedere all’assistenza sanitaria, sentirsi inclusi e vivere bene.",
+    "btnImpact": "Il nostro impatto",
+    "btnContributors": "Collaboratori",
+    "btnBoard": "Consiglio direttivo",
+    "btnMascots": "Mascotte",
+    "btnInvolve": "Partecipa",
+    "impactHeader": "Il nostro impatto",
+    "impactDoctors": "300+ medici registrati",
+    "impactUsers": "100+ utenti mensili",
+    "impactVolunteer": "Guidato da volontari e dalla comunità",
+    "contributorsHeader": "Collaboratori",
+    "boardHeader": "Consiglio direttivo",
+    "mascotsHeader": "Mascotte",
+    "mascotsAwa": "Awa",
+    "mascotsMichael": "Michael",
+    "mascotsTamika": "Tamika",
+    "mascotsSachi": "Sachi",
+    "mascotsChiko": "Chiko",
+    "involveHeader": "Partecipa",
+    "involveAdd": "Aggiungi un medico",
+    "involveGit": "Contribuisci",
+    "involveLinkedin": "Seguici",
+    "involveFeedback": "Lascia un feedback"
   },
   "serverErrorMessages": {
     "errorCodeMessagingNeeded": "Il codice di errore del server non ha un messaggio per l'utente. Si prega di aggiungerne uno.",
@@ -409,6 +433,15 @@
     "review": "Review",
     "createdDate": "Created on",
     "updatedDate": "Updated last"
+  },
+  "profile": {
+    "edit": "Edit Profile",
+    "username": "Username",
+    "email": "Email",
+    "profilePhoto": "Profile Photo",
+    "save": "Save Changes",
+    "updatedSuccessfully": "Profile updated successfully",
+    "updateFailed": "Profile update failed"
   },
   "authErrors": {
     "loggingIn": "Error logging in:",

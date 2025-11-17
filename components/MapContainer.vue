@@ -14,6 +14,7 @@
             :center="currentLocation"
             :zoom="currentZoom"
             :gesture-handling="'greedy'"
+            @click="handleMapClick"
             @drag="handleMapMovement"
             @zoom_changed="handleZoomChanged"
         >
@@ -31,7 +32,7 @@
                             lng: location.mapLongitude ?? defaultLocation.lng,
                         },
                     }"
-                    @click="handlePinClick(location.id)"
+                    @click="(event: MouseEvent) => handlePinClick(location.id, event)"
                 >
                     <div style="text-align: center">
                         <SVGMapPin
@@ -144,7 +145,9 @@ const isMapMovingFromSearchResults = ref(false)
 // Emit events for map movement
 const emit = defineEmits(['map-moved'])
 
-const handlePinClick = (resultId: string) => {
+const handlePinClick = (resultId: string, event?: MouseEvent) => {
+    event?.stopPropagation() // Prevent the map click event
+
     //Let's show the result details
     searchResultsStore.setActiveFacility(resultId)
     bottomSheetStore.showBottomSheet(BottomSheetType.SearchResultDetails)
@@ -154,6 +157,14 @@ const handlePinClick = (resultId: string) => {
     nextTick(() => {
         setLocation(currentLocation.value.lat, currentLocation.value.lng)
     })
+}
+
+const handleMapClick = (_event: google.maps.MapMouseEvent) => {
+    // Close the panel if a facility is active
+    if (searchResultsStore.activeFacilityId) {
+        bottomSheetStore.showBottomSheet(BottomSheetType.SearchResultsList)
+        searchResultsStore.clearActiveSearchResult()
+    }
 }
 
 onMounted(() => {

@@ -3885,6 +3885,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@pinia/testing@npm:^1.0.2":
+  version: 1.0.2
+  resolution: "@pinia/testing@npm:1.0.2"
+  peerDependencies:
+    pinia: ">=3.0.3"
+  checksum: 10/1a5c2118b362f88cc8fcbd585f25c05cd7ddf9be8c01b351d59186172b389cc1f278cdab124b3e280976a0b3e53e0f52ba3fc46fd51bf74ed9ea003d5252e346
+  languageName: node
+  linkType: hard
+
 "@pkgjs/parseargs@npm:^0.11.0":
   version: 0.11.0
   resolution: "@pkgjs/parseargs@npm:0.11.0"
@@ -9671,6 +9680,7 @@ __metadata:
     "@nuxt/types": "npm:^2.18.1"
     "@nuxtjs/i18n": "npm:^9.1.0"
     "@pinia/nuxt": "npm:^0.5.2"
+    "@pinia/testing": "npm:^1.0.2"
     "@stylistic/eslint-plugin": "npm:^2.6.1"
     "@swc/core": "npm:^1.7.6"
     "@testing-library/vue": "npm:^8.1.0"

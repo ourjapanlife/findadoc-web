@@ -34,7 +34,7 @@
                     role="img"
                     alt="linkedin icon"
                     title="linkedin icon"
-                    class="social-icon w-8 h-8"
+                    class="social-icon w-8 h-8 mx-2"
                 />
             </a>
             <a
@@ -49,7 +49,7 @@
                     role="img"
                     alt="github icon"
                     title="github icon"
-                    class="social-icon w-8 h-8 ml-1"
+                    class="social-icon w-8 h-8 mx-2"
                 />
             </a>
         </div>
