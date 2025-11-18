@@ -1,11 +1,5 @@
 <template>
     <label class="switch">
-        <!-- <input
-            v-if="state"
-
-            type="checkbox"
-            @input="toggleDarkLightMode"
-        > -->
 
         <input
             id="isChecked"
@@ -17,10 +11,6 @@
             class="slider round bg-neutral-500"
             :class="!props.state ? 'bg-primary' :'bg-neutral-500'"
         />
-        <!-- <span
-            v-else
-            class="slider round bg-primary"
-        /> -->
     </label>
 </template>
 
@@ -34,10 +24,6 @@ const toggleChecked = !props.state
 const emit = defineEmits(['theme-change'])
 
 const toggleDarkLightMode = () => {
-    // refs.value.state = !refs.value.state
-
-    // props.state ? toggleChecked = true : toggleChecked = false
-    console.log(`refs.state is currently ${props.state}`)
     emit('theme-change', props.state)
 }
 </script>
@@ -63,7 +49,6 @@ const toggleDarkLightMode = () => {
     left: 0;
     right: 0;
     bottom: 0;
-    /* background-color: #ccc; */
     -webkit-transition: .4s;
     transition: .4s;
     }
@@ -81,7 +66,6 @@ const toggleDarkLightMode = () => {
     }
 
     input:checked + .slider {
-    /* background-color: red; */
     }
 
     input:focus + .slider {

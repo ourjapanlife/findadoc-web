@@ -185,7 +185,6 @@
                             :dot-color="theme.dotColor"
                             :name="theme.name"
                             :selected="theme.selected"
-                            :light-dark-toggle="theme.lightDarkToggle"
                             :state="isDarkMode"
                             @click="setTheme(theme.id)"
                             @theme-change="toggleLightDarkMode"
@@ -311,60 +310,9 @@ import { convertStringToTitleCase } from '~/utils/stringUtils'
 const authStore = useAuthStore()
 const toast = useToast()
 const router = useRouter()
-
-const isMenuOpen = ref(false)
-
-const currentTheme = ref('original')
-
 const { t } = useI18n()
 
-// const lightDarkMode = ref('LIGHT')
-
-// change to isLightMode
-const isDarkMode = ref(false)
-
-const themes = reactive([
-    {
-        id: 'original',
-        dotColor: '#0EB0C0',
-        name: 'Original',
-        selected: true,
-        lightDarkToggle: true,
-        state: isDarkMode
-    },
-    {
-        id: 'coral',
-        dotColor: '#ED6C5A',
-        name: 'Coral',
-        selected: false,
-        lightDarkToggle: true,
-        state: isDarkMode
-    },
-    {
-        id: 'violet',
-        dotColor: '#A45D9A',
-        name: 'Violet',
-        selected: false,
-        lightDarkToggle: true,
-        state: isDarkMode
-    },
-    {
-        id: 'accessible-high-contrast',
-        dotColor: '#EEFF02FF',
-        name: 'High Contrast',
-        selected: false,
-        lightDarkToggle: false,
-        state: isDarkMode
-    },
-    {
-        id: 'accessible-red-green',
-        dotColor: '#FF0000FF',
-        name: 'Red-Green Color Blindness',
-        selected: false,
-        lightDarkToggle: false,
-        state: isDarkMode
-    }
-])
+const isMenuOpen = ref(false)
 
 function openMenu() {
     isMenuOpen.value = true
@@ -383,7 +331,51 @@ async function logout() {
         toast.error(error)
     }
 }
-//change toggleLightDarkMode to toggleLightDarkMode
+
+// Theme Changer
+
+const currentTheme = ref('original')
+
+const isDarkMode = ref(false)
+
+const themes = reactive([
+    {
+        id: 'original',
+        dotColor: '#0EB0C0',
+        name: 'Original',
+        selected: true,
+        state: isDarkMode
+    },
+    {
+        id: 'coral',
+        dotColor: '#ED6C5A',
+        name: 'Coral',
+        selected: false,
+        state: isDarkMode
+    },
+    {
+        id: 'violet',
+        dotColor: '#A45D9A',
+        name: 'Violet',
+        selected: false,
+        state: isDarkMode
+    },
+    {
+        id: 'accessible-high-contrast',
+        dotColor: '#EEFF02FF',
+        name: 'High Contrast',
+        selected: false,
+        state: isDarkMode
+    },
+    {
+        id: 'accessible-red-green',
+        dotColor: '#FF0000FF',
+        name: 'Red-Green Color Blindness',
+        selected: false,
+        state: isDarkMode
+    }
+])
+
 function toggleLightDarkMode() {
     isDarkMode.value = !isDarkMode.value
     localStorage.setItem('isDarkMode', `${isDarkMode.value}`)
@@ -393,9 +385,8 @@ function toggleLightDarkMode() {
 function setTheme(newTheme: string) {
     // ---Remove selected from previous theme
     const selectedTheme = themes.find(theme => theme.selected)
-    console.log(selectedTheme)
     selectedTheme.selected = !selectedTheme.selected
-    console.log(selectedTheme)
+
     // ---Set theme to selected---
     const identifiedTheme = themes.find(theme => theme.id === newTheme)
 
@@ -414,14 +405,12 @@ function setTheme(newTheme: string) {
         'theme-coral-dark',
         'theme-violet-dark',
         'theme-accessible-high-contrast',
-        'theme-accessible-red-green'
+        'theme-accessible-red-green',
+        'theme-accessible-high-contrast-dark',
+        'theme-accessible-red-green-dark'
     )
 
-    const isAccessibleTheme = isDarkMode.value || newTheme === 'accessible-high-contrast' || newTheme === 'accessible-red-green'
-
-    if (isAccessibleTheme) {
-        console.log('Light theme!')
-        isDarkMode.value = true
+    if (isDarkMode.value) {
         document.documentElement.classList.add(`theme-${newTheme}`)
         addTheme(newTheme)
     } else {
@@ -430,38 +419,10 @@ function setTheme(newTheme: string) {
     }
 }
 
-// This gives a black border to the currently selected theme
-function getSelectedTheme(theme: string) {
-    if (currentTheme.value === theme) {
-        return 'border-4 border-primary'
-    }
-    return 'border border-gray-300'
-}
-
-// 1. Create themes as objects
-// 2. Have toggle call function
-// 3. Function will swap one of two options for dark or light
-// 4. that option will then get added to to the class list
-
-// function toggleDarkLight() {
-//     if (mode.value == colorMode.Light) {
-//         mode.value = colorMode.Dark
-//         console.log(currentTheme)
-//     } else {
-//         mode.value = colorMode.Light
-//         console.log(currentTheme)
-//     }
-// }
-
 onMounted(() => {
     const saveTheme = localStorage.getItem('theme')
     if (saveTheme) {
         const saveColorMode = localStorage.getItem('isDarkMode') === 'true'
-        // if (saveColorMode) {
-        //     lightDarkMode.value = 'LIGHT'
-        // } else {
-        //     lightDarkMode.value = 'DARK'
-        // }
         currentTheme.value = saveTheme
         isDarkMode.value = saveColorMode
         setTheme(saveTheme)
