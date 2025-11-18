@@ -1,0 +1,111 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`privacypolicy.vue renders correctly 1`] = `
+<div
+  class="overflow-y-auto w-full px-10 md:px-32"
+>
+  <div>
+    <h1
+      class="mb-20 text-black text-5xl font-bold font-sans"
+      data-testid="privacy-heading"
+    >
+      privacyPage.heading
+    </h1>
+  </div>
+  <h2
+    class="mb-10 text-black text-2xl font-normal font-sans"
+    data-testid="privacy-subheading"
+  >
+    privacyPage.subheading
+  </h2>
+  <div
+    class="text-gray-500 text-lg font-normal font-sans"
+  >
+    <p
+      class="mb-10"
+    >
+      privacyPage.date
+    </p>
+    <p
+      class="mb-10"
+    >
+      privacyPage.paragraph1
+    </p>
+    <p
+      class="mb-2 font-bold"
+    >
+      privacyPage.paragraph2
+    </p>
+    <p
+      class="mb-10"
+    >
+      privacyPage.paragraph3
+    </p>
+    <p
+      class="mb-2 font-bold"
+    >
+      privacyPage.paragraph4
+    </p>
+    <p
+      class="mb-10"
+    >
+      privacyPage.paragraph5
+    </p>
+    <p
+      class="mb-2 font-bold"
+    >
+      privacyPage.paragraph6: 
+    </p>
+    <p
+      class="mb-10"
+    >
+      privacyPage.paragraph7
+    </p>
+    <p
+      class="mb-2 font-bold"
+    >
+      privacyPage.paragraph8: 
+    </p>
+    <p
+      class="mb-10"
+    >
+      privacyPage.paragraph9
+    </p>
+    <p
+      class="mb-2 font-bold"
+    >
+      privacyPage.paragraph10
+    </p>
+    <p
+      class="mb-10"
+    >
+      privacyPage.paragraph11
+    </p>
+    <p
+      class="mb-2 font-bold"
+    >
+      privacyPage.paragraph12
+    </p>
+    <p
+      class="mb-10"
+    >
+      privacyPage.paragraph13
+    </p>
+    <p
+      class="mb-2 font-bold"
+    >
+      privacyPage.paragraph14
+    </p>
+    <p
+      class="mb-10"
+    >
+      privacyPage.paragraph15
+    </p>
+    <p
+      class="mb-10"
+    >
+      privacyPage.paragraph16
+    </p>
+  </div>
+</div>
+`;
