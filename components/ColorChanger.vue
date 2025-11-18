@@ -81,10 +81,8 @@ defineProps({
 
 const emit = defineEmits(['theme-change'])
 
-const changeLight = isLightMode => {
-    console.log(isLightMode)
-    emit('theme-change', isLightMode)
+const changeLight = isDarkMode => {
+    console.log(isDarkMode)
+    emit('theme-change', isDarkMode)
 }
-
-console.log('The current light mode is')
 </script>

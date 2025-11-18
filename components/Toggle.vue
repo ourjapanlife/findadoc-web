@@ -1,43 +1,44 @@
 <template>
     <label class="switch">
-        <input
+        <!-- <input
             v-if="state"
+
             type="checkbox"
             @input="toggleDarkLightMode"
-        >
+        > -->
 
         <input
-            v-else
+            id="isChecked"
+            v-model="toggleChecked"
             type="checkbox"
-            checked
             @input="toggleDarkLightMode"
         >
         <span
-            v-if="state"
             class="slider round bg-neutral-500"
+            :class="!props.state ? 'bg-primary' :'bg-neutral-500'"
         />
-        <span
+        <!-- <span
             v-else
             class="slider round bg-primary"
-        />
+        /> -->
     </label>
 </template>
 
 <script setup lang="ts">
-defineProps({
+const props = defineProps({
     state: Boolean
 })
 
-enum ColorMode {
-    Light = 'LIGHT',
-    Dark = 'DARK'
-}
-const theme = ref(ColorMode.Light)
+const toggleChecked = !props.state
+
 const emit = defineEmits(['theme-change'])
 
 const toggleDarkLightMode = () => {
-    theme.value = theme.value === ColorMode.Light ? ColorMode.Dark : ColorMode.Light
-    emit('theme-change', theme.value)
+    // refs.value.state = !refs.value.state
+
+    // props.state ? toggleChecked = true : toggleChecked = false
+    console.log(`refs.state is currently ${props.state}`)
+    emit('theme-change', props.state)
 }
 </script>
 

@@ -186,9 +186,9 @@
                             :name="theme.name"
                             :selected="theme.selected"
                             :light-dark-toggle="theme.lightDarkToggle"
-                            :state="lightMode"
+                            :state="isDarkMode"
                             @click="setTheme(theme.id)"
-                            @theme-change="changeLightDark"
+                            @theme-change="toggleLightDarkMode"
                         />
 
                         <!-- Footer Section -->
@@ -321,7 +321,7 @@ const { t } = useI18n()
 // const lightDarkMode = ref('LIGHT')
 
 // change to isLightMode
-const lightMode = ref(true)
+const isDarkMode = ref(false)
 
 const themes = reactive([
     {
@@ -330,7 +330,7 @@ const themes = reactive([
         name: 'Original',
         selected: true,
         lightDarkToggle: true,
-        state: lightMode
+        state: isDarkMode
     },
     {
         id: 'coral',
@@ -338,7 +338,7 @@ const themes = reactive([
         name: 'Coral',
         selected: false,
         lightDarkToggle: true,
-        state: lightMode
+        state: isDarkMode
     },
     {
         id: 'violet',
@@ -346,7 +346,7 @@ const themes = reactive([
         name: 'Violet',
         selected: false,
         lightDarkToggle: true,
-        state: lightMode
+        state: isDarkMode
     },
     {
         id: 'accessible-high-contrast',
@@ -354,7 +354,7 @@ const themes = reactive([
         name: 'High Contrast',
         selected: false,
         lightDarkToggle: false,
-        state: lightMode
+        state: isDarkMode
     },
     {
         id: 'accessible-red-green',
@@ -362,51 +362,9 @@ const themes = reactive([
         name: 'Red-Green Color Blindness',
         selected: false,
         lightDarkToggle: false,
-        state: lightMode
+        state: isDarkMode
     }
 ])
-
-// const original = {
-//     LIGHT: 'theme-original',
-//     DARK: 'theme-dark'
-// }
-
-// const coral = {
-//     LIGHT: 'theme-coral',
-//     DARK: 'theme-coral-dark'
-// }
-
-// const violet = {
-//     LIGHT: 'theme-violet',
-//     DARK: 'theme-violet-dark'
-// }
-
-// function lightDarkModeSwitcher(passedValue) {
-//     document.documentElement.classList.remove(
-//         'theme-original',
-//         'theme-coral',
-//         'theme-violet',
-//         'theme-original-dark',
-//         'theme-coral-dark',
-//         'theme-violet-dark',
-//         'theme-accessible-high-contrast',
-//         'theme-accessible-red-green'
-//     )
-//     if (currentTheme.value == 'original') {
-//         document.documentElement.classList.add(original[passedValue])
-//         const themeMode = original[passedValue]
-//         console.log(original[passedValue])
-//         console.log(themeMode)
-//     } else if (currentTheme.value == 'coral') {
-//         document.documentElement.classList.add(coral[passedValue])
-//     } else if (currentTheme.value == 'violet') {
-//         document.documentElement.classList.add(violet[passedValue])
-//     }
-//     localStorage.setItem('theme', themeMode)
-//     localStorage.setItem('colorMode', lightOrDark)
-//     lightDarkMode.value = passedValue
-//     console.log(passedValue)
-// }
 
 function openMenu() {
     isMenuOpen.value = true
@@ -425,10 +383,10 @@ async function logout() {
         toast.error(error)
     }
 }
-//change changeLightDark to toggleLightDarkMode
-function changeLightDark() {
-    lightMode.value = !lightMode.value
-    localStorage.setItem('lightMode', `${lightMode.value}`)
+//change toggleLightDarkMode to toggleLightDarkMode
+function toggleLightDarkMode() {
+    isDarkMode.value = !isDarkMode.value
+    localStorage.setItem('isDarkMode', `${isDarkMode.value}`)
     setTheme(currentTheme.value)
 }
 
@@ -459,11 +417,11 @@ function setTheme(newTheme: string) {
         'theme-accessible-red-green'
     )
 
-    const isAccessibleTheme = lightMode.value || newTheme === 'accessible-high-contrast' || newTheme === 'accessible-red-green'
+    const isAccessibleTheme = isDarkMode.value || newTheme === 'accessible-high-contrast' || newTheme === 'accessible-red-green'
 
     if (isAccessibleTheme) {
         console.log('Light theme!')
-        lightMode.value = true
+        isDarkMode.value = true
         document.documentElement.classList.add(`theme-${newTheme}`)
         addTheme(newTheme)
     } else {
@@ -498,14 +456,14 @@ function getSelectedTheme(theme: string) {
 onMounted(() => {
     const saveTheme = localStorage.getItem('theme')
     if (saveTheme) {
-        const saveColorMode = localStorage.getItem('lightMode') === 'true'
+        const saveColorMode = localStorage.getItem('isDarkMode') === 'true'
         // if (saveColorMode) {
         //     lightDarkMode.value = 'LIGHT'
         // } else {
         //     lightDarkMode.value = 'DARK'
         // }
         currentTheme.value = saveTheme
-        lightMode.value = saveColorMode
+        isDarkMode.value = saveColorMode
         setTheme(saveTheme)
         console.log(`Current theme is ${saveTheme} ${saveColorMode}`)
     }
