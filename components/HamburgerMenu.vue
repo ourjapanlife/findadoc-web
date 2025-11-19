@@ -176,19 +176,27 @@
 
                         <!-- Accessible Theme Selector -->
 
-                        <!-- light-dark-toggle should be hasLightDarkToggleEnabled -->
-
-                        <ColorChanger
-                            v-for="theme in themes"
-                            :id="theme.id"
-                            :key="theme.id"
-                            :dot-color="theme.dotColor"
-                            :name="theme.name"
-                            :selected="theme.selected"
-                            :state="isDarkMode"
-                            @click="setTheme(theme.id)"
-                            @theme-change="toggleLightDarkMode"
-                        />
+                        <div>
+                            <P
+                                class="size-full px-5 pt-3 pb-1 text-primary"
+                                @click="toggleThemeVisibility"
+                            >
+                                Color Themes
+                            </p>
+                            <div v-if="themesAreVisible">
+                                <ColorChanger
+                                    v-for="theme in themes"
+                                    :id="theme.id"
+                                    :key="theme.id"
+                                    :dot-color="theme.dotColor"
+                                    :name="theme.name"
+                                    :selected="theme.selected"
+                                    :state="isDarkMode"
+                                    @click="setTheme(theme.id)"
+                                    @theme-change="toggleLightDarkMode"
+                                />
+                            </div>
+                        </div>
 
                         <!-- Footer Section -->
                         <div
@@ -334,6 +342,8 @@ async function logout() {
 
 // Theme Changer
 
+const themesAreVisible = ref(false)
+
 const currentTheme = ref('original')
 
 const isDarkMode = ref(false)
@@ -375,6 +385,10 @@ const themes = reactive([
         state: isDarkMode
     }
 ])
+
+function toggleThemeVisibility() {
+    themesAreVisible.value = !themesAreVisible.value
+}
 
 function toggleLightDarkMode() {
     isDarkMode.value = !isDarkMode.value
