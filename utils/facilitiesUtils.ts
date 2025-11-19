@@ -59,6 +59,43 @@ export function validateCreateFacility(input: CreateFacilityInput): FacilityVali
 /**
  * Validation specific to facility updates.
  */
-export function validateUpdateFacility(input: UpdateFacilityInput): FacilityValidationResult {
-    return validateAddress(input.contact?.address)
+export function validateUpdateFacility(
+    fields: FacilitySectionFields,
+    updatedInput: UpdateFacilityInput
+): FacilityValidationResult {
+    const errors: string[] = []
+    const addressValidation = validateAddress(updatedInput.contact?.address)
+    const addressValidationErrorPresent = !addressValidation.valid
+
+    if (addressValidationErrorPresent) {
+        errors.push(...addressValidation.errors)
+    }
+
+    // List of required keys that must not be empty
+    const alwaysRequiredKeys: (keyof FacilitySectionFields)[] = [
+        'nameEn', 'nameJa',
+        'phone',
+        'postalCode',
+        'cityEn', 'addressLine1En',
+        'cityJa', 'addressLine1Ja',
+        'googlemapsURL',
+        'mapLatitude', 'mapLongitude'
+    ]
+
+    const allRequiredKeys: (keyof FacilitySectionFields)[] = [
+        ...alwaysRequiredKeys,
+        'prefectureEn', 'prefectureJa'
+    ]
+
+    const keysToValidate = addressValidationErrorPresent
+        ? alwaysRequiredKeys
+        : allRequiredKeys
+
+    for (const key of keysToValidate) {
+        const value = fields[key]
+        if (typeof value === 'string' && !value.trim()) {
+            errors.push('Required fields cannot be empty.')
+        }
+    }
+    return { valid: errors.length === 0, errors }
 }
