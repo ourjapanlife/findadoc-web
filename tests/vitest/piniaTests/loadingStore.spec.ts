@@ -30,7 +30,7 @@ describe('LoadingStore', () => {
         loadingStore.setIsLoading(true, 2000)
         expect(loadingStore.isLoading).to.be.true
 
-        // This will fast-forwards fake timers by a specified amount of time
+        // This will fast-forward fake timers by a specified amount of time
         await vi.advanceTimersByTimeAsync(2000)
 
         loadingStore.setIsLoading(false)
@@ -39,4 +39,3 @@ describe('LoadingStore', () => {
         vi.useRealTimers()
     })
 })
-

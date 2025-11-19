@@ -1,7 +1,0 @@
-{
-  "compilerOptions": {
-    "composite": true,
-     "noEmit": false,
-  },
-  "include": ["**/*.jest.test.ts"]
-}

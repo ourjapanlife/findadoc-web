@@ -1,5 +1,5 @@
-import { beforeAll, describe, it, expect, jest } from '@jest/globals'
-import { mount } from '@vue/test-utils'
+import { beforeAll, describe, expect, it, vi } from 'vitest'
+import { shallowMount } from '@vue/test-utils'
 import { createI18n } from 'vue-i18n'
 import About from '~/pages/about.vue'
 
@@ -12,7 +12,7 @@ type MemberData = {
     personalWebsite?: string
 }
 
-jest.mock('~/utils/arrayUtils', () => ({
+vi.mock('~/utils/arrayUtils', () => ({
     shuffleArray: (arr: MemberData[]) => [...arr]
 }))
 
@@ -37,20 +37,14 @@ const i18n = createI18n({
     messages: { 'en-US': {} }
 })
 
-describe('about.vue', () => {
+describe('about.vue (vitest snapshot)', () => {
     it('renders correctly', () => {
-        const wrapper = mount(About, {
+        const wrapper = shallowMount(About, {
             global: {
-                plugins: [i18n],
-                stubs: {
-                    NuxtLink: true,
-                    FadeInTransitionImage: true,
-                    SVGLinkedinIcon: true,
-                    SVGGithubIcon: true
-
-                }
+                plugins: [i18n]
             }
         })
-        expect(wrapper.element).toMatchSnapshot()
+
+        expect(wrapper.html()).toMatchSnapshot()
     })
 })
