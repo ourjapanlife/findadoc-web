@@ -1,0 +1,257 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`about.vue (vitest snapshot) > renders correctly 1`] = `
+"<div class="overflow-y-auto w-full bg-primary-bg">
+  <!-- Hero Section  -->
+  <div class="relative flex flex-col items-center p-10 md:p-14">
+    <!-- <div class="absolute inset-0 bg-black/30"></div> -->
+    <anonymous-stub role="img" alt="pink heart with a white plus in the middle to symbolize health" title="heart icon" class="my-4 h-32 z-10"></anonymous-stub>
+    <h1 data-testid="about-hero-heading" class="mb-12 font-bold text-4xl text-primary-text text-center z-10">about.heroHeading</h1>
+    <p data-testid="about-hero-subheading" class="mb-12 text-2xl text-primary-text text-center z-10">about.heroSubheading</p>
+    <div class="flex gap-8 mb-4 z-10">
+      <nuxt-link-stub to="/" class="outline outline-1 rounded-xl p-4 bg-primary text-primary-text-inverted text-lg font-bold transition-colors text-center"></nuxt-link-stub><button class="outline outline-1 outline-primary/70 rounded-xl text-primary font-bold text-xl p-4 shadow-lg text-center">about.heroLearnMore</button>
+    </div>
+    <anonymous-stub role="img" alt="Characters Together SVG Icon" title="Characters Together" class="md:w-1/3 md:mr-4"></anonymous-stub>
+  </div><!-- Our Story section -->
+  <div id="about-header-container" data-testid="about-header-container" class="flex justify-center items-center">
+    <div id="about-header" data-testid="about-header" class="flex w-4/5 my-12">
+      <div class="flex-1 border-currentColor/70 border self-center"></div>
+      <div class="text-primary-text text-2xl font-bold mx-4 p-2 whitespace-nowrap">about.storyHeader</div>
+      <div class="flex-1 border-currentColor/70 border self-center"></div>
+    </div>
+  </div>
+  <div id="about-findadoc-section" class="flex flex-col items-center px-10 md:px-32">
+    <p data-testid="about-paragraph1" class="mb-6 text-md text-primary-text text-center">about.storyParagraph1</p>
+    <p data-testid="about-paragraph2" class="text-md text-primary-text text-center">about.storyParagraph2</p><!-- Scroll buttons -->
+    <nav id="button-section" class="w-full flex justify-center my-6 md:p-10">
+      <div class="grid grid-cols-1 gap-4 gap-y-8 mt-10 md:grid-cols-5 md:mr-8 md:w-4/5 md:flex md:justify-around"><button class="outline outline-1 outline-primary/70 rounded-xl text-primary hover:text-primary-text-inverted hover:bg-primary font-bold text-xl p-4 shadow-lg text-center">about.btnImpact</button><button class="outline outline-1 outline-primary/70 rounded-xl text-primary hover:text-primary-text-inverted hover:bg-primary font-bold text-xl p-4 shadow-lg">about.btnContributors</button><button class="outline outline-1 outline-primary/70 rounded-xl text-primary hover:text-primary-text-inverted hover:bg-primary font-bold text-xl p-4 shadow-lg">about.btnBoard</button><button class="outline outline-1 outline-primary/70 rounded-xl text-primary hover:text-primary-text-inverted hover:bg-primary font-bold text-xl p-4 shadow-lg">about.btnMascots</button><button class="outline outline-1 outline-primary/70 rounded-xl text-primary hover:text-primary-text-inverted hover:bg-primary font-bold text-xl p-4 shadow-lg">about.btnInvolve</button></div>
+    </nav>
+  </div><!-- Impact Section  -->
+  <div id="impact-header-container" data-testid="impact-header-container" class="flex justify-center items-center">
+    <div id="impact-header" data-testid="impact-header" class="flex w-4/5 my-14">
+      <div class="flex-1 border-currentColor/70 border self-center"></div>
+      <div class="text-primary-text text-2xl font-bold mx-4 p-2 whitespace-nowrap">about.impactHeader</div>
+      <div class="flex-1 border-currentColor/70 border self-center"></div>
+    </div>
+  </div>
+  <div class="grid grid-cols-1 md:grid-cols-3 my-0 md:my-12">
+    <div class="flex flex-col items-center my-6 md:my-0">
+      <anonymous-stub role="img" alt="Doctor SVG Icon" title="Doctor Icon" class="my-4 h-32 fill-primary"></anonymous-stub>
+      <p class="font-semibold text-xl text-primary-text">about.impactDoctors</p>
+    </div>
+    <div class="flex flex-col items-center my-6 md:my-0">
+      <anonymous-stub role="img" alt="User SVG Icon" title="User Icon" class="my-4 h-32 fill-primary"></anonymous-stub>
+      <p class="font-semibold text-xl text-primary-text">about.impactUsers</p>
+    </div>
+    <div class="flex flex-col items-center my-6 md:my-0">
+      <anonymous-stub role="img" alt="Volunteer SVG Icon" title="Volunteer Icon" class="my-4 h-32 fill-primary"></anonymous-stub>
+      <p class="font-semibold text-xl text-primary-text">about.impactVolunteer</p>
+    </div>
+  </div><!-- Contributor Section -->
+  <div id="contributor-header-container" data-testid="contributor-header-container" class="flex justify-center items-center my-4">
+    <div id="contributor-header" data-testid="members-header" class="flex w-4/5 my-14">
+      <div class="flex-1 border-currentColor/70 border self-center"></div>
+      <div class="text-primary-text text-2xl font-bold mx-4 p-2 whitespace-nowrap">about.contributorsHeader</div>
+      <div class="flex-1 border-currentColor/70 border self-center"></div>
+    </div>
+  </div>
+  <div id="contributor-container" data-testid="contributor-container" class="flex justify-center items-center">
+    <div id="contributors" data-testid="contributors" class="grid grid-cols-2 md:grid-cols-5 mx-4 gap-16 pb-10 md:pb-12">
+      <div data-testid="member" class="members-list grid">
+        <member-component-stub avatarimg="/avatars/aaron_culbert.jpg" githuburl="https://github.com/aaronculbert" linkedinurl="https://www.linkedin.com/in/aculbert/" name="Aaron Culbert" datatestid="0" title="Developer"></member-component-stub>
+      </div>
+      <div data-testid="member" class="members-list grid">
+        <member-component-stub avatarimg="/avatars/anissa_chadouli.jpg" githuburl="https://github.com/Anissa3005" linkedinurl="https://www.linkedin.com/in/anissa-chadouli/" name="Anissa Chadouli" datatestid="1" title="Developer"></member-component-stub>
+      </div>
+      <div data-testid="member" class="members-list grid">
+        <member-component-stub avatarimg="/avatars/andrew_leemhuis.jpg" linkedinurl="https://www.linkedin.com/in/andrew-leemhuis-01482718/" name="Andrew Leemhuis" datatestid="2" title="Design"></member-component-stub>
+      </div>
+      <div data-testid="member" class="members-list grid">
+        <member-component-stub avatarimg="/avatars/ann_kilzer.jpg" githuburl="https://github.com/ann-kilzer" name="Ann Kilzer" datatestid="3" title="Developer"></member-component-stub>
+      </div>
+      <div data-testid="member" class="members-list grid">
+        <member-component-stub avatarimg="/avatars/anthony_lavizzo.jpg" githuburl="https://github.com/sylentwulf81" linkedinurl="https://www.linkedin.com/in/anthonylavizzo/" name="Anthony Lavizzo" datatestid="4" title="Developer"></member-component-stub>
+      </div>
+      <div data-testid="member" class="members-list grid">
+        <member-component-stub avatarimg="/avatars/bruno_uemura.jpg" githuburl="https://github.com/bnogimauemura" linkedinurl="https://www.linkedin.com/in/bruno-nogima-uemura-21124a321/" name="Bruno Uemura" datatestid="5" title="Developer"></member-component-stub>
+      </div>
+      <div data-testid="member" class="members-list grid">
+        <member-component-stub avatarimg="/avatars/chris_bowman.jpg" githuburl="https://github.com/ProgressChris88" linkedinurl="https://www.linkedin.com/in/bowman-chris/" name="Chris Bowman" datatestid="6" title="Developer"></member-component-stub>
+      </div>
+      <div data-testid="member" class="members-list grid">
+        <member-component-stub avatarimg="/avatars/chunyan_li.jpg" linkedinurl="https://www.linkedin.com/in/chunyan-li-10/" name="Chunyan Li" datatestid="7" title="Public Health Expert"></member-component-stub>
+      </div>
+      <div data-testid="member" class="members-list grid">
+        <member-component-stub avatarimg="/avatars/davide_ghezzo.jpg" githuburl="https://github.com/Ghezz9" linkedinurl="https://www.linkedin.com/in/davide-ghezzo-a91587206/" name="Davide Ghezzo" datatestid="8" title="Developer"></member-component-stub>
+      </div>
+      <div data-testid="member" class="members-list grid">
+        <member-component-stub avatarimg="/avatars/derek_cameron.jpg" githuburl="https://github.com/deek87" linkedinurl="https://www.linkedin.com/in/derek-cameron-5b5543123/" name="Derek Cameron" datatestid="9" title="Developer"></member-component-stub>
+      </div>
+      <div data-testid="member" class="members-list grid">
+        <member-component-stub avatarimg="/avatars/diego_mendez.jpg" githuburl="https://github.com/Diego-Bittencourt" linkedinurl="https://www.linkedin.com/in/diego-bittencourt-mendes-5b3898a8/" name="Diego Mendez" datatestid="10" title="Developer"></member-component-stub>
+      </div>
+      <div data-testid="member" class="members-list grid">
+        <member-component-stub avatarimg="/avatars/dominik.jpg" githuburl="https://github.com/dominiksakic" name="Dominik" datatestid="11" title="Developer"></member-component-stub>
+      </div>
+      <div data-testid="member" class="members-list grid">
+        <member-component-stub avatarimg="/avatars/eri_yawata.jpg" githuburl="https://github.com/eyawata" linkedinurl="https://www.linkedin.com/in/eriyawata/" name="Eri Yawata" datatestid="12" title="Developer"></member-component-stub>
+      </div>
+      <div data-testid="member" class="members-list grid">
+        <member-component-stub avatarimg="/avatars/evan_peterson.jpg" githuburl="https://github.com/evan-desu" linkedinurl="https://www.linkedin.com/in/evan-peterson-desu/" name="Evan Peterson" datatestid="13" title="Developer"></member-component-stub>
+      </div>
+      <div data-testid="member" class="members-list grid">
+        <member-component-stub avatarimg="/avatars/gustavo_minetoma.jpg" githuburl="https://github.com/gminetoma" linkedinurl="https://www.linkedin.com/in/gustavommalves/" name="Gustavo Minetoma" datatestid="14" title="Developer"></member-component-stub>
+      </div>
+      <div data-testid="member" class="members-list grid">
+        <member-component-stub avatarimg="/avatars/jacob_chae.jpg" githuburl="https://github.com/jbcden" linkedinurl="https://www.linkedin.com/in/jacob-chae-26a862b2/" name="Jacob Chae" datatestid="15" title="Developer"></member-component-stub>
+      </div>
+      <div data-testid="member" class="members-list grid">
+        <member-component-stub avatarimg="/avatars/jake_anderson.jpg" githuburl="https://github.com/jd-anderson88" name="Jake Anderson" datatestid="16" title="Developer"></member-component-stub>
+      </div>
+      <div data-testid="member" class="members-list grid">
+        <member-component-stub avatarimg="/avatars/jason_sagalow.jpg" githuburl="https://github.com/ConwayDecker" linkedinurl="https://www.linkedin.com/in/jason-sagalow-76047614b/" name="Jason Sagalow" datatestid="17" title="Developer"></member-component-stub>
+      </div>
+      <div data-testid="member" class="members-list grid">
+        <member-component-stub avatarimg="/avatars/julian_schoenfeld.jpg" githuburl="https://github.com/carved-duck" name="Julian Schoenfeld" datatestid="18" title="Developer"></member-component-stub>
+      </div>
+      <div data-testid="member" class="members-list grid">
+        <member-component-stub avatarimg="/avatars/karen_miyazawa.jpg" githuburl="https://github.com/KSmiyazawa" linkedinurl="https://www.linkedin.com/in/ks-miyazawa/" name="Karen Miyazawa" datatestid="19" title="Developer"></member-component-stub>
+      </div>
+      <div data-testid="member" class="members-list grid">
+        <member-component-stub avatarimg="/avatars/karl_komeya.jpg" githuburl="https://github.com/karlk08" linkedinurl="https://www.linkedin.com/in/karl-komeya-a1a64526b/" name="Karl Komeya" datatestid="20" title="Developer"></member-component-stub>
+      </div>
+      <div data-testid="member" class="members-list grid">
+        <member-component-stub avatarimg="/avatars/kei_yumino.jpg" linkedinurl="https://www.linkedin.com/in/kei-yumino-86299861/" name="Kei Yumino" datatestid="21" title="Design"></member-component-stub>
+      </div>
+      <div data-testid="member" class="members-list grid">
+        <member-component-stub avatarimg="/avatars/lily.jpg" githuburl="https://github.com/Kumaguro3" name="Lily" datatestid="22" title="Developer"></member-component-stub>
+      </div>
+      <div data-testid="member" class="members-list grid">
+        <member-component-stub avatarimg="/avatars/lisa_broersen.jpg" githuburl="https://github.com/ljbroersen" linkedinurl="https://www.linkedin.com/in/lisa-broersen/" name="Lisa Broerson" datatestid="23" title="Developer"></member-component-stub>
+      </div>
+      <div data-testid="member" class="members-list grid">
+        <member-component-stub avatarimg="/avatars/lucy_gelderloos.jpg" githuburl="https://github.com/lucy-gelderloos" name="Lucy Gelderloos" datatestid="24" title="Developer"></member-component-stub>
+      </div>
+      <div data-testid="member" class="members-list grid">
+        <member-component-stub avatarimg="/avatars/matthew_kurtti.jpg" githuburl="https://github.com/matthewkurtti" linkedinurl="https://www.linkedin.com/in/matthew-kurtti-737ab2123/" name="Matthew Kurtti" datatestid="25" title="Developer"></member-component-stub>
+      </div>
+      <div data-testid="member" class="members-list grid">
+        <member-component-stub avatarimg="/avatars/nasira_nebi.jpg" githuburl="https://github.com/nasiranebi914" linkedinurl="https://www.linkedin.com/in/nasira-nebi/" name="Nasira Nebi" datatestid="26" title="Developer"></member-component-stub>
+      </div>
+      <div data-testid="member" class="members-list grid">
+        <member-component-stub avatarimg="/avatars/natalja_dembek.jpg" githuburl="https://github.com/Ntlja" linkedinurl="https://www.linkedin.com/in/nataljadembek/" name="Natalja Dembek" datatestid="27" title="UI/UX Designer"></member-component-stub>
+      </div>
+      <div data-testid="member" class="members-list grid">
+        <member-component-stub avatarimg="/avatars/nathaniel_smith.jpg" githuburl="https://github.com/NathanielDSmith" linkedinurl="https://www.linkedin.com/in/nathaniel-damien-smith/" name="Nathaniel Smith" datatestid="28" title="Developer"></member-component-stub>
+      </div>
+      <div data-testid="member" class="members-list grid">
+        <member-component-stub avatarimg="/avatars/olivier_lechevalier.jpg" githuburl="https://github.com/RageZBla" linkedinurl="https://www.linkedin.com/in/olechevalier/" name="Olivier Lechevalier" datatestid="29" title="Developer"></member-component-stub>
+      </div>
+      <div data-testid="member" class="members-list grid">
+        <member-component-stub avatarimg="/avatars/preston_boardman.jpg" githuburl="https://github.com/prestonb91" linkedinurl="https://www.linkedin.com/in/preston-boardman-8210a671/" name="Preston Boardman" datatestid="30" title="Developer"></member-component-stub>
+      </div>
+      <div data-testid="member" class="members-list grid">
+        <member-component-stub avatarimg="/avatars/reezan.jpg" githuburl="https://github.com/ReeAya" name="Reezan" datatestid="31" title="Developer"></member-component-stub>
+      </div>
+      <div data-testid="member" class="members-list grid">
+        <member-component-stub avatarimg="/avatars/shashank_dangi.jpg" githuburl="https://github.com/shashankdangi" linkedinurl="https://www.linkedin.com/in/shashank-dangi/" name="Shashank Dangi" datatestid="32" title="Developer"></member-component-stub>
+      </div>
+      <div data-testid="member" class="members-list grid">
+        <member-component-stub avatarimg="/avatars/shingo_toyoda.jpg" name="Shingo Toyoda" datatestid="33" title="Language Support"></member-component-stub>
+      </div>
+      <div data-testid="member" class="members-list grid">
+        <member-component-stub avatarimg="/avatars/sulaymane_sillah.jpg" githuburl="https://github.com/Tch4lla" linkedinurl="https://www.linkedin.com/in/sulaymanesillah/" name="Sulaymane Sillah" datatestid="34" title="Developer"></member-component-stub>
+      </div>
+      <div data-testid="member" class="members-list grid">
+        <member-component-stub avatarimg="/avatars/trent_shimamura.jpg" linkedinurl="https://www.linkedin.com/in/trent-golden-58811b129/" name="Trent Shimamura" datatestid="35" title="Moderation Lead"></member-component-stub>
+      </div>
+    </div>
+  </div><!-- NPO Board Section  -->
+  <div id="npo-header-container" data-testid="npo-header-container" class="flex justify-center items-center">
+    <div id="npo-header" data-testid="npo-header" class="flex w-4/5 my-14">
+      <div class="flex-1 border-currentColor/70 border self-center"></div>
+      <div class="text-primary-text text-2xl font-bold mx-4 p-2 whitespace-nowrap">about.boardHeader</div>
+      <div class="flex-1 border-currentColor/70 border self-center"></div>
+    </div>
+  </div>
+  <div id="npo-container" data-testid="npo-container" class="flex justify-center items-center">
+    <div id="npo" data-testid="npo" class="grid grid-cols-2 md:grid-cols-4 mx-4 gap-16 pb-10 md:pb-12">
+      <div data-testid="member" class="members-list grid">
+        <member-component-stub avatarimg="/avatars/william_brammer.jpg" githuburl="https://github.com/NabbeunNabi" linkedinurl="https://www.linkedin.com/in/william-brammer/" name="William Brammer" datatestid="0" title="CEO"></member-component-stub>
+      </div>
+      <div data-testid="member" class="members-list grid">
+        <member-component-stub avatarimg="/avatars/russell_miller.jpg" linkedinurl="https://www.linkedin.com/in/russell-miller-51a5136b/" name="Russell Miller" datatestid="1" title="President"></member-component-stub>
+      </div>
+      <div data-testid="member" class="members-list grid">
+        <member-component-stub avatarimg="/avatars/niaya_harper_igarashi.jpg" linkedinurl="https://www.linkedin.com/in/niayaharper/r" name="Niaya Harper Igarashi" datatestid="2" title="Vice President"></member-component-stub>
+      </div>
+      <div data-testid="member" class="members-list grid">
+        <member-component-stub avatarimg="/avatars/lashawn_toyoda.jpg" githuburl="https://github.com/theyokohamalife/" linkedinurl="https://www.linkedin.com/in/lashawn-toyoda/" name="LaShawn Toyoda" datatestid="3" title="Secretary"></member-component-stub>
+      </div>
+      <div data-testid="member" class="members-list grid">
+        <member-component-stub avatarimg="/avatars/philip_ermish.jpg" githuburl="https://github.com/ermish" linkedinurl="https://www.linkedin.com/in/philipermish" name="Philip Ermish" datatestid="4" title="Tech Lead"></member-component-stub>
+      </div>
+      <div data-testid="member" class="members-list grid">
+        <member-component-stub avatarimg="/avatars/kuniko_arita.jpg" name="Kuniko Arita" datatestid="5" title="Medical &amp; Social Welfare Expert"></member-component-stub>
+      </div>
+      <div data-testid="member" class="members-list grid">
+        <member-component-stub avatarimg="/avatars/aya_yumino.jpg" name="Aya Yumino, MD" datatestid="6" title="Medical &amp; Social Welfare Expert"></member-component-stub>
+      </div>
+    </div>
+  </div><!-- Mascot Section  -->
+  <div id="mascot-header-container" data-testid="mascot-header-container" class="flex justify-center items-center">
+    <div id="mascot-header" data-testid="mascot-header" class="flex w-4/5 my-14">
+      <div class="flex-1 border-currentColor/70 border self-center"></div>
+      <div class="text-primary-text text-2xl font-bold mx-4 p-2 whitespace-nowrap">about.mascotsHeader</div>
+      <div class="flex-1 border-currentColor/70 border self-center"></div>
+    </div>
+  </div>
+  <div class="grid grid-cols-2 md:grid-cols-5 my-0 md:my-12">
+    <div class="flex flex-col items-center my-8 md:my-0">
+      <h1>about.mascotsAwa</h1>
+      <anonymous-stub role="img" alt="Awa SVG Icon" title="Awa" class="my-4 h-40"></anonymous-stub>
+    </div>
+    <div class="flex flex-col items-center my-8 md:my-0">
+      <h1>about.mascotsMichael</h1>
+      <anonymous-stub role="img" alt="Michael SVG Icon" title="Michael" class="my-4 h-40"></anonymous-stub>
+    </div>
+    <div class="flex flex-col items-center my-8 md:my-0">
+      <h1>about.mascotsTamika</h1>
+      <anonymous-stub role="img" alt="Tamika SVG Icon" title="Tamika" class="my-4 h-40"></anonymous-stub>
+    </div>
+    <div class="flex flex-col items-center my-8 md:my-0">
+      <h1>about.mascotsSachi</h1>
+      <anonymous-stub role="img" alt="Sachi SVG Icon" title="Sachi" class="my-4 h-40"></anonymous-stub>
+    </div>
+    <div class="flex flex-col items-center my-8 md:my-0 md:mt-10">
+      <h1>about.mascotsChiko</h1>
+      <anonymous-stub role="img" alt="Chiko SVG Icon" title="Chiko" class="my-4 h-32"></anonymous-stub>
+    </div>
+  </div><!-- Get Involved section  -->
+  <div id="involve-header-container" data-testid="involve-header-container" class="flex justify-center items-center">
+    <div id="involve-header" data-testid="involve-header" class="flex w-4/5 my-14">
+      <div class="flex-1 border-currentColor/70 border self-center"></div>
+      <div class="text-primary-text text-2xl font-bold mx-4 p-2 whitespace-nowrap">about.involveHeader</div>
+      <div class="flex-1 border-currentColor/70 border self-center"></div>
+    </div>
+  </div>
+  <div class="mb-14 grid grid-cols-2 pb-32 md:grid-cols-4 md:gap-0 md:pb-16">
+    <div class="flex flex-col items-center my-6 md:my-0">
+      <anonymous-stub role="img" alt="Add Doctor SVG Icon" title="Add Doctor Icon" class="my-4 w-20"></anonymous-stub>
+      <nuxt-link-stub to="/submit" class="hover:text-primary-hover text-lg font-bold underline transition-colors"></nuxt-link-stub>
+    </div>
+    <div class="flex flex-col items-center my-6 md:my-0">
+      <anonymous-stub role="img" alt="GitHub SVG Icon" title="Github Icon" class="my-4 w-20"></anonymous-stub><a href="https://github.com/ourjapanlife" class="underline font-bold hover:text-primary-hover text-lg transition-colors" target="_blank">about.involveGit</a>
+    </div>
+    <div class="flex flex-col items-center my-6 md:my-0">
+      <anonymous-stub role="img" alt="LinkedIn SVG Icon" title="LinkedIn Icon" class="my-4 w-20"></anonymous-stub><a href="https://www.linkedin.com/company/find-a-doc-japan/" class="underline font-bold hover:text-primary-hover text-lg transition-colors" target="_blank">about.involveLinkedin</a>
+    </div>
+    <div class="flex flex-col items-center my-6 md:my-0">
+      <anonymous-stub role="img" alt="LinkedIn SVG Icon" title="LinkedIn Icon" class="ml-4 my-4 w-20"></anonymous-stub><a href="https://docs.google.com/forms/d/e/1FAIpQLScx9cXurA6BhbBPUFH2nFAVWPP6Pm3yqXQj-NvJiaI2CUhh0Q/viewform" class="underline font-bold hover:text-primary-hover text-lg transition-colors" target="_blank">about.involveFeedback</a>
+    </div>
+  </div><!-- Back to Top Button  -->
+  <transition-stub enterfromclass="opacity-0 translate-y-3" enteractiveclass="transition ease-out duration-300" entertoclass="opacity-100 translate-y-0" leavefromclass="opacity-100 translate-y-0" leaveactiveclass="transition ease-in duration-200" leavetoclass="opacity-0 translate-y-3" appear="false" persisted="true" css="true"><a class="fixed bottom-4 left-1/2 -translate-x-1/2 md:bottom-4 md:left-auto md:right-6 z-50" style="display: none;">
+      <anonymous-stub role="img" alt="Arrow SVG Icon" title="Arrow Icon" class="my-8 h-24 fill-primary cursor-pointer"></anonymous-stub>
+    </a></transition-stub>
+</div>"
+`;

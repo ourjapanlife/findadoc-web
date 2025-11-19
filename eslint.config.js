@@ -5,7 +5,6 @@ import stylistic from '@stylistic/eslint-plugin'
 import pluginCypress from 'eslint-plugin-cypress/flat'
 import pluginVitest from '@vitest/eslint-plugin'
 import pluginVue from 'eslint-plugin-vue'
-import pluginJest from 'eslint-plugin-jest'
 import withNuxt from './.nuxt/eslint.config.mjs'
 
 export default withNuxt(
@@ -99,7 +98,7 @@ export default withNuxt(
     },
     // Linting for Cypress (https://www.npmjs.com/package/eslint-plugin-cypress)
     {
-        files: ['test/cypress/**/*'],
+        files: ['tests/cypress/**/*'],
         ...pluginCypress.configs.recommended,
         rules: {
             'cypress/no-unnecessary-waiting': 'off'
@@ -107,32 +106,14 @@ export default withNuxt(
     },
     // Linting for Vitest (https://github.com/vitest-dev/eslint-plugin-vitest)
     {
-        files: ['test/vitest/**/*'],
+        files: ['tests/vitest/**/*'],
         ...pluginVitest.configs.recommended,
         ...pluginVitest.configs.env,
         rules: {
             '@typescript-eslint/no-unused-expressions': 'off',
             'no-unused-expressions': 'off'
         }
-    },
-    // Linting for Jest (https://github.com/jest-community/eslint-plugin-jest)
-    {
-        files: ['test/jest/**/*'],
-        plugins: {
-            jest: pluginJest
-        },
-        languageOptions: {
-            globals: {
-                ...globals.jest
-            }
-        },
-        rules: {
-            ...pluginJest.configs.recommended.rules,
-            '@typescript-eslint/no-unused-expressions': 'off',
-            'no-unused-expressions': 'off'
-        }
     }
-
 )
     .override('nuxt/stylistic', {
         ignores: ['./i18n/index.ts'],

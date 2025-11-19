@@ -3,13 +3,17 @@ import { defineVitestConfig } from '@nuxt/test-utils/config'
 export default defineVitestConfig({
     test: {
         globals: true,
-        setupFiles: './test/setup.ts',
+        setupFiles: './tests/setup.ts',
         environment: 'nuxt',
         environmentOptions: {
             nuxt: {
                 domEnvironment: 'jsdom'
             }
         },
-        exclude: ['**/*.jest.test.ts', 'node_modules']
+        include: [
+            'tests/vitest/storeTests/**/*.spec.ts',
+            'tests/vitest/snapshotTests/**/*.spec.ts'
+        ],
+        exclude: ['node_modules']
     }
 })

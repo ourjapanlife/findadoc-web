@@ -17,10 +17,10 @@ const config = defineConfig({
         },
         setupNodeEvents() { },
         // Path to e2e specs folder
-        specPattern: './test/cypress/e2e/**/*.cy.{js,jsx,ts,tsx}',
+        specPattern: './tests/cypress/e2e/**/*.cy.{js,jsx,ts,tsx}',
         // Path to the fake data
-        fixturesFolder: './test/fake_data',
-        supportFile: './test/cypress/support/e2e.ts',
+        fixturesFolder: './tests/fake_data',
+        supportFile: './tests/cypress/support/e2e.ts',
         baseUrl: 'http://localhost:3000',
         testIsolation: false,
         experimentalRunAllSpecs: true,

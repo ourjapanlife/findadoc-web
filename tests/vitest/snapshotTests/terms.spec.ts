@@ -1,5 +1,5 @@
-import { beforeAll, describe, it, expect } from '@jest/globals'
-import { mount } from '@vue/test-utils'
+import { beforeAll, describe, expect, it } from 'vitest'
+import { shallowMount } from '@vue/test-utils'
 import { createI18n } from 'vue-i18n'
 import Terms from '~/pages/terms.vue'
 
@@ -26,14 +26,12 @@ const i18n = createI18n({
 
 describe('terms.vue', () => {
     it('renders correctly', () => {
-        const wrapper = mount(Terms, {
+        const wrapper = shallowMount(Terms, {
             global: {
-                plugins: [i18n],
-                stubs: {
-                    NuxtLink: true
-                }
+                plugins: [i18n]
             }
         })
-        expect(wrapper.element).toMatchSnapshot()
+
+        expect(wrapper.html()).toMatchSnapshot()
     })
 })
