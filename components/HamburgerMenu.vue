@@ -176,13 +176,26 @@
 
                         <!-- Accessible Theme Selector -->
 
-                        <div>
-                            <P
-                                class="size-full px-5 pt-3 pb-1 text-primary"
-                                @click="toggleThemeVisibility"
-                            >
-                                Color Themes
-                            </p>
+                        <div class="size-full">
+                            <div class="flex flex-row px-5 pt-3 pb-1 gap-3 items-center">
+                                <P
+                                    class="text-primary"
+                                    @click="toggleThemeVisibility"
+                                >
+                                    Color Themes
+                                </p>
+                                <svg
+                                    id="accordion"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="16"
+                                    height="16"
+                                    fill="currentColor"
+                                    viewBox="0 0 16 16"
+                                    class="text-primary"
+                                >
+                                    <path d="M13.354,5.146c0.094,0.094 0.147,0.221 0.147,0.354c0,0.133 -0.053,0.26 -0.147,0.354l-5,5c-0.094,0.094 -0.221,0.147 -0.354,0.147c-0.133,0 -0.26,-0.053 -0.354,-0.147l-5,-5c-0.094,-0.094 -0.147,-0.221 -0.147,-0.354c0,-0.275 0.226,-0.501 0.501,-0.501c0.133,0 0.26,0.053 0.354,0.147l4.646,4.647l4.646,-4.647c0.094,-0.094 0.221,-0.147 0.354,-0.147c0.133,0 0.26,0.053 0.354,0.147Z" />
+                                </svg>
+                            </div>
                             <div v-if="themesAreVisible">
                                 <ColorChanger
                                     v-for="theme in themes"
@@ -388,6 +401,7 @@ const themes = reactive([
 
 function toggleThemeVisibility() {
     themesAreVisible.value = !themesAreVisible.value
+    document.getElementById('accordion').classList.toggle('rotate-180')
 }
 
 function toggleLightDarkMode() {
