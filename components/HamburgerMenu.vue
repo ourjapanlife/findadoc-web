@@ -177,8 +177,9 @@
                         <!-- Accessible Theme Selector -->
 
                         <div class="size-full">
-                            <div class="flex flex-row px-5 pt-3 pb-1 gap-3 items-center">
-                                <P
+                            <div class="flex flex-row px-5 pt-6 pb-1 gap-3 items-center">
+                                <p
+                                    id="theme-text"
                                     class="text-primary"
                                     @click="toggleThemeVisibility"
                                 >
@@ -191,12 +192,15 @@
                                     height="16"
                                     fill="currentColor"
                                     viewBox="0 0 16 16"
-                                    class="text-primary"
+                                    class="text-primary transition duration-300"
                                 >
                                     <path d="M13.354,5.146c0.094,0.094 0.147,0.221 0.147,0.354c0,0.133 -0.053,0.26 -0.147,0.354l-5,5c-0.094,0.094 -0.221,0.147 -0.354,0.147c-0.133,0 -0.26,-0.053 -0.354,-0.147l-5,-5c-0.094,-0.094 -0.147,-0.221 -0.147,-0.354c0,-0.275 0.226,-0.501 0.501,-0.501c0.133,0 0.26,0.053 0.354,0.147l4.646,4.647l4.646,-4.647c0.094,-0.094 0.221,-0.147 0.354,-0.147c0.133,0 0.26,0.053 0.354,0.147Z" />
                                 </svg>
                             </div>
-                            <div v-if="themesAreVisible">
+                            <div
+                                id="color-changer"
+                                class="transition duration-300 opacity-0 invisible"
+                            >
                                 <ColorChanger
                                     v-for="theme in themes"
                                     :id="theme.id"
@@ -320,6 +324,7 @@ import { useRouter } from 'vue-router'
 import { ref, onMounted } from 'vue'
 import { current } from 'tailwindcss/colors'
 import Toggle from './Toggle.vue'
+import ColorChanger from './ColorChanger.vue'
 import { vCloseOnOutsideClick } from '~/composables/closeOnOutsideClick'
 import SVGHamburgerMenuIcon from '~/assets/icons/hamburger-menu.svg'
 import SVGGithubIcon from '~/assets/icons/social-github.svg'
@@ -400,8 +405,10 @@ const themes = reactive([
 ])
 
 function toggleThemeVisibility() {
-    themesAreVisible.value = !themesAreVisible.value
-    document.getElementById('accordion').classList.toggle('rotate-180')
+    // themesAreVisible.value = !themesAreVisible.value
+    document.getElementById('accordion').classList.toggle('-rotate-180')
+    document.getElementById('color-changer').classList.toggle('invisible')
+    document.getElementById('color-changer').classList.toggle('opacity-0')
 }
 
 function toggleLightDarkMode() {
