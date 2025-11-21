@@ -2,16 +2,18 @@
     <div class="flex items-center gap-3">
         <div
             v-if="selected"
-            class="flex items-center gap-3 object-fill bg-secondary-bg size-full px-5 py-3"
+            class="flex items-center place-content-between  bg-secondary-bg size-full px-5 py-3"
         >
-            <div
-                class="w-7 h-7 mr-1 rounded-full"
-                title="Original Theme"
-                :style="{ backgroundColor: dotColor }"
-            />
-            <p class="text-primary">
-                {{ name }}
-            </p>
+            <div class="flex items-center gap-3">
+                <div
+                    class="w-7 h-7 mr-1 rounded-full"
+                    title="Original Theme"
+                    :style="{ backgroundColor: dotColor }"
+                />
+                <p class="text-primary max-w-24">
+                    {{ name }}
+                </p>
+            </div>
             <Toggle
                 :state="state"
                 @theme-change="toggleLightDarkMode"

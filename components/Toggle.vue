@@ -1,6 +1,5 @@
 <template>
     <label class="switch">
-
         <input
             id="isChecked"
             v-model="toggleChecked"
