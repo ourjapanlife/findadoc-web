@@ -5,11 +5,11 @@
             id="isChecked"
             v-model="toggleChecked"
             type="checkbox"
-            @input="toggleDarkLightMode"
+            @input="toggleLightDarkMode"
         >
         <span
-            class="slider round bg-neutral-500"
-            :class="!props.state ? 'bg-primary' :'bg-neutral-500'"
+            id="slider"
+            :class="toggleChecked ? 'slider round bg-primary' : 'slider round bg-neutral-500'"
         />
     </label>
 </template>
@@ -19,12 +19,13 @@ const props = defineProps({
     state: Boolean
 })
 
-const toggleChecked = !props.state
+let toggleChecked = props.state
 
 const emit = defineEmits(['theme-change'])
 
-const toggleDarkLightMode = () => {
-    emit('theme-change', props.state)
+const toggleLightDarkMode = () => {
+    toggleChecked = !toggleChecked
+    emit('theme-change', toggleChecked)
 }
 </script>
 

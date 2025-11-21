@@ -14,7 +14,7 @@
             </p>
             <Toggle
                 :state="state"
-                @theme-change="changeLight"
+                @theme-change="toggleLightDarkMode"
             />
         </div>
 
@@ -59,7 +59,8 @@ defineProps({
 
 const emit = defineEmits(['theme-change'])
 
-const changeLight = isDarkMode => {
+const toggleLightDarkMode = isDarkMode => {
+    console.log(`isDarkMode on ColorChanger is ${isDarkMode}`)
     emit('theme-change', isDarkMode)
 }
 </script>

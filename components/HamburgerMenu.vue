@@ -176,43 +176,46 @@
 
                         <!-- Accessible Theme Selector -->
 
-                        <div class="size-full">
-                            <div class="flex flex-row px-5 pt-6 pb-1 gap-3 items-center">
-                                <p
-                                    id="theme-text"
-                                    class="text-primary"
-                                    @click="toggleThemeVisibility"
-                                >
-                                    Color Themes
-                                </p>
-                                <svg
-                                    id="accordion"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width="16"
-                                    height="16"
-                                    fill="currentColor"
-                                    viewBox="0 0 16 16"
-                                    class="text-primary transition duration-300"
-                                >
-                                    <path d="M13.354,5.146c0.094,0.094 0.147,0.221 0.147,0.354c0,0.133 -0.053,0.26 -0.147,0.354l-5,5c-0.094,0.094 -0.221,0.147 -0.354,0.147c-0.133,0 -0.26,-0.053 -0.354,-0.147l-5,-5c-0.094,-0.094 -0.147,-0.221 -0.147,-0.354c0,-0.275 0.226,-0.501 0.501,-0.501c0.133,0 0.26,0.053 0.354,0.147l4.646,4.647l4.646,-4.647c0.094,-0.094 0.221,-0.147 0.354,-0.147c0.133,0 0.26,0.053 0.354,0.147Z" />
-                                </svg>
-                            </div>
+                        <div
+                            class="flex flex-row px-5 pt-6 pb-1 gap-3 items-center"
+                            @click="toggleThemeVisibility"
+                        >
                             <div
-                                id="color-changer"
-                                class="transition duration-300 opacity-0 invisible"
+                                class="w-7 h-7 mr-1 rounded-full bg-primary"
+                            />
+                            <p
+                                id="theme-text"
+                                class="text-primary"
                             >
-                                <ColorChanger
-                                    v-for="theme in themes"
-                                    :id="theme.id"
-                                    :key="theme.id"
-                                    :dot-color="theme.dotColor"
-                                    :name="theme.name"
-                                    :selected="theme.selected"
-                                    :state="isDarkMode"
-                                    @click="setTheme(theme.id)"
-                                    @theme-change="toggleLightDarkMode"
-                                />
-                            </div>
+                                Color Themes
+                            </p>
+                            <svg
+                                id="accordion"
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="16"
+                                height="16"
+                                fill="currentColor"
+                                viewBox="0 0 16 16"
+                                class="text-primary transition duration-300"
+                            >
+                                <path d="M13.354,5.146c0.094,0.094 0.147,0.221 0.147,0.354c0,0.133 -0.053,0.26 -0.147,0.354l-5,5c-0.094,0.094 -0.221,0.147 -0.354,0.147c-0.133,0 -0.26,-0.053 -0.354,-0.147l-5,-5c-0.094,-0.094 -0.147,-0.221 -0.147,-0.354c0,-0.275 0.226,-0.501 0.501,-0.501c0.133,0 0.26,0.053 0.354,0.147l4.646,4.647l4.646,-4.647c0.094,-0.094 0.221,-0.147 0.354,-0.147c0.133,0 0.26,0.053 0.354,0.147Z" />
+                            </svg>
+                        </div>
+                        <div
+                            id="color-changer"
+                            class="transition duration-300 opacity-0 invisible"
+                        >
+                            <ColorChanger
+                                v-for="theme in themes"
+                                :id="theme.id"
+                                :key="theme.id"
+                                :dot-color="theme.dotColor"
+                                :name="theme.name"
+                                :selected="theme.selected"
+                                :state="isDarkMode"
+                                @click="setTheme(theme.id, isDarkMode)"
+                                @theme-change="toggleLightDarkMode"
+                            />
                         </div>
 
                         <!-- Footer Section -->
@@ -411,13 +414,16 @@ function toggleThemeVisibility() {
     document.getElementById('color-changer').classList.toggle('opacity-0')
 }
 
-function toggleLightDarkMode() {
-    isDarkMode.value = !isDarkMode.value
+function toggleLightDarkMode(returnedDarkModeValue) {
+    console.log(`returnedDarkModeValue on HamburgerMenu is ${returnedDarkModeValue}`)
+    isDarkMode.value = returnedDarkModeValue
+    console.log(`isDarkMode on HamburgerMenu is ${isDarkMode.value}`)
     localStorage.setItem('isDarkMode', `${isDarkMode.value}`)
-    setTheme(currentTheme.value)
+    setTheme(currentTheme.value, isDarkMode.value)
 }
 
-function setTheme(newTheme: string) {
+function setTheme(newTheme: string, darkModeValue: boolean) {
+    console.log(`darkModeValue on HamburgerMenu is ${darkModeValue}`)
     // ---Remove selected from previous theme
     const selectedTheme = themes.find(theme => theme.selected)
     selectedTheme.selected = !selectedTheme.selected
@@ -429,6 +435,7 @@ function setTheme(newTheme: string) {
 
     const addTheme = function(theme) {
         localStorage.setItem('theme', theme)
+        localStorage.setItem('isDarkMode', `${darkModeValue}`)
         currentTheme.value = theme
     }
 
@@ -445,7 +452,7 @@ function setTheme(newTheme: string) {
         'theme-accessible-red-green-dark'
     )
 
-    if (isDarkMode.value) {
+    if (darkModeValue === false) {
         document.documentElement.classList.add(`theme-${newTheme}`)
         addTheme(newTheme)
     } else {
@@ -455,13 +462,15 @@ function setTheme(newTheme: string) {
 }
 
 onMounted(() => {
-    const saveTheme = localStorage.getItem('theme')
-    if (saveTheme) {
-        const saveColorMode = localStorage.getItem('isDarkMode') === 'true'
-        currentTheme.value = saveTheme
-        isDarkMode.value = saveColorMode
-        setTheme(saveTheme)
-        console.log(`Current theme is ${saveTheme} ${saveColorMode}`)
+    const savedTheme = localStorage.getItem('theme')
+    if (savedTheme) {
+        const savedColorMode = localStorage.getItem('isDarkMode') === 'true'
+        currentTheme.value = savedTheme
+        isDarkMode.value = savedColorMode
+        setTheme(savedTheme, savedColorMode)
+        console.log(`Current theme is ${savedTheme} ${savedColorMode}`)
+    } else {
+        setTheme('original', false)
     }
 })
 </script>
