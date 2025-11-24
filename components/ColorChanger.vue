@@ -2,7 +2,7 @@
     <div class="flex items-center gap-3">
         <div
             v-if="selected"
-            class="flex items-center place-content-between  bg-secondary-bg size-full px-5 py-3"
+            class="flex items-center place-content-between  bg-secondary-bg size-full px-4 py-3"
         >
             <div class="flex items-center gap-3">
                 <div
@@ -10,7 +10,7 @@
                     title="Original Theme"
                     :style="{ backgroundColor: dotColor }"
                 />
-                <p class="text-primary max-w-24">
+                <p class="text-primary max-w-32">
                     {{ name }}
                 </p>
             </div>
@@ -22,14 +22,14 @@
 
         <div
             v-else
-            class="flex items-center gap-3 object-fill size-full px-5 py-3"
+            class="flex items-center gap-3 object-fill size-full px-4 py-3"
         >
             <div
-                class="w-7 h-7 mr-1 rounded-full"
+                class="w-7 h-7 mr-1 my-2 rounded-full"
                 title="Original Theme"
                 :style="{ backgroundColor: dotColor }"
             />
-            <p class="text-primary">
+            <p class="text-primary max-w-32">
                 {{ name }}
             </p>
         </div>

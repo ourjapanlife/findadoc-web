@@ -29,7 +29,7 @@
                     <div data-testid="hamburger-upper-section">
                         <div
                             data-testid="hamburger-header"
-                            class="flex justify-between px-5"
+                            class="flex justify-between px-4"
                         >
                             <div class="flex">
                                 <div
@@ -43,7 +43,7 @@
                             </div>
                             <button
                                 data-testid="hamburger-menu-close-button"
-                                class="px-2 py-.5 mr-2"
+                                class="px-4 py-.5 mr-2"
                                 @click="closeMenu()"
                             >
                                 <svg
@@ -68,7 +68,7 @@
                         <!-- Language Selector -->
                         <div
                             data-testid="hamburger-menu-language-section"
-                            class="flex px-5 mt-2"
+                            class="flex px-4 mt-2"
                         >
                             <span class="self-center mr-2 text-primary-text">{{ t('hamburgerMenu.languageDropdownTitle')
                             }}</span>
@@ -77,7 +77,7 @@
                         <!-- Menu Links -->
                         <div
                             data-testid="hamburger-menu-items"
-                            class="flex flex-col gap-6 px-5 mt-6 mb-1"
+                            class="flex flex-col gap-6 px-4 mt-6 mb-1"
                         >
                             <!-- Home Link -->
                             <NuxtLink to="/">
@@ -177,7 +177,6 @@
                         <!-- Accessible Theme Selector -->
 
                         <div
-
                             id="color-changer"
                             class="transition duration-300 opacity-0 invisible translate-y-20"
                         >
@@ -195,7 +194,7 @@
                             <hr class="mx-auto w-32 border-secondary">
                         </div>
                         <div
-                            class="flex flex-row px-5 pt-3 pb-3 gap-3 items-center"
+                            class="flex flex-row px-4 pt-3 pb-3 gap-3 items-center"
                             @click="toggleThemeVisibility"
                         >
                             <div
@@ -223,7 +222,7 @@
                         <!-- Footer Section -->
                         <div
                             data-testid="hamburger-menu-footer-section"
-                            class="flex flex-col gap-5 px-5"
+                            class="flex flex-col gap-5 px-4"
                         >
                             <div
                                 data-testid="hamburger-menu-footer-legal"
@@ -409,11 +408,18 @@ const themes = reactive([
     }
 ])
 
+let colorThemesAreClosed = true
+
 function toggleThemeVisibility() {
     document.getElementById('accordion').classList.toggle('-rotate-180')
-    document.getElementById('color-changer').classList.toggle('invisible')
     document.getElementById('color-changer').classList.toggle('opacity-0')
     document.getElementById('color-changer').classList.toggle('translate-y-20')
+    colorThemesAreClosed = !colorThemesAreClosed
+    if (colorThemesAreClosed) {
+        setTimeout(() => { document.getElementById('color-changer').classList.toggle('invisible') }, 300)
+    } else {
+        document.getElementById('color-changer').classList.toggle('invisible')
+    }
 }
 
 function toggleLightDarkMode(returnedDarkModeValue) {
