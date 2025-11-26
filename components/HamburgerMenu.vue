@@ -394,14 +394,14 @@ const themes = reactive([
     },
     {
         id: 'accessible-high-contrast',
-        dotColor: '#EEFF02FF',
+        dotColor: '#00FFFF',
         name: 'High Contrast',
         selected: false,
         state: isDarkMode
     },
     {
         id: 'accessible-red-green',
-        dotColor: '#FF0000FF',
+        dotColor: '#007BFF',
         name: 'Red-Green Color Blindness',
         selected: false,
         state: isDarkMode

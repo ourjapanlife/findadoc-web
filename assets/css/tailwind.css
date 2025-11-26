@@ -106,8 +106,8 @@
       /* #FB9999 */
       251 153 153;
     --color-accent:
-      /* #1E40AF */
-      30 64 175;
+      /* #4065DE */
+      128 158 255;
     --color-primary-inverted:
       /* #FFFFFF */
       255 255 255;
@@ -224,8 +224,8 @@
       /* #245A7D */
       36 90 125;
     --color-accent:
-      /* #245A7D */
-      36 90 125;
+      /* #3A91C9 */
+      58 145 201;
     --color-primary-inverted:
       /* #ffffff */
       255 255 255;
@@ -280,8 +280,8 @@
       /* #A45D9A */
       164 93 154;
     --color-secondary:
-      /* #DA5550 */
-      218 85 80;
+      /* #FB9999 */
+      251 153 153;
     --color-accent:
       /* #F4F3E9 */
       244 243 233;
@@ -339,8 +339,8 @@
       /* #FF00DB */
       255 0 219;
     --color-secondary:
-      /* #DA5550 */
-      218 85 80;
+      /* #AB514E */
+      171 81 78;
     --color-accent:
       /* #F4F3E9 */
       244 243 233;
@@ -399,14 +399,14 @@
   .theme-accessible-high-contrast {
     /* high contrast - general branding colors */
     --color-primary:
-      /* #00FFFF */
-      0 255 255;
+      /* #000000 */
+      0 0 0;
     --color-secondary:
       /* #FFFF00 */
       255 255 0;
     --color-accent:
-      /* #FF00FF */
-      255 0 255;
+      /* #BD00BD */
+      189 0 189;
     --color-primary-inverted:
       /* #000000 */
       0 0 0;
@@ -525,8 +525,8 @@
       /* #D97706 */
       217 119 6;
     --color-accent:
-      /* #FFC107 */
-      255 193 7;
+      /* #DEA807 */
+      222 168 7;
     --color-primary-inverted:
       /* #FFFFFF */
       255 255 255;
