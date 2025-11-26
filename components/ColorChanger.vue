@@ -2,7 +2,7 @@
     <div class="flex items-center gap-3">
         <div
             v-if="selected"
-            class="flex items-center place-content-between  bg-secondary-bg size-full px-4 py-3"
+            class="flex items-center place-content-between bg-secondary-bg size-full px-4 py-3 z-0"
         >
             <div class="flex items-center gap-3">
                 <div
@@ -22,7 +22,7 @@
 
         <div
             v-else
-            class="flex items-center gap-3 object-fill size-full px-4 py-3"
+            class="flex items-center gap-3 object-fill size-full px-4 py-3 bg-primary-bg"
         >
             <div
                 class="w-7 h-7 mr-1 my-2 rounded-full"

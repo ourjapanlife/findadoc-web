@@ -47,53 +47,53 @@
       /* #FB9999 */
       251 153 153;
     --color-accent:
-      /* #1e40af */
+      /* #1E40AF */
       30 64 175;
     --color-primary-inverted:
       /* #FFFFFF */
       255 255 255;
     --color-primary-hover:
-      /* #0891a0 */
+      /* #0891A0 */
       8 145 160;
     --color-secondary-inverted:
-      /* #7f1d1d */
-      127 29 29;
+      /* #046666 */
+      4 102 102;
     --color-secondary-hover:
-      /* #f87171 */
+      /* #F87171 */
       248 113 113;
     --color-success:
-      /* #10b981 */
+      /* #10B981 */
       16 185 129;
     --color-error:
-      /* #ef4444 */
+      /* #EF4444 */
       239 68 68;
     --color-warning:
-      /* #f59e0b */
+      /* #F59E0B */
       245 158 11;
     --color-info:
-      /* #3b82f6 */
+      /* #3B82F6 */
       59 130 246;
 
     /* text */
     --color-text-base:
-      /* #1e293b */
+      /* #1E293B */
       30 41 59;
     --color-text-muted:
-      /* #64748b */
+      /* #64748B */
       100 116 139;
     --color-text-inverted:
-      /* #ffffff */
+      /* #FFFFFF */
       255 255 255;
 
     /* Background */
     --color-bg-primary:
-      /* #f8fafc */
+      /* #F8FAFC */
       248 250 252;
     --color-bg-secondary:
-      /* #D7FBFF */
-      215 251 255;
+      /* #DCF0F2 */
+      220 240 242;
     --color-bg-accent:
-      /* #e2e8f0 */
+      /* #E2E8F0 */
       226 232 240;
   }
 
@@ -103,31 +103,31 @@
       /* #00FFFF */
       0 255 255;
     --color-secondary:
-      /* #FFFF00 */
-      255 255 0;
+      /* #FB9999 */
+      251 153 153;
     --color-accent:
-      /* #FF00FF */
-      255 0 255;
+      /* #1E40AF */
+      30 64 175;
     --color-primary-inverted:
-      /* #000000 */
-      0 0 0;
+      /* #FFFFFF */
+      255 255 255;
     --color-primary-hover:
       /* #7FFFD4 */
       127 255 212;
     --color-secondary-inverted:
-      /* #000000 */
-      0 0 0;
+      /* #046666 */
+      4 102 102;
     --color-secondary-hover:
-      /* #FFFACD */
-      255 250 205;
+      /* #F87171 */
+      248 113 113;
     --color-success:
-      /* #007ccf */
-      0 124 207;
+      /* #10B981 */
+      16 185 129;
     --color-error:
-      /* #FF4500 */
-      255 69 0;
+      /* #EF4444 */
+      239 68 68;
     --color-warning:
-      /* #f59e0b */
+      /* #F59E0B */
       245 158 11;
     --color-info:
       /* #3b82f6 */
@@ -148,12 +148,12 @@
     --color-bg-primary:
       /* #000000 */
       0 0 0;
+      --color-bg-secondary:
+        /* #1A1A1A */
+        26 26 26;
     --color-bg-accent:
-      /* #FFFFFF */
-      255 255 255;
-    --color-bg-secondary:
-      /* #1A1A1A */
-      26 26 26;
+      /* #EDF3FC */
+      237 243 252;
   }
 
   .theme-coral {
@@ -174,17 +174,17 @@
       /* #d66051 */
       214 96 81;
     --color-secondary-inverted:
-      /* #ffffff */
-      255 255 255;
+      /* #FB9999 */
+      251 153 153;
     --color-secondary-hover:
-      /* #d66051 */
-      214 96 81;
+      /* #13537D */
+      19 83 125;
     --color-success:
-      /* #007ccf */
-      0 124 207;
+      /* #10B981 */
+      16 185 129;
     --color-error:
-      /* #d1523f */
-      209 82 63;
+      /* #EF4444 */
+      239 68 68;
     --color-warning:
       /* #f59e0b */
       245 158 11;
@@ -233,22 +233,22 @@
       /* #d66051 */
       214 96 81;
     --color-secondary-inverted:
-      /* #ffffff */
-      255 255 255;
+      /* #FB9999 */
+      251 153 153;
     --color-secondary-hover:
-      /* #d66051 */
-      214 96 81;
+      /* #13537D */
+      19 83 125;
     --color-success:
-      /* #007ccf */
-      0 124 207;
+      /* #10B981 */
+      16 185 129;
     --color-error:
-      /* #d1523f */
-      209 82 63;
+      /* #EF4444 */
+      239 68 68;
     --color-warning:
       /* #f59e0b */
       245 158 11;
     --color-info:
-      /* #3b82f6 */
+      /* #3B82F6 */
       59 130 246;
 
     /* text - dark mode */
@@ -266,12 +266,12 @@
     --color-bg-primary:
       /* #000000 */
       0 0 0;
-    --color-bg-accent:
-      /* #FFFFFF */
-      255 255 255;
     --color-bg-secondary:
       /* #1A1A1A */
       26 26 26;
+    --color-bg-accent:
+      /* #FFFFFF */
+      255 255 255;
   }
 
   .theme-violet {
@@ -284,7 +284,7 @@
       218 85 80;
     --color-accent:
       /* #F4F3E9 */
-      36 90 125;
+      244 243 233;
     --color-primary-inverted:
       /* #ffffff */
       255 255 255;
@@ -292,17 +292,17 @@
       /* #c46fb8 */
       196 111 184;
     --color-secondary-inverted:
-      /* #ffffff */
-      255 255 255;
+      /* #25AAAF */
+      37 170 175;
     --color-secondary-hover:
-      /* #d66051 */
-      214 96 81;
+      /* #DA342E */
+      218 52 46;
     --color-success:
-      /* #007ccf */
-      0 124 207;
+      /* #10B981 */
+      16 185 129;
     --color-error:
-      /* #d1523f */
-      209 82 63;
+      /* #EF4444 */
+      239 68 68;
     --color-warning:
       /* #f59e0b */
       245 158 11;
@@ -351,17 +351,17 @@
       /* #c46fb8 */
       196 111 184;
     --color-secondary-inverted:
-      /* #ffffff */
-      255 255 255;
+      /* #25AAAF */
+      37 170 175;
     --color-secondary-hover:
-      /* #d66051 */
-      214 96 81;
+      /* #DA342E */
+      218 52 46;
     --color-success:
-      /* #007ccf */
-      0 124 207;
+      /* #10B981 */
+      16 185 129;
     --color-error:
-      /* #d1523f */
-      209 82 63;
+      /* #EF4444 */
+      239 68 68;
     --color-warning:
       /* #f59e0b */
       245 158 11;
@@ -384,12 +384,12 @@
     --color-bg-primary:
       /* #000000 */
       0 0 0;
-    --color-bg-accent:
-      /* #FFFFFF */
-      255 255 255;
     --color-bg-secondary:
       /* #1A1A1A */
       26 26 26;
+    --color-bg-accent:
+      /* #FFFFFF */
+      255 255 255;
   }
 
   /* MARK: Accessible Themes */
@@ -420,11 +420,11 @@
       /* #FFFACD */
       255 250 205;
     --color-success:
-      /* #007ccf */
-      0 124 207;
+      /* #10B981 */
+      16 185 129;
     --color-error:
-      /* #FF4500 */
-      255 69 0;
+      /* #EF4444 */
+      239 68 68;
     --color-warning:
       /* #f59e0b */
       245 158 11;
@@ -434,25 +434,25 @@
 
     /* high contrast - text */
     --color-text-base:
-      /* #FFFFFF */
-      255 255 255;
+      /* #1E3B3B */
+      30 59 59;
     --color-text-muted:
       /* #C0C0C0 */
       192 192 192;
     --color-text-inverted:
-      /* #000000 */
-      0 0 0;
+      /* #FFFFFF */
+      255 255 255;
 
     /* high contrast - background */
     --color-bg-primary:
-      /* #000000 */
-      0 0 0;
-    --color-bg-accent:
-      /* #FFFFFF */
-      255 255 255;
+      /* #F8FAFC */
+      248 250 252;
     --color-bg-secondary:
-      /* #1A1A1A */
-      26 26 26;
+      /* #DAF2F2 */
+      218 242 242;
+    --color-bg-accent:
+      /* #e1f0f0 */
+      255 240 240;
   }
 
   .theme-accessible-high-contrast-dark {
@@ -479,11 +479,11 @@
       /* #FFFACD */
       255 250 205;
     --color-success:
-      /* #007ccf */
-      0 124 207;
+      /* #10B981 */
+      16 185 129;
     --color-error:
-      /* #FF4500 */
-      255 69 0;
+      /* #EF4444 */
+      239 68 68;
     --color-warning:
       /* #f59e0b */
       245 158 11;
@@ -506,12 +506,12 @@
     --color-bg-primary:
       /* #000000 */
       0 0 0;
-    --color-bg-accent:
-      /* #FFFFFF */
-      255 255 255;
     --color-bg-secondary:
       /* #1A1A1A */
       26 26 26;
+    --color-bg-accent:
+      /* #FFFFFF */
+      255 255 255;
   }
 
   /* accessible r-g color blindness friendly theme (daltonism) */
@@ -540,11 +540,11 @@
       /* #F59E0B */
       245 158 11;
     --color-success:
-      /* #007ccf */
-      0 124 207;
+      /* #10B981 */
+      16 185 129;
     --color-error:
-      /* #F97316 */
-      249 115 22;
+      /* #EF4444 */
+      239 68 68;
     --color-warning:
       /* #f59e0b */
       245 158 11;
@@ -554,25 +554,25 @@
 
     /* red green - text */
     --color-text-base:
-      /* #E5E7EB */
-      229 231 235;
+      /* #1E2C3B */
+      30 44 59;
     --color-text-muted:
       /* #9CA3AF */
       156 163 175;
     --color-text-inverted:
-      /* #111827 */
-      17 24 39;
+      /* #FFFFFF */
+      255 255 255;
 
     /* red green - background */
     --color-bg-primary:
-      /* #1F2937 */
-      31 41 55;
-    --color-bg-accent:
-      /* #F3F4F6 */
-      243 244 246;
+      /* #F7FAFC */
+      247 250 252;
     --color-bg-secondary:
-      /* #374151 */
-      55 65 81;
+      /* #DAE6F2 */
+      218 230 242;
+    --color-bg-accent:
+      /* #E1E8F0 */
+      225 232 240;
   }
 
     .theme-accessible-red-green-dark {
@@ -599,11 +599,11 @@
       /* #F59E0B */
       245 158 11;
     --color-success:
-      /* #007ccf */
-      0 124 207;
+      /* #10B981 */
+      16 185 129;
     --color-error:
-      /* #F97316 */
-      249 115 22;
+      /* #EF4444 */
+      239 68 68;
     --color-warning:
       /* #f59e0b */
       245 158 11;
@@ -626,12 +626,12 @@
     --color-bg-primary:
       /* #1F2937 */
       31 41 55;
-    --color-bg-accent:
-      /* #F3F4F6 */
-      243 244 246;
     --color-bg-secondary:
       /* #374151 */
       55 65 81;
+    --color-bg-accent:
+      /* #F3F4F6 */
+      243 244 246;
   }
 
   /* .theme-ocean { */
@@ -649,8 +649,8 @@
   /* #ffffff */
   /* 255 255 255; */
   /* --color-primary-hover: */
-  /* #007ccf */
-  /* 0 124 207; */
+  /* #10B981 */
+  /* 16 185 129; */
   /* --color-secondary-inverted: */
   /* #ffffff */
   /* 255 255 255; */
@@ -677,11 +677,11 @@
   /* #e5e7eb */
   /* 229 231 235; */
   /* --color-success: */
-  /* #007ccf */
-  /* 0 124 207; */
+  /* #10B981 */
+  /* 16 185 129; */
   /* --color-error: */
-  /* #d1523f */
-  /* 209 82 63; */
+  /* #EF4444 */
+  /* 239 68 68; */
   /* --color-warning: */
   /* #f59e0b */
   /* 245 158 11; */
