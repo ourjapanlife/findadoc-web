@@ -100,8 +100,8 @@
     .theme-original-dark {
     /* branding colors - dark mode*/
     --color-primary:
-      /* #00FFFF */
-      0 255 255;
+      /* #0EB0C0 */
+      14 176 192;
     --color-secondary:
       /* #FB9999 */
       251 153 153;
@@ -146,8 +146,8 @@
 
     /* background - dark mode */
     --color-bg-primary:
-      /* #000000 */
-      0 0 0;
+      /* #212626 */
+      33 38 38;
       --color-bg-secondary:
         /* #1A1A1A */
         26 26 26;
@@ -218,8 +218,8 @@
     .theme-coral-dark {
     /* coral - branding colors*/
     --color-primary:
-      /* #FF1F00 */
-      255 31 0;
+      /* #ED6C5A */
+      237 108 90;
     --color-secondary:
       /* #245A7D */
       36 90 125;
@@ -264,8 +264,8 @@
 
     /* background - dark mode */
     --color-bg-primary:
-      /* #000000 */
-      0 0 0;
+      /* #22201F */
+      34 32 31;
     --color-bg-secondary:
       /* #1A1A1A */
       26 26 26;
@@ -280,8 +280,8 @@
       /* #A45D9A */
       164 93 154;
     --color-secondary:
-      /* #FB9999 */
-      251 153 153;
+      /* #99A6FB */
+      153 166 251;
     --color-accent:
       /* #7A1C5A */
       122 28 90;
@@ -336,11 +336,11 @@
   .theme-violet-dark {
     /* violet - branding colors */
     --color-primary:
-      /* #FF00DB */
-      255 0 219;
+      /* #A45D9A */
+      164 93 154;
     --color-secondary:
-      /* #AB514E */
-      171 81 78;
+      /* #99A6FB */
+      153 166 251;
     --color-accent:
       /* #DBB4CE */
       219 180 206;
@@ -382,8 +382,8 @@
 
     /* background - dark mode */
     --color-bg-primary:
-      /* #000000 */
-      0 0 0;
+      /* #262125 */
+      38 33 37;
     --color-bg-secondary:
       /* #1A1A1A */
       26 26 26;
@@ -507,8 +507,8 @@
       /* #000000 */
       0 0 0;
     --color-bg-secondary:
-      /* #1A1A1A */
-      26 26 26;
+      /* #2B3636 */
+      43 54 54;
     --color-bg-accent:
       /* #FFFFFF */
       255 255 255;
