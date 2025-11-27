@@ -23,7 +23,7 @@
                     v-show="isMenuOpen"
                     data-testid="hamburger-menu"
                     class="fixed top-0 right-0 z-30 flex flex-col
-                    justify-between w-2/3 h-dvh pt-6 pb-2 border-l-2 border-primary/20 rounded bg-primary-bg "
+                    justify-between w-2/3 h-dvh pt-6 pb-2 border-l-2 border-primary/20 rounded-s-2xl bg-primary-bg "
                     @click.stop
                 >
                     <div data-testid="hamburger-upper-section">
@@ -183,8 +183,7 @@
                         >
                             <div
                                 id="color-changer"
-                                v-close-on-outside-click="closeMenu"
-                                class="transition duration-300 opacity-0 invisible rounded border border-primary translate-y-20 drop-shadow-xl overflow-hidden"
+                                class="transition duration-300 opacity-0 invisible rounded-2xl border-t border-b border-primary/20 translate-y-20 drop-shadow-xl overflow-hidden"
                             >
                                 <ColorChanger
                                     v-for="theme in themes"
@@ -394,7 +393,7 @@ const themes = reactive([
     },
     {
         id: 'accessible-high-contrast',
-        dotColor: '#00FFFF',
+        dotColor: '#006872',
         name: 'High Contrast',
         selected: false,
         state: isDarkMode
@@ -423,15 +422,12 @@ function toggleThemeVisibility() {
 }
 
 function toggleLightDarkMode(returnedDarkModeValue) {
-    console.log(`returnedDarkModeValue on HamburgerMenu is ${returnedDarkModeValue}`)
     isDarkMode.value = returnedDarkModeValue
-    console.log(`isDarkMode on HamburgerMenu is ${isDarkMode.value}`)
     localStorage.setItem('isDarkMode', `${isDarkMode.value}`)
     setTheme(currentTheme.value, isDarkMode.value)
 }
 
 function setTheme(newTheme: string, darkModeValue: boolean) {
-    console.log(`darkModeValue on HamburgerMenu is ${darkModeValue}`)
     // ---Remove selected from previous theme
     const selectedTheme = themes.find(theme => theme.selected)
     selectedTheme.selected = !selectedTheme.selected
@@ -476,7 +472,6 @@ onMounted(() => {
         currentTheme.value = savedTheme
         isDarkMode.value = savedColorMode
         setTheme(savedTheme, savedColorMode)
-        console.log(`Current theme is ${savedTheme} ${savedColorMode}`)
     } else {
         setTheme('original', false)
     }

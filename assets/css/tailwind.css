@@ -283,8 +283,8 @@
       /* #FB9999 */
       251 153 153;
     --color-accent:
-      /* #F4F3E9 */
-      244 243 233;
+      /* #7A1C5A */
+      122 28 90;
     --color-primary-inverted:
       /* #ffffff */
       255 255 255;
@@ -342,8 +342,8 @@
       /* #AB514E */
       171 81 78;
     --color-accent:
-      /* #F4F3E9 */
-      244 243 233;
+      /* #DBB4CE */
+      219 180 206;
     --color-primary-inverted:
       /* #ffffff */
       255 255 255;
@@ -399,8 +399,8 @@
   .theme-accessible-high-contrast {
     /* high contrast - general branding colors */
     --color-primary:
-      /* #000000 */
-      0 0 0;
+      /* #006872 */
+      0 104 114;
     --color-secondary:
       /* #FFFF00 */
       255 255 0;

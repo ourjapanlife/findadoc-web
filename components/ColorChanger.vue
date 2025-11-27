@@ -62,7 +62,6 @@ defineProps({
 const emit = defineEmits(['theme-change'])
 
 const toggleLightDarkMode = isDarkMode => {
-    console.log(`isDarkMode on ColorChanger is ${isDarkMode}`)
     emit('theme-change', isDarkMode)
 }
 </script>
