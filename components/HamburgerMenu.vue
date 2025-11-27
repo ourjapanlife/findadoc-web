@@ -179,11 +179,11 @@
                         <!-- Footer Section -->
                         <div
                             data-testid="hamburger-menu-footer-section"
-                            class="absolute left-0 bottom-0 flex flex-col gap-3 pb-4 w-full"
+                            class="absolute bg-primary-bg left-0 bottom-0 z-0 flex flex-col gap-3 pb-4 w-full"
                         >
                             <div
                                 id="color-changer"
-                                class="transition duration-300 opacity-0 invisible rounded-2xl border-t border-b border-primary/20 translate-y-20 drop-shadow-xl overflow-hidden"
+                                class="transition duration-300 opacity-0 invisible rounded-t-2xl border-t border-primary/20 translate-y-20 overflow-hidden"
                             >
                                 <ColorChanger
                                     v-for="theme in themes"
@@ -198,120 +198,122 @@
                                 />
                                 <!-- <hr class="mx-auto w-32 border-secondary"> -->
                             </div>
-                            <div
-                                class="flex flex-row px-4 py-1 gap-3 items-center"
-                                @click="toggleThemeVisibility"
-                            >
+                            <div class="bg-primary-bg z-10 ">
                                 <div
-                                    class="w-7 h-7 mr-1 rounded-full bg-primary"
-                                />
-                                <p
-                                    id="theme-text"
-                                    class="text-primary"
+                                    class="flex flex-row px-4 py-1 gap-3 items-center"
+                                    @click="toggleThemeVisibility"
                                 >
-                                    Color Themes
-                                </p>
-                                <svg
-                                    id="accordion"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width="16"
-                                    height="16"
-                                    fill="currentColor"
-                                    viewBox="0 0 16 16"
-                                    class="text-primary transition duration-300"
-                                >
-                                    <path d="M13.354,5.146c0.094,0.094 0.147,0.221 0.147,0.354c0,0.133 -0.053,0.26 -0.147,0.354l-5,5c-0.094,0.094 -0.221,0.147 -0.354,0.147c-0.133,0 -0.26,-0.053 -0.354,-0.147l-5,-5c-0.094,-0.094 -0.147,-0.221 -0.147,-0.354c0,-0.275 0.226,-0.501 0.501,-0.501c0.133,0 0.26,0.053 0.354,0.147l4.646,4.647l4.646,-4.647c0.094,-0.094 0.221,-0.147 0.354,-0.147c0.133,0 0.26,0.053 0.354,0.147Z" />
-                                </svg>
-                            </div>
-                            <div class="px-4 flex flex-col gap-3">
-                                <div
-                                    data-testid="hamburger-menu-footer-legal"
-                                    class="flex gap-4"
-                                >
-                                    <NuxtLink
-                                        to="/terms"
-                                        data-testid="hamburger-menu-footer-legal-terms"
+                                    <div
+                                        class="w-7 h-7 mr-1 rounded-full bg-primary"
+                                    />
+                                    <p
+                                        id="theme-text"
+                                        class="text-primary"
                                     >
-                                        <span
-                                            class="text-primary-text"
-                                            @click="closeMenu()"
-                                        >
-                                            {{ t('footer.terms') }}
-                                        </span>
-                                    </NuxtLink>
-                                    <NuxtLink
-                                        to="/privacypolicy"
-                                        data-testid="hamburger-menu-footer-legal-privacy"
+                                        Color Themes
+                                    </p>
+                                    <svg
+                                        id="accordion"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="16"
+                                        height="16"
+                                        fill="currentColor"
+                                        viewBox="0 0 16 16"
+                                        class="text-primary transition duration-300"
                                     >
-                                        <span
-                                            class="text-primary-text"
-                                            @click="closeMenu()"
-                                        >
-                                            {{ t('footer.privacy') }}
-                                        </span>
-                                    </NuxtLink>
+                                        <path d="M13.354,5.146c0.094,0.094 0.147,0.221 0.147,0.354c0,0.133 -0.053,0.26 -0.147,0.354l-5,5c-0.094,0.094 -0.221,0.147 -0.354,0.147c-0.133,0 -0.26,-0.053 -0.354,-0.147l-5,-5c-0.094,-0.094 -0.147,-0.221 -0.147,-0.354c0,-0.275 0.226,-0.501 0.501,-0.501c0.133,0 0.26,0.053 0.354,0.147l4.646,4.647l4.646,-4.647c0.094,-0.094 0.221,-0.147 0.354,-0.147c0.133,0 0.26,0.053 0.354,0.147Z" />
+                                    </svg>
                                 </div>
-                                <div
-                                    data-testid="hamburger-menu-footer-dev-links"
-                                    class="flex gap-6"
-                                >
-                                    <NuxtLink
-                                        to="https://github.com/ourjapanlife"
-                                        target="_blank"
-                                    >
-                                        <SVGGithubIcon
-                                            data-testid="hamburger-menu-github-icon"
-                                            alt="hamburger menu"
-                                            class="w-8 h-10"
-                                        />
-                                    </NuxtLink>
-                                    <!-- Netlify Icons are available here: https://www.netlify.com/press/#badges -->
-                                    <NuxtLink
-                                        to="https://www.netlify.com"
-                                        target="_blank"
-                                        data-testid="hamburger-menu-footer-dev-links-netlify"
-                                    >
-                                        <img
-                                            src="https://www.netlify.com/v3/img/components/netlify-light.svg"
-                                            alt="Deploys by Netlify"
-                                            class="w-20 h-10 "
-                                        >
-                                    </NuxtLink>
-                                </div>
-                                <div
-                                    data-testid="hamburger-menu-footer-copyright"
-                                    class="text-xs text-primary-text-muted"
-                                >
-                                    <div>
-                                        © {{ new Date().getUTCFullYear() }} {{ t('hamburgerMenu.copyright') }}
-                                    </div>
+                                <div class="px-4 flex flex-col gap-3">
                                     <div
                                         data-testid="hamburger-menu-footer-legal"
-                                        class="flex"
+                                        class="flex gap-4"
                                     >
-                                        <span
-                                            data-testid="npo-link"
-                                            class="mt-0.5"
+                                        <NuxtLink
+                                            to="/terms"
+                                            data-testid="hamburger-menu-footer-legal-terms"
                                         >
-                                            NPO
-                                            <NuxtLink
-                                                to="https://www.npo-hiroba.or.jp/search/zoom.php?pk=121289"
-                                                target="_blank"
-                                                class="underline"
-                                            >#9011005010215
-                                            </NuxtLink>
-                                        </span>
-                                        <span
-                                            data-testid="npo-balance-sheet-link"
-                                            class="ml-2 mt-0.5"
+                                            <span
+                                                class="text-primary-text"
+                                                @click="closeMenu()"
+                                            >
+                                                {{ t('footer.terms') }}
+                                            </span>
+                                        </NuxtLink>
+                                        <NuxtLink
+                                            to="/privacypolicy"
+                                            data-testid="hamburger-menu-footer-legal-privacy"
                                         >
-                                            <NuxtLink
-                                                to="https://docs.google.com/spreadsheets/d/1CafQoHn1NNNoRy35QSt_nUZcgKL8QN2M"
-                                                target="_blank"
-                                                class="underline"
-                                            >{{ t('hamburgerMenu.balancesheet') }}
-                                            </NuxtLink>
-                                        </span>
+                                            <span
+                                                class="text-primary-text"
+                                                @click="closeMenu()"
+                                            >
+                                                {{ t('footer.privacy') }}
+                                            </span>
+                                        </NuxtLink>
+                                    </div>
+                                    <div
+                                        data-testid="hamburger-menu-footer-dev-links"
+                                        class="flex gap-6"
+                                    >
+                                        <NuxtLink
+                                            to="https://github.com/ourjapanlife"
+                                            target="_blank"
+                                        >
+                                            <SVGGithubIcon
+                                                data-testid="hamburger-menu-github-icon"
+                                                alt="hamburger menu"
+                                                class="w-8 h-10"
+                                            />
+                                        </NuxtLink>
+                                        <!-- Netlify Icons are available here: https://www.netlify.com/press/#badges -->
+                                        <NuxtLink
+                                            to="https://www.netlify.com"
+                                            target="_blank"
+                                            data-testid="hamburger-menu-footer-dev-links-netlify"
+                                        >
+                                            <img
+                                                src="https://www.netlify.com/v3/img/components/netlify-light.svg"
+                                                alt="Deploys by Netlify"
+                                                class="w-20 h-10 "
+                                            >
+                                        </NuxtLink>
+                                    </div>
+                                    <div
+                                        data-testid="hamburger-menu-footer-copyright"
+                                        class="text-xs text-primary-text-muted"
+                                    >
+                                        <div>
+                                            © {{ new Date().getUTCFullYear() }} {{ t('hamburgerMenu.copyright') }}
+                                        </div>
+                                        <div
+                                            data-testid="hamburger-menu-footer-legal"
+                                            class="flex"
+                                        >
+                                            <span
+                                                data-testid="npo-link"
+                                                class="mt-0.5"
+                                            >
+                                                NPO
+                                                <NuxtLink
+                                                    to="https://www.npo-hiroba.or.jp/search/zoom.php?pk=121289"
+                                                    target="_blank"
+                                                    class="underline"
+                                                >#9011005010215
+                                                </NuxtLink>
+                                            </span>
+                                            <span
+                                                data-testid="npo-balance-sheet-link"
+                                                class="ml-2 mt-0.5"
+                                            >
+                                                <NuxtLink
+                                                    to="https://docs.google.com/spreadsheets/d/1CafQoHn1NNNoRy35QSt_nUZcgKL8QN2M"
+                                                    target="_blank"
+                                                    class="underline"
+                                                >{{ t('hamburgerMenu.balancesheet') }}
+                                                </NuxtLink>
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
