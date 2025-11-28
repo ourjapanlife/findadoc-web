@@ -29,29 +29,23 @@
                 id="theme-text"
                 class="text-primary"
             >
-                Color Themes
+                {{ t('themeManager.colorThemes') }}
             </p>
-            <!-- <svg
+            <SvgoAccordionArrow
                 id="accordion"
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                fill="currentColor"
-                viewBox="0 0 16 16"
-                class="text-primary transition duration-300"
-            >
-                <path d="M13.354,5.146c0.094,0.094 0.147,0.221 0.147,0.354c0,0.133 -0.053,0.26 -0.147,0.354l-5,5c-0.094,0.094 -0.221,0.147 -0.354,0.147c-0.133,0 -0.26,-0.053 -0.354,-0.147l-5,-5c-0.094,-0.094 -0.147,-0.221 -0.147,-0.354c0,-0.275 0.226,-0.501 0.501,-0.501c0.133,0 0.26,0.053 0.354,0.147l4.646,4.647l4.646,-4.647c0.094,-0.094 0.221,-0.147 0.354,-0.147c0.133,0 0.26,0.053 0.354,0.147Z" />
-            </svg> -->
-            <img
-                id="accordion"
-                class="text-secondary transition duration-300"
-                src="../assets/icons/accordion-arrow.svg"
-            >
+                role="img"
+                title="accordion arrow"
+                class="text-secondary w-6 h-6 transition duration-300 fill-primary"
+            />
         </div>
     </div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
+import { SvgoAccordionArrow } from '#components'
+
+const { t } = useI18n()
+
 const currentTheme = ref('original')
 
 const isDarkMode = ref(false)

@@ -298,7 +298,7 @@
 <script lang="ts" setup>
 import { useToast } from 'vue-toastification'
 import { useRouter } from 'vue-router'
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 import { vCloseOnOutsideClick } from '~/composables/closeOnOutsideClick'
 import SVGHamburgerMenuIcon from '~/assets/icons/hamburger-menu.svg'
 import SVGGithubIcon from '~/assets/icons/social-github.svg'
