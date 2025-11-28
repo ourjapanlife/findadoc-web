@@ -8,7 +8,7 @@
                 class="profile-icon w-8 h-8 stroke-primary inline"
             />
             <span class="w-4 font-bold pl-2 self-center text-primary-text"> {{ name }}, </span>
-            <span class="w-4 pl-2 font-semibold self-center">{{
+            <span class="w-4 pl-2 font-semibold self-center text-primary-text">{{
                 degrees.length === 1
                     ? degrees[0]
                     : degrees[0] + ", ... +" + (degrees.length - 1).toString()

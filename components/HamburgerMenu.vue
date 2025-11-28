@@ -174,57 +174,18 @@
                             </div>
                         </div>
 
-                        <!-- Accessible Theme Selector -->
-
                         <!-- Footer Section -->
                         <div
                             data-testid="hamburger-menu-footer-section"
-                            class="absolute bg-primary-bg left-0 bottom-0 z-0 flex flex-col gap-3 pb-4 w-full"
+                            class="absolute bg-primary-bg left-0 bottom-0 flex flex-col gap-3 pb-4 w-full"
                         >
-                            <div
-                                id="color-changer"
-                                class="transition duration-300 opacity-0 invisible rounded-t-2xl border-t border-primary/20 translate-y-20 overflow-hidden"
-                            >
-                                <ColorChanger
-                                    v-for="theme in themes"
-                                    :id="theme.id"
-                                    :key="theme.id"
-                                    :dot-color="theme.dotColor"
-                                    :name="theme.name"
-                                    :selected="theme.selected"
-                                    :state="isDarkMode"
-                                    @click="setTheme(theme.id, isDarkMode)"
-                                    @theme-change="toggleLightDarkMode"
-                                />
-                                <!-- <hr class="mx-auto w-32 border-secondary"> -->
-                            </div>
+                            <!-- Color Changer -->
+
+                            <ThemeManager />
                             <div class="bg-primary-bg z-10 ">
-                                <div
-                                    class="flex flex-row px-4 py-1 gap-3 items-center"
-                                    @click="toggleThemeVisibility"
-                                >
-                                    <div
-                                        class="w-7 h-7 mr-1 rounded-full bg-primary"
-                                    />
-                                    <p
-                                        id="theme-text"
-                                        class="text-primary"
-                                    >
-                                        Color Themes
-                                    </p>
-                                    <svg
-                                        id="accordion"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="16"
-                                        height="16"
-                                        fill="currentColor"
-                                        viewBox="0 0 16 16"
-                                        class="text-primary transition duration-300"
-                                    >
-                                        <path d="M13.354,5.146c0.094,0.094 0.147,0.221 0.147,0.354c0,0.133 -0.053,0.26 -0.147,0.354l-5,5c-0.094,0.094 -0.221,0.147 -0.354,0.147c-0.133,0 -0.26,-0.053 -0.354,-0.147l-5,-5c-0.094,-0.094 -0.147,-0.221 -0.147,-0.354c0,-0.275 0.226,-0.501 0.501,-0.501c0.133,0 0.26,0.053 0.354,0.147l4.646,4.647l4.646,-4.647c0.094,-0.094 0.221,-0.147 0.354,-0.147c0.133,0 0.26,0.053 0.354,0.147Z" />
-                                    </svg>
-                                </div>
                                 <div class="px-4 flex flex-col gap-3">
+                                    <!-- Terms and Privacy Policy -->
+
                                     <div
                                         data-testid="hamburger-menu-footer-legal"
                                         class="flex gap-4"
@@ -252,10 +213,13 @@
                                             </span>
                                         </NuxtLink>
                                     </div>
+
+                                    <!-- Github and Netify -->
                                     <div
                                         data-testid="hamburger-menu-footer-dev-links"
                                         class="flex gap-6"
                                     >
+                                        <!-- Github -->
                                         <NuxtLink
                                             to="https://github.com/ourjapanlife"
                                             target="_blank"
@@ -266,6 +230,9 @@
                                                 class="w-8 h-10"
                                             />
                                         </NuxtLink>
+
+                                        <!-- Netify -->
+
                                         <!-- Netlify Icons are available here: https://www.netlify.com/press/#badges -->
                                         <NuxtLink
                                             to="https://www.netlify.com"
@@ -275,10 +242,13 @@
                                             <img
                                                 src="https://www.netlify.com/v3/img/components/netlify-light.svg"
                                                 alt="Deploys by Netlify"
-                                                class="w-20 h-10 "
+                                                class="w-20 h-10"
                                             >
                                         </NuxtLink>
                                     </div>
+
+                                    <!-- Copyright NPO number and Balance Sheet -->
+
                                     <div
                                         data-testid="hamburger-menu-footer-copyright"
                                         class="text-xs text-primary-text-muted"
@@ -329,9 +299,6 @@
 import { useToast } from 'vue-toastification'
 import { useRouter } from 'vue-router'
 import { ref, onMounted } from 'vue'
-import { current } from 'tailwindcss/colors'
-import Toggle from './Toggle.vue'
-import ColorChanger from './ColorChanger.vue'
 import { vCloseOnOutsideClick } from '~/composables/closeOnOutsideClick'
 import SVGHamburgerMenuIcon from '~/assets/icons/hamburger-menu.svg'
 import SVGGithubIcon from '~/assets/icons/social-github.svg'
@@ -364,118 +331,4 @@ async function logout() {
         toast.error(error)
     }
 }
-
-// Theme Changer
-
-const currentTheme = ref('original')
-
-const isDarkMode = ref(false)
-
-const themes = reactive([
-    {
-        id: 'original',
-        dotColor: '#0EB0C0',
-        name: 'Original',
-        selected: true,
-        state: isDarkMode
-    },
-    {
-        id: 'coral',
-        dotColor: '#ED6C5A',
-        name: 'Coral',
-        selected: false,
-        state: isDarkMode
-    },
-    {
-        id: 'violet',
-        dotColor: '#A45D9A',
-        name: 'Violet',
-        selected: false,
-        state: isDarkMode
-    },
-    {
-        id: 'accessible-high-contrast',
-        dotColor: '#006872',
-        name: 'High Contrast',
-        selected: false,
-        state: isDarkMode
-    },
-    {
-        id: 'accessible-red-green',
-        dotColor: '#007BFF',
-        name: 'Red-Green Color Blindness',
-        selected: false,
-        state: isDarkMode
-    }
-])
-
-let colorThemesAreClosed = true
-
-function toggleThemeVisibility() {
-    document.getElementById('accordion').classList.toggle('-rotate-180')
-    document.getElementById('color-changer').classList.toggle('opacity-0')
-    document.getElementById('color-changer').classList.toggle('translate-y-20')
-    colorThemesAreClosed = !colorThemesAreClosed
-    if (colorThemesAreClosed) {
-        setTimeout(() => { document.getElementById('color-changer').classList.toggle('invisible') }, 300)
-    } else {
-        document.getElementById('color-changer').classList.toggle('invisible')
-    }
-}
-
-function toggleLightDarkMode(returnedDarkModeValue) {
-    isDarkMode.value = returnedDarkModeValue
-    localStorage.setItem('isDarkMode', `${isDarkMode.value}`)
-    setTheme(currentTheme.value, isDarkMode.value)
-}
-
-function setTheme(newTheme: string, darkModeValue: boolean) {
-    // ---Remove selected from previous theme
-    const selectedTheme = themes.find(theme => theme.selected)
-    selectedTheme.selected = !selectedTheme.selected
-
-    // ---Set theme to selected---
-    const identifiedTheme = themes.find(theme => theme.id === newTheme)
-
-    identifiedTheme.selected = !identifiedTheme.selected
-
-    const addTheme = function(theme) {
-        localStorage.setItem('theme', theme)
-        localStorage.setItem('isDarkMode', `${darkModeValue}`)
-        currentTheme.value = theme
-    }
-
-    document.documentElement.classList.remove(
-        'theme-original',
-        'theme-coral',
-        'theme-violet',
-        'theme-original-dark',
-        'theme-coral-dark',
-        'theme-violet-dark',
-        'theme-accessible-high-contrast',
-        'theme-accessible-red-green',
-        'theme-accessible-high-contrast-dark',
-        'theme-accessible-red-green-dark'
-    )
-
-    if (darkModeValue === false) {
-        document.documentElement.classList.add(`theme-${newTheme}`)
-        addTheme(newTheme)
-    } else {
-        document.documentElement.classList.add(`theme-${newTheme}-dark`)
-        addTheme(newTheme)
-    }
-}
-
-onMounted(() => {
-    const savedTheme = localStorage.getItem('theme')
-    if (savedTheme) {
-        const savedColorMode = localStorage.getItem('isDarkMode') === 'true'
-        currentTheme.value = savedTheme
-        isDarkMode.value = savedColorMode
-        setTheme(savedTheme, savedColorMode)
-    } else {
-        setTheme('original', false)
-    }
-})
 </script>

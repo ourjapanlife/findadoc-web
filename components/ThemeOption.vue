@@ -1,8 +1,8 @@
 <template>
     <div class="flex items-center gap-3">
         <div
-            v-if="selected"
-            class="flex items-center place-content-between bg-secondary-bg size-full px-4 py-3 z-0"
+            v-if="isSelected"
+            class="flex items-center place-content-between bg-secondary-bg size-full px-4 py-3"
         >
             <div class="flex items-center gap-3">
                 <div
@@ -11,12 +11,13 @@
                     :style="{ backgroundColor: dotColor }"
                 />
                 <p class="text-primary max-w-32">
-                    {{ name }}
+                    {{ themeName }}
                 </p>
             </div>
             <Toggle
-                :state="state"
-                @theme-change="toggleLightDarkMode"
+                :is-toggled-on="isDarkMode"
+                :toggle-text="isDarkMode ? 'Dark' : 'Light'"
+                @toggled-on-off="toggleLightDarkMode"
             />
         </div>
 
@@ -30,7 +31,7 @@
                 :style="{ backgroundColor: dotColor }"
             />
             <p class="text-primary max-w-32">
-                {{ name }}
+                {{ themeName }}
             </p>
         </div>
     </div>
@@ -38,7 +39,7 @@
 
 <script setup lang="ts">
 defineProps({
-    id: {
+    themeId: {
         type: String,
         required: true
     },
@@ -46,22 +47,22 @@ defineProps({
         type: String,
         required: true
     },
-    name: {
+    themeName: {
         type: String,
         required: true
     },
-    selected: {
+    isSelected: {
         type: Boolean,
         required: true
     },
-    state: {
+    isDarkMode: {
         type: Boolean
     }
 })
 
-const emit = defineEmits(['theme-change'])
+const emit = defineEmits(['lightdarkmode-toggle'])
 
 const toggleLightDarkMode = isDarkMode => {
-    emit('theme-change', isDarkMode)
+    emit('lightdarkmode-toggle', isDarkMode)
 }
 </script>

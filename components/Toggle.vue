@@ -1,34 +1,18 @@
 <template>
-    <!-- <label class="switch">
-        <input
-            id="isChecked"
-            v-model="toggleChecked"
-            type="checkbox"
-            @input="toggleLightDarkMode"
-        >
-        <span
-            id="slider"
-            :class="toggleChecked ? 'slider round bg-primary' : 'slider round bg-neutral-500'"
-        />
-    </label> -->
     <div
         class="flex flex-col"
-        @click="toggleLightDarkMode"
+        @click="toggle"
     >
         <p
-            id="state-text"
             class="text-primary"
         >
-            {{ state ? 'Dark' : 'Light' }}
+            {{ toggleText }}
         </p>
         <div
-            id="newToggle"
-            class="w-9 h-5 z-auto rounded-full bg-secondary transition duration-500"
+            class="w-9 h-5 rounded-full bg-secondary transition duration-500"
         >
             <div
-                id="new-toggle-slider"
-
-                :class="toggleChecked ? 'w-3 h-3 m-1 rounded-full transition duration-300 bg-accent absolute bg-primary translate-x-4' : 'w-3 h-3 m-1 rounded-full transition duration-300 bg-accent absolute bg-primary'"
+                :class="toggleChecked ? `${sliderStyling} translate-x-4` : sliderStyling"
             />
         </div>
     </div>
@@ -36,19 +20,18 @@
 
 <script setup lang="ts">
 const props = defineProps({
-    state: Boolean
+    isToggledOn: Boolean,
+    toggleText: String
 })
 
-let toggleChecked = props.state
+let toggleChecked = props.isToggledOn
 
-const emit = defineEmits(['theme-change'])
+const sliderStyling = 'w-3 h-3 m-1 rounded-full transition duration-300 absolute bg-primary'
 
-const toggleLightDarkMode = () => {
-    // document.getElementById('newToggle')?.classList.toggle('justify-end')
-    // document.getElementById('new-toggle-slider')?.classList.toggle('translate-x-4')
-    // document.getElementById('new-toggle-slider')?.classList.toggle('bg-primary')
+const emit = defineEmits(['toggled-on-off'])
 
+const toggle = () => {
     toggleChecked = !toggleChecked
-    emit('theme-change', toggleChecked)
+    emit('toggled-on-off', toggleChecked)
 }
 </script>
