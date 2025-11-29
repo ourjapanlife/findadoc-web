@@ -179,9 +179,8 @@
                             data-testid="hamburger-menu-footer-section"
                             class="absolute bg-primary-bg left-0 bottom-0 flex flex-col gap-3 pb-4 w-full"
                         >
-                            <!-- Color Changer -->
-
                             <ThemeManager />
+
                             <div class="bg-primary-bg z-10 ">
                                 <div class="px-4 flex flex-col gap-3">
                                     <!-- Terms and Privacy Policy -->

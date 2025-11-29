@@ -14,7 +14,6 @@
             @click="setTheme(theme.themeId, isDarkMode)"
             @lightdarkmode-toggle="toggleLightDarkMode"
         />
-    <!-- <hr class="mx-auto w-32 border-secondary"> -->
     </div>
 
     <div class="bg-primary-bg z-10 ">
@@ -42,8 +41,6 @@
 </template>
 
 <script lang="ts" setup>
-import { SvgoAccordionArrow } from '#components'
-
 const { t } = useI18n()
 
 const currentTheme = ref('original')
@@ -137,7 +134,6 @@ onMounted(() => {
     const savedTheme = localStorage.getItem('theme')
     if (savedTheme) {
         const savedColorMode = localStorage.getItem('isDarkMode') === 'true'
-        currentTheme.value = savedTheme
         isDarkMode.value = savedColorMode
         setTheme(savedTheme, savedColorMode)
     } else {

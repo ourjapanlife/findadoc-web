@@ -12,7 +12,9 @@
             class="w-9 h-5 rounded-full bg-secondary transition duration-500"
         >
             <div
-                :class="toggleChecked ? `${sliderStyling} translate-x-4` : sliderStyling"
+                :class="toggleChecked
+                    ? 'w-3 h-3 m-1 rounded-full transition duration-300 absolute bg-primary translate-x-4'
+                    : 'w-3 h-3 m-1 rounded-full transition duration-300 absolute bg-primary'"
             />
         </div>
     </div>
@@ -25,8 +27,6 @@ const props = defineProps({
 })
 
 let toggleChecked = props.isToggledOn
-
-const sliderStyling = 'w-3 h-3 m-1 rounded-full transition duration-300 absolute bg-primary'
 
 const emit = defineEmits(['toggled-on-off'])
 
