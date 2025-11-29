@@ -1,7 +1,7 @@
 <template>
     <div
         id="color-changer"
-        class="transition duration-300 opacity-0 invisible rounded-t-2xl border-t border-primary/20 translate-y-20 overflow-hidden"
+        :class="colorThemeAccordionIsClosed ? 'transition duration-300 opacity-0 delay-(invisible) rounded-t-2xl border-t border-primary/20 translate-y-20 overflow-hidden' : 'transition duration-300 rounded-t-2xl border-t border-primary/20 overflow-hidden'"
     >
         <ThemeOption
             v-for="theme in themes"
@@ -35,7 +35,7 @@
                 id="accordion"
                 role="img"
                 title="accordion arrow"
-                class="text-secondary w-6 h-6 transition duration-300 fill-primary"
+                :class="colorThemeAccordionIsClosed ? 'w-6 h-6 transition duration-300 fill-primary' : 'w-6 h-6 transition duration-300 fill-primary -rotate-180'"
             />
         </div>
     </div>
@@ -88,28 +88,10 @@ const themes = reactive([
     }
 ])
 
-let colorThemeAccordionIsClosed = true
+const colorThemeAccordionIsClosed = ref(true)
 
 function toggleThemeVisibility() {
-    const accordion = document.getElementById('accordion')
-
-    const colorChanger = document.getElementById('color-changer')
-
-    accordion.classList.toggle('-rotate-180')
-
-    colorChanger.classList.toggle('opacity-0')
-
-    colorChanger.classList.toggle('translate-y-20')
-
-    colorThemeAccordionIsClosed = !colorThemeAccordionIsClosed
-
-    if (colorThemeAccordionIsClosed) {
-        // colorChanger.classList.toggle('delay-300')
-        // colorChanger.classList.toggle('invisible')
-        setTimeout(() => { colorChanger.classList.toggle('invisible') }, 300)
-    } else {
-        colorChanger.classList.toggle('invisible')
-    }
+    colorThemeAccordionIsClosed.value = !colorThemeAccordionIsClosed.value
 }
 
 function toggleLightDarkMode(returnedDarkModeValue) {
@@ -128,12 +110,6 @@ function setTheme(newTheme: string, darkModeValue: boolean) {
 
     identifiedTheme.isSelected = !identifiedTheme.isSelected
 
-    const addTheme = function(theme) {
-        localStorage.setItem('theme', theme)
-        localStorage.setItem('isDarkMode', `${darkModeValue}`)
-        currentTheme.value = theme
-    }
-
     document.documentElement.classList.remove(
         'theme-original',
         'theme-coral',
@@ -149,11 +125,12 @@ function setTheme(newTheme: string, darkModeValue: boolean) {
 
     if (!darkModeValue) {
         document.documentElement.classList.add(`theme-${newTheme}`)
-        addTheme(newTheme)
     } else {
         document.documentElement.classList.add(`theme-${newTheme}-dark`)
-        addTheme(newTheme)
     }
+    localStorage.setItem('theme', newTheme)
+    localStorage.setItem('isDarkMode', `${darkModeValue}`)
+    currentTheme.value = newTheme
 }
 
 onMounted(() => {
