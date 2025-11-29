@@ -23,7 +23,7 @@
                     renderer: clusterRenderer,
                 }"
             >
-                <CustomMarker
+                <AdvancedMarker
                     v-for="location in searchResultsStore.searchResultsList"
                     :key="location.id"
                     :options="{
@@ -44,7 +44,7 @@
                             ]"
                         />
                     </div>
-                </CustomMarker>
+                </AdvancedMarker>
             </MarkerCluster>
         </GoogleMap>
     </div>
@@ -52,7 +52,7 @@
 
 <script setup lang="ts">
 import { ref, watch, nextTick, onMounted } from 'vue'
-import { GoogleMap, CustomMarker, MarkerCluster } from 'vue3-google-map'
+import { GoogleMap, AdvancedMarker, MarkerCluster } from 'vue3-google-map'
 import { useSearchResultsStore } from '../stores/searchResultsStore'
 import { useRuntimeConfig } from '#imports'
 import SVGMapPin from '~/assets/icons/map-pin.svg'
