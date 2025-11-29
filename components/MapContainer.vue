@@ -91,14 +91,24 @@ const clusterRenderer = {
         const width = 45
         const height = 73
 
-        return new window.google.maps.Marker({
+        // Use AdvancedMarkerElement with a DOM content node instead of the legacy Marker icon API
+        const icon = document.createElement('div')
+
+        icon.innerHTML = `
+            <div class="flex items-center justify-center">
+                <img
+                    src="${createClusterIcon(count, width, height)}"
+                    class="block"
+                    style="width: ${width}px; height: ${height}px;"
+                />
+            </div>
+        `
+
+        return new window.google.maps.marker.AdvancedMarkerElement({
             position,
-            icon: {
-                url: createClusterIcon(count, width, height),
-                scaledSize: new window.google.maps.Size(width, height),
-                anchor: new window.google.maps.Point(width / 2, height / 2)
-            },
-            zIndex: Number(window.google.maps.Marker.MAX_ZINDEX) + count
+            content: icon.firstElementChild as Element,
+            // Use a high z-index value (1,000,000 is standard max) since Marker.MAX_ZINDEX is legacy
+            zIndex: 1000000 + count
         })
     }
 }
