@@ -1,0 +1,8 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`submit.vue (vitest snapshot) > renders correctly 1`] = `
+"<div class="flex flex-col h-full w-full place-self-center overflow-y-auto pb-8">
+  <submission-form-stub></submission-form-stub>
+  <!--v-if-->
+</div>"
+`;

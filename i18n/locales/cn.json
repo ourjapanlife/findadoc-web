@@ -1,10 +1,34 @@
 {
   "about": {
-    "heading": "关于Find a Doc, Japan",
-    "members": "成员",
-    "subheading": "用人们熟悉的语言，为在日本生活的大家提供适当的医疗服务。",
-    "paragraph1": "在Find a Doc, Japan，我们的使命是促进一个更健康、更包容的社会。我们提供多语种的优质健康或卫生资讯，免费供所有人 – 包括外国人和医疗专业人士 – 使用。我们期望不论国籍或语言，在日本生活的所有人都能自信地使用当地的医疗卫生系统，找到合适的医疗专业人员，并享受所需的医疗服务。",
-    "paragraph2": "我们是一个非营利组织，致力于让每个人都能获得健康信息、享受充实的生活。我们的活动以社会公正、文化敏感性和创新精神为指导。我们非常乐意与政府、其他非营利组织和医疗界的伙伴建立合作联系。我们希望与各界伙伴一切携手创造一个每个人都能获得医疗服务、被接纳、享有美好生活的日本社会。"
+    "heroHeading": "Find a Doc, Japan",
+  "heroSubheading": "用您的语言连接您与所需的医疗服务",
+  "heroGetStarted": "开始使用",
+  "heroLearnMore": "了解更多",
+  "storyHeader": "我们的故事",
+  "storyParagraph1": "我们成立于2020年疫情期间，使命是促进更健康、更包容的社会。我们为所有人——包括外国人和医疗专业人员——免费提供多语言的高质量健康信息。我们希望无论国籍或语言，每个人都能自信地了解医疗体系，找到合适的医生，并获得所需的医疗服务。",
+  "storyParagraph2": "我们是一个非营利组织，秉持人人都应获得健康信息以享受美好生活的理念。我们的活动贯穿社会正义、文化敏感性和创新精神。我们始终乐于与政府、非营利组织和医疗领域的合作伙伴建立联系。与伙伴们一起，我们希望创造一个人人都能获得医疗服务、感受到包容并享有美好生活的日本。",
+  "btnImpact": "我们的影响",
+  "btnContributors": "贡献者",
+  "btnBoard": "NPO 董事会",
+  "btnMascots": "吉祥物",
+  "btnInvolve": "参与我们",
+  "impactHeader": "我们的影响",
+  "impactDoctors": "300+ 名注册医生",
+  "impactUsers": "100+ 月活用户",
+  "impactVolunteer": "志愿者与社区驱动",
+  "contributorsHeader": "贡献者",
+  "boardHeader": "NPO 董事会",
+  "mascotsHeader": "吉祥物",
+  "mascotsAwa": "Awa",
+  "mascotsMichael": "Michael",
+  "mascotsTamika": "Tamika",
+  "mascotsSachi": "Sachi",
+  "mascotsChiko": "Chiko",
+  "involveHeader": "参与我们",
+  "involveAdd": "添加医生",
+  "involveGit": "贡献代码",
+  "involveLinkedin": "关注我们",
+  "involveFeedback": "反馈意见"
   },
   "footer": {
     "terms": "条款",
@@ -99,7 +123,8 @@
     "speaks": "这位医师可以说",
     "contact": "联系",
     "lastUpdate": "Last updated",
-    "additionalInfo": "Additional Info"
+    "additionalInfo": "Additional Info",
+    "healthcareProfessionals": "Healthcare Professionals"
   },
   "thankYouPage": {
     "heading": "谢谢！",
@@ -359,7 +384,8 @@
     "urology": "泌尿科医生",
     "traumatology": "创伤学",
     "generalMedicine": "全科医生",
-    "surgery": "外科医生"
+    "surgery": "外科医生",
+    "proctology": "直肠科医生"
   },
   "specialtyCategories": {
     "childrensHealth": "儿童健康",
@@ -408,5 +434,47 @@
     "displayName": "显示名称",
     "healthcareProfessionalName": "个人资料图片",
     "updateButton": "更新设置"
+  },
+  "profile": {
+    "edit": "Edit Profile",
+    "username": "Username",
+    "email": "Email",
+    "profilePhoto": "Profile Photo",
+    "save": "Save Changes",
+    "updatedSuccessfully": "Profile updated successfully",
+    "updateFailed": "Profile update failed"
+  },
+  "authErrors": {
+    "loggingIn": "Error logging in:",
+    "authBearerToken": "Error getting auth bearer token:",
+    "tenSecondTimeout": "Auth0 loading timed out after 10 seconds"
+  },
+  "facilitiesErrors": {
+    "facilityQuery": "Error querying the facilities:"
+  },
+  "healthcareProfessionalsErrors": {
+    "noCurrentProfessionalDataFound": "No data found for currentProfessionalData with id",
+    "noUpdatesFound": "No updates found",
+    "queryError": "Error querying the healthcare professionals:",
+    "idDoesNotExist": "The Healthcare Professional ID doesn't exist",
+    "retrievingById": "Error retrieving healthcare professional by id: "
+  },
+  "localeErrors": {
+    "notFound": "Language not found",
+    "notSpecified": "Not Specified"
+  },
+  "locationErrors": {
+    "facilitiesDropdown": "Error getting facilities for dropdown:",
+    "gettingData": "Error getting data! Please contact our support team by clicking the bottom right link on the page!"
+  },
+  "moderationSubmissionsErrors": {
+    "unableToApprove": "Unable to approve submission. Submission ID is required.",
+    "unableToReject": "Unable to reject submission. Submission ID is required.",
+    "queryError": "Error querying the submissions:"
+  },
+  "searchResultsErrors": {
+    "gettingProfessionals": "Error getting professionals:",
+    "gettingData": "Error getting data! Please contact our support team by clicking the bottom right link on the page!",
+    "gettingfacilities": "Error getting facilities:"
   }
 }

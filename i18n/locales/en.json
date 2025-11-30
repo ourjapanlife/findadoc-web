@@ -1,10 +1,67 @@
 {
   "about": {
-    "heading": "About Find a Doc, Japan",
-    "members": "Members",
-    "subheading": "Connecting you to the healthcare services you need, in your language",
-    "paragraph1": "At Find a Doc, Japan, our mission is to promote a healthier and more inclusive society. We offer quality health information for free in many languages for everyone, including foreigners and medical professionals. We aim for a Japan where all people, regardless of nationality or language, can confidently navigate the healthcare system, find the right doctors and get the healthcare they need.",
-    "paragraph2": "We are a non-profit organization driven by the ideal that everyone should have access to health information as part of a flourishing life. Our activities are guided by a sense of social justice, cultural sensitivity and innovation. We are always happy to connect with partners in the governmental, non-profit and medical communities. Together with our partners, we hope to create a Japan where everyone has access to healthcare, feels included and can live well."
+    "heroHeading": "Find a Doc, Japan",
+    "heroSubheading": "Connecting you to the healthcare services you need, in your language",
+    "heroGetStarted": "Get Started",
+    "heroLearnMore": "Learn More",
+    "storyHeader": "Our Story",
+    "storyParagraph1": "Founded in 2020 during the pandemic, our mission is to promote a healthier and more inclusive society. We offer quality health information for free in many languages for everyone, including foreigners and medical professionals. We aim for a Japan where all people, regardless of nationality or language, can confidently navigate the healthcare system, find the right doctors and get the healthcare they need.",
+    "storyParagraph2": "We are a non-profit organization driven by the ideal that everyone should have access to health information as part of a flourishing life. Our activities are guided by a sense of social justice, cultural sensitivity and innovation. We are always happy to connect with partners in the governmental, non-profit and medical communities. Together with our partners, we hope to create a Japan where everyone has access to healthcare, feels included and can live well.",
+    "btnImpact": "Our Impact So Far",
+    "btnContributors": "Contributors",
+    "btnBoard": "NPO Board",
+    "btnMascots": "Mascots",
+    "btnInvolve": "Get Involved",
+    "impactHeader": "Our Impact So Far",
+    "impactDoctors": "300+ Doctors Registered",
+    "impactUsers": "100+ Monthly Users",
+    "impactVolunteer": "Volunteer and Community Driven",
+    "contributorsHeader": "Contributors",
+    "boardHeader": "NPO Board",
+    "mascotsHeader": "Mascots",
+    "mascotsAwa": "Awa",
+    "mascotsMichael": "Michael",
+    "mascotsTamika": "Tamika",
+    "mascotsSachi": "Sachi",
+    "mascotsChiko": "Chiko",
+    "involveHeader": "Get Involved",
+    "involveAdd": "Add a Doctor",
+    "involveGit": "Contribute",
+    "involveLinkedin": "Follow Us",
+    "involveFeedback": "Give Feedback"
+  },
+  "authErrors":{
+    "loggingIn": "Error logging in:",
+    "authBearerToken": "Error getting auth bearer token:",
+    "tenSecondTimeout": "Auth0 loading timed out after 10 seconds"
+  },
+  "facilitiesErrors":{
+    "facilityQuery": "Error querying the facilities:"
+  },
+  "healthcareProfessionalsErrors":{
+    "noCurrentProfessionalDataFound": "No data found for currentProfessionalData with id",
+    "noUpdatesFound": "No updates found",
+    "queryError": "Error querying the healthcare professionals:",
+    "idDoesNotExist": "The Healthcare Professional ID doesn't exist",
+    "retrievingById": "Error retrieving healthcare professional by id: "
+  },
+  "localeErrors":{
+    "notFound": "Language not found",
+    "notSpecified": "Not Specified"
+  },
+  "locationErrors": {
+    "facilitiesDropdown": "Error getting facilities for dropdown:",
+    "gettingData":"Error getting data! Please contact our support team by clicking the bottom right link on the page!"
+  },
+  "moderationSubmissionsErrors": {
+    "unableToApprove": "Unable to approve submission. Submission ID is required.",
+    "unableToReject": "Unable to reject submission. Submission ID is required.",
+    "queryError": "Error querying the submissions:"
+  },
+  "searchResultsErrors": {
+    "gettingProfessionals": "Error getting professionals:",
+    "gettingData": "Error getting data! Please contact our support team by clicking the bottom right link on the page!",
+    "gettingfacilities": "Error getting facilities:"
   },
   "serverErrorMessages": {
     "errorCodeMessagingNeeded": "The server error code does not have a message for the user. Please add one.",
@@ -99,7 +156,8 @@
     "speaks": "This doctor speaks",
     "contact": "Contact",
     "lastUpdate": "Last updated",
-    "additionalInfo": "Additional Info"
+    "additionalInfo": "Additional Info",
+    "healthcareProfessionals": "Healthcare Professionals"
   },
   "thankYouPage": {
     "heading": "Thank you!",
@@ -157,6 +215,7 @@
     "physiotherapy": "Physical Therapist",
     "psychiatry": "Psychiatrist",
     "preventiveMedicine": "Preventive Medicine",
+    "proctology": "Proctologist",
     "radiationOncology": "Radiation Oncologist",
     "sportsMedicine": "Sports Medicine",
     "surgery": "Surgery",
@@ -410,5 +469,14 @@
     "displayName": "Display Name",
     "healthcareProfessionalName": "Profile Image",
     "updateButton": "Update Settings"
+  },
+  "profile": {
+    "edit": "Edit Profile",
+    "username": "Username",
+    "email": "Email",
+    "profilePhoto": "Profile Photo",
+    "save": "Save Changes",
+    "updatedSuccessfully": "Profile updated successfully",
+    "updateFailed": "Profile update failed"
   }
 }

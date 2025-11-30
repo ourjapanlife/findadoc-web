@@ -32,7 +32,7 @@
             <!-- Selected Languages -->
             <div class="search-language flex-1 landscape:flex-1">
                 <span
-                    class="block text-start pl-2 max-w-full landscape:max-w-full overflow-hidden text-ellipsis
+                    class="block text-start pl-2 max-w-full landscape:hidden overflow-hidden text-ellipsis
                            whitespace-nowrap"
                 >
                     {{ selectedLanguageText }}
@@ -41,7 +41,7 @@
             <!-- Selected Specialties -->
             <div class="search-specialty flex-1 landscape:flex-1">
                 <span
-                    class="block text-start pl-2 max-w-full landscape:max-w-full overflow-hidden text-ellipsis
+                    class="block text-start pl-2 max-w-full landscape:hidden overflow-hidden text-ellipsis
                            whitespace-nowrap"
                 >
                     • {{ selectedSpecialtyText }}
@@ -50,7 +50,7 @@
             <!-- Selected Locations -->
             <div class="search-location flex-1 landscape:flex-1">
                 <span
-                    class="block text-start pl-2 max-w-full landscape:max-w-full overflow-hidden text-ellipsis
+                    class="block text-start pl-2 max-w-full landscape:hidden overflow-hidden text-ellipsis
                            whitespace-nowrap"
                 >
                     • {{ selectedLocationText }}
@@ -60,8 +60,7 @@
         <!-- Results count -->
         <span
             class="block text-sm text-center
-                   text-primary-text-muted self-center
-                   landscape:ml-auto"
+                   text-primary-text-muted self-center"
         >
             {{ t('searchBar.resultsFound', searchResultsStore.totalResults) }}
         </span>

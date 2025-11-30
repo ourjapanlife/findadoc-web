@@ -1,9 +1,284 @@
 {
     "members": [
+    {
+        "avatarImg": "/avatars/aaron_culbert.jpg",
+        "name": "Aaron Culbert",
+        "title": "Developer",
+        "linkedInUrl": "https://www.linkedin.com/in/aculbert/",
+        "githubUrl": "https://github.com/aaronculbert"
+    },
+    {
+        "avatarImg": "/avatars/anissa_chadouli.jpg",
+        "name": "Anissa Chadouli",
+        "title": "Developer",
+        "linkedInUrl": "https://www.linkedin.com/in/anissa-chadouli/",
+        "githubUrl": "https://github.com/Anissa3005"
+    },
+    {
+        "avatarImg": "/avatars/andrew_leemhuis.jpg",
+        "name": "Andrew Leemhuis",
+        "title": "Design",
+        "linkedInUrl": "https://www.linkedin.com/in/andrew-leemhuis-01482718/",
+        "githubUrl": null
+    },
+    {
+        "avatarImg": "/avatars/ann_kilzer.jpg",
+        "name": "Ann Kilzer",
+        "title": "Developer",
+        "linkedInUrl": null,
+        "githubUrl": "https://github.com/ann-kilzer"
+    },
+    {
+        "avatarImg": "/avatars/anthony_lavizzo.jpg",
+        "name": "Anthony Lavizzo",
+        "title": "Developer",
+        "linkedInUrl": "https://www.linkedin.com/in/anthonylavizzo/",
+        "githubUrl": "https://github.com/sylentwulf81"
+    },
+    {
+        "avatarImg": "/avatars/bruno_uemura.jpg",
+        "name": "Bruno Uemura",
+        "title": "Developer",
+        "linkedInUrl": "https://www.linkedin.com/in/bruno-nogima-uemura-21124a321/",
+        "githubUrl": "https://github.com/bnogimauemura"
+    },
+    {
+        "avatarImg": "/avatars/chris_bowman.jpg",
+        "name": "Chris Bowman",
+        "title": "Developer",
+        "linkedInUrl": "https://www.linkedin.com/in/bowman-chris/",
+        "githubUrl": "https://github.com/ProgressChris88"
+    },
+    {
+        "avatarImg": "/avatars/chunyan_li.jpg",
+        "name": "Chunyan Li",
+        "title": "Public Health Expert",
+        "linkedInUrl": "https://www.linkedin.com/in/chunyan-li-10/",
+        "githubUrl": null
+    },
+    {
+        "avatarImg": "/avatars/davide_ghezzo.jpg",
+        "name": "Davide Ghezzo",
+        "title": "Developer",
+        "linkedInUrl": "https://www.linkedin.com/in/davide-ghezzo-a91587206/",
+        "githubUrl": "https://github.com/Ghezz9"
+    },
+    {
+        "avatarImg": "/avatars/derek_cameron.jpg",
+        "name": "Derek Cameron",
+        "title": "Developer",
+        "linkedInUrl": "https://www.linkedin.com/in/derek-cameron-5b5543123/",
+        "githubUrl": "https://github.com/deek87"
+    },
+    {
+        "avatarImg": "/avatars/diego_mendez.jpg",
+        "name": "Diego Mendez",
+        "title": "Developer",
+        "linkedInUrl": "https://www.linkedin.com/in/diego-bittencourt-mendes-5b3898a8/",
+        "githubUrl": "https://github.com/Diego-Bittencourt"
+    },
+    {
+        "avatarImg": "/avatars/dominik.jpg",
+        "name": "Dominik",
+        "title": "Developer",
+        "linkedInUrl": null,
+        "githubUrl": "https://github.com/dominiksakic"
+    },
+    {
+        "avatarImg": "/avatars/eri_yawata.jpg",
+        "name": "Eri Yawata",
+        "title": "Developer",
+        "linkedInUrl": "https://www.linkedin.com/in/eriyawata/",
+        "githubUrl": "https://github.com/eyawata"
+    },
+    {
+        "avatarImg": "/avatars/evan_peterson.jpg",
+        "name": "Evan Peterson",
+        "title": "Developer",
+        "linkedInUrl": "https://www.linkedin.com/in/evan-peterson-desu/",
+        "githubUrl": "https://github.com/evan-desu"
+    },
+    {
+        "avatarImg": "/avatars/gustavo_minetoma.jpg",
+        "name": "Gustavo Minetoma",
+        "title": "Developer",
+        "linkedInUrl": "https://www.linkedin.com/in/gustavommalves/",
+        "githubUrl": "https://github.com/gminetoma"
+    },
+    {
+        "avatarImg": "/avatars/jacob_chae.jpg",
+        "name": "Jacob Chae",
+        "title": "Developer",
+        "linkedInUrl": "https://www.linkedin.com/in/jacob-chae-26a862b2/",
+        "githubUrl": "https://github.com/jbcden"
+    },
+    {
+        "avatarImg": "/avatars/jake_anderson.jpg",
+        "name": "Jake Anderson",
+        "title": "Developer",
+        "linkedInUrl": null,
+        "githubUrl": "https://github.com/jd-anderson88"
+    },
+    {
+        "avatarImg": "/avatars/jason_sagalow.jpg",
+        "name": "Jason Sagalow",
+        "title": "Developer",
+        "linkedInUrl": "https://www.linkedin.com/in/jason-sagalow-76047614b/",
+        "githubUrl": "https://github.com/ConwayDecker"
+    },
+    {
+        "avatarImg": "/avatars/julian_schoenfeld.jpg",
+        "name": "Julian Schoenfeld",
+        "title": "Developer",
+        "linkedInUrl": null,
+        "githubUrl": "https://github.com/carved-duck"
+    },
+    {
+        "avatarImg": "/avatars/karen_miyazawa.jpg",
+        "name": "Karen Miyazawa",
+        "title": "Developer",
+        "linkedInUrl": "https://www.linkedin.com/in/ks-miyazawa/",
+        "githubUrl": "https://github.com/KSmiyazawa"
+    },
+    {
+        "avatarImg": "/avatars/karl_komeya.jpg",
+        "name": "Karl Komeya",
+        "title": "Developer",
+        "linkedInUrl": "https://www.linkedin.com/in/karl-komeya-a1a64526b/",
+        "githubUrl": "https://github.com/karlk08"
+    },
+    {
+        "avatarImg": "/avatars/kei_yumino.jpg",
+        "name": "Kei Yumino",
+        "title": "Design",
+        "linkedInUrl": "https://www.linkedin.com/in/kei-yumino-86299861/",
+        "githubUrl": null
+    },
+    {
+        "avatarImg": "/avatars/lily.jpg",
+        "name": "Lily",
+        "title": "Developer",
+        "linkedInUrl": null,
+        "githubUrl": "https://github.com/Kumaguro3"
+    },
+    {
+        "avatarImg": "/avatars/lisa_broersen.jpg",
+        "name": "Lisa Broerson",
+        "title": "Developer",
+        "linkedInUrl": "https://www.linkedin.com/in/lisa-broersen/",
+        "githubUrl": "https://github.com/ljbroersen"
+    },
+    {
+        "avatarImg": "/avatars/lucy_gelderloos.jpg",
+        "name": "Lucy Gelderloos",
+        "title": "Developer",
+        "linkedInUrl": null,
+        "githubUrl": "https://github.com/lucy-gelderloos"
+    },
+    {
+        "avatarImg": "/avatars/matthew_kurtti.jpg",
+        "name": "Matthew Kurtti",
+        "title": "Developer",
+        "linkedInUrl": "https://www.linkedin.com/in/matthew-kurtti-737ab2123/",
+        "githubUrl": "https://github.com/matthewkurtti"
+    },
+    {
+        "avatarImg": "/avatars/nasira_nebi.jpg",
+        "name": "Nasira Nebi",
+        "title": "Developer",
+        "linkedInUrl": "https://www.linkedin.com/in/nasira-nebi/",
+        "githubUrl": "https://github.com/nasiranebi914"
+    },
+    {
+        "avatarImg": "/avatars/natalja_dembek.jpg",
+        "name": "Natalja Dembek",
+        "title": "UI/UX Designer",
+        "linkedInUrl": "https://www.linkedin.com/in/nataljadembek/",
+        "githubUrl": "https://github.com/Ntlja",
+        "personalWebsite": "https://www.natalja-d.com"
+    },
+    {
+        "avatarImg": "/avatars/nathaniel_smith.jpg",
+        "name": "Nathaniel Smith",
+        "title": "Developer",
+        "linkedInUrl": "https://www.linkedin.com/in/nathaniel-damien-smith/",
+        "githubUrl": "https://github.com/NathanielDSmith"
+    },
+    {
+        "avatarImg": "/avatars/olivier_lechevalier.jpg",
+        "name": "Olivier Lechevalier",
+        "title": "Developer",
+        "linkedInUrl": "https://www.linkedin.com/in/olechevalier/",
+        "githubUrl": "https://github.com/RageZBla"
+    },
+    {
+        "avatarImg": "/avatars/preston_boardman.jpg",
+        "name": "Preston Boardman",
+        "title": "Developer",
+        "linkedInUrl": "https://www.linkedin.com/in/preston-boardman-8210a671/",
+        "githubUrl": "https://github.com/prestonb91"
+    },
+    {
+        "avatarImg": "/avatars/reezan.jpg",
+        "name": "Reezan",
+        "title": "Developer",
+        "linkedInUrl": null,
+        "githubUrl": "https://github.com/ReeAya"
+    },
+    {
+        "avatarImg": "/avatars/shashank_dangi.jpg",
+        "name": "Shashank Dangi",
+        "title": "Developer",
+        "linkedInUrl": "https://www.linkedin.com/in/shashank-dangi/",
+        "githubUrl": "https://github.com/shashankdangi"
+    },
+    {
+        "avatarImg": "/avatars/shingo_toyoda.jpg",
+        "name": "Shingo Toyoda",
+        "title": "Language Support",
+        "linkedInUrl": null,
+        "githubUrl": null
+    },
+    {
+        "avatarImg": "/avatars/sulaymane_sillah.jpg",
+        "name": "Sulaymane Sillah",
+        "title": "Developer",
+        "linkedInUrl": "https://www.linkedin.com/in/sulaymanesillah/",
+        "githubUrl": "https://github.com/Tch4lla"
+    },
+    {
+        "avatarImg": "/avatars/trent_shimamura.jpg",
+        "name": "Trent Shimamura",
+        "title": "Moderation Lead",
+        "linkedInUrl": "https://www.linkedin.com/in/trent-golden-58811b129/",
+        "githubUrl": null
+    }],
+    "board": [
+        {
+            "avatarImg": "/avatars/william_brammer.jpg",
+            "name": "William Brammer",
+            "title": "CEO",
+            "linkedInUrl": "https://www.linkedin.com/in/william-brammer/",
+            "githubUrl": "https://github.com/NabbeunNabi"
+        },
+        {
+            "avatarImg": "/avatars/russell_miller.jpg",
+            "name": "Russell Miller",
+            "title": "President",
+            "linkedInUrl": "https://www.linkedin.com/in/russell-miller-51a5136b/",
+            "githubUrl": null
+        },
+        {
+            "avatarImg": "/avatars/niaya_harper_igarashi.jpg",
+            "name": "Niaya Harper Igarashi",
+            "title": "Vice President",
+            "linkedInUrl": "https://www.linkedin.com/in/niayaharper/r",
+            "githubUrl": null
+        },
         {
             "avatarImg": "/avatars/lashawn_toyoda.jpg",
             "name": "LaShawn Toyoda",
-            "title": "Founder & Executive Director",
+            "title": "Secretary",
             "linkedInUrl": "https://www.linkedin.com/in/lashawn-toyoda/",
             "githubUrl": "https://github.com/theyokohamalife/"
         },
@@ -13,13 +288,6 @@
             "title": "Tech Lead",
             "linkedInUrl": "https://www.linkedin.com/in/philipermish",
             "githubUrl": "https://github.com/ermish"
-        },
-        {
-            "avatarImg": "/avatars/russell_miller.jpg",
-            "name": "Russell Miller",
-            "title": "Healthcare Content Lead",
-            "linkedInUrl": "https://www.linkedin.com/in/russell-miller-51a5136b/",
-            "githubUrl": null
         },
         {
             "avatarImg": "/avatars/kuniko_arita.jpg",
@@ -34,56 +302,6 @@
             "title": "Medical & Social Welfare Expert",
             "linkedInUrl": null,
             "githubUrl": null
-        },
-        {
-            "avatarImg": "/avatars/niaya_harper_igarashi.jpg",
-            "name": "Niaya Harper Igarashi",
-            "title": "Access, Community Outreach",
-            "linkedInUrl": "https://www.linkedin.com/in/niayaharper/r",
-            "githubUrl": null
-        },
-        {
-            "avatarImg": "/avatars/kei_yumino.jpg",
-            "name": "Kei Yumino",
-            "title": "Design Lead",
-            "linkedInUrl": "https://www.linkedin.com/in/kei-yumino-86299861/",
-            "githubUrl": null
-        },
-        {
-            "avatarImg": "/avatars/emanuele_monica.jpg",
-            "name": "Emanuele Monica",
-            "title": "Language Support",
-            "linkedInUrl": "https://www.linkedin.com/in/emanuele-monica-59b93949/",
-            "githubUrl": null
-        },
-        {
-            "avatarImg": "/avatars/chunyan_li.jpg",
-            "name": "Chunyan Li",
-            "title": "Public Health Expert",
-            "linkedInUrl": "https://www.linkedin.com/in/chunyan-li-10/",
-            "githubUrl": null
-        },
-        {
-            "avatarImg": "/avatars/andrew_leemhuis.jpg",
-            "name": "Andrew Leemhuis",
-            "title": "Design",
-            "linkedInUrl": "https://www.linkedin.com/in/andrew-leemhuis-01482718/",
-            "githubUrl": null
-        },
-        {
-            "avatarImg": "/avatars/shingo_toyoda.jpg",
-            "name": "Shingo Toyoda",
-            "title": "Language Support",
-            "linkedInUrl": null,
-            "githubUrl": null
-        },
-        {
-            "avatarImg": "/avatars/natalja_dembek.jpg",
-            "name": "Natalja Dembek",
-            "title": "UI/UX Designer",
-            "linkedInUrl": "https://www.linkedin.com/in/nataljadembek/",
-            "githubUrl": "https://github.com/Ntlja",
-            "personalWebsite": "https://www.natalja-d.com"
         }
     ]
 }

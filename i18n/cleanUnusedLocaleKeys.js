@@ -42,14 +42,35 @@ function getFilesRecursively(dir, exts = [], ignoreDirectories = []) {
 const extractUsedTranslationKeys = async () => {
     const files = getFilesRecursively(sourceCodeDir, ['.ts', '.vue'], ['node_modules', 'dist'])
 
-    const keyRegex = /(?:\$t|t)\(\s*['"`]([^'"`]+)['"`]\s*\)/g
+    // Collect keys matched by a list of regexes that cover various usage patterns
+    const patterns = [
+        // $t('key', ...) or t('key', ...)
+        /(?:\$t|\bt)\(\s*['"`]([^'"`]+)['"`]/g,
+        // $tc('key', ...)
+        /\$tc\(\s*['"`]([^'"`]+)['"`]/g,
+        // <i18n-t keypath="key.path">
+        /\bkeypath\s*=\s*['"`]([^'"`]+)['"`]/g,
+        // bound :keypath="'key.path'" or :keypath="`key.path`"
+        /:\s*keypath\s*=\s*['"`]([^'"`]+)['"`]/g,
+        // v-t="'key.path'" (string literal form)
+        /\bv-t\s*=\s*['"`]([^'"`]+)['"`]/g,
+        // v-t="{ path: 'key.path' }" (object syntax)
+        /\bv-t\s*=\s*"\{[^}\n]*?['"]path['"]\s*:\s*['"]([^'"}]+)['"][^}]*\}"/g
+    ]
 
-    return new Set(
-        files
-            .map(file => fs.readFileSync(file, 'utf8').matchAll(keyRegex))
-            .flatMap(matches => Array.from(matches))
-            .map(match => match[1])
-    )
+    const usedKeys = new Set()
+
+    files.forEach(file => {
+        const content = fs.readFileSync(file, 'utf8')
+        patterns.forEach(regex => {
+            const matches = content.matchAll(regex)
+            for (const m of matches) {
+                if (m[1]) usedKeys.add(m[1])
+            }
+        })
+    })
+
+    return usedKeys
 }
 
 // 🔄 Recursively extract all keys from JSON (flattened)
@@ -128,7 +149,7 @@ const run = async () => {
         })
         .join('\n')
 
-    fs.writeFileSync('potentially_unused_locales_keys.txt', output, 'utf-8')
+    fs.writeFileSync('potentially_unused_keys.txt', output, 'utf-8')
     console.info('\n📝 Report saved to: potentially_unused_keys.txt\n')
 }
 

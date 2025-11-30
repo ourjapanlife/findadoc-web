@@ -1,10 +1,34 @@
 {
   "about": {
-    "heading": "À propos de Find a Doc, Japon",
-    "members": "Membres",
-    "subheading": "Connecter les gens au Japon aux services de santé dont ils ont besoin, dans les langues dont ils ont besoin.",
-    "paragraph1": "Chez Find a Doc, Japon, notre mission est de promouvoir une société plus saine et plus inclusive. Nous offrons gratuitement des informations de santé de qualité dans de nombreuses langues pour tout le monde, y compris les étrangers et les professionnels de la santé. Nous visons un Japon où toutes les personnes, indépendamment de leur nationalité ou de leur langue, peuvent naviguer en toute confiance dans le système de santé, trouver les bons médecins et obtenir les soins dont elles ont besoin.",
-    "paragraph2": "Nous sommes une organisation à but non lucratif guidée par l'idéal que tout le monde devrait avoir accès à l'information sur la santé dans le cadre d'une vie épanouie. Nos activités sont orientées par un sens de la justice sociale, de la sensibilité culturelle et de l'innovation. Nous sommes toujours heureux de nous connecter avec des partenaires dans les communautés gouvernementales, à but non lucratif et médicales. Ensemble avec nos partenaires, nous espérons créer un Japon où chacun a accès aux soins de santé, se sent inclus et peut vivre pleinement."
+    "heroHeading": "Find a Doc, Japan",
+    "heroSubheading": "Nous vous connectons aux services de santé dont vous avez besoin, dans votre langue",
+    "heroGetStarted": "Commencer",
+    "heroLearnMore": "En savoir plus",
+    "storyHeader": "Notre histoire",
+    "storyParagraph1": "Fondée en 2020 pendant la pandémie, notre mission est de promouvoir une société plus saine et plus inclusive. Nous offrons gratuitement des informations de santé de qualité en plusieurs langues pour tous, y compris les étrangers et les professionnels de santé. Nous visons un Japon où chacun, quelle que soit sa nationalité ou sa langue, peut naviguer dans le système de santé, trouver les bons médecins et obtenir les soins dont il a besoin.",
+    "storyParagraph2": "Nous sommes une organisation à but non lucratif, motivée par l’idée que chacun devrait avoir accès aux informations de santé pour mener une vie épanouie. Nos activités sont guidées par la justice sociale, la sensibilité culturelle et l’innovation. Nous sommes toujours heureux de collaborer avec des partenaires gouvernementaux, non lucratifs et médicaux. Ensemble, nous espérons créer un Japon où chacun a accès aux soins, se sent inclus et peut vivre sereinement.",
+    "btnImpact": "Notre impact",
+    "btnContributors": "Contributeurs",
+    "btnBoard": "Conseil de l’association",
+    "btnMascots": "Mascottes",
+    "btnInvolve": "S'impliquer",
+    "impactHeader": "Notre impact",
+    "impactDoctors": "300+ médecins inscrits",
+    "impactUsers": "100+ utilisateurs mensuels",
+    "impactVolunteer": "Porté par des bénévoles et la communauté",
+    "contributorsHeader": "Contributeurs",
+    "boardHeader": "Conseil de l’association",
+    "mascotsHeader": "Mascottes",
+    "mascotsAwa": "Awa",
+    "mascotsMichael": "Michael",
+    "mascotsTamika": "Tamika",
+    "mascotsSachi": "Sachi",
+    "mascotsChiko": "Chiko",
+    "involveHeader": "S'impliquer",
+    "involveAdd": "Ajouter un médecin",
+    "involveGit": "Contribuer",
+    "involveLinkedin": "Suivez-nous",
+    "involveFeedback": "Donner un avis"
   },
   "footer": {
     "terms": "Conditions",
@@ -99,7 +123,8 @@
     "speaks": "Ce médecin parle",
     "contact": "Contact",
     "lastUpdate": "Last updated",
-    "additionalInfo": "Additional Info"
+    "additionalInfo": "Additional Info",
+    "healthcareProfessionals": "Healthcare Professionals"
   },
   "thankYouPage": {
     "heading": "Merci !",
@@ -214,7 +239,8 @@
     "surgery": "Chirurgien",
     "physicalMedicineAndRehabilitation": "Médecine physique et réadaptation",
     "urology": "Urologue",
-    "traumatology": "Traumatologue"
+    "traumatology": "Traumatologue",
+    "proctology": "Proctologue"
   },
   "specialtyCategories": {
     "childrensHealth": "Santé des enfants",
@@ -407,5 +433,47 @@
     "displayName": "Nom d'affichage",
     "healthcareProfessionalName": "Profile Image",
     "updateButton": "Update Settings"
+  },
+  "profile": {
+    "edit": "Edit Profile",
+    "username": "Username",
+    "email": "Email",
+    "profilePhoto": "Profile Photo",
+    "save": "Save Changes",
+    "updatedSuccessfully": "Profile updated successfully",
+    "updateFailed": "Profile update failed"
+  },
+  "authErrors": {
+    "loggingIn": "Error logging in:",
+    "authBearerToken": "Error getting auth bearer token:",
+    "tenSecondTimeout": "Auth0 loading timed out after 10 seconds"
+  },
+  "facilitiesErrors": {
+    "facilityQuery": "Error querying the facilities:"
+  },
+  "healthcareProfessionalsErrors": {
+    "noCurrentProfessionalDataFound": "No data found for currentProfessionalData with id",
+    "noUpdatesFound": "No updates found",
+    "queryError": "Error querying the healthcare professionals:",
+    "idDoesNotExist": "The Healthcare Professional ID doesn't exist",
+    "retrievingById": "Error retrieving healthcare professional by id: "
+  },
+  "localeErrors": {
+    "notFound": "Language not found",
+    "notSpecified": "Not Specified"
+  },
+  "locationErrors": {
+    "facilitiesDropdown": "Error getting facilities for dropdown:",
+    "gettingData": "Error getting data! Please contact our support team by clicking the bottom right link on the page!"
+  },
+  "moderationSubmissionsErrors": {
+    "unableToApprove": "Unable to approve submission. Submission ID is required.",
+    "unableToReject": "Unable to reject submission. Submission ID is required.",
+    "queryError": "Error querying the submissions:"
+  },
+  "searchResultsErrors": {
+    "gettingProfessionals": "Error getting professionals:",
+    "gettingData": "Error getting data! Please contact our support team by clicking the bottom right link on the page!",
+    "gettingfacilities": "Error getting facilities:"
   }
 }

@@ -22,7 +22,7 @@
                         <span class="block mt-2">Find a Doc, Japan!</span>
                     </h1>
                     <p class="landscape:text-2xl text-lg mt-3 max-w-md">
-                        {{ t('about.subheading') }}
+                        {{ t('about.heroSubheading') }}
                     </p>
                 </div>
                 <!-- Bouncing arrow button -->
@@ -77,10 +77,10 @@
                         <!-- Subtly morph the wave path when hovered -->
                         <path
                             :d="waveHover
-                                ? 'M375 0V56H0V25C50 33 125 70 187.5 50C250 30 320 -10 375 25Z'
+                                ? 'M375 0V56H0V30C56 13 123 8 195 27C263 42 322 40 375 11 Z'
                                 : 'M375 0V56H0V18.5C46.5 33 120 59 187.5 45C255 31 328.5 -13.5 375 18.5Z'"
                             class="fill-primary-bg"
-                            :style="{ transition: 'd 0.4s cubic-bezier(.6,0,.4,1)' }"
+                            :style="{ transition: 'd 0.8s cubic-bezier(.6,0,.4,1)' }"
                         />
                     </svg>
                 </div>
