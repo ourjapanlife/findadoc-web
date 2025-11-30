@@ -475,5 +475,8 @@
     "gettingProfessionals": "Error getting professionals:",
     "gettingData": "Error getting data! Please contact our support team by clicking the bottom right link on the page!",
     "gettingfacilities": "Error getting facilities:"
+  },
+  "themeManager": {
+    "colorThemes": "Color Themes"
   }
 }
