@@ -7,8 +7,8 @@
                 title="profile icon"
                 class="profile-icon w-8 h-8 stroke-primary inline"
             />
-            <span class="w-4 font-bold pl-2 self-center"> {{ name }}, </span>
-            <span class="w-4 pl-2 font-semibold self-center">{{
+            <span class="w-4 font-bold pl-2 self-center text-primary-text"> {{ name }}, </span>
+            <span class="w-4 pl-2 font-semibold self-center text-primary-text">{{
                 degrees.length === 1
                     ? degrees[0]
                     : degrees[0] + ", ... +" + (degrees.length - 1).toString()
@@ -22,7 +22,7 @@
                 :key="index"
                 class="flex"
             >
-                <span class="ml-2 pr-2 italic"> {{ specialty }}</span>
+                <span class="ml-2 pr-2 italic text-primary-text"> {{ specialty }}</span>
             </div>
 
             <div class="flex ml-2 mt-4">
@@ -37,7 +37,7 @@
                         v-for="(spokenLanguage, index) in formattedLanguages"
                         :key="index"
                         class="px-2 py-[1px] mr-2 border border-primary/40 rounded-full shadow text-sm
-                        hover:bg-primary/20 transition-all"
+                        hover:bg-primary/20 transition-all text-primary-text"
                     >
                         {{ spokenLanguage }}
                     </div>
