@@ -177,7 +177,7 @@
                         <!-- Footer Section -->
                         <div
                             data-testid="hamburger-menu-footer-section"
-                            class="absolute bg-primary-bg left-0 bottom-0 flex flex-col gap-3 pb-4 w-full"
+                            class="absolute left-0 bottom-0 flex flex-col gap-3 pb-4 w-full"
                         >
                             <ThemeManager />
 
@@ -304,7 +304,6 @@ import SVGGithubIcon from '~/assets/icons/social-github.svg'
 import SVGSettingsIcon from '~/assets/icons/settings-icon.svg'
 import SVGSignOutIcon from '~/assets/icons/sign-out-icon.svg'
 import { useAuthStore } from '~/stores/authStore'
-import { convertStringToTitleCase } from '~/utils/stringUtils'
 
 const authStore = useAuthStore()
 const toast = useToast()

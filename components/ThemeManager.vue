@@ -2,7 +2,7 @@
     <div
         id="color-changer"
         :class="colorThemeAccordionIsClosed
-            ? 'transition duration-300 opacity-0 delay-(invisible) rounded-t-2xl border-t border-primary/20 translate-y-20 overflow-hidden'
+            ? 'transition duration-300 h-0 opacity-0 delay-(invisible) rounded-t-2xl border-t border-primary/20 translate-y-20 overflow-hidden'
             : 'transition duration-300 rounded-t-2xl border-t border-primary/20 overflow-hidden'"
     >
         <ThemeOption

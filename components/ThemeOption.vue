@@ -62,7 +62,7 @@ defineProps({
 
 const emit = defineEmits(['lightdarkmode-toggle'])
 
-const toggleLightDarkMode = isDarkMode => {
+const toggleLightDarkMode = (isDarkMode: boolean) => {
     emit('lightdarkmode-toggle', isDarkMode)
 }
 </script>
