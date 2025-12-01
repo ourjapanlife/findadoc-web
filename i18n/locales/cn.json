@@ -1,34 +1,34 @@
 {
   "about": {
     "heroHeading": "Find a Doc, Japan",
-  "heroSubheading": "用您的语言连接您与所需的医疗服务",
-  "heroGetStarted": "开始使用",
-  "heroLearnMore": "了解更多",
-  "storyHeader": "我们的故事",
-  "storyParagraph1": "我们成立于2020年疫情期间，使命是促进更健康、更包容的社会。我们为所有人——包括外国人和医疗专业人员——免费提供多语言的高质量健康信息。我们希望无论国籍或语言，每个人都能自信地了解医疗体系，找到合适的医生，并获得所需的医疗服务。",
-  "storyParagraph2": "我们是一个非营利组织，秉持人人都应获得健康信息以享受美好生活的理念。我们的活动贯穿社会正义、文化敏感性和创新精神。我们始终乐于与政府、非营利组织和医疗领域的合作伙伴建立联系。与伙伴们一起，我们希望创造一个人人都能获得医疗服务、感受到包容并享有美好生活的日本。",
-  "btnImpact": "我们的影响",
-  "btnContributors": "贡献者",
-  "btnBoard": "NPO 董事会",
-  "btnMascots": "吉祥物",
-  "btnInvolve": "参与我们",
-  "impactHeader": "我们的影响",
-  "impactDoctors": "300+ 名注册医生",
-  "impactUsers": "100+ 月活用户",
-  "impactVolunteer": "志愿者与社区驱动",
-  "contributorsHeader": "贡献者",
-  "boardHeader": "NPO 董事会",
-  "mascotsHeader": "吉祥物",
-  "mascotsAwa": "Awa",
-  "mascotsMichael": "Michael",
-  "mascotsTamika": "Tamika",
-  "mascotsSachi": "Sachi",
-  "mascotsChiko": "Chiko",
-  "involveHeader": "参与我们",
-  "involveAdd": "添加医生",
-  "involveGit": "贡献代码",
-  "involveLinkedin": "关注我们",
-  "involveFeedback": "反馈意见"
+    "heroSubheading": "用您的语言连接您与所需的医疗服务",
+    "heroGetStarted": "开始使用",
+    "heroLearnMore": "了解更多",
+    "storyHeader": "我们的故事",
+    "storyParagraph1": "我们成立于2020年疫情期间，使命是促进更健康、更包容的社会。我们为所有人——包括外国人和医疗专业人员——免费提供多语言的高质量健康信息。我们希望无论国籍或语言，每个人都能自信地了解医疗体系，找到合适的医生，并获得所需的医疗服务。",
+    "storyParagraph2": "我们是一个非营利组织，秉持人人都应获得健康信息以享受美好生活的理念。我们的活动贯穿社会正义、文化敏感性和创新精神。我们始终乐于与政府、非营利组织和医疗领域的合作伙伴建立联系。与伙伴们一起，我们希望创造一个人人都能获得医疗服务、感受到包容并享有美好生活的日本。",
+    "btnImpact": "我们的影响",
+    "btnContributors": "贡献者",
+    "btnBoard": "NPO 董事会",
+    "btnMascots": "吉祥物",
+    "btnInvolve": "参与我们",
+    "impactHeader": "我们的影响",
+    "impactDoctors": "300+ 名注册医生",
+    "impactUsers": "100+ 月活用户",
+    "impactVolunteer": "志愿者与社区驱动",
+    "contributorsHeader": "贡献者",
+    "boardHeader": "NPO 董事会",
+    "mascotsHeader": "吉祥物",
+    "mascotsAwa": "Awa",
+    "mascotsMichael": "Michael",
+    "mascotsTamika": "Tamika",
+    "mascotsSachi": "Sachi",
+    "mascotsChiko": "Chiko",
+    "involveHeader": "参与我们",
+    "involveAdd": "添加医生",
+    "involveGit": "贡献代码",
+    "involveLinkedin": "关注我们",
+    "involveFeedback": "反馈意见"
   },
   "footer": {
     "terms": "条款",
@@ -41,10 +41,8 @@
   },
   "hamburgerMenu": {
     "about": "关于 Find a Doc, Japan",
-    "home": "主页",
     "contact": "联系我们",
     "submit": "添加一位医师",
-    "moderation": "审核",
     "logout": "退出登录",
     "theme": "主题",
     "languageDropdownTitle": "语言:",
@@ -114,8 +112,6 @@
     "searchAndFilterDoctors": "搜索和筛选医生"
   },
   "searchResultsList": {
-    "doctorsNearby": "附近的医师",
-    "filters": "筛选条件",
     "noResults": "无符合条件的结果",
     "noResultsSubtext": "请使用不同的筛选条件"
   },
@@ -135,7 +131,6 @@
   "topNav": {
     "about": "关于",
     "home": "主页",
-    "moderation": "审核",
     "submit": "添加医师",
     "logout": "退出登录",
     "login": "Login",
@@ -176,11 +171,7 @@
     "update": "Update"
   },
   "modPanelSubmissionList": {
-    "facilityNameUnknown": "未知机构名称",
-    "modified": "已修改",
-    "name": "名称",
-    "noSubmissions": "暂无待审核的已提交项目",
-    "submitted": "已提交"
+    "noSubmissions": "暂无待审核的已提交项目"
   },
   "modHealthcareProfessionalSection": {
     "addHealthCareProfessionalLocaleName": "Add Name by Language",
@@ -238,7 +229,6 @@
     "errorMessageHealthcareInputsInvalid": "Some of the Healthcare Professional Fields were not filled in correctly",
     "errorMessageEnglishNameRequired": "The healthcare professional must have an English name",
     "infoMessageAlreadyApproved": "This submission has already been approved",
-    "infoMessageUpdateNeeded": "This needs to be updated before approval",
     "successMessageUpdated": "Submission updated successfully",
     "successMessageApproved": "Submission approved and created successfully",
     "facilitySuccessfullyRejected": "Facility rejected successfully",
@@ -271,9 +261,7 @@
     "facilityHeading": "Facility Information",
     "googleMapsInformation": "Google Maps Information",
     "inputErrorMessageFacilityAddressLine1Ja": "Invalid Japanese Address",
-    "inputErrorMessageFacilityAddressLine2Ja": "Invalid Japanese Address",
     "inputErrorMessageFacilityAddressLine1En": "Invalid English Address",
-    "inputErrorMessageFacilityAddressLine2En": "Invalid English Address",
     "inputErrorMessagePrefectureMismatch": "Japanese and/or English Name Prefecture do not match",
     "inputErrorMessageFacilityCityEn": "Invalid English City Name",
     "inputErrorMessageFacilityCityJa": "Invalid Japanese City Name",
@@ -423,8 +411,6 @@
     "newSubmission": "New",
     "underReviewSubmission": "Under Review",
     "approvedSubmission": "Approved",
-    "rejectedSubmission": "Rejected",
-    "review": "Review",
     "createdDate": "Created on",
     "updatedDate": "Updated last"
   },
@@ -444,37 +430,11 @@
     "updatedSuccessfully": "Profile updated successfully",
     "updateFailed": "Profile update failed"
   },
-  "authErrors": {
-    "loggingIn": "Error logging in:",
-    "authBearerToken": "Error getting auth bearer token:",
-    "tenSecondTimeout": "Auth0 loading timed out after 10 seconds"
-  },
-  "facilitiesErrors": {
-    "facilityQuery": "Error querying the facilities:"
-  },
-  "healthcareProfessionalsErrors": {
-    "noCurrentProfessionalDataFound": "No data found for currentProfessionalData with id",
-    "noUpdatesFound": "No updates found",
-    "queryError": "Error querying the healthcare professionals:",
-    "idDoesNotExist": "The Healthcare Professional ID doesn't exist",
-    "retrievingById": "Error retrieving healthcare professional by id: "
-  },
-  "localeErrors": {
-    "notFound": "Language not found",
-    "notSpecified": "Not Specified"
-  },
-  "locationErrors": {
-    "facilitiesDropdown": "Error getting facilities for dropdown:",
-    "gettingData": "Error getting data! Please contact our support team by clicking the bottom right link on the page!"
-  },
-  "moderationSubmissionsErrors": {
-    "unableToApprove": "Unable to approve submission. Submission ID is required.",
-    "unableToReject": "Unable to reject submission. Submission ID is required.",
-    "queryError": "Error querying the submissions:"
-  },
-  "searchResultsErrors": {
-    "gettingProfessionals": "Error getting professionals:",
-    "gettingData": "Error getting data! Please contact our support team by clicking the bottom right link on the page!",
-    "gettingfacilities": "Error getting facilities:"
-  }
+  "authErrors": {},
+  "facilitiesErrors": {},
+  "healthcareProfessionalsErrors": {},
+  "localeErrors": {},
+  "locationErrors": {},
+  "moderationSubmissionsErrors": {},
+  "searchResultsErrors": {}
 }
