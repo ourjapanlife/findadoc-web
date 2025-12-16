@@ -98,7 +98,7 @@
                 </div>
             </div>
             <!-- Contact Details -->
-            <div class="about ml-4 pl-2">
+            <div class="about mx-4 pl-2">
                 <span class="font-semibold">{{
                     t("searchResultsDetails.contact")
                 }}</span>
@@ -141,25 +141,30 @@
                     >{{ website }}</a>
                 </div>
                 <!-- Phone -->
-                <div class="phone flex my-4">
-                    <SVGPhoneIcon
-                        role="img"
-                        alt="Facility Banner Image"
-                        title="banner image"
-                        class="banner-icon w-6 h-6 stroke-primary mr-2 self-center"
-                    />
-                    <a
-                        v-if="phone"
-                        :href="`tel:${phone}`"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="underline text-blue"
-                    >{{ phone }}</a>
+                <div class="phone flex my-4 items-center justify-between">
+                    <div class="flex">
+                        <SVGPhoneIcon
+                            role="img"
+                            alt="Facility Banner Image"
+                            title="banner image"
+                            class="banner-icon w-6 h-6 stroke-primary mr-2 self-center"
+                        />
+                        <a
+                            v-if="phone"
+                            :href="`tel:${phone}`"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="underline text-blue"
+                        >{{ phone }}</a>
+                    </div>
                     <button
                         v-if="phone"
+                        class="mr-5 px-4 py-1 shadow-sm text-white rounded-lg bg-primary
+                        font-medium hover:bg-primary/90 hover:scale-105 transition-colors"
                         @click="handleCallNow"
-                        class="ml-2"
-                    >Call ☎️</button>
+                    >
+                        Call ☎️
+                    </button>
                 </div>
                 <!-- Email -->
                 <div
