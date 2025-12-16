@@ -155,6 +155,11 @@
                         rel="noopener noreferrer"
                         class="underline text-blue"
                     >{{ phone }}</a>
+                    <button
+                        v-if="phone"
+                        @click="handleCallNow"
+                        class="ml-2"
+                    >Call ☎️</button>
                 </div>
                 <!-- Email -->
                 <div
@@ -320,6 +325,22 @@ const formattedLastUpdate = computed(() => {
     }
     return ''
 })
+
+const handleCallNow = () => {
+    //log phone call
+    console.log('Call now button clicked', {
+        professionalName: healthcareProfessionalName.value,
+        facilityName: facilityName.value,
+        phone: phone.value,
+        email: email.value,
+        website: website.value,
+        addressLine1: addressLine1.value
+    })
+    //Initiate phone call
+    if (phone.value) {
+        window.location.href = `tel:${phone.value}`
+    }
+}
 
 const excludedEmailAddresses = ['none', 'email@email.com']
 </script>
