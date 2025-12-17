@@ -157,14 +157,14 @@
                             class="underline text-blue"
                         >{{ phone }}</a>
                     </div>
-                    <button
+                    <a
                         v-if="phone"
                         class="mr-5 px-4 py-1 shadow-sm text-white rounded-lg bg-primary
                         font-medium hover:bg-primary/90 hover:scale-105 transition-colors"
                         @click="handleCallNow"
                     >
-                        Call ☎️
-                    </button>
+                        {{ t("searchResultsDetails.callNow") }} ☎️
+                    </a>
                 </div>
                 <!-- Email -->
                 <div
