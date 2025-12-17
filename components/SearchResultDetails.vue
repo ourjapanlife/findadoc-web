@@ -162,6 +162,7 @@
                         class="mr-5 px-4 py-1 shadow-sm text-white rounded-lg bg-primary
                         font-medium hover:bg-primary/90 hover:scale-105 transition-colors"
                         @click="handleCallNow"
+                        :href="`tel:${phone}`"
                     >
                         {{ t("searchResultsDetails.callNow") }} ☎️
                     </a>
@@ -208,6 +209,7 @@ import { useSearchResultsStore } from '~/stores/searchResultsStore'
 import { Locale } from '~/typedefs/gqlTypes.js'
 import { formatHealthcareProfessionalName } from '~/utils/nameUtils'
 import { formatToReadableDate } from '~/utils/dateUtils'
+import { useUmami } from '~/composables/useUmamiTracking'
 
 const { t } = useI18n()
 
@@ -215,6 +217,7 @@ const resultsStore = useSearchResultsStore()
 const localeStore = useLocaleStore()
 const specialtiesStore = useSpecialtiesStore()
 const bottomSheetStore = useBottomSheetStore()
+const { track } = useUmami()
 
 // Form Data
 const activeProfessional = computed(() => resultsStore.activeProfessional)
@@ -332,10 +335,15 @@ const formattedLastUpdate = computed(() => {
 })
 
 const handleCallNow = () => {
-    //Initiate phone call
-    if (phone.value) {
-        window.location.href = `tel:${phone.value}`
-    }
+    // logging data using umami
+    track('Call button clicked', {
+        facilityName: facilityName.value,
+        professionalName: healthcareProfessionalName.value,
+        phone: phone.value,
+        email: email.value,
+        website: website.value,
+        addressLine1: addressLine1.value
+    })
 }
 
 const excludedEmailAddresses = ['none', 'email@email.com']
