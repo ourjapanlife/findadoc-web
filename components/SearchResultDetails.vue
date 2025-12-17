@@ -151,10 +151,7 @@
                         />
                         <a
                             v-if="phone"
-                            :href="`tel:${phone}`"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            class="underline text-blue"
+                            class=" text-blue"
                         >{{ phone }}</a>
                     </div>
                     <a
@@ -163,6 +160,8 @@
                         font-medium hover:bg-primary/90 hover:scale-105 transition-colors"
                         @click="handleCallNow"
                         :href="`tel:${phone}`"
+                        target="_blank"
+                        rel="noopener noreferrer"
                     >
                         {{ t("searchResultsDetails.callNow") }} ☎️
                     </a>
