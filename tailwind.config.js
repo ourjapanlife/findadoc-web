@@ -49,7 +49,7 @@ module.exports = {
                 'rgb(var(--color-warning) / <alpha-value>)',
             info:
                 'rgb(var(--color-info) / <alpha-value>)',
-            blue: '#245A7D',
+            hyperlink: 'rgb(var(--color-hyperlink) / <alpha-value>)',
             neutral: colors.gray,
             black: colors.black,
             white: colors.white,
