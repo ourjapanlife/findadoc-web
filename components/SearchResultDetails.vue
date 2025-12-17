@@ -332,15 +332,6 @@ const formattedLastUpdate = computed(() => {
 })
 
 const handleCallNow = () => {
-    //log phone call
-    console.log('Call now button clicked', {
-        professionalName: healthcareProfessionalName.value,
-        facilityName: facilityName.value,
-        phone: phone.value,
-        email: email.value,
-        website: website.value,
-        addressLine1: addressLine1.value
-    })
     //Initiate phone call
     if (phone.value) {
         window.location.href = `tel:${phone.value}`
