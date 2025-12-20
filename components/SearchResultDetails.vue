@@ -98,7 +98,7 @@
                 </div>
             </div>
             <!-- Contact Details -->
-            <div class="about ml-4 pl-2">
+            <div class="about mx-4 pl-2">
                 <span class="font-semibold">{{
                     t("searchResultsDetails.contact")
                 }}</span>
@@ -141,20 +141,30 @@
                     >{{ website }}</a>
                 </div>
                 <!-- Phone -->
-                <div class="phone flex my-4">
-                    <SVGPhoneIcon
-                        role="img"
-                        alt="Facility Banner Image"
-                        title="banner image"
-                        class="banner-icon w-6 h-6 stroke-primary mr-2 self-center"
-                    />
+                <div class="phone flex my-4 items-center justify-between">
+                    <div class="flex">
+                        <SVGPhoneIcon
+                            role="img"
+                            alt="Facility Banner Image"
+                            title="banner image"
+                            class="banner-icon w-6 h-6 stroke-primary mr-2 self-center"
+                        />
+                        <a
+                            v-if="phone"
+                            class=" text-blue"
+                        >{{ phone }}</a>
+                    </div>
                     <a
                         v-if="phone"
+                        class="mr-5 px-4 py-1 shadow-sm text-white rounded-lg bg-primary
+                        font-medium hover:bg-primary/90 hover:scale-105 transition-colors"
                         :href="`tel:${phone}`"
                         target="_blank"
                         rel="noopener noreferrer"
-                        class="underline text-blue"
-                    >{{ phone }}</a>
+                        @click="handleCallNow"
+                    >
+                        {{ t("searchResultsDetails.callNow") }} ☎️
+                    </a>
                 </div>
                 <!-- Email -->
                 <div
@@ -198,6 +208,7 @@ import { useSearchResultsStore } from '~/stores/searchResultsStore'
 import { Locale } from '~/typedefs/gqlTypes.js'
 import { formatHealthcareProfessionalName } from '~/utils/nameUtils'
 import { formatToReadableDate } from '~/utils/dateUtils'
+import { useUmami } from '~/composables/useUmamiTracking'
 
 const { t } = useI18n()
 
@@ -205,6 +216,7 @@ const resultsStore = useSearchResultsStore()
 const localeStore = useLocaleStore()
 const specialtiesStore = useSpecialtiesStore()
 const bottomSheetStore = useBottomSheetStore()
+const { track } = useUmami()
 
 // Form Data
 const activeProfessional = computed(() => resultsStore.activeProfessional)
@@ -320,6 +332,18 @@ const formattedLastUpdate = computed(() => {
     }
     return ''
 })
+
+const handleCallNow = () => {
+    // logging data using umami
+    track('Call button clicked', {
+        facilityName: facilityName.value,
+        professionalName: healthcareProfessionalName.value,
+        phone: phone.value,
+        email: email.value,
+        website: website.value,
+        addressLine1: addressLine1.value
+    })
+}
 
 const excludedEmailAddresses = ['none', 'email@email.com']
 </script>
