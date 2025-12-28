@@ -1,10 +1,9 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`about.vue (vitest snapshot) > renders correctly 1`] = `
-"<div class="overflow-y-auto w-full bg-primary-bg">
+"<div class="w-full bg-primary-bg">
   <!-- Hero Section  -->
   <div class="relative flex flex-col items-center p-10 md:p-14">
-    <!-- <div class="absolute inset-0 bg-black/30"></div> -->
     <anonymous-stub role="img" alt="pink heart with a white plus in the middle to symbolize health" title="heart icon" class="my-4 h-32 z-10"></anonymous-stub>
     <h1 data-testid="about-hero-heading" class="mb-12 font-bold text-4xl text-primary-text text-center z-10">about.heroHeading</h1>
     <p data-testid="about-hero-subheading" class="mb-12 text-2xl text-primary-text text-center z-10">about.heroSubheading</p>
