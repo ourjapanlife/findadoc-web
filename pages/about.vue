@@ -1,11 +1,10 @@
 <template>
-    <div class="overflow-y-auto w-full bg-primary-bg">
+    <div class="w-full bg-primary-bg">
         <!-- Hero Section  -->
         <div
             ref="heroSectionRef"
             class="relative flex flex-col items-center p-10 md:p-14"
         >
-            <!-- <div class="absolute inset-0 bg-black/30"></div> -->
             <SvgHeartPlus
                 role="img"
                 alt="pink heart with a white plus in the middle to symbolize health"
@@ -184,7 +183,6 @@
                 </p>
             </div>
         </div>
-
         <!-- Contributor Section -->
         <div
             id="contributor-header-container"
