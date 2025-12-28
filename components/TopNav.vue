@@ -25,8 +25,13 @@
                     />
                 </NuxtLink>
                 <Transition
-                    name="slide-left"
                     mode="out-in"
+                    enter-active-class="transition-transform transition-opacity duration-[400ms] ease-in-out"
+                    enter-from-class="-translate-x-10 opacity-0"
+                    enter-to-class="translate-x-0 opacity-100"
+                    leave-active-class="transition-opacity duration-[400ms] ease-in-out"
+                    leave-from-class="opacity-100"
+                    leave-to-class="opacity-0"
                 >
                     <!-- Find a Doc, Japan Logo Text -->
                     <div
@@ -236,25 +241,3 @@ async function logout() {
 }
 </script>
 
-<style scoped>
-.slide-left-enter-active,
-.slide-left-leave-active {
-  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.slide-left-enter-from {
-  transform: translateX(-40px);
-  opacity: 0;
-}
-.slide-left-enter-to {
-  transform: translateX(0);
-  opacity: 1;
-}
-.slide-left-leave-from {
-  transform: translateX(0);
-  opacity: 1;
-}
-.slide-left-leave-to {
-  transform: translateX(0);
-  opacity: 0;
-}
-</style>
