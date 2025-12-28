@@ -5,6 +5,7 @@
             ref="mapRef"
             data-testid="map-of-japan"
             :api-key="runtimeConfig.public.GOOGLE_MAPS_API_KEY as string ?? undefined"
+            :libraries="['marker']"
             map-id="153d718018a2577e"
             :disable-default-ui="true"
             :options="{
@@ -31,13 +32,14 @@
                             lat: location.mapLatitude ?? defaultLocation.lat,
                             lng: location.mapLongitude ?? defaultLocation.lng,
                         },
+                        title: location.nameEn || location.nameJa || 'Facility',
                     }"
                     @click="(event: MouseEvent) => handlePinClick(location.id, event)"
                 >
-                    <div style="text-align: center">
+                    <div class="text-center gmp-clickable">
                         <SVGMapPin
                             :class="[
-                                'w-[45px] h-[73px]',
+                                'w-[45px] h-[73px] block',
                                 searchResultsStore.activeFacility?.id === location.id
                                     ? 'text-secondary fill-secondary'
                                     : 'text-primary fill-primary',
@@ -91,29 +93,33 @@ const clusterRenderer = {
         const width = 45
         const height = 73
 
-        // Use AdvancedMarkerElement with a DOM content node instead of the legacy Marker icon API
-        const icon = document.createElement('div')
-
-        icon.innerHTML = `
-            <div class="flex items-center justify-center">
+        // Use AdvancedMarkerElement with a PinElement if available (standard approach)
+        const AdvancedMarkerElement = window.google?.maps?.AdvancedMarkerElement
+          || window.google?.maps?.marker?.AdvancedMarkerElement
+        if (AdvancedMarkerElement) {
+            const icon = document.createElement('div')
+            icon.innerHTML = `
                 <img
                     src="${createClusterIcon(count, width, height)}"
-                    class="block"
-                    style="width: ${width}px; height: ${height}px;"
+                    style="width: ${width}px; height: ${height}px; display: block;"
+                    class="flex items-center justify-center"
                 />
-            </div>
-        `
+            `
 
-        return new window.google.maps.marker.AdvancedMarkerElement({
-            position,
-            content: icon.firstElementChild as Element,
-            // Use a high z-index value (1,000,000 is standard max) since Marker.MAX_ZINDEX is legacy
-            zIndex: 1000000 + count
-        })
+            const marker = new AdvancedMarkerElement({
+                position,
+                content: icon,
+                zIndex: 1000000 + count,
+                title: `Cluster of ${count}`
+            })
+
+            return marker
+        }
+
+        return null
     }
 }
 
-// Creates a dynamic cluster icon for Google Maps markers
 // Note: Inline SVG generation is required because Google Maps markers need data URIs
 // with dynamic values (count, fontSize, primaryColor) that can't be set with CSS classes
 const createClusterIcon = (count: number, width: number, height: number) => {
