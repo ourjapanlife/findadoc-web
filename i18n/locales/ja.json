@@ -41,12 +41,9 @@
   },
   "hamburgerMenu": {
     "about": "私たちについて",
-    "home": "ホーム",
     "contact": "お問い合わせ",
     "submit": "医師情報の追加",
-    "moderation": "モデレータ",
     "logout": "ログアウト",
-    "theme": "テーマ",
     "languageDropdownTitle": "対応言語:",
     "copyright": "Find a Doc, Japan",
     "balancesheet": "Balance Sheet",
@@ -114,8 +111,6 @@
     "searchAndFilterDoctors": "医師を検索・フィルター"
   },
   "searchResultsList": {
-    "doctorsNearby": "近隣の医師",
-    "filters": "フィルター",
     "noResults": "もう一度お試しください",
     "noResultsSubtext": "それぞれ別のフィルターでお試しください"
   },
@@ -136,7 +131,6 @@
   "topNav": {
     "home": "ホーム",
     "about": "私たちについて",
-    "moderation": "モデレータ",
     "submit": "医師情報の追加",
     "logout": "ログアウト",
     "login": "Login",
@@ -177,11 +171,7 @@
     "update": "Update"
   },
   "modPanelSubmissionList": {
-    "facilityNameUnknown": "Facility Name Unknown",
-    "modified": "Modified",
-    "name": "Name",
-    "noSubmissions": "There are no pending submissions",
-    "submitted": "Submitted"
+    "noSubmissions": "There are no pending submissions"
   },
   "modHealthcareProfessionalSection": {
     "addHealthCareProfessionalLocaleName": "Add Name by Language",
@@ -239,7 +229,6 @@
     "errorMessageHealthcareInputsInvalid": "Some of the Healthcare Professional Fields were not filled in correctly",
     "errorMessageEnglishNameRequired": "The healthcare professional must have an English name",
     "infoMessageAlreadyApproved": "This submission has already been approved",
-    "infoMessageUpdateNeeded": "This needs to be updated before approval",
     "successMessageUpdated": "Submission updated successfully",
     "successMessageApproved": "Submission approved and created successfully",
     "facilitySuccessfullyRejected": "Facility rejected successfully",
@@ -272,9 +261,7 @@
     "facilityHeading": "Facility Information",
     "googleMapsInformation": "Google Maps Information",
     "inputErrorMessageFacilityAddressLine1Ja": "Invalid Japanese Address",
-    "inputErrorMessageFacilityAddressLine2Ja": "Invalid Japanese Address",
     "inputErrorMessageFacilityAddressLine1En": "Invalid English Address",
-    "inputErrorMessageFacilityAddressLine2En": "Invalid English Address",
     "inputErrorMessagePrefectureMismatch": "Japanese and/or English Name Prefecture do not match",
     "inputErrorMessageFacilityCityEn": "Invalid English City Name",
     "inputErrorMessageFacilityCityJa": "Invalid Japanese City Name",
@@ -424,8 +411,6 @@
     "newSubmission": "New",
     "underReviewSubmission": "Under Review",
     "approvedSubmission": "Approved",
-    "rejectedSubmission": "Rejected",
-    "review": "Review",
     "createdDate": "Created on",
     "updatedDate": "Updated last"
   },
@@ -445,39 +430,13 @@
     "updatedSuccessfully": "Profile updated successfully",
     "updateFailed": "Profile update failed"
   },
-  "authErrors": {
-    "loggingIn": "Error logging in:",
-    "authBearerToken": "Error getting auth bearer token:",
-    "tenSecondTimeout": "Auth0 loading timed out after 10 seconds"
-  },
-  "facilitiesErrors": {
-    "facilityQuery": "Error querying the facilities:"
-  },
-  "healthcareProfessionalsErrors": {
-    "noCurrentProfessionalDataFound": "No data found for currentProfessionalData with id",
-    "noUpdatesFound": "No updates found",
-    "queryError": "Error querying the healthcare professionals:",
-    "idDoesNotExist": "The Healthcare Professional ID doesn't exist",
-    "retrievingById": "Error retrieving healthcare professional by id: "
-  },
-  "localeErrors": {
-    "notFound": "Language not found",
-    "notSpecified": "Not Specified"
-  },
-  "locationErrors": {
-    "facilitiesDropdown": "Error getting facilities for dropdown:",
-    "gettingData": "Error getting data! Please contact our support team by clicking the bottom right link on the page!"
-  },
-  "moderationSubmissionsErrors": {
-    "unableToApprove": "Unable to approve submission. Submission ID is required.",
-    "unableToReject": "Unable to reject submission. Submission ID is required.",
-    "queryError": "Error querying the submissions:"
-  },
-  "searchResultsErrors": {
-    "gettingProfessionals": "Error getting professionals:",
-    "gettingData": "Error getting data! Please contact our support team by clicking the bottom right link on the page!",
-    "gettingfacilities": "Error getting facilities:"
-  },
+  "authErrors": {},
+  "facilitiesErrors": {},
+  "healthcareProfessionalsErrors": {},
+  "localeErrors": {},
+  "locationErrors": {},
+  "moderationSubmissionsErrors": {},
+  "searchResultsErrors": {},
   "themeManager": {
     "colorThemes": "Color Themes"
   }

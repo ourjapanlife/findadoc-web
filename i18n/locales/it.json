@@ -46,12 +46,9 @@
   "hamburgerMenu": {
     "about": "Informazioni su Find a Doc, Japan",
     "balancesheet": "Bilancio",
-    "home": "Home",
     "contact": "Contatto",
     "submit": "Aggiungi un medico",
-    "moderation": "Moderazione",
     "logout": "Esci",
-    "theme": "Tema",
     "languageDropdownTitle": "Lingua:",
     "copyright": "Find a Doc, Japan",
     "login": "Login",
@@ -118,10 +115,8 @@
     "searchAndFilterDoctors": "Cerca e filtra i medici"
   },
   "searchResultsList": {
-    "doctorsNearby": "Medici validi",
     "noResults": "Nessun risultato trovato",
-    "noResultsSubtext": "Prova con una combinazione di filtri diversa",
-    "filters": "Filters"
+    "noResultsSubtext": "Prova con una combinazione di filtri diversa"
   },
   "searchResultsDetails": {
     "speaks": "Questo medico parla",
@@ -140,7 +135,6 @@
   "topNav": {
     "about": "Informazioni",
     "home": "Home",
-    "moderation": "Moderazione",
     "submit": "Aggiungi un medico",
     "logout": "Esci",
     "login": "Login",
@@ -212,11 +206,7 @@
     "update": "Aggiorna"
   },
   "modPanelSubmissionList": {
-    "facilityNameUnknown": "Nome struttura sconosciuto",
-    "modified": "Modificato",
-    "name": "Nome",
-    "noSubmissions": "Non ci sono richieste in attesa",
-    "submitted": "Inoltrato"
+    "noSubmissions": "Non ci sono richieste in attesa"
   },
   "modHealthcareProfessionalCard": {},
   "modHealthcareProfessionalSection": {
@@ -268,9 +258,7 @@
     "googleMapsInformation": "Informazioni Google Maps",
     "addHealthcareProfessional": "Professionista sanitario da aggiungere",
     "inputErrorMessageFacilityAddressLine1Ja": "Indirizzo giapponese non valido",
-    "inputErrorMessageFacilityAddressLine2Ja": "Indirizzo giapponese non valido",
     "inputErrorMessageFacilityAddressLine1En": "Indirizzo inglese non valido",
-    "inputErrorMessageFacilityAddressLine2En": "Indirizzo inglese non valido",
     "inputErrorMessagePrefectureMismatch": "Japanese and/or English Name Prefecture do not match",
     "inputErrorMessageFacilityCityEn": "Nome città in inglese non valido",
     "inputErrorMessageFacilityCityJa": "Nome città in giapponese non valido",
@@ -330,7 +318,6 @@
     "facilitySuccessfullyRejected": "Struttura rifiutata con successo",
     "healthcareProfessionalId": "ID professionista sanitario",
     "infoMessageAlreadyApproved": "Questa richiesta è già stata approvata",
-    "infoMessageUpdateNeeded": "Deve essere aggiornato prima dell'approvazione",
     "labelHealthcareProfessionalFirstName": "Nome",
     "labelHealthcareProfessionalLastName": "Cognome",
     "labelHealthcareProfessionalMiddleName": "Nome intermedio",
@@ -430,8 +417,6 @@
     "newSubmission": "New",
     "underReviewSubmission": "Under Review",
     "approvedSubmission": "Approved",
-    "rejectedSubmission": "Rejected",
-    "review": "Review",
     "createdDate": "Created on",
     "updatedDate": "Updated last"
   },
@@ -444,39 +429,13 @@
     "updatedSuccessfully": "Profile updated successfully",
     "updateFailed": "Profile update failed"
   },
-  "authErrors": {
-    "loggingIn": "Error logging in:",
-    "authBearerToken": "Error getting auth bearer token:",
-    "tenSecondTimeout": "Auth0 loading timed out after 10 seconds"
-  },
-  "facilitiesErrors": {
-    "facilityQuery": "Error querying the facilities:"
-  },
-  "healthcareProfessionalsErrors": {
-    "noCurrentProfessionalDataFound": "No data found for currentProfessionalData with id",
-    "noUpdatesFound": "No updates found",
-    "queryError": "Error querying the healthcare professionals:",
-    "idDoesNotExist": "The Healthcare Professional ID doesn't exist",
-    "retrievingById": "Error retrieving healthcare professional by id: "
-  },
-  "localeErrors": {
-    "notFound": "Language not found",
-    "notSpecified": "Not Specified"
-  },
-  "locationErrors": {
-    "facilitiesDropdown": "Error getting facilities for dropdown:",
-    "gettingData": "Error getting data! Please contact our support team by clicking the bottom right link on the page!"
-  },
-  "moderationSubmissionsErrors": {
-    "unableToApprove": "Unable to approve submission. Submission ID is required.",
-    "unableToReject": "Unable to reject submission. Submission ID is required.",
-    "queryError": "Error querying the submissions:"
-  },
-  "searchResultsErrors": {
-    "gettingProfessionals": "Error getting professionals:",
-    "gettingData": "Error getting data! Please contact our support team by clicking the bottom right link on the page!",
-    "gettingfacilities": "Error getting facilities:"
-  },
+  "authErrors": {},
+  "facilitiesErrors": {},
+  "healthcareProfessionalsErrors": {},
+  "localeErrors": {},
+  "locationErrors": {},
+  "moderationSubmissionsErrors": {},
+  "searchResultsErrors": {},
   "themeManager": {
     "colorThemes": "Color Themes"
   }
