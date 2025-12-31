@@ -5,6 +5,7 @@
             ref="mapRef"
             data-testid="map-of-japan"
             :api-key="runtimeConfig.public.GOOGLE_MAPS_API_KEY as string ?? undefined"
+            :libraries="['marker']"
             map-id="153d718018a2577e"
             :disable-default-ui="true"
             :options="{
@@ -23,7 +24,7 @@
                     renderer: clusterRenderer,
                 }"
             >
-                <CustomMarker
+                <AdvancedMarker
                     v-for="location in searchResultsStore.searchResultsList"
                     :key="location.id"
                     :options="{
@@ -31,20 +32,21 @@
                             lat: location.mapLatitude ?? defaultLocation.lat,
                             lng: location.mapLongitude ?? defaultLocation.lng,
                         },
+                        title: location.nameEn || location.nameJa || 'Facility',
                     }"
                     @click="(event: MouseEvent) => handlePinClick(location.id, event)"
                 >
-                    <div style="text-align: center">
+                    <div class="text-center gmp-clickable">
                         <SVGMapPin
                             :class="[
-                                'w-[45px] h-[73px]',
+                                'w-[45px] h-[73px] block',
                                 searchResultsStore.activeFacility?.id === location.id
                                     ? 'text-secondary fill-secondary'
                                     : 'text-primary fill-primary',
                             ]"
                         />
                     </div>
-                </CustomMarker>
+                </AdvancedMarker>
             </MarkerCluster>
         </GoogleMap>
     </div>
@@ -52,7 +54,7 @@
 
 <script setup lang="ts">
 import { ref, watch, nextTick, onMounted } from 'vue'
-import { GoogleMap, CustomMarker, MarkerCluster } from 'vue3-google-map'
+import { GoogleMap, AdvancedMarker, MarkerCluster } from 'vue3-google-map'
 import { useSearchResultsStore } from '../stores/searchResultsStore'
 import { useRuntimeConfig } from '#imports'
 import SVGMapPin from '~/assets/icons/map-pin.svg'
@@ -91,19 +93,33 @@ const clusterRenderer = {
         const width = 45
         const height = 73
 
-        return new window.google.maps.Marker({
-            position,
-            icon: {
-                url: createClusterIcon(count, width, height),
-                scaledSize: new window.google.maps.Size(width, height),
-                anchor: new window.google.maps.Point(width / 2, height / 2)
-            },
-            zIndex: Number(window.google.maps.Marker.MAX_ZINDEX) + count
-        })
+        // Use AdvancedMarkerElement with a PinElement if available (standard approach)
+        const AdvancedMarkerElement = window.google?.maps?.AdvancedMarkerElement
+          || window.google?.maps?.marker?.AdvancedMarkerElement
+        if (AdvancedMarkerElement) {
+            const icon = document.createElement('div')
+            icon.innerHTML = `
+                <img
+                    src="${createClusterIcon(count, width, height)}"
+                    style="width: ${width}px; height: ${height}px; display: block;"
+                    class="flex items-center justify-center"
+                />
+            `
+
+            const marker = new AdvancedMarkerElement({
+                position,
+                content: icon,
+                zIndex: 1000000 + count,
+                title: `Cluster of ${count}`
+            })
+
+            return marker
+        }
+
+        return null
     }
 }
 
-// Creates a dynamic cluster icon for Google Maps markers
 // Note: Inline SVG generation is required because Google Maps markers need data URIs
 // with dynamic values (count, fontSize, primaryColor) that can't be set with CSS classes
 const createClusterIcon = (count: number, width: number, height: number) => {

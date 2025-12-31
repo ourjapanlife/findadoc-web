@@ -6,10 +6,28 @@ const SITE_DESCRIPTION
     = 'Health service information for the international community in Japan'
 
 export default defineNuxtConfig({
-    sourcemap: {
-        client: true
-    },
+
+    modules: [
+        '@nuxtjs/i18n',
+        '@pinia/nuxt',
+        'nuxt-viewport',
+        'nuxt-svgo',
+        '@nuxt/eslint',
+        '@nuxt/test-utils/module',
+        'nuxt-gtag'
+    ],
+
+    // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
+    plugins: [],
     ssr: false,
+
+    // Auto import components: https://nuxt.com/docs/guide/directory-structure/components#component-names
+    components: [
+        {
+            path: '~/components',
+            pathPrefix: false
+        }
+    ],
     app: {
     // Global page headers: https://nuxt.com/docs/getting-started/seo-meta
         head: {
@@ -101,30 +119,56 @@ export default defineNuxtConfig({
     // Global CSS: https://go.nuxtjs.dev/config-css
     css: ['~/assets/css/tailwind.css'],
 
-    // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-    plugins: [],
+    runtimeConfig: {
+        public: {
+            isTestingMode: process.env.NUXT_IS_TESTING_MODE,
 
-    // Auto import components: https://nuxt.com/docs/guide/directory-structure/components#component-names
-    components: [
-        {
-            path: '~/components',
-            pathPrefix: false
+            GOOGLE_MAPS_API_KEY: process.env.GOOGLE_MAPS_API_KEY,
+
+            NUXT_PUBLIC_LOAD_STORES: process.env.NUXT_PUBLIC_LOAD_STORES,
+
+            NUXT_USE_LOCAL_API: process.env.NUXT_USE_LOCAL_API
         }
-    ],
+    },
+    sourcemap: {
+        client: true
+    },
+    compatibilityDate: '2025-01-17',
 
-    modules: [
-        '@nuxtjs/i18n',
-        '@pinia/nuxt',
-        'nuxt-viewport',
-        'nuxt-svgo',
-        '@nuxt/eslint',
-        '@nuxt/test-utils/module',
-        'nuxt-gtag'
-    ],
+    postcss: {
+        plugins: {
+            '@tailwindcss/postcss': {},
+            autoprefixer: {}
+        }
+    },
+    telemetry: false,
     eslint: {
         config: {
             stylistic: true
         }
+    },
+
+    // Google analytics configuration
+    gtag: {
+        enabled: process.env.NODE_ENV === 'production' && process.env.ENABLE_GOOGLE_ANALYTICS === 'true',
+        id: 'G-T0RE9B3PRG'
+    },
+
+    i18n: {
+        strategy: 'no_prefix',
+        locales: i18nLocales,
+        defaultLocale: 'en-US',
+        langDir: 'locales',
+        lazy: true,
+        detectBrowserLanguage: {
+            useCookie: true,
+            cookieKey: 'i18n_redirected',
+            fallbackLocale: 'en-US',
+            alwaysRedirect: true
+        }
+    },
+    svgo: {
+        defaultImport: 'component'
     },
     viewport: {
         breakpoints: {
@@ -150,49 +194,5 @@ export default defineNuxtConfig({
         },
 
         fallbackBreakpoint: 'desktop'
-    },
-
-    i18n: {
-        strategy: 'no_prefix',
-        locales: i18nLocales,
-        defaultLocale: 'en-US',
-        langDir: 'locales',
-        lazy: true,
-        detectBrowserLanguage: {
-            useCookie: true,
-            cookieKey: 'i18n_redirected',
-            fallbackLocale: 'en-US',
-            alwaysRedirect: true
-        }
-    },
-    svgo: {
-        defaultImport: 'component'
-    },
-
-    // Google analytics configuration
-    gtag: {
-        enabled: process.env.NODE_ENV === 'production' && process.env.ENABLE_GOOGLE_ANALYTICS === 'true',
-        id: 'G-T0RE9B3PRG'
-    },
-
-    // Postcss configuration
-    postcss: {
-        plugins: {
-            tailwindcss: {},
-            autoprefixer: {}
-        }
-    },
-    runtimeConfig: {
-        public: {
-            isTestingMode: process.env.NUXT_IS_TESTING_MODE,
-
-            GOOGLE_MAPS_API_KEY: process.env.GOOGLE_MAPS_API_KEY,
-
-            NUXT_PUBLIC_LOAD_STORES: process.env.NUXT_PUBLIC_LOAD_STORES,
-
-            NUXT_USE_LOCAL_API: process.env.NUXT_USE_LOCAL_API
-        }
-    },
-    telemetry: false,
-    compatibilityDate: '2025-01-17'
+    }
 })
