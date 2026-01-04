@@ -39,7 +39,7 @@ export const useModerationSubmissionsStore = defineStore(
         const approvingSubmissionFromTopBar: Ref<boolean> = ref(false)
         const showRejectSubmissionConfirmation: Ref<boolean> = ref(false)
         const selectedModerationListViewTabChosen: Ref<SelectedSubmissionListViewTab>
-        = ref(SelectedSubmissionListViewTab.ForReview)
+            = ref(SelectedSubmissionListViewTab.ForReview)
 
         // Used for store the total number of submissions found by the current search query.
         const totalSubmissionsCount: Ref<number> = ref(0)

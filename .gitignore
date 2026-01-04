@@ -28,6 +28,7 @@ eslint-results.sarif
 
 # VS Code
 .vscode
+!/vscode/settings.json
 
 # Jetbrains IDEs
 .idea

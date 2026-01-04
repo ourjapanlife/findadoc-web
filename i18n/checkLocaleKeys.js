@@ -84,34 +84,34 @@ the translations are later updated into their native language by a contributor.
 * @param {() => void} insertMissingKeysAndValues  - function to insert a key-value pair into a nested object
 */
 const findAndInsertMissingKeysAndValuesInNonEnFiles
-= (localeFilesWithoutEnFileName, enFileContent, referenceKeys, insertMissingKeysAndValues) => {
-    localeFilesWithoutEnFileName.forEach(file => {
-        const localeFilePath = path.join(localesI18nDirectory, file)
-        const jsonContent = JSON.parse(fs.readFileSync(localeFilePath, 'utf-8'))
+    = (localeFilesWithoutEnFileName, enFileContent, referenceKeys, insertMissingKeysAndValues) => {
+        localeFilesWithoutEnFileName.forEach(file => {
+            const localeFilePath = path.join(localesI18nDirectory, file)
+            const jsonContent = JSON.parse(fs.readFileSync(localeFilePath, 'utf-8'))
 
-        const existingKeys = new Set(extractAllKeys(jsonContent))
-        let fileUpdated = false
-        const missingKeys = []
+            const existingKeys = new Set(extractAllKeys(jsonContent))
+            let fileUpdated = false
+            const missingKeys = []
 
-        referenceKeys.forEach(key => {
-            if (!existingKeys.has(key)) {
-                const value = key.split('.').reduce((obj, part) => obj?.[part], enFileContent)
-                if (value !== undefined) {
-                    insertMissingKeysAndValues(jsonContent, key, value)
-                    missingKeys.push(key)
-                    fileUpdated = true
+            referenceKeys.forEach(key => {
+                if (!existingKeys.has(key)) {
+                    const value = key.split('.').reduce((obj, part) => obj?.[part], enFileContent)
+                    if (value !== undefined) {
+                        insertMissingKeysAndValues(jsonContent, key, value)
+                        missingKeys.push(key)
+                        fileUpdated = true
+                    }
                 }
+            })
+
+            if (fileUpdated) {
+                fs.writeFileSync(localeFilePath, JSON.stringify(jsonContent, null, 2), 'utf-8')
+                console.log(`\x1b[35mInserted missing keys into ${file}\x1b[0m`)
+                console.log('\x1b[34mMissing keys:\x1b[0m')
+                missingKeys.forEach(key => console.log(`- ${key}`))
             }
         })
-
-        if (fileUpdated) {
-            fs.writeFileSync(localeFilePath, JSON.stringify(jsonContent, null, 2), 'utf-8')
-            console.log(`\x1b[35mInserted missing keys into ${file}\x1b[0m`)
-            console.log('\x1b[34mMissing keys:\x1b[0m')
-            missingKeys.forEach(key => console.log(`- ${key}`))
-        }
-    })
-}
+    }
 
 // To run in CI/CD just to report the keys
 const findAndReportMissingKeysInNonEnFiles = (localeFilesWithoutEnFileName, referenceKeys) => {

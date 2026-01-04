@@ -367,7 +367,8 @@
                 <NuxtLink
                     to="/submit"
                     class="hover:text-primary-hover text-lg font-bold underline transition-colors"
-                >{{ t("about.involveAdd") }}
+                >{{
+                    t("about.involveAdd") }}
                 </NuxtLink>
             </div>
             <div class="flex flex-col items-center my-6 md:my-0">
@@ -381,7 +382,8 @@
                     href="https://github.com/ourjapanlife"
                     class="underline font-bold hover:text-primary-hover text-lg transition-colors"
                     target="_blank"
-                >{{ t("about.involveGit") }}</a>
+                >{{
+                    t("about.involveGit") }}</a>
             </div>
             <div class="flex flex-col items-center my-6 md:my-0">
                 <SvgLinkedin
@@ -394,7 +396,8 @@
                     href="https://www.linkedin.com/company/find-a-doc-japan/"
                     class="underline font-bold hover:text-primary-hover text-lg transition-colors"
                     target="_blank"
-                >{{ t("about.involveLinkedin") }}</a>
+                >{{
+                    t("about.involveLinkedin") }}</a>
             </div>
             <div class="flex flex-col items-center my-6 md:my-0">
                 <SvgFeedback
@@ -407,7 +410,8 @@
                     href="https://docs.google.com/forms/d/e/1FAIpQLScx9cXurA6BhbBPUFH2nFAVWPP6Pm3yqXQj-NvJiaI2CUhh0Q/viewform"
                     class="underline font-bold hover:text-primary-hover text-lg transition-colors"
                     target="_blank"
-                >{{ t("about.involveFeedback") }}</a>
+                >{{
+                    t("about.involveFeedback") }}</a>
             </div>
         </div>
         <!-- Back to Top Button  -->

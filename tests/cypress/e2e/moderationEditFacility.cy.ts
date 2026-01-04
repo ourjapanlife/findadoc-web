@@ -159,7 +159,7 @@ describe.skip('Moderation edit facility form', () => {
         it('should be able to add a professional that matches by id', () => {
             cy.window().then(win => {
                 win.$pinia.state.value.healthcareProfessionalsStore.healthcareProfessionalsData
-            = fakeHealthcareProfessionalResult.data.healthcareProfessionals
+                    = fakeHealthcareProfessionalResult.data.healthcareProfessionals
             })
             cy.get('[data-testid="mod-facility-section-doctor-search"]').find('input').clear().type('UTF8YaYa')
             cy.get('[data-testid="mod-search-bar-search-result"]').click()
