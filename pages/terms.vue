@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col overflow-y-auto w-full px-10 md:px-32">
+    <div class="flex flex-col overflow-y-auto w-full px-10 portrait:px-32">
         <div>
             <h1
                 class="mb-20 text-primary-text text-5xl font-bold font-sans"

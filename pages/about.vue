@@ -3,7 +3,7 @@
         <!-- Hero Section  -->
         <div
             ref="heroSectionRef"
-            class="relative flex flex-col items-center p-10 md:p-14"
+            class="relative flex flex-col items-center p-10 landscape:p-14"
         >
             <SvgHeartPlus
                 role="img"
@@ -42,7 +42,7 @@
                 role="img"
                 alt="Characters Together SVG Icon"
                 title="Characters Together"
-                class="md:w-1/3 md:mr-4"
+                class="landscape:w-1/3 landscape:mr-4"
             />
         </div>
         <!-- Our Story section -->
@@ -66,7 +66,7 @@
         <div
             id="about-findadoc-section"
             ref="aboutSectionRef"
-            class="flex flex-col items-center px-10 md:px-32"
+            class="flex flex-col items-center px-10 landscape:px-32"
         >
             <p
                 data-testid="about-paragraph1"
@@ -83,9 +83,9 @@
             <!-- Scroll buttons -->
             <nav
                 id="button-section"
-                class="w-full flex justify-center my-6 md:p-10"
+                class="w-full flex justify-center my-6 landscape:p-10"
             >
-                <div class="grid grid-cols-1 gap-4 gap-y-8 mt-10 md:grid-cols-5 md:mr-8 md:w-4/5 md:flex md:justify-around">
+                <div class="grid grid-cols-1 gap-4 gap-y-8 mt-10 landscape:grid-cols-5 landscape:mr-8 landscape:w-4/5 landscape:flex landscape:justify-around">
                     <button
                         class="outline outline-1 outline-primary/70 rounded-xl text-primary hover:text-primary-text-inverted
                     hover:bg-primary font-bold text-xl p-4 shadow-lg text-center"
@@ -146,8 +146,8 @@
                 <div class="flex-1 border-currentColor/70 border self-center" />
             </div>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 my-0 md:my-12">
-            <div class="flex flex-col items-center my-6 md:my-0">
+        <div class="grid grid-cols-1 landscape:grid-cols-3 my-0 landscape:my-12">
+            <div class="flex flex-col items-center my-6 landscape:my-0">
                 <SvgDoctor
                     role="img"
                     alt="Doctor SVG Icon"
@@ -159,7 +159,7 @@
                 </p>
             </div>
 
-            <div class="flex flex-col items-center my-6 md:my-0">
+            <div class="flex flex-col items-center my-6 landscape:my-0">
                 <SvgUser
                     role="img"
                     alt="User SVG Icon"
@@ -171,7 +171,7 @@
                 </p>
             </div>
 
-            <div class="flex flex-col items-center my-6 md:my-0">
+            <div class="flex flex-col items-center my-6 landscape:my-0">
                 <SvgVolunteer
                     role="img"
                     alt="Volunteer SVG Icon"
@@ -209,7 +209,7 @@
             <div
                 id="contributors"
                 data-testid="contributors"
-                class="grid grid-cols-2 md:grid-cols-5 mx-4 gap-16 pb-10 md:pb-12"
+                class="grid grid-cols-2 landscape:grid-cols-5 mx-4 gap-16 pb-10 landscape:pb-12"
             >
                 <div
                     v-for="(member, index) in contributors"
@@ -254,7 +254,7 @@
             <div
                 id="npo"
                 data-testid="npo"
-                class="grid grid-cols-2 md:grid-cols-4 mx-4 gap-16 pb-10 md:pb-12"
+                class="grid grid-cols-2 landscape:grid-cols-4 mx-4 gap-16 pb-10 landscape:pb-12"
             >
                 <div
                     v-for="(member, index) in boardMembers"
@@ -291,8 +291,8 @@
                 <div class="flex-1 border-currentColor/70 border self-center" />
             </div>
         </div>
-        <div class="grid grid-cols-2 md:grid-cols-5 my-0 md:my-12">
-            <div class="flex flex-col items-center my-8 md:my-0">
+        <div class="grid grid-cols-2 landscape:grid-cols-5 my-0 landscape:my-12">
+            <div class="flex flex-col items-center my-8 landscape:my-0">
                 <h1>{{ t("about.mascotsAwa") }}</h1>
                 <SvgAwa
                     role="img"
@@ -301,7 +301,7 @@
                     class="my-4 h-40"
                 />
             </div>
-            <div class="flex flex-col items-center my-8 md:my-0">
+            <div class="flex flex-col items-center my-8 landscape:my-0">
                 <h1>{{ t("about.mascotsMichael") }}</h1>
                 <SvgMichael
                     role="img"
@@ -310,7 +310,7 @@
                     class="my-4 h-40"
                 />
             </div>
-            <div class="flex flex-col items-center my-8 md:my-0">
+            <div class="flex flex-col items-center my-8 landscape:my-0">
                 <h1>{{ t("about.mascotsTamika") }}</h1>
                 <SvgTamika
                     role="img"
@@ -319,7 +319,7 @@
                     class="my-4 h-40"
                 />
             </div>
-            <div class="flex flex-col items-center my-8 md:my-0">
+            <div class="flex flex-col items-center my-8 landscape:my-0">
                 <h1>{{ t("about.mascotsSachi") }}</h1>
                 <SvgSachi
                     role="img"
@@ -328,7 +328,7 @@
                     class="my-4 h-40"
                 />
             </div>
-            <div class="flex flex-col items-center my-8 md:my-0 md:mt-10">
+            <div class="flex flex-col items-center my-8 landscape:my-0 landscape:mt-10">
                 <h1>{{ t("about.mascotsChiko") }}</h1>
                 <SvgChiko
                     role="img"
@@ -356,8 +356,8 @@
                 <div class="flex-1 border-currentColor/70 border self-center" />
             </div>
         </div>
-        <div class="mb-14 grid grid-cols-2 pb-32 md:grid-cols-4 md:gap-0 md:pb-16">
-            <div class="flex flex-col items-center my-6 md:my-0">
+        <div class="mb-14 grid grid-cols-2 pb-32 landscape:grid-cols-4 landscape:gap-0 landscape:pb-16">
+            <div class="flex flex-col items-center my-6 landscape:my-0">
                 <SvgAdd
                     role="img"
                     alt="Add Doctor SVG Icon"
@@ -370,7 +370,7 @@
                 >{{ t("about.involveAdd") }}
                 </NuxtLink>
             </div>
-            <div class="flex flex-col items-center my-6 md:my-0">
+            <div class="flex flex-col items-center my-6 landscape:my-0">
                 <SvgGithub
                     role="img"
                     alt="GitHub SVG Icon"
@@ -383,7 +383,7 @@
                     target="_blank"
                 >{{ t("about.involveGit") }}</a>
             </div>
-            <div class="flex flex-col items-center my-6 md:my-0">
+            <div class="flex flex-col items-center my-6 landscape:my-0">
                 <SvgLinkedin
                     role="img"
                     alt="LinkedIn SVG Icon"
@@ -396,7 +396,7 @@
                     target="_blank"
                 >{{ t("about.involveLinkedin") }}</a>
             </div>
-            <div class="flex flex-col items-center my-6 md:my-0">
+            <div class="flex flex-col items-center my-6 landscape:my-0">
                 <SvgFeedback
                     role="img"
                     alt="LinkedIn SVG Icon"
@@ -422,7 +422,7 @@
             <a
                 v-show="showScrollUpButton"
                 class="fixed bottom-4 left-1/2 -translate-x-1/2
-                    md:bottom-4 md:left-auto md:right-6
+                    landscape:bottom-4 landscape:left-auto landscape:right-6
                      z-50"
             >
                 <SvgArrow

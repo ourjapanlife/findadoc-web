@@ -46,7 +46,7 @@
         "vue-server-renderer": "^2.7.16",
         "vue-template-compiler": "^2.7.16",
         "vue-toastification": "^2.0.0-rc.5",
-        "vue3-google-map": "^0.25.1"
+        "vue3-google-map": "^0.26.0"
     },
     "devDependencies": {
         "@graphql-codegen/cli": "^6.0.2",

@@ -1,3 +1,9 @@
+<script setup lang="ts">
+import { useScreenOrientation } from '~/composables/useScreenOrientation'
+
+const { isLandscape } = useScreenOrientation()
+</script>
+
 <template>
     <!--
     The main app should se h-dvh (dynamic viewport height) so the app fits the visible viewport on mobile
@@ -16,6 +22,9 @@
             <NuxtPage />
         </main>
 
-        <Footer class="shrink-0" />
+        <Footer
+            v-if="isLandscape"
+            class="shrink-0"
+        />
     </div>
 </template>

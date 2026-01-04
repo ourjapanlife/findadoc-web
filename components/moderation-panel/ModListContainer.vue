@@ -12,7 +12,7 @@
                 <!-- Submissions -->
                 <div
                     v-if="hasSubmissions && submissionsModerationListViewChosen"
-                    class="grid grid-cols-1 md:grid-cols-2 gap-4 items-start justify-start mx-2 mt-2 mb-44"
+                    class="grid grid-cols-1 landscape:grid-cols-2 gap-4 items-start justify-start mx-2 mt-2 mb-44"
                 >
                     <div
                         v-for="(submission, index) in modSubmissionsStore.submissionsData"
@@ -30,7 +30,7 @@
                 <!-- Facilities -->
                 <div
                     v-else-if="hasFacilities && facilitiesModerationListViewChosen"
-                    class="grid grid-cols-1 md:grid-cols-2 gap-4 items-start justify-start mx-2 mt-2 mb-44"
+                    class="grid grid-cols-1 landscape:grid-cols-2 gap-4 items-start justify-start mx-2 mt-2 mb-44"
                 >
                     <div
                         v-for="(facility, index) in facilitiesStore.facilityData"
@@ -48,7 +48,7 @@
                 <!-- Healthcare Professionals -->
                 <div
                     v-else-if="hasHealthcareProfessionals && healthcareProfessionalsModerationListViewChosen"
-                    class="grid grid-cols-1 md:grid-cols-2 gap-4 items-start justify-start mx-2 mt-2 mb-44"
+                    class="grid grid-cols-1 landscape:grid-cols-2 gap-4 items-start justify-start mx-2 mt-2 mb-44"
                 >
                     <div
                         v-for="(healthcareProfessional, index) in healthcareProfessionalsStore.healthcareProfessionalsData"

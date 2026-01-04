@@ -1,5 +1,5 @@
 <template>
-    <div class="overflow-y-auto w-full px-10 md:px-32">
+    <div class="overflow-y-auto w-full px-10 landscape:px-32">
         <div>
             <h1
                 data-testid="privacy-heading"
