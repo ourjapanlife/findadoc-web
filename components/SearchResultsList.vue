@@ -6,14 +6,14 @@
         <div
             v-if="isPortrait"
             data-testid="searchbar"
-            class="results-header flex flex-col justify-center flex-shrink-0"
+            class="results-header flex flex-col justify-center shrink-0"
         >
             <SearchBar class="mx-4" />
         </div>
         <!-- Divider line -->
         <div
             v-if="isPortrait"
-            class="h-px border border-accent/10 my-2 mx-auto w-20 flex-shrink-0"
+            class="h-px border border-accent/10 my-2 mx-auto w-20 shrink-0"
         />
         <!-- Loading List Placeholder -->
         <div

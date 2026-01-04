@@ -78,11 +78,11 @@
         <!-- Search button -->
         <div
             id="search-button"
-            class="flex items-center flex-shrink-0 px-4 pt-3 pb-4"
+            class="flex items-center shrink-0 px-4 pt-3 pb-4"
         >
             <button
                 id="searchButton"
-                class="flex flex-0 flex-row rounded-md
+                class="flex flex-none flex-row rounded-md
                                 w-full pl-1 pr-2 py-4 text-sm align-middle justify-center
                                 bg-accent hover:bg-accent-hover transition-all"
                 data-testid="search-button"

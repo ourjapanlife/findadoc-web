@@ -1,10 +1,10 @@
 <template>
     <div
         data-testid="footer"
-        class="footer portrait:hidden flex border-t-4 border-secondary-bg/40 bg-secondary-bg
+        class="footer flex border-t-4 border-secondary-bg/40 bg-secondary-bg
         text-sm text-primary-text font-semibold py-2 rounded-t-md"
     >
-        <div class="left-footer-section flex flex-0 justify-start">
+        <div class="left-footer-section flex flex-none justify-start">
             <NuxtLink
                 to="/"
                 class="self-center ml-8 mr-2 hover:text-primary-hover transition-colors"
@@ -39,7 +39,7 @@
                 </NuxtLink>
             </nav>
         </div>
-        <div class="right-footer-section flex flex-0 flex-row gap-6 justify-end px-8 text-xs">
+        <div class="right-footer-section flex flex-none flex-row gap-6 justify-end px-8 text-xs">
             <div class="mx-2 hover:text-primary-hover transition-colors">
                 <NuxtLink
                     to="https://github.com/ourjapanlife/findadoc-web/"

@@ -11,8 +11,8 @@ export default {
     ],
     theme: {
         screens: {
-            md: { min: '800px' },
-            sm: { max: '640px' }
+            portrait: { raw: '(orientation: portrait)' },
+            landscape: { raw: '(orientation: landscape)' }
         }
     },
     plugins: []
