@@ -56,6 +56,8 @@
 import { ref, watch, nextTick, onMounted } from 'vue'
 import { GoogleMap, AdvancedMarker, MarkerCluster } from 'vue3-google-map'
 import type { Renderer } from '@googlemaps/markerclusterer'
+import { useUmami } from '~/composables/useUmamiTracking'
+
 import { useSearchResultsStore } from '../stores/searchResultsStore'
 import { useRuntimeConfig } from '#imports'
 import { BottomSheetType, useBottomSheetStore } from '~/stores/bottomSheetStore'
@@ -95,6 +97,8 @@ interface ClusterData {
 interface MarkerClustererInstance {
     clusters: ClusterData[]
 }
+
+const { track } = useUmami()
 
 // Base function to create pin icon with swappable center content
 const createPinIcon = (color: string, width: number, height: number, centerContent: string): string => {
@@ -220,6 +224,9 @@ const handlePinClick = (resultId: string) => {
     //Even though the watch() will update the location, we need to set it here to ensure the map is centered on the new result
     nextTick(() => {
         setLocation(currentLocation.value.lat, currentLocation.value.lng)
+    })
+    track('Map Pin Clicked', {
+        facilityId: resultId
     })
 }
 
