@@ -1,7 +1,7 @@
 <template>
     <div
         data-testid="footer"
-        class="footer flex border-t-4 border-secondary-bg/40 bg-secondary-bg
+        class="footer portrait:hidden flex border-t-4 border-secondary-bg/40 bg-secondary-bg
         text-sm text-primary-text font-semibold py-2 rounded-t-md"
     >
         <div class="left-footer-section flex flex-none justify-start">
