@@ -14,7 +14,7 @@ jobs:
         name: Running Pinia Tests 🚀
         strategy:
             matrix:
-                node-version: [21.3.0]
+                node-version: [22.12.0]
         runs-on: ubuntu-latest
         steps:
             - name: Checkout Code
