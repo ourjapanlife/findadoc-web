@@ -1,7 +1,7 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`privacypolicy.vue > renders correctly 1`] = `
-"<div class="overflow-y-auto w-full px-10 md:px-32">
+"<div class="overflow-y-auto w-full px-10 landscape:px-32">
   <div>
     <h1 data-testid="privacy-heading" class="mb-20 text-black text-5xl font-bold font-sans">privacyPage.heading</h1>
   </div>

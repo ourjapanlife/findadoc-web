@@ -3,14 +3,14 @@
 exports[`about.vue (vitest snapshot) > renders correctly 1`] = `
 "<div class="w-full bg-primary-bg">
   <!-- Hero Section  -->
-  <div class="relative flex flex-col items-center p-10 md:p-14">
+  <div class="relative flex flex-col items-center p-10 landscape:p-14">
     <anonymous-stub role="img" alt="pink heart with a white plus in the middle to symbolize health" title="heart icon" class="my-4 h-32 z-10"></anonymous-stub>
     <h1 data-testid="about-hero-heading" class="mb-12 font-bold text-4xl text-primary-text text-center z-10">about.heroHeading</h1>
     <p data-testid="about-hero-subheading" class="mb-12 text-2xl text-primary-text text-center z-10">about.heroSubheading</p>
     <div class="flex gap-8 mb-4 z-10">
       <nuxt-link-stub to="/" class="outline outline-1 rounded-xl p-4 bg-primary text-primary-text-inverted text-lg font-bold transition-colors text-center"></nuxt-link-stub><button class="outline outline-1 outline-primary/70 rounded-xl text-primary font-bold text-xl p-4 shadow-lg text-center">about.heroLearnMore</button>
     </div>
-    <anonymous-stub role="img" alt="Characters Together SVG Icon" title="Characters Together" class="md:w-1/3 md:mr-4"></anonymous-stub>
+    <anonymous-stub role="img" alt="Characters Together SVG Icon" title="Characters Together" class="landscape:w-1/3 landscape:mr-4"></anonymous-stub>
   </div><!-- Our Story section -->
   <div id="about-header-container" data-testid="about-header-container" class="flex justify-center items-center">
     <div id="about-header" data-testid="about-header" class="flex w-4/5 my-12">
@@ -19,11 +19,11 @@ exports[`about.vue (vitest snapshot) > renders correctly 1`] = `
       <div class="flex-1 border-currentColor/70 border self-center"></div>
     </div>
   </div>
-  <div id="about-findadoc-section" class="flex flex-col items-center px-10 md:px-32">
+  <div id="about-findadoc-section" class="flex flex-col items-center px-10 landscape:px-32">
     <p data-testid="about-paragraph1" class="mb-6 text-md text-primary-text text-center">about.storyParagraph1</p>
     <p data-testid="about-paragraph2" class="text-md text-primary-text text-center">about.storyParagraph2</p><!-- Scroll buttons -->
-    <nav id="button-section" class="w-full flex justify-center my-6 md:p-10">
-      <div class="grid grid-cols-1 gap-4 gap-y-8 mt-10 md:grid-cols-5 md:mr-8 md:w-4/5 md:flex md:justify-around"><button class="outline outline-1 outline-primary/70 rounded-xl text-primary hover:text-primary-text-inverted hover:bg-primary font-bold text-xl p-4 shadow-lg text-center">about.btnImpact</button><button class="outline outline-1 outline-primary/70 rounded-xl text-primary hover:text-primary-text-inverted hover:bg-primary font-bold text-xl p-4 shadow-lg">about.btnContributors</button><button class="outline outline-1 outline-primary/70 rounded-xl text-primary hover:text-primary-text-inverted hover:bg-primary font-bold text-xl p-4 shadow-lg">about.btnBoard</button><button class="outline outline-1 outline-primary/70 rounded-xl text-primary hover:text-primary-text-inverted hover:bg-primary font-bold text-xl p-4 shadow-lg">about.btnMascots</button><button class="outline outline-1 outline-primary/70 rounded-xl text-primary hover:text-primary-text-inverted hover:bg-primary font-bold text-xl p-4 shadow-lg">about.btnInvolve</button></div>
+    <nav id="button-section" class="w-full flex justify-center my-6 landscape:p-10">
+      <div class="grid grid-cols-1 gap-4 gap-y-8 mt-10 landscape:grid-cols-5 landscape:mr-8 landscape:w-4/5 landscape:flex landscape:justify-around"><button class="outline outline-1 outline-primary/70 rounded-xl text-primary hover:text-primary-text-inverted hover:bg-primary font-bold text-xl p-4 shadow-lg text-center">about.btnImpact</button><button class="outline outline-1 outline-primary/70 rounded-xl text-primary hover:text-primary-text-inverted hover:bg-primary font-bold text-xl p-4 shadow-lg">about.btnContributors</button><button class="outline outline-1 outline-primary/70 rounded-xl text-primary hover:text-primary-text-inverted hover:bg-primary font-bold text-xl p-4 shadow-lg">about.btnBoard</button><button class="outline outline-1 outline-primary/70 rounded-xl text-primary hover:text-primary-text-inverted hover:bg-primary font-bold text-xl p-4 shadow-lg">about.btnMascots</button><button class="outline outline-1 outline-primary/70 rounded-xl text-primary hover:text-primary-text-inverted hover:bg-primary font-bold text-xl p-4 shadow-lg">about.btnInvolve</button></div>
     </nav>
   </div><!-- Impact Section  -->
   <div id="impact-header-container" data-testid="impact-header-container" class="flex justify-center items-center">
@@ -33,16 +33,16 @@ exports[`about.vue (vitest snapshot) > renders correctly 1`] = `
       <div class="flex-1 border-currentColor/70 border self-center"></div>
     </div>
   </div>
-  <div class="grid grid-cols-1 md:grid-cols-3 my-0 md:my-12">
-    <div class="flex flex-col items-center my-6 md:my-0">
+  <div class="grid grid-cols-1 landscape:grid-cols-3 my-0 landscape:my-12">
+    <div class="flex flex-col items-center my-6 landscape:my-0">
       <anonymous-stub role="img" alt="Doctor SVG Icon" title="Doctor Icon" class="my-4 h-32 fill-primary"></anonymous-stub>
       <p class="font-semibold text-xl text-primary-text">about.impactDoctors</p>
     </div>
-    <div class="flex flex-col items-center my-6 md:my-0">
+    <div class="flex flex-col items-center my-6 landscape:my-0">
       <anonymous-stub role="img" alt="User SVG Icon" title="User Icon" class="my-4 h-32 fill-primary"></anonymous-stub>
       <p class="font-semibold text-xl text-primary-text">about.impactUsers</p>
     </div>
-    <div class="flex flex-col items-center my-6 md:my-0">
+    <div class="flex flex-col items-center my-6 landscape:my-0">
       <anonymous-stub role="img" alt="Volunteer SVG Icon" title="Volunteer Icon" class="my-4 h-32 fill-primary"></anonymous-stub>
       <p class="font-semibold text-xl text-primary-text">about.impactVolunteer</p>
     </div>
@@ -55,7 +55,7 @@ exports[`about.vue (vitest snapshot) > renders correctly 1`] = `
     </div>
   </div>
   <div id="contributor-container" data-testid="contributor-container" class="flex justify-center items-center">
-    <div id="contributors" data-testid="contributors" class="grid grid-cols-2 md:grid-cols-5 mx-4 gap-16 pb-10 md:pb-12">
+    <div id="contributors" data-testid="contributors" class="grid grid-cols-2 landscape:grid-cols-5 mx-4 gap-16 pb-10 landscape:pb-12">
       <div data-testid="member" class="members-list grid">
         <member-component-stub avatarimg="/avatars/aaron_culbert.jpg" githuburl="https://github.com/aaronculbert" linkedinurl="https://www.linkedin.com/in/aculbert/" name="Aaron Culbert" datatestid="0" title="Developer"></member-component-stub>
       </div>
@@ -174,7 +174,7 @@ exports[`about.vue (vitest snapshot) > renders correctly 1`] = `
     </div>
   </div>
   <div id="npo-container" data-testid="npo-container" class="flex justify-center items-center">
-    <div id="npo" data-testid="npo" class="grid grid-cols-2 md:grid-cols-4 mx-4 gap-16 pb-10 md:pb-12">
+    <div id="npo" data-testid="npo" class="grid grid-cols-2 landscape:grid-cols-4 mx-4 gap-16 pb-10 landscape:pb-12">
       <div data-testid="member" class="members-list grid">
         <member-component-stub avatarimg="/avatars/william_brammer.jpg" githuburl="https://github.com/NabbeunNabi" linkedinurl="https://www.linkedin.com/in/william-brammer/" name="William Brammer" datatestid="0" title="CEO"></member-component-stub>
       </div>
@@ -205,24 +205,24 @@ exports[`about.vue (vitest snapshot) > renders correctly 1`] = `
       <div class="flex-1 border-currentColor/70 border self-center"></div>
     </div>
   </div>
-  <div class="grid grid-cols-2 md:grid-cols-5 my-0 md:my-12">
-    <div class="flex flex-col items-center my-8 md:my-0">
+  <div class="grid grid-cols-2 landscape:grid-cols-5 my-0 landscape:my-12">
+    <div class="flex flex-col items-center my-8 landscape:my-0">
       <h1>about.mascotsAwa</h1>
       <anonymous-stub role="img" alt="Awa SVG Icon" title="Awa" class="my-4 h-40"></anonymous-stub>
     </div>
-    <div class="flex flex-col items-center my-8 md:my-0">
+    <div class="flex flex-col items-center my-8 landscape:my-0">
       <h1>about.mascotsMichael</h1>
       <anonymous-stub role="img" alt="Michael SVG Icon" title="Michael" class="my-4 h-40"></anonymous-stub>
     </div>
-    <div class="flex flex-col items-center my-8 md:my-0">
+    <div class="flex flex-col items-center my-8 landscape:my-0">
       <h1>about.mascotsTamika</h1>
       <anonymous-stub role="img" alt="Tamika SVG Icon" title="Tamika" class="my-4 h-40"></anonymous-stub>
     </div>
-    <div class="flex flex-col items-center my-8 md:my-0">
+    <div class="flex flex-col items-center my-8 landscape:my-0">
       <h1>about.mascotsSachi</h1>
       <anonymous-stub role="img" alt="Sachi SVG Icon" title="Sachi" class="my-4 h-40"></anonymous-stub>
     </div>
-    <div class="flex flex-col items-center my-8 md:my-0 md:mt-10">
+    <div class="flex flex-col items-center my-8 landscape:my-0 landscape:mt-10">
       <h1>about.mascotsChiko</h1>
       <anonymous-stub role="img" alt="Chiko SVG Icon" title="Chiko" class="my-4 h-32"></anonymous-stub>
     </div>
@@ -234,22 +234,22 @@ exports[`about.vue (vitest snapshot) > renders correctly 1`] = `
       <div class="flex-1 border-currentColor/70 border self-center"></div>
     </div>
   </div>
-  <div class="mb-14 grid grid-cols-2 pb-32 md:grid-cols-4 md:gap-0 md:pb-16">
-    <div class="flex flex-col items-center my-6 md:my-0">
+  <div class="mb-14 grid grid-cols-2 pb-32 landscape:grid-cols-4 landscape:gap-0 landscape:pb-16">
+    <div class="flex flex-col items-center my-6 landscape:my-0">
       <anonymous-stub role="img" alt="Add Doctor SVG Icon" title="Add Doctor Icon" class="my-4 w-20"></anonymous-stub>
       <nuxt-link-stub to="/submit" class="hover:text-primary-hover text-lg font-bold underline transition-colors"></nuxt-link-stub>
     </div>
-    <div class="flex flex-col items-center my-6 md:my-0">
+    <div class="flex flex-col items-center my-6 landscape:my-0">
       <anonymous-stub role="img" alt="GitHub SVG Icon" title="Github Icon" class="my-4 w-20"></anonymous-stub><a href="https://github.com/ourjapanlife" class="underline font-bold hover:text-primary-hover text-lg transition-colors" target="_blank">about.involveGit</a>
     </div>
-    <div class="flex flex-col items-center my-6 md:my-0">
+    <div class="flex flex-col items-center my-6 landscape:my-0">
       <anonymous-stub role="img" alt="LinkedIn SVG Icon" title="LinkedIn Icon" class="my-4 w-20"></anonymous-stub><a href="https://www.linkedin.com/company/find-a-doc-japan/" class="underline font-bold hover:text-primary-hover text-lg transition-colors" target="_blank">about.involveLinkedin</a>
     </div>
-    <div class="flex flex-col items-center my-6 md:my-0">
+    <div class="flex flex-col items-center my-6 landscape:my-0">
       <anonymous-stub role="img" alt="LinkedIn SVG Icon" title="LinkedIn Icon" class="ml-4 my-4 w-20"></anonymous-stub><a href="https://docs.google.com/forms/d/e/1FAIpQLScx9cXurA6BhbBPUFH2nFAVWPP6Pm3yqXQj-NvJiaI2CUhh0Q/viewform" class="underline font-bold hover:text-primary-hover text-lg transition-colors" target="_blank">about.involveFeedback</a>
     </div>
   </div><!-- Back to Top Button  -->
-  <transition-stub enterfromclass="opacity-0 translate-y-3" enteractiveclass="transition ease-out duration-300" entertoclass="opacity-100 translate-y-0" leavefromclass="opacity-100 translate-y-0" leaveactiveclass="transition ease-in duration-200" leavetoclass="opacity-0 translate-y-3" appear="false" persisted="true" css="true"><a class="fixed bottom-4 left-1/2 -translate-x-1/2 md:bottom-4 md:left-auto md:right-6 z-50" style="display: none;">
+  <transition-stub enterfromclass="opacity-0 translate-y-3" enteractiveclass="transition ease-out duration-300" entertoclass="opacity-100 translate-y-0" leavefromclass="opacity-100 translate-y-0" leaveactiveclass="transition ease-in duration-200" leavetoclass="opacity-0 translate-y-3" appear="false" persisted="true" css="true"><a class="fixed bottom-4 left-1/2 -translate-x-1/2 landscape:bottom-4 landscape:left-auto landscape:right-6 z-50" style="display: none;">
       <anonymous-stub role="img" alt="Arrow SVG Icon" title="Arrow Icon" class="my-8 h-24 fill-primary cursor-pointer"></anonymous-stub>
     </a></transition-stub>
 </div>"
