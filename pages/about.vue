@@ -85,7 +85,10 @@
                 id="button-section"
                 class="w-full flex justify-center my-6 landscape:p-10"
             >
-                <div class="grid grid-cols-1 gap-4 gap-y-8 mt-10 landscape:grid-cols-5 landscape:mr-8 landscape:w-4/5 landscape:flex landscape:justify-around">
+                <div
+                    class="grid grid-cols-1 gap-4 gap-y-8 mt-10 landscape:grid-cols-5 landscape:mr-8
+                landscape:w-4/5 landscape:flex landscape:justify-around"
+                >
                     <button
                         class="outline outline-1 outline-primary/70 rounded-xl text-primary hover:text-primary-text-inverted
                     hover:bg-primary font-bold text-xl p-4 shadow-lg text-center"
