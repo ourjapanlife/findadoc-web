@@ -165,7 +165,7 @@ export const useHealthcareProfessionalsStore = defineStore(
 
             // Map facilities to relationships, but send full array even if empty
             const facilitiesRelationsToSelectedHealthcareProfessional: Relationship[]
-            = facilitiesForRelationshipCreationArray.map(createFacilityRelation)
+                = facilitiesForRelationshipCreationArray.map(createFacilityRelation)
 
             const updateInput: MutationUpdateHealthcareProfessionalArgs = {
                 id: selectedHealthcareProfessionalId.value,

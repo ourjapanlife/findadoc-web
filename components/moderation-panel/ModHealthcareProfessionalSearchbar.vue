@@ -91,9 +91,9 @@ const addHealthcareProfessional = (id: string) => {
       || moderationScreenStore.createFacilityScreenIsActive()) {
         //Check if the healthcareProfessional has already been added
         const foundProfessionalAlreadyPartOfFacility
-        = facilitiesStore.facilitySectionFields.healthProfessionalsRelations
-            .find(relation => relation.otherEntityId === id)
-            || facilitiesStore.facilitySectionFields.healthcareProfessionalIds.includes(id)
+            = facilitiesStore.facilitySectionFields.healthProfessionalsRelations
+                .find(relation => relation.otherEntityId === id)
+                || facilitiesStore.facilitySectionFields.healthcareProfessionalIds.includes(id)
 
         // Return out of the function if already added
         if (foundProfessionalAlreadyPartOfFacility) return

@@ -136,9 +136,9 @@ names: Array<LocalizedName> | undefined
     const localePrefix = currentLocale.split('-')[0]
 
     const selectedName
-    = names.find(name => name.locale === currentLocale)
-      || names.find(name => name.locale.startsWith(localePrefix))
-      || names[0]
+        = names.find(name => name.locale === currentLocale)
+          || names.find(name => name.locale.startsWith(localePrefix))
+          || names[0]
 
     return `${selectedName.firstName} ${selectedName.lastName}`
 }

@@ -5,7 +5,10 @@
             :id="ModHealthcareProfessionalsLeftNavbarSections.HealthcareProfessionalName"
             class="mod-healthcare-professional-section"
         >
-            <h2 class="mb-3.5 text-start text-primary-text text-2xl font-bold font-sans leading-normal">
+            <h2
+                class="mb-3.5 text-start text-primary-text
+            text-2xl font-bold font-sans leading-normal"
+            >
                 {{ t('modHealthcareProfessionalSection.healthcareProfessionalNameHeading') }}
             </h2>
             <div class="input-fields flex flex-col my-4">
@@ -111,16 +114,16 @@
                     </div>
                 </Transition>
                 <div
-                    v-if="healthcareProfessionalsStore.healthcareProfessionalSectionFields.names"
+                    v-if="hpStore.healthcareProfessionalSectionFields.names"
                     class="flex flex-col"
                 >
                     <div
-                        v-for="(nameLocale, index) in healthcareProfessionalsStore.healthcareProfessionalSectionFields.names"
+                        v-for="(nameLocale, index) in hpStore.healthcareProfessionalSectionFields.names"
                         :key="`${nameLocale.firstName}-${nameLocale.lastName}-${index}`"
                         @click="() => setChosenLocaleNameInput(index)"
                     >
                         <ModDashboardHealthProfessionalCard
-                            :healthcare-professional="healthcareProfessionalsStore.healthcareProfessionalSectionFields"
+                            :healthcare-professional="hpStore.healthcareProfessionalSectionFields"
                             :healthcare-professional-name-by-locale="nameLocale"
                             :chosen-locale-index="index"
                             :is-editable="editingLocaleName"
@@ -150,7 +153,7 @@
                     {{ t("modHealthcareProfessionalSection.selectInsurances") }}
                 </label>
                 <ModSearchBar
-                    v-model="healthcareProfessionalsStore.healthcareProfessionalSectionFields.acceptedInsurance"
+                    v-model="hpStore.healthcareProfessionalSectionFields.acceptedInsurance"
                     data-test-id="mod-healthcare-professional-section-accepted-insurances"
                     :place-holder-text="t('modHealthcareProfessionalSection.placeholderTextAcceptedInsurances')"
                     :no-match-text="t('modHealthcareProfessionalSection.noInsurancesWereFound')"
@@ -160,7 +163,7 @@
                 />
                 <ol class="list-disc text-primary-text/60 font-semibold my-2 px-2">
                     <li
-                        v-for="insurance in healthcareProfessionalsStore.healthcareProfessionalSectionFields.acceptedInsurance"
+                        v-for="insurance in hpStore.healthcareProfessionalSectionFields.acceptedInsurance"
                         :key="`accepted-${insurance}`"
                         class="py-1"
                     >
@@ -174,7 +177,7 @@
                     {{ t("modHealthcareProfessionalSection.selectDegrees") }}
                 </label>
                 <ModSearchBar
-                    v-model="healthcareProfessionalsStore.healthcareProfessionalSectionFields.degrees"
+                    v-model="hpStore.healthcareProfessionalSectionFields.degrees"
                     data-test-id="mod-healthcare-professional-section-degrees"
                     :place-holder-text="t('modHealthcareProfessionalSection.placeholderTextDegrees')"
                     :no-match-text="t('modHealthcareProfessionalSection.noDegreesWereFound')"
@@ -184,7 +187,7 @@
                 />
                 <ol class="list-disc text-primary-text/60 font-semibold my-2 px-2">
                     <li
-                        v-for="degree in healthcareProfessionalsStore.healthcareProfessionalSectionFields.degrees"
+                        v-for="degree in hpStore.healthcareProfessionalSectionFields.degrees"
                         :key="`current-${degree}`"
                         class="py-1"
                     >
@@ -198,7 +201,7 @@
                     {{ t("modHealthcareProfessionalSection.selectSpecialties") }}
                 </label>
                 <ModSearchBar
-                    v-model="healthcareProfessionalsStore.healthcareProfessionalSectionFields.specialties"
+                    v-model="hpStore.healthcareProfessionalSectionFields.specialties"
                     data-test-id="mod-healthcare-professional-section-specialties"
                     :place-holder-text="t('modHealthcareProfessionalSection.placeholderTextSpecialties')"
                     :no-match-text="t('modHealthcareProfessionalSection.noSpecialtiesWereFound')"
@@ -208,7 +211,7 @@
                 />
                 <ol class="list-disc text-primary-text/60 font-semibold my-2 px-2">
                     <li
-                        v-for="specialty in healthcareProfessionalsStore.healthcareProfessionalSectionFields.specialties"
+                        v-for="specialty in hpStore.healthcareProfessionalSectionFields.specialties"
                         :key="`current-${specialty}`"
                         class="py-1"
                     >
@@ -222,7 +225,7 @@
                     {{ t("modHealthcareProfessionalSection.selectLocales") }}
                 </label>
                 <ModSearchBar
-                    v-model="healthcareProfessionalsStore.healthcareProfessionalSectionFields.spokenLanguages"
+                    v-model="hpStore.healthcareProfessionalSectionFields.spokenLanguages"
                     data-test-id="mod-healthcare-professional-section-spoken-locales"
                     :place-holder-text="t('modHealthcareProfessionalSection.placeholderTextLocales')"
                     :no-match-text="t('modHealthcareProfessionalSection.noLocalesWereFound')"
@@ -232,7 +235,7 @@
                 />
                 <ol class="list-disc text-primary-text/60 font-semibold my-2 px-2">
                     <li
-                        v-for="locale in healthcareProfessionalsStore.healthcareProfessionalSectionFields.spokenLanguages"
+                        v-for="locale in hpStore.healthcareProfessionalSectionFields.spokenLanguages"
                         :key="`spoken-${locale}`"
                         class="py-1"
                     >
@@ -240,7 +243,7 @@
                     </li>
                 </ol>
                 <NoteInputField
-                    v-model="healthcareProfessionalsStore.healthcareProfessionalSectionFields.additionalInfoForPatients as string"
+                    v-model="hpStore.healthcareProfessionalSectionFields.additionalInfoForPatients as string"
                     :label="t('modHealthcareProfessionalSection.labelAdditionalNotesForPatients')"
                     :placeholder="t('modHealthcareProfessionalSection.placeholderAdditionalNotesForPatients')"
                     :required="false"
@@ -299,7 +302,7 @@ const loadingStore = useLoadingStore()
 
 const moderationScreenStore = useModerationScreenStore()
 const localesStore = useLocaleStore()
-const healthcareProfessionalsStore = useHealthcareProfessionalsStore()
+const hpStore = useHealthcareProfessionalsStore()
 const facilitiesStore = useFacilitiesStore()
 await facilitiesStore.getFacilities() // Fix a bug where facilities disappear after the user refreshes the page
 const currentFacilities = facilitiesStore.facilityData
@@ -379,19 +382,20 @@ const setChosenLocaleNameInput = (index: number) => {
 
     //This will keep track of the healthcare professional to not lose it but we can swap it later with the chosen one
     const tempToHoldZeroIndexedHealthcareProfessionalToSwap
-    = healthcareProfessionalsStore.healthcareProfessionalSectionFields.names[0]
+        = hpStore.healthcareProfessionalSectionFields.names[0]
 
     //This finds the chosen healthcare professional to edit
     chosenHealthcareProfessionalToEdit.value
-    = healthcareProfessionalsStore.healthcareProfessionalSectionFields.names.find((_, index) => index === chosenLocaleIndex.value)
+        = hpStore.healthcareProfessionalSectionFields.names.find((_, index) =>
+            index === chosenLocaleIndex.value)
 
     if (chosenHealthcareProfessionalToEdit.value) {
         //Set the chosen healthcare professional name to move it closer to the input
-        healthcareProfessionalsStore.healthcareProfessionalSectionFields.names[0]
-    = chosenHealthcareProfessionalToEdit.value
+        hpStore.healthcareProfessionalSectionFields.names[0]
+            = chosenHealthcareProfessionalToEdit.value
         // Put the temp one in the index where the old locale name was
-        healthcareProfessionalsStore.healthcareProfessionalSectionFields.names[chosenLocaleIndex.value]
-        = tempToHoldZeroIndexedHealthcareProfessionalToSwap
+        hpStore.healthcareProfessionalSectionFields.names[chosenLocaleIndex.value]
+            = tempToHoldZeroIndexedHealthcareProfessionalToSwap
         //Autofill with the chosen healthcare professional locale name
         autofillNameLocaleInputWithChosenHealthcareProfessional(chosenHealthcareProfessionalToEdit.value)
         // Set the chosenLocaleIndex to 0 so the correct pencil is showing
@@ -408,7 +412,7 @@ const handleUpdateExistingName = () => {
     }
 
     // Checks to keep user from adding a name with same locale instead of editing
-    const existingNameForLocale = healthcareProfessionalsStore.healthcareProfessionalSectionFields.names
+    const existingNameForLocale = hpStore.healthcareProfessionalSectionFields.names
         .filter(name => name.locale !== originalNameLocale.value)
         .find(name => name.locale === nameLocaleInputs.locale)
 
@@ -426,12 +430,12 @@ const handleUpdateExistingName = () => {
 
     // This updates the array in the store with the new edited name since we already ordered the index to this when autofilling
     if (chosenHealthcareProfessionalToEdit.value) {
-        healthcareProfessionalsStore.healthcareProfessionalSectionFields.names[0] = localizedNameToAdd
+        hpStore.healthcareProfessionalSectionFields.names[0] = localizedNameToAdd
     }
 
     // This updates the array in the store with the new edited name since we already ordered the index to this when autofilling
     if (chosenHealthcareProfessionalToEdit.value) {
-        healthcareProfessionalsStore.healthcareProfessionalSectionFields.names[0] = localizedNameToAdd
+        hpStore.healthcareProfessionalSectionFields.names[0] = localizedNameToAdd
     }
 
     setEditingLocaleName(false)
@@ -445,12 +449,12 @@ const handleUpdateExistingName = () => {
 }
 
 const handleDeleteExistingName = () => {
-    if (healthcareProfessionalsStore.healthcareProfessionalSectionFields.names.length <= 1) {
+    if (hpStore.healthcareProfessionalSectionFields.names.length <= 1) {
         toast.error(t('modHealthcareProfessionalSection.oneNameNecessary'))
         return
     }
     // Remove the first element safely since we reordered the one for deletion at 0
-    healthcareProfessionalsStore.healthcareProfessionalSectionFields.names.shift()
+    hpStore.healthcareProfessionalSectionFields.names.shift()
 
     setEditingLocaleName(false)
 
@@ -471,7 +475,7 @@ const handleAddLocalizedName = () => {
     }
 
     // Checks to keep user from adding a name with same locale instead of editing
-    const existingNameForLocale = healthcareProfessionalsStore.healthcareProfessionalSectionFields.names
+    const existingNameForLocale = hpStore.healthcareProfessionalSectionFields.names
         .find(name => name.locale === nameLocaleInputs.locale)
 
     // Displays message if user is trying to add a locale for name that exists and they aren't editing a healthcare professional
@@ -508,8 +512,8 @@ const handleAddLocalizedName = () => {
       && nameLocaleInputs.lastName
       && nameLocaleInputs.firstName.length
       && nameLocaleInputs.lastName.length
-      && healthcareProfessionalsStore.healthcareProfessionalSectionFields.names) {
-        healthcareProfessionalsStore.healthcareProfessionalSectionFields.names.push(localizedNameToAdd)
+      && hpStore.healthcareProfessionalSectionFields.names) {
+        hpStore.healthcareProfessionalSectionFields.names.push(localizedNameToAdd)
     }
 
     // Sets the chosen healthcare professional to undefined to reset
@@ -594,19 +598,19 @@ onBeforeMount(async () => {
         return
     }
 
-    if (!healthcareProfessionalsStore.healthcareProfessionalsData.length) {
-        await healthcareProfessionalsStore.getHealthcareProfessionals()
+    if (!hpStore.healthcareProfessionalsData.length) {
+        await hpStore.getHealthcareProfessionals()
     }
 
     await nextTick()
 
-    healthcareProfessionalsStore
-        .setSelectedHealthcareProfessional(healthcareProfessionalsStore.selectedHealthcareProfessionalId)
+    hpStore
+        .setSelectedHealthcareProfessional(hpStore.selectedHealthcareProfessionalId)
 
     await nextTick()
 
     currentFacilityRelations.value = facilitiesStore.facilityData
-        .filter(facility => healthcareProfessionalsStore.healthcareProfessionalSectionFields.facilityIds
+        .filter(facility => hpStore.healthcareProfessionalSectionFields.facilityIds
             .includes(facility.id))
 
     isHealthcareProfessionalInitialized.value = true
@@ -617,11 +621,11 @@ onBeforeMount(async () => {
 })
 
 // This autofills the selected fields based on our current healthcare data for the user
-watch(() => healthcareProfessionalsStore.healthcareProfessionalSectionFields.facilityIds,
+watch(() => hpStore.healthcareProfessionalSectionFields.facilityIds,
       facilityIds => {
           if (facilityIds) {
               currentFacilityRelations.value = facilitiesStore.facilityData
-                  .filter(facility => healthcareProfessionalsStore.healthcareProfessionalSectionFields.facilityIds
+                  .filter(facility => hpStore.healthcareProfessionalSectionFields.facilityIds
                       .includes(facility.id))
               selectedFacilities.value = []
           }
@@ -630,7 +634,7 @@ watch(() => healthcareProfessionalsStore.healthcareProfessionalSectionFields.fac
 // This updates the array in the store once it is updated due to a facility clicked
 watch(() => selectedFacilities.value, newValue => {
     if (newValue) {
-        healthcareProfessionalsStore.selectedFacilities = selectedFacilities.value
+        hpStore.selectedFacilities = selectedFacilities.value
     }
 }, { deep: true })
 </script>

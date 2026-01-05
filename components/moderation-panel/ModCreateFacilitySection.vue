@@ -298,7 +298,7 @@ const healthcareProfessionalsStore = useHealthcareProfessionalsStore()
 
 const isFacilitySectionInitialized: Ref<boolean> = ref(false)
 const healthcareProfessionalsRelatedToFacility: Ref<string[]>
-= ref([])
+    = ref([])
 
 // This keeps track of the existing healthcare professionals we are adding to the new facility
 const healthcareProfessionalsToAddToFacility: Ref<HealthcareProfessional[]> = ref([])
@@ -355,7 +355,7 @@ onBeforeMount(async () => {
 watch(healthcareProfessionalsToAddToFacility.value, newValue => {
     if (newValue) {
         facilityStore.createFacilityFields.healthcareProfessionalIds
-        = healthcareProfessionalsToAddToFacility.value.map(healthcareProfessional => healthcareProfessional.id)
+            = healthcareProfessionalsToAddToFacility.value.map(healthcareProfessional => healthcareProfessional.id)
     }
 }, { deep: true })
 

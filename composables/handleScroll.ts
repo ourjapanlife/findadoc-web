@@ -6,36 +6,37 @@ export interface SectionInformation {
 }
 
 export const handleScroll
-= (sectionDetailsObject: SectionInformation[], isScrolling: Ref<boolean> = ref(false), activeSection: Ref<string> = ref('')) => {
-    if (isScrolling.value) return
-    let newActiveSection: string | null = null
-    sectionDetailsObject.forEach(section => {
-        let rect = null
-        const foundSectionById = document.getElementById(section.sectionElementIdToScrollTo)
-        if (!foundSectionById) {
-            return
+    = (sectionDetailsObject: SectionInformation[], isScrolling: Ref<boolean> = ref(false),
+        activeSection: Ref<string> = ref('')) => {
+        if (isScrolling.value) return
+        let newActiveSection: string | null = null
+        sectionDetailsObject.forEach(section => {
+            let rect = null
+            const foundSectionById = document.getElementById(section.sectionElementIdToScrollTo)
+            if (!foundSectionById) {
+                return
+            }
+            rect = foundSectionById.getBoundingClientRect()
+
+            const sectionId = section.sectionElementIdToScrollTo
+
+            if (rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2) {
+                newActiveSection = sectionId
+            }
+        })
+
+        if (newActiveSection) {
+            activeSection.value = newActiveSection
         }
-        rect = foundSectionById.getBoundingClientRect()
-
-        const sectionId = section.sectionElementIdToScrollTo
-
-        if (rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2) {
-            newActiveSection = sectionId
-        }
-    })
-
-    if (newActiveSection) {
-        activeSection.value = newActiveSection
     }
-}
 
 export const scrollToSectionOfForm
-= (sectionId: string, activeSection: Ref<string> = ref('')) => {
-    document.getElementById(sectionId)?.scrollIntoView({
-        behavior: 'smooth'
-    })
-    activeSection.value = sectionId
-}
+    = (sectionId: string, activeSection: Ref<string> = ref('')) => {
+        document.getElementById(sectionId)?.scrollIntoView({
+            behavior: 'smooth'
+        })
+        activeSection.value = sectionId
+    }
 
 export const observeFormSections = (
     sectionsInfo: SectionInformation[],
@@ -45,7 +46,7 @@ export const observeFormSections = (
 ) => {
     // Map the sectionInfo objects given to DOM elements and filter out any null elements
     const sections: Element[]
-    = sectionsInfo.map(info => document.getElementById(info.sectionElementIdToScrollTo)!).filter(element => element !== null)
+        = sectionsInfo.map(info => document.getElementById(info.sectionElementIdToScrollTo)!).filter(element => element !== null)
 
     const sectionsObserver = new IntersectionObserver(
         (entries: IntersectionObserverEntry[]) => {

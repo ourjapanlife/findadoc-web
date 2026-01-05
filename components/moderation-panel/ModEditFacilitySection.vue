@@ -326,7 +326,7 @@ const healthcareProfessionalsStore = useHealthcareProfessionalsStore()
 const isFacilitySectionInitialized: Ref<boolean> = ref(false)
 
 const healthcareProfessionalsRelatedToFacility: Ref<string[]>
-= ref([])
+    = ref([])
 const healthcareProfessionalRelatedToFacilityFiltered: Ref<HealthcareProfessional[]> = ref([])
 // This keeps track of the existing healthcare professionals we are adding to an existing facility
 const healthcareProfessionalsToAddToFacility: Ref<HealthcareProfessional[]> = ref([])
@@ -459,13 +459,13 @@ watch(() => healthcareProfessionalsToAddToFacility.value, newValue => {
             !facilityStore.facilitySectionFields.healthcareProfessionalIds.includes(healthcareProfessional.id))
         // Map the filtered professionals into relationship objects
         const relationshipCreationArrayFromSelectedHealthcareProfessionalsToAdd
-        = professionalsToAdd.map(healthcareProfessional => ({
-            action: RelationshipAction.Create,
-            otherEntityId: healthcareProfessional.id
-        }))
+            = professionalsToAdd.map(healthcareProfessional => ({
+                action: RelationshipAction.Create,
+                otherEntityId: healthcareProfessional.id
+            }))
         // Update the store field with the new relationships
         facilityStore.facilitySectionFields.healthProfessionalsRelations
-        = relationshipCreationArrayFromSelectedHealthcareProfessionalsToAdd
+            = relationshipCreationArrayFromSelectedHealthcareProfessionalsToAdd
     }
 }, { deep: true })
 

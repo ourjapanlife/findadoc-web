@@ -1,0 +1,37 @@
+{
+    // Use ESLint as the formatter for JavaScript, TypeScript, and Vue files
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+    "[javascript]": {
+        "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+    },
+    "[typescript]": {
+        "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+    },
+    "[vue]": {
+        "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+    },
+
+    // Enable ESLint auto-fix on save
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": "explicit"
+    },
+
+    // Enable format on save
+    "editor.formatOnSave": true,
+
+    // ESLint settings
+    "eslint.enable": true,
+    "eslint.validate": [
+        "javascript",
+        "javascriptreact",
+        "typescript",
+        "typescriptreact",
+        "vue"
+    ],
+
+    // Use flat config (matching your package.json script)
+    "eslint.useFlatConfig": true,
+
+    // Disable other formatters that might conflict
+    "prettier.enable": false
+}

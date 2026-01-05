@@ -42,14 +42,11 @@
   "hamburgerMenu": {
     "about": "Tungkol sa Find a Doc, Japan",
     "balancesheet": "Balanseng Pahayag",
-    "home": "Home",
     "contact": "Kontakt",
     "submit": "Magdagdag ng Doktor",
-    "moderation": "Moderasyon",
     "logout": "Log out",
     "languageDropdownTitle": "Lengwahe:",
     "copyright": "Find a Doc, Japan",
-    "theme": "Tema",
     "login": "Login",
     "settings": "Settings",
     "logoutToast": "Successfully logged out"
@@ -114,8 +111,6 @@
     "searchAndFilterDoctors": "Maghanap at mag-filter ng mga doktor"
   },
   "searchResultsList": {
-    "doctorsNearby": "Mga kalapit na Doktor",
-    "filters": "Mga Filter",
     "noResults": "Walang natagpuang resulta",
     "noResultsSubtext": "Paki-subukang gumamit ng ibang kombinasyon ng filter."
   },
@@ -136,7 +131,6 @@
   "topNav": {
     "about": "About",
     "home": "Home",
-    "moderation": "Moderasyon",
     "submit": "Magdagdag ng Doktor",
     "logout": "Log out",
     "login": "Login",
@@ -208,11 +202,7 @@
     "update": "Update"
   },
   "modPanelSubmissionList": {
-    "facilityNameUnknown": "Walang impormasyon sa pangalan ng pasilidad",
-    "modified": "Binago",
-    "name": "Pangalan",
-    "noSubmissions": "Walang nakabinbing mga isinumite.",
-    "submitted": "Isinumite"
+    "noSubmissions": "Walang nakabinbing mga isinumite."
   },
   "modFacilitySection": {
     "addresses": "Mga Address",
@@ -220,9 +210,7 @@
     "facilityHeading": "Impormasyon ng Pasilidad",
     "googleMapsInformation": "Impormasyon sa Google maps",
     "inputErrorMessageFacilityAddressLine1Ja": "Hindi wastong address sa Hapon",
-    "inputErrorMessageFacilityAddressLine2Ja": "Hindi wastong address sa Hapon",
     "inputErrorMessageFacilityAddressLine1En": "Hindi wastong address sa Ingles",
-    "inputErrorMessageFacilityAddressLine2En": "Hindi wastong address sa Ingles",
     "inputErrorMessagePrefectureMismatch": "Japanese and/or English Name Prefecture do not match",
     "inputErrorMessageFacilityCityEn": "Hindi wastong pangalan ng Lungsod sa Ingles",
     "inputErrorMessageFacilityCityJa": "Hindi wastong pangalan ng Lungsod sa Hapon",
@@ -284,7 +272,6 @@
     "errorMessageEnglishNameRequired": "Ang propesyonal sa Pangangalagang Pangkalusugan ay kailangang may pangalan sa Ingles",
     "healthcareProfessionalId": "Mga ID ng propesyonal sa Pangangalagang Pangkalusugan",
     "infoMessageAlreadyApproved": "Ang Isinumite ay aprubado na",
-    "infoMessageUpdateNeeded": "Kailangang i-update ito bago maaprubahan",
     "labelHealthcareProfessionalFirstName": "Pangalan",
     "labelHealthcareProfessionalLastName": "Apelyido",
     "labelHealthcareProfessionalMiddleName": "Pangalawang pangalan",
@@ -423,8 +410,6 @@
     "newSubmission": "New",
     "underReviewSubmission": "Under Review",
     "approvedSubmission": "Approved",
-    "rejectedSubmission": "Rejected",
-    "review": "Review",
     "createdDate": "Created on",
     "updatedDate": "Updated last"
   },
@@ -444,39 +429,13 @@
     "updatedSuccessfully": "Profile updated successfully",
     "updateFailed": "Profile update failed"
   },
-  "authErrors": {
-    "loggingIn": "Error logging in:",
-    "authBearerToken": "Error getting auth bearer token:",
-    "tenSecondTimeout": "Auth0 loading timed out after 10 seconds"
-  },
-  "facilitiesErrors": {
-    "facilityQuery": "Error querying the facilities:"
-  },
-  "healthcareProfessionalsErrors": {
-    "noCurrentProfessionalDataFound": "No data found for currentProfessionalData with id",
-    "noUpdatesFound": "No updates found",
-    "queryError": "Error querying the healthcare professionals:",
-    "idDoesNotExist": "The Healthcare Professional ID doesn't exist",
-    "retrievingById": "Error retrieving healthcare professional by id: "
-  },
-  "localeErrors": {
-    "notFound": "Language not found",
-    "notSpecified": "Not Specified"
-  },
-  "locationErrors": {
-    "facilitiesDropdown": "Error getting facilities for dropdown:",
-    "gettingData": "Error getting data! Please contact our support team by clicking the bottom right link on the page!"
-  },
-  "moderationSubmissionsErrors": {
-    "unableToApprove": "Unable to approve submission. Submission ID is required.",
-    "unableToReject": "Unable to reject submission. Submission ID is required.",
-    "queryError": "Error querying the submissions:"
-  },
-  "searchResultsErrors": {
-    "gettingProfessionals": "Error getting professionals:",
-    "gettingData": "Error getting data! Please contact our support team by clicking the bottom right link on the page!",
-    "gettingfacilities": "Error getting facilities:"
-  },
+  "authErrors": {},
+  "facilitiesErrors": {},
+  "healthcareProfessionalsErrors": {},
+  "localeErrors": {},
+  "locationErrors": {},
+  "moderationSubmissionsErrors": {},
+  "searchResultsErrors": {},
   "themeManager": {
     "colorThemes": "Color Themes"
   }
