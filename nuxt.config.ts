@@ -1,5 +1,6 @@
 import { defineNuxtConfig } from 'nuxt/config'
 import i18nLocales from './i18n'
+import tailwindcss from '@tailwindcss/vite'
 
 const SITE_TITLE = 'Find a Doc, Japan!'
 const SITE_DESCRIPTION
@@ -135,12 +136,9 @@ export default defineNuxtConfig({
     },
     compatibilityDate: '2025-01-17',
 
-    postcss: {
-        plugins: {
-            '@tailwindcss/postcss': {},
-            autoprefixer: {}
-        }
-    },
+    vite: { plugins: [
+        tailwindcss()
+    ] },
     telemetry: false,
     eslint: {
         config: {
