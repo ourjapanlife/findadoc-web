@@ -375,19 +375,19 @@ const setChosenLocaleNameInput = (index: number) => {
 
     //This will keep track of the healthcare professional to not lose it but we can swap it later with the chosen one
     const tempToHoldZeroIndexedHealthcareProfessionalToSwap
-    = healthcareProfessionalsStore.createHealthcareProfessionalSectionFields.names[0]
+        = healthcareProfessionalsStore.createHealthcareProfessionalSectionFields.names[0]
 
     //This finds the chosen healthcare professional to edit
     chosenHealthcareProfessionalToEdit.value
-    = healthcareProfessionalsStore.createHealthcareProfessionalSectionFields
+        = healthcareProfessionalsStore.createHealthcareProfessionalSectionFields
             .names.find((_, index) => index === chosenLocaleIndex.value)
 
     if (chosenHealthcareProfessionalToEdit.value) {
         healthcareProfessionalsStore.createHealthcareProfessionalSectionFields.names[0]
-        = chosenHealthcareProfessionalToEdit.value
+            = chosenHealthcareProfessionalToEdit.value
             // Put the temp one in the index where the old locale name was
         healthcareProfessionalsStore.createHealthcareProfessionalSectionFields.names[chosenLocaleIndex.value]
-    = tempToHoldZeroIndexedHealthcareProfessionalToSwap
+            = tempToHoldZeroIndexedHealthcareProfessionalToSwap
 
         //Autofill with the chosen healthcare professional locale name
         autofillNameLocaleInputWithChosenHealthcareProfessional(chosenHealthcareProfessionalToEdit.value)

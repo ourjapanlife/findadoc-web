@@ -362,7 +362,7 @@ function initializeSubmissionFormValues(submissionData: Submission | undefined) 
     }
 
     const submittedHealthcareProfessionalName
-    = submissionData?.healthcareProfessionalName?.split(' ') ?? []
+        = submissionData?.healthcareProfessionalName?.split(' ') ?? []
 
     if (submissionData && submissionData.notes) {
         currentSubmissionNotes.value = submissionData.notes
@@ -370,7 +370,7 @@ function initializeSubmissionFormValues(submissionData: Submission | undefined) 
 
     const facilitySectionFields = facilitiesStore.facilitySectionFields
     const healthcareProfessionalSections
-    = healthcareProfessionalsStore.healthcareProfessionalSectionFields
+        = healthcareProfessionalsStore.healthcareProfessionalSectionFields
 
     // Facility fields
     facilitySectionFields.nameEn = submissionData?.facility?.nameEn ?? ''
@@ -379,36 +379,36 @@ function initializeSubmissionFormValues(submissionData: Submission | undefined) 
     facilitySectionFields.email = submissionData?.facility?.contact?.email ?? ''
     facilitySectionFields.website = submissionData?.facility?.contact?.website ?? ''
     facilitySectionFields.postalCode
-    = submissionData?.facility?.contact?.address.postalCode ?? ''
+        = submissionData?.facility?.contact?.address.postalCode ?? ''
     facilitySectionFields.prefectureEn
-    = submissionData?.facility?.contact?.address.prefectureEn ?? ''
+        = submissionData?.facility?.contact?.address.prefectureEn ?? ''
     facilitySectionFields.cityEn
-    = submissionData?.facility?.contact?.address.cityEn ?? ''
+        = submissionData?.facility?.contact?.address.cityEn ?? ''
     facilitySectionFields.addressLine1En
-    = submissionData?.facility?.contact?.address.addressLine1En ?? ''
+        = submissionData?.facility?.contact?.address.addressLine1En ?? ''
     facilitySectionFields.addressLine2En
-    = submissionData?.facility?.contact?.address.addressLine2En ?? ''
+        = submissionData?.facility?.contact?.address.addressLine2En ?? ''
     facilitySectionFields.prefectureJa
-    = submissionData?.facility?.contact?.address.prefectureJa ?? ''
+        = submissionData?.facility?.contact?.address.prefectureJa ?? ''
     facilitySectionFields.cityJa
-    = submissionData?.facility?.contact?.address.cityJa ?? ''
+        = submissionData?.facility?.contact?.address.cityJa ?? ''
     facilitySectionFields.addressLine1Ja
-    = submissionData?.facility?.contact?.address.addressLine1Ja ?? ''
+        = submissionData?.facility?.contact?.address.addressLine1Ja ?? ''
     facilitySectionFields.addressLine2Ja
-    = submissionData?.facility?.contact?.address.addressLine2Ja ?? ''
+        = submissionData?.facility?.contact?.address.addressLine2Ja ?? ''
     facilitySectionFields.mapLatitude
-    = submissionData?.facility?.mapLatitude?.toString() ?? ''
+        = submissionData?.facility?.mapLatitude?.toString() ?? ''
     facilitySectionFields.mapLongitude
-    = submissionData?.facility?.mapLongitude?.toString() ?? ''
+        = submissionData?.facility?.mapLongitude?.toString() ?? ''
 
     facilitySectionFields.googlemapsURL
-    = submissionData?.facility?.contact?.googleMapsUrl
-      ?? submissionData?.googleMapsUrl
-      ?? ''
+        = submissionData?.facility?.contact?.googleMapsUrl
+          ?? submissionData?.googleMapsUrl
+          ?? ''
 
     facilitySectionFields.healthcareProfessionalIds = submissionData?.facility?.healthcareProfessionalIds ?? []
     currentExistingHealthcareProfessionals.value
-    = facilitySectionFields.healthcareProfessionalIds
+        = facilitySectionFields.healthcareProfessionalIds
             .map(healthcareProfessionalId =>
                 healthcareProfessionalsStore.healthcareProfessionalsData.find(
                     hp => hp.id === healthcareProfessionalId
@@ -419,25 +419,25 @@ function initializeSubmissionFormValues(submissionData: Submission | undefined) 
     const hp = submissionData?.healthcareProfessionals?.[0]
 
     healthcareProfessionalSections.names
-    = hp?.names
-      ?? (submittedHealthcareProfessionalName.length === 2
-          ? [
-              {
-                  firstName: submittedHealthcareProfessionalName[0] || '',
-                  lastName: submittedHealthcareProfessionalName[1] || '',
-                  locale: Locale.Und
-              }
-          ]
-          : submittedHealthcareProfessionalName.length === 3
+        = hp?.names
+          ?? (submittedHealthcareProfessionalName.length === 2
               ? [
                   {
                       firstName: submittedHealthcareProfessionalName[0] || '',
-                      middleName: submittedHealthcareProfessionalName[1] || '',
-                      lastName: submittedHealthcareProfessionalName[2] || '',
+                      lastName: submittedHealthcareProfessionalName[1] || '',
                       locale: Locale.Und
                   }
               ]
-              : [])
+              : submittedHealthcareProfessionalName.length === 3
+                  ? [
+                      {
+                          firstName: submittedHealthcareProfessionalName[0] || '',
+                          middleName: submittedHealthcareProfessionalName[1] || '',
+                          lastName: submittedHealthcareProfessionalName[2] || '',
+                          locale: Locale.Und
+                      }
+                  ]
+                  : [])
 
     healthcareProfessionalSections.facilityIds = [...(hp?.facilityIds ?? [])]
     currentFacilityRelations.value
@@ -448,21 +448,21 @@ function initializeSubmissionFormValues(submissionData: Submission | undefined) 
 
     if (submissionData?.healthcareProfessionals?.[0]?.acceptedInsurance) {
         healthcareProfessionalSections.acceptedInsurance
-    = submissionData.healthcareProfessionals[0].acceptedInsurance
+            = submissionData.healthcareProfessionals[0].acceptedInsurance
     }
 
     if (submissionData?.healthcareProfessionals?.[0]?.additionalInfoForPatients) {
         healthcareProfessionalSections.additionalInfoForPatients
-    = submissionData.healthcareProfessionals[0].additionalInfoForPatients
+            = submissionData.healthcareProfessionals[0].additionalInfoForPatients
     }
 
     if (submissionData?.healthcareProfessionals?.[0]?.degrees) {
         healthcareProfessionalSections.degrees
-    = submissionData.healthcareProfessionals[0].degrees
+            = submissionData.healthcareProfessionals[0].degrees
     }
     if (submissionData?.healthcareProfessionals?.[0]?.specialties) {
         healthcareProfessionalSections.specialties
-    = submissionData.healthcareProfessionals[0].specialties
+            = submissionData.healthcareProfessionals[0].specialties
     }
 
     // Always include submissionData.spokenLanguages, append hp.spokenLanguages, remove duplicates

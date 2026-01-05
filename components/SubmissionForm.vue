@@ -238,12 +238,12 @@ async function submitNewSubmission(e: Event) {
     }
 
     const newSubmission: MutationCreateSubmissionArgs
-    = { input: {
-        googleMapsUrl: location.value,
-        healthcareProfessionalName: `${firstName.value} ${lastName.value}`,
-        spokenLanguages: spokenLanguages,
-        notes: otherNotes.value
-    } }
+        = { input: {
+            googleMapsUrl: location.value,
+            healthcareProfessionalName: `${firstName.value} ${lastName.value}`,
+            spokenLanguages: spokenLanguages,
+            notes: otherNotes.value
+        } }
 
     const response = await submissionStore.createNewSubmission(newSubmission)
     // This is used in the component and not graphQL call as it is user messaging and needs the mounted toast library

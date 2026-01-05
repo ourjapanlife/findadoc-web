@@ -218,42 +218,42 @@ const healthcareProfessionalHasUnsavedChanges = () => {
 
     // Compare each field in the `healthcareProfessionalSectionFields` object with the original data.
     const areThereUnsavedHealthcareProfessionalChanges
-= !arraysAreEqual(
-    healthcareProfessionalSections.names,
-    originalHealthcareProfessional.names
-)
-|| !arraysAreEqual(
-    healthcareProfessionalSections.acceptedInsurance,
-    originalHealthcareProfessional.acceptedInsurance
-)
-|| healthcareProfessionalSections.additionalInfoForPatients !== originalHealthcareProfessional.additionalInfoForPatients
-|| healthcareProfessionalSections.createdDate
-!== originalHealthcareProfessional.createdDate
-|| !arraysAreEqual(
-    healthcareProfessionalSections.degrees,
-    originalHealthcareProfessional.degrees
-)
-|| !arraysAreEqual(
-    healthcareProfessionalSections.facilityIds,
-    originalHealthcareProfessional.facilityIds
-)
-|| healthcareProfessionalSections.id
-!== originalHealthcareProfessional.id
-|| !arraysAreEqual(
-    healthcareProfessionalSections.specialties,
-    originalHealthcareProfessional.specialties
-)
-|| !arraysAreEqual(
-    healthcareProfessionalSections.spokenLanguages,
-    originalHealthcareProfessional.spokenLanguages
-)
-|| !arraysAreEqual(
-    healthcareProfessionalSections.facilityIds,
-    originalHealthcareProfessional.facilityIds
-)
-|| healthcareProfessionalSections.updatedDate
-!== originalHealthcareProfessional.updatedDate
-|| healthcareProfessionalsStore.selectedFacilities.length
+        = !arraysAreEqual(
+            healthcareProfessionalSections.names,
+            originalHealthcareProfessional.names
+        )
+        || !arraysAreEqual(
+            healthcareProfessionalSections.acceptedInsurance,
+            originalHealthcareProfessional.acceptedInsurance
+        )
+        || healthcareProfessionalSections.additionalInfoForPatients !== originalHealthcareProfessional.additionalInfoForPatients
+        || healthcareProfessionalSections.createdDate
+        !== originalHealthcareProfessional.createdDate
+        || !arraysAreEqual(
+            healthcareProfessionalSections.degrees,
+            originalHealthcareProfessional.degrees
+        )
+        || !arraysAreEqual(
+            healthcareProfessionalSections.facilityIds,
+            originalHealthcareProfessional.facilityIds
+        )
+        || healthcareProfessionalSections.id
+        !== originalHealthcareProfessional.id
+        || !arraysAreEqual(
+            healthcareProfessionalSections.specialties,
+            originalHealthcareProfessional.specialties
+        )
+        || !arraysAreEqual(
+            healthcareProfessionalSections.spokenLanguages,
+            originalHealthcareProfessional.spokenLanguages
+        )
+        || !arraysAreEqual(
+            healthcareProfessionalSections.facilityIds,
+            originalHealthcareProfessional.facilityIds
+        )
+        || healthcareProfessionalSections.updatedDate
+        !== originalHealthcareProfessional.updatedDate
+        || healthcareProfessionalsStore.selectedFacilities.length
 
     return areThereUnsavedHealthcareProfessionalChanges
 }
