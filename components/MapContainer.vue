@@ -43,7 +43,7 @@
                     <template #content>
                         <img
                             :src="renderMarkerIcon(location.id)"
-                            class="w-[45px] h-[73px] block gmp-clickable"
+                            class="h-16 w-18 block gmp-clickable"
                         >
                     </template>
                 </AdvancedMarker>
@@ -146,7 +146,7 @@ const createClusterMarkerContent = (count: number): HTMLDivElement => {
     content.innerHTML = `
         <img
             src="${createClusterIcon(count, width, height)}"
-            style="width: ${width}px; height: ${height}px; display: block;"
+            class="block h-18 w-20"
         />
     `
     return content
