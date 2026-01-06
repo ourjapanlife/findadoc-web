@@ -15,7 +15,8 @@ export default defineNuxtConfig({
         'nuxt-svgo',
         '@nuxt/eslint',
         '@nuxt/test-utils/module',
-        'nuxt-gtag'
+        'nuxt-gtag',
+        '@nuxtjs/storybook'
     ],
 
     // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
