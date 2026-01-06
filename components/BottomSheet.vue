@@ -22,7 +22,7 @@
             </transition>
             <div
                 ref="bottomSheetContent"
-                class="fixed inset-0 flex flex-col mx-1 rounded-t-2xl bg-primary-bg overflow-y-hidden
+                class="fixed inset-0 flex flex-col mx-1 rounded-t-2xl bg-primary-bg overflow-hidden
                     box-border pointer-events-auto"
                 :style="{
                     transform: `translate3d(0, ${translateValue}%, 0)`,
