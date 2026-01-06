@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+/* We use these custom variants to target portrait and landscape orientation instead of using screen sizes.
+   This is because screen sizes are not consistent across devices and can cause unexpected behavior. */
+@custom-variant portrait (@media (orientation: portrait));
+@custom-variant landscape (@media (orientation: landscape));
+
 @theme {
   --color-transparent: transparent;
   --color-current: currentColor;
