@@ -60,7 +60,7 @@
                                                 in healthcareProfessional.spokenLanguages"
                                             :key="`${spokenLanguage}-${indexOfLocale}`"
                                             class="healthcare-professional-related-to-facility-formatted-spoken-language
-                                    w-24 px-2 py-[1px] mr-1 mb-1 bg-primary-text-muted/30
+                                    w-24 px-2 py-1 mr-1 mb-1 bg-primary-text-muted/30
                                     text-nowrap rounded-full text-sm text-center"
                                         >
                                             <span>

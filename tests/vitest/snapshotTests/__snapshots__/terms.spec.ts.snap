@@ -1,7 +1,7 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`terms.vue > renders correctly 1`] = `
-"<div class="flex flex-col overflow-y-auto w-full px-10 md:px-32">
+"<div class="flex flex-col overflow-y-auto w-full px-10 portrait:px-32">
   <div>
     <h1 class="mb-20 text-primary-text text-5xl font-bold font-sans"> Terms and Conditions </h1>
     <p class="mb-10 text-3xl font-bold font-sans"> 1. Acceptance of Terms </p>

@@ -4,6 +4,7 @@
 [build.environment]
   NETLIFY_USE_YARN="true"
   YARN_VERSION="3.4.1"
+  NODE_VERSION="22.12.0"
 
 # The following redirect is intended for use with most SPAs that handle
 # routing internally.
