@@ -28,7 +28,7 @@
     },
     "packageManager": "yarn@4.12.0",
     "engines": {
-        "node": ">=22.12.0"
+        "node": ">=22.21.1"
     },
     "type": "module",
     "dependencies": {
