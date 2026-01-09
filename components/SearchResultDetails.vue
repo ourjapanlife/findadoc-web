@@ -3,213 +3,192 @@
     <div
         class="result-details landscape:min-w-[480px] pt-5 landscape:pt-0 pb-[50vh] md:pb-2"
     >
-        <!-- TEST -->
-        <div class="ml-4 mt-4">
-            <p>TEST CONTENT</p>
-            <p>Line 1</p>
-            <p>Line 2</p>
-            <p>Line 3</p>
-            <p>Line 1</p>
-            <p>Line 2</p>
-            <p>Line 3</p>
-            <p>Line 1</p>
-            <p>Line 2</p>
-            <p>Line 3</p>
-            <p>Line 3</p>
-            <p>Line 1</p>
-            <p>Line 2</p>
-            <p>Line 3</p>
-            <p>Line 3</p>
-            <p>Line 1</p>
-            <p>Line 2</p>
-            <p>Line 3</p>
-            <!-- Banner -->
-            <div class="header flex flex-1 bg-primary bg-gradient-to-r from-primary to-secondary">
-                <SVGDoctorsBanner
-                    role="img"
-                    alt="Facility Banner Image"
-                    title="banner image"
-                    class="w-48 h-48 fill-primary-text-inverted ml-8"
-                />
+        <!-- Banner -->
+        <div class="header flex flex-1 bg-primary bg-gradient-to-r from-primary to-secondary">
+            <SVGDoctorsBanner
+                role="img"
+                alt="Facility Banner Image"
+                title="banner image"
+                class="w-48 h-48 fill-primary-text-inverted ml-8"
+            />
+        </div>
+        <div class="result-content ml-2">
+            <!-- Header -->
+            <div class="result-header mt-7 ml-4">
+                <template v-if="activeProfessional">
+                    <span class="w-4 text-3xl font-bold pl-2 self-center">{{
+                        healthcareProfessionalName
+                    }}, </span>
+                    <span class="w-4 text-2xl font-semibold pl-2 self-center">{{
+                        healthcareProfessionalDegrees
+                    }}</span>
+                </template>
+                <span
+                    v-else
+                    class="w-4 text-3xl font-bold pl-2 self-center"
+                >
+                    {{ facilityName }}
+                </span>
             </div>
-            <div class="result-content ml-2">
-                <!-- Header -->
-                <div class="result-header mt-7 ml-4">
-                    <template v-if="activeProfessional">
-                        <span class="w-4 text-3xl font-bold pl-2 self-center">{{
-                            healthcareProfessionalName
-                        }}, </span>
-                        <span class="w-4 text-2xl font-semibold pl-2 self-center">{{
-                            healthcareProfessionalDegrees
-                        }}</span>
-                    </template>
-                    <span
-                        v-else
-                        class="w-4 text-3xl font-bold pl-2 self-center"
-                    >
-                        {{ facilityName }}
-                    </span>
+            <!-- Facility Or Hp Details -->
+            <div class="result-details flex flex-col mb-1 ml-4 pl-2 mt-2 text-sm">
+                <span
+                    v-if="activeProfessional"
+                    class="px-3 text-primary/90 font-medium text-lg"
+                >{{
+                    facilityName
+                }}</span>
+                <!-- Specialties -->
+                <div
+                    v-for="(specialty, index) in specialties"
+                    :key="index"
+                    class="flex"
+                >
+                    <span class="px-3 italic">{{ specialty }}</span>
                 </div>
-                <!-- Facility Or Hp Details -->
-                <div class="result-details flex flex-col mb-1 ml-4 pl-2 mt-2 text-sm">
-                    <span
-                        v-if="activeProfessional"
-                        class="px-3 text-primary/90 font-medium text-lg"
-                    >{{
-                        facilityName
-                    }}</span>
-                    <!-- Specialties -->
-                    <div
-                        v-for="(specialty, index) in specialties"
-                        :key="index"
-                        class="flex"
-                    >
-                        <span class="px-3 italic">{{ specialty }}</span>
-                    </div>
+            </div>
+            <!-- Healthcare Professionals Related to Facility -->
+            <div v-if="!activeProfessional && hpNamesInFacility.length">
+                <div class="about ml-4 pl-2">
+                    <span class="font-semibold">{{ t("searchResultsDetails.healthcareProfessionals") }}:</span>
                 </div>
-                <!-- Healthcare Professionals Related to Facility -->
-                <div v-if="!activeProfessional && hpNamesInFacility.length">
-                    <div class="about ml-4 pl-2">
-                        <span class="font-semibold">{{ t("searchResultsDetails.healthcareProfessionals") }}:</span>
-                    </div>
-                    <div class="result-tags flex flex-col mb-2 mt-1 ml-6 pl-2">
-                        <button
-                            v-for="hp in hpNamesInFacility"
-                            :key="hp.id"
-                            class="flex items-center text-left py-1 px-3 w-full
+                <div class="result-tags flex flex-col mb-2 mt-1 ml-6 pl-2">
+                    <button
+                        v-for="hp in hpNamesInFacility"
+                        :key="hp.id"
+                        class="flex items-center text-left py-1 px-3 w-full
                                text-primary hover:bg-primary/10 transition-colors cursor-pointer rounded-lg"
-                            @click.stop="showProfessionalProfile(hp)"
-                        >
-                            <SVGProfileIcon
-                                role="img"
-                                alt="Healthcare Professional Icon"
-                                class="w-7 h-7 stroke-primary mr-1"
-                            />
-                            <span class="underline">
-                                {{ hp.displayName }}
-                                ({{ hp.degrees.join(', ') }})
-                            </span>
-                        </button>
-                    </div>
-                </div>
-                <!-- Languages -->
-                <div v-if="activeProfessional">
-                    <div class="ml-9 mt-2 font-bold text-sm">
-                        <span>{{ t("searchResultsDetails.speaks") }}:</span>
-                    </div>
-                    <div class="result-tags flex flex-wrap w-64 mb-2 mt-1 ml-6 pl-2">
-                        <div
-                            v-for="(spokenLanguage, index) in spokenLanguages"
-                            :key="index"
-                            class="pl-2 pr-2 py-px mr-2 border-2 border-primary/40 rounded-full shadow-sm text-md
-                    text-primary hover:bg-primary/20 transition-all"
-                        >
-                            {{ spokenLanguage }}
-                        </div>
-                    </div>
-                </div>
-                <!-- Additional Info -->
-                <div v-show="additionalInfoForPatients">
-                    <div
-                        class="ml-9 mt-2 font-bold text-sm"
+                        @click.stop="showProfessionalProfile(hp)"
                     >
-                        <span>{{ t("searchResultsDetails.additionalInfo") }}:</span>
-                    </div>
-                    <div class="ml-9 mb-4 text-primary-text">
-                        <p>{{ additionalInfoForPatients }}</p>
+                        <SVGProfileIcon
+                            role="img"
+                            alt="Healthcare Professional Icon"
+                            class="w-7 h-7 stroke-primary mr-1"
+                        />
+                        <span class="underline">
+                            {{ hp.displayName }}
+                            ({{ hp.degrees.join(', ') }})
+                        </span>
+                    </button>
+                </div>
+            </div>
+            <!-- Languages -->
+            <div v-if="activeProfessional">
+                <div class="ml-9 mt-2 font-bold text-sm">
+                    <span>{{ t("searchResultsDetails.speaks") }}:</span>
+                </div>
+                <div class="result-tags flex flex-wrap w-64 mb-2 mt-1 ml-6 pl-2">
+                    <div
+                        v-for="(spokenLanguage, index) in spokenLanguages"
+                        :key="index"
+                        class="pl-2 pr-2 py-px mr-2 border-2 border-primary/40 rounded-full shadow-sm text-md
+                    text-primary hover:bg-primary/20 transition-all"
+                    >
+                        {{ spokenLanguage }}
                     </div>
                 </div>
-                <!-- Contact Details -->
-                <div class="about mx-4 pl-2">
-                    <span class="font-semibold">{{
-                        t("searchResultsDetails.contact")
-                    }}</span>
-                    <!-- Address -->
-                    <div class="address flex my-4">
-                        <SVGMapPinIcon
-                            role="img"
-                            alt="Facility Banner Image"
-                            title="banner image"
-                            class="w-6 h-6 stroke-primary mr-2 self-center"
-                        />
-                        <div class="flex flex-col">
-                            <a
-                                :href="addressLink"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                class="underline text-blue"
-                            >
-                                <div>{{ addressLine1 }}</div>
-                                <div v-if="addressLine2">
-                                    {{ addressLine2 }}
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <!-- Website -->
-                    <div class="website flex my-4">
-                        <SVGGlobeIcon
-                            role="img"
-                            alt="Facility Banner Image"
-                            title="banner image"
-                            class="banner-icon w-6 h-6 stroke-primary mr-2 self-center"
-                        />
+            </div>
+            <!-- Additional Info -->
+            <div v-show="additionalInfoForPatients">
+                <div
+                    class="ml-9 mt-2 font-bold text-sm"
+                >
+                    <span>{{ t("searchResultsDetails.additionalInfo") }}:</span>
+                </div>
+                <div class="ml-9 mb-4 text-primary-text">
+                    <p>{{ additionalInfoForPatients }}</p>
+                </div>
+            </div>
+            <!-- Contact Details -->
+            <div class="about mx-4 pl-2">
+                <span class="font-semibold">{{
+                    t("searchResultsDetails.contact")
+                }}</span>
+                <!-- Address -->
+                <div class="address flex my-4">
+                    <SVGMapPinIcon
+                        role="img"
+                        alt="Facility Banner Image"
+                        title="banner image"
+                        class="w-6 h-6 stroke-primary mr-2 self-center"
+                    />
+                    <div class="flex flex-col">
                         <a
-                            v-if="website"
-                            :href="website"
+                            :href="addressLink"
                             target="_blank"
                             rel="noopener noreferrer"
                             class="underline text-blue"
-                        >{{ website }}</a>
-                    </div>
-                    <!-- Phone -->
-                    <div class="phone flex my-4 items-center justify-between">
-                        <div class="flex">
-                            <SVGPhoneIcon
-                                role="img"
-                                alt="Facility Banner Image"
-                                title="banner image"
-                                class="banner-icon w-6 h-6 stroke-primary mr-2 self-center"
-                            />
-                            <a
-                                v-if="phone"
-                                class=" text-blue"
-                            >{{ phone }}</a>
-                        </div>
-                        <a
-                            v-if="phone"
-                            class="mr-5 px-4 py-1 shadow-sm text-white rounded-lg bg-primary
-                        font-medium hover:bg-primary/90 hover:scale-105 transition-colors"
-                            :href="`tel:${phone}`"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            @click="handleCallNow"
                         >
-                            {{ t("searchResultsDetails.callNow") }} ☎️
+                            <div>{{ addressLine1 }}</div>
+                            <div v-if="addressLine2">
+                                {{ addressLine2 }}
+                            </div>
                         </a>
                     </div>
-                    <!-- Email -->
-                    <div
-                        v-if="email && !excludedEmailAddresses.includes(email)"
-                        class="email flex my-4"
-                    >
-                        <SVGEmailIcon
+                </div>
+                <!-- Website -->
+                <div class="website flex my-4">
+                    <SVGGlobeIcon
+                        role="img"
+                        alt="Facility Banner Image"
+                        title="banner image"
+                        class="banner-icon w-6 h-6 stroke-primary mr-2 self-center"
+                    />
+                    <a
+                        v-if="website"
+                        :href="website"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="underline text-blue"
+                    >{{ website }}</a>
+                </div>
+                <!-- Phone -->
+                <div class="phone flex my-4 items-center justify-between">
+                    <div class="flex">
+                        <SVGPhoneIcon
                             role="img"
                             alt="Facility Banner Image"
                             title="banner image"
                             class="banner-icon w-6 h-6 stroke-primary mr-2 self-center"
                         />
                         <a
-                            :href="`mailto:${email}`"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            class="underline text-blue"
-                        >{{ email }}</a>
+                            v-if="phone"
+                            class=" text-blue"
+                        >{{ phone }}</a>
                     </div>
-                    <!-- Last Updated Time -->
-                    <div class="mr-3 mb-1 flex flex-row-reverse text-sm text-primary-text-muted">
-                        <p>{{ formattedLastUpdate }}</p>
-                    </div>
+                    <a
+                        v-if="phone"
+                        class="mr-5 px-4 py-1 shadow-sm text-white rounded-lg bg-primary
+                        font-medium hover:bg-primary/90 hover:scale-105 transition-colors"
+                        :href="`tel:${phone}`"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        @click="handleCallNow"
+                    >
+                        {{ t("searchResultsDetails.callNow") }} ☎️
+                    </a>
+                </div>
+                <!-- Email -->
+                <div
+                    v-if="email && !excludedEmailAddresses.includes(email)"
+                    class="email flex my-4"
+                >
+                    <SVGEmailIcon
+                        role="img"
+                        alt="Facility Banner Image"
+                        title="banner image"
+                        class="banner-icon w-6 h-6 stroke-primary mr-2 self-center"
+                    />
+                    <a
+                        :href="`mailto:${email}`"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="underline text-blue"
+                    >{{ email }}</a>
+                </div>
+                <!-- Last Updated Time -->
+                <div class="mr-3 mb-1 flex flex-row-reverse text-sm text-primary-text-muted">
+                    <p>{{ formattedLastUpdate }}</p>
                 </div>
             </div>
         </div>
