@@ -10,6 +10,7 @@
         :initial-position="50"
         :custom-positions="[80, 50, 25]"
         @dragging-content="handleDraggingContent"
+        @scrolled="handleDraggingContent"
     >
         <!-- Close button -->
         <button
@@ -39,7 +40,9 @@
         <!-- Bottom Sheet Content -->
         <!-- We want to share the same bottom sheet to keep the UX smooth -->
         <!-- We use v-show here for components that we don't re-running queries every time  -->
-        <SearchResultDetails v-if="bottomSheetStore.bottomSheetType === BottomSheetType.SearchResultDetails" />
+        <SearchResultDetails
+            v-if="bottomSheetStore.bottomSheetType === BottomSheetType.SearchResultDetails"
+        />
         <SearchResultsList
             v-show="bottomSheetStore.bottomSheetType === BottomSheetType.SearchResultsList"
             @scrolled="handleDraggingContent"

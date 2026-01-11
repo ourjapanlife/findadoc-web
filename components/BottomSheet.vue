@@ -22,7 +22,7 @@
             </transition>
             <div
                 ref="bottomSheetContent"
-                class="fixed inset-0 flex flex-col mx-1 rounded-t-2xl bg-primary-bg overflow-y-hidden
+                class="fixed inset-0 flex flex-col mx-1 rounded-t-2xl bg-primary-bg overflow-x-hidden
                     box-border pointer-events-auto"
                 :style="{
                     transform: `translate3d(0, ${translateValue}%, 0)`,
@@ -39,6 +39,7 @@
                 <main
                     ref="bottomSheetMain"
                     class="flex flex-col grow overflow-y-auto box-border touch-pan-y"
+                    @scroll="handleMainScroll"
                 >
                     <slot />
                 </main>
@@ -100,7 +101,7 @@ const props = withDefaults(defineProps<IProps>(), {
 /**
    * Bottom sheet emit interface
    */
-const emit = defineEmits(['opened', 'closed', 'dragging-up', 'dragging-down', 'dragging-content'])
+const emit = defineEmits(['opened', 'closed', 'dragging-up', 'dragging-down', 'dragging-content', 'scrolled'])
 
 /**
    * Show or hide sheet
@@ -289,18 +290,11 @@ onMounted(() => {
             dragHandler(e, 'draghandle')
         })
     }
-
-    if (bottomSheetMain.value) {
-        const hammerMainInstance = new Hammer(bottomSheetMain.value, {
-            inputClass: Hammer.TouchMouseInput,
-            recognizers: [[Hammer.Pan, { direction: Hammer.DIRECTION_VERTICAL }]]
-        })
-        hammerMainInstance.on('panstart panup pandown panend', (e: HammerInput) => {
-            dragHandler(e, 'dragcontent')
-        })
-    }
 })
 
+const handleMainScroll = () => {
+    emit('scrolled')
+}
 /**
    * Define public methods
    */
