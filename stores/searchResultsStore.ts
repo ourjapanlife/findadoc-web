@@ -38,6 +38,9 @@ export const useSearchResultsStore = defineStore('searchResultsStore', () => {
         // This is for the UI to only show loading when loading for a user search. On load it prefetches on screen
         const shouldTriggerLoadingState = !isPrefetchingSearchResults.value && searchResultsList.value.length
 
+        // deep copy orignaly searchResultsList for future comparison
+        const originalSearchResultList = [...searchResultsList.value]
+
         if (shouldTriggerLoadingState) loadingStore.setIsLoading(true)
 
         //get the facilities that match the professionals we found
@@ -67,7 +70,7 @@ export const useSearchResultsStore = defineStore('searchResultsStore', () => {
         clearActiveSearchResult()
 
         //update the state with the new results
-        searchResultsList.value = combinedResults
+        if (!arraysAreEqual(searchResultsList.value, originalSearchResultList)) searchResultsList.value = combinedResults
         //update the total results count
         totalResults.value = combinedResults.length
 
