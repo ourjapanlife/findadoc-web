@@ -39,6 +39,7 @@
                 <main
                     ref="bottomSheetMain"
                     class="flex flex-col grow overflow-y-auto box-border touch-pan-y"
+                    @scroll="handleMainScroll"
                 >
                     <slot />
                 </main>
@@ -100,7 +101,7 @@ const props = withDefaults(defineProps<IProps>(), {
 /**
    * Bottom sheet emit interface
    */
-const emit = defineEmits(['opened', 'closed', 'dragging-up', 'dragging-down', 'dragging-content'])
+const emit = defineEmits(['opened', 'closed', 'dragging-up', 'dragging-down', 'dragging-content', 'scrolling'])
 
 /**
    * Show or hide sheet
@@ -291,6 +292,9 @@ onMounted(() => {
     }
 })
 
+const handleMainScroll = () => {
+    emit('scrolling')
+}
 /**
    * Define public methods
    */
