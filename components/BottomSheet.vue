@@ -101,7 +101,7 @@ const props = withDefaults(defineProps<IProps>(), {
 /**
    * Bottom sheet emit interface
    */
-const emit = defineEmits(['opened', 'closed', 'dragging-up', 'dragging-down', 'dragging-content', 'scrolling'])
+const emit = defineEmits(['opened', 'closed', 'dragging-up', 'dragging-down', 'dragging-content', 'scrolled'])
 
 /**
    * Show or hide sheet
@@ -293,7 +293,7 @@ onMounted(() => {
 })
 
 const handleMainScroll = () => {
-    emit('scrolling')
+    emit('scrolled')
 }
 /**
    * Define public methods
