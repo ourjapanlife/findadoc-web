@@ -35,3 +35,6 @@ eslint-results.sarif
 # txt file added when linting files
 *missing_keys.txt
 *potentially_unused_keys.txt
+
+*storybook.log
+storybook-static
