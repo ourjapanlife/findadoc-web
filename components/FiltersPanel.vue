@@ -219,7 +219,7 @@ watch(selectedLanguages, () => {
 })
 
 async function search() {
-    await searchResultsStore.search()
+    if (!searchResultsStore.isPrefetchingSearchResults) await searchResultsStore.search()
     bottomSheetStore.showBottomSheet(BottomSheetType.SearchResultsList)
 }
 </script>
