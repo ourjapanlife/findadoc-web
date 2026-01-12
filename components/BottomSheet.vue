@@ -293,7 +293,9 @@ onMounted(() => {
 })
 
 const handleMainScroll = () => {
-    emit('scrolled')
+    if (translateValue.value > 25) {
+        emit('scrolled')
+    }
 }
 /**
    * Define public methods
