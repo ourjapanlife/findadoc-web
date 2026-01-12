@@ -296,7 +296,9 @@ onMounted(() => {
             recognizers: [[Hammer.Pan, { direction: Hammer.DIRECTION_VERTICAL }]]
         })
         hammerMainInstance.on('panstart panup pandown panend', (e: HammerInput) => {
-            dragHandler(e, 'dragcontent')
+            if (translateValue.value > 25) {
+                dragHandler(e, 'dragcontent')
+            }
         })
     }
 })
