@@ -298,6 +298,9 @@ onMounted(() => {
         hammerMainInstance.on('panstart panup pandown panend', (e: HammerInput) => {
             if (translateValue.value > 25) {
                 dragHandler(e, 'dragcontent')
+                if (e.isFinal && translateValue.value <= 25) {
+                    hammerMainInstance.stop(true)
+                }
             }
         })
     }
