@@ -290,6 +290,15 @@ onMounted(() => {
             dragHandler(e, 'draghandle')
         })
     }
+    if (bottomSheetMain.value) {
+        const hammerMainInstance = new Hammer(bottomSheetMain.value, {
+            inputClass: Hammer.TouchMouseInput,
+            recognizers: [[Hammer.Pan, { direction: Hammer.DIRECTION_VERTICAL }]]
+        })
+        hammerMainInstance.on('panstart panup pandown panend', (e: HammerInput) => {
+            dragHandler(e, 'dragcontent')
+        })
+    }
 })
 
 const handleMainScroll = () => {
