@@ -10,7 +10,6 @@
         :initial-position="50"
         :custom-positions="[80, 50, 25]"
         @dragging-content="handleDraggingContent"
-        @scrolled="handleDraggingContent"
     >
         <!-- Close button -->
         <button
