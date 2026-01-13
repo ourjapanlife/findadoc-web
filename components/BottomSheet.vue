@@ -38,7 +38,7 @@
                 </header>
                 <main
                     ref="bottomSheetMain"
-                    class="flex flex-col grow overflow-y-auto box-border touch-pan-y"
+                    class="flex flex-col grow overflow-y-auto box-border"
                 >
                     <slot />
                 </main>
@@ -205,10 +205,10 @@ const dragHandler = (event: HammerInput | IEvent, type: 'draghandle' | 'dragcont
 
     // Triggers when the user "lets go" of the sheet
     if ('isFinal' in event && event.isFinal) {
-        const preventDefault = (e: Event) => {
-            e.preventDefault()
-        }
-        bottomSheetMain.value!.removeEventListener('touchmove', preventDefault)
+        // const preventDefault = (e: Event) => {
+        //     e.preventDefault()
+        // }
+        // bottomSheetMain.value!.removeEventListener('touchmove', preventDefault)
 
         isDragging.value = false
 
