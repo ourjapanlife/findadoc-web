@@ -275,6 +275,8 @@ const setPosition = (position: number) => {
     }
 }
 
+let hammerMainInstance: HammerManager | null = null
+
 onMounted(() => {
     initHeight()
 
@@ -291,18 +293,28 @@ onMounted(() => {
         })
     }
     if (bottomSheetMain.value) {
-        const hammerMainInstance = new Hammer(bottomSheetMain.value, {
+        hammerMainInstance = new Hammer(bottomSheetMain.value, {
             inputClass: Hammer.TouchMouseInput,
-            recognizers: [[Hammer.Pan, { direction: Hammer.DIRECTION_VERTICAL }]]
+            touchAction: 'pan-y'
         })
+        hammerMainInstance.add(
+            new Hammer.Pan({ direction: Hammer.DIRECTION_VERTICAL })
+        )
         hammerMainInstance.on('panstart panup pandown panend', (e: HammerInput) => {
             if (translateValue.value > 25) {
                 dragHandler(e, 'dragcontent')
-                if (e.isFinal && translateValue.value <= 25) {
-                    hammerMainInstance.stop(true)
-                }
             }
         })
+    }
+})
+
+watch(translateValue, value => {
+    const pan = hammerMainInstance?.get('pan')
+    if (value <= 25) {
+        // Fully expanded -> enable scroll
+        pan?.set({ enable: false })
+    } else {
+        pan?.set({ enable: true })
     }
 })
 
