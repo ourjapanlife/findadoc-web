@@ -39,7 +39,6 @@
                 <main
                     ref="bottomSheetMain"
                     class="flex flex-col grow overflow-y-auto box-border touch-pan-y"
-                    @scroll="handleMainScroll"
                 >
                     <slot />
                 </main>
@@ -318,11 +317,6 @@ watch(translateValue, value => {
     }
 })
 
-const handleMainScroll = () => {
-    if (translateValue.value > 25) {
-        emit('scrolled')
-    }
-}
 /**
    * Define public methods
    */
