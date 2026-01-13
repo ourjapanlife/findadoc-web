@@ -295,7 +295,7 @@ onMounted(() => {
     if (bottomSheetMain.value) {
         hammerMainInstance = new Hammer(bottomSheetMain.value, {
             inputClass: Hammer.TouchMouseInput,
-            touchAction: 'pan-y'
+            touchAction: 'auto'
         })
         hammerMainInstance.add(
             new Hammer.Pan({ direction: Hammer.DIRECTION_VERTICAL })
