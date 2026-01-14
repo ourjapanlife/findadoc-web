@@ -300,8 +300,11 @@ onMounted(() => {
             new Hammer.Pan({ direction: Hammer.DIRECTION_VERTICAL })
         )
         hammerMainInstance.on('panstart panup pandown panend', (e: HammerInput) => {
-            if (translateValue.value > 25) {
-                dragHandler(e, 'dragcontent')
+            const content = bottomSheetMain.value
+            const sheetNotExpanded = translateValue.value > 25
+            const isAtTop = content?.scrollTop === 0
+            if (sheetNotExpanded && isAtTop) {
+                dragHandler(e, 'draghandle')
             }
         })
     }
