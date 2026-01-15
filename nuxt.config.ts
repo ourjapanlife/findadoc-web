@@ -16,7 +16,7 @@ export default defineNuxtConfig({
         '@nuxt/eslint',
         '@nuxt/test-utils/module',
         'nuxt-gtag',
-        '@nuxtjs/storybook'
+        ...(process.env.STORYBOOK ? ['@nuxtjs/storybook'] as const : [])
     ],
 
     // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
