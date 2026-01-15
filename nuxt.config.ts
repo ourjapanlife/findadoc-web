@@ -166,6 +166,13 @@ export default defineNuxtConfig({
             alwaysRedirect: true
         }
     },
+
+    storybook: {
+        host: 'http://localhost',
+        port: 6006,
+        enabled: !!process.env.NUXT_STORYBOOK
+    },
+
     svgo: {
         defaultImport: 'component'
     },
