@@ -20,6 +20,7 @@
             @zoom_changed="handleZoomChanged"
         >
             <MarkerCluster
+                v-if="!isUnmounting"
                 ref="markerClusterRef"
                 :options="{
                     //vue3-google-map's Renderer type expects legacy Marker,
@@ -83,6 +84,8 @@ const emit = defineEmits(['map-moved'])
 const isMapReady = ref(false)
 const { isLandscape } = useScreenOrientation()
 const { getPrimaryColor, getSecondaryColor, themeChanged } = useThemeColors()
+
+const isUnmounting = ref(false)
 
 type Location = {
     lat: number
@@ -400,8 +403,13 @@ const calculateZoomLevel = (coordinates: { lat: number, lng: number }[]) => {
 }
 
 onBeforeUnmount(() => {
-    if (markerClusterRef.value?.markerCluster) {
-        markerClusterRef.value.markerCluster.clearMarkers?.()
+  isUnmounting.value = true
+
+  nextTick(() => {
+    const markerClusterInstance = (markerClusterRef.value as { markerCluster?: any })?.markerCluster
+    if (markerClusterInstance?.setMap) {
+      markerClusterInstance.setMap(null)
     }
+  })
 })
 </script>
