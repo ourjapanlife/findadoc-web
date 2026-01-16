@@ -55,6 +55,7 @@
 
 <script setup lang="ts">
 import { ref, watch, nextTick, onMounted, onBeforeUnmount } from 'vue'
+import { onBeforeRouteLeave } from 'vue-router'
 import { GoogleMap, AdvancedMarker, MarkerCluster } from 'vue3-google-map'
 import type { Renderer } from '@googlemaps/markerclusterer'
 import { useUmami } from '~/composables/useUmamiTracking'
@@ -402,14 +403,34 @@ const calculateZoomLevel = (coordinates: { lat: number, lng: number }[]) => {
     }
 }
 
-onBeforeUnmount(() => {
-  isUnmounting.value = true
+onBeforeRouteLeave(() => {
+    isUnmounting.value = true
 
-  nextTick(() => {
+    //eslint-disable-next-line
     const markerClusterInstance = (markerClusterRef.value as { markerCluster?: any })?.markerCluster
-    if (markerClusterInstance?.setMap) {
-      markerClusterInstance.setMap(null)
+    if (markerClusterInstance) {
+        try {
+            if (markerClusterInstance.setMap) {
+                markerClusterInstance.setMap(null)
+            }
+            if (markerClusterInstance.clearMarkers) {
+                markerClusterInstance.clearMarkers()
+            }
+        } catch (error) {
+            console.error(error)
+        }
     }
-  })
+})
+
+onBeforeUnmount(() => {
+    isUnmounting.value = true
+
+    nextTick(() => {
+        //eslint-disable-next-line
+        const markerClusterInstance = (markerClusterRef.value as { markerCluster?: any })?.markerCluster
+        if (markerClusterInstance?.setMap) {
+            markerClusterInstance.setMap(null)
+        }
+    })
 })
 </script>
