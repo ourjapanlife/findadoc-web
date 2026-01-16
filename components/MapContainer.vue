@@ -53,7 +53,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, nextTick, onMounted } from 'vue'
+import { ref, watch, nextTick, onMounted, onBeforeUnmount } from 'vue'
 import { GoogleMap, AdvancedMarker, MarkerCluster } from 'vue3-google-map'
 import type { Renderer } from '@googlemaps/markerclusterer'
 import { useUmami } from '~/composables/useUmamiTracking'
@@ -398,4 +398,10 @@ const calculateZoomLevel = (coordinates: { lat: number, lng: number }[]) => {
         default: return 12
     }
 }
+
+onBeforeUnmount(() => {
+    if (markerClusterRef.value?.markerCluster) {
+        markerClusterRef.value.markerCluster.clearMarkers?.()
+    }
+})
 </script>
