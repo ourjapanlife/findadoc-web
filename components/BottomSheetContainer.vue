@@ -42,11 +42,9 @@
         <!-- We use v-show here for components that we don't re-running queries every time  -->
         <SearchResultDetails
             v-if="bottomSheetStore.bottomSheetType === BottomSheetType.SearchResultDetails"
-            @scrolled="handleDraggingContent"
         />
         <SearchResultsList
             v-show="bottomSheetStore.bottomSheetType === BottomSheetType.SearchResultsList"
-            @scrolled="handleDraggingContent"
         />
         <FiltersPanel v-show="bottomSheetStore.bottomSheetType === BottomSheetType.FiltersPanel" />
     </BottomSheet>
@@ -123,7 +121,7 @@ const resetSheet = () => {
     isScrollingEnabled.value = false
 }
 
-const handleDraggingContent = () => {
+const handleDraggingContent = (bottomSheetPosition: number) => {
     switch (bottomSheetStore.bottomSheetType) {
         case BottomSheetType.SearchResultDetails:
             // If the user is dragging up on minimized sheet, expand the sheet so they can see more
@@ -132,7 +130,7 @@ const handleDraggingContent = () => {
             bottomSheetRef.value?.setPosition(25)
 
             // don't allow scrolling until the sheet is expanded
-            if (bottomSheetRef.value?.currentPosition === 25) {
+            if (bottomSheetPosition < 30) {
                 isScrollingEnabled.value = true
             } else {
                 isScrollingEnabled.value = false
