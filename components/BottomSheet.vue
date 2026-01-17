@@ -66,6 +66,7 @@ interface IProps {
     overlayClickClose?: boolean
     canSwipe?: boolean
     canSwipeClose?: boolean
+    canScroll?: boolean
     zIndex?: number
 }
 
@@ -94,6 +95,7 @@ const props = withDefaults(defineProps<IProps>(), {
     overlayClickClose: true,
     canSwipe: true,
     canSwipeClose: true,
+    canScroll: false,
     zIndex: 99999
 })
 
@@ -205,10 +207,10 @@ const dragHandler = (event: HammerInput | IEvent, type: 'draghandle' | 'dragcont
 
     // Triggers when the user "lets go" of the sheet
     if ('isFinal' in event && event.isFinal) {
-        // const preventDefault = (e: Event) => {
-        //     e.preventDefault()
-        // }
-        // bottomSheetMain.value!.removeEventListener('touchmove', preventDefault)
+        const preventDefault = (e: Event) => {
+            e.preventDefault()
+        }
+        bottomSheetMain.value!.removeEventListener('touchmove', preventDefault)
 
         isDragging.value = false
 
@@ -274,7 +276,7 @@ const setPosition = (position: number) => {
     }
 }
 
-let hammerMainInstance: HammerManager | null = null
+const hammerMainInstance: HammerManager | null = null
 
 onMounted(() => {
     initHeight()
@@ -292,29 +294,19 @@ onMounted(() => {
         })
     }
     if (bottomSheetMain.value) {
-        hammerMainInstance = new Hammer(bottomSheetMain.value, {
+        const hammerMainInstance = new Hammer(bottomSheetMain.value, {
             inputClass: Hammer.TouchMouseInput,
-            touchAction: 'auto'
+            recognizers: [[Hammer.Pan, { direction: Hammer.DIRECTION_VERTICAL }]]
         })
-        hammerMainInstance.add(
-            new Hammer.Pan({ direction: Hammer.DIRECTION_VERTICAL })
-        )
         hammerMainInstance.on('panstart panup pandown panend', (e: HammerInput) => {
-            if (translateValue.value > 25) {
-                dragHandler(e, 'dragcontent')
-            }
+            dragHandler(e, 'dragcontent')
         })
     }
 })
 
-watch(translateValue, value => {
+watch(() => props.canScroll, newCanScrollValue => {
     const pan = hammerMainInstance?.get('pan')
-    if (value <= 25) {
-        // Fully expanded -> enable scroll
-        pan?.set({ enable: false })
-    } else {
-        pan?.set({ enable: true })
-    }
+    pan?.set({ enable: newCanScrollValue == true ? true : false })
 })
 
 /**

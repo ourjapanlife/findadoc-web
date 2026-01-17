@@ -9,6 +9,7 @@
         :z-index="0"
         :initial-position="50"
         :custom-positions="[80, 50, 25]"
+        :can-scroll="isScrollingEnabled"
         @dragging-content="handleDraggingContent"
     >
         <!-- Close button -->
@@ -41,6 +42,7 @@
         <!-- We use v-show here for components that we don't re-running queries every time  -->
         <SearchResultDetails
             v-if="bottomSheetStore.bottomSheetType === BottomSheetType.SearchResultDetails"
+            @scrolled="handleDraggingContent"
         />
         <SearchResultsList
             v-show="bottomSheetStore.bottomSheetType === BottomSheetType.SearchResultsList"
@@ -65,6 +67,7 @@ const searchResultsStore = useSearchResultsStore()
 // Refs
 const bottomSheetRef = ref<typeof BottomSheet | null>(null)
 const showCloseButton = ref(false)
+const isScrollingEnabled = ref(false)
 const beforeMinimizedPosition = ref(75)
 
 //Vue Event Handlers
@@ -106,6 +109,7 @@ watch(() => bottomSheetStore.bottomSheetType, newType => {
 watch(() => bottomSheetStore.isMinimized, isMinimized => {
     if (isMinimized) {
         bottomSheetRef.value?.setPosition(80)
+        isScrollingEnabled.value = false
     } else {
         bottomSheetRef.value?.setPosition(beforeMinimizedPosition.value)
     }
@@ -116,12 +120,37 @@ const resetSheet = () => {
     bottomSheetStore.showBottomSheet(BottomSheetType.SearchResultsList)
     // We want to clear the active result on the map and list
     searchResultsStore.clearActiveSearchResult()
+    isScrollingEnabled.value = false
 }
 
 const handleDraggingContent = () => {
-    // If the user is dragging up on minimized sheet, expand the sheet so they can see more
-    bottomSheetStore.isMinimized = false
-    beforeMinimizedPosition.value = 25
-    bottomSheetRef.value?.setPosition(25)
+    switch (bottomSheetStore.bottomSheetType) {
+        case BottomSheetType.SearchResultDetails:
+            // If the user is dragging up on minimized sheet, expand the sheet so they can see more
+            bottomSheetStore.isMinimized = false
+            beforeMinimizedPosition.value = 25
+            bottomSheetRef.value?.setPosition(25)
+
+            // don't allow scrolling until the sheet is expanded
+            if (bottomSheetRef.value?.currentPosition === 25) {
+                isScrollingEnabled.value = true
+            } else {
+                isScrollingEnabled.value = false
+                return
+            }
+
+            break
+
+        case BottomSheetType.SearchResultsList:
+            isScrollingEnabled.value = true
+
+            // If the user is dragging up on minimized sheet, expand the sheet so they can see more
+            bottomSheetStore.isMinimized = false
+            beforeMinimizedPosition.value = 25
+            bottomSheetRef.value?.setPosition(25)
+            break
+        default:
+            break
+    }
 }
 </script>
