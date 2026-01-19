@@ -176,7 +176,7 @@ const dragHandler = (event: HammerInput | IEvent, type: 'draghandle' | 'dragcont
     if (type === 'dragcontent') {
         // If the user is dragging the content, emit an event so the parent can handle it
         // We don't handle content dragging or scrolling here because it can have nested scrollable content
-        emit('dragging-content')
+        emit('dragging-content', translateValue.value)
         return
     }
 
@@ -276,7 +276,8 @@ const setPosition = (position: number) => {
     }
 }
 
-const hammerMainInstance: HammerManager | null = null
+let hammerMainInstance: HammerManager | null = null
+let hammerAreaInstance: HammerManager | null = null
 
 onMounted(() => {
     initHeight()
@@ -285,22 +286,24 @@ onMounted(() => {
      * Create instances of Hammerjs
      */
     if (bottomSheetDraggableArea.value) {
-        const hammerAreaInstance = new Hammer(bottomSheetDraggableArea.value, {
+        const newAreaInstance = new Hammer(bottomSheetDraggableArea.value, {
             inputClass: Hammer.TouchMouseInput,
             recognizers: [[Hammer.Pan, { direction: Hammer.DIRECTION_VERTICAL }]]
         })
-        hammerAreaInstance.on('panstart panup pandown panend', (e: HammerInput) => {
+        newAreaInstance.on('panstart panup pandown panend', (e: HammerInput) => {
             dragHandler(e, 'draghandle')
         })
+        hammerAreaInstance = newAreaInstance
     }
     if (bottomSheetMain.value) {
-        const hammerMainInstance = new Hammer(bottomSheetMain.value, {
+        const newMainInstance = new Hammer(bottomSheetMain.value, {
             inputClass: Hammer.TouchMouseInput,
             recognizers: [[Hammer.Pan, { direction: Hammer.DIRECTION_VERTICAL }]]
         })
-        hammerMainInstance.on('panstart panup pandown panend', (e: HammerInput) => {
+        newMainInstance.on('panstart panup pandown panend', (e: HammerInput) => {
             dragHandler(e, 'dragcontent')
         })
+        hammerMainInstance = newMainInstance
     }
 })
 
