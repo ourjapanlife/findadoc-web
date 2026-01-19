@@ -277,7 +277,7 @@ const setPosition = (position: number) => {
 }
 
 let hammerMainInstance: HammerManager | null = null
-let hammerAreaInstance: HammerManager | null = null
+// let hammerAreaInstance: HammerManager | null = null
 
 onMounted(() => {
     initHeight()
@@ -293,7 +293,7 @@ onMounted(() => {
         newAreaInstance.on('panstart panup pandown panend', (e: HammerInput) => {
             dragHandler(e, 'draghandle')
         })
-        hammerAreaInstance = newAreaInstance
+        // hammerAreaInstance = newAreaInstance
     }
     if (bottomSheetMain.value) {
         const newMainInstance = new Hammer(bottomSheetMain.value, {
@@ -304,12 +304,15 @@ onMounted(() => {
             dragHandler(e, 'dragcontent')
         })
         hammerMainInstance = newMainInstance
+        // Sets initial state based on canScroll prop
+        const pan = hammerMainInstance?.get('pan')
+        pan?.set({ enable: !props.canScroll })
     }
 })
 
 watch(() => props.canScroll, newCanScrollValue => {
     const pan = hammerMainInstance?.get('pan')
-    pan?.set({ enable: newCanScrollValue == true ? true : false })
+    pan?.set({ enable: !newCanScrollValue })
 })
 
 /**

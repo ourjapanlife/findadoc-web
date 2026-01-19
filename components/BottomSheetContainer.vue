@@ -130,10 +130,10 @@ const handleDraggingContent = (bottomSheetPosition: number) => {
             bottomSheetRef.value?.setPosition(25)
 
             // don't allow scrolling until the sheet is expanded
-            if (bottomSheetPosition < 30) {
-                isScrollingEnabled.value = true
-            } else {
+            if (bottomSheetPosition > 25) {
                 isScrollingEnabled.value = false
+            } else {
+                isScrollingEnabled.value = true
                 return
             }
 
