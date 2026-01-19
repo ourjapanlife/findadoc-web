@@ -100,6 +100,7 @@ watch(() => bottomSheetStore.bottomSheetType, newType => {
             beforeMinimizedPosition.value = 50
             showCloseButton.value = true
             bottomSheetStore.isMinimized = false
+            isScrollingEnabled.value = false
             break
     }
 })
