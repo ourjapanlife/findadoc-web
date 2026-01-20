@@ -23,7 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [21.3.0]
+        node-version: [22.12.0]
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -38,14 +38,3 @@ jobs:
         run: yarn install --immutable
       - name: Run ESLint
         run: yarn lint:ci
-      - name: Check Lint Status
-        if: always()
-        run: |
-          # failure if one or more lint jobs exit without "success"/"skipped" status
-          if echo "$LINT_RESULTS" | jq -r '.[].result' | grep -v 'success' | grep -q -v 'skipped'; then
-            echo "lint failure"
-            exit 1
-          fi
-          exit 0
-    env:
-      LINT_RESULTS: ${{ toJson(needs) }}

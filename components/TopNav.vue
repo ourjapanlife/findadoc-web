@@ -20,7 +20,7 @@
                     <SVGSiteLogo
                         role="img"
                         title="site icon"
-                        class="mt-1 mr-1 w-10 h-10 flex-shrink-0 align-middle fill-primary group-hover:fill-primary-hover"
+                        class="mt-1 mr-1 w-10 h-10 shrink-0 align-middle fill-primary group-hover:fill-primary-hover"
                         @click="toggleLogoText()"
                     />
                 </NuxtLink>
@@ -36,7 +36,7 @@
                     <!-- Find a Doc, Japan Logo Text -->
                     <div
                         v-show="showLogoText"
-                        class="title-text flex flex-col flex-shrink-0"
+                        class="title-text flex flex-col shrink-0"
                         data-testid="landscape-logo"
                     >
                         <div class="text-lg text-primary group-hover:text-primary-hover">
@@ -63,11 +63,11 @@
                         <SVGSiteLogo
                             role="img"
                             title="site icon"
-                            class="mr-1 w-10 h-10 flex-shrink-0 align-middle fill-primary group-hover:fill-primary-hover"
+                            class="mr-1 w-10 h-10 shrink-0 align-middle fill-primary group-hover:fill-primary-hover"
                         />
                         <!-- Find a Doc, Japan Logo Text -->
                         <div
-                            class="title-text flex flex-col flex-shrink-0"
+                            class="title-text flex flex-col shrink-0"
                             data-testid="landscape-logo"
                         >
                             <div class="text-lg text-primary group-hover:text-primary-hover">

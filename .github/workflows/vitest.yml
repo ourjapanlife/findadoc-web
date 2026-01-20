@@ -14,15 +14,15 @@ jobs:
         name: Running Pinia Tests 🚀
         strategy:
             matrix:
-                node-version: [21.3.0]
+                node-version: [22.12.0]
         runs-on: ubuntu-latest
         steps:
             - name: Checkout Code
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
               with:
                   fetch-depth: 0
             - name: Install Yarn/ Node ${{ matrix.node-version }}
-              uses: actions/setup-node@v3
+              uses: actions/setup-node@v4
               with:
                   node-version: ${{ matrix.node-version }}
                   cache: "yarn"

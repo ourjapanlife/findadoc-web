@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+      "lib": [
+        "ESNext",
+        "ESNext.AsyncIterable",
+        "DOM"
+      ],
+      "types": [
+        "node",
+      ],
+      "sourceMap": false,
+      "resolveJsonModule": true,
+      "esModuleInterop": true,
+    },
+    "include": ["**/*.ts"]
+}

@@ -5,6 +5,7 @@
             ref="mapRef"
             data-testid="map-of-japan"
             :api-key="runtimeConfig.public.GOOGLE_MAPS_API_KEY as string ?? undefined"
+            :libraries="['marker']"
             map-id="153d718018a2577e"
             :disable-default-ui="true"
             :options="{
@@ -19,11 +20,15 @@
             @zoom_changed="handleZoomChanged"
         >
             <MarkerCluster
+                ref="markerClusterRef"
                 :options="{
-                    renderer: clusterRenderer,
+                    //vue3-google-map's Renderer type expects legacy Marker,
+                    // but we use AdvancedMarkerElement which works at runtime because their types aren't updated,
+                    // but it's valid according to the underlying google maps API type
+                    renderer: clusterRenderer as unknown as Renderer,
                 }"
             >
-                <CustomMarker
+                <AdvancedMarker
                     v-for="location in searchResultsStore.searchResultsList"
                     :key="location.id"
                     :options="{
@@ -31,20 +36,17 @@
                             lat: location.mapLatitude ?? defaultLocation.lat,
                             lng: location.mapLongitude ?? defaultLocation.lng,
                         },
+                        title: location.nameEn || location.nameJa || 'Facility',
                     }"
-                    @click="(event: MouseEvent) => handlePinClick(location.id, event)"
+                    @click="() => handlePinClick(location.id)"
                 >
-                    <div style="text-align: center">
-                        <SVGMapPin
-                            :class="[
-                                'w-[45px] h-[73px]',
-                                searchResultsStore.activeFacility?.id === location.id
-                                    ? 'text-secondary fill-secondary'
-                                    : 'text-primary fill-primary',
-                            ]"
-                        />
-                    </div>
-                </CustomMarker>
+                    <template #content>
+                        <img
+                            :src="renderMarkerIcon(location.id)"
+                            class="h-16 w-18 block gmp-clickable"
+                        >
+                    </template>
+                </AdvancedMarker>
             </MarkerCluster>
         </GoogleMap>
     </div>
@@ -52,102 +54,168 @@
 
 <script setup lang="ts">
 import { ref, watch, nextTick, onMounted } from 'vue'
-import { GoogleMap, CustomMarker, MarkerCluster } from 'vue3-google-map'
+import { GoogleMap, AdvancedMarker, MarkerCluster } from 'vue3-google-map'
+import type { Renderer } from '@googlemaps/markerclusterer'
+import { useUmami } from '~/composables/useUmamiTracking'
+
 import { useSearchResultsStore } from '../stores/searchResultsStore'
 import { useRuntimeConfig } from '#imports'
-import SVGMapPin from '~/assets/icons/map-pin.svg'
 import { BottomSheetType, useBottomSheetStore } from '~/stores/bottomSheetStore'
 import { useScreenOrientation } from '~/composables/useScreenOrientation'
+import { useThemeColors } from '~/composables/useThemeColors'
+import pinTemplate from '~/assets/icons/map-pin-template.svg?raw'
 
-const defaultLocation = { lat: 35.6804, lng: 139.769 }
+const defaultLocation = { lat: 35.6804, lng: 139.769 } as Location
 const currentLocation = ref(defaultLocation)
 const currentZoom = ref(9)
 
 const searchResultsStore = useSearchResultsStore()
 const mapRef = ref<{ map: google.maps.Map } | null>(null)
+const markerClusterRef = ref<typeof MarkerCluster | null>(null)
 const runtimeConfig = useRuntimeConfig()
 const bottomSheetStore = useBottomSheetStore()
 
+const markerIcons = ref<Record<string, string>>({})
+
+// Emit events for map movement
+const emit = defineEmits(['map-moved'])
+
 const isMapReady = ref(false)
 const { isLandscape } = useScreenOrientation()
+const { getPrimaryColor, getSecondaryColor, themeChanged } = useThemeColors()
 
-// Get the primary color from CSS variable (supports theming)
-const getPrimaryColor = (): string => {
-    if (typeof window === 'undefined') return '#0EB0C0' // fallback for SSR
+type Location = {
+    lat: number
+    lng: number
+}
 
-    const root = document.documentElement
-    const rgbValue = getComputedStyle(root).getPropertyValue('--color-primary').trim()
+interface ClusterData {
+    markers: unknown[]
+    marker?: google.maps.marker.AdvancedMarkerElement
+}
 
-    if (!rgbValue) return '#0EB0C0' // fallback to default teal
+interface MarkerClustererInstance {
+    clusters: ClusterData[]
+}
 
-    // Convert "14 176 192" to "#0EB0C0"
-    const [r, g, b] = rgbValue.split(' ').map(Number)
-    return `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}`
+const { track } = useUmami()
+
+// Base function to create pin icon with swappable center content
+const createPinIcon = (color: string, width: number, height: number, centerContent: string): string => {
+    // Use imported SVG template and replace placeholders
+    const svg = pinTemplate
+        .replace('{{PIN_COLOR}}', color)
+        .replace('{{CENTER_CONTENT}}', centerContent)
+        .replace('preserveAspectRatio="xMidYMid meet"', `width="${width}" height="${height}" preserveAspectRatio="xMidYMid meet"`)
+
+    return `data:image/svg+xml;base64,${window.btoa(svg)}`
+}
+
+const createMarkerIcon = (isActive: boolean): string => {
+    const width = 45
+    const height = 73
+    const color = isActive ? getSecondaryColor() : getPrimaryColor()
+
+    const heartIcon = `
+    <g transform="translate(50, 40)">
+        <path d="M0,5 C-2,-10 -19,-10 -19,2 C-19,14 0,29 0,29 C0,29 19,14 19,2 C19,-10 2,-10 0,5 Z" fill="${color}"/>
+        <rect x="10" y="-3" width="4" height="12" fill="white"/>
+        <rect x="5" y="2" width="12" height="4" fill="white"/>
+    </g>`
+
+    return createPinIcon(color, width, height, heartIcon)
+}
+
+const renderMarkerIcon = (locationId: string): string => markerIcons.value[locationId] ?? createMarkerIcon(false)
+
+const renderMarkerIcons = () => {
+    const activeId = searchResultsStore.activeFacility?.id
+    const icons: Record<string, string> = {}
+
+    for (const location of searchResultsStore.searchResultsList) {
+        icons[location.id] = createMarkerIcon(location.id === activeId)
+    }
+    markerIcons.value = icons
+}
+
+// Build cluster marker content element
+const createClusterMarkerContent = (count: number): HTMLDivElement => {
+    const width = 45
+    const height = 73
+    const content = document.createElement('div')
+    content.innerHTML = `
+        <img
+            src="${createClusterIcon(count, width, height)}"
+            class="block h-18 w-20"
+        />
+    `
+    return content
+}
+
+// Update existing cluster markers with new themed icons
+const renderClusterMarkerIcons = () => {
+    const markerClusterInstance = (markerClusterRef.value as { markerCluster?: MarkerClustererInstance })?.markerCluster
+    if (!markerClusterInstance?.clusters) return
+
+    for (const cluster of markerClusterInstance.clusters) {
+        // Only update actual clusters (2+ markers), not single markers
+        if (cluster.marker && cluster.markers.length > 1) {
+            cluster.marker.content = createClusterMarkerContent(cluster.markers.length)
+        }
+    }
+}
+
+// Note: Inline SVG generation is required because Google Maps markers need data URIs
+// with dynamic values (count, fontSize, primaryColor) that can't be set with CSS classes
+const createClusterIcon = (count: number, width: number, height: number) => {
+    // match font size based on the zoom size of the map and number of digits
+    const digits = String(count).length
+    const fontSize = Math.max(14, Math.round(height * (digits <= 2 ? 0.42 : digits === 3 ? 0.28 : 0.23)))
+    const primaryColor = getPrimaryColor()
+
+    // Number text centered in the white circle
+    const numberContent = `<text x="49.5" y="49.5" text-anchor="middle" dominant-baseline="middle"
+                font-family="Inter, Arial, sans-serif" font-weight="700"
+                font-size="${fontSize}" fill="${primaryColor}">${count}</text>`
+
+    return createPinIcon(primaryColor, width, height, numberContent)
 }
 
 const clusterRenderer = {
-    render: ({ count, position }: { count: number, position: google.maps.LatLng | google.maps.LatLngLiteral }) => {
-        // Match SVGMapPin dimensions
-        const width = 45
-        const height = 73
+    render: (
+        cluster: { count: number, position: google.maps.LatLng },
+        _stats: unknown,
+        _map: google.maps.Map
+    ): google.maps.marker.AdvancedMarkerElement => {
+        const { count, position } = cluster
 
-        return new window.google.maps.Marker({
+        const AdvancedMarkerElement = window.google?.maps?.marker?.AdvancedMarkerElement
+        if (!AdvancedMarkerElement) {
+            throw new Error('AdvancedMarkerElement not available')
+        }
+
+        return new AdvancedMarkerElement({
             position,
-            icon: {
-                url: createClusterIcon(count, width, height),
-                scaledSize: new window.google.maps.Size(width, height),
-                anchor: new window.google.maps.Point(width / 2, height / 2)
-            },
-            zIndex: Number(window.google.maps.Marker.MAX_ZINDEX) + count
+            content: createClusterMarkerContent(count),
+            zIndex: 1000000 + count,
+            title: `Cluster of ${count}`
         })
     }
 }
 
-// Creates a dynamic cluster icon for Google Maps markers
-// Note: Inline SVG generation is required because Google Maps markers need data URIs
-// with dynamic values (count, fontSize, primaryColor) that can't be set with CSS classes
-const createClusterIcon = (count: number, width: number, height: number) => {
-    const digits = String(count).length
-    const fontSize = Math.max(14, Math.round(height * (digits <= 2 ? 0.35 : digits === 3 ? 0.28 : 0.23)))
-    const primaryColor = getPrimaryColor()
-
-    const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 99 144" width="${width}" height="${height}" preserveAspectRatio="xMidYMid meet">
-        <g filter="url(#filter0_d_335_7363)">
-          <path d="M88 44.9073C88 65.0221 66.2265 101.883 52.2449 126.204C51.0586 128.268 48.0455 128.212 46.9163 126.116C33.705 101.6 11 65.0108 11 44.9073C11 23.4194 28.237 6 49.5 6C70.763 6 88 23.4194 88 44.9073Z" fill="${primaryColor}"/>
-          <ellipse cx="49.5001" cy="46.5626" rx="25.3936" ry="25.6623" fill="white"/>
-          <text x="49.5" y="46.5626" text-anchor="middle" dominant-baseline="middle"
-                font-family="Inter, Arial, sans-serif" font-weight="700"
-                font-size="${fontSize}" fill="${primaryColor}">${count}</text>
-        </g>
-        <defs>
-          <filter id="filter0_d_335_7363" x="0" y="0" width="99" height="147" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-            <feFlood flood-opacity="0" result="BackgroundImageFix"/>
-            <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-            <feMorphology radius="1" operator="erode" in="SourceAlpha" result="effect1_dropShadow_335_7363"/>
-            <feOffset dy="5"/>
-            <feGaussianBlur stdDeviation="6"/>
-            <feComposite in2="hardAlpha" operator="out"/>
-            <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.1 0"/>
-            <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_335_7363"/>
-            <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_335_7363" result="shape"/>
-          </filter>
-        </defs>
-      </svg>`
-
-    return `data:image/svg+xml;base64,${window.btoa(svg)}`
-}
+// Re-render icons when theme changes or active facility changes
+watch(themeChanged, () => {
+    renderMarkerIcons()
+    nextTick(renderClusterMarkerIcons)
+})
+watch(() => searchResultsStore.activeFacility, renderMarkerIcons)
 
 // UX hack: When the map is moved from search results, we don't want to minimize the bottom sheet
 // This is because the map movement is triggered by the search results list changing,
 // which is also triggered by the bottom sheet opening
 const isMapMovingFromSearchResults = ref(false)
 
-// Emit events for map movement
-const emit = defineEmits(['map-moved'])
-
-const handlePinClick = (resultId: string, event?: MouseEvent) => {
-    event?.stopPropagation() // Prevent the map click event
-
+const handlePinClick = (resultId: string) => {
     //Let's show the result details
     searchResultsStore.setActiveFacility(resultId)
     bottomSheetStore.showBottomSheet(BottomSheetType.SearchResultDetails)
@@ -157,9 +225,12 @@ const handlePinClick = (resultId: string, event?: MouseEvent) => {
     nextTick(() => {
         setLocation(currentLocation.value.lat, currentLocation.value.lng)
     })
+    track('Map Pin Clicked', {
+        facilityId: resultId
+    })
 }
 
-const handleMapClick = (_event: google.maps.MapMouseEvent) => {
+const handleMapClick = () => {
     // Close the panel if a facility is active
     if (searchResultsStore.activeFacilityId) {
         bottomSheetStore.showBottomSheet(BottomSheetType.SearchResultsList)
@@ -295,9 +366,9 @@ const calculateOffset = (zoomLevel: number) => {
     return latOffset
 }
 
-const calculateAvgCenter = (coordinates: { lat: number, lng: number }[]) => {
+const calculateAvgCenter = (coordinates: { lat: number, lng: number }[]): Location => {
     if (coordinates.length === 0) return defaultLocation
-    if (coordinates.length === 1) return coordinates[0]
+    if (coordinates.length === 1) return coordinates[0] as Location
 
     const avgLat = coordinates.reduce((sum, coord) => sum + coord.lat, 0) / coordinates.length
     const avgLng = coordinates.reduce((sum, coord) => sum + coord.lng, 0) / coordinates.length

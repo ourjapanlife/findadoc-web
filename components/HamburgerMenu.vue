@@ -33,7 +33,7 @@
                         >
                             <div class="flex">
                                 <div
-                                    class="flex flex-col flex-shrink-0 title-text"
+                                    class="flex flex-col shrink-0 title-text"
                                     data-testid="logo"
                                 >
                                     <div class="text-lg font-semibold text-primary-text group-hover:text-primary-hover">

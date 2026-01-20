@@ -36,7 +36,7 @@
                     <div
                         v-for="(spokenLanguage, index) in formattedLanguages"
                         :key="index"
-                        class="px-2 py-[1px] mr-2 border border-primary/40 rounded-full shadow text-sm
+                        class="px-2 py-1 mr-2 border border-primary/40 rounded-full shadow text-sm
                         hover:bg-primary/20 transition-all text-primary-text"
                     >
                         {{ spokenLanguage }}
