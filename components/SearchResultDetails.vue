@@ -1,6 +1,8 @@
 <template>
     <!-- Result Details -->
-    <div class="result-details landscape:min-w-[480px] pt-5 landscape:pt-0">
+    <div
+        class="result-details landscape:min-w-[480px] pt-5 landscape:pt-0 pb-[50vh] md:pb-2"
+    >
         <!-- Banner -->
         <div class="header flex flex-1 bg-primary bg-gradient-to-r from-primary to-secondary">
             <SVGDoctorsBanner
