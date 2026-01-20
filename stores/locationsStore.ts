@@ -87,7 +87,7 @@ export const listPrefectureJapanEn: Prefecture[] = [
     Prefecture.Miyazaki, Prefecture.Kagoshima, Prefecture.Okinawa
 ]
 
-export const prefectureLanguageMatch: Record<Prefecture, { en: string, jp: string }> = {
+export const prefectureDisplayName: Record<Prefecture, { en: string, jp: string }> = {
     [Prefecture.Hokkaido]: { en: 'Hokkaido', jp: '北海道' },
     [Prefecture.Aomori]: { en: 'Aomori', jp: '青森県' },
     [Prefecture.Iwate]: { en: 'Iwate', jp: '岩手県' },
