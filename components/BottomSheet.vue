@@ -277,7 +277,6 @@ const setPosition = (position: number) => {
 }
 
 let hammerMainInstance: HammerManager | null = null
-// let hammerAreaInstance: HammerManager | null = null
 
 onMounted(() => {
     initHeight()
@@ -293,7 +292,6 @@ onMounted(() => {
         newAreaInstance.on('panstart panup pandown panend', (e: HammerInput) => {
             dragHandler(e, 'draghandle')
         })
-        // hammerAreaInstance = newAreaInstance
     }
     if (bottomSheetMain.value) {
         const newMainInstance = new Hammer(bottomSheetMain.value, {
