@@ -9,6 +9,7 @@
         :z-index="0"
         :initial-position="50"
         :custom-positions="[80, 50, 25]"
+        :can-scroll="isScrollingEnabled"
         @dragging-content="handleDraggingContent"
     >
         <!-- Close button -->
@@ -39,10 +40,11 @@
         <!-- Bottom Sheet Content -->
         <!-- We want to share the same bottom sheet to keep the UX smooth -->
         <!-- We use v-show here for components that we don't re-running queries every time  -->
-        <SearchResultDetails v-if="bottomSheetStore.bottomSheetType === BottomSheetType.SearchResultDetails" />
+        <SearchResultDetails
+            v-if="bottomSheetStore.bottomSheetType === BottomSheetType.SearchResultDetails"
+        />
         <SearchResultsList
             v-show="bottomSheetStore.bottomSheetType === BottomSheetType.SearchResultsList"
-            @scrolled="handleDraggingContent"
         />
         <FiltersPanel v-show="bottomSheetStore.bottomSheetType === BottomSheetType.FiltersPanel" />
     </BottomSheet>
@@ -63,6 +65,7 @@ const searchResultsStore = useSearchResultsStore()
 // Refs
 const bottomSheetRef = ref<typeof BottomSheet | null>(null)
 const showCloseButton = ref(false)
+const isScrollingEnabled = ref(false)
 const beforeMinimizedPosition = ref(75)
 
 //Vue Event Handlers
@@ -97,6 +100,7 @@ watch(() => bottomSheetStore.bottomSheetType, newType => {
             beforeMinimizedPosition.value = 50
             showCloseButton.value = true
             bottomSheetStore.isMinimized = false
+            isScrollingEnabled.value = false
             break
     }
 })
@@ -104,6 +108,7 @@ watch(() => bottomSheetStore.bottomSheetType, newType => {
 watch(() => bottomSheetStore.isMinimized, isMinimized => {
     if (isMinimized) {
         bottomSheetRef.value?.setPosition(80)
+        isScrollingEnabled.value = false
     } else {
         bottomSheetRef.value?.setPosition(beforeMinimizedPosition.value)
     }
@@ -114,12 +119,37 @@ const resetSheet = () => {
     bottomSheetStore.showBottomSheet(BottomSheetType.SearchResultsList)
     // We want to clear the active result on the map and list
     searchResultsStore.clearActiveSearchResult()
+    isScrollingEnabled.value = false
 }
 
-const handleDraggingContent = () => {
-    // If the user is dragging up on minimized sheet, expand the sheet so they can see more
-    bottomSheetStore.isMinimized = false
-    beforeMinimizedPosition.value = 25
-    bottomSheetRef.value?.setPosition(25)
+const handleDraggingContent = (bottomSheetPosition: number) => {
+    switch (bottomSheetStore.bottomSheetType) {
+        case BottomSheetType.SearchResultDetails:
+            // If the user is dragging up on minimized sheet, expand the sheet so they can see more
+            bottomSheetStore.isMinimized = false
+            beforeMinimizedPosition.value = 25
+            bottomSheetRef.value?.setPosition(25)
+
+            // don't allow scrolling until the sheet is expanded
+            if (bottomSheetPosition > 25) {
+                isScrollingEnabled.value = false
+            } else {
+                isScrollingEnabled.value = true
+                return
+            }
+
+            break
+
+        case BottomSheetType.SearchResultsList:
+            isScrollingEnabled.value = true
+
+            // If the user is dragging up on minimized sheet, expand the sheet so they can see more
+            bottomSheetStore.isMinimized = false
+            beforeMinimizedPosition.value = 25
+            bottomSheetRef.value?.setPosition(25)
+            break
+        default:
+            break
+    }
 }
 </script>

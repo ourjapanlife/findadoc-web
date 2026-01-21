@@ -22,7 +22,7 @@
             </transition>
             <div
                 ref="bottomSheetContent"
-                class="fixed inset-0 flex flex-col mx-1 rounded-t-2xl bg-primary-bg overflow-y-hidden
+                class="fixed inset-0 flex flex-col mx-1 rounded-t-2xl bg-primary-bg overflow-x-hidden
                     box-border pointer-events-auto"
                 :style="{
                     transform: `translate3d(0, ${translateValue}%, 0)`,
@@ -38,7 +38,7 @@
                 </header>
                 <main
                     ref="bottomSheetMain"
-                    class="flex flex-col grow overflow-y-auto box-border touch-pan-y"
+                    class="flex flex-col grow overflow-y-auto box-border"
                 >
                     <slot />
                 </main>
@@ -66,6 +66,7 @@ interface IProps {
     overlayClickClose?: boolean
     canSwipe?: boolean
     canSwipeClose?: boolean
+    canScroll?: boolean
     zIndex?: number
 }
 
@@ -94,13 +95,14 @@ const props = withDefaults(defineProps<IProps>(), {
     overlayClickClose: true,
     canSwipe: true,
     canSwipeClose: true,
+    canScroll: false,
     zIndex: 99999
 })
 
 /**
    * Bottom sheet emit interface
    */
-const emit = defineEmits(['opened', 'closed', 'dragging-up', 'dragging-down', 'dragging-content'])
+const emit = defineEmits(['opened', 'closed', 'dragging-up', 'dragging-down', 'dragging-content', 'scrolled'])
 
 /**
    * Show or hide sheet
@@ -174,7 +176,7 @@ const dragHandler = (event: HammerInput | IEvent, type: 'draghandle' | 'dragcont
     if (type === 'dragcontent') {
         // If the user is dragging the content, emit an event so the parent can handle it
         // We don't handle content dragging or scrolling here because it can have nested scrollable content
-        emit('dragging-content')
+        emit('dragging-content', translateValue.value)
         return
     }
 
@@ -274,6 +276,8 @@ const setPosition = (position: number) => {
     }
 }
 
+let hammerMainInstance: HammerManager | null = null
+
 onMounted(() => {
     initHeight()
 
@@ -281,24 +285,32 @@ onMounted(() => {
      * Create instances of Hammerjs
      */
     if (bottomSheetDraggableArea.value) {
-        const hammerAreaInstance = new Hammer(bottomSheetDraggableArea.value, {
+        const newAreaInstance = new Hammer(bottomSheetDraggableArea.value, {
             inputClass: Hammer.TouchMouseInput,
             recognizers: [[Hammer.Pan, { direction: Hammer.DIRECTION_VERTICAL }]]
         })
-        hammerAreaInstance.on('panstart panup pandown panend', (e: HammerInput) => {
+        newAreaInstance.on('panstart panup pandown panend', (e: HammerInput) => {
             dragHandler(e, 'draghandle')
         })
     }
-
     if (bottomSheetMain.value) {
-        const hammerMainInstance = new Hammer(bottomSheetMain.value, {
+        const newMainInstance = new Hammer(bottomSheetMain.value, {
             inputClass: Hammer.TouchMouseInput,
             recognizers: [[Hammer.Pan, { direction: Hammer.DIRECTION_VERTICAL }]]
         })
-        hammerMainInstance.on('panstart panup pandown panend', (e: HammerInput) => {
+        newMainInstance.on('panstart panup pandown panend', (e: HammerInput) => {
             dragHandler(e, 'dragcontent')
         })
+        hammerMainInstance = newMainInstance
+        // Sets initial state based on canScroll prop
+        const pan = hammerMainInstance?.get('pan')
+        pan?.set({ enable: !props.canScroll })
     }
+})
+
+watch(() => props.canScroll, newCanScrollValue => {
+    const pan = hammerMainInstance?.get('pan')
+    pan?.set({ enable: !newCanScrollValue })
 })
 
 /**

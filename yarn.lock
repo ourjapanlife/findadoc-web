@@ -10094,7 +10094,7 @@ __metadata:
     vue-server-renderer: "npm:^2.7.16"
     vue-template-compiler: "npm:^2.7.16"
     vue-toastification: "npm:^2.0.0-rc.5"
-    vue3-google-map: "npm:^0.26.0"
+    vue3-google-map: "npm:^0.27.0"
   languageName: unknown
   linkType: soft
 
@@ -17941,9 +17941,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vue3-google-map@npm:^0.26.0":
-  version: 0.26.0
-  resolution: "vue3-google-map@npm:0.26.0"
+"vue3-google-map@npm:^0.27.0":
+  version: 0.27.0
+  resolution: "vue3-google-map@npm:0.27.0"
   dependencies:
     "@googlemaps/js-api-loader": "npm:^2.0.1"
     "@googlemaps/markerclusterer": "npm:^2.4.0"
@@ -17951,7 +17951,7 @@ __metadata:
     lodash-es: "npm:^4.17.21"
   peerDependencies:
     vue: ^3
-  checksum: 10/810477c1d2be6d02c8004dd8ceca3a82c2c12b1135dd5c063935ebc640f8f04499b0ba0abd3a2d452af326c57b01318fd1aa7b12ed8148d6be90473f55d74a33
+  checksum: 10/a3f752371fb43c97c9746c1199ac43083386ecd8c3a6b4c4c13480d5e2c8e75a1f5ae1163e20c961b7bd2a7ab27ae70823885d4f2b450bfbfee8dc43c148c856
   languageName: node
   linkType: hard
 
