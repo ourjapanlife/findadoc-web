@@ -5,7 +5,7 @@ import { gqlClient } from '../utils/graphql.js'
 import { useLoadingStore } from './loadingStore.js'
 import type { Facility, FacilitySearchFilters } from '~/typedefs/gqlTypes.js'
 import { useTranslation } from '~/composables/useTranslation.js'
-import { City, Region, Prefecture } from '~/typedefs/locationEnums.js'
+import { City, Region, Prefecture } from '~/typedefs/locationTypes.js'
 
 export const useLocationsStore = defineStore('locationsStore', () => {
     const allCitiesEnglishList = ref<string[]>([])
@@ -72,25 +72,6 @@ const searchFacilitiesQuery = gql`query QueryFacilities($filters: FacilitySearch
     }
 }
 `
-export const regionsEnum: Region[] = [
-    Region.Hokkaido, Region.Tohoku, Region.Kanto, Region.Chubu, Region.Kansai, Region.Chugoku,
-    Region.Shikoku, Region.Kyushu, Region.Okinawa
-]
-
-export const prefecturesEnum: Prefecture[] = [
-    Prefecture.Hokkaido, Prefecture.Aomori, Prefecture.Iwate, Prefecture.Miyagi,
-    Prefecture.Akita, Prefecture.Yamagata, Prefecture.Fukushima, Prefecture.Ibaraki,
-    Prefecture.Tochigi, Prefecture.Gunma, Prefecture.Saitama, Prefecture.Chiba,
-    Prefecture.Tokyo, Prefecture.Kanagawa, Prefecture.Niigata, Prefecture.Toyama,
-    Prefecture.Ishikawa, Prefecture.Fukui, Prefecture.Yamanashi, Prefecture.Nagano,
-    Prefecture.Gifu, Prefecture.Shizuoka, Prefecture.Aichi, Prefecture.Mie,
-    Prefecture.Shiga, Prefecture.Kyoto, Prefecture.Osaka, Prefecture.Hyogo,
-    Prefecture.Nara, Prefecture.Wakayama, Prefecture.Tottori, Prefecture.Shimane,
-    Prefecture.Okayama, Prefecture.Hiroshima, Prefecture.Yamaguchi, Prefecture.Tokushima,
-    Prefecture.Kagawa, Prefecture.Ehime, Prefecture.Kochi, Prefecture.Fukuoka,
-    Prefecture.Saga, Prefecture.Nagasaki, Prefecture.Kumamoto, Prefecture.Oita,
-    Prefecture.Miyazaki, Prefecture.Kagoshima, Prefecture.Okinawa
-]
 
 // DisplayName for each
 export const regionDisplayName: Record<Region, { en: string, ja: string }> = {

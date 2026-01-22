@@ -59,10 +59,29 @@ export enum Prefecture {
     Kagoshima = 'KAGOSHIMA',
     Okinawa = 'OKINAWA'
 }
-// typedefs/cityEnums.ts
-// Complete enum of all Japanese cities organized by prefecture
-// Total: ~790 cities across all 47 prefectures
 
+// Arrays
+export const regionsEnum: Region[] = [
+    Region.Hokkaido, Region.Tohoku, Region.Kanto, Region.Chubu, Region.Kansai, Region.Chugoku,
+    Region.Shikoku, Region.Kyushu, Region.Okinawa
+]
+
+export const prefecturesEnum: Prefecture[] = [
+    Prefecture.Hokkaido, Prefecture.Aomori, Prefecture.Iwate, Prefecture.Miyagi,
+    Prefecture.Akita, Prefecture.Yamagata, Prefecture.Fukushima, Prefecture.Ibaraki,
+    Prefecture.Tochigi, Prefecture.Gunma, Prefecture.Saitama, Prefecture.Chiba,
+    Prefecture.Tokyo, Prefecture.Kanagawa, Prefecture.Niigata, Prefecture.Toyama,
+    Prefecture.Ishikawa, Prefecture.Fukui, Prefecture.Yamanashi, Prefecture.Nagano,
+    Prefecture.Gifu, Prefecture.Shizuoka, Prefecture.Aichi, Prefecture.Mie,
+    Prefecture.Shiga, Prefecture.Kyoto, Prefecture.Osaka, Prefecture.Hyogo,
+    Prefecture.Nara, Prefecture.Wakayama, Prefecture.Tottori, Prefecture.Shimane,
+    Prefecture.Okayama, Prefecture.Hiroshima, Prefecture.Yamaguchi, Prefecture.Tokushima,
+    Prefecture.Kagawa, Prefecture.Ehime, Prefecture.Kochi, Prefecture.Fukuoka,
+    Prefecture.Saga, Prefecture.Nagasaki, Prefecture.Kumamoto, Prefecture.Oita,
+    Prefecture.Miyazaki, Prefecture.Kagoshima, Prefecture.Okinawa
+]
+
+// Complete enum of all Japanese cities organized by prefecture
 export enum City {
     // HOKKAIDO (31 cities)
     HokkaidoSapporo = 'HOKKAIDO_SAPPORO', HokkaidoHakodate = 'HOKKAIDO_HAKODATE', HokkaidoAsahikawa = 'HOKKAIDO_ASAHIKAWA',
