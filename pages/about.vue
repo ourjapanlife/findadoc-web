@@ -13,7 +13,8 @@
             />
             <h1
                 data-testid="about-hero-heading"
-                class="mb-12 font-bold text-4xl text-primary-text text-center z-10"
+                class="mb-12 font-bold text-4xl text-primary-text text-center z-10" 
+                
             >
                 {{ t("about.heroHeading") }}
             </h1>
