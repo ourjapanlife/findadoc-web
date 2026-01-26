@@ -81,6 +81,76 @@ export const prefecturesEnum: Prefecture[] = [
     Prefecture.Miyazaki, Prefecture.Kagoshima, Prefecture.Okinawa
 ]
 
+// Region to prefecture here. Prefecture to city after City enum below.
+export const regionsToPrefecturesMap: Record<Region, Prefecture[]> = {
+    [Region.Hokkaido]: [Prefecture.Hokkaido],
+    [Region.Tohoku]: [
+        Prefecture.Aomori,
+        Prefecture.Iwate,
+        Prefecture.Miyagi,
+        Prefecture.Akita,
+        Prefecture.Yamagata,
+        Prefecture.Fukushima
+    ],
+    [Region.Kanto]: [
+        Prefecture.Ibaraki,
+        Prefecture.Ibaraki,
+        Prefecture.Tochigi,
+        Prefecture.Gunma,
+        Prefecture.Saitama,
+        Prefecture.Chiba,
+        Prefecture.Tokyo,
+        Prefecture.Kanagawa
+    ],
+    [Region.Chubu]: [
+        Prefecture.Niigata,
+        Prefecture.Toyama,
+        Prefecture.Ishikawa,
+        Prefecture.Fukui,
+        Prefecture.Yamanashi,
+        Prefecture.Nagano,
+        Prefecture.Gifu,
+        Prefecture.Shizuoka,
+        Prefecture.Aichi
+    ],
+    [Region.Kansai]: [
+        Prefecture.Mie,
+        Prefecture.Shiga,
+        Prefecture.Kyoto,
+        Prefecture.Osaka,
+        Prefecture.Hyogo,
+        Prefecture.Nara,
+        Prefecture.Wakayama
+    ],
+    [Region.Chugoku]: [
+        Prefecture.Tottori,
+        Prefecture.Shimane,
+        Prefecture.Okayama,
+        Prefecture.Hiroshima,
+        Prefecture.Yamaguchi
+    ],
+    [Region.Shikoku]: [
+        Prefecture.Tokushima,
+        Prefecture.Kagawa,
+        Prefecture.Ehime,
+        Prefecture.Kochi
+    ],
+    [Region.Kyushu]: [
+        Prefecture.Fukuoka,
+        Prefecture.Saga,
+        Prefecture.Nagasaki,
+        Prefecture.Kumamoto,
+        Prefecture.Oita,
+        Prefecture.Miyazaki,
+        Prefecture.Kagoshima
+    ],
+    [Region.Okinawa]: [Prefecture.Okinawa]
+}
+// Helper function to get prefectures by region
+export function getPrefecturesByRegion(region: Region): Prefecture[] {
+    return regionsToPrefecturesMap[region]
+}
+
 // Complete enum of all Japanese cities organized by prefecture
 export enum City {
     // HOKKAIDO (31 cities)
@@ -460,4 +530,418 @@ export enum City {
     OkinawaUrasoe = 'OKINAWA_URASOE', OkinawaItoman = 'OKINAWA_ITOMAN', OkinawaOkinawa = 'OKINAWA_OKINAWA',
     OkinawaTomigusuku = 'OKINAWA_TOMIGUSUKU', OkinawaUruma = 'OKINAWA_URUMA', OkinawaMiyakojima = 'OKINAWA_MIYAKOJIMA',
     OkinawaNanjo = 'OKINAWA_NANJO', OkinawaNago = 'OKINAWA_NAGO'
+}
+
+// Prefectures to cities array
+// Maps each prefecture to its cities
+export const prefecturesToCitiesMap: Record<Prefecture, City[]> = {
+    // HOKKAIDO
+    [Prefecture.Hokkaido]: [
+        City.HokkaidoSapporo, City.HokkaidoHakodate, City.HokkaidoAsahikawa, City.HokkaidoKushiro,
+        City.HokkaidoObihiro, City.HokkaidoKitami, City.HokkaidoOtaru, City.HokkaidoMuroran,
+        City.HokkaidoTomakomai, City.HokkaidoWakkanai, City.HokkaidoNayoro, City.HokkaidoBibai,
+        City.HokkaidoAshibetsu, City.HokkaidoEbetsu, City.HokkaidoAkabira, City.HokkaidoMonbetsu,
+        City.HokkaidoShibetsu, City.HokkaidoNemuro, City.HokkaidoChitose, City.HokkaidoTakikawa,
+        City.HokkaidoSunagawa, City.HokkaidoUtashinai, City.HokkaidoFukagawa, City.HokkaidoFurano,
+        City.HokkaidoNoboribetsu, City.HokkaidoEniwa, City.HokkaidoDate, City.HokkaidoKitahiroshima,
+        City.HokkaidoIshikari, City.HokkaidoHokuto
+    ],
+
+    // AOMORI
+    [Prefecture.Aomori]: [
+        City.AomoriAomori, City.AomoriHirosaki, City.AomoriHachinohe, City.AomoriGoshogawara,
+        City.AomoriTowada, City.AomoriMisawa, City.AomoriKuroishi, City.AomoriMutsu,
+        City.AomoriTsugaru, City.AomoriHirakawa
+    ],
+
+    // IWATE
+    [Prefecture.Iwate]: [
+        City.IwateMorioka, City.IwateMiyako, City.IwateOfunato, City.IwateHanamaki,
+        City.IwateKitakami, City.IwateKuji, City.IwateTono, City.IwateIchinoseki,
+        City.IwateRikuzentakata, City.IwateKamaishi, City.IwateNinohe, City.IwateHachimantai,
+        City.IwateOshu, City.IwateTakizawa
+    ],
+
+    // MIYAGI
+    [Prefecture.Miyagi]: [
+        City.MiyagiSendai, City.MiyagiIshinomaki, City.MiyagiShiogama, City.MiyagiKesennuma,
+        City.MiyagiShiroishi, City.MiyagiNatori, City.MiyagiKakuda, City.MiyagiTagajo,
+        City.MiyagiIwanuma, City.MiyagiTomiya, City.MiyagiOsaki, City.MiyagiKurihara,
+        City.MiyagiHigashimatsushima, City.MiyagiWatari
+    ],
+
+    // AKITA
+    [Prefecture.Akita]: [
+        City.AkitaAkita, City.AkitaNoshiro, City.AkitaYokote, City.AkitaOdate,
+        City.AkitaOga, City.AkitaYuzawa, City.AkitaKatagami, City.AkitaDaisen,
+        City.AkitaKitaakita, City.AkitaSemboku, City.AkitaNikaho
+    ],
+
+    // YAMAGATA
+    [Prefecture.Yamagata]: [
+        City.YamagataYamagata, City.YamagataYonezawa, City.YamagataTsuruoka, City.YamagataSakata,
+        City.YamagataShinjo, City.YamagataSagae, City.YamagataKaminoyama, City.YamagataMurayama,
+        City.YamagataNagai, City.YamagataTendo, City.YamagataHigashine, City.YamagataObanazawa,
+        City.YamagataNanyo
+    ],
+
+    // FUKUSHIMA
+    [Prefecture.Fukushima]: [
+        City.FukushimaFukushima, City.FukushimaAizuwakamatsu, City.FukushimaKoriyama, City.FukushimaIwaki,
+        City.FukushimaShirakawa, City.FukushimaSukagawa, City.FukushimaKitakata, City.FukushimaSoma,
+        City.FukushimaDate, City.FukushimaMotomiya, City.FukushimaNihonmatsu, City.FukushimaMinamisoma,
+        City.FukushimaTamura
+    ],
+
+    // IBARAKI
+    [Prefecture.Ibaraki]: [
+        City.IbarakiMito, City.IbarakiHitachi, City.IbarakiTsuchiura, City.IbarakiKoga,
+        City.IbarakiIshioka, City.IbarakiYuki, City.IbarakiRyugasaki, City.IbarakiShimotsuma,
+        City.IbarakiJoso, City.IbarakiHitachiota, City.IbarakiTakahagi, City.IbarakiKitaibaraki,
+        City.IbarakiKasama, City.IbarakiToride, City.IbarakiUshiku, City.IbarakiTsukuba,
+        City.IbarakiHitachinaka, City.IbarakiKashima, City.IbarakiItako, City.IbarakiSakuragawa,
+        City.IbarakiKamisu, City.IbarakiBando, City.IbarakiInashiki, City.IbarakiKasumigaura,
+        City.IbarakiTsukubamirai, City.IbarakiOmitama
+    ],
+
+    // TOCHIGI
+    [Prefecture.Tochigi]: [
+        City.TochigiUtsunomiya, City.TochigiAshikaga, City.TochigiTochigi, City.TochigiSano,
+        City.TochigiKanuma, City.TochigiNikko, City.TochigiOyama, City.TochigiMooka,
+        City.TochigiOhtawara, City.TochigiYaita, City.TochigiNasushiobara, City.TochigiSakura,
+        City.TochigiNasukarasuyama, City.TochigiShimotsuke
+    ],
+
+    // GUNMA
+    [Prefecture.Gunma]: [
+        City.GunmaMaebashi, City.GunmaTakasaki, City.GunmaKiryu, City.GunmaIsesaki,
+        City.GunmaOta, City.GunmaNumata, City.GunmaTatebayashi, City.GunmaShibukawa,
+        City.GunmaFujioka, City.GunmaTomioka, City.GunmaAnnaka, City.GunmaMidori
+    ],
+
+    // SAITAMA
+    [Prefecture.Saitama]: [
+        City.SaitamaSaitama, City.SaitamaKawaguchi, City.SaitamaKawagoe, City.SaitamaKumagaya,
+        City.SaitamaGyoda, City.SaitamaChichibu, City.SaitamaTokorozawa, City.SaitamaHanno,
+        City.SaitamaKazo, City.SaitamaHonjo, City.SaitamaHigashimatsuyama, City.SaitamaKasukabe,
+        City.SaitamaSayama, City.SaitamaHanyu, City.SaitamaKonosu, City.SaitamaFukaya,
+        City.SaitamaAgeo, City.SaitamaKoshigaya, City.SaitamaWarabi, City.SaitamaToda,
+        City.SaitamaIruma, City.SaitamaAsaka, City.SaitamaShiki, City.SaitamaWako,
+        City.SaitamaNiiza, City.SaitamaOkegawa, City.SaitamaKuki, City.SaitamaKitamoto,
+        City.SaitamaYashio, City.SaitamaFujimi, City.SaitamaMisato, City.SaitamaHasuda,
+        City.SaitamaSakado, City.SaitamaSatte, City.SaitamaTsurugashima, City.SaitamaHidaka,
+        City.SaitamaYoshikawa, City.SaitamaFujimino, City.SaitamaSouka
+    ],
+
+    // CHIBA
+    [Prefecture.Chiba]: [
+        City.ChibaChiba, City.ChibaChoshi, City.ChibaIchikawa, City.ChibaFunabashi,
+        City.ChibaTateyama, City.ChibaKisarazu, City.ChibaMatsudo, City.ChibaNoda,
+        City.ChibaMobara, City.ChibaNarita, City.ChibaSakura, City.ChibaTogane,
+        City.ChibaAsahi, City.ChibaNarashino, City.ChibaKashiwa, City.ChibaKatsuura,
+        City.ChibaIchihara, City.ChibaNagareyama, City.ChibaYachiyo, City.ChibaAbiko,
+        City.ChibaKamogawa, City.ChibaKamagaya, City.ChibaKimitsu, City.ChibaFuttsu,
+        City.ChibaUrayasu, City.ChibaYotsukaido, City.ChibaSodegaura, City.ChibaYachimata,
+        City.ChibaInzai, City.ChibaShiroi, City.ChibaTomisato, City.ChibaMinamiboso,
+        City.ChibaSosa, City.ChibaKatori, City.ChibaSanmu, City.ChibaIsumi,
+        City.ChibaOamishirasato
+    ],
+
+    // TOKYO
+    [Prefecture.Tokyo]: [
+        City.TokyoChiyoda, City.TokyoChuo, City.TokyoMinato, City.TokyoShinjuku,
+        City.TokyoBunkyo, City.TokyoTaito, City.TokyoSumida, City.TokyoKoto,
+        City.TokyoShinagawa, City.TokyoMeguro, City.TokyoOta, City.TokyoSetagaya,
+        City.TokyoShibuya, City.TokyoNakano, City.TokyoSuginami, City.TokyoToshima,
+        City.TokyoKita, City.TokyoArakawa, City.TokyoItabashi, City.TokyoNerima,
+        City.TokyoAdachi, City.TokyoKatsushika, City.TokyoEdogawa, City.TokyoHachioji,
+        City.TokyoTachikawa, City.TokyoMusashino, City.TokyoMitaka, City.TokyoOme,
+        City.TokyoFuchu, City.TokyoAkishima, City.TokyoChofu, City.TokyoMachida,
+        City.TokyoKoganei, City.TokyoKodaira, City.TokyoHino, City.TokyoHigashimurayama,
+        City.TokyoKokubunji, City.TokyoKunitachi, City.TokyoFussa, City.TokyoKomae,
+        City.TokyoHigashiyamato, City.TokyoKiyose, City.TokyoHigashikurume, City.TokyoMusashimurayama,
+        City.TokyoTama, City.TokyoInagi, City.TokyoHamura, City.TokyoAkiruno,
+        City.TokyoNishitokyo
+    ],
+
+    // KANAGAWA
+    [Prefecture.Kanagawa]: [
+        City.KanagawaYokohama, City.KanagawaKawasaki, City.KanagawaSagamihara, City.KanagawaYokosuka,
+        City.KanagawaFujisawa, City.KanagawaHiratsuka, City.KanagawaKamakura, City.KanagawaChigasaki,
+        City.KanagawaAtsugi, City.KanagawaYamato, City.KanagawaOdawara, City.KanagawaIsehara,
+        City.KanagawaEbina, City.KanagawaZama, City.KanagawaZushi, City.KanagawaMinamiashigara,
+        City.KanagawaHadano
+    ],
+
+    // NIIGATA
+    [Prefecture.Niigata]: [
+        City.NiigataNiigata, City.NiigataJoetsu, City.NiigataKashiwazaki, City.NiigataShibata,
+        City.NiigataNagaoka, City.NiigataSanjo, City.NiigataOjiya, City.NiigataKamo,
+        City.NiigataTokamachi, City.NiigataMitsuke, City.NiigataMurakami, City.NiigataItoigawa,
+        City.NiigataSado, City.NiigataUonuma, City.NiigataMinamiuonuma, City.NiigataTsubame,
+        City.NiigataMyoko, City.NiigataGosen, City.NiigataAgano, City.NiigataTainai
+    ],
+
+    // TOYAMA
+    [Prefecture.Toyama]: [
+        City.ToyamaToyama, City.ToyamaTakaoka, City.ToyamaUozu, City.ToyamaHimi,
+        City.ToyamaNamerikawa, City.ToyamaKurobe, City.ToyamaTonami, City.ToyamaOyabe,
+        City.ToyamaNanto, City.ToyamaImizu
+    ],
+
+    // ISHIKAWA
+    [Prefecture.Ishikawa]: [
+        City.IshikawaKanazawa, City.IshikawaNanao, City.IshikawaKomatsu, City.IshikawaWajima,
+        City.IshikawaSuzu, City.IshikawaKaga, City.IshikawaHakui, City.IshikawaKahoku,
+        City.IshikawaHakusan, City.IshikawaNomi, City.IshikawaNoto
+    ],
+
+    // FUKUI
+    [Prefecture.Fukui]: [
+        City.FukuiFukui, City.FukuiTsuruga, City.FukuiObama, City.FukuiOno,
+        City.FukuiKatsuyama, City.FukuiSabae, City.FukuiAwara, City.FukuiEchizen,
+        City.FukuiSakai
+    ],
+
+    // YAMANASHI
+    [Prefecture.Yamanashi]: [
+        City.YamanashiKofu, City.YamanashiFujiyoshida, City.YamanashiTsuru, City.YamanashiYamanashi,
+        City.YamanashiOtsuki, City.YamanashiNirasaki, City.YamanashiMinamiArupusu, City.YamanashiHokuto,
+        City.YamanashiKai, City.YamanashiFuefuki, City.YamanashiUenohara, City.YamanashiKoshu,
+        City.YamanashiChuo
+    ],
+
+    // NAGANO
+    [Prefecture.Nagano]: [
+        City.NaganoNagano, City.NaganoMatsumoto, City.NaganoUeda, City.NaganoOkaya,
+        City.NaganoIida, City.NaganoSuwa, City.NaganoKomagane, City.NaganoIna,
+        City.NaganoKomoro, City.NaganoIiyama, City.NaganoSaku, City.NaganoChino,
+        City.NaganoOmachi, City.NaganoAzumino, City.NaganoShiojiri, City.NaganoTomi,
+        City.NaganoNakano, City.NaganoChikuma
+    ],
+
+    // GIFU
+    [Prefecture.Gifu]: [
+        City.GifuGifu, City.GifuOgaki, City.GifuTakayama, City.GifuTajimi,
+        City.GifuSeki, City.GifuNakatsugawa, City.GifuMino, City.GifuMizunami,
+        City.GifuHashima, City.GifuEna, City.GifuMinokamo, City.GifuToki,
+        City.GifuKakamigahara, City.GifuKani, City.GifuYamagata, City.GifuMizuho,
+        City.GifuHida, City.GifuMotosu, City.GifuGero, City.GifuKaizu
+    ],
+
+    // SHIZUOKA
+    [Prefecture.Shizuoka]: [
+        City.ShizuokaShizuoka, City.ShizuokaHamamatsu, City.ShizuokaNumazu, City.ShizuokaAtami,
+        City.ShizuokaMishima, City.ShizuokaFujinomiya, City.ShizuokaIto, City.ShizuokaShimada,
+        City.ShizuokaFuji, City.ShizuokaYaizu, City.ShizuokaKakegawa, City.ShizuokaFujieda,
+        City.ShizuokaGotemba, City.ShizuokaShimoda, City.ShizuokaSusono, City.ShizuokaKosai,
+        City.ShizuokaIzu, City.ShizuokaOmaezaki, City.ShizuokaKikugawa, City.ShizuokaIzunokuni,
+        City.ShizuokaMakinohara
+    ],
+
+    // AICHI
+    [Prefecture.Aichi]: [
+        City.AichiNagoya, City.AichiToyohashi, City.AichiOkazaki, City.AichiIchinomiya,
+        City.AichiSeto, City.AichiHanda, City.AichiKasugai, City.AichiToyokawa,
+        City.AichiTsushima, City.AichiHekinan, City.AichiKariya, City.AichiToyota,
+        City.AichiAnjo, City.AichiNishio, City.AichiGamagori, City.AichiInuyama,
+        City.AichiTokoname, City.AichiKonan, City.AichiKomaki, City.AichiInazawa,
+        City.AichiOwariasahi, City.AichiTakahama, City.AichiIwakura, City.AichiToyoake,
+        City.AichiNisshin, City.AichiTahara, City.AichiAisai, City.AichiKiyosu,
+        City.AichiKitanagoya, City.AichiYatomi, City.AichiMiyoshi, City.AichiAma,
+        City.AichiNagakute
+    ],
+
+    // MIE
+    [Prefecture.Mie]: [
+        City.MieTsu, City.MieYokkaichi, City.MieIse, City.MieMatsusaka,
+        City.MieKuwana, City.MieSuzuka, City.MieNabari, City.MieOwase,
+        City.MieKameyama, City.MieToba, City.MieKumano, City.MieInabe,
+        City.MieShima, City.MieIga
+    ],
+
+    // SHIGA
+    [Prefecture.Shiga]: [
+        City.ShigaOtsu, City.ShigaHikone, City.ShigaNagahama, City.ShigaOmihachiman,
+        City.ShigaKusatsu, City.ShigaMoriyama, City.ShigaRitto, City.ShigaKoka,
+        City.ShigaYasu, City.ShigaKonan, City.ShigaTakashima, City.ShigaHigashiomi,
+        City.ShigaMaibara
+    ],
+
+    // KYOTO
+    [Prefecture.Kyoto]: [
+        City.KyotoKyoto, City.KyotoFukuchiyama, City.KyotoMaizuru, City.KyotoAyabe,
+        City.KyotoUji, City.KyotoMiyazu, City.KyotoKameoka, City.KyotoJoyo,
+        City.KyotoMuko, City.KyotoNagaokakyo, City.KyotoYawata, City.KyotoKyotanabe,
+        City.KyotoKyotango, City.KyotoNantan, City.KyotoKizugawa
+    ],
+
+    // OSAKA
+    [Prefecture.Osaka]: [
+        City.OsakaOsaka, City.OsakaSakai, City.OsakaToyonaka, City.OsakaIkeda,
+        City.OsakaSuita, City.OsakaTakatsuki, City.OsakaKaizuka, City.OsakaMoriguchi,
+        City.OsakaHirakata, City.OsakaIbaraki, City.OsakaYao, City.OsakaIzumisano,
+        City.OsakaTondabayashi, City.OsakaNeyagawa, City.OsakaKawachinagano, City.OsakaMatsubara,
+        City.OsakaDaito, City.OsakaIzumi, City.OsakaMinoh, City.OsakaKashiwara,
+        City.OsakaHabikino, City.OsakaKadoma, City.OsakaSettsu, City.OsakaTakaishi,
+        City.OsakaFujiidera, City.OsakaHigashiosaka, City.OsakaSennan, City.OsakaShijonawate,
+        City.OsakaKatano, City.OsakaOsakasayama, City.OsakaHannan
+    ],
+
+    // HYOGO
+    [Prefecture.Hyogo]: [
+        City.HyogoKobe, City.HyogoHimeji, City.HyogoAmagasaki, City.HyogoAkashi,
+        City.HyogoNishinomiya, City.HyogoSumoto, City.HyogoAshiya, City.HyogoItami,
+        City.HyogoAioi, City.HyogoToyooka, City.HyogoKakogawa, City.HyogoAko,
+        City.HyogoNishiwaki, City.HyogoTakarazuka, City.HyogoMiki, City.HyogoTakasago,
+        City.HyogoKawanishi, City.HyogoOno, City.HyogoSanda, City.HyogoKasai,
+        City.HyogoSasayama, City.HyogoYabu, City.HyogoTamba, City.HyogoMinami,
+        City.HyogoAwaji, City.HyogoShiso, City.HyogoKato, City.HyogoTatsuno
+    ],
+
+    // NARA
+    [Prefecture.Nara]: [
+        City.NaraNara, City.NaraYamatokoriyama, City.NaraYamatotakada, City.NaraKashihara,
+        City.NaraSakurai, City.NaraGojo, City.NaraGose, City.NaraIkoma,
+        City.NaraKashiba, City.NaraKatsuragi, City.NaraUda, City.NaraTenri
+    ],
+
+    // WAKAYAMA
+    [Prefecture.Wakayama]: [
+        City.WakayamaWakayama, City.WakayamaKainan, City.WakayamaHashimoto, City.WakayamaArida,
+        City.WakayamaGobo, City.WakayamaTanabe, City.WakayamaShingu, City.WakayamaKinokawa,
+        City.WakayamaIwade
+    ],
+
+    // TOTTORI
+    [Prefecture.Tottori]: [
+        City.TottoriTottori, City.TottoriYonago, City.TottoriKurayoshi, City.TottoriBoundary
+    ],
+
+    // SHIMANE
+    [Prefecture.Shimane]: [
+        City.ShimaneMatsue, City.ShimaneHamada, City.ShimaneIzumo, City.ShimaneMasuda,
+        City.ShimaneOda, City.ShimaneYasugi, City.ShimaneGotsu, City.ShimaneUnnan
+    ],
+
+    // OKAYAMA
+    [Prefecture.Okayama]: [
+        City.OkayamaOkayama, City.OkayamaKurashiki, City.OkayamaTsuyama, City.OkayamaTamano,
+        City.OkayamaKasaoka, City.OkayamaIbara, City.OkayamaSoja, City.OkayamaTakahashi,
+        City.OkayamaNiimi, City.OkayamaBizen, City.OkayamaSetouchi, City.OkayamaAkaiwa,
+        City.OkayamaManiwa, City.OkayamaMimasaka, City.OkayamaAsakuchi
+    ],
+
+    // HIROSHIMA
+    [Prefecture.Hiroshima]: [
+        City.HiroshimaHiroshima, City.HiroshimaKure, City.HiroshimaTakehara, City.HiroshimaMihara,
+        City.HiroshimaOnoichi, City.HiroshimaFukuyama, City.HiroshimaFuchu, City.HiroshimaMiyoshi,
+        City.HiroshimaShobara, City.HiroshimaOtake, City.HiroshimaHigashihiroshima, City.HiroshimaHatsukaichi,
+        City.HiroshimaAkitakata, City.HiroshimaEtajima
+    ],
+
+    // YAMAGUCHI
+    [Prefecture.Yamaguchi]: [
+        City.YamaguchiShimonoseki, City.YamaguchiUbe, City.YamaguchiYamaguchi, City.YamaguchiHagi,
+        City.YamaguchiHofu, City.YamaguchiKudamatsu, City.YamaguchiIwakuni, City.YamaguchiHikari,
+        City.YamaguchiNagato, City.YamaguchiYanai, City.YamaguchiMine, City.YamaguchiShuto,
+        City.YamaguchiSanyo
+    ],
+
+    // TOKUSHIMA
+    [Prefecture.Tokushima]: [
+        City.TokushimaTokushima, City.TokushimaNaruto, City.TokushimaKomatsushima, City.TokushimaAnan,
+        City.TokushimaYoshinogawa, City.TokushimaAwa, City.TokushimaMima, City.TokushimaMiyoshi
+    ],
+
+    // KAGAWA
+    [Prefecture.Kagawa]: [
+        City.KagawaTakamatsu, City.KagawaMarugame, City.KagawaSakaide, City.KagawaZentuji,
+        City.KagawaKanonji, City.KagawaSanuki, City.KagawaHigashikagawa, City.KagawaMitoyo
+    ],
+
+    // EHIME
+    [Prefecture.Ehime]: [
+        City.EhimeMatsuyama, City.EhimeImabari, City.EhimeUwajima, City.EhimeYawatahama,
+        City.EhimeNiihama, City.EhimeSaijo, City.EhimeOzu, City.EhimeIyo,
+        City.EhimeSeiyo, City.EhimeToon, City.EhimeShikokuchuo
+    ],
+
+    // KOCHI
+    [Prefecture.Kochi]: [
+        City.KochiKochi, City.KochiMuroto, City.KochiAki, City.KochiNankoku,
+        City.KochiTosa, City.KochiSusaki, City.KochiSukumo, City.KochiTosashimizu,
+        City.KochiShimanto, City.KochiKonan, City.KochiKami
+    ],
+    // PART 5 (FINAL) - Continue and CLOSE the prefectureToCityMap object
+
+    // FUKUOKA
+    [Prefecture.Fukuoka]: [
+        City.FukuokaFukuoka, City.FukuokaKitakyushu, City.FukuokaOmuta, City.FukuokaKurume,
+        City.FukuokaNogata, City.FukuokaIizuka, City.FukuokaTagawa, City.FukuokaYanagawa,
+        City.FukuokaYame, City.FukuokaChikugo, City.FukuokaOkawa, City.FukuokaBuzen,
+        City.FukuokaNakagawa, City.FukuokaOgori, City.FukuokaChikushino, City.FukuokaKasuga,
+        City.FukuokaOnojo, City.FukuokaMunakata, City.FukuokaDazaifu, City.FukuokaKoga,
+        City.FukuokaFukutsu, City.FukuokaUkiha, City.FukuokaMiyawaka, City.FukuokaKama,
+        City.FukuokaAsakura, City.FukuokaMiyama, City.FukuokaItoshima
+    ],
+
+    // SAGA
+    [Prefecture.Saga]: [
+        City.SagaSaga, City.SagaKaratsu, City.SagaTosu, City.SagaTaku,
+        City.SagaImari, City.SagaKashima, City.SagaOgi, City.SagaUreshino,
+        City.SagaKanzaki
+    ],
+
+    // NAGASAKI
+    [Prefecture.Nagasaki]: [
+        City.NagasakiNagasaki, City.NagasakiSasebo, City.NagasakiShimabara, City.NagasakiIsahaya,
+        City.NagasakiOmura, City.NagasakiHirado, City.NagasakiMatsuura, City.NagasakiTsushima,
+        City.NagasakiIki, City.NagasakiGoto, City.NagasakiSaikai, City.NagasakiUnzen,
+        City.NagasakiMinamishimabara
+    ],
+
+    // KUMAMOTO
+    [Prefecture.Kumamoto]: [
+        City.KumamotoKumamoto, City.KumamotoYatsushiro, City.KumamotoHitoyoshi, City.KumamotoArao,
+        City.KumamotoTamana, City.KumamotoAmakusa, City.KumamotoYamaga, City.KumamotoKikuchi,
+        City.KumamotoUto, City.KumamotoKamiamakusa, City.KumamotoUki, City.KumamotoAsagiri,
+        City.KumamotoKosa
+    ],
+
+    // OITA
+    [Prefecture.Oita]: [
+        City.OitaOita, City.OitaBeppu, City.OitaNakatsu, City.OitaHita,
+        City.OitaSaiki, City.OitaUsuki, City.OitaTsukumi, City.OitaTaketa,
+        City.OitaBungotakada, City.OitaKitsuki, City.OitaUsa, City.OitaBungoono,
+        City.OitaYufu, City.OitaKunisaki
+    ],
+
+    // MIYAZAKI
+    [Prefecture.Miyazaki]: [
+        City.MiyazakiMiyazaki, City.MiyazakiMiyakonojo, City.MiyazakiNobeoka, City.MiyazakiNichinan,
+        City.MiyazakiKobayashi, City.MiyazakiHyuga, City.MiyazakiKushima, City.MiyazakiSaito,
+        City.MiyazakiEbino
+    ],
+
+    // KAGOSHIMA
+    [Prefecture.Kagoshima]: [
+        City.KagoshimaKagoshima, City.KagoshimaKanoya, City.KagoshimaMakurazaki, City.KagoshimaAkune,
+        City.KagoshimaIzumi, City.KagoshimaIbusuki, City.KagoshimaMinamikyu, City.KagoshimaSoo,
+        City.KagoshimaKirishima, City.KagoshimaIchikikushikino, City.KagoshimaSatsumasendai, City.KagoshimaHioki,
+        City.KagoshimaNishinoomote, City.KagoshimaTarumizu, City.KagoshimaSatsuma, City.KagoshimaAmami,
+        City.KagoshimaMinamikyushu, City.KagoshimaShiiba, City.KagoshimaAira
+    ],
+
+    // OKINAWA
+    [Prefecture.Okinawa]: [
+        City.OkinawaNaha, City.OkinawaGinowan, City.OkinawaIshigaki, City.OkinawaUrasoe,
+        City.OkinawaItoman, City.OkinawaOkinawa, City.OkinawaTomigusuku, City.OkinawaUruma,
+        City.OkinawaMiyakojima, City.OkinawaNanjo, City.OkinawaNago
+    ]
+}
+// Helper function to get cities by prefecture
+// EX. const tokyoCities = getCitiesByPrefecture(Prefectuture.Tokyo) -> [City.TokyoChiyoda...]
+export function getCititesByPrefecture(prefecture: Prefecture): City[] {
+    return prefecturesToCitiesMap[prefecture] || []
 }
