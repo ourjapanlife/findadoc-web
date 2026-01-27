@@ -105,11 +105,13 @@ import { ref, type Ref, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import SVGSearchIcon from '~/assets/icons/search-icon.svg'
 import { useSearchResultsStore } from '~/stores/searchResultsStore.js'
-import { useLocationsStore } from '~/stores/locationsStore.js'
+import { useLocationsStore, regionDisplayName, prefectureDisplayName, cityDisplayName } from '~/stores/locationsStore.js'
 import { useSpecialtiesStore } from '~/stores/specialtiesStore.js'
 import { useLocaleStore } from '~/stores/localeStore.js'
 import { type Specialty, Locale } from '~/typedefs/gqlTypes.js'
 import { BottomSheetType, useBottomSheetStore } from '~/stores/bottomSheetStore'
+import type { Region, Prefecture } from '~/typedefs/locationTypes'
+import { City, regionsEnum, prefecturesEnum, citiesEnum, regionsToPrefecturesMap, prefecturesToCitiesMap } from '~/typedefs/locationTypes'
 
 const { t } = useI18n()
 
@@ -126,6 +128,11 @@ const languageDropdownOptions: Ref<DropdownOption[]> = ref([])
 const selectedSpecialties: Ref<string> = ref('')
 const selectedLocations: Ref<string> = ref('')
 const selectedLanguages: Ref<string> = ref(localeStore.activeLocale.code)
+
+// Locations search rework. cities is string for API call
+const selectedRegion: Ref<Region | ''> = ref('')
+const selectedPrefecture: Ref<Prefecture | ''> = ref('')
+const selectedCity: Ref<string> = ref('')
 
 interface DropdownOption {
     displayText: string
