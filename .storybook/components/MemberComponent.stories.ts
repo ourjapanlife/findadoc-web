@@ -12,8 +12,8 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
     args: {
-        avatarImg: 'https://images.pexels.com/photos/1102341/pexels-photo-1102341.jpeg',
-        name: 'Samantha Carter',
+        avatarImg: '/public/avatars/andrew_leemhuis.jpg',
+        name: 'Andrew Leemhuis',
         title: 'Full stack developer',
         dataTestId: 1,
         githubUrl: '',
