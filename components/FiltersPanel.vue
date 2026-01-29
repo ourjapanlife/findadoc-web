@@ -132,7 +132,7 @@ const selectedLanguages: Ref<string> = ref(localeStore.activeLocale.code)
 // Locations search rework. cities is string for API call
 const selectedRegion: Ref<Region | ''> = ref('')
 const selectedPrefecture: Ref<Prefecture | ''> = ref('')
-// const selectedCity: Ref<string> = ref('')
+const selectedCity: Ref<string> = ref('')
 
 interface DropdownOption {
     displayText: string
@@ -181,6 +181,14 @@ const cityDropdownOptions = computed(() => {
         value: city,
         displayText: isEnglish ? cityDisplayName[city].en : cityDisplayName[city].ja
     }))
+})
+// Watch statement to prevent prefectures and cities that dont match
+watch(selectedRegion, () => {
+    selectedPrefecture.value = ''
+    selectedCity.value = ''
+})
+watch(selectedPrefecture, () => {
+    selectedCity.value = ''
 })
 
 function createLanguageDropdownOptions() {
