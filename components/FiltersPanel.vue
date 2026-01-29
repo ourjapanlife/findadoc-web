@@ -152,6 +152,20 @@ onMounted(async () => {
     createSpecialtyDropdownOptions()
 })
 
+const isEnglish = localeStore.activeLocale.code === Locale.EnUs
+const regionDropdownOptions = computed(() => regionsEnum.map(region => ({
+    value: region,
+    displayText: isEnglish ? regionDisplayName[region].en : regionDisplayName[region].ja
+})))
+const prefectureDropdownOptions = computed(() => prefecturesEnum.map(prefecture => ({
+    value: prefecture,
+    displayText: isEnglish ? prefectureDisplayName[prefecture].en : prefectureDisplayName[prefecture].ja
+})))
+const cityDropdownOptions = computed(() => citiesEnum.map(city => ({
+    value: city,
+    displayText: isEnglish ? cityDisplayName[city].en : cityDisplayName[city].ja
+})))
+
 function createLanguageDropdownOptions() {
     // This will remove any codes code that is falsy
     const dropdownOptions = localeStore.localeDisplayOptions.map(locale => ({
