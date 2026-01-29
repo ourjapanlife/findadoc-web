@@ -1,5 +1,12 @@
 <template>
-    <Transition name="slide-left">
+    <Transition
+        enter-from-class="-translate-x-full opacity-40"
+        enter-active-class="transition-all duration-300 ease-in-out"
+        enter-to-class="translate-x-0 opacity-100"
+        leave-from-class="translate-x-0 opacity-100"
+        leave-active-class="transition-all duration-250 ease-in-out"
+        leave-to-class="-translate-x-full opacity-30"
+    >
         <div
             v-if="shouldShowPanel"
             class="absolute left-96 inset-y-24 ml-1 bg-primary-bg
@@ -75,29 +82,3 @@ const closePanelHandler = () => {
     searchResultsStore.clearActiveSearchResult()
 }
 </script>
-
-<style scoped>
-/* Slide in from the left on enter; slide out to the left on leave */
-.slide-left-enter-from {
-  transform: translateX(-100%);
-  opacity: 0.4;
-}
-.slide-left-enter-active {
-  transition: transform 300ms ease, opacity 300ms ease;
-}
-.slide-left-enter-to {
-  transform: translateX(0%);
-  opacity: 1;
-}
-.slide-left-leave-from {
-  transform: translateX(0%);
-  opacity: 1;
-}
-.slide-left-leave-active {
-  transition: transform 250ms ease, opacity 250ms ease;
-}
-.slide-left-leave-to {
-  transform: translateX(-100%);
-  opacity: 0.3;
-}
-</style>
