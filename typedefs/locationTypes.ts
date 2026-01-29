@@ -1254,6 +1254,6 @@ export const prefecturesToCitiesMap: Record<Prefecture, City[]> = {
 }
 // Helper function to get cities by prefecture
 // EX. const tokyoCities = getCitiesByPrefecture(Prefectuture.Tokyo) -> [City.TokyoChiyoda...]
-export function getCititesByPrefecture(prefecture: Prefecture): City[] {
+export function getCitiesByPrefecture(prefecture: Prefecture): City[] {
     return prefecturesToCitiesMap[prefecture] || []
 }

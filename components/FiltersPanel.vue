@@ -111,7 +111,7 @@ import { useLocaleStore } from '~/stores/localeStore.js'
 import { type Specialty, Locale } from '~/typedefs/gqlTypes.js'
 import { BottomSheetType, useBottomSheetStore } from '~/stores/bottomSheetStore'
 import type { Region, Prefecture } from '~/typedefs/locationTypes'
-import { City, regionsEnum, prefecturesEnum, citiesEnum, regionsToPrefecturesMap, prefecturesToCitiesMap } from '~/typedefs/locationTypes'
+import { regionsEnum, getPrefecturesByRegion, getCitiesByPrefecture } from '~/typedefs/locationTypes'
 
 const { t } = useI18n()
 
@@ -132,7 +132,7 @@ const selectedLanguages: Ref<string> = ref(localeStore.activeLocale.code)
 // Locations search rework. cities is string for API call
 const selectedRegion: Ref<Region | ''> = ref('')
 const selectedPrefecture: Ref<Prefecture | ''> = ref('')
-const selectedCity: Ref<string> = ref('')
+// const selectedCity: Ref<string> = ref('')
 
 interface DropdownOption {
     displayText: string
@@ -153,18 +153,35 @@ onMounted(async () => {
 })
 
 const isEnglish = localeStore.activeLocale.code === Locale.EnUs
+
 const regionDropdownOptions = computed(() => regionsEnum.map(region => ({
     value: region,
     displayText: isEnglish ? regionDisplayName[region].en : regionDisplayName[region].ja
 })))
-const prefectureDropdownOptions = computed(() => prefecturesEnum.map(prefecture => ({
-    value: prefecture,
-    displayText: isEnglish ? prefectureDisplayName[prefecture].en : prefectureDisplayName[prefecture].ja
-})))
-const cityDropdownOptions = computed(() => citiesEnum.map(city => ({
-    value: city,
-    displayText: isEnglish ? cityDisplayName[city].en : cityDisplayName[city].ja
-})))
+
+const prefectureDropdownOptions = computed(() => {
+    const isEnglish = localeStore.activeLocale.code === Locale.EnUs
+    // Get prefectures of selected region
+    if (!selectedRegion.value) return []
+    // Helper function
+    const prefectures = getPrefecturesByRegion(selectedRegion.value)
+    return prefectures.map(prefecture => ({
+        value: prefecture,
+        displayText: isEnglish ? prefectureDisplayName[prefecture].en : prefectureDisplayName[prefecture].ja
+    }))
+})
+
+const cityDropdownOptions = computed(() => {
+    const isEnglish = localeStore.activeLocale.code === Locale.EnUs
+    // Get cities by selected prefecture
+    if (!selectedPrefecture.value) return []
+
+    const cities = getCitiesByPrefecture(selectedPrefecture.value)
+    return cities.map(city => ({
+        value: city,
+        displayText: isEnglish ? cityDisplayName[city].en : cityDisplayName[city].ja
+    }))
+})
 
 function createLanguageDropdownOptions() {
     // This will remove any codes code that is falsy
