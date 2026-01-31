@@ -61,6 +61,8 @@
             <!-- NEW version -->
             <!-- region dropdown -->
             <div class="search-language col-span-1 w-full py-4">
+                <p>{{ t('searchBar.region') }}</p>
+
                 <select
                     v-model="selectedRegion"
                     class="w-full px-1 py-1.5 border-2 border-primary/60 rounded-md text-primary-text
@@ -84,11 +86,17 @@
                 </select>
             </div>
             <!-- prefecture dropdown -->
-            <div class="search-language col-span-1 w-full py-4">
+            <div
+                v-if="selectedRegion"
+                class="search-language col-span-1 w-full py-4"
+            >
+                <p>Prefecture</p>
+
                 <select
                     v-model="selectedPrefecture"
                     class="w-full px-1 py-1.5 border-2 border-primary/60 rounded-md text-primary-text
-                    drop-shadow-md bg-primary-bg/10 transition-all"
+                    drop-shadow-md bg-primary-bg/10 transition-all disabled:opacity-50"
+                    :disabled="!selectedRegion"
                 >
                     <option
                         value=""
@@ -108,7 +116,11 @@
                 </select>
             </div>
             <!-- city dropdown -->
-            <div class="search-language col-span-1 w-full py-4">
+            <div
+                v-if="selectedPrefecture"
+                class="search-language col-span-1 w-full py-4"
+            >
+                <p>City</p>
                 <select
                     v-model="selectedCity"
                     class="w-full px-1 py-1.5 border-2 border-primary/60 rounded-md text-primary-text
@@ -267,6 +279,9 @@ watch(selectedRegion, () => {
 watch(selectedPrefecture, () => {
     selectedCity.value = ''
 })
+watch(selectedCity, () => {
+    searchResultsStore.selectedCity = selectedCity.value ? selectedCity.value : undefined
+})
 
 function createLanguageDropdownOptions() {
     // This will remove any codes code that is falsy
@@ -331,10 +346,6 @@ watch(selectedSpecialties, () => {
     searchResultsStore.selectedSpecialties = selectedSpecialties.value === ''
         ? []
         : [selectedSpecialties.value as Specialty]
-})
-
-watch(selectedLocations, () => {
-    searchResultsStore.selectedCity = selectedLocations.value ? selectedLocations.value : undefined
 })
 
 watch(selectedLanguages, () => {
