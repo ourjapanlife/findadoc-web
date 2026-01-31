@@ -104,6 +104,7 @@
   "searchBar": {
     "selectSpecialty": "Wählen Sie eine Fachrichtung...",
     "selectLocation": "Wählen Sie einen Standort...",
+    "region": "Region",
     "search": "Suchen",
     "allLocations": "All Locations",
     "allSpecialties": "All Specialties",

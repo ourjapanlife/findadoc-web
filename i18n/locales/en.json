@@ -111,6 +111,7 @@
   "searchBar": {
     "selectSpecialty": "Select a specialty...",
     "selectLocation": "Select a location...",
+    "region": "Region",
     "allLocations": "All Locations",
     "allSpecialties": "All Specialties",
     "search": "Search",

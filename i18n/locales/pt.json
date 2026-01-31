@@ -104,6 +104,7 @@
   "searchBar": {
     "selectSpecialty": "Escolha uma especialidade...",
     "selectLocation": "Escolha uma localização...",
+    "region": "Região",
     "allLocations": "Todos os locais",
     "allSpecialties": "Todas as especialidades",
     "search": "Procurar",
