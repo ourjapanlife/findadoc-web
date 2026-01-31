@@ -152,12 +152,13 @@ onMounted(async () => {
     createSpecialtyDropdownOptions()
 })
 
-const isEnglish = localeStore.activeLocale.code === Locale.EnUs
-
-const regionDropdownOptions = computed(() => regionsEnum.map(region => ({
-    value: region,
-    displayText: isEnglish ? regionDisplayName[region].en : regionDisplayName[region].ja
-})))
+const regionDropdownOptions = computed(() => {
+    const isEnglish = localeStore.activeLocale.code === Locale.en
+    return regionsEnum.map(region => ({
+        value: region,
+        displayText: isEnglish ? regionDisplayName[region].en : regionDisplayName[region].ja
+    }))
+})
 
 const prefectureDropdownOptions = computed(() => {
     const isEnglish = localeStore.activeLocale.code === Locale.EnUs
