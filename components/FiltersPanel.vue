@@ -33,7 +33,7 @@
                     </option>
                 </select>
             </div>
-            <!-- Location dropdown -->
+            <!-- Location dropdown (OLD Version)
             <div class="search-location col-span-2 py-4">
                 <select
                     v-model="selectedLocations"
@@ -57,6 +57,81 @@
                     </option>
                 </select>
             </div>
+            -->
+            <!-- NEW version -->
+            <!-- region dropdown -->
+            <div class="search-language col-span-1 w-full py-4">
+                <select
+                    v-model="selectedRegion"
+                    class="w-full px-1 py-1.5 border-2 border-primary/60 rounded-md text-primary-text
+                    drop-shadow-md bg-primary-bg/10 transition-all"
+                >
+                    <option
+                        value=""
+                        class="text-primary-text-muted hidden"
+                        disabled
+                        selected
+                    >
+                        {{ t('searchBar.selectLocation') }}
+                    </option>
+                    <option
+                        v-for="region in regionDropdownOptions"
+                        :key="region.value"
+                        :value="region.value"
+                    >
+                        {{ region.displayText }}
+                    </option>
+                </select>
+            </div>
+            <!-- prefecture dropdown -->
+            <div class="search-language col-span-1 w-full py-4">
+                <select
+                    v-model="selectedPrefecture"
+                    class="w-full px-1 py-1.5 border-2 border-primary/60 rounded-md text-primary-text
+                    drop-shadow-md bg-primary-bg/10 transition-all"
+                >
+                    <option
+                        value=""
+                        class="text-primary-text-muted hidden"
+                        disabled
+                        selected
+                    >
+                        {{ t('searchBar.selectLocation') }}
+                    </option>
+                    <option
+                        v-for="prefecture in prefectureDropdownOptions"
+                        :key="prefecture.value"
+                        :value="prefecture.value"
+                    >
+                        {{ prefecture.displayText }}
+                    </option>
+                </select>
+            </div>
+            <!-- city dropdown -->
+            <div class="search-language col-span-1 w-full py-4">
+                <select
+                    v-model="selectedCity"
+                    class="w-full px-1 py-1.5 border-2 border-primary/60 rounded-md text-primary-text
+                    drop-shadow-md bg-primary-bg/10 transition-all"
+                >
+                    <option
+                        value=""
+                        class="text-primary-text-muted hidden"
+                        disabled
+                        selected
+                    >
+                        {{ t('searchBar.selectLocation') }}
+                    </option>
+                    <option
+                        v-for="city in cityDropdownOptions"
+                        :key="city.value"
+                        :value="city.value"
+                    >
+                        {{ city.displayText }}
+                    </option>
+                </select>
+            </div>
+
             <!-- Language dropdown -->
             <div class="search-language col-span-1 w-full py-4">
                 <select
@@ -75,6 +150,7 @@
                 </select>
             </div>
         </div>
+
         <!-- Search button -->
         <div
             id="search-button"
@@ -153,7 +229,7 @@ onMounted(async () => {
 })
 
 const regionDropdownOptions = computed(() => {
-    const isEnglish = localeStore.activeLocale.code === Locale.en
+    const isEnglish = localeStore.activeLocale.code === Locale.EnUs
     return regionsEnum.map(region => ({
         value: region,
         displayText: isEnglish ? regionDisplayName[region].en : regionDisplayName[region].ja
