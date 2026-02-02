@@ -10,7 +10,7 @@
                     title="Original Theme"
                     :style="{ backgroundColor: dotColor }"
                 />
-                <p class="text-primary max-w-32">
+                <p class="text-primary w-32 text-wrap">
                     {{ themeName }}
                 </p>
             </div>
@@ -30,7 +30,7 @@
                 title="Original Theme"
                 :style="{ backgroundColor: dotColor }"
             />
-            <p class="text-primary max-w-32">
+            <p class="text-primary max-w-32 text-wrap">
                 {{ themeName }}
             </p>
         </div>
@@ -38,6 +38,8 @@
 </template>
 
 <script setup lang="ts">
+import Toggle from './Toggle.vue'
+
 defineProps({
     themeId: {
         type: String,

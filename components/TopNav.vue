@@ -93,6 +93,9 @@
                     id="desktop-menu-items"
                     class="portrait:hidden flex gap-3 mx-6 self-center items-center whitespace-nowrap"
                 >
+                    <!-- Theme Changer -->
+                    <ThemeManager />
+
                     <!-- About Link -->
                     <NuxtLink
                         to="/about"
@@ -202,6 +205,7 @@ import SVGSignOutIcon from '~/assets/icons/sign-out-icon.svg'
 import { useAuthStore } from '~/stores/authStore'
 import { useScreenOrientation } from '~/composables/useScreenOrientation'
 import { vCloseOnOutsideClick } from '~/composables/closeOnOutsideClick'
+import ThemeManager from './ThemeManager.vue'
 
 const { t } = useI18n()
 const toast = useToast()

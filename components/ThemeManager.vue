@@ -3,8 +3,8 @@
         id="color-changer"
         :class="colorThemeAccordionIsClosed
             ? 'transition duration-300 h-0 opacity-0 delay-(invisible) rounded-t-2xl'
-                + 'border-t border-primary/20 translate-y-20 overflow-hidden'
-            : 'transition duration-300 rounded-t-2xl border-t border-primary/20 overflow-hidden'"
+                + 'border-t border-primary/20 portrait:translate-y-20 overflow-hidden landscape:absolute landscape:-translate-y-2/3'
+            : 'transition duration-300 portrait:rounded-t-2xl landscape:rounded-md border-t border-primary/20 overflow-hidden landscape:absolute landscape:translate-y-2/3'"
     >
         <ThemeOption
             v-for="theme in themes"
@@ -19,7 +19,7 @@
         />
     </div>
 
-    <div class="bg-primary-bg z-10 ">
+    <div class="portrait:bg-primary-bg z-10 ">
         <div
             class="flex px-4 py-2 gap-3 items-center"
             @click="toggleThemeVisibility"
@@ -46,6 +46,8 @@
 </template>
 
 <script lang="ts" setup>
+import ThemeOption from './ThemeOption.vue'
+
 const { t } = useI18n()
 
 const currentTheme = ref('original')
