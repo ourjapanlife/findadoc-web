@@ -2,9 +2,10 @@
     <div
         id="color-changer"
         :class="colorThemeAccordionIsClosed
-            ? 'transition-discrete duration-300 opacity-0 h-0 rounded-t-2xl'
-                + 'border-t border-primary/20 portrait:translate-y-20 overflow-hidden landscape:absolute landscape:translate-y-1/2'
-            : 'transition-discrete duration-300 portrait:rounded-t-2xl landscape:rounded-md border-t border-primary/20 overflow-hidden landscape:absolute landscape:translate-y-2/3'"
+            ? 'transition-discrete duration-300 opacity-0 h-0 rounded-t-2xl border-t border-primary/20'
+                + ' portrait:translate-y-20 overflow-hidden landscape:absolute landscape:translate-y-1/2'
+            : 'transition-discrete duration-300 portrait:rounded-t-2xl landscape:rounded-md border-t-2'
+                + 'border-primary/20 overflow-hidden landscape:absolute landscape:translate-y-2/3'"
     >
         <ThemeOption
             v-for="theme in themes"
@@ -114,14 +115,10 @@ function setTheme(newTheme: string, darkModeValue: boolean) {
     const selectedTheme = themes.find(theme => theme.isSelected)
     selectedTheme.isSelected = !selectedTheme.isSelected
 
-    console.log(selectedTheme)
-
     // ---Set theme to selected---
     const identifiedTheme = themes.find(theme => theme.themeId === newTheme)
 
     identifiedTheme.isSelected = !identifiedTheme.isSelected
-
-    console.log(identifiedTheme)
 
     document.documentElement.classList.remove(
         'theme-original',
