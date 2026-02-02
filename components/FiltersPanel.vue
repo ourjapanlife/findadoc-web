@@ -59,131 +59,169 @@
             </div>
             -->
             <!-- NEW version -->
-            <!-- region dropdown -->
-            <div class="search-language col-span-1 w-full py-4">
-                <p>{{ t('searchBar.region') }}</p>
-
-                <select
-                    v-model="selectedRegion"
-                    class="w-full px-1 py-1.5 border-2 border-primary/60 rounded-md text-primary-text
-                    drop-shadow-md bg-primary-bg/10 transition-all"
+            <div class="location-filters">
+                <!-- REGION -->
+                <div
+                    v-for="region in regionDropdownOptions"
+                    :key="region.value"
+                    class="border-b border-primary/20 last:border-b-0"
                 >
-                    <option
-                        value=""
-                        class="text-primary-text-muted hidden"
-                        disabled
-                        selected
+                    <div class="flex items-center justify-between py-2">
+                        <!-- checkbox and label -->
+                        <label
+                            label="checkbox"
+                            class="flex items-center gap-3 cursor-pointer"
+                            @change="selectRegion(selectedRegion === region.value ? '' : region.value)"
+                        >
+                            <input
+                                type="checkbox"
+                                :checked="selectedRegion === region.value"
+                                class="w-4 h-4 rounded"
+                            >
+                            <span> {{ region.displayText }} </span>
+                        </label>
+                        <!-- dropdown arrow -->
+                        <button
+                            v-if="selectedRegion === region.value"
+                            class="p-1 hover:hover:bg-primary-bg/20 rounded"
+                            @click="toggleSection('prefecture')"
+                        >
+                            <svg
+                                class="w-4 h-4 text-primary-text transition-transform duration-200"
+                                :class="{ 'rotate-180': openSections.city }"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M19 9l-7 7-7-7"
+                                />
+                            </svg>
+                        </button>
+                    </div>
+                    <!-- prefecture dropdown -->
+                    <div
+                        v-if="selectedRegion === region.value"
+                        class="max-h-64 overflow-y-auto py-2 px-3"
                     >
-                        {{ t('searchBar.selectLocation') }}
-                    </option>
-                    <option
-                        v-for="region in regionDropdownOptions"
-                        :key="region.value"
-                        :value="region.value"
-                    >
-                        {{ region.displayText }}
-                    </option>
-                </select>
-            </div>
-            <!-- prefecture dropdown -->
-            <div
-                v-if="selectedRegion"
-                class="search-language col-span-1 w-full py-4"
-            >
-                <p>Prefecture</p>
+                        <div
+                            v-for="prefecture in prefectureDropdownOptions"
+                            :key="prefecture.value"
+                            :value="prefecture.value"
+                            class="border-b border-primary/20 last:border-b-0"
+                        >
+                            <div class="flex items-center justify-between py-2">
+                                <!-- checkbox and label -->
+                                <label
+                                    label="checkbox"
+                                    class="flex items-center gap-3 cursor-pointer"
+                                    @change="selectPrefecture(selectedPrefecture=== prefecture.value ? '' : prefecture.value)"
+                                >
+                                    <input
+                                        type="checkbox"
+                                        :checked="selectedPrefecture === prefecture.value"
+                                        class="w-4 h-4 rounded"
+                                    >
+                                    <span> {{ prefecture.displayText }} </span>
+                                </label>
+                                <!-- dropdown arrow -->
+                                <button
+                                    v-if="selectedPrefecture=== prefecture.value"
+                                    class="p-1 hover:hover:bg-primary-bg/20 rounded"
+                                    @click="toggleSection('city')"
+                                >
+                                    <svg
+                                        class="w-4 h-4 text-primary-text transition-transform duration-200"
+                                        :class="{ 'rotate-180': openSections.city }"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M19 9l-7 7-7-7"
+                                        />
+                                    </svg>
+                                </button>
+                            </div>
+                            <!-- city dropdown -->
+                            <div
+                                v-if="selectedPrefecture === prefecture.value"
+                                class="max-h-48 overflow-y-auto py-2 px-3"
+                            >
+                                <div
+                                    v-for="city in cityDropdownOptions"
+                                    :key="city.value"
+                                    :value="city.value"
+                                    class="border-b border-primary/20 last:border-b-0"
+                                >
+                                    <div class="flex items-center justify-between py-2">
+                                        <!-- checkbox and label -->
+                                        <label
+                                            label="checkbox"
+                                            class="flex items-center gap-3 cursor-pointer"
+                                            @change="selectCity(selectedCity=== city.value ? '' : city.value)"
+                                        >
+                                            <input
+                                                type="checkbox"
+                                                :checked="selectedCity === city.value"
+                                                class="w-4 h-4 rounded"
+                                            >
+                                            <span> {{ city.displayText }} </span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-                <select
-                    v-model="selectedPrefecture"
-                    class="w-full px-1 py-1.5 border-2 border-primary/60 rounded-md text-primary-text
-                    drop-shadow-md bg-primary-bg/10 transition-all disabled:opacity-50"
-                    :disabled="!selectedRegion"
-                >
-                    <option
-                        value=""
-                        class="text-primary-text-muted hidden"
-                        disabled
-                        selected
-                    >
-                        {{ t('searchBar.selectLocation') }}
-                    </option>
-                    <option
-                        v-for="prefecture in prefectureDropdownOptions"
-                        :key="prefecture.value"
-                        :value="prefecture.value"
-                    >
-                        {{ prefecture.displayText }}
-                    </option>
-                </select>
-            </div>
-            <!-- city dropdown -->
-            <div
-                v-if="selectedPrefecture"
-                class="search-language col-span-1 w-full py-4"
-            >
-                <p>City</p>
-                <select
-                    v-model="selectedCity"
-                    class="w-full px-1 py-1.5 border-2 border-primary/60 rounded-md text-primary-text
-                    drop-shadow-md bg-primary-bg/10 transition-all"
-                >
-                    <option
-                        value=""
-                        class="text-primary-text-muted hidden"
-                        disabled
-                        selected
-                    >
-                        {{ t('searchBar.selectLocation') }}
-                    </option>
-                    <option
-                        v-for="city in cityDropdownOptions"
-                        :key="city.value"
-                        :value="city.value"
-                    >
-                        {{ city.displayText }}
-                    </option>
-                </select>
-            </div>
-
-            <!-- Language dropdown -->
-            <div class="search-language col-span-1 w-full py-4">
-                <select
-                    v-model="selectedLanguages"
-                    class="w-full px-1 py-1.5 border-2 border-primary/60 rounded-md text-primary-text
+                <!-- Language dropdown -->
+                <div class="search-language col-span-1 w-full py-4">
+                    <select
+                        v-model="selectedLanguages"
+                        class="w-full px-1 py-1.5 border-2 border-primary/60 rounded-md text-primary-text
                                     drop-shadow-md bg-primary-bg/10 transition-all"
-                    data-testid="search-bar-language"
-                >
-                    <option
-                        v-for="(language) in languageDropdownOptions"
-                        :key="language.value"
-                        :value="language.value"
+                        data-testid="search-bar-language"
                     >
-                        {{ language.displayText }}
-                    </option>
-                </select>
-            </div>
-        </div>
+                        <option
+                            v-for="(language) in languageDropdownOptions"
+                            :key="language.value"
+                            :value="language.value"
+                        >
+                            {{ language.displayText }}
+                        </option>
+                    </select>
+                </div>
 
-        <!-- Search button -->
-        <div
-            id="search-button"
-            class="flex items-center shrink-0 px-4 pt-3 pb-4"
-        >
-            <button
-                id="searchButton"
-                class="flex flex-none flex-row rounded-md
+                <!-- Search button -->
+                <div
+                    id="search-button"
+                    class="flex items-center shrink-0 px-4 pt-3 pb-4"
+                >
+                    <button
+                        id="searchButton"
+                        class="flex flex-none flex-row rounded-md
                                 w-full pl-1 pr-2 py-4 text-sm align-middle justify-center
                                 bg-accent hover:bg-accent-hover transition-all"
-                data-testid="search-button"
-                @click="search"
-            >
-                <SVGSearchIcon
-                    role="img"
-                    alt="search icon"
-                    title="search icon"
-                    class="search-icon w-5 h-5 mr-1 fill-primary-text-inverted"
-                />
-                <span class="self-center text-primary-text-inverted">{{ t('searchBar.search') }}</span>
-            </button>
+                        data-testid="search-button"
+                        @click="search"
+                    >
+                        <SVGSearchIcon
+                            role="img"
+                            alt="search icon"
+                            title="search icon"
+                            class="search-icon w-5 h-5 mr-1 fill-primary-text-inverted"
+                        />
+                        <span class="self-center text-primary-text-inverted">{{ t('searchBar.search') }}</span>
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -214,13 +252,16 @@ const specialtyDropdownOptions: Ref<DropdownOption[]> = ref([])
 const languageDropdownOptions: Ref<DropdownOption[]> = ref([])
 
 const selectedSpecialties: Ref<string> = ref('')
-const selectedLocations: Ref<string> = ref('')
 const selectedLanguages: Ref<string> = ref(localeStore.activeLocale.code)
 
 // Locations search rework. cities is string for API call
 const selectedRegion: Ref<Region | ''> = ref('')
 const selectedPrefecture: Ref<Prefecture | ''> = ref('')
 const selectedCity: Ref<string> = ref('')
+const openSections = ref({
+    prefecture: false,
+    city: false
+})
 
 interface DropdownOption {
     displayText: string
@@ -240,6 +281,7 @@ onMounted(async () => {
     createSpecialtyDropdownOptions()
 })
 
+// Region dropdowns
 const regionDropdownOptions = computed(() => {
     const isEnglish = localeStore.activeLocale.code === Locale.EnUs
     return regionsEnum.map(region => ({
@@ -247,7 +289,7 @@ const regionDropdownOptions = computed(() => {
         displayText: isEnglish ? regionDisplayName[region].en : regionDisplayName[region].ja
     }))
 })
-
+// Prefecture dropdowns
 const prefectureDropdownOptions = computed(() => {
     const isEnglish = localeStore.activeLocale.code === Locale.EnUs
     // Get prefectures of selected region
@@ -259,7 +301,7 @@ const prefectureDropdownOptions = computed(() => {
         displayText: isEnglish ? prefectureDisplayName[prefecture].en : prefectureDisplayName[prefecture].ja
     }))
 })
-
+// City dropdowns
 const cityDropdownOptions = computed(() => {
     const isEnglish = localeStore.activeLocale.code === Locale.EnUs
     // Get cities by selected prefecture
@@ -271,6 +313,7 @@ const cityDropdownOptions = computed(() => {
         displayText: isEnglish ? cityDisplayName[city].en : cityDisplayName[city].ja
     }))
 })
+
 // Watch statement to prevent prefectures and cities that dont match
 watch(selectedRegion, () => {
     selectedPrefecture.value = ''
@@ -282,6 +325,31 @@ watch(selectedPrefecture, () => {
 watch(selectedCity, () => {
     searchResultsStore.selectedCity = selectedCity.value ? selectedCity.value : undefined
 })
+
+// Selection handlers
+function selectRegion(region: Region | '') {
+    selectedRegion.value = region
+    selectedPrefecture.value = ''
+    selectedCity.value = ''
+    if (region) {
+        openSections.value.prefecture = true
+    }
+}
+function selectPrefecture(prefecture: Prefecture | '') {
+    selectedPrefecture.value = prefecture
+    selectedCity.value = ''
+    if (prefecture) {
+        openSections.value.city = true
+    }
+}
+function selectCity(city: string) {
+    selectedCity.value = city
+}
+
+// Toggle section visibility
+function toggleSection(section: 'prefecture' | 'city') {
+    openSections.value[section] = !openSections.value[section]
+}
 
 function createLanguageDropdownOptions() {
     // This will remove any codes code that is falsy
