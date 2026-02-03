@@ -93,8 +93,15 @@
                     id="desktop-menu-items"
                     class="portrait:hidden flex gap-3 mx-6 self-center items-center whitespace-nowrap"
                 >
+                    <Dropdown>
+                        <LocaleSelector class="portrait:hidden" />
+                    </Dropdown>
+
                     <!-- Theme Changer -->
-                    <ThemeManager />
+
+                    <Dropdown>
+                        <ThemeManager />
+                    </Dropdown>
 
                     <!-- About Link -->
                     <NuxtLink
@@ -188,7 +195,6 @@
                         </button>
                     </div>
                 </nav>
-                <LocaleSelector class="portrait:hidden" />
                 <HamburgerMenu class="landscape:hidden justify-end z-20 p-2 bg-primary-bg/20 rounded-2xl" />
             </div>
         </div>

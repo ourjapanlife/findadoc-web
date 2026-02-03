@@ -3,9 +3,9 @@
         id="color-changer"
         :class="colorThemeAccordionIsClosed
             ? 'transition-discrete duration-300 opacity-0 h-0 rounded-t-2xl border-t border-primary/20'
-                + ' portrait:translate-y-20 overflow-hidden landscape:absolute landscape:translate-y-1/2'
+                + ' portrait:translate-y-20 overflow-hidden landscape:absolute '
             : 'transition-discrete duration-300 portrait:rounded-t-2xl landscape:rounded-md border-t-2'
-                + 'border-primary/20 overflow-hidden landscape:absolute landscape:translate-y-2/3'"
+                + 'border-primary/20 overflow-hidden landscape:absolute landscape:translate-y-1/5'"
     >
         <ThemeOption
             v-for="theme in themes"
@@ -22,11 +22,11 @@
 
     <div class="portrait:bg-primary-bg z-10 ">
         <div
-            class="flex px-4 py-2 gap-3 items-center"
+            class="flex px-4 py-2 gap-3 landscape:px-2 landscape:py-0 landscape:gap-1 items-center"
             @click="toggleThemeVisibility"
         >
             <div
-                class="w-7 h-7 mr-1 rounded-full bg-primary"
+                class="w-7 h-7 landscape:hidden mr-1 rounded-full bg-primary"
             />
             <p
                 id="theme-text"
@@ -34,14 +34,6 @@
             >
                 {{ t('themeManager.colorThemes') }}
             </p>
-            <SvgoAccordionArrow
-                id="accordion"
-                role="img"
-                title="accordion arrow"
-                :class="colorThemeAccordionIsClosed
-                    ? 'w-6 h-6 transition duration-300 fill-primary'
-                    : 'w-6 h-6 transition duration-300 fill-primary -rotate-180'"
-            />
         </div>
     </div>
 </template>
@@ -49,10 +41,6 @@
 <script lang="ts" setup>
 import ThemeOption from './ThemeOption.vue'
 import { onMounted } from 'vue'
-
-// To dos
-// Make theme changer animated back up when disappearing
-// Fix theme changer so that it once more changes colors and modes
 
 const { t } = useI18n()
 
