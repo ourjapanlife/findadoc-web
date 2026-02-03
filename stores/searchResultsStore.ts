@@ -94,6 +94,10 @@ export const useSearchResultsStore = defineStore('searchResultsStore', () => {
         activeProfessional.value = undefined
     }
 
+    function clearActiveProfessional() {
+        activeProfessional.value = undefined
+    }
+
     return {
         activeFacilityId,
         activeFacility,
@@ -103,6 +107,7 @@ export const useSearchResultsStore = defineStore('searchResultsStore', () => {
         setActiveFacility,
         setActiveProfessional,
         clearActiveSearchResult,
+        clearActiveProfessional,
         selectedCity,
         selectedSpecialties,
         selectedLanguages,

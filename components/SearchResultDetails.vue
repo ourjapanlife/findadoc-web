@@ -3,6 +3,26 @@
     <div
         class="result-details landscape:min-w-[480px] pt-5 landscape:pt-0 pb-[50vh] md:pb-2"
     >
+        <!-- Back Button -->
+        <button
+            v-if="activeProfessional"
+            class="absolute top-4 left-4 p-2 rounded-full
+                hover:bg-white/20 transition-colors"
+            @click="goBackToFacilityResult"
+        >
+            <svg
+                class="w-6 h-6 stroke-primary"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="2"
+            >
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M15 19l-7-7 7-7"
+                />
+            </svg>
+        </button>
         <!-- Banner -->
         <div class="header flex flex-1 bg-primary bg-gradient-to-r from-primary to-secondary">
             <SVGDoctorsBanner
@@ -348,4 +368,8 @@ const handleCallNow = () => {
 }
 
 const excludedEmailAddresses = ['none', 'email@email.com']
+
+function goBackToFacilityResult() {
+    resultsStore.clearActiveProfessional()
+}
 </script>
