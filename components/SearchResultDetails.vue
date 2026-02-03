@@ -10,18 +10,9 @@
                 hover:bg-white/20 transition-colors"
             @click="goBackToFacilityResult"
         >
-            <svg
-                class="w-6 h-6 stroke-primary"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="2"
-            >
-                <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M15 19l-7-7 7-7"
-                />
-            </svg>
+            <SVGLeftArrow
+                class="w-6 h-6 text-primary"
+            />
         </button>
         <!-- Banner -->
         <div class="header flex flex-1 bg-primary bg-gradient-to-r from-primary to-secondary">
@@ -224,6 +215,7 @@ import SVGGlobeIcon from '~/assets/icons/globe-icon.svg'
 import SVGPhoneIcon from '~/assets/icons/phone-icon.svg'
 import SVGEmailIcon from '~/assets/icons/email-icon.svg'
 import SVGProfileIcon from '~/assets/icons/profile-icon.svg'
+import SVGLeftArrow from '~/assets/icons/left-arrow-pagination.svg'
 import { useLocaleStore } from '~/stores/localeStore.js'
 import { useSpecialtiesStore } from '~/stores/specialtiesStore.js'
 import { useSearchResultsStore } from '~/stores/searchResultsStore'
