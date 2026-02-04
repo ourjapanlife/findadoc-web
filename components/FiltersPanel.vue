@@ -33,33 +33,10 @@
                     </option>
                 </select>
             </div>
-            <!-- Location dropdown (OLD Version)
-            <div class="search-location col-span-2 py-4">
-                <select
-                    v-model="selectedLocations"
-                    class="w-full px-1 py-1.5 border-2 border-primary/60 rounded-md text-primary-text
-                                    drop-shadow-md bg-primary-bg/10 transition-all"
-                >
-                    <option
-                        value=""
-                        class="text-primary-text-muted hidden"
-                        disabled
-                        selected
-                    >
-                        {{ t('searchBar.selectLocation') }}
-                    </option>
-                    <option
-                        v-for="(cityDetails) in locationDropdownOptions"
-                        :key="cityDetails.value"
-                        :value="cityDetails.value"
-                    >
-                        {{ cityDetails.displayText }}: ({{ cityDetails.cityOccurrenceCount }})
-                    </option>
-                </select>
-            </div>
-            -->
-            <!-- NEW version -->
             <div class="location-filters">
+                <p class="w-full bg-primary/20 rounded px-4 py-1 mb-2 text-sm font-medium">
+                    Select Location
+                </p>
                 <!-- REGION -->
                 <div
                     v-for="region in regionDropdownOptions"
