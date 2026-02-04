@@ -94,7 +94,6 @@ export const regionsToPrefecturesMap: Record<Region, Prefecture[]> = {
     ],
     [Region.Kanto]: [
         Prefecture.Ibaraki,
-        Prefecture.Ibaraki,
         Prefecture.Tochigi,
         Prefecture.Gunma,
         Prefecture.Saitama,

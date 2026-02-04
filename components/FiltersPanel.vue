@@ -82,13 +82,12 @@
                         </label>
                         <!-- dropdown arrow -->
                         <button
-                            v-if="selectedRegion === region.value"
-                            class="p-1 hover:hover:bg-primary-bg/20 rounded"
-                            @click="toggleSection('prefecture')"
+                            class="p-1 hover:bg-primary-bg/20 rounded"
+                            @click="togglePrefectureSection(region.value)"
                         >
                             <svg
                                 class="w-4 h-4 text-primary-text transition-transform duration-200"
-                                :class="{ 'rotate-180': openSections.city }"
+                                :class="{ 'rotate-180': openPrefectureSections[region.value] }"
                                 fill="none"
                                 viewBox="0 0 24 24"
                                 stroke="currentColor"
@@ -129,13 +128,12 @@
                                 </label>
                                 <!-- dropdown arrow -->
                                 <button
-                                    v-if="selectedPrefecture=== prefecture.value"
-                                    class="p-1 hover:hover:bg-primary-bg/20 rounded"
-                                    @click="toggleSection('city')"
+                                    class="p-1 hover:bg-primary-bg/20 rounded"
+                                    @click="toggleCitySection(prefecture.value)"
                                 >
                                     <svg
                                         class="w-4 h-4 text-primary-text transition-transform duration-200"
-                                        :class="{ 'rotate-180': openSections.city }"
+                                        :class="{ 'rotate-180': openCitySections[prefecture.value] }"
                                         fill="none"
                                         viewBox="0 0 24 24"
                                         stroke="currentColor"
@@ -151,7 +149,7 @@
                             </div>
                             <!-- city dropdown -->
                             <div
-                                v-if="selectedPrefecture === prefecture.value"
+                                v-if="selectedPrefecture=== prefecture.value"
                                 class="max-h-48 overflow-y-auto py-2 px-3"
                             >
                                 <div
@@ -258,10 +256,9 @@ const selectedLanguages: Ref<string> = ref(localeStore.activeLocale.code)
 const selectedRegion: Ref<Region | ''> = ref('')
 const selectedPrefecture: Ref<Prefecture | ''> = ref('')
 const selectedCity: Ref<string> = ref('')
-const openSections = ref({
-    prefecture: false,
-    city: false
-})
+// Needed for toggling
+const openPrefectureSections: Ref<Record<string, boolean>> = ref({})
+const openCitySections: Ref<Record<string, boolean>> = ref({})
 
 interface DropdownOption {
     displayText: string
@@ -331,15 +328,19 @@ function selectRegion(region: Region | '') {
     selectedRegion.value = region
     selectedPrefecture.value = ''
     selectedCity.value = ''
+    // Sets sections as closed to default falsy value so arrow points down
+    openPrefectureSections.value = {}
     if (region) {
-        openSections.value.prefecture = true
+        openPrefectureSections.value[region] = true
     }
 }
 function selectPrefecture(prefecture: Prefecture | '') {
     selectedPrefecture.value = prefecture
     selectedCity.value = ''
+    // Sets sections as closed to default falsy value so arrow points down
+    openCitySections.value = {}
     if (prefecture) {
-        openSections.value.city = true
+        openCitySections.value[prefecture] = true
     }
 }
 function selectCity(city: string) {
@@ -347,8 +348,11 @@ function selectCity(city: string) {
 }
 
 // Toggle section visibility
-function toggleSection(section: 'prefecture' | 'city') {
-    openSections.value[section] = !openSections.value[section]
+function togglePrefectureSection(region: Region) {
+    openPrefectureSections.value[region] = !openPrefectureSections.value[region]
+}
+function toggleCitySection(prefecture: Prefecture) {
+    openCitySections.value[prefecture] = !openCitySections.value[prefecture]
 }
 
 function createLanguageDropdownOptions() {
