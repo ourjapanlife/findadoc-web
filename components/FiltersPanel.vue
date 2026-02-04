@@ -104,7 +104,7 @@
                     <!-- prefecture dropdown -->
                     <div
                         v-if="selectedRegion === region.value"
-                        class="max-h-64 overflow-y-auto py-2 px-3"
+                        class="py-2 px-3"
                     >
                         <div
                             v-for="prefecture in prefectureDropdownOptions"
@@ -150,7 +150,7 @@
                             <!-- city dropdown -->
                             <div
                                 v-if="selectedPrefecture=== prefecture.value"
-                                class="max-h-48 overflow-y-auto py-2 px-3"
+                                class="py-2 px-3"
                             >
                                 <div
                                     v-for="city in cityDropdownOptions"
