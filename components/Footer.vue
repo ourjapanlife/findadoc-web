@@ -39,7 +39,10 @@
                 </NuxtLink>
             </nav>
         </div>
-        <div class="right-footer-section flex flex-none flex-row gap-6 justify-end px-8 text-xs">
+        <div class="right-footer-section flex flex-none flex-row gap-6 justify-start px-8 text-xs">
+            <!-- Theme Changer -->
+            <ThemeManager />
+            <span class="self-center">·</span>
             <div class="mx-2 hover:text-primary-hover transition-colors">
                 <NuxtLink
                     to="https://github.com/ourjapanlife/findadoc-web/"

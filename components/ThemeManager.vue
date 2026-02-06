@@ -2,9 +2,10 @@
     <div
         id="color-changer"
         :class="colorThemeAccordionIsClosed
-            ? 'transition duration-300 h-0 opacity-0 delay-(invisible) rounded-t-2xl'
-                + 'border-t border-primary/20 translate-y-20 overflow-hidden'
-            : 'transition duration-300 rounded-t-2xl border-t border-primary/20 overflow-hidden'"
+            ? 'transition-discrete duration-300 h-0 opacity-0 delay-(invisible) rounded-t-2xl border-t'
+                + 'border-primary/20 portrait:translate-y-20 overflow-hidden landscape:absolute landscape:-translate-y-2/3'
+            : 'transition-discreet duration-300 portrait:rounded-t-2xl landscape:rounded-md border-t'
+                + 'border-primary/20 overflow-hidden landscape:absolute landscape:-translate-y-90'"
     >
         <ThemeOption
             v-for="theme in themes"
