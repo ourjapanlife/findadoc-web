@@ -21,11 +21,11 @@
 
     <div class="bg-primary-bg z-10 ">
         <div
-            class="flex px-4 py-2 gap-3 items-center"
+            class="flex px-4 py-2 gap-3 landscape:gap-1 items-center"
             @click="toggleThemeVisibility"
         >
             <div
-                class="w-7 h-7 mr-1 rounded-full bg-primary"
+                class="w-7 h-7 landscape:w-5 landscape:h-5 mr-1 rounded-full bg-primary"
             />
             <p
                 id="theme-text"
