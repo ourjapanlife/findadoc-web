@@ -20,7 +20,7 @@
         />
     </div>
 
-    <div class="bg-primary-bg z-10 ">
+    <div class="portrait:bg-primary-bg z-10 ">
         <div
             class="flex px-4 py-2 gap-3 landscape:gap-1 items-center"
             @click="toggleThemeVisibility"
