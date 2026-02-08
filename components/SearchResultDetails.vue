@@ -7,7 +7,7 @@
         <button
             v-if="activeProfessional"
             class="absolute top-4 left-4 p-2 rounded-full
-                hover:bg-white/20 transition-colors"
+                hover:bg-secondary-bg/20 transition-colors z-10"
             @click="goBackToFacilityResult"
         >
             <SVGLeftArrow
