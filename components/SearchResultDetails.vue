@@ -3,6 +3,17 @@
     <div
         class="result-details landscape:min-w-[480px] pt-5 landscape:pt-0 pb-[50vh] md:pb-2"
     >
+        <!-- Back Button -->
+        <button
+            v-if="activeProfessional"
+            class="absolute top-4 left-4 p-2 rounded-full
+                hover:bg-secondary-bg/20 transition-colors z-10"
+            @click="goBackToFacilityResult"
+        >
+            <SVGLeftArrow
+                class="w-6 h-6 text-primary"
+            />
+        </button>
         <!-- Banner -->
         <div class="header flex flex-1 bg-primary bg-gradient-to-r from-primary to-secondary">
             <SVGDoctorsBanner
@@ -204,6 +215,7 @@ import SVGGlobeIcon from '~/assets/icons/globe-icon.svg'
 import SVGPhoneIcon from '~/assets/icons/phone-icon.svg'
 import SVGEmailIcon from '~/assets/icons/email-icon.svg'
 import SVGProfileIcon from '~/assets/icons/profile-icon.svg'
+import SVGLeftArrow from '~/assets/icons/left-arrow-pagination.svg'
 import { useLocaleStore } from '~/stores/localeStore.js'
 import { useSpecialtiesStore } from '~/stores/specialtiesStore.js'
 import { useSearchResultsStore } from '~/stores/searchResultsStore'
@@ -348,4 +360,8 @@ const handleCallNow = () => {
 }
 
 const excludedEmailAddresses = ['none', 'email@email.com']
+
+function goBackToFacilityResult() {
+    resultsStore.clearActiveProfessional()
+}
 </script>
