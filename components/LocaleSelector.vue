@@ -5,9 +5,6 @@
     >
         <select
             v-model="selectedLocale"
-            class="text-center rounded-full landscape:w-full px-2 py-1 landscape:px-1 landscape:py-1.5 border-2 border-primary/80
-      landscape:border-primary/60 drop-shadow-md text-primary-text bg-secondary-bg/5
-      landscape:bg-primary-bg hover:bg-primary-hover/10 transition-colors"
         >
             <option
                 v-for="(localeOption) in localeStore.mvpLocaleDisplayOptions"

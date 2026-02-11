@@ -93,6 +93,16 @@
                     id="desktop-menu-items"
                     class="portrait:hidden flex gap-3 mx-6 self-center items-center whitespace-nowrap"
                 >
+                    <Dropdown>
+                        <LocaleSelector class="portrait:hidden" />
+                    </Dropdown>
+
+                    <!-- Theme Changer -->
+
+                    <Dropdown>
+                        <ThemeManager />
+                    </Dropdown>
+
                     <!-- About Link -->
                     <NuxtLink
                         to="/about"
@@ -185,7 +195,6 @@
                         </button>
                     </div>
                 </nav>
-                <LocaleSelector class="portrait:hidden" />
                 <HamburgerMenu class="landscape:hidden justify-end z-20 p-2 bg-primary-bg/20 rounded-2xl" />
             </div>
         </div>
@@ -202,6 +211,7 @@ import SVGSignOutIcon from '~/assets/icons/sign-out-icon.svg'
 import { useAuthStore } from '~/stores/authStore'
 import { useScreenOrientation } from '~/composables/useScreenOrientation'
 import { vCloseOnOutsideClick } from '~/composables/closeOnOutsideClick'
+import ThemeManager from './ThemeManager.vue'
 
 const { t } = useI18n()
 const toast = useToast()
