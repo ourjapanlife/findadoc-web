@@ -1,6 +1,9 @@
 <template>
     <div
-        v-close-on-outside-click="closeMenu"
+        v-close-on-outside-click="{
+            onOutside: closeMenu,
+            when: () => !isMenuOpen,
+        }"
         data-testid="hamburger-menu-container"
         class="flex w-full cursor-pointer"
     >
