@@ -1,27 +1,45 @@
+/* eslint-disable no-underscore-dangle */
 import type { DirectiveBinding } from 'vue'
 
+type BindingValue
+    = | (() => void)
+      | {
+          onOutside: () => void
+          when?: () => boolean // optional predicate: only close when open
+      }
+
 type ElWithOutsideHandler = HTMLElement & {
-    clickOutsideEvent: (event: MouseEvent) => void
+    __outsideHandler?: (event: Event) => void
 }
 
 export const vCloseOnOutsideClick = {
-    mounted: (el: ElWithOutsideHandler, binding: DirectiveBinding) => {
-        let isOpen = false
-
-        el.clickOutsideEvent = event => {
-            const eventTarget: EventTarget | null = event.target
-            const isClickInsideElement = (el == eventTarget || el.contains(eventTarget as Node))
-            if (isOpen && !isClickInsideElement) {
-                binding.value()
-                isOpen = false
-            }
-            if (!isOpen) {
-                isOpen = true
-            }
+    mounted(el: ElWithOutsideHandler, binding: DirectiveBinding<BindingValue>) {
+        const get = () => {
+            const v = binding.value
+            return typeof v === 'function'
+                ? { onOutside: v, when: undefined }
+                : v
         }
-        document.addEventListener('click', el.clickOutsideEvent)
+
+        el.__outsideHandler = (event: Event) => {
+            const { onOutside, when } = get()
+
+            // only run when predicate allows (for instance if menu is open)
+            if (when && !when()) return
+
+            const path = (event as PointerEvent).composedPath?.() ?? []
+            const clickedInside = path.includes(el)
+
+            if (!clickedInside) onOutside()
+        }
+
+        document.addEventListener('pointerdown', el.__outsideHandler, true)
     },
-    unmounted: (el: ElWithOutsideHandler) => {
-        document.removeEventListener('click', el.clickOutsideEvent)
+
+    unmounted(el: ElWithOutsideHandler) {
+        if (el.__outsideHandler) {
+            document.removeEventListener('pointerdown', el.__outsideHandler, true)
+            delete el.__outsideHandler
+        }
     }
 }

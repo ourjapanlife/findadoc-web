@@ -7,7 +7,10 @@
     >
         <div
             ref="modal"
-            v-close-on-outside-click="hideModalAndEmitClosedEvent"
+            v-close-on-outside-click="{
+                onOutside: hideModalAndEmitClosedEvent,
+                when: () => store.isOpen,
+            }"
             class="absolute z-10 bg-primary-bg rounded-xl overflow-hidden
             shadow-lg shadow-primary
             hover:shadow-inner hover:shadow-primary/90"
