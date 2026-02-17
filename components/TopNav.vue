@@ -138,7 +138,10 @@
                     <!-- Profile Dropdown Menu Options (if profile pic clicked) -->
                     <div
                         v-if="profileMenuIsOpen"
-                        v-close-on-outside-click="toggleProfileMenu"
+                        v-close-on-outside-click="{
+                            onOutside: toggleProfileMenu,
+                            when: () => profileMenuIsOpen,
+                        }"
                         class="absolute border-2 border-primary/60 top-20 right-24
                         z-10 bg-primary-bg rounded-xl p-2 shadow-xl"
                     >
