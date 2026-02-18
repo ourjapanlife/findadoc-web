@@ -1,10 +1,11 @@
 <template>
     <div
-        v-close-on-outside-click="closeTheme"
-    >
+        v-close-on-outside-click="{
+            onOutside: closeTheme,
+            when: () => !colorThemeAccordionIsClosed
+            }">
         <div
             id="color-changer"
-
             :class="colorThemeAccordionIsClosed
                 ? 'transition-discrete duration-300 h-0 opacity-0 delay-(invisible) rounded-t-2xl border-t'
                     + 'border-primary/20 portrait:translate-y-20 overflow-hidden landscape:absolute landscape:-translate-y-2/3'
@@ -24,7 +25,7 @@
             />
         </div>
 
-        <div class="portrait:bg-primary-bg z-10 ">
+        <div class="portrait:bg-primary-bg z-10 cursor-pointer">
             <div
                 class="flex px-4 py-2 gap-3 landscape:gap-1 items-center"
                 @click="toggleThemeVisibility"
@@ -103,10 +104,6 @@ const colorThemeAccordionIsClosed = ref(true)
 function toggleThemeVisibility() {
     colorThemeAccordionIsClosed.value = !colorThemeAccordionIsClosed.value
 }
-
-// function openTheme() {
-//     colorThemeAccordionIsClosed.value = false
-// }
 
 function closeTheme() {
     colorThemeAccordionIsClosed.value = true
