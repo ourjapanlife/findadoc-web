@@ -2,8 +2,9 @@
     <div
         v-close-on-outside-click="{
             onOutside: closeTheme,
-            when: () => !colorThemeAccordionIsClosed
-            }">
+            when: () => !colorThemeAccordionIsClosed,
+        }"
+    >
         <div
             id="color-changer"
             :class="colorThemeAccordionIsClosed
