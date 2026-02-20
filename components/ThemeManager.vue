@@ -1,51 +1,61 @@
 <template>
     <div
-        id="color-changer"
-        :class="colorThemeAccordionIsClosed
-            ? 'transition duration-300 h-0 opacity-0 delay-(invisible) rounded-t-2xl'
-                + 'border-t border-primary/20 translate-y-20 overflow-hidden'
-            : 'transition duration-300 rounded-t-2xl border-t border-primary/20 overflow-hidden'"
+        v-close-on-outside-click="{
+            onOutside: closeTheme,
+            when: () => !colorThemeAccordionIsClosed,
+        }"
     >
-        <ThemeOption
-            v-for="theme in themes"
-            :key="theme.themeId"
-            :theme-id="theme.themeId"
-            :dot-color="theme.dotColor"
-            :theme-name="theme.themeName"
-            :is-selected="theme.isSelected"
-            :is-dark-mode="isDarkMode"
-            @click="setTheme(theme.themeId, isDarkMode)"
-            @lightdarkmode-toggle="toggleLightDarkMode"
-        />
-    </div>
-
-    <div class="bg-primary-bg z-10 ">
         <div
-            class="flex px-4 py-2 gap-3 items-center"
-            @click="toggleThemeVisibility"
+            id="color-changer"
+            :class="colorThemeAccordionIsClosed
+                ? 'transition-discrete duration-300 h-0 opacity-0 delay-(invisible) rounded-t-2xl border-t'
+                    + 'border-primary/20 portrait:translate-y-20 overflow-hidden landscape:absolute landscape:-translate-y-2/3'
+                : 'transition-discreet duration-300 portrait:rounded-t-2xl landscape:rounded-md border-t'
+                    + 'border-primary/20 overflow-hidden landscape:absolute landscape:-translate-y-90'"
         >
+            <ThemeOption
+                v-for="theme in themes"
+                :key="theme.themeId"
+                :theme-id="theme.themeId"
+                :dot-color="theme.dotColor"
+                :theme-name="theme.themeName"
+                :is-selected="theme.isSelected"
+                :is-dark-mode="isDarkMode"
+                @click="setTheme(theme.themeId, isDarkMode)"
+                @lightdarkmode-toggle="toggleLightDarkMode"
+            />
+        </div>
+
+        <div class="portrait:bg-primary-bg z-10 cursor-pointer">
             <div
-                class="w-7 h-7 mr-1 rounded-full bg-primary"
-            />
-            <p
-                id="theme-text"
-                class="text-primary"
+                class="flex px-4 py-2 gap-3 landscape:gap-1 items-center"
+                @click="toggleThemeVisibility"
             >
-                {{ t('themeManager.colorThemes') }}
-            </p>
-            <SvgoAccordionArrow
-                id="accordion"
-                role="img"
-                title="accordion arrow"
-                :class="colorThemeAccordionIsClosed
-                    ? 'w-6 h-6 transition duration-300 fill-primary'
-                    : 'w-6 h-6 transition duration-300 fill-primary -rotate-180'"
-            />
+                <div
+                    class="w-7 h-7 landscape:w-5 landscape:h-5 mr-1 rounded-full bg-primary"
+                />
+                <p
+                    id="theme-text"
+                    class="text-primary"
+                >
+                    {{ t('themeManager.colorThemes') }}
+                </p>
+                <SvgoAccordionArrow
+                    id="accordion"
+                    role="img"
+                    title="accordion arrow"
+                    :class="colorThemeAccordionIsClosed
+                        ? 'w-6 h-6 transition duration-300 fill-primary'
+                        : 'w-6 h-6 transition duration-300 fill-primary -rotate-180'"
+                />
+            </div>
         </div>
     </div>
 </template>
 
 <script lang="ts" setup>
+import { vCloseOnOutsideClick } from '~/composables/closeOnOutsideClick'
+
 const { t } = useI18n()
 
 const currentTheme = ref('original')
@@ -94,6 +104,10 @@ const colorThemeAccordionIsClosed = ref(true)
 
 function toggleThemeVisibility() {
     colorThemeAccordionIsClosed.value = !colorThemeAccordionIsClosed.value
+}
+
+function closeTheme() {
+    colorThemeAccordionIsClosed.value = true
 }
 
 function toggleLightDarkMode(returnedDarkModeValue: boolean) {
