@@ -104,6 +104,7 @@
   "searchBar": {
     "selectSpecialty": "専門を選択",
     "selectLocation": "場所を選択",
+    "region": "地域",
     "allLocations": "すべての場所",
     "allSpecialties": "すべての専門分野",
     "search": "検索",

@@ -108,6 +108,7 @@
   "searchBar": {
     "selectSpecialty": "Seleziona una specialità...",
     "selectLocation": "Seleziona una posizione...",
+    "region": "Regione",
     "allLocations": "Tutte le località",
     "allSpecialties": "Tutte le specialità",
     "search": "Cerca",
