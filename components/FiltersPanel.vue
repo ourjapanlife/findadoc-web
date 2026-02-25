@@ -211,7 +211,7 @@ import { useSpecialtiesStore } from '~/stores/specialtiesStore.js'
 import { useLocaleStore } from '~/stores/localeStore.js'
 import { type Specialty, Locale } from '~/typedefs/gqlTypes.js'
 import { BottomSheetType, useBottomSheetStore } from '~/stores/bottomSheetStore'
-import type { Region, Prefecture } from '~/typedefs/locationTypes'
+import type { Region, Prefecture, City } from '~/typedefs/locationTypes'
 import { regionsEnum, getPrefecturesByRegion, getCitiesByPrefecture } from '~/typedefs/locationTypes'
 
 const { t } = useI18n()
@@ -297,7 +297,12 @@ watch(selectedPrefecture, () => {
     selectedCity.value = ''
 })
 watch(selectedCity, () => {
-    searchResultsStore.selectedCity = selectedCity.value ? selectedCity.value : undefined
+    if (!selectedCity.value) {
+        searchResultsStore.selectedCity = undefined
+    }
+    const isEnglish = localeStore.activeLocale.code === Locale.EnUs
+    const cityKey = selectedCity.value as City
+    searchResultsStore.selectedCity = isEnglish ? cityDisplayName[cityKey].en : cityDisplayName[cityKey].ja
 })
 
 // Selection handlers
