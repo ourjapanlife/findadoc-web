@@ -282,7 +282,17 @@ const cityDropdownOptions = computed(() => {
     if (!selectedPrefecture.value) return []
 
     const cities = getCitiesByPrefecture(selectedPrefecture.value)
-    return cities.map(city => ({
+
+    // Only show cities that have facilities listed. Create new set below
+    const citiesWithFacilities = new Set(locationDropdownOptions.value.map(option => option.value))
+
+    // First filter cities by getting name of city, then checking if thats in existing cities with facilities
+    // Then, on those filtered cities, map (create new array) for those options
+    // So, prefectures will only show cities that have facilities
+    return cities.filter(city => {
+        const displayName = isEnglish ? cityDisplayName[city].en : cityDisplayName[city].ja
+        return citiesWithFacilities.has(displayName)
+    }).map(city => ({
         value: city,
         displayText: isEnglish ? cityDisplayName[city].en : cityDisplayName[city].ja
     }))
