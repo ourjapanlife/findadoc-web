@@ -292,10 +292,16 @@ const cityDropdownOptions = computed(() => {
     return cities.filter(city => {
         const displayName = isEnglish ? cityDisplayName[city].en : cityDisplayName[city].ja
         return citiesWithFacilities.has(displayName)
-    }).map(city => ({
-        value: city,
-        displayText: isEnglish ? cityDisplayName[city].en : cityDisplayName[city].ja
-    }))
+    }).map(city => {
+        const displayName = isEnglish ? cityDisplayName[city].en : cityDisplayName[city].ja
+        // Find/Check for cities from the options that match city names filtered & placed in the map from above
+        // Then check the count and return it in the displayText
+        const count = locationDropdownOptions.value.find(location => location.value === displayName)?.cityOccurrenceCount
+        return {
+            value: city,
+            displayText: `${displayName} (${count})`
+        }
+    })
 })
 
 // Watch statement to prevent prefectures and cities that dont match
