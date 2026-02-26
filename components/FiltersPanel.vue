@@ -35,7 +35,7 @@
             </div>
             <div class="location-filters">
                 <p class="w-full bg-primary/20 rounded px-4 py-1 mb-2 text-sm font-medium">
-                    Select Location
+                    {{ t('searchBar.selectLocation') }}
                 </p>
                 <!-- REGION -->
                 <div
