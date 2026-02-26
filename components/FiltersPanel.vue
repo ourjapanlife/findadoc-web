@@ -173,14 +173,19 @@
                         v-for="(language) in languageDropdownOptions"
                         :key="language.value"
                         :value="language.value"
-                        class="flex items-center gap-1.5 bg-primary/20 rounded cursor-pointer text-center py-1"
+                        class="flex items-center gap-1.5 bg-primary/20 rounded cursor-pointer text-center px-2 py-1 min-h-[2rem]"
                     >
                         <input
                             type="checkbox"
                             :checked="selectedLanguages === language.value"
+                            class="shrink-0"
                             @change="selectedLanguages = selectedLanguages === language.value ? '' : language.value"
                         >
-                        <span class="text-sm">{{ language.displayText }}</span>
+                        <span
+                            class="text-xs truncate min-w-0"
+                        >
+                            {{ language.displayText }}
+                        </span>
                     </label>
                 </div>
 
