@@ -174,6 +174,7 @@
                         :key="language.value"
                         :value="language.value"
                         class="flex items-center gap-1.5 bg-primary/20 rounded cursor-pointer text-center px-2 py-1 min-h-[2rem]"
+                        :class="selectedLanguages === language.value ? 'bg-primary/40' : 'bg-primary/20'"
                     >
                         <input
                             type="checkbox"
