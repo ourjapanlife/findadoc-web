@@ -151,6 +151,12 @@
                                         </label>
                                     </div>
                                 </div>
+                                <p
+                                    v-if="cityDropdownOptions.length === 0"
+                                    class="text-sm text-primary-text-muted py-2"
+                                >
+                                    {{ t('modHealthcareProfessionalSection.noFacilitiesWereFound') }}
+                                </p>
                             </div>
                         </div>
                     </div>
