@@ -168,7 +168,7 @@
                         Select Language
                     </p>
                 </div>
-                <div class="search-language grid grid-cols-4 gap-2">
+                <div class="search-language grid grid-cols-4 gap-2 border-b border-primary/20 pb-2">
                     <label
                         v-for="(language) in languageDropdownOptions"
                         :key="language.value"
