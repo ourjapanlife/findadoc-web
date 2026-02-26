@@ -110,7 +110,7 @@
   },
   "searchBar": {
     "selectSpecialty": "Select a specialty...",
-    "selectLocation": "Select a location...",
+    "selectLocation": "Select Location",
     "region": "Region",
     "allLocations": "All Locations",
     "allSpecialties": "All Specialties",
