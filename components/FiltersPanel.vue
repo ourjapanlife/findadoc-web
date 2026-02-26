@@ -165,24 +165,23 @@
                 <!-- Language dropdown -->
                 <div class="language-filters">
                     <p class="w-full bg-primary/20 rounded px-4 py-1 my-2 text-sm font-medium">
-                        Select Location
+                        Select Language
                     </p>
                 </div>
-                <div class="search-language col-span-1 w-full py-4">
-                    <button
-                        v-model="selectedLanguages"
-                        class="w-full px-1 py-1.5 border-2 border-primary/60 rounded-md text-primary-text
-                                    drop-shadow-md bg-primary-bg/10 transition-all"
-                        data-testid="search-bar-language"
+                <div class="search-language grid grid-cols-4 gap-2">
+                    <label
+                        v-for="(language) in languageDropdownOptions"
+                        :key="language.value"
+                        :value="language.value"
+                        class="flex items-center gap-1.5 bg-primary/20 rounded cursor-pointer text-center py-1"
                     >
-                        <option
-                            v-for="(language) in languageDropdownOptions"
-                            :key="language.value"
-                            :value="language.value"
+                        <input
+                            type="checkbox"
+                            :checked="selectedLanguages === language.value"
+                            @change="selectedLanguages = selectedLanguages === language.value ? '' : language.value"
                         >
-                            {{ language.displayText }}
-                        </option>
-                    </button>
+                        <span class="text-sm">{{ language.displayText }}</span>
+                    </label>
                 </div>
 
                 <!-- Search button -->
@@ -367,7 +366,7 @@ function toggleCitySection(prefecture: Prefecture) {
 function createLanguageDropdownOptions() {
     // This will remove any codes code that is falsy
     const dropdownOptions = localeStore.localeDisplayOptions.map(locale => ({
-        displayText: locale.displayText,
+        displayText: locale.simpleText,
         value: locale.code
     })) as DropdownOption[]
 
