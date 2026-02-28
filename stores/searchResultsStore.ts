@@ -16,6 +16,7 @@ import type { Locale,
 type FacilitySearchResult = Facility & {
     healthcareProfessionals: HealthcareProfessional[]
 }
+
 const toast = useToast()
 
 export const useSearchResultsStore = defineStore('searchResultsStore', () => {
@@ -28,11 +29,19 @@ export const useSearchResultsStore = defineStore('searchResultsStore', () => {
     const selectedCity: Ref<string | undefined> = ref()
     const selectedSpecialties: Ref<Specialty[] | undefined> = ref()
     const selectedLanguages: Ref<Locale[] | undefined> = ref()
+    const isPrefetchingSearchResults: Ref<boolean> = ref(false)
 
     async function search() {
-        //set the loading visual state
+        //set the loading visual state and not prefetching results for better ux
         const loadingStore = useLoadingStore()
-        loadingStore.setIsLoading(true)
+
+        // This is for the UI to only show loading when loading for a user search. On load it prefetches on screen
+        const shouldTriggerLoadingState = !isPrefetchingSearchResults.value && searchResultsList.value.length
+
+        // deep copy orignaly searchResultsList for future comparison
+        const originalSearchResultList = [...searchResultsList.value]
+
+        if (shouldTriggerLoadingState) loadingStore.setIsLoading(true)
 
         //get the facilities that match the professionals we found
         const facilitiesSearchResults = await queryFacilities(selectedCity.value)
@@ -61,7 +70,7 @@ export const useSearchResultsStore = defineStore('searchResultsStore', () => {
         clearActiveSearchResult()
 
         //update the state with the new results
-        searchResultsList.value = combinedResults
+        if (!arraysAreEqual(searchResultsList.value, originalSearchResultList)) searchResultsList.value = combinedResults
         //update the total results count
         totalResults.value = combinedResults.length
 
@@ -111,7 +120,8 @@ export const useSearchResultsStore = defineStore('searchResultsStore', () => {
         selectedCity,
         selectedSpecialties,
         selectedLanguages,
-        totalResults
+        totalResults,
+        isPrefetchingSearchResults
     }
 })
 

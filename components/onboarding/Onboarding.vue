@@ -21,14 +21,12 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-// import { useSearchResultsStore } from '~/stores/searchResultsStore'
 import type { SpecialtyCategory } from '~/typedefs/gqlTypes.js'
 import { useOnboardingStore, OnboardingState } from '@/stores/onboardingStore'
 // import { useSpecialtiesStore } from '@/stores/specialtiesStore'
 
 // const specialtiesStore = useSpecialtiesStore()
 const onboardingStore = useOnboardingStore()
-// const searchResultsStore = useSearchResultsStore()
 
 const enum OnboardingSteps {
     Welcome = 'welcome',
@@ -59,8 +57,6 @@ const completeOnboarding = async () => {
     //     : undefined
 
     // searchResultsStore.selectedSpecialties = specialtiesToSearch ?? []
-
-    // await searchResultsStore.search()
 }
 </script>
 
