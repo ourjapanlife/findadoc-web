@@ -1,5 +1,6 @@
 import { prefectureDisplayName } from '~/stores/locationsStore'
 import type { CreateFacilityInput, UpdateFacilityInput, PhysicalAddressInput } from '~/typedefs/gqlTypes'
+import type { Prefecture } from '~/typedefs/locationTypes'
 
 export interface FacilityValidationResult {
     valid: boolean
@@ -16,7 +17,8 @@ export function validatePrefectureMatch(prefectureEn?: string, prefectureJa?: st
     const trimmedEn = prefectureEn.trim()
     const trimmedJa = prefectureEn.trim()
 
-    for (const name of Object.values(prefectureDisplayName)) {
+    for (const key in prefectureDisplayName) {
+        const name = prefectureDisplayName[key as Prefecture]
         if (name.en === trimmedEn && name.ja === trimmedJa) {
             return true
         }
