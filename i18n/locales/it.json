@@ -106,8 +106,10 @@
     "otherNotes": "Altre note"
   },
   "searchBar": {
-    "selectSpecialty": "Seleziona una specialità...",
-    "selectLocation": "Seleziona una posizione...",
+    "selectSpecialty": "Seleziona specialità",
+    "selectLocation": "Seleziona posizione",
+    "selectLanguage": "Seleziona lingua",
+    "region": "Regione",
     "allLocations": "Tutte le località",
     "allSpecialties": "Tutte le specialità",
     "search": "Cerca",

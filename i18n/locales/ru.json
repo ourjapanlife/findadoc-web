@@ -102,8 +102,10 @@
     "submissionSuccessful": "Thank you for contributing! Your submission about the doctor has been successfully recorded. We’re grateful for your support!"
   },
   "searchBar": {
-    "selectSpecialty": " Выбрать специальность...",
-    "selectLocation": " Выбрать локацию...",
+    "selectSpecialty": "Выбрать специальность",
+    "selectLocation": "Выбрать местоположение",
+    "selectLanguage": "Выбрать язык",
+    "region": "Регион",
     "allLocations": "Все места",
     "allSpecialties": "Все специальности",
     "search": "Поиск",

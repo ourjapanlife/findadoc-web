@@ -95,10 +95,10 @@
                 text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
                         >
                             <option
-                                v-for="(prefecture, index) in listPrefectureJapanEn"
-                                :key="index"
+                                v-for="(names, key) in prefectureDisplayName"
+                                :key="key"
                             >
-                                {{ prefecture }}
+                                {{ names.en }}
                             </option>
                         </select>
                     </div>
@@ -152,10 +152,10 @@
                 text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
                         >
                             <option
-                                v-for="(prefecture, index) in listPrefectureJapanJa"
-                                :key="index"
+                                v-for="(names, key) in prefectureDisplayName"
+                                :key="key"
                             >
-                                {{ prefecture }}
+                                {{ names.ja }}
                             </option>
                         </select>
                     </div>
@@ -284,7 +284,7 @@ import {
     validateCityJa
 } from '~/utils/formValidations'
 import type { HealthcareProfessional } from '~/typedefs/gqlTypes'
-import { listPrefectureJapanEn, listPrefectureJapanJa } from '~/stores/locationsStore'
+import { prefectureDisplayName } from '~/stores/locationsStore'
 import { checkPrefectureNameMatch } from '~/utils/facilitiesUtils'
 
 const { t } = useI18n()

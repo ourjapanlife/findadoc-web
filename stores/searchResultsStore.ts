@@ -187,8 +187,11 @@ async function queryFacilities(searchCity?: string, heathcareProfessinalIDs?: st
         const facilitiesSearchResults = serverResponse.data.facilities ?? []
 
         const locationFilteredSearchResults = searchCity
-            ? facilitiesSearchResults.filter(facility =>
-                facility.contact?.address.cityEn === searchCity || facility.contact?.address.cityJa === searchCity)
+            ? facilitiesSearchResults.filter(facility => {
+                console.info('searchCity:', searchCity)
+                console.info('cityEn:', facility.contact?.address.cityEn)
+                return facility.contact?.address.cityEn === searchCity || facility.contact?.address.cityJa === searchCity
+            })
             : facilitiesSearchResults
 
         return locationFilteredSearchResults

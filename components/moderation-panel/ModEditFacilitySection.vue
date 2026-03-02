@@ -105,10 +105,10 @@
                 text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
                 >
                     <option
-                        v-for="(prefecture, index) in listPrefectureJapanEn"
-                        :key="index"
+                        v-for="(prefecture, key) in prefectureDisplayName"
+                        :key="key"
                     >
-                        {{ prefecture }}
+                        {{ prefecture.en }}
                     </option>
                 </select>
             </div>
@@ -165,10 +165,10 @@
                 text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
                 >
                     <option
-                        v-for="(prefecture, index) in listPrefectureJapanJa"
-                        :key="index"
+                        v-for="(prefecture, key) in prefectureDisplayName"
+                        :key="key"
                     >
-                        {{ prefecture }}
+                        {{ prefecture.ja }}
                     </option>
                 </select>
             </div>
@@ -313,7 +313,7 @@ import { validateAddressLineEn,
     validateWebsite,
     validateCityJa } from '~/utils/formValidations'
 import { RelationshipAction, type HealthcareProfessional } from '~/typedefs/gqlTypes'
-import { listPrefectureJapanEn, listPrefectureJapanJa } from '~/stores/locationsStore'
+import { prefectureDisplayName } from '~/stores/locationsStore'
 import { checkPrefectureNameMatch } from '~/utils/facilitiesUtils'
 
 const toast = useToast()

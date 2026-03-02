@@ -1,5 +1,6 @@
-import { prefectureLanguageMatch } from '~/stores/locationsStore'
+import { prefectureDisplayName } from '~/stores/locationsStore'
 import type { CreateFacilityInput, UpdateFacilityInput, PhysicalAddressInput } from '~/typedefs/gqlTypes'
+import type { Prefecture } from '~/typedefs/locationTypes'
 
 export interface FacilityValidationResult {
     valid: boolean
@@ -13,8 +14,16 @@ export function validatePrefectureMatch(prefectureEn?: string, prefectureJa?: st
     if (!prefectureEn && !prefectureJa) return true
     if (!prefectureEn || !prefectureJa) return false
 
-    const lowercasePrefectureEn = prefectureEn.trim().toLowerCase()
-    return prefectureLanguageMatch[lowercasePrefectureEn] === prefectureJa
+    const trimmedEn = prefectureEn.trim()
+    const trimmedJa = prefectureEn.trim()
+
+    for (const key in prefectureDisplayName) {
+        const name = prefectureDisplayName[key as Prefecture]
+        if (name.en === trimmedEn && name.ja === trimmedJa) {
+            return true
+        }
+    }
+    return false
 }
 
 /**

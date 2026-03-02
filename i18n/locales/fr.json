@@ -102,8 +102,10 @@
     "submissionSuccessful": "Thank you for contributing! Your submission about the doctor has been successfully recorded. We’re grateful for your support!"
   },
   "searchBar": {
-    "selectSpecialty": "Sélectionnez une spécialité...",
-    "selectLocation": "Sélectionnez un lieu...",
+    "selectSpecialty": "Sélectionner une spécialité",
+    "selectLocation": "Sélectionner un lieu",
+    "selectLanguage": "Sélectionner une langue",
+    "region": "Région",
     "allLocations": "Tous les lieux",
     "allSpecialties": "Toutes les spécialités",
     "search": "Rechercher",
