@@ -102,8 +102,9 @@
     "submissionSuccessful": "Thank you for contributing! Your submission about the doctor has been successfully recorded. We’re grateful for your support!"
   },
   "searchBar": {
-    "selectSpecialty": "専門を選択",
-    "selectLocation": "場所を選択",
+    "selectSpecialty": "専門科を選ぶ",
+    "selectLocation": "場所を選ぶ",
+    "selectLanguage": "言語を選ぶ",
     "region": "地域",
     "allLocations": "すべての場所",
     "allSpecialties": "すべての専門分野",
