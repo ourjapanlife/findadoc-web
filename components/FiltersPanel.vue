@@ -165,7 +165,7 @@
                 <!-- Language dropdown -->
                 <div class="language-filters">
                     <p class="w-full bg-primary/20 rounded px-4 py-1 my-2 text-sm font-medium">
-                        Select Language
+                        {{ t('searchBar.selectLanguage') }}
                     </p>
                 </div>
                 <div class="search-language grid grid-cols-4 gap-2 border-b border-primary/20 pb-2">

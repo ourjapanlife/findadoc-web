@@ -104,6 +104,7 @@
   "searchBar": {
     "selectSpecialty": "选择专科",
     "selectLocation": "选择地点",
+    "selectLanguage": "选择语言",
     "region": "区域",
     "allLocations": "所有地点",
     "allSpecialties": "所有专科",

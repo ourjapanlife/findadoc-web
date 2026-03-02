@@ -104,6 +104,7 @@
   "searchBar": {
     "selectSpecialty": "Выбрать специальность",
     "selectLocation": "Выбрать местоположение",
+    "selectLanguage": "Выбрать язык",
     "region": "Регион",
     "allLocations": "Все места",
     "allSpecialties": "Все специальности",

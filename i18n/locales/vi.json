@@ -104,6 +104,7 @@
   "searchBar": {
     "selectSpecialty": "Chọn chuyên khoa",
     "selectLocation": "Chọn địa điểm",
+    "selectLanguage": "Chọn ngôn ngữ",
     "region": "Khu Vực",
     "allLocations": "Tất cả địa điểm",
     "allSpecialties": "Tất cả chuyên khoa",
