@@ -102,8 +102,8 @@
     "submissionSuccessful": "Cảm ơn bạn đã đóng góp! Bài gửi của bạn về bác sĩ đã được ghi nhận thành công. Chúng tôi rất biết ơn sự hỗ trợ của bạn!"
   },
   "searchBar": {
-    "selectSpecialty": "Chọn chuyên khoa...",
-    "selectLocation": "Chọn vị trí...",
+    "selectSpecialty": "Chọn chuyên khoa",
+    "selectLocation": "Chọn địa điểm",
     "region": "Khu Vực",
     "allLocations": "Tất cả địa điểm",
     "allSpecialties": "Tất cả chuyên khoa",

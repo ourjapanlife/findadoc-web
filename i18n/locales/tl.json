@@ -102,8 +102,8 @@
     "spokenLanguageValidation": "Pumili ng Lengwahe"
   },
   "searchBar": {
-    "selectSpecialty": "Pumili ng espesyalidad...",
-    "selectLocation": "Pumili ng lokasyon...",
+    "selectSpecialty": "Piliin ang espesyalidad",
+    "selectLocation": "Piliin ang lokasyon",
     "region": "Rehiyon",
     "allLocations": "Lahat ng Lokasyon",
     "allSpecialties": "Lahat ng Espesyalidad",
