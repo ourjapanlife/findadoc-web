@@ -102,8 +102,9 @@
     "submissionSuccessful": "Obrigado por contribuir! Seu envio sobre o médico foi gravado com sucesso. Estamos gratos por seu apoio!"
   },
   "searchBar": {
-    "selectSpecialty": "Escolha uma especialidade...",
-    "selectLocation": "Escolha uma localização...",
+    "selectSpecialty": "Selecionar especialidade",
+    "selectLocation": "Selecionar localização",
+    "selectLanguage": "Selecionar idioma",
     "region": "Região",
     "allLocations": "Todos os locais",
     "allSpecialties": "Todas as especialidades",

@@ -109,8 +109,9 @@
     "otherNotes": "Other notes"
   },
   "searchBar": {
-    "selectSpecialty": "Select a specialty...",
-    "selectLocation": "Select a location...",
+    "selectSpecialty": "Select Specialty",
+    "selectLocation": "Select Location",
+    "selectLanguage": "Select Language",
     "region": "Region",
     "allLocations": "All Locations",
     "allSpecialties": "All Specialties",
