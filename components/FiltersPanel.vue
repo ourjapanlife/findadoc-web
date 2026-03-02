@@ -35,7 +35,7 @@
             </div>
             <div class="location-filters">
                 <p class="w-full bg-primary/20 rounded px-4 py-1 mb-2 text-sm font-medium">
-                    Select Location
+                    {{ t('searchBar.selectLocation') }}
                 </p>
                 <!-- REGION -->
                 <div
@@ -163,21 +163,31 @@
                 </div>
 
                 <!-- Language dropdown -->
-                <div class="search-language col-span-1 w-full py-4">
-                    <select
-                        v-model="selectedLanguages"
-                        class="w-full px-1 py-1.5 border-2 border-primary/60 rounded-md text-primary-text
-                                    drop-shadow-md bg-primary-bg/10 transition-all"
-                        data-testid="search-bar-language"
+                <div class="language-filters">
+                    <p class="w-full bg-primary/20 rounded px-4 py-1 my-2 text-sm font-medium">
+                        {{ t('searchBar.selectLanguage') }}
+                    </p>
+                </div>
+                <div class="search-language grid grid-cols-4 gap-2 border-b border-primary/20 pb-2">
+                    <label
+                        v-for="(language) in languageDropdownOptions"
+                        :key="language.value"
+                        :value="language.value"
+                        class="flex items-center gap-1.5 bg-primary/20 rounded cursor-pointer text-center px-2 py-1 min-h-[2rem]"
+                        :class="selectedLanguages === language.value ? 'bg-primary/40' : 'bg-primary/20'"
                     >
-                        <option
-                            v-for="(language) in languageDropdownOptions"
-                            :key="language.value"
-                            :value="language.value"
+                        <input
+                            type="checkbox"
+                            :checked="selectedLanguages === language.value"
+                            class="shrink-0"
+                            @change="selectedLanguages = selectedLanguages === language.value ? '' : language.value"
+                        >
+                        <span
+                            class="text-xs truncate min-w-0"
                         >
                             {{ language.displayText }}
-                        </option>
-                    </select>
+                        </span>
+                    </label>
                 </div>
 
                 <!-- Search button -->
@@ -362,7 +372,7 @@ function toggleCitySection(prefecture: Prefecture) {
 function createLanguageDropdownOptions() {
     // This will remove any codes code that is falsy
     const dropdownOptions = localeStore.localeDisplayOptions.map(locale => ({
-        displayText: locale.displayText,
+        displayText: locale.simpleText,
         value: locale.code
     })) as DropdownOption[]
 
