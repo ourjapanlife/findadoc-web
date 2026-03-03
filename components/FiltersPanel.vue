@@ -43,7 +43,10 @@
                     :key="region.value"
                     class="border-b border-primary/20 last:border-b-0"
                 >
-                    <div class="flex items-center justify-between py-2">
+                    <div
+                        class="flex items-center justify-between py-2"
+                        @click="selectRegion(selectedRegion === region.value ? '' : region.value)"
+                    >
                         <!-- checkbox and label -->
                         <label
                             label="checkbox"
@@ -89,7 +92,10 @@
                             :value="prefecture.value"
                             class="border-b border-primary/20 last:border-b-0"
                         >
-                            <div class="flex items-center justify-between py-2">
+                            <div
+                                class="flex items-center justify-between py-2"
+                                @click="selectPrefecture(selectedPrefecture=== prefecture.value ? '' : prefecture.value)"
+                            >
                                 <!-- checkbox and label -->
                                 <label
                                     label="checkbox"
@@ -135,7 +141,10 @@
                                     :value="city.value"
                                     class="border-b border-primary/20 last:border-b-0"
                                 >
-                                    <div class="flex items-center justify-between py-2">
+                                    <div
+                                        class="flex items-center justify-between py-2"
+                                        @click="selectCity(selectedCity=== city.value ? '' : city.value)"
+                                    >
                                         <!-- checkbox and label -->
                                         <label
                                             label="checkbox"
