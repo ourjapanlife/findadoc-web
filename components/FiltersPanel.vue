@@ -296,16 +296,20 @@ const cityDropdownOptions = computed(() => {
     const isEnglish = localeStore.activeLocale.code === Locale.EnUs
     if (!selectedPrefecture.value) return []
 
-    const cities = getCitiesByPrefecture(selectedPrefecture.value)
+    const citiesInPrefecture = getCitiesByPrefecture(selectedPrefecture.value)
+
+    const facilityCountByCity = new Map(locationDropdownOptions.value.map(
+        location => [location.value, location.cityOccurrenceCount]
+    ))
 
     const citiesWithFacilities = new Set(locationDropdownOptions.value.map(option => option.value))
 
-    return cities.filter(city => {
+    return citiesInPrefecture.filter(city => {
         const displayName = isEnglish ? cityDisplayName[city].en : cityDisplayName[city].ja
         return citiesWithFacilities.has(displayName)
     }).map(city => {
         const displayName = isEnglish ? cityDisplayName[city].en : cityDisplayName[city].ja
-        const count = locationDropdownOptions.value.find(location => location.value === displayName)?.cityOccurrenceCount
+        const count = facilityCountByCity.get(displayName)
         return {
             value: city,
             displayText: `${displayName} (${count})`
