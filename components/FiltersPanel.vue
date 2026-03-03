@@ -302,12 +302,12 @@ const cityDropdownOptions = computed(() => {
         location => [location.value, location.cityOccurrenceCount]
     ))
 
-    const citiesWithFacilities = new Set(locationDropdownOptions.value.map(option => option.value))
-
-    return citiesInPrefecture.filter(city => {
+    const citiesWithFacilities = citiesInPrefecture.filter(city => {
         const displayName = isEnglish ? cityDisplayName[city].en : cityDisplayName[city].ja
-        return citiesWithFacilities.has(displayName)
-    }).map(city => {
+        return facilityCountByCity.has(displayName)
+    })
+
+    const finalCityOptions = citiesWithFacilities.map(city => {
         const displayName = isEnglish ? cityDisplayName[city].en : cityDisplayName[city].ja
         const count = facilityCountByCity.get(displayName)
         return {
@@ -315,6 +315,7 @@ const cityDropdownOptions = computed(() => {
             displayText: `${displayName} (${count})`
         }
     })
+    return finalCityOptions
 })
 
 // Watch statement to prevent prefectures and cities that dont match
