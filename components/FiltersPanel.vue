@@ -294,24 +294,17 @@ const prefectureDropdownOptions = computed(() => {
 // City dropdowns
 const cityDropdownOptions = computed(() => {
     const isEnglish = localeStore.activeLocale.code === Locale.EnUs
-    // Get cities by selected prefecture
     if (!selectedPrefecture.value) return []
 
     const cities = getCitiesByPrefecture(selectedPrefecture.value)
 
-    // Only show cities that have facilities listed. Create new set below
     const citiesWithFacilities = new Set(locationDropdownOptions.value.map(option => option.value))
 
-    // First filter cities by getting name of city, then checking if thats in existing cities with facilities
-    // Then, on those filtered cities, map (create new array) for those options
-    // So, prefectures will only show cities that have facilities
     return cities.filter(city => {
         const displayName = isEnglish ? cityDisplayName[city].en : cityDisplayName[city].ja
         return citiesWithFacilities.has(displayName)
     }).map(city => {
         const displayName = isEnglish ? cityDisplayName[city].en : cityDisplayName[city].ja
-        // Find/Check for cities from the options that match city names filtered & placed in the map from above
-        // Then check the count and return it in the displayText
         const count = locationDropdownOptions.value.find(location => location.value === displayName)?.cityOccurrenceCount
         return {
             value: city,
