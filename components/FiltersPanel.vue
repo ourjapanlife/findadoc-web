@@ -307,21 +307,19 @@ const cityDropdownOptions = computed(() => {
 
     const citiesInPrefecture = getCitiesByPrefecture(selectedPrefecture.value)
 
-    const facilityCountByCity = new Map(locationDropdownOptions.value.map(
-        location => [location.value, location.cityOccurrenceCount]
-    ))
-
     const citiesWithFacilities = citiesInPrefecture.filter(city => {
         const displayName = isEnglish ? cityDisplayName[city].en : cityDisplayName[city].ja
-        return facilityCountByCity.has(displayName)
+        return locationDropdownOptions.value.some(location =>
+            location.value.includes(displayName))
     })
 
     const finalCityOptions = citiesWithFacilities.map(city => {
         const displayName = isEnglish ? cityDisplayName[city].en : cityDisplayName[city].ja
-        const count = facilityCountByCity.get(displayName)
+        const match = locationDropdownOptions.value.find(location =>
+            location.value.includes(displayName))
         return {
             value: city,
-            displayText: `${displayName} (${count})`
+            displayText: `${displayName} (${match?.cityOccurrenceCount})`
         }
     })
     return finalCityOptions
