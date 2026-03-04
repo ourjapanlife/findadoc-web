@@ -438,5 +438,19 @@
   "searchResultsErrors": {},
   "themeManager": {
     "colorThemes": "Color Themes"
+  },
+  "unsavedChanges": {
+    "create": {
+      "title": "Rời đi mà không tạo?",
+      "message": "Chưa được tạo. Nếu bạn rời đi bây giờ, tất cả thông tin đã nhập sẽ bị mất.",
+      "cancel": "Ở lại",
+      "confirm": "Rời đi"
+    },
+    "update": {
+      "title": "Hủy các thay đổi?",
+      "message": "Các thay đổi của bạn chưa được lưu. Nếu bạn rời đi bây giờ, chúng sẽ bị mất.",
+      "cancel": "Tiếp tục chỉnh sửa",
+      "confirm": "Hủy thay đổi"
+    }
   }
 }
