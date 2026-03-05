@@ -11,7 +11,7 @@ on:
 
 jobs:
     setup:
-        name: Running Pinia Tests 🚀
+        name: Running Tests 🚀
         strategy:
             matrix:
                 node-version: [22.12.0]
@@ -30,4 +30,4 @@ jobs:
               run: yarn install --immutable
             # Run the tests!
             - name: Run Vitest 🚀
-              run: yarn run test:pinia
+              run: yarn run test:unit
