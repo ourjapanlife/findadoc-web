@@ -2,7 +2,7 @@ import { stableStringify } from '~/utils/stableStringify'
 import { useUnsavedChangesConfirmationOptions } from '#imports'
 import type { Ref } from 'vue'
 
-type Equivalence<T> = (a: T, b: T) => boolean
+type Equivalence<T> = (entityOne: T, entityTwo: T) => boolean
 
 interface Config<T> {
     /** Component-owned form state. Composable syncs from this (initial + watch)
