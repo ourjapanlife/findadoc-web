@@ -1,5 +1,6 @@
 export const stableStringify = (input: unknown): string => {
     const seen = new WeakSet<object>()
+    const CIRCULAR = '[circular]'
 
     const normalize = (value: unknown): unknown => {
         if (value === null) return null
@@ -7,7 +8,6 @@ export const stableStringify = (input: unknown): string => {
         const t = typeof value
 
         if (t === 'string' || t === 'number' || t === 'boolean') return value
-
         if (t === 'bigint') return null
 
         // JSON-like: drop from objects; arrays become null (handled below)
@@ -17,6 +17,7 @@ export const stableStringify = (input: unknown): string => {
         if (value instanceof RegExp) return value.toString()
 
         if (Array.isArray(value)) {
+            // NOTE: we don't add arrays to `seen` here; they'll be handled by the object branch below
             return value.map(v => {
                 const n = normalize(v)
                 return n === undefined ? null : n
@@ -26,7 +27,8 @@ export const stableStringify = (input: unknown): string => {
         if (t === 'object' && value) {
             const obj = value as Record<string, unknown>
 
-            if (seen.has(obj)) throw new TypeError('stableStringify: circular structure')
+            // Graceful: represent circular refs instead of throwing
+            if (seen.has(obj)) return CIRCULAR
             seen.add(obj)
 
             const out: Record<string, unknown> = {}

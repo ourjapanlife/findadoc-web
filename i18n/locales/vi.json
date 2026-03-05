@@ -432,7 +432,9 @@
   "authErrors": {},
   "facilitiesErrors": {},
   "healthcareProfessionalsErrors": {},
-  "localeErrors": {},
+  "localeErrors": {
+    "notSpecified": "Not Specified"
+  },
   "locationErrors": {},
   "moderationSubmissionsErrors": {},
   "searchResultsErrors": {},

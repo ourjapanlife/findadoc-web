@@ -11,8 +11,7 @@ export default defineVitestConfig({
             }
         },
         include: [
-            'tests/vitest/storeTests/**/*.spec.ts',
-            'tests/vitest/snapshotTests/**/*.spec.ts'
+            'tests/vitest/**/*.spec.ts'
         ],
         exclude: ['node_modules']
     }
