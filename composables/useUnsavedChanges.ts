@@ -1,5 +1,4 @@
 import { stableStringify } from '~/utils/stableStringify'
-import { useUnsavedChangesConfirmationOptions } from '#imports'
 import type { Ref } from 'vue'
 
 type Equivalence<T> = (entityOne: T, entityTwo: T) => boolean
@@ -18,7 +17,7 @@ interface Config<T> {
 }
 
 const defaultEquivalence = <T>(): Equivalence<T> =>
-    (a, b) => stableStringify(a) === stableStringify(b)
+    (entityOne, entityTwo) => stableStringify(entityOne) === stableStringify(entityTwo)
 
 // Deep-clone to produce an immutable baseline that won't share identity with reactive proxies.
 const snapshot = <V>(val: V): V => JSON.parse(JSON.stringify(val ?? null))
@@ -49,9 +48,6 @@ export const useUnsavedChanges = <T>(config: Config<T>) => {
         return !eq(config.data.source.value, committed)
     })
 
-    // immediate: true ensures the initial dirty state is registered on mount,
-    // which is required for the router guard and beforeunload handler to work
-    // correctly when startDirty is true (create mode).
     watch(isDirty, dirty => {
         if (dirty) {
             $unsavedChangesRegistry.register(instanceId, config.mode)
@@ -70,7 +66,7 @@ export const useUnsavedChanges = <T>(config: Config<T>) => {
                 $unsavedChangesRegistry.unregister(instanceId)
                 config.onClose?.()
             }, {
-                ...useUnsavedChangesConfirmationOptions(config.mode),
+                mode: config.mode,
                 onCancel: config.onCancel
             })
         } else {

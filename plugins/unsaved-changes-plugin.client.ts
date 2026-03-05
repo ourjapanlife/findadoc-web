@@ -1,5 +1,3 @@
-import { useUnsavedChangesConfirmationOptions } from '~/composables/useUnsavedChangesConfirmationOptions'
-
 export default defineNuxtPlugin(() => {
     const activeDirtyIds = reactive(new Map<symbol, 'create' | 'update'>())
 
@@ -22,7 +20,7 @@ export default defineNuxtPlugin(() => {
 
         return new Promise<boolean>(resolve => {
             useNuxtApp().$withConfirmation(() => resolve(true), {
-                ...useUnsavedChangesConfirmationOptions(confirmationMode.value),
+                mode: confirmationMode.value,
                 onCancel: () => resolve(false)
             })
         })

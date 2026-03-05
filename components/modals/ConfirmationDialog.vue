@@ -11,7 +11,7 @@
                 when: () => isOpen,
             }"
             class="absolute z-50 bg-primary-bg rounded-xl overflow-hidden shadow-lg shadow-primary
-            hover:shadow-inner hover:shadow-primary/90 w-[92vw] max-w-md"
+      hover:shadow-inner hover:shadow-primary/90 w-[92vw] max-w-md"
             role="dialog"
             aria-modal="true"
             :aria-label="title || 'Confirmation'"
@@ -21,7 +21,7 @@
                 <button
                     type="button"
                     class="absolute right-6 top-5 bg-primary-inverted
-                    rounded-lg px-2 py-1 group hover:bg-primary-hover transition-all duration-200"
+          rounded-lg px-2 py-1 group hover:bg-primary-hover transition-all duration-200"
                     :aria-label="t('common.close', 'Close')"
                     @click="cancelAction"
                 >
@@ -85,13 +85,20 @@ import { vCloseOnOutsideClick } from '~/composables/closeOnOutsideClick'
 
 const modal = ref<HTMLElement | null>(null)
 
-const { confirmation, cancelAction, confirmAction } = useNuxtApp().$confirmationDialog
+const {
+    confirmation,
+    cancelAction,
+    confirmAction
+} = useNuxtApp().$confirmationDialog
+
 const { t } = useI18n()
 
 const isOpen = computed(() => Boolean(confirmation.value))
 
+// Default to update mode if none provided
 const mode = computed<'create' | 'update'>(() => confirmation.value?.mode ?? 'update')
 
+// All defaults live here (single source of truth)
 const title = computed(() =>
     confirmation.value?.title ?? t(`unsavedChanges.${mode.value}.title`))
 
@@ -104,6 +111,7 @@ const textConfirm = computed(() =>
 const textCancel = computed(() =>
     confirmation.value?.textCancel ?? t(`unsavedChanges.${mode.value}.cancel`))
 
+// ESC closes (cancel)
 const onKeydown = (e: KeyboardEvent) => {
     if (e.key === 'Escape' && isOpen.value) cancelAction()
 }
