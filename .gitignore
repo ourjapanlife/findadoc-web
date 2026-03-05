@@ -18,6 +18,9 @@ cypress/screenshots
 cypress/videos
 cypress/downloads
 
+#tests
+/coverage
+
 # eslint results
 eslint-results.sarif
 *.DS_Store
