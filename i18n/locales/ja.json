@@ -433,11 +433,27 @@
   "authErrors": {},
   "facilitiesErrors": {},
   "healthcareProfessionalsErrors": {},
-  "localeErrors": {},
+  "localeErrors": {
+    "notSpecified": "Not Specified"
+  },
   "locationErrors": {},
   "moderationSubmissionsErrors": {},
   "searchResultsErrors": {},
   "themeManager": {
     "colorThemes": "Color Themes"
+  },
+  "unsavedChanges": {
+    "create": {
+      "title": "作成せずに終了しますか？",
+      "message": "まだ作成は完了していません。このまま終了すると、入力した内容はすべて失われます。",
+      "cancel": "続ける",
+      "confirm": "終了する"
+    },
+    "update": {
+      "title": "変更内容を破棄しますか？",
+      "message": "変更内容はまだ保存されていません。このまま終了すると、変更内容はすべて失われます。",
+      "cancel": "編集を続ける",
+      "confirm": "変更を破棄する"
+    }
   }
 }
