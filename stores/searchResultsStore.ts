@@ -183,9 +183,11 @@ async function queryFacilities(searchCity?: string, heathcareProfessinalIDs?: st
 
         const locationFilteredSearchResults = searchCity
             ? facilitiesSearchResults.filter(facility => {
-                console.info('searchCity:', searchCity)
-                console.info('cityEn:', facility.contact?.address.cityEn)
-                return facility.contact?.address.cityEn === searchCity || facility.contact?.address.cityJa === searchCity
+                const cityEn = facility.contact.address.cityEn
+                const cityJa = facility.contact.address.cityJa
+                const englishMatches = cityEn.includes(searchCity) || searchCity.includes(cityEn)
+                const japaneseMatches = cityJa.includes(searchCity) || searchCity.includes(cityJa)
+                return englishMatches || japaneseMatches
             })
             : facilitiesSearchResults
 
