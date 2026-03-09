@@ -432,9 +432,7 @@
   "authErrors": {},
   "facilitiesErrors": {},
   "healthcareProfessionalsErrors": {},
-  "localeErrors": {
-    "notSpecified": "Not Specified"
-  },
+  "localeErrors": {},
   "locationErrors": {},
   "moderationSubmissionsErrors": {},
   "searchResultsErrors": {},
@@ -442,17 +440,7 @@
     "colorThemes": "Color Themes"
   },
   "unsavedChanges": {
-    "create": {
-      "title": "Umalis nang hindi gumagawa?",
-      "message": "Hindi pa ito nagagawa. Kapag umalis ka ngayon, mawawala ang lahat ng impormasyong inilagay mo.",
-      "cancel": "Manatili",
-      "confirm": "Umalis"
-    },
-    "update": {
-      "title": "Itapon ang mga pagbabago?",
-      "message": "Hindi pa nase-save ang mga pagbabago mo. Kapag umalis ka ngayon, mawawala ang mga ito.",
-      "cancel": "Magpatuloy sa pag-edit",
-      "confirm": "Itapon ang mga pagbabago"
-    }
+    "create": {},
+    "update": {}
   }
 }

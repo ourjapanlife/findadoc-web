@@ -33,9 +33,7 @@
   "authErrors": {},
   "facilitiesErrors": {},
   "healthcareProfessionalsErrors": {},
-  "localeErrors": {
-    "notSpecified": "Not Specified"
-  },
+  "localeErrors": {},
   "locationErrors": {},
   "moderationSubmissionsErrors": {},
   "searchResultsErrors": {},
@@ -442,17 +440,7 @@
     "updateFailed": "Profile update failed"
   },
   "unsavedChanges": {
-    "create": {
-      "title": "Leave without creating?",
-      "message": "This hasn't been created yet. If you leave now, all entered information will be lost.",
-      "cancel": "Stay",
-      "confirm": "Leave"
-    },
-    "update": {
-      "title": "Discard changes?",
-      "message": "Your changes haven't been saved. If you leave now, they will be lost.",
-      "cancel": "Continue editing",
-      "confirm": "Discard changes"
-    }
+    "create": {},
+    "update": {}
   }
 }

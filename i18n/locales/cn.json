@@ -433,9 +433,7 @@
   "authErrors": {},
   "facilitiesErrors": {},
   "healthcareProfessionalsErrors": {},
-  "localeErrors": {
-    "notSpecified": "Not Specified"
-  },
+  "localeErrors": {},
   "locationErrors": {},
   "moderationSubmissionsErrors": {},
   "searchResultsErrors": {},
@@ -443,17 +441,7 @@
     "colorThemes": "Color Themes"
   },
   "unsavedChanges": {
-    "create": {
-      "title": "未创建就离开吗？",
-      "message": "尚未创建完成。如果现在离开，已输入的所有信息将会丢失。",
-      "cancel": "继续",
-      "confirm": "离开"
-    },
-    "update": {
-      "title": "要放弃更改吗？",
-      "message": "你的更改尚未保存。如果现在离开，它们将会丢失。",
-      "cancel": "继续编辑",
-      "confirm": "放弃更改"
-    }
+    "create": {},
+    "update": {}
   }
 }

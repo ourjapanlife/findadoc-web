@@ -432,9 +432,7 @@
   "authErrors": {},
   "facilitiesErrors": {},
   "healthcareProfessionalsErrors": {},
-  "localeErrors": {
-    "notSpecified": "Not Specified"
-  },
+  "localeErrors": {},
   "locationErrors": {},
   "moderationSubmissionsErrors": {},
   "searchResultsErrors": {},
@@ -442,17 +440,7 @@
     "colorThemes": "Color Themes"
   },
   "unsavedChanges": {
-    "create": {
-      "title": "Quitter sans créer ?",
-      "message": "Cela n'a pas encore été créé. Si vous quittez maintenant, toutes les informations saisies seront perdues.",
-      "cancel": "Rester",
-      "confirm": "Quitter"
-    },
-    "update": {
-      "title": "Ignorer les modifications ?",
-      "message": "Vos modifications n'ont pas été enregistrées. Si vous quittez maintenant, elles seront perdues.",
-      "cancel": "Continuer la modification",
-      "confirm": "Ignorer les modifications"
-    }
+    "create": {},
+    "update": {}
   }
 }
