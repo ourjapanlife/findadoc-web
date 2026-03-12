@@ -1,5 +1,5 @@
 <template>
-    <div class="w-64 p-4 border-r border-slate-300">
+    <div class="w-52 px-4 py-6 border-r border-gray-200 bg-primary-bg">
         <div v-if="moderationScreenStore.dashboardScreenIsActive()">
             <ModDashboardLeftNavbar />
         </div>
