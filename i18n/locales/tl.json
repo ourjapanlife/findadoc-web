@@ -111,6 +111,8 @@
     "searchAndFilterDoctors": "Maghanap at mag-filter ng mga doktor"
   },
   "searchResultsList": {
+    "loadMore": "โหลดเพิ่มเติม",
+    "remaining": "เหลืออยู่",
     "noResults": "Walang natagpuang resulta",
     "noResultsSubtext": "Paki-subukang gumamit ng ibang kombinasyon ng filter."
   },

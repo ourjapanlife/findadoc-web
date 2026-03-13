@@ -111,6 +111,8 @@
     "searchAndFilterDoctors": "医師を検索・フィルター"
   },
   "searchResultsList": {
+    "loadMore": "さらに読み込む",
+    "remaining": "残り",
     "noResults": "もう一度お試しください",
     "noResultsSubtext": "それぞれ別のフィルターでお試しください"
   },

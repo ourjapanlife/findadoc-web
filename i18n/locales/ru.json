@@ -111,6 +111,8 @@
     "searchAndFilterDoctors": "Поиск и фильтрация врачей"
   },
   "searchResultsList": {
+    "loadMore": "Загрузить еще",
+    "remaining": "осталось",
     "noResults": " Ничего не найдено ",
     "noResultsSubtext": " Попробуйте другую комбинацию фильтров."
   },
