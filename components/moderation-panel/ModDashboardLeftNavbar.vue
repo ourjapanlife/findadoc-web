@@ -6,42 +6,42 @@
 
         <!-- Navigation Links -->
         <button
-            @click="setView(SelectedModerationListView.Submissions)"
             :class="[
                 'flex items-center gap-3 px-3 py-2.5 rounded-lg text-left transition-colors',
-                isSubmissionsActive 
-                    ? 'bg-white border-l-4 border-primary font-semibold text-primary-text' 
-                    : 'text-primary-text-muted hover:bg-white/50'
+                isSubmissionsActive
+                    ? 'bg-white border-l-4 border-primary font-semibold text-primary-text'
+                    : 'text-primary-text-muted hover:bg-white/50',
             ]"
             data-testid="mod-dashboard-leftnav-submissions"
+            @click="setView(SelectedModerationListView.Submissions)"
         >
             <SVGSubmissionsIcon class="w-5 h-5" />
             <span class="text-sm">{{ t('modDashboardLeftNav.submissions') }}</span>
         </button>
 
         <button
-            @click="setView(SelectedModerationListView.Facilities)"
             :class="[
                 'flex items-center gap-3 px-3 py-2.5 rounded-lg text-left transition-colors',
-                isFacilitiesActive 
-                    ? 'bg-white border-l-4 border-primary font-semibold text-primary-text' 
-                    : 'text-primary-text-muted hover:bg-white/50'
+                isFacilitiesActive
+                    ? 'bg-white border-l-4 border-primary font-semibold text-primary-text'
+                    : 'text-primary-text-muted hover:bg-white/50',
             ]"
             data-testid="mod-dashboard-leftnav-facilities"
+            @click="setView(SelectedModerationListView.Facilities)"
         >
             <SVGFacilitiesIcon class="w-5 h-5" />
             <span class="text-sm">{{ t('modDashboardLeftNav.facilities') }}</span>
         </button>
 
         <button
-            @click="setView(SelectedModerationListView.HealthcareProfessionals)"
             :class="[
                 'flex items-center gap-3 px-3 py-2.5 rounded-lg text-left transition-colors',
-                isHealthcareProfessionalsActive 
-                    ? 'bg-white border-l-4 border-primary font-semibold text-primary-text' 
-                    : 'text-primary-text-muted hover:bg-white/50'
+                isHealthcareProfessionalsActive
+                    ? 'bg-white border-l-4 border-primary font-semibold text-primary-text'
+                    : 'text-primary-text-muted hover:bg-white/50',
             ]"
             data-testid="mod-dashboard-leftnav-healthcare-professionals"
+            @click="setView(SelectedModerationListView.HealthcareProfessionals)"
         >
             <SVGHealthcareProfessionalsIcon class="w-5 h-5" />
             <span class="text-sm">{{ t('modDashboardLeftNav.healthcareProfessionals') }}</span>
@@ -60,17 +60,14 @@ import { useModerationSubmissionsStore, SelectedModerationListView } from '~/sto
 const { t } = useI18n()
 const moderationSubmissionsStore = useModerationSubmissionsStore()
 
-const isSubmissionsActive = computed(() => 
-    moderationSubmissionsStore.selectedModerationListViewChosen === SelectedModerationListView.Submissions
-)
+const isSubmissionsActive = computed(() =>
+    moderationSubmissionsStore.selectedModerationListViewChosen === SelectedModerationListView.Submissions)
 
-const isFacilitiesActive = computed(() => 
-    moderationSubmissionsStore.selectedModerationListViewChosen === SelectedModerationListView.Facilities
-)
+const isFacilitiesActive = computed(() =>
+    moderationSubmissionsStore.selectedModerationListViewChosen === SelectedModerationListView.Facilities)
 
-const isHealthcareProfessionalsActive = computed(() => 
-    moderationSubmissionsStore.selectedModerationListViewChosen === SelectedModerationListView.HealthcareProfessionals
-)
+const isHealthcareProfessionalsActive = computed(() =>
+    moderationSubmissionsStore.selectedModerationListViewChosen === SelectedModerationListView.HealthcareProfessionals)
 
 function setView(view: SelectedModerationListView) {
     moderationSubmissionsStore.setSelectedModerationListViewChosen(view)
