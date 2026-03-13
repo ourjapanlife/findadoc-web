@@ -44,7 +44,7 @@
                 data-testid="search-results-list"
             >
                 <div
-                    v-for="(searchResult, index) in searchResultsStore.searchResultsList"
+                    v-for="(searchResult, index) in searchResultsStore.paginatedResults"
                     :key="searchResult.id"
                     class="flex flex-col drop-shadow-md my-4 mx-4 py-1 min-h-36 rounded-md border-t-2
                             border-primary/10 transition-all cursor-pointer"
@@ -66,6 +66,22 @@
                         :spoken-languages="searchResult.healthcareProfessionals[0]?.spokenLanguages"
                         :data-testid="`search-result-list-item-${index}`"
                     />
+                </div>
+
+                <!-- Load More Button -->
+                <div
+                    v-if="searchResultsStore.hasMore"
+                    class="flex justify-center my-6 mx-4 mb-20"
+                >
+                    <button
+                        class="w-full max-w-md px-6 py-3 rounded-lg bg-accent hover:bg-accent/80 transition-all cursor-pointer
+                            text-white font-medium text-center"
+                        data-testid="load-more-button"
+                        @click="handleLoadMore"
+                    >
+                        {{ t('searchResultsList.loadMore') }}
+                        ({{ remainingResults }} {{ t('searchResultsList.remaining') }})
+                    </button>
                 </div>
             </div>
         </div>
@@ -105,7 +121,10 @@ const bottomSheetStore = useBottomSheetStore()
 const { isPortrait } = useScreenOrientation()
 const { track } = useUmami()
 
-const hasResults = computed(() => searchResultsStore.searchResultsList.length > 0)
+const hasResults = computed(() => searchResultsStore.paginatedResults.length > 0)
+
+const remainingResults = computed(() => searchResultsStore.totalResults - searchResultsStore.paginatedResults.length)
+
 const resultsContainerRef = ref<HTMLElement | null>(null)
 
 // Emit events
@@ -117,6 +136,15 @@ onMounted(() => {
 
 function handleScroll() {
     emit('scrolled')
+}
+
+function handleLoadMore() {
+    searchResultsStore.loadMore()
+
+    track('Load More Results', {
+        currentCount: searchResultsStore.paginatedResults.length,
+        totalCount: searchResultsStore.totalResults
+    })
 }
 
 function resultClicked(facilityId: string, professionalId: string, hp: string) {

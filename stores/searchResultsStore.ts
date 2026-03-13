@@ -1,6 +1,6 @@
 import { gql } from 'graphql-request'
 import { defineStore } from 'pinia'
-import { ref, type Ref } from 'vue'
+import { ref, computed, type Ref } from 'vue'
 import { useToast } from 'vue-toastification'
 import { gqlClient } from '../utils/graphql.js'
 import { useLoadingStore } from './loadingStore.js'
@@ -29,23 +29,122 @@ export const useSearchResultsStore = defineStore('searchResultsStore', () => {
     const selectedSpecialties: Ref<Specialty[] | undefined> = ref()
     const selectedLanguages: Ref<Locale[] | undefined> = ref()
 
+    const currentPage = ref(1)
+    const itemsPerPage = 25
+
+    const FETCH_BATCH_SIZE = 100
+
+    const allMapPoints = ref<Array<{
+        id: string
+        nameEn: string
+        nameJa: string
+        mapLatitude: number
+        mapLongitude: number
+    }>>([])
+
+    const paginatedResults = computed(() => {
+        const endIndex = currentPage.value * itemsPerPage
+        return searchResultsList.value.slice(0, endIndex)
+    })
+
+    const hasMore = computed(() => (itemsPerPage * currentPage.value) < totalResults.value)
+
+    function loadMore() {
+        if (hasMore.value) {
+            currentPage.value++
+        }
+    }
+
+    async function fetchAllFacilities(
+        searchCity?: string,
+        healthcareProfessionalIDs?: string[]
+    ): Promise<Facility[]> {
+        const allFacilities: Facility[] = []
+        const batchSize = FETCH_BATCH_SIZE
+        let offset = 0
+        let hasMoreBatches = true
+
+        while (hasMoreBatches) {
+            const batch = await queryFacilities(searchCity, healthcareProfessionalIDs, batchSize, offset)
+
+            allFacilities.push(...batch)
+
+            // If we got less than batchSize, we've reached the end
+            hasMoreBatches = batch.length === batchSize
+            offset += batchSize
+        }
+
+        return allFacilities
+    }
+
+    // We have the numbers of HelathcareProfessional on runtime
+    // Becuase fetchAllFacilities also cointain number of healthcareProfessional
+    // Use Promise.all for work in parallel
+    async function fetchAllProfessionals(
+    searchSpecialties: Specialty[],
+    searchLanguages: Locale[],
+    professionalIDs: string[]
+    ): Promise<HealthcareProfessional[]> {
+        if (professionalIDs.length === 0) {
+            return []
+        }
+
+        const batchSize = FETCH_BATCH_SIZE
+        // Calculate number of batches
+        const batchCount = Math.ceil(professionalIDs.length / batchSize)
+        const batchIndices = Array.from({ length: batchCount }, (_, i) => i)
+        // Fetch all batches in PARALLEL
+        const batches = await Promise.all(
+            batchIndices.map(async batchIndex => {
+                const start = batchIndex * batchSize
+                const batchIds = professionalIDs.slice(start, start + batchSize)
+                return queryProfessionals(searchSpecialties, searchLanguages, batchIds)
+            })
+        )
+        return batches.flat()
+    }
+
     async function search() {
-        //set the loading visual state
         const loadingStore = useLoadingStore()
         loadingStore.setIsLoading(true)
 
-        //get the facilities that match the professionals we found
-        const facilitiesSearchResults = await queryFacilities(selectedCity.value)
+        // Fetch lightweight map points FIRST
+        const mapPointsResult = await graphQLClientRequestWithRetry<{
+            facilities: Array<{
+                id: string
+                nameEn: string
+                nameJa: string
+                mapLatitude: number
+                mapLongitude: number
+            }>
+        }>(
+            gqlClient.request.bind(gqlClient),
+            mapPointsQuery,
+            { filters: { limit: 1000 } }
+        )
 
-        const professionalIds = facilitiesSearchResults.map(facility => facility.healthcareProfessionalIds).flat()
+        allMapPoints.value = mapPointsResult.data.facilities ?? []
 
-        const professionalsSearchResults = await queryProfessionals(selectedSpecialties.value ?? [],
-                                                                    selectedLanguages.value ?? [], professionalIds)
+        // Fetch ALL facilities using automatic pagination
+        const facilitiesSearchResults = await fetchAllFacilities(selectedCity.value)
 
-        //combine the professionals and facilities into a single search result
-        //then filter out any results that don't have any facilities
+        // Extract all unique professional IDs
+        const allProfessionalIds = facilitiesSearchResults
+            .map(facility => facility.healthcareProfessionalIds)
+            .flat()
+
+        const uniqueProfessionalIds = [...new Set(allProfessionalIds)]
+
+        // Fetch ALL professionals using automatic batching
+        const professionalsSearchResults = await fetchAllProfessionals(
+            selectedSpecialties.value ?? [],
+            selectedLanguages.value ?? [],
+            uniqueProfessionalIds
+        )
+
+        // Combine the professionals and facilities into a single search result
+        // Filter out any facilities that don't have any matching professionals
         const combinedResults = facilitiesSearchResults.flatMap(facilityResult => {
-            //check from the facility perspective as data is populated in a one-way relationship (facility -> professionals)
             const associatedProfessionals = professionalsSearchResults.filter(professionalResult =>
                 facilityResult.healthcareProfessionalIds.includes(professionalResult.id))
 
@@ -57,15 +156,15 @@ export const useSearchResultsStore = defineStore('searchResultsStore', () => {
                 : []
         })
 
-        //clear any active result when new search results are loaded
+        // Clear any active result when new search results are loaded
         clearActiveSearchResult()
 
-        //update the state with the new results
+        currentPage.value = 1
+
+        // Update the state with the new results
         searchResultsList.value = combinedResults
-        //update the total results count
         totalResults.value = combinedResults.length
 
-        //set the loading visual state back to normal
         loadingStore.setIsLoading(false)
     }
 
@@ -103,6 +202,8 @@ export const useSearchResultsStore = defineStore('searchResultsStore', () => {
         activeFacility,
         activeProfessional,
         searchResultsList,
+        paginatedResults,
+        allMapPoints,
         search,
         setActiveFacility,
         setActiveProfessional,
@@ -111,12 +212,17 @@ export const useSearchResultsStore = defineStore('searchResultsStore', () => {
         selectedCity,
         selectedSpecialties,
         selectedLanguages,
-        totalResults
+        totalResults,
+        loadMore,
+        hasMore
     }
 })
 
-async function queryProfessionals(searchSpecialties: Specialty[], searchLanguages: Locale[], professionalIDs?: string[]):
-Promise<HealthcareProfessional[]> {
+async function queryProfessionals(
+    searchSpecialties: Specialty[],
+    searchLanguages: Locale[],
+    professionalIDs?: string[]
+): Promise<HealthcareProfessional[]> {
     try {
         const searchProfessionalsData = {
             filters: {
@@ -156,13 +262,18 @@ Promise<HealthcareProfessional[]> {
     }
 }
 
-async function queryFacilities(searchCity?: string, heathcareProfessinalIDs?: string[]): Promise<Facility[]> {
+async function queryFacilities(
+    searchCity?: string,
+    healthcareProfessionalIDs?: string[],
+    limit: number = 100,
+    offset: number = 0
+): Promise<Facility[]> {
     try {
         const searchFacilitiesData = {
             filters: {
-                limit: 1000,
-                offset: 0,
-                healthcareProfessionalIds: heathcareProfessinalIDs ?? undefined,
+                limit: limit,
+                offset: offset,
+                healthcareProfessionalIds: healthcareProfessionalIDs ?? undefined,
                 contact: undefined,
                 createdDate: undefined,
                 healthcareProfessionalName: undefined,
@@ -180,6 +291,7 @@ async function queryFacilities(searchCity?: string, heathcareProfessinalIDs?: st
             searchFacilitiesQuery,
             searchFacilitiesData
         )
+
         if (serverResponse.errors?.length) {
             handleServerErrorMessaging(serverResponse.errors, toast, useTranslation)
         }
@@ -218,6 +330,17 @@ const searchProfessionalsQuery = gql`
             additionalInfoForPatients
             createdDate
             updatedDate
+        }
+    }
+`
+const mapPointsQuery = gql`
+    query MapPoints($filters: FacilitySearchFilters!) {
+        facilities(filters: $filters) {
+            id
+            nameEn
+            nameJa
+            mapLatitude
+            mapLongitude
         }
     }
 `

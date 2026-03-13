@@ -111,6 +111,8 @@
     "searchAndFilterDoctors": "搜索和筛选医生"
   },
   "searchResultsList": {
+    "loadMore": "加载更多",
+    "remaining": "剩余",
     "noResults": "无符合条件的结果",
     "noResultsSubtext": "请使用不同的筛选条件"
   },

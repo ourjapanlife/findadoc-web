@@ -111,6 +111,8 @@
     "searchAndFilterDoctors": "Pesquisar e filtrar médicos"
   },
   "searchResultsList": {
+    "loadMore": "Carregar mais",
+    "remaining": "restante",
     "noResults": "Nenhum resultado foi encontrado",
     "noResultsSubtext": "Por favor, tente outra combinação de filtros"
   },

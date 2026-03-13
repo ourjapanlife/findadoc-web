@@ -111,6 +111,8 @@
     "searchAndFilterDoctors": "Tìm kiếm và lọc bác sĩ"
   },
   "searchResultsList": {
+    "loadMore": "Tải thêm",
+    "remaining": "còn lại",
     "noResults": "Không tìm thấy kết quả",
     "noResultsSubtext": "Vui lòng thử kết hợp bộ lọc khác."
   },

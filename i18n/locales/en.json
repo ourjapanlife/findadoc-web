@@ -120,6 +120,8 @@
     "searchAndFilterDoctors": "Search and filter doctors"
   },
   "searchResultsList": {
+    "loadMore": "Load More",
+    "remaining": "remaining",
     "noResults": "No Results Found",
     "noResultsSubtext": "Please try a different filter combination."
   },
