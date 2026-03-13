@@ -47,8 +47,10 @@ export const useSearchResultsStore = defineStore('searchResultsStore', () => {
         return searchResultsList.value.slice(0, endIndex)
     })
 
+    const hasMore = computed(() => (itemsPerPage * currentPage.value) < totalResults.value)
+
     function loadMore() {
-        if (paginatedResults.value.length < searchResultsList.value.length) {
+        if (hasMore.value) {
             currentPage.value++
         }
     }
@@ -60,15 +62,15 @@ export const useSearchResultsStore = defineStore('searchResultsStore', () => {
         const allFacilities: Facility[] = []
         const batchSize = FETCH_BATCH_SIZE
         let offset = 0
-        let hasMore = true
+        let hasMoreBatches = true
 
-        while (hasMore) {
+        while (hasMoreBatches) {
             const batch = await queryFacilities(searchCity, healthcareProfessionalIDs, batchSize, offset)
 
             allFacilities.push(...batch)
 
             // If we got less than batchSize, we've reached the end
-            hasMore = batch.length === batchSize
+            hasMoreBatches = batch.length === batchSize
             offset += batchSize
         }
 
@@ -211,7 +213,8 @@ export const useSearchResultsStore = defineStore('searchResultsStore', () => {
         selectedSpecialties,
         selectedLanguages,
         totalResults,
-        loadMore
+        loadMore,
+        hasMore
     }
 })
 

@@ -70,7 +70,7 @@
 
                 <!-- Load More Button -->
                 <div
-                    v-if="hasMore"
+                    v-if="searchResultsStore.hasMore"
                     class="flex justify-center my-6 mx-4 mb-20"
                 >
                     <button
@@ -122,8 +122,6 @@ const { isPortrait } = useScreenOrientation()
 const { track } = useUmami()
 
 const hasResults = computed(() => searchResultsStore.paginatedResults.length > 0)
-
-const hasMore = computed(() => searchResultsStore.paginatedResults.length < searchResultsStore.totalResults)
 
 const remainingResults = computed(() => searchResultsStore.totalResults - searchResultsStore.paginatedResults.length)
 
