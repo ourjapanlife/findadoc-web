@@ -75,10 +75,11 @@ jobs:
         env:
           NODE_ENV: development
 
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium firefox webkit
+
       - name: Run Playwright e2e tests
-        run: |
-          npx playwright install --with-deps chromium
-          PLAYWRIGHT_BASE_URL=http://localhost:4242 yarn test:e2e:ci
+        run: PLAYWRIGHT_BASE_URL=http://localhost:4242 yarn test:e2e:ci
         env:
           NODE_ENV: development
 
