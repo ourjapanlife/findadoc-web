@@ -68,7 +68,8 @@
 
                 <button
                     type="button"
-                    class="px-4 py-2 rounded-lg bg-red-600 text-white hover:opacity-90 transition"
+                    :data-testid="(mode === 'update' || mode === 'create') ? 'submission-unsaved-confirmation-btn' : undefined"
+                    class="px-4 py-2 rounded-lg bg-primary text-primary-inverted hover:bg-primary-hover transition"
                     @click="confirmAction"
                 >
                     {{ textConfirm }}

@@ -294,10 +294,10 @@
 </template>
 
 <script lang="ts" setup>
-import { type Ref, ref, onBeforeMount, nextTick, watch } from 'vue'
+import { type Ref, ref, computed, onBeforeMount, nextTick, watch } from 'vue'
 import { useToast } from 'vue-toastification'
-import { useRoute } from 'vue-router'
-import { useModerationScreenStore } from '~/stores/moderationScreenStore'
+import { useRoute, useRouter } from 'vue-router'
+import { useModerationScreenStore, ModerationScreen } from '~/stores/moderationScreenStore'
 import { useFacilitiesStore } from '~/stores/facilitiesStore'
 import { useHealthcareProfessionalsStore } from '~/stores/healthcareProfessionalsStore'
 import { useI18n } from '#imports'
@@ -315,15 +315,28 @@ import { validateAddressLineEn,
 import { RelationshipAction, type HealthcareProfessional } from '~/typedefs/gqlTypes'
 import { listPrefectureJapanEn, listPrefectureJapanJa } from '~/stores/locationsStore'
 import { checkPrefectureNameMatch } from '~/utils/facilitiesUtils'
+import { stableStringify } from '~/utils/stableStringify'
 
 const toast = useToast()
 const route = useRoute()
+const router = useRouter()
 const { t } = useI18n()
 const loadingStore = useLoadingStore()
 const moderationScreenStore = useModerationScreenStore()
 const facilityStore = useFacilitiesStore()
 const healthcareProfessionalsStore = useHealthcareProfessionalsStore()
 const isFacilitySectionInitialized: Ref<boolean> = ref(false)
+
+const facilityFormState = computed(() =>
+    JSON.parse(stableStringify(facilityStore.facilitySectionFields)))
+const { makeNonDirty: makeFacilityFormNonDirty } = useUnsavedChanges({
+    data: { source: facilityFormState },
+    mode: 'update',
+    onClose: () => {
+        moderationScreenStore.setActiveScreen(ModerationScreen.Dashboard)
+        router.push('/moderation')
+    }
+})
 
 const healthcareProfessionalsRelatedToFacility: Ref<string[]>
     = ref([])
@@ -414,6 +427,7 @@ onBeforeMount(async () => {
     await nextTick()
     syncHealthcareProfessionalsRelatedToFacility()
     isFacilitySectionInitialized.value = true
+    makeFacilityFormNonDirty()
     loadingStore.setIsLoading(false)
     // Ensure UI updates are reflected
     await nextTick()

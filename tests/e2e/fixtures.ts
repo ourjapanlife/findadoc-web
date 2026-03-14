@@ -19,7 +19,8 @@ export function shouldRunModerationTests(): boolean {
       && !!process.env.AUTH0_CLIENTSECRET
 }
 
-const AUTH0_DOMAIN = process.env.AUTH0_DOMAIN || 'findadoc.jp.auth0.com'
+// Strip protocol and trailing slash so URL is always https://<domain>/oauth/token
+const AUTH0_DOMAIN = (process.env.AUTH0_DOMAIN || 'findadoc.jp.auth0.com').replace(/^https?:\/\//, '').replace(/\/$/, '')
 
 /**
  * Log in via Auth0 resource owner password grant and set auth cookies on the page context.

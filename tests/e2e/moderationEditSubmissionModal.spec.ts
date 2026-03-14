@@ -27,7 +27,7 @@ test.describe('Moderation edit submission unsaved changes modal', () => {
 
         await page.getByTestId('mod-facility-section-nameEn').locator('input').fill('Test Hospital')
         await page.goBack()
-        await expect(page.getByTestId('submission-form-modal')).toBeVisible()
+        await expect(page.getByTestId('confirmation-modal')).toBeVisible()
         await expect(page.getByText(enUS.modEditFacilityOrHPTopbar.hasUnsavedChanges)).toBeVisible()
         await page.getByTestId('submission-unsaved-confirmation-btn').click()
         await expect(page).toHaveURL(/\/moderation/)

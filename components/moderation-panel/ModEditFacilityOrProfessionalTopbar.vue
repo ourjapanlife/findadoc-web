@@ -75,21 +75,6 @@
                     class="flex flex-col aspect-square h-96 items-center justify-center bg-primary-inverted p-10 rounded"
                 >
                     <div
-                        v-if="modalType === ModalType.UnsavedChanges"
-                        class="flex flex-col items-center"
-                    >
-                        <div class="font-bold text-3xl">
-                            {{ t('modEditFacilityOrHPTopbar.hasUnsavedChanges') }}
-                        </div>
-                        <button
-                            class="bg-primary p-4 rounded-full my-8 font-semibold text-xl"
-                            type="button"
-                            @click="handleNavigateToModerationScreen"
-                        >
-                            {{ t('modSubmissionForm.confirmationButton') }}
-                        </button>
-                    </div>
-                    <div
                         v-if="modalType === ModalType.DeleteConfirmation && moderationScreenStore.editFacilityScreenIsActive()"
                         class="flex flex-col items-center"
                     >
@@ -149,7 +134,6 @@ import { useModalStore, ModalType } from '~/stores/modalStore'
 import { handleServerErrorMessaging } from '~/composables/handleServerErrorMessaging'
 import type { Facility, HealthcareProfessional } from '~/typedefs/gqlTypes'
 import { arraysAreEqual } from '~/utils/arrayUtils'
-import { onBeforeRouteLeave } from '#app'
 
 const router = useRouter()
 
@@ -386,13 +370,8 @@ const deleteFacilityOrHealthcareProfessional = async () => {
 }
 
 const exitWithoutSavingUpdates = () => {
-    if (!hasUnsavedChanges()) {
-        router.push('/moderation')
-        moderationScreenStore.setActiveScreen(ModerationScreen.Dashboard)
-        return
-    }
-    modalType.value = ModalType.UnsavedChanges
-    modalStore.showModal()
+    router.push('/moderation')
+    moderationScreenStore.setActiveScreen(ModerationScreen.Dashboard)
 }
 
 watch(() => facilitiesStore.selectedFacilityData, (newValue, oldValue) => {
@@ -416,13 +395,4 @@ const handleNavigateToModerationScreen = () => {
     moderationScreenStore.setActiveScreen(ModerationScreen.Dashboard)
 }
 
-onBeforeRouteLeave(async (to, from, next) => {
-    if (hasUnsavedChanges()) {
-        modalType.value = ModalType.UnsavedChanges
-        modalStore.showModal()
-        next(false)
-        return
-    }
-    next()
-})
 </script>

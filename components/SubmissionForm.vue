@@ -87,6 +87,7 @@
             >{{ t('submitPage.spokenLanguage1') }}</span>
             <p
                 v-show="!isValidInput.primarySpokenLangauge.value"
+                role="alert"
                 class="text-error text-xs font-sans"
             >
                 {{ t('submitPage.spokenLanguageValidation') }}
@@ -193,7 +194,7 @@ const isValidInput = {
     googleMapsUrl: ref(true),
     lastName: ref(true),
     firstName: ref(true),
-    primarySpokenLangauge: ref(true),
+    primarySpokenLangauge: ref(false),
     secondarySpokenLanguage: ref(true)
 }
 
