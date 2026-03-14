@@ -10,57 +10,59 @@ test.describe('Onboarding flow (new visitor)', () => {
         test('shows the welcome screen for a new visitor', async ({ page }) => {
             await expect(
                 page.getByRole('heading', { name: /welcome to/i })
-            ).toBeVisible({ timeout: 10000 })
+            ).toBeVisible()
             await expect(
                 page.getByText(/Find a Doc, Japan!/i)
             ).toBeVisible()
             await expect(
-                page.getByTestId('onboarding-lets-go')
+                page.getByRole('button', { name: new RegExp(enUS.onboarding.letsGoButtonText, 'i') })
             ).toBeVisible()
         })
 
         test('shows the hero subheading', async ({ page }) => {
             await expect(
                 page.getByText(enUS.about.heroSubheading)
-            ).toBeVisible({ timeout: 10000 })
+            ).toBeVisible()
         })
     })
 
     test.describe('Happy path: complete onboarding', () => {
         test('clicking Let\'s go shows loading then the main app (map)', async ({ page }) => {
-            await expect(
-                page.getByTestId('onboarding-lets-go')
-            ).toBeVisible({ timeout: 10000 })
+            const letsGo = page.getByRole('button', { name: new RegExp(enUS.onboarding.letsGoButtonText, 'i') })
+            await expect(letsGo).toBeVisible()
 
-            await page.getByTestId('onboarding-lets-go').click()
+            await page.emulateMedia({ reducedMotion: 'reduce' })
+            await letsGo.click()
 
             await expect(
                 page.getByText(enUS.onboarding.searchloading)
-            ).toBeVisible({ timeout: 5000 })
+            ).toBeVisible()
 
             await expect(
-                page.getByTestId('map-of-japan')
-            ).toBeVisible({ timeout: 15000 })
+                page.getByRole('region', { name: 'Map' })
+            ).toBeVisible()
         })
 
         test('after completing onboarding, home shows map and nav (not welcome)', async ({ page }) => {
-            await page.getByTestId('onboarding-lets-go').click()
+            await page.emulateMedia({ reducedMotion: 'reduce' })
+            await page.getByRole('button', { name: new RegExp(enUS.onboarding.letsGoButtonText, 'i') }).click()
 
-            await expect(page.getByTestId('map-of-japan')).toBeVisible({ timeout: 15000 })
+            await expect(page.getByRole('region', { name: 'Map' })).toBeVisible()
 
             await expect(
                 page.getByRole('heading', { name: /welcome to/i })
             ).not.toBeVisible()
-            await expect(page.getByTestId('top-nav')).toBeVisible()
+            await expect(page.getByRole('navigation').first()).toBeVisible()
         })
 
         test('revisiting home after completing onboarding skips welcome (persisted state)', async ({ page }) => {
-            await page.getByTestId('onboarding-lets-go').click()
-            await expect(page.getByTestId('map-of-japan')).toBeVisible({ timeout: 15000 })
+            await page.emulateMedia({ reducedMotion: 'reduce' })
+            await page.getByRole('button', { name: new RegExp(enUS.onboarding.letsGoButtonText, 'i') }).click()
+            await expect(page.getByRole('region', { name: 'Map' })).toBeVisible()
 
             await page.goto('/')
 
-            await expect(page.getByTestId('map-of-japan')).toBeVisible({ timeout: 5000 })
+            await expect(page.getByRole('region', { name: 'Map' })).toBeVisible()
             await expect(
                 page.getByRole('heading', { name: /welcome to/i })
             ).not.toBeVisible()

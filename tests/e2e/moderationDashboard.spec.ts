@@ -13,12 +13,13 @@ test.describe('Moderation dashboard', () => {
         }
         await page.setViewportSize({ width: 1728, height: 1077 })
         await page.goto('/moderation')
-        await expect(page.getByTestId('moderation-page')).toBeVisible({ timeout: 15000 })
+        await page.waitForLoadState('networkidle')
+        await expect(page.getByRole('button', { name: new RegExp(enUS.modDashboardLeftNav.forReview, 'i') })).toBeVisible()
     })
 
     test('shows submission type selector and can switch between Submissions, Facilities, Healthcare Professionals',
          async ({ page }) => {
-             const submissionTypeSelect = page.getByTestId('submission-type-select')
+             const submissionTypeSelect = page.getByRole('combobox').first()
              await expect(submissionTypeSelect).toBeVisible()
 
              await submissionTypeSelect.selectOption({ label: enUS.modDashboardLeftNav.facilities })

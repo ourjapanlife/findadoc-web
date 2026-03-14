@@ -13,23 +13,25 @@ test.describe('Moderation edit submission unsaved changes modal', () => {
         }
         await page.setViewportSize({ width: 1728, height: 1077 })
         await page.goto('/moderation')
-        await expect(page.getByTestId('moderation-page')).toBeVisible({ timeout: 15000 })
+        await page.waitForLoadState('networkidle')
+        await expect(page.getByRole('button', { name: new RegExp(enUS.modDashboardLeftNav.forReview, 'i') })).toBeVisible()
     })
 
     test('shows confirmation modal when navigating back with unsaved changes', async ({ page }) => {
         const firstSubmissionLink = page.getByRole('link').first()
-        await firstSubmissionLink.click({ timeout: 10000 }).catch(() => {})
-        const onEditPage = await page.getByTestId('mod-facility-section-nameEn').isVisible().catch(() => false)
+        await firstSubmissionLink.click().catch(() => {})
+        const facilityNameInput = page.getByPlaceholder(enUS.modFacilitySection.placeholderTextFacilityNameEn)
+        const onEditPage = await facilityNameInput.isVisible().catch(() => false)
         if (!onEditPage) {
             test.skip(true, 'No submission data to open (seed data may be empty)')
             return
         }
 
-        await page.getByTestId('mod-facility-section-nameEn').locator('input').fill('Test Hospital')
+        await facilityNameInput.fill('Test Hospital')
         await page.goBack()
-        await expect(page.getByTestId('confirmation-modal')).toBeVisible()
+        await expect(page.getByRole('dialog')).toBeVisible()
         await expect(page.getByText(enUS.modEditFacilityOrHPTopbar.hasUnsavedChanges)).toBeVisible()
-        await page.getByTestId('submission-unsaved-confirmation-btn').click()
+        await page.getByRole('button', { name: new RegExp(enUS.modSubmissionForm.confirmationButton, 'i') }).click()
         await expect(page).toHaveURL(/\/moderation/)
     })
 })

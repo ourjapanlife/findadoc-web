@@ -14,7 +14,7 @@ test.describe('Home page', () => {
         })
 
         test('renders the map', async ({ page }) => {
-            await expect(page.getByTestId('map-of-japan')).toBeVisible()
+            await expect(page.getByRole('region', { name: 'Map' })).toBeVisible()
         })
 
         test('does not show the hamburger on desktop', async ({ page }) => {
@@ -44,7 +44,7 @@ test.describe('Home page', () => {
         })
 
         test('renders the map', async ({ page }) => {
-            await expect(page.getByTestId('map-of-japan')).toBeVisible()
+            await expect(page.getByRole('region', { name: 'Map' })).toBeVisible()
         })
 
         test('shows the hamburger icon', async ({ page }) => {
