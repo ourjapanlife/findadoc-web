@@ -10,6 +10,7 @@ test.describe('Home page', () => {
         })
 
         test('displays the logo', async ({ page }) => {
+            await page.waitForLoadState('networkidle')
             await expect(page.getByRole('img', { name: /Find a Doc Japan/i }).first()).toBeVisible()
         })
 
@@ -40,6 +41,7 @@ test.describe('Home page', () => {
         })
 
         test('shows the logo', async ({ page }) => {
+            await page.waitForLoadState('networkidle')
             await expect(page.getByRole('img', { name: /Find a Doc Japan/i }).first()).toBeVisible()
         })
 
