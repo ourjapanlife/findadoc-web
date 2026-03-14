@@ -62,7 +62,7 @@ jobs:
         run: |
           cd findadoc-server && yarn dev:startserver &
           cd ..
-          npx wait-on http://127.0.0.1:4000 -t 120000
+          npx wait-on http://127.0.0.1:4000/health -t 120000
           yarn install
           yarn ci:build
           PORT=4242 yarn ci:start &
@@ -73,7 +73,7 @@ jobs:
           NODE_ENV: development
 
       - name: Playwright report comment
-        if: always() && github.event_name == 'pull_request'
+        if: always() && github.event_name == 'pull_request' && hashFiles('results.json') != ''
         uses: daun/playwright-report-summary@v3
         with:
           report-file: results.json
