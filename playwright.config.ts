@@ -1,5 +1,8 @@
 import { defineConfig, devices } from '@playwright/test'
 
+// Load .env so AUTH0_* etc. are available for shouldRunModerationTests() when running locally
+import 'dotenv/config'
+
 export default defineConfig({
     testDir: './tests/e2e',
     fullyParallel: true,
