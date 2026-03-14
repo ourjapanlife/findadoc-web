@@ -10,13 +10,15 @@ export async function skipOnboarding(page: Page) {
     })
 }
 
-/** Run moderation tests only when Auth0 credentials are present (e.g. CI with dev server or local .env). Otherwise skip moderation tests and skip login programmatically. */
+/** Run moderation tests only when Auth0 credentials are present
+ * (e.g. CI with dev server or local .env). Otherwise skip moderation tests and skip login programmatically.
+ */
 export function shouldRunModerationTests(): boolean {
-    const has =
-        !!process.env.AUTH0_USERNAME &&
-        !!process.env.AUTH0_PASSWORD &&
-        !!process.env.AUTH0_CLIENTID &&
-        !!process.env.AUTH0_CLIENTSECRET
+    const has
+        = !!process.env.AUTH0_USERNAME
+          && !!process.env.AUTH0_PASSWORD
+          && !!process.env.AUTH0_CLIENTID
+          && !!process.env.AUTH0_CLIENTSECRET
     return has
 }
 
@@ -37,13 +39,16 @@ export async function auth0Login(page: Page) {
 
     const response = await page.context().request.post(`https://${AUTH0_DOMAIN}/oauth/token`, {
         data: {
+            // eslint-disable-next-line camelcase
             grant_type: 'password',
             connection: 'Username-Password-Authentication',
             audience: 'findadoc',
             username,
             password,
             scope: 'openid profile email',
+            // eslint-disable-next-line camelcase
             client_id: clientId,
+            // eslint-disable-next-line camelcase
             client_secret: clientSecret
         }
     })
@@ -51,8 +56,7 @@ export async function auth0Login(page: Page) {
         const body = await response.text()
         throw new Error(`Auth0 token request failed: ${response.status()} ${body}`)
     }
-    const body = await response.json() as { access_token: string; id_token: string }
-    const expiry = Math.floor(Date.now() / 1000) + 60 * 60 * 24
+    const body = await response.json() as { access_token: string, id_token: string }
     await page.context().addCookies([
         { name: 'auth_token', value: body.access_token, domain: 'localhost', path: '/' },
         { name: 'id_token', value: body.id_token, domain: 'localhost', path: '/' },

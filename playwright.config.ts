@@ -12,7 +12,11 @@ export default defineConfig({
     forbidOnly: !!process.env.CI,
     retries: process.env.CI ? 2 : 0,
     workers: process.env.CI ? 2 : undefined,
-    reporter: process.env.CI ? [['json', { outputFile: 'results.json' }], ['html', { outputFolder: 'playwright-report' }]] : 'html',
+    reporter: process.env.CI
+        ? [
+            ['json', { outputFile: 'results.json' }],
+            ['html', { outputFolder: 'playwright-report' }]]
+        : 'html',
     use: {
         baseURL: process.env.PLAYWRIGHT_BASE_URL ?? 'http://localhost:4242',
         trace: 'on-first-retry',

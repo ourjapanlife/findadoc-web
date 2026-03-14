@@ -3,7 +3,8 @@ import { test, expect } from '@playwright/test'
 import { skipOnboarding, shouldRunModerationTests, auth0Login } from './fixtures'
 
 test.describe('Moderation edit submission unsaved changes modal', () => {
-    test.skip(!shouldRunModerationTests(), 'Skipping moderation tests when Auth0 credentials are not set (skip login programmatically)')
+    test.skip(!shouldRunModerationTests(),
+              'Skipping moderation tests when Auth0 credentials are not set (skip login programmatically)')
 
     test.beforeEach(async ({ page }) => {
         await skipOnboarding(page)
