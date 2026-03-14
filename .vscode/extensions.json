@@ -8,7 +8,7 @@
         "vitest.explorer",
         "graphql.vscode-graphql",
         "lokalise.i18n-ally",
-        "storybook.storybook-vscode"
+        "joshbolduc.story-explorer"
     ],
     "unwantedRecommendations": [
         "octref.vetur"
