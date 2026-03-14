@@ -61,7 +61,7 @@ jobs:
       - name: Start servers, build web, and run e2e tests
         run: |
           cd findadoc-server && yarn dev:startserver &
-          cd ..
+          cd "$GITHUB_WORKSPACE"
           npx wait-on http://127.0.0.1:4000/health -t 120000
           yarn install
           yarn ci:build
