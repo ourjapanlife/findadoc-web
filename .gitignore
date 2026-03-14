@@ -13,10 +13,10 @@ node_modules
 !.yarn/versions
 yarn-error.log
 
-#cypress
-cypress/screenshots
-cypress/videos
-cypress/downloads
+#playwright
+playwright-report
+results.json
+test-results
 
 #tests
 /coverage
