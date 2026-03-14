@@ -7,12 +7,18 @@
         data-testid="hamburger-menu-container"
         class="flex w-full cursor-pointer"
     >
-        <SVGHamburgerMenuIcon
+        <button
+            type="button"
+            :aria-label="t('common.menu')"
+            class="p-0 border-0 bg-transparent cursor-pointer"
             data-testid="hamburger-menu-icon"
-            alt="hamburger menu"
-            class="w-8 h-8 fill-primary"
             @click="openMenu()"
-        />
+        >
+            <SVGHamburgerMenuIcon
+                class="w-8 h-8 fill-primary"
+                aria-hidden="true"
+            />
+        </button>
         <Teleport to="body">
             <Transition
                 enter-active-class="transition ease-in-out duration-300 transform: translate(100%, 0)"

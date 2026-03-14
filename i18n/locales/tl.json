@@ -1,4 +1,11 @@
 {
+  "common": {
+    "menu": "Menu",
+    "siteName": "Find a Doc Japan",
+    "siteNameLine1": "Find a Doc",
+    "siteNameLine2": "Japan",
+    "close": "Isara"
+  },
   "about": {
     "heroHeading": "Find a Doc, Japan",
     "heroSubheading": "Ikokonekta ka namin sa mga serbisyong pangkalusugan na kailangan mo, sa iyong wika",

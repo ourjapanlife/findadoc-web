@@ -32,6 +32,7 @@
                 >
                     <button
                         id="welcome-screen-arrow-button"
+                        data-testid="onboarding-lets-go"
                         type="button"
                         class="relative group flex items-center self-start focus:outline-none
                         bg-secondary hover:bg-secondary/90 transition-colors
