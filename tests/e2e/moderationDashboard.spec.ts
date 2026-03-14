@@ -24,11 +24,11 @@ test.describe('Moderation dashboard', () => {
 
              await submissionTypeSelect.selectOption({ label: enUS.modDashboardLeftNav.facilities })
              await expect(submissionTypeSelect).toHaveValue('FACILITIES')
-             await expect(page.getByRole('button', { name: new RegExp(enUS.modDashboardTopbar.addFacility, 'i') })).toBeVisible()
+             await expect(page.getByRole('link', { name: new RegExp(enUS.modDashboardTopbar.addFacility, 'i') })).toBeVisible()
 
              await submissionTypeSelect.selectOption({ label: enUS.modDashboardLeftNav.healthcareProfessionals })
              await expect(submissionTypeSelect).toHaveValue('HEALTHCARE_PROFESSIONALS')
-             await expect(page.getByRole('button', { name: new RegExp(enUS.modDashboardTopbar.addHealthcareProfessional, 'i') }))
+             await expect(page.getByRole('link', { name: new RegExp(enUS.modDashboardTopbar.addHealthcareProfessional, 'i') }))
                  .toBeVisible()
 
              await submissionTypeSelect.selectOption({ label: enUS.modDashboardLeftNav.submissions })
