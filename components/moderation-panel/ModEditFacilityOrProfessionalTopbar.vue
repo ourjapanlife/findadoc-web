@@ -387,12 +387,4 @@ watch(() => facilitiesStore.selectedFacilityData, (newValue, oldValue) => {
 watch(() => healthcareProfessionalsStore.selectedHealthcareProfessionalData, newValue => {
     originalHealthcareProfessionalRefsValue.value = JSON.parse(JSON.stringify(newValue))
 })
-
-const handleNavigateToModerationScreen = () => {
-    modalType.value = null
-    modalStore.hideModal()
-    router.push('/moderation')
-    moderationScreenStore.setActiveScreen(ModerationScreen.Dashboard)
-}
-
 </script>

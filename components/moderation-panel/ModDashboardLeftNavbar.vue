@@ -21,7 +21,10 @@
             class="flex flex-col"
         >
             <div class="flex w-4/5 justify-start items-center border-b-2 border-slate-200">
-                <SVGNoteStackAddSvg class="h-4" aria-hidden="true" />
+                <SVGNoteStackAddSvg
+                    class="h-4"
+                    aria-hidden="true"
+                />
                 <button
                     type="button"
                     class="flex flex-row items-center text-start p-1"
@@ -32,7 +35,10 @@
                 </button>
             </div>
             <div class="flex w-4/5 justify-start items-center border-b-2 border-slate-200">
-                <SVGCheckBoxSvg class="h-5" aria-hidden="true" />
+                <SVGCheckBoxSvg
+                    class="h-5"
+                    aria-hidden="true"
+                />
                 <button
                     type="button"
                     class="flex flex-row items-center text-start p-1 "
@@ -43,7 +49,10 @@
                 </button>
             </div>
             <div class="flex flex-row w-4/5 justify-start items-center ">
-                <SVGDisabledByDefault class="h-4" aria-hidden="true" />
+                <SVGDisabledByDefault
+                    class="h-4"
+                    aria-hidden="true"
+                />
                 <button
                     type="button"
                     class="flex flex-row items-center text-start p-1"
