@@ -12,7 +12,7 @@
         "lint:fix": "ESLINT_USE_FLAT_CONFIG=true eslint . -c eslint.config.js --fix",
         "lint:locales": "node i18n/checkLocaleKeys.js",
         "lint:cleanlocales": "node i18n/cleanUnusedLocaleKeys.js",
-        "lint:ci": "yarn prepare:ci && eslint . --config eslint.config.js --format @microsoft/eslint-formatter-sarif --output-file eslint-results.sarif",
+        "lint:ci": "yarn prepare:ci && ESLINT_USE_FLAT_CONFIG=true eslint . -c eslint.config.js",
         "prod:build": "yarn && yarn generate && nuxi generate",
         "prod:start": "nuxi start",
         "ci:build": "yarn && yarn generate && nuxi generate",
