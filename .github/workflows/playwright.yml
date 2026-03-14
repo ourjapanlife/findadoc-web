@@ -58,15 +58,25 @@ jobs:
           yarn generate
           yarn dev:seeddb
 
-      - name: Start servers, build web, and run e2e tests
+      - name: Start API server
         run: |
           cd findadoc-server && yarn dev:startserver &
           cd "$GITHUB_WORKSPACE"
           npx wait-on http://127.0.0.1:4000/health -t 120000
+        env:
+          NODE_ENV: development
+
+      - name: Build web and start web server
+        run: |
           yarn install
           yarn ci:build
           PORT=4242 yarn ci:start &
           npx wait-on http://localhost:4242 -t 60000
+        env:
+          NODE_ENV: development
+
+      - name: Run Playwright e2e tests
+        run: |
           npx playwright install --with-deps chromium
           PLAYWRIGHT_BASE_URL=http://localhost:4242 yarn test:e2e:ci
         env:

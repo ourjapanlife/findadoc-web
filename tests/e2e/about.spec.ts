@@ -1,4 +1,4 @@
-import enUS from '../../i18n/locales/en.json'
+import enUS from '../../i18n/locales/en.json' with { type: 'json' }
 import { test, expect } from '@playwright/test'
 import { skipOnboarding } from './fixtures'
 

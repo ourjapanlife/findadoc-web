@@ -23,7 +23,7 @@
         "test:unit:coverage": "nuxi prepare && vitest run -c vitest.unit.config.ts --coverage",
         "test:e2e": "playwright test --ui",
         "test:e2e:headless": "playwright test",
-        "test:e2e:ci": "playwright test --reporter=json",
+        "test:e2e:ci": "playwright test",
         "test:snapshot": "vitest run -c vitest.snapshot.config.ts",
         "test:snapshot:update": "vitest run -c vitest.snapshot.config.ts --update",
         "storybook": "NUXT_STORYBOOK=true nuxi dev -p 7331 && storybook dev -p 6006"
