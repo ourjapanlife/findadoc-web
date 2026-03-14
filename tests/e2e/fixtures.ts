@@ -10,16 +10,13 @@ export async function skipOnboarding(page: Page) {
     })
 }
 
-/** Run moderation tests only when Auth0 credentials are present
- * (e.g. CI with dev server or local .env). Otherwise skip moderation tests and skip login programmatically.
- */
+/** Run moderation tests: always in CI; locally only when Auth0 credentials are present. */
 export function shouldRunModerationTests(): boolean {
-    const has
-        = !!process.env.AUTH0_USERNAME
-          && !!process.env.AUTH0_PASSWORD
-          && !!process.env.AUTH0_CLIENTID
-          && !!process.env.AUTH0_CLIENTSECRET
-    return has
+    if (process.env.CI) return true
+    return !!process.env.AUTH0_USERNAME
+      && !!process.env.AUTH0_PASSWORD
+      && !!process.env.AUTH0_CLIENTID
+      && !!process.env.AUTH0_CLIENTSECRET
 }
 
 const AUTH0_DOMAIN = process.env.AUTH0_DOMAIN || 'findadoc.jp.auth0.com'
