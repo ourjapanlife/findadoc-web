@@ -49,7 +49,7 @@
         <div
             id="about-header-container"
             data-testid="about-header-container"
-            class="flex justify-center items-center"
+            class="scroll-mt-4 flex justify-center items-center"
         >
             <div
                 id="about-header"
@@ -135,7 +135,7 @@
         <div
             id="impact-header-container"
             data-testid="impact-header-container"
-            class="flex justify-center items-center"
+            class="scroll-mt-4 flex justify-center items-center"
         >
             <div
                 id="impact-header"
@@ -190,7 +190,7 @@
         <div
             id="contributor-header-container"
             data-testid="contributor-header-container"
-            class="flex justify-center items-center my-4"
+            class="scroll-mt-4 flex justify-center items-center my-4"
         >
             <div
                 id="contributor-header"
@@ -235,7 +235,7 @@
         <div
             id="npo-header-container"
             data-testid="npo-header-container"
-            class="flex justify-center items-center"
+            class="scroll-mt-4 flex justify-center items-center"
         >
             <div
                 id="npo-header"
@@ -280,7 +280,7 @@
         <div
             id="mascot-header-container"
             data-testid="mascot-header-container"
-            class="flex justify-center items-center"
+            class="scroll-mt-4 flex justify-center items-center"
         >
             <div
                 id="mascot-header"
@@ -345,7 +345,7 @@
         <div
             id="involve-header-container"
             data-testid="involve-header-container"
-            class="flex justify-center items-center"
+            class="scroll-mt-4 flex justify-center items-center"
         >
             <div
                 id="involve-header"
