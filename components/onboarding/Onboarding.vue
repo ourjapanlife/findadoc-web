@@ -67,7 +67,7 @@ const completeOnboarding = async () => {
 <style scoped>
 .fade-enter-active,
 .fade-leave-active {
-    transition: opacity 0.5s ease;
+    transition: opacity 0.1s ease;
 }
 
 .fade-enter-from,
