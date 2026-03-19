@@ -1,3 +1,5 @@
+import { useI18n } from 'vue-i18n'
+
 export default defineNuxtPlugin(() => {
     const activeDirtyIds = reactive(new Map<symbol, 'create' | 'update'>())
 
@@ -18,10 +20,12 @@ export default defineNuxtPlugin(() => {
     router.beforeEach(() => {
         if (!isGloballyDirty.value) return true
 
+        const { t } = useI18n()
         return new Promise<boolean>(resolve => {
             useNuxtApp().$withConfirmation(() => resolve(true), {
                 mode: confirmationMode.value,
-                onCancel: () => resolve(false)
+                onCancel: () => resolve(false),
+                message: t('modEditFacilityOrHPTopbar.hasUnsavedChanges')
             })
         })
     })

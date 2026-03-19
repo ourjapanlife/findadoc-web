@@ -3,6 +3,14 @@
         "editorconfig.editorconfig",
         "dbaeumer.vscode-eslint",
         "bradlc.vscode-tailwindcss",
-        "vue.volar"
+        "vue.volar",
+        "ms-playwright.playwright",
+        "vitest.explorer",
+        "graphql.vscode-graphql",
+        "lokalise.i18n-ally",
+        "joshbolduc.story-explorer"
+    ],
+    "unwantedRecommendations": [
+        "octref.vetur"
     ]
 }

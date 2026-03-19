@@ -8,12 +8,12 @@
                 {{ t("privacyPage.heading") }}
             </h1>
         </div>
-        <h2
+        <p
             data-testid="privacy-subheading"
             class="mb-10 text-black text-2xl font-normal font-sans"
         >
             {{ t("privacyPage.subheading") }}
-        </h2>
+        </p>
         <div class="text-gray-500 text-lg font-normal font-sans">
             <p class="mb-10">
                 {{ t("privacyPage.date") }}

@@ -15,11 +15,12 @@
             >
                 <NuxtLink
                     to="/"
+                    :aria-label="t('common.siteName')"
                     @click="handleMobileLogoClick"
                 >
                     <SVGSiteLogo
                         role="img"
-                        title="site icon"
+                        :aria-label="t('common.siteName')"
                         class="mt-1 mr-1 w-10 h-10 shrink-0 align-middle fill-primary group-hover:fill-primary-hover"
                         @click="toggleLogoText()"
                     />
@@ -36,14 +37,16 @@
                     <!-- Find a Doc, Japan Logo Text -->
                     <div
                         v-show="showLogoText"
+                        role="img"
+                        :aria-label="t('common.siteName')"
                         class="title-text flex flex-col shrink-0"
                         data-testid="landscape-logo"
                     >
                         <div class="text-lg text-primary group-hover:text-primary-hover">
-                            Find a Doc
+                            {{ t('common.siteNameLine1') }}
                         </div>
                         <div class="text-sm text-primary leading-none group-hover:text-primary-hover">
-                            Japan
+                            {{ t('common.siteNameLine2') }}
                         </div>
                     </div>
                 </Transition>
@@ -59,22 +62,25 @@
                     <NuxtLink
                         class="flex"
                         to="/"
+                        :aria-label="t('common.siteName')"
                     >
                         <SVGSiteLogo
                             role="img"
-                            title="site icon"
+                            :aria-label="t('common.siteName')"
                             class="mr-1 w-10 h-10 shrink-0 align-middle fill-primary group-hover:fill-primary-hover"
                         />
                         <!-- Find a Doc, Japan Logo Text -->
                         <div
+                            role="img"
+                            :aria-label="t('common.siteName')"
                             class="title-text flex flex-col shrink-0"
                             data-testid="landscape-logo"
                         >
                             <div class="text-lg text-primary group-hover:text-primary-hover">
-                                Find a Doc
+                                {{ t('common.siteNameLine1') }}
                             </div>
                             <div class="text-sm text-primary leading-none group-hover:text-primary-hover">
-                                Japan
+                                {{ t('common.siteNameLine2') }}
                             </div>
                         </div>
                     </NuxtLink>

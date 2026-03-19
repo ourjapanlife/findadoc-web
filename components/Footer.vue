@@ -1,5 +1,6 @@
 <template>
-    <div
+    <footer
+        role="contentinfo"
         data-testid="footer"
         class="footer portrait:hidden flex border-t-4 border-secondary-bg/40 bg-secondary-bg
         text-sm text-primary-text font-semibold py-2 rounded-t-md"
@@ -67,7 +68,7 @@
                 >{{ t('footer.clickHere') }}</NuxtLink>
             </div>
         </div>
-    </div>
+    </footer>
 </template>
 
 <script setup lang="ts">

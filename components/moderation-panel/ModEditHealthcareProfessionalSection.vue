@@ -280,22 +280,22 @@
 </template>
 
 <script lang="ts" setup>
-import { nextTick, onBeforeMount, reactive, type Ref, ref, watch } from 'vue'
-import { useRoute } from 'vue-router'
+import { computed, nextTick, onBeforeMount, reactive, type Ref, ref, watch } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import { useToast } from 'vue-toastification'
 import { useHealthcareProfessionalsStore } from '~/stores/healthcareProfessionalsStore'
 import { useFacilitiesStore } from '~/stores/facilitiesStore'
-import { useModerationScreenStore } from '~/stores/moderationScreenStore'
+import { useModerationScreenStore, ModerationScreen } from '~/stores/moderationScreenStore'
 import { useLocaleStore } from '~/stores/localeStore'
 import { Insurance, Locale, Degree, Specialty, type LocalizedNameInput, type Facility } from '~/typedefs/gqlTypes'
 import { useI18n } from '#imports'
 import { validateNameLocaleMatchesLanguage } from '~/utils/formValidations'
+import { stableStringify } from '~/utils/stableStringify'
 // Keeps track of if the search bar inputs have been autofilled with existing facilities
 
 const toast = useToast()
-
 const route = useRoute()
-
+const router = useRouter()
 const { t } = useI18n()
 
 const loadingStore = useLoadingStore()
@@ -309,6 +309,17 @@ const currentFacilities = facilitiesStore.facilityData
 
 const isHealthcareProfessionalInitialized: Ref<boolean> = ref(false)
 const selectedFacilities: Ref<Facility[]> = ref([])
+
+const hpFormState = computed(() =>
+    JSON.parse(stableStringify(hpStore.healthcareProfessionalSectionFields)))
+const { makeNonDirty: makeHpFormNonDirty } = useUnsavedChanges({
+    data: { source: hpFormState },
+    mode: 'update',
+    onClose: () => {
+        moderationScreenStore.setActiveScreen(ModerationScreen.Dashboard)
+        router.push('/moderation')
+    }
+})
 
 /* Keeps track of if the search bar inputs have been autofilled with existing facilities
  and is used because this hold facilities while we need to sift through the ids*/
@@ -614,7 +625,7 @@ onBeforeMount(async () => {
             .includes(facility.id))
 
     isHealthcareProfessionalInitialized.value = true
-
+    makeHpFormNonDirty()
     loadingStore.setIsLoading(false)
 
     await nextTick()

@@ -20,7 +20,7 @@ const defaultEquivalence = <T>(): Equivalence<T> =>
     (entityOne, entityTwo) => stableStringify(entityOne) === stableStringify(entityTwo)
 
 // Deep-clone to produce an immutable baseline that won't share identity with reactive proxies.
-const snapshot = <V>(val: V): V => JSON.parse(JSON.stringify(val ?? null))
+const snapshot = <V>(val: V): V => JSON.parse(stableStringify(val ?? null)) as V
 
 export const useUnsavedChanges = <T>(config: Config<T>) => {
     const { $unsavedChangesRegistry } = useNuxtApp()

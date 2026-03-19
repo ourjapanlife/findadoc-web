@@ -5,7 +5,6 @@ import globals from 'globals'
 import eslintJsPlugin from '@eslint/js'
 import tseslint from 'typescript-eslint'
 import stylistic from '@stylistic/eslint-plugin'
-import pluginCypress from 'eslint-plugin-cypress/flat'
 import pluginVitest from '@vitest/eslint-plugin'
 import pluginVue from 'eslint-plugin-vue'
 import withNuxt from './.nuxt/eslint.config.mjs'
@@ -97,14 +96,6 @@ export default withNuxt(
         rules: {
             'vue/multi-word-component-names': 'off',
             'vue/html-indent': ['error', 4]
-        }
-    },
-    // Linting for Cypress (https://www.npmjs.com/package/eslint-plugin-cypress)
-    {
-        files: ['tests/cypress/**/*'],
-        ...pluginCypress.configs.recommended,
-        rules: {
-            'cypress/no-unnecessary-waiting': 'off'
         }
     },
     // Linting for Vitest (https://github.com/vitest-dev/eslint-plugin-vitest)

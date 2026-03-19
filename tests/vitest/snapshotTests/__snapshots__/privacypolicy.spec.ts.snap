@@ -5,7 +5,7 @@ exports[`privacypolicy.vue > renders correctly 1`] = `
   <div>
     <h1 data-testid="privacy-heading" class="mb-20 text-black text-5xl font-bold font-sans">privacyPage.heading</h1>
   </div>
-  <h2 data-testid="privacy-subheading" class="mb-10 text-black text-2xl font-normal font-sans">privacyPage.subheading</h2>
+  <p data-testid="privacy-subheading" class="mb-10 text-black text-2xl font-normal font-sans">privacyPage.subheading</p>
   <div class="text-gray-500 text-lg font-normal font-sans">
     <p class="mb-10">privacyPage.date</p>
     <p class="mb-10">privacyPage.paragraph1</p>

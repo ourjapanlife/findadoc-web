@@ -1,4 +1,11 @@
 {
+  "common": {
+    "menu": "Menu",
+    "siteName": "Find a Doc Japan",
+    "siteNameLine1": "Find a Doc",
+    "siteNameLine2": "Japan",
+    "close": "Close"
+  },
   "about": {
     "heroHeading": "Find a Doc, Japan",
     "heroSubheading": "Connecting you to the healthcare services you need, in your language",

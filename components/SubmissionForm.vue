@@ -86,7 +86,8 @@
                 class="mb-2 text-primary-text text-sm font-normal font-sans"
             >{{ t('submitPage.spokenLanguage1') }}</span>
             <p
-                v-show="!isValidInput.primarySpokenLangauge.value"
+                v-show="!isValidInput.primarySpokeLangauge.value"
+                role="alert"
                 class="text-error text-xs font-sans"
             >
                 {{ t('submitPage.spokenLanguageValidation') }}
@@ -185,7 +186,7 @@ const validationCheckedPreviously = {
     googleMapsUrl: ref(false),
     lastName: ref(false),
     firstName: ref(false),
-    primarySpokenLangauge: ref(false),
+    primarySpokeLangauge: ref(false),
     secondarySpokenLanguage: ref(false)
 }
 
@@ -193,7 +194,7 @@ const isValidInput = {
     googleMapsUrl: ref(true),
     lastName: ref(true),
     firstName: ref(true),
-    primarySpokenLangauge: ref(true),
+    primarySpokeLangauge: ref(false),
     secondarySpokenLanguage: ref(true)
 }
 
@@ -204,8 +205,8 @@ const validateFields = () => {
     isValidInput.lastName.value = validations.validateUserSubmittedLastName(lastName.value)
     validationCheckedPreviously.firstName.value = true
     isValidInput.firstName.value = validations.validateUserSubmittedFirstName(firstName.value)
-    validationCheckedPreviously.primarySpokenLangauge.value = true
-    isValidInput.primarySpokenLangauge.value = validations.validateFirstSpokenLanguage(selectLanguage1.value)
+    validationCheckedPreviously.primarySpokeLangauge.value = true
+    isValidInput.primarySpokeLangauge.value = validations.validateFirstSpokenLanguage(selectLanguage1.value)
     validationCheckedPreviously.secondarySpokenLanguage.value = true
     isValidInput.secondarySpokenLanguage.value = selectLanguage2.value
         ? validations.validateUserSubmittedLastName(selectLanguage2.value)
@@ -215,7 +216,7 @@ const validateFields = () => {
         !isValidInput.googleMapsUrl.value
         || !isValidInput.lastName.value
         || !isValidInput.firstName.value
-        || !isValidInput.primarySpokenLangauge.value
+        || !isValidInput.primarySpokeLangauge.value
         || !isValidInput.secondarySpokenLanguage.value
     ) {
         return
@@ -285,9 +286,9 @@ const initialValidationCheck = async (inputValue: string, field: string) => {
             isValidInput.firstName.value = validations.validateUserSubmittedFirstName(inputValue)
             break
         case 'primaryLanguage':
-            validationCheckedPreviously.primarySpokenLangauge.value = true
+            validationCheckedPreviously.primarySpokeLangauge.value = true
             await nextTick()
-            isValidInput.primarySpokenLangauge.value = validations.validateFirstSpokenLanguage(inputValue)
+            isValidInput.primarySpokeLangauge.value = validations.validateFirstSpokenLanguage(inputValue)
             break
         case 'secondaryLanguage':
             validationCheckedPreviously.secondarySpokenLanguage.value = true
@@ -313,8 +314,8 @@ watch(() => firstName.value, newValue => {
     }
 })
 watch(() => selectLanguage1.value, newValue => {
-    if (validationCheckedPreviously.primarySpokenLangauge.value) {
-        isValidInput.primarySpokenLangauge.value = validations.validateFirstSpokenLanguage(newValue)
+    if (validationCheckedPreviously.primarySpokeLangauge.value) {
+        isValidInput.primarySpokeLangauge.value = validations.validateFirstSpokenLanguage(newValue)
     }
 })
 watch(() => selectLanguage2.value, newValue => {

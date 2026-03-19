@@ -37,20 +37,6 @@
                     {{ t('modSubmissionForm.rejectSubmissionConfirmationButton') }}
                 </button>
             </div>
-            <div
-                v-else-if="formHasUnsavedChanges()"
-                class="flex flex-col aspect-square h-96 items-center justify-around bg-primary-inverted p-10 rounded"
-            >
-                <span class="font-bold text-3xl">{{ t('modSubmissionForm.hasUnsavedChanges') }}</span>
-                <button
-                    type="button"
-                    data-testid="submission-unsaved-confirmation-btn"
-                    class="bg-secondary p-4 rounded-full my-8 font-semibold text-xl hover:bg-primary"
-                    @click="handleNavigateToModerationScreen"
-                >
-                    {{ t('modSubmissionForm.confirmationButton') }}
-                </button>
-            </div>
         </Modal>
     </div>
     <div class="flex">
@@ -164,10 +150,9 @@ import { validateAddressLineEn,
     validatePostalCode,
     validateWebsite,
     validateCityJa } from '~/utils/formValidations'
-import { onBeforeRouteLeave } from '#app'
 import { useI18n } from '#imports'
 import { triggerFormValidationErrorMessages } from '~/utils/triggerFormValidationErrorMessages'
-import { arraysAreEqual } from '~/utils/arrayUtils'
+import { stableStringify } from '~/utils/stableStringify'
 import { handleServerErrorMessaging } from '~/composables/handleServerErrorMessaging'
 
 const toast = useToast()
@@ -182,6 +167,18 @@ const facilitiesStore = useFacilitiesStore()
 const healthcareProfessionalsStore = useHealthcareProfessionalsStore()
 
 const currentSubmissionNotes = ref('')
+
+// Single reactive snapshot for useUnsavedChanges (plugin shows confirmation on browser back / router leave).
+const formState = computed(() => ({
+    facility: JSON.parse(stableStringify(facilitiesStore.facilitySectionFields)),
+    hp: JSON.parse(stableStringify(healthcareProfessionalsStore.healthcareProfessionalSectionFields)),
+    notes: currentSubmissionNotes.value
+}))
+const { makeNonDirty } = useUnsavedChanges({
+    data: { source: formState },
+    mode: 'update',
+    onClose: () => handleNavigateToModerationScreen()
+})
 
 const syntheticEvent = new Event('submit', { bubbles: false, cancelable: true })
 
@@ -472,67 +469,10 @@ function initializeSubmissionFormValues(submissionData: Submission | undefined) 
     ].filter((value, index, self) => self.indexOf(value) === index)
 }
 
-// Assume you already have:
-// • isEditSubmissionFormInitialized
+// •
 // • submissionFormFieldsBeforeChanges (“before” snapshot)
 // • facilitiesStore.facilitySectionFields → facility
 // • healthcareProfessionalsStore.healthcareProfessionalSectionFields → hp
-// • arraysAreEqual
-const hasFacilityChanges = (submissionBeforeChangesComparison: Submission | undefined) => {
-    const facilitySectionFields = facilitiesStore.facilitySectionFields
-
-    if (!submissionBeforeChangesComparison) return false
-
-    return (
-        submissionBeforeChangesComparison?.facility?.nameEn !== facilitySectionFields.nameEn
-        || submissionBeforeChangesComparison?.facility?.nameJa !== facilitySectionFields.nameJa
-        || submissionBeforeChangesComparison?.facility?.contact?.phone !== facilitySectionFields.phone
-        || (submissionBeforeChangesComparison?.facility?.contact?.email
-          && submissionBeforeChangesComparison?.facility?.contact?.email !== facilitySectionFields.email)
-        || (submissionBeforeChangesComparison?.facility?.contact?.website
-          && submissionBeforeChangesComparison?.facility?.contact?.website !== facilitySectionFields.website)
-        || submissionBeforeChangesComparison?.facility?.contact?.address?.postalCode !== facilitySectionFields.postalCode
-        || !arraysAreEqual(submissionBeforeChangesComparison?.facility?.healthcareProfessionalIds,
-                           facilitySectionFields.healthcareProfessionalIds)
-    )
-}
-
-const hasHealthcareProfessionalChanges = (submissionBeforeChangesComparison: Submission | undefined) => {
-    const hpSectionFields = healthcareProfessionalsStore.healthcareProfessionalSectionFields
-
-    if (!submissionBeforeChangesComparison) return false
-
-    return (
-        !arraysAreEqual(
-            submissionBeforeChangesComparison?.healthcareProfessionals?.[0]?.names || [],
-            hpSectionFields.names
-        )
-        || !arraysAreEqual(
-            submissionBeforeChangesComparison?.healthcareProfessionals?.[0]?.acceptedInsurance || [],
-            hpSectionFields.acceptedInsurance
-        )
-        || !arraysAreEqual(
-            submissionBeforeChangesComparison?.healthcareProfessionals?.[0]?.degrees || [],
-            hpSectionFields.degrees
-        )
-        || !arraysAreEqual(
-            submissionBeforeChangesComparison?.healthcareProfessionals?.[0]?.specialties || [],
-            hpSectionFields.specialties
-        )
-        || !arraysAreEqual(
-            submissionBeforeChangesComparison?.healthcareProfessionals?.[0]?.spokenLanguages || [],
-            hpSectionFields.spokenLanguages
-        )
-        || !arraysAreEqual(
-            submissionBeforeChangesComparison?.healthcareProfessionals?.[0]?.facilityIds || [],
-            hpSectionFields.facilityIds
-        )
-    )
-}
-
-const formHasUnsavedChanges = () => hasFacilityChanges(submissionBeforeChanges.value)
-  || hasHealthcareProfessionalChanges(submissionBeforeChanges.value)
-
 async function submitUpdatedSubmission(e: Event) {
     e.preventDefault()
 
@@ -732,6 +672,9 @@ onMounted(async () => {
     initializeSubmissionFormValues(moderationSubmissionStore.selectedSubmissionData)
 
     await nextTick()
+    makeNonDirty()
+
+    await nextTick()
 
     isEditSubmissionFormInitialized.value = true
     loadingStore.setIsLoading(false)
@@ -764,15 +707,5 @@ watch(currentExistingHealthcareProfessionals, newValue => {
     }
 }, { deep: true })
 
-onBeforeRouteLeave(async (_, __, next) => {
-    if (formHasUnsavedChanges()
-      && !moderationSubmissionStore.updatingSubmissionFromTopBarAndExiting
-      && !moderationSubmissionStore.approvingSubmissionFromTopBar) {
-        modalStore.showModal()
-        next(false)
-        return
-    }
-    await resetModalRefs()
-    next()
-})
+// Unsaved changes on browser back / router leave are handled by useUnsavedChanges + unsaved-changes-plugin (router.beforeEach).
 </script>

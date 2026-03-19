@@ -36,8 +36,8 @@
                         class="relative group flex items-center self-start focus:outline-none
                         bg-secondary hover:bg-secondary/90 transition-colors
                         px-6 py-3 landscape:mt-24 mt-14
-                        rounded-full animate-bounce z-10"
-                        :style="{ animationDuration: '1.5s' }"
+                        rounded-full welcome-lets-go z-10"
+                        :aria-label="t('onboarding.letsGoButtonText')"
                         @click="expandBackground"
                     >
                         <!-- Button text -->
@@ -46,6 +46,7 @@
                         </span>
                         <!-- Right-pointing Arrow SVG -->
                         <svg
+                            aria-hidden="true"
                             class="w-6 h-6 pt-1 text-primary-text-inverted transform
                                 group-hover:translate-x-1 transition-transform"
                             fill="none"
@@ -131,12 +132,18 @@ const expandBackground = () => {
 </script>
 
 <style scoped>
-.animate-bounce {
+.welcome-lets-go {
   animation: bounce 1.5s infinite;
 }
 
-.animate-bounce:hover {
+.welcome-lets-go:hover {
   animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .welcome-lets-go {
+    animation: none;
+  }
 }
 
 @keyframes bounce {

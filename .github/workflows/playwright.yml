@@ -1,0 +1,99 @@
+name: "Tests: Playwright e2e"
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+  schedule:
+    - cron: "45 15 * * 4"
+
+env:
+  NUXT_AUTH_TOKEN_SECRET: ${{ secrets.NUXT_AUTH_TOKEN_SECRET }}
+  AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
+  AUTH0_USERNAME: ${{ secrets.AUTH0_USERNAME }}
+  AUTH0_PASSWORD: ${{ secrets.AUTH0_PASSWORD }}
+  AUTH0_CLIENTID: ${{ secrets.AUTH0_CLIENTID }}
+  AUTH0_CLIENTSECRET: ${{ secrets.AUTH0_CLIENTSECRET }}
+  NUXT_PUBLIC_LOAD_STORES: true
+  NUXT_IS_TESTING_MODE: true
+  NUXT_USE_LOCAL_API: true
+
+jobs:
+  playwright-e2e:
+    name: Playwright e2e
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [22.12.0]
+
+    steps:
+      - name: Checkout web
+        uses: actions/checkout@v4
+
+      - name: Clone server
+        run: git clone https://github.com/ourjapanlife/findadoc-server.git findadoc-server
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "yarn"
+
+      - name: Cache yarn dependencies (web)
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/yarn
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: Start Supabase and seed server DB
+        working-directory: findadoc-server
+        run: |
+          yarn install
+          cp .env.dev .env 2>/dev/null || true
+          npx supabase start
+          npx supabase db reset
+          yarn generate
+          yarn dev:seeddb
+
+      - name: Start API server
+        run: |
+          cd findadoc-server && yarn dev:startserver &
+          cd "$GITHUB_WORKSPACE"
+          npx wait-on http://127.0.0.1:4000/health -t 120000
+        env:
+          NODE_ENV: development
+
+      - name: Build web and start web server
+        run: |
+          yarn install
+          yarn ci:build
+          PORT=4242 yarn ci:start &
+          npx wait-on http://localhost:4242 -t 60000
+        env:
+          NODE_ENV: development
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium firefox webkit
+
+      - name: Run Playwright e2e tests
+        run: PLAYWRIGHT_BASE_URL=http://localhost:4242 yarn test:e2e:ci
+        env:
+          NODE_ENV: development
+
+      - name: Playwright report comment
+        if: always() && github.event_name == 'pull_request' && hashFiles('results.json') != ''
+        uses: daun/playwright-report-summary@v3
+        with:
+          report-file: results.json
+          comment-title: "Playwright e2e test results"
+
+      - name: Upload Playwright report
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7
