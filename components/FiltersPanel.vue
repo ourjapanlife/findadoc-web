@@ -237,7 +237,7 @@ import { useSearchResultsStore } from '~/stores/searchResultsStore.js'
 import { useLocationsStore, regionDisplayName, prefectureDisplayName, cityDisplayName } from '~/stores/locationsStore.js'
 import { useSpecialtiesStore } from '~/stores/specialtiesStore.js'
 import { useLocaleStore } from '~/stores/localeStore.js'
-import { type Specialty, Locale } from '~/typedefs/gqlTypes.js'
+import { type Specialty, Locale, SpecialtyCategory } from '~/typedefs/gqlTypes.js'
 import { BottomSheetType, useBottomSheetStore } from '~/stores/bottomSheetStore'
 import type { Region, Prefecture, City } from '~/typedefs/locationTypes'
 import { regionsEnum, getPrefecturesByRegion, getCitiesByPrefecture } from '~/typedefs/locationTypes'
@@ -255,7 +255,7 @@ const categoryDropdownOptions: Ref<DropdownOption[]> = ref([])
 const specialtyDropdownOptions: Ref<DropdownOption[]> = ref([])
 const languageDropdownOptions: Ref<DropdownOption[]> = ref([])
 
-const selectedCategories: Ref<string> = ref('')
+const selectedCategories: Ref<SpecialtyCategory | ''> = ref('')
 const selectedSpecialties: Ref<string> = ref('')
 const selectedLanguages: Ref<string> = ref(localeStore.activeLocale.code)
 
