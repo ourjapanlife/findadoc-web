@@ -11,6 +11,9 @@
         >
             <!-- Specialty dropdown -->
             <div class="search-specialty col-span-1 w-full py-4">
+                <p class="w-full bg-primary/20 rounded px-4 py-1 mb-2 text-sm font-medium">
+                    {{ t('searchBar.selectSpecialty') }}
+                </p>
                 <select
                     v-model="selectedSpecialties"
                     class="w-full px-1 py-1.5 border-2 border-primary/60 rounded-md text-primary-text
