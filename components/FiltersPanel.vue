@@ -14,27 +14,48 @@
                 <p class="w-full bg-primary/20 rounded px-4 py-1 mb-2 text-sm font-medium">
                     {{ t('searchBar.selectSpecialty') }}
                 </p>
-                <select
-                    v-model="selectedSpecialties"
-                    class="w-full px-1 py-1.5 border-2 border-primary/60 rounded-md text-primary-text
-                                    drop-shadow-md bg-primary-bg/10 transition-all"
+                <!-- category -->
+                <div
+                    v-for="category in categoryDropdownOptions"
+                    :key="category.value"
+                    class="border-b border-primary/20"
                 >
-                    <option
-                        value=""
-                        class="text-primary-text-muted hidden"
-                        disabled
-                        selected
+                    <div
+                        class="flex items-center justify-between py-2"
+                        @click="selectCategory(selectedCategory === category.value ? '' : category.value as SpecialtyCategory)"
                     >
-                        {{ t('searchBar.selectSpecialty') }}
-                    </option>
-                    <option
-                        v-for="(specialty) in specialtyDropdownOptions"
-                        :key="specialty.value"
-                        :value="specialty.value"
-                    >
-                        {{ specialty.displayText }}
-                    </option>
-                </select>
+                        <label class="flex items-center gap-3 cursor-pointer">
+                            <input
+                                type="checkbox"
+                                :checked="selectedCategory === category.value"
+                                class="w-4 h-4"
+                            >
+                            <span>{{ category.displayText }}</span>
+                        </label>
+                    </div>
+                    <div v-if="selectedCategory === category.value">
+                        <div
+                            v-for="specialty in specialtyDropdownOptions"
+                            :key="specialty.value"
+                            class="border-b border-primary/20"
+                        >
+                            <div
+                                id="specialty-boxes"
+                                class="flex justify-between py-2"
+                                @click="selectSpecialty()"
+                            >
+                                <label class="flex items-center justify-between gap-3 ml-2">
+                                    <input
+                                        type="checkbox"
+                                        :checked="selectedSpecialty === specialty.value"
+                                        class="w-4 h-4"
+                                    >
+                                    <span>{{ specialty.displayText }}</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="location-filters">
                 <p class="w-full bg-primary/20 rounded px-4 py-1 mb-2 text-sm font-medium">
@@ -237,7 +258,8 @@ import { useSearchResultsStore } from '~/stores/searchResultsStore.js'
 import { useLocationsStore, regionDisplayName, prefectureDisplayName, cityDisplayName } from '~/stores/locationsStore.js'
 import { useSpecialtiesStore } from '~/stores/specialtiesStore.js'
 import { useLocaleStore } from '~/stores/localeStore.js'
-import { type Specialty, Locale, SpecialtyCategory } from '~/typedefs/gqlTypes.js'
+import type { SpecialtyCategory, Specialty } from '~/typedefs/gqlTypes.js'
+import { Locale } from '~/typedefs/gqlTypes.js'
 import { BottomSheetType, useBottomSheetStore } from '~/stores/bottomSheetStore'
 import type { Region, Prefecture, City } from '~/typedefs/locationTypes'
 import { regionsEnum, getPrefecturesByRegion, getCitiesByPrefecture } from '~/typedefs/locationTypes'
@@ -255,8 +277,8 @@ const categoryDropdownOptions: Ref<DropdownOption[]> = ref([])
 const specialtyDropdownOptions: Ref<DropdownOption[]> = ref([])
 const languageDropdownOptions: Ref<DropdownOption[]> = ref([])
 
-const selectedCategories: Ref<SpecialtyCategory | ''> = ref('')
-const selectedSpecialties: Ref<string> = ref('')
+const selectedCategory: Ref<string | ''> = ref('')
+const selectedSpecialty: Ref<string> = ref('')
 const selectedLanguages: Ref<string> = ref(localeStore.activeLocale.code)
 
 // Locations search rework. cities is string for API call
@@ -371,6 +393,9 @@ function selectPrefecture(prefecture: Prefecture | '') {
 function selectCity(city: string) {
     selectedCity.value = city
 }
+function selectCategory(category: SpecialtyCategory | '') {
+    selectedCategory.value = category
+}
 
 // Toggle section visibility
 function togglePrefectureSection(region: Region) {
@@ -447,11 +472,11 @@ async function createLocationDropdownOptions(): Promise<void> {
     locationDropdownOptions.value = newLocationDropdownOptions
 }
 
-watch(selectedSpecialties, () => {
-    // If the selected specialty is empty, clear the selected specialties
-    searchResultsStore.selectedSpecialties = selectedSpecialties.value === ''
+watch(selectedSpecialty, () => {
+    // If the selected specialty is empty, clear the selected specialty
+    searchResultsStore.selectedSpecialties = selectedSpecialty.value === ''
         ? []
-        : [selectedSpecialties.value as Specialty]
+        : [selectedSpecialty.value as Specialty]
 })
 
 watch(selectedLanguages, () => {
