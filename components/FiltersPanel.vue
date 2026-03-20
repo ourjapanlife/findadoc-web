@@ -42,7 +42,7 @@
                             <div
                                 id="specialty-boxes"
                                 class="flex justify-between py-2"
-                                @click="selectSpecialty()"
+                                @click="selectSpecialty(selectedSpecialty === specialty.value ? '' : specialty.value)"
                             >
                                 <label class="flex items-center justify-between gap-3 ml-2">
                                     <input
@@ -263,6 +263,7 @@ import { Locale } from '~/typedefs/gqlTypes.js'
 import { BottomSheetType, useBottomSheetStore } from '~/stores/bottomSheetStore'
 import type { Region, Prefecture, City } from '~/typedefs/locationTypes'
 import { regionsEnum, getPrefecturesByRegion, getCitiesByPrefecture } from '~/typedefs/locationTypes'
+import { displayPartsToString } from 'typescript'
 
 const { t } = useI18n()
 
@@ -274,7 +275,6 @@ const bottomSheetStore = useBottomSheetStore()
 
 const locationDropdownOptions: Ref<LocationDropdownOption[]> = ref([])
 const categoryDropdownOptions: Ref<DropdownOption[]> = ref([])
-const specialtyDropdownOptions: Ref<DropdownOption[]> = ref([])
 const languageDropdownOptions: Ref<DropdownOption[]> = ref([])
 
 const selectedCategory: Ref<string | ''> = ref('')
@@ -353,6 +353,18 @@ const cityDropdownOptions = computed(() => {
     return finalCityOptions
 })
 
+const specialtyDropdownOptions = computed(() => {
+    if (!selectedCategory.value) return []
+
+    const specialtiesAreInCategory = specialtiesStore.categoryToSpecialtyMap[selectedCategory.value as SpecialtyCategory]
+
+    const specialtyOptions = specialtiesAreInCategory.map(specialty => ({
+        value: specialty,
+        displayText: specialty
+    }))
+    return specialtyOptions
+})
+
 // Watch statement to prevent prefectures and cities that dont match
 watch(selectedRegion, () => {
     selectedPrefecture.value = ''
@@ -395,6 +407,10 @@ function selectCity(city: string) {
 }
 function selectCategory(category: SpecialtyCategory | '') {
     selectedCategory.value = category
+    selectedSpecialty.value = ''
+}
+function selectSpecialty(specialty: string | '') {
+    selectedSpecialty.value = specialty
 }
 
 // Toggle section visibility
@@ -434,7 +450,7 @@ function createSpecialtyDropdownOptions() {
     })) as DropdownOption[]
 
     // Add the "All" option to the top of the list
-    dropdownOptions.unshift({ displayText: t('searchBar.allSpecialties'), value: '' })
+    // dropdownOptions.unshift({ displayText: t('searchBar.allSpecialties'), value: '' })
 
     specialtyDropdownOptions.value = dropdownOptions
 }
