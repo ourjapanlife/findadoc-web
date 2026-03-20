@@ -12,24 +12,16 @@ We want to provide free, accessible, and quality healthcare information in multi
 
 ## Newcomers
 - Join our **[Slack](https://find-a-doc.slack.com/join/shared_invite/zt-2lb3j2t1z-O9F4thzcFktqsIXNzzjzHw#/shared-invite/email)** and introduce yourself in the [general](https://find-a-doc.slack.com/archives/C025N4D525P) channel!
-- Join our **[👩‍💻 standup](https://documentation.findadoc.jp/development/standups)** where we can help get you started and answer any questions you might have.
 
 ## What is this repo?
 
 This is the open-source, public repository for the [findadoc.jp](https://findadoc.jp) website! We welcome support and contributions :)
 
-
 ### Documentation:
-- [📒 **Welcome to Find a Doc, Japan!**](https://documentation.findadoc.jp/development)
+- [📒 **Getting Started**](https://docs.findadoc.jp/getting-started/)
+- [💻 **Development**](https://docs.findadoc.jp/development/)
 - [❤️ **Code of Conduct**](./CODE_OF_CONDUCT.md)
 - [🤝 **Contributing Guidelines**](./CONTRIBUTING.md)
-- [🔧 **Tech Stack and Code Style**](https://documentation.findadoc.jp/development/start-coding/overview)
-- [🚀 **Get Started Developing**](https://documentation.findadoc.jp/development/start-coding/getting-the-code-running)
-
-
-## 🛠️ Troubleshooting
-Encounter any issues?
-Consult the **[Troubleshooting Documentation](https://documentation.findadoc.jp/development/start-coding/troubleshooting)** or ask us on **[Slack](https://find-a-doc.slack.com/join/shared_invite/zt-2lb3j2t1z-O9F4thzcFktqsIXNzzjzHw#/shared-invite/email)**!
 
 
 ## Our Amazing Volunteers ✨
