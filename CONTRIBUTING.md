@@ -10,7 +10,7 @@ We are working on the V2 version of the site, so if you've volunteered in the pa
 
 👉️ Developers 💻️
 
-1. Get started by following the [Development Documentation](https://documentation.findadoc.jp/development/start-coding).
+1. Get started by following the [Development Documentation](https://docs.findadoc.jp/getting-started/).
 2. Find a good issue by checking out the [Issues Section](https://github.com/ourjapanlife/findadoc-web/issues). PLEASE only take tickets with the `help wanted` label.
 3. For new developers looking for easier tickets, look for an unassigned issue tagged `Good First Issue`.
 4. Create your own branch and start writing your code!  (we recommend prefixing your branch with your username, like `coolgithubname/mychange`)
