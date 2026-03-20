@@ -251,9 +251,11 @@ const specialtiesStore = useSpecialtiesStore()
 const bottomSheetStore = useBottomSheetStore()
 
 const locationDropdownOptions: Ref<LocationDropdownOption[]> = ref([])
+const categoryDropdownOptions: Ref<DropdownOption[]> = ref([])
 const specialtyDropdownOptions: Ref<DropdownOption[]> = ref([])
 const languageDropdownOptions: Ref<DropdownOption[]> = ref([])
 
+const selectedCategories: Ref<string> = ref('')
 const selectedSpecialties: Ref<string> = ref('')
 const selectedLanguages: Ref<string> = ref(localeStore.activeLocale.code)
 
@@ -280,6 +282,7 @@ onMounted(async () => {
     // Initialize locations when component is mounted. The dropdown options are reactive, so they will update automatically
     await createLocationDropdownOptions()
     createLanguageDropdownOptions()
+    createCategoryDropdownOptions()
     createSpecialtyDropdownOptions()
 })
 
@@ -388,6 +391,15 @@ function createLanguageDropdownOptions() {
     dropdownOptions.filter(locale => locale.value)
 
     languageDropdownOptions.value = dropdownOptions
+}
+
+function createCategoryDropdownOptions() {
+    const dropdownOptions = specialtiesStore.specialtyCategories.map(category => ({
+        displayText: category.displayText,
+        value: category.code
+    })) as DropdownOption[]
+
+    categoryDropdownOptions.value = dropdownOptions
 }
 
 function createSpecialtyDropdownOptions() {
