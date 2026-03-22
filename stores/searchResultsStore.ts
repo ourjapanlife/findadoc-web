@@ -299,8 +299,13 @@ async function queryFacilities(
         const facilitiesSearchResults = serverResponse.data.facilities ?? []
 
         const locationFilteredSearchResults = searchCity
-            ? facilitiesSearchResults.filter(facility =>
-                facility.contact?.address.cityEn === searchCity || facility.contact?.address.cityJa === searchCity)
+            ? facilitiesSearchResults.filter(facility => {
+                const cityEn = facility.contact.address.cityEn
+                const cityJa = facility.contact.address.cityJa
+                const englishMatches = cityEn.includes(searchCity) || searchCity.includes(cityEn)
+                const japaneseMatches = cityJa.includes(searchCity) || searchCity.includes(cityJa)
+                return englishMatches || japaneseMatches
+            })
             : facilitiesSearchResults
 
         return locationFilteredSearchResults
