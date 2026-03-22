@@ -146,6 +146,10 @@
     "settings": "Settings",
     "logoutToast": "Successfully logged out"
   },
+  "appAccessNav": {
+    "moderation": "Moderation",
+    "ariaLabel": "Account and tools"
+  },
   "login": {
     "checkingauth": "Authentifizierung wird überprüft...",
     "redirectingtoauth0": "Sie werden zur Authentifizierung zu Auth0 weitergeleitet",

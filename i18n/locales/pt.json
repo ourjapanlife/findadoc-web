@@ -146,6 +146,10 @@
     "settings": "Settings",
     "logoutToast": "Successfully logged out"
   },
+  "appAccessNav": {
+    "moderation": "Moderation",
+    "ariaLabel": "Account and tools"
+  },
   "modCreateFacilityOrHPTopbar": {
     "confirmExit": "Exit without saving",
     "create": "Create",

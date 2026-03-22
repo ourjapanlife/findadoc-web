@@ -146,6 +146,10 @@
     "settings": "Settings",
     "logoutToast": "Successfully logged out"
   },
+  "appAccessNav": {
+    "moderation": "Moderation",
+    "ariaLabel": "Account and tools"
+  },
   "login": {
     "checkingauth": "Đang kiểm tra xác thực...",
     "redirectingtoauth0": "Đang chuyển hướng bạn đến Auth0 để xác thực.",

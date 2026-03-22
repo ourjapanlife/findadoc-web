@@ -155,6 +155,10 @@
     "settings": "Settings",
     "logoutToast": "Successfully logged out"
   },
+  "appAccessNav": {
+    "moderation": "Moderation",
+    "ariaLabel": "Account and tools"
+  },
   "login": {
     "checkingauth": "Checking Authentication...",
     "redirectingtoauth0": "Redirecting you to Auth0 for authentication",

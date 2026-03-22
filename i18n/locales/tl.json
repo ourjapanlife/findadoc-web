@@ -146,6 +146,10 @@
     "settings": "Settings",
     "logoutToast": "Successfully logged out"
   },
+  "appAccessNav": {
+    "moderation": "Moderation",
+    "ariaLabel": "Account and tools"
+  },
   "login": {
     "checkingauth": "Sinusuri ang Authentication...",
     "redirectingtoauth0": "Iri-redirect ka sa Auth0 para sa authentication",

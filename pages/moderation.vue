@@ -1,9 +1,9 @@
 <template>
-    <div>
+    <div class="flex flex-1 min-h-0 flex-col">
         <Suspense>
             <div
                 data-testid="moderation-content"
-                class="h-full w-full flex flex-col flex-1 font-sans text-primary-text bg-primary-bg"
+                class="flex flex-1 min-h-0 flex-col w-full font-sans text-primary-text bg-primary-bg"
             >
                 <div
                     v-if="authStore.isLoadingAuth"
@@ -34,12 +34,12 @@
                 <div
                     v-if="authStore.isLoggedIn"
                     data-testid="moderation-page"
-                    class="flex flex-row h-screen"
+                    class="flex flex-row flex-1 min-h-0 h-full"
                 >
                     <ModLeftNavbar />
-                    <div class="w-full flex flex-col items-stretch">
+                    <div class="w-full flex flex-col items-stretch flex-1 min-h-0 min-w-0">
                         <ModTopbar />
-                        <ModMainContent />
+                        <ModMainContent class="flex-1 min-h-0" />
                     </div>
                 </div>
             </div>
@@ -62,9 +62,8 @@ import { useRoute } from 'vue-router'
 import { useAuthStore } from '~/stores/authStore'
 import { definePageMeta, useI18n } from '#imports'
 
-// tell nuxt to our moderation layout
 definePageMeta({
-    layout: 'moderationlayout'
+    layout: 'app-access'
 })
 
 const { t } = useI18n()

@@ -1,5 +1,5 @@
 <template>
-    <div class="min-h-screen bg-primary-bg pt-20 px-4">
+    <div class="min-h-0 flex-1 bg-primary-bg px-4 py-6">
         <div class="max-w-2xl mx-auto">
             <div class="mb-8">
                 <h1 class="text-3xl font-bold text-primary">
@@ -60,8 +60,12 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useI18n } from '#imports'
+import { definePageMeta, useI18n } from '#imports'
 import SVGChiko from '~/assets/icons/characters-chiko-therapy-dog-primary.svg'
+
+definePageMeta({
+    layout: 'app-access'
+})
 
 const { t } = useI18n()
 const displayName = ref('')

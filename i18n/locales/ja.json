@@ -146,6 +146,10 @@
     "settings": "Settings",
     "logoutToast": "Successfully logged out"
   },
+  "appAccessNav": {
+    "moderation": "モデレーション",
+    "ariaLabel": "アカウントとツール"
+  },
   "login": {
     "checkingauth": "認証の確認...",
     "redirectingtoauth0": "Auth0ログインページにリダイレクトします",

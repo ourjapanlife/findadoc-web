@@ -85,8 +85,8 @@
                         </div>
                     </NuxtLink>
                 </div>
-                <!-- Search Bar -->
-                <div v-if="isLandscape">
+                <!-- Search Bar (hidden in app-access shell; search lives on the home map page) -->
+                <div v-if="isLandscape && !hideSearch">
                     <SearchBar />
                 </div>
             </div>
@@ -211,6 +211,14 @@ import SVGSignOutIcon from '~/assets/icons/sign-out-icon.svg'
 import { useAuthStore } from '~/stores/authStore'
 import { useScreenOrientation } from '~/composables/useScreenOrientation'
 import { vCloseOnOutsideClick } from '~/composables/closeOnOutsideClick'
+
+withDefaults(
+    defineProps<{
+        /** Omit search bar (e.g. app-access layout uses the map page for search). */
+        hideSearch?: boolean
+    }>(),
+    { hideSearch: false }
+)
 
 const { t } = useI18n()
 const toast = useToast()
