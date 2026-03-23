@@ -276,8 +276,6 @@
     "labelHealthcareProfessionalFirstName": "First Name",
     "labelHealthcareProfessionalLastName": "Last Name",
     "labelHealthcareProfessionalMiddleName": "Middle Name",
-    "confirmationButton": "Leave Page",
-    "hasUnsavedChanges": "You have unsaved changes. Are you sure you want to leave?",
     "submissionConfirmationAcceptanceButton": "Yes, submit",
     "submissionConfirmationMessage": "Are you sure you want to submit this form?",
     "errorMessageCompletedForm": "Failed to submit completed form",
@@ -442,9 +440,7 @@
   "authErrors": {},
   "facilitiesErrors": {},
   "healthcareProfessionalsErrors": {},
-  "localeErrors": {
-    "notSpecified": "Not Specified"
-  },
+  "localeErrors": {},
   "locationErrors": {},
   "moderationSubmissionsErrors": {},
   "searchResultsErrors": {},
@@ -452,17 +448,7 @@
     "colorThemes": "Color Themes"
   },
   "unsavedChanges": {
-    "create": {
-      "title": "Ohne Erstellung verlassen?",
-      "message": "Dies wurde noch nicht erstellt. Wenn du jetzt verlässt, gehen alle eingegebenen Informationen verloren.",
-      "cancel": "Bleiben",
-      "confirm": "Verlassen"
-    },
-    "update": {
-      "title": "Änderungen verwerfen?",
-      "message": "Deine Änderungen wurden noch nicht gespeichert. Wenn du jetzt verlässt, gehen sie verloren.",
-      "cancel": "Weiter bearbeiten",
-      "confirm": "Änderungen verwerfen"
-    }
+    "create": {},
+    "update": {}
   }
 }

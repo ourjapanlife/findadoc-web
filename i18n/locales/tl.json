@@ -272,8 +272,6 @@
     "noHealthcareProfessionalFound": "No matching Healthcare Professionals found"
   },
   "modSubmissionForm": {
-    "confirmationButton": "Umalis sa pahina",
-    "hasUnsavedChanges": "Mayroon mga hindi na-save na pagbabago. Sigurado ka bang nais mong umalis?",
     "errorMessageCompletedForm": "Hindi na-isumite and kumpletong form",
     "errorMessageFacilityInputsInvalid": "Ang ilan sa mga impormasyon ng pasilidad ay hindi nakumpleto ng tama.",
     "errorMessageFacilityId": "Kinakailangan ang ID ng Pasilidad upang ma-update ang pasilidad.",
@@ -441,9 +439,7 @@
   "authErrors": {},
   "facilitiesErrors": {},
   "healthcareProfessionalsErrors": {},
-  "localeErrors": {
-    "notSpecified": "Not Specified"
-  },
+  "localeErrors": {},
   "locationErrors": {},
   "moderationSubmissionsErrors": {},
   "searchResultsErrors": {},
@@ -451,17 +447,7 @@
     "colorThemes": "Color Themes"
   },
   "unsavedChanges": {
-    "create": {
-      "title": "Umalis nang hindi gumagawa?",
-      "message": "Hindi pa ito nagagawa. Kapag umalis ka ngayon, mawawala ang lahat ng impormasyong inilagay mo.",
-      "cancel": "Manatili",
-      "confirm": "Umalis"
-    },
-    "update": {
-      "title": "Itapon ang mga pagbabago?",
-      "message": "Hindi pa nase-save ang mga pagbabago mo. Kapag umalis ka ngayon, mawawala ang mga ito.",
-      "cancel": "Magpatuloy sa pag-edit",
-      "confirm": "Itapon ang mga pagbabago"
-    }
+    "create": {},
+    "update": {}
   }
 }

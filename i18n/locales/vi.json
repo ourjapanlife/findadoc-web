@@ -312,8 +312,6 @@
     "noHealthcareProfessionalFound": "No matching Healthcare Professionals found"
   },
   "modSubmissionForm": {
-    "confirmationButton": "Rời trang",
-    "hasUnsavedChanges": "Bạn có thay đổi chưa được lưu. Bạn có chắc chắn muốn rời khỏi trang không?",
     "errorMessageCompletedForm": "Gửi mẫu đã hoàn thành không thành công.",
     "errorMessageFacilityInputsInvalid": "Một số trường thông tin cơ sở vật chất chưa được điền chính xác.",
     "errorMessageFacilityId": "Mã cơ sở vật chất là bắt buộc để cập nhật cơ sở vật chất.",
@@ -441,9 +439,7 @@
   "authErrors": {},
   "facilitiesErrors": {},
   "healthcareProfessionalsErrors": {},
-  "localeErrors": {
-    "notSpecified": "Not Specified"
-  },
+  "localeErrors": {},
   "locationErrors": {},
   "moderationSubmissionsErrors": {},
   "searchResultsErrors": {},
@@ -451,17 +447,7 @@
     "colorThemes": "Color Themes"
   },
   "unsavedChanges": {
-    "create": {
-      "title": "Rời đi mà không tạo?",
-      "message": "Chưa được tạo. Nếu bạn rời đi bây giờ, tất cả thông tin đã nhập sẽ bị mất.",
-      "cancel": "Ở lại",
-      "confirm": "Rời đi"
-    },
-    "update": {
-      "title": "Hủy các thay đổi?",
-      "message": "Các thay đổi của bạn chưa được lưu. Nếu bạn rời đi bây giờ, chúng sẽ bị mất.",
-      "cancel": "Tiếp tục chỉnh sửa",
-      "confirm": "Hủy thay đổi"
-    }
+    "create": {},
+    "update": {}
   }
 }

@@ -40,9 +40,7 @@
   "authErrors": {},
   "facilitiesErrors": {},
   "healthcareProfessionalsErrors": {},
-  "localeErrors": {
-    "notSpecified": "Not Specified"
-  },
+  "localeErrors": {},
   "locationErrors": {},
   "moderationSubmissionsErrors": {},
   "searchResultsErrors": {},
@@ -377,8 +375,6 @@
     "placeholderTextFacilityWebsite": "e.g. http://www.example.com/"
   },
   "modSubmissionForm": {
-    "confirmationButton": "Leave Page",
-    "hasUnsavedChanges": "You have unsaved changes. Are you sure you want to leave?",
     "errorMessageCompletedForm": "Failed to submit completed form",
     "errorMessageFacilityInputsInvalid": "Some of the Facility Fields were not filled in correctly",
     "errorMessageFacilityId": "Facility ID is required for updating the Facility",
@@ -451,17 +447,7 @@
     "updateFailed": "Profile update failed"
   },
   "unsavedChanges": {
-    "create": {
-      "title": "Leave without creating?",
-      "message": "This hasn't been created yet. If you leave now, all entered information will be lost.",
-      "cancel": "Stay",
-      "confirm": "Leave"
-    },
-    "update": {
-      "title": "Discard changes?",
-      "message": "Your changes haven't been saved. If you leave now, they will be lost.",
-      "cancel": "Continue editing",
-      "confirm": "Discard changes"
-    }
+    "create": {},
+    "update": {}
   }
 }
