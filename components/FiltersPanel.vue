@@ -32,6 +32,25 @@
                             >
                             <span>{{ category.displayText }}</span>
                         </label>
+                        <button
+                            class="p-1 hover:bg-primary-bg/20 rounded"
+                            @click="toggleSpecialtySection(category.value)"
+                        >
+                            <svg
+                                class="w-4 h-4 text-primary-text transition-transform duration-200"
+                                :class="{ 'rotate-180': openSpecialtySection[category.value] }"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M19 9l-7 7-7-7"
+                                />
+                            </svg>
+                        </button>
                     </div>
                     <!-- specialty -->
                     <div v-if="selectedCategory === category.value">
@@ -288,6 +307,7 @@ const selectedCity: Ref<string> = ref('')
 // Needed for toggling
 const openPrefectureSections: Ref<Record<string, boolean>> = ref({})
 const openCitySections: Ref<Record<string, boolean>> = ref({})
+const openSpecialtySection: Ref<Record<string, boolean>> = ref({})
 
 interface DropdownOption {
     displayText: string
@@ -411,6 +431,10 @@ function selectCity(city: string) {
 function selectCategory(category: SpecialtyCategory | '') {
     selectedCategory.value = category
     selectedSpecialty.value = ''
+    openSpecialtySection.value = {}
+    if (category) {
+        openSpecialtySection.value[category] = true
+    }
 }
 function selectSpecialty(specialty: string | '') {
     selectedSpecialty.value = specialty
@@ -422,6 +446,9 @@ function togglePrefectureSection(region: Region) {
 }
 function toggleCitySection(prefecture: Prefecture) {
     openCitySections.value[prefecture] = !openCitySections.value[prefecture]
+}
+function toggleSpecialtySection(category: string) {
+    openSpecialtySection.value[category] = !openSpecialtySection.value[category]
 }
 
 function createLanguageDropdownOptions() {
