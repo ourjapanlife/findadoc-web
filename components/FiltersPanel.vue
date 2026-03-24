@@ -32,25 +32,20 @@
                             >
                             <span>{{ category.displayText }}</span>
                         </label>
-                        <button
-                            class="p-1 hover:bg-primary-bg/20 rounded"
-                            @click="toggleSpecialtySection(category.value)"
+                        <svg
+                            class="w-4 h-4 text-primary-text transition-transform duration-200"
+                            :class="{ 'rotate-180': openSpecialtySection[category.value] }"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
                         >
-                            <svg
-                                class="w-4 h-4 text-primary-text transition-transform duration-200"
-                                :class="{ 'rotate-180': openSpecialtySection[category.value] }"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M19 9l-7 7-7-7"
-                                />
-                            </svg>
-                        </button>
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M19 9l-7 7-7-7"
+                            />
+                        </svg>
                     </div>
                     <!-- specialty -->
                     <div v-if="selectedCategory === category.value">
@@ -446,9 +441,6 @@ function togglePrefectureSection(region: Region) {
 }
 function toggleCitySection(prefecture: Prefecture) {
     openCitySections.value[prefecture] = !openCitySections.value[prefecture]
-}
-function toggleSpecialtySection(category: string) {
-    openSpecialtySection.value[category] = !openSpecialtySection.value[category]
 }
 
 function createLanguageDropdownOptions() {
