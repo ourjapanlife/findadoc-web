@@ -33,11 +33,12 @@
                             <span>{{ category.displayText }}</span>
                         </label>
                     </div>
+                    <!-- specialty -->
                     <div v-if="selectedCategory === category.value">
                         <div
                             v-for="specialty in specialtyDropdownOptions"
                             :key="specialty.value"
-                            class="border-b border-primary/20"
+                            class="border-b border-primary/20 last:border-b-0"
                         >
                             <div
                                 id="specialty-boxes"
@@ -206,8 +207,8 @@
                         v-for="(language) in languageDropdownOptions"
                         :key="language.value"
                         :value="language.value"
-                        class="flex items-center gap-1.5 bg-primary/20 rounded cursor-pointer text-center px-2 py-1 min-h-[2rem]"
-                        :class="selectedLanguages === language.value ? 'bg-primary/40' : 'bg-primary/20'"
+                        class="flex items-center gap-1.5 rounded cursor-pointer text-center px-2 py-1 min-h-8"
+                        :class="selectedLanguages === language.value ? 'bg-primary/40' : 'bg-primary/10'"
                     >
                         <input
                             type="checkbox"
@@ -444,7 +445,6 @@ function createCategoryDropdownOptions() {
 
     categoryDropdownOptions.value = dropdownOptions
 }
-
 
 async function createLocationDropdownOptions(): Promise<void> {
     // Show an interim loading state while we fetch the locations
