@@ -263,7 +263,6 @@ import { Locale } from '~/typedefs/gqlTypes.js'
 import { BottomSheetType, useBottomSheetStore } from '~/stores/bottomSheetStore'
 import type { Region, Prefecture, City } from '~/typedefs/locationTypes'
 import { regionsEnum, getPrefecturesByRegion, getCitiesByPrefecture } from '~/typedefs/locationTypes'
-import { displayPartsToString } from 'typescript'
 
 const { t } = useI18n()
 
@@ -305,7 +304,6 @@ onMounted(async () => {
     await createLocationDropdownOptions()
     createLanguageDropdownOptions()
     createCategoryDropdownOptions()
-    createSpecialtyDropdownOptions()
 })
 
 // Region dropdowns
@@ -359,17 +357,14 @@ const specialtyDropdownOptions = computed(() => {
     const specialtiesInCategory = specialtiesStore.categoryToSpecialtyMap[selectedCategory.value as SpecialtyCategory]
     const specialtiesInCategorySet = new Set(specialtiesInCategory)
 
-    console.log(specialtiesInCategorySet)
-
-    const specialtyOptions = specialtiesStore.specialtyDisplayOptions
+    const finalSpecialtyOptions = specialtiesStore.specialtyDisplayOptions
         .filter(specialty => specialtiesInCategorySet.has(specialty.code))
         .map(selection => ({
             value: selection.code,
             displayText: selection.displayText
         }))
-    console.log(specialtyOptions)
 
-    return specialtyOptions
+    return finalSpecialtyOptions
 })
 
 // Watch statement to prevent prefectures and cities that dont match
@@ -450,17 +445,6 @@ function createCategoryDropdownOptions() {
     categoryDropdownOptions.value = dropdownOptions
 }
 
-function createSpecialtyDropdownOptions() {
-    const dropdownOptions = specialtiesStore.specialtyDisplayOptions.map(specialty => ({
-        displayText: specialty.displayText,
-        value: specialty.code
-    })) as DropdownOption[]
-
-    // Add the "All" option to the top of the list
-    // dropdownOptions.unshift({ displayText: t('searchBar.allSpecialties'), value: '' })
-
-    specialtyDropdownOptions.value = dropdownOptions
-}
 
 async function createLocationDropdownOptions(): Promise<void> {
     // Show an interim loading state while we fetch the locations
