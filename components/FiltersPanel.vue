@@ -356,11 +356,12 @@ const cityDropdownOptions = computed(() => {
 const specialtyDropdownOptions = computed(() => {
     if (!selectedCategory.value) return []
 
-    const specialtiesAreInCategory = specialtiesStore.categoryToSpecialtyMap[selectedCategory.value as SpecialtyCategory]
-
-    const specialtyOptions = specialtiesAreInCategory.map(specialty => ({
+    const specialtiesInCategory = specialtiesStore.categoryToSpecialtyMap[selectedCategory.value as SpecialtyCategory]
+    const specialtiesInCategorySet = new Set(specialtiesInCategory)
+    console.log(specialtiesInCategorySet)
+    const specialtyOptions = specialtiesInCategory.map(specialty => ({
         value: specialty,
-        displayText: specialty
+        displayText: specialty.displayText
     }))
     return specialtyOptions
 })
