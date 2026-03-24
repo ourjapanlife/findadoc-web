@@ -358,11 +358,17 @@ const specialtyDropdownOptions = computed(() => {
 
     const specialtiesInCategory = specialtiesStore.categoryToSpecialtyMap[selectedCategory.value as SpecialtyCategory]
     const specialtiesInCategorySet = new Set(specialtiesInCategory)
+
     console.log(specialtiesInCategorySet)
-    const specialtyOptions = specialtiesInCategory.map(specialty => ({
-        value: specialty,
-        displayText: specialty.displayText
-    }))
+
+    const specialtyOptions = specialtiesStore.specialtyDisplayOptions
+        .filter(specialty => specialtiesInCategorySet.has(specialty.code))
+        .map(selection => ({
+            value: selection.code,
+            displayText: selection.displayText
+        }))
+    console.log(specialtyOptions)
+
     return specialtyOptions
 })
 
