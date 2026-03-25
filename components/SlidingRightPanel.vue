@@ -11,7 +11,7 @@
             <!-- Close button -->
             <div class="sticky top-0 z-10 bg-primary-bg flex justify-end p-6 rounded-t-lg">
                 <button
-                    class="absolute top-1 right-4 p-2 hover:bg-secondary-bg/20 rounded-full transition-colors z-10"
+                    class="absolute top-1 right-2 p-2 hover:bg-secondary-bg/20 rounded-full transition-colors z-10"
                     @click="closePanelHandler"
                 >
                     <svg
