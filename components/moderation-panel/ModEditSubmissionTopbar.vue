@@ -4,7 +4,7 @@
             <button
                 type="button"
                 data-testid="mod-edit-submission-copy-submission-id"
-                class="flex flex-row w-90 bg-neutral p-2 m-2 border-2 border-slate-400 rounded hover"
+                class="flex flex-row bg-neutral p-2 m-2 border-2 border-slate-400 rounded hover"
                 @click="copySubmissionId"
             >
                 ID: {{ selectedSubmissionId }}
@@ -62,6 +62,11 @@
                 {{
                     t('modEditSubmissionTopNav.approve') }}
             </button>
+            <Button
+                :button-style="'primary'"
+            >
+                Approve
+            </Button>
         </div>
     </div>
 </template>
@@ -71,6 +76,7 @@ import { ref, type Ref } from 'vue'
 import SVGCopyContent from '~/assets/icons/content-copy.svg'
 import SVGSuccessCheckMark from '~/assets/icons/checkmark-square.svg'
 import { useModerationSubmissionsStore } from '~/stores/moderationSubmissionsStore'
+import Button from '~/components/ui-components/ButtonTypes.vue'
 
 const { t } = useI18n()
 
