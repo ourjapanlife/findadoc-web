@@ -22,8 +22,8 @@
                 />
             </button>
         </div>
-        <div class="flex flex-row justify p-2 font-bold ">
-            <button
+        <div class="flex flex-row gap-2 justify p-2 font-bold ">
+            <!-- <button
                 type="button"
                 class="flex justify-center items-center rounded-full bg-secondary-bg border-primary-text-muted
                 border-2 w-28 text-sm mr-2"
@@ -61,11 +61,34 @@
             >
                 {{
                     t('modEditSubmissionTopNav.approve') }}
-            </button>
+            </button> -->
+            <Button
+                :button-style="'primaryOutline'"
+                data-testid="submission-topNav-update"
+                @click="updateWithoutExiting"
+            >
+                {{ t('modEditSubmissionTopNav.update') }}
+            </Button>
+            <Button
+                :button-style="'primaryOutline'"
+                data-testid="submission-topNav-updateAndExit"
+                @click="updateAndExit"
+            >
+                {{ t('modEditSubmissionTopNav.updateAndExit') }}
+            </Button>
+            <Button
+                :button-style="'destructive'"
+                data-testid="mod-edit-submission-reject-button"
+                @click="showRejectionConfirmation"
+            >
+                {{ t('modEditSubmissionTopNav.reject') }}
+            </Button>
             <Button
                 :button-style="'primary'"
+                data-testid="submission-topNav-updateAndExit"
+                @click="acceptSubmission"
             >
-                Approve
+                {{ t('modEditSubmissionTopNav.approve') }}
             </Button>
         </div>
     </div>
