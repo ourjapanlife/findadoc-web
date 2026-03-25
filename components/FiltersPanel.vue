@@ -1,7 +1,7 @@
 <template>
     <!-- Filters panel -->
     <div
-        class="flex flex-col w-full landscape:h-full portrait:max-h-[70svh] pt-6"
+        class="flex flex-col w-full landscape:h-full portrait:max-h-[70svh]"
         data-testid="filters-panel-container"
     >
         <!-- Search fields -->
@@ -11,27 +11,66 @@
         >
             <!-- Specialty dropdown -->
             <div class="search-specialty col-span-1 w-full py-4">
-                <select
-                    v-model="selectedSpecialties"
-                    class="w-full px-1 py-1.5 border-2 border-primary/60 rounded-md text-primary-text
-                                    drop-shadow-md bg-primary-bg/10 transition-all"
+                <p class="w-full bg-primary/20 rounded px-4 py-1 mb-2 text-sm font-medium">
+                    {{ t('searchBar.selectSpecialty') }}
+                </p>
+                <!-- category -->
+                <div
+                    v-for="category in categoryDropdownOptions"
+                    :key="category.value"
+                    class="border-b border-primary/20"
                 >
-                    <option
-                        value=""
-                        class="text-primary-text-muted hidden"
-                        disabled
-                        selected
+                    <div
+                        class="flex items-center justify-between py-2"
+                        @click="selectCategory(selectedCategory === category.value ? '' : category.value as SpecialtyCategory)"
                     >
-                        {{ t('searchBar.selectSpecialty') }}
-                    </option>
-                    <option
-                        v-for="(specialty) in specialtyDropdownOptions"
-                        :key="specialty.value"
-                        :value="specialty.value"
-                    >
-                        {{ specialty.displayText }}
-                    </option>
-                </select>
+                        <label class="flex items-center gap-3 cursor-pointer">
+                            <input
+                                type="checkbox"
+                                :checked="selectedCategory === category.value"
+                                class="w-4 h-4"
+                            >
+                            <span>{{ category.displayText }}</span>
+                        </label>
+                        <svg
+                            class="w-4 h-4 text-primary-text transition-transform duration-200"
+                            :class="{ 'rotate-180': openSpecialtySection[category.value] }"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M19 9l-7 7-7-7"
+                            />
+                        </svg>
+                    </div>
+                    <!-- specialty -->
+                    <div v-if="selectedCategory === category.value">
+                        <div
+                            v-for="specialty in specialtyDropdownOptions"
+                            :key="specialty.value"
+                            class="border-b border-primary/20 last:border-b-0"
+                        >
+                            <div
+                                id="specialty-boxes"
+                                class="flex justify-between py-2"
+                                @click="selectSpecialty(selectedSpecialty === specialty.value ? '' : specialty.value)"
+                            >
+                                <label class="flex items-center justify-between gap-3 ml-2">
+                                    <input
+                                        type="checkbox"
+                                        :checked="selectedSpecialty === specialty.value"
+                                        class="w-4 h-4"
+                                    >
+                                    <span>{{ specialty.displayText }}</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="location-filters">
                 <p class="w-full bg-primary/20 rounded px-4 py-1 mb-2 text-sm font-medium">
@@ -61,25 +100,21 @@
                             <span> {{ region.displayText }} </span>
                         </label>
                         <!-- dropdown arrow -->
-                        <button
-                            class="p-1 hover:bg-primary-bg/20 rounded"
-                            @click="togglePrefectureSection(region.value)"
+
+                        <svg
+                            class="w-4 h-4 text-primary-text transition-transform duration-200"
+                            :class="{ 'rotate-180': openPrefectureSections[region.value] }"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
                         >
-                            <svg
-                                class="w-4 h-4 text-primary-text transition-transform duration-200"
-                                :class="{ 'rotate-180': openPrefectureSections[region.value] }"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M19 9l-7 7-7-7"
-                                />
-                            </svg>
-                        </button>
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M19 9l-7 7-7-7"
+                            />
+                        </svg>
                     </div>
                     <!-- prefecture dropdown -->
                     <div
@@ -110,25 +145,20 @@
                                     <span> {{ prefecture.displayText }} </span>
                                 </label>
                                 <!-- dropdown arrow -->
-                                <button
-                                    class="p-1 hover:bg-primary-bg/20 rounded"
-                                    @click="toggleCitySection(prefecture.value)"
+                                <svg
+                                    class="w-4 h-4 text-primary-text transition-transform duration-200"
+                                    :class="{ 'rotate-180': openCitySections[prefecture.value] }"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
                                 >
-                                    <svg
-                                        class="w-4 h-4 text-primary-text transition-transform duration-200"
-                                        :class="{ 'rotate-180': openCitySections[prefecture.value] }"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke="currentColor"
-                                    >
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M19 9l-7 7-7-7"
-                                        />
-                                    </svg>
-                                </button>
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M19 9l-7 7-7-7"
+                                    />
+                                </svg>
                             </div>
                             <!-- city dropdown -->
                             <div
@@ -182,8 +212,8 @@
                         v-for="(language) in languageDropdownOptions"
                         :key="language.value"
                         :value="language.value"
-                        class="flex items-center gap-1.5 bg-primary/20 rounded cursor-pointer text-center px-2 py-1 min-h-[2rem]"
-                        :class="selectedLanguages === language.value ? 'bg-primary/40' : 'bg-primary/20'"
+                        class="flex items-center gap-1.5 rounded cursor-pointer text-center px-2 py-1 min-h-8"
+                        :class="selectedLanguages === language.value ? 'bg-primary/40' : 'bg-primary/10'"
                     >
                         <input
                             type="checkbox"
@@ -234,7 +264,8 @@ import { useSearchResultsStore } from '~/stores/searchResultsStore.js'
 import { useLocationsStore, regionDisplayName, prefectureDisplayName, cityDisplayName } from '~/stores/locationsStore.js'
 import { useSpecialtiesStore } from '~/stores/specialtiesStore.js'
 import { useLocaleStore } from '~/stores/localeStore.js'
-import { type Specialty, Locale } from '~/typedefs/gqlTypes.js'
+import type { SpecialtyCategory, Specialty } from '~/typedefs/gqlTypes.js'
+import { Locale } from '~/typedefs/gqlTypes.js'
 import { BottomSheetType, useBottomSheetStore } from '~/stores/bottomSheetStore'
 import type { Region, Prefecture, City } from '~/typedefs/locationTypes'
 import { regionsEnum, getPrefecturesByRegion, getCitiesByPrefecture } from '~/typedefs/locationTypes'
@@ -248,10 +279,11 @@ const specialtiesStore = useSpecialtiesStore()
 const bottomSheetStore = useBottomSheetStore()
 
 const locationDropdownOptions: Ref<LocationDropdownOption[]> = ref([])
-const specialtyDropdownOptions: Ref<DropdownOption[]> = ref([])
+const categoryDropdownOptions: Ref<DropdownOption[]> = ref([])
 const languageDropdownOptions: Ref<DropdownOption[]> = ref([])
 
-const selectedSpecialties: Ref<string> = ref('')
+const selectedCategory: Ref<string | ''> = ref('')
+const selectedSpecialty: Ref<string> = ref('')
 const selectedLanguages: Ref<string> = ref(localeStore.activeLocale.code)
 
 // Locations search rework. cities is string for API call
@@ -261,6 +293,7 @@ const selectedCity: Ref<string> = ref('')
 // Needed for toggling
 const openPrefectureSections: Ref<Record<string, boolean>> = ref({})
 const openCitySections: Ref<Record<string, boolean>> = ref({})
+const openSpecialtySection: Ref<Record<string, boolean>> = ref({})
 
 interface DropdownOption {
     displayText: string
@@ -277,7 +310,7 @@ onMounted(async () => {
     // Initialize locations when component is mounted. The dropdown options are reactive, so they will update automatically
     await createLocationDropdownOptions()
     createLanguageDropdownOptions()
-    createSpecialtyDropdownOptions()
+    createCategoryDropdownOptions()
 })
 
 // Region dropdowns
@@ -325,6 +358,22 @@ const cityDropdownOptions = computed(() => {
     return finalCityOptions
 })
 
+const specialtyDropdownOptions = computed(() => {
+    if (!selectedCategory.value) return []
+
+    const specialtiesInCategory = specialtiesStore.categoryToSpecialtyMap[selectedCategory.value as SpecialtyCategory]
+    const specialtiesInCategorySet = new Set(specialtiesInCategory)
+
+    const finalSpecialtyOptions = specialtiesStore.specialtyDisplayOptions
+        .filter(specialty => specialtiesInCategorySet.has(specialty.code))
+        .map(selection => ({
+            value: selection.code,
+            displayText: selection.displayText
+        }))
+
+    return finalSpecialtyOptions
+})
+
 // Watch statement to prevent prefectures and cities that dont match
 watch(selectedRegion, () => {
     selectedPrefecture.value = ''
@@ -365,13 +414,16 @@ function selectPrefecture(prefecture: Prefecture | '') {
 function selectCity(city: string) {
     selectedCity.value = city
 }
-
-// Toggle section visibility
-function togglePrefectureSection(region: Region) {
-    openPrefectureSections.value[region] = !openPrefectureSections.value[region]
+function selectCategory(category: SpecialtyCategory | '') {
+    selectedCategory.value = category
+    selectedSpecialty.value = ''
+    openSpecialtySection.value = {}
+    if (category) {
+        openSpecialtySection.value[category] = true
+    }
 }
-function toggleCitySection(prefecture: Prefecture) {
-    openCitySections.value[prefecture] = !openCitySections.value[prefecture]
+function selectSpecialty(specialty: string | '') {
+    selectedSpecialty.value = specialty
 }
 
 function createLanguageDropdownOptions() {
@@ -387,16 +439,13 @@ function createLanguageDropdownOptions() {
     languageDropdownOptions.value = dropdownOptions
 }
 
-function createSpecialtyDropdownOptions() {
-    const dropdownOptions = specialtiesStore.specialtyDisplayOptions.map(specialty => ({
-        displayText: specialty.displayText,
-        value: specialty.code
+function createCategoryDropdownOptions() {
+    const dropdownOptions = specialtiesStore.specialtyCategories.map(category => ({
+        displayText: category.displayText,
+        value: category.code
     })) as DropdownOption[]
 
-    // Add the "All" option to the top of the list
-    dropdownOptions.unshift({ displayText: t('searchBar.allSpecialties'), value: '' })
-
-    specialtyDropdownOptions.value = dropdownOptions
+    categoryDropdownOptions.value = dropdownOptions
 }
 
 async function createLocationDropdownOptions(): Promise<void> {
@@ -432,11 +481,11 @@ async function createLocationDropdownOptions(): Promise<void> {
     locationDropdownOptions.value = newLocationDropdownOptions
 }
 
-watch(selectedSpecialties, () => {
-    // If the selected specialty is empty, clear the selected specialties
-    searchResultsStore.selectedSpecialties = selectedSpecialties.value === ''
+watch(selectedSpecialty, () => {
+    // If the selected specialty is empty, clear the selected specialty
+    searchResultsStore.selectedSpecialties = selectedSpecialty.value === ''
         ? []
-        : [selectedSpecialties.value as Specialty]
+        : [selectedSpecialty.value as Specialty]
 })
 
 watch(selectedLanguages, () => {
