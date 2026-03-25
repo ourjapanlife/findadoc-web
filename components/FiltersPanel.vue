@@ -1,7 +1,7 @@
 <template>
     <!-- Filters panel -->
     <div
-        class="flex flex-col w-full landscape:h-full portrait:max-h-[70svh] pt-6"
+        class="flex flex-col w-full landscape:h-full portrait:max-h-[70svh]"
         data-testid="filters-panel-container"
     >
         <!-- Search fields -->

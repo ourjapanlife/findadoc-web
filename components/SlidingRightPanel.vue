@@ -3,32 +3,34 @@
         <div
             v-if="shouldShowPanel"
             class="absolute left-96 inset-y-24 ml-1 bg-primary-bg
-            border-l border-secondary-bg/40 shadow-lg z-10 rounded-lg"
+            border-l border-secondary-bg/40 shadow-lg z-10 rounded-lg flex flex-col"
             :class="[
                 panelWidth,
             ]"
         >
             <!-- Close button -->
-            <button
-                class="absolute top-4 right-4 p-2 hover:bg-secondary-bg/20 rounded-full transition-colors z-10"
-                @click="closePanelHandler"
-            >
-                <svg
-                    class="w-6 h-6 stroke-primary"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="2"
+            <div class="sticky top-0 z-10 bg-primary-bg flex justify-end p-6 rounded-t-lg">
+                <button
+                    class="absolute top-1 right-4 p-2 hover:bg-secondary-bg/20 rounded-full transition-colors z-10"
+                    @click="closePanelHandler"
                 >
-                    <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M6 18L18 6M6 6l12 12"
-                    />
-                </svg>
-            </button>
+                    <svg
+                        class="w-6 h-6 stroke-primary"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="2"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M6 18L18 6M6 6l12 12"
+                        />
+                    </svg>
+                </button>
+            </div>
 
             <!-- Panel Content -->
-            <div class="h-full overflow-y-auto overflow-x-hidden pt-16 pb-2">
+            <div class="h-full overflow-y-auto overflow-x-hidden pb-2">
                 <!-- Search Result Details -->
                 <div v-if="bottomSheetStore.bottomSheetType === BottomSheetType.SearchResultDetails">
                     <SearchResultDetails />
