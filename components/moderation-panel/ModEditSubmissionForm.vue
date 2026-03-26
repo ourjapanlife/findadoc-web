@@ -6,7 +6,7 @@
             @modal-closed="resetModalRefs"
         >
             <div
-                v-if="moderationSubmissionStore.approvingSubmissionFromTopBar"
+                v-if="showApproveSubmissionConfirmation"
                 class="flex flex-col aspect-square h-96 items-center justify-around bg-primary-inverted p-10 rounded"
             >
                 <span class="font-bold text-3xl">
@@ -15,13 +15,13 @@
                 <button
                     type="button"
                     class="bg-primary p-4 rounded-full my-8 font-semibold text-xl"
-                    @click="submitCompletedForm"
+                    @click="confirmAndApproveSubmission"
                 >
                     {{ t('modSubmissionForm.submissionConfirmationAcceptanceButton') }}
                 </button>
             </div>
             <div
-                v-else-if="moderationSubmissionStore.showRejectSubmissionConfirmation"
+                v-else-if="showRejectSubmissionConfirmation"
                 data-testid="reject-confirmation"
                 class="flex flex-col aspect-square h-96 items-center justify-around bg-primary-inverted p-10 rounded"
             >
@@ -52,7 +52,7 @@
                     {{ t('modSubmissionForm.searchExistingFacilities') }}
                 </label>
                 <ModSearchBar
-                    v-model="currentFacilityRelations"
+                    v-model="selectedFacilityRelationsModel"
                     :place-holder-text="t('modHealthcareProfessionalSection.placeholderTextFacilitySearchBar')"
                     :no-match-text="t('modHealthcareProfessionalSection.noFacilitiesWereFound')"
                     :fields-to-display-callback="facilitiesFieldsToDisplayCallback"
@@ -92,7 +92,7 @@
                     {{ t('modSubmissionForm.searchExistingHealthcareProfessionals') }}
                 </label>
                 <ModSearchBar
-                    v-model="currentExistingHealthcareProfessionals"
+                    v-model="selectedHealthcareProfessionalsModel"
                     data-testid="mod-facility-section-doctor-search"
                     :place-holder-text="t('modFacilitySection.placeholderTextHealthcareProfessionalSearchbar')"
                     :no-match-text="t('modFacilitySection.noHealthcareProfessionalFound')"
@@ -106,8 +106,8 @@
                         :key="healthcareProfessional.id"
                         class="py-1"
                     >
-                        {{ `${healthcareProfessional.id} / ${healthcareProfessional.names[0].lastName}
-                    / ${healthcareProfessional.names[0].firstName}` }}
+                        {{ `${healthcareProfessional.id} / ${healthcareProfessional.names[0]?.lastName}
+                    / ${healthcareProfessional.names[0]?.firstName}` }}
                     </li>
                 </ol>
             </div>
@@ -139,27 +139,26 @@ import { Locale,
     type MutationUpdateSubmissionArgs,
     type Facility,
     type HealthcareProfessional } from '~/typedefs/gqlTypes'
-import { validateAddressLineEn,
-    validateAddressLineJa,
-    validateNameEn,
-    validateNameJa,
-    validatePhoneNumber,
-    validateCityEn,
-    validateEmail,
-    validateFloat,
-    validatePostalCode,
-    validateWebsite,
-    validateCityJa } from '~/utils/formValidations'
 import { useI18n } from '#imports'
-import { triggerFormValidationErrorMessages } from '~/utils/triggerFormValidationErrorMessages'
 import { stableStringify } from '~/utils/stableStringify'
-import { handleServerErrorMessaging } from '~/composables/handleServerErrorMessaging'
+import { returnWithSuccessToast } from '~/composables/useModerationActionFeedback'
+import { guardWithErrorToastAndEffect } from '~/composables/useModerationGuardFeedback'
+import { handleModerationResponseErrors } from '~/composables/useModerationResponseHandling'
+import { ModerationSubmissionActionType, useModerationSubmissionActions } from '~/composables/useModerationSubmissionActions'
+import { mapIdsToEntities, matchesFacilitySearch, matchesHealthcareProfessionalSearch } from '~/utils/moderationSearchUtils'
+import { formatFirstLocalizedFullName, hasEnglishLocalizedName } from '~/utils/nameUtils'
+import { navigateToModerationDashboard as goToModerationDashboard } from '~/utils/moderationUtils'
+import {
+    hasRequiredHealthcareProfessionalSelections,
+    validateModerationFacilityFields
+} from '~/utils/moderationFormValidationUtils'
 
 const toast = useToast()
 const { t } = useI18n()
 const router = useRouter()
 
 const moderationSubmissionStore = useModerationSubmissionsStore()
+const { moderationSubmissionAction } = useModerationSubmissionActions()
 const modalStore = useModalStore()
 const screenStore = useModerationScreenStore()
 const loadingStore = useLoadingStore()
@@ -177,27 +176,44 @@ const formState = computed(() => ({
 const { makeNonDirty } = useUnsavedChanges({
     data: { source: formState },
     mode: 'update',
-    onClose: () => handleNavigateToModerationScreen()
+    onClose: () => navigateToModerationDashboard()
 })
 
 const syntheticEvent = new Event('submit', { bubbles: false, cancelable: true })
 
 const isEditSubmissionFormInitialized: Ref<boolean> = ref(false)
+const showApproveSubmissionConfirmation: Ref<boolean> = ref(false)
+const showRejectSubmissionConfirmation: Ref<boolean> = ref(false)
+const lastHandledActionId: Ref<number> = ref(0)
 const submissionBeforeChanges: Ref<Submission | undefined> = ref(undefined)
 
 // Keeps track of existing facilities related to new healthcare professional submission
 const currentFacilityRelations: Ref<Facility[]> = ref([])
 // Keeps track of existing healthcare professionals related to new facility submission
 const currentExistingHealthcareProfessionals: Ref<HealthcareProfessional[]> = ref([])
+const selectedFacilityRelationsModel = computed({
+    get: () => currentFacilityRelations.value,
+    set: (newValue: Facility[]) => {
+        currentFacilityRelations.value = newValue
+        if (isEditSubmissionFormInitialized.value) {
+            healthcareProfessionalsStore.healthcareProfessionalSectionFields.facilityIds = newValue.map(facility => facility.id)
+        }
+    }
+})
+const selectedHealthcareProfessionalsModel = computed({
+    get: () => currentExistingHealthcareProfessionals.value,
+    set: (newValue: HealthcareProfessional[]) => {
+        currentExistingHealthcareProfessionals.value = newValue
+        if (isEditSubmissionFormInitialized.value) {
+            facilitiesStore.facilitySectionFields.healthcareProfessionalIds = newValue.map(
+                healthcareProfessional => healthcareProfessional.id
+            )
+        }
+    }
+})
 
 const handleFacilitySearchInputChange = (filteredItems: Ref<Facility[]>, inputValue: string) => {
-    filteredItems.value = facilitiesStore.facilityData.filter(({ nameEn, nameJa, id }) => {
-        const isMatch
-            = nameEn.toLowerCase().includes(inputValue)
-              || nameJa.toLowerCase().includes(inputValue)
-              || id.toLowerCase().includes(inputValue)
-        return isMatch
-    })
+    filteredItems.value = facilitiesStore.facilityData.filter(facility => matchesFacilitySearch(facility, inputValue))
 
     if (currentFacilityRelations.value.length) {
         facilitiesStore.resetFacilitySectionFields()
@@ -214,25 +230,8 @@ const facilitiesFieldsToDisplayCallback = (item: Facility) => [item.nameEn, item
 
 const handleHealthcareProfessionalsInputChange = (filteredItems: Ref<HealthcareProfessional[]>, inputValue: string) => {
     filteredItems.value = healthcareProfessionalsStore.healthcareProfessionalsData
-        .filter((healthcareProfessional: HealthcareProfessional) => {
-            const idMatches = healthcareProfessional.id
-                .toLowerCase()
-                .startsWith(inputValue.toLowerCase().trim())
-            const nameMatches = healthcareProfessional.names.some(name => {
-                const firstNameMatch = name.firstName
-                    .toLowerCase()
-                    .includes(inputValue.toLowerCase())
-                const middleNameMatch = name.middleName
-                  && name.middleName
-                      .toLowerCase()
-                      .includes(inputValue.toLowerCase())
-                const lastNameMatch = name.lastName
-                    .toLowerCase()
-                    .includes(inputValue.toLowerCase())
-                return firstNameMatch || middleNameMatch || lastNameMatch
-            })
-            return idMatches || nameMatches
-        })
+        .filter((healthcareProfessional: HealthcareProfessional) =>
+            matchesHealthcareProfessionalSearch(healthcareProfessional, inputValue))
 
     if (currentExistingHealthcareProfessionals.value.length) {
         healthcareProfessionalsStore.resetHealthcareProfessionalSectionFields()
@@ -245,53 +244,10 @@ const handleHealthcareProfessionalsInputChange = (filteredItems: Ref<HealthcareP
     }
 }
 const healthcareProfessionalsToDisplayCallback = (healthcareProfessional: HealthcareProfessional) =>
-    [healthcareProfessional.names[0].firstName + ' ' + healthcareProfessional.names[0].lastName]
+    [formatFirstLocalizedFullName(healthcareProfessional.names)]
 
-const validateFacilityFields = () => {
-    const facilitySections = facilitiesStore.facilitySectionFields
-    // Required fields
-    const isNameEnValid: boolean = validateNameEn(facilitySections.nameEn)
-    const isNameJaValid: boolean = validateNameJa(facilitySections.nameJa)
-    const isPhoneValid: boolean = validatePhoneNumber(facilitySections.phone)
-    const isAddressLine1EnValid: boolean = validateAddressLineEn(facilitySections.addressLine1En)
-    const isAddressLine1JaValid: boolean = validateAddressLineJa(facilitySections.addressLine1Ja)
-    const isCityEnValid: boolean = validateCityEn(facilitySections.cityEn)
-    const isCityJaValid: boolean = validateCityJa(facilitySections.cityJa)
-    const isPostalCodeValid: boolean = validatePostalCode(facilitySections.postalCode)
-    const isLatitudeValid: boolean = validateFloat(facilitySections.mapLatitude)
-    const isLongitudeValid: boolean = validateFloat(facilitySections.mapLongitude)
-
-    // Optional fields: only validate if present
-    const isEmailValid: boolean = !facilitySections.email || validateEmail(facilitySections.email)
-    const isWebsiteValid: boolean = !facilitySections.website || validateWebsite(facilitySections.website)
-    const isAddressLine2EnValid: boolean = !facilitySections.addressLine2En
-      || validateAddressLineEn(facilitySections.addressLine2En)
-    const isAddressLine2JaValid: boolean = !facilitySections.addressLine2Ja
-      || validateAddressLineJa(facilitySections.addressLine2Ja)
-
-    triggerFormValidationErrorMessages('mod-input-field')
-
-    // Only required fields are strictly validated; optional fields only if present
-    const areAllTheFacilityFieldsValid
-        = isNameEnValid
-          && isNameJaValid
-          && isPhoneValid
-          && isAddressLine1EnValid
-          && isAddressLine1JaValid
-          && isCityEnValid
-          && isCityJaValid
-          && isPostalCodeValid
-          && isLatitudeValid
-          && isLongitudeValid
-          && isEmailValid
-          && isWebsiteValid
-          && isAddressLine2EnValid
-          && isAddressLine2JaValid
-            ? true
-            : false
-
-    return areAllTheFacilityFieldsValid
-}
+const validateFacilityFields = () =>
+    validateModerationFacilityFields(facilitiesStore.facilitySectionFields)
 
 const validateHealthcareProfessionalFields = () => {
     const healthcareProfessionalFields = healthcareProfessionalsStore.healthcareProfessionalSectionFields
@@ -300,26 +256,13 @@ const validateHealthcareProfessionalFields = () => {
     const areNamesSelectedToFacility: boolean
         = healthcareProfessionalFields.names.length > 0
           || facilitySectionFields.healthcareProfessionalIds.length > 0
-    const areInsurancesSelected: boolean = healthcareProfessionalFields.acceptedInsurance.length > 0
-    const areDegreesSelected: boolean = healthcareProfessionalFields.degrees.length > 0
-    const areSpecialtiesSelected: boolean = healthcareProfessionalFields.spokenLanguages.length > 0
-    const areLocalesSelected: boolean = healthcareProfessionalFields.spokenLanguages.length > 0
-
-    const areAllFieldsValid = areNamesSelectedToFacility
-      && areInsurancesSelected && areDegreesSelected
-      && areSpecialtiesSelected && areLocalesSelected
-
-    return areAllFieldsValid
+    return areNamesSelectedToFacility
+      && hasRequiredHealthcareProfessionalSelections(healthcareProfessionalFields)
 }
 
 const validateHealthcareProfessionalEnglishName = () => {
     const healthcareProfessionalFields = healthcareProfessionalsStore.healthcareProfessionalSectionFields
-    const names = healthcareProfessionalFields.names
-
-    // Check if the healthcare professional has a name in the 'en_US' locale (assumed to be in Romaji)
-    const hasEnglishName = names.some(name => name.locale == 'en_US')
-
-    return hasEnglishName
+    return hasEnglishLocalizedName(healthcareProfessionalFields.names)
 }
 
 // Manual deep copy function for submission data
@@ -404,13 +347,10 @@ function initializeSubmissionFormValues(submissionData: Submission | undefined) 
           ?? ''
 
     facilitySectionFields.healthcareProfessionalIds = submissionData?.facility?.healthcareProfessionalIds ?? []
-    currentExistingHealthcareProfessionals.value
-        = facilitySectionFields.healthcareProfessionalIds
-            .map(healthcareProfessionalId =>
-                healthcareProfessionalsStore.healthcareProfessionalsData.find(
-                    hp => hp.id === healthcareProfessionalId
-                ))
-            .filter((hp): hp is NonNullable<typeof hp> => hp !== undefined)
+    currentExistingHealthcareProfessionals.value = mapIdsToEntities(
+        facilitySectionFields.healthcareProfessionalIds,
+        healthcareProfessionalsStore.healthcareProfessionalsData
+    )
 
     // Healthcare Professionals fields
     const hp = submissionData?.healthcareProfessionals?.[0]
@@ -437,11 +377,10 @@ function initializeSubmissionFormValues(submissionData: Submission | undefined) 
                   : [])
 
     healthcareProfessionalSections.facilityIds = [...(hp?.facilityIds ?? [])]
-    currentFacilityRelations.value
-        = healthcareProfessionalSections.facilityIds
-            .map(facilityId =>
-                facilitiesStore.facilityData.find(facility => facility.id === facilityId))
-            .filter((facility): facility is NonNullable<typeof facility> => facility !== undefined)
+    currentFacilityRelations.value = mapIdsToEntities(
+        healthcareProfessionalSections.facilityIds,
+        facilitiesStore.facilityData
+    )
 
     if (submissionData?.healthcareProfessionals?.[0]?.acceptedInsurance) {
         healthcareProfessionalSections.acceptedInsurance
@@ -473,7 +412,14 @@ function initializeSubmissionFormValues(submissionData: Submission | undefined) 
 // • submissionFormFieldsBeforeChanges (“before” snapshot)
 // • facilitiesStore.facilitySectionFields → facility
 // • healthcareProfessionalsStore.healthcareProfessionalSectionFields → hp
-async function submitUpdatedSubmission(e: Event) {
+async function saveSubmissionDraft(
+    e: Event,
+    options: {
+        showSuccessToast?: boolean
+        shouldExitAfterUpdate?: boolean
+        shouldResetModalRefsAfterUpdate?: boolean
+    } = {}
+) {
     e.preventDefault()
 
     const id = moderationSubmissionStore.selectedSubmissionId || ''
@@ -532,8 +478,7 @@ async function submitUpdatedSubmission(e: Event) {
     }
 
     const result = await moderationSubmissionStore.updateSubmission(submissionInputVariables)
-    if (result?.errors?.length) {
-        handleServerErrorMessaging(result.errors, toast, t)
+    if (handleModerationResponseErrors(result, toast, t)) {
         await resetModalRefs()
         return
     }
@@ -541,20 +486,20 @@ async function submitUpdatedSubmission(e: Event) {
     const submissionResult = result.data
     if (submissionResult) initializeSubmissionFormValues(submissionResult.updateSubmission)
 
-    if (!moderationSubmissionStore.approvingSubmissionFromTopBar) {
-        toast.success(t('modSubmissionForm.successMessageUpdated'))
+    if (options.showSuccessToast ?? true) {
+        returnWithSuccessToast(result, toast, t, 'modSubmissionForm.successMessageUpdated')
     }
-    if (moderationSubmissionStore.updatingSubmissionFromTopBarAndExiting) {
-        router.push('/moderation')
+    if (options.shouldExitAfterUpdate) {
+        await goToModerationDashboard(router, screenStore)
         return
     }
 
-    if (moderationSubmissionStore.updatingSubmissionFromTopBar) {
+    if (options.shouldResetModalRefsAfterUpdate) {
         await resetModalRefs()
     }
 }
 
-async function submitCompletedForm(e: Event) {
+async function confirmAndApproveSubmission(e: Event) {
     // stop the form submitting before we validate
     e.preventDefault()
 
@@ -572,40 +517,51 @@ async function submitCompletedForm(e: Event) {
     // This shows a toast and returns if the facility fields arent valid
     if (!faciliyAlreadyExistsInOurDatabase) {
         const isValidFacility = validateFacilityFields()
-        if (!isValidFacility) {
-            toast.error(t('modSubmissionForm.errorMessageFacilityInputsInvalid'))
-            await resetModalRefs()
+        if (await guardWithErrorToastAndEffect(
+            !isValidFacility,
+            toast,
+            t,
+            'modSubmissionForm.errorMessageFacilityInputsInvalid',
+            resetModalRefs
+        )) {
             return
         }
     }
 
     if (!healthcareProfessionalAlreadyExistsInOurDatabase) {
         const isValidHealthcareProfessional = validateHealthcareProfessionalFields()
-        if (!isValidHealthcareProfessional) {
-            toast.error(t('modSubmissionForm.errorMessageHealthcareInputsInvalid'))
-            await resetModalRefs()
+        if (await guardWithErrorToastAndEffect(
+            !isValidHealthcareProfessional,
+            toast,
+            t,
+            'modSubmissionForm.errorMessageHealthcareInputsInvalid',
+            resetModalRefs
+        )) {
             return
         }
         const hasEnglishName = validateHealthcareProfessionalEnglishName()
-        if (!hasEnglishName) {
-            toast.error(t('modSubmissionForm.errorMessageEnglishNameRequired'))
-            await resetModalRefs()
+        if (await guardWithErrorToastAndEffect(
+            !hasEnglishName,
+            toast,
+            t,
+            'modSubmissionForm.errorMessageEnglishNameRequired',
+            resetModalRefs
+        )) {
             return
         }
     }
 
     try {
         // This updates submission before approving since moderators might not think to update first
-        await submitUpdatedSubmission(syntheticEvent)
+        await saveSubmissionDraft(syntheticEvent, { showSuccessToast: false })
         const result = await moderationSubmissionStore.approveSubmission()
-        if (result?.errors?.length) {
-            handleServerErrorMessaging(result.errors, toast, t)
+        if (handleModerationResponseErrors(result, toast, t)) {
             await resetModalRefs()
             return
         }
         await resetModalRefs()
-        toast.success(t('modSubmissionForm.successMessageApproved'))
-        await router.push('/moderation')
+        returnWithSuccessToast(result, toast, t, 'modSubmissionForm.successMessageApproved')
+        await goToModerationDashboard(router, screenStore)
     } catch {
         toast.error(t('modSubmissionForm.errorMessageCompletedForm'))
         await resetModalRefs()
@@ -614,10 +570,8 @@ async function submitCompletedForm(e: Event) {
 
 const resetModalRefs = async () => {
     await nextTick()
-    moderationSubmissionStore.setShowRejectSubmissionConfirmation(false)
-    moderationSubmissionStore.setApprovingSubmissionFromTopBar(false)
-    moderationSubmissionStore.setUpdatingSubmissionFromTopBarAndExiting(false)
-    moderationSubmissionStore.setUpdatingSubmissionFromTopBar(false)
+    showRejectSubmissionConfirmation.value = false
+    showApproveSubmissionConfirmation.value = false
     modalStore.hideModal()
 }
 
@@ -625,23 +579,38 @@ const rejectSubmission = async () => {
     await moderationSubmissionStore.rejectSubmission()
     await resetModalRefs()
     toast.success(t('modSubmissionForm.facilitySuccessfullyRejected'))
-    handleNavigateToModerationScreen()
+    navigateToModerationDashboard()
 }
 
 watch(
-    () => [
-        moderationSubmissionStore.updatingSubmissionFromTopBarAndExiting,
-        moderationSubmissionStore.updatingSubmissionFromTopBar,
-        moderationSubmissionStore.approvingSubmissionFromTopBar,
-        moderationSubmissionStore.showRejectSubmissionConfirmation
-    ],
-    ([updatingSubmissionAndExiting, updatingSubmission, approvingSubmission, showRejectSubmissionConfirmation]) => {
-        if (approvingSubmission || showRejectSubmissionConfirmation) {
-            modalStore.showModal()
+    moderationSubmissionAction,
+    action => {
+        if (!action || action.id === lastHandledActionId.value) {
             return
         }
-        if (updatingSubmissionAndExiting || updatingSubmission) {
-            submitUpdatedSubmission(syntheticEvent)
+
+        lastHandledActionId.value = action.id
+
+        switch (action.type) {
+            case ModerationSubmissionActionType.Approve:
+                showApproveSubmissionConfirmation.value = true
+                showRejectSubmissionConfirmation.value = false
+                modalStore.showModal()
+                return
+            case ModerationSubmissionActionType.Reject:
+                showRejectSubmissionConfirmation.value = true
+                showApproveSubmissionConfirmation.value = false
+                modalStore.showModal()
+                return
+            case ModerationSubmissionActionType.UpdateAndExit:
+                saveSubmissionDraft(syntheticEvent, {
+                    shouldExitAfterUpdate: true
+                })
+                return
+            case ModerationSubmissionActionType.Update:
+                saveSubmissionDraft(syntheticEvent, {
+                    shouldResetModalRefsAfterUpdate: true
+                })
         }
     }
 )
@@ -680,32 +649,9 @@ onMounted(async () => {
     loadingStore.setIsLoading(false)
 })
 
-const handleNavigateToModerationScreen = () => {
-    modalStore.hideModal()
-    screenStore.setActiveScreen(ModerationScreen.Dashboard)
-    router.push('/moderation')
+const navigateToModerationDashboard = () => {
+    goToModerationDashboard(router, screenStore, modalStore)
 }
-
-/* This updates the healthcare professional with existing facilities in order to update
- the healthcare professional section fields to include the existing facility ids
- and help prevent adding duplicate of the same facility */
-watch(currentFacilityRelations, newValue => {
-    if (isEditSubmissionFormInitialized.value) {
-        const newIds = newValue.map(facility => facility.id)
-        healthcareProfessionalsStore.healthcareProfessionalSectionFields.facilityIds = newIds
-    }
-}, { deep: true })
-
-/* This updates the fcaility with existing healthcare professionals in order to update
- the facility section fields to include the existing healthcare professional ids
- and help prevent adding duplicate of the same healthcareprofessional */
-watch(currentExistingHealthcareProfessionals, newValue => {
-    if (isEditSubmissionFormInitialized.value) {
-        facilitiesStore.facilitySectionFields.healthcareProfessionalIds = newValue.map(
-            healthcareProfessional => healthcareProfessional.id
-        )
-    }
-}, { deep: true })
 
 // Unsaved changes on browser back / router leave are handled by useUnsavedChanges + unsaved-changes-plugin (router.beforeEach).
 </script>

@@ -4,7 +4,6 @@ import { gql } from 'graphql-request'
 import { fetchFacilitiesWithCount } from '../utils/graphqlHelpers'
 import type {
     Facility,
-    HealthcareProfessional,
     Mutation,
     MutationDeleteFacilityArgs,
     MutationUpdateFacilityArgs,
@@ -209,10 +208,6 @@ export const useFacilitiesStore = defineStore('facilitiesStore', () => {
         mapLongitude: '',
         healthcareProfessionalIds: [] as string[]
     })
-
-    const healthProfessionalsRelationsForDisplay: Ref<
-        HealthcareProfessional[]
-    > = ref([])
 
     function setSelectedFacilityData(facilityId: string) {
         selectedFacilityId.value = facilityId
@@ -478,7 +473,6 @@ export const useFacilitiesStore = defineStore('facilitiesStore', () => {
         selectedFacilityData,
         setSelectedFacilityData,
         initializeFacilitySectionValues,
-        healthProfessionalsRelationsForDisplay,
         resetFacilitySectionFields,
         resetCreateFacilityFields,
         currentOffset,

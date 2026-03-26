@@ -1,5 +1,17 @@
 import { Locale, type LocalizedName } from '~/typedefs/gqlTypes.js'
 
+export const hasEnglishLocalizedName = (names: LocalizedName[] | undefined): boolean =>
+    !!names?.some(name => name.locale === Locale.EnUs)
+
+export const formatFirstLocalizedFullName = (names: LocalizedName[] | undefined): string => {
+    const firstLocalizedName = names?.[0]
+    if (!firstLocalizedName) {
+        return ''
+    }
+
+    return `${firstLocalizedName.firstName ?? ''} ${firstLocalizedName.lastName ?? ''}`.trim()
+}
+
 export const formatHealthcareProfessionalName = (
     names: LocalizedName[] | undefined,
     preferredLocale: Locale

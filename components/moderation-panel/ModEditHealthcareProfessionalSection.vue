@@ -258,7 +258,7 @@
                     {{ t("modHealthcareProfessionalSection.facilities") }}
                 </h2>
                 <ModSearchBar
-                    v-model="selectedFacilities"
+                    v-model="selectedFacilitiesModel"
                     :place-holder-text="t('modHealthcareProfessionalSection.placeholderTextFacilitySearchBar')"
                     :no-match-text="t('modHealthcareProfessionalSection.noFacilitiesWereFound')"
                     :fields-to-display-callback="facilitiesFieldsToDisplayCallback"
@@ -280,7 +280,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, nextTick, onBeforeMount, reactive, type Ref, ref, watch } from 'vue'
+import { computed, nextTick, onBeforeMount, reactive, type Ref, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useToast } from 'vue-toastification'
 import { useHealthcareProfessionalsStore } from '~/stores/healthcareProfessionalsStore'
@@ -291,6 +291,7 @@ import { Insurance, Locale, Degree, Specialty, type LocalizedNameInput, type Fac
 import { useI18n } from '#imports'
 import { validateNameLocaleMatchesLanguage } from '~/utils/formValidations'
 import { stableStringify } from '~/utils/stableStringify'
+import { filterByCaseInsensitiveIncludes, matchesFacilitySearch } from '~/utils/moderationSearchUtils'
 // Keeps track of if the search bar inputs have been autofilled with existing facilities
 
 const toast = useToast()
@@ -309,6 +310,20 @@ const currentFacilities = facilitiesStore.facilityData
 
 const isHealthcareProfessionalInitialized: Ref<boolean> = ref(false)
 const selectedFacilities: Ref<Facility[]> = ref([])
+const selectedFacilitiesModel = computed({
+    get: () => selectedFacilities.value,
+    set: (newValue: Facility[]) => {
+        selectedFacilities.value = newValue
+        if (newValue.length) {
+            const selectedFacilityIds = newValue.map(facility => facility.id)
+            const mergedFacilityIds = Array.from(
+                new Set([...hpStore.healthcareProfessionalSectionFields.facilityIds, ...selectedFacilityIds])
+            )
+            hpStore.healthcareProfessionalSectionFields.facilityIds = mergedFacilityIds
+            selectedFacilities.value = []
+        }
+    }
+})
 
 const hpFormState = computed(() =>
     JSON.parse(stableStringify(hpStore.healthcareProfessionalSectionFields)))
@@ -321,9 +336,10 @@ const { makeNonDirty: makeHpFormNonDirty } = useUnsavedChanges({
     }
 })
 
-/* Keeps track of if the search bar inputs have been autofilled with existing facilities
- and is used because this hold facilities while we need to sift through the ids*/
-const currentFacilityRelations: Ref<Facility[]> = ref([])
+const currentFacilityRelations = computed(() =>
+    facilitiesStore.facilityData.filter(facility =>
+        hpStore.healthcareProfessionalSectionFields.facilityIds.includes(facility.id))
+)
 
 // Tracks whether we want to display adding a new name
 const addingLocaleName: Ref<boolean> = ref(false)
@@ -532,46 +548,22 @@ const handleAddLocalizedName = () => {
 }
 
 const handleFacilitySearchInputChange = (filteredItems: Ref<Facility[]>, inputValue: string) => {
-    filteredItems.value = currentFacilities.filter(({ nameEn, nameJa, id }) => {
-        const isMatch
-            = nameEn.toLowerCase().includes(inputValue)
-              || nameJa.toLowerCase().includes(inputValue)
-              || id.toLowerCase().includes(inputValue)
-        return isMatch
-    })
+    filteredItems.value = currentFacilities.filter(facility => matchesFacilitySearch(facility, inputValue))
 }
 
 const handleInsuranceInputChange = (filteredItems: Ref<Insurance[]>, inputValue: string) => {
     const arrayOfInsurances = Object.values(Insurance) as Insurance[]
-
-    if (!inputValue) {
-        filteredItems.value = arrayOfInsurances
-        return
-    }
-
-    filteredItems.value = arrayOfInsurances.filter(insurance => insurance.toLowerCase().includes(inputValue))
+    filteredItems.value = filterByCaseInsensitiveIncludes(arrayOfInsurances, inputValue)
 }
 
 const handleDegreeInputChange = (filteredItems: Ref<Degree[]>, inputValue: string) => {
     const degree = Object.values(Degree) as Degree[]
-
-    if (!inputValue) {
-        filteredItems.value = degree
-        return
-    }
-
-    filteredItems.value = degree.filter(degree => degree.toLowerCase().includes(inputValue))
+    filteredItems.value = filterByCaseInsensitiveIncludes(degree, inputValue)
 }
 
 const handleSpecialtyInputChange = (filteredItems: Ref<Specialty[]>, inputValue: string) => {
     const arrayOfSpecialties = Object.values(Specialty) as Specialty[]
-
-    if (!inputValue) {
-        filteredItems.value = arrayOfSpecialties
-        return
-    }
-
-    filteredItems.value = arrayOfSpecialties.filter(specialty => specialty.toLowerCase().includes(inputValue))
+    filteredItems.value = filterByCaseInsensitiveIncludes(arrayOfSpecialties, inputValue)
 }
 
 const handleLocaleInputChange = (filteredItems: Ref<Locale[]>, inputValue: string) => {
@@ -620,10 +612,6 @@ onBeforeMount(async () => {
 
     await nextTick()
 
-    currentFacilityRelations.value = facilitiesStore.facilityData
-        .filter(facility => hpStore.healthcareProfessionalSectionFields.facilityIds
-            .includes(facility.id))
-
     isHealthcareProfessionalInitialized.value = true
     makeHpFormNonDirty()
     loadingStore.setIsLoading(false)
@@ -631,21 +619,4 @@ onBeforeMount(async () => {
     await nextTick()
 })
 
-// This autofills the selected fields based on our current healthcare data for the user
-watch(() => hpStore.healthcareProfessionalSectionFields.facilityIds,
-      facilityIds => {
-          if (facilityIds) {
-              currentFacilityRelations.value = facilitiesStore.facilityData
-                  .filter(facility => hpStore.healthcareProfessionalSectionFields.facilityIds
-                      .includes(facility.id))
-              selectedFacilities.value = []
-          }
-      }, { deep: true })
-
-// This updates the array in the store once it is updated due to a facility clicked
-watch(() => selectedFacilities.value, newValue => {
-    if (newValue) {
-        hpStore.selectedFacilities = selectedFacilities.value
-    }
-}, { deep: true })
 </script>

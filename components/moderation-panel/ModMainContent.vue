@@ -116,8 +116,7 @@ const setActiveScreenBasedOnRoute = async () => {
     }
 }
 
-watch(selectedIdFromModSubmissionList, setActiveScreenBasedOnRoute)
-watch(routePathForModerationScreen, setActiveScreenBasedOnRoute)
+watch([selectedIdFromModSubmissionList, routePathForModerationScreen], setActiveScreenBasedOnRoute)
 
 onMounted(() => {
     setActiveScreenBasedOnRoute()

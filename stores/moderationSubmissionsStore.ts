@@ -34,10 +34,6 @@ export const useModerationSubmissionsStore = defineStore(
         const selectedSubmissionData: Ref<Submission | undefined> = ref()
         const filteredSubmissionDataForListComponent: Ref<Submission[]> = ref([])
         const didMutationFail: Ref<boolean> = ref(false)
-        const updatingSubmissionFromTopBarAndExiting: Ref<boolean> = ref(false)
-        const updatingSubmissionFromTopBar: Ref<boolean> = ref(false)
-        const approvingSubmissionFromTopBar: Ref<boolean> = ref(false)
-        const showRejectSubmissionConfirmation: Ref<boolean> = ref(false)
         const selectedModerationListViewTabChosen: Ref<SelectedSubmissionListViewTab>
             = ref(SelectedSubmissionListViewTab.ForReview)
 
@@ -48,22 +44,6 @@ export const useModerationSubmissionsStore = defineStore(
         const itemsPerPage: Ref<number> = ref(25)
         const hasNextPage = computed(() => currentOffset.value + itemsPerPage.value < totalSubmissionsCount.value)
         const hasPrevPage = computed(() => currentOffset.value > 0)
-
-        function setUpdatingSubmissionFromTopBarAndExiting(newValue: boolean) {
-            updatingSubmissionFromTopBarAndExiting.value = newValue
-        }
-
-        function setUpdatingSubmissionFromTopBar(newValue: boolean) {
-            updatingSubmissionFromTopBar.value = newValue
-        }
-
-        function setApprovingSubmissionFromTopBar(newValue: boolean) {
-            approvingSubmissionFromTopBar.value = newValue
-        }
-
-        function setShowRejectSubmissionConfirmation(newValue: boolean) {
-            showRejectSubmissionConfirmation.value = newValue
-        }
 
         function setDidMutationFail(newValue: boolean) {
             didMutationFail.value = newValue
@@ -210,14 +190,6 @@ export const useModerationSubmissionsStore = defineStore(
             setDidMutationFail,
             selectedModerationListViewChosen,
             setSelectedModerationListViewChosen,
-            updatingSubmissionFromTopBar,
-            setUpdatingSubmissionFromTopBar,
-            updatingSubmissionFromTopBarAndExiting,
-            setUpdatingSubmissionFromTopBarAndExiting,
-            showRejectSubmissionConfirmation,
-            setShowRejectSubmissionConfirmation,
-            approvingSubmissionFromTopBar,
-            setApprovingSubmissionFromTopBar,
             selectedModerationListViewTabChosen,
             setSelectedModerationListViewTabChosen,
             updateSubmission,

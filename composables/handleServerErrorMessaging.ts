@@ -5,7 +5,7 @@ export function handleServerErrorMessaging(
     serverErrors: ServerError[], toast: ToastInterface,
     t: (translatableString: string) => string | undefined
 ) {
-    serverErrors.map(error => {
+    serverErrors.forEach(error => {
         if (t(`serverErrorMessages.${error.code}`)) {
             toast.error((t(`serverErrorMessages.${error.code}`)))
             console.error(error.code)
@@ -15,6 +15,5 @@ export function handleServerErrorMessaging(
         console.error((t('serverErrorMessages.genericErrorMessage')))
         console.info(t('serverErrorMessages.errorCodeMessagingNeeded'))
     })
-    return
 }
 

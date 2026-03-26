@@ -34,4 +34,34 @@ test.describe('Moderation edit submission unsaved changes modal', () => {
         await page.getByRole('button', { name: new RegExp(enUS.modSubmissionForm.confirmationButton, 'i') }).click()
         await expect(page).toHaveURL(/\/moderation/)
     })
+
+    test('opens approve confirmation modal from topbar action', async ({ page }) => {
+        const firstSubmissionLink = page.getByRole('link').first()
+        await firstSubmissionLink.click().catch(() => {})
+        const facilityNameInput = page.getByPlaceholder(enUS.modFacilitySection.placeholderTextFacilityNameEn)
+        const onEditPage = await facilityNameInput.isVisible().catch(() => false)
+        if (!onEditPage) {
+            test.skip(true, 'No submission data to open (seed data may be empty)')
+            return
+        }
+
+        await page.getByRole('button', { name: new RegExp(enUS.modEditSubmissionTopNav.approve, 'i') }).click()
+        await expect(page.getByRole('dialog')).toBeVisible()
+        await expect(page.getByText(enUS.modSubmissionForm.submissionConfirmationMessage)).toBeVisible()
+    })
+
+    test('opens reject confirmation modal from topbar action', async ({ page }) => {
+        const firstSubmissionLink = page.getByRole('link').first()
+        await firstSubmissionLink.click().catch(() => {})
+        const facilityNameInput = page.getByPlaceholder(enUS.modFacilitySection.placeholderTextFacilityNameEn)
+        const onEditPage = await facilityNameInput.isVisible().catch(() => false)
+        if (!onEditPage) {
+            test.skip(true, 'No submission data to open (seed data may be empty)')
+            return
+        }
+
+        await page.getByTestId('mod-edit-submission-reject-button').click()
+        await expect(page.getByRole('dialog')).toBeVisible()
+        await expect(page.getByText(enUS.modSubmissionForm.rejectSubmissionConfirmationMessage)).toBeVisible()
+    })
 })

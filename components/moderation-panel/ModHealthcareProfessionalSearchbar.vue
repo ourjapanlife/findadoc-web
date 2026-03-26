@@ -46,15 +46,16 @@
                                 </span>
                                 <span
                                     v-show="healthcareProfessionalsStore
-                                        .displayChosenLocaleForHealthcareProfessional(healthcareProfessional).middleName"
+                                        ?.displayChosenLocaleForHealthcareProfessional(healthcareProfessional)?.middleName"
                                     class="mr-1"
                                 >
                                     {{ healthcareProfessionalsStore
-                                        .displayChosenLocaleForHealthcareProfessional(healthcareProfessional).middleName }}
+                                        .displayChosenLocaleForHealthcareProfessional(healthcareProfessional)
+                                        ?.middleName }}
                                 </span>
                                 <span>
                                     {{ healthcareProfessionalsStore
-                                        .displayChosenLocaleForHealthcareProfessional(healthcareProfessional).firstName }}
+                                        ?.displayChosenLocaleForHealthcareProfessional(healthcareProfessional)?.firstName }}
                                 </span>
                             </div>
                             <span>
@@ -69,12 +70,13 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, watch, type Ref } from 'vue'
+import { ref, type Ref } from 'vue'
 import SVGLookingGlass from '~/assets/icons/looking-glass.svg'
 import { RelationshipAction, type HealthcareProfessional } from '~/typedefs/gqlTypes'
 import { useHealthcareProfessionalsStore } from '~/stores/healthcareProfessionalsStore'
 import { useFacilitiesStore } from '~/stores/facilitiesStore'
 import { useModerationScreenStore } from '~/stores/moderationScreenStore'
+import { matchesHealthcareProfessionalSearch } from '~/utils/moderationSearchUtils'
 
 const { t } = useI18n()
 
@@ -108,9 +110,7 @@ const addHealthcareProfessional = (id: string) => {
         const foundProfessional = healthcareProfessionalsStore.healthcareProfessionalsData
             .find(healthcareProfessional => healthcareProfessional.id === id)
 
-        // Only push to healthProfessionalsRelationsForDisplay if the professional exists
         if (foundProfessional) {
-            facilitiesStore.healthProfessionalsRelationsForDisplay.push(foundProfessional)
             searchValue.value = ''
             healthcareProfessionalByIdOrName.value = []
         }
@@ -122,29 +122,9 @@ function searchHealthcareProfessionalByIdOrName() {
         return healthcareProfessionalByIdOrName.value = []
     }
 
-    //Search for Ids or names of existing Healthcare professional
     const healthcareProfessionalByIdOrNamesFound = healthcareProfessionalsStore.healthcareProfessionalsData
-        .filter(healthcareProfessional => {
-            const caseInsensitiveIdMatch = healthcareProfessional.id
-                .toLowerCase()
-                .startsWith(searchValue.value.toLowerCase().trim())
-
-            const nameMatches = healthcareProfessional.names.some(name => {
-                const firstNameMatch = name.firstName
-                    .toLowerCase()
-                    .includes(searchValue.value.toLowerCase())
-                const middleNameMatch = name.middleName
-                  && name.middleName
-                      .toLowerCase()
-                      .includes(searchValue.value.toLowerCase())
-                const lastNameMatch = name.lastName
-                    .toLowerCase()
-                    .includes(searchValue.value.toLowerCase())
-                return firstNameMatch || middleNameMatch || lastNameMatch
-            })
-
-            return caseInsensitiveIdMatch || nameMatches
-        })
+        .filter(healthcareProfessional =>
+            matchesHealthcareProfessionalSearch(healthcareProfessional, searchValue.value))
 
     // Filter out IDs already included in `selectedFacilityData.healthcareProfessionalIds`
     const selectedIds = facilitiesStore.selectedFacilityData?.healthcareProfessionalIds || []
@@ -153,10 +133,4 @@ function searchHealthcareProfessionalByIdOrName() {
 
     healthcareProfessionalByIdOrName.value = filteredHealthcareProfessionalIds
 }
-
-watch(() => facilitiesStore.facilitySectionFields.healthcareProfessionalIds, newValue => {
-    if (newValue) {
-        facilitiesStore.healthProfessionalsRelationsForDisplay = []
-    }
-})
 </script>
