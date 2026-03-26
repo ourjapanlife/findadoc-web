@@ -291,6 +291,8 @@ import { Insurance, Locale, Degree, Specialty, type LocalizedNameInput, type Fac
 import { useI18n } from '#imports'
 import { validateNameLocaleMatchesLanguage } from '~/utils/formValidations'
 import { stableStringify } from '~/utils/stableStringify'
+
+import { useModerationSubmissionsStore } from '~/stores/moderationSubmissionsStore'
 // Keeps track of if the search bar inputs have been autofilled with existing facilities
 
 const toast = useToast()
@@ -309,6 +311,12 @@ const currentFacilities = facilitiesStore.facilityData
 
 const isHealthcareProfessionalInitialized: Ref<boolean> = ref(false)
 const selectedFacilities: Ref<Facility[]> = ref([])
+
+const hpFieldsForUpdating: Array<Insurance> = []
+
+function addToHpFieldsToUpdate(newFieldData: Ref<Insurance>) {
+    hpFieldsForUpdating.push(newFieldData)
+}
 
 const hpFormState = computed(() =>
     JSON.parse(stableStringify(hpStore.healthcareProfessionalSectionFields)))
@@ -544,10 +552,14 @@ const handleFacilitySearchInputChange = (filteredItems: Ref<Facility[]>, inputVa
 const handleInsuranceInputChange = (filteredItems: Ref<Insurance[]>, inputValue: string) => {
     const arrayOfInsurances = Object.values(Insurance) as Insurance[]
 
+    hpFieldsForUpdating.push(inputValue)
+
     if (!inputValue) {
         filteredItems.value = arrayOfInsurances
         return
     }
+
+    console.log(hpFieldsForUpdating)
 
     filteredItems.value = arrayOfInsurances.filter(insurance => insurance.toLowerCase().includes(inputValue))
 }
@@ -631,6 +643,19 @@ onBeforeMount(async () => {
     await nextTick()
 })
 
+const moderationSubmissionStore = useModerationSubmissionsStore()
+
+// Initial data
+onMounted(() => {
+    console.log(moderationSubmissionStore.selectedSubmissionData?.healthcareProfessionals)
+})
+
+for (const field in hpStore.healthcareProfessionalSectionFields) {
+    console.log(field)
+}
+
+console.log(hpStore.healthcareProfessionalSectionFields)
+
 // This autofills the selected fields based on our current healthcare data for the user
 watch(() => hpStore.healthcareProfessionalSectionFields.facilityIds,
       facilityIds => {
@@ -641,6 +666,9 @@ watch(() => hpStore.healthcareProfessionalSectionFields.facilityIds,
               selectedFacilities.value = []
           }
       }, { deep: true })
+
+watch(() => hpStore.healthcareProfessionalSectionFields,
+      newValue => { console.log(newValue) }, { deep: true })
 
 // This updates the array in the store once it is updated due to a facility clicked
 watch(() => selectedFacilities.value, newValue => {

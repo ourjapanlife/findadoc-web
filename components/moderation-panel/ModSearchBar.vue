@@ -129,6 +129,7 @@ const emit = defineEmits<{
     searchInputArrowUp: []
     searchInputEnter: []
     searchInputChange: [filteredItems: Ref<ArrayType<T>[]>, inputValue: string]
+    updatedField: []
 }>()
 
 // Using a type from the user. T is defined when selectedItems is passed down.

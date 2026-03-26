@@ -521,6 +521,8 @@ async function submitUpdatedSubmission(e: Event) {
         }
     ]
 
+    // build function that checks updated fields and sends them
+
     const submissionInputVariables: MutationUpdateSubmissionArgs = {
         id,
         input: {
