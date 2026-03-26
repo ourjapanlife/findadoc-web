@@ -1,8 +1,8 @@
 <template>
-    <div
-        class="relative h-screen w-full overflow-hidden bg-primary-bg"
-        :style="{ opacity: isFadingIn ? 1 : 0, transition: 'opacity 0.5s ease' }"
-    >
+        <div
+          class="relative h-screen w-full overflow-hidden bg-primary-bg transition-opacity duration-500 ease-in-out"
+          :class="isFadingIn ? 'opacity-100' : 'opacity-0'"
+        >
         <!-- Content -->
         <div class="h-full flex flex-col text-center text-primary-text-inverted">
             <!-- Top half of screen -->
@@ -31,14 +31,17 @@
                     :class="{ 'opacity-0': isBackgroundExpanding }"
                 >
                     <button
-                        id="welcome-screen-arrow-button"
-                        type="button"
-                        class="relative group flex items-center self-start focus:outline-none
-                        bg-secondary hover:bg-secondary/90 transition-colors
-                        px-6 py-3 landscape:mt-24 mt-14
-                        rounded-full animate-bounce z-10"
-                        :style="{ animationDuration: '1.5s' }"
-                        @click="expandBackground"
+                      id="welcome-screen-arrow-button"
+                      type="button"
+                      class="relative group z-10 flex self-start items-center rounded-full
+                            bg-secondary px-6 py-3
+                            landscape:mt-24 mt-14
+                            text-primary-text-inverted
+                            transition-colors hover:bg-secondary/90
+                            focus:outline-none
+                            motion-safe:animate-bounce [animation-duration:1.5s]
+                            hover:[animation-play-state:paused]"
+                      @click="expandBackground"
                     >
                         <!-- Button text -->
                         <span class="text-xl font-bold text-primary-text-inverted">
@@ -79,8 +82,7 @@
                             :d="waveHover
                                 ? 'M375 0V56H0V30C56 13 123 8 195 27C263 42 322 40 375 11 Z'
                                 : 'M375 0V56H0V18.5C46.5 33 120 59 187.5 45C255 31 328.5 -13.5 375 18.5Z'"
-                            class="fill-primary-bg"
-                            :style="{ transition: 'd 0.8s cubic-bezier(.6,0,.4,1)' }"
+                            class="fill-primary-bg wave-transition"
                         />
                     </svg>
                 </div>
@@ -130,23 +132,9 @@ const expandBackground = () => {
 }
 </script>
 
+
 <style scoped>
-.animate-bounce {
-  animation: bounce 1.5s infinite;
-}
-
-.animate-bounce:hover {
-  animation-play-state: paused;
-}
-
-@keyframes bounce {
-  0%, 100% {
-    transform: translateY(-25%);
-    animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
-  }
-  50% {
-    transform: translateY(0);
-    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
-  }
+.wave-transition {
+  transition: d 0.8s cubic-bezier(.6,0,.4,1);
 }
 </style>
