@@ -50,49 +50,69 @@ type HealthcareProfessionalValidationFields = {
     spokenLanguages: string[]
 }
 
+type NormalizedFacilityValidationFields = {
+    nameEn: string
+    nameJa: string
+    mapLatitude: string
+    mapLongitude: string
+    phone: string
+    email: string
+    website: string
+    addressLine1En: string
+    addressLine1Ja: string
+    addressLine2En: string
+    addressLine2Ja: string
+    cityEn: string
+    cityJa: string
+    postalCode: string
+}
+
+function normalizeFacilityValidationFields(
+    fields: FacilityValidationFields
+): NormalizedFacilityValidationFields {
+    return {
+        nameEn: fields.nameEn,
+        nameJa: fields.nameJa,
+        mapLatitude: fields.mapLatitude,
+        mapLongitude: fields.mapLongitude,
+        phone: fields.contact?.phone ?? fields.phone ?? '',
+        email: fields.contact?.email ?? fields.email ?? '',
+        website: fields.contact?.website ?? fields.website ?? '',
+        addressLine1En: fields.contact?.address.addressLine1En ?? fields.addressLine1En ?? '',
+        addressLine1Ja: fields.contact?.address.addressLine1Ja ?? fields.addressLine1Ja ?? '',
+        addressLine2En: fields.contact?.address.addressLine2En ?? fields.addressLine2En ?? '',
+        addressLine2Ja: fields.contact?.address.addressLine2Ja ?? fields.addressLine2Ja ?? '',
+        cityEn: fields.contact?.address.cityEn ?? fields.cityEn ?? '',
+        cityJa: fields.contact?.address.cityJa ?? fields.cityJa ?? '',
+        postalCode: fields.contact?.address.postalCode ?? fields.postalCode ?? ''
+    }
+}
+
+function getFacilityValidationResults(fields: NormalizedFacilityValidationFields): boolean[] {
+    return [
+        validateNameEn(fields.nameEn),
+        validateNameJa(fields.nameJa),
+        validatePhoneNumber(fields.phone),
+        validateAddressLineEn(fields.addressLine1En),
+        validateAddressLineJa(fields.addressLine1Ja),
+        validateCityEn(fields.cityEn),
+        validateCityJa(fields.cityJa),
+        validatePostalCode(fields.postalCode),
+        validateFloat(fields.mapLatitude),
+        validateFloat(fields.mapLongitude),
+        !fields.email || validateEmail(fields.email),
+        !fields.website || validateWebsite(fields.website),
+        !fields.addressLine2En || validateAddressLineEn(fields.addressLine2En),
+        !fields.addressLine2Ja || validateAddressLineJa(fields.addressLine2Ja)
+    ]
+}
+
 export function validateModerationFacilityFields(fields: FacilityValidationFields): boolean {
-    const phone = fields.contact?.phone ?? fields.phone ?? ''
-    const email = fields.contact?.email ?? fields.email ?? ''
-    const website = fields.contact?.website ?? fields.website ?? ''
-    const addressLine1En = fields.contact?.address.addressLine1En ?? fields.addressLine1En ?? ''
-    const addressLine1Ja = fields.contact?.address.addressLine1Ja ?? fields.addressLine1Ja ?? ''
-    const addressLine2En = fields.contact?.address.addressLine2En ?? fields.addressLine2En ?? ''
-    const addressLine2Ja = fields.contact?.address.addressLine2Ja ?? fields.addressLine2Ja ?? ''
-    const cityEn = fields.contact?.address.cityEn ?? fields.cityEn ?? ''
-    const cityJa = fields.contact?.address.cityJa ?? fields.cityJa ?? ''
-    const postalCode = fields.contact?.address.postalCode ?? fields.postalCode ?? ''
-
-    const isNameEnValid = validateNameEn(fields.nameEn)
-    const isNameJaValid = validateNameJa(fields.nameJa)
-    const isPhoneValid = validatePhoneNumber(phone)
-    const isAddressLine1EnValid = validateAddressLineEn(addressLine1En)
-    const isAddressLine1JaValid = validateAddressLineJa(addressLine1Ja)
-    const isCityEnValid = validateCityEn(cityEn)
-    const isCityJaValid = validateCityJa(cityJa)
-    const isPostalCodeValid = validatePostalCode(postalCode)
-    const isLatitudeValid = validateFloat(fields.mapLatitude)
-    const isLongitudeValid = validateFloat(fields.mapLongitude)
-    const isEmailValid = !email || validateEmail(email)
-    const isWebsiteValid = !website || validateWebsite(website)
-    const isAddressLine2EnValid = !addressLine2En || validateAddressLineEn(addressLine2En)
-    const isAddressLine2JaValid = !addressLine2Ja || validateAddressLineJa(addressLine2Ja)
-
     triggerFormValidationErrorMessages('mod-input-field')
 
-    return isNameEnValid
-      && isNameJaValid
-      && isPhoneValid
-      && isAddressLine1EnValid
-      && isAddressLine1JaValid
-      && isCityEnValid
-      && isCityJaValid
-      && isPostalCodeValid
-      && isLatitudeValid
-      && isLongitudeValid
-      && isEmailValid
-      && isWebsiteValid
-      && isAddressLine2EnValid
-      && isAddressLine2JaValid
+    const normalizedFields = normalizeFacilityValidationFields(fields)
+    const validationResults = getFacilityValidationResults(normalizedFields)
+    return validationResults.every(Boolean)
 }
 
 export function hasRequiredHealthcareProfessionalSelections(
