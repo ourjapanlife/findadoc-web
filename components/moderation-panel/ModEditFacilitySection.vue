@@ -347,8 +347,7 @@ const healthcareProfessionalRelatedToFacilityFiltered = computed<HealthcareProfe
             healthcareProfessionalsStore.healthcareProfessionalsData.find(
                 healthcareProfessional => healthcareProfessional.id === healthcareProfessionalId
             ) || []
-    )
-)
+    ))
 // This keeps track of the existing healthcare professionals we are adding to an existing facility
 const selectedHealthcareProfessionals: Ref<HealthcareProfessional[]> = ref([])
 const selectedHealthcareProfessionalsModel = computed({
@@ -423,5 +422,4 @@ onBeforeMount(async () => {
     // Ensure UI updates are reflected
     await nextTick()
 })
-
 </script>

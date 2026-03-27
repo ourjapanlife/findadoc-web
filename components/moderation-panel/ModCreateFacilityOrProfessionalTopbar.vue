@@ -82,9 +82,7 @@ const toast = useToast()
 
 const { t } = useI18n()
 
-const validateFacilityFields = () => {
-    return validateModerationFacilityFields(facilitiesStore.createFacilityFields)
-}
+const validateFacilityFields = () => validateModerationFacilityFields(facilitiesStore.createFacilityFields)
 
 const validateHealthcareProfessionalFields = () => {
     const healthcareProfessionalFields = healthcareProfessionalsStore.createHealthcareProfessionalSectionFields

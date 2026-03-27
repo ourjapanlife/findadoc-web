@@ -338,8 +338,7 @@ const { makeNonDirty: makeHpFormNonDirty } = useUnsavedChanges({
 
 const currentFacilityRelations = computed(() =>
     facilitiesStore.facilityData.filter(facility =>
-        hpStore.healthcareProfessionalSectionFields.facilityIds.includes(facility.id))
-)
+        hpStore.healthcareProfessionalSectionFields.facilityIds.includes(facility.id)))
 
 // Tracks whether we want to display adding a new name
 const addingLocaleName: Ref<boolean> = ref(false)
@@ -618,5 +617,4 @@ onBeforeMount(async () => {
 
     await nextTick()
 })
-
 </script>
