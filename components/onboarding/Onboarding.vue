@@ -1,7 +1,10 @@
 <template>
     <div class="min-h-screen">
         <Transition
-            name="fade"
+            enter-active-class="transition-opacity duration-500 ease-in-out"
+            enter-from-class="opacity-0"
+            leave-active-class="transition-opacity duration-500 ease-in-out"
+            leave-to-class="opacity-0"
             mode="out-in"
         >
             <WelcomeScreen
@@ -64,14 +67,3 @@ const completeOnboarding = async () => {
 }
 </script>
 
-<style scoped>
-.fade-enter-active,
-.fade-leave-active {
-    transition: opacity 0.5s ease;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-    opacity: 0;
-}
-</style>
