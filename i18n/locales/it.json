@@ -317,8 +317,6 @@
     "noHealthcareProfessionalFound": "No matching Healthcare Professionals found"
   },
   "modSubmissionForm": {
-    "confirmationButton": "Lascia la pagina",
-    "hasUnsavedChanges": "Hai delle modifiche non salvate. Sei sicuro di voler uscire?",
     "errorMessageCompletedForm": "Tentativo di inviare il modulo completato fallito",
     "errorMessageFacilityInputsInvalid": "Alcuni campi della struttura non sono stati compilati correttamente",
     "errorMessageFacilityId": "L'ID della struttura è obbligatiorio per aggiornare la struttura",
@@ -441,9 +439,7 @@
   "authErrors": {},
   "facilitiesErrors": {},
   "healthcareProfessionalsErrors": {},
-  "localeErrors": {
-    "notSpecified": "Not Specified"
-  },
+  "localeErrors": {},
   "locationErrors": {},
   "moderationSubmissionsErrors": {},
   "searchResultsErrors": {},
@@ -451,17 +447,7 @@
     "colorThemes": "Color Themes"
   },
   "unsavedChanges": {
-    "create": {
-      "title": "Uscire senza creare?",
-      "message": "Non è stato ancora creato. Se esci ora, tutte le informazioni inserite andranno perse.",
-      "cancel": "Resta",
-      "confirm": "Esci"
-    },
-    "update": {
-      "title": "Eliminare le modifiche?",
-      "message": "Le tue modifiche non sono state salvate. Se esci ora, andranno perse.",
-      "cancel": "Continua a modificare",
-      "confirm": "Elimina modifiche"
-    }
+    "create": {},
+    "update": {}
   }
 }

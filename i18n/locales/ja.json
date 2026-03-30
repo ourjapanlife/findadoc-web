@@ -228,8 +228,6 @@
     "labelHealthcareProfessionalFirstName": "First Name",
     "labelHealthcareProfessionalLastName": "Last Name",
     "labelHealthcareProfessionalMiddleName": "Middle Name",
-    "confirmationButton": "Leave Page",
-    "hasUnsavedChanges": "You have unsaved changes. Are you sure you want to leave?",
     "submissionConfirmationAcceptanceButton": "Yes, submit",
     "submissionConfirmationMessage": "Are you sure you want to submit this form?",
     "errorMessageCompletedForm": "Failed to submit completed form",
@@ -442,9 +440,7 @@
   "authErrors": {},
   "facilitiesErrors": {},
   "healthcareProfessionalsErrors": {},
-  "localeErrors": {
-    "notSpecified": "Not Specified"
-  },
+  "localeErrors": {},
   "locationErrors": {},
   "moderationSubmissionsErrors": {},
   "searchResultsErrors": {},
@@ -452,17 +448,7 @@
     "colorThemes": "Color Themes"
   },
   "unsavedChanges": {
-    "create": {
-      "title": "作成せずに終了しますか？",
-      "message": "まだ作成は完了していません。このまま終了すると、入力した内容はすべて失われます。",
-      "cancel": "続ける",
-      "confirm": "終了する"
-    },
-    "update": {
-      "title": "変更内容を破棄しますか？",
-      "message": "変更内容はまだ保存されていません。このまま終了すると、変更内容はすべて失われます。",
-      "cancel": "編集を続ける",
-      "confirm": "変更を破棄する"
-    }
+    "create": {},
+    "update": {}
   }
 }
