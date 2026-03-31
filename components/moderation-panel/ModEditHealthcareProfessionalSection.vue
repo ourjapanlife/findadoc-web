@@ -142,7 +142,7 @@
                 <h2
                     :id="ModHealthcareProfessionalsLeftNavbarSections.HealthcareProfessionalMedicalInfo"
                     class="mod-healthcare-professional-section
-                     my-3.5 text-start text-primary-text text-2xl font-bold font-sans leading-normal"
+                    my-3.5 text-start text-primary-text text-2xl font-bold font-sans leading-normal"
                 >
                     {{ t('modHealthcareProfessionalSection.healthcareProfessionalMedicalInfoHeading') }}
                 </h2>
@@ -253,7 +253,7 @@
                 <h2
                     :id="ModHealthcareProfessionalsLeftNavbarSections.HealthcareProfessionalFacilities"
                     class="mod-healthcare-professional-section
-                 my-3.5 text-start text-primary-text text-2xl font-bold font-sans leading-normal"
+                    my-3.5 text-start text-primary-text text-2xl font-bold font-sans leading-normal"
                 >
                     {{ t("modHealthcareProfessionalSection.facilities") }}
                 </h2>
