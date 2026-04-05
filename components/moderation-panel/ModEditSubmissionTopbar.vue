@@ -1,6 +1,15 @@
 <template>
     <div class="flex flex-row justify-between w-full">
-        <div>
+        <div class="flex flex-row items-center">
+            <button
+                type="button"
+                data-testid="mod-edit-submission-back-to-dashboard"
+                class="flex justify-center items-center rounded-full bg-secondary-bg border-primary-text-muted
+                border-2 w-28 text-sm mr-2 p-2 m-2 font-bold"
+                @click="goToDashboard"
+            >
+                {{ t('modEditFacilityOrHPTopbar.back') }}
+            </button>
             <button
                 type="button"
                 data-testid="mod-edit-submission-copy-submission-id"
@@ -69,15 +78,26 @@
 <script setup lang="ts">
 import { ref, type Ref } from 'vue'
 import { storeToRefs } from 'pinia'
+import { useRouter } from 'vue-router'
 import SVGCopyContent from '~/assets/icons/content-copy.svg'
 import SVGSuccessCheckMark from '~/assets/icons/checkmark-square.svg'
 import { ModerationSubmissionActionType, useModerationSubmissionActions } from '~/composables/useModerationSubmissionActions'
+import { navigateToModerationDashboard } from '~/utils/moderationUtils'
 
 const { t } = useI18n()
+const router = useRouter()
+const moderationScreenStore = useModerationScreenStore()
+const modalStore = useModalStore()
 
 const moderationSubmissionStore = useModerationSubmissionsStore()
+const moderationSubmissionUnsavedStore = useModerationSubmissionUnsavedStore()
 const { emitModerationSubmissionAction } = useModerationSubmissionActions()
 const { selectedSubmissionId } = storeToRefs(moderationSubmissionStore)
+
+const goToDashboard = () => {
+    moderationSubmissionUnsavedStore.runEditSubmissionBackOr(() =>
+        navigateToModerationDashboard(router, moderationScreenStore, modalStore))
+}
 
 const showCopySuccessIcon: Ref<boolean> = ref(false)
 

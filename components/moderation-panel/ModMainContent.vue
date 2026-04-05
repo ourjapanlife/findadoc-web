@@ -81,7 +81,9 @@ const setActiveScreenBasedOnRoute = async () => {
         moderationScreenStore.setActiveScreen(ModerationScreen.Dashboard)
         moderationSubmissionsStore.selectedSubmissionId = ''
         facilitiesStore.selectedFacilityId = ''
+        facilitiesStore.selectedFacilityData = undefined
         healthcareProfessionalsStore.selectedHealthcareProfessionalId = ''
+        healthcareProfessionalsStore.selectedHealthcareProfessionalData = undefined
         return
     }
 
@@ -108,7 +110,9 @@ const setActiveScreenBasedOnRoute = async () => {
             moderationScreenStore.setActiveScreen(ModerationScreen.Dashboard)
             moderationSubmissionsStore.selectedSubmissionId = ''
             facilitiesStore.selectedFacilityId = ''
+            facilitiesStore.selectedFacilityData = undefined
             healthcareProfessionalsStore.selectedHealthcareProfessionalId = ''
+            healthcareProfessionalsStore.selectedHealthcareProfessionalData = undefined
             // Reset healthcareProfessionalSections
             healthcareProfessionalsStore.resetHealthcareProfessionalSectionFields()
             // Reset facilitySectionFields

@@ -5,12 +5,14 @@ import {
     validateCityJa,
     validateEmail,
     validateFloat,
+    validateGoogleMapsUrlInput,
     validateNameEn,
     validateNameJa,
     validatePhoneNumber,
     validatePostalCode,
     validateWebsite
 } from '~/utils/formValidations'
+import { checkPrefectureNameMatch } from '~/utils/facilitiesUtils'
 import { triggerFormValidationErrorMessages } from '~/utils/triggerFormValidationErrorMessages'
 
 type FacilityValidationFields = {
@@ -18,10 +20,16 @@ type FacilityValidationFields = {
     nameJa: string
     mapLatitude: string
     mapLongitude: string
+    /** Moderation facility section uses `googlemapsURL`; nested contact may use `googleMapsUrl`. */
+    googleMapsUrl?: string
+    googlemapsURL?: string
+    prefectureEn?: string
+    prefectureJa?: string
     contact?: {
         phone: string
         email?: string
         website?: string
+        googleMapsUrl?: string
         address: {
             addressLine1En: string
             addressLine1Ja: string
@@ -30,6 +38,8 @@ type FacilityValidationFields = {
             cityEn: string
             cityJa: string
             postalCode: string
+            prefectureEn?: string
+            prefectureJa?: string
         }
     }
     phone?: string
@@ -55,6 +65,9 @@ type NormalizedFacilityValidationFields = {
     nameJa: string
     mapLatitude: string
     mapLongitude: string
+    googleMapsUrl: string
+    prefectureEn: string
+    prefectureJa: string
     phone: string
     email: string
     website: string
@@ -67,28 +80,60 @@ type NormalizedFacilityValidationFields = {
     postalCode: string
 }
 
+/** First defined value (nullish coalescing), without chaining ?? for eslint complexity. */
+function pickStr(...candidates: (string | undefined)[]): string {
+    for (const value of candidates) {
+        if (value !== undefined && value !== null) {
+            return value
+        }
+    }
+    return ''
+}
+
+function pickStrTrim(...candidates: (string | undefined)[]): string {
+    return pickStr(...candidates).trim()
+}
+
 function normalizeFacilityValidationFields(
     fields: FacilityValidationFields
 ): NormalizedFacilityValidationFields {
+    const { contact } = fields
+    const address = contact?.address
+
     return {
         nameEn: fields.nameEn,
         nameJa: fields.nameJa,
         mapLatitude: fields.mapLatitude,
         mapLongitude: fields.mapLongitude,
-        phone: fields.contact?.phone ?? fields.phone ?? '',
-        email: fields.contact?.email ?? fields.email ?? '',
-        website: fields.contact?.website ?? fields.website ?? '',
-        addressLine1En: fields.contact?.address?.addressLine1En ?? fields.addressLine1En ?? '',
-        addressLine1Ja: fields.contact?.address?.addressLine1Ja ?? fields.addressLine1Ja ?? '',
-        addressLine2En: fields.contact?.address?.addressLine2En ?? fields.addressLine2En ?? '',
-        addressLine2Ja: fields.contact?.address?.addressLine2Ja ?? fields.addressLine2Ja ?? '',
-        cityEn: fields.contact?.address?.cityEn ?? fields.cityEn ?? '',
-        cityJa: fields.contact?.address?.cityJa ?? fields.cityJa ?? '',
-        postalCode: fields.contact?.address?.postalCode ?? fields.postalCode ?? ''
+        googleMapsUrl: pickStrTrim(
+            contact?.googleMapsUrl,
+            fields.googleMapsUrl,
+            fields.googlemapsURL
+        ),
+        prefectureEn: pickStrTrim(address?.prefectureEn, fields.prefectureEn),
+        prefectureJa: pickStrTrim(address?.prefectureJa, fields.prefectureJa),
+        phone: pickStr(contact?.phone, fields.phone),
+        email: pickStr(contact?.email, fields.email),
+        website: pickStr(contact?.website, fields.website),
+        addressLine1En: pickStr(address?.addressLine1En, fields.addressLine1En),
+        addressLine1Ja: pickStr(address?.addressLine1Ja, fields.addressLine1Ja),
+        addressLine2En: pickStr(address?.addressLine2En, fields.addressLine2En),
+        addressLine2Ja: pickStr(address?.addressLine2Ja, fields.addressLine2Ja),
+        cityEn: pickStr(address?.cityEn, fields.cityEn),
+        cityJa: pickStr(address?.cityJa, fields.cityJa),
+        postalCode: pickStr(address?.postalCode, fields.postalCode)
     }
 }
 
 function getFacilityValidationResults(fields: NormalizedFacilityValidationFields): boolean[] {
+    const prefecturesPresent
+        = fields.prefectureEn.length > 0
+          && fields.prefectureJa.length > 0
+    const prefecturesConsistent = checkPrefectureNameMatch({
+        prefectureEn: fields.prefectureEn,
+        prefectureJa: fields.prefectureJa
+    })
+
     return [
         validateNameEn(fields.nameEn),
         validateNameJa(fields.nameJa),
@@ -100,6 +145,8 @@ function getFacilityValidationResults(fields: NormalizedFacilityValidationFields
         validatePostalCode(fields.postalCode),
         validateFloat(fields.mapLatitude),
         validateFloat(fields.mapLongitude),
+        validateGoogleMapsUrlInput(fields.googleMapsUrl),
+        prefecturesPresent && prefecturesConsistent,
         !fields.email || validateEmail(fields.email),
         !fields.website || validateWebsite(fields.website),
         !fields.addressLine2En || validateAddressLineEn(fields.addressLine2En),

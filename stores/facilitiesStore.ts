@@ -209,6 +209,9 @@ export const useFacilitiesStore = defineStore('facilitiesStore', () => {
         healthcareProfessionalIds: [] as string[]
     })
 
+    /** Bumped after a successful moderation edit save so useUnsavedChanges can call makeNonDirty before router navigation. */
+    const unsavedChangesResetTick: Ref<number> = ref(0)
+
     function setSelectedFacilityData(facilityId: string) {
         selectedFacilityId.value = facilityId
         selectedFacilityData.value = facilityData.value.find(
@@ -399,6 +402,10 @@ export const useFacilitiesStore = defineStore('facilitiesStore', () => {
                 facilitySectionFields.value.healthProfessionalsRelations = []
             }
         }
+        // Clear moderation unsaved-changes guard whenever the mutation did not return GraphQL errors (even if data is null).
+        if (!serverResponse.errors?.length) {
+            unsavedChangesResetTick.value++
+        }
 
         const mappedResponse: ServerResponse<Facility> = {
             ...serverResponse,
@@ -468,6 +475,7 @@ export const useFacilitiesStore = defineStore('facilitiesStore', () => {
         totalFacilitiesCount,
         updateFacility,
         facilitySectionFields,
+        unsavedChangesResetTick,
         selectedFacilityId,
         deleteFacility,
         selectedFacilityData,

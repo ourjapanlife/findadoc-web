@@ -130,7 +130,8 @@
 </template>
 
 <script lang="ts" setup>
-import { type Ref, ref, watch, onMounted } from 'vue'
+import { type Ref, computed, ref, watch, onMounted, onUnmounted } from 'vue'
+import { storeToRefs } from 'pinia'
 import { useRouter } from 'vue-router'
 import { useToast } from 'vue-toastification'
 import { useModerationSubmissionsStore } from '~/stores/moderationSubmissionsStore'
@@ -164,19 +165,26 @@ const screenStore = useModerationScreenStore()
 const loadingStore = useLoadingStore()
 const facilitiesStore = useFacilitiesStore()
 const healthcareProfessionalsStore = useHealthcareProfessionalsStore()
+const { facilitySectionFields } = storeToRefs(facilitiesStore)
+const { healthcareProfessionalSectionFields } = storeToRefs(healthcareProfessionalsStore)
 
 const currentSubmissionNotes = ref('')
 
 // Single reactive snapshot for useUnsavedChanges (plugin shows confirmation on browser back / router leave).
 const formState = computed(() => ({
-    facility: JSON.parse(stableStringify(facilitiesStore.facilitySectionFields)),
-    hp: JSON.parse(stableStringify(healthcareProfessionalsStore.healthcareProfessionalSectionFields)),
+    facility: JSON.parse(stableStringify(facilitySectionFields.value)),
+    hp: JSON.parse(stableStringify(healthcareProfessionalSectionFields.value)),
     notes: currentSubmissionNotes.value
 }))
-const { makeNonDirty } = useUnsavedChanges({
+const moderationSubmissionUnsavedStore = useModerationSubmissionUnsavedStore()
+const { makeNonDirty, isDirty, tryClose } = useUnsavedChanges({
     data: { source: formState },
     mode: 'update',
     onClose: () => navigateToModerationDashboard()
+})
+watch(isDirty, dirty => moderationSubmissionUnsavedStore.setEditSubmissionFormDirty(dirty), {
+    immediate: true,
+    flush: 'sync'
 })
 
 const isEditSubmissionFormInitialized: Ref<boolean> = ref(false)
@@ -417,7 +425,7 @@ async function saveSubmissionDraft(
         shouldExitAfterUpdate?: boolean
         shouldResetModalRefsAfterUpdate?: boolean
     } = {}
-) {
+): Promise<boolean> {
     e.preventDefault()
 
     const id = moderationSubmissionStore.selectedSubmissionId || ''
@@ -425,7 +433,7 @@ async function saveSubmissionDraft(
         toast.error(t('modSubmissionForm.errorMessageFacilityId'))
         console.error(t('modSubmissionForm.errorMessageFacilityId'))
         await resetModalRefs()
-        return
+        return false
     }
 
     const facilitySubmissionUpdate = {
@@ -478,7 +486,7 @@ async function saveSubmissionDraft(
     const result = await moderationSubmissionStore.updateSubmission(submissionInputVariables)
     if (handleModerationResponseErrors(result, toast, t)) {
         await resetModalRefs()
-        return
+        return false
     }
 
     const submissionResult = result.data
@@ -489,12 +497,13 @@ async function saveSubmissionDraft(
     }
     if (options.shouldExitAfterUpdate) {
         await goToModerationDashboard(router, screenStore)
-        return
+        return true
     }
 
     if (options.shouldResetModalRefsAfterUpdate) {
         await resetModalRefs()
     }
+    return true
 }
 
 async function confirmAndApproveSubmission(e: Event) {
@@ -551,10 +560,13 @@ async function confirmAndApproveSubmission(e: Event) {
 
     try {
         // This updates submission before approving since moderators might not think to update first
-        await saveSubmissionDraft(
+        const draftSaved = await saveSubmissionDraft(
             new Event('submit', { bubbles: false, cancelable: true }),
             { showSuccessToast: false }
         )
+        if (!draftSaved) {
+            return
+        }
         const result = await moderationSubmissionStore.approveSubmission()
         if (handleModerationResponseErrors(result, toast, t)) {
             await resetModalRefs()
@@ -616,6 +628,11 @@ watch(
     }
 )
 
+onUnmounted(() => {
+    moderationSubmissionUnsavedStore.registerEditSubmissionTryClose(null)
+    moderationSubmissionUnsavedStore.setEditSubmissionFormDirty(false)
+})
+
 onMounted(async () => {
     isEditSubmissionFormInitialized.value = false
 
@@ -647,6 +664,7 @@ onMounted(async () => {
     await nextTick()
 
     isEditSubmissionFormInitialized.value = true
+    moderationSubmissionUnsavedStore.registerEditSubmissionTryClose(tryClose)
     loadingStore.setIsLoading(false)
 })
 

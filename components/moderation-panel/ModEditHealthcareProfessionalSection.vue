@@ -280,7 +280,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, nextTick, onBeforeMount, reactive, type Ref, ref } from 'vue'
+import { computed, nextTick, onBeforeMount, reactive, ref, watch, type Ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useToast } from 'vue-toastification'
 import { useHealthcareProfessionalsStore } from '~/stores/healthcareProfessionalsStore'
@@ -335,6 +335,14 @@ const { makeNonDirty: makeHpFormNonDirty } = useUnsavedChanges({
         router.push('/moderation')
     }
 })
+
+watch(
+    () => hpStore.unsavedChangesResetTick,
+    () => {
+        makeHpFormNonDirty()
+    },
+    { flush: 'sync' }
+)
 
 const currentFacilityRelations = computed(() =>
     facilitiesStore.facilityData.filter(facility =>
@@ -415,15 +423,15 @@ const setChosenLocaleNameInput = (index: number) => {
         = hpStore.healthcareProfessionalSectionFields.names.find((_, index) =>
             index === chosenLocaleIndex.value)
 
-    if (chosenHealthcareProfessionalToEdit.value) {
+    const chosen = chosenHealthcareProfessionalToEdit.value
+    if (chosen && tempToHoldZeroIndexedHealthcareProfessionalToSwap !== undefined) {
         //Set the chosen healthcare professional name to move it closer to the input
-        hpStore.healthcareProfessionalSectionFields.names[0]
-            = chosenHealthcareProfessionalToEdit.value
+        hpStore.healthcareProfessionalSectionFields.names[0] = chosen
         // Put the temp one in the index where the old locale name was
         hpStore.healthcareProfessionalSectionFields.names[chosenLocaleIndex.value]
             = tempToHoldZeroIndexedHealthcareProfessionalToSwap
         //Autofill with the chosen healthcare professional locale name
-        autofillNameLocaleInputWithChosenHealthcareProfessional(chosenHealthcareProfessionalToEdit.value)
+        autofillNameLocaleInputWithChosenHealthcareProfessional(chosen)
         // Set the chosenLocaleIndex to 0 so the correct pencil is showing
         chosenLocaleIndex.value = 0
     }

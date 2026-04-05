@@ -294,7 +294,8 @@
 </template>
 
 <script lang="ts" setup>
-import { type Ref, ref, computed, onBeforeMount, nextTick } from 'vue'
+import { type Ref, ref, computed, onBeforeMount, nextTick, watch } from 'vue'
+import { storeToRefs } from 'pinia'
 import { useToast } from 'vue-toastification'
 import { useRoute, useRouter } from 'vue-router'
 import { useModerationScreenStore, ModerationScreen } from '~/stores/moderationScreenStore'
@@ -326,11 +327,12 @@ const { t } = useI18n()
 const loadingStore = useLoadingStore()
 const moderationScreenStore = useModerationScreenStore()
 const facilityStore = useFacilitiesStore()
+const { facilitySectionFields } = storeToRefs(facilityStore)
 const healthcareProfessionalsStore = useHealthcareProfessionalsStore()
 const isFacilitySectionInitialized: Ref<boolean> = ref(false)
 
 const facilityFormState = computed(() =>
-    JSON.parse(stableStringify(facilityStore.facilitySectionFields)))
+    JSON.parse(stableStringify(facilitySectionFields.value)))
 const { makeNonDirty: makeFacilityFormNonDirty } = useUnsavedChanges({
     data: { source: facilityFormState },
     mode: 'update',
@@ -340,7 +342,15 @@ const { makeNonDirty: makeFacilityFormNonDirty } = useUnsavedChanges({
     }
 })
 
-const healthcareProfessionalsRelatedToFacility = computed(() => facilityStore.facilitySectionFields.healthcareProfessionalIds)
+watch(
+    () => facilityStore.unsavedChangesResetTick,
+    () => {
+        makeFacilityFormNonDirty()
+    },
+    { flush: 'sync' }
+)
+
+const healthcareProfessionalsRelatedToFacility = computed(() => facilitySectionFields.value.healthcareProfessionalIds)
 const healthcareProfessionalRelatedToFacilityFiltered = computed<HealthcareProfessional[]>(() =>
     healthcareProfessionalsRelatedToFacility.value.flatMap(
         healthcareProfessionalId =>

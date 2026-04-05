@@ -285,7 +285,7 @@ import {
     validateCityJa
 } from '~/utils/formValidations'
 import type { HealthcareProfessional } from '~/typedefs/gqlTypes'
-import { listPrefectureJapanEn, listPrefectureJapanJa } from '~/stores/locationsStore'
+import { listPrefectureJapanEn, listPrefectureJapanJa, prefectureLanguageMatch } from '~/stores/locationsStore'
 import { checkPrefectureNameMatch } from '~/utils/facilitiesUtils'
 import { matchesHealthcareProfessionalSearch } from '~/utils/moderationSearchUtils'
 import { formatFirstLocalizedFullName } from '~/utils/nameUtils'
@@ -335,7 +335,7 @@ const syncPrefectureJaFromEn = () => {
     const lowercasePrefectureEn = prefectureEn.trim().toLowerCase()
     const prefectureJaFromEn = prefectureLanguageMatch[lowercasePrefectureEn]
 
-    if (prefectureJaFromEn && !facilityStore.createFacilityFields.contact.address.prefectureJa) {
+    if (prefectureJaFromEn) {
         facilityStore.createFacilityFields.contact.address.prefectureJa = prefectureJaFromEn
     }
 }

@@ -1,4 +1,4 @@
-import type { Router } from 'vue-router'
+import { isNavigationFailure, NavigationFailureType, type Router } from 'vue-router'
 import { ModerationScreen } from '~/stores/moderationScreenStore'
 import type { ServerError } from '~/typedefs/serverResponse'
 
@@ -13,7 +13,13 @@ export async function navigateToModerationDashboard(
     moderationScreenStore: { setActiveScreen: (screen: ModerationScreen) => void },
     modalStore?: { hideModal: () => void }
 ) {
+    const navigationResult = await router.push('/moderation')
+    if (isNavigationFailure(navigationResult)) {
+        // Already on `/moderation` (dashboard + edit share one route); still switch Pinia screen.
+        if (!isNavigationFailure(navigationResult, NavigationFailureType.duplicated)) {
+            return
+        }
+    }
     modalStore?.hideModal()
     moderationScreenStore.setActiveScreen(ModerationScreen.Dashboard)
-    await router.push('/moderation')
 }

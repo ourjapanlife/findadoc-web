@@ -5,10 +5,17 @@ import type { ErrorCode, ServerErrorResponse, ServerResponse } from '~/typedefs/
 // eslint-disable-next-line
 export let gqlClient: GraphQLClient
 
+let gqlClientBaseUrl: string | null = null
+
 export const initializeGqlClient = () => {
     const useLocalApi = useRuntimeConfig().public.NUXT_USE_LOCAL_API as string | undefined
     const apiURL = useLocalApi ? 'http://127.0.0.1:4000' : 'https://api.findadoc.jp'
 
+    if (gqlClient && gqlClientBaseUrl === apiURL) {
+        return
+    }
+
+    gqlClientBaseUrl = apiURL
     gqlClient = new GraphQLClient(apiURL)
 }
 

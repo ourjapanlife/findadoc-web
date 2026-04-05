@@ -121,7 +121,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onBeforeMount, ref, type ComputedRef, type Ref } from 'vue'
+import { computed, ref, watch, type ComputedRef, type Ref } from 'vue'
+import { storeToRefs } from 'pinia'
 import { useToast } from 'vue-toastification'
 import { useRouter } from 'vue-router'
 import { useI18n } from '#imports'
@@ -137,31 +138,65 @@ import { handleModerationResponseErrors } from '~/composables/useModerationRespo
 import type { Facility, HealthcareProfessional } from '~/typedefs/gqlTypes'
 import { arraysAreEqual } from '~/utils/arrayUtils'
 import { hasEnglishLocalizedName } from '~/utils/nameUtils'
-import { navigateToModerationDashboard } from '~/utils/moderationUtils'
+import { hasServerErrors, navigateToModerationDashboard } from '~/utils/moderationUtils'
 
 const router = useRouter()
 
 // Initialize the stores in use
 const facilitiesStore = useFacilitiesStore()
+const { facilitySectionFields } = storeToRefs(facilitiesStore)
 const healthcareProfessionalsStore = useHealthcareProfessionalsStore()
 const moderationScreenStore = useModerationScreenStore()
 const modalStore = useModalStore()
 
 // Initialize the value of the selected Id based off of Moderation Screen
 const selectedId: ComputedRef<string> = computed(() => setSelectedId())
-const originalFacilityData = computed(() => facilitiesStore.selectedFacilityData)
+
+// Deep snapshots (not live store refs). Topbar mounts before edit sections finish loading — capture once data exists.
+const originalFacilityData: Ref<Facility | undefined> = ref()
 const originalHealthcareProfessionalData: Ref<HealthcareProfessional | undefined> = ref()
 
-onBeforeMount(() => {
-    if (!moderationScreenStore.editHealthcareProfessionalScreenIsActive()) {
-        return
+watch(
+    () => facilitiesStore.selectedFacilityId,
+    () => {
+        if (moderationScreenStore.editFacilityScreenIsActive()) {
+            originalFacilityData.value = undefined
+        }
     }
+)
 
-    const data = healthcareProfessionalsStore.selectedHealthcareProfessionalData
-    originalHealthcareProfessionalData.value = data
-        ? JSON.parse(JSON.stringify(data)) as HealthcareProfessional
-        : undefined
-})
+watch(
+    () => facilitiesStore.selectedFacilityData,
+    data => {
+        if (!moderationScreenStore.editFacilityScreenIsActive()) return
+        const id = facilitiesStore.selectedFacilityId
+        if (!data || !id || data.id !== id) return
+        if (originalFacilityData.value !== undefined) return
+        originalFacilityData.value = JSON.parse(JSON.stringify(data)) as Facility
+    },
+    { immediate: true }
+)
+
+watch(
+    () => healthcareProfessionalsStore.selectedHealthcareProfessionalId,
+    () => {
+        if (moderationScreenStore.editHealthcareProfessionalScreenIsActive()) {
+            originalHealthcareProfessionalData.value = undefined
+        }
+    }
+)
+
+watch(
+    () => healthcareProfessionalsStore.selectedHealthcareProfessionalData,
+    data => {
+        if (!moderationScreenStore.editHealthcareProfessionalScreenIsActive()) return
+        const id = healthcareProfessionalsStore.selectedHealthcareProfessionalId
+        if (!data || !id || data.id !== id) return
+        if (originalHealthcareProfessionalData.value !== undefined) return
+        originalHealthcareProfessionalData.value = JSON.parse(JSON.stringify(data)) as HealthcareProfessional
+    },
+    { immediate: true }
+)
 
 const modalType = ref<ModalType.UnsavedChanges | ModalType.DeleteConfirmation | null>(null)
 
@@ -202,7 +237,7 @@ const hasFacilityFormChanges = (): boolean => {
     if (!originalFacilityData.value) return false
 
     const updatedFields = getChangedFacilityFieldsForUpdate(
-        facilitiesStore.facilitySectionFields,
+        facilitySectionFields.value,
         originalFacilityData.value
     )
 
@@ -269,7 +304,14 @@ const saveChanges = async () => {
 
         if (!hasFacilityFormChanges()) return
 
-        const response = await facilitiesStore.updateFacility()
+        let response
+        try {
+            response = await facilitiesStore.updateFacility()
+        } catch (e: unknown) {
+            const message = e instanceof Error ? e.message : String(e)
+            toast.error(message)
+            return
+        }
 
         if (handleModerationResponseErrors(response, toast, t)) {
             return response
@@ -277,11 +319,16 @@ const saveChanges = async () => {
 
         // Updates the facility section values with the data saved in the database
         facilitiesStore.initializeFacilitySectionValues(response.data as Facility)
+        const savedFacility = facilitiesStore.selectedFacilityData
+        if (savedFacility) {
+            originalFacilityData.value = JSON.parse(JSON.stringify(savedFacility)) as Facility
+        }
         return returnWithSuccessToast(
             response,
             toast,
             t,
-            'modEditFacilityOrHPTopbar.facilityUpdatedSuccessfully'
+            'modEditFacilityOrHPTopbar.facilityUpdatedSuccessfully',
+            { toastClassName: 'e2e-moderation-success-toast' }
         )
     }
     // This makes the on click update the facility if the screen is EditFacility
@@ -289,17 +336,22 @@ const saveChanges = async () => {
         // This prevents us from sending a requested unnecessarily if the user has not made changes
         if (!hasHealthcareProfessionalFormChanges()) return
 
-        const hasEnglishName = hasEnglishLocalizedName(
-            healthcareProfessionalsStore.healthcareProfessionalSectionFields.names
+        const namesDirty = !arraysAreEqual(
+            healthcareProfessionalsStore.healthcareProfessionalSectionFields.names,
+            originalHealthcareProfessionalData.value?.names ?? []
         )
-
-        if (guardWithErrorToast(
-            !hasEnglishName,
-            toast,
-            t,
-            'modEditFacilityOrHPTopbar.healthcareProfessionalEnglishNameRequired'
-        )) {
-            return
+        if (namesDirty) {
+            const hasEnglishName = hasEnglishLocalizedName(
+                healthcareProfessionalsStore.healthcareProfessionalSectionFields.names
+            )
+            if (guardWithErrorToast(
+                !hasEnglishName,
+                toast,
+                t,
+                'modEditFacilityOrHPTopbar.healthcareProfessionalEnglishNameRequired'
+            )) {
+                return
+            }
         }
 
         const response = await healthcareProfessionalsStore.updateHealthcareProfessional()
@@ -308,11 +360,16 @@ const saveChanges = async () => {
             return response
         }
 
+        const savedHp = response.data
+        if (savedHp) {
+            originalHealthcareProfessionalData.value = JSON.parse(JSON.stringify(savedHp)) as HealthcareProfessional
+        }
         return returnWithSuccessToast(
             response,
             toast,
             t,
-            'modEditFacilityOrHPTopbar.healthcareProfessionalUpdatedSuccessfully'
+            'modEditFacilityOrHPTopbar.healthcareProfessionalUpdatedSuccessfully',
+            { toastClassName: 'e2e-moderation-success-toast' }
         )
     }
 }
@@ -321,12 +378,8 @@ const saveChangesAndExit = async () => {
     if (moderationScreenStore.editFacilityScreenIsActive()) {
         const response = await saveChanges()
 
-        if (response === undefined) {
+        if (response === undefined || hasServerErrors(response)) {
             return
-        }
-
-        if (handleModerationResponseErrors(response, toast, t)) {
-            return response
         }
 
         await navigateToModerationDashboard(router, moderationScreenStore)
@@ -334,12 +387,8 @@ const saveChangesAndExit = async () => {
     if (moderationScreenStore.editHealthcareProfessionalScreenIsActive()) {
         const response = await saveChanges()
 
-        if (response === undefined) {
+        if (response === undefined || hasServerErrors(response)) {
             return
-        }
-
-        if (handleModerationResponseErrors(response, toast, t)) {
-            return response
         }
 
         await navigateToModerationDashboard(router, moderationScreenStore)
