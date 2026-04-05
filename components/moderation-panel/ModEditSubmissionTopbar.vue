@@ -68,6 +68,7 @@
 
 <script setup lang="ts">
 import { ref, type Ref } from 'vue'
+import { storeToRefs } from 'pinia'
 import SVGCopyContent from '~/assets/icons/content-copy.svg'
 import SVGSuccessCheckMark from '~/assets/icons/checkmark-square.svg'
 import { ModerationSubmissionActionType, useModerationSubmissionActions } from '~/composables/useModerationSubmissionActions'
@@ -76,7 +77,7 @@ const { t } = useI18n()
 
 const moderationSubmissionStore = useModerationSubmissionsStore()
 const { emitModerationSubmissionAction } = useModerationSubmissionActions()
-const selectedSubmissionId: Ref<string> = ref(moderationSubmissionStore.selectedSubmissionId)
+const { selectedSubmissionId } = storeToRefs(moderationSubmissionStore)
 
 const showCopySuccessIcon: Ref<boolean> = ref(false)
 

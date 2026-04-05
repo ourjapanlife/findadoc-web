@@ -179,8 +179,6 @@ const { makeNonDirty } = useUnsavedChanges({
     onClose: () => navigateToModerationDashboard()
 })
 
-const syntheticEvent = new Event('submit', { bubbles: false, cancelable: true })
-
 const isEditSubmissionFormInitialized: Ref<boolean> = ref(false)
 const showApproveSubmissionConfirmation: Ref<boolean> = ref(false)
 const showRejectSubmissionConfirmation: Ref<boolean> = ref(false)
@@ -553,7 +551,10 @@ async function confirmAndApproveSubmission(e: Event) {
 
     try {
         // This updates submission before approving since moderators might not think to update first
-        await saveSubmissionDraft(syntheticEvent, { showSuccessToast: false })
+        await saveSubmissionDraft(
+            new Event('submit', { bubbles: false, cancelable: true }),
+            { showSuccessToast: false }
+        )
         const result = await moderationSubmissionStore.approveSubmission()
         if (handleModerationResponseErrors(result, toast, t)) {
             await resetModalRefs()
@@ -603,12 +604,12 @@ watch(
                 modalStore.showModal()
                 return
             case ModerationSubmissionActionType.UpdateAndExit:
-                saveSubmissionDraft(syntheticEvent, {
+                saveSubmissionDraft(new Event('submit', { bubbles: false, cancelable: true }), {
                     shouldExitAfterUpdate: true
                 })
                 return
             case ModerationSubmissionActionType.Update:
-                saveSubmissionDraft(syntheticEvent, {
+                saveSubmissionDraft(new Event('submit', { bubbles: false, cancelable: true }), {
                     shouldResetModalRefsAfterUpdate: true
                 })
         }

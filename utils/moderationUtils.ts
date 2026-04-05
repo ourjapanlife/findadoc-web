@@ -1,6 +1,6 @@
 import type { Router } from 'vue-router'
 import { ModerationScreen } from '~/stores/moderationScreenStore'
-import type { ServerError } from '~/typedefs/gqlTypes'
+import type { ServerError } from '~/typedefs/serverResponse'
 
 export function hasServerErrors(
     response: { errors?: ServerError[] } | undefined

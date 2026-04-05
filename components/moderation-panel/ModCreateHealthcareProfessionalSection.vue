@@ -309,9 +309,9 @@ const selectedFacilitiesModel = computed({
     get: () => selectedFacilities.value,
     set: (newValue: Facility[]) => {
         selectedFacilities.value = newValue
-        if (newValue.length) {
-            createHealthcareProfessionalSectionFields.facilityIds = newValue.map(facility => facility.id)
-        }
+        createHealthcareProfessionalSectionFields.facilityIds = newValue.length
+            ? newValue.map(facility => facility.id)
+            : []
     }
 })
 

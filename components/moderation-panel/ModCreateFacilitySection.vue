@@ -309,10 +309,8 @@ const selectedHealthcareProfessionalsModel = computed({
     get: () => selectedHealthcareProfessionals.value,
     set: (newValue: HealthcareProfessional[]) => {
         selectedHealthcareProfessionals.value = newValue
-        if (newValue.length) {
-            facilityStore.createFacilityFields.healthcareProfessionalIds
-                = newValue.map(healthcareProfessional => healthcareProfessional.id)
-        }
+        facilityStore.createFacilityFields.healthcareProfessionalIds
+            = newValue.map(healthcareProfessional => healthcareProfessional.id)
     }
 })
 
@@ -345,6 +343,8 @@ const syncPrefectureJaFromEn = () => {
 onBeforeMount(async () => {
     isFacilitySectionInitialized.value = false
 
+    syncPrefectureJaFromEn()
+
     // Wait for the route to be fully resolved
     await nextTick()
 
@@ -365,9 +365,5 @@ onBeforeMount(async () => {
 
     // Ensure UI updates are reflected
     await nextTick()
-})
-
-onBeforeMount(() => {
-    syncPrefectureJaFromEn()
 })
 </script>

@@ -1,13 +1,10 @@
 import type { ToastInterface } from 'vue-toastification'
 import { handleServerErrorMessaging } from '~/composables/handleServerErrorMessaging'
+import type { ServerError } from '~/typedefs/serverResponse'
 import { hasServerErrors } from '~/utils/moderationUtils'
 
-type ServerErrorResponse = {
-    errors?: Array<{ code?: string }>
-}
-
 export function handleModerationResponseErrors(
-    response: ServerErrorResponse | undefined,
+    response: { errors?: ServerError[] } | undefined,
     toast: ToastInterface,
     t: (translatableString: string) => string | undefined
 ): boolean {
@@ -15,6 +12,6 @@ export function handleModerationResponseErrors(
         return false
     }
 
-    handleServerErrorMessaging(response.errors ?? [], toast, t)
+    handleServerErrorMessaging(response.errors, toast, t)
     return true
 }

@@ -97,7 +97,7 @@ const createFacilityOrHealthcareProfessional = async () => {
         const healthcareProfessionalCreationSectionFields = healthcareProfessionalsStore.createHealthcareProfessionalSectionFields
         const hasEnglishName = hasEnglishLocalizedName(healthcareProfessionalCreationSectionFields.names)
 
-        const hasEmptyRequiredFields = validateHealthcareProfessionalFields()
+        const hasAllRequiredFields = validateHealthcareProfessionalFields()
 
         if (guardWithErrorToast(
             !hasEnglishName,
@@ -109,7 +109,7 @@ const createFacilityOrHealthcareProfessional = async () => {
         }
 
         if (guardWithErrorToast(
-            !hasEmptyRequiredFields,
+            !hasAllRequiredFields,
             toast,
             t,
             'modCreateFacilityOrHPTopbar.hasEmptyFieldsHealthcareProfessional'

@@ -1,6 +1,13 @@
 import enUS from '../../i18n/locales/en.json' with { type: 'json' }
-import { test, expect } from '@playwright/test'
+import { test, expect, type Page } from '@playwright/test'
 import { skipOnboarding, shouldRunModerationTests, auth0Login } from './fixtures'
+
+async function navigateToFirstSubmissionEditPage(page: Page): Promise<boolean> {
+    const firstSubmissionLink = page.getByRole('link').first()
+    await firstSubmissionLink.click().catch(() => {})
+    const facilityNameInput = page.getByPlaceholder(enUS.modFacilitySection.placeholderTextFacilityNameEn)
+    return facilityNameInput.isVisible().catch(() => false)
+}
 
 test.describe('Moderation edit submission unsaved changes modal', () => {
     test.skip(!shouldRunModerationTests(),
@@ -18,15 +25,13 @@ test.describe('Moderation edit submission unsaved changes modal', () => {
     })
 
     test('shows confirmation modal when navigating back with unsaved changes', async ({ page }) => {
-        const firstSubmissionLink = page.getByRole('link').first()
-        await firstSubmissionLink.click().catch(() => {})
-        const facilityNameInput = page.getByPlaceholder(enUS.modFacilitySection.placeholderTextFacilityNameEn)
-        const onEditPage = await facilityNameInput.isVisible().catch(() => false)
+        const onEditPage = await navigateToFirstSubmissionEditPage(page)
         if (!onEditPage) {
             test.skip(true, 'No submission data to open (seed data may be empty)')
             return
         }
 
+        const facilityNameInput = page.getByPlaceholder(enUS.modFacilitySection.placeholderTextFacilityNameEn)
         await facilityNameInput.fill('Test Hospital')
         await page.goBack()
         await expect(page.getByRole('dialog')).toBeVisible()
@@ -36,10 +41,7 @@ test.describe('Moderation edit submission unsaved changes modal', () => {
     })
 
     test('opens approve confirmation modal from topbar action', async ({ page }) => {
-        const firstSubmissionLink = page.getByRole('link').first()
-        await firstSubmissionLink.click().catch(() => {})
-        const facilityNameInput = page.getByPlaceholder(enUS.modFacilitySection.placeholderTextFacilityNameEn)
-        const onEditPage = await facilityNameInput.isVisible().catch(() => false)
+        const onEditPage = await navigateToFirstSubmissionEditPage(page)
         if (!onEditPage) {
             test.skip(true, 'No submission data to open (seed data may be empty)')
             return
@@ -51,10 +53,7 @@ test.describe('Moderation edit submission unsaved changes modal', () => {
     })
 
     test('opens reject confirmation modal from topbar action', async ({ page }) => {
-        const firstSubmissionLink = page.getByRole('link').first()
-        await firstSubmissionLink.click().catch(() => {})
-        const facilityNameInput = page.getByPlaceholder(enUS.modFacilitySection.placeholderTextFacilityNameEn)
-        const onEditPage = await facilityNameInput.isVisible().catch(() => false)
+        const onEditPage = await navigateToFirstSubmissionEditPage(page)
         if (!onEditPage) {
             test.skip(true, 'No submission data to open (seed data may be empty)')
             return

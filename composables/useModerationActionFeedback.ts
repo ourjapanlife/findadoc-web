@@ -6,6 +6,7 @@ export function returnWithSuccessToast<T>(
     t: (translatableString: string) => string | undefined,
     translationKey: string
 ): T {
-    toast.success(t(translationKey))
+    const msg = t(translationKey) ?? translationKey ?? ''
+    toast.success(msg)
     return response
 }

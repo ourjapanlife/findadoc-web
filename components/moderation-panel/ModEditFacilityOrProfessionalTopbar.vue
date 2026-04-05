@@ -49,7 +49,7 @@
                 :disabled="!hasPendingChanges"
                 class="flex justify-center items-center rounded-full bg-secondary-bg border-primary-text-muted
                 border-2 w-28 text-sm mr-2"
-                data-testid="mod-edit-facility-hp-topbar-update"
+                data-testid="mod-edit-facility-hp-topbar-update-and-exit"
                 @click="saveChangesAndExit"
             >
                 <span>
@@ -317,6 +317,10 @@ const saveChangesAndExit = async () => {
     if (moderationScreenStore.editFacilityScreenIsActive()) {
         const response = await saveChanges()
 
+        if (response === undefined) {
+            return
+        }
+
         if (handleModerationResponseErrors(response, toast, t)) {
             return response
         }
@@ -325,6 +329,10 @@ const saveChangesAndExit = async () => {
     }
     if (moderationScreenStore.editHealthcareProfessionalScreenIsActive()) {
         const response = await saveChanges()
+
+        if (response === undefined) {
+            return
+        }
 
         if (handleModerationResponseErrors(response, toast, t)) {
             return response

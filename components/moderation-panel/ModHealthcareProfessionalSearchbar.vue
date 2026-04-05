@@ -42,20 +42,19 @@
                                     class="mr-1"
                                 >
                                     {{ healthcareProfessionalsStore
-                                        .displayChosenLocaleForHealthcareProfessional(healthcareProfessional).lastName }}
+                                        .displayChosenLocaleForHealthcareProfessional(healthcareProfessional)?.lastName }}
                                 </span>
                                 <span
                                     v-show="healthcareProfessionalsStore
-                                        ?.displayChosenLocaleForHealthcareProfessional(healthcareProfessional)?.middleName"
+                                        .displayChosenLocaleForHealthcareProfessional(healthcareProfessional)?.middleName"
                                     class="mr-1"
                                 >
                                     {{ healthcareProfessionalsStore
-                                        .displayChosenLocaleForHealthcareProfessional(healthcareProfessional)
-                                        ?.middleName }}
+                                        .displayChosenLocaleForHealthcareProfessional(healthcareProfessional)?.middleName }}
                                 </span>
                                 <span>
                                     {{ healthcareProfessionalsStore
-                                        ?.displayChosenLocaleForHealthcareProfessional(healthcareProfessional)?.firstName }}
+                                        .displayChosenLocaleForHealthcareProfessional(healthcareProfessional)?.firstName }}
                                 </span>
                             </div>
                             <span>

@@ -10,7 +10,8 @@ export function guardWithErrorToast(
         return false
     }
 
-    toast.error(t(translationKey))
+    const message = t(translationKey) ?? translationKey ?? ''
+    toast.error(message)
     return true
 }
 

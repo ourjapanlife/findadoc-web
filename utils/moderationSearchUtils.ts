@@ -45,7 +45,8 @@ export function filterByCaseInsensitiveIncludes<T extends string>(items: T[], ra
 }
 
 export function mapIdsToEntities<T extends { id: string }>(ids: string[], entities: T[]): T[] {
+    const byId = new Map(entities.map(entity => [entity.id, entity] as const))
     return ids
-        .map(id => entities.find(entity => entity.id === id))
+        .map(id => byId.get(id))
         .filter((entity): entity is T => entity !== undefined)
 }

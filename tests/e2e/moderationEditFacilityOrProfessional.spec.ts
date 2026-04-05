@@ -8,9 +8,7 @@ test.describe('Moderation facility and healthcare professional happy paths', () 
 
     test.beforeEach(async ({ page }) => {
         await skipOnboarding(page)
-        if (shouldRunModerationTests()) {
-            await auth0Login(page)
-        }
+        await auth0Login(page)
         await page.setViewportSize({ width: 1728, height: 1077 })
         await page.goto('/moderation')
         await page.waitForLoadState('networkidle')
@@ -31,10 +29,10 @@ test.describe('Moderation facility and healthcare professional happy paths', () 
         await expect(nameEnInput).toBeVisible()
         await nameEnInput.fill(`Playwright Facility ${Date.now()}`)
 
-        await page.getByTestId('mod-edit-facility-hp-topbar-update').first().click()
+        await page.getByTestId('mod-edit-facility-hp-topbar-update').click()
         await expect(page.getByText(enUS.modEditFacilityOrHPTopbar.facilityUpdatedSuccessfully)).toBeVisible()
 
-        await page.getByTestId('mod-edit-facility-hp-topbar-update').nth(1).click()
+        await page.getByTestId('mod-edit-facility-hp-topbar-update-and-exit').click()
         await expect(page).toHaveURL(/\/moderation$/)
     })
 
@@ -52,10 +50,10 @@ test.describe('Moderation facility and healthcare professional happy paths', () 
         await expect(noteInput).toBeVisible()
         await noteInput.fill(`Playwright HP note ${Date.now()}`)
 
-        await page.getByTestId('mod-edit-facility-hp-topbar-update').first().click()
+        await page.getByTestId('mod-edit-facility-hp-topbar-update').click()
         await expect(page.getByText(enUS.modEditFacilityOrHPTopbar.healthcareProfessionalUpdatedSuccessfully)).toBeVisible()
 
-        await page.getByTestId('mod-edit-facility-hp-topbar-update').nth(1).click()
+        await page.getByTestId('mod-edit-facility-hp-topbar-update-and-exit').click()
         await expect(page).toHaveURL(/\/moderation$/)
     })
 })

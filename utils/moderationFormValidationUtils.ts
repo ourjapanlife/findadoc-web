@@ -78,13 +78,13 @@ function normalizeFacilityValidationFields(
         phone: fields.contact?.phone ?? fields.phone ?? '',
         email: fields.contact?.email ?? fields.email ?? '',
         website: fields.contact?.website ?? fields.website ?? '',
-        addressLine1En: fields.contact?.address.addressLine1En ?? fields.addressLine1En ?? '',
-        addressLine1Ja: fields.contact?.address.addressLine1Ja ?? fields.addressLine1Ja ?? '',
-        addressLine2En: fields.contact?.address.addressLine2En ?? fields.addressLine2En ?? '',
-        addressLine2Ja: fields.contact?.address.addressLine2Ja ?? fields.addressLine2Ja ?? '',
-        cityEn: fields.contact?.address.cityEn ?? fields.cityEn ?? '',
-        cityJa: fields.contact?.address.cityJa ?? fields.cityJa ?? '',
-        postalCode: fields.contact?.address.postalCode ?? fields.postalCode ?? ''
+        addressLine1En: fields.contact?.address?.addressLine1En ?? fields.addressLine1En ?? '',
+        addressLine1Ja: fields.contact?.address?.addressLine1Ja ?? fields.addressLine1Ja ?? '',
+        addressLine2En: fields.contact?.address?.addressLine2En ?? fields.addressLine2En ?? '',
+        addressLine2Ja: fields.contact?.address?.addressLine2Ja ?? fields.addressLine2Ja ?? '',
+        cityEn: fields.contact?.address?.cityEn ?? fields.cityEn ?? '',
+        cityJa: fields.contact?.address?.cityJa ?? fields.cityJa ?? '',
+        postalCode: fields.contact?.address?.postalCode ?? fields.postalCode ?? ''
     }
 }
 
