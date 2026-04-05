@@ -121,7 +121,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, type ComputedRef, type Ref } from 'vue'
+import { computed, onBeforeMount, ref, type ComputedRef, type Ref } from 'vue'
 import { useToast } from 'vue-toastification'
 import { useRouter } from 'vue-router'
 import { useI18n } from '#imports'
@@ -150,15 +150,19 @@ const modalStore = useModalStore()
 // Initialize the value of the selected Id based off of Moderation Screen
 const selectedId: ComputedRef<string> = computed(() => setSelectedId())
 const originalFacilityData = computed(() => facilitiesStore.selectedFacilityData)
-const originalHealthcareProfessionalData = computed<HealthcareProfessional | undefined>(() => {
-    const selectedHealthcareProfessionalData = healthcareProfessionalsStore.selectedHealthcareProfessionalData
-    if (!selectedHealthcareProfessionalData) {
-        return undefined
+const originalHealthcareProfessionalData: Ref<HealthcareProfessional | undefined> = ref()
+
+onBeforeMount(() => {
+    if (!moderationScreenStore.editHealthcareProfessionalScreenIsActive()) {
+        return
     }
 
-    // Keep an immutable snapshot for dirty-checking.
-    return JSON.parse(JSON.stringify(selectedHealthcareProfessionalData))
+    const data = healthcareProfessionalsStore.selectedHealthcareProfessionalData
+    originalHealthcareProfessionalData.value = data
+        ? JSON.parse(JSON.stringify(data)) as HealthcareProfessional
+        : undefined
 })
+
 const modalType = ref<ModalType.UnsavedChanges | ModalType.DeleteConfirmation | null>(null)
 
 // Disable the buttons if there are no changes
