@@ -6,21 +6,10 @@ import type { ErrorCode, ServerErrorResponse, ServerResponse } from '~/typedefs/
 export let gqlClient: GraphQLClient
 
 export const initializeGqlClient = () => {
-    if (gqlClient) {
-        return gqlClient
-    }
-
-    let apiURL
-
     const useLocalApi = useRuntimeConfig().public.NUXT_USE_LOCAL_API as string | undefined
-    if (useLocalApi) {
-        apiURL = 'http://127.0.0.1:4000'
-    } else {
-        apiURL = 'https://api.findadoc.jp'
-    }
+    const apiURL = useLocalApi ? 'http://127.0.0.1:4000' : 'https://api.findadoc.jp'
 
-    const client = new GraphQLClient(apiURL)
-    gqlClient = client
+    gqlClient = new GraphQLClient(apiURL)
 }
 
 export const graphQLClientRequestWithRetry = async <T>(
