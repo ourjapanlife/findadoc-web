@@ -1,6 +1,6 @@
 import type { Maybe } from 'graphql/jsutils/Maybe'
 import { defineStore } from 'pinia'
-import { reactive, ref, type Ref, computed } from 'vue'
+import { reactive, ref, type Ref, computed, type Reactive } from 'vue'
 import { gql } from 'graphql-request'
 import { fetchHealthcareProfessionalsWithCount } from '../utils/graphqlHelpers'
 import { type Insurance,
@@ -49,6 +49,21 @@ export const useHealthcareProfessionalsStore = defineStore(
             spokenLanguages: [],
             updatedDate: ''
         })
+
+        const healthcareProfessionalUpdatedFields = ref<HealthcareProfessional[]>([])
+
+        // const healthcareProfessionalUpdatedFields = reactive<HealthcareProfessional>({
+        //     acceptedInsurance: null,
+        //     additionalInfoForPatients: null,
+        //     createdDate: null,
+        //     degrees: null,
+        //     facilityIds: null,
+        //     id: null, // Empty string, assuming the ID will be set later
+        //     names: null,
+        //     specialties: null,
+        //     spokenLanguages: null,
+        //     updatedDate: null
+        // // })
 
         const createHealthcareProfessionalSectionFields: CreateHealthcareProfessionalInput = reactive({
             acceptedInsurance: [] as Insurance[],
@@ -291,6 +306,7 @@ export const useHealthcareProfessionalsStore = defineStore(
             selectedHealthcareProfessionalId,
             deleteHealthcareProfessional,
             healthcareProfessionalSectionFields,
+            healthcareProfessionalUpdatedFields,
             displayChosenLocaleForHealthcareProfessional,
             setSelectedHealthcareProfessional,
             selectedHealthcareProfessionalData,

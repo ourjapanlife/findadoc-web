@@ -119,6 +119,7 @@
 import { computed, ref, watch, type Ref } from 'vue'
 import SVGCheckMark from '~/assets/icons/check-mark.svg'
 import SVGLookingGlass from '~/assets/icons/looking-glass.svg'
+import { useHealthcareProfessionalsStore } from '@/stores/healthcareProfessionalsStore'
 
 // Obtain the array inner type
 type ArrayType<V> = V extends Array<infer U> ? U : never
@@ -132,6 +133,8 @@ const emit = defineEmits<{
     updatedField: []
 }>()
 
+const hpFieldsForUpdating = useHealthcareProfessionalsStore().healthcareProfessionalUpdatedFields
+
 // Using a type from the user. T is defined when selectedItems is passed down.
 const selectedItems = defineModel<T>({ required: true })
 
@@ -141,12 +144,13 @@ type Props = {
     // Callback to display the desired output
     fieldsToDisplayCallback: (item: ArrayType<T>) => string[]
     defaultSuggestions: ArrayType<T>[]
+    fieldName: string
 
     //Optional test id for testing the component
     dataTestId?: string
 }
 
-const { placeHolderText, noMatchText, fieldsToDisplayCallback, defaultSuggestions } = defineProps<Props>()
+const { placeHolderText, noMatchText, fieldsToDisplayCallback, defaultSuggestions, fieldName } = defineProps<Props>()
 
 const searchInputElement = ref<HTMLInputElement>()
 const searchInputValue = ref('')
@@ -170,6 +174,14 @@ const handleListItem = () => {
     if (filteredItems.value.length === 0) return
 
     const item = filteredItems.value[selectedItemIndex.value]
+
+    if (!hpFieldsForUpdating.includes(fieldName)) {
+        hpFieldsForUpdating.push(fieldName)
+    }
+    // Have object with key name of each field
+    // Create if statements for each key to catch the name of the field name
+    // add the entire list to that key
+    // send non null keys to graphql
 
     if (selectedItems.value.includes(item)) {
         const itemIndex = selectedItems.value.indexOf(item)

@@ -159,6 +159,7 @@
                     :no-match-text="t('modHealthcareProfessionalSection.noInsurancesWereFound')"
                     :fields-to-display-callback="insurancesToDisplayCallback"
                     :default-suggestions="Object.values(Insurance)"
+                    :field-name="'acceptedInsurance'"
                     @search-input-change="handleInsuranceInputChange"
                 />
                 <ol class="list-disc text-primary-text/60 font-semibold my-2 px-2">
@@ -183,6 +184,7 @@
                     :no-match-text="t('modHealthcareProfessionalSection.noDegreesWereFound')"
                     :fields-to-display-callback="degreesToDisplayCallback"
                     :default-suggestions="Object.values(Degree)"
+                    :field-name="'degrees'"
                     @search-input-change="handleDegreeInputChange"
                 />
                 <ol class="list-disc text-primary-text/60 font-semibold my-2 px-2">
@@ -206,6 +208,7 @@
                     :place-holder-text="t('modHealthcareProfessionalSection.placeholderTextSpecialties')"
                     :no-match-text="t('modHealthcareProfessionalSection.noSpecialtiesWereFound')"
                     :fields-to-display-callback="specialtiesToDisplayCallback"
+                    :field-name="'specialties'"
                     :default-suggestions="Object.values(Specialty)"
                     @search-input-change="handleSpecialtyInputChange"
                 />
@@ -230,6 +233,7 @@
                     :place-holder-text="t('modHealthcareProfessionalSection.placeholderTextLocales')"
                     :no-match-text="t('modHealthcareProfessionalSection.noLocalesWereFound')"
                     :fields-to-display-callback="localesToDisplayCallback"
+                    :field-name="'spokenLanguages'"
                     :default-suggestions="Object.values(Locale)"
                     @search-input-change="handleLocaleInputChange"
                 />
@@ -262,6 +266,7 @@
                     :place-holder-text="t('modHealthcareProfessionalSection.placeholderTextFacilitySearchBar')"
                     :no-match-text="t('modHealthcareProfessionalSection.noFacilitiesWereFound')"
                     :fields-to-display-callback="facilitiesFieldsToDisplayCallback"
+                    :field-name="'facilityIds'"
                     :default-suggestions="facilitiesStore.facilityData"
                     @search-input-change="handleFacilitySearchInputChange"
                 />
@@ -311,12 +316,6 @@ const currentFacilities = facilitiesStore.facilityData
 
 const isHealthcareProfessionalInitialized: Ref<boolean> = ref(false)
 const selectedFacilities: Ref<Facility[]> = ref([])
-
-const hpFieldsForUpdating: Array<Insurance> = []
-
-function addToHpFieldsToUpdate(newFieldData: Ref<Insurance>) {
-    hpFieldsForUpdating.push(newFieldData)
-}
 
 const hpFormState = computed(() =>
     JSON.parse(stableStringify(hpStore.healthcareProfessionalSectionFields)))
@@ -552,14 +551,10 @@ const handleFacilitySearchInputChange = (filteredItems: Ref<Facility[]>, inputVa
 const handleInsuranceInputChange = (filteredItems: Ref<Insurance[]>, inputValue: string) => {
     const arrayOfInsurances = Object.values(Insurance) as Insurance[]
 
-    hpFieldsForUpdating.push(inputValue)
-
     if (!inputValue) {
         filteredItems.value = arrayOfInsurances
         return
     }
-
-    console.log(hpFieldsForUpdating)
 
     filteredItems.value = arrayOfInsurances.filter(insurance => insurance.toLowerCase().includes(inputValue))
 }
@@ -643,19 +638,6 @@ onBeforeMount(async () => {
     await nextTick()
 })
 
-const moderationSubmissionStore = useModerationSubmissionsStore()
-
-// Initial data
-onMounted(() => {
-    console.log(moderationSubmissionStore.selectedSubmissionData?.healthcareProfessionals)
-})
-
-for (const field in hpStore.healthcareProfessionalSectionFields) {
-    console.log(field)
-}
-
-console.log(hpStore.healthcareProfessionalSectionFields)
-
 // This autofills the selected fields based on our current healthcare data for the user
 watch(() => hpStore.healthcareProfessionalSectionFields.facilityIds,
       facilityIds => {
@@ -666,9 +648,6 @@ watch(() => hpStore.healthcareProfessionalSectionFields.facilityIds,
               selectedFacilities.value = []
           }
       }, { deep: true })
-
-watch(() => hpStore.healthcareProfessionalSectionFields,
-      newValue => { console.log(newValue) }, { deep: true })
 
 // This updates the array in the store once it is updated due to a facility clicked
 watch(() => selectedFacilities.value, newValue => {
