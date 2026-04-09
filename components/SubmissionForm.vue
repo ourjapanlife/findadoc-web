@@ -219,14 +219,17 @@ const validateFields = () => {
         || !isValidInput.primarySpokeLangauge.value
         || !isValidInput.secondarySpokenLanguage.value
     ) {
-        return
+        return false
     }
+
+    return true
 }
 
 async function submitNewSubmission(e: Event) {
     e.preventDefault()
 
-    validateFields()
+    const isValid = validateFields()
+    if (!isValid) return
 
     const spokenLanguages: Locale[] = []
 
