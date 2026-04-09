@@ -145,9 +145,9 @@ export const useHealthcareProfessionalsStore = defineStore(
             const currentProfessionalData = healthcareProfessionalsData.value.find(
                 hp => hp.id === selectedHealthcareProfessionalId.value
             )
-                ?? (selectedHealthcareProfessionalData.value?.id === selectedHealthcareProfessionalId.value
-                    ? selectedHealthcareProfessionalData.value
-                    : undefined)
+            ?? (selectedHealthcareProfessionalData.value?.id === selectedHealthcareProfessionalId.value
+                ? selectedHealthcareProfessionalData.value
+                : undefined)
 
             if (!currentProfessionalData) {
                 console.error(useTranslation('healthcareProfessionalsErrors.noCurrentProfessionalDataFound'), `${selectedHealthcareProfessionalId.value}`)

@@ -31,7 +31,7 @@ export default defineNuxtPlugin({
 
                 return new Promise<boolean>(resolve => {
                     const message = nuxtApp.$i18n?.t('modEditFacilityOrHPTopbar.hasUnsavedChanges')
-                        ?? 'You have unsaved changes'
+                      ?? 'You have unsaved changes'
                     const confirm = nuxtApp.$withConfirmation
                     if (typeof confirm !== 'function') {
                         resolve(true)
