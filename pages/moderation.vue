@@ -73,8 +73,10 @@ const authStore = useAuthStore()
 const route = useRoute()
 const doesTheUserHaveAccess: Ref<boolean> = ref(true)
 
-const redirectIfUnauthenticatedUser = authStore.redirectIfUnauthenticatedUser('/moderation', doesTheUserHaveAccess)
+const runModerationAuthRedirect = () => {
+    void authStore.redirectIfUnauthenticatedUser('/moderation', doesTheUserHaveAccess)
+}
 
-watch(() => route.path, () => redirectIfUnauthenticatedUser)
-onMounted(() => redirectIfUnauthenticatedUser)
+watch(() => route.path, runModerationAuthRedirect)
+onMounted(runModerationAuthRedirect)
 </script>

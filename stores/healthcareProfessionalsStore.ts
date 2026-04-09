@@ -6,7 +6,7 @@ import { fetchHealthcareProfessionalsWithCount } from '../utils/graphqlHelpers'
 import { type Insurance,
     type Degree,
     type Specialty,
-    type Locale, type Facility, type DeleteResult, type HealthcareProfessional,
+    type Locale, type DeleteResult, type HealthcareProfessional,
     type LocalizedNameInput,
     type Mutation,
     type MutationDeleteHealthcareProfessionalArgs,
@@ -15,8 +15,10 @@ import { type Insurance,
     RelationshipAction,
     type CreateHealthcareProfessionalInput,
     type MutationCreateHealthcareProfessionalArgs,
-    type Query } from '~/typedefs/gqlTypes'
+    type Query,
+    type UpdateHealthcareProfessionalInput } from '~/typedefs/gqlTypes'
 import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql'
+import { stableStringify } from '~/utils/stableStringify'
 import { useLocaleStore } from '~/stores/localeStore'
 import type { ServerResponse } from '~/typedefs/serverResponse'
 import { useTranslation } from '~/composables/useTranslation'
@@ -60,9 +62,11 @@ export const useHealthcareProfessionalsStore = defineStore(
             additionalInfoForPatients: ''
         })
 
-        const selectedFacilities: Ref<Facility[]> = ref([])
         // This helps users easily add name locales back to a healthcare professional by keeping track of removed ones
         const removedHealthcareProfessionalNames: Ref<LocalizedNameInput[]> = ref([])
+
+        /** Bumped after a successful moderation edit save so useUnsavedChanges can call makeNonDirty before router navigation. */
+        const unsavedChangesResetTick: Ref<number> = ref(0)
 
         function setSelectedHealthcareProfessional(healthcareProfessionalId: string) {
             selectedHealthcareProfessionalId.value = healthcareProfessionalId
@@ -128,21 +132,22 @@ export const useHealthcareProfessionalsStore = defineStore(
         }
 
         // helper — create the relationship object to send to the API
-        function createFacilityRelation(facility: Facility): Relationship {
+        function createFacilityRelation(otherEntityId: string, currentFacilityIds: string[]): Relationship {
             return {
-                otherEntityId: facility.id,
-                action: healthcareProfessionalSectionFields.facilityIds.includes(facility.id)
+                otherEntityId,
+                action: currentFacilityIds.includes(otherEntityId)
                     ? RelationshipAction.Delete
                     : RelationshipAction.Create
             }
         }
 
         async function updateHealthcareProfessional(): Promise<ServerResponse<HealthcareProfessional>> {
-            const facilitiesForRelationshipCreationArray = selectedFacilities.value
-
             const currentProfessionalData = healthcareProfessionalsData.value.find(
                 hp => hp.id === selectedHealthcareProfessionalId.value
             )
+            ?? (selectedHealthcareProfessionalData.value?.id === selectedHealthcareProfessionalId.value
+                ? selectedHealthcareProfessionalData.value
+                : undefined)
 
             if (!currentProfessionalData) {
                 console.error(useTranslation('healthcareProfessionalsErrors.noCurrentProfessionalDataFound'), `${selectedHealthcareProfessionalId.value}`)
@@ -163,21 +168,54 @@ export const useHealthcareProfessionalsStore = defineStore(
                 }
             }
 
-            // Map facilities to relationships, but send full array even if empty
+            const currentFacilityIds = currentProfessionalData.facilityIds ?? []
+            const nextFacilityIds = healthcareProfessionalSectionFields.facilityIds ?? []
+            const changedFacilityIds = Array.from(new Set([...currentFacilityIds, ...nextFacilityIds]))
+
+            // Map changed facility IDs to relationship actions the API expects.
             const facilitiesRelationsToSelectedHealthcareProfessional: Relationship[]
-                = facilitiesForRelationshipCreationArray.map(createFacilityRelation)
+                = changedFacilityIds
+                    .filter(facilityId => currentFacilityIds.includes(facilityId) !== nextFacilityIds.includes(facilityId))
+                    .map(facilityId => createFacilityRelation(facilityId, currentFacilityIds))
+
+            const sec = healthcareProfessionalSectionFields
+            const cur = currentProfessionalData
+            const patch: UpdateHealthcareProfessionalInput = {}
+
+            if (stableStringify(sec.acceptedInsurance ?? []) !== stableStringify(cur.acceptedInsurance ?? [])) {
+                patch.acceptedInsurance = sec.acceptedInsurance ?? []
+            }
+            if ((sec.additionalInfoForPatients ?? '') !== (cur.additionalInfoForPatients ?? '')) {
+                patch.additionalInfoForPatients = sec.additionalInfoForPatients ?? ''
+            }
+            if (stableStringify(sec.degrees ?? []) !== stableStringify(cur.degrees ?? [])) {
+                patch.degrees = sec.degrees ?? []
+            }
+            if (stableStringify(sec.names ?? []) !== stableStringify(cur.names ?? [])) {
+                patch.names = sec.names ?? []
+            }
+            if (stableStringify(sec.specialties ?? []) !== stableStringify(cur.specialties ?? [])) {
+                patch.specialties = sec.specialties ?? []
+            }
+            if (stableStringify(sec.spokenLanguages ?? []) !== stableStringify(cur.spokenLanguages ?? [])) {
+                patch.spokenLanguages = sec.spokenLanguages ?? []
+            }
+            if (facilitiesRelationsToSelectedHealthcareProfessional.length > 0) {
+                patch.facilityIds = facilitiesRelationsToSelectedHealthcareProfessional
+            }
+
+            if (Object.keys(patch).length < 1) {
+                unsavedChangesResetTick.value++
+                return {
+                    data: currentProfessionalData,
+                    errors: [],
+                    hasErrors: false
+                }
+            }
 
             const updateInput: MutationUpdateHealthcareProfessionalArgs = {
                 id: selectedHealthcareProfessionalId.value,
-                input: {
-                    acceptedInsurance: healthcareProfessionalSectionFields.acceptedInsurance ?? [],
-                    additionalInfoForPatients: healthcareProfessionalSectionFields.additionalInfoForPatients ?? '',
-                    degrees: healthcareProfessionalSectionFields.degrees ?? [],
-                    facilityIds: facilitiesRelationsToSelectedHealthcareProfessional,
-                    names: healthcareProfessionalSectionFields.names ?? [],
-                    specialties: healthcareProfessionalSectionFields.specialties ?? [],
-                    spokenLanguages: healthcareProfessionalSectionFields.spokenLanguages ?? []
-                }
+                input: patch
             }
 
             const serverResponse = await graphQLClientRequestWithRetry<Mutation>(
@@ -193,6 +231,9 @@ export const useHealthcareProfessionalsStore = defineStore(
                 if (index !== -1) healthcareProfessionalsData.value[index] = responseData
                 updateHealthcareProfessionalSectionFields(responseData)
                 removedHealthcareProfessionalNames.value = []
+            }
+            if (!serverResponse.errors?.length) {
+                unsavedChangesResetTick.value++
             }
 
             return {
@@ -291,11 +332,11 @@ export const useHealthcareProfessionalsStore = defineStore(
             selectedHealthcareProfessionalId,
             deleteHealthcareProfessional,
             healthcareProfessionalSectionFields,
+            unsavedChangesResetTick,
             displayChosenLocaleForHealthcareProfessional,
             setSelectedHealthcareProfessional,
             selectedHealthcareProfessionalData,
             removedHealthcareProfessionalNames,
-            selectedFacilities,
             createHealthcareProfessional,
             createHealthcareProfessionalSectionFields,
             resetCreateHealthcareProfessionalFields,

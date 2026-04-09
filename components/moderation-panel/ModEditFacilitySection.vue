@@ -249,7 +249,7 @@
                 {{ t('modFacilitySection.addHealthcareProfessional') }}
             </span>
             <ModSearchBar
-                v-model="healthcareProfessionalsToAddToFacility"
+                v-model="selectedHealthcareProfessionalsModel"
                 data-testid="mod-facility-section-doctor-search"
                 :place-holder-text="t('modFacilitySection.placeholderTextHealthcareProfessionalSearchbar')"
                 :no-match-text="t('modFacilitySection.noHealthcareProfessionalFound')"
@@ -258,12 +258,12 @@
                 @search-input-change="handleHealthcareProfessionalsInputChange"
             />
             <span
-                v-show="!healthcareProfessionalsToAddToFacility.length"
+                v-show="!selectedHealthcareProfessionals.length"
                 class="font-semibold my-3"
             >- {{ t('modFacilitySection.noHPSelected') }}
             </span>
             <div
-                v-for="(healthcareProfessional, index) in healthcareProfessionalsToAddToFacility"
+                v-for="(healthcareProfessional, index) in selectedHealthcareProfessionals"
                 :key="`${healthcareProfessional.id}-${index}`"
             >
                 <ModDashboardHealthProfessionalCard
@@ -295,6 +295,7 @@
 
 <script lang="ts" setup>
 import { type Ref, ref, computed, onBeforeMount, nextTick, watch } from 'vue'
+import { storeToRefs } from 'pinia'
 import { useToast } from 'vue-toastification'
 import { useRoute, useRouter } from 'vue-router'
 import { useModerationScreenStore, ModerationScreen } from '~/stores/moderationScreenStore'
@@ -316,6 +317,8 @@ import { RelationshipAction, type HealthcareProfessional } from '~/typedefs/gqlT
 import { listPrefectureJapanEn, listPrefectureJapanJa } from '~/stores/locationsStore'
 import { checkPrefectureNameMatch } from '~/utils/facilitiesUtils'
 import { stableStringify } from '~/utils/stableStringify'
+import { matchesHealthcareProfessionalSearch } from '~/utils/moderationSearchUtils'
+import { formatFirstLocalizedFullName } from '~/utils/nameUtils'
 
 const toast = useToast()
 const route = useRoute()
@@ -324,11 +327,12 @@ const { t } = useI18n()
 const loadingStore = useLoadingStore()
 const moderationScreenStore = useModerationScreenStore()
 const facilityStore = useFacilitiesStore()
+const { facilitySectionFields } = storeToRefs(facilityStore)
 const healthcareProfessionalsStore = useHealthcareProfessionalsStore()
 const isFacilitySectionInitialized: Ref<boolean> = ref(false)
 
 const facilityFormState = computed(() =>
-    JSON.parse(stableStringify(facilityStore.facilitySectionFields)))
+    JSON.parse(stableStringify(facilitySectionFields.value)))
 const { makeNonDirty: makeFacilityFormNonDirty } = useUnsavedChanges({
     data: { source: facilityFormState },
     mode: 'update',
@@ -338,24 +342,40 @@ const { makeNonDirty: makeFacilityFormNonDirty } = useUnsavedChanges({
     }
 })
 
-const healthcareProfessionalsRelatedToFacility: Ref<string[]>
-    = ref([])
-const healthcareProfessionalRelatedToFacilityFiltered: Ref<HealthcareProfessional[]> = ref([])
-// This keeps track of the existing healthcare professionals we are adding to an existing facility
-const healthcareProfessionalsToAddToFacility: Ref<HealthcareProfessional[]> = ref([])
-const defaultHealthcareProfessionalSuggestions: Ref<HealthcareProfessional[]> = ref([])
+watch(
+    () => facilityStore.unsavedChangesResetTick,
+    () => {
+        makeFacilityFormNonDirty()
+    },
+    { flush: 'sync' }
+)
 
-const syncHealthcareProfessionalsRelatedToFacility = () => {
-    if (healthcareProfessionalsStore.healthcareProfessionalsData
-      && !healthcareProfessionalRelatedToFacilityFiltered.value.length) {
-        healthcareProfessionalRelatedToFacilityFiltered.value = healthcareProfessionalsRelatedToFacility.value.flatMap(
-            healthcareProfessionalId =>
-                healthcareProfessionalsStore.healthcareProfessionalsData.find(
-                    healthcareProfessional => healthcareProfessional.id === healthcareProfessionalId
-                ) || []
-        )
+const healthcareProfessionalsRelatedToFacility = computed(() => facilitySectionFields.value.healthcareProfessionalIds)
+const healthcareProfessionalRelatedToFacilityFiltered = computed<HealthcareProfessional[]>(() =>
+    healthcareProfessionalsRelatedToFacility.value.flatMap(
+        healthcareProfessionalId =>
+            healthcareProfessionalsStore.healthcareProfessionalsData.find(
+                healthcareProfessional => healthcareProfessional.id === healthcareProfessionalId
+            ) || []
+    ))
+// This keeps track of the existing healthcare professionals we are adding to an existing facility
+const selectedHealthcareProfessionals: Ref<HealthcareProfessional[]> = ref([])
+const selectedHealthcareProfessionalsModel = computed({
+    get: () => selectedHealthcareProfessionals.value,
+    set: (newValue: HealthcareProfessional[]) => {
+        selectedHealthcareProfessionals.value = newValue
+        if (newValue.length) {
+            const professionalsToAdd = newValue.filter(healthcareProfessional =>
+                !facilityStore.facilitySectionFields.healthcareProfessionalIds.includes(healthcareProfessional.id))
+            facilityStore.facilitySectionFields.healthProfessionalsRelations = professionalsToAdd.map(healthcareProfessional => ({
+                action: RelationshipAction.Create,
+                otherEntityId: healthcareProfessional.id
+            }))
+            selectedHealthcareProfessionals.value = []
+        }
     }
-}
+})
+const defaultHealthcareProfessionalSuggestions: Ref<HealthcareProfessional[]> = ref([])
 
 const handleHealthcareProfessionalsInputChange = (filteredItems: Ref<HealthcareProfessional[]>, inputValue: string) => {
     filteredItems.value = healthcareProfessionalsStore.healthcareProfessionalsData
@@ -363,31 +383,12 @@ const handleHealthcareProfessionalsInputChange = (filteredItems: Ref<HealthcareP
             if (facilityStore.facilitySectionFields.healthcareProfessionalIds.includes(healthcareProfessional.id)) {
                 return false
             }
-
-            const idMatches = healthcareProfessional.id
-                .toLowerCase()
-                .startsWith(inputValue.toLowerCase().trim())
-            const nameMatches = healthcareProfessional.names.some(name => {
-                const firstNameMatch = name.firstName
-                    .toLowerCase()
-                    .includes(inputValue.toLowerCase())
-                const middleNameMatch = name.middleName
-                  && name.middleName
-                      .toLowerCase()
-                      .includes(inputValue.toLowerCase())
-                const lastNameMatch = name.lastName
-                    .toLowerCase()
-                    .includes(inputValue.toLowerCase())
-                return firstNameMatch || middleNameMatch || lastNameMatch
-            })
-            return idMatches || nameMatches
+            return matchesHealthcareProfessionalSearch(healthcareProfessional, inputValue)
         })
 }
 
 const healthcareProfessionalsToDisplayCallback = (healthcareProfessional: HealthcareProfessional) =>
-    [healthcareProfessional.names[0].firstName + ' ' + healthcareProfessional.names[0].lastName]
-
-const prefectureNameMatchError = ref(false)
+    [formatFirstLocalizedFullName(healthcareProfessional.names)]
 
 onBeforeMount(async () => {
     // This onBeforeMount can be skipped on other screens since this logic is handled there when active
@@ -425,77 +426,10 @@ onBeforeMount(async () => {
 
     // Ensure UI updates are reflected with the autofill values
     await nextTick()
-    syncHealthcareProfessionalsRelatedToFacility()
     isFacilitySectionInitialized.value = true
     makeFacilityFormNonDirty()
     loadingStore.setIsLoading(false)
     // Ensure UI updates are reflected
     await nextTick()
 })
-
-/** This is making sure all the data is loaded in the component before running the function to set
-    the healthcare professionals related to the facility. This loads the data correctly whether sent the
-    link or navigating from the moderator dashboard **/
-watch(
-    () => [
-        healthcareProfessionalsStore.healthcareProfessionalsData,
-        facilityStore.facilityData,
-        facilityStore.selectedFacilityData
-    ],
-    ([healthcareData, relatedFacilityIds]) => {
-        if (healthcareData && relatedFacilityIds) {
-            syncHealthcareProfessionalsRelatedToFacility()
-        }
-        if (facilityStore.selectedFacilityData) {
-            healthcareProfessionalsRelatedToFacility.value
-                = facilityStore.facilitySectionFields.healthcareProfessionalIds
-        }
-    },
-    { immediate: false }
-)
-
-watch(() => facilityStore.facilitySectionFields.healthcareProfessionalIds, newValue => {
-    // Set the filtered related ones back to an empty array to sync upon update
-    healthcareProfessionalRelatedToFacilityFiltered.value = []
-    // Set the professionals related to the facility based on the updated value
-    healthcareProfessionalsRelatedToFacility.value = newValue
-    // Sync the list to the updated values
-    syncHealthcareProfessionalsRelatedToFacility()
-
-    healthcareProfessionalsToAddToFacility.value = []
-})
-
-// This watch adds the relations for updating a facility with an added healthcareProfessional
-watch(() => healthcareProfessionalsToAddToFacility.value, newValue => {
-    if (newValue.length) {
-        // Filter out healthcare professionals not already included to prevent unintended side effects
-        const professionalsToAdd = healthcareProfessionalsToAddToFacility.value.filter(healthcareProfessional =>
-            !facilityStore.facilitySectionFields.healthcareProfessionalIds.includes(healthcareProfessional.id))
-        // Map the filtered professionals into relationship objects
-        const relationshipCreationArrayFromSelectedHealthcareProfessionalsToAdd
-            = professionalsToAdd.map(healthcareProfessional => ({
-                action: RelationshipAction.Create,
-                otherEntityId: healthcareProfessional.id
-            }))
-        // Update the store field with the new relationships
-        facilityStore.facilitySectionFields.healthProfessionalsRelations
-            = relationshipCreationArrayFromSelectedHealthcareProfessionalsToAdd
-    }
-}, { deep: true })
-
-/** Watches the facility sections fields regarding the prefecture name of the address (Japanese and English).
-If one of them does not match with the other language, it will throw an error. **/
-watch(
-    () => [
-        facilityStore.facilitySectionFields.prefectureEn,
-        facilityStore.facilitySectionFields.prefectureJa
-    ],
-    ([en, ja]) => {
-        prefectureNameMatchError.value = !checkPrefectureNameMatch({
-            prefectureEn: en,
-            prefectureJa: ja
-        })
-    },
-    { immediate: true }
-)
 </script>

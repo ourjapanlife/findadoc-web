@@ -18,6 +18,13 @@ type FacilitySearchResult = Facility & {
 }
 const toast = useToast()
 
+function notifyServerErrorsIfPresent(errors: { code: string }[] | undefined) {
+    if (!errors?.length) {
+        return
+    }
+    handleServerErrorMessaging(errors, toast, useTranslation)
+}
+
 export const useSearchResultsStore = defineStore('searchResultsStore', () => {
     const activeFacilityId: Ref<string | undefined> = ref()
     const activeFacility: Ref<FacilitySearchResult | undefined> = ref()
@@ -248,9 +255,7 @@ async function queryProfessionals(
             searchProfessionalsData
         )
 
-        if (serverResponse.errors?.length) {
-            handleServerErrorMessaging(serverResponse.errors, toast, useTranslation)
-        }
+        notifyServerErrorsIfPresent(serverResponse.errors)
 
         const professionalsSearchResult = serverResponse.data.healthcareProfessionals ?? []
         return professionalsSearchResult
@@ -292,9 +297,7 @@ async function queryFacilities(
             searchFacilitiesData
         )
 
-        if (serverResponse.errors?.length) {
-            handleServerErrorMessaging(serverResponse.errors, toast, useTranslation)
-        }
+        notifyServerErrorsIfPresent(serverResponse.errors)
 
         const facilitiesSearchResults = serverResponse.data.facilities ?? []
 
