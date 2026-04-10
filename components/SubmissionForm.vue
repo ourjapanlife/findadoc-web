@@ -251,8 +251,8 @@ async function submitNewSubmission(e: Event) {
 
     const response = await submissionStore.createNewSubmission(newSubmission)
     // This is used in the component and not graphQL call as it is user messaging and needs the mounted toast library
-    if (response?.errors?.length) {
-        handleServerErrorMessaging(response.errors, toast, t)
+    if (response?.hasErrors || response?.errors?.length) {
+        handleServerErrorMessaging(response.errors ?? [], toast, t)
         return
     }
 
