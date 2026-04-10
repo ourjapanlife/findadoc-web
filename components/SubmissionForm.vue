@@ -209,7 +209,7 @@ const validateFields = () => {
     isValidInput.primarySpokeLangauge.value = validations.validateFirstSpokenLanguage(selectLanguage1.value)
     validationCheckedPreviously.secondarySpokenLanguage.value = true
     isValidInput.secondarySpokenLanguage.value = selectLanguage2.value
-        ? validations.validateUserSubmittedLastName(selectLanguage2.value)
+        ? validations.validateSecondSpokenLanguage(selectLanguage2.value)
         : true
 
     if (
