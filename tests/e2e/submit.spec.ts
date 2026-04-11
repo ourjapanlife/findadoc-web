@@ -47,6 +47,8 @@ test.describe('Submit page', () => {
         })
 
         test('requires Spoken Language 1 to be selected', async ({ page }) => {
+            await expect(page.getByText(enUS.submitPage.spokenLanguageValidation)).toBeHidden()
+            await page.getByRole('button', { name: enUS.submitPage.submitButton }).click()
             await expect(page.getByText(enUS.submitPage.spokenLanguageValidation)).toBeVisible()
             await page.getByRole('combobox').first().selectOption('ja_JP')
             await expect(page.getByText(enUS.submitPage.spokenLanguageValidation)).toBeHidden()
