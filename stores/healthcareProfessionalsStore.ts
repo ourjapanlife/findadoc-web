@@ -52,19 +52,6 @@ export const useHealthcareProfessionalsStore = defineStore(
 
         const healthcareProfessionalUpdatedFields = ref<HealthcareProfessional[]>([])
 
-        // const healthcareProfessionalUpdatedFields = reactive<HealthcareProfessional>({
-        //     acceptedInsurance: null,
-        //     additionalInfoForPatients: null,
-        //     createdDate: null,
-        //     degrees: null,
-        //     facilityIds: null,
-        //     id: null, // Empty string, assuming the ID will be set later
-        //     names: null,
-        //     specialties: null,
-        //     spokenLanguages: null,
-        //     updatedDate: null
-        // // })
-
         const createHealthcareProfessionalSectionFields: CreateHealthcareProfessionalInput = reactive({
             acceptedInsurance: [] as Insurance[],
             degrees: [] as Degree[],
@@ -182,22 +169,39 @@ export const useHealthcareProfessionalsStore = defineStore(
             const facilitiesRelationsToSelectedHealthcareProfessional: Relationship[]
                 = facilitiesForRelationshipCreationArray.map(createFacilityRelation)
 
-            const updateInput: MutationUpdateHealthcareProfessionalArgs = {
-                id: selectedHealthcareProfessionalId.value,
-                input: {
-                    acceptedInsurance: healthcareProfessionalSectionFields.acceptedInsurance ?? [],
-                    additionalInfoForPatients: healthcareProfessionalSectionFields.additionalInfoForPatients ?? '',
-                    degrees: healthcareProfessionalSectionFields.degrees ?? [],
-                    facilityIds: facilitiesRelationsToSelectedHealthcareProfessional,
-                    names: healthcareProfessionalSectionFields.names ?? [],
-                    specialties: healthcareProfessionalSectionFields.specialties ?? [],
-                    spokenLanguages: healthcareProfessionalSectionFields.spokenLanguages ?? []
+            // original
+
+            // const updateInput: MutationUpdateHealthcareProfessionalArgs = {
+            //     id: selectedHealthcareProfessionalId.value,
+            //     input: {
+            //         acceptedInsurance: healthcareProfessionalSectionFields.acceptedInsurance ?? [],
+            //         additionalInfoForPatients: healthcareProfessionalSectionFields.additionalInfoForPatients ?? '',
+            //         degrees: healthcareProfessionalSectionFields.degrees ?? [],
+            //         facilityIds: facilitiesRelationsToSelectedHealthcareProfessional,
+            //         names: healthcareProfessionalSectionFields.names ?? [],
+            //         specialties: healthcareProfessionalSectionFields.specialties ?? [],
+            //         spokenLanguages: healthcareProfessionalSectionFields.spokenLanguages ?? []
+            //     }
+            // }
+
+            // Check me!
+
+            function updateInput(): MutationUpdateHealthcareProfessionalArgs {
+                const healthcareArgsObject = {}
+                const hpFields = useHealthcareProfessionalsStore().healthcareProfessionalSectionFields
+                const healthcareProfessionalId = hpFields.selectedHealthcareProfessionalId
+
+                healthcareArgsObject[id] = selectedHealthcareProfessionalId.value
+
+                for (const field of hpFields) {
+                    healthcareArgsObject[field] = hpFields[field]
                 }
+                return healthcareArgsObject
             }
 
             const serverResponse = await graphQLClientRequestWithRetry<Mutation>(
                 gqlClient.request.bind(gqlClient),
-                updateHealthcareProfessionalGqlMutation,
+                updateHealthcareProfessionalGqlMutation(),
                 updateInput
             )
 
@@ -361,27 +365,90 @@ const getHealthcareProfessionalByIdGqlQuery = gql`
     }
 }`
 
-const updateHealthcareProfessionalGqlMutation = gql`
-mutation Mutation($id: ID!, $input: UpdateHealthcareProfessionalInput!) {
-  updateHealthcareProfessional(id: $id, input: $input) {
-    id
-    names {
-      firstName
-      middleName
-      lastName
-      locale
+// const updateHealthcareProfessionalGqlMutation = gql`
+// mutation Mutation($id: ID!, $input: UpdateHealthcareProfessionalInput!) {
+//   updateHealthcareProfessional(id: $id, input: $input) {
+//     id
+//     names {
+//       firstName
+//       middleName
+//       lastName
+//       locale
+//     }
+//     spokenLanguages
+//     degrees
+//     specialties
+//     acceptedInsurance
+//     additionalInfoForPatients
+//     facilityIds
+//     createdDate
+//     updatedDate
+//   }
+// }
+// `
+
+const updateHealthcareProfessionalGqlMutation = () => {
+    let updatedFields = ''
+
+    for (const field of useHealthcareProfessionalsStore().healthcareProfessionalUpdatedFields) {
+        updatedFields = `${updatedFields + field} `
     }
-    spokenLanguages
-    degrees
-    specialties
-    acceptedInsurance
-    additionalInfoForPatients
-    facilityIds
-    createdDate
-    updatedDate
-  }
+
+    return gql`mutation Mutation($id: ID!, $input: UpdateHealthcareProfessionalInput!) {
+        updateHealthcareProfessional(id: $id, input: $input) {
+            id
+            names {
+                firstName
+                middleName
+                lastName
+                locale
+            }
+                ${updatedFields}
+            }
+        }`
 }
-`
+
+// const updateHealthcareProfessionalGqlMutation2 = () => {
+//     let updatedFields = ''
+//     const healthcareArgsObject = {}
+//     const hpFields = useHealthcareProfessionalsStore().healthcareProfessionalSectionFields
+//     const healthcareProfessionalId = hpFields.selectedHealthcareProfessionalId
+
+//     // console.log('accepted insurance' + hpFields.acceptedInsurance)
+
+//     for (const field of hpFieldsForUpdating) {
+//         updatedFields = `${updatedFields + field}\n` + '\t' + '\t'
+//         healthcareArgsObject[field] = hpFields[field]
+//         // console.log(healthcareArgsObject[field])
+//     }
+
+//     console.log(healthcareArgsObject.acceptedInsurance)
+
+//     // I'm trying to create an object that
+
+//     // create object
+//     // loop through hp fields for updateing, use the field for the key and the pinia store name
+//     // create if statements for each field to
+
+//     // const updateHealtchareProfessionalArgs = {
+//     //     id: healthcareProfessionalId,
+//     //     input: {
+//     //         acceptedInsurance: healthcareProfessionalSectionFields.acceptedInsurance ?? [],
+//     //         additionalInfoForPatients: healthcareProfessionalSectionFields.additionalInfoForPatients ?? '',
+//     //         degrees: healthcareProfessionalSectionFields.degrees ?? [],
+//     //         facilityIds: facilitiesRelationsToSelectedHealthcareProfessional,
+//     //         names: healthcareProfessionalSectionFields.names ?? [],
+//     //         specialties: healthcareProfessionalSectionFields.specialties ?? [],
+//     //         spokenLanguages: healthcareProfessionalSectionFields.spokenLanguages ?? []
+//     //     }
+//     // }
+
+//     const baseGQLMutation = `mutation Mutation($id: ID!, $input: UpdateHealthcareProfessionalInput!) {
+//         updateHealthcareProfessional(id: $id, input: $input) {
+//                 ${updatedFields}
+//             }
+//         }`
+// }
 
 const deleteHealthcareProfessionalGqlMutation = gql`
 mutation Mutation($id: ID!) {

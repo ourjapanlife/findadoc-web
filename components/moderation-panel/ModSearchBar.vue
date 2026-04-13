@@ -178,6 +178,8 @@ const handleListItem = () => {
     if (!hpFieldsForUpdating.includes(fieldName)) {
         hpFieldsForUpdating.push(fieldName)
     }
+
+    updateHealthcareProfessionalGqlMutation2()
     // Have object with key name of each field
     // Create if statements for each key to catch the name of the field name
     // add the entire list to that key
@@ -195,6 +197,48 @@ const handleListItem = () => {
 const handleListItemClick = (event: MouseEvent) => {
     event.preventDefault()
     handleListItem()
+}
+
+const updateHealthcareProfessionalGqlMutation2 = () => {
+    let updatedFields = ''
+    const healthcareArgsObject = {}
+    const hpFields = useHealthcareProfessionalsStore().healthcareProfessionalSectionFields
+    const healthcareProfessionalId = hpFields.selectedHealthcareProfessionalId
+
+    // console.log('accepted insurance' + hpFields.acceptedInsurance)
+
+    for (const field of hpFieldsForUpdating) {
+        updatedFields = updatedFields + field + '\n' + '\t' + '\t'
+        healthcareArgsObject[field] = hpFields[field]
+        // console.log(healthcareArgsObject[field])
+    }
+
+    console.log(healthcareArgsObject.acceptedInsurance)
+
+    // I'm trying to create an object that
+
+    // create object
+    // loop through hp fields for updateing, use the field for the key and the pinia store name
+    // create if statements for each field to
+
+    // const updateHealtchareProfessionalArgs = {
+    //     id: healthcareProfessionalId,
+    //     input: {
+    //         acceptedInsurance: healthcareProfessionalSectionFields.acceptedInsurance ?? [],
+    //         additionalInfoForPatients: healthcareProfessionalSectionFields.additionalInfoForPatients ?? '',
+    //         degrees: healthcareProfessionalSectionFields.degrees ?? [],
+    //         facilityIds: facilitiesRelationsToSelectedHealthcareProfessional,
+    //         names: healthcareProfessionalSectionFields.names ?? [],
+    //         specialties: healthcareProfessionalSectionFields.specialties ?? [],
+    //         spokenLanguages: healthcareProfessionalSectionFields.spokenLanguages ?? []
+    //     }
+    // }
+
+    const baseGQLMutation = `mutation Mutation($id: ID!, $input: UpdateHealthcareProfessionalInput!) {
+        updateHealthcareProfessional(id: $id, input: $input) {
+                ${updatedFields}
+            }
+        }`
 }
 
 const handleListItemMouseOver = (index: number) => {
