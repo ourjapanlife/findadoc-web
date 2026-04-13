@@ -90,6 +90,8 @@ export type CreateFacilityInput = {
   nameEn: Scalars['String']['input'];
   /** Name of the facility in Japanese. */
   nameJa: Scalars['String']['input'];
+  /** Payment options for the facility, Type and Brand */
+  paymentOptions?: InputMaybe<Array<PaymentOptionsInput>>;
 };
 
 /** Input for creating a new healthcare professional. */
@@ -208,6 +210,8 @@ export type Facility = {
   nameEn: Scalars['String']['output'];
   /** Name of the facility in Japanese. */
   nameJa: Scalars['String']['output'];
+  /** The payment methods accepted by this facility. */
+  paymentOptions?: Maybe<Array<PaymentOption>>;
   /** ISO 8601 timestamp of the last update to this facility. */
   updatedDate: Scalars['String']['output'];
 };
@@ -624,6 +628,31 @@ export enum OrderDirection {
   Desc = 'desc'
 }
 
+/** Represents a payment method accepted at a healthcare facility. */
+export type PaymentOption = {
+  __typename?: 'PaymentOption';
+  /** Specific brands or networks accepted (e.g., 'Visa', 'Mastercard', 'Suica', 'PayPay'). */
+  paymentBrands?: Maybe<Array<Scalars['String']['output']>>;
+  /** The general category of payment (e.g., 'Credit Card', 'Cash', 'Electronic Money'). */
+  paymentType: PaymentType;
+};
+
+/** Payment Options input for adding facility  */
+export type PaymentOptionsInput = {
+  paymentBrands?: InputMaybe<Array<Scalars['String']['input']>>;
+  paymentType: PaymentType;
+};
+
+/** List of payment types for healthcare facilities */
+export enum PaymentType {
+  Cash = 'CASH',
+  CreditCard = 'CREDIT_CARD',
+  DebitCard = 'DEBIT_CARD',
+  ElectronicMoney = 'ELECTRONIC_MONEY',
+  Insurance = 'INSURANCE',
+  QrCode = 'QR_CODE'
+}
+
 /** A physical address with bilingual (English and Japanese) fields. */
 export type PhysicalAddress = {
   __typename?: 'PhysicalAddress';
@@ -981,6 +1010,8 @@ export type UpdateFacilityInput = {
   nameEn?: InputMaybe<Scalars['String']['input']>;
   /** Updated name of the facility in Japanese. */
   nameJa?: InputMaybe<Scalars['String']['input']>;
+  /** Payment options for the facility, Type and Brand */
+  paymentOptions?: InputMaybe<Array<PaymentOptionsInput>>;
 };
 
 /** Input for updating an existing healthcare professional. All fields are optional — only provided fields are updated. */
@@ -1159,6 +1190,9 @@ export type ResolversTypes = {
   ObjectType: ObjectType;
   OrderBy: OrderBy;
   OrderDirection: OrderDirection;
+  PaymentOption: ResolverTypeWrapper<PaymentOption>;
+  PaymentOptionsInput: PaymentOptionsInput;
+  PaymentType: PaymentType;
   PhysicalAddress: ResolverTypeWrapper<PhysicalAddress>;
   PhysicalAddressInput: PhysicalAddressInput;
   Query: ResolverTypeWrapper<Record<PropertyKey, never>>;
@@ -1206,6 +1240,8 @@ export type ResolversParentTypes = {
   ModerationAutofillDatabaseSubmissionInput: ModerationAutofillDatabaseSubmissionInput;
   Mutation: Record<PropertyKey, never>;
   OrderBy: OrderBy;
+  PaymentOption: PaymentOption;
+  PaymentOptionsInput: PaymentOptionsInput;
   PhysicalAddress: PhysicalAddress;
   PhysicalAddressInput: PhysicalAddressInput;
   Query: Record<PropertyKey, never>;
@@ -1254,6 +1290,7 @@ export type FacilityResolvers<ContextType = any, ParentType extends ResolversPar
   mapLongitude?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
   nameEn?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   nameJa?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  paymentOptions?: Resolver<Maybe<Array<ResolversTypes['PaymentOption']>>, ParentType, ContextType>;
   updatedDate?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
 };
 
@@ -1313,6 +1350,11 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   updateReservation?: Resolver<ResolversTypes['Reservation'], ParentType, ContextType, RequireFields<MutationUpdateReservationArgs, 'input'>>;
   updateSubmission?: Resolver<ResolversTypes['Submission'], ParentType, ContextType, RequireFields<MutationUpdateSubmissionArgs, 'id' | 'input'>>;
   updateUser?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationUpdateUserArgs, 'id' | 'input'>>;
+};
+
+export type PaymentOptionResolvers<ContextType = any, ParentType extends ResolversParentTypes['PaymentOption'] = ResolversParentTypes['PaymentOption']> = {
+  paymentBrands?: Resolver<Maybe<Array<ResolversTypes['String']>>, ParentType, ContextType>;
+  paymentType?: Resolver<ResolversTypes['PaymentType'], ParentType, ContextType>;
 };
 
 export type PhysicalAddressResolvers<ContextType = any, ParentType extends ResolversParentTypes['PhysicalAddress'] = ResolversParentTypes['PhysicalAddress']> = {
@@ -1384,6 +1426,7 @@ export type Resolvers<ContextType = any> = {
   HealthcareProfessionalSubmission?: HealthcareProfessionalSubmissionResolvers<ContextType>;
   LocalizedName?: LocalizedNameResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
+  PaymentOption?: PaymentOptionResolvers<ContextType>;
   PhysicalAddress?: PhysicalAddressResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   Reservation?: ReservationResolvers<ContextType>;
