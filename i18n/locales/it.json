@@ -161,12 +161,7 @@
     "confirmExit": "Exit without saving",
     "create": "Create",
     "exit": "Exit",
-    "facilityCreatedSuccessfully": "Facility created successfully.",
-    "heathcareProfessionalCreatedSuccessfully": "Healthcare Professional created successfully.",
-    "unsavedChangesMessage": "This will exit without saving your entry. All unsaved data will be lost.",
-    "healthcareProfessionalEnglishNameRequired": "Healthcare Professional must have an English name",
-    "hasEmptyFieldsHealthcareProfessional": "All fields are required for creating a healthcare professional",
-    "hasEmptyFieldsFacility": "Some required fields are missing for creating a facility"
+    "unsavedChangesMessage": "This will exit without saving your entry. All unsaved data will be lost."
   },
   "modDashboardLeftNav": {
     "facilities": "Strutture",
@@ -198,15 +193,10 @@
     "deleteButtonText": "ELIMINA DEFINITIVAMENTE",
     "update": "Aggiorna",
     "updateAndExit": "Aggiorna & Esci",
-    "facilityDeletedSuccessfully": "Struttura eliminata con successo",
-    "facilityUpdatedSuccessfully": "Struttura aggiornata con successo",
-    "healthcareProfessionalDeletedSuccessfully": "Professionista sanitario eliminato con successo",
-    "healthcareProfessionalUpdatedSuccessfully": "Professionista sanitario aggiornato con successo",
     "back": "Back",
     "hasUnsavedChanges": "You have unsaved changes. Are you sure you want to leave?",
     "deleteConfirmationFacility": "Are you sure you want to delete the Facility: {facility}, with ID: {id}?",
-    "deleteConfirmationHealthcareProfessional": "Are you sure you want to delete the Healthcare Professional: {healthcareProfessional}, with ID: {id}?",
-    "healthcareProfessionalEnglishNameRequired": "Healthcare Professional must have an English name"
+    "deleteConfirmationHealthcareProfessional": "Are you sure you want to delete the Healthcare Professional: {healthcareProfessional}, with ID: {id}?"
   },
   "modEditSubmissionTopNav": {
     "updateAndExit": "Aggiorna & Esci",
@@ -317,13 +307,8 @@
     "noHealthcareProfessionalFound": "No matching Healthcare Professionals found"
   },
   "modSubmissionForm": {
-    "confirmationButton": "Lascia la pagina",
-    "hasUnsavedChanges": "Hai delle modifiche non salvate. Sei sicuro di voler uscire?",
     "errorMessageCompletedForm": "Tentativo di inviare il modulo completato fallito",
-    "errorMessageFacilityInputsInvalid": "Alcuni campi della struttura non sono stati compilati correttamente",
     "errorMessageFacilityId": "L'ID della struttura è obbligatiorio per aggiornare la struttura",
-    "errorMessageHealthcareInputsInvalid": "Alcuni campi del professionista sanitario non sono stati compilati correttamente",
-    "errorMessageEnglishNameRequired": "Il professionista sanitario deve avere un nome in inglese",
     "facilitySuccessfullyRejected": "Struttura rifiutata con successo",
     "healthcareProfessionalId": "ID professionista sanitario",
     "infoMessageAlreadyApproved": "Questa richiesta è già stata approvata",
@@ -333,8 +318,6 @@
     "placeholderTextHealthcareProfessionalSearchbar": "Cerca per nome o ID per aggiungere un medico",
     "submissionConfirmationAcceptanceButton": "Si, invia",
     "submissionConfirmationMessage": "Sei sicuro di inviare questo form?",
-    "successMessageUpdated": "Avvio aggiornato con successo",
-    "successMessageApproved": "Invio approvato e creato con successo",
     "rejectSubmissionConfirmationMessage": "Are you sure you want to reject this submission?",
     "rejectSubmissionConfirmationButton": "Yes, reject the submission",
     "searchExistingFacilities": "Search for existing facility",
@@ -441,9 +424,7 @@
   "authErrors": {},
   "facilitiesErrors": {},
   "healthcareProfessionalsErrors": {},
-  "localeErrors": {
-    "notSpecified": "Not Specified"
-  },
+  "localeErrors": {},
   "locationErrors": {},
   "moderationSubmissionsErrors": {},
   "searchResultsErrors": {},
@@ -451,17 +432,7 @@
     "colorThemes": "Color Themes"
   },
   "unsavedChanges": {
-    "create": {
-      "title": "Uscire senza creare?",
-      "message": "Non è stato ancora creato. Se esci ora, tutte le informazioni inserite andranno perse.",
-      "cancel": "Resta",
-      "confirm": "Esci"
-    },
-    "update": {
-      "title": "Eliminare le modifiche?",
-      "message": "Le tue modifiche non sono state salvate. Se esci ora, andranno perse.",
-      "cancel": "Continua a modificare",
-      "confirm": "Elimina modifiche"
-    }
+    "create": {},
+    "update": {}
   }
 }
