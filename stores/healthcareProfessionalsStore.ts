@@ -15,7 +15,8 @@ import { type Insurance,
     RelationshipAction,
     type CreateHealthcareProfessionalInput,
     type MutationCreateHealthcareProfessionalArgs,
-    type Query } from '~/typedefs/gqlTypes'
+    type Query,
+    type UpdateHealthcareProfessionalInput } from '~/typedefs/gqlTypes'
 import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql'
 import { useLocaleStore } from '~/stores/localeStore'
 import type { ServerResponse } from '~/typedefs/serverResponse'
@@ -186,23 +187,66 @@ export const useHealthcareProfessionalsStore = defineStore(
 
             // Check me!
 
-            function updateInput(): MutationUpdateHealthcareProfessionalArgs {
-                const healthcareArgsObject = {}
-                const hpFields = useHealthcareProfessionalsStore().healthcareProfessionalSectionFields
-                const healthcareProfessionalId = hpFields.selectedHealthcareProfessionalId
+            const updateInput = () => {
+                const hpFields = Array.from(useHealthcareProfessionalsStore().healthcareProfessionalUpdatedFields)
+                const healthcareProfessionalId = '07c52d15-527b-4c2e-b3ce-843601c8a5fd'
+                const healthcareArgsObject = {
+                    id: healthcareProfessionalId,
+                    input: {
+                        acceptedInsurance: [],
+                        additionalInfoForPatients: '',
+                        degrees: [],
+                        facilityIds: [],
+                        names: [{
+                            firstName: 'Frank',
+                            lastName: 'Sinatra',
+                            locale: 'en_US',
+                            middleName: 'm'
+                        }],
+                        specialties: [],
+                        spokenLanguages: []
+                    } as UpdateHealthcareProfessionalInput
+                } as MutationUpdateHealthcareProfessionalArgs
 
-                healthcareArgsObject[id] = selectedHealthcareProfessionalId.value
+                console.log(selectedHealthcareProfessionalId.value)
+
+                // Add if statements for each key
+                // Figure out unwrapping proxy
+                // Make sure object type is correct
+                // Figure out what is required to be sent in the GraphQL schema
 
                 for (const field of hpFields) {
-                    healthcareArgsObject[field] = hpFields[field]
+                    // healthcareArgsObject[field] = hpFields[field]
+
+                    if (field === 'acceptedInsurance') {
+                        healthcareArgsObject.input.acceptedInsurance = Array.from(healthcareProfessionalSectionFields.acceptedInsurance)
+                        console.log('Found accepted insurance!')
+                    }
+                    if (field === 'additionalInfoForPatients') {
+                        healthcareArgsObject.input.additionalInfoForPatients = healthcareProfessionalSectionFields.additionalInfoForPatients
+                    }
+                    if (field === 'degrees') {
+                        healthcareArgsObject.input.degrees = Array.from(healthcareProfessionalSectionFields.degrees)
+                        console.log('Found degrees!')
+                    }
+                    if (field === 'names') {
+                        healthcareArgsObject.input.names = Array.from(healthcareProfessionalSectionFields.names)
+                    }
+                    if (field === 'specialties') {
+                        healthcareArgsObject.input.specialties = Array.from(healthcareProfessionalSectionFields.specialties)
+                    }
+                    if (field === 'spokenLanguages') {
+                        healthcareArgsObject.input.spokenLanguages = Array.from(healthcareProfessionalSectionFields.spokenLanguages)
+                    }
                 }
+                console.log(healthcareArgsObject)
                 return healthcareArgsObject
             }
 
             const serverResponse = await graphQLClientRequestWithRetry<Mutation>(
                 gqlClient.request.bind(gqlClient),
                 updateHealthcareProfessionalGqlMutation(),
-                updateInput
+                updateInput()
             )
 
             const responseData = serverResponse.data?.updateHealthcareProfessional
@@ -387,16 +431,15 @@ const getHealthcareProfessionalByIdGqlQuery = gql`
 // }
 // `
 
-const updateHealthcareProfessionalGqlMutation = () => {
+function updateHealthcareProfessionalGqlMutation() {
     let updatedFields = ''
 
     for (const field of useHealthcareProfessionalsStore().healthcareProfessionalUpdatedFields) {
-        updatedFields = `${updatedFields + field} `
+        updatedFields = `${updatedFields + field}\n` + '\t' + '\t'
     }
 
     return gql`mutation Mutation($id: ID!, $input: UpdateHealthcareProfessionalInput!) {
         updateHealthcareProfessional(id: $id, input: $input) {
-            id
             names {
                 firstName
                 middleName
@@ -407,6 +450,8 @@ const updateHealthcareProfessionalGqlMutation = () => {
             }
         }`
 }
+
+// Original code
 
 // const updateHealthcareProfessionalGqlMutation2 = () => {
 //     let updatedFields = ''

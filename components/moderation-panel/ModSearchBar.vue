@@ -203,17 +203,18 @@ const updateHealthcareProfessionalGqlMutation2 = () => {
     let updatedFields = ''
     const healthcareArgsObject = {}
     const hpFields = useHealthcareProfessionalsStore().healthcareProfessionalSectionFields
-    const healthcareProfessionalId = hpFields.selectedHealthcareProfessionalId
+    const healthcareProfessionalId = hpFields.id
 
     // console.log('accepted insurance' + hpFields.acceptedInsurance)
 
     for (const field of hpFieldsForUpdating) {
         updatedFields = updatedFields + field + '\n' + '\t' + '\t'
-        healthcareArgsObject[field] = hpFields[field]
+        healthcareArgsObject[field] = Array.from(hpFields[field])
         // console.log(healthcareArgsObject[field])
     }
-
-    console.log(healthcareArgsObject.acceptedInsurance)
+    console.log(healthcareProfessionalId)
+    console.log(healthcareArgsObject)
+    console.log(updatedFields)
 
     // I'm trying to create an object that
 

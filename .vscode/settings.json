@@ -33,5 +33,9 @@
     "eslint.useFlatConfig": true,
 
     // Disable other formatters that might conflict
-    "prettier.enable": false
+    "prettier.enable": false,
+    "i18n-ally.localesPaths": [
+      "i18n",
+      "i18n/locales"
+    ]
 }
