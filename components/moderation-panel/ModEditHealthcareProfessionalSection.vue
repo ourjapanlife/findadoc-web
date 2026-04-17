@@ -247,10 +247,11 @@
                     </li>
                 </ol>
                 <NoteInputField
-                    v-model="hpStore.healthcareProfessionalSectionFields.additionalInfoForPatients as string"
+                    v-model="hpStore.healthcareProfessionalSectionFields.additionalInfoForPatients as Array"
                     :label="t('modHealthcareProfessionalSection.labelAdditionalNotesForPatients')"
                     :placeholder="t('modHealthcareProfessionalSection.placeholderAdditionalNotesForPatients')"
                     :required="false"
+                    @vue:updated="notesUpdated"
                 />
             </div>
             <div v-if="moderationScreenStore.editHealthcareProfessionalScreenIsActive()">
@@ -590,6 +591,15 @@ const handleLocaleInputChange = (filteredItems: Ref<Locale[]>, inputValue: strin
     }
 
     filteredItems.value = localesStore.getLocaleByNameInput(inputValue)
+}
+
+let notesUpdateValue = false
+
+function notesUpdated() {
+    if (!notesUpdateValue) {
+        hpStore.healthcareProfessionalUpdatedFields.push('additionalInfoForPatients')
+        notesUpdateValue = true
+    }
 }
 
 const facilitiesFieldsToDisplayCallback = (item: Facility) => [item.nameEn, item.nameJa]
