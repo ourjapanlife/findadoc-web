@@ -31,7 +31,7 @@
                 :placeholder="t('submitPage.location')"
                 @blur="initialValidationCheck(location, 'googleMaps')"
             >
-            <div class="google-maps-validation-container flex text-error text-xs font-sans h-3 mt-1 mb-3">
+            <div class="google-maps-validation-container flex text-error text-xs font-sans h-3 mt-1 mb-4">
                 <span
                     v-show="!isValidInput.googleMapsUrl.value"
                     class="text-error text-xs font-sans"
@@ -66,7 +66,7 @@
                     @blur="initialValidationCheck(firstName, 'firstName')"
                 >
             </div>
-            <div class="name-validation-container flex text-error text-xs font-sans h-3 mt-1 mb-3">
+            <div class="name-validation-container flex text-error text-xs font-sans h-3 mt-1 mb-4">
                 <div class="last-name-validation-container w-44 mr-5">
                     <span
                         v-show="!isValidInput.lastName.value"
@@ -85,17 +85,11 @@
             <span
                 class="mb-2 text-primary-text text-sm font-normal font-sans"
             >{{ t('submitPage.spokenLanguage1') }}</span>
-            <p
-                v-show="!isValidInput.primarySpokeLangauge.value"
-                role="alert"
-                class="text-error text-xs font-sans"
-            >
-                {{ t('submitPage.spokenLanguageValidation') }}
-            </p>
+
             <select
                 v-model="selectLanguage1"
                 data-testid="submit-select-language1"
-                class="mb-5 px-3 py-3.5 w-96 h-12 bg-secondary-bg rounded-lg border border-primary-text-muted
+                class=" px-3 py-3.5 w-96 h-12 bg-secondary-bg rounded-lg border border-primary-text-muted
                         text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
                 :placeholder="t('submitPage.selectLanguage1')"
                 @change="initialValidationCheck(selectLanguage1, 'primaryLanguage')"
@@ -108,19 +102,23 @@
                     {{ locale.displayText }}
                 </option>
             </select>
+            <div class="primary-language-validation-container flex text-error text-xs font-sans h-3 mt-1 mb-4">
+                <span
+                    v-show="!isValidInput.primarySpokeLangauge.value"
+                    role="alert"
+                    class="text-error text-xs font-sans"
+                >
+                    {{ t('submitPage.spokenLanguageValidation') }}
+                </span>
+            </div>
             <span
                 class="mb-2 text-primary-text text-sm font-normal font-sans"
             >{{ t('submitPage.spokenLanguage2') + " (" + t('submitPage.optional') + ")" }}</span>
-            <p
-                v-show="!isValidInput.secondarySpokenLanguage.value"
-                class="text-error text-xs font-sans"
-            >
-                {{ t('submitPage.invalidOption') }}
-            </p>
+
             <select
                 v-model="selectLanguage2"
                 data-testid="submit-select-language2"
-                class="mb-5 px-3 py-3.5 w-96 h-12 bg-primary-text-inverted rounded-lg border border-primary-text-muted
+                class=" px-3 py-3.5 w-96 h-12 bg-primary-text-inverted rounded-lg border border-primary-text-muted
                         text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
                 :placeholder="t('submitPage.selectLanguage2')"
                 @change="selectLanguage2 ? initialValidationCheck(selectLanguage2, 'secondaryLanguage') : null"
@@ -133,6 +131,14 @@
                     {{ locale.displayText }}
                 </option>
             </select>
+            <div class="secondary-language-validation-container flex text-error text-xs font-sans h-3 mt-1 mb-4">
+                <span
+                    v-show="!isValidInput.secondarySpokenLanguage.value"
+                    class="text-error text-xs font-sans"
+                >
+                    {{ t('submitPage.invalidOption') }}
+                </span>
+            </div>
             <span
                 class="mb-2 text-primary-text text-sm font-normal font-sans"
             >{{ t('submitPage.otherNotes') + " (" + t('submitPage.optional') + ")" }}</span>
@@ -194,7 +200,7 @@ const isValidInput = {
     googleMapsUrl: ref(true),
     lastName: ref(true),
     firstName: ref(true),
-    primarySpokeLangauge: ref(false),
+    primarySpokeLangauge: ref(true),
     secondarySpokenLanguage: ref(true)
 }
 
