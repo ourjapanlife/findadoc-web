@@ -150,12 +150,7 @@
     "confirmExit": "Exit without saving",
     "create": "Create",
     "exit": "Exit",
-    "facilityCreatedSuccessfully": "Facility created successfully.",
-    "heathcareProfessionalCreatedSuccessfully": "Healthcare professional created successfully.",
-    "unsavedChangesMessage": "This will exit without saving your entry. All unsaved data will be lost.",
-    "healthcareProfessionalEnglishNameRequired": "Healthcare Professional must have an English name",
-    "hasEmptyFieldsHealthcareProfessional": "All fields are required for creating a healthcare professional",
-    "hasEmptyFieldsFacility": "Some required fields are missing for creating a facility"
+    "unsavedChangesMessage": "This will exit without saving your entry. All unsaved data will be lost."
   },
   "modDashboardLeftNav": {
     "facilities": "Établissements",
@@ -177,21 +172,14 @@
   "modSubmissionForm": {
     "healthcareProfessionalId": "Identifiants des professionnels de santé",
     "placeholderTextHealthcareProfessionalSearchbar": "Rechercher par nom ou ID pour ajouter un médecin",
-    "confirmationButton": "Leave Page",
-    "hasUnsavedChanges": "You have unsaved changes. Are you sure you want to leave?",
     "errorMessageCompletedForm": "Failed to submit completed form",
-    "errorMessageFacilityInputsInvalid": "Some of the Facility Fields were not filled in correctly",
     "errorMessageFacilityId": "Facility ID is required for updating the Facility",
-    "errorMessageHealthcareInputsInvalid": "Some of the Healthcare Professional Fields were not filled in correctly",
-    "errorMessageEnglishNameRequired": "The healthcare professional must have an English name",
     "infoMessageAlreadyApproved": "This submission has already been approved",
     "labelHealthcareProfessionalFirstName": "First Name",
     "labelHealthcareProfessionalLastName": "Last Name",
     "labelHealthcareProfessionalMiddleName": "Middle Name",
     "submissionConfirmationAcceptanceButton": "Yes, submit",
     "submissionConfirmationMessage": "Are you sure you want to submit this form?",
-    "successMessageUpdated": "Submission updated successfully",
-    "successMessageApproved": "Submission approved and created successfully",
     "facilitySuccessfullyRejected": "Facility rejected successfully",
     "rejectSubmissionConfirmationMessage": "Are you sure you want to reject this submission?",
     "rejectSubmissionConfirmationButton": "Yes, reject the submission",
@@ -334,16 +322,11 @@
     "delete": "Delete",
     "copyFailure": "Failed to copy ID",
     "update": "Update",
-    "facilityUpdatedSuccessfully": "Facility updated successfully",
     "deleteButtonText": "DELETE FOREVER",
-    "facilityDeletedSuccessfully": "Facility deleted successfully",
-    "healthcareProfessionalDeletedSuccessfully": "Healthcare Professional deleted successfully",
-    "healthcareProfessionalUpdatedSuccessfully": "Healthcare Professional updated successfully",
     "back": "Back",
     "hasUnsavedChanges": "You have unsaved changes. Are you sure you want to leave?",
     "deleteConfirmationFacility": "Are you sure you want to delete the Facility: {facility}, with ID: {id}?",
-    "deleteConfirmationHealthcareProfessional": "Are you sure you want to delete the Healthcare Professional: {healthcareProfessional}, with ID: {id}?",
-    "healthcareProfessionalEnglishNameRequired": "Healthcare Professional must have an English name"
+    "deleteConfirmationHealthcareProfessional": "Are you sure you want to delete the Healthcare Professional: {healthcareProfessional}, with ID: {id}?"
   },
   "serverErrorMessages": {
     "genericErrorMessage": "There was an error submitting your form, please try again",
@@ -441,9 +424,7 @@
   "authErrors": {},
   "facilitiesErrors": {},
   "healthcareProfessionalsErrors": {},
-  "localeErrors": {
-    "notSpecified": "Not Specified"
-  },
+  "localeErrors": {},
   "locationErrors": {},
   "moderationSubmissionsErrors": {},
   "searchResultsErrors": {},
@@ -451,17 +432,7 @@
     "colorThemes": "Color Themes"
   },
   "unsavedChanges": {
-    "create": {
-      "title": "Quitter sans créer ?",
-      "message": "Cela n'a pas encore été créé. Si vous quittez maintenant, toutes les informations saisies seront perdues.",
-      "cancel": "Rester",
-      "confirm": "Quitter"
-    },
-    "update": {
-      "title": "Ignorer les modifications ?",
-      "message": "Vos modifications n'ont pas été enregistrées. Si vous quittez maintenant, elles seront perdues.",
-      "cancel": "Continuer la modification",
-      "confirm": "Ignorer les modifications"
-    }
+    "create": {},
+    "update": {}
   }
 }
