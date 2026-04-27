@@ -1,36 +1,54 @@
 <template>
-    <div class="w-64 p-4 border-r border-slate-300">
-        <div v-if="moderationScreenStore.dashboardScreenIsActive()">
-            <ModDashboardLeftNavbar />
+    <div class="w-64 h-screen bg-white p-8 flex flex-col gap-10">
+        <div class="flex items-center mb-2">
+            <SvgoSiteLogo class="w-12 h-12" />
         </div>
-        <div v-if="moderationScreenStore.editSubmissionScreenIsActive()">
-            NAVBAR EDIT SUBMISSION PLACEHOLDER
-        </div>
-        <div v-if="moderationScreenStore.editHealthcareProfessionalScreenIsActive()">
-            <p class="text-xl font-bold">
-                <ModHealthcareProfessionalLeftNavbar />
-            </p>
-        </div>
-        <div v-if="moderationScreenStore.editFacilityScreenIsActive()">
-            <p class="text-xl font-bold">
-                NAVBAR EDIT FACILITY PLACEHOLDER
-            </p>
-        </div>
-        <div v-if="moderationScreenStore.createHealthcareProfessionalScreenIsActive()">
-            <p class="text-xl font-bold">
-                NAVBAR CREATE FACILITY PLACEHOLDER
-            </p>
-        </div>
-        <div v-if="moderationScreenStore.createFacilityScreenIsActive()">
-            <p class="text-xl font-bold">
-                NAVBAR CREATE FACILITY PLACEHOLDER
-            </p>
-        </div>
+
+        <nav class="flex flex-col gap-8">
+            <button
+                class="flex items-center gap-4 text-left group cursor-pointer"
+                :class="selectedDashboardView === SelectedModerationListView.Submissions ? 'text-black' : 'text-slate-400'"
+                @click="updateView(SelectedModerationListView.Submissions)"
+            >
+                <span class="text-xl font-bold tracking-tight">
+                    {{ t("modDashboardLeftNav.submissions") }}
+                </span>
+            </button>
+
+            <button
+                class="flex items-center gap-4 text-left group cursor-pointer"
+                :class="selectedDashboardView === SelectedModerationListView.Facilities ? 'text-black' : 'text-slate-400'"
+                @click="updateView(SelectedModerationListView.Facilities)"
+            >
+                <span class="text-xl font-bold tracking-tight">
+                    {{ t("modDashboardLeftNav.facilities") }}
+                </span>
+            </button>
+
+            <button
+                class="flex items-start gap-4 text-left group cursor-pointer"
+                :class="selectedDashboardView === SelectedModerationListView.HealthcareProfessionals
+                    ? 'text-black' : 'text-slate-400'"
+                @click="updateView(SelectedModerationListView.HealthcareProfessionals)"
+            >
+                <span class="text-xl font-bold tracking-tight leading-tight block">
+                    {{ t("modDashboardLeftNav.healthcareProfessionals") }}
+                </span>
+            </button>
+        </nav>
     </div>
 </template>
 
 <script setup lang="ts">
-import { useModerationScreenStore } from '~/stores/moderationScreenStore'
+import { computed } from 'vue'
+import { useModerationSubmissionsStore, SelectedModerationListView } from '~/stores/moderationSubmissionsStore'
 
-const moderationScreenStore = useModerationScreenStore()
+const { t } = useI18n()
+const moderationSubmissionsStore = useModerationSubmissionsStore()
+
+const selectedDashboardView = computed(() => moderationSubmissionsStore.selectedModerationListViewChosen)
+
+const updateView = (view: SelectedModerationListView) => {
+    moderationSubmissionsStore.setSelectedModerationListViewChosen(view)
+}
 </script>
