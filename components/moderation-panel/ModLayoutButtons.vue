@@ -1,5 +1,5 @@
 <template>
-    <div class="flex justify-center items-center gap-5 mb-10 w-full min-h-20">
+    <div class="relative flex justify-center items-center gap-5 mb-10 w-full min-h-20">
         <div
             v-if="isSubmissionsViewActive"
             class="flex gap-5"
@@ -37,6 +37,28 @@
                 </span>
             </button>
         </div>
+
+        <div class="absolute bottom-0 right-0 flex items-center -mb-5">
+            <NuxtLink
+                v-if="isHealthcareProfessionals"
+                to="/moderation/create-healthcare-professional"
+                data-testid="add-hp-button"
+                class="flex justify-center items-center rounded-full bg-secondary-bg border-primary p-2 border-2 w-50
+                font-semibold text-sm mr-2 overflow-hidden text-center hover:bg-gray-50"
+            >
+                {{ t('modDashboardTopbar.addHealthcareProfessional') }}
+            </NuxtLink>
+
+            <NuxtLink
+                v-if="isFacility"
+                to="/moderation/create-facility"
+                data-testid="add-facility-button"
+                class="flex justify-center items-center rounded-full bg-secondary-bg border-primary p-2 border-2 w-50
+                font-semibold text-sm mr-2 overflow-hidden text-center hover:bg-gray-50"
+            >
+                {{ t('modDashboardTopbar.addFacility') }}
+            </NuxtLink>
+        </div>
     </div>
 </template>
 
@@ -58,6 +80,12 @@ const moderationSubmissionsStore = useModerationSubmissionsStore()
 
 const isSubmissionsViewActive = computed(() =>
     moderationSubmissionsStore.selectedModerationListViewChosen === SelectedModerationListView.Submissions)
+
+const isHealthcareProfessionals = computed(() =>
+    moderationSubmissionsStore.selectedModerationListViewChosen === SelectedModerationListView.HealthcareProfessionals)
+
+const isFacility = computed(() =>
+    moderationSubmissionsStore.selectedModerationListViewChosen === SelectedModerationListView.Facilities)
 
 const currentTab = computed(() => moderationSubmissionsStore.selectedModerationListViewTabChosen)
 
