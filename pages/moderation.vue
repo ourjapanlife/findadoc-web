@@ -49,7 +49,7 @@
 
                                 <div
                                     v-if="authStore.isLoggedIn"
-                                    class="p-8"
+                                    class="px-8 py-2"
                                 >
                                     <ModMainContentTopbar />
                                     <ModMainContent />
