@@ -1,54 +1,67 @@
 <template>
-    <div>
+    <div class="h-screen w-screen overflow-hidden flex bg-primary/10 font-sans">
         <Suspense>
-            <div
-                data-testid="moderation-content"
-                class="h-full w-full flex flex-col flex-1 font-sans text-primary-text bg-primary-bg"
-            >
+            <template #default>
                 <div
-                    v-if="authStore.isLoadingAuth"
-                    class="w-full h-full mt-16 mb-16 text-primary-text text-2xl font-bold
-                flex self-center justify-items-center justify-center text-center"
+                    data-testid="moderation-content"
+                    class="flex w-full h-full"
                 >
-                    {{ t('login.checkingauth') }}
-                </div>
-                <div
-                    v-if="!doesTheUserHaveAccess"
-                    data-testid="unauthorized-message"
-                >
-                    <div
-                        class="flex flex-col w-full h-full mt-16 mb-16 text-primary-text text-2xl font-bold
-                    self-center justify-items-center justify-center text-center"
-                    >
-                        <span>{{ t('login.unauthorizedline1') }}</span>
-                        <span>{{ t('login.unauthorizedline2') }}</span>
-                        <NuxtLink
-                            to="https://forms.gle/4E763qfaq46kEsn99"
-                            target="_blank"
-                            class="inline text-primary underline"
-                        >
-                            {{ t('login.unauthorizedline3') }}
-                        </NuxtLink>
+                    <aside class="w-70 h-full bg-white border-r border-gray-200 shrink-0">
+                        <ModLeftNavbar />
+                    </aside>
+
+                    <div class="flex-1 flex flex-col min-w-0 h-full">
+                        <header class="w-full bg-white border-b border-gray-200 flex items-center px-12 shrink-0">
+                            <ModTopbar class="w-full" />
+                        </header>
+
+                        <main class="flex-1 overflow-y-auto px-12 pb-12">
+                            <div class="h-10" />
+
+                            <ModLayoutButtons />
+
+                            <section
+                                class="w-full max-w-350 mx-auto bg-white rounded-xl
+                            shadow-sm border border-gray-200 min-h-150 flex flex-col"
+                            >
+                                <div
+                                    v-if="authStore.isLoadingAuth"
+                                    class="p-10 text-center font-bold"
+                                >
+                                    {{ t('login.checkingauth') }}
+                                </div>
+
+                                <div
+                                    v-if="!doesTheUserHaveAccess"
+                                    class="p-10 text-center"
+                                >
+                                    <h2 class="text-2xl font-bold">
+                                        {{ t('login.unauthorizedline1') }}
+                                    </h2>
+                                    <NuxtLink
+                                        to="https://forms.gle/4E763qfaq46kEsn99"
+                                        target="_blank"
+                                        class="text-primary underline"
+                                    >
+                                        {{ t('login.unauthorizedline3') }}
+                                    </NuxtLink>
+                                </div>
+
+                                <div
+                                    v-if="authStore.isLoggedIn"
+                                    class="px-8 py-2"
+                                >
+                                    <ModMainContentTopbar />
+                                    <ModMainContent />
+                                </div>
+                            </section>
+                        </main>
                     </div>
                 </div>
-                <div
-                    v-if="authStore.isLoggedIn"
-                    data-testid="moderation-page"
-                    class="flex flex-row h-screen"
-                >
-                    <ModLeftNavbar />
-                    <div class="w-full flex flex-col items-stretch">
-                        <ModTopbar />
-                        <ModMainContent />
-                    </div>
-                </div>
-            </div>
+            </template>
             <!-- loading state via #fallback slot -->
             <template #fallback>
-                <div
-                    class="w-full h-full mt-16 mb-16 text-primary-text text-2xl font-bold
-                flex self-center justify-items-center justify-center text-center"
-                >
+                <div class="h-screen w-screen flex items-center justify-center text-2xl font-bold bg-white">
                     {{ t('login.checkingauth') }}
                 </div>
             </template>

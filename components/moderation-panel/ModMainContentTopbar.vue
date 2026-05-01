@@ -1,8 +1,25 @@
 <template>
-    <div class="flex items-center justify-between h-full px-4 py-5">
-        <h1 class="font-bold">
+    <div class="flex items-center justify-between">
+        <h2
+            class="displayed-section-header-maincontent font-semibold mx-1"
+        >
             {{ updateTextForModerationDashboard(moderationSubmissionsStore.selectedModerationListViewChosen) }}
-        </h1>
+        </h2>
+        <div class="dashboard-search flex items-center mt-4">
+            <div class="justify-start items-start flex">
+                <input
+                    type="text"
+                    :placeholder="t('modDashboardTopbar.placeholderText')"
+                    class=" px-3 py-3.5 w-96 h-12 bg-secondary-bg rounded-lg border border-primary-text-muted
+                    text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
+                >
+                <SVGLookingGlass
+                    role="img"
+                    title="searching icon"
+                    class="relative right-8 top-3 w-6 h-6"
+                />
+            </div>
+        </div>
     </div>
 </template>
 
@@ -13,6 +30,7 @@ import {
     useModerationSubmissionsStore
 } from '~/stores/moderationSubmissionsStore'
 import { useI18n } from '#imports'
+import SVGLookingGlass from '~/assets/icons/looking-glass.svg'
 
 const { t } = useI18n()
 const moderationSubmissionsStore = useModerationSubmissionsStore()
