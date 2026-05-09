@@ -209,7 +209,7 @@ const validateFields = () => {
     isValidInput.primarySpokeLangauge.value = validations.validateFirstSpokenLanguage(selectLanguage1.value)
     validationCheckedPreviously.secondarySpokenLanguage.value = true
     isValidInput.secondarySpokenLanguage.value = selectLanguage2.value
-        ? validations.validateUserSubmittedLastName(selectLanguage2.value)
+        ? validations.validateSecondSpokenLanguage(selectLanguage2.value)
         : true
 
     if (
@@ -219,14 +219,17 @@ const validateFields = () => {
         || !isValidInput.primarySpokeLangauge.value
         || !isValidInput.secondarySpokenLanguage.value
     ) {
-        return
+        return false
     }
+
+    return true
 }
 
 async function submitNewSubmission(e: Event) {
     e.preventDefault()
 
-    validateFields()
+    const isValid = validateFields()
+    if (!isValid) return
 
     const spokenLanguages: Locale[] = []
 
@@ -248,8 +251,8 @@ async function submitNewSubmission(e: Event) {
 
     const response = await submissionStore.createNewSubmission(newSubmission)
     // This is used in the component and not graphQL call as it is user messaging and needs the mounted toast library
-    if (response?.errors?.length) {
-        handleServerErrorMessaging(response.errors, toast, t)
+    if (response?.hasErrors || response?.errors?.length) {
+        handleServerErrorMessaging(response.errors ?? [], toast, t)
         return
     }
 
