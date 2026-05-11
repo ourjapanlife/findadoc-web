@@ -157,12 +157,7 @@
     "confirmExit": "Exit without saving",
     "create": "Create",
     "exit": "Exit",
-    "facilityCreatedSuccessfully": "Facility created successfully.",
-    "heathcareProfessionalCreatedSuccessfully": "Healthcare Professional created successfully.",
-    "unsavedChangesMessage": "This will exit without saving your entry. All unsaved data will be lost.",
-    "healthcareProfessionalEnglishNameRequired": "Healthcare Professional must have an English name",
-    "hasEmptyFieldsHealthcareProfessional": "All fields are required for creating a healthcare professional",
-    "hasEmptyFieldsFacility": "Some required fields are missing for creating a facility"
+    "unsavedChangesMessage": "This will exit without saving your entry. All unsaved data will be lost."
   },
   "modDashboardLeftNav": {
     "facilities": "Cơ sở vật chất",
@@ -194,15 +189,10 @@
     "updateAndExit": "Cập nhật và thoát.",
     "deleteButtonText": "DELETE FOREVER",
     "update": "Update",
-    "facilityDeletedSuccessfully": "Facility deleted successfully",
-    "facilityUpdatedSuccessfully": "Facility updated successfully",
-    "healthcareProfessionalDeletedSuccessfully": "Healthcare Professional deleted successfully",
-    "healthcareProfessionalUpdatedSuccessfully": "Healthcare Professional updated successfully",
     "back": "Back",
     "hasUnsavedChanges": "You have unsaved changes. Are you sure you want to leave?",
     "deleteConfirmationFacility": "Are you sure you want to delete the Facility: {facility}, with ID: {id}?",
-    "deleteConfirmationHealthcareProfessional": "Are you sure you want to delete the Healthcare Professional: {healthcareProfessional}, with ID: {id}?",
-    "healthcareProfessionalEnglishNameRequired": "Healthcare Professional must have an English name"
+    "deleteConfirmationHealthcareProfessional": "Are you sure you want to delete the Healthcare Professional: {healthcareProfessional}, with ID: {id}?"
   },
   "modEditSubmissionTopNav": {
     "updateAndExit": "Lưu và thoát.",
@@ -312,13 +302,8 @@
     "noHealthcareProfessionalFound": "No matching Healthcare Professionals found"
   },
   "modSubmissionForm": {
-    "confirmationButton": "Rời trang",
-    "hasUnsavedChanges": "Bạn có thay đổi chưa được lưu. Bạn có chắc chắn muốn rời khỏi trang không?",
     "errorMessageCompletedForm": "Gửi mẫu đã hoàn thành không thành công.",
-    "errorMessageFacilityInputsInvalid": "Một số trường thông tin cơ sở vật chất chưa được điền chính xác.",
     "errorMessageFacilityId": "Mã cơ sở vật chất là bắt buộc để cập nhật cơ sở vật chất.",
-    "errorMessageHealthcareInputsInvalid": "Một số trường thông tin về chuyên gia y tế chưa được điền chính xác.",
-    "errorMessageEnglishNameRequired": "Chuyên gia y tế phải có tên tiếng Anh",
     "healthcareProfessionalId": "Mã số chuyên gia y tế",
     "infoMessageAlreadyApproved": "Đơn đăng ký này đã được phê duyệt.",
     "labelHealthcareProfessionalFirstName": "Tên đầu tiên",
@@ -327,8 +312,6 @@
     "placeholderTextHealthcareProfessionalSearchbar": "Tìm kiếm theo tên hoặc ID để thêm bác sĩ.",
     "submissionConfirmationAcceptanceButton": "Vâng, gửi đi",
     "submissionConfirmationMessage": "Bạn có chắc chắn muốn gửi mẫu đơn này không?",
-    "successMessageUpdated": "Mẫu đơn đã được cập nhật thành công.",
-    "successMessageApproved": "Đã phê duyệt và tạo thành công bài nộp.",
     "facilitySuccessfullyRejected": "Facility rejected successfully",
     "rejectSubmissionConfirmationMessage": "Are you sure you want to reject this submission?",
     "rejectSubmissionConfirmationButton": "Yes, reject the submission",
@@ -441,9 +424,7 @@
   "authErrors": {},
   "facilitiesErrors": {},
   "healthcareProfessionalsErrors": {},
-  "localeErrors": {
-    "notSpecified": "Not Specified"
-  },
+  "localeErrors": {},
   "locationErrors": {},
   "moderationSubmissionsErrors": {},
   "searchResultsErrors": {},
@@ -451,17 +432,7 @@
     "colorThemes": "Color Themes"
   },
   "unsavedChanges": {
-    "create": {
-      "title": "Rời đi mà không tạo?",
-      "message": "Chưa được tạo. Nếu bạn rời đi bây giờ, tất cả thông tin đã nhập sẽ bị mất.",
-      "cancel": "Ở lại",
-      "confirm": "Rời đi"
-    },
-    "update": {
-      "title": "Hủy các thay đổi?",
-      "message": "Các thay đổi của bạn chưa được lưu. Nếu bạn rời đi bây giờ, chúng sẽ bị mất.",
-      "cancel": "Tiếp tục chỉnh sửa",
-      "confirm": "Hủy thay đổi"
-    }
+    "create": {},
+    "update": {}
   }
 }
