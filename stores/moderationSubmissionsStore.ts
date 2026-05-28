@@ -100,9 +100,9 @@ export const useModerationSubmissionsStore = defineStore(
                     const facilityNameEn = submission.facility?.nameEn?.toLowerCase() || ''
                     const facilityNameJa = submission.facility?.nameJa?.toLowerCase() || ''
                     return submissionId.includes(query)
-                        || healthcareProfessionalName.includes(query)
-                        || facilityNameEn.includes(query)
-                        || facilityNameJa.includes(query)
+                      || healthcareProfessionalName.includes(query)
+                      || facilityNameEn.includes(query)
+                      || facilityNameJa.includes(query)
                 })
             }
 

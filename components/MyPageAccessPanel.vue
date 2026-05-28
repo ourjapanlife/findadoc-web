@@ -237,7 +237,7 @@ function moderationPage(entry: AccessControlEntry): NavPage | null {
     }
 
     if (entry.route === '/my-page'
-        && entry.listView === SelectedModerationListView.HealthcareProfessionals) {
+      && entry.listView === SelectedModerationListView.HealthcareProfessionals) {
         return {
             id: 'moderation-healthcare-professionals',
             route: '/my-page',

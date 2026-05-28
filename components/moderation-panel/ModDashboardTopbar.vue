@@ -67,7 +67,7 @@ const accessStore = useCurrentUserAccessStore()
 
 const showAddHpButton = computed(() =>
     moderationSubmissionsStore.selectedModerationListViewChosen
-        === SelectedModerationListView.HealthcareProfessionals
+    === SelectedModerationListView.HealthcareProfessionals
     && (
         accessStore.loadError
         || !accessStore.isLoaded
@@ -76,7 +76,7 @@ const showAddHpButton = computed(() =>
 
 const showAddFacilityButton = computed(() =>
     moderationSubmissionsStore.selectedModerationListViewChosen
-        === SelectedModerationListView.Facilities
+    === SelectedModerationListView.Facilities
     && (
         accessStore.loadError
         || !accessStore.isLoaded
@@ -100,5 +100,4 @@ const updateTextForModerationDashboard = (selectedView: SelectedModerationListVi
             return ''
     }
 }
-
 </script>
