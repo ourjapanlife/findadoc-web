@@ -385,7 +385,8 @@ const saveChangesAndExit = async () => {
             return
         }
 
-        await navigateToModerationDashboard(router, moderationScreenStore)
+        await router.push('/my-page?view=facilities')
+        moderationScreenStore.setActiveScreen(ModerationScreen.Dashboard)
     }
     if (moderationScreenStore.editHealthcareProfessionalScreenIsActive()) {
         const response = await saveChanges()
@@ -394,7 +395,8 @@ const saveChangesAndExit = async () => {
             return
         }
 
-        await navigateToModerationDashboard(router, moderationScreenStore)
+        await router.push('/my-page?view=healthcare-professionals')
+        moderationScreenStore.setActiveScreen(ModerationScreen.Dashboard)
     }
 }
 

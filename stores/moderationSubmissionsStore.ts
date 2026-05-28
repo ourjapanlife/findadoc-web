@@ -37,6 +37,7 @@ export const useModerationSubmissionsStore = defineStore(
         const didMutationFail: Ref<boolean> = ref(false)
         const selectedModerationListViewTabChosen: Ref<SelectedSubmissionListViewTab>
             = ref(SelectedSubmissionListViewTab.ForReview)
+        const submissionStatusFilterEnabled: Ref<boolean> = ref(false)
 
         // Used for store the total number of submissions found by the current search query.
         const totalSubmissionsCount: Ref<number> = ref(0)
@@ -82,6 +83,7 @@ export const useModerationSubmissionsStore = defineStore(
 
         function setSelectedModerationListViewTabChosen(selectedOption: SelectedSubmissionListViewTab) {
             selectedModerationListViewTabChosen.value = selectedOption
+            submissionStatusFilterEnabled.value = true
         }
 
         function filterSelectedSubmission(submissionId: string | undefined) {
@@ -106,7 +108,7 @@ export const useModerationSubmissionsStore = defineStore(
                 })
             }
 
-            const shouldApplyStatusFilter = true
+            const shouldApplyStatusFilter = submissionStatusFilterEnabled.value
             if (!shouldApplyStatusFilter) {
                 filteredSubmissionDataForListComponent.value = applySearch(submissionsData.value)
                 return

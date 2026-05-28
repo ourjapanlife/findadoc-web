@@ -81,6 +81,9 @@ const authStore = useAuthStore()
 const route = useRoute()
 const doesTheUserHaveAccess: Ref<boolean> = ref(true)
 const isSettingsView = computed(() => {
+    if (route.path !== '/my-page') {
+        return false
+    }
     const view = route.query.view
     return typeof view !== 'string' || view === '' || view === 'settings'
 })

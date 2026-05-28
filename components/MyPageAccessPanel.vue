@@ -190,6 +190,12 @@ const moderationSubmissionsStore = useModerationSubmissionsStore()
 const accessRoles = computed(() => accessStore.roles)
 const settingsExpanded = ref(false)
 const moderationExpanded = ref(false)
+const allowLinksWhileAccessUnknown = computed(() => accessStore.loadError || !accessStore.isLoaded)
+const canReadSubmissions = computed(() => allowLinksWhileAccessUnknown.value || accessStore.hasScope('read:submissions'))
+const canReadFacilities = computed(() => allowLinksWhileAccessUnknown.value || accessStore.hasScope('read:facilities'))
+const canReadHealthcareProfessionals = computed(
+    () => allowLinksWhileAccessUnknown.value || accessStore.hasScope('read:healthcareprofessionals')
+)
 
 const settingsPages = computed<NavPage[]>(() => [{
     id: 'my-page',
@@ -198,7 +204,7 @@ const settingsPages = computed<NavPage[]>(() => [{
 }])
 
 const moderationPages = computed<NavPage[]>(() => [
-    ...(accessStore.hasScope('read:submissions')
+    ...(canReadSubmissions.value
         ? [{
             id: 'moderation-submissions',
             route: '/my-page',
@@ -206,7 +212,7 @@ const moderationPages = computed<NavPage[]>(() => [
             listView: SelectedModerationListView.Submissions
         }]
         : []),
-    ...(accessStore.hasScope('read:facilities')
+    ...(canReadFacilities.value
         ? [{
             id: 'moderation-facilities',
             route: '/my-page',
@@ -214,7 +220,7 @@ const moderationPages = computed<NavPage[]>(() => [
             listView: SelectedModerationListView.Facilities
         }]
         : []),
-    ...(accessStore.hasScope('read:healthcareprofessionals')
+    ...(canReadHealthcareProfessionals.value
         ? [{
             id: 'moderation-healthcare-professionals',
             route: '/my-page',
