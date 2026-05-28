@@ -143,6 +143,7 @@
     "submit": "Magdagdag ng Doktor",
     "logout": "Log out",
     "login": "Login",
+    "myPage": "Aking Pahina",
     "settings": "Settings",
     "logoutToast": "Successfully logged out"
   },
@@ -172,6 +173,18 @@
     "approved": "Aprubado",
     "rejected": "Hindi na-aprubahan",
     "submissions": "Mga Isinumite"
+  },
+  "accessPanel": {
+    "loading": "Nilo-load ang mga pahintulot…",
+    "loadError": "Hindi ma-load ang mga pahintulot mula sa server.",
+    "signedInAs": "Naka-sign in bilang",
+    "roles": "Mga papel:",
+    "none": "—",
+    "sections": {
+      "settings": "Mga Setting",
+      "moderation": "Moderation",
+      "admin": "Admin"
+    }
   },
   "modPanelSubmissionLeftNavbar": {
     "facilityNameUnknown": "Walang impormasyon sa pangalan ng pasilidad",

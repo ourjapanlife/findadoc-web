@@ -143,6 +143,7 @@
     "submit": "Adicionar um profissional de saúde",
     "logout": "Log out",
     "login": "Login",
+    "myPage": "Minha página",
     "settings": "Settings",
     "logoutToast": "Successfully logged out"
   },
@@ -165,6 +166,18 @@
     "approved": "Aprovado",
     "rejected": "Rejeitado",
     "submissions": "Submissions"
+  },
+  "accessPanel": {
+    "loading": "Carregando permissões…",
+    "loadError": "Não foi possível carregar as permissões do servidor.",
+    "signedInAs": "Conectado como",
+    "roles": "Funções:",
+    "none": "—",
+    "sections": {
+      "settings": "Configurações",
+      "moderation": "Moderação",
+      "admin": "Admin"
+    }
   },
   "modPanelFacilitySubmissionLeftNavbar": {},
   "modEditSubmissionTopNav": {

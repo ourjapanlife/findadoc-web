@@ -143,6 +143,7 @@
     "submit": "Ajouter un médecin",
     "logout": "Log out",
     "login": "Login",
+    "myPage": "Ma page",
     "settings": "Settings",
     "logoutToast": "Successfully logged out"
   },
@@ -165,6 +166,18 @@
     "approved": "Approuvé",
     "rejected": "Rejeté",
     "submissions": "Submissions"
+  },
+  "accessPanel": {
+    "loading": "Chargement des autorisations…",
+    "loadError": "Impossible de charger les autorisations depuis le serveur.",
+    "signedInAs": "Connecté en tant que",
+    "roles": "Rôles :",
+    "none": "—",
+    "sections": {
+      "settings": "Paramètres",
+      "moderation": "Modération",
+      "admin": "Admin"
+    }
   },
   "modEditSubmissionTopNav": {
     "updateAndExit": "Enregistrer et quitter",

@@ -147,6 +147,7 @@
     "submit": "Aggiungi un medico",
     "logout": "Esci",
     "login": "Login",
+    "myPage": "La mia pagina",
     "settings": "Settings",
     "logoutToast": "Successfully logged out"
   },
@@ -176,6 +177,18 @@
     "approved": "Approvato",
     "rejected": "Rifiutato",
     "submissions": "Inoltrato"
+  },
+  "accessPanel": {
+    "loading": "Caricamento autorizzazioni…",
+    "loadError": "Impossibile caricare le autorizzazioni dal server.",
+    "signedInAs": "Accesso come",
+    "roles": "Ruoli:",
+    "none": "—",
+    "sections": {
+      "settings": "Impostazioni",
+      "moderation": "Moderazione",
+      "admin": "Admin"
+    }
   },
   "modPanelSubmissionLeftNavbar": {
     "facilityNameUnknown": "Nome struttura sconosciuto",

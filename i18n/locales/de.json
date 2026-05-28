@@ -143,6 +143,7 @@
     "submit": "Arzt hinzufügen",
     "logout": "Abmelden",
     "login": "Login",
+    "myPage": "Meine Seite",
     "settings": "Settings",
     "logoutToast": "Successfully logged out"
   },
@@ -220,6 +221,18 @@
     "approved": "Genehmigt",
     "rejected": "Abgelehnt",
     "submissions": "Submissions"
+  },
+  "accessPanel": {
+    "loading": "Berechtigungen werden geladen…",
+    "loadError": "Berechtigungen konnten nicht vom Server geladen werden.",
+    "signedInAs": "Angemeldet als",
+    "roles": "Rollen:",
+    "none": "—",
+    "sections": {
+      "settings": "Einstellungen",
+      "moderation": "Moderation",
+      "admin": "Admin"
+    }
   },
   "modPanelFacilitySubmissionLeftNavbar": {},
   "modEditSubmissionTopNav": {

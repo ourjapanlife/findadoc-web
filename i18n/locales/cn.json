@@ -143,6 +143,7 @@
     "submit": "添加医师",
     "logout": "退出登录",
     "login": "Login",
+    "myPage": "我的页面",
     "settings": "Settings",
     "logoutToast": "Successfully logged out"
   },
@@ -172,6 +173,18 @@
     "approved": "已批准",
     "rejected": "已驳回",
     "submissions": "Submissions"
+  },
+  "accessPanel": {
+    "loading": "正在加载权限…",
+    "loadError": "无法从服务器加载权限。",
+    "signedInAs": "登录身份",
+    "roles": "角色:",
+    "none": "—",
+    "sections": {
+      "settings": "设置",
+      "moderation": "审核",
+      "admin": "管理员"
+    }
   },
   "modPanelFacilitySubmissionLeftNavbar": {},
   "modEditSubmissionTopNav": {

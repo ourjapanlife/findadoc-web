@@ -143,6 +143,7 @@
     "submit": "Thêm bác sĩ",
     "logout": "Đăng xuất",
     "login": "Login",
+    "myPage": "Trang của tôi",
     "settings": "Settings",
     "logoutToast": "Successfully logged out"
   },
@@ -172,6 +173,18 @@
     "approved": "Đã được phê duyệt",
     "rejected": "Bị từ chối",
     "submissions": "Các bài gửi"
+  },
+  "accessPanel": {
+    "loading": "Đang tải quyền truy cập…",
+    "loadError": "Không thể tải quyền truy cập từ máy chủ.",
+    "signedInAs": "Đăng nhập với tên",
+    "roles": "Vai trò:",
+    "none": "—",
+    "sections": {
+      "settings": "Cài đặt",
+      "moderation": "Kiểm duyệt",
+      "admin": "Quản trị"
+    }
   },
   "modPanelSubmissionLeftNavbar": {
     "facilityNameUnknown": "Tên cơ sở không xác định",

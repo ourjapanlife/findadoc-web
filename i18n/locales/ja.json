@@ -143,6 +143,7 @@
     "submit": "医師情報の追加",
     "logout": "ログアウト",
     "login": "Login",
+    "myPage": "マイページ",
     "settings": "Settings",
     "logoutToast": "Successfully logged out"
   },
@@ -172,6 +173,18 @@
     "approved": "Approved",
     "rejected": "Rejected",
     "submissions": "Submissions"
+  },
+  "accessPanel": {
+    "loading": "権限を読み込み中…",
+    "loadError": "サーバーから権限を読み込めませんでした。",
+    "signedInAs": "サインイン中",
+    "roles": "ロール:",
+    "none": "—",
+    "sections": {
+      "settings": "設定",
+      "moderation": "モデレーション",
+      "admin": "管理者"
+    }
   },
   "modPanelFacilitySubmissionLeftNavbar": {},
   "modEditSubmissionTopNav": {

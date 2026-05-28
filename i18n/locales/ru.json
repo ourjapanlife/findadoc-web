@@ -143,6 +143,7 @@
     "submit": "Добавить доктора",
     "logout": "Log out",
     "login": "Login",
+    "myPage": "Моя страница",
     "settings": "Settings",
     "logoutToast": "Successfully logged out"
   },
@@ -165,6 +166,18 @@
     "approved": "Одобрено",
     "rejected": "Отклонено",
     "submissions": "Submissions"
+  },
+  "accessPanel": {
+    "loading": "Загрузка прав доступа…",
+    "loadError": "Не удалось загрузить права доступа с сервера.",
+    "signedInAs": "Вы вошли как",
+    "roles": "Роли:",
+    "none": "—",
+    "sections": {
+      "settings": "Настройки",
+      "moderation": "Модерация",
+      "admin": "Админ"
+    }
   },
   "modPanelFacilitySubmissionLeftNavbar": {},
   "modEditSubmissionTopNav": {
