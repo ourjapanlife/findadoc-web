@@ -55,7 +55,7 @@
     "languageDropdownTitle": "Lengwahe:",
     "copyright": "Find a Doc, Japan",
     "login": "Login",
-    "settings": "Settings",
+    "settings": "Mga Setting",
     "logoutToast": "Successfully logged out"
   },
   "privacyPage": {
@@ -144,7 +144,7 @@
     "logout": "Log out",
     "login": "Login",
     "myPage": "Aking Pahina",
-    "settings": "Settings",
+    "settings": "Mga Setting",
     "logoutToast": "Successfully logged out"
   },
   "login": {
@@ -184,6 +184,40 @@
       "settings": "Mga Setting",
       "moderation": "Moderation",
       "admin": "Admin"
+    },
+    "title": "Iyong access",
+    "availablePages": "Mga available na pahina",
+    "jwtScopes": "Saklaw ng token:",
+    "effectiveScopes": "Epektibong saklaw",
+    "apiOnlyHint": "Wala pang moderator screen para sa saklaw na ito; available lang sa API.",
+    "apiOnlyTag": "API",
+    "pages": {
+      "moderation": "Aking Pahina",
+      "createFacility": "Gumawa ng pasilidad",
+      "createHealthcareProfessional": "Gumawa ng propesyonal sa kalusugan",
+      "settings": "Mga Setting"
+    },
+    "scopes": {
+      "read_submissions": "Mga isinumite — listahan ng moderasyon",
+      "write_submissions": "I-edit ang mga isinumite",
+      "delete_submissions": "Tanggalin ang mga isinumite",
+      "create_submissions": "Lumikha ng mga isinumite",
+      "read_facilities": "Mga pasilidad — listahan ng moderasyon",
+      "write_facilities": "Lumikha / mag-edit ng mga pasilidad",
+      "delete_facilities": "Tanggalin ang mga pasilidad",
+      "read_healthcareprofessionals": "Mga propesyonal sa kalusugan — listahan ng moderasyon",
+      "write_healthcareprofessionals": "Lumikha / mag-edit ng mga propesyonal sa kalusugan",
+      "delete_healthcareprofessionals": "Tanggalin ang mga propesyonal sa kalusugan",
+      "read_users": "Basahin ang mga user",
+      "write_users": "I-edit ang mga user",
+      "delete_users": "Tanggalin ang mga user",
+      "read_logs": "Basahin ang mga audit log",
+      "write_logs": "Isulat ang mga audit log",
+      "read_profile": "Basahin ang profile",
+      "write_posts": "Sumulat ng mga post",
+      "read_reservations": "Basahin ang mga reservation",
+      "write_reservations": "I-edit ang mga reservation",
+      "unknown": "Karagdagang saklaw"
     }
   },
   "modPanelSubmissionLeftNavbar": {

@@ -55,7 +55,7 @@
     "copyright": "Find a Doc, Japan",
     "balancesheet": "Balance Sheet",
     "login": "Login",
-    "settings": "Settings",
+    "settings": "設定",
     "logoutToast": "Successfully logged out"
   },
   "privacyPage": {
@@ -144,7 +144,7 @@
     "logout": "ログアウト",
     "login": "Login",
     "myPage": "マイページ",
-    "settings": "Settings",
+    "settings": "設定",
     "logoutToast": "Successfully logged out"
   },
   "login": {
@@ -184,6 +184,40 @@
       "settings": "設定",
       "moderation": "モデレーション",
       "admin": "管理者"
+    },
+    "title": "あなたのアクセス",
+    "availablePages": "利用可能なページ",
+    "jwtScopes": "トークンスコープ:",
+    "effectiveScopes": "有効なスコープ",
+    "apiOnlyHint": "このスコープにはまだモデレーター画面がありません。API のみ利用可能です。",
+    "apiOnlyTag": "API",
+    "pages": {
+      "moderation": "マイページ",
+      "createFacility": "施設を作成",
+      "createHealthcareProfessional": "医療従事者を作成",
+      "settings": "設定"
+    },
+    "scopes": {
+      "read_submissions": "投稿 — モデレーション一覧",
+      "write_submissions": "投稿を編集",
+      "delete_submissions": "投稿を削除",
+      "create_submissions": "投稿を作成",
+      "read_facilities": "施設 — モデレーション一覧",
+      "write_facilities": "施設を作成 / 編集",
+      "delete_facilities": "施設を削除",
+      "read_healthcareprofessionals": "医療従事者 — モデレーション一覧",
+      "write_healthcareprofessionals": "医療従事者を作成 / 編集",
+      "delete_healthcareprofessionals": "医療従事者を削除",
+      "read_users": "ユーザーを閲覧",
+      "write_users": "ユーザーを編集",
+      "delete_users": "ユーザーを削除",
+      "read_logs": "監査ログを閲覧",
+      "write_logs": "監査ログを書き込み",
+      "read_profile": "プロフィールを閲覧",
+      "write_posts": "投稿を書き込み",
+      "read_reservations": "予約を閲覧",
+      "write_reservations": "予約を編集",
+      "unknown": "追加スコープ"
     }
   },
   "modPanelFacilitySubmissionLeftNavbar": {},

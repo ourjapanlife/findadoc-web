@@ -55,7 +55,7 @@
     "copyright": "Find a Doc, Japan",
     "balancesheet": "Balance Sheet",
     "login": "Login",
-    "settings": "Settings",
+    "settings": "Einstellungen",
     "logoutToast": "Successfully logged out"
   },
   "privacyPage": {
@@ -144,7 +144,7 @@
     "logout": "Abmelden",
     "login": "Login",
     "myPage": "Meine Seite",
-    "settings": "Settings",
+    "settings": "Einstellungen",
     "logoutToast": "Successfully logged out"
   },
   "login": {
@@ -232,6 +232,40 @@
       "settings": "Einstellungen",
       "moderation": "Moderation",
       "admin": "Admin"
+    },
+    "title": "Ihr Zugriff",
+    "availablePages": "Verfugbare Seiten",
+    "jwtScopes": "Token-Berechtigungen:",
+    "effectiveScopes": "Effektive Berechtigungen",
+    "apiOnlyHint": "Fur diesen Bereich gibt es noch keine Moderationsansicht; nur uber API verfugbar.",
+    "apiOnlyTag": "API",
+    "pages": {
+      "moderation": "Meine Seite",
+      "createFacility": "Einrichtung erstellen",
+      "createHealthcareProfessional": "Gesundheitsfachkraft erstellen",
+      "settings": "Einstellungen"
+    },
+    "scopes": {
+      "read_submissions": "Einreichungen — Moderationsliste",
+      "write_submissions": "Einreichungen bearbeiten",
+      "delete_submissions": "Einreichungen loschen",
+      "create_submissions": "Einreichungen erstellen",
+      "read_facilities": "Einrichtungen — Moderationsliste",
+      "write_facilities": "Einrichtungen erstellen / bearbeiten",
+      "delete_facilities": "Einrichtungen loschen",
+      "read_healthcareprofessionals": "Gesundheitsfachkrafte — Moderationsliste",
+      "write_healthcareprofessionals": "Gesundheitsfachkrafte erstellen / bearbeiten",
+      "delete_healthcareprofessionals": "Gesundheitsfachkrafte loschen",
+      "read_users": "Benutzer lesen",
+      "write_users": "Benutzer bearbeiten",
+      "delete_users": "Benutzer loschen",
+      "read_logs": "Audit-Logs lesen",
+      "write_logs": "Audit-Logs schreiben",
+      "read_profile": "Profil lesen",
+      "write_posts": "Beitrage schreiben",
+      "read_reservations": "Reservierungen lesen",
+      "write_reservations": "Reservierungen bearbeiten",
+      "unknown": "Zusatzlicher Bereich"
     }
   },
   "modPanelFacilitySubmissionLeftNavbar": {},

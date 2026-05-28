@@ -55,7 +55,7 @@
     "languageDropdownTitle": "Ngôn Ngữ:",
     "copyright": "Find a Doc, Japan",
     "login": "Login",
-    "settings": "Settings",
+    "settings": "Cài đặt",
     "logoutToast": "Successfully logged out"
   },
   "privacyPage": {
@@ -144,7 +144,7 @@
     "logout": "Đăng xuất",
     "login": "Login",
     "myPage": "Trang của tôi",
-    "settings": "Settings",
+    "settings": "Cài đặt",
     "logoutToast": "Successfully logged out"
   },
   "login": {
@@ -184,6 +184,40 @@
       "settings": "Cài đặt",
       "moderation": "Kiểm duyệt",
       "admin": "Quản trị"
+    },
+    "title": "Quyen truy cap cua ban",
+    "availablePages": "Trang co san",
+    "jwtScopes": "Pham vi token:",
+    "effectiveScopes": "Pham vi hieu luc",
+    "apiOnlyHint": "Chua co man hinh kiem duyet cho pham vi nay; chi co qua API.",
+    "apiOnlyTag": "API",
+    "pages": {
+      "moderation": "Trang cua toi",
+      "createFacility": "Tao co so",
+      "createHealthcareProfessional": "Tao nhan vien y te",
+      "settings": "Cài đặt"
+    },
+    "scopes": {
+      "read_submissions": "Bai gui — danh sach kiem duyet",
+      "write_submissions": "Chinh sua bai gui",
+      "delete_submissions": "Xoa bai gui",
+      "create_submissions": "Tao bai gui",
+      "read_facilities": "Co so — danh sach kiem duyet",
+      "write_facilities": "Tao / chinh sua co so",
+      "delete_facilities": "Xoa co so",
+      "read_healthcareprofessionals": "Nhan vien y te — danh sach kiem duyet",
+      "write_healthcareprofessionals": "Tao / chinh sua nhan vien y te",
+      "delete_healthcareprofessionals": "Xoa nhan vien y te",
+      "read_users": "Xem nguoi dung",
+      "write_users": "Chinh sua nguoi dung",
+      "delete_users": "Xoa nguoi dung",
+      "read_logs": "Xem nhat ky kiem toan",
+      "write_logs": "Ghi nhat ky kiem toan",
+      "read_profile": "Xem ho so",
+      "write_posts": "Dang bai viet",
+      "read_reservations": "Xem dat cho",
+      "write_reservations": "Chinh sua dat cho",
+      "unknown": "Pham vi bo sung"
     }
   },
   "modPanelSubmissionLeftNavbar": {
