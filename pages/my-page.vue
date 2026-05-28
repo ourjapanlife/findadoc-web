@@ -53,7 +53,6 @@
                     </div>
                 </div>
             </div>
-            <!-- loading state via #fallback slot -->
             <template #fallback>
                 <div
                     class="w-full h-full mt-16 mb-16 text-primary-text text-2xl font-bold
@@ -72,19 +71,17 @@ import { useRoute } from 'vue-router'
 import { useAuthStore } from '~/stores/authStore'
 import { definePageMeta, useI18n } from '#imports'
 
-// tell nuxt to our moderation layout
 definePageMeta({
     layout: 'moderationlayout'
 })
 
 const { t } = useI18n()
-
 const authStore = useAuthStore()
 const route = useRoute()
 const doesTheUserHaveAccess: Ref<boolean> = ref(true)
 
 const runModerationAuthRedirect = () => {
-    void authStore.redirectIfUnauthenticatedUser('/moderation', doesTheUserHaveAccess)
+    void authStore.redirectIfUnauthenticatedUser('/my-page', doesTheUserHaveAccess)
 }
 
 watch(() => route.path, runModerationAuthRedirect)

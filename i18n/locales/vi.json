@@ -165,6 +165,7 @@
     "hasEmptyFieldsFacility": "Some required fields are missing for creating a facility"
   },
   "modDashboardLeftNav": {
+    "viewsSection": "Views",
     "facilities": "Cơ sở vật chất",
     "healthcareProfessionals": "Chuyên gia y tế",
     "forReview": "Đang xem xét",

@@ -165,6 +165,7 @@
     "hasEmptyFieldsFacility": "Some required fields are missing for creating a facility"
   },
   "modDashboardLeftNav": {
+    "viewsSection": "Views",
     "facilities": "Pasilidad",
     "healthcareProfessionals": "Mga Propesyonal sa Pangangalagang Pangkalusugan",
     "forReview": "Para sa Pagsusuri",

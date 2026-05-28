@@ -158,6 +158,7 @@
     "hasEmptyFieldsFacility": "Some required fields are missing for creating a facility"
   },
   "modDashboardLeftNav": {
+    "viewsSection": "Views",
     "facilities": "Instalações",
     "healthcareProfessionals": "Profissionais de saúde",
     "forReview": "Para Revisão",

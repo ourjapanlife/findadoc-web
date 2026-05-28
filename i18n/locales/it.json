@@ -169,6 +169,7 @@
     "hasEmptyFieldsFacility": "Some required fields are missing for creating a facility"
   },
   "modDashboardLeftNav": {
+    "viewsSection": "Views",
     "facilities": "Strutture",
     "healthcareProfessionals": "Professionisti sanitari",
     "forReview": "In revisione",

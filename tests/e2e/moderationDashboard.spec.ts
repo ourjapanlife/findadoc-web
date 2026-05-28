@@ -4,29 +4,31 @@ import { test, expect } from '@playwright/test'
 test.describe('Moderation dashboard', () => {
     test.beforeEach(async ({ page }) => {
         await page.setViewportSize({ width: 1728, height: 1077 })
-        await page.goto('/moderation')
+        await page.goto('/my-page')
         await page.waitForLoadState('domcontentloaded')
-        await expect(page.getByTestId('submission-type-select')).toBeVisible()
+        await expect(page.getByTestId('mod-access-panel')).toBeVisible({ timeout: 30_000 })
+        await expect(page.getByTestId('access-page-link-moderation-submissions')).toBeVisible({ timeout: 30_000 })
         await expect(page.getByRole('button', { name: new RegExp(enUS.modDashboardLeftNav.forReview, 'i') })).toBeVisible()
     })
 
-    test('shows submission type selector and can switch between Submissions, Facilities, Healthcare Professionals',
+    test('shows access panel and primary view navigation for Submissions, Facilities, Healthcare Professionals',
          async ({ page }) => {
-             const submissionTypeSelect = page.getByTestId('submission-type-select')
-             await expect(submissionTypeSelect).toBeVisible()
+             await expect(page.getByTestId('mod-access-panel')).toContainText(enUS.accessPanel.signedInAs)
 
-             await submissionTypeSelect.selectOption({ label: enUS.modDashboardLeftNav.facilities })
-             await expect(submissionTypeSelect).toHaveValue('FACILITIES')
+             await page.getByTestId('access-page-link-moderation-facilities').click()
              await expect(page.getByRole('link', { name: new RegExp(enUS.modDashboardTopbar.addFacility, 'i') })).toBeVisible()
 
-             await submissionTypeSelect.selectOption({ label: enUS.modDashboardLeftNav.healthcareProfessionals })
-             await expect(submissionTypeSelect).toHaveValue('HEALTHCARE_PROFESSIONALS')
+             await page.getByTestId('access-page-link-moderation-healthcare-professionals').click()
              await expect(page.getByRole('link', { name: new RegExp(enUS.modDashboardTopbar.addHealthcareProfessional, 'i') }))
                  .toBeVisible()
 
-             await submissionTypeSelect.selectOption({ label: enUS.modDashboardLeftNav.submissions })
-             await expect(submissionTypeSelect).toHaveValue('SUBMISSIONS')
+             await page.getByTestId('access-page-link-moderation-submissions').click()
+             await expect(page.getByRole('button', { name: new RegExp(enUS.modDashboardLeftNav.forReview, 'i') })).toBeVisible()
          })
+
+    test('shows scope link for read:submissions when granted', async ({ page }) => {
+        await expect(page.getByTestId('access-page-link-moderation-submissions')).toBeVisible({ timeout: 30_000 })
+    })
 
     test('shows left nav for submissions with For Review, Approved, Rejected',
          async ({ page }) => {

@@ -165,6 +165,7 @@
     "hasEmptyFieldsFacility": "Some required fields are missing for creating a facility"
   },
   "modDashboardLeftNav": {
+    "viewsSection": "Views",
     "facilities": "机构",
     "healthcareProfessionals": "医师",
     "forReview": "待审核",

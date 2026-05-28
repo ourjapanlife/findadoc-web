@@ -56,7 +56,7 @@
 import { useRoute } from 'vue-router'
 import { computed, nextTick, onMounted, watch } from 'vue'
 import { useModerationScreenStore, ModerationScreen } from '~/stores/moderationScreenStore'
-import { useModerationSubmissionsStore } from '~/stores/moderationSubmissionsStore'
+import { SelectedModerationListView, useModerationSubmissionsStore } from '~/stores/moderationSubmissionsStore'
 import { useFacilitiesStore } from '~/stores/facilitiesStore'
 import { useHealthcareProfessionalsStore } from '~/stores/healthcareProfessionalsStore'
 
@@ -69,6 +69,25 @@ const healthcareProfessionalsStore = useHealthcareProfessionalsStore()
 
 const routePathForModerationScreen = computed(() => route.path as string)
 const selectedIdFromModSubmissionList = computed(() => route.params.id as string)
+const selectedViewQuery = computed(() => {
+    const view = route.query.view
+    return typeof view === 'string' ? view : ''
+})
+
+function syncSelectedModerationViewFromQuery() {
+    switch (selectedViewQuery.value) {
+        case 'facilities':
+            moderationSubmissionsStore.setSelectedModerationListViewChosen(SelectedModerationListView.Facilities)
+            return
+        case 'healthcare-professionals':
+            moderationSubmissionsStore
+                .setSelectedModerationListViewChosen(SelectedModerationListView.HealthcareProfessionals)
+            return
+        case 'submissions':
+        default:
+            moderationSubmissionsStore.setSelectedModerationListViewChosen(SelectedModerationListView.Submissions)
+    }
+}
 
 const setActiveScreenBasedOnRoute = async () => {
     await nextTick()
@@ -108,6 +127,7 @@ const setActiveScreenBasedOnRoute = async () => {
             break
         default:
             moderationScreenStore.setActiveScreen(ModerationScreen.Dashboard)
+            syncSelectedModerationViewFromQuery()
             moderationSubmissionsStore.selectedSubmissionId = ''
             facilitiesStore.selectedFacilityId = ''
             facilitiesStore.selectedFacilityData = undefined
@@ -120,7 +140,10 @@ const setActiveScreenBasedOnRoute = async () => {
     }
 }
 
-watch([selectedIdFromModSubmissionList, routePathForModerationScreen], setActiveScreenBasedOnRoute)
+watch(
+    [selectedIdFromModSubmissionList, routePathForModerationScreen, selectedViewQuery],
+    setActiveScreenBasedOnRoute
+)
 
 onMounted(() => {
     setActiveScreenBasedOnRoute()

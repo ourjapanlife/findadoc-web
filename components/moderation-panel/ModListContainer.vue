@@ -15,7 +15,7 @@
                     class="grid grid-cols-1 landscape:grid-cols-2 gap-4 items-start justify-start mx-2 mt-2 mb-44"
                 >
                     <div
-                        v-for="(submission, index) in modSubmissionsStore.submissionsData"
+                        v-for="(submission, index) in modSubmissionsStore.filteredSubmissionDataForListComponent"
                         :key="index"
                     >
                         <ModListContainerItem
@@ -72,9 +72,9 @@
                 </div>
 
                 <!-- Sticky Pagination at Bottom -->
-                <div class="fixed bottom-0 left-0 w-full bg-background border-t border-border z-20">
-                    <div class="max-w-7xl mx-auto flex items-center justify-between px-4 py-2">
-                        <div class="flex-1 flex justify-center">
+                <div class="fixed bottom-0 left-0 w-full bg-primary-bg border-t border-accent-bg z-20">
+                    <div class="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center px-3 py-2 gap-2">
+                        <div class="w-full md:flex-1 flex justify-center">
                             <Pagination
                                 v-if="submissionsModerationListViewChosen"
                                 :current-offset="modSubmissionsStore.currentOffset"
@@ -97,17 +97,17 @@
                                 @update:offset="healthcareProfessionalsStore.setOffset"
                             />
                         </div>
-                        <div class="flex items-center ml-4">
+                        <div class="w-full md:w-auto flex items-center justify-center md:justify-end gap-2">
                             <label
                                 for="items-per-page-select"
-                                class="text-sm text-primary-700 mr-2"
+                                class="text-xs sm:text-sm text-primary-text-muted"
                             >{{ $t('modListContainer.resultsPerPage') }}
                             </label>
                             <select
                                 id="items-per-page-select"
                                 :value="getCurrentItemsPerPage()"
-                                class="border border-primary/40 rounded px-2 py-1 text-sm bg-primary-inverted
-        focus:ring-primary focus:border-primary"
+                                class="border border-accent-bg rounded px-2 py-1 text-sm bg-secondary-bg
+                                text-primary-text focus:ring-primary focus:border-primary"
                                 @change="handleItemsPerPageChange"
                             >
                                 <option value="10">
@@ -156,7 +156,7 @@ onMounted(async () => {
     await healthcareProfessionalsStore.getHealthcareProfessionals()
 })
 
-const hasSubmissions = computed(() => modSubmissionsStore.submissionsData.length)
+const hasSubmissions = computed(() => modSubmissionsStore.filteredSubmissionDataForListComponent.length)
 const hasFacilities = computed(() => facilitiesStore.facilityData.length)
 const hasHealthcareProfessionals = computed(() => healthcareProfessionalsStore.healthcareProfessionalsData.length)
 

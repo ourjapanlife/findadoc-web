@@ -1,6 +1,5 @@
 <template>
-    <!-- styling will change from px to rm -->
-    <div class="h-[76px] w-full">
+    <div class="w-full flex flex-col gap-3">
         <div v-if="moderationScreenStore.dashboardScreenIsActive()">
             <ModDashboardTopbar />
         </div>

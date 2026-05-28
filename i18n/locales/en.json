@@ -152,6 +152,7 @@
     "submit": "Add a Doctor",
     "logout": "Log out",
     "login": "Login",
+    "myPage": "My Page",
     "settings": "Settings",
     "logoutToast": "Successfully logged out"
   },
@@ -229,12 +230,59 @@
     "hasEmptyFieldsFacility": "Some required fields are missing for creating a facility"
   },
   "modDashboardLeftNav": {
+    "viewsSection": "Views",
     "facilities": "Facilities",
     "healthcareProfessionals": "Healthcare Professionals",
     "forReview": "For Review",
     "approved": "Approved",
     "rejected": "Rejected",
     "submissions": "Submissions"
+  },
+  "accessPanel": {
+    "title": "Your access",
+    "loading": "Loading permissions…",
+    "loadError": "Could not load permissions from the server.",
+    "signedInAs": "Signed in as",
+    "roles": "Roles:",
+    "availablePages": "Available pages",
+    "sections": {
+      "settings": "Settings",
+      "moderation": "Moderation",
+      "admin": "Admin"
+    },
+    "jwtScopes": "Token scopes:",
+    "effectiveScopes": "Effective scopes",
+    "none": "—",
+    "apiOnlyHint": "No moderator screen for this scope yet; available via API only.",
+    "apiOnlyTag": "API",
+    "pages": {
+      "moderation": "My Page",
+      "createFacility": "Create facility",
+      "createHealthcareProfessional": "Create healthcare professional",
+      "settings": "Settings"
+    },
+    "scopes": {
+      "read_submissions": "Submissions — moderation list",
+      "write_submissions": "Edit submissions",
+      "delete_submissions": "Delete submissions",
+      "create_submissions": "Create submissions",
+      "read_facilities": "Facilities — moderation list",
+      "write_facilities": "Create / edit facilities",
+      "delete_facilities": "Delete facilities",
+      "read_healthcareprofessionals": "Healthcare professionals — moderation list",
+      "write_healthcareprofessionals": "Create / edit healthcare professionals",
+      "delete_healthcareprofessionals": "Delete healthcare professionals",
+      "read_users": "Read users",
+      "write_users": "Edit users",
+      "delete_users": "Delete users",
+      "read_logs": "Read audit logs",
+      "write_logs": "Write audit logs",
+      "read_profile": "Read profile",
+      "write_posts": "Write posts",
+      "read_reservations": "Read reservations",
+      "write_reservations": "Edit reservations",
+      "unknown": "Additional scope"
+    }
   },
   "modPanelSubmissionLeftNavbar": {
     "facilityNameUnknown": "Facility Name Unknown",

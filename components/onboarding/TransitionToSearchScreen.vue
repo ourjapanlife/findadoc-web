@@ -16,11 +16,10 @@
                         <path
                             d="M20,50 L40,70 L80,30"
                             fill="none"
-                            stroke="white"
+                            class="draw stroke-primary-inverted"
                             stroke-width="8"
                             stroke-linecap="round"
                             stroke-linejoin="round"
-                            class="draw"
                         />
                         <!-- Drawn circle around checkmark -->
                         <circle
@@ -28,16 +27,15 @@
                             cy="50"
                             r="45"
                             fill="none"
-                            stroke="white"
+                            class="circle-draw opacity-30 stroke-primary-inverted"
                             stroke-width="2"
                             stroke-dasharray="283"
-                            class="circle-draw opacity-30"
                             :style="{ animationDelay: '0.7s' }"
                         />
                     </svg>
                 </div>
 
-                <h2 class="text-4xl font-bold text-white mb-4">
+                <h2 class="text-4xl font-bold text-primary-text-inverted mb-4">
                     <span class="inline-block">
                         <span
                             v-for="(word, index) in t('onboarding.searchloading').split(' ')"

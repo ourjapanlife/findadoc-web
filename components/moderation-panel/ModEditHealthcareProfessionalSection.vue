@@ -332,7 +332,7 @@ const { makeNonDirty: makeHpFormNonDirty } = useUnsavedChanges({
     mode: 'update',
     onClose: () => {
         moderationScreenStore.setActiveScreen(ModerationScreen.Dashboard)
-        router.push('/moderation')
+        router.push('/my-page')
     }
 })
 
