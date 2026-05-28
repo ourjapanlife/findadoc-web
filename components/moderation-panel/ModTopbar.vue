@@ -1,6 +1,6 @@
 <template>
     <div class="w-full flex flex-col gap-3">
-        <div v-if="moderationScreenStore.dashboardScreenIsActive()">
+        <div v-if="moderationScreenStore.dashboardScreenIsActive() && !isSettingsView">
             <ModDashboardTopbar />
         </div>
         <div
@@ -34,7 +34,14 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
+import { useRoute } from 'vue-router'
 import { useModerationScreenStore } from '~/stores/moderationScreenStore'
 
+const route = useRoute()
 const moderationScreenStore = useModerationScreenStore()
+const isSettingsView = computed(() => {
+    const view = route.query.view
+    return typeof view !== 'string' || view === '' || view === 'settings'
+})
 </script>

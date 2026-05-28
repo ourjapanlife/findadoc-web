@@ -106,9 +106,7 @@ export const useModerationSubmissionsStore = defineStore(
                 })
             }
 
-            // Status filters are currently hidden in the UI, so default to showing
-            // all submission statuses and only apply text search.
-            const shouldApplyStatusFilter = false
+            const shouldApplyStatusFilter = true
             if (!shouldApplyStatusFilter) {
                 filteredSubmissionDataForListComponent.value = applySearch(submissionsData.value)
                 return

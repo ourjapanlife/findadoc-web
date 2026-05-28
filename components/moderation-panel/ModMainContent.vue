@@ -1,7 +1,8 @@
 <template>
     <div class="h-full overflow-hidden">
         <div v-if="moderationScreenStore.dashboardScreenIsActive()">
-            <ModListContainer />
+            <MyPageSettingsContent v-if="isSettingsView" />
+            <ModListContainer v-else />
         </div>
         <div
             v-if="moderationScreenStore.editSubmissionScreenIsActive()"
@@ -73,8 +74,13 @@ const selectedViewQuery = computed(() => {
     const view = route.query.view
     return typeof view === 'string' ? view : ''
 })
+const isSettingsView = computed(() => selectedViewQuery.value === '' || selectedViewQuery.value === 'settings')
 
 function syncSelectedModerationViewFromQuery() {
+    if (isSettingsView.value) {
+        return
+    }
+
     switch (selectedViewQuery.value) {
         case 'facilities':
             moderationSubmissionsStore.setSelectedModerationListViewChosen(SelectedModerationListView.Facilities)

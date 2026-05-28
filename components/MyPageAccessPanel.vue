@@ -173,7 +173,6 @@ import {
     type SelectedModerationListView as SelectedModerationListViewType
 } from '~/stores/moderationSubmissionsStore'
 import { useModerationSubmissionsStore } from '~/stores/moderationSubmissionsStore'
-import { visibleAccessEntries, type AccessControlEntry } from '~/utils/accessControlLinks'
 import SVGAccordionArrow from '~/assets/icons/accordion-arrow.svg'
 
 interface NavPage {
@@ -188,7 +187,6 @@ const authStore = useAuthStore()
 const accessStore = useCurrentUserAccessStore()
 const moderationSubmissionsStore = useModerationSubmissionsStore()
 
-const visibleEntries = computed(() => visibleAccessEntries(accessStore.effectiveScopes))
 const accessRoles = computed(() => accessStore.roles)
 const settingsExpanded = ref(false)
 const moderationExpanded = ref(false)
@@ -199,63 +197,32 @@ const settingsPages = computed<NavPage[]>(() => [{
     label: t('topNav.myPage')
 }])
 
-const moderationPages = computed<NavPage[]>(() => {
-    const routeEntries = visibleEntries.value.filter(entry => entry.kind === 'route' && !!entry.route)
-    const pageMap = new Map<string, NavPage>()
-
-    for (const entry of routeEntries) {
-        const page = moderationPage(entry)
-        if (page) {
-            pageMap.set(page.id, page)
-        }
-    }
-
-    return [...pageMap.values()]
-})
-
-function moderationPage(entry: AccessControlEntry): NavPage | null {
-    if (!entry.route) {
-        return null
-    }
-
-    if (entry.route === '/my-page' && entry.listView === SelectedModerationListView.Submissions) {
-        return {
+const moderationPages = computed<NavPage[]>(() => [
+    ...(accessStore.hasScope('read:submissions')
+        ? [{
             id: 'moderation-submissions',
             route: '/my-page',
             label: t('modDashboardLeftNav.submissions'),
             listView: SelectedModerationListView.Submissions
-        }
-    }
-
-    if (entry.route === '/my-page' && entry.listView === SelectedModerationListView.Facilities) {
-        return {
+        }]
+        : []),
+    ...(accessStore.hasScope('read:facilities')
+        ? [{
             id: 'moderation-facilities',
             route: '/my-page',
             label: t('modDashboardLeftNav.facilities'),
             listView: SelectedModerationListView.Facilities
-        }
-    }
-
-    if (entry.route === '/my-page'
-      && entry.listView === SelectedModerationListView.HealthcareProfessionals) {
-        return {
+        }]
+        : []),
+    ...(accessStore.hasScope('read:healthcareprofessionals')
+        ? [{
             id: 'moderation-healthcare-professionals',
             route: '/my-page',
             label: t('modDashboardLeftNav.healthcareProfessionals'),
             listView: SelectedModerationListView.HealthcareProfessionals
-        }
-    }
-
-    if (entry.route === '/my-page') {
-        return {
-            id: `moderation-${entry.route.replace(/\//g, '-')}`,
-            route: entry.route,
-            label: t(entry.labelKey)
-        }
-    }
-
-    return null
-}
+        }]
+        : [])
+])
 
 function onPageClick(listView?: SelectedModerationListViewType): void {
     if (listView) {

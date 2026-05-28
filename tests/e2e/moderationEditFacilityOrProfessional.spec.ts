@@ -6,7 +6,7 @@ test.describe('Moderation facility and healthcare professional happy paths', () 
     test.describe.configure({ mode: 'serial', timeout: 120_000 })
     test.beforeEach(async ({ page }) => {
         await page.setViewportSize({ width: 1728, height: 1077 })
-        await page.goto('/my-page')
+        await page.goto('/my-page?view=submissions')
         await page.waitForLoadState('domcontentloaded')
         await expect(page.getByTestId('access-page-link-moderation-submissions')).toBeVisible({ timeout: 30_000 })
         await expect(page.getByRole('button', { name: new RegExp(enUS.modDashboardLeftNav.forReview, 'i') })).toBeVisible()
@@ -45,7 +45,7 @@ test.describe('Moderation facility and healthcare professional happy paths', () 
         await nameEnInput.fill(`Playwright Facility exit ${Date.now()}`)
 
         await page.getByTestId('mod-edit-facility-hp-topbar-update-and-exit').click()
-        await expect(page).toHaveURL(/\/my-page\/?$/)
+        await expect(page).toHaveURL(/\/my-page\?view=facilities$/)
     })
 
     test('healthcare professional edit: update shows success toast', async ({ page }) => {
@@ -83,6 +83,6 @@ test.describe('Moderation facility and healthcare professional happy paths', () 
         await noteInput.fill(`Playwright HP note exit ${Date.now()}`)
 
         await page.getByTestId('mod-edit-facility-hp-topbar-update-and-exit').click()
-        await expect(page).toHaveURL(/\/my-page\/?$/)
+        await expect(page).toHaveURL(/\/my-page\?view=healthcare-professionals$/)
     })
 })

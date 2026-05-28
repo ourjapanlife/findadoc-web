@@ -48,6 +48,32 @@
                 </NuxtLink>
             </div>
         </div>
+        <div
+            v-if="moderationSubmissionsStore.selectedModerationListViewChosen === SelectedModerationListView.Submissions"
+            class="flex flex-wrap items-center gap-2"
+        >
+            <button
+                type="button"
+                :class="statusFilterClass(SelectedSubmissionListViewTab.ForReview)"
+                @click="updateSubmissionListViewState(SelectedSubmissionListViewTab.ForReview)"
+            >
+                {{ t("modDashboardLeftNav.forReview") }} ({{ statusCounts.forReviewCount }})
+            </button>
+            <button
+                type="button"
+                :class="statusFilterClass(SelectedSubmissionListViewTab.Approved)"
+                @click="updateSubmissionListViewState(SelectedSubmissionListViewTab.Approved)"
+            >
+                {{ t("modDashboardLeftNav.approved") }} ({{ statusCounts.approvedCount }})
+            </button>
+            <button
+                type="button"
+                :class="statusFilterClass(SelectedSubmissionListViewTab.Rejected)"
+                @click="updateSubmissionListViewState(SelectedSubmissionListViewTab.Rejected)"
+            >
+                {{ t("modDashboardLeftNav.rejected") }} ({{ statusCounts.rejectedCount }})
+            </button>
+        </div>
     </div>
 </template>
 
@@ -55,6 +81,8 @@
 import { computed } from 'vue'
 import {
     SelectedModerationListView,
+    SelectedSubmissionListViewTab,
+    SubmissionStatus,
     useModerationSubmissionsStore
 } from '~/stores/moderationSubmissionsStore'
 import { useCurrentUserAccessStore } from '~/stores/currentUserAccessStore'
@@ -87,6 +115,42 @@ const submissionSearchQuery = computed({
     get: () => moderationSubmissionsStore.submissionSearchQuery,
     set: (newValue: string) => moderationSubmissionsStore.setSubmissionSearchQuery(newValue)
 })
+
+const statusCounts = computed(() => {
+    const submissions = moderationSubmissionsStore.submissionsData
+    const forReviewCount = submissions.filter(submission => {
+        const isNewSubmission = !submission.isRejected && !submission.isApproved && !submission.isUnderReview
+        return submission.isUnderReview || isNewSubmission
+    }).length
+    const approvedCount = submissions.filter(submission => submission.isApproved).length
+    const rejectedCount = submissions.filter(submission => submission.isRejected).length
+
+    return {
+        forReviewCount,
+        approvedCount,
+        rejectedCount
+    }
+})
+
+function updateSubmissionListViewState(newValue: SelectedSubmissionListViewTab) {
+    moderationSubmissionsStore.setSelectedModerationListViewTabChosen(newValue)
+
+    const status = newValue === SelectedSubmissionListViewTab.Approved
+        ? SubmissionStatus.Approved
+        : newValue === SelectedSubmissionListViewTab.Rejected
+            ? SubmissionStatus.Rejected
+            : SubmissionStatus.InReview
+    moderationSubmissionsStore.filterSubmissionByStatus(status)
+}
+
+function statusFilterClass(tab: SelectedSubmissionListViewTab): string {
+    const isActive = moderationSubmissionsStore.selectedModerationListViewTabChosen === tab
+    const baseClass = 'inline-flex items-center gap-2 px-3 py-1.5 rounded-lg border text-sm transition-colors'
+
+    return isActive
+        ? `${baseClass} border-primary bg-primary text-primary-text-inverted`
+        : `${baseClass} border-accent-bg bg-secondary-bg text-primary-text hover:bg-accent-bg/20`
+}
 
 const updateTextForModerationDashboard = (selectedView: SelectedModerationListView) => {
     switch (selectedView) {

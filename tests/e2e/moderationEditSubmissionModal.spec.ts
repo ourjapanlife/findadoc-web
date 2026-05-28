@@ -16,7 +16,7 @@ test.describe('Moderation edit submission topbar modals', () => {
     test.describe.configure({ timeout: 120_000 })
     test.beforeEach(async ({ page }) => {
         await page.setViewportSize({ width: 1728, height: 1077 })
-        await page.goto('/my-page')
+        await page.goto('/my-page?view=submissions')
         await page.waitForLoadState('domcontentloaded')
         await expect(page.getByTestId('access-page-link-moderation-submissions')).toBeVisible({ timeout: 30_000 })
         await expect(page.getByRole('button', { name: new RegExp(enUS.modDashboardLeftNav.forReview, 'i') })).toBeVisible()

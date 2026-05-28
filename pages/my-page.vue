@@ -39,6 +39,7 @@
                     <ModLeftNavbar />
                     <div class="w-full flex flex-col items-stretch p-3 md:p-4 gap-3 md:gap-4 min-h-0">
                         <div
+                            v-if="!isSettingsView"
                             class="bg-secondary-bg border border-accent-bg rounded-xl
                             shadow-sm px-3 md:px-5 py-3 md:py-4"
                         >
@@ -66,7 +67,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, type Ref, onMounted, watch } from 'vue'
+import { computed, ref, type Ref, onMounted, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { useAuthStore } from '~/stores/authStore'
 import { definePageMeta, useI18n } from '#imports'
@@ -79,6 +80,10 @@ const { t } = useI18n()
 const authStore = useAuthStore()
 const route = useRoute()
 const doesTheUserHaveAccess: Ref<boolean> = ref(true)
+const isSettingsView = computed(() => {
+    const view = route.query.view
+    return typeof view !== 'string' || view === '' || view === 'settings'
+})
 
 const runModerationAuthRedirect = () => {
     void authStore.redirectIfUnauthenticatedUser('/my-page', doesTheUserHaveAccess)
