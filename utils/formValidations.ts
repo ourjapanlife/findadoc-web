@@ -218,11 +218,8 @@ export function validateUserSubmittedFirstName(name: string): boolean {
 
 export function validateGoogleMapsUrlInput(url: string): boolean {
     url = url.trim()
-    if (url.startsWith('https://www.google.com/maps') || url.startsWith('https://www.google.co.jp/maps')
-      || url.startsWith('https://maps.google.com/')) {
-        return true
-    }
-    return false
+    const googleMapsRegex = /^https:\/\/(www\.)?(google\.com\/maps|google\.co\.jp\/maps|maps\.google\.com|maps\.app\.goo\.gl)\//
+    return googleMapsRegex.test(url)
 }
 
 export function validateFirstSpokenLanguage(localeCode: string): boolean {

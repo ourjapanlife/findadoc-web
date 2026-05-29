@@ -46,6 +46,13 @@ test.describe('Submit page', () => {
             await expect(page.getByText(enUS.submitPage.googleMapsValidation)).toBeVisible()
         })
 
+        test('rejects a Google Maps URL with no location path', async ({ page }) => {
+            const urlInput = page.getByPlaceholder(enUS.submitPage.location)
+            await urlInput.fill('https://maps.google.com')
+            await urlInput.blur()
+            await expect(page.getByText(enUS.submitPage.googleMapsValidation)).toBeVisible()
+        })
+
         test('requires Spoken Language 1 to be selected', async ({ page }) => {
             await expect(page.getByText(enUS.submitPage.spokenLanguageValidation)).toBeVisible()
             await page.getByRole('combobox').first().selectOption('ja_JP')
