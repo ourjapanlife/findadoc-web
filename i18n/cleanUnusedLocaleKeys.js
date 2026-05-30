@@ -118,18 +118,25 @@ function removeKeysFromJson(obj, keysToRemove) {
     }, obj)
 }
 
+export function shouldPruneKey(key, usedKeysSet) {
+    const isUnsavedChangesKey = /^unsavedChanges\.(create|update)\./.test(key)
+    if (isUnsavedChangesKey) {
+        return false
+    }
+    return !usedKeysSet.has(key)
+}
+
 const run = async () => {
     const usedKeys = await extractUsedTranslationKeys()
 
     const unusedKeysByLocale = translationFilePaths.reduce((acc, filePath) => {
         const content = JSON.parse(fs.readFileSync(filePath, 'utf-8'))
         const allKeys = extractAllKeysFromJson(content)
-        const unusedKeys = allKeys.filter(key => !usedKeys.has(key))
+
+        const unusedKeys = allKeys.filter(key => shouldPruneKey(key, usedKeys))
 
         if (unusedKeys.length > 0) {
-            // Clean JSON
             const cleanedContent = removeKeysFromJson(content, unusedKeys)
-            // Rewrite file
             fs.writeFileSync(filePath, JSON.stringify(cleanedContent, null, 2), 'utf-8')
             acc[path.basename(filePath)] = unusedKeys
         }
@@ -154,4 +161,3 @@ const run = async () => {
 }
 
 run()
-
