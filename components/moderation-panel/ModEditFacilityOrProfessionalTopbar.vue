@@ -27,18 +27,18 @@
                 class="flex justify-center items-center rounded-full bg-secondary-bg border-primary-text-muted
                 border-2 w-28 text-sm mr-2"
                 data-testid="mod-edit-facility-hp-topbar-delete"
-                @click="exitWithoutSavingUpdates"
+                @click="navigateBackToDashboard"
             >
                 {{
                     t('modEditFacilityOrHPTopbar.back') }}
             </button>
             <button
                 type="button"
-                :disabled="!enableUpdateButtons"
+                :disabled="!hasPendingChanges"
                 class="flex justify-center items-center rounded-full bg-secondary-bg border-primary-text-muted
                 border-2 w-28 text-sm mr-2"
                 data-testid="mod-edit-facility-hp-topbar-update"
-                @click="updateFacilityOrHealthcareProfessional"
+                @click="saveChanges"
             >
                 <span>
                     {{ t('modEditFacilityOrHPTopbar.update') }}
@@ -46,11 +46,11 @@
             </button>
             <button
                 type="button"
-                :disabled="!enableUpdateButtons"
+                :disabled="!hasPendingChanges"
                 class="flex justify-center items-center rounded-full bg-secondary-bg border-primary-text-muted
                 border-2 w-28 text-sm mr-2"
-                data-testid="mod-edit-facility-hp-topbar-update"
-                @click="updateFacilityOrHealthcareProfessionalAndExit"
+                data-testid="mod-edit-facility-hp-topbar-update-and-exit"
+                @click="saveChangesAndExit"
             >
                 <span>
                     {{ t('modEditFacilityOrHPTopbar.updateAndExit') }}
@@ -60,7 +60,7 @@
                 type="button"
                 class="flex justify-center items-center rounded-full bg-secondary-bg border-primary border-2 w-28 text-sm mr-2 "
                 data-testid="mod-edit-facility-hp-topbar-delete"
-                @click="openDeletionConfirmation"
+                @click="openDeleteConfirmation"
             >
                 {{
                     t('modEditFacilityOrHPTopbar.delete') }}
@@ -122,6 +122,7 @@
 
 <script setup lang="ts">
 import { computed, ref, watch, type ComputedRef, type Ref } from 'vue'
+import { storeToRefs } from 'pinia'
 import { useToast } from 'vue-toastification'
 import { useRouter } from 'vue-router'
 import { useI18n } from '#imports'
@@ -131,26 +132,76 @@ import { useFacilitiesStore, getChangedFacilityFieldsForUpdate } from '~/stores/
 import { useHealthcareProfessionalsStore } from '~/stores/healthcareProfessionalsStore'
 import { useModerationScreenStore, ModerationScreen } from '~/stores/moderationScreenStore'
 import { useModalStore, ModalType } from '~/stores/modalStore'
-import { handleServerErrorMessaging } from '~/composables/handleServerErrorMessaging'
+import { returnWithSuccessToast } from '~/composables/useModerationActionFeedback'
+import { guardWithErrorToast } from '~/composables/useModerationGuardFeedback'
+import { handleModerationResponseErrors } from '~/composables/useModerationResponseHandling'
 import type { Facility, HealthcareProfessional } from '~/typedefs/gqlTypes'
 import { arraysAreEqual } from '~/utils/arrayUtils'
+import { hasEnglishLocalizedName } from '~/utils/nameUtils'
+import { hasServerErrors, navigateToModerationDashboard } from '~/utils/moderationUtils'
 
 const router = useRouter()
 
 // Initialize the stores in use
 const facilitiesStore = useFacilitiesStore()
+const { facilitySectionFields } = storeToRefs(facilitiesStore)
 const healthcareProfessionalsStore = useHealthcareProfessionalsStore()
 const moderationScreenStore = useModerationScreenStore()
 const modalStore = useModalStore()
 
 // Initialize the value of the selected Id based off of Moderation Screen
 const selectedId: ComputedRef<string> = computed(() => setSelectedId())
-const originalFacilityRefsValue: Ref<Facility | undefined> = ref()
-const originalHealthcareProfessionalRefsValue: Ref<HealthcareProfessional | undefined> = ref()
+
+// Deep snapshots (not live store refs). Topbar mounts before edit sections finish loading — capture once data exists.
+const originalFacilityData: Ref<Facility | undefined> = ref()
+const originalHealthcareProfessionalData: Ref<HealthcareProfessional | undefined> = ref()
+
+watch(
+    () => facilitiesStore.selectedFacilityId,
+    () => {
+        if (moderationScreenStore.editFacilityScreenIsActive()) {
+            originalFacilityData.value = undefined
+        }
+    }
+)
+
+watch(
+    () => facilitiesStore.selectedFacilityData,
+    data => {
+        if (!moderationScreenStore.editFacilityScreenIsActive()) return
+        const id = facilitiesStore.selectedFacilityId
+        if (!data || !id || data.id !== id) return
+        if (originalFacilityData.value !== undefined) return
+        originalFacilityData.value = JSON.parse(JSON.stringify(data)) as Facility
+    },
+    { immediate: true }
+)
+
+watch(
+    () => healthcareProfessionalsStore.selectedHealthcareProfessionalId,
+    () => {
+        if (moderationScreenStore.editHealthcareProfessionalScreenIsActive()) {
+            originalHealthcareProfessionalData.value = undefined
+        }
+    }
+)
+
+watch(
+    () => healthcareProfessionalsStore.selectedHealthcareProfessionalData,
+    data => {
+        if (!moderationScreenStore.editHealthcareProfessionalScreenIsActive()) return
+        const id = healthcareProfessionalsStore.selectedHealthcareProfessionalId
+        if (!data || !id || data.id !== id) return
+        if (originalHealthcareProfessionalData.value !== undefined) return
+        originalHealthcareProfessionalData.value = JSON.parse(JSON.stringify(data)) as HealthcareProfessional
+    },
+    { immediate: true }
+)
+
 const modalType = ref<ModalType.UnsavedChanges | ModalType.DeleteConfirmation | null>(null)
 
 // Disable the buttons if there are no changes
-const enableUpdateButtons = computed(() => hasUnsavedChanges())
+const hasPendingChanges = computed(() => hasPendingFormChanges())
 
 const toast = useToast()
 
@@ -182,21 +233,21 @@ function setSelectedId() {
     }
 }
 
-const facilityHasUnsavedChanges = (): boolean => {
-    if (!originalFacilityRefsValue.value) return false
+const hasFacilityFormChanges = (): boolean => {
+    if (!originalFacilityData.value) return false
 
     const updatedFields = getChangedFacilityFieldsForUpdate(
-        facilitiesStore.facilitySectionFields,
-        originalFacilityRefsValue.value
+        facilitySectionFields.value,
+        originalFacilityData.value
     )
 
     return !!Object.keys(updatedFields).length
 }
 
-const healthcareProfessionalHasUnsavedChanges = () => {
-    if (!originalHealthcareProfessionalRefsValue.value) return false // No match found, no changes to compare.
+const hasHealthcareProfessionalFormChanges = () => {
+    if (!originalHealthcareProfessionalData.value) return false // No match found, no changes to compare.
 
-    const originalHealthcareProfessional = originalHealthcareProfessionalRefsValue.value
+    const originalHealthcareProfessional = originalHealthcareProfessionalData.value
 
     const healthcareProfessionalSections = healthcareProfessionalsStore.healthcareProfessionalSectionFields
 
@@ -217,10 +268,6 @@ const healthcareProfessionalHasUnsavedChanges = () => {
             healthcareProfessionalSections.degrees,
             originalHealthcareProfessional.degrees
         )
-        || !arraysAreEqual(
-            healthcareProfessionalSections.facilityIds,
-            originalHealthcareProfessional.facilityIds
-        )
         || healthcareProfessionalSections.id
         !== originalHealthcareProfessional.id
         || !arraysAreEqual(
@@ -237,91 +284,118 @@ const healthcareProfessionalHasUnsavedChanges = () => {
         )
         || healthcareProfessionalSections.updatedDate
         !== originalHealthcareProfessional.updatedDate
-        || healthcareProfessionalsStore.selectedFacilities.length
-
     return areThereUnsavedHealthcareProfessionalChanges
 }
 
-const hasUnsavedChanges = () => {
+const hasPendingFormChanges = () => {
     if (moderationScreenStore.editFacilityScreenIsActive()) {
-        return facilityHasUnsavedChanges()
+        return hasFacilityFormChanges()
     }
 
     if (moderationScreenStore.editHealthcareProfessionalScreenIsActive()) {
-        return healthcareProfessionalHasUnsavedChanges()
+        return hasHealthcareProfessionalFormChanges()
     }
     return false
 }
 
-const updateFacilityOrHealthcareProfessional = async () => {
+const saveChanges = async () => {
     if (moderationScreenStore.editFacilityScreenIsActive()) {
-        if (!originalFacilityRefsValue.value) return
+        if (!originalFacilityData.value) return
 
-        if (!facilityHasUnsavedChanges()) return
+        if (!hasFacilityFormChanges()) return
 
-        const response = await facilitiesStore.updateFacility()
+        let response
+        try {
+            response = await facilitiesStore.updateFacility()
+        } catch (e: unknown) {
+            const message = e instanceof Error ? e.message : String(e)
+            toast.error(message)
+            return
+        }
 
-        if (response.errors?.length) {
-            handleServerErrorMessaging(response.errors, toast, t)
+        if (handleModerationResponseErrors(response, toast, t)) {
             return response
         }
 
         // Updates the facility section values with the data saved in the database
         facilitiesStore.initializeFacilitySectionValues(response.data as Facility)
-        toast.success(t('modEditFacilityOrHPTopbar.facilityUpdatedSuccessfully'))
-        return response
+        const savedFacility = facilitiesStore.selectedFacilityData
+        if (savedFacility) {
+            originalFacilityData.value = JSON.parse(JSON.stringify(savedFacility)) as Facility
+        }
+        return returnWithSuccessToast(
+            response,
+            toast,
+            t,
+            'modEditFacilityOrHPTopbar.facilityUpdatedSuccessfully',
+            { toastClassName: 'e2e-moderation-success-toast' }
+        )
     }
     // This makes the on click update the facility if the screen is EditFacility
     if (moderationScreenStore.editHealthcareProfessionalScreenIsActive()) {
         // This prevents us from sending a requested unnecessarily if the user has not made changes
-        if (!healthcareProfessionalHasUnsavedChanges()) return
+        if (!hasHealthcareProfessionalFormChanges()) return
 
-        const hasEnglishName
-            = healthcareProfessionalsStore.healthcareProfessionalSectionFields.names.some(name => name.locale === 'en_US')
-
-        if (!hasEnglishName) {
-            toast.error(t('modEditFacilityOrHPTopbar.healthcareProfessionalEnglishNameRequired'))
-            return
+        const namesDirty = !arraysAreEqual(
+            healthcareProfessionalsStore.healthcareProfessionalSectionFields.names,
+            originalHealthcareProfessionalData.value?.names ?? []
+        )
+        if (namesDirty) {
+            const hasEnglishName = hasEnglishLocalizedName(
+                healthcareProfessionalsStore.healthcareProfessionalSectionFields.names
+            )
+            if (guardWithErrorToast(
+                !hasEnglishName,
+                toast,
+                t,
+                'modEditFacilityOrHPTopbar.healthcareProfessionalEnglishNameRequired'
+            )) {
+                return
+            }
         }
 
         const response = await healthcareProfessionalsStore.updateHealthcareProfessional()
 
-        if (response.errors?.length) {
-            handleServerErrorMessaging(response.errors, toast, t)
+        if (handleModerationResponseErrors(response, toast, t)) {
             return response
         }
 
-        toast.success(t('modEditFacilityOrHPTopbar.healthcareProfessionalUpdatedSuccessfully'))
-        return response
+        const savedHp = response.data
+        if (savedHp) {
+            originalHealthcareProfessionalData.value = JSON.parse(JSON.stringify(savedHp)) as HealthcareProfessional
+        }
+        return returnWithSuccessToast(
+            response,
+            toast,
+            t,
+            'modEditFacilityOrHPTopbar.healthcareProfessionalUpdatedSuccessfully',
+            { toastClassName: 'e2e-moderation-success-toast' }
+        )
     }
 }
 
-const updateFacilityOrHealthcareProfessionalAndExit = async () => {
+const saveChangesAndExit = async () => {
     if (moderationScreenStore.editFacilityScreenIsActive()) {
-        const response = await updateFacilityOrHealthcareProfessional()
+        const response = await saveChanges()
 
-        if (response && response.errors?.length) {
-            handleServerErrorMessaging(response.errors, toast, t)
-            return response
+        if (response === undefined || hasServerErrors(response)) {
+            return
         }
 
-        router.push('/moderation')
-        moderationScreenStore.setActiveScreen(ModerationScreen.Dashboard)
+        await navigateToModerationDashboard(router, moderationScreenStore)
     }
     if (moderationScreenStore.editHealthcareProfessionalScreenIsActive()) {
-        const response = await updateFacilityOrHealthcareProfessional()
+        const response = await saveChanges()
 
-        if (response && response.errors?.length) {
-            handleServerErrorMessaging(response.errors, toast, t)
-            return response
+        if (response === undefined || hasServerErrors(response)) {
+            return
         }
 
-        router.push('/moderation')
-        moderationScreenStore.setActiveScreen(ModerationScreen.Dashboard)
+        await navigateToModerationDashboard(router, moderationScreenStore)
     }
 }
 
-const openDeletionConfirmation = () => {
+const openDeleteConfirmation = () => {
     modalType.value = ModalType.DeleteConfirmation
     modalStore.showModal()
 }
@@ -333,16 +407,17 @@ const deleteFacilityOrHealthcareProfessional = async () => {
         }
         const response = await facilitiesStore.deleteFacility(deleteFacilityArgs)
 
-        if (response.errors?.length) {
-            handleServerErrorMessaging(response.errors, toast, t)
+        if (handleModerationResponseErrors(response, toast, t)) {
             return response
         }
-        // Wipe the data of the now deleted facility from the ref to prevent the UnsavedChanges modal from triggering
-        originalFacilityRefsValue.value = undefined
-
-        toast.success(t('modEditFacilityOrHPTopbar.facilityDeletedSuccessfully'))
+        returnWithSuccessToast(
+            response,
+            toast,
+            t,
+            'modEditFacilityOrHPTopbar.facilityDeletedSuccessfully'
+        )
         // Redirect to the dashboard since the facility no longer exists
-        router.push('/moderation')
+        await navigateToModerationDashboard(router, moderationScreenStore)
         modalType.value = null
         modalStore.hideModal()
         return response
@@ -355,36 +430,25 @@ const deleteFacilityOrHealthcareProfessional = async () => {
 
         const response = await healthcareProfessionalsStore.deleteHealthcareProfessional(deleteHealthcareProfessionalArgs)
 
-        if (response.errors?.length) {
-            handleServerErrorMessaging(response.errors, toast, t)
+        if (handleModerationResponseErrors(response, toast, t)) {
             return response
         }
 
-        toast.success(t('modEditFacilityOrHPTopbar.healthcareProfessionalDeletedSuccessfully'))
+        returnWithSuccessToast(
+            response,
+            toast,
+            t,
+            'modEditFacilityOrHPTopbar.healthcareProfessionalDeletedSuccessfully'
+        )
         // Redirect to the dashboard since the healthcare professional no longer exists
-        router.push('/moderation')
+        await navigateToModerationDashboard(router, moderationScreenStore)
         modalType.value = null
         modalStore.hideModal()
         return response
     }
 }
 
-const exitWithoutSavingUpdates = () => {
-    router.push('/moderation')
-    moderationScreenStore.setActiveScreen(ModerationScreen.Dashboard)
+const navigateBackToDashboard = async () => {
+    await navigateToModerationDashboard(router, moderationScreenStore)
 }
-
-watch(() => facilitiesStore.selectedFacilityData, (newValue, oldValue) => {
-    if (newValue !== oldValue) {
-        originalFacilityRefsValue.value = newValue
-    }
-}, { deep: true })
-
-// using stringify and then parsing was the only working solution to stop
-// originalHealthcareProfessionalRefsValue from being assigned a reference to
-// healthcareProfessionalsStore.selectedHealthcareProfessionalData; all other methods
-// had originalHealthcareProfessionalRefsValue updating with healthcareProfessionalsStore.healthcareProfessionalSectionFields
-watch(() => healthcareProfessionalsStore.selectedHealthcareProfessionalData, newValue => {
-    originalHealthcareProfessionalRefsValue.value = JSON.parse(JSON.stringify(newValue))
-})
 </script>

@@ -140,6 +140,17 @@ export type CreateUserInput = {
   profilePicUrl?: InputMaybe<Scalars['String']['input']>;
 };
 
+/** Auth roles and scopes for the GraphQL caller, as evaluated by the API (JWT + role mapping + production rules). */
+export type CurrentUserAccess = {
+  __typename?: 'CurrentUserAccess';
+  /** Effective scopes used for API authorization (merged and filtered). */
+  effectiveScopes: Array<Scalars['String']['output']>;
+  /** Space-delimited OAuth scopes from the access token `scope` claim. */
+  jwtScopes: Array<Scalars['String']['output']>;
+  /** Application roles from the token (e.g. Admin, Moderator). */
+  roles: Array<Scalars['String']['output']>;
+};
+
 /** Academic or professional degrees held by healthcare professionals. */
 export enum Degree {
   /** Certified Nurse Midwife */
@@ -702,6 +713,8 @@ export type Query = {
   __typename?: 'Query';
   /** Look up a single audit log entry by its ID. Returns null if not found. */
   auditLog?: Maybe<AuditLog>;
+  /** Roles and effective API scopes for the authenticated user (always allowed when a user context exists). */
+  currentUserAccess: CurrentUserAccess;
   /** Search for facilities matching the given filters. Returns an empty list if no matches. */
   facilities: Array<Facility>;
   /** Get the total count of facilities matching the given filters. Useful for pagination. */
@@ -1170,6 +1183,7 @@ export type ResolversTypes = {
   CreateReservationInput: CreateReservationInput;
   CreateSubmissionInput: CreateSubmissionInput;
   CreateUserInput: CreateUserInput;
+  CurrentUserAccess: ResolverTypeWrapper<CurrentUserAccess>;
   Degree: Degree;
   DeleteResult: ResolverTypeWrapper<DeleteResult>;
   Facility: ResolverTypeWrapper<Facility>;
@@ -1225,6 +1239,7 @@ export type ResolversParentTypes = {
   CreateReservationInput: CreateReservationInput;
   CreateSubmissionInput: CreateSubmissionInput;
   CreateUserInput: CreateUserInput;
+  CurrentUserAccess: CurrentUserAccess;
   DeleteResult: DeleteResult;
   Facility: Facility;
   FacilitySearchFilters: FacilitySearchFilters;
@@ -1275,6 +1290,12 @@ export type ContactResolvers<ContextType = any, ParentType extends ResolversPare
   googleMapsUrl?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   phone?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   website?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+};
+
+export type CurrentUserAccessResolvers<ContextType = any, ParentType extends ResolversParentTypes['CurrentUserAccess'] = ResolversParentTypes['CurrentUserAccess']> = {
+  effectiveScopes?: Resolver<Array<ResolversTypes['String']>, ParentType, ContextType>;
+  jwtScopes?: Resolver<Array<ResolversTypes['String']>, ParentType, ContextType>;
+  roles?: Resolver<Array<ResolversTypes['String']>, ParentType, ContextType>;
 };
 
 export type DeleteResultResolvers<ContextType = any, ParentType extends ResolversParentTypes['DeleteResult'] = ResolversParentTypes['DeleteResult']> = {
@@ -1371,6 +1392,7 @@ export type PhysicalAddressResolvers<ContextType = any, ParentType extends Resol
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   auditLog?: Resolver<Maybe<ResolversTypes['AuditLog']>, ParentType, ContextType, Partial<QueryAuditLogArgs>>;
+  currentUserAccess?: Resolver<ResolversTypes['CurrentUserAccess'], ParentType, ContextType>;
   facilities?: Resolver<Array<ResolversTypes['Facility']>, ParentType, ContextType, RequireFields<QueryFacilitiesArgs, 'filters'>>;
   facilitiesTotalCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType, RequireFields<QueryFacilitiesTotalCountArgs, 'filters'>>;
   facility?: Resolver<Maybe<ResolversTypes['Facility']>, ParentType, ContextType, RequireFields<QueryFacilityArgs, 'id'>>;
@@ -1419,6 +1441,7 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
 export type Resolvers<ContextType = any> = {
   AuditLog?: AuditLogResolvers<ContextType>;
   Contact?: ContactResolvers<ContextType>;
+  CurrentUserAccess?: CurrentUserAccessResolvers<ContextType>;
   DeleteResult?: DeleteResultResolvers<ContextType>;
   Facility?: FacilityResolvers<ContextType>;
   FacilitySubmission?: FacilitySubmissionResolvers<ContextType>;

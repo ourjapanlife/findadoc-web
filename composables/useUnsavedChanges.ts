@@ -24,6 +24,7 @@ const snapshot = <V>(val: V): V => JSON.parse(stableStringify(val ?? null)) as V
 
 export const useUnsavedChanges = <T>(config: Config<T>) => {
     const { $unsavedChangesRegistry } = useNuxtApp()
+    const { t } = useI18n()
     const instanceId = Symbol('unsaved-changes-instance')
 
     const eq = config.data.equivalence ?? defaultEquivalence<T>()
@@ -67,7 +68,8 @@ export const useUnsavedChanges = <T>(config: Config<T>) => {
                 config.onClose?.()
             }, {
                 mode: config.mode,
-                onCancel: config.onCancel
+                onCancel: config.onCancel,
+                message: t('modEditFacilityOrHPTopbar.hasUnsavedChanges')
             })
         } else {
             config.onClose?.()

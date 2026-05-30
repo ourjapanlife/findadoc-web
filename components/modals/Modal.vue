@@ -11,6 +11,8 @@
                 onOutside: hideModalAndEmitClosedEvent,
                 when: () => store.isOpen,
             }"
+            role="dialog"
+            aria-modal="true"
             class="absolute z-10 bg-primary-bg rounded-xl overflow-hidden
             shadow-lg shadow-primary
             hover:shadow-inner hover:shadow-primary/90"

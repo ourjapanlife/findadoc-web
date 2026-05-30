@@ -30,17 +30,17 @@
                             class="flex font-bold pt-2"
                         >
                             <span>{{ healthcareProfessionalsStore
-                                .displayChosenLocaleForHealthcareProfessional(healthcareProfessional).lastName }}</span>
+                                .displayChosenLocaleForHealthcareProfessional(healthcareProfessional)?.lastName }}</span>
                             <span class="mx-2">
                                 {{ healthcareProfessionalsStore
-                                    .displayChosenLocaleForHealthcareProfessional(healthcareProfessional).firstName }}
+                                    .displayChosenLocaleForHealthcareProfessional(healthcareProfessional)?.firstName }}
                             </span>
                             <span
                                 v-show="healthcareProfessionalsStore
-                                    .displayChosenLocaleForHealthcareProfessional(healthcareProfessional).middleName"
+                                    .displayChosenLocaleForHealthcareProfessional(healthcareProfessional)?.middleName"
                             >
                                 {{ healthcareProfessionalsStore
-                                    .displayChosenLocaleForHealthcareProfessional(healthcareProfessional).middleName }}
+                                    .displayChosenLocaleForHealthcareProfessional(healthcareProfessional)?.middleName }}
                             </span>
                         </div>
                         <span>
@@ -213,9 +213,6 @@ const removeHealthcareProfessional = (id: string = '0') => {
     facilitiesStore.facilitySectionFields.healthProfessionalsRelations
         = facilitiesStore.facilitySectionFields.healthProfessionalsRelations
             .filter((healthcareProfessionalRelation: Relationship) => healthcareProfessionalRelation.otherEntityId !== id)
-    facilitiesStore.healthProfessionalsRelationsForDisplay
-        = facilitiesStore.healthProfessionalsRelationsForDisplay
-            .filter(healthcareProfessional => healthcareProfessional.id !== id)
 }
 
 const undoRemovalOfHealthcareProfessional = (id: string = '0') => {

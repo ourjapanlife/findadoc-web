@@ -10,7 +10,6 @@
         >
             <ModEditSubmissionTopbar
                 data-test-id="mod-edit-submission-topbar"
-                :selected-id="modSubmissionsListStore.selectedSubmissionId"
             />
         </div>
         <div
@@ -36,9 +35,7 @@
 </template>
 
 <script setup lang="ts">
-import { useModerationSubmissionsStore } from '~/stores/moderationSubmissionsStore'
 import { useModerationScreenStore } from '~/stores/moderationScreenStore'
 
 const moderationScreenStore = useModerationScreenStore()
-const modSubmissionsListStore = useModerationSubmissionsStore()
 </script>

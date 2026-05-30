@@ -81,7 +81,7 @@
                             {{ t('modFacilitySection.labelFacilityPrefectureEn') }}
                         </label>
                         <p
-                            v-if="prefectureNameMatchError"
+                            v-if="isPrefectureNameMismatch"
                             class="text-error text-xs font-sans mt-1"
                         >
                             {{ t('modFacilitySection.inputErrorMessagePrefectureMismatch') }}
@@ -93,6 +93,7 @@
                             name="prefecture-japan-en"
                             class="mb-5 px-3 py-3.5 w-96 h-12 bg-secondary-bg rounded-lg border border-primary-text-muted
                 text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
+                            @change="syncPrefectureJaFromEn"
                         >
                             <option
                                 v-for="(prefecture, index) in listPrefectureJapanEn"
@@ -138,7 +139,7 @@
                             {{ t('modFacilitySection.labelFacilityPrefectureJa') }}
                         </label>
                         <p
-                            v-if="prefectureNameMatchError"
+                            v-if="isPrefectureNameMismatch"
                             class="text-error text-xs font-sans mt-1"
                         >
                             {{ t('modFacilitySection.inputErrorMessagePrefectureMismatch') }}
@@ -234,7 +235,7 @@
                         {{ t('modFacilitySection.addHealthcareProfessional') }}
                     </span>
                     <ModSearchBar
-                        v-model="healthcareProfessionalsToAddToFacility"
+                        v-model="selectedHealthcareProfessionalsModel"
                         data-testid="mod-facility-section-doctor-search"
                         :place-holder-text="t('modFacilitySection.placeholderTextHealthcareProfessionalSearchbar')"
                         :no-match-text="t('modFacilitySection.noHealthcareProfessionalFound')"
@@ -243,12 +244,12 @@
                         @search-input-change="handleHealthcareProfessionalsInputChange"
                     />
                     <span
-                        v-show="!healthcareProfessionalsToAddToFacility.length"
+                        v-show="!selectedHealthcareProfessionals.length"
                         class="font-semibold my-3"
                     >- {{ t('modFacilitySection.noHPSelected') }}
                     </span>
                     <div
-                        v-for="(healthcareProfessional, index) in healthcareProfessionalsToAddToFacility"
+                        v-for="(healthcareProfessional, index) in selectedHealthcareProfessionals"
                         :key="`${healthcareProfessional.id}-${index}`"
                     >
                         <ModDashboardHealthProfessionalCard
@@ -265,7 +266,7 @@
 </template>
 
 <script lang="ts" setup>
-import { type Ref, ref, onBeforeMount, nextTick } from 'vue'
+import { computed, type Ref, ref, onBeforeMount, nextTick } from 'vue'
 import { useModerationScreenStore, ModerationScreen } from '~/stores/moderationScreenStore'
 import { useFacilitiesStore } from '~/stores/facilitiesStore'
 import { useHealthcareProfessionalsStore } from '~/stores/healthcareProfessionalsStore'
@@ -284,8 +285,10 @@ import {
     validateCityJa
 } from '~/utils/formValidations'
 import type { HealthcareProfessional } from '~/typedefs/gqlTypes'
-import { listPrefectureJapanEn, listPrefectureJapanJa } from '~/stores/locationsStore'
+import { listPrefectureJapanEn, listPrefectureJapanJa, prefectureLanguageMatch } from '~/stores/locationsStore'
 import { checkPrefectureNameMatch } from '~/utils/facilitiesUtils'
+import { matchesHealthcareProfessionalSearch } from '~/utils/moderationSearchUtils'
+import { formatFirstLocalizedFullName } from '~/utils/nameUtils'
 
 const { t } = useI18n()
 
@@ -301,33 +304,46 @@ const healthcareProfessionalsRelatedToFacility: Ref<string[]>
     = ref([])
 
 // This keeps track of the existing healthcare professionals we are adding to the new facility
-const healthcareProfessionalsToAddToFacility: Ref<HealthcareProfessional[]> = ref([])
+const selectedHealthcareProfessionals: Ref<HealthcareProfessional[]> = ref([])
+const selectedHealthcareProfessionalsModel = computed({
+    get: () => selectedHealthcareProfessionals.value,
+    set: (newValue: HealthcareProfessional[]) => {
+        selectedHealthcareProfessionals.value = newValue
+        facilityStore.createFacilityFields.healthcareProfessionalIds
+            = newValue.map(healthcareProfessional => healthcareProfessional.id)
+    }
+})
 
 const defaultHealthcareProfessionalSuggestions: Ref<HealthcareProfessional[]> = ref([])
 
 const handleHealthcareProfessionalsInputChange = (filteredItems: Ref<HealthcareProfessional[]>, inputValue: string) => {
-    const input = inputValue.toLowerCase().trim()
-
     filteredItems.value = healthcareProfessionalsStore.healthcareProfessionalsData.filter(
-        (healthcareProfessional: HealthcareProfessional) => {
-            const idMatches = healthcareProfessional.id.toLowerCase().startsWith(input)
-            const nameMatches = healthcareProfessional.names.some(name => {
-                const firstNameMatch = name.firstName.toLowerCase().includes(input)
-                const middleNameMatch = name.middleName?.toLowerCase().includes(input)
-                const lastNameMatch = name.lastName.toLowerCase().includes(input)
-                return firstNameMatch || middleNameMatch || lastNameMatch
-            })
-            return idMatches || nameMatches
-        }
+        (healthcareProfessional: HealthcareProfessional) =>
+            matchesHealthcareProfessionalSearch(healthcareProfessional, inputValue)
     )
 }
 const healthcareProfessionalsToDisplayCallback = (healthcareProfessional: HealthcareProfessional) =>
-    [healthcareProfessional.names[0].firstName + ' ' + healthcareProfessional.names[0].lastName]
+    [formatFirstLocalizedFullName(healthcareProfessional.names)]
 
-const prefectureNameMatchError = ref(false)
+const isPrefectureNameMismatch = computed(() => !checkPrefectureNameMatch({
+    prefectureEn: facilityStore.createFacilityFields.contact.address.prefectureEn,
+    prefectureJa: facilityStore.createFacilityFields.contact.address.prefectureJa
+}))
+
+const syncPrefectureJaFromEn = () => {
+    const prefectureEn = facilityStore.createFacilityFields.contact.address.prefectureEn
+    const lowercasePrefectureEn = prefectureEn.trim().toLowerCase()
+    const prefectureJaFromEn = prefectureLanguageMatch[lowercasePrefectureEn]
+
+    if (prefectureJaFromEn) {
+        facilityStore.createFacilityFields.contact.address.prefectureJa = prefectureJaFromEn
+    }
+}
 
 onBeforeMount(async () => {
     isFacilitySectionInitialized.value = false
+
+    syncPrefectureJaFromEn()
 
     // Wait for the route to be fully resolved
     await nextTick()
@@ -350,36 +366,4 @@ onBeforeMount(async () => {
     // Ensure UI updates are reflected
     await nextTick()
 })
-
-// This makes sure a chosen healthcare professional gets added to the facility if the facility entry is created
-watch(healthcareProfessionalsToAddToFacility.value, newValue => {
-    if (newValue) {
-        facilityStore.createFacilityFields.healthcareProfessionalIds
-            = healthcareProfessionalsToAddToFacility.value.map(healthcareProfessional => healthcareProfessional.id)
-    }
-}, { deep: true })
-
-/** Watches and updates the facility sections fields regarding the prefecture name of the address (Japanese and English).
-If one of them does not match with the other language, it will throw an error. **/
-watch(
-    () => [
-        facilityStore.createFacilityFields.contact.address.prefectureEn,
-        facilityStore.createFacilityFields.contact.address.prefectureJa
-    ],
-    ([en, _]) => {
-        const lowercasePrefectureEn = en.trim().toLowerCase()
-        const prefectureJaFromEn = prefectureLanguageMatch[lowercasePrefectureEn]
-
-        if (prefectureJaFromEn && !facilityStore.createFacilityFields.contact.address.prefectureJa) {
-            facilityStore.createFacilityFields.contact.address.prefectureJa = prefectureJaFromEn
-        }
-
-        const { prefectureEn, prefectureJa } = facilityStore.createFacilityFields.contact.address
-        prefectureNameMatchError.value = !checkPrefectureNameMatch({
-            prefectureEn,
-            prefectureJa
-        })
-    },
-    { immediate: true }
-)
 </script>

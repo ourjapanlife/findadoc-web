@@ -253,7 +253,7 @@
             {{ t("modHealthcareProfessionalSection.facilities") }}
         </h2>
         <ModSearchBar
-            v-model="selectedFacilities"
+            v-model="selectedFacilitiesModel"
             data-testid="mod-healthcare-professional-section-facilities"
             :place-holder-text="t('modHealthcareProfessionalSection.placeholderTextFacilitySearchBar')"
             :no-match-text="t('modHealthcareProfessionalSection.noFacilitiesWereFound')"
@@ -274,7 +274,7 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, type Ref, ref, watch } from 'vue'
+import { computed, reactive, type Ref, ref } from 'vue'
 import { useToast } from 'vue-toastification'
 import { useHealthcareProfessionalsStore } from '~/stores/healthcareProfessionalsStore'
 import { useFacilitiesStore } from '~/stores/facilitiesStore'
@@ -288,6 +288,7 @@ import { Insurance,
     type Facility,
     type HealthcareProfessional } from '~/typedefs/gqlTypes'
 import { useI18n } from '#imports'
+import { filterByCaseInsensitiveIncludes, matchesFacilitySearch } from '~/utils/moderationSearchUtils'
 
 const toast = useToast()
 
@@ -304,6 +305,15 @@ await facilitiesStore.getFacilities() // Fix a bug where facilities disappear af
 const currentFacilities = facilitiesStore.facilityData
 
 const selectedFacilities: Ref<Facility[]> = ref([])
+const selectedFacilitiesModel = computed({
+    get: () => selectedFacilities.value,
+    set: (newValue: Facility[]) => {
+        selectedFacilities.value = newValue
+        createHealthcareProfessionalSectionFields.facilityIds = newValue.length
+            ? newValue.map(facility => facility.id)
+            : []
+    }
+})
 
 const createHealthcareProfessionalSectionFields = healthcareProfessionalsStore.createHealthcareProfessionalSectionFields
 
@@ -397,7 +407,6 @@ const setChosenLocaleNameInput = (index: number) => {
 }
 
 const handleUpdateExistingName = () => {
-    const originalNameLocale = nameLocaleInputs.locale
     const localizedNameToAdd: LocalizedNameInput = {
         firstName: nameLocaleInputs.firstName,
         lastName: nameLocaleInputs.lastName,
@@ -406,8 +415,8 @@ const handleUpdateExistingName = () => {
     }
 
     // Checks to keep user from adding a name with same locale instead of editing
-    const existingNameForLocale = healthcareProfessionalsStore.healthcareProfessionalSectionFields.names
-        .filter(name => name.locale !== originalNameLocale)
+    const existingNameForLocale = healthcareProfessionalsStore.createHealthcareProfessionalSectionFields.names
+        .filter(name => name.locale !== originalNameLocale.value)
         .find(name => name.locale === nameLocaleInputs.locale)
 
     // Displays message if user is trying to add a locale for name that exists and they aren't editing a healthcare professional
@@ -420,11 +429,6 @@ const handleUpdateExistingName = () => {
     if (!nameLocaleInputs.locale || nameLocaleInputs.locale === Locale.Und) {
         toast.error(t('modHealthcareProfessionalSection.missingLocale'))
         return
-    }
-
-    // This updates the array in the store with the new edited name since we already ordered the index to this when autofilling
-    if (chosenHealthcareProfessionalToEdit.value) {
-        healthcareProfessionalsStore.createHealthcareProfessionalSectionFields.names[0] = localizedNameToAdd
     }
 
     // This updates the array in the store with the new edited name since we already ordered the index to this when autofilling
@@ -513,46 +517,22 @@ function checkIfHealthcareProfessionalHasAnExistingNameForLocale() {
 }
 
 const handleFacilitySearchInputChange = (filteredItems: Ref<Facility[]>, inputValue: string) => {
-    filteredItems.value = currentFacilities.filter(({ nameEn, nameJa, id }) => {
-        const isMatch
-            = nameEn.toLowerCase().includes(inputValue)
-              || nameJa.toLowerCase().includes(inputValue)
-              || id.toLowerCase().includes(inputValue)
-        return isMatch
-    })
+    filteredItems.value = currentFacilities.filter(facility => matchesFacilitySearch(facility, inputValue))
 }
 
 const handleInsuranceInputChange = (filteredItems: Ref<Insurance[]>, inputValue: string) => {
     const arrayOfInsurances = Object.values(Insurance) as Insurance[]
-
-    if (!inputValue) {
-        filteredItems.value = arrayOfInsurances
-        return
-    }
-
-    filteredItems.value = arrayOfInsurances.filter(insurance => insurance.toLowerCase().includes(inputValue))
+    filteredItems.value = filterByCaseInsensitiveIncludes(arrayOfInsurances, inputValue)
 }
 
 const handleDegreeInputChange = (filteredItems: Ref<Degree[]>, inputValue: string) => {
     const degree = Object.values(Degree) as Degree[]
-
-    if (!inputValue) {
-        filteredItems.value = degree
-        return
-    }
-
-    filteredItems.value = degree.filter(degree => degree.toLowerCase().includes(inputValue))
+    filteredItems.value = filterByCaseInsensitiveIncludes(degree, inputValue)
 }
 
 const handleSpecialtyInputChange = (filteredItems: Ref<Specialty[]>, inputValue: string) => {
     const arrayOfSpecialties = Object.values(Specialty) as Specialty[]
-
-    if (!inputValue) {
-        filteredItems.value = arrayOfSpecialties
-        return
-    }
-
-    filteredItems.value = arrayOfSpecialties.filter(specialty => specialty.toLowerCase().includes(inputValue))
+    filteredItems.value = filterByCaseInsensitiveIncludes(arrayOfSpecialties, inputValue)
 }
 
 const handleLocaleInputChange = (filteredItems: Ref<Locale[]>, inputValue: string) => {
@@ -571,12 +551,4 @@ const specialtiesToDisplayCallback = (specialty: Specialty) => [specialty]
 const degreesToDisplayCallback = (degree: Degree) => [degree]
 const insurancesToDisplayCallback = (insurance: Insurance) => [insurance]
 const localesToDisplayCallback = (locale: Locale) => [localesStore.formatLanguageCodeToSimpleText(locale)]
-
-// This updates the array in the store once it is updated due to a facility clicked
-watch(selectedFacilities.value, newValue => {
-    if (newValue) {
-        createHealthcareProfessionalSectionFields.facilityIds
-            = selectedFacilities.value.map(facility => facility.id)
-    }
-})
 </script>
