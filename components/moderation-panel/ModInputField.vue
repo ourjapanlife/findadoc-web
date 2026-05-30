@@ -29,9 +29,11 @@
 
 <script setup lang="ts">
 import { ref, type Ref, watch, nextTick } from 'vue'
-import { useI18n } from '#imports'
+import { useI18n, useHealthcareProfessionalsStore } from '#imports'
 
 const { t } = useI18n()
+
+const hpNamesForUpdating = useHealthcareProfessionalsStore().healthcareProfessionalUpdatedNames
 
 const isTheInputValueValid: Ref<boolean> = ref(true)
 const validationCheckedPreviously: Ref<boolean> = ref(false)
@@ -43,12 +45,15 @@ const props = defineProps({
         type: String,
         required: true
     },
+    fieldName: String,
     type: String,
     placeholder: String,
     required: Boolean,
     invalidInputErrorMessage: String,
     inputValidationCheck: Function
 })
+
+const name = props.fieldName
 
 const labelsToOnlyValidateOnBlur = [
     t('modSubmissionForm.labelHealthcareProfessionalLastName'),
@@ -70,6 +75,9 @@ watch(
     () => {
         if (validationCheckedPreviously.value && props.inputValidationCheck) {
             isTheInputValueValid.value = props.inputValidationCheck(model.value)
+        }
+        if (!hpNamesForUpdating.includes(name)) {
+            hpNamesForUpdating.push(name)
         }
     }
 )

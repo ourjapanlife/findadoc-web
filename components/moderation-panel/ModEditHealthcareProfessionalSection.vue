@@ -31,6 +31,7 @@
                             v-model="nameLocaleInputs.lastName"
                             data-testid="mod-healthcare-professional-section-lastName"
                             :label="t('modHealthcareProfessionalSection.labelHealthcareProfessionalLastName')"
+                            :field-name="'lastName'"
                             type="text"
                             :placeholder="t('modHealthcareProfessionalSection.placeholderTextHealthcareProfessionalLastName')"
                             :required="true"
@@ -39,6 +40,7 @@
                             v-model="nameLocaleInputs.firstName"
                             data-testid="mod-healthcare-professional-section-firstName"
                             :label="t('modHealthcareProfessionalSection.labelHealthcareProfessionalFirstName')"
+                            :field-name="'firstName'"
                             type="text"
                             :placeholder="t('modHealthcareProfessionalSection.placeholderTextHealthcareProfessionalFirstName')"
                             :required="true"
@@ -47,6 +49,7 @@
                             v-model="nameLocaleInputs.middleName as string"
                             data-testid="mod-healthcare-professional-section-middleName"
                             :label="t('modHealthcareProfessionalSection.labelHealthcareProfessionalMiddleName')"
+                            :field-name="'middleName'"
                             type="text"
                             :placeholder="t('modHealthcareProfessionalSection.placeholderTextHealthcareProfessionalMiddleName')"
                             :required="false"
@@ -600,6 +603,7 @@ function notesUpdated() {
         hpStore.healthcareProfessionalUpdatedFields.push('additionalInfoForPatients')
         notesUpdateValue = true
     }
+    console.log(hpStore.healthcareProfessionalSectionFields.names)
 }
 
 const facilitiesFieldsToDisplayCallback = (item: Facility) => [item.nameEn, item.nameJa]

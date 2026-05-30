@@ -52,6 +52,7 @@ export const useHealthcareProfessionalsStore = defineStore(
         })
 
         const healthcareProfessionalUpdatedFields = ref<HealthcareProfessional[]>([])
+        const healthcareProfessionalUpdatedNames = ref<HealthcareProfessional[]>([])
 
         const createHealthcareProfessionalSectionFields: CreateHealthcareProfessionalInput = reactive({
             acceptedInsurance: [] as Insurance[],
@@ -189,7 +190,7 @@ export const useHealthcareProfessionalsStore = defineStore(
 
             const updateInput = () => {
                 const hpFields = Array.from(useHealthcareProfessionalsStore().healthcareProfessionalUpdatedFields)
-                const healthcareProfessionalId = '07c52d15-527b-4c2e-b3ce-843601c8a5fd'
+                const healthcareProfessionalId = 'e2b0966e-2e59-480a-8b65-baf41a6b6ed0'
                 const healthcareArgsObject = {
                     id: healthcareProfessionalId,
                     input: {
@@ -355,6 +356,7 @@ export const useHealthcareProfessionalsStore = defineStore(
             deleteHealthcareProfessional,
             healthcareProfessionalSectionFields,
             healthcareProfessionalUpdatedFields,
+            healthcareProfessionalUpdatedNames,
             displayChosenLocaleForHealthcareProfessional,
             setSelectedHealthcareProfessional,
             selectedHealthcareProfessionalData,
