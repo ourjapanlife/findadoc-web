@@ -157,12 +157,7 @@
     "confirmExit": "Exit without saving",
     "create": "Create",
     "exit": "Exit",
-    "facilityCreatedSuccessfully": "Facility created successfully.",
-    "heathcareProfessionalCreatedSuccessfully": "Healthcare Professional created successfully.",
-    "unsavedChangesMessage": "This will exit without saving your entry. All unsaved data will be lost.",
-    "healthcareProfessionalEnglishNameRequired": "Healthcare Professional must have an English name",
-    "hasEmptyFieldsHealthcareProfessional": "All fields are required for creating a healthcare professional",
-    "hasEmptyFieldsFacility": "Some required fields are missing for creating a facility"
+    "unsavedChangesMessage": "This will exit without saving your entry. All unsaved data will be lost."
   },
   "modDashboardLeftNav": {
     "facilities": "Pasilidad",
@@ -193,16 +188,11 @@
     "delete": "Burahin",
     "updateAndExit": "I-update at I-Exit",
     "update": "Update",
-    "facilityUpdatedSuccessfully": "Facility updated successfully",
     "deleteButtonText": "DELETE FOREVER",
-    "facilityDeletedSuccessfully": "Facility deleted successfully",
-    "healthcareProfessionalDeletedSuccessfully": "Healthcare Professional deleted successfully",
-    "healthcareProfessionalUpdatedSuccessfully": "Healthcare Professional updated successfully",
     "back": "Bumalik",
     "hasUnsavedChanges": "You have unsaved changes. Are you sure you want to leave?",
     "deleteConfirmationFacility": "Are you sure you want to delete the Facility: {facility}, with ID: {id}?",
-    "deleteConfirmationHealthcareProfessional": "Are you sure you want to delete the Healthcare Professional: {healthcareProfessional}, with ID: {id}?",
-    "healthcareProfessionalEnglishNameRequired": "Healthcare Professional must have an English name"
+    "deleteConfirmationHealthcareProfessional": "Are you sure you want to delete the Healthcare Professional: {healthcareProfessional}, with ID: {id}?"
   },
   "modEditSubmissionTopNav": {
     "updateAndExit": "I-Update at I-Exit",
@@ -272,13 +262,8 @@
     "noHealthcareProfessionalFound": "No matching Healthcare Professionals found"
   },
   "modSubmissionForm": {
-    "confirmationButton": "Umalis sa pahina",
-    "hasUnsavedChanges": "Mayroon mga hindi na-save na pagbabago. Sigurado ka bang nais mong umalis?",
     "errorMessageCompletedForm": "Hindi na-isumite and kumpletong form",
-    "errorMessageFacilityInputsInvalid": "Ang ilan sa mga impormasyon ng pasilidad ay hindi nakumpleto ng tama.",
     "errorMessageFacilityId": "Kinakailangan ang ID ng Pasilidad upang ma-update ang pasilidad.",
-    "errorMessageHealthcareInputsInvalid": "Ang ilan sa mga impormasyon ng Propesyonal sa Pangangalagang Pangkalusugan ay hindi nakumpleto ng tama.",
-    "errorMessageEnglishNameRequired": "Ang propesyonal sa Pangangalagang Pangkalusugan ay kailangang may pangalan sa Ingles",
     "healthcareProfessionalId": "Mga ID ng propesyonal sa Pangangalagang Pangkalusugan",
     "infoMessageAlreadyApproved": "Ang Isinumite ay aprubado na",
     "labelHealthcareProfessionalFirstName": "Pangalan",
@@ -287,8 +272,6 @@
     "placeholderTextHealthcareProfessionalSearchbar": "Hanapin ayon sa pangalan o ID upang magdagdag ng doktor",
     "submissionConfirmationAcceptanceButton": "Oo, Isumite",
     "submissionConfirmationMessage": "Nais mo bang isumite ang form na ito?",
-    "successMessageUpdated": "Matagumpay na na-update ang pagsusumite.",
-    "successMessageApproved": "Ang Isinumite ay matagumpay na na-aprubahan.",
     "facilitySuccessfullyRejected": "Matagumpay na hindi na-apprubahan ang pasilidad",
     "rejectSubmissionConfirmationMessage": "Are you sure you want to reject this submission?",
     "rejectSubmissionConfirmationButton": "Yes, reject the submission",
@@ -441,9 +424,7 @@
   "authErrors": {},
   "facilitiesErrors": {},
   "healthcareProfessionalsErrors": {},
-  "localeErrors": {
-    "notSpecified": "Not Specified"
-  },
+  "localeErrors": {},
   "locationErrors": {},
   "moderationSubmissionsErrors": {},
   "searchResultsErrors": {},
@@ -451,17 +432,7 @@
     "colorThemes": "Color Themes"
   },
   "unsavedChanges": {
-    "create": {
-      "title": "Umalis nang hindi gumagawa?",
-      "message": "Hindi pa ito nagagawa. Kapag umalis ka ngayon, mawawala ang lahat ng impormasyong inilagay mo.",
-      "cancel": "Manatili",
-      "confirm": "Umalis"
-    },
-    "update": {
-      "title": "Itapon ang mga pagbabago?",
-      "message": "Hindi pa nase-save ang mga pagbabago mo. Kapag umalis ka ngayon, mawawala ang mga ito.",
-      "cancel": "Magpatuloy sa pag-edit",
-      "confirm": "Itapon ang mga pagbabago"
-    }
+    "create": {},
+    "update": {}
   }
 }

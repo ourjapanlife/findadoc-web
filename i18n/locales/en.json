@@ -3,8 +3,7 @@
     "menu": "Menu",
     "siteName": "Find a Doc Japan",
     "siteNameLine1": "Find a Doc",
-    "siteNameLine2": "Japan",
-    "close": "Close"
+    "siteNameLine2": "Japan"
   },
   "about": {
     "heroHeading": "Find a Doc, Japan",
@@ -36,19 +35,6 @@
     "involveGit": "Contribute",
     "involveLinkedin": "Follow Us",
     "involveFeedback": "Give Feedback"
-  },
-  "authErrors": {},
-  "facilitiesErrors": {},
-  "healthcareProfessionalsErrors": {},
-  "localeErrors": {
-    "notSpecified": "Not Specified"
-  },
-  "locationErrors": {},
-  "moderationSubmissionsErrors": {},
-  "searchResultsErrors": {},
-  "serverErrorMessages": {
-    "errorCodeMessagingNeeded": "The server error code does not have a message for the user. Please add one.",
-    "genericErrorMessage": "There was an error submitting your form, please try again"
   },
   "footer": {
     "terms": "Terms",
@@ -123,7 +109,6 @@
     "allLocations": "All Locations",
     "allSpecialties": "All Specialties",
     "search": "Search",
-    "resultsFound": "{count} results found",
     "searchAndFilterDoctors": "Search and filter doctors"
   },
   "searchResultsList": {
@@ -221,12 +206,7 @@
     "confirmExit": "Exit without saving",
     "create": "Create",
     "exit": "Exit",
-    "facilityCreatedSuccessfully": "Facility created successfully.",
-    "heathcareProfessionalCreatedSuccessfully": "Healthcare Professional created successfully.",
-    "unsavedChangesMessage": "This will exit without saving your entry. All unsaved data will be lost.",
-    "healthcareProfessionalEnglishNameRequired": "Healthcare Professional must have an English name",
-    "hasEmptyFieldsHealthcareProfessional": "All fields are required for creating a healthcare professional",
-    "hasEmptyFieldsFacility": "Some required fields are missing for creating a facility"
+    "unsavedChangesMessage": "This will exit without saving your entry. All unsaved data will be lost."
   },
   "modDashboardLeftNav": {
     "facilities": "Facilities",
@@ -258,15 +238,7 @@
     "deleteButtonText": "DELETE FOREVER",
     "update": "Update",
     "updateAndExit": "Update & Exit",
-    "deleteConfirmationFacility": "Are you sure you want to delete the Facility: {facility}, with ID: {id}?",
-    "deleteConfirmationHealthcareProfessional": "Are you sure you want to delete the Healthcare Professional: {healthcareProfessional}, with ID: {id}?",
-    "facilityDeletedSuccessfully": "Facility deleted successfully",
-    "facilityUpdatedSuccessfully": "Facility updated successfully",
-    "healthcareProfessionalDeletedSuccessfully": "Healthcare Professional deleted successfully",
-    "healthcareProfessionalUpdatedSuccessfully": "Healthcare Professional updated successfully",
-    "back": "Back",
-    "hasUnsavedChanges": "You have unsaved changes. Are you sure you want to leave?",
-    "healthcareProfessionalEnglishNameRequired": "Healthcare Professional must have an English name"
+    "back": "Back"
   },
   "modEditSubmissionTopNav": {
     "update": "Update",
@@ -277,7 +249,6 @@
   "modPanelSubmissionList": {
     "noSubmissions": "There are no pending submissions"
   },
-  "modHealthcareProfessionalCard": {},
   "modHealthcareProfessionalSection": {
     "addHealthCareProfessionalLocaleName": "Add New Name",
     "delete": "Permanently delete",
@@ -377,13 +348,8 @@
     "placeholderTextFacilityWebsite": "e.g. http://www.example.com/"
   },
   "modSubmissionForm": {
-    "confirmationButton": "Leave Page",
-    "hasUnsavedChanges": "You have unsaved changes. Are you sure you want to leave?",
     "errorMessageCompletedForm": "Failed to submit completed form",
-    "errorMessageFacilityInputsInvalid": "Some of the Facility Fields were not filled in correctly",
     "errorMessageFacilityId": "Facility ID is required for updating the Facility",
-    "errorMessageHealthcareInputsInvalid": "Some of the Healthcare Professional Fields were not filled in correctly",
-    "errorMessageEnglishNameRequired": "The healthcare professional must have an English name",
     "facilitySuccessfullyRejected": "Facility rejected successfully",
     "healthcareProfessionalId": "Healthcare Professional IDs",
     "infoMessageAlreadyApproved": "This submission has already been approved",
@@ -397,8 +363,6 @@
     "searchExistingHealthcareProfessionals": "Search for existing Healthcare Professionals",
     "submissionConfirmationAcceptanceButton": "Yes, submit",
     "submissionConfirmationMessage": "Are you sure you want to submit this form?",
-    "successMessageUpdated": "Submission updated successfully",
-    "successMessageApproved": "Submission approved and created successfully",
     "rejectSubmissionConfirmationMessage": "Are you sure you want to reject this submission?",
     "rejectSubmissionConfirmationButton": "Yes, reject the submission"
   },
@@ -449,19 +413,5 @@
     "save": "Save Changes",
     "updatedSuccessfully": "Profile updated successfully",
     "updateFailed": "Profile update failed"
-  },
-  "unsavedChanges": {
-    "create": {
-      "title": "Leave without creating?",
-      "message": "This hasn't been created yet. If you leave now, all entered information will be lost.",
-      "cancel": "Stay",
-      "confirm": "Leave"
-    },
-    "update": {
-      "title": "Discard changes?",
-      "message": "Your changes haven't been saved. If you leave now, they will be lost.",
-      "cancel": "Continue editing",
-      "confirm": "Discard changes"
-    }
   }
 }
