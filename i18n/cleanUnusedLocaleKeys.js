@@ -156,7 +156,8 @@ try {
     console.log('🚀 Step 1: Initiating structural repository file sweep...')
 
     // Define relevant directories for macro frontend coverage
-    const targetFolders = ['./components', './pages', './layouts']
+    // Define relevant directories for macro frontend coverage
+    const targetFolders = ['./components', './pages', './layouts', './stores', './composables'];
     const codeInventory = scanDirectories(targetFolders)
 
     console.log(`✅ Code analysis complete. Discovered ${codeInventory.staticKeys.size} active identifiers in scope.`)
