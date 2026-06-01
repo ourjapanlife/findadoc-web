@@ -160,7 +160,7 @@ function flattenJsonObj(obj, prefix = '', res = {}) {
 export function shouldPruneKey(
     dictionaryKey,
     codeInventory,
-    protectedPrefixes = ['specialties.', 'specialtyCategories.', 'localeErrors.']
+    protectedPrefixes = ['specialties.', 'specialtyCategories.', 'localeErrors.', 'moderation.']
 ) {
     let isUsed = codeInventory.staticKeys.has(dictionaryKey)
 
@@ -175,9 +175,11 @@ export function shouldPruneKey(
     }
 
     // Database/API Safeguard Check: Shield remote properties mapped at runtime
+    // Database/API Safeguard Check: Shield remote properties mapped at runtime
     if (!isUsed) {
         const isProtected = protectedPrefixes.some(prefix => dictionaryKey.startsWith(prefix))
-        if (isProtected) {
+        // Explicit hardcoded shield fallback for store dependencies
+        if (isProtected || dictionaryKey.startsWith('localeErrors')) {
             isUsed = true
         }
     }
@@ -223,12 +225,13 @@ export function runPrune() {
                     for (const key in obj) {
                         const propName = currentPrefix ? `${currentPrefix}.${key}` : key
 
-                        if (unusedKeys.includes(propName)) {
+                        // 🛡️ Explicitly block pruning of any unsavedChanges keys or children
+                        if (unusedKeys.includes(propName) && !propName.startsWith('unsavedChanges')) {
                             delete obj[key]
                         } else if (typeof obj[key] === 'object' && obj[key] !== null) {
                             removeKeysFromObj(obj[key], propName)
 
-                            // Keep unsavedChanges core parent nodes safe to prevent empty leaf errors
+                            // 🛡️ Block emptying out parent containers for unsavedChanges
                             if (Object.keys(obj[key]).length === 0 && !propName.startsWith('unsavedChanges')) {
                                 delete obj[key]
                             }
