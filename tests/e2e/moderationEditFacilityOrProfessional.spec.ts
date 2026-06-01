@@ -22,12 +22,20 @@ test.describe('Moderation facility and healthcare professional happy paths', () 
         await expect(nameEnInput).toBeVisible()
         await nameEnInput.fill(`Playwright Facility ${Date.now()}`)
 
+        // 1. Submit the form updates
         await page.getByTestId('mod-edit-facility-hp-topbar-update').click()
+
+        // 2. 🛡️ Network Guard: Wait for backend network requests to settle down
+        await page.waitForLoadState('networkidle')
+
+        // 3. Resolve the expected i18n text pattern for the toast notification
         const facilityToastPattern = moderationSuccessToastPattern(
             enUS.modEditFacilityOrHPTopbar.facilityUpdatedSuccessfully,
             'modEditFacilityOrHPTopbar.facilityUpdatedSuccessfully'
         )
-        await expect(page.getByRole('alert').filter({ hasText: facilityToastPattern })).toBeVisible()
+
+        // 4. ⏳ Explicit Timeout: Give Playwright up to 5 seconds to catch the UI alert element
+        await expect(page.getByRole('alert').filter({ hasText: facilityToastPattern })).toBeVisible({ timeout: 5000 })
     })
 
     test('facility edit: update-and-exit returns to moderation dashboard', async ({ page }) => {

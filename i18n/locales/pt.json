@@ -416,11 +416,24 @@
     "updatedSuccessfully": "Profile updated successfully",
     "updateFailed": "Profile update failed"
   },
+  "localeErrors": {
+    "notSpecified": "Not Specified"
+  },
   "themeManager": {
     "colorThemes": "Color Themes"
   },
   "unsavedChanges": {
-    "create": {},
-    "update": {}
+    "create": {
+      "title": "Sair sem criar?",
+      "message": "Isso ainda não foi criado. Se você sair agora, todas as informações inseridas serão perdidas.",
+      "cancel": "Ficar",
+      "confirm": "Sair"
+    },
+    "update": {
+      "title": "Descartar alterações?",
+      "message": "Suas alterações ainda não foram salvas. Se você sair agora, elas serão perdidas.",
+      "cancel": "Continuar editando",
+      "confirm": "Descartar alterações"
+    }
   }
 }

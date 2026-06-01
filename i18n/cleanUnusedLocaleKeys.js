@@ -178,7 +178,8 @@ export function shouldPruneKey(
     // Database/API Safeguard Check: Shield remote properties mapped at runtime
     if (!isUsed) {
         const isProtected = protectedPrefixes.some(prefix => dictionaryKey.startsWith(prefix))
-        // Explicit hardcoded shield fallback for store dependencies
+
+        // 🛡️ FORCE PROTECTION FOR STORE TEST CONSTANTS
         if (isProtected || dictionaryKey.startsWith('localeErrors')) {
             isUsed = true
         }
