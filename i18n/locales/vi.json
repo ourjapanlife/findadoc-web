@@ -3,8 +3,7 @@
     "menu": "Menu",
     "siteName": "Find a Doc Japan",
     "siteNameLine1": "Find a Doc",
-    "siteNameLine2": "Japan",
-    "close": "Đóng"
+    "siteNameLine2": "Japan"
   },
   "about": {
     "heroHeading": "Find a Doc, Japan",
@@ -114,7 +113,6 @@
     "allLocations": "Tất cả địa điểm",
     "allSpecialties": "Tất cả chuyên khoa",
     "search": "Tìm kiếm",
-    "resultsFound": "Đã tìm thấy {count} kết quả",
     "searchAndFilterDoctors": "Tìm kiếm và lọc bác sĩ"
   },
   "searchResultsList": {
@@ -190,9 +188,7 @@
     "deleteButtonText": "DELETE FOREVER",
     "update": "Update",
     "back": "Back",
-    "hasUnsavedChanges": "You have unsaved changes. Are you sure you want to leave?",
-    "deleteConfirmationFacility": "Are you sure you want to delete the Facility: {facility}, with ID: {id}?",
-    "deleteConfirmationHealthcareProfessional": "Are you sure you want to delete the Healthcare Professional: {healthcareProfessional}, with ID: {id}?"
+    "hasUnsavedChanges": "You have unsaved changes. Are you sure you want to leave?"
   },
   "modEditSubmissionTopNav": {
     "updateAndExit": "Lưu và thoát.",
@@ -324,7 +320,6 @@
     "errorCodeMessagingNeeded": "The server error code does not have a message for the user. Please add one.",
     "genericErrorMessage": "There was an error submitting your form, please try again"
   },
-  "modHealthcareProfessionalCard": {},
   "modDashboardHealthcareProfessionalCard": {
     "spokenLanguages": "Spoken languages",
     "lastName": "Last name",
@@ -421,13 +416,6 @@
     "updatedSuccessfully": "Profile updated successfully",
     "updateFailed": "Profile update failed"
   },
-  "authErrors": {},
-  "facilitiesErrors": {},
-  "healthcareProfessionalsErrors": {},
-  "localeErrors": {},
-  "locationErrors": {},
-  "moderationSubmissionsErrors": {},
-  "searchResultsErrors": {},
   "themeManager": {
     "colorThemes": "Color Themes"
   },

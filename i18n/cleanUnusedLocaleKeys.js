@@ -6,7 +6,7 @@
  * aggregates translation keys, cross-references them against localized JSON dictionaries,
  * protects dynamically-injected namespaces, and prunes orphaned keys.
  *
- * @version 1.0.0
+ * @version 1.1.0
  * @author Aaditya Kakad
  */
 
@@ -105,7 +105,7 @@ function scanDirectories(foldersToScan, allStaticKeys = new Set(), allDynamicMat
     for (const folder of foldersToScan) {
         if (!fs.existsSync(folder)) continue
 
-        const walk = (dir) => {
+        const walk = dir => {
             const files = fs.readdirSync(dir)
             for (const file of files) {
                 const fullPath = path.join(dir, file)
@@ -182,7 +182,7 @@ export function shouldPruneKey(dictionaryKey, codeInventory, protectedPrefixes =
 }
 
 /**
- * Core Orchestrator execution pipeline.
+ * Core Orchestrator execution pipeline. Loops globally across all local language definitions.
  */
 export function runPrune() {
     try {
@@ -193,67 +193,60 @@ export function runPrune() {
 
         console.log(`✅ Code analysis complete. Discovered ${codeInventory.staticKeys.size} active identifiers in scope.`)
 
-        const localeFilePath = './i18n/locales/en.json'
-
-        if (!fs.existsSync(localeFilePath)) {
-            throw new Error(`Target localization dictionary absent at route: ${localeFilePath}`)
+        const localesDir = './i18n/locales'
+        if (!fs.existsSync(localesDir)) {
+            throw new Error(`Target localization directory missing at: ${localesDir}`)
         }
 
-        console.log(`\n📖 Step 2: Extracting active dictionary blueprint from ${localeFilePath}...`)
-        const rawLocaleData = JSON.parse(fs.readFileSync(localeFilePath, 'utf-8'))
-        const flatLocaleMap = flattenJsonObj(rawLocaleData)
-        const totalDictionaryKeys = Object.keys(flatLocaleMap)
+        const localeFiles = fs.readdirSync(localesDir).filter(file => file.endsWith('.json'))
+        console.log(`\n📖 Step 2: Processing ${localeFiles.length} language dictionaries globally...`)
 
-        console.log(`✅ Locale matrix generated. Total keys defined: ${totalDictionaryKeys.length}`)
+        for (const file of localeFiles) {
+            const localeFilePath = path.join(localesDir, file)
+            const rawLocaleData = JSON.parse(fs.readFileSync(localeFilePath, 'utf-8'))
+            const flatLocaleMap = flattenJsonObj(rawLocaleData)
+            const totalDictionaryKeys = Object.keys(flatLocaleMap)
 
-        console.log('\n⚖️ Step 3: Computing semantic translation key delta matrices...')
-        const unusedKeys = []
-
-        for (const dictionaryKey of totalDictionaryKeys) {
-            if (shouldPruneKey(dictionaryKey, codeInventory)) {
-                unusedKeys.push(dictionaryKey)
-            }
-        }
-
-        console.log('\n📊 PRUNING DIAGNOSTIC SUMMARY:')
-        console.log('------------------------------------------------')
-        console.log(`Total Object Keys Evaluated     : ${totalDictionaryKeys.length}`)
-        console.log(`Active Graph Nodes Preserved    : ${totalDictionaryKeys.length - unusedKeys.length}`)
-        console.log(`Orphaned String Leaf Elements   : ${unusedKeys.length}`)
-        console.log('------------------------------------------------')
-
-        if (unusedKeys.length > 0) {
-            console.log('\n🪓 Step 4: Purging dead nodes & optimizing localized trees...')
-
-            function removeKeysFromObj(obj, currentPrefix = '') {
-                for (const key in obj) {
-                    const propName = currentPrefix ? `${currentPrefix}.${key}` : key
-
-                    if (unusedKeys.includes(propName)) {
-                        delete obj[key]
-                    } else if (typeof obj[key] === 'object' && obj[key] !== null) {
-                        removeKeysFromObj(obj[key], propName)
-
-                        if (Object.keys(obj[key]).length === 0) {
-                            delete obj[key]
-                        }
-                    }
+            const unusedKeys = []
+            for (const dictionaryKey of totalDictionaryKeys) {
+                if (shouldPruneKey(dictionaryKey, codeInventory)) {
+                    unusedKeys.push(dictionaryKey)
                 }
             }
 
-            removeKeysFromObj(rawLocaleData)
-            fs.writeFileSync(localeFilePath, JSON.stringify(rawLocaleData, null, 2), 'utf-8')
-            console.log(`✨ System Optimization Complete. ${unusedKeys.length} dead properties successfully removed.`)
-        } else {
-            console.log('\n✨ Analysis complete: Dictionary graph is fully optimal with zero dead weight.')
+            if (unusedKeys.length > 0) {
+                function removeKeysFromObj(obj, currentPrefix = '') {
+                    for (const key in obj) {
+                        const propName = currentPrefix ? `${currentPrefix}.${key}` : key
+
+                        if (unusedKeys.includes(propName)) {
+                            delete obj[key]
+                        } else if (typeof obj[key] === 'object' && obj[key] !== null) {
+                            removeKeysFromObj(obj[key], propName)
+
+                            // Keep unsavedChanges core parent nodes safe to prevent empty leaf errors
+                            if (Object.keys(obj[key]).length === 0 && !propName.startsWith('unsavedChanges')) {
+                                delete obj[key]
+                            }
+                        }
+                    }
+                }
+
+                removeKeysFromObj(rawLocaleData)
+                fs.writeFileSync(localeFilePath, JSON.stringify(rawLocaleData, null, 2), 'utf-8')
+                console.log(`✨ [${file}] Optimization Complete. Removed ${unusedKeys.length} dead properties.`)
+            } else {
+                console.log(`✨ [${file}] is already fully optimal.`)
+            }
         }
+        console.log('\n✅ Global dictionary optimization successfully completed across all regions!')
     } catch (error) {
         console.error('\n❌ Automation Pipeline Execution Interrupted:', error.message)
         process.exitCode = 1
     }
 }
 
-// CLI Execution Guard: Only execute the I/O operations automatically if run directly from the terminal
+// CLI Execution Guard
 const currentFilePath = fileURLToPath(import.meta.url)
 if (process.argv[1] && (process.argv[1] === currentFilePath || path.basename(process.argv[1]) === 'cleanUnusedLocaleKeys.js')) {
     runPrune()

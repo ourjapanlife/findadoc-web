@@ -3,8 +3,7 @@
     "menu": "Menü",
     "siteName": "Find a Doc Japan",
     "siteNameLine1": "Find a Doc",
-    "siteNameLine2": "Japan",
-    "close": "Schließen"
+    "siteNameLine2": "Japan"
   },
   "about": {
     "heroHeading": "Find a Doc, Japan",
@@ -114,7 +113,6 @@
     "search": "Suchen",
     "allLocations": "All Locations",
     "allSpecialties": "All Specialties",
-    "resultsFound": "{count} Ergebnisse gefunden",
     "searchAndFilterDoctors": "Ärzte suchen und filtern"
   },
   "searchResultsList": {
@@ -215,7 +213,6 @@
     "rejected": "Abgelehnt",
     "submissions": "Submissions"
   },
-  "modPanelFacilitySubmissionLeftNavbar": {},
   "modEditSubmissionTopNav": {
     "updateAndExit": "Sichern & Beenden",
     "approve": "Genehmigen",
@@ -365,15 +362,12 @@
     "update": "Update",
     "deleteButtonText": "DELETE FOREVER",
     "back": "Back",
-    "hasUnsavedChanges": "You have unsaved changes. Are you sure you want to leave?",
-    "deleteConfirmationFacility": "Are you sure you want to delete the Facility: {facility}, with ID: {id}?",
-    "deleteConfirmationHealthcareProfessional": "Are you sure you want to delete the Healthcare Professional: {healthcareProfessional}, with ID: {id}?"
+    "hasUnsavedChanges": "You have unsaved changes. Are you sure you want to leave?"
   },
   "serverErrorMessages": {
     "genericErrorMessage": "There was an error submitting your form, please try again",
     "errorCodeMessagingNeeded": "The server error code does not have a message for the user. Please add one."
   },
-  "modHealthcareProfessionalCard": {},
   "modDashboardHealthcareProfessionalCard": {
     "spokenLanguages": "Spoken languages",
     "lastName": "Last name",
@@ -422,13 +416,6 @@
     "updatedSuccessfully": "Profile updated successfully",
     "updateFailed": "Profile update failed"
   },
-  "authErrors": {},
-  "facilitiesErrors": {},
-  "healthcareProfessionalsErrors": {},
-  "localeErrors": {},
-  "locationErrors": {},
-  "moderationSubmissionsErrors": {},
-  "searchResultsErrors": {},
   "themeManager": {
     "colorThemes": "Color Themes"
   },

@@ -3,8 +3,7 @@
     "menu": "菜单",
     "siteName": "Find a Doc Japan",
     "siteNameLine1": "Find a Doc",
-    "siteNameLine2": "Japan",
-    "close": "关闭"
+    "siteNameLine2": "Japan"
   },
   "about": {
     "heroHeading": "Find a Doc, Japan",
@@ -114,7 +113,6 @@
     "allLocations": "所有地点",
     "allSpecialties": "所有专科",
     "search": "搜索",
-    "resultsFound": "找到{count}个结果",
     "searchAndFilterDoctors": "搜索和筛选医生"
   },
   "searchResultsList": {
@@ -167,7 +165,6 @@
     "rejected": "已驳回",
     "submissions": "Submissions"
   },
-  "modPanelFacilitySubmissionLeftNavbar": {},
   "modEditSubmissionTopNav": {
     "updateAndExit": "保存并退出",
     "approve": "批准",
@@ -317,15 +314,12 @@
     "update": "Update",
     "deleteButtonText": "DELETE FOREVER",
     "back": "Back",
-    "hasUnsavedChanges": "You have unsaved changes. Are you sure you want to leave?",
-    "deleteConfirmationFacility": "Are you sure you want to delete the Facility: {facility}, with ID: {id}?",
-    "deleteConfirmationHealthcareProfessional": "Are you sure you want to delete the Healthcare Professional: {healthcareProfessional}, with ID: {id}?"
+    "hasUnsavedChanges": "You have unsaved changes. Are you sure you want to leave?"
   },
   "serverErrorMessages": {
     "genericErrorMessage": "There was an error submitting your form, please try again",
     "errorCodeMessagingNeeded": "The server error code does not have a message for the user. Please add one."
   },
-  "modHealthcareProfessionalCard": {},
   "modDashboardHealthcareProfessionalCard": {
     "spokenLanguages": "Spoken languages",
     "lastName": "Last name",
@@ -422,13 +416,6 @@
     "updatedSuccessfully": "Profile updated successfully",
     "updateFailed": "Profile update failed"
   },
-  "authErrors": {},
-  "facilitiesErrors": {},
-  "healthcareProfessionalsErrors": {},
-  "localeErrors": {},
-  "locationErrors": {},
-  "moderationSubmissionsErrors": {},
-  "searchResultsErrors": {},
   "themeManager": {
     "colorThemes": "Color Themes"
   },

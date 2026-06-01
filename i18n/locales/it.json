@@ -3,8 +3,7 @@
     "menu": "Menu",
     "siteName": "Find a Doc Japan",
     "siteNameLine1": "Find a Doc",
-    "siteNameLine2": "Japan",
-    "close": "Chiudi"
+    "siteNameLine2": "Japan"
   },
   "about": {
     "heroHeading": "Find a Doc, Japan",
@@ -118,7 +117,6 @@
     "allLocations": "Tutte le località",
     "allSpecialties": "Tutte le specialità",
     "search": "Cerca",
-    "resultsFound": "{count} risultati trovati",
     "searchAndFilterDoctors": "Cerca e filtra i medici"
   },
   "searchResultsList": {
@@ -194,9 +192,7 @@
     "update": "Aggiorna",
     "updateAndExit": "Aggiorna & Esci",
     "back": "Back",
-    "hasUnsavedChanges": "You have unsaved changes. Are you sure you want to leave?",
-    "deleteConfirmationFacility": "Are you sure you want to delete the Facility: {facility}, with ID: {id}?",
-    "deleteConfirmationHealthcareProfessional": "Are you sure you want to delete the Healthcare Professional: {healthcareProfessional}, with ID: {id}?"
+    "hasUnsavedChanges": "You have unsaved changes. Are you sure you want to leave?"
   },
   "modEditSubmissionTopNav": {
     "updateAndExit": "Aggiorna & Esci",
@@ -207,7 +203,6 @@
   "modPanelSubmissionList": {
     "noSubmissions": "Non ci sono richieste in attesa"
   },
-  "modHealthcareProfessionalCard": {},
   "modHealthcareProfessionalSection": {
     "addHealthCareProfessionalLocaleName": "Aggiungi nome per località",
     "errorMessageHealthcareProfessionalId": "ID professionista sanitario non trovato",
@@ -421,13 +416,6 @@
     "updatedSuccessfully": "Profile updated successfully",
     "updateFailed": "Profile update failed"
   },
-  "authErrors": {},
-  "facilitiesErrors": {},
-  "healthcareProfessionalsErrors": {},
-  "localeErrors": {},
-  "locationErrors": {},
-  "moderationSubmissionsErrors": {},
-  "searchResultsErrors": {},
   "themeManager": {
     "colorThemes": "Color Themes"
   },
