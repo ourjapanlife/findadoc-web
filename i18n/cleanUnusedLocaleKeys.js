@@ -157,7 +157,7 @@ function flattenJsonObj(obj, prefix = '', res = {}) {
  * Pure predicate evaluator to determine whether a given translation key should be pruned.
  * Exported specifically to feed the Vitest test infrastructure safely without I/O side effects.
  */
-export function shouldPruneKey(dictionaryKey, codeInventory, protectedPrefixes = ['specialties.', 'specialtyCategories.']) {
+export function shouldPruneKey(dictionaryKey, codeInventory, protectedPrefixes = ['specialties.', 'specialtyCategories.', 'localeErrors.']) {
     let isUsed = codeInventory.staticKeys.has(dictionaryKey)
 
     // Code Evaluation Check: Evaluate matches against code AST dynamic structures
