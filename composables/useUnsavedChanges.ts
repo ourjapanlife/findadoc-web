@@ -24,6 +24,7 @@ const snapshot = <V>(val: V): V => JSON.parse(stableStringify(val ?? null)) as V
 
 export const useUnsavedChanges = <T>(config: Config<T>) => {
     const { $unsavedChangesRegistry } = useNuxtApp()
+
     const { t } = useI18n()
     const instanceId = Symbol('unsaved-changes-instance')
 

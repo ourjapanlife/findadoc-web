@@ -3,8 +3,7 @@
     "menu": "Menu",
     "siteName": "Find a Doc Japan",
     "siteNameLine1": "Find a Doc",
-    "siteNameLine2": "Japan",
-    "close": "Isara"
+    "siteNameLine2": "Japan"
   },
   "about": {
     "heroHeading": "Find a Doc, Japan",
@@ -114,7 +113,6 @@
     "allLocations": "Lahat ng Lokasyon",
     "allSpecialties": "Lahat ng Espesyalidad",
     "search": "Maghanap",
-    "resultsFound": "Natagpuan ang {count} na resulta",
     "searchAndFilterDoctors": "Maghanap at mag-filter ng mga doktor"
   },
   "searchResultsList": {
@@ -157,12 +155,7 @@
     "confirmExit": "Exit without saving",
     "create": "Create",
     "exit": "Exit",
-    "facilityCreatedSuccessfully": "Facility created successfully.",
-    "heathcareProfessionalCreatedSuccessfully": "Healthcare Professional created successfully.",
-    "unsavedChangesMessage": "This will exit without saving your entry. All unsaved data will be lost.",
-    "healthcareProfessionalEnglishNameRequired": "Healthcare Professional must have an English name",
-    "hasEmptyFieldsHealthcareProfessional": "All fields are required for creating a healthcare professional",
-    "hasEmptyFieldsFacility": "Some required fields are missing for creating a facility"
+    "unsavedChangesMessage": "This will exit without saving your entry. All unsaved data will be lost."
   },
   "modDashboardLeftNav": {
     "facilities": "Pasilidad",
@@ -272,13 +265,8 @@
     "noHealthcareProfessionalFound": "No matching Healthcare Professionals found"
   },
   "modSubmissionForm": {
-    "confirmationButton": "Umalis sa pahina",
-    "hasUnsavedChanges": "Mayroon mga hindi na-save na pagbabago. Sigurado ka bang nais mong umalis?",
     "errorMessageCompletedForm": "Hindi na-isumite and kumpletong form",
-    "errorMessageFacilityInputsInvalid": "Ang ilan sa mga impormasyon ng pasilidad ay hindi nakumpleto ng tama.",
     "errorMessageFacilityId": "Kinakailangan ang ID ng Pasilidad upang ma-update ang pasilidad.",
-    "errorMessageHealthcareInputsInvalid": "Ang ilan sa mga impormasyon ng Propesyonal sa Pangangalagang Pangkalusugan ay hindi nakumpleto ng tama.",
-    "errorMessageEnglishNameRequired": "Ang propesyonal sa Pangangalagang Pangkalusugan ay kailangang may pangalan sa Ingles",
     "healthcareProfessionalId": "Mga ID ng propesyonal sa Pangangalagang Pangkalusugan",
     "infoMessageAlreadyApproved": "Ang Isinumite ay aprubado na",
     "labelHealthcareProfessionalFirstName": "Pangalan",
@@ -287,8 +275,6 @@
     "placeholderTextHealthcareProfessionalSearchbar": "Hanapin ayon sa pangalan o ID upang magdagdag ng doktor",
     "submissionConfirmationAcceptanceButton": "Oo, Isumite",
     "submissionConfirmationMessage": "Nais mo bang isumite ang form na ito?",
-    "successMessageUpdated": "Matagumpay na na-update ang pagsusumite.",
-    "successMessageApproved": "Ang Isinumite ay matagumpay na na-aprubahan.",
     "facilitySuccessfullyRejected": "Matagumpay na hindi na-apprubahan ang pasilidad",
     "rejectSubmissionConfirmationMessage": "Are you sure you want to reject this submission?",
     "rejectSubmissionConfirmationButton": "Yes, reject the submission",
@@ -341,7 +327,6 @@
     "labelAdditionalNotesForPatients": "Additional Notes for Patients",
     "placeholderAdditionalNotesForPatients": "e.g. English speaking doctors only available from 2-4"
   },
-  "modHealthcareProfessionalCard": {},
   "modDashboardHealthcareProfessionalCard": {
     "spokenLanguages": "Spoken languages",
     "lastName": "Last name",
@@ -438,15 +423,9 @@
     "updatedSuccessfully": "Profile updated successfully",
     "updateFailed": "Profile update failed"
   },
-  "authErrors": {},
-  "facilitiesErrors": {},
-  "healthcareProfessionalsErrors": {},
   "localeErrors": {
     "notSpecified": "Not Specified"
   },
-  "locationErrors": {},
-  "moderationSubmissionsErrors": {},
-  "searchResultsErrors": {},
   "themeManager": {
     "colorThemes": "Color Themes"
   },

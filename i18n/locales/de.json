@@ -3,8 +3,7 @@
     "menu": "Menü",
     "siteName": "Find a Doc Japan",
     "siteNameLine1": "Find a Doc",
-    "siteNameLine2": "Japan",
-    "close": "Schließen"
+    "siteNameLine2": "Japan"
   },
   "about": {
     "heroHeading": "Find a Doc, Japan",
@@ -114,7 +113,6 @@
     "search": "Suchen",
     "allLocations": "All Locations",
     "allSpecialties": "All Specialties",
-    "resultsFound": "{count} Ergebnisse gefunden",
     "searchAndFilterDoctors": "Ärzte suchen und filtern"
   },
   "searchResultsList": {
@@ -205,12 +203,7 @@
     "confirmExit": "Verlassen ohne zu Speichern",
     "create": "Erstellen",
     "exit": "Verlassen",
-    "facilityCreatedSuccessfully": "Einrichtung erfolgreich erstellt.",
-    "heathcareProfessionalCreatedSuccessfully": "Gesundheitsfachkraft erfolgreich erstellt.",
-    "unsavedChangesMessage": "Die Seite wird verlassen, ohne das Ihr Eintrag gespeichert wird. Alle nicht gespeicherten Daten gehen verloren.",
-    "healthcareProfessionalEnglishNameRequired": "Healthcare Professional must have an English name",
-    "hasEmptyFieldsHealthcareProfessional": "All fields are required for creating a healthcare professional",
-    "hasEmptyFieldsFacility": "Some required fields are missing for creating a facility"
+    "unsavedChangesMessage": "Die Seite wird verlassen, ohne das Ihr Eintrag gespeichert wird. Alle nicht gespeicherten Daten gehen verloren."
   },
   "modDashboardLeftNav": {
     "facilities": "Einrichtungen",
@@ -220,7 +213,6 @@
     "rejected": "Abgelehnt",
     "submissions": "Submissions"
   },
-  "modPanelFacilitySubmissionLeftNavbar": {},
   "modEditSubmissionTopNav": {
     "updateAndExit": "Sichern & Beenden",
     "approve": "Genehmigen",
@@ -276,18 +268,11 @@
     "labelHealthcareProfessionalFirstName": "First Name",
     "labelHealthcareProfessionalLastName": "Last Name",
     "labelHealthcareProfessionalMiddleName": "Middle Name",
-    "confirmationButton": "Leave Page",
-    "hasUnsavedChanges": "You have unsaved changes. Are you sure you want to leave?",
     "submissionConfirmationAcceptanceButton": "Yes, submit",
     "submissionConfirmationMessage": "Are you sure you want to submit this form?",
     "errorMessageCompletedForm": "Failed to submit completed form",
-    "errorMessageFacilityInputsInvalid": "Some of the Facility Fields were not filled in correctly",
     "errorMessageFacilityId": "Facility ID is required for updating the Facility",
-    "errorMessageHealthcareInputsInvalid": "Some of the Healthcare Professional Fields were not filled in correctly",
-    "errorMessageEnglishNameRequired": "The healthcare professional must have an English name",
     "infoMessageAlreadyApproved": "This submission has already been approved",
-    "successMessageUpdated": "Submission updated successfully",
-    "successMessageApproved": "Submission approved and created successfully",
     "facilitySuccessfullyRejected": "Facility rejected successfully",
     "rejectSubmissionConfirmationMessage": "Are you sure you want to reject this submission?",
     "rejectSubmissionConfirmationButton": "Yes, reject the submission",
@@ -390,7 +375,6 @@
     "genericErrorMessage": "There was an error submitting your form, please try again",
     "errorCodeMessagingNeeded": "The server error code does not have a message for the user. Please add one."
   },
-  "modHealthcareProfessionalCard": {},
   "modDashboardHealthcareProfessionalCard": {
     "spokenLanguages": "Spoken languages",
     "lastName": "Last name",
@@ -439,15 +423,9 @@
     "updatedSuccessfully": "Profile updated successfully",
     "updateFailed": "Profile update failed"
   },
-  "authErrors": {},
-  "facilitiesErrors": {},
-  "healthcareProfessionalsErrors": {},
   "localeErrors": {
     "notSpecified": "Not Specified"
   },
-  "locationErrors": {},
-  "moderationSubmissionsErrors": {},
-  "searchResultsErrors": {},
   "themeManager": {
     "colorThemes": "Color Themes"
   },

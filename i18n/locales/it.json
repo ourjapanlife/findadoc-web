@@ -3,8 +3,7 @@
     "menu": "Menu",
     "siteName": "Find a Doc Japan",
     "siteNameLine1": "Find a Doc",
-    "siteNameLine2": "Japan",
-    "close": "Chiudi"
+    "siteNameLine2": "Japan"
   },
   "about": {
     "heroHeading": "Find a Doc, Japan",
@@ -118,7 +117,6 @@
     "allLocations": "Tutte le località",
     "allSpecialties": "Tutte le specialità",
     "search": "Cerca",
-    "resultsFound": "{count} risultati trovati",
     "searchAndFilterDoctors": "Cerca e filtra i medici"
   },
   "searchResultsList": {
@@ -161,12 +159,7 @@
     "confirmExit": "Exit without saving",
     "create": "Create",
     "exit": "Exit",
-    "facilityCreatedSuccessfully": "Facility created successfully.",
-    "heathcareProfessionalCreatedSuccessfully": "Healthcare Professional created successfully.",
-    "unsavedChangesMessage": "This will exit without saving your entry. All unsaved data will be lost.",
-    "healthcareProfessionalEnglishNameRequired": "Healthcare Professional must have an English name",
-    "hasEmptyFieldsHealthcareProfessional": "All fields are required for creating a healthcare professional",
-    "hasEmptyFieldsFacility": "Some required fields are missing for creating a facility"
+    "unsavedChangesMessage": "This will exit without saving your entry. All unsaved data will be lost."
   },
   "modDashboardLeftNav": {
     "facilities": "Strutture",
@@ -217,7 +210,6 @@
   "modPanelSubmissionList": {
     "noSubmissions": "Non ci sono richieste in attesa"
   },
-  "modHealthcareProfessionalCard": {},
   "modHealthcareProfessionalSection": {
     "addHealthCareProfessionalLocaleName": "Aggiungi nome per località",
     "errorMessageHealthcareProfessionalId": "ID professionista sanitario non trovato",
@@ -317,13 +309,8 @@
     "noHealthcareProfessionalFound": "No matching Healthcare Professionals found"
   },
   "modSubmissionForm": {
-    "confirmationButton": "Lascia la pagina",
-    "hasUnsavedChanges": "Hai delle modifiche non salvate. Sei sicuro di voler uscire?",
     "errorMessageCompletedForm": "Tentativo di inviare il modulo completato fallito",
-    "errorMessageFacilityInputsInvalid": "Alcuni campi della struttura non sono stati compilati correttamente",
     "errorMessageFacilityId": "L'ID della struttura è obbligatiorio per aggiornare la struttura",
-    "errorMessageHealthcareInputsInvalid": "Alcuni campi del professionista sanitario non sono stati compilati correttamente",
-    "errorMessageEnglishNameRequired": "Il professionista sanitario deve avere un nome in inglese",
     "facilitySuccessfullyRejected": "Struttura rifiutata con successo",
     "healthcareProfessionalId": "ID professionista sanitario",
     "infoMessageAlreadyApproved": "Questa richiesta è già stata approvata",
@@ -333,8 +320,6 @@
     "placeholderTextHealthcareProfessionalSearchbar": "Cerca per nome o ID per aggiungere un medico",
     "submissionConfirmationAcceptanceButton": "Si, invia",
     "submissionConfirmationMessage": "Sei sicuro di inviare questo form?",
-    "successMessageUpdated": "Avvio aggiornato con successo",
-    "successMessageApproved": "Invio approvato e creato con successo",
     "rejectSubmissionConfirmationMessage": "Are you sure you want to reject this submission?",
     "rejectSubmissionConfirmationButton": "Yes, reject the submission",
     "searchExistingFacilities": "Search for existing facility",
@@ -438,15 +423,9 @@
     "updatedSuccessfully": "Profile updated successfully",
     "updateFailed": "Profile update failed"
   },
-  "authErrors": {},
-  "facilitiesErrors": {},
-  "healthcareProfessionalsErrors": {},
   "localeErrors": {
     "notSpecified": "Not Specified"
   },
-  "locationErrors": {},
-  "moderationSubmissionsErrors": {},
-  "searchResultsErrors": {},
   "themeManager": {
     "colorThemes": "Color Themes"
   },

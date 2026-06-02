@@ -3,8 +3,7 @@
     "menu": "Menu",
     "siteName": "Find a Doc Japan",
     "siteNameLine1": "Find a Doc",
-    "siteNameLine2": "Japan",
-    "close": "Đóng"
+    "siteNameLine2": "Japan"
   },
   "about": {
     "heroHeading": "Find a Doc, Japan",
@@ -114,7 +113,6 @@
     "allLocations": "Tất cả địa điểm",
     "allSpecialties": "Tất cả chuyên khoa",
     "search": "Tìm kiếm",
-    "resultsFound": "Đã tìm thấy {count} kết quả",
     "searchAndFilterDoctors": "Tìm kiếm và lọc bác sĩ"
   },
   "searchResultsList": {
@@ -157,12 +155,7 @@
     "confirmExit": "Exit without saving",
     "create": "Create",
     "exit": "Exit",
-    "facilityCreatedSuccessfully": "Facility created successfully.",
-    "heathcareProfessionalCreatedSuccessfully": "Healthcare Professional created successfully.",
-    "unsavedChangesMessage": "This will exit without saving your entry. All unsaved data will be lost.",
-    "healthcareProfessionalEnglishNameRequired": "Healthcare Professional must have an English name",
-    "hasEmptyFieldsHealthcareProfessional": "All fields are required for creating a healthcare professional",
-    "hasEmptyFieldsFacility": "Some required fields are missing for creating a facility"
+    "unsavedChangesMessage": "This will exit without saving your entry. All unsaved data will be lost."
   },
   "modDashboardLeftNav": {
     "facilities": "Cơ sở vật chất",
@@ -312,13 +305,8 @@
     "noHealthcareProfessionalFound": "No matching Healthcare Professionals found"
   },
   "modSubmissionForm": {
-    "confirmationButton": "Rời trang",
-    "hasUnsavedChanges": "Bạn có thay đổi chưa được lưu. Bạn có chắc chắn muốn rời khỏi trang không?",
     "errorMessageCompletedForm": "Gửi mẫu đã hoàn thành không thành công.",
-    "errorMessageFacilityInputsInvalid": "Một số trường thông tin cơ sở vật chất chưa được điền chính xác.",
     "errorMessageFacilityId": "Mã cơ sở vật chất là bắt buộc để cập nhật cơ sở vật chất.",
-    "errorMessageHealthcareInputsInvalid": "Một số trường thông tin về chuyên gia y tế chưa được điền chính xác.",
-    "errorMessageEnglishNameRequired": "Chuyên gia y tế phải có tên tiếng Anh",
     "healthcareProfessionalId": "Mã số chuyên gia y tế",
     "infoMessageAlreadyApproved": "Đơn đăng ký này đã được phê duyệt.",
     "labelHealthcareProfessionalFirstName": "Tên đầu tiên",
@@ -327,8 +315,6 @@
     "placeholderTextHealthcareProfessionalSearchbar": "Tìm kiếm theo tên hoặc ID để thêm bác sĩ.",
     "submissionConfirmationAcceptanceButton": "Vâng, gửi đi",
     "submissionConfirmationMessage": "Bạn có chắc chắn muốn gửi mẫu đơn này không?",
-    "successMessageUpdated": "Mẫu đơn đã được cập nhật thành công.",
-    "successMessageApproved": "Đã phê duyệt và tạo thành công bài nộp.",
     "facilitySuccessfullyRejected": "Facility rejected successfully",
     "rejectSubmissionConfirmationMessage": "Are you sure you want to reject this submission?",
     "rejectSubmissionConfirmationButton": "Yes, reject the submission",
@@ -341,7 +327,6 @@
     "errorCodeMessagingNeeded": "The server error code does not have a message for the user. Please add one.",
     "genericErrorMessage": "There was an error submitting your form, please try again"
   },
-  "modHealthcareProfessionalCard": {},
   "modDashboardHealthcareProfessionalCard": {
     "spokenLanguages": "Spoken languages",
     "lastName": "Last name",
@@ -438,15 +423,9 @@
     "updatedSuccessfully": "Profile updated successfully",
     "updateFailed": "Profile update failed"
   },
-  "authErrors": {},
-  "facilitiesErrors": {},
-  "healthcareProfessionalsErrors": {},
   "localeErrors": {
     "notSpecified": "Not Specified"
   },
-  "locationErrors": {},
-  "moderationSubmissionsErrors": {},
-  "searchResultsErrors": {},
   "themeManager": {
     "colorThemes": "Color Themes"
   },
