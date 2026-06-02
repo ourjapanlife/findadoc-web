@@ -312,9 +312,16 @@
     "delete": "Delete",
     "copyFailure": "Failed to copy ID",
     "update": "Update",
+    "facilityUpdatedSuccessfully": "Facility updated successfully",
     "deleteButtonText": "DELETE FOREVER",
+    "facilityDeletedSuccessfully": "Facility deleted successfully",
+    "healthcareProfessionalDeletedSuccessfully": "Healthcare Professional deleted successfully",
+    "healthcareProfessionalUpdatedSuccessfully": "Healthcare Professional updated successfully",
     "back": "Back",
-    "hasUnsavedChanges": "You have unsaved changes. Are you sure you want to leave?"
+    "hasUnsavedChanges": "You have unsaved changes. Are you sure you want to leave?",
+    "deleteConfirmationFacility": "Are you sure you want to delete the Facility: {facility}, with ID: {id}?",
+    "deleteConfirmationHealthcareProfessional": "Are you sure you want to delete the Healthcare Professional: {healthcareProfessional}, with ID: {id}?",
+    "healthcareProfessionalEnglishNameRequired": "Healthcare Professional must have an English name"
   },
   "serverErrorMessages": {
     "genericErrorMessage": "There was an error submitting your form, please try again",

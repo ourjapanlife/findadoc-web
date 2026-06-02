@@ -191,8 +191,15 @@
     "deleteButtonText": "ELIMINA DEFINITIVAMENTE",
     "update": "Aggiorna",
     "updateAndExit": "Aggiorna & Esci",
+    "facilityDeletedSuccessfully": "Struttura eliminata con successo",
+    "facilityUpdatedSuccessfully": "Struttura aggiornata con successo",
+    "healthcareProfessionalDeletedSuccessfully": "Professionista sanitario eliminato con successo",
+    "healthcareProfessionalUpdatedSuccessfully": "Professionista sanitario aggiornato con successo",
     "back": "Back",
-    "hasUnsavedChanges": "You have unsaved changes. Are you sure you want to leave?"
+    "hasUnsavedChanges": "You have unsaved changes. Are you sure you want to leave?",
+    "deleteConfirmationFacility": "Are you sure you want to delete the Facility: {facility}, with ID: {id}?",
+    "deleteConfirmationHealthcareProfessional": "Are you sure you want to delete the Healthcare Professional: {healthcareProfessional}, with ID: {id}?",
+    "healthcareProfessionalEnglishNameRequired": "Healthcare Professional must have an English name"
   },
   "modEditSubmissionTopNav": {
     "updateAndExit": "Aggiorna & Esci",

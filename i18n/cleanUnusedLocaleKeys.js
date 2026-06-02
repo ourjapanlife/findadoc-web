@@ -160,7 +160,7 @@ function flattenJsonObj(obj, prefix = '', res = {}) {
 export function shouldPruneKey(
     dictionaryKey,
     codeInventory,
-    protectedPrefixes = ['specialties.', 'specialtyCategories.', 'localeErrors', 'moderation.']
+    protectedPrefixes = ['specialties.', 'specialtyCategories.', 'localeErrors', 'moderation.', 'modEditFacilityOrHPTopbar.']
 ) {
     let isUsed = codeInventory.staticKeys.has(dictionaryKey)
 

@@ -187,8 +187,15 @@
     "updateAndExit": "Cập nhật và thoát.",
     "deleteButtonText": "DELETE FOREVER",
     "update": "Update",
+    "facilityDeletedSuccessfully": "Facility deleted successfully",
+    "facilityUpdatedSuccessfully": "Facility updated successfully",
+    "healthcareProfessionalDeletedSuccessfully": "Healthcare Professional deleted successfully",
+    "healthcareProfessionalUpdatedSuccessfully": "Healthcare Professional updated successfully",
     "back": "Back",
-    "hasUnsavedChanges": "You have unsaved changes. Are you sure you want to leave?"
+    "hasUnsavedChanges": "You have unsaved changes. Are you sure you want to leave?",
+    "deleteConfirmationFacility": "Are you sure you want to delete the Facility: {facility}, with ID: {id}?",
+    "deleteConfirmationHealthcareProfessional": "Are you sure you want to delete the Healthcare Professional: {healthcareProfessional}, with ID: {id}?",
+    "healthcareProfessionalEnglishNameRequired": "Healthcare Professional must have an English name"
   },
   "modEditSubmissionTopNav": {
     "updateAndExit": "Lưu và thoát.",

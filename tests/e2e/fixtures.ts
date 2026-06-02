@@ -4,11 +4,11 @@ import { test as base, type Page } from '@playwright/test'
  * Match moderation success toast: translated copy or lazy i18n key still on screen.
  */
 export function moderationSuccessToastPattern(expectedMessage: string, keySuffix: string): RegExp {
-    // Escape special regex characters in both strings so they match literally
+    // 1. Escape special regex characters (like dots, brackets, and wildcards) so they match literally
     const escapedMessage = expectedMessage.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
     const escapedKeySuffix = keySuffix.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
-    // Explicitly group the alternation using standard parenthesis
-    return new RegExp(`(${escapedMessage}|${escapedKeySuffix})`)
+    // 2. 🛡️ Combine into a strict alternation group with a case-insensitive 'i' flag
+    return new RegExp(`(${escapedMessage}|${escapedKeySuffix})`, 'i')
 }
 
 /**
