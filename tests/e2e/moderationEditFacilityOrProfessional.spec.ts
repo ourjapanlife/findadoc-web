@@ -34,8 +34,12 @@ test.describe('Moderation facility and healthcare professional happy paths', () 
             'modEditFacilityOrHPTopbar.facilityUpdatedSuccessfully'
         )
 
-        // 4. ⏳ Explicit Timeout: Give Playwright up to 5 seconds to catch the UI alert element
-        await expect(page.getByRole('alert').filter({ hasText: facilityToastPattern })).toBeVisible({ timeout: 5000 })
+        // 4. 🛑 Explicit Asynchronous DOM Wait: Hold the thread until the alert paints on screen
+        const alertElement = page.getByRole('alert').filter({ hasText: facilityToastPattern })
+        await alertElement.waitFor({ state: 'visible', timeout: 10000 })
+
+        // 5. Assert visibility safely
+        await expect(alertElement).toBeVisible()
     })
 
     test('facility edit: update-and-exit returns to moderation dashboard', async ({ page }) => {
@@ -48,7 +52,13 @@ test.describe('Moderation facility and healthcare professional happy paths', () 
         await expect(nameEnInput).toBeVisible()
         await nameEnInput.fill(`Playwright Facility exit ${Date.now()}`)
 
+        // 1. Trigger the update and exit action
         await page.getByTestId('mod-edit-facility-hp-topbar-update-and-exit').click()
+
+        // 2. 🛡️ Network Guard: Wait for submission and redirection routing to settle
+        await page.waitForLoadState('networkidle')
+
+        // 3. Assert the redirection safely
         await expect(page).toHaveURL(/\/moderation\/?$/)
     })
 
@@ -65,11 +75,22 @@ test.describe('Moderation facility and healthcare professional happy paths', () 
         const hpUpdate = page.getByTestId('mod-edit-facility-hp-topbar-update')
         await expect(hpUpdate).toBeEnabled()
         await hpUpdate.click()
+
+        // 1. 🛡️ Network Guard: Wait for backend network requests to settle down
+        await page.waitForLoadState('networkidle')
+
+        // 2. Resolve the expected i18n text pattern for the healthcare professional toast
         const hpToastPattern = moderationSuccessToastPattern(
             enUS.modEditFacilityOrHPTopbar.healthcareProfessionalUpdatedSuccessfully,
             'modEditFacilityOrHPTopbar.healthcareProfessionalUpdatedSuccessfully'
         )
-        await expect(page.getByRole('alert').filter({ hasText: hpToastPattern })).toBeVisible()
+
+        // 3. 🛑 Explicit Asynchronous DOM Wait: Hold the thread until the alert paints on screen
+        const alertElement = page.getByRole('alert').filter({ hasText: hpToastPattern })
+        await alertElement.waitFor({ state: 'visible', timeout: 10000 })
+
+        // 4. Assert visibility safely
+        await expect(alertElement).toBeVisible()
     })
 
     test('healthcare professional edit: update-and-exit returns to moderation dashboard', async ({ page }) => {
@@ -82,7 +103,13 @@ test.describe('Moderation facility and healthcare professional happy paths', () 
         await expect(noteInput).toBeVisible()
         await noteInput.fill(`Playwright HP note exit ${Date.now()}`)
 
+        // 1. Trigger the update and exit action
         await page.getByTestId('mod-edit-facility-hp-topbar-update-and-exit').click()
+
+        // 2. 🛡️ Network Guard: Wait for submission and redirection routing to settle
+        await page.waitForLoadState('networkidle')
+
+        // 3. Assert the redirection safely
         await expect(page).toHaveURL(/\/moderation\/?$/)
     })
 })
