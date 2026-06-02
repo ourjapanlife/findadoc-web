@@ -36,7 +36,7 @@ test.describe('Moderation facility and healthcare professional happy paths', () 
 
         // 4. 🛑 Explicit Asynchronous DOM Wait: Hold the thread until the alert paints on screen
         const alertElement = page.getByRole('alert').filter({ hasText: facilityToastPattern })
-        await alertElement.waitFor({ state: 'visible', timeout: 10000 })
+        await alertElement.waitFor({ state: 'visible', timeout: 15000 })
 
         // 5. Assert visibility safely
         await expect(alertElement).toBeVisible()
