@@ -499,7 +499,6 @@ function updateHealthcareProfessionalGqlMutation() {
         updateHealthcareProfessional(id: $id, input: $input) {
             names {
                 ${updatedNames}
-                locale
             }
                 ${updatedFields}
             }
