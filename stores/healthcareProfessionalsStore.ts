@@ -171,6 +171,8 @@ export const useHealthcareProfessionalsStore = defineStore(
                 }
             }
 
+            console.log(updateHealthcareProfessionalGqlMutation())
+
             const currentFacilityIds = currentProfessionalData.facilityIds ?? []
             const nextFacilityIds = healthcareProfessionalSectionFields.facilityIds ?? []
             const changedFacilityIds = Array.from(new Set([...currentFacilityIds, ...nextFacilityIds]))
@@ -235,9 +237,8 @@ export const useHealthcareProfessionalsStore = defineStore(
 
             const updateInput = () => {
                 const hpFields = Array.from(useHealthcareProfessionalsStore().healthcareProfessionalUpdatedFields)
-                const healthcareProfessionalId = 'e2b0966e-2e59-480a-8b65-baf41a6b6ed0'
                 const healthcareArgsObject = {
-                    id: healthcareProfessionalId,
+                    id: currentProfessionalData.id,
                     input: {
                         acceptedInsurance: [],
                         additionalInfoForPatients: '',
@@ -255,6 +256,7 @@ export const useHealthcareProfessionalsStore = defineStore(
                 } as MutationUpdateHealthcareProfessionalArgs
 
                 console.log(selectedHealthcareProfessionalId.value)
+                console.log(healthcareArgsObject)
 
                 // Add if statements for each key
                 // Figure out unwrapping proxy
@@ -483,17 +485,20 @@ const getHealthcareProfessionalByIdGqlQuery = gql`
 
 function updateHealthcareProfessionalGqlMutation() {
     let updatedFields = ''
+    let updatedNames = ''
 
     for (const field of useHealthcareProfessionalsStore().healthcareProfessionalUpdatedFields) {
         updatedFields = `${updatedFields + field}\n` + '\t' + '\t'
     }
 
+    for (const field of useHealthcareProfessionalsStore().healthcareProfessionalUpdatedNames) {
+        updatedNames = `${updatedNames + field}\n` + '\t' + '\t'
+    }
+
     return gql`mutation Mutation($id: ID!, $input: UpdateHealthcareProfessionalInput!) {
         updateHealthcareProfessional(id: $id, input: $input) {
             names {
-                firstName
-                middleName
-                lastName
+                ${updatedNames}
                 locale
             }
                 ${updatedFields}

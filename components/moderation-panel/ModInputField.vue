@@ -79,6 +79,8 @@ watch(
         if (!hpNamesForUpdating.includes(name)) {
             hpNamesForUpdating.push(name)
         }
+        console.log("Names are here: ")
+        console.log(hpNamesForUpdating)
     }
 )
 </script>

@@ -646,4 +646,11 @@ onBeforeMount(async () => {
 
     await nextTick()
 })
+
+watch(nameLocaleInputs, () => {
+    if(!hpStore.healthcareProfessionalUpdatedNames.find(entry => entry === 'locale')) {
+        hpStore.healthcareProfessionalUpdatedNames.push('locale')
+        }
+        console.log(useHealthcareProfessionalsStore().healthcareProfessionalUpdatedNames)
+    })
 </script>
