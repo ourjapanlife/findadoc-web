@@ -33,6 +33,8 @@ import { useI18n, useHealthcareProfessionalsStore } from '#imports'
 
 const { t } = useI18n()
 
+const hpStore = useHealthcareProfessionalsStore()
+
 const hpNamesForUpdating = useHealthcareProfessionalsStore().healthcareProfessionalUpdatedNames
 
 const isTheInputValueValid: Ref<boolean> = ref(true)
@@ -77,9 +79,15 @@ watch(
             isTheInputValueValid.value = props.inputValidationCheck(model.value)
         }
         if (!hpNamesForUpdating.includes(name)) {
+            const namesExists = hpStore.healthcareProfessionalUpdatedFields.find(field => field === 'names')
+            if (!namesExists) {
+                hpStore.healthcareProfessionalUpdatedFields.push('names')
+            }
             hpNamesForUpdating.push(name)
+
+            console.log(hpNamesForUpdating)
         }
-        console.log("Names are here: ")
+        console.log('Names are here: ')
         console.log(hpNamesForUpdating)
     }
 )

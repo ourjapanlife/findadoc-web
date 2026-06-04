@@ -244,12 +244,7 @@ export const useHealthcareProfessionalsStore = defineStore(
                         additionalInfoForPatients: '',
                         degrees: [],
                         facilityIds: [],
-                        names: [{
-                            firstName: 'Frank',
-                            lastName: 'Sinatra',
-                            locale: 'en_US',
-                            middleName: 'm'
-                        }],
+                        names: [],
                         specialties: [],
                         spokenLanguages: []
                     } as UpdateHealthcareProfessionalInput
@@ -279,6 +274,8 @@ export const useHealthcareProfessionalsStore = defineStore(
                     }
                     if (field === 'names') {
                         healthcareArgsObject.input.names = Array.from(healthcareProfessionalSectionFields.names)
+                        console.log('Found names! ')
+                        console.log(healthcareArgsObject.input.names)
                     }
                     if (field === 'specialties') {
                         healthcareArgsObject.input.specialties = Array.from(healthcareProfessionalSectionFields.specialties)

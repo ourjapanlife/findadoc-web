@@ -478,11 +478,6 @@ const handleUpdateExistingName = () => {
         hpStore.healthcareProfessionalSectionFields.names[0] = localizedNameToAdd
     }
 
-    // This updates the array in the store with the new edited name since we already ordered the index to this when autofilling
-    if (chosenHealthcareProfessionalToEdit.value) {
-        hpStore.healthcareProfessionalSectionFields.names[0] = localizedNameToAdd
-    }
-
     setEditingLocaleName(false)
 
     // Allows for the inputs to completely transition before resetting the fields
@@ -648,9 +643,9 @@ onBeforeMount(async () => {
 })
 
 watch(nameLocaleInputs, () => {
-    if(!hpStore.healthcareProfessionalUpdatedNames.find(entry => entry === 'locale')) {
+    if (!hpStore.healthcareProfessionalUpdatedNames.find(entry => entry === 'locale')) {
         hpStore.healthcareProfessionalUpdatedNames.push('locale')
-        }
-        console.log(useHealthcareProfessionalsStore().healthcareProfessionalUpdatedNames)
-    })
+    }
+    console.log(useHealthcareProfessionalsStore().healthcareProfessionalUpdatedNames)
+})
 </script>
