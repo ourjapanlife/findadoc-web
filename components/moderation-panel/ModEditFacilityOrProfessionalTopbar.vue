@@ -26,11 +26,11 @@
             <button
                 type="button"
                 :class="[buttonBaseClass, buttonOutlineClass, 'w-28 mr-2']"
-                data-testid="mod-edit-facility-hp-topbar-delete"
+                data-testid="mod-edit-facility-hp-topbar-back"
                 @click="navigateBackToDashboard"
             >
                 {{
-                    t('modEditFacilityOrHPTopbar.back') }}
+
             </button>
             <button
                 type="button"
