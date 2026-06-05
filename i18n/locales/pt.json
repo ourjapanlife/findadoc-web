@@ -55,7 +55,7 @@
     "logout": "Log out",
     "balancesheet": "Balance Sheet",
     "login": "Login",
-    "settings": "Settings",
+    "settings": "Configurações",
     "logoutToast": "Successfully logged out"
   },
   "privacyPage": {
@@ -143,7 +143,8 @@
     "submit": "Adicionar um profissional de saúde",
     "logout": "Log out",
     "login": "Login",
-    "settings": "Settings",
+    "myPage": "Minha página",
+    "settings": "Configurações",
     "logoutToast": "Successfully logged out"
   },
   "modCreateFacilityOrHPTopbar": {
@@ -158,12 +159,59 @@
     "hasEmptyFieldsFacility": "Some required fields are missing for creating a facility"
   },
   "modDashboardLeftNav": {
+    "viewsSection": "Views",
     "facilities": "Instalações",
     "healthcareProfessionals": "Profissionais de saúde",
     "forReview": "Para Revisão",
     "approved": "Aprovado",
     "rejected": "Rejeitado",
     "submissions": "Submissions"
+  },
+  "accessPanel": {
+    "loading": "Carregando permissões…",
+    "loadError": "Não foi possível carregar as permissões do servidor.",
+    "signedInAs": "Conectado como",
+    "roles": "Funções:",
+    "none": "—",
+    "sections": {
+      "settings": "Configurações",
+      "moderation": "Moderação",
+      "admin": "Admin"
+    },
+    "title": "Seu acesso",
+    "availablePages": "Paginas disponiveis",
+    "jwtScopes": "Escopos do token:",
+    "effectiveScopes": "Escopos efetivos",
+    "apiOnlyHint": "Ainda nao ha tela de moderacao para este escopo; disponivel apenas via API.",
+    "apiOnlyTag": "API",
+    "pages": {
+      "moderation": "Minha pagina",
+      "createFacility": "Criar unidade",
+      "createHealthcareProfessional": "Criar profissional de saude",
+      "settings": "Configurações"
+    },
+    "scopes": {
+      "read_submissions": "Envios — lista de moderacao",
+      "write_submissions": "Editar envios",
+      "delete_submissions": "Excluir envios",
+      "create_submissions": "Criar envios",
+      "read_facilities": "Unidades — lista de moderacao",
+      "write_facilities": "Criar / editar unidades",
+      "delete_facilities": "Excluir unidades",
+      "read_healthcareprofessionals": "Profissionais de saude — lista de moderacao",
+      "write_healthcareprofessionals": "Criar / editar profissionais de saude",
+      "delete_healthcareprofessionals": "Excluir profissionais de saude",
+      "read_users": "Ler usuarios",
+      "write_users": "Editar usuarios",
+      "delete_users": "Excluir usuarios",
+      "read_logs": "Ler logs de auditoria",
+      "write_logs": "Escrever logs de auditoria",
+      "read_profile": "Ler perfil",
+      "write_posts": "Escrever publicacoes",
+      "read_reservations": "Ler reservas",
+      "write_reservations": "Editar reservas",
+      "unknown": "Escopo adicional"
+    }
   },
   "modPanelFacilitySubmissionLeftNavbar": {},
   "modEditSubmissionTopNav": {

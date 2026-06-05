@@ -39,6 +39,7 @@
                     <ModLeftNavbar />
                     <div class="w-full flex flex-col items-stretch p-3 md:p-4 gap-3 md:gap-4 min-h-0">
                         <div
+                            v-if="!isSettingsView"
                             class="bg-secondary-bg border border-accent-bg rounded-xl
                             shadow-sm px-3 md:px-5 py-3 md:py-4"
                         >
@@ -53,7 +54,6 @@
                     </div>
                 </div>
             </div>
-            <!-- loading state via #fallback slot -->
             <template #fallback>
                 <div
                     class="w-full h-full mt-16 mb-16 text-primary-text text-2xl font-bold
@@ -67,24 +67,29 @@
 </template>
 
 <script setup lang="ts">
-import { ref, type Ref, onMounted, watch } from 'vue'
+import { computed, ref, type Ref, onMounted, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { useAuthStore } from '~/stores/authStore'
 import { definePageMeta, useI18n } from '#imports'
 
-// tell nuxt to our moderation layout
 definePageMeta({
     layout: 'moderationlayout'
 })
 
 const { t } = useI18n()
-
 const authStore = useAuthStore()
 const route = useRoute()
 const doesTheUserHaveAccess: Ref<boolean> = ref(true)
+const isSettingsView = computed(() => {
+    if (route.path !== '/my-page') {
+        return false
+    }
+    const view = route.query.view
+    return typeof view !== 'string' || view === '' || view === 'settings'
+})
 
 const runModerationAuthRedirect = () => {
-    void authStore.redirectIfUnauthenticatedUser('/moderation', doesTheUserHaveAccess)
+    void authStore.redirectIfUnauthenticatedUser('/my-page', doesTheUserHaveAccess)
 }
 
 watch(() => route.path, runModerationAuthRedirect)

@@ -20,6 +20,7 @@
   --color-primary-text: rgb(var(--theme-color-text-base));
   --color-primary-text-muted: rgb(var(--theme-color-text-muted));
   --color-primary-text-inverted: rgb(var(--theme-color-text-inverted));
+  --color-user-icon: rgb(var(--theme-color-text-base));
   --color-secondary-inverted: rgb(var(--theme-color-secondary-inverted));
   --color-secondary-hover: rgb(var(--theme-color-secondary-hover));
   --color-success: rgb(var(--theme-color-success));
@@ -60,6 +61,10 @@
 
   h4 {
     @apply text-lg font-semibold;
+  }
+
+  button {
+    @apply cursor-pointer;
   }
 
   :root {

@@ -13,9 +13,9 @@ export async function navigateToModerationDashboard(
     moderationScreenStore: { setActiveScreen: (screen: ModerationScreen) => void },
     modalStore?: { hideModal: () => void }
 ) {
-    const navigationResult = await router.push('/moderation')
+    const navigationResult = await router.push('/my-page?view=submissions')
     if (isNavigationFailure(navigationResult)) {
-        // Already on `/moderation` (dashboard + edit share one route); still switch Pinia screen.
+        // Already on `/my-page` (dashboard + edit share one route); still switch Pinia screen.
         if (!isNavigationFailure(navigationResult, NavigationFailureType.duplicated)) {
             return
         }

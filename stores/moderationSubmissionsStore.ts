@@ -33,9 +33,11 @@ export const useModerationSubmissionsStore = defineStore(
         const selectedSubmissionId: Ref<string> = ref('')
         const selectedSubmissionData: Ref<Submission | undefined> = ref()
         const filteredSubmissionDataForListComponent: Ref<Submission[]> = ref([])
+        const submissionSearchQuery: Ref<string> = ref('')
         const didMutationFail: Ref<boolean> = ref(false)
         const selectedModerationListViewTabChosen: Ref<SelectedSubmissionListViewTab>
             = ref(SelectedSubmissionListViewTab.ForReview)
+        const submissionStatusFilterEnabled: Ref<boolean> = ref(false)
 
         // Used for store the total number of submissions found by the current search query.
         const totalSubmissionsCount: Ref<number> = ref(0)
@@ -81,6 +83,7 @@ export const useModerationSubmissionsStore = defineStore(
 
         function setSelectedModerationListViewTabChosen(selectedOption: SelectedSubmissionListViewTab) {
             selectedModerationListViewTabChosen.value = selectedOption
+            submissionStatusFilterEnabled.value = true
         }
 
         function filterSelectedSubmission(submissionId: string | undefined) {
@@ -88,23 +91,51 @@ export const useModerationSubmissionsStore = defineStore(
         }
 
         function filterSubmissionByStatus(submissionStatus: SubmissionStatus) {
+            const applySearch = (submissions: Submission[]) => {
+                const query = submissionSearchQuery.value.trim().toLowerCase()
+                if (!query) {
+                    return submissions
+                }
+                return submissions.filter((submission: Submission) => {
+                    const submissionId = submission.id.toLowerCase()
+                    const healthcareProfessionalName = submission.healthcareProfessionalName.toLowerCase()
+                    const facilityNameEn = submission.facility?.nameEn?.toLowerCase() || ''
+                    const facilityNameJa = submission.facility?.nameJa?.toLowerCase() || ''
+                    return submissionId.includes(query)
+                      || healthcareProfessionalName.includes(query)
+                      || facilityNameEn.includes(query)
+                      || facilityNameJa.includes(query)
+                })
+            }
+
+            const shouldApplyStatusFilter = submissionStatusFilterEnabled.value
+            if (!shouldApplyStatusFilter) {
+                filteredSubmissionDataForListComponent.value = applySearch(submissionsData.value)
+                return
+            }
+
             switch (submissionStatus) {
                 case SubmissionStatus.InReview:
-                    filteredSubmissionDataForListComponent.value = submissionsData.value
+                    filteredSubmissionDataForListComponent.value = applySearch(submissionsData.value
                         .filter((submission: Submission) => {
                             const isNewSubmission = !submission.isRejected && !submission.isApproved && !submission.isUnderReview
                             return submission.isUnderReview || isNewSubmission
-                        })
+                        }))
                     break
                 case SubmissionStatus.Approved:
-                    filteredSubmissionDataForListComponent.value = submissionsData.value
-                        .filter((submission: Submission) => submission.isApproved)
+                    filteredSubmissionDataForListComponent.value = applySearch(submissionsData.value
+                        .filter((submission: Submission) => submission.isApproved))
                     break
                 case SubmissionStatus.Rejected:
-                    filteredSubmissionDataForListComponent.value = submissionsData.value
-                        .filter((submission: Submission) => submission.isRejected)
+                    filteredSubmissionDataForListComponent.value = applySearch(submissionsData.value
+                        .filter((submission: Submission) => submission.isRejected))
                     break
             }
+        }
+
+        function setSubmissionSearchQuery(newQuery: string) {
+            submissionSearchQuery.value = newQuery
+            filterSubmissionByStatus(selectedModerationListViewTabChosen.value as unknown as SubmissionStatus)
         }
 
         async function updateSubmission(
@@ -183,6 +214,8 @@ export const useModerationSubmissionsStore = defineStore(
             submissionsData,
             filterSubmissionByStatus,
             filteredSubmissionDataForListComponent,
+            submissionSearchQuery,
+            setSubmissionSearchQuery,
             selectedSubmissionId,
             filterSelectedSubmission,
             selectedSubmissionData,

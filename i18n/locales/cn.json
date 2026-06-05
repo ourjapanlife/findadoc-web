@@ -55,7 +55,7 @@
     "copyright": "Find a Doc, Japan",
     "balancesheet": "Balance Sheet",
     "login": "Login",
-    "settings": "Settings",
+    "settings": "设置",
     "logoutToast": "Successfully logged out"
   },
   "privacyPage": {
@@ -143,7 +143,8 @@
     "submit": "添加医师",
     "logout": "退出登录",
     "login": "Login",
-    "settings": "Settings",
+    "myPage": "我的页面",
+    "settings": "设置",
     "logoutToast": "Successfully logged out"
   },
   "login": {
@@ -165,12 +166,59 @@
     "hasEmptyFieldsFacility": "Some required fields are missing for creating a facility"
   },
   "modDashboardLeftNav": {
+    "viewsSection": "Views",
     "facilities": "机构",
     "healthcareProfessionals": "医师",
     "forReview": "待审核",
     "approved": "已批准",
     "rejected": "已驳回",
     "submissions": "Submissions"
+  },
+  "accessPanel": {
+    "loading": "正在加载权限…",
+    "loadError": "无法从服务器加载权限。",
+    "signedInAs": "登录身份",
+    "roles": "角色:",
+    "none": "—",
+    "sections": {
+      "settings": "设置",
+      "moderation": "审核",
+      "admin": "管理员"
+    },
+    "title": "您的访问权限",
+    "availablePages": "可访问页面",
+    "jwtScopes": "令牌权限范围:",
+    "effectiveScopes": "有效权限范围",
+    "apiOnlyHint": "该权限范围暂无审核界面；仅可通过 API 使用。",
+    "apiOnlyTag": "API",
+    "pages": {
+      "moderation": "我的页面",
+      "createFacility": "创建机构",
+      "createHealthcareProfessional": "创建医护人员",
+      "settings": "设置"
+    },
+    "scopes": {
+      "read_submissions": "提交内容 — 审核列表",
+      "write_submissions": "编辑提交内容",
+      "delete_submissions": "删除提交内容",
+      "create_submissions": "创建提交内容",
+      "read_facilities": "机构 — 审核列表",
+      "write_facilities": "创建 / 编辑机构",
+      "delete_facilities": "删除机构",
+      "read_healthcareprofessionals": "医护人员 — 审核列表",
+      "write_healthcareprofessionals": "创建 / 编辑医护人员",
+      "delete_healthcareprofessionals": "删除医护人员",
+      "read_users": "查看用户",
+      "write_users": "编辑用户",
+      "delete_users": "删除用户",
+      "read_logs": "查看审计日志",
+      "write_logs": "写入审计日志",
+      "read_profile": "查看个人资料",
+      "write_posts": "发布内容",
+      "read_reservations": "查看预约",
+      "write_reservations": "编辑预约",
+      "unknown": "附加权限范围"
+    }
   },
   "modPanelFacilitySubmissionLeftNavbar": {},
   "modEditSubmissionTopNav": {

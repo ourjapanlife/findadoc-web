@@ -55,7 +55,7 @@
     "logout": "Log out",
     "balancesheet": "Balance Sheet",
     "login": "Login",
-    "settings": "Settings",
+    "settings": "Настройки",
     "logoutToast": "Successfully logged out"
   },
   "privacyPage": {
@@ -143,7 +143,8 @@
     "submit": "Добавить доктора",
     "logout": "Log out",
     "login": "Login",
-    "settings": "Settings",
+    "myPage": "Моя страница",
+    "settings": "Настройки",
     "logoutToast": "Successfully logged out"
   },
   "modCreateFacilityOrHPTopbar": {
@@ -158,12 +159,59 @@
     "hasEmptyFieldsFacility": "Some required fields are missing for creating a facility"
   },
   "modDashboardLeftNav": {
+    "viewsSection": "Views",
     "facilities": "Услуги",
     "healthcareProfessionals": " Медицинские специалисты ",
     "forReview": " Для рассмотрения ",
     "approved": "Одобрено",
     "rejected": "Отклонено",
     "submissions": "Submissions"
+  },
+  "accessPanel": {
+    "loading": "Загрузка прав доступа…",
+    "loadError": "Не удалось загрузить права доступа с сервера.",
+    "signedInAs": "Вы вошли как",
+    "roles": "Роли:",
+    "none": "—",
+    "sections": {
+      "settings": "Настройки",
+      "moderation": "Модерация",
+      "admin": "Админ"
+    },
+    "title": "Ваш доступ",
+    "availablePages": "Доступные страницы",
+    "jwtScopes": "Области токена:",
+    "effectiveScopes": "Эффективные области",
+    "apiOnlyHint": "Для этой области пока нет экрана модерации; доступно только через API.",
+    "apiOnlyTag": "API",
+    "pages": {
+      "moderation": "Моя страница",
+      "createFacility": "Создать учреждение",
+      "createHealthcareProfessional": "Создать медспециалиста",
+      "settings": "Настройки"
+    },
+    "scopes": {
+      "read_submissions": "Заявки — список модерации",
+      "write_submissions": "Редактировать заявки",
+      "delete_submissions": "Удалять заявки",
+      "create_submissions": "Создавать заявки",
+      "read_facilities": "Учреждения — список модерации",
+      "write_facilities": "Создавать / редактировать учреждения",
+      "delete_facilities": "Удалять учреждения",
+      "read_healthcareprofessionals": "Медспециалисты — список модерации",
+      "write_healthcareprofessionals": "Создавать / редактировать медспециалистов",
+      "delete_healthcareprofessionals": "Удалять медспециалистов",
+      "read_users": "Читать пользователей",
+      "write_users": "Редактировать пользователей",
+      "delete_users": "Удалять пользователей",
+      "read_logs": "Читать журналы аудита",
+      "write_logs": "Записывать журналы аудита",
+      "read_profile": "Читать профиль",
+      "write_posts": "Писать публикации",
+      "read_reservations": "Читать бронирования",
+      "write_reservations": "Редактировать бронирования",
+      "unknown": "Дополнительная область"
+    }
   },
   "modPanelFacilitySubmissionLeftNavbar": {},
   "modEditSubmissionTopNav": {
