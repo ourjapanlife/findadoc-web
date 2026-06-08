@@ -55,7 +55,6 @@
     "logout": "Log out",
     "balancesheet": "Balance Sheet",
     "login": "Login",
-    "settings": "Configurações",
     "logoutToast": "Successfully logged out"
   },
   "privacyPage": {
@@ -144,22 +143,15 @@
     "logout": "Log out",
     "login": "Login",
     "myPage": "Minha página",
-    "settings": "Configurações",
     "logoutToast": "Successfully logged out"
   },
   "modCreateFacilityOrHPTopbar": {
     "confirmExit": "Exit without saving",
     "create": "Create",
     "exit": "Exit",
-    "facilityCreatedSuccessfully": "Facility created successfully.",
-    "heathcareProfessionalCreatedSuccessfully": "Healthcare Professional created successfully.",
-    "unsavedChangesMessage": "This will exit without saving your entry. All unsaved data will be lost.",
-    "healthcareProfessionalEnglishNameRequired": "Healthcare Professional must have an English name",
-    "hasEmptyFieldsHealthcareProfessional": "All fields are required for creating a healthcare professional",
-    "hasEmptyFieldsFacility": "Some required fields are missing for creating a facility"
+    "unsavedChangesMessage": "This will exit without saving your entry. All unsaved data will be lost."
   },
   "modDashboardLeftNav": {
-    "viewsSection": "Views",
     "facilities": "Instalações",
     "healthcareProfessionals": "Profissionais de saúde",
     "forReview": "Para Revisão",
@@ -175,43 +167,10 @@
     "none": "—",
     "sections": {
       "settings": "Configurações",
-      "moderation": "Moderação",
-      "admin": "Admin"
+      "moderation": "Moderação"
     },
-    "title": "Seu acesso",
-    "availablePages": "Paginas disponiveis",
-    "jwtScopes": "Escopos do token:",
-    "effectiveScopes": "Escopos efetivos",
-    "apiOnlyHint": "Ainda nao ha tela de moderacao para este escopo; disponivel apenas via API.",
-    "apiOnlyTag": "API",
-    "pages": {
-      "moderation": "Minha pagina",
-      "createFacility": "Criar unidade",
-      "createHealthcareProfessional": "Criar profissional de saude",
-      "settings": "Configurações"
-    },
-    "scopes": {
-      "read_submissions": "Envios — lista de moderacao",
-      "write_submissions": "Editar envios",
-      "delete_submissions": "Excluir envios",
-      "create_submissions": "Criar envios",
-      "read_facilities": "Unidades — lista de moderacao",
-      "write_facilities": "Criar / editar unidades",
-      "delete_facilities": "Excluir unidades",
-      "read_healthcareprofessionals": "Profissionais de saude — lista de moderacao",
-      "write_healthcareprofessionals": "Criar / editar profissionais de saude",
-      "delete_healthcareprofessionals": "Excluir profissionais de saude",
-      "read_users": "Ler usuarios",
-      "write_users": "Editar usuarios",
-      "delete_users": "Excluir usuarios",
-      "read_logs": "Ler logs de auditoria",
-      "write_logs": "Escrever logs de auditoria",
-      "read_profile": "Ler perfil",
-      "write_posts": "Escrever publicacoes",
-      "read_reservations": "Ler reservas",
-      "write_reservations": "Editar reservas",
-      "unknown": "Escopo adicional"
-    }
+    "pages": {},
+    "scopes": {}
   },
   "modPanelFacilitySubmissionLeftNavbar": {},
   "modEditSubmissionTopNav": {
@@ -269,18 +228,11 @@
     "labelHealthcareProfessionalFirstName": "First Name",
     "labelHealthcareProfessionalLastName": "Last Name",
     "labelHealthcareProfessionalMiddleName": "Middle Name",
-    "confirmationButton": "Leave Page",
-    "hasUnsavedChanges": "You have unsaved changes. Are you sure you want to leave?",
     "submissionConfirmationAcceptanceButton": "Yes, submit",
     "submissionConfirmationMessage": "Are you sure you want to submit this form?",
     "errorMessageCompletedForm": "Failed to submit completed form",
-    "errorMessageFacilityInputsInvalid": "Some of the Facility Fields were not filled in correctly",
     "errorMessageFacilityId": "Facility ID is required for updating the Facility",
-    "errorMessageHealthcareInputsInvalid": "Some of the Healthcare Professional Fields were not filled in correctly",
-    "errorMessageEnglishNameRequired": "The healthcare professional must have an English name",
     "infoMessageAlreadyApproved": "This submission has already been approved",
-    "successMessageUpdated": "Submission updated successfully",
-    "successMessageApproved": "Submission approved and created successfully",
     "facilitySuccessfullyRejected": "Facility rejected successfully",
     "rejectSubmissionConfirmationMessage": "Are you sure you want to reject this submission?",
     "rejectSubmissionConfirmationButton": "Yes, reject the submission",
@@ -305,9 +257,6 @@
   "modDashboardTopbar": {
     "addFacility": "Add Facility",
     "placeholderText": "Enter name or ID to search",
-    "approved": "Approved",
-    "rejected": "Rejected",
-    "forReview": "For Review",
     "healthcareProfessionals": "Healthcare Professionals",
     "facilities": "Facilities",
     "addHealthcareProfessional": "Add Healthcare Professional"
@@ -375,16 +324,11 @@
     "delete": "Delete",
     "copyFailure": "Failed to copy ID",
     "update": "Update",
-    "facilityUpdatedSuccessfully": "Facility updated successfully",
     "deleteButtonText": "DELETE FOREVER",
-    "facilityDeletedSuccessfully": "Facility deleted successfully",
-    "healthcareProfessionalDeletedSuccessfully": "Healthcare Professional deleted successfully",
-    "healthcareProfessionalUpdatedSuccessfully": "Healthcare Professional updated successfully",
     "back": "Back",
     "hasUnsavedChanges": "You have unsaved changes. Are you sure you want to leave?",
     "deleteConfirmationFacility": "Are you sure you want to delete the Facility: {facility}, with ID: {id}?",
-    "deleteConfirmationHealthcareProfessional": "Are you sure you want to delete the Healthcare Professional: {healthcareProfessional}, with ID: {id}?",
-    "healthcareProfessionalEnglishNameRequired": "Healthcare Professional must have an English name"
+    "deleteConfirmationHealthcareProfessional": "Are you sure you want to delete the Healthcare Professional: {healthcareProfessional}, with ID: {id}?"
   },
   "serverErrorMessages": {
     "genericErrorMessage": "There was an error submitting your form, please try again",
@@ -490,9 +434,7 @@
   "authErrors": {},
   "facilitiesErrors": {},
   "healthcareProfessionalsErrors": {},
-  "localeErrors": {
-    "notSpecified": "Not Specified"
-  },
+  "localeErrors": {},
   "locationErrors": {},
   "moderationSubmissionsErrors": {},
   "searchResultsErrors": {},
@@ -500,17 +442,7 @@
     "colorThemes": "Color Themes"
   },
   "unsavedChanges": {
-    "create": {
-      "title": "Sair sem criar?",
-      "message": "Isso ainda não foi criado. Se você sair agora, todas as informações inseridas serão perdidas.",
-      "cancel": "Ficar",
-      "confirm": "Sair"
-    },
-    "update": {
-      "title": "Descartar alterações?",
-      "message": "Suas alterações ainda não foram salvas. Se você sair agora, elas serão perdidas.",
-      "cancel": "Continuar editando",
-      "confirm": "Descartar alterações"
-    }
+    "create": {},
+    "update": {}
   }
 }

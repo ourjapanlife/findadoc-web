@@ -55,7 +55,6 @@
     "languageDropdownTitle": "Ngôn Ngữ:",
     "copyright": "Find a Doc, Japan",
     "login": "Login",
-    "settings": "Cài đặt",
     "logoutToast": "Successfully logged out"
   },
   "privacyPage": {
@@ -144,7 +143,6 @@
     "logout": "Đăng xuất",
     "login": "Login",
     "myPage": "Trang của tôi",
-    "settings": "Cài đặt",
     "logoutToast": "Successfully logged out"
   },
   "login": {
@@ -158,15 +156,9 @@
     "confirmExit": "Exit without saving",
     "create": "Create",
     "exit": "Exit",
-    "facilityCreatedSuccessfully": "Facility created successfully.",
-    "heathcareProfessionalCreatedSuccessfully": "Healthcare Professional created successfully.",
-    "unsavedChangesMessage": "This will exit without saving your entry. All unsaved data will be lost.",
-    "healthcareProfessionalEnglishNameRequired": "Healthcare Professional must have an English name",
-    "hasEmptyFieldsHealthcareProfessional": "All fields are required for creating a healthcare professional",
-    "hasEmptyFieldsFacility": "Some required fields are missing for creating a facility"
+    "unsavedChangesMessage": "This will exit without saving your entry. All unsaved data will be lost."
   },
   "modDashboardLeftNav": {
-    "viewsSection": "Views",
     "facilities": "Cơ sở vật chất",
     "healthcareProfessionals": "Chuyên gia y tế",
     "forReview": "Đang xem xét",
@@ -182,43 +174,10 @@
     "none": "—",
     "sections": {
       "settings": "Cài đặt",
-      "moderation": "Kiểm duyệt",
-      "admin": "Quản trị"
+      "moderation": "Kiểm duyệt"
     },
-    "title": "Quyen truy cap cua ban",
-    "availablePages": "Trang co san",
-    "jwtScopes": "Pham vi token:",
-    "effectiveScopes": "Pham vi hieu luc",
-    "apiOnlyHint": "Chua co man hinh kiem duyet cho pham vi nay; chi co qua API.",
-    "apiOnlyTag": "API",
-    "pages": {
-      "moderation": "Trang cua toi",
-      "createFacility": "Tao co so",
-      "createHealthcareProfessional": "Tao nhan vien y te",
-      "settings": "Cài đặt"
-    },
-    "scopes": {
-      "read_submissions": "Bai gui — danh sach kiem duyet",
-      "write_submissions": "Chinh sua bai gui",
-      "delete_submissions": "Xoa bai gui",
-      "create_submissions": "Tao bai gui",
-      "read_facilities": "Co so — danh sach kiem duyet",
-      "write_facilities": "Tao / chinh sua co so",
-      "delete_facilities": "Xoa co so",
-      "read_healthcareprofessionals": "Nhan vien y te — danh sach kiem duyet",
-      "write_healthcareprofessionals": "Tao / chinh sua nhan vien y te",
-      "delete_healthcareprofessionals": "Xoa nhan vien y te",
-      "read_users": "Xem nguoi dung",
-      "write_users": "Chinh sua nguoi dung",
-      "delete_users": "Xoa nguoi dung",
-      "read_logs": "Xem nhat ky kiem toan",
-      "write_logs": "Ghi nhat ky kiem toan",
-      "read_profile": "Xem ho so",
-      "write_posts": "Dang bai viet",
-      "read_reservations": "Xem dat cho",
-      "write_reservations": "Chinh sua dat cho",
-      "unknown": "Pham vi bo sung"
-    }
+    "pages": {},
+    "scopes": {}
   },
   "modPanelSubmissionLeftNavbar": {
     "facilityNameUnknown": "Tên cơ sở không xác định",
@@ -229,9 +188,6 @@
   "modDashboardTopbar": {
     "addFacility": "Add Facility",
     "placeholderText": "Nhập tên hoặc mã ID để tìm kiếm",
-    "approved": "Đã được phê duyệt",
-    "rejected": "Đã bị từ chối",
-    "forReview": "Chờ duyệt",
     "healthcareProfessionals": "Các Chuyên gia Chăm sóc Sức khỏe",
     "facilities": "Cơ sở vật chất",
     "addHealthcareProfessional": "Add Healthcare Professional"
@@ -242,15 +198,10 @@
     "updateAndExit": "Cập nhật và thoát.",
     "deleteButtonText": "DELETE FOREVER",
     "update": "Update",
-    "facilityDeletedSuccessfully": "Facility deleted successfully",
-    "facilityUpdatedSuccessfully": "Facility updated successfully",
-    "healthcareProfessionalDeletedSuccessfully": "Healthcare Professional deleted successfully",
-    "healthcareProfessionalUpdatedSuccessfully": "Healthcare Professional updated successfully",
     "back": "Back",
     "hasUnsavedChanges": "You have unsaved changes. Are you sure you want to leave?",
     "deleteConfirmationFacility": "Are you sure you want to delete the Facility: {facility}, with ID: {id}?",
-    "deleteConfirmationHealthcareProfessional": "Are you sure you want to delete the Healthcare Professional: {healthcareProfessional}, with ID: {id}?",
-    "healthcareProfessionalEnglishNameRequired": "Healthcare Professional must have an English name"
+    "deleteConfirmationHealthcareProfessional": "Are you sure you want to delete the Healthcare Professional: {healthcareProfessional}, with ID: {id}?"
   },
   "modEditSubmissionTopNav": {
     "updateAndExit": "Lưu và thoát.",
@@ -360,13 +311,8 @@
     "noHealthcareProfessionalFound": "No matching Healthcare Professionals found"
   },
   "modSubmissionForm": {
-    "confirmationButton": "Rời trang",
-    "hasUnsavedChanges": "Bạn có thay đổi chưa được lưu. Bạn có chắc chắn muốn rời khỏi trang không?",
     "errorMessageCompletedForm": "Gửi mẫu đã hoàn thành không thành công.",
-    "errorMessageFacilityInputsInvalid": "Một số trường thông tin cơ sở vật chất chưa được điền chính xác.",
     "errorMessageFacilityId": "Mã cơ sở vật chất là bắt buộc để cập nhật cơ sở vật chất.",
-    "errorMessageHealthcareInputsInvalid": "Một số trường thông tin về chuyên gia y tế chưa được điền chính xác.",
-    "errorMessageEnglishNameRequired": "Chuyên gia y tế phải có tên tiếng Anh",
     "healthcareProfessionalId": "Mã số chuyên gia y tế",
     "infoMessageAlreadyApproved": "Đơn đăng ký này đã được phê duyệt.",
     "labelHealthcareProfessionalFirstName": "Tên đầu tiên",
@@ -375,8 +321,6 @@
     "placeholderTextHealthcareProfessionalSearchbar": "Tìm kiếm theo tên hoặc ID để thêm bác sĩ.",
     "submissionConfirmationAcceptanceButton": "Vâng, gửi đi",
     "submissionConfirmationMessage": "Bạn có chắc chắn muốn gửi mẫu đơn này không?",
-    "successMessageUpdated": "Mẫu đơn đã được cập nhật thành công.",
-    "successMessageApproved": "Đã phê duyệt và tạo thành công bài nộp.",
     "facilitySuccessfullyRejected": "Facility rejected successfully",
     "rejectSubmissionConfirmationMessage": "Are you sure you want to reject this submission?",
     "rejectSubmissionConfirmationButton": "Yes, reject the submission",
@@ -489,9 +433,7 @@
   "authErrors": {},
   "facilitiesErrors": {},
   "healthcareProfessionalsErrors": {},
-  "localeErrors": {
-    "notSpecified": "Not Specified"
-  },
+  "localeErrors": {},
   "locationErrors": {},
   "moderationSubmissionsErrors": {},
   "searchResultsErrors": {},
@@ -499,17 +441,7 @@
     "colorThemes": "Color Themes"
   },
   "unsavedChanges": {
-    "create": {
-      "title": "Rời đi mà không tạo?",
-      "message": "Chưa được tạo. Nếu bạn rời đi bây giờ, tất cả thông tin đã nhập sẽ bị mất.",
-      "cancel": "Ở lại",
-      "confirm": "Rời đi"
-    },
-    "update": {
-      "title": "Hủy các thay đổi?",
-      "message": "Các thay đổi của bạn chưa được lưu. Nếu bạn rời đi bây giờ, chúng sẽ bị mất.",
-      "cancel": "Tiếp tục chỉnh sửa",
-      "confirm": "Hủy thay đổi"
-    }
+    "create": {},
+    "update": {}
   }
 }
