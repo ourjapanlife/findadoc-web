@@ -53,17 +53,31 @@
                             ? 'bg-secondary/10 hover:bg-secondary/30 border-2 border-secondary/10'
                             : 'bg-primary-bg hover:bg-primary-hover/50',
                     ]"
-                    @click="resultClicked(searchResult.id, searchResult.healthcareProfessionals[0].id,
-                                          getLocalizedName(searchResult.healthcareProfessionals[0]?.names))"
+                    role="button"
+                    tabindex="0"
+                    @click="
+                        resultClicked(
+                            searchResult.id,
+                            searchResult.healthcareProfessionals?.[0]?.id || '',
+                            getLocalizedName(searchResult.healthcareProfessionals?.[0]?.names),
+                        )
+                    "
+                    @keydown.enter="
+                        resultClicked(
+                            searchResult.id,
+                            searchResult.healthcareProfessionals?.[0]?.id || '',
+                            getLocalizedName(searchResult.healthcareProfessionals?.[0]?.names),
+                        )
+                    "
                 >
                     <SearchResultsListItem
-                        :name="getLocalizedName(searchResult.healthcareProfessionals[0]?.names)"
-                        :degrees="searchResult.healthcareProfessionals[0]?.degrees"
+                        :name="getLocalizedName(searchResult.healthcareProfessionals?.[0]?.names)"
+                        :degrees="searchResult.healthcareProfessionals?.[0]?.degrees || []"
                         :facility-name="localeStore.activeLocale.code == Locale.JaJp
                             ? searchResult.nameJa
                             : searchResult.nameEn"
-                        :specialties="searchResult.healthcareProfessionals[0]?.specialties"
-                        :spoken-languages="searchResult.healthcareProfessionals[0]?.spokenLanguages"
+                        :specialties="searchResult.healthcareProfessionals?.[0]?.specialties || []"
+                        :spoken-languages="searchResult.healthcareProfessionals?.[0]?.spokenLanguages || []"
                         :data-testid="`search-result-list-item-${index}`"
                     />
                 </div>
@@ -161,13 +175,12 @@ names: Array<LocalizedName> | undefined
     if (!names || !names.length) return ''
 
     const currentLocale = localeStore.activeLocale.code
-    const localePrefix = currentLocale.split('-')[0]
+    const localePrefix = currentLocale.split('-')[0] || ''
 
     const selectedName
         = names.find(name => name.locale === currentLocale)
           || names.find(name => name.locale.startsWith(localePrefix))
           || names[0]
-
-    return `${selectedName.firstName} ${selectedName.lastName}`
+    return `${selectedName?.firstName || ''} ${selectedName?.lastName || ''}`
 }
 </script>

@@ -72,10 +72,12 @@
                         width="100%"
                         height="56"
                         preserveAspectRatio="none"
+                        aria-hidden="true"
                         @mouseenter="waveHover = true"
                         @mouseleave="waveHover = false"
+                        @focus="waveHover = true"
+                        @blur="waveHover = false"
                     >
-                        <!-- Subtly morph the wave path when hovered -->
                         <path
                             :d="waveHover
                                 ? 'M375 0V56H0V30C56 13 123 8 195 27C263 42 322 40 375 11 Z'
@@ -96,8 +98,9 @@
                     role="img"
                     alt="Find a Doc, Japan character team"
                     title="Find a Doc, Japan character team"
-                    class="absolute right-0 bottom-0 landscape:right-12 landscape:w-[416px] w-[300px]
-                        opacity-70 pointer-events-none select-none z-0"
+                    class="absolute right-0 bottom-0 landscape:right-12
+                        landscape:w-104 w-75 opacity-70
+                        pointer-events-none select-none z-0"
                 />
             </div>
         </div>
@@ -106,8 +109,8 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import { useI18n } from 'vue-i18n'
-import SVGCharactersTogetherWelcomeScreen from '@/assets/icons/characters-together-welcomescreen.svg'
+import { useI18n } from '#imports'
+import SVGCharactersTogetherWelcomeScreen from '~/assets/icons/characters-together-welcomescreen.svg'
 
 const { t } = useI18n()
 

@@ -65,20 +65,20 @@
                         selectedItemIndex === index ? 'bg-primary-hover text-primary-inverted' : 'opacity-95',
                     ]"
                     data-testid="mod-search-bar-search-result"
+                    role="button"
+                    tabindex="-1"
                     @click="handleListItemClick"
                     @mousedown="handleListItemMouseDown"
                     @mouseover="() => { handleListItemMouseOver(index) }"
+                    @focus="() => { handleListItemMouseOver(index) }"
+                    @keydown.enter="handleListItem"
+                    @keydown.space.prevent="handleListItem"
                 >
                     <div class="flex items-center m-3 gap-3 overflow-x-auto">
                         <span>{{ index + 1 }}</span>
                         <div class="flex flex-col overflow-x-auto whitespace-nowrap">
                             <span class="text-xs">{{ item.id }}</span>
                             <div class="divide-x-2 mt-1">
-                                <!--
-                                    Originally, the 'item' type is UnwrapRefSimple<ArrayType<T>>,
-                                    but we don't have access to UnwrapRefSimple,
-                                    so we need to directly set the type as ArrayType<T>.
-                                -->
                                 <span
                                     v-for="(field, fieldIndex) in fieldsToDisplayCallback(item as ArrayType<T>)"
                                     :key="fieldIndex"

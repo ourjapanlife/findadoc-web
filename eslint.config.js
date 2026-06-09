@@ -7,6 +7,7 @@ import tseslint from 'typescript-eslint'
 import stylistic from '@stylistic/eslint-plugin'
 import pluginVitest from '@vitest/eslint-plugin'
 import pluginVue from 'eslint-plugin-vue'
+import vuejsAccessibility from 'eslint-plugin-vuejs-accessibility'
 import withNuxt from './.nuxt/eslint.config.mjs'
 
 export default withNuxt(
@@ -93,9 +94,19 @@ export default withNuxt(
     // Vue rules
     {
         ...pluginVue.configs['flat/vue3-recommended'],
+        plugins: {
+            'vuejs-accessibility': vuejsAccessibility // <-- ADD THIS TO REGISTER THE PLUGIN
+        },
         rules: {
             'vue/multi-word-component-names': 'off',
-            'vue/html-indent': ['error', 4]
+            'vue/html-indent': ['error', 4],
+
+            // Issue #1745 Accessibility Rules (Set to throw warnings instead of errors)
+            'vuejs-accessibility/aria-props': 'warn',
+            'vuejs-accessibility/aria-role': 'warn',
+            'vuejs-accessibility/alt-text': 'warn',
+            'vuejs-accessibility/click-events-have-key-events': 'warn',
+            'vuejs-accessibility/mouse-events-have-key-events': 'warn'
         }
     },
     // Linting for Vitest (https://github.com/vitest-dev/eslint-plugin-vitest)

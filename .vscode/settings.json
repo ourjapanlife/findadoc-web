@@ -13,11 +13,11 @@
 
     // Enable ESLint auto-fix on save
     "editor.codeActionsOnSave": {
-        "source.fixAll.eslint": "explicit"
+        "source.fixAll.eslint": "never"
     },
 
     // Enable format on save
-    "editor.formatOnSave": true,
+    "editor.formatOnSave": false,
 
     // ESLint settings
     "eslint.enable": true,
@@ -33,5 +33,9 @@
     "eslint.useFlatConfig": true,
 
     // Disable other formatters that might conflict
-    "prettier.enable": false
+    "prettier.enable": false,
+    "i18n-ally.localesPaths": [
+        "i18n",
+        "i18n/locales"
+    ]
 }
