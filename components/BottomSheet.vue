@@ -18,6 +18,7 @@
                     v-show="overlay && showSheet"
                     class="absolute inset-0 z-10 bg-primary-bg/20"
                     @click="clickOnOverlayHandler"
+                    @keydown.enter="clickOnOverlayHandler"
                 />
             </transition>
             <div
@@ -215,7 +216,7 @@ const dragHandler = (event: HammerInput | IEvent, type: 'draghandle' | 'dragcont
         isDragging.value = false
 
         // The lowest enabledPosition nearest the bottom of the screen (100)
-        const lowestPosition = enabledPositions.value.sort((a, b) => a - b)[0]
+        const lowestPosition = enabledPositions.value.sort((a, b) => a - b)[0] ?? 50
 
         // Find the nearest enabledPosition (closest value)
         const nearest = enabledPositions.value.reduce((prev, curr) =>

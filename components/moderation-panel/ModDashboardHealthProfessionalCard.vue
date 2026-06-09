@@ -123,7 +123,11 @@
                     id="remove-related-healthcare-professional-to-facility"
                     class="flex w-8 items-center justify-center
                     cursor-pointer font-bold text-secondary text-sm self-start p-1"
+                    role="button"
+                    tabindex="0"
                     @click="() => removeHealthcareProfessional(healthcareProfessional?.id)"
+                    @keydown.enter="() => removeHealthcareProfessional(healthcareProfessional?.id)"
+                    @keydown.space.prevent="() => removeHealthcareProfessional(healthcareProfessional?.id)"
                 >
                     <SVGTrashCan
                         v-show="showTrashCan"
@@ -136,7 +140,11 @@
                     id="undo-remove-related-healthcare-professional-to-facility"
                     class="flex w-8 items-center justify-center
                     cursor-pointer font-bold text-secondary text-sm self-start p-1"
+                    role="button"
+                    tabindex="0"
                     @click="() => undoRemovalOfHealthcareProfessional(healthcareProfessional?.id)"
+                    @keydown.enter="() => undoRemovalOfHealthcareProfessional(healthcareProfessional?.id)"
+                    @keydown.space.prevent="() => undoRemovalOfHealthcareProfessional(healthcareProfessional?.id)"
                 >
                     <SVGUndoIcon class="flex items-center justify-center w-6 h-6" />
                 </div>

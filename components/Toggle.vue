@@ -1,7 +1,12 @@
 <template>
     <div
         class="flex flex-col"
+        role="checkbox"
+        :aria-checked="toggleChecked"
+        tabindex="0"
         @click="toggle"
+        @keydown.enter="toggle"
+        @keydown.space.prevent="toggle"
     >
         <p
             class="text-primary"
@@ -21,17 +26,19 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue'
+
 const props = defineProps({
     isToggledOn: Boolean,
     toggleText: String
 })
 
-let toggleChecked = props.isToggledOn
+const toggleChecked = ref(props.isToggledOn)
 
 const emit = defineEmits(['toggled-on-off'])
 
 const toggle = () => {
-    toggleChecked = !toggleChecked
-    emit('toggled-on-off', toggleChecked)
+    toggleChecked.value = !toggleChecked.value
+    emit('toggled-on-off', toggleChecked.value)
 }
 </script>

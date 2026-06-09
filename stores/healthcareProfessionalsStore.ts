@@ -70,10 +70,11 @@ export const useHealthcareProfessionalsStore = defineStore(
 
         function setSelectedHealthcareProfessional(healthcareProfessionalId: string) {
             selectedHealthcareProfessionalId.value = healthcareProfessionalId
-            selectedHealthcareProfessionalData.value = healthcareProfessionalsData.value
+            const foundHP = healthcareProfessionalsData.value
                 .find((healthcareProfessional: HealthcareProfessional) => healthcareProfessional.id === healthcareProfessionalId)
-            if (selectedHealthcareProfessionalData.value) {
-                updateHealthcareProfessionalSectionFields(selectedHealthcareProfessionalData.value)
+            selectedHealthcareProfessionalData.value = foundHP
+            if (foundHP) {
+                updateHealthcareProfessionalSectionFields(foundHP)
             }
         }
 
@@ -285,12 +286,12 @@ export const useHealthcareProfessionalsStore = defineStore(
         }
 
         async function deleteHealthcareProfessional(
-      healthcareProfessionalId: MutationDeleteHealthcareProfessionalArgs
+            inputArgs: MutationDeleteHealthcareProfessionalArgs
         ): Promise<ServerResponse<DeleteResult>> {
             const serverResponse = await graphQLClientRequestWithRetry<Mutation>(
                 gqlClient.request.bind(gqlClient),
                 deleteHealthcareProfessionalGqlMutation,
-                healthcareProfessionalId
+                inputArgs
             )
 
             const deleteResult = serverResponse.data?.deleteHealthcareProfessional as DeleteResult | undefined
@@ -302,7 +303,7 @@ export const useHealthcareProfessionalsStore = defineStore(
 
             if (!serverResponse.errors?.length && deleteResult?.isSuccessful) {
                 await getHealthcareProfessionals()
-                if (selectedHealthcareProfessionalId.value === healthcareProfessionalId.id) {
+                if (selectedHealthcareProfessionalId.value === inputArgs.id) {
                     selectedHealthcareProfessionalId.value = ''
                     selectedHealthcareProfessionalData.value = undefined
                 }
@@ -314,11 +315,26 @@ export const useHealthcareProfessionalsStore = defineStore(
         const displayChosenLocaleForHealthcareProfessional = (
             healthcareProfessional: HealthcareProfessional | CreateHealthcareProfessionalInput
         ) => {
-            // Find the name of the healthcare professional from the chosen display locale
-            const nameFromChosenLocaleDisplay = healthcareProfessional.names.find(name =>
-                name.locale === localeStore.activeLocale.code)
-            // Return the name of the healthcare professional of chosen locale or default to the 0 indexed recorded name
-            return nameFromChosenLocaleDisplay ? nameFromChosenLocaleDisplay : healthcareProfessional.names[0]
+            const nameFromChosenLocaleDisplay = healthcareProfessional.names.find(
+                name => name.locale === localeStore.activeLocale.code
+            )
+
+            if (nameFromChosenLocaleDisplay) {
+                return nameFromChosenLocaleDisplay
+            }
+
+            const defaultName = healthcareProfessional.names[0]
+            if (defaultName) {
+                return defaultName
+            }
+
+            const fallback: LocalizedNameInput = {
+                firstName: '',
+                lastName: '',
+                middleName: '',
+                locale: '' as unknown as LocalizedNameInput['locale']
+            }
+            return fallback
         }
 
         function setItemsPerPage(newLimit: number) {

@@ -93,6 +93,7 @@
                                 <div
                                     class="text-primary"
                                     @click="closeMenu()"
+                                    @keydown.enter="closeMenu()"
                                 >
                                     {{ t('topNav.home') }}
                                 </div>
@@ -102,6 +103,7 @@
                                 <div
                                     class="text-primary"
                                     @click="closeMenu()"
+                                    @keydown.enter="closeMenu()"
                                 >
                                     {{ t('hamburgerMenu.about') }}
                                 </div>
@@ -114,6 +116,7 @@
                                 <div
                                     class="text-primary"
                                     @click="closeMenu()"
+                                    @keydown.enter="closeMenu()"
                                 >
                                     {{ t('hamburgerMenu.contact') }}
                                 </div>
@@ -123,6 +126,7 @@
                                 <div
                                     class="text-primary"
                                     @click="closeMenu()"
+                                    @keydown.enter="closeMenu()"
                                 >
                                     {{ t('hamburgerMenu.submit') }}
                                 </div>
@@ -206,6 +210,7 @@
                                             <span
                                                 class="text-primary-text"
                                                 @click="closeMenu()"
+                                                @keydown.enter="closeMenu()"
                                             >
                                                 {{ t('footer.terms') }}
                                             </span>
@@ -217,6 +222,7 @@
                                             <span
                                                 class="text-primary-text"
                                                 @click="closeMenu()"
+                                                @keydown.enter="closeMenu()"
                                             >
                                                 {{ t('footer.privacy') }}
                                             </span>
