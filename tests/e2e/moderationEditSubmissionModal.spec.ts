@@ -2,12 +2,12 @@ import enUS from '../../i18n/locales/en.json' with { type: 'json' }
 import { test, expect, type Page } from '@playwright/test'
 
 async function navigateToFirstSubmissionEditPage(page: Page) {
-    await page.getByTestId('submission-type-select').selectOption({
-        label: enUS.modDashboardLeftNav.submissions
-    })
+    await page.getByTestId('access-page-link-moderation-submissions').click()
     const firstSubmission = page.locator('[data-testid^="mod-submission-list-item-"]').first()
     await expect(firstSubmission).toBeVisible()
     await firstSubmission.click()
+    await expect(page.getByTestId('mod-access-panel')).toBeVisible()
+    await expect(page.getByTestId('access-page-link-moderation-submissions')).toBeVisible()
     const facilityNameInput = page.getByPlaceholder(enUS.modFacilitySection.placeholderTextFacilityNameEn)
     await expect(facilityNameInput).toBeVisible()
 }
@@ -16,9 +16,9 @@ test.describe('Moderation edit submission topbar modals', () => {
     test.describe.configure({ timeout: 120_000 })
     test.beforeEach(async ({ page }) => {
         await page.setViewportSize({ width: 1728, height: 1077 })
-        await page.goto('/moderation')
+        await page.goto('/my-page?view=submissions')
         await page.waitForLoadState('domcontentloaded')
-        await expect(page.getByTestId('submission-type-select')).toBeVisible()
+        await expect(page.getByTestId('access-page-link-moderation-submissions')).toBeVisible({ timeout: 30_000 })
         await expect(page.getByRole('button', { name: new RegExp(enUS.modDashboardLeftNav.forReview, 'i') })).toBeVisible()
     })
 

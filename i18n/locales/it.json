@@ -59,7 +59,7 @@
     "languageDropdownTitle": "Lingua:",
     "copyright": "Find a Doc, Japan",
     "login": "Login",
-    "settings": "Settings",
+    "settings": "Impostazioni",
     "logoutToast": "Successfully logged out"
   },
   "privacyPage": {
@@ -147,7 +147,8 @@
     "submit": "Aggiungi un medico",
     "logout": "Esci",
     "login": "Login",
-    "settings": "Settings",
+    "myPage": "La mia pagina",
+    "settings": "Impostazioni",
     "logoutToast": "Successfully logged out"
   },
   "login": {
@@ -169,12 +170,59 @@
     "hasEmptyFieldsFacility": "Some required fields are missing for creating a facility"
   },
   "modDashboardLeftNav": {
+    "viewsSection": "Views",
     "facilities": "Strutture",
     "healthcareProfessionals": "Professionisti sanitari",
     "forReview": "In revisione",
     "approved": "Approvato",
     "rejected": "Rifiutato",
     "submissions": "Inoltrato"
+  },
+  "accessPanel": {
+    "loading": "Caricamento autorizzazioni…",
+    "loadError": "Impossibile caricare le autorizzazioni dal server.",
+    "signedInAs": "Accesso come",
+    "roles": "Ruoli:",
+    "none": "—",
+    "sections": {
+      "settings": "Impostazioni",
+      "moderation": "Moderazione",
+      "admin": "Admin"
+    },
+    "title": "I tuoi accessi",
+    "availablePages": "Pagine disponibili",
+    "jwtScopes": "Ambiti del token:",
+    "effectiveScopes": "Ambiti effettivi",
+    "apiOnlyHint": "Nessuna schermata moderatore per questo ambito; disponibile solo via API.",
+    "apiOnlyTag": "API",
+    "pages": {
+      "moderation": "La mia pagina",
+      "createFacility": "Crea struttura",
+      "createHealthcareProfessional": "Crea professionista sanitario",
+      "settings": "Impostazioni"
+    },
+    "scopes": {
+      "read_submissions": "Segnalazioni — elenco moderazione",
+      "write_submissions": "Modifica segnalazioni",
+      "delete_submissions": "Elimina segnalazioni",
+      "create_submissions": "Crea segnalazioni",
+      "read_facilities": "Strutture — elenco moderazione",
+      "write_facilities": "Crea / modifica strutture",
+      "delete_facilities": "Elimina strutture",
+      "read_healthcareprofessionals": "Professionisti sanitari — elenco moderazione",
+      "write_healthcareprofessionals": "Crea / modifica professionisti sanitari",
+      "delete_healthcareprofessionals": "Elimina professionisti sanitari",
+      "read_users": "Leggi utenti",
+      "write_users": "Modifica utenti",
+      "delete_users": "Elimina utenti",
+      "read_logs": "Leggi log di audit",
+      "write_logs": "Scrivi log di audit",
+      "read_profile": "Leggi profilo",
+      "write_posts": "Scrivi post",
+      "read_reservations": "Leggi prenotazioni",
+      "write_reservations": "Modifica prenotazioni",
+      "unknown": "Ambito aggiuntivo"
+    }
   },
   "modPanelSubmissionLeftNavbar": {
     "facilityNameUnknown": "Nome struttura sconosciuto",

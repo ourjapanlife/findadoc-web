@@ -55,7 +55,7 @@
     "balancesheet": "Balance Sheet",
     "logout": "Log out",
     "login": "Login",
-    "settings": "Settings",
+    "settings": "Paramètres",
     "logoutToast": "Successfully logged out"
   },
   "privacyPage": {
@@ -143,7 +143,8 @@
     "submit": "Ajouter un médecin",
     "logout": "Log out",
     "login": "Login",
-    "settings": "Settings",
+    "myPage": "Ma page",
+    "settings": "Paramètres",
     "logoutToast": "Successfully logged out"
   },
   "modCreateFacilityOrHPTopbar": {
@@ -158,12 +159,59 @@
     "hasEmptyFieldsFacility": "Some required fields are missing for creating a facility"
   },
   "modDashboardLeftNav": {
+    "viewsSection": "Views",
     "facilities": "Établissements",
     "healthcareProfessionals": "Professionnels de la santé",
     "forReview": "À examiner",
     "approved": "Approuvé",
     "rejected": "Rejeté",
     "submissions": "Submissions"
+  },
+  "accessPanel": {
+    "loading": "Chargement des autorisations…",
+    "loadError": "Impossible de charger les autorisations depuis le serveur.",
+    "signedInAs": "Connecté en tant que",
+    "roles": "Rôles :",
+    "none": "—",
+    "sections": {
+      "settings": "Paramètres",
+      "moderation": "Modération",
+      "admin": "Admin"
+    },
+    "title": "Vos acces",
+    "availablePages": "Pages disponibles",
+    "jwtScopes": "Portees du jeton :",
+    "effectiveScopes": "Portees effectives",
+    "apiOnlyHint": "Pas encore d'ecran de moderation pour cette portee ; disponible via API uniquement.",
+    "apiOnlyTag": "API",
+    "pages": {
+      "moderation": "Ma page",
+      "createFacility": "Creer un etablissement",
+      "createHealthcareProfessional": "Creer un professionnel de sante",
+      "settings": "Paramètres"
+    },
+    "scopes": {
+      "read_submissions": "Soumissions — liste de moderation",
+      "write_submissions": "Modifier les soumissions",
+      "delete_submissions": "Supprimer les soumissions",
+      "create_submissions": "Creer des soumissions",
+      "read_facilities": "Etablissements — liste de moderation",
+      "write_facilities": "Creer / modifier des etablissements",
+      "delete_facilities": "Supprimer des etablissements",
+      "read_healthcareprofessionals": "Professionnels de sante — liste de moderation",
+      "write_healthcareprofessionals": "Creer / modifier des professionnels de sante",
+      "delete_healthcareprofessionals": "Supprimer des professionnels de sante",
+      "read_users": "Lire les utilisateurs",
+      "write_users": "Modifier les utilisateurs",
+      "delete_users": "Supprimer les utilisateurs",
+      "read_logs": "Lire les journaux d'audit",
+      "write_logs": "Ecrire les journaux d'audit",
+      "read_profile": "Lire le profil",
+      "write_posts": "Ecrire des publications",
+      "read_reservations": "Lire les reservations",
+      "write_reservations": "Modifier les reservations",
+      "unknown": "Portee supplementaire"
+    }
   },
   "modEditSubmissionTopNav": {
     "updateAndExit": "Enregistrer et quitter",

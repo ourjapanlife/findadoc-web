@@ -2,7 +2,7 @@
     <div
         v-close-on-outside-click="{
             onOutside: closeMenu,
-            when: () => !isMenuOpen,
+            when: () => isMenuOpen,
         }"
         data-testid="hamburger-menu-container"
         class="flex w-full cursor-pointer"
@@ -144,16 +144,17 @@
                                     </div>
                                 </div>
                                 <NuxtLink
-                                    to="/settings"
-                                    class="flex ml-0.3 mb-4"
+                                    to="/my-page"
+                                    class="flex ml-0.3 mb-4 items-center"
+                                    @click="closeMenu()"
                                 >
-                                    <SVGSettingsIcon
+                                    <SVGUserIcon
                                         role="img"
-                                        title="setting icon"
-                                        class="w-6 h-6 mr-2"
+                                        title="my page icon"
+                                        class="w-6 h-6 mr-2 text-user-icon"
                                     />
-                                    <div @click="closeMenu()">
-                                        {{ t('hamburgerMenu.settings') }}
+                                    <div>
+                                        {{ t('topNav.myPage') }}
                                     </div>
                                 </NuxtLink>
                                 <button
@@ -310,7 +311,7 @@ import { ref } from 'vue'
 import { vCloseOnOutsideClick } from '~/composables/closeOnOutsideClick'
 import SVGHamburgerMenuIcon from '~/assets/icons/hamburger-menu.svg'
 import SVGGithubIcon from '~/assets/icons/social-github.svg'
-import SVGSettingsIcon from '~/assets/icons/settings-icon.svg'
+import SVGUserIcon from '~/assets/icons/user-icon.svg'
 import SVGSignOutIcon from '~/assets/icons/sign-out-icon.svg'
 import { useAuthStore } from '~/stores/authStore'
 

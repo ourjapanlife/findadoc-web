@@ -75,7 +75,7 @@
                 >
                     <button
                         class="w-full max-w-md px-6 py-3 rounded-lg bg-accent hover:bg-accent/80 transition-all cursor-pointer
-                            text-white font-medium text-center"
+                            text-primary-text-inverted font-medium text-center"
                         data-testid="load-more-button"
                         @click="handleLoadMore"
                     >
