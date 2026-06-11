@@ -31,6 +31,7 @@
                             v-model="nameLocaleInputs.lastName"
                             data-testid="mod-healthcare-professional-section-lastName"
                             :label="t('modHealthcareProfessionalSection.labelHealthcareProfessionalLastName')"
+                            :field-name="'lastName'"
                             type="text"
                             :placeholder="t('modHealthcareProfessionalSection.placeholderTextHealthcareProfessionalLastName')"
                             :required="true"
@@ -39,6 +40,7 @@
                             v-model="nameLocaleInputs.firstName"
                             data-testid="mod-healthcare-professional-section-firstName"
                             :label="t('modHealthcareProfessionalSection.labelHealthcareProfessionalFirstName')"
+                            :field-name="'firstName'"
                             type="text"
                             :placeholder="t('modHealthcareProfessionalSection.placeholderTextHealthcareProfessionalFirstName')"
                             :required="true"
@@ -47,6 +49,7 @@
                             v-model="nameLocaleInputs.middleName as string"
                             data-testid="mod-healthcare-professional-section-middleName"
                             :label="t('modHealthcareProfessionalSection.labelHealthcareProfessionalMiddleName')"
+                            :field-name="'middleName'"
                             type="text"
                             :placeholder="t('modHealthcareProfessionalSection.placeholderTextHealthcareProfessionalMiddleName')"
                             :required="false"
@@ -159,6 +162,7 @@
                     :no-match-text="t('modHealthcareProfessionalSection.noInsurancesWereFound')"
                     :fields-to-display-callback="insurancesToDisplayCallback"
                     :default-suggestions="Object.values(Insurance)"
+                    :field-name="'acceptedInsurance'"
                     @search-input-change="handleInsuranceInputChange"
                 />
                 <ol class="list-disc text-primary-text/60 font-semibold my-2 px-2">
@@ -183,6 +187,7 @@
                     :no-match-text="t('modHealthcareProfessionalSection.noDegreesWereFound')"
                     :fields-to-display-callback="degreesToDisplayCallback"
                     :default-suggestions="Object.values(Degree)"
+                    :field-name="'degrees'"
                     @search-input-change="handleDegreeInputChange"
                 />
                 <ol class="list-disc text-primary-text/60 font-semibold my-2 px-2">
@@ -206,6 +211,7 @@
                     :place-holder-text="t('modHealthcareProfessionalSection.placeholderTextSpecialties')"
                     :no-match-text="t('modHealthcareProfessionalSection.noSpecialtiesWereFound')"
                     :fields-to-display-callback="specialtiesToDisplayCallback"
+                    :field-name="'specialties'"
                     :default-suggestions="Object.values(Specialty)"
                     @search-input-change="handleSpecialtyInputChange"
                 />
@@ -230,6 +236,7 @@
                     :place-holder-text="t('modHealthcareProfessionalSection.placeholderTextLocales')"
                     :no-match-text="t('modHealthcareProfessionalSection.noLocalesWereFound')"
                     :fields-to-display-callback="localesToDisplayCallback"
+                    :field-name="'spokenLanguages'"
                     :default-suggestions="Object.values(Locale)"
                     @search-input-change="handleLocaleInputChange"
                 />
@@ -243,10 +250,11 @@
                     </li>
                 </ol>
                 <NoteInputField
-                    v-model="hpStore.healthcareProfessionalSectionFields.additionalInfoForPatients as string"
+                    v-model="hpStore.healthcareProfessionalSectionFields.additionalInfoForPatients as Array"
                     :label="t('modHealthcareProfessionalSection.labelAdditionalNotesForPatients')"
                     :placeholder="t('modHealthcareProfessionalSection.placeholderAdditionalNotesForPatients')"
                     :required="false"
+                    @vue:updated="notesUpdated"
                 />
             </div>
             <div v-if="moderationScreenStore.editHealthcareProfessionalScreenIsActive()">
@@ -262,6 +270,7 @@
                     :place-holder-text="t('modHealthcareProfessionalSection.placeholderTextFacilitySearchBar')"
                     :no-match-text="t('modHealthcareProfessionalSection.noFacilitiesWereFound')"
                     :fields-to-display-callback="facilitiesFieldsToDisplayCallback"
+                    :field-name="'facilityIds'"
                     :default-suggestions="facilitiesStore.facilityData"
                     @search-input-change="handleFacilitySearchInputChange"
                 />
@@ -292,6 +301,8 @@ import { useI18n } from '#imports'
 import { validateNameLocaleMatchesLanguage } from '~/utils/formValidations'
 import { stableStringify } from '~/utils/stableStringify'
 import { filterByCaseInsensitiveIncludes, matchesFacilitySearch } from '~/utils/moderationSearchUtils'
+
+import { useModerationSubmissionsStore } from '~/stores/moderationSubmissionsStore'
 // Keeps track of if the search bar inputs have been autofilled with existing facilities
 
 const toast = useToast()
@@ -467,11 +478,6 @@ const handleUpdateExistingName = () => {
         hpStore.healthcareProfessionalSectionFields.names[0] = localizedNameToAdd
     }
 
-    // This updates the array in the store with the new edited name since we already ordered the index to this when autofilling
-    if (chosenHealthcareProfessionalToEdit.value) {
-        hpStore.healthcareProfessionalSectionFields.names[0] = localizedNameToAdd
-    }
-
     setEditingLocaleName(false)
 
     // Allows for the inputs to completely transition before resetting the fields
@@ -584,6 +590,16 @@ const handleLocaleInputChange = (filteredItems: Ref<Locale[]>, inputValue: strin
     filteredItems.value = localesStore.getLocaleByNameInput(inputValue)
 }
 
+let notesUpdateValue = false
+
+function notesUpdated() {
+    if (!notesUpdateValue) {
+        hpStore.healthcareProfessionalUpdatedFields.push('additionalInfoForPatients')
+        notesUpdateValue = true
+    }
+    console.log(hpStore.healthcareProfessionalSectionFields.names)
+}
+
 const facilitiesFieldsToDisplayCallback = (item: Facility) => [item.nameEn, item.nameJa]
 const specialtiesToDisplayCallback = (specialty: Specialty) => [specialty]
 const degreesToDisplayCallback = (degree: Degree) => [degree]
@@ -624,5 +640,12 @@ onBeforeMount(async () => {
     loadingStore.setIsLoading(false)
 
     await nextTick()
+})
+
+watch(nameLocaleInputs, () => {
+    if (!hpStore.healthcareProfessionalUpdatedNames.find(entry => entry === 'locale')) {
+        hpStore.healthcareProfessionalUpdatedNames.push('locale')
+    }
+    console.log(useHealthcareProfessionalsStore().healthcareProfessionalUpdatedNames)
 })
 </script>

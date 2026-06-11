@@ -119,6 +119,7 @@
 import { computed, ref, watch, type Ref } from 'vue'
 import SVGCheckMark from '~/assets/icons/check-mark.svg'
 import SVGLookingGlass from '~/assets/icons/looking-glass.svg'
+import { useHealthcareProfessionalsStore } from '@/stores/healthcareProfessionalsStore'
 
 // Obtain the array inner type
 type ArrayType<V> = V extends Array<infer U> ? U : never
@@ -129,7 +130,10 @@ const emit = defineEmits<{
     searchInputArrowUp: []
     searchInputEnter: []
     searchInputChange: [filteredItems: Ref<ArrayType<T>[]>, inputValue: string]
+    updatedField: []
 }>()
+
+const hpFieldsForUpdating = useHealthcareProfessionalsStore().healthcareProfessionalUpdatedFields
 
 // Using a type from the user. T is defined when selectedItems is passed down.
 const selectedItems = defineModel<T>({ required: true })
@@ -140,12 +144,13 @@ type Props = {
     // Callback to display the desired output
     fieldsToDisplayCallback: (item: ArrayType<T>) => string[]
     defaultSuggestions: ArrayType<T>[]
+    fieldName: string
 
     //Optional test id for testing the component
     dataTestId?: string
 }
 
-const { placeHolderText, noMatchText, fieldsToDisplayCallback, defaultSuggestions } = defineProps<Props>()
+const { placeHolderText, noMatchText, fieldsToDisplayCallback, defaultSuggestions, fieldName } = defineProps<Props>()
 
 const searchInputElement = ref<HTMLInputElement>()
 const searchInputValue = ref('')
@@ -170,6 +175,16 @@ const handleListItem = () => {
 
     const item = filteredItems.value[selectedItemIndex.value]
 
+    if (!hpFieldsForUpdating.includes(fieldName)) {
+        hpFieldsForUpdating.push(fieldName)
+    }
+
+    updateHealthcareProfessionalGqlMutation2()
+    // Have object with key name of each field
+    // Create if statements for each key to catch the name of the field name
+    // add the entire list to that key
+    // send non null keys to graphql
+
     if (selectedItems.value.includes(item)) {
         const itemIndex = selectedItems.value.indexOf(item)
         selectedItems.value.splice(itemIndex, 1)
@@ -182,6 +197,49 @@ const handleListItem = () => {
 const handleListItemClick = (event: MouseEvent) => {
     event.preventDefault()
     handleListItem()
+}
+
+const updateHealthcareProfessionalGqlMutation2 = () => {
+    let updatedFields = ''
+    const healthcareArgsObject = {}
+    const hpFields = useHealthcareProfessionalsStore().healthcareProfessionalSectionFields
+    const healthcareProfessionalId = hpFields.id
+
+    // console.log('accepted insurance' + hpFields.acceptedInsurance)
+
+    for (const field of hpFieldsForUpdating) {
+        updatedFields = updatedFields + field + '\n' + '\t' + '\t'
+        healthcareArgsObject[field] = Array.from(hpFields[field])
+        // console.log(healthcareArgsObject[field])
+    }
+    console.log(healthcareProfessionalId)
+    console.log(healthcareArgsObject)
+    console.log(updatedFields)
+
+    // I'm trying to create an object that
+
+    // create object
+    // loop through hp fields for updateing, use the field for the key and the pinia store name
+    // create if statements for each field to
+
+    // const updateHealtchareProfessionalArgs = {
+    //     id: healthcareProfessionalId,
+    //     input: {
+    //         acceptedInsurance: healthcareProfessionalSectionFields.acceptedInsurance ?? [],
+    //         additionalInfoForPatients: healthcareProfessionalSectionFields.additionalInfoForPatients ?? '',
+    //         degrees: healthcareProfessionalSectionFields.degrees ?? [],
+    //         facilityIds: facilitiesRelationsToSelectedHealthcareProfessional,
+    //         names: healthcareProfessionalSectionFields.names ?? [],
+    //         specialties: healthcareProfessionalSectionFields.specialties ?? [],
+    //         spokenLanguages: healthcareProfessionalSectionFields.spokenLanguages ?? []
+    //     }
+    // }
+
+    const baseGQLMutation = `mutation Mutation($id: ID!, $input: UpdateHealthcareProfessionalInput!) {
+        updateHealthcareProfessional(id: $id, input: $input) {
+                ${updatedFields}
+            }
+        }`
 }
 
 const handleListItemMouseOver = (index: number) => {
