@@ -236,11 +236,6 @@ export const useHealthcareProfessionalsStore = defineStore(
                 console.log(selectedHealthcareProfessionalId.value)
                 console.log(healthcareArgsObject)
 
-                // Add if statements for each key
-                // Figure out unwrapping proxy
-                // Make sure object type is correct
-                // Figure out what is required to be sent in the GraphQL schema
-
                 for (const field of hpFields) {
                     // healthcareArgsObject[field] = hpFields[field]
 
@@ -441,93 +436,27 @@ const getHealthcareProfessionalByIdGqlQuery = gql`
     }
 }`
 
-// const updateHealthcareProfessionalGqlMutation = gql`
-// mutation Mutation($id: ID!, $input: UpdateHealthcareProfessionalInput!) {
-//   updateHealthcareProfessional(id: $id, input: $input) {
-//     id
-//     names {
-//       firstName
-//       middleName
-//       lastName
-//       locale
-//     }
-//     spokenLanguages
-//     degrees
-//     specialties
-//     acceptedInsurance
-//     additionalInfoForPatients
-//     facilityIds
-//     createdDate
-//     updatedDate
-//   }
-// }
-// `
-
 function updateHealthcareProfessionalGqlMutation() {
     let updatedFields = ''
     let updatedNames = ''
 
     for (const field of useHealthcareProfessionalsStore().healthcareProfessionalUpdatedFields) {
-        updatedFields = `${updatedFields + field}\n` + '\t' + '\t'
-    }
-
-    for (const field of useHealthcareProfessionalsStore().healthcareProfessionalUpdatedNames) {
-        updatedNames = `${updatedNames + field}\n` + '\t' + '\t'
+        updatedFields = `${updatedFields + field}`
+        if (field === 'names') {
+            for (const nameField of useHealthcareProfessionalsStore().healthcareProfessionalUpdatedNames) {
+                updatedNames = `${updatedNames + nameField}\n \t \t \t`
+            }
+            updatedFields = `${updatedFields}{ \n \t \t \t ${updatedNames} }`
+        }
+        updatedFields += '\n' + '\t' + '\t'
     }
 
     return gql`mutation Mutation($id: ID!, $input: UpdateHealthcareProfessionalInput!) {
         updateHealthcareProfessional(id: $id, input: $input) {
-            names {
-                ${updatedNames}
-            }
                 ${updatedFields}
             }
         }`
 }
-
-// Original code
-
-// const updateHealthcareProfessionalGqlMutation2 = () => {
-//     let updatedFields = ''
-//     const healthcareArgsObject = {}
-//     const hpFields = useHealthcareProfessionalsStore().healthcareProfessionalSectionFields
-//     const healthcareProfessionalId = hpFields.selectedHealthcareProfessionalId
-
-//     // console.log('accepted insurance' + hpFields.acceptedInsurance)
-
-//     for (const field of hpFieldsForUpdating) {
-//         updatedFields = `${updatedFields + field}\n` + '\t' + '\t'
-//         healthcareArgsObject[field] = hpFields[field]
-//         // console.log(healthcareArgsObject[field])
-//     }
-
-//     console.log(healthcareArgsObject.acceptedInsurance)
-
-//     // I'm trying to create an object that
-
-//     // create object
-//     // loop through hp fields for updateing, use the field for the key and the pinia store name
-//     // create if statements for each field to
-
-//     // const updateHealtchareProfessionalArgs = {
-//     //     id: healthcareProfessionalId,
-//     //     input: {
-//     //         acceptedInsurance: healthcareProfessionalSectionFields.acceptedInsurance ?? [],
-//     //         additionalInfoForPatients: healthcareProfessionalSectionFields.additionalInfoForPatients ?? '',
-//     //         degrees: healthcareProfessionalSectionFields.degrees ?? [],
-//     //         facilityIds: facilitiesRelationsToSelectedHealthcareProfessional,
-//     //         names: healthcareProfessionalSectionFields.names ?? [],
-//     //         specialties: healthcareProfessionalSectionFields.specialties ?? [],
-//     //         spokenLanguages: healthcareProfessionalSectionFields.spokenLanguages ?? []
-//     //     }
-//     // }
-
-//     const baseGQLMutation = `mutation Mutation($id: ID!, $input: UpdateHealthcareProfessionalInput!) {
-//         updateHealthcareProfessional(id: $id, input: $input) {
-//                 ${updatedFields}
-//             }
-//         }`
-// }
 
 const deleteHealthcareProfessionalGqlMutation = gql`
 mutation Mutation($id: ID!) {
