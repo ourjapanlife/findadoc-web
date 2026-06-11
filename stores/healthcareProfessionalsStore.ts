@@ -218,23 +218,6 @@ export const useHealthcareProfessionalsStore = defineStore(
                 }
             }
 
-            // original
-
-            // const updateInput: MutationUpdateHealthcareProfessionalArgs = {
-            //     id: selectedHealthcareProfessionalId.value,
-            //     input: {
-            //         acceptedInsurance: healthcareProfessionalSectionFields.acceptedInsurance ?? [],
-            //         additionalInfoForPatients: healthcareProfessionalSectionFields.additionalInfoForPatients ?? '',
-            //         degrees: healthcareProfessionalSectionFields.degrees ?? [],
-            //         facilityIds: facilitiesRelationsToSelectedHealthcareProfessional,
-            //         names: healthcareProfessionalSectionFields.names ?? [],
-            //         specialties: healthcareProfessionalSectionFields.specialties ?? [],
-            //         spokenLanguages: healthcareProfessionalSectionFields.spokenLanguages ?? []
-            //     }
-            // }
-
-            // Check me!
-
             const updateInput = () => {
                 const hpFields = Array.from(useHealthcareProfessionalsStore().healthcareProfessionalUpdatedFields)
                 const healthcareArgsObject = {
