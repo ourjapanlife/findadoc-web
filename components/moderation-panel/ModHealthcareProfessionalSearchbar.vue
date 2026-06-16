@@ -31,7 +31,7 @@
                             'w-96 border-b border-primary-gray-bg p-4',
                             index === healthcareProfessionalByIdOrName.length - 1 ? 'rounded-b-lg' : '',
                         ]"
-                        class="bg-white shadow-md  hover:bg-currentColor"
+                        class="bg-secondary-bg shadow-md hover:bg-accent-bg/20"
                     >
                         <div
                             class="cursor-pointer"

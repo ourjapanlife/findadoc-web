@@ -6,7 +6,7 @@
     >
         <NuxtLink
             class="block h-full mx-2"
-            :to="`/moderation/edit-submission/${props.submission.id}`"
+            :to="`/my-page/edit-submission/${props.submission.id}`"
             :data-testid="`mod-submission-list-item-${index + 1}`"
             @click="handleClickToSubmissionForm(props.submission.id)"
         >
@@ -73,7 +73,7 @@
     >
         <NuxtLink
             class="block h-full mx-2"
-            :to="`/moderation/edit-facility/${props.facility.id}`"
+            :to="`/my-page/edit-facility/${props.facility.id}`"
             :data-testid="`mod-facility-list-item-${index + 1}`"
             @click="handleClickToFacilityForm(props.facility.id)"
         >
@@ -125,7 +125,7 @@
     >
         <NuxtLink
             class="block h-full mx-2"
-            :to="`/moderation/edit-healthcare-professional/${props.healthcareProfessional.id}`"
+            :to="`/my-page/edit-healthcare-professional/${props.healthcareProfessional.id}`"
             :data-testid="`mod-healthcare-professional-list-item-${index + 1}`"
             @click="handleClickToHPForm(props.healthcareProfessional.id)"
         >

@@ -2,8 +2,9 @@
     <div class="flex justify-between w-full">
         <div>
             <button
+                type="button"
                 data-testid="mod-edit-facility-hp-topbar-copy-id"
-                class="flex w-90 bg-neutral p-2 m-2 border-2 border-inverted rounded hover"
+                :class="[buttonBaseClass, copyButtonClass, 'w-fit px-3 py-2 m-2']"
                 @click="copyFacilityOrHealthcareProfessionalId"
             >
                 ID: {{ selectedId }}
@@ -24,9 +25,8 @@
         <div class="facility-hp-topbar-actions flex justify p-2 font-bold ">
             <button
                 type="button"
-                class="flex justify-center items-center rounded-full bg-secondary-bg border-primary-text-muted
-                border-2 w-28 text-sm mr-2"
-                data-testid="mod-edit-facility-hp-topbar-delete"
+                :class="[buttonBaseClass, buttonOutlineClass, 'w-28 mr-2']"
+                data-testid="mod-edit-facility-hp-topbar-back"
                 @click="navigateBackToDashboard"
             >
                 {{
@@ -35,8 +35,7 @@
             <button
                 type="button"
                 :disabled="!hasPendingChanges"
-                class="flex justify-center items-center rounded-full bg-secondary-bg border-primary-text-muted
-                border-2 w-28 text-sm mr-2"
+                :class="[buttonBaseClass, buttonOutlineClass, 'w-28 mr-2']"
                 data-testid="mod-edit-facility-hp-topbar-update"
                 @click="saveChanges"
             >
@@ -47,8 +46,7 @@
             <button
                 type="button"
                 :disabled="!hasPendingChanges"
-                class="flex justify-center items-center rounded-full bg-secondary-bg border-primary-text-muted
-                border-2 w-28 text-sm mr-2"
+                :class="[buttonBaseClass, buttonOutlineClass, 'w-28 mr-2']"
                 data-testid="mod-edit-facility-hp-topbar-update-and-exit"
                 @click="saveChangesAndExit"
             >
@@ -58,7 +56,7 @@
             </button>
             <button
                 type="button"
-                class="flex justify-center items-center rounded-full bg-secondary-bg border-primary border-2 w-28 text-sm mr-2 "
+                :class="[buttonBaseClass, buttonDangerClass, 'w-28 mr-2']"
                 data-testid="mod-edit-facility-hp-topbar-delete"
                 @click="openDeleteConfirmation"
             >
@@ -85,7 +83,7 @@
                             }) }}
                         </div>
                         <button
-                            class="bg-primary p-4 rounded-full my-8 font-semibold text-xl"
+                            :class="[buttonBaseClass, buttonDangerFilledClass, 'my-8 px-6 py-3 text-xl']"
                             type="button"
                             @click="deleteFacilityOrHealthcareProfessional"
                         >
@@ -107,7 +105,7 @@
                             }) }}
                         </div>
                         <button
-                            class="bg-primary p-4 rounded-full my-8 font-semibold text-xl"
+                            :class="[buttonBaseClass, buttonDangerFilledClass, 'my-8 px-6 py-3 text-xl']"
                             type="button"
                             @click="deleteFacilityOrHealthcareProfessional"
                         >
@@ -208,6 +206,11 @@ const toast = useToast()
 const { t } = useI18n()
 
 const showCopySuccessIcon: Ref<boolean> = ref(false)
+const buttonBaseClass = 'inline-flex justify-center items-center rounded-full border-2 text-base font-bold'
+const buttonOutlineClass = 'bg-secondary-bg border-primary-text-muted text-primary-text hover:bg-accent-bg/20'
+const buttonDangerClass = 'bg-secondary-bg border-error text-error hover:bg-error/10'
+const buttonDangerFilledClass = 'bg-error border-error text-primary-text-inverted hover:opacity-90'
+const copyButtonClass = 'bg-secondary-bg border-accent-bg text-primary-text'
 
 const copyFacilityOrHealthcareProfessionalId = async () => {
     try {
@@ -382,7 +385,8 @@ const saveChangesAndExit = async () => {
             return
         }
 
-        await navigateToModerationDashboard(router, moderationScreenStore)
+        await router.push('/my-page?view=facilities')
+        moderationScreenStore.setActiveScreen(ModerationScreen.Dashboard)
     }
     if (moderationScreenStore.editHealthcareProfessionalScreenIsActive()) {
         const response = await saveChanges()
@@ -391,7 +395,8 @@ const saveChangesAndExit = async () => {
             return
         }
 
-        await navigateToModerationDashboard(router, moderationScreenStore)
+        await router.push('/my-page?view=healthcare-professionals')
+        moderationScreenStore.setActiveScreen(ModerationScreen.Dashboard)
     }
 }
 

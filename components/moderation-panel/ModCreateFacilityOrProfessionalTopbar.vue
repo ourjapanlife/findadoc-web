@@ -3,8 +3,7 @@
         <div class="facility-hp-topbar-actions flex justify p-2 font-bold ">
             <button
                 type="button"
-                class="flex justify-center items-center rounded-full bg-secondary-bg border-primary hover:bg-currentColor
-              border-2 w-28 text-lg mr-2"
+                :class="[buttonBaseClass, buttonPrimaryClass, 'w-28 text-lg mr-2']"
                 data-testid="mod-create-facility-hp-topbar-create"
                 @click="createFacilityOrHealthcareProfessional"
             >
@@ -14,8 +13,7 @@
             </button>
             <button
                 type="button"
-                class="flex justify-center items-center rounded-full bg-secondary-bg border-primary-text-muted
-              border-2 w-28 text-lg mr-2"
+                :class="[buttonBaseClass, buttonOutlineClass, 'w-28 text-lg mr-2']"
                 data-testid="mod-create-facility-hp-topbar-exit"
                 @click="openExitConfirmation"
             >
@@ -38,7 +36,7 @@
                         {{ t('modCreateFacilityOrHPTopbar.unsavedChangesMessage') }}
                     </span>
                     <button
-                        class="bg-primary p-4 rounded-full my-8 font-semibold text-xl"
+                        :class="[buttonBaseClass, buttonDangerFilledClass, 'my-8 px-6 py-3 text-xl']"
                         type="button"
                         @click="navigateBackToDashboardWithoutCreation"
                     >
@@ -81,6 +79,10 @@ const moderationSubmissionsStore = useModerationSubmissionsStore()
 const toast = useToast()
 
 const { t } = useI18n()
+const buttonBaseClass = 'inline-flex justify-center items-center rounded-full border-2 font-bold'
+const buttonOutlineClass = 'bg-secondary-bg border-primary-text-muted text-primary-text hover:bg-accent-bg/20'
+const buttonPrimaryClass = 'bg-primary border-primary text-primary-text-inverted hover:bg-primary-hover'
+const buttonDangerFilledClass = 'bg-error border-error text-primary-text-inverted hover:opacity-90'
 
 const validateFacilityFields = () => validateModerationFacilityFields(facilitiesStore.createFacilityFields)
 

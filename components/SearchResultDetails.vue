@@ -128,7 +128,7 @@
                             :href="addressLink"
                             target="_blank"
                             rel="noopener noreferrer"
-                            class="underline text-blue"
+                            class="underline text-secondary"
                         >
                             <div>{{ addressLine1 }}</div>
                             <div v-if="addressLine2">
@@ -150,7 +150,7 @@
                         :href="website"
                         target="_blank"
                         rel="noopener noreferrer"
-                        class="underline text-blue"
+                        class="underline text-secondary"
                     >{{ website }}</a>
                 </div>
                 <!-- Phone -->
@@ -164,12 +164,12 @@
                         />
                         <a
                             v-if="phone"
-                            class=" text-blue"
+                            class=" text-secondary"
                         >{{ phone }}</a>
                     </div>
                     <a
                         v-if="phone"
-                        class="mr-5 px-4 py-1 shadow-sm text-white rounded-lg bg-primary
+                        class="mr-5 px-4 py-1 shadow-sm text-primary-text-inverted rounded-lg bg-primary
                         font-medium hover:bg-primary/90 hover:scale-105 transition-colors"
                         :href="`tel:${phone}`"
                         target="_blank"
@@ -194,7 +194,7 @@
                         :href="`mailto:${email}`"
                         target="_blank"
                         rel="noopener noreferrer"
-                        class="underline text-blue"
+                        class="underline text-secondary"
                     >{{ email }}</a>
                 </div>
                 <!-- Last Updated Time -->

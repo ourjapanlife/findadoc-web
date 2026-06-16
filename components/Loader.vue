@@ -1,7 +1,7 @@
 <template>
     <div
         v-show="loadingStore.isLoading"
-        class="h-full w-full bg-gray-200/70 z-10 absolute"
+        class="h-full w-full bg-primary-bg/70 z-10 absolute"
     >
         <div class="flex justify-center align-middle mt-12">
             <div class="flex text-primary self-center text-4xl">

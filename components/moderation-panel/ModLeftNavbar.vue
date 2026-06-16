@@ -1,36 +1,11 @@
 <template>
-    <div class="w-64 p-4 border-r border-slate-300">
-        <div v-if="moderationScreenStore.dashboardScreenIsActive()">
-            <ModDashboardLeftNavbar />
-        </div>
-        <div v-if="moderationScreenStore.editSubmissionScreenIsActive()">
-            NAVBAR EDIT SUBMISSION PLACEHOLDER
-        </div>
-        <div v-if="moderationScreenStore.editHealthcareProfessionalScreenIsActive()">
-            <p class="text-xl font-bold">
-                <ModHealthcareProfessionalLeftNavbar />
-            </p>
-        </div>
-        <div v-if="moderationScreenStore.editFacilityScreenIsActive()">
-            <p class="text-xl font-bold">
-                NAVBAR EDIT FACILITY PLACEHOLDER
-            </p>
-        </div>
-        <div v-if="moderationScreenStore.createHealthcareProfessionalScreenIsActive()">
-            <p class="text-xl font-bold">
-                NAVBAR CREATE FACILITY PLACEHOLDER
-            </p>
-        </div>
-        <div v-if="moderationScreenStore.createFacilityScreenIsActive()">
-            <p class="text-xl font-bold">
-                NAVBAR CREATE FACILITY PLACEHOLDER
-            </p>
-        </div>
-    </div>
+    <aside
+        class="w-full md:w-80 px-4 py-4 md:py-6 border-b md:border-b-0
+        md:border-r border-accent-bg bg-secondary-bg"
+    >
+        <h2 class="text-3xl md:text-4xl font-semibold mb-4 md:mb-6 text-primary-text">
+            My Page
+        </h2>
+        <MyPageAccessPanel />
+    </aside>
 </template>
-
-<script setup lang="ts">
-import { useModerationScreenStore } from '~/stores/moderationScreenStore'
-
-const moderationScreenStore = useModerationScreenStore()
-</script>

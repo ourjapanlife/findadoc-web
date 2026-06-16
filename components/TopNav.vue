@@ -85,8 +85,8 @@
                         </div>
                     </NuxtLink>
                 </div>
-                <!-- Search Bar -->
-                <div v-if="isLandscape">
+                <!-- Search Bar (hide on moderation/admin-style routes) -->
+                <div v-if="showGlobalSearch">
                     <SearchBar />
                 </div>
             </div>
@@ -117,20 +117,79 @@
                         class="hover:text-primary-hover transition-colors"
                     >{{ t('topNav.submit') }}
                     </NuxtLink>
-                    <!-- Profile Picture (if logged in) -->
-                    <button
+                    <!-- My Page menu trigger (if logged in) -->
+                    <div
                         v-if="authStore.isLoggedIn"
-                        data-testid="topnav-profile-section"
-                        class="flex text-primary"
-                        @click="toggleProfileMenu"
+                        v-close-on-outside-click="{
+                            onOutside: closeProfileMenu,
+                            when: () => profileMenuIsOpen,
+                        }"
+                        class="relative"
                     >
-                        <img
-                            :src="authStore.userProfileImage"
-                            alt="profile icon"
-                            title="profile icon"
-                            class="w-8 h-8 stroke-primary inline stroke-2 rounded-full mx-1 hover:scale-105"
+                        <button
+                            data-testid="topnav-profile-section"
+                            class="flex items-center gap-2 rounded-xl px-3 py-2 text-primary-text
+                            hover:bg-primary-hover/10 transition-colors"
+                            @click="toggleProfileMenu"
                         >
-                    </button>
+                            <span class="max-w-44 truncate font-medium">
+                                {{ profileMenuLabel }}
+                            </span>
+                            <SVGAccordionArrow
+                                class="w-4 h-4 fill-primary-text transition-transform"
+                                :class="profileMenuIsOpen ? 'rotate-180' : ''"
+                                aria-hidden="true"
+                            />
+                        </button>
+                        <!-- Profile Dropdown Menu Options -->
+                        <div
+                            v-if="profileMenuIsOpen"
+                            class="absolute right-0 mt-2 border-2 border-primary/60
+                            z-10 bg-primary-bg rounded-xl p-2 shadow-xl min-w-56"
+                        >
+                            <div class="flex mb-3 border-b-2 p-1 pb-1 items-center">
+                                <img
+                                    :src="authStore.userProfileImage"
+                                    alt="profile icon"
+                                    title="profile icon"
+                                    class="w-7 h-7 stroke-primary inline stroke-2 rounded-full"
+                                >
+                                <div class="ml-2 text-primary-text font-bold mb-1 text-wrap">
+                                    {{ authStore.userId }}
+                                </div>
+                            </div>
+                            <NuxtLink
+                                to="/my-page"
+                                data-testid="top-nav-mod-link"
+                                class="flex mb-1 items-center text-primary-text hover:bg-primary-hover/10
+                                rounded-xl p-2 transition-colors"
+                            >
+                                <SVGUserIcon
+                                    role="img"
+                                    title="my page icon"
+                                    class="w-6 h-6 mr-2 text-user-icon"
+                                />
+                                <div class="">
+                                    {{ t('topNav.myPage') }}
+                                </div>
+                            </NuxtLink>
+
+                            <button
+                                class="flex items-center text-primary-text hover:bg-primary-hover/10
+                                rounded-xl p-2"
+                                @click="logout()"
+                            >
+                                <SVGSignOutIcon
+                                    role="img"
+                                    title="log out icon"
+                                    class="w-6 h-6 mr-2"
+                                />
+                                <div>
+                                    {{ t('topNav.logout') }}
+                                </div>
+                            </button>
+                        </div>
+                    </div>
                     <!-- Login Button (if logged out)  -->
                     <div
                         v-if="!authStore.isLoggedIn"
@@ -140,58 +199,6 @@
                         <NuxtLink to="/login">
                             {{ t('topNav.login') }}
                         </NuxtLink>
-                    </div>
-                    <!-- Profile Dropdown Menu Options (if profile pic clicked) -->
-                    <div
-                        v-if="profileMenuIsOpen"
-                        v-close-on-outside-click="{
-                            onOutside: toggleProfileMenu,
-                            when: () => profileMenuIsOpen,
-                        }"
-                        class="absolute border-2 border-primary/60 top-20 right-24
-                        z-10 bg-primary-bg rounded-xl p-2 shadow-xl"
-                    >
-                        <div class="flex mb-3 border-b-2 p-1 pb-1 items-center">
-                            <img
-                                :src="authStore.userProfileImage"
-                                alt="profile icon"
-                                title="profile icon"
-                                class="w-7 h-7 stroke-primary inline stroke-2 rounded-full"
-                            >
-                            <div class="ml-2 text-primary-text font-bold mb-1 text-wrap">
-                                {{ authStore.userId }}
-                            </div>
-                        </div>
-                        <NuxtLink
-                            to="/settings"
-                            data-testid="top-nav-mod-link"
-                            class="flex mb-1 items-center text-primary-text hover:bg-primary-hover/10
-                            rounded-xl p-2 transition-colors"
-                        >
-                            <SVGSettingsIcon
-                                role="img"
-                                title="moderation icon"
-                                class="w-6 h-6 mr-2"
-                            />
-                            <div class="">
-                                {{ t('topNav.settings') }}
-                            </div>
-                        </NuxtLink>
-
-                        <button
-                            class="flex items-center text-primary-text hover:bg-primary-hover/10
-                            rounded-xl p-2"
-                            @click="logout()"
-                        >
-                            <SVGSignOutIcon
-                                role="img"
-                                title="log out icon"
-                                class="w-6 h-6 mr-2"
-                            />
-                            <div>
-                                {{ t('topNav.logout') }}
-                            </div>
-                        </button>
                     </div>
                 </nav>
                 <LocaleSelector class="portrait:hidden" />
@@ -203,10 +210,11 @@
 
 <script lang="ts" setup>
 import { useToast } from 'vue-toastification'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import HamburgerMenu from './HamburgerMenu.vue'
 import SVGSiteLogo from '~/assets/icons/site-logo.svg'
-import SVGSettingsIcon from '~/assets/icons/settings-icon.svg'
+import SVGAccordionArrow from '~/assets/icons/accordion-arrow.svg'
+import SVGUserIcon from '~/assets/icons/user-icon.svg'
 import SVGSignOutIcon from '~/assets/icons/sign-out-icon.svg'
 import { useAuthStore } from '~/stores/authStore'
 import { useScreenOrientation } from '~/composables/useScreenOrientation'
@@ -215,12 +223,18 @@ import { vCloseOnOutsideClick } from '~/composables/closeOnOutsideClick'
 const { t } = useI18n()
 const toast = useToast()
 const router = useRouter()
+const route = useRoute()
 
 const profileMenuIsOpen = ref(false)
 const authStore = useAuthStore()
 const { isLandscape } = useScreenOrientation()
+const showGlobalSearch = computed(() =>
+    isLandscape.value
+    && !route.path.startsWith('/moderation')
+    && !route.path.startsWith('/my-page'))
 
 const showLogoText = ref(false)
+const profileMenuLabel = computed(() => authStore.userId || t('topNav.myPage'))
 
 function toggleLogoText() {
     showLogoText.value = true
@@ -231,6 +245,10 @@ function toggleLogoText() {
 
 function toggleProfileMenu() {
     profileMenuIsOpen.value = !profileMenuIsOpen.value
+}
+
+function closeProfileMenu() {
+    profileMenuIsOpen.value = false
 }
 
 function handleMobileLogoClick(e: Event) {

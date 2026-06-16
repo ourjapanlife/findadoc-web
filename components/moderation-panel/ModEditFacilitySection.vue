@@ -338,7 +338,7 @@ const { makeNonDirty: makeFacilityFormNonDirty } = useUnsavedChanges({
     mode: 'update',
     onClose: () => {
         moderationScreenStore.setActiveScreen(ModerationScreen.Dashboard)
-        router.push('/moderation')
+        router.push('/my-page?view=facilities')
     }
 })
 

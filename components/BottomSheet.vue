@@ -88,7 +88,7 @@ interface IEvent {
    */
 const props = withDefaults(defineProps<IProps>(), {
     overlay: true,
-    overlayColor: '#0000004D',
+    overlayColor: 'rgb(var(--theme-color-text-base) / 0.3)',
     initialPosition: 25,
     customPositions: () => [],
     transitionDuration: 0.5,
