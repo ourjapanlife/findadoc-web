@@ -129,7 +129,13 @@ export default defineNuxtConfig({
 
             NUXT_PUBLIC_LOAD_STORES: process.env.NUXT_PUBLIC_LOAD_STORES,
 
-            NUXT_USE_LOCAL_API: process.env.NUXT_USE_LOCAL_API
+            NUXT_USE_LOCAL_API: process.env.NUXT_USE_LOCAL_API,
+
+            sentry: {
+                dsn: process.env.NUXT_PUBLIC_SENTRY_DSN,
+                environment: process.env.NUXT_PUBLIC_SENTRY_ENVIRONMENT,
+                tracesSampleRate: process.env.NUXT_PUBLIC_SENTRY_TRACES_SAMPLE_RATE
+            }
         }
     },
     sourcemap: {
