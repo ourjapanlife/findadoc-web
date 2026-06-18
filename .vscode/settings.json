@@ -2,7 +2,7 @@
     // Use ESLint as the formatter for JavaScript, TypeScript, and Vue files
     "editor.defaultFormatter": "dbaeumer.vscode-eslint",
     "[javascript]": {
-        "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+        "editor.defaultFormatter": "vscode.typescript-language-features"
     },
     "[typescript]": {
         "editor.defaultFormatter": "dbaeumer.vscode-eslint"
@@ -33,5 +33,10 @@
     "eslint.useFlatConfig": true,
 
     // Disable other formatters that might conflict
-    "prettier.enable": false
+    "prettier.enable": false,
+    "i18n-ally.localesPaths": [
+        "i18n",
+        "i18n/locales"
+    ],
+    "i18n-ally.keystyle": "nested"
 }
