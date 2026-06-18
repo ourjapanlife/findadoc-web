@@ -63,6 +63,12 @@
                 </div>
             </template>
         </Suspense>
+        <!-- Nested /my-page/* child routes mount here; visible UI is driven by ModMainContent. -->
+        <NuxtPage
+            class="hidden"
+            aria-hidden="true"
+            tabindex="-1"
+        />
     </div>
 </template>
 
@@ -73,7 +79,8 @@ import { useAuthStore } from '~/stores/authStore'
 import { definePageMeta, useI18n } from '#imports'
 
 definePageMeta({
-    layout: 'moderationlayout'
+    layout: 'moderationlayout',
+    key: route => route.fullPath
 })
 
 const { t } = useI18n()
