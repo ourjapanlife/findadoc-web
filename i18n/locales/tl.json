@@ -112,7 +112,8 @@
     "allLocations": "Lahat ng Lokasyon",
     "allSpecialties": "Lahat ng Espesyalidad",
     "search": "Maghanap",
-    "searchAndFilterDoctors": "Maghanap at mag-filter ng mga doktor"
+    "searchAndFilterDoctors": "Maghanap at mag-filter ng mga doktor",
+    "resultsFound": "Walang resulta | 1 resulta | {n} resulta"
   },
   "searchResultsList": {
     "loadMore": "โหลดเพิ่มเติม",
