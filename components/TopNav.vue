@@ -93,11 +93,11 @@
             <!-- Desktop Right Section -->
             <div
                 id="right-section"
-                class="flex"
+                class="flex items-center"
             >
                 <nav
                     id="desktop-menu-items"
-                    class="portrait:hidden flex mx-6 self-center items-end whitespace-nowrap border-b border-accent-bg"
+                    class="portrait:hidden flex mx-6 items-end whitespace-nowrap border-b border-accent-bg"
                 >
                     <NuxtLink
                         to="/"
@@ -125,8 +125,8 @@
                     >
                         <button
                             data-testid="topnav-profile-section"
-                            class="flex items-center gap-2 rounded-xl px-3 py-2 text-primary-text
-                            hover:bg-primary-hover/10 transition-colors"
+                            class="flex items-center gap-2 px-4 py-2.5 text-sm font-medium text-primary-text
+                            border-b-2 -mb-px border-transparent hover:text-primary-text transition-colors"
                             @click="toggleProfileMenu"
                         >
                             <span class="max-w-44 truncate font-medium">
@@ -187,16 +187,14 @@
                             </button>
                         </div>
                     </div>
-                    <!-- Login Button (if logged out)  -->
-                    <div
+                    <NuxtLink
                         v-if="!authStore.isLoggedIn"
+                        :to="loginRoute"
                         data-testid="topnav-login"
-                        class="flex text-primary"
+                        :class="navLinkClass('/login')"
                     >
-                        <NuxtLink :to="loginRoute">
-                            {{ t('topNav.login') }}
-                        </NuxtLink>
-                    </div>
+                        {{ t('topNav.login') }}
+                    </NuxtLink>
                 </nav>
                 <LocaleSelector class="portrait:hidden" />
                 <HamburgerMenu class="landscape:hidden justify-end z-20 p-2 bg-primary-bg/20 rounded-2xl" />
