@@ -25,7 +25,7 @@
         <div class="facility-hp-topbar-actions flex justify p-2 font-bold ">
             <button
                 type="button"
-                :class="[buttonBaseClass, buttonOutlineClass, 'w-28 mr-2']"
+                :class="[buttonBaseClass, buttonOutlineClass, buttonPaddingClass, 'mr-2']"
                 data-testid="mod-edit-facility-hp-topbar-back"
                 @click="navigateBackToDashboard"
             >
@@ -35,7 +35,7 @@
             <button
                 type="button"
                 :disabled="!hasPendingChanges"
-                :class="[buttonBaseClass, buttonOutlineClass, 'w-28 mr-2']"
+                :class="[buttonBaseClass, buttonOutlineClass, buttonPaddingClass, 'mr-2']"
                 data-testid="mod-edit-facility-hp-topbar-update"
                 @click="saveChanges"
             >
@@ -46,7 +46,7 @@
             <button
                 type="button"
                 :disabled="!hasPendingChanges"
-                :class="[buttonBaseClass, buttonOutlineClass, 'w-28 mr-2']"
+                :class="[buttonBaseClass, buttonOutlineClass, buttonPaddingClass, 'mr-2']"
                 data-testid="mod-edit-facility-hp-topbar-update-and-exit"
                 @click="saveChangesAndExit"
             >
@@ -56,7 +56,7 @@
             </button>
             <button
                 type="button"
-                :class="[buttonBaseClass, buttonDangerClass, 'w-28 mr-2']"
+                :class="[buttonBaseClass, buttonDangerClass, buttonPaddingClass, 'mr-2']"
                 data-testid="mod-edit-facility-hp-topbar-delete"
                 @click="openDeleteConfirmation"
             >
@@ -136,7 +136,8 @@ import { handleModerationResponseErrors } from '~/composables/useModerationRespo
 import type { Facility, HealthcareProfessional } from '~/typedefs/gqlTypes'
 import { arraysAreEqual } from '~/utils/arrayUtils'
 import { hasEnglishLocalizedName } from '~/utils/nameUtils'
-import { hasServerErrors, navigateToModerationDashboard } from '~/utils/moderationUtils'
+import { hasServerErrors, leaveToModerationDashboard, getModerationDashboardViewForScreen } from '~/utils/moderationUtils'
+import { useModerationSubmissionUnsavedStore } from '~/stores/moderationSubmissionUnsavedStore'
 
 const router = useRouter()
 
@@ -145,6 +146,7 @@ const facilitiesStore = useFacilitiesStore()
 const { facilitySectionFields } = storeToRefs(facilitiesStore)
 const healthcareProfessionalsStore = useHealthcareProfessionalsStore()
 const moderationScreenStore = useModerationScreenStore()
+const moderationSubmissionUnsavedStore = useModerationSubmissionUnsavedStore()
 const modalStore = useModalStore()
 
 // Initialize the value of the selected Id based off of Moderation Screen
@@ -207,6 +209,7 @@ const { t } = useI18n()
 
 const showCopySuccessIcon: Ref<boolean> = ref(false)
 const buttonBaseClass = 'inline-flex justify-center items-center rounded-full border-2 text-base font-bold'
+const buttonPaddingClass = 'px-5 py-2 whitespace-nowrap'
 const buttonOutlineClass = 'bg-secondary-bg border-primary-text-muted text-primary-text hover:bg-accent-bg/20'
 const buttonDangerClass = 'bg-secondary-bg border-error text-error hover:bg-error/10'
 const buttonDangerFilledClass = 'bg-error border-error text-primary-text-inverted hover:opacity-90'
@@ -378,25 +381,26 @@ const saveChanges = async () => {
 }
 
 const saveChangesAndExit = async () => {
+    const dashboardView = getModerationDashboardViewForScreen(moderationScreenStore.activeScreen)
+
     if (moderationScreenStore.editFacilityScreenIsActive()) {
-        const response = await saveChanges()
-
-        if (response === undefined || hasServerErrors(response)) {
-            return
+        if (hasPendingFormChanges()) {
+            const response = await saveChanges()
+            if (response === undefined || hasServerErrors(response)) {
+                return
+            }
         }
-
-        await router.push('/my-page?view=facilities')
-        moderationScreenStore.setActiveScreen(ModerationScreen.Dashboard)
+        await leaveToModerationDashboard(router, moderationScreenStore, modalStore, dashboardView)
+        return
     }
     if (moderationScreenStore.editHealthcareProfessionalScreenIsActive()) {
-        const response = await saveChanges()
-
-        if (response === undefined || hasServerErrors(response)) {
-            return
+        if (hasPendingFormChanges()) {
+            const response = await saveChanges()
+            if (response === undefined || hasServerErrors(response)) {
+                return
+            }
         }
-
-        await router.push('/my-page?view=healthcare-professionals')
-        moderationScreenStore.setActiveScreen(ModerationScreen.Dashboard)
+        await leaveToModerationDashboard(router, moderationScreenStore, modalStore, dashboardView)
     }
 }
 
@@ -422,7 +426,7 @@ const deleteFacilityOrHealthcareProfessional = async () => {
             'modEditFacilityOrHPTopbar.facilityDeletedSuccessfully'
         )
         // Redirect to the dashboard since the facility no longer exists
-        await navigateToModerationDashboard(router, moderationScreenStore)
+        await leaveToModerationDashboard(router, moderationScreenStore, modalStore)
         modalType.value = null
         modalStore.hideModal()
         return response
@@ -446,14 +450,16 @@ const deleteFacilityOrHealthcareProfessional = async () => {
             'modEditFacilityOrHPTopbar.healthcareProfessionalDeletedSuccessfully'
         )
         // Redirect to the dashboard since the healthcare professional no longer exists
-        await navigateToModerationDashboard(router, moderationScreenStore)
+        await leaveToModerationDashboard(router, moderationScreenStore, modalStore)
         modalType.value = null
         modalStore.hideModal()
         return response
     }
 }
 
-const navigateBackToDashboard = async () => {
-    await navigateToModerationDashboard(router, moderationScreenStore)
+const navigateBackToDashboard = () => {
+    const dashboardView = getModerationDashboardViewForScreen(moderationScreenStore.activeScreen)
+    moderationSubmissionUnsavedStore.runLeaveOr(() =>
+        leaveToModerationDashboard(router, moderationScreenStore, modalStore, dashboardView))
 }
 </script>

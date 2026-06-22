@@ -4,7 +4,7 @@
             <button
                 type="button"
                 data-testid="mod-edit-submission-back-to-dashboard"
-                :class="[buttonBaseClass, buttonOutlineClass, 'w-28 mr-2 p-2 m-2']"
+                :class="[buttonBaseClass, buttonOutlineClass, buttonPaddingClass, 'mr-2 m-2']"
                 @click="goToDashboard"
             >
                 {{ t('modEditFacilityOrHPTopbar.back') }}
@@ -33,7 +33,7 @@
         <div class="flex flex-row justify p-2 font-bold ">
             <button
                 type="button"
-                :class="[buttonBaseClass, buttonOutlineClass, 'w-28 mr-2']"
+                :class="[buttonBaseClass, buttonOutlineClass, buttonPaddingClass, 'mr-2']"
                 data-testid="submission-topNav-update"
                 @click="requestUpdate"
             >
@@ -43,7 +43,7 @@
             </button>
             <button
                 type="button"
-                :class="[buttonBaseClass, buttonOutlineClass, 'w-28 mr-2']"
+                :class="[buttonBaseClass, buttonOutlineClass, buttonPaddingClass, 'mr-2']"
                 data-testid="submission-topNav-updateAndExit"
                 @click="requestUpdateAndExit"
             >
@@ -54,7 +54,7 @@
             <button
                 data-testid="mod-edit-submission-reject-button"
                 type="button"
-                :class="[buttonBaseClass, buttonDangerClass, 'w-28 mr-2']"
+                :class="[buttonBaseClass, buttonDangerClass, buttonPaddingClass, 'mr-2']"
                 @click="requestRejectConfirmation"
             >
                 {{
@@ -62,7 +62,7 @@
             </button>
             <button
                 type="button"
-                :class="[buttonBaseClass, buttonPrimaryClass, 'w-28 mr-2']"
+                :class="[buttonBaseClass, buttonPrimaryClass, buttonPaddingClass, 'mr-2']"
                 @click="requestApproveConfirmation"
             >
                 {{
@@ -79,7 +79,7 @@ import { useRouter } from 'vue-router'
 import SVGCopyContent from '~/assets/icons/content-copy.svg'
 import SVGSuccessCheckMark from '~/assets/icons/checkmark-square.svg'
 import { ModerationSubmissionActionType, useModerationSubmissionActions } from '~/composables/useModerationSubmissionActions'
-import { navigateToModerationDashboard } from '~/utils/moderationUtils'
+import { leaveToModerationDashboard } from '~/utils/moderationUtils'
 
 const { t } = useI18n()
 const router = useRouter()
@@ -92,12 +92,13 @@ const { emitModerationSubmissionAction } = useModerationSubmissionActions()
 const { selectedSubmissionId } = storeToRefs(moderationSubmissionStore)
 
 const goToDashboard = () => {
-    moderationSubmissionUnsavedStore.runEditSubmissionBackOr(() =>
-        navigateToModerationDashboard(router, moderationScreenStore, modalStore))
+    moderationSubmissionUnsavedStore.runLeaveOr(() =>
+        leaveToModerationDashboard(router, moderationScreenStore, modalStore, 'submissions'))
 }
 
 const showCopySuccessIcon: Ref<boolean> = ref(false)
 const buttonBaseClass = 'inline-flex justify-center items-center rounded-full border-2 text-base font-bold'
+const buttonPaddingClass = 'px-5 py-2 whitespace-nowrap'
 const buttonOutlineClass = 'bg-secondary-bg border-primary-text-muted text-primary-text hover:bg-accent-bg/20'
 const buttonPrimaryClass = 'bg-primary border-primary text-primary-text-inverted hover:bg-primary-hover'
 const buttonDangerClass = 'bg-secondary-bg border-error text-error hover:bg-error/10'

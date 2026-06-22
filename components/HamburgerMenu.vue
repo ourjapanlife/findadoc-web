@@ -89,7 +89,10 @@
                             class="flex flex-col gap-6 px-4 mt-6 mb-1"
                         >
                             <!-- Home Link -->
-                            <NuxtLink to="/">
+                            <NuxtLink
+                                to="/"
+                                @click="handleHomeClick"
+                            >
                                 <div
                                     class="text-primary"
                                     @click="closeMenu()"
@@ -321,8 +324,14 @@ import SVGUserIcon from '~/assets/icons/user-icon.svg'
 import SVGSignOutIcon from '~/assets/icons/sign-out-icon.svg'
 import { useAuthStore } from '~/stores/authStore'
 import { buildLoginRoute, resolveAuthReturnPath } from '~/utils/auth0Config'
+import { useModerationScreenStore } from '~/stores/moderationScreenStore'
+import { useModerationSubmissionUnsavedStore } from '~/stores/moderationSubmissionUnsavedStore'
+import { isMyPageFormRoute, leaveToAppHome } from '~/utils/moderationUtils'
 
 const authStore = useAuthStore()
+const moderationScreenStore = useModerationScreenStore()
+const moderationSubmissionUnsavedStore = useModerationSubmissionUnsavedStore()
+const modalStore = useModalStore()
 const toast = useToast()
 const router = useRouter()
 const route = useRoute()
@@ -339,6 +348,18 @@ function openMenu() {
 
 function closeMenu() {
     isMenuOpen.value = false
+}
+
+function handleHomeClick(event: MouseEvent) {
+    closeMenu()
+
+    if (!isMyPageFormRoute(route.path)) {
+        return
+    }
+
+    event.preventDefault()
+    moderationSubmissionUnsavedStore.runLeaveOr(() =>
+        leaveToAppHome(router, moderationScreenStore, modalStore))
 }
 
 async function logout() {

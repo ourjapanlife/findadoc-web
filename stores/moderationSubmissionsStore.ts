@@ -13,34 +13,30 @@ export enum SelectedSubmissionListViewTab {
     Rejected = 'REJECTED'
 }
 
-export enum SubmissionStatus {
-    InReview = 'IN_REVIEW',
-    Approved = 'APPROVED',
-    Rejected = 'REJECTED'
-}
-
 export enum SelectedModerationListView {
     Facilities = 'FACILITIES',
     HealthcareProfessionals = 'HEALTHCARE_PROFESSIONALS',
     Submissions = 'SUBMISSIONS'
 }
 
+type SubmissionStatusFilter = Pick<SubmissionSearchFilters, 'isUnderReview' | 'isApproved' | 'isRejected'>
+
+const SUBMISSION_TAB_FILTERS: Record<SelectedSubmissionListViewTab, SubmissionStatusFilter> = {
+    [SelectedSubmissionListViewTab.ForReview]: { isUnderReview: true },
+    [SelectedSubmissionListViewTab.Approved]: { isApproved: true },
+    [SelectedSubmissionListViewTab.Rejected]: { isRejected: true }
+}
+
+const SUBMISSION_STATUS_COUNT_QUERIES = [
+    { countKey: 'forReviewCount', filter: { isUnderReview: true } },
+    { countKey: 'approvedCount', filter: { isApproved: true } },
+    { countKey: 'rejectedCount', filter: { isRejected: true } }
+] as const
+
 interface SubmissionStatusCounts {
     forReviewCount: number
     approvedCount: number
     rejectedCount: number
-}
-
-function getStatusFiltersForTab(tab: SelectedSubmissionListViewTab): Partial<SubmissionSearchFilters> {
-    switch (tab) {
-        case SelectedSubmissionListViewTab.Approved:
-            return { isApproved: true }
-        case SelectedSubmissionListViewTab.Rejected:
-            return { isRejected: true }
-        case SelectedSubmissionListViewTab.ForReview:
-        default:
-            return { isUnderReview: true }
-    }
 }
 
 export const useModerationSubmissionsStore = defineStore(
@@ -89,11 +85,10 @@ export const useModerationSubmissionsStore = defineStore(
         }
 
         async function getSubmissions() {
-            const statusFilters = getStatusFiltersForTab(selectedModerationListViewTabChosen.value)
             const filters: SubmissionSearchFilters = {
                 offset: currentOffset.value,
                 limit: itemsPerPage.value,
-                ...statusFilters
+                ...SUBMISSION_TAB_FILTERS[selectedModerationListViewTabChosen.value]
             }
             try {
                 const { filteredSearchResults, totalCount } = await fetchSubmissionsWithCount(filters)
@@ -112,17 +107,22 @@ export const useModerationSubmissionsStore = defineStore(
 
         async function fetchStatusCounts() {
             try {
-                const [forReviewResult, approvedResult, rejectedResult] = await Promise.all([
-                    fetchSubmissionsWithCount({ isUnderReview: true, limit: 1, offset: 0 }),
-                    fetchSubmissionsWithCount({ isApproved: true, limit: 1, offset: 0 }),
-                    fetchSubmissionsWithCount({ isRejected: true, limit: 1, offset: 0 })
-                ])
+                const countResults = await Promise.all(
+                    SUBMISSION_STATUS_COUNT_QUERIES.map(({ filter }) =>
+                        fetchSubmissionsWithCount({ ...filter, limit: 1, offset: 0 }))
+                )
 
-                statusTotalCounts.value = {
-                    forReviewCount: forReviewResult.totalCount,
-                    approvedCount: approvedResult.totalCount,
-                    rejectedCount: rejectedResult.totalCount
-                }
+                statusTotalCounts.value = SUBMISSION_STATUS_COUNT_QUERIES.reduce(
+                    (counts, { countKey }, index) => {
+                        counts[countKey] = countResults[index]?.totalCount ?? 0
+                        return counts
+                    },
+                    {
+                        forReviewCount: 0,
+                        approvedCount: 0,
+                        rejectedCount: 0
+                    }
+                )
             } catch (error) {
                 console.error(`Error fetching submission status counts: ${JSON.stringify(error)}`)
             }

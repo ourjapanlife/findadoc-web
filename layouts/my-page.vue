@@ -1,6 +1,6 @@
 <template>
     <div
-        data-testid="moderation-app"
+        data-testid="my-page-app"
         class="h-dvh w-full font-sans text-primary-text bg-primary-bg flex flex-col"
     >
         <TopNav class="shrink-0" />

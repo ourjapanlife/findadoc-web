@@ -294,11 +294,11 @@
 </template>
 
 <script lang="ts" setup>
-import { type Ref, ref, computed, onBeforeMount, nextTick, watch } from 'vue'
+import { type Ref, ref, computed, onBeforeMount, onUnmounted, nextTick, watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useToast } from 'vue-toastification'
-import { useRoute, useRouter } from 'vue-router'
-import { useModerationScreenStore, ModerationScreen } from '~/stores/moderationScreenStore'
+import { useRoute } from 'vue-router'
+import { useModerationScreenStore } from '~/stores/moderationScreenStore'
 import { useFacilitiesStore } from '~/stores/facilitiesStore'
 import { useHealthcareProfessionalsStore } from '~/stores/healthcareProfessionalsStore'
 import { useI18n } from '#imports'
@@ -319,10 +319,10 @@ import { checkPrefectureNameMatch } from '~/utils/facilitiesUtils'
 import { stableStringify } from '~/utils/stableStringify'
 import { matchesHealthcareProfessionalSearch } from '~/utils/moderationSearchUtils'
 import { formatFirstLocalizedFullName } from '~/utils/nameUtils'
+import { useModerationSubmissionUnsavedStore } from '~/stores/moderationSubmissionUnsavedStore'
 
 const toast = useToast()
 const route = useRoute()
-const router = useRouter()
 const { t } = useI18n()
 const loadingStore = useLoadingStore()
 const moderationScreenStore = useModerationScreenStore()
@@ -333,13 +333,10 @@ const isFacilitySectionInitialized: Ref<boolean> = ref(false)
 
 const facilityFormState = computed(() =>
     JSON.parse(stableStringify(facilitySectionFields.value)))
-const { makeNonDirty: makeFacilityFormNonDirty } = useUnsavedChanges({
+const moderationSubmissionUnsavedStore = useModerationSubmissionUnsavedStore()
+const { makeNonDirty: makeFacilityFormNonDirty, tryLeave: tryLeaveFacilityForm } = useUnsavedChanges({
     data: { source: facilityFormState },
-    mode: 'update',
-    onClose: () => {
-        moderationScreenStore.setActiveScreen(ModerationScreen.Dashboard)
-        router.push('/my-page?view=facilities')
-    }
+    mode: 'update'
 })
 
 watch(
@@ -428,8 +425,13 @@ onBeforeMount(async () => {
     await nextTick()
     isFacilitySectionInitialized.value = true
     makeFacilityFormNonDirty()
+    moderationSubmissionUnsavedStore.registerEditFormTryLeave(tryLeaveFacilityForm)
     loadingStore.setIsLoading(false)
     // Ensure UI updates are reflected
     await nextTick()
+})
+
+onUnmounted(() => {
+    moderationSubmissionUnsavedStore.registerEditFormTryLeave(null)
 })
 </script>

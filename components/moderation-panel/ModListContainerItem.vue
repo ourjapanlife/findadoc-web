@@ -40,6 +40,12 @@
                         >
                             {{ t('modListContainerItem.approvedSubmission') }}
                         </span>
+                        <span
+                            v-if="props.submission.isRejected"
+                            class="text-xs px-2 py-1 rounded-full bg-error/80 text-primary-inverted ml-2"
+                        >
+                            {{ t('modListContainerItem.rejectedSubmission') }}
+                        </span>
                     </div>
                 </div>
 
@@ -148,14 +154,11 @@
                     </div>
                     <div class="flex-1">
                         <span class="block text-lg font-bold">
-                            <!-- TO DO: use function to default name to selected locale or English -->
-                            {{ props.healthcareProfessional.names[0].lastName
-                                + ' '
-                                + props.healthcareProfessional.names[0].firstName
-                            }}
-                            {{ props.healthcareProfessional.names[0].middleName
-                                ? props.healthcareProfessional.names[0].middleName
-                                : '' }}
+                            {{ displayedHealthcareProfessionalName?.lastName }}
+                            {{ displayedHealthcareProfessionalName?.firstName }}
+                            <template v-if="displayedHealthcareProfessionalName?.middleName">
+                                {{ displayedHealthcareProfessionalName.middleName }}
+                            </template>
                         </span>
                     </div>
                 </div>
@@ -215,6 +218,15 @@ const handleClickToFacilityForm = (id: string) => {
 const handleClickToHPForm = (id: string) => {
     healthcareProfessionalsStore.selectedHealthcareProfessionalId = id
 }
+
+const displayedHealthcareProfessionalName = computed(() => {
+    if (!props.healthcareProfessional) {
+        return undefined
+    }
+    return healthcareProfessionalsStore.displayChosenLocaleForHealthcareProfessional(
+        props.healthcareProfessional
+    )
+})
 
 const isNewSubmission = computed(() => {
     if (!props.submission) {

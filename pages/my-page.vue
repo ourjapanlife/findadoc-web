@@ -1,9 +1,9 @@
 <template>
-    <div>
+    <div class="h-full min-h-0 flex flex-col">
         <Suspense>
             <div
                 data-testid="moderation-content"
-                class="h-full w-full flex flex-col flex-1 min-h-0 font-sans text-primary-text bg-primary-bg"
+                class="h-full w-full flex flex-col flex-1 min-h-0 overflow-hidden font-sans text-primary-text bg-primary-bg"
             >
                 <div
                     v-if="authStore.isLoadingAuth"
@@ -34,13 +34,13 @@
                 <div
                     v-if="authStore.isLoggedIn"
                     data-testid="moderation-page"
-                    class="flex flex-col md:flex-row flex-1 min-h-0"
+                    class="flex flex-col md:flex-row flex-1 min-h-0 h-full overflow-hidden p-3 md:p-4 gap-3 md:gap-4"
                 >
                     <ModLeftNavbar />
-                    <div class="w-full flex flex-col items-stretch p-3 md:p-4 gap-3 md:gap-4 min-h-0 flex-1">
+                    <div class="w-full flex flex-col items-stretch gap-3 md:gap-4 min-h-0 flex-1 overflow-hidden">
                         <div
                             v-if="!isSettingsView"
-                            class="bg-secondary-bg border border-accent-bg rounded-xl
+                            class="shrink-0 bg-secondary-bg border border-accent-bg rounded-xl
                             shadow-sm px-3 md:px-5 py-3 md:py-4"
                         >
                             <ModTopbar />
@@ -79,8 +79,8 @@ import { useAuthStore } from '~/stores/authStore'
 import { definePageMeta, useI18n } from '#imports'
 
 definePageMeta({
-    layout: 'moderationlayout',
-    key: route => route.fullPath
+    layout: 'my-page',
+    key: 'my-page'
 })
 
 const { t } = useI18n()

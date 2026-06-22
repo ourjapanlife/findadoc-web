@@ -16,13 +16,12 @@
                 <NuxtLink
                     to="/"
                     :aria-label="t('common.siteName')"
-                    @click="handleMobileLogoClick"
+                    @click="handleHomeClick"
                 >
                     <SVGSiteLogo
                         role="img"
                         :aria-label="t('common.siteName')"
                         class="mt-1 mr-1 w-10 h-10 shrink-0 align-middle fill-primary group-hover:fill-primary-hover"
-                        @click="toggleLogoText()"
                     />
                 </NuxtLink>
                 <Transition
@@ -63,6 +62,7 @@
                         class="flex"
                         to="/"
                         :aria-label="t('common.siteName')"
+                        @click="handleHomeClick"
                     >
                         <SVGSiteLogo
                             role="img"
@@ -102,6 +102,7 @@
                     <NuxtLink
                         to="/"
                         :class="navLinkClass('/')"
+                        @click="handleHomeClick"
                     >{{ t('topNav.home') }}
                     </NuxtLink>
                     <NuxtLink
@@ -212,9 +213,12 @@ import SVGAccordionArrow from '~/assets/icons/accordion-arrow.svg'
 import SVGUserIcon from '~/assets/icons/user-icon.svg'
 import SVGSignOutIcon from '~/assets/icons/sign-out-icon.svg'
 import { useAuthStore } from '~/stores/authStore'
+import { useModerationScreenStore } from '~/stores/moderationScreenStore'
+import { useModerationSubmissionUnsavedStore } from '~/stores/moderationSubmissionUnsavedStore'
 import { useScreenOrientation } from '~/composables/useScreenOrientation'
 import { vCloseOnOutsideClick } from '~/composables/closeOnOutsideClick'
 import { buildLoginRoute, resolveAuthReturnPath } from '~/utils/auth0Config'
+import { isMyPageFormRoute, leaveToAppHome } from '~/utils/moderationUtils'
 
 const { t } = useI18n()
 const toast = useToast()
@@ -226,6 +230,9 @@ const loginRoute = computed(() => buildLoginRoute(
 ))
 const profileMenuIsOpen = ref(false)
 const authStore = useAuthStore()
+const moderationScreenStore = useModerationScreenStore()
+const moderationSubmissionUnsavedStore = useModerationSubmissionUnsavedStore()
+const modalStore = useModalStore()
 const { isLandscape } = useScreenOrientation()
 const showGlobalSearch = computed(() =>
     isLandscape.value
@@ -250,11 +257,20 @@ function closeProfileMenu() {
     profileMenuIsOpen.value = false
 }
 
-function handleMobileLogoClick(e: Event) {
-    if (router.currentRoute.value.path === '/') {
-        e.preventDefault()
+function handleHomeClick(event: MouseEvent) {
+    if (route.path === '/') {
+        event.preventDefault()
         toggleLogoText()
+        return
     }
+
+    if (!isMyPageFormRoute(route.path)) {
+        return
+    }
+
+    event.preventDefault()
+    moderationSubmissionUnsavedStore.runLeaveOr(() =>
+        leaveToAppHome(router, moderationScreenStore, modalStore))
 }
 
 function navLinkClass(path: string): string {

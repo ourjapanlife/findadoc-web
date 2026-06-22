@@ -264,7 +264,7 @@ function sidebarNavLinkClass(page: NavPage): string {
 
     const currentView = typeof route.query.view === 'string' ? route.query.view : 'settings'
     const isActive = route.path === targetPath
-        && (page.listView ? currentView === targetView : currentView === 'settings' || currentView === '')
+      && (page.listView ? currentView === targetView : currentView === 'settings' || currentView === '')
 
     return isActive
         ? `${base} border-primary text-primary-text bg-accent-bg/20`
@@ -273,6 +273,9 @@ function sidebarNavLinkClass(page: NavPage): string {
 
 async function loadIfLoggedIn(): Promise<void> {
     if (!authStore.isLoggedIn || authStore.isLoadingAuth) {
+        return
+    }
+    if (accessStore.isLoaded) {
         return
     }
     await accessStore.fetchAccess()

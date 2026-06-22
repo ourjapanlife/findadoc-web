@@ -389,7 +389,9 @@
     "submissionConfirmationAcceptanceButton": "Yes, submit",
     "submissionConfirmationMessage": "Are you sure you want to submit this form?",
     "rejectSubmissionConfirmationMessage": "Are you sure you want to reject this submission?",
-    "rejectSubmissionConfirmationButton": "Yes, reject the submission"
+    "rejectSubmissionConfirmationButton": "Yes, reject the submission",
+    "successMessageUpdated": "Submission updated successfully",
+    "successMessageApproved": "Submission approved successfully"
   },
   "modDashboardHealthcareProfessionalCard": {
     "spokenLanguages": "Spoken languages",
@@ -408,6 +410,7 @@
     "newSubmission": "New",
     "underReviewSubmission": "Under Review",
     "approvedSubmission": "Approved",
+    "rejectedSubmission": "Rejected",
     "createdDate": "Created on",
     "updatedDate": "Updated last"
   },
