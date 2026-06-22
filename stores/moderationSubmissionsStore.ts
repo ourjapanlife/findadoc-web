@@ -39,7 +39,7 @@ function getStatusFiltersForTab(tab: SelectedSubmissionListViewTab): Partial<Sub
             return { isRejected: true }
         case SelectedSubmissionListViewTab.ForReview:
         default:
-            return { isForReview: true }
+            return { isUnderReview: true }
     }
 }
 
@@ -113,7 +113,7 @@ export const useModerationSubmissionsStore = defineStore(
         async function fetchStatusCounts() {
             try {
                 const [forReviewResult, approvedResult, rejectedResult] = await Promise.all([
-                    fetchSubmissionsWithCount({ isForReview: true, limit: 1, offset: 0 }),
+                    fetchSubmissionsWithCount({ isUnderReview: true, limit: 1, offset: 0 }),
                     fetchSubmissionsWithCount({ isApproved: true, limit: 1, offset: 0 }),
                     fetchSubmissionsWithCount({ isRejected: true, limit: 1, offset: 0 })
                 ])
