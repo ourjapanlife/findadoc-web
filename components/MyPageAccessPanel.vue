@@ -67,8 +67,7 @@
                         >
                             <NuxtLink
                                 :to="pageRoute(page)"
-                                class="text-primary-text hover:text-primary block py-1.5 px-2 rounded-md
-                                hover:bg-accent-bg/30 text-base font-semibold underline underline-offset-2"
+                                :class="sidebarNavLinkClass(page)"
                                 :data-testid="`access-page-link-${page.id}`"
                                 @click="onPageClick(page.listView)"
                             >
@@ -86,8 +85,7 @@
                         >
                             <NuxtLink
                                 :to="pageRoute(page)"
-                                class="text-primary-text hover:text-primary block py-1.5 px-2 rounded-md
-                                hover:bg-accent-bg/30 text-base font-semibold underline underline-offset-2"
+                                :class="sidebarNavLinkClass(page)"
                                 :data-testid="`access-page-link-${page.id}-mobile`"
                                 @click="onPageClick(page.listView)"
                             >
@@ -123,8 +121,7 @@
                         >
                             <NuxtLink
                                 :to="pageRoute(page)"
-                                class="text-primary-text hover:text-primary block py-1.5 px-2 rounded-md
-                                hover:bg-accent-bg/30 text-base font-semibold underline underline-offset-2"
+                                :class="sidebarNavLinkClass(page)"
                                 :data-testid="`access-page-link-${page.id}`"
                                 @click="onPageClick(page.listView)"
                             >
@@ -142,8 +139,7 @@
                         >
                             <NuxtLink
                                 :to="pageRoute(page)"
-                                class="text-primary-text hover:text-primary block py-1.5 px-2 rounded-md
-                                hover:bg-accent-bg/30 text-base font-semibold underline underline-offset-2"
+                                :class="sidebarNavLinkClass(page)"
                                 :data-testid="`access-page-link-${page.id}-mobile`"
                                 @click="onPageClick(page.listView)"
                             >
@@ -166,6 +162,7 @@
 
 <script setup lang="ts">
 import { computed, onMounted, ref, watch } from 'vue'
+import { useRoute } from 'vue-router'
 import { useAuthStore } from '~/stores/authStore'
 import { useCurrentUserAccessStore } from '~/stores/currentUserAccessStore'
 import {
@@ -184,6 +181,7 @@ interface NavPage {
 }
 
 const { t } = useI18n()
+const route = useRoute()
 const authStore = useAuthStore()
 const accessStore = useCurrentUserAccessStore()
 const moderationSubmissionsStore = useModerationSubmissionsStore()
@@ -254,6 +252,23 @@ function pageRoute(page: NavPage): string | { path: string, query: { view: strin
         path: page.route,
         query: { view }
     }
+}
+
+function sidebarNavLinkClass(page: NavPage): string {
+    const base = 'block py-2 px-3 text-sm font-medium transition-colors border-l-2 rounded-r-md'
+    const resolved = pageRoute(page)
+    const targetPath = typeof resolved === 'string' ? resolved : resolved.path
+    const targetView = typeof resolved === 'string'
+        ? 'settings'
+        : resolved.query.view
+
+    const currentView = typeof route.query.view === 'string' ? route.query.view : 'settings'
+    const isActive = route.path === targetPath
+        && (page.listView ? currentView === targetView : currentView === 'settings' || currentView === '')
+
+    return isActive
+        ? `${base} border-primary text-primary-text bg-accent-bg/20`
+        : `${base} border-transparent text-primary-text-muted hover:text-primary-text hover:bg-accent-bg/10`
 }
 
 async function loadIfLoggedIn(): Promise<void> {

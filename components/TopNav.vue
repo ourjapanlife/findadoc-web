@@ -97,24 +97,21 @@
             >
                 <nav
                     id="desktop-menu-items"
-                    class="portrait:hidden flex gap-3 mx-6 self-center items-center whitespace-nowrap"
+                    class="portrait:hidden flex mx-6 self-center items-end whitespace-nowrap border-b border-accent-bg"
                 >
-                    <!-- About Link -->
-                    <NuxtLink
-                        to="/about"
-                        class="hover:text-primary-hover transition-colors"
-                    >{{ t('topNav.about') }}
-                    </NuxtLink>
-                    <!-- Home Link -->
                     <NuxtLink
                         to="/"
-                        class="hover:text-primary-hover transition-colors"
+                        :class="navLinkClass('/')"
                     >{{ t('topNav.home') }}
                     </NuxtLink>
-                    <!-- Submit a new Doctor Link -->
+                    <NuxtLink
+                        to="/about"
+                        :class="navLinkClass('/about')"
+                    >{{ t('topNav.about') }}
+                    </NuxtLink>
                     <NuxtLink
                         to="/submit"
-                        class="hover:text-primary-hover transition-colors"
+                        :class="navLinkClass('/submit')"
                     >{{ t('topNav.submit') }}
                     </NuxtLink>
                     <!-- My Page menu trigger (if logged in) -->
@@ -260,6 +257,17 @@ function handleMobileLogoClick(e: Event) {
         e.preventDefault()
         toggleLogoText()
     }
+}
+
+function navLinkClass(path: string): string {
+    const isActive = path === '/'
+        ? route.path === '/'
+        : route.path === path || route.path.startsWith(`${path}/`)
+    const base = 'px-4 py-2.5 text-sm font-medium transition-colors border-b-2 -mb-px'
+
+    return isActive
+        ? `${base} border-primary text-primary-text`
+        : `${base} border-transparent text-primary-text-muted hover:text-primary-text`
 }
 async function logout() {
     try {

@@ -993,6 +993,8 @@ export type SubmissionSearchFilters = {
   healthcareProfessionalName?: InputMaybe<Scalars['String']['input']>;
   /** Filter to approved submissions. */
   isApproved?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Filter to submissions needing review (pending or under review). */
+  isForReview?: InputMaybe<Scalars['Boolean']['input']>;
   /** Filter to rejected submissions. */
   isRejected?: InputMaybe<Scalars['Boolean']['input']>;
   /** Filter to submissions under review. */
