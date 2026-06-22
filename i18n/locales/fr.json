@@ -112,7 +112,8 @@
     "allLocations": "Tous les lieux",
     "allSpecialties": "Toutes les spécialités",
     "search": "Rechercher",
-    "searchAndFilterDoctors": "Rechercher et filtrer les médecins"
+    "searchAndFilterDoctors": "Rechercher et filtrer les médecins",
+    "resultsFound": "Aucun résultat | 1 résultat trouvé | {n} résultats trouvés"
   },
   "searchResultsList": {
     "loadMore": "Charger plus",

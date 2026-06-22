@@ -112,7 +112,8 @@
     "allLocations": "Tất cả địa điểm",
     "allSpecialties": "Tất cả chuyên khoa",
     "search": "Tìm kiếm",
-    "searchAndFilterDoctors": "Tìm kiếm và lọc bác sĩ"
+    "searchAndFilterDoctors": "Tìm kiếm và lọc bác sĩ",
+    "resultsFound": "Không có kết quả | 1 kết quả | {n} kết quả"
   },
   "searchResultsList": {
     "loadMore": "Tải thêm",

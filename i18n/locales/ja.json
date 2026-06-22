@@ -112,7 +112,8 @@
     "allLocations": "すべての場所",
     "allSpecialties": "すべての専門分野",
     "search": "検索",
-    "searchAndFilterDoctors": "医師を検索・フィルター"
+    "searchAndFilterDoctors": "医師を検索・フィルター",
+    "resultsFound": "結果なし | 1件の結果 | {n}件の結果"
   },
   "searchResultsList": {
     "loadMore": "さらに読み込む",
