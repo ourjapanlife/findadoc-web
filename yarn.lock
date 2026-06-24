@@ -4403,6 +4403,83 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@sentry/browser-utils@npm:10.58.0":
+  version: 10.58.0
+  resolution: "@sentry/browser-utils@npm:10.58.0"
+  dependencies:
+    "@sentry/core": "npm:10.58.0"
+  checksum: 10/0ed7429a29a7f4900f33fb3bd78afc073f23c20024a7d604ce8d6095fbb90d7593db8e6332be44e8c745389f9a2686a3888f0db3023a00fc0c68e2c1fc92ac27
+  languageName: node
+  linkType: hard
+
+"@sentry/browser@npm:10.58.0":
+  version: 10.58.0
+  resolution: "@sentry/browser@npm:10.58.0"
+  dependencies:
+    "@sentry/browser-utils": "npm:10.58.0"
+    "@sentry/core": "npm:10.58.0"
+    "@sentry/feedback": "npm:10.58.0"
+    "@sentry/replay": "npm:10.58.0"
+    "@sentry/replay-canvas": "npm:10.58.0"
+  checksum: 10/ff28dd471fde64fcc91361ec1ac9118260eba76b7120466904958c74bd27e14200c53b74192ed14253b8913ea5df59f569aae8c5bcddb3cdfeec23aa4de45d50
+  languageName: node
+  linkType: hard
+
+"@sentry/core@npm:10.58.0":
+  version: 10.58.0
+  resolution: "@sentry/core@npm:10.58.0"
+  checksum: 10/5c4668298a12f0649f29569922db2d3ab67222f31f9b817b06d4a06815f4906a06486e88594bc95261fc9365c424c7c78aff280b09118fdaf975b48f940a1aef
+  languageName: node
+  linkType: hard
+
+"@sentry/feedback@npm:10.58.0":
+  version: 10.58.0
+  resolution: "@sentry/feedback@npm:10.58.0"
+  dependencies:
+    "@sentry/core": "npm:10.58.0"
+  checksum: 10/0f9155d4c2187c667eebddcdc79848d02166091bd1b8e9fb43c06bdcebc2253a3dbe39ada3c69a3ae82052adff7b2273b29c57c6a9d48a2bf6b54799a205d9b1
+  languageName: node
+  linkType: hard
+
+"@sentry/replay-canvas@npm:10.58.0":
+  version: 10.58.0
+  resolution: "@sentry/replay-canvas@npm:10.58.0"
+  dependencies:
+    "@sentry/core": "npm:10.58.0"
+    "@sentry/replay": "npm:10.58.0"
+  checksum: 10/f9578f76cf307bb6095ee5ce69b7f12317a4ca2c3041be1bb8afffd5801f7ab37ca761ddbdfa9537f5cd7a4ceab59f6141f9ece7fd243a1b161d3ef1fd8221fb
+  languageName: node
+  linkType: hard
+
+"@sentry/replay@npm:10.58.0":
+  version: 10.58.0
+  resolution: "@sentry/replay@npm:10.58.0"
+  dependencies:
+    "@sentry/browser-utils": "npm:10.58.0"
+    "@sentry/core": "npm:10.58.0"
+  checksum: 10/0721517e0415d35d6a83f6bb66776488857fa6187495fd8597cdec5199724dc42e3ab33c4ed315139a0e2521c8e0fff6517b0ed3c101f35becbec4cb71a4b81b
+  languageName: node
+  linkType: hard
+
+"@sentry/vue@npm:^10.58.0":
+  version: 10.58.0
+  resolution: "@sentry/vue@npm:10.58.0"
+  dependencies:
+    "@sentry/browser": "npm:10.58.0"
+    "@sentry/core": "npm:10.58.0"
+  peerDependencies:
+    "@tanstack/vue-router": ^1.64.0
+    pinia: 2.x || 3.x
+    vue: 2.x || 3.x
+  peerDependenciesMeta:
+    "@tanstack/vue-router":
+      optional: true
+    pinia:
+      optional: true
+  checksum: 10/807a7657a5cddca2520a71ce84b86ca53c605c4f4026f374c3e63b17789cf2ec8dfe8805bc468a5775feee1e68bbe8908ed079621737e00b6ff4e4c0b06a03ce
+  languageName: node
+  linkType: hard
+
 "@sindresorhus/base62@npm:^1.0.0":
   version: 1.0.0
   resolution: "@sindresorhus/base62@npm:1.0.0"
@@ -9676,6 +9753,7 @@ __metadata:
     "@pinia/nuxt": "npm:^0.11.3"
     "@pinia/testing": "npm:^1.0.3"
     "@playwright/test": "npm:^1.49.0"
+    "@sentry/vue": "npm:^10.58.0"
     "@storybook/addon-a11y": "npm:^10.1.11"
     "@storybook/addon-docs": "npm:^10.1.11"
     "@storybook/addon-links": "npm:^10.1.11"

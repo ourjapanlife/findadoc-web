@@ -173,6 +173,7 @@ import {
     type SelectedModerationListView as SelectedModerationListViewType
 } from '~/stores/moderationSubmissionsStore'
 import { useModerationSubmissionsStore } from '~/stores/moderationSubmissionsStore'
+import { ModerationScreen, useModerationScreenStore } from '~/stores/moderationScreenStore'
 import SVGAccordionArrow from '~/assets/icons/accordion-arrow.svg'
 
 interface NavPage {
@@ -186,6 +187,7 @@ const { t } = useI18n()
 const authStore = useAuthStore()
 const accessStore = useCurrentUserAccessStore()
 const moderationSubmissionsStore = useModerationSubmissionsStore()
+const moderationScreenStore = useModerationScreenStore()
 
 const accessRoles = computed(() => accessStore.roles)
 const settingsExpanded = ref(false)
@@ -231,6 +233,7 @@ const moderationPages = computed<NavPage[]>(() => [
 ])
 
 function onPageClick(listView?: SelectedModerationListViewType): void {
+    moderationScreenStore.setActiveScreen(ModerationScreen.Dashboard)
     if (listView) {
         moderationSubmissionsStore.setSelectedModerationListViewChosen(listView)
     }

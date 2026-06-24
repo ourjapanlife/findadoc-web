@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest'
-import { shallowMount } from '@vue/test-utils'
+import { mount } from '@vue/test-utils'
 import { createI18n } from 'vue-i18n'
 import { createTestingPinia } from '@pinia/testing'
 import Submit from '~/pages/submit.vue'
@@ -25,7 +25,7 @@ describe('submit.vue (vitest snapshot)', () => {
     })
 
     it('renders correctly', () => {
-        const wrapper = shallowMount(Submit, {
+        const wrapper = mount(Submit, {
             global: {
                 plugins: [i18n, pinia]
             }
