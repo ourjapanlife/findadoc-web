@@ -69,6 +69,13 @@
                             getLocalizedName(searchResult.healthcareProfessionals?.[0]?.names),
                         )
                     "
+                    @keydown.space.prevent="
+                        resultClicked(
+                            searchResult.id,
+                            searchResult.healthcareProfessionals?.[0]?.id || '',
+                            getLocalizedName(searchResult.healthcareProfessionals?.[0]?.names),
+                        )
+                    "
                 >
                     <SearchResultsListItem
                         :name="getLocalizedName(searchResult.healthcareProfessionals?.[0]?.names)"

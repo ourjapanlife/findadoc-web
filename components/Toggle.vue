@@ -35,6 +35,13 @@ const props = defineProps({
 
 const toggleChecked = ref(props.isToggledOn)
 
+watch(
+    () => props.isToggledOn,
+    newValue => {
+        toggleChecked.value = newValue
+    }
+)
+
 const emit = defineEmits(['toggled-on-off'])
 
 const toggle = () => {

@@ -75,8 +75,6 @@
                         aria-hidden="true"
                         @mouseenter="waveHover = true"
                         @mouseleave="waveHover = false"
-                        @focus="waveHover = true"
-                        @blur="waveHover = false"
                     >
                         <path
                             :d="waveHover

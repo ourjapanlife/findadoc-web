@@ -66,7 +66,7 @@
                     ]"
                     data-testid="mod-search-bar-search-result"
                     role="button"
-                    tabindex="-1"
+                    tabindex="0"
                     @click="handleListItemClick"
                     @mousedown="handleListItemMouseDown"
                     @mouseover="() => { handleListItemMouseOver(index) }"

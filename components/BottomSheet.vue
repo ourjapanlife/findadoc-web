@@ -216,7 +216,7 @@ const dragHandler = (event: HammerInput | IEvent, type: 'draghandle' | 'dragcont
         isDragging.value = false
 
         // The lowest enabledPosition nearest the bottom of the screen (100)
-        const lowestPosition = enabledPositions.value.sort((a, b) => a - b)[0] ?? 50
+        const lowestPosition = [...enabledPositions.value].sort((a, b) => a - b)[0] ?? 50
 
         // Find the nearest enabledPosition (closest value)
         const nearest = enabledPositions.value.reduce((prev, curr) =>

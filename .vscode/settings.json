@@ -11,12 +11,12 @@
         "editor.defaultFormatter": "dbaeumer.vscode-eslint"
     },
 
-    // Enable ESLint auto-fix on save
+    // Disable ESLint auto-fix on save
     "editor.codeActionsOnSave": {
         "source.fixAll.eslint": "never"
     },
 
-    // Enable format on save
+    // Disable format on save
     "editor.formatOnSave": false,
 
     // ESLint settings

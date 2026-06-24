@@ -121,27 +121,25 @@
                     v-if="isEditOrCreateFacility
                         && !isHealthcareProfessionalReadyForRemoval(healthcareProfessional?.id)"
                     id="remove-related-healthcare-professional-to-facility"
-                    class="flex w-8 items-center justify-center
-                    cursor-pointer font-bold text-secondary text-sm self-start p-1"
+                    class="flex w-8 items-center justify-center cursor-pointer font-bold text-secondary text-sm self-start p-1"
                     role="button"
                     tabindex="0"
+                    aria-label="Remove healthcare professional from facility"
                     @click="() => removeHealthcareProfessional(healthcareProfessional?.id)"
                     @keydown.enter="() => removeHealthcareProfessional(healthcareProfessional?.id)"
                     @keydown.space.prevent="() => removeHealthcareProfessional(healthcareProfessional?.id)"
                 >
-                    <SVGTrashCan
-                        v-show="showTrashCan"
-                        class="flex items-center justify-center w-6 h-6"
-                    />
+                    <SVGTrashCan v-show="showTrashCan" />
                 </div>
+
                 <div
                     v-if="isEditOrCreateFacility
                         && isHealthcareProfessionalReadyForRemoval(healthcareProfessional?.id)"
                     id="undo-remove-related-healthcare-professional-to-facility"
-                    class="flex w-8 items-center justify-center
-                    cursor-pointer font-bold text-secondary text-sm self-start p-1"
+                    class="flex w-8 items-center justify-center cursor-pointer font-bold text-secondary text-sm self-start p-1"
                     role="button"
                     tabindex="0"
+                    aria-label="Undo removal of healthcare professional from facility"
                     @click="() => undoRemovalOfHealthcareProfessional(healthcareProfessional?.id)"
                     @keydown.enter="() => undoRemovalOfHealthcareProfessional(healthcareProfessional?.id)"
                     @keydown.space.prevent="() => undoRemovalOfHealthcareProfessional(healthcareProfessional?.id)"

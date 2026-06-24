@@ -332,7 +332,7 @@ export const useHealthcareProfessionalsStore = defineStore(
                 firstName: '',
                 lastName: '',
                 middleName: '',
-                locale: '' as unknown as LocalizedNameInput['locale']
+                locale: localeStore.activeLocale.code as LocalizedNameInput['locale']
             }
             return fallback
         }
