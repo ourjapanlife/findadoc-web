@@ -29,7 +29,11 @@
         <div class="portrait:bg-primary-bg z-10 cursor-pointer">
             <div
                 class="flex px-4 py-2 gap-3 landscape:gap-1 items-center"
+                role="button"
+                tabindex="0"
                 @click="toggleThemeVisibility"
+                @keydown.enter="toggleThemeVisibility"
+                @keydown.space.prevent="toggleThemeVisibility"
             >
                 <div
                     class="w-7 h-7 landscape:w-5 landscape:h-5 mr-1 rounded-full bg-primary"
@@ -117,14 +121,15 @@ function toggleLightDarkMode(returnedDarkModeValue: boolean) {
 }
 
 function setTheme(newTheme: string, darkModeValue: boolean) {
-    // ---Remove selected from previous theme
     const selectedTheme = themes.find(theme => theme.isSelected)
-    selectedTheme.isSelected = !selectedTheme.isSelected
+    if (selectedTheme) {
+        selectedTheme.isSelected = false
+    }
 
-    // ---Set theme to selected---
     const identifiedTheme = themes.find(theme => theme.themeId === newTheme)
-
-    identifiedTheme.isSelected = !identifiedTheme.isSelected
+    if (identifiedTheme) {
+        identifiedTheme.isSelected = true
+    }
 
     document.documentElement.classList.remove(
         'theme-original',

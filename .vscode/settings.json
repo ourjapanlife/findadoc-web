@@ -11,13 +11,13 @@
         "editor.defaultFormatter": "dbaeumer.vscode-eslint"
     },
 
-    // Enable ESLint auto-fix on save
+    // Disable ESLint auto-fix on save
     "editor.codeActionsOnSave": {
-        "source.fixAll.eslint": "explicit"
+        "source.fixAll.eslint": "never"
     },
 
-    // Enable format on save
-    "editor.formatOnSave": true,
+    // Disable format on save
+    "editor.formatOnSave": false,
 
     // ESLint settings
     "eslint.enable": true,
@@ -37,6 +37,5 @@
     "i18n-ally.localesPaths": [
         "i18n",
         "i18n/locales"
-    ],
-    "i18n-ally.keystyle": "nested"
+    ]
 }

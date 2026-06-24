@@ -120,7 +120,11 @@
                     <div
                         v-for="(nameLocale, index) in hpStore.healthcareProfessionalSectionFields.names"
                         :key="`${nameLocale.firstName}-${nameLocale.lastName}-${index}`"
+                        role="button"
+                        tabindex="0"
                         @click="() => setChosenLocaleNameInput(index)"
+                        @keydown.enter="() => setChosenLocaleNameInput(index)"
+                        @keydown.space.prevent="() => setChosenLocaleNameInput(index)"
                     >
                         <ModDashboardHealthProfessionalCard
                             :healthcare-professional="hpStore.healthcareProfessionalSectionFields"
@@ -420,15 +424,14 @@ const setChosenLocaleNameInput = (index: number) => {
 
     //This finds the chosen healthcare professional to edit
     chosenHealthcareProfessionalToEdit.value
-        = hpStore.healthcareProfessionalSectionFields.names.find((_, index) =>
-            index === chosenLocaleIndex.value)
+        = hpStore.healthcareProfessionalSectionFields.names.find((_, idx) => idx === index)
 
     const chosen = chosenHealthcareProfessionalToEdit.value
-    if (chosen && tempToHoldZeroIndexedHealthcareProfessionalToSwap !== undefined) {
+    if (chosen && tempToHoldZeroIndexedHealthcareProfessionalToSwap) {
         //Set the chosen healthcare professional name to move it closer to the input
         hpStore.healthcareProfessionalSectionFields.names[0] = chosen
         // Put the temp one in the index where the old locale name was
-        hpStore.healthcareProfessionalSectionFields.names[chosenLocaleIndex.value]
+        hpStore.healthcareProfessionalSectionFields.names[index]
             = tempToHoldZeroIndexedHealthcareProfessionalToSwap
         //Autofill with the chosen healthcare professional locale name
         autofillNameLocaleInputWithChosenHealthcareProfessional(chosen)

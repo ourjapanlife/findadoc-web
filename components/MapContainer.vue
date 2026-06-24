@@ -43,6 +43,7 @@
                     <template #content>
                         <img
                             :src="renderMarkerIcon(location.id)"
+                            alt=""
                             class="h-16 w-18 block gmp-clickable"
                         >
                     </template>
@@ -53,6 +54,7 @@
 </template>
 
 <script setup lang="ts">
+/// <reference types="google.maps" />
 import { ref, watch, nextTick, onMounted } from 'vue'
 import { GoogleMap, AdvancedMarker, MarkerCluster } from 'vue3-google-map'
 import type { Renderer } from '@googlemaps/markerclusterer'
