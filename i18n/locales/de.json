@@ -112,8 +112,7 @@
     "search": "Suchen",
     "allLocations": "All Locations",
     "allSpecialties": "All Specialties",
-    "searchAndFilterDoctors": "Ärzte suchen und filtern",
-    "resultsFound": "Keine Ergebnisse | 1 Ergebnis gefunden | {n} Ergebnisse gefunden"
+    "searchAndFilterDoctors": "Ärzte suchen und filtern"
   },
   "searchResultsList": {
     "loadMore": "Mehr laden",

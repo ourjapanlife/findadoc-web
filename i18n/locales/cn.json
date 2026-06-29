@@ -112,8 +112,7 @@
     "allLocations": "所有地点",
     "allSpecialties": "所有专科",
     "search": "搜索",
-    "searchAndFilterDoctors": "搜索和筛选医生",
-    "resultsFound": "无结果 | 1 条结果 | {n} 条结果"
+    "searchAndFilterDoctors": "搜索和筛选医生"
   },
   "searchResultsList": {
     "loadMore": "加载更多",

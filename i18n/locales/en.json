@@ -115,8 +115,7 @@
     "allLocations": "All Locations",
     "allSpecialties": "All Specialties",
     "search": "Search",
-    "searchAndFilterDoctors": "Search and filter doctors",
-    "resultsFound": "No results | 1 result found | {n} results found"
+    "searchAndFilterDoctors": "Search and filter doctors"
   },
   "searchResultsList": {
     "loadMore": "Load More",

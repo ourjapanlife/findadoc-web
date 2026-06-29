@@ -112,8 +112,7 @@
     "allLocations": "Все места",
     "allSpecialties": "Все специальности",
     "search": "Поиск",
-    "searchAndFilterDoctors": "Поиск и фильтрация врачей",
-    "resultsFound": "Ничего не найдено | Найден 1 результат | Найдено {n} результатов"
+    "searchAndFilterDoctors": "Поиск и фильтрация врачей"
   },
   "searchResultsList": {
     "loadMore": "Загрузить еще",
