@@ -40,11 +40,16 @@ export function validateNameJa(nameJa: string): boolean {
 }
 
 export function validatePhoneNumber(phoneNumber: string): boolean {
-    if (phoneNumber.length < 1) {
+    // NFKC folds full-width digits/symbols to ASCII, so a phone number typed with
+    // a Japanese IME (e.g. "０９０－１２３４－５６７８") validates the same as its half-width
+    // form. Same approach as validateNameJa above.
+    const normalizedPhoneNumber = phoneNumber.normalize('NFKC')
+
+    if (normalizedPhoneNumber.length < 1) {
         return false
     }
 
-    const isPhoneNumberValid: boolean = isValidPhoneNumber(phoneNumber)
+    const isPhoneNumberValid: boolean = isValidPhoneNumber(normalizedPhoneNumber)
 
     if (!isPhoneNumberValid) {
         return false
@@ -137,11 +142,16 @@ export function validateCityJa(cityJa: string): boolean {
 }
 
 export function validatePostalCode(postalCode: string): boolean {
-    if (postalCode.length > 18) {
+    // NFKC folds full-width digits/hyphen to ASCII, so a postal code typed with a
+    // Japanese IME (e.g. "１２３－４５６７") validates the same as its half-width form.
+    // Same approach as validateNameJa above.
+    const normalizedPostalCode = postalCode.normalize('NFKC')
+
+    if (normalizedPostalCode.length > 18) {
         return false
     }
 
-    const isPostalCodeValid = isValidPostalCode(postalCode)
+    const isPostalCodeValid = isValidPostalCode(normalizedPostalCode)
 
     if (!isPostalCodeValid) {
         return false
