@@ -88,7 +88,7 @@
     "firstName": "Pangalan",
     "firstNameValidation": "Ilagay ang Pangalan",
     "googleMaps": "Google Maps URL",
-    "googleMapsValidation": "Ilagay ang URL na nagsisimula sa https://",
+    "googleMapsValidation": "Maglagay ng link ng Google Maps (hal. https://maps.app.goo.gl/…)",
     "heading": "Magdagdag ng Doktor",
     "healthcareProfessionalName": "Pangalan ng Propesyonal sa Pangangalagang Pangkalusugan",
     "invalidOption": "Hindi wastong opsyon",

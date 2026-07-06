@@ -87,7 +87,7 @@
   "submitPage": {
     "firstName": "Prénom",
     "googleMaps": "URL de Google Maps",
-    "googleMapsValidation": "Entrez une URL commençant par https://",
+    "googleMapsValidation": "Entrez un lien Google Maps (par ex. https://maps.app.goo.gl/…)",
     "heading": "Ajouter un médecin",
     "healthcareProfessionalName": "Nom du professionnel de la santé",
     "invalidOption": "Option invalide",

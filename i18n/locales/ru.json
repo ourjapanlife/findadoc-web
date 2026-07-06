@@ -87,7 +87,7 @@
   "submitPage": {
     "firstName": "Имя",
     "googleMaps": "Google Maps URL",
-    "googleMapsValidation": " Введите URL, начинающийся с https:/",
+    "googleMapsValidation": "Введите ссылку Google Карт (например, https://maps.app.goo.gl/…)",
     "heading": "Добавить доктора",
     "healthcareProfessionalName": " Имя специалиста в области здравоохранения ",
     "invalidOption": " Недопустимый параметр ",
