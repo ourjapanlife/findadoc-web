@@ -229,7 +229,5 @@ const displayedHealthcareProfessionalName = computed(() => {
     )
 })
 
-const isNewSubmission = computed(() => {
-    return props.submission ? isNewSubmissionStatus(props.submission) : false
-})
+const isNewSubmission = computed(() => props.submission ? isNewSubmissionStatus(props.submission) : false)
 </script>
