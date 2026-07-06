@@ -87,6 +87,10 @@ const runModerationAuthRedirect = () => {
     void authStore.redirectIfUnauthenticatedUser('/moderation', doesTheUserHaveAccess)
 }
 
+watch(
+    () => [authStore.isLoggedIn, authStore.isLoadingAuth] as const,
+    runModerationAuthRedirect
+)
 watch(() => route.path, runModerationAuthRedirect)
 onMounted(runModerationAuthRedirect)
 </script>
