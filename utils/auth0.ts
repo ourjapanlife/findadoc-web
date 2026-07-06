@@ -1,7 +1,6 @@
-
 import type { Auth0Plugin } from '@auth0/auth0-vue'
 import { createAuth0 } from '@auth0/auth0-vue'
-import { useRoute } from 'vue-router'
+import { getAuth0AuthorizationParams } from '~/utils/auth0Config'
 
 //eslint-disable-next-line
 export let auth0: Auth0Plugin
@@ -16,13 +15,7 @@ export const initializeAuth0 = async () => {
         const auth0Plugin = createAuth0({
             domain: 'findadoc.jp.auth0.com',
             clientId: 'HB5Jow9yA5yiA4LTPQCKBYrfDyRkO9JX',
-            authorizationParams: {
-                appState: {
-                    target: useRoute().path
-                },
-                //eslint-disable-next-line
-                redirect_uri: window.location.origin
-            }
+            authorizationParams: getAuth0AuthorizationParams()
         })
 
         //set the global auth0 instance

@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { auth0 } from '../utils/auth0.js'
+import { getAuth0AuthorizationParams, resolveAuthReturnPath } from '~/utils/auth0Config'
 import { useLoadingStore } from './loadingStore.js'
 import { useCookie, useRuntimeConfig } from '#app'
 import { useTranslation } from '~/composables/useTranslation.js'
@@ -39,10 +40,16 @@ export const useAuthStore = defineStore('authStore', () => {
 
         try {
             loadingStore.setIsLoading(true)
+            await waitForAuth0ToLoad()
 
-            if (!isLoggedIn.value) {
-                await auth0.loginWithRedirect()
+            if (isLoggedIn.value) {
+                return
             }
+
+            await auth0.loginWithRedirect({
+                appState: { target: resolveAuthReturnPath(route.fullPath) },
+                authorizationParams: getAuth0AuthorizationParams()
+            })
 
             //set the loading visual state back to normal
             loadingStore.setIsLoading(false)
@@ -69,22 +76,15 @@ export const useAuthStore = defineStore('authStore', () => {
                 return useCookie('auth_token').value ?? undefined
             }
 
-            if (!auth0) {
-                await waitForAuth0ToLoad()
-            }
+            await waitForAuth0ToLoad()
 
-            if (!auth0.isAuthenticated.value) {
+            if (!auth0?.isAuthenticated.value) {
                 return undefined
             }
 
-            const token = await auth0.getAccessTokenSilently({
-                authorizationParams: {
-                    audience: 'findadoc',
-                    tokenSigningAlg: 'RS256'
-                }
+            return await auth0.getAccessTokenSilently({
+                authorizationParams: getAuth0AuthorizationParams()
             })
-
-            return token
         } catch (error) {
             console.error(useTranslation('authErrors.authBearerToken'), `${JSON.stringify(error)}`)
         }
@@ -117,23 +117,25 @@ export const useAuthStore = defineStore('authStore', () => {
         routePath: string,
         doesTheUserHaveAccess: Ref<boolean>
     ) => {
-        // This promise is here to make the Suspense component work.
-        // It doesn't do anything, but <Suspense> requires an awaited setup method
-        await new Promise(resolve => {
-            //ignore if route change is unrelated to moderation
-            const needsRedirectDueToAccess = route.path.startsWith(routePath)
-              && !isLoggedIn.value && !isLoadingAuth.value
-            if (needsRedirectDueToAccess) {
-                // give the user a bit of time to read the message before redirecting
-                doesTheUserHaveAccess.value = false
-                setTimeout(() => {
-                    // Redirect to login page if user is not logged in
-                    router.push('/')
-                }, 10000)
-            }
+        if (!route.path.startsWith(routePath)) {
+            return
+        }
 
-            resolve(true)
-        })
+        if (isLoadingAuth.value) {
+            return
+        }
+
+        if (isLoggedIn.value) {
+            doesTheUserHaveAccess.value = true
+            return
+        }
+
+        doesTheUserHaveAccess.value = false
+        setTimeout(() => {
+            if (!isLoggedIn.value && route.path.startsWith(routePath)) {
+                router.push('/')
+            }
+        }, 10000)
     }
 
     return { userId,
@@ -143,5 +145,6 @@ export const useAuthStore = defineStore('authStore', () => {
         login,
         logout,
         getAuthBearerToken,
+        waitForAuth0ToLoad,
         redirectIfUnauthenticatedUser }
 })

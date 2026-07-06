@@ -196,7 +196,7 @@
                         data-testid="topnav-login"
                         class="flex text-primary"
                     >
-                        <NuxtLink to="/login">
+                        <NuxtLink :to="loginRoute">
                             {{ t('topNav.login') }}
                         </NuxtLink>
                     </div>
@@ -219,12 +219,16 @@ import SVGSignOutIcon from '~/assets/icons/sign-out-icon.svg'
 import { useAuthStore } from '~/stores/authStore'
 import { useScreenOrientation } from '~/composables/useScreenOrientation'
 import { vCloseOnOutsideClick } from '~/composables/closeOnOutsideClick'
+import { buildLoginRoute, resolveAuthReturnPath } from '~/utils/auth0Config'
 
 const { t } = useI18n()
 const toast = useToast()
 const router = useRouter()
 const route = useRoute()
 
+const loginRoute = computed(() => buildLoginRoute(
+    route.path === '/login' ? resolveAuthReturnPath(route.fullPath) : route.fullPath
+))
 const profileMenuIsOpen = ref(false)
 const authStore = useAuthStore()
 const { isLandscape } = useScreenOrientation()

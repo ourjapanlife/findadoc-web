@@ -180,7 +180,7 @@
                                 class="text-primary"
                             >
                                 <NuxtLink
-                                    to="/login"
+                                    :to="loginRoute"
                                     @click="closeMenu()"
                                 >
                                     {{ t('hamburgerMenu.login') }}
@@ -312,7 +312,7 @@
 
 <script lang="ts" setup>
 import { useToast } from 'vue-toastification'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { ref } from 'vue'
 import { vCloseOnOutsideClick } from '~/composables/closeOnOutsideClick'
 import SVGHamburgerMenuIcon from '~/assets/icons/hamburger-menu.svg'
@@ -320,13 +320,18 @@ import SVGGithubIcon from '~/assets/icons/social-github.svg'
 import SVGUserIcon from '~/assets/icons/user-icon.svg'
 import SVGSignOutIcon from '~/assets/icons/sign-out-icon.svg'
 import { useAuthStore } from '~/stores/authStore'
+import { buildLoginRoute, resolveAuthReturnPath } from '~/utils/auth0Config'
 
 const authStore = useAuthStore()
 const toast = useToast()
 const router = useRouter()
+const route = useRoute()
 const { t } = useI18n()
 
 const isMenuOpen = ref(false)
+const loginRoute = computed(() => buildLoginRoute(
+    route.path === '/login' ? resolveAuthReturnPath(route.fullPath) : route.fullPath
+))
 
 function openMenu() {
     isMenuOpen.value = true
