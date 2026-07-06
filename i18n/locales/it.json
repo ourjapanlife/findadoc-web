@@ -167,6 +167,7 @@
     "facilities": "Strutture",
     "healthcareProfessionals": "Professionisti sanitari",
     "forReview": "In revisione",
+    "new": "New",
     "approved": "Approvato",
     "rejected": "Rifiutato",
     "submissions": "Inoltrato"
@@ -332,6 +333,8 @@
     "submissionConfirmationMessage": "Sei sicuro di inviare questo form?",
     "rejectSubmissionConfirmationMessage": "Are you sure you want to reject this submission?",
     "rejectSubmissionConfirmationButton": "Yes, reject the submission",
+    "successMessageUpdated": "Submission updated successfully",
+    "successMessageApproved": "Submission approved successfully",
     "searchExistingFacilities": "Search for existing facility",
     "searchExistingHealthcareProfessionals": "Search for existing healthcare professionals",
     "labelModNoteInput": "Moderator Notes",
@@ -421,6 +424,7 @@
     "newSubmission": "New",
     "underReviewSubmission": "Under Review",
     "approvedSubmission": "Approved",
+    "rejectedSubmission": "Rifiutato",
     "createdDate": "Created on",
     "updatedDate": "Updated last"
   },

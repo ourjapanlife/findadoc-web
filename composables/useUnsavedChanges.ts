@@ -62,23 +62,30 @@ export const useUnsavedChanges = <T>(config: Config<T>) => {
         $unsavedChangesRegistry.unregister(instanceId)
     })
 
-    const tryClose = () => {
+    const tryLeave = (onLeave: () => void | Promise<void>) => {
         if (isDirty.value) {
             useNuxtApp().$withConfirmation(() => {
-                $unsavedChangesRegistry.unregister(instanceId)
-                config.onClose?.()
+                makeNonDirty()
+                void onLeave()
             }, {
                 mode: config.mode,
                 onCancel: config.onCancel,
                 message: t('modEditFacilityOrHPTopbar.hasUnsavedChanges')
             })
         } else {
-            config.onClose?.()
+            void onLeave()
+        }
+    }
+
+    const tryClose = () => {
+        if (config.onClose) {
+            tryLeave(config.onClose)
         }
     }
 
     return {
         tryClose,
+        tryLeave,
         isDirty,
         makeDirty,
         makeNonDirty

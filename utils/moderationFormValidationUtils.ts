@@ -1,3 +1,4 @@
+import type { CreateHealthcareProfessionalInput } from '~/typedefs/gqlTypes'
 import {
     validateAddressLineEn,
     validateAddressLineJa,
@@ -54,11 +55,10 @@ type FacilityValidationFields = {
     postalCode?: string
 }
 
-type HealthcareProfessionalValidationFields = {
-    acceptedInsurance: string[]
-    degrees: string[]
-    spokenLanguages: string[]
-}
+type HealthcareProfessionalValidationFields = Pick<
+    CreateHealthcareProfessionalInput,
+    'acceptedInsurance' | 'degrees' | 'spokenLanguages'
+>
 
 type NormalizedFacilityValidationFields = {
     nameEn: string
@@ -165,7 +165,7 @@ export function validateModerationFacilityFields(fields: FacilityValidationField
 export function hasRequiredHealthcareProfessionalSelections(
     fields: HealthcareProfessionalValidationFields
 ): boolean {
-    return fields.acceptedInsurance.length > 0
-      && fields.degrees.length > 0
-      && fields.spokenLanguages.length > 0
+    return (fields.acceptedInsurance?.length ?? 0) > 0
+      && (fields.degrees?.length ?? 0) > 0
+      && (fields.spokenLanguages?.length ?? 0) > 0
 }
