@@ -1,13 +1,6 @@
 {
     "members": [
     {
-        "avatarImg": "/avatars/aaron_culbert.jpg",
-        "name": "Aaron Culbert",
-        "title": "Developer",
-        "linkedInUrl": "https://www.linkedin.com/in/aculbert/",
-        "githubUrl": "https://github.com/aaronculbert"
-    },
-    {
         "avatarImg": "/avatars/anissa_chadouli.jpg",
         "name": "Anissa Chadouli",
         "title": "Developer",
@@ -155,6 +148,13 @@
         "githubUrl": null
     },
     {
+        "avatarImg": "/avatars/kuniko_arita.jpg",
+        "name": "Kuniko Arita",
+        "title": "Medical & Social Welfare Expert",
+        "linkedInUrl": null,
+        "githubUrl": null
+    },
+    {
         "avatarImg": "/avatars/lily.jpg",
         "name": "Lily",
         "title": "Developer",
@@ -205,6 +205,13 @@
         "githubUrl": "https://github.com/NathanielDSmith"
     },
     {
+        "avatarImg": "/avatars/niaya_harper_igarashi.jpg",
+        "name": "Niaya Harper Igarashi",
+        "title": "Medical & Social Welfare Expert",
+        "linkedInUrl": "https://www.linkedin.com/in/niayaharper/r",
+        "githubUrl": null
+    },
+    {
         "avatarImg": "/avatars/olivier_lechevalier.jpg",
         "name": "Olivier Lechevalier",
         "title": "Developer",
@@ -253,6 +260,22 @@
         "linkedInUrl": "https://www.linkedin.com/in/trent-golden-58811b129/",
         "githubUrl": null
     }],
+    "cofounders": [
+        {
+            "avatarImg": "/avatars/lashawn_toyoda.jpg",
+            "name": "LaShawn Toyoda",
+            "title": "Co-Founder",
+            "linkedInUrl": "https://www.linkedin.com/in/lashawn-toyoda/",
+            "githubUrl": "https://github.com/theyokohamalife/"
+        },
+        {
+            "avatarImg": "/avatars/philip_ermish.jpg",
+            "name": "Phil Ermish",
+            "title": "Co-Founder",
+            "linkedInUrl": "https://www.linkedin.com/in/philipermish",
+            "githubUrl": "https://github.com/ermish"
+        }
+    ],
     "board": [
         {
             "avatarImg": "/avatars/william_brammer.jpg",
@@ -269,38 +292,24 @@
             "githubUrl": null
         },
         {
-            "avatarImg": "/avatars/niaya_harper_igarashi.jpg",
-            "name": "Niaya Harper Igarashi",
-            "title": "Vice President",
-            "linkedInUrl": "https://www.linkedin.com/in/niayaharper/r",
-            "githubUrl": null
-        },
-        {
-            "avatarImg": "/avatars/lashawn_toyoda.jpg",
-            "name": "LaShawn Toyoda",
-            "title": "Secretary",
-            "linkedInUrl": "https://www.linkedin.com/in/lashawn-toyoda/",
-            "githubUrl": "https://github.com/theyokohamalife/"
-        },
-        {
-            "avatarImg": "/avatars/philip_ermish.jpg",
-            "name": "Philip Ermish",
-            "title": "Tech Lead",
-            "linkedInUrl": "https://www.linkedin.com/in/philipermish",
-            "githubUrl": "https://github.com/ermish"
-        },
-        {
-            "avatarImg": "/avatars/kuniko_arita.jpg",
-            "name": "Kuniko Arita",
-            "title": "Medical & Social Welfare Expert",
-            "linkedInUrl": null,
-            "githubUrl": null
-        },
-        {
             "avatarImg": "/avatars/aya_yumino.jpg",
             "name": "Aya Yumino, MD",
             "title": "Medical & Social Welfare Expert",
             "linkedInUrl": null,
+            "githubUrl": null
+        },
+        {
+            "avatarImg": "/avatars/aaron_culbert.jpg",
+            "name": "Aaron Culbert",
+            "title": "CTO",
+            "linkedInUrl": "https://www.linkedin.com/in/aculbert/",
+            "githubUrl": "https://github.com/aaronculbert"
+        },
+        {
+            "avatarImg": "/avatars/kaja_swenson.jpg",
+            "name": "Kaja Swenson",
+            "title": "Board Member",
+            "linkedInUrl": "https://www.linkedin.com/in/kajaswenson/",
             "githubUrl": null
         }
     ]
