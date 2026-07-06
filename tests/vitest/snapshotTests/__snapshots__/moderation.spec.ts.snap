@@ -1,0 +1,11 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`moderation.vue (vitest snapshot) > renders correctly 1`] = `
+"<div>
+  <div data-testid="moderation-content" class="h-full w-full flex flex-col flex-1 min-h-0 font-sans text-primary-text bg-primary-bg">
+    <!--v-if-->
+    <!--v-if-->
+    <!--v-if-->
+  </div>
+</div>"
+`;
