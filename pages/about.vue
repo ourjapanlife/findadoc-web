@@ -26,12 +26,12 @@
             <div class="flex gap-8 mb-4 z-10">
                 <NuxtLink
                     to="/"
-                    class="outline outline-1 rounded-xl p-4 bg-primary text-primary-text-inverted
+                    class="outline rounded-xl p-4 bg-primary text-primary-text-inverted
                     text-lg font-bold transition-colors text-center"
                 >{{ t("about.heroGetStarted") }}
                 </NuxtLink>
                 <button
-                    class="outline outline-1 outline-primary/70 rounded-xl text-primary
+                    class="outline outline-primary/70 rounded-xl text-primary
                     font-bold text-xl p-4 shadow-lg text-center"
                     @click="scrollTo('about-header-container')"
                 >
@@ -86,11 +86,11 @@
                 class="w-full flex justify-center my-6 landscape:p-10"
             >
                 <div
-                    class="grid grid-cols-1 gap-4 gap-y-8 mt-10 landscape:grid-cols-5 landscape:mr-8
-                landscape:w-4/5 landscape:flex landscape:justify-around"
+                    class="grid grid-cols-1 gap-4 gap-y-8 mt-10 landscape:grid-cols-3 landscape:mr-8
+                landscape:w-4/5 landscape:flex landscape:flex-wrap landscape:justify-around"
                 >
                     <button
-                        class="outline outline-1 outline-primary/70 rounded-xl text-primary hover:text-primary-text-inverted
+                        class="outline outline-primary/70 rounded-xl text-primary hover:text-primary-text-inverted
                     hover:bg-primary font-bold text-xl p-4 shadow-lg text-center"
                         @click="scrollTo('impact-header-container')"
                     >
@@ -98,7 +98,7 @@
                     </button>
 
                     <button
-                        class="outline outline-1 outline-primary/70 rounded-xl text-primary hover:text-primary-text-inverted
+                        class="outline outline-primary/70 rounded-xl text-primary hover:text-primary-text-inverted
                     hover:bg-primary font-bold text-xl p-4 shadow-lg"
                         @click="scrollTo('contributor-header-container')"
                     >
@@ -106,7 +106,7 @@
                     </button>
 
                     <button
-                        class="outline outline-1 outline-primary/70 rounded-xl text-primary hover:text-primary-text-inverted
+                        class="outline outline-primary/70 rounded-xl text-primary hover:text-primary-text-inverted
                     hover:bg-primary font-bold text-xl p-4 shadow-lg"
                         @click="scrollTo('npo-header-container')"
                     >
@@ -114,7 +114,15 @@
                     </button>
 
                     <button
-                        class="outline outline-1 outline-primary/70 rounded-xl text-primary hover:text-primary-text-inverted
+                        class="outline outline-primary/70 rounded-xl text-primary hover:text-primary-text-inverted
+                    hover:bg-primary font-bold text-xl p-4 shadow-lg"
+                        @click="scrollTo('cofounder-header-container')"
+                    >
+                        {{ t("about.btnCofounders") }}
+                    </button>
+
+                    <button
+                        class="outline outline-primary/70 rounded-xl text-primary hover:text-primary-text-inverted
                     hover:bg-primary font-bold text-xl p-4 shadow-lg"
                         @click="scrollTo('mascot-header-container')"
                     >
@@ -122,7 +130,7 @@
                     </button>
 
                     <button
-                        class="outline outline-1 outline-primary/70 rounded-xl text-primary hover:text-primary-text-inverted
+                        class="outline outline-primary/70 rounded-xl text-primary hover:text-primary-text-inverted
                     hover:bg-primary font-bold text-xl p-4 shadow-lg"
                         @click="scrollTo('involve-header-container')"
                     >
@@ -261,6 +269,51 @@
             >
                 <div
                     v-for="(member, index) in boardMembers"
+                    :key="member.avatarImg"
+                    data-testid="member"
+                    class="members-list grid"
+                >
+                    <MemberComponent
+                        :avatar-img="member.avatarImg"
+                        :github-url="member.githubUrl"
+                        :linked-in-url="member.linkedInUrl"
+                        :name="member.name"
+                        :data-test-id="index"
+                        :title="member.title"
+                    />
+                </div>
+            </div>
+        </div>
+        <!-- Co-Founders Section -->
+        <div
+            id="cofounder-header-container"
+            data-testid="cofounder-header-container"
+            class="scroll-mt-4 flex justify-center items-center"
+        >
+            <div
+                id="cofounder-header"
+                data-testid="cofounder-header"
+                class="flex w-4/5 my-14"
+            >
+                <div class="flex-1 border-currentColor/70 border self-center" />
+                <div class="text-primary-text text-2xl font-bold mx-4 p-2 whitespace-nowrap">
+                    {{ t("about.cofoundersHeader") }}
+                </div>
+                <div class="flex-1 border-currentColor/70 border self-center" />
+            </div>
+        </div>
+        <div
+            id="cofounder-container"
+            data-testid="cofounder-container"
+            class="flex justify-center items-center"
+        >
+            <div
+                id="cofounders"
+                data-testid="cofounders"
+                class="flex flex-wrap justify-center gap-16 mx-4 pb-10 landscape:pb-12"
+            >
+                <div
+                    v-for="(member, index) in cofounders"
                     :key="member.avatarImg"
                     data-testid="member"
                     class="members-list grid"
@@ -479,6 +532,7 @@ interface Member {
 const { t } = useI18n()
 const { scrollTo } = useSmoothScroll()
 const contributors = ref<Member[]>(shuffleArray(data.members))
+const cofounders = ref<Member[]>(data.cofounders)
 const boardMembers = ref<Member[]>(data.board)
 const showScrollUpButton = ref(false)
 const aboutSectionRef = ref<HTMLElement | null>(null)
