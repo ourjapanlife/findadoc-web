@@ -3,6 +3,8 @@ import { test, expect, type Page } from '@playwright/test'
 
 async function navigateToFirstSubmissionEditPage(page: Page) {
     await page.getByTestId('access-page-link-moderation-submissions').click()
+    // Default tab is "New"; CI seed data has submissions under "For Review".
+    await page.getByRole('button', { name: new RegExp(enUS.modDashboardLeftNav.forReview, 'i') }).click()
     const firstSubmission = page.locator('[data-testid^="mod-submission-list-item-"]').first()
     await expect(firstSubmission).toBeVisible()
     await firstSubmission.click()
