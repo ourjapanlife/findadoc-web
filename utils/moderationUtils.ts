@@ -7,6 +7,14 @@ import {
 import { useModerationSubmissionUnsavedStore } from '~/stores/moderationSubmissionUnsavedStore'
 import type { ServerError } from '~/typedefs/serverResponse'
 
+import type { Submission } from '~/typedefs/gqlTypes'
+
+export function isNewSubmission(
+    submission: Pick<Submission, 'isApproved' | 'isRejected' | 'isUnderReview'>
+): boolean {
+    return !submission.isRejected && !submission.isApproved && !submission.isUnderReview
+}
+
 export type ModerationDashboardView = 'submissions' | 'facilities' | 'healthcare-professionals'
 
 const MY_PAGE_FORM_ROUTE = /^\/(?:my-page|moderation)\/(?:edit-|create-)/

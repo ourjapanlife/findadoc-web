@@ -184,6 +184,7 @@
 import type { Facility, HealthcareProfessional, Submission } from '~/typedefs/gqlTypes'
 import { useModerationSubmissionsStore, SelectedModerationListView } from '~/stores/moderationSubmissionsStore'
 import { formatToReadableDate } from '~/utils/dateUtils'
+import { isNewSubmission as isNewSubmissionStatus } from '~/utils/moderationUtils'
 import SVGHPPersonIcon from '~/assets/icons/hp-person-icon.svg'
 import SVGHospitalFacilityIcon from '~/assets/icons/hospital-facility-icon.svg'
 
@@ -229,12 +230,6 @@ const displayedHealthcareProfessionalName = computed(() => {
 })
 
 const isNewSubmission = computed(() => {
-    if (!props.submission) {
-        return false
-    }
-    if (props.submission.isApproved || props.submission.isRejected || props.submission.isUnderReview) {
-        return false
-    }
-    return true
+    return props.submission ? isNewSubmissionStatus(props.submission) : false
 })
 </script>

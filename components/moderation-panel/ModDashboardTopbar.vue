@@ -54,6 +54,13 @@
         >
             <button
                 type="button"
+                :class="statusFilterClass(SelectedSubmissionListViewTab.New)"
+                @click="updateSubmissionListViewState(SelectedSubmissionListViewTab.New)"
+            >
+                {{ t("modDashboardLeftNav.new") }} ({{ moderationSubmissionsStore.statusTotalCounts.newCount }})
+            </button>
+            <button
+                type="button"
                 :class="statusFilterClass(SelectedSubmissionListViewTab.ForReview)"
                 @click="updateSubmissionListViewState(SelectedSubmissionListViewTab.ForReview)"
             >
