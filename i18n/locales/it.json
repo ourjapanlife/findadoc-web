@@ -92,7 +92,7 @@
     "firstName": "Nome",
     "firstNameValidation": "Inserisci un nome",
     "googleMaps": "URL di Google Maps",
-    "googleMapsValidation": "Inserisci un URL che inizi con https://",
+    "googleMapsValidation": "Inserisci un link di Google Maps (es. https://maps.app.goo.gl/…)",
     "heading": "Aggiungi un medico",
     "healthcareProfessionalName": "Nome del professionista sanitario",
     "invalidOption": "Opzione non valida",

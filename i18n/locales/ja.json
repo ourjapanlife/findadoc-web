@@ -88,7 +88,7 @@
     "firstName": "名",
     "firstNameValidation": "Enter a first name",
     "googleMaps": "Google MapsのURL",
-    "googleMapsValidation": "https://を含む、アドレスを入れてください",
+    "googleMapsValidation": "Googleマップのリンクを入力してください（例：https://maps.app.goo.gl/…）",
     "heading": "医師情報の追加",
     "healthcareProfessionalName": "医師の姓名",
     "invalidOption": "選択外の項目を選んでいます",

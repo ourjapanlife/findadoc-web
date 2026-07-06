@@ -88,7 +88,7 @@
     "firstName": "Tên",
     "firstNameValidation": "Nhập tên của bạn",
     "googleMaps": "Google Maps URL",
-    "googleMapsValidation": "Nhập một URL bắt đầu bằng https://",
+    "googleMapsValidation": "Nhập liên kết Google Maps (ví dụ: https://maps.app.goo.gl/…)",
     "heading": "Thêm bác sĩ",
     "healthcareProfessionalName": "Tên chuyên gia y tế",
     "invalidOption": "Tùy chọn không hợp lệ",

@@ -88,7 +88,7 @@
     "firstName": "名",
     "firstNameValidation": "请输入名字（不含姓）",
     "googleMaps": "谷歌地图 URL",
-    "googleMapsValidation": "请输入以https://开头的URL链接",
+    "googleMapsValidation": "请输入 Google 地图链接（例如 https://maps.app.goo.gl/…）",
     "heading": "添加医师",
     "healthcareProfessionalName": "医师姓名",
     "invalidOption": "无效选项",

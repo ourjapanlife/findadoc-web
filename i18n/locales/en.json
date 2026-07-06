@@ -91,7 +91,7 @@
     "firstName": "First name",
     "firstNameValidation": "Enter a first name",
     "googleMaps": "Google Maps URL",
-    "googleMapsValidation": "Enter a URL starting with https://",
+    "googleMapsValidation": "Enter a Google Maps link (e.g. https://maps.app.goo.gl/…)",
     "heading": "Add a Doctor",
     "healthcareProfessionalName": "Healthcare Professional Name",
     "invalidOption": "Invalid option",
