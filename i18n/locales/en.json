@@ -117,8 +117,7 @@
     "allLocations": "All Locations",
     "allSpecialties": "All Specialties",
     "search": "Search",
-    "searchAndFilterDoctors": "Search and filter doctors",
-    "resultsFound": "No results | 1 result found | {n} results found"
+    "searchAndFilterDoctors": "Search and filter doctors"
   },
   "searchResultsList": {
     "loadMore": "Load More",
@@ -390,9 +389,7 @@
     "submissionConfirmationAcceptanceButton": "Yes, submit",
     "submissionConfirmationMessage": "Are you sure you want to submit this form?",
     "rejectSubmissionConfirmationMessage": "Are you sure you want to reject this submission?",
-    "rejectSubmissionConfirmationButton": "Yes, reject the submission",
-    "successMessageUpdated": "Submission updated successfully",
-    "successMessageApproved": "Submission approved successfully"
+    "rejectSubmissionConfirmationButton": "Yes, reject the submission"
   },
   "modDashboardHealthcareProfessionalCard": {
     "spokenLanguages": "Spoken languages",

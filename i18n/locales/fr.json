@@ -114,8 +114,7 @@
     "allLocations": "Tous les lieux",
     "allSpecialties": "Toutes les spécialités",
     "search": "Rechercher",
-    "searchAndFilterDoctors": "Rechercher et filtrer les médecins",
-    "resultsFound": "Aucun résultat | 1 résultat trouvé | {n} résultats trouvés"
+    "searchAndFilterDoctors": "Rechercher et filtrer les médecins"
   },
   "searchResultsList": {
     "loadMore": "Charger plus",
@@ -195,8 +194,6 @@
     "facilitySuccessfullyRejected": "Facility rejected successfully",
     "rejectSubmissionConfirmationMessage": "Are you sure you want to reject this submission?",
     "rejectSubmissionConfirmationButton": "Yes, reject the submission",
-    "successMessageUpdated": "Submission updated successfully",
-    "successMessageApproved": "Submission approved successfully",
     "searchExistingFacilities": "Search for existing Facility",
     "searchExistingHealthcareProfessionals": "Search for existing Healthcare Professionals",
     "labelModNoteInput": "Moderator Notes",

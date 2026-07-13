@@ -114,8 +114,7 @@
     "allLocations": "Todos os locais",
     "allSpecialties": "Todas as especialidades",
     "search": "Procurar",
-    "searchAndFilterDoctors": "Pesquisar e filtrar médicos",
-    "resultsFound": "Nenhum resultado | 1 resultado encontrado | {n} resultados encontrados"
+    "searchAndFilterDoctors": "Pesquisar e filtrar médicos"
   },
   "searchResultsList": {
     "loadMore": "Carregar mais",
@@ -235,8 +234,6 @@
     "facilitySuccessfullyRejected": "Facility rejected successfully",
     "rejectSubmissionConfirmationMessage": "Are you sure you want to reject this submission?",
     "rejectSubmissionConfirmationButton": "Yes, reject the submission",
-    "successMessageUpdated": "Submission updated successfully",
-    "successMessageApproved": "Submission approved successfully",
     "searchExistingFacilities": "Search for existing Facility",
     "searchExistingHealthcareProfessionals": "Search for existing Healthcare Professionals",
     "labelModNoteInput": "Moderator Notes",
