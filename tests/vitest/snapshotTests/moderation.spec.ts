@@ -31,7 +31,7 @@ const i18n = createI18n({
 })
 
 describe('moderation.vue (vitest snapshot)', () => {
-    it('renders correctly', async () => {
+    it('renders correctly', () => {
         const wrapper = mount(Moderation, {
             global: {
                 plugins: [i18n],
@@ -40,7 +40,6 @@ describe('moderation.vue (vitest snapshot)', () => {
                 }
             }
         })
-        await flushPromises()
         expect(wrapper.html()).toMatchSnapshot()
     })
 })
