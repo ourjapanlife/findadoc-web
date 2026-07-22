@@ -3,7 +3,7 @@
         <Suspense>
             <div
                 data-testid="moderation-content"
-                class="h-full w-full flex flex-col flex-1 font-sans text-primary-text bg-primary-bg"
+                class="h-full w-full flex flex-col flex-1 min-h-0 font-sans text-primary-text bg-primary-bg"
             >
                 <div
                     v-if="authStore.isLoadingAuth"
@@ -34,10 +34,10 @@
                 <div
                     v-if="authStore.isLoggedIn"
                     data-testid="moderation-page"
-                    class="flex flex-col md:flex-row min-h-full"
+                    class="flex flex-col md:flex-row flex-1 min-h-0"
                 >
                     <ModLeftNavbar />
-                    <div class="w-full flex flex-col items-stretch p-3 md:p-4 gap-3 md:gap-4 min-h-0">
+                    <div class="w-full flex flex-col items-stretch p-3 md:p-4 gap-3 md:gap-4 min-h-0 flex-1">
                         <div
                             class="bg-secondary-bg border border-accent-bg rounded-xl
                             shadow-sm px-3 md:px-5 py-3 md:py-4"
@@ -74,7 +74,7 @@ import { definePageMeta, useI18n } from '#imports'
 
 // tell nuxt to our moderation layout
 definePageMeta({
-    layout: 'moderationlayout'
+    layout: 'my-page'
 })
 
 const { t } = useI18n()
@@ -87,6 +87,10 @@ const runModerationAuthRedirect = () => {
     void authStore.redirectIfUnauthenticatedUser('/moderation', doesTheUserHaveAccess)
 }
 
+watch(
+    () => [authStore.isLoggedIn, authStore.isLoadingAuth] as const,
+    runModerationAuthRedirect
+)
 watch(() => route.path, runModerationAuthRedirect)
 onMounted(runModerationAuthRedirect)
 </script>

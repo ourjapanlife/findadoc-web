@@ -3,8 +3,7 @@
     "menu": "Menu",
     "siteName": "Find a Doc Japan",
     "siteNameLine1": "Find a Doc",
-    "siteNameLine2": "Japan",
-    "close": "Đóng"
+    "siteNameLine2": "Japan"
   },
   "about": {
     "heroHeading": "Find a Doc, Japan",
@@ -12,10 +11,11 @@
     "heroGetStarted": "Bắt đầu",
     "heroLearnMore": "Tìm hiểu thêm",
     "storyHeader": "Câu chuyện của chúng tôi",
-    "storyParagraph1": "Được thành lập năm 2020 trong thời kỳ đại dịch, sứ mệnh của chúng tôi là thúc đẩy một xã hội khỏe mạnh và hòa nhập hơn. Chúng tôi cung cấp miễn phí thông tin y tế chất lượng bằng nhiều ngôn ngữ cho tất cả mọi người, bao gồm người nước ngoài và các chuyên gia y tế. Chúng tôi mong muốn một Nhật Bản nơi mọi người, bất kể quốc tịch hay ngôn ngữ, đều có thể tự tin tiếp cận hệ thống y tế, tìm đúng bác sĩ và nhận được dịch vụ chăm sóc cần thiết.",
+    "storyParagraph1": "Được thành lập năm 2020 trong thời kỳ đại dịch bởi LaShawn Toyoda và Phil Ermish, sứ mệnh của chúng tôi là thúc đẩy một xã hội khỏe mạnh và hòa nhập hơn. Chúng tôi cung cấp miễn phí thông tin y tế chất lượng bằng nhiều ngôn ngữ cho tất cả mọi người, bao gồm người nước ngoài và các chuyên gia y tế. Chúng tôi mong muốn một Nhật Bản nơi mọi người, bất kể quốc tịch hay ngôn ngữ, đều có thể tự tin tiếp cận hệ thống y tế, tìm đúng bác sĩ và nhận được dịch vụ chăm sóc cần thiết.",
     "storyParagraph2": "Chúng tôi là một tổ chức phi lợi nhuận, được thúc đẩy bởi niềm tin rằng mọi người nên có quyền tiếp cận thông tin y tế như một phần của cuộc sống tốt đẹp. Các hoạt động của chúng tôi được định hướng bởi công bằng xã hội, sự nhạy cảm văn hóa và đổi mới. Chúng tôi luôn sẵn lòng hợp tác với các đối tác trong chính phủ, tổ chức phi lợi nhuận và cộng đồng y tế. Cùng với các đối tác, chúng tôi hy vọng xây dựng một Nhật Bản nơi mọi người đều có thể tiếp cận dịch vụ chăm sóc sức khỏe, cảm thấy được hòa nhập và có cuộc sống tốt đẹp.",
     "btnImpact": "Tác động của chúng tôi",
     "btnContributors": "Những người đóng góp",
+    "btnCofounders": "Đồng sáng lập",
     "btnBoard": "Ban điều hành NPO",
     "btnMascots": "Linh vật",
     "btnInvolve": "Tham gia",
@@ -24,6 +24,7 @@
     "impactUsers": "100+ người dùng hàng tháng",
     "impactVolunteer": "Dựa trên cộng đồng và tình nguyện",
     "contributorsHeader": "Những người đóng góp",
+    "cofoundersHeader": "Đồng sáng lập",
     "boardHeader": "Ban điều hành NPO",
     "mascotsHeader": "Linh vật",
     "mascotsAwa": "Awa",
@@ -55,7 +56,6 @@
     "languageDropdownTitle": "Ngôn Ngữ:",
     "copyright": "Find a Doc, Japan",
     "login": "Login",
-    "settings": "Cài đặt",
     "logoutToast": "Successfully logged out"
   },
   "privacyPage": {
@@ -90,7 +90,7 @@
     "firstName": "Tên",
     "firstNameValidation": "Nhập tên của bạn",
     "googleMaps": "Google Maps URL",
-    "googleMapsValidation": "Nhập một URL bắt đầu bằng https://",
+    "googleMapsValidation": "Nhập liên kết Google Maps (ví dụ: https://maps.app.goo.gl/…)",
     "heading": "Thêm bác sĩ",
     "healthcareProfessionalName": "Tên chuyên gia y tế",
     "invalidOption": "Tùy chọn không hợp lệ",
@@ -114,8 +114,8 @@
     "allLocations": "Tất cả địa điểm",
     "allSpecialties": "Tất cả chuyên khoa",
     "search": "Tìm kiếm",
-    "resultsFound": "Đã tìm thấy {count} kết quả",
-    "searchAndFilterDoctors": "Tìm kiếm và lọc bác sĩ"
+    "searchAndFilterDoctors": "Tìm kiếm và lọc bác sĩ",
+    "resultsFound": "Không có kết quả | 1 kết quả | {n} kết quả"
   },
   "searchResultsList": {
     "loadMore": "Tải thêm",
@@ -144,7 +144,6 @@
     "logout": "Đăng xuất",
     "login": "Login",
     "myPage": "Trang của tôi",
-    "settings": "Cài đặt",
     "logoutToast": "Successfully logged out"
   },
   "login": {
@@ -158,18 +157,13 @@
     "confirmExit": "Exit without saving",
     "create": "Create",
     "exit": "Exit",
-    "facilityCreatedSuccessfully": "Facility created successfully.",
-    "heathcareProfessionalCreatedSuccessfully": "Healthcare Professional created successfully.",
-    "unsavedChangesMessage": "This will exit without saving your entry. All unsaved data will be lost.",
-    "healthcareProfessionalEnglishNameRequired": "Healthcare Professional must have an English name",
-    "hasEmptyFieldsHealthcareProfessional": "All fields are required for creating a healthcare professional",
-    "hasEmptyFieldsFacility": "Some required fields are missing for creating a facility"
+    "unsavedChangesMessage": "This will exit without saving your entry. All unsaved data will be lost."
   },
   "modDashboardLeftNav": {
-    "viewsSection": "Views",
     "facilities": "Cơ sở vật chất",
     "healthcareProfessionals": "Chuyên gia y tế",
     "forReview": "Đang xem xét",
+    "new": "New",
     "approved": "Đã được phê duyệt",
     "rejected": "Bị từ chối",
     "submissions": "Các bài gửi"
@@ -182,42 +176,7 @@
     "none": "—",
     "sections": {
       "settings": "Cài đặt",
-      "moderation": "Kiểm duyệt",
-      "admin": "Quản trị"
-    },
-    "title": "Quyen truy cap cua ban",
-    "availablePages": "Trang co san",
-    "jwtScopes": "Pham vi token:",
-    "effectiveScopes": "Pham vi hieu luc",
-    "apiOnlyHint": "Chua co man hinh kiem duyet cho pham vi nay; chi co qua API.",
-    "apiOnlyTag": "API",
-    "pages": {
-      "moderation": "Trang cua toi",
-      "createFacility": "Tao co so",
-      "createHealthcareProfessional": "Tao nhan vien y te",
-      "settings": "Cài đặt"
-    },
-    "scopes": {
-      "read_submissions": "Bai gui — danh sach kiem duyet",
-      "write_submissions": "Chinh sua bai gui",
-      "delete_submissions": "Xoa bai gui",
-      "create_submissions": "Tao bai gui",
-      "read_facilities": "Co so — danh sach kiem duyet",
-      "write_facilities": "Tao / chinh sua co so",
-      "delete_facilities": "Xoa co so",
-      "read_healthcareprofessionals": "Nhan vien y te — danh sach kiem duyet",
-      "write_healthcareprofessionals": "Tao / chinh sua nhan vien y te",
-      "delete_healthcareprofessionals": "Xoa nhan vien y te",
-      "read_users": "Xem nguoi dung",
-      "write_users": "Chinh sua nguoi dung",
-      "delete_users": "Xoa nguoi dung",
-      "read_logs": "Xem nhat ky kiem toan",
-      "write_logs": "Ghi nhat ky kiem toan",
-      "read_profile": "Xem ho so",
-      "write_posts": "Dang bai viet",
-      "read_reservations": "Xem dat cho",
-      "write_reservations": "Chinh sua dat cho",
-      "unknown": "Pham vi bo sung"
+      "moderation": "Kiểm duyệt"
     }
   },
   "modPanelSubmissionLeftNavbar": {
@@ -229,9 +188,6 @@
   "modDashboardTopbar": {
     "addFacility": "Add Facility",
     "placeholderText": "Nhập tên hoặc mã ID để tìm kiếm",
-    "approved": "Đã được phê duyệt",
-    "rejected": "Đã bị từ chối",
-    "forReview": "Chờ duyệt",
     "healthcareProfessionals": "Các Chuyên gia Chăm sóc Sức khỏe",
     "facilities": "Cơ sở vật chất",
     "addHealthcareProfessional": "Add Healthcare Professional"
@@ -360,13 +316,8 @@
     "noHealthcareProfessionalFound": "No matching Healthcare Professionals found"
   },
   "modSubmissionForm": {
-    "confirmationButton": "Rời trang",
-    "hasUnsavedChanges": "Bạn có thay đổi chưa được lưu. Bạn có chắc chắn muốn rời khỏi trang không?",
     "errorMessageCompletedForm": "Gửi mẫu đã hoàn thành không thành công.",
-    "errorMessageFacilityInputsInvalid": "Một số trường thông tin cơ sở vật chất chưa được điền chính xác.",
     "errorMessageFacilityId": "Mã cơ sở vật chất là bắt buộc để cập nhật cơ sở vật chất.",
-    "errorMessageHealthcareInputsInvalid": "Một số trường thông tin về chuyên gia y tế chưa được điền chính xác.",
-    "errorMessageEnglishNameRequired": "Chuyên gia y tế phải có tên tiếng Anh",
     "healthcareProfessionalId": "Mã số chuyên gia y tế",
     "infoMessageAlreadyApproved": "Đơn đăng ký này đã được phê duyệt.",
     "labelHealthcareProfessionalFirstName": "Tên đầu tiên",
@@ -375,11 +326,11 @@
     "placeholderTextHealthcareProfessionalSearchbar": "Tìm kiếm theo tên hoặc ID để thêm bác sĩ.",
     "submissionConfirmationAcceptanceButton": "Vâng, gửi đi",
     "submissionConfirmationMessage": "Bạn có chắc chắn muốn gửi mẫu đơn này không?",
-    "successMessageUpdated": "Mẫu đơn đã được cập nhật thành công.",
-    "successMessageApproved": "Đã phê duyệt và tạo thành công bài nộp.",
     "facilitySuccessfullyRejected": "Facility rejected successfully",
     "rejectSubmissionConfirmationMessage": "Are you sure you want to reject this submission?",
     "rejectSubmissionConfirmationButton": "Yes, reject the submission",
+    "successMessageUpdated": "Submission updated successfully",
+    "successMessageApproved": "Submission approved successfully",
     "searchExistingFacilities": "Search for existing Facility",
     "searchExistingHealthcareProfessionals": "Search for existing Healthcare Professionals",
     "labelModNoteInput": "Moderator Notes",
@@ -389,7 +340,6 @@
     "errorCodeMessagingNeeded": "The server error code does not have a message for the user. Please add one.",
     "genericErrorMessage": "There was an error submitting your form, please try again"
   },
-  "modHealthcareProfessionalCard": {},
   "modDashboardHealthcareProfessionalCard": {
     "spokenLanguages": "Spoken languages",
     "lastName": "Last name",
@@ -467,6 +417,7 @@
     "newSubmission": "New",
     "underReviewSubmission": "Under Review",
     "approvedSubmission": "Approved",
+    "rejectedSubmission": "Bị từ chối",
     "createdDate": "Created on",
     "updatedDate": "Updated last"
   },
@@ -486,15 +437,9 @@
     "updatedSuccessfully": "Profile updated successfully",
     "updateFailed": "Profile update failed"
   },
-  "authErrors": {},
-  "facilitiesErrors": {},
-  "healthcareProfessionalsErrors": {},
   "localeErrors": {
     "notSpecified": "Not Specified"
   },
-  "locationErrors": {},
-  "moderationSubmissionsErrors": {},
-  "searchResultsErrors": {},
   "themeManager": {
     "colorThemes": "Color Themes"
   },

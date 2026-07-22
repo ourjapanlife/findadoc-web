@@ -3,8 +3,7 @@
     "menu": "Menu",
     "siteName": "Find a Doc Japan",
     "siteNameLine1": "Find a Doc",
-    "siteNameLine2": "Japan",
-    "close": "Isara"
+    "siteNameLine2": "Japan"
   },
   "about": {
     "heroHeading": "Find a Doc, Japan",
@@ -12,10 +11,11 @@
     "heroGetStarted": "Magsimula",
     "heroLearnMore": "Alamin pa",
     "storyHeader": "Aming Kuwento",
-    "storyParagraph1": "Itinatag noong 2020 sa panahon ng pandemya, ang aming layunin ay isulong ang isang mas malusog at mas inklusibong lipunan. Nagbibigay kami ng dekalidad na impormasyong pangkalusugan nang libre at sa maraming wika para sa lahat, kabilang ang mga dayuhan at mga propesyonal sa pangangalagang pangkalusugan. Layunin namin ang isang Japan kung saan ang lahat, anuman ang nasyonalidad o wika, ay makakagalaw nang may kumpiyansa sa sistema ng pangangalagang pangkalusugan, makakahanap ng tamang doktor, at makakakuha ng kinakailangang serbisyong medikal.",
+    "storyParagraph1": "Itinatag noong 2020 sa panahon ng pandemya nina LaShawn Toyoda at Phil Ermish, ang aming layunin ay isulong ang isang mas malusog at mas inklusibong lipunan. Nagbibigay kami ng dekalidad na impormasyong pangkalusugan nang libre at sa maraming wika para sa lahat, kabilang ang mga dayuhan at mga propesyonal sa pangangalagang pangkalusugan. Layunin namin ang isang Japan kung saan ang lahat, anuman ang nasyonalidad o wika, ay makakagalaw nang may kumpiyansa sa sistema ng pangangalagang pangkalusugan, makakahanap ng tamang doktor, at makakakuha ng kinakailangang serbisyong medikal.",
     "storyParagraph2": "Kami ay isang non-profit na organisasyon na pinapatakbo ng paniniwalang ang lahat ay dapat magkaroon ng access sa impormasyong pangkalusugan bilang bahagi ng masagana at makabuluhang buhay. Ang aming mga gawain ay ginagabayan ng katarungang panlipunan, pagkakaunawa sa kultura, at inobasyon. Lagi kaming bukas para makipagtulungan sa mga kasosyo mula sa pamahalaan, mga non-profit, at komunidad ng medisina. Kasama ng aming mga katuwang, umaasa kami na makalikha ng isang Japan kung saan ang lahat ay may access sa pangangalagang pangkalusugan, nararamdaman ang pagiging kabilang, at may kakayahang mamuhay nang maayos.",
     "btnImpact": "Aming Epekto",
     "btnContributors": "Mga Kontributor",
+    "btnCofounders": "Mga Co-Founder",
     "btnBoard": "Lupon ng NPO",
     "btnMascots": "Mga Maskot",
     "btnInvolve": "Sumali",
@@ -24,6 +24,7 @@
     "impactUsers": "100+ Buwanang Gumagamit",
     "impactVolunteer": "Boluntaryo at Pinapatakbo ng Komunidad",
     "contributorsHeader": "Mga Kontributor",
+    "cofoundersHeader": "Mga Co-Founder",
     "boardHeader": "Lupon ng NPO",
     "mascotsHeader": "Mga Maskot",
     "mascotsAwa": "Awa",
@@ -55,7 +56,6 @@
     "languageDropdownTitle": "Lengwahe:",
     "copyright": "Find a Doc, Japan",
     "login": "Login",
-    "settings": "Mga Setting",
     "logoutToast": "Successfully logged out"
   },
   "privacyPage": {
@@ -90,7 +90,7 @@
     "firstName": "Pangalan",
     "firstNameValidation": "Ilagay ang Pangalan",
     "googleMaps": "Google Maps URL",
-    "googleMapsValidation": "Ilagay ang URL na nagsisimula sa https://",
+    "googleMapsValidation": "Maglagay ng link ng Google Maps (hal. https://maps.app.goo.gl/…)",
     "heading": "Magdagdag ng Doktor",
     "healthcareProfessionalName": "Pangalan ng Propesyonal sa Pangangalagang Pangkalusugan",
     "invalidOption": "Hindi wastong opsyon",
@@ -114,8 +114,8 @@
     "allLocations": "Lahat ng Lokasyon",
     "allSpecialties": "Lahat ng Espesyalidad",
     "search": "Maghanap",
-    "resultsFound": "Natagpuan ang {count} na resulta",
-    "searchAndFilterDoctors": "Maghanap at mag-filter ng mga doktor"
+    "searchAndFilterDoctors": "Maghanap at mag-filter ng mga doktor",
+    "resultsFound": "Walang resulta | 1 resulta | {n} resulta"
   },
   "searchResultsList": {
     "loadMore": "โหลดเพิ่มเติม",
@@ -144,7 +144,6 @@
     "logout": "Log out",
     "login": "Login",
     "myPage": "Aking Pahina",
-    "settings": "Mga Setting",
     "logoutToast": "Successfully logged out"
   },
   "login": {
@@ -158,18 +157,13 @@
     "confirmExit": "Exit without saving",
     "create": "Create",
     "exit": "Exit",
-    "facilityCreatedSuccessfully": "Facility created successfully.",
-    "heathcareProfessionalCreatedSuccessfully": "Healthcare Professional created successfully.",
-    "unsavedChangesMessage": "This will exit without saving your entry. All unsaved data will be lost.",
-    "healthcareProfessionalEnglishNameRequired": "Healthcare Professional must have an English name",
-    "hasEmptyFieldsHealthcareProfessional": "All fields are required for creating a healthcare professional",
-    "hasEmptyFieldsFacility": "Some required fields are missing for creating a facility"
+    "unsavedChangesMessage": "This will exit without saving your entry. All unsaved data will be lost."
   },
   "modDashboardLeftNav": {
-    "viewsSection": "Views",
     "facilities": "Pasilidad",
     "healthcareProfessionals": "Mga Propesyonal sa Pangangalagang Pangkalusugan",
     "forReview": "Para sa Pagsusuri",
+    "new": "New",
     "approved": "Aprubado",
     "rejected": "Hindi na-aprubahan",
     "submissions": "Mga Isinumite"
@@ -182,42 +176,7 @@
     "none": "—",
     "sections": {
       "settings": "Mga Setting",
-      "moderation": "Moderation",
-      "admin": "Admin"
-    },
-    "title": "Iyong access",
-    "availablePages": "Mga available na pahina",
-    "jwtScopes": "Saklaw ng token:",
-    "effectiveScopes": "Epektibong saklaw",
-    "apiOnlyHint": "Wala pang moderator screen para sa saklaw na ito; available lang sa API.",
-    "apiOnlyTag": "API",
-    "pages": {
-      "moderation": "Aking Pahina",
-      "createFacility": "Gumawa ng pasilidad",
-      "createHealthcareProfessional": "Gumawa ng propesyonal sa kalusugan",
-      "settings": "Mga Setting"
-    },
-    "scopes": {
-      "read_submissions": "Mga isinumite — listahan ng moderasyon",
-      "write_submissions": "I-edit ang mga isinumite",
-      "delete_submissions": "Tanggalin ang mga isinumite",
-      "create_submissions": "Lumikha ng mga isinumite",
-      "read_facilities": "Mga pasilidad — listahan ng moderasyon",
-      "write_facilities": "Lumikha / mag-edit ng mga pasilidad",
-      "delete_facilities": "Tanggalin ang mga pasilidad",
-      "read_healthcareprofessionals": "Mga propesyonal sa kalusugan — listahan ng moderasyon",
-      "write_healthcareprofessionals": "Lumikha / mag-edit ng mga propesyonal sa kalusugan",
-      "delete_healthcareprofessionals": "Tanggalin ang mga propesyonal sa kalusugan",
-      "read_users": "Basahin ang mga user",
-      "write_users": "I-edit ang mga user",
-      "delete_users": "Tanggalin ang mga user",
-      "read_logs": "Basahin ang mga audit log",
-      "write_logs": "Isulat ang mga audit log",
-      "read_profile": "Basahin ang profile",
-      "write_posts": "Sumulat ng mga post",
-      "read_reservations": "Basahin ang mga reservation",
-      "write_reservations": "I-edit ang mga reservation",
-      "unknown": "Karagdagang saklaw"
+      "moderation": "Moderation"
     }
   },
   "modPanelSubmissionLeftNavbar": {
@@ -229,9 +188,6 @@
   "modDashboardTopbar": {
     "addFacility": "Add Facility",
     "placeholderText": "Maglagay ng pangalan o ID upang mahanap",
-    "approved": "Aprubado",
-    "rejected": "Hindi na-aprubahan",
-    "forReview": "Susuriin",
     "healthcareProfessionals": "Propesyonal sa Pangangalagang Pangkalusugan",
     "facilities": "Pasilidad",
     "addHealthcareProfessional": "Add Healthcare Professional"
@@ -320,13 +276,8 @@
     "noHealthcareProfessionalFound": "No matching Healthcare Professionals found"
   },
   "modSubmissionForm": {
-    "confirmationButton": "Umalis sa pahina",
-    "hasUnsavedChanges": "Mayroon mga hindi na-save na pagbabago. Sigurado ka bang nais mong umalis?",
     "errorMessageCompletedForm": "Hindi na-isumite and kumpletong form",
-    "errorMessageFacilityInputsInvalid": "Ang ilan sa mga impormasyon ng pasilidad ay hindi nakumpleto ng tama.",
     "errorMessageFacilityId": "Kinakailangan ang ID ng Pasilidad upang ma-update ang pasilidad.",
-    "errorMessageHealthcareInputsInvalid": "Ang ilan sa mga impormasyon ng Propesyonal sa Pangangalagang Pangkalusugan ay hindi nakumpleto ng tama.",
-    "errorMessageEnglishNameRequired": "Ang propesyonal sa Pangangalagang Pangkalusugan ay kailangang may pangalan sa Ingles",
     "healthcareProfessionalId": "Mga ID ng propesyonal sa Pangangalagang Pangkalusugan",
     "infoMessageAlreadyApproved": "Ang Isinumite ay aprubado na",
     "labelHealthcareProfessionalFirstName": "Pangalan",
@@ -335,11 +286,11 @@
     "placeholderTextHealthcareProfessionalSearchbar": "Hanapin ayon sa pangalan o ID upang magdagdag ng doktor",
     "submissionConfirmationAcceptanceButton": "Oo, Isumite",
     "submissionConfirmationMessage": "Nais mo bang isumite ang form na ito?",
-    "successMessageUpdated": "Matagumpay na na-update ang pagsusumite.",
-    "successMessageApproved": "Ang Isinumite ay matagumpay na na-aprubahan.",
     "facilitySuccessfullyRejected": "Matagumpay na hindi na-apprubahan ang pasilidad",
     "rejectSubmissionConfirmationMessage": "Are you sure you want to reject this submission?",
     "rejectSubmissionConfirmationButton": "Yes, reject the submission",
+    "successMessageUpdated": "Submission updated successfully",
+    "successMessageApproved": "Submission approved successfully",
     "searchExistingFacilities": "Search for existing Facility",
     "searchExistingHealthcareProfessionals": "Search for existing Healthcare Professionals",
     "labelModNoteInput": "Moderator Notes",
@@ -389,7 +340,6 @@
     "labelAdditionalNotesForPatients": "Additional Notes for Patients",
     "placeholderAdditionalNotesForPatients": "e.g. English speaking doctors only available from 2-4"
   },
-  "modHealthcareProfessionalCard": {},
   "modDashboardHealthcareProfessionalCard": {
     "spokenLanguages": "Spoken languages",
     "lastName": "Last name",
@@ -467,6 +417,7 @@
     "newSubmission": "New",
     "underReviewSubmission": "Under Review",
     "approvedSubmission": "Approved",
+    "rejectedSubmission": "Hindi na-aprubahan",
     "createdDate": "Created on",
     "updatedDate": "Updated last"
   },
@@ -486,15 +437,9 @@
     "updatedSuccessfully": "Profile updated successfully",
     "updateFailed": "Profile update failed"
   },
-  "authErrors": {},
-  "facilitiesErrors": {},
-  "healthcareProfessionalsErrors": {},
   "localeErrors": {
     "notSpecified": "Not Specified"
   },
-  "locationErrors": {},
-  "moderationSubmissionsErrors": {},
-  "searchResultsErrors": {},
   "themeManager": {
     "colorThemes": "Color Themes"
   },

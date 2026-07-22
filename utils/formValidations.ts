@@ -219,7 +219,10 @@ export function validateUserSubmittedFirstName(name: string): boolean {
 export function validateGoogleMapsUrlInput(url: string): boolean {
     url = url.trim()
     if (url.startsWith('https://www.google.com/maps') || url.startsWith('https://www.google.co.jp/maps')
-      || url.startsWith('https://maps.google.com/')) {
+      || url.startsWith('https://maps.google.com/')
+      // Short "Share" links produced by the Google Maps app/website. These are
+      // what most users actually paste, so they must be accepted.
+      || url.startsWith('https://maps.app.goo.gl/') || url.startsWith('https://goo.gl/maps/')) {
         return true
     }
     return false

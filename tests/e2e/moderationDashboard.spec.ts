@@ -8,6 +8,7 @@ test.describe('Moderation dashboard', () => {
         await page.waitForLoadState('domcontentloaded')
         await expect(page.getByTestId('mod-access-panel')).toBeVisible({ timeout: 30_000 })
         await expect(page.getByTestId('access-page-link-moderation-submissions')).toBeVisible({ timeout: 30_000 })
+        await expect(page.getByRole('button', { name: new RegExp(enUS.modDashboardLeftNav.new, 'i') })).toBeVisible()
         await expect(page.getByRole('button', { name: new RegExp(enUS.modDashboardLeftNav.forReview, 'i') })).toBeVisible()
     })
 
@@ -30,8 +31,9 @@ test.describe('Moderation dashboard', () => {
         await expect(page.getByTestId('access-page-link-moderation-submissions')).toBeVisible({ timeout: 30_000 })
     })
 
-    test('shows left nav for submissions with For Review, Approved, Rejected',
+    test('shows left nav for submissions with New, For Review, Approved, Rejected',
          async ({ page }) => {
+             await expect(page.getByRole('button', { name: new RegExp(enUS.modDashboardLeftNav.new, 'i') })).toBeVisible()
              await expect(page.getByRole('button', { name: new RegExp(enUS.modDashboardLeftNav.forReview, 'i') })).toBeVisible()
              await expect(page.getByRole('button', { name: new RegExp(enUS.modDashboardLeftNav.approved, 'i') })).toBeVisible()
              await expect(page.getByRole('button', { name: new RegExp(enUS.modDashboardLeftNav.rejected, 'i') })).toBeVisible()

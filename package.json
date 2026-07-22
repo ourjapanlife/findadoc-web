@@ -38,6 +38,7 @@
     "dependencies": {
         "@auth0/auth0-vue": "^2.5.0",
         "@pinia/nuxt": "^0.11.3",
+        "@sentry/vue": "^10.58.0",
         "graphql": "^16.12.0",
         "graphql-request": "^7.4.0",
         "hammerjs": "^2.0.8",
@@ -87,6 +88,7 @@
         "eslint-plugin-json": "^4.0.1",
         "eslint-plugin-storybook": "^10.1.11",
         "eslint-plugin-vue": "^10.6.2",
+        "eslint-plugin-vuejs-accessibility": "^2.5.0",
         "husky": "^9.1.7",
         "jsdom": "^27.4.0",
         "nuxt": "^4.2.2",

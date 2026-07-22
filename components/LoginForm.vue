@@ -11,7 +11,7 @@
             class="h-8"
         />
         <span>
-            {{ t('login.redirectingtoauth0') }}...
+            {{ statusMessage }}...
         </span>
     </h1>
 </template>
@@ -19,11 +19,21 @@
 <script lang="ts" setup>
 import SVGLoadingIcon from '~/assets/icons/loading.svg'
 import { useAuthStore } from '~/stores/authStore'
+import { resolveAuthReturnPath } from '~/utils/auth0Config'
 
 const authStore = useAuthStore()
-
+const route = useRoute()
+const router = useRouter()
 const { t } = useI18n()
+const statusMessage = ref(t('login.checkingauth'))
 
-// since the login is a redirection, let's go there right away
-await authStore.login()
+await authStore.waitForAuth0ToLoad()
+
+if (authStore.isLoggedIn) {
+    statusMessage.value = t('login.checkingauth')
+    await router.replace(resolveAuthReturnPath(route.fullPath))
+} else {
+    statusMessage.value = t('login.redirectingtoauth0')
+    await authStore.login()
+}
 </script>

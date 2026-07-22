@@ -1,6 +1,9 @@
 <template>
-    <div class="h-full overflow-hidden">
-        <div v-if="moderationScreenStore.dashboardScreenIsActive()">
+    <div class="h-full min-h-0 overflow-hidden flex flex-col">
+        <div
+            v-if="moderationScreenStore.dashboardScreenIsActive()"
+            class="h-full min-h-0 flex flex-col"
+        >
             <MyPageSettingsContent v-if="isSettingsView" />
             <ModListContainer v-else />
         </div>

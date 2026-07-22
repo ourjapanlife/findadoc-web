@@ -148,7 +148,7 @@ import { handleModerationResponseErrors } from '~/composables/useModerationRespo
 import { ModerationSubmissionActionType, useModerationSubmissionActions } from '~/composables/useModerationSubmissionActions'
 import { mapIdsToEntities, matchesFacilitySearch, matchesHealthcareProfessionalSearch } from '~/utils/moderationSearchUtils'
 import { formatFirstLocalizedFullName, hasEnglishLocalizedName } from '~/utils/nameUtils'
-import { navigateToModerationDashboard as goToModerationDashboard } from '~/utils/moderationUtils'
+import { leaveToModerationDashboard } from '~/utils/moderationUtils'
 import {
     hasRequiredHealthcareProfessionalSelections,
     validateModerationFacilityFields
@@ -177,10 +177,9 @@ const formState = computed(() => ({
     notes: currentSubmissionNotes.value
 }))
 const moderationSubmissionUnsavedStore = useModerationSubmissionUnsavedStore()
-const { makeNonDirty, isDirty, tryClose } = useUnsavedChanges({
+const { makeNonDirty, isDirty, tryLeave } = useUnsavedChanges({
     data: { source: formState },
-    mode: 'update',
-    onClose: () => navigateToModerationDashboard()
+    mode: 'update'
 })
 watch(isDirty, dirty => moderationSubmissionUnsavedStore.setEditSubmissionFormDirty(dirty), {
     immediate: true,
@@ -492,13 +491,16 @@ async function saveSubmissionDraft(
     }
 
     const submissionResult = result.data
-    if (submissionResult) initializeSubmissionFormValues(submissionResult.updateSubmission)
+    if (submissionResult) {
+        initializeSubmissionFormValues(submissionResult.updateSubmission)
+    }
+    makeNonDirty()
 
     if (options.showSuccessToast ?? true) {
         returnWithSuccessToast(result, toast, t, 'modSubmissionForm.successMessageUpdated')
     }
     if (options.shouldExitAfterUpdate) {
-        await goToModerationDashboard(router, screenStore)
+        await leaveToModerationDashboard(router, screenStore, modalStore, 'submissions')
         return true
     }
 
@@ -576,7 +578,7 @@ async function confirmAndApproveSubmission(e: Event) {
         }
         await resetModalRefs()
         returnWithSuccessToast(result, toast, t, 'modSubmissionForm.successMessageApproved')
-        await goToModerationDashboard(router, screenStore)
+        await leaveToModerationDashboard(router, screenStore, modalStore, 'submissions')
     } catch {
         toast.error(t('modSubmissionForm.errorMessageCompletedForm'))
         await resetModalRefs()
@@ -594,7 +596,7 @@ const rejectSubmission = async () => {
     await moderationSubmissionStore.rejectSubmission()
     await resetModalRefs()
     toast.success(t('modSubmissionForm.facilitySuccessfullyRejected'))
-    navigateToModerationDashboard()
+    await leaveToModerationDashboard(router, screenStore, modalStore, 'submissions')
 }
 
 watch(
@@ -631,7 +633,7 @@ watch(
 )
 
 onUnmounted(() => {
-    moderationSubmissionUnsavedStore.registerEditSubmissionTryClose(null)
+    moderationSubmissionUnsavedStore.registerEditFormTryLeave(null)
     moderationSubmissionUnsavedStore.setEditSubmissionFormDirty(false)
 })
 
@@ -666,13 +668,7 @@ onMounted(async () => {
     await nextTick()
 
     isEditSubmissionFormInitialized.value = true
-    moderationSubmissionUnsavedStore.registerEditSubmissionTryClose(tryClose)
+    moderationSubmissionUnsavedStore.registerEditFormTryLeave(tryLeave)
     loadingStore.setIsLoading(false)
 })
-
-const navigateToModerationDashboard = () => {
-    goToModerationDashboard(router, screenStore, modalStore)
-}
-
-// Unsaved changes on browser back / router leave are handled by useUnsavedChanges + unsaved-changes-plugin (router.beforeEach).
 </script>

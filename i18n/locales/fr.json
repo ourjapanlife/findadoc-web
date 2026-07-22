@@ -3,8 +3,7 @@
     "menu": "Menu",
     "siteName": "Find a Doc Japan",
     "siteNameLine1": "Find a Doc",
-    "siteNameLine2": "Japan",
-    "close": "Fermer"
+    "siteNameLine2": "Japan"
   },
   "about": {
     "heroHeading": "Find a Doc, Japan",
@@ -12,10 +11,11 @@
     "heroGetStarted": "Commencer",
     "heroLearnMore": "En savoir plus",
     "storyHeader": "Notre histoire",
-    "storyParagraph1": "Fondée en 2020 pendant la pandémie, notre mission est de promouvoir une société plus saine et plus inclusive. Nous offrons gratuitement des informations de santé de qualité en plusieurs langues pour tous, y compris les étrangers et les professionnels de santé. Nous visons un Japon où chacun, quelle que soit sa nationalité ou sa langue, peut naviguer dans le système de santé, trouver les bons médecins et obtenir les soins dont il a besoin.",
+    "storyParagraph1": "Fondée en 2020 pendant la pandémie par LaShawn Toyoda et Phil Ermish, notre mission est de promouvoir une société plus saine et plus inclusive. Nous offrons gratuitement des informations de santé de qualité en plusieurs langues pour tous, y compris les étrangers et les professionnels de santé. Nous visons un Japon où chacun, quelle que soit sa nationalité ou sa langue, peut naviguer dans le système de santé, trouver les bons médecins et obtenir les soins dont il a besoin.",
     "storyParagraph2": "Nous sommes une organisation à but non lucratif, motivée par l’idée que chacun devrait avoir accès aux informations de santé pour mener une vie épanouie. Nos activités sont guidées par la justice sociale, la sensibilité culturelle et l’innovation. Nous sommes toujours heureux de collaborer avec des partenaires gouvernementaux, non lucratifs et médicaux. Ensemble, nous espérons créer un Japon où chacun a accès aux soins, se sent inclus et peut vivre sereinement.",
     "btnImpact": "Notre impact",
     "btnContributors": "Contributeurs",
+    "btnCofounders": "Co-fondateurs",
     "btnBoard": "Conseil de l’association",
     "btnMascots": "Mascottes",
     "btnInvolve": "S'impliquer",
@@ -24,6 +24,7 @@
     "impactUsers": "100+ utilisateurs mensuels",
     "impactVolunteer": "Porté par des bénévoles et la communauté",
     "contributorsHeader": "Contributeurs",
+    "cofoundersHeader": "Co-fondateurs",
     "boardHeader": "Conseil de l’association",
     "mascotsHeader": "Mascottes",
     "mascotsAwa": "Awa",
@@ -55,7 +56,6 @@
     "balancesheet": "Balance Sheet",
     "logout": "Log out",
     "login": "Login",
-    "settings": "Paramètres",
     "logoutToast": "Successfully logged out"
   },
   "privacyPage": {
@@ -89,7 +89,7 @@
   "submitPage": {
     "firstName": "Prénom",
     "googleMaps": "URL de Google Maps",
-    "googleMapsValidation": "Entrez une URL commençant par https://",
+    "googleMapsValidation": "Entrez un lien Google Maps (par ex. https://maps.app.goo.gl/…)",
     "heading": "Ajouter un médecin",
     "healthcareProfessionalName": "Nom du professionnel de la santé",
     "invalidOption": "Option invalide",
@@ -114,8 +114,8 @@
     "allLocations": "Tous les lieux",
     "allSpecialties": "Toutes les spécialités",
     "search": "Rechercher",
-    "resultsFound": "{count} résultats trouvés",
-    "searchAndFilterDoctors": "Rechercher et filtrer les médecins"
+    "searchAndFilterDoctors": "Rechercher et filtrer les médecins",
+    "resultsFound": "Aucun résultat | 1 résultat trouvé | {n} résultats trouvés"
   },
   "searchResultsList": {
     "loadMore": "Charger plus",
@@ -144,25 +144,19 @@
     "logout": "Log out",
     "login": "Login",
     "myPage": "Ma page",
-    "settings": "Paramètres",
     "logoutToast": "Successfully logged out"
   },
   "modCreateFacilityOrHPTopbar": {
     "confirmExit": "Exit without saving",
     "create": "Create",
     "exit": "Exit",
-    "facilityCreatedSuccessfully": "Facility created successfully.",
-    "heathcareProfessionalCreatedSuccessfully": "Healthcare professional created successfully.",
-    "unsavedChangesMessage": "This will exit without saving your entry. All unsaved data will be lost.",
-    "healthcareProfessionalEnglishNameRequired": "Healthcare Professional must have an English name",
-    "hasEmptyFieldsHealthcareProfessional": "All fields are required for creating a healthcare professional",
-    "hasEmptyFieldsFacility": "Some required fields are missing for creating a facility"
+    "unsavedChangesMessage": "This will exit without saving your entry. All unsaved data will be lost."
   },
   "modDashboardLeftNav": {
-    "viewsSection": "Views",
     "facilities": "Établissements",
     "healthcareProfessionals": "Professionnels de la santé",
     "forReview": "À examiner",
+    "new": "New",
     "approved": "Approuvé",
     "rejected": "Rejeté",
     "submissions": "Submissions"
@@ -175,42 +169,7 @@
     "none": "—",
     "sections": {
       "settings": "Paramètres",
-      "moderation": "Modération",
-      "admin": "Admin"
-    },
-    "title": "Vos acces",
-    "availablePages": "Pages disponibles",
-    "jwtScopes": "Portees du jeton :",
-    "effectiveScopes": "Portees effectives",
-    "apiOnlyHint": "Pas encore d'ecran de moderation pour cette portee ; disponible via API uniquement.",
-    "apiOnlyTag": "API",
-    "pages": {
-      "moderation": "Ma page",
-      "createFacility": "Creer un etablissement",
-      "createHealthcareProfessional": "Creer un professionnel de sante",
-      "settings": "Paramètres"
-    },
-    "scopes": {
-      "read_submissions": "Soumissions — liste de moderation",
-      "write_submissions": "Modifier les soumissions",
-      "delete_submissions": "Supprimer les soumissions",
-      "create_submissions": "Creer des soumissions",
-      "read_facilities": "Etablissements — liste de moderation",
-      "write_facilities": "Creer / modifier des etablissements",
-      "delete_facilities": "Supprimer des etablissements",
-      "read_healthcareprofessionals": "Professionnels de sante — liste de moderation",
-      "write_healthcareprofessionals": "Creer / modifier des professionnels de sante",
-      "delete_healthcareprofessionals": "Supprimer des professionnels de sante",
-      "read_users": "Lire les utilisateurs",
-      "write_users": "Modifier les utilisateurs",
-      "delete_users": "Supprimer les utilisateurs",
-      "read_logs": "Lire les journaux d'audit",
-      "write_logs": "Ecrire les journaux d'audit",
-      "read_profile": "Lire le profil",
-      "write_posts": "Ecrire des publications",
-      "read_reservations": "Lire les reservations",
-      "write_reservations": "Modifier les reservations",
-      "unknown": "Portee supplementaire"
+      "moderation": "Modération"
     }
   },
   "modEditSubmissionTopNav": {
@@ -225,24 +184,19 @@
   "modSubmissionForm": {
     "healthcareProfessionalId": "Identifiants des professionnels de santé",
     "placeholderTextHealthcareProfessionalSearchbar": "Rechercher par nom ou ID pour ajouter un médecin",
-    "confirmationButton": "Leave Page",
-    "hasUnsavedChanges": "You have unsaved changes. Are you sure you want to leave?",
     "errorMessageCompletedForm": "Failed to submit completed form",
-    "errorMessageFacilityInputsInvalid": "Some of the Facility Fields were not filled in correctly",
     "errorMessageFacilityId": "Facility ID is required for updating the Facility",
-    "errorMessageHealthcareInputsInvalid": "Some of the Healthcare Professional Fields were not filled in correctly",
-    "errorMessageEnglishNameRequired": "The healthcare professional must have an English name",
     "infoMessageAlreadyApproved": "This submission has already been approved",
     "labelHealthcareProfessionalFirstName": "First Name",
     "labelHealthcareProfessionalLastName": "Last Name",
     "labelHealthcareProfessionalMiddleName": "Middle Name",
     "submissionConfirmationAcceptanceButton": "Yes, submit",
     "submissionConfirmationMessage": "Are you sure you want to submit this form?",
-    "successMessageUpdated": "Submission updated successfully",
-    "successMessageApproved": "Submission approved and created successfully",
     "facilitySuccessfullyRejected": "Facility rejected successfully",
     "rejectSubmissionConfirmationMessage": "Are you sure you want to reject this submission?",
     "rejectSubmissionConfirmationButton": "Yes, reject the submission",
+    "successMessageUpdated": "Submission updated successfully",
+    "successMessageApproved": "Submission approved successfully",
     "searchExistingFacilities": "Search for existing Facility",
     "searchExistingHealthcareProfessionals": "Search for existing Healthcare Professionals",
     "labelModNoteInput": "Moderator Notes",
@@ -312,9 +266,6 @@
   "modDashboardTopbar": {
     "addFacility": "Add Facility",
     "placeholderText": "Enter name or ID to search",
-    "approved": "Approved",
-    "rejected": "Rejected",
-    "forReview": "For Review",
     "healthcareProfessionals": "Healthcare Professionals",
     "facilities": "Facilities",
     "addHealthcareProfessional": "Add Healthcare Professional"
@@ -437,7 +388,6 @@
     "labelAdditionalNotesForPatients": "Additional Notes for Patients",
     "placeholderAdditionalNotesForPatients": "e.g. English speaking doctors only available from 2-4"
   },
-  "modHealthcareProfessionalCard": {},
   "modDashboardHealthcareProfessionalCard": {
     "spokenLanguages": "Spoken languages",
     "lastName": "Last name",
@@ -467,6 +417,7 @@
     "newSubmission": "New",
     "underReviewSubmission": "Under Review",
     "approvedSubmission": "Approved",
+    "rejectedSubmission": "Rejeté",
     "createdDate": "Created on",
     "updatedDate": "Updated last"
   },
@@ -486,15 +437,9 @@
     "updatedSuccessfully": "Profile updated successfully",
     "updateFailed": "Profile update failed"
   },
-  "authErrors": {},
-  "facilitiesErrors": {},
-  "healthcareProfessionalsErrors": {},
   "localeErrors": {
     "notSpecified": "Not Specified"
   },
-  "locationErrors": {},
-  "moderationSubmissionsErrors": {},
-  "searchResultsErrors": {},
   "themeManager": {
     "colorThemes": "Color Themes"
   },

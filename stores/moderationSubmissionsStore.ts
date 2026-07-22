@@ -6,15 +6,11 @@ import type { Submission, MutationUpdateSubmissionArgs, Mutation, SubmissionSear
 import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql.js'
 import type { ServerResponse } from '~/typedefs/serverResponse'
 import { useTranslation } from '~/composables/useTranslation'
+import { isNewSubmission } from '~/utils/moderationUtils'
 
 export enum SelectedSubmissionListViewTab {
+    New = 'NEW',
     ForReview = 'FOR_REVIEW',
-    Approved = 'APPROVED',
-    Rejected = 'REJECTED'
-}
-
-export enum SubmissionStatus {
-    InReview = 'IN_REVIEW',
     Approved = 'APPROVED',
     Rejected = 'REJECTED'
 }
@@ -23,6 +19,29 @@ export enum SelectedModerationListView {
     Facilities = 'FACILITIES',
     HealthcareProfessionals = 'HEALTHCARE_PROFESSIONALS',
     Submissions = 'SUBMISSIONS'
+}
+
+type SubmissionStatusFilter = Pick<SubmissionSearchFilters, 'isUnderReview' | 'isApproved' | 'isRejected'>
+
+const SUBMISSION_TAB_FILTERS: Partial<Record<SelectedSubmissionListViewTab, SubmissionStatusFilter>> = {
+    [SelectedSubmissionListViewTab.ForReview]: { isUnderReview: true },
+    [SelectedSubmissionListViewTab.Approved]: { isApproved: true },
+    [SelectedSubmissionListViewTab.Rejected]: { isRejected: true }
+}
+
+const SUBMISSION_STATUS_COUNT_QUERIES = [
+    { countKey: 'forReviewCount', filter: { isUnderReview: true } },
+    { countKey: 'approvedCount', filter: { isApproved: true } },
+    { countKey: 'rejectedCount', filter: { isRejected: true } }
+] as const
+
+const NEW_SUBMISSIONS_FETCH_LIMIT = 1000
+
+interface SubmissionStatusCounts {
+    newCount: number
+    forReviewCount: number
+    approvedCount: number
+    rejectedCount: number
 }
 
 export const useModerationSubmissionsStore = defineStore(
@@ -36,14 +55,18 @@ export const useModerationSubmissionsStore = defineStore(
         const submissionSearchQuery: Ref<string> = ref('')
         const didMutationFail: Ref<boolean> = ref(false)
         const selectedModerationListViewTabChosen: Ref<SelectedSubmissionListViewTab>
-            = ref(SelectedSubmissionListViewTab.ForReview)
-        const submissionStatusFilterEnabled: Ref<boolean> = ref(false)
+            = ref(SelectedSubmissionListViewTab.New)
+        const statusTotalCounts: Ref<SubmissionStatusCounts> = ref({
+            newCount: 0,
+            forReviewCount: 0,
+            approvedCount: 0,
+            rejectedCount: 0
+        })
 
-        // Used for store the total number of submissions found by the current search query.
         const totalSubmissionsCount: Ref<number> = ref(0)
-        // Used for store the starting index (offset) for the current page of results.
         const currentOffset: Ref<number> = ref(0)
         const itemsPerPage: Ref<number> = ref(25)
+        const cachedNewSubmissions: Ref<Submission[]> = ref([])
         const hasNextPage = computed(() => currentOffset.value + itemsPerPage.value < totalSubmissionsCount.value)
         const hasPrevPage = computed(() => currentOffset.value > 0)
 
@@ -51,24 +74,92 @@ export const useModerationSubmissionsStore = defineStore(
             didMutationFail.value = newValue
         }
 
-        async function getSubmissions() {
-            const filters: SubmissionSearchFilters = {
-                offset: currentOffset.value,
-                limit: itemsPerPage.value
+        function applySearchFilter(submissions: Submission[]) {
+            const query = submissionSearchQuery.value.trim().toLowerCase()
+            if (!query) {
+                return submissions
             }
+            return submissions.filter((submission: Submission) => {
+                const submissionId = submission.id.toLowerCase()
+                const healthcareProfessionalName = submission.healthcareProfessionalName.toLowerCase()
+                const facilityNameEn = submission.facility?.nameEn?.toLowerCase() || ''
+                const facilityNameJa = submission.facility?.nameJa?.toLowerCase() || ''
+                return submissionId.includes(query)
+                  || healthcareProfessionalName.includes(query)
+                  || facilityNameEn.includes(query)
+                  || facilityNameJa.includes(query)
+            })
+        }
+
+        async function fetchNewSubmissions() {
+            const { filteredSearchResults } = await fetchSubmissionsWithCount({
+                limit: NEW_SUBMISSIONS_FETCH_LIMIT,
+                offset: 0
+            })
+            return filteredSearchResults.filter(isNewSubmission)
+        }
+
+        function applyNewTabListView(newSubmissions: Submission[]) {
+            cachedNewSubmissions.value = newSubmissions
+            const searchFiltered = applySearchFilter(newSubmissions)
+            totalSubmissionsCount.value = searchFiltered.length
+            submissionsData.value = searchFiltered.slice(
+                currentOffset.value,
+                currentOffset.value + itemsPerPage.value
+            )
+            filteredSubmissionDataForListComponent.value = submissionsData.value
+        }
+
+        async function getSubmissions() {
             try {
-                // Call the utility function to fetch the paginated data and the total count.
+                if (selectedModerationListViewTabChosen.value === SelectedSubmissionListViewTab.New) {
+                    applyNewTabListView(await fetchNewSubmissions())
+                    return
+                }
+
+                cachedNewSubmissions.value = []
+
+                const filters: SubmissionSearchFilters = {
+                    offset: currentOffset.value,
+                    limit: itemsPerPage.value,
+                    ...SUBMISSION_TAB_FILTERS[selectedModerationListViewTabChosen.value]
+                }
                 const { filteredSearchResults, totalCount } = await fetchSubmissionsWithCount(filters)
                 submissionsData.value = filteredSearchResults
                 totalSubmissionsCount.value = totalCount
-                // Apply a secondary filter on the fetched data based on the currently selected tab.
-                filterSubmissionByStatus(selectedModerationListViewTabChosen.value as unknown as SubmissionStatus)
+                filteredSubmissionDataForListComponent.value = applySearchFilter(filteredSearchResults)
             } catch (error) {
                 console.error(`Error fetching submissions: ${JSON.stringify(error)}`)
                 //eslint-disable-next-line
                 alert('Error loading submissions. Please try again later.')
                 submissionsData.value = []
+                filteredSubmissionDataForListComponent.value = []
                 totalSubmissionsCount.value = 0
+            }
+        }
+
+        async function fetchStatusCounts() {
+            try {
+                const [newSubmissions, ...countResults] = await Promise.all([
+                    fetchNewSubmissions(),
+                    ...SUBMISSION_STATUS_COUNT_QUERIES.map(({ filter }) =>
+                        fetchSubmissionsWithCount({ ...filter, limit: 1, offset: 0 }))
+                ])
+
+                statusTotalCounts.value = SUBMISSION_STATUS_COUNT_QUERIES.reduce(
+                    (counts, { countKey }, index) => {
+                        counts[countKey] = countResults[index]?.totalCount ?? 0
+                        return counts
+                    },
+                    {
+                        newCount: newSubmissions.length,
+                        forReviewCount: 0,
+                        approvedCount: 0,
+                        rejectedCount: 0
+                    }
+                )
+            } catch (error) {
+                console.error(`Error fetching submission status counts: ${JSON.stringify(error)}`)
             }
         }
 
@@ -81,61 +172,23 @@ export const useModerationSubmissionsStore = defineStore(
             selectedModerationListViewChosen.value = selectedOption
         }
 
-        function setSelectedModerationListViewTabChosen(selectedOption: SelectedSubmissionListViewTab) {
+        async function setSelectedModerationListViewTabChosen(selectedOption: SelectedSubmissionListViewTab) {
             selectedModerationListViewTabChosen.value = selectedOption
-            submissionStatusFilterEnabled.value = true
+            currentOffset.value = 0
+            await getSubmissions()
         }
 
         function filterSelectedSubmission(submissionId: string | undefined) {
             selectedSubmissionData.value = submissionsData.value.find(submission => submission.id === submissionId)
         }
 
-        function filterSubmissionByStatus(submissionStatus: SubmissionStatus) {
-            const applySearch = (submissions: Submission[]) => {
-                const query = submissionSearchQuery.value.trim().toLowerCase()
-                if (!query) {
-                    return submissions
-                }
-                return submissions.filter((submission: Submission) => {
-                    const submissionId = submission.id.toLowerCase()
-                    const healthcareProfessionalName = submission.healthcareProfessionalName.toLowerCase()
-                    const facilityNameEn = submission.facility?.nameEn?.toLowerCase() || ''
-                    const facilityNameJa = submission.facility?.nameJa?.toLowerCase() || ''
-                    return submissionId.includes(query)
-                      || healthcareProfessionalName.includes(query)
-                      || facilityNameEn.includes(query)
-                      || facilityNameJa.includes(query)
-                })
-            }
-
-            const shouldApplyStatusFilter = submissionStatusFilterEnabled.value
-            if (!shouldApplyStatusFilter) {
-                filteredSubmissionDataForListComponent.value = applySearch(submissionsData.value)
-                return
-            }
-
-            switch (submissionStatus) {
-                case SubmissionStatus.InReview:
-                    filteredSubmissionDataForListComponent.value = applySearch(submissionsData.value
-                        .filter((submission: Submission) => {
-                            const isNewSubmission = !submission.isRejected && !submission.isApproved && !submission.isUnderReview
-                            return submission.isUnderReview || isNewSubmission
-                        }))
-                    break
-                case SubmissionStatus.Approved:
-                    filteredSubmissionDataForListComponent.value = applySearch(submissionsData.value
-                        .filter((submission: Submission) => submission.isApproved))
-                    break
-                case SubmissionStatus.Rejected:
-                    filteredSubmissionDataForListComponent.value = applySearch(submissionsData.value
-                        .filter((submission: Submission) => submission.isRejected))
-                    break
-            }
-        }
-
         function setSubmissionSearchQuery(newQuery: string) {
             submissionSearchQuery.value = newQuery
-            filterSubmissionByStatus(selectedModerationListViewTabChosen.value as unknown as SubmissionStatus)
+            if (selectedModerationListViewTabChosen.value === SelectedSubmissionListViewTab.New) {
+                applyNewTabListView(cachedNewSubmissions.value)
+                return
+            }
+            filteredSubmissionDataForListComponent.value = applySearchFilter(submissionsData.value)
         }
 
         async function updateSubmission(
@@ -158,7 +211,6 @@ export const useModerationSubmissionsStore = defineStore(
                 return serverResponse
             }
 
-            // Update the submission in the submissionsData array
             const indexOfOutdatedSubmissionData = submissionsData.value
                 .findIndex(submission => submission.id === updatedSubmission.id)
 
@@ -169,6 +221,8 @@ export const useModerationSubmissionsStore = defineStore(
             }
 
             selectedSubmissionData.value = updatedSubmission
+            await fetchStatusCounts()
+            await getSubmissions()
 
             return serverResponse
         }
@@ -211,8 +265,8 @@ export const useModerationSubmissionsStore = defineStore(
 
         return {
             getSubmissions,
+            fetchStatusCounts,
             submissionsData,
-            filterSubmissionByStatus,
             filteredSubmissionDataForListComponent,
             submissionSearchQuery,
             setSubmissionSearchQuery,
@@ -225,6 +279,7 @@ export const useModerationSubmissionsStore = defineStore(
             setSelectedModerationListViewChosen,
             selectedModerationListViewTabChosen,
             setSelectedModerationListViewTabChosen,
+            statusTotalCounts,
             updateSubmission,
             approveSubmission,
             rejectSubmission,

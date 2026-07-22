@@ -16,13 +16,12 @@
                 <NuxtLink
                     to="/"
                     :aria-label="t('common.siteName')"
-                    @click="handleMobileLogoClick"
+                    @click="handleHomeClick"
                 >
                     <SVGSiteLogo
                         role="img"
                         :aria-label="t('common.siteName')"
                         class="mt-1 mr-1 w-10 h-10 shrink-0 align-middle fill-primary group-hover:fill-primary-hover"
-                        @click="toggleLogoText()"
                     />
                 </NuxtLink>
                 <Transition
@@ -63,6 +62,7 @@
                         class="flex"
                         to="/"
                         :aria-label="t('common.siteName')"
+                        @click="handleHomeClick"
                     >
                         <SVGSiteLogo
                             role="img"
@@ -93,28 +93,26 @@
             <!-- Desktop Right Section -->
             <div
                 id="right-section"
-                class="flex"
+                class="flex items-center"
             >
                 <nav
                     id="desktop-menu-items"
-                    class="portrait:hidden flex gap-3 mx-6 self-center items-center whitespace-nowrap"
+                    class="portrait:hidden flex mx-6 items-end whitespace-nowrap border-b border-accent-bg"
                 >
-                    <!-- About Link -->
-                    <NuxtLink
-                        to="/about"
-                        class="hover:text-primary-hover transition-colors"
-                    >{{ t('topNav.about') }}
-                    </NuxtLink>
-                    <!-- Home Link -->
                     <NuxtLink
                         to="/"
-                        class="hover:text-primary-hover transition-colors"
+                        :class="navLinkClass('/')"
+                        @click="handleHomeClick"
                     >{{ t('topNav.home') }}
                     </NuxtLink>
-                    <!-- Submit a new Doctor Link -->
+                    <NuxtLink
+                        to="/about"
+                        :class="navLinkClass('/about')"
+                    >{{ t('topNav.about') }}
+                    </NuxtLink>
                     <NuxtLink
                         to="/submit"
-                        class="hover:text-primary-hover transition-colors"
+                        :class="navLinkClass('/submit')"
                     >{{ t('topNav.submit') }}
                     </NuxtLink>
                     <!-- My Page menu trigger (if logged in) -->
@@ -128,8 +126,8 @@
                     >
                         <button
                             data-testid="topnav-profile-section"
-                            class="flex items-center gap-2 rounded-xl px-3 py-2 text-primary-text
-                            hover:bg-primary-hover/10 transition-colors"
+                            class="flex items-center gap-2 px-4 py-2.5 text-sm font-medium text-primary-text
+                            border-b-2 -mb-px border-transparent hover:text-primary-text transition-colors"
                             @click="toggleProfileMenu"
                         >
                             <span class="max-w-44 truncate font-medium">
@@ -190,16 +188,14 @@
                             </button>
                         </div>
                     </div>
-                    <!-- Login Button (if logged out)  -->
-                    <div
+                    <NuxtLink
                         v-if="!authStore.isLoggedIn"
+                        :to="loginRoute"
                         data-testid="topnav-login"
-                        class="flex text-primary"
+                        :class="navLinkClass('/login')"
                     >
-                        <NuxtLink to="/login">
-                            {{ t('topNav.login') }}
-                        </NuxtLink>
-                    </div>
+                        {{ t('topNav.login') }}
+                    </NuxtLink>
                 </nav>
                 <LocaleSelector class="portrait:hidden" />
                 <HamburgerMenu class="landscape:hidden justify-end z-20 p-2 bg-primary-bg/20 rounded-2xl" />
@@ -217,16 +213,26 @@ import SVGAccordionArrow from '~/assets/icons/accordion-arrow.svg'
 import SVGUserIcon from '~/assets/icons/user-icon.svg'
 import SVGSignOutIcon from '~/assets/icons/sign-out-icon.svg'
 import { useAuthStore } from '~/stores/authStore'
+import { useModerationScreenStore } from '~/stores/moderationScreenStore'
+import { useModerationSubmissionUnsavedStore } from '~/stores/moderationSubmissionUnsavedStore'
 import { useScreenOrientation } from '~/composables/useScreenOrientation'
 import { vCloseOnOutsideClick } from '~/composables/closeOnOutsideClick'
+import { buildLoginRoute, resolveAuthReturnPath } from '~/utils/auth0Config'
+import { isMyPageFormRoute, leaveToAppHome } from '~/utils/moderationUtils'
 
 const { t } = useI18n()
 const toast = useToast()
 const router = useRouter()
 const route = useRoute()
 
+const loginRoute = computed(() => buildLoginRoute(
+    route.path === '/login' ? resolveAuthReturnPath(route.fullPath) : route.fullPath
+))
 const profileMenuIsOpen = ref(false)
 const authStore = useAuthStore()
+const moderationScreenStore = useModerationScreenStore()
+const moderationSubmissionUnsavedStore = useModerationSubmissionUnsavedStore()
+const modalStore = useModalStore()
 const { isLandscape } = useScreenOrientation()
 const showGlobalSearch = computed(() =>
     isLandscape.value
@@ -251,11 +257,31 @@ function closeProfileMenu() {
     profileMenuIsOpen.value = false
 }
 
-function handleMobileLogoClick(e: Event) {
-    if (router.currentRoute.value.path === '/') {
-        e.preventDefault()
+function handleHomeClick(event: MouseEvent) {
+    if (route.path === '/') {
+        event.preventDefault()
         toggleLogoText()
+        return
     }
+
+    if (!isMyPageFormRoute(route.path)) {
+        return
+    }
+
+    event.preventDefault()
+    moderationSubmissionUnsavedStore.runLeaveOr(() =>
+        leaveToAppHome(router, moderationScreenStore, modalStore))
+}
+
+function navLinkClass(path: string): string {
+    const isActive = path === '/'
+        ? route.path === '/'
+        : route.path === path || route.path.startsWith(`${path}/`)
+    const base = 'px-4 py-2.5 text-sm font-medium transition-colors border-b-2 -mb-px'
+
+    return isActive
+        ? `${base} border-primary text-primary-text`
+        : `${base} border-transparent text-primary-text-muted hover:text-primary-text`
 }
 async function logout() {
     try {

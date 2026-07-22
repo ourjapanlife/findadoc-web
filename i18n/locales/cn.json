@@ -3,8 +3,7 @@
     "menu": "菜单",
     "siteName": "Find a Doc Japan",
     "siteNameLine1": "Find a Doc",
-    "siteNameLine2": "Japan",
-    "close": "关闭"
+    "siteNameLine2": "Japan"
   },
   "about": {
     "heroHeading": "Find a Doc, Japan",
@@ -12,10 +11,11 @@
     "heroGetStarted": "开始使用",
     "heroLearnMore": "了解更多",
     "storyHeader": "我们的故事",
-    "storyParagraph1": "我们成立于2020年疫情期间，使命是促进更健康、更包容的社会。我们为所有人——包括外国人和医疗专业人员——免费提供多语言的高质量健康信息。我们希望无论国籍或语言，每个人都能自信地了解医疗体系，找到合适的医生，并获得所需的医疗服务。",
+    "storyParagraph1": "我们由 LaShawn Toyoda 和 Phil Ermish 于2020年疫情期间创立，使命是促进更健康、更包容的社会。我们为所有人——包括外国人和医疗专业人员——免费提供多语言的高质量健康信息。我们希望无论国籍或语言，每个人都能自信地了解医疗体系，找到合适的医生，并获得所需的医疗服务。",
     "storyParagraph2": "我们是一个非营利组织，秉持人人都应获得健康信息以享受美好生活的理念。我们的活动贯穿社会正义、文化敏感性和创新精神。我们始终乐于与政府、非营利组织和医疗领域的合作伙伴建立联系。与伙伴们一起，我们希望创造一个人人都能获得医疗服务、感受到包容并享有美好生活的日本。",
     "btnImpact": "我们的影响",
     "btnContributors": "贡献者",
+    "btnCofounders": "联合创始人",
     "btnBoard": "NPO 董事会",
     "btnMascots": "吉祥物",
     "btnInvolve": "参与我们",
@@ -24,6 +24,7 @@
     "impactUsers": "100+ 月活用户",
     "impactVolunteer": "志愿者与社区驱动",
     "contributorsHeader": "贡献者",
+    "cofoundersHeader": "联合创始人",
     "boardHeader": "NPO 董事会",
     "mascotsHeader": "吉祥物",
     "mascotsAwa": "Awa",
@@ -55,7 +56,6 @@
     "copyright": "Find a Doc, Japan",
     "balancesheet": "Balance Sheet",
     "login": "Login",
-    "settings": "设置",
     "logoutToast": "Successfully logged out"
   },
   "privacyPage": {
@@ -90,7 +90,7 @@
     "firstName": "名",
     "firstNameValidation": "请输入名字（不含姓）",
     "googleMaps": "谷歌地图 URL",
-    "googleMapsValidation": "请输入以https://开头的URL链接",
+    "googleMapsValidation": "请输入 Google 地图链接（例如 https://maps.app.goo.gl/…）",
     "heading": "添加医师",
     "healthcareProfessionalName": "医师姓名",
     "invalidOption": "无效选项",
@@ -114,8 +114,8 @@
     "allLocations": "所有地点",
     "allSpecialties": "所有专科",
     "search": "搜索",
-    "resultsFound": "找到{count}个结果",
-    "searchAndFilterDoctors": "搜索和筛选医生"
+    "searchAndFilterDoctors": "搜索和筛选医生",
+    "resultsFound": "无结果 | 1 条结果 | {n} 条结果"
   },
   "searchResultsList": {
     "loadMore": "加载更多",
@@ -144,7 +144,6 @@
     "logout": "退出登录",
     "login": "Login",
     "myPage": "我的页面",
-    "settings": "设置",
     "logoutToast": "Successfully logged out"
   },
   "login": {
@@ -158,18 +157,13 @@
     "confirmExit": "Exit without saving",
     "create": "Create",
     "exit": "Exit",
-    "facilityCreatedSuccessfully": "Facility created successfully.",
-    "heathcareProfessionalCreatedSuccessfully": "Healthcare Professional created successfully.",
-    "unsavedChangesMessage": "This will exit without saving your entry. All unsaved data will be lost.",
-    "healthcareProfessionalEnglishNameRequired": "Healthcare Professional must have an English name",
-    "hasEmptyFieldsHealthcareProfessional": "All fields are required for creating a healthcare professional",
-    "hasEmptyFieldsFacility": "Some required fields are missing for creating a facility"
+    "unsavedChangesMessage": "This will exit without saving your entry. All unsaved data will be lost."
   },
   "modDashboardLeftNav": {
-    "viewsSection": "Views",
     "facilities": "机构",
     "healthcareProfessionals": "医师",
     "forReview": "待审核",
+    "new": "New",
     "approved": "已批准",
     "rejected": "已驳回",
     "submissions": "Submissions"
@@ -182,45 +176,9 @@
     "none": "—",
     "sections": {
       "settings": "设置",
-      "moderation": "审核",
-      "admin": "管理员"
-    },
-    "title": "您的访问权限",
-    "availablePages": "可访问页面",
-    "jwtScopes": "令牌权限范围:",
-    "effectiveScopes": "有效权限范围",
-    "apiOnlyHint": "该权限范围暂无审核界面；仅可通过 API 使用。",
-    "apiOnlyTag": "API",
-    "pages": {
-      "moderation": "我的页面",
-      "createFacility": "创建机构",
-      "createHealthcareProfessional": "创建医护人员",
-      "settings": "设置"
-    },
-    "scopes": {
-      "read_submissions": "提交内容 — 审核列表",
-      "write_submissions": "编辑提交内容",
-      "delete_submissions": "删除提交内容",
-      "create_submissions": "创建提交内容",
-      "read_facilities": "机构 — 审核列表",
-      "write_facilities": "创建 / 编辑机构",
-      "delete_facilities": "删除机构",
-      "read_healthcareprofessionals": "医护人员 — 审核列表",
-      "write_healthcareprofessionals": "创建 / 编辑医护人员",
-      "delete_healthcareprofessionals": "删除医护人员",
-      "read_users": "查看用户",
-      "write_users": "编辑用户",
-      "delete_users": "删除用户",
-      "read_logs": "查看审计日志",
-      "write_logs": "写入审计日志",
-      "read_profile": "查看个人资料",
-      "write_posts": "发布内容",
-      "read_reservations": "查看预约",
-      "write_reservations": "编辑预约",
-      "unknown": "附加权限范围"
+      "moderation": "审核"
     }
   },
-  "modPanelFacilitySubmissionLeftNavbar": {},
   "modEditSubmissionTopNav": {
     "updateAndExit": "保存并退出",
     "approve": "批准",
@@ -276,21 +234,16 @@
     "labelHealthcareProfessionalFirstName": "First Name",
     "labelHealthcareProfessionalLastName": "Last Name",
     "labelHealthcareProfessionalMiddleName": "Middle Name",
-    "confirmationButton": "Leave Page",
-    "hasUnsavedChanges": "You have unsaved changes. Are you sure you want to leave?",
     "submissionConfirmationAcceptanceButton": "Yes, submit",
     "submissionConfirmationMessage": "Are you sure you want to submit this form?",
     "errorMessageCompletedForm": "Failed to submit completed form",
-    "errorMessageFacilityInputsInvalid": "Some of the Facility Fields were not filled in correctly",
     "errorMessageFacilityId": "Facility ID is required for updating the Facility",
-    "errorMessageHealthcareInputsInvalid": "Some of the Healthcare Professional Fields were not filled in correctly",
-    "errorMessageEnglishNameRequired": "The healthcare professional must have an English name",
     "infoMessageAlreadyApproved": "This submission has already been approved",
-    "successMessageUpdated": "Submission updated successfully",
-    "successMessageApproved": "Submission approved and created successfully",
     "facilitySuccessfullyRejected": "Facility rejected successfully",
     "rejectSubmissionConfirmationMessage": "Are you sure you want to reject this submission?",
     "rejectSubmissionConfirmationButton": "Yes, reject the submission",
+    "successMessageUpdated": "Submission updated successfully",
+    "successMessageApproved": "Submission approved successfully",
     "searchExistingFacilities": "Search for existing Facility",
     "searchExistingHealthcareProfessionals": "Search for existing Healthcare Professionals",
     "labelModNoteInput": "Moderator Notes",
@@ -305,9 +258,6 @@
   "modDashboardTopbar": {
     "addFacility": "Add Facility",
     "placeholderText": "Enter name or ID to search",
-    "approved": "Approved",
-    "rejected": "Rejected",
-    "forReview": "For Review",
     "healthcareProfessionals": "Healthcare Professionals",
     "facilities": "Facilities",
     "addHealthcareProfessional": "Add Healthcare Professional"
@@ -390,7 +340,6 @@
     "genericErrorMessage": "There was an error submitting your form, please try again",
     "errorCodeMessagingNeeded": "The server error code does not have a message for the user. Please add one."
   },
-  "modHealthcareProfessionalCard": {},
   "modDashboardHealthcareProfessionalCard": {
     "spokenLanguages": "Spoken languages",
     "lastName": "Last name",
@@ -468,6 +417,7 @@
     "newSubmission": "New",
     "underReviewSubmission": "Under Review",
     "approvedSubmission": "Approved",
+    "rejectedSubmission": "已驳回",
     "createdDate": "Created on",
     "updatedDate": "Updated last"
   },
@@ -487,15 +437,9 @@
     "updatedSuccessfully": "Profile updated successfully",
     "updateFailed": "Profile update failed"
   },
-  "authErrors": {},
-  "facilitiesErrors": {},
-  "healthcareProfessionalsErrors": {},
   "localeErrors": {
     "notSpecified": "Not Specified"
   },
-  "locationErrors": {},
-  "moderationSubmissionsErrors": {},
-  "searchResultsErrors": {},
   "themeManager": {
     "colorThemes": "Color Themes"
   },

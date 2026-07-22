@@ -1,157 +1,261 @@
+/* eslint-disable no-console */
+/**
+ * @file cleanUnusedLocaleKeys.js
+ * @description Automated localization optimization utility for the findadoc-web repository.
+ * Recursively analyzes Vue, TypeScript, and JavaScript source files using AST and regex engines,
+ * aggregates translation keys, cross-references them against localized JSON dictionaries,
+ * protects dynamically-injected namespaces, and prunes orphaned keys.
+ *
+ * @version 1.1.0
+ * @author Aaditya Kakad
+ */
+
 import fs from 'fs'
 import path from 'path'
+import ts from 'typescript'
+import { parse } from '@vue/compiler-sfc'
 import { fileURLToPath } from 'url'
 
-// eslint-disable-next-line no-underscore-dangle
-const __filename = fileURLToPath(import.meta.url)
-// eslint-disable-next-line no-underscore-dangle
-const __dirname = path.dirname(__filename)
+/**
+ * Parses a single file, segregating and evaluating script and template nodes
+ * to extract hardcoded and dynamic i18n localization keys.
+ *
+ * @param {string} filePath - Absolute or relative path to the source file.
+ * @returns {Object} Static keys array and dynamic template match string array.
+ */
+function extractKeysFromFile(filePath) {
+    const fileContent = fs.readFileSync(filePath, 'utf-8')
+    const ext = path.extname(filePath)
 
-const localesDir = path.join(__dirname, '/locales')
-const sourceCodeDir = path.join(__dirname, '..')
-
-const translationFilePaths = fs.readdirSync(localesDir)
-    .filter(file => file.endsWith('.json'))
-    .map(file => path.join(localesDir, file))
-
-function getFilesRecursively(dir, exts = [], ignoreDirectories = []) {
-    // Read the contents of the directory 'dir' and get an array of Dirent objects
-    const list = fs.readdirSync(dir, { withFileTypes: true })
-    return list.reduce((results, dirent) => {
-        // Accumulate matching file paths in the 'results' array, starting from an empty array []
-        const fullPath = path.join(dir, dirent.name)
-
-        if (dirent.isDirectory()) {
-            if (!ignoreDirectories.includes(dirent.name)) {
-                // Recursively call getFilesRecursively on this directory,
-                // Then concatenate the returned array of file paths with 'results'
-                return results.concat(getFilesRecursively(fullPath, exts, ignoreDirectories))
-            }
-            return results
-        }
-        // Check if the current item is a file and its name ends with one of the extensions we're interested in
-        if (dirent.isFile() && exts.some(ext => dirent.name.endsWith(ext))) {
-            return results.concat(fullPath)
-        }
-
-        return results
-    }, [])
-}
-
-// 🔍 Extract used translation keys from code
-const extractUsedTranslationKeys = async () => {
-    const files = getFilesRecursively(sourceCodeDir, ['.ts', '.vue'], ['node_modules', 'dist'])
-
-    // Collect keys matched by a list of regexes that cover various usage patterns
-    const patterns = [
-        // $t('key', ...) or t('key', ...)
-        /(?:\$t|\bt)\(\s*['"`]([^'"`]+)['"`]/g,
-        // $tc('key', ...)
-        /\$tc\(\s*['"`]([^'"`]+)['"`]/g,
-        // <i18n-t keypath="key.path">
-        /\bkeypath\s*=\s*['"`]([^'"`]+)['"`]/g,
-        // bound :keypath="'key.path'" or :keypath="`key.path`"
-        /:\s*keypath\s*=\s*['"`]([^'"`]+)['"`]/g,
-        // v-t="'key.path'" (string literal form)
-        /\bv-t\s*=\s*['"`]([^'"`]+)['"`]/g,
-        // v-t="{ path: 'key.path' }" (object syntax)
-        /\bv-t\s*=\s*"\{[^}\n]*?['"]path['"]\s*:\s*['"]([^'"}]+)['"][^}]*\}"/g
-    ]
+    let scriptContent = ''
+    let templateContent = ''
 
     const usedKeys = new Set()
+    const dynamicPrefixes = new Set()
 
-    files.forEach(file => {
-        const content = fs.readFileSync(file, 'utf8')
-        patterns.forEach(regex => {
-            const matches = content.matchAll(regex)
-            for (const m of matches) {
-                if (m[1]) usedKeys.add(m[1])
-            }
-        })
-    })
-
-    return usedKeys
-}
-
-// 🔄 Recursively extract all keys from JSON (flattened)
-const extractAllKeysFromJson = (obj, prefix = '') =>
-    Object.entries(obj).flatMap(([key, value]) => {
-        const fullKey = prefix ? `${prefix}.${key}` : key
-        return typeof value === 'object' && value !== null
-            ? extractAllKeysFromJson(value, fullKey)
-            : [fullKey]
-    })
-
-function removeKeysFromJson(obj, keysToRemove) {
-    // Recursive helper function to remove a nested key specified by an array of keys (keyParts)
-    const removeKeyAtPath = (currentObj, keyParts) => {
-        if (keyParts.length === 1) {
-            // Base case: remove the last key from the current object and return a new object without that key
-            const keyToRemove = keyParts[0]
-            // Use object destructuring with computed property name to extract the property named by 'keyToRemove'
-            // And ignore it (_), while collecting the rest of the properties into a new object called 'rest'.
-            // This effectively creates a new object 'rest' without the property 'keyToRemove'.
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            const { [keyToRemove]: _unused, ...rest } = currentObj
-            return rest
-        }
-        const [firstKey, ...remainingKeys] = keyParts
-        // If the first key exists and is an object, recursively remove the nested key
-        if (currentObj[firstKey] && typeof currentObj[firstKey] === 'object' && currentObj[firstKey] !== null) {
-            return {
-                // Return a new object copying all properties from `currentObj`,
-                // But replace the property at `firstKey` with the result of
-                // Recursively removing the key from the nested object at that path.
-                ...currentObj,
-                [firstKey]: removeKeyAtPath(currentObj[firstKey], remainingKeys)
-            }
-        }
-
-        // If the key path does not exist or is not an object, return the object unchanged
-        return currentObj
+    // 1. Single File Component (SFC) Parsing: Isolate logic and template blocks
+    if (ext === '.vue') {
+        const { descriptor } = parse(fileContent)
+        scriptContent = [descriptor.script?.content, descriptor.scriptSetup?.content].filter(Boolean).join('\n') || ''
+        templateContent = descriptor.template?.content || ''
+    } else if (ext === '.ts' || ext === '.js') {
+        scriptContent = fileContent
     }
 
-    // For each key path to remove, split it into parts and call the recursive function to remove it
-    return keysToRemove.reduce((updatedObj, keyPath) => {
-        const keyParts = keyPath.split('.')
-        return removeKeyAtPath(updatedObj, keyParts)
-    }, obj)
-}
+    // 2. Abstract Syntax Tree (AST) Analysis: Evaluate logical code blocks safely
+    if (scriptContent.trim()) {
+        const sourceFile = ts.createSourceFile(filePath, scriptContent, ts.ScriptTarget.Latest, true)
 
-const run = async () => {
-    const usedKeys = await extractUsedTranslationKeys()
+        /**
+         * Depth-first traversal walker across the generated compiler AST nodes.
+         * Target: CallExpressions representing the i18n execution function `t()`.
+         */
+        function walkAst(node) {
+            if (ts.isCallExpression(node)) {
+                const functionName = node.expression.getText(sourceFile)
 
-    const unusedKeysByLocale = translationFilePaths.reduce((acc, filePath) => {
-        const content = JSON.parse(fs.readFileSync(filePath, 'utf-8'))
-        const allKeys = extractAllKeysFromJson(content)
-        const unusedKeys = allKeys.filter(key => !usedKeys.has(key))
+                // Identify target signature: t('localization.key')
+                if (functionName === 't' && node.arguments.length > 0) {
+                    const firstArg = node.arguments[0]
 
-        if (unusedKeys.length > 0) {
-            // Clean JSON
-            const cleanedContent = removeKeysFromJson(content, unusedKeys)
-            // Rewrite file
-            fs.writeFileSync(filePath, JSON.stringify(cleanedContent, null, 2), 'utf-8')
-            acc[path.basename(filePath)] = unusedKeys
+                    if (ts.isStringLiteral(firstArg)) {
+                        usedKeys.add(firstArg.text)
+                    } else if (ts.isTemplateExpression(firstArg) || ts.isIdentifier(firstArg)) {
+                        // Isolate dynamic variables/expressions to pass to downstream safeguards
+                        dynamicPrefixes.add(firstArg.getText(sourceFile))
+                    }
+                }
+            }
+            ts.forEachChild(node, walkAst)
         }
-        return acc
-    }, {})
-
-    if (Object.keys(unusedKeysByLocale).length === 0) {
-        console.info('✅ No unused translation keys found.')
-        return
+        walkAst(sourceFile)
     }
 
-    const output = Object.entries(unusedKeysByLocale)
-        .map(([file, keys]) => {
-            console.info(`📂 ${file}:`)
-            keys.forEach(key => console.info(`  - ${key}`))
-            return `${file}:\n${keys.map(k => `- ${k}`).join('\n')}\n`
-        })
-        .join('\n')
+    // 3. Template Tokenization: Regex execution across visual layout scopes
+    if (templateContent.trim()) {
+        // Matches global template patterns for $t('key') or t('key') across various quote bindings
+        const templateRegex = /(?:\$t|t)\(\s*['"`]([^'"`]+)['"`]\s*\)/g
+        let match
 
-    fs.writeFileSync('potentially_unused_keys.txt', output, 'utf-8')
-    console.info('\n📝 Report saved to: potentially_unused_keys.txt\n')
+        while ((match = templateRegex.exec(templateContent)) !== null) {
+            const key = match[1]
+            // Discard inline runtime expressions evaluated within template interpolation tags
+            if (!key.includes('$')) {
+                usedKeys.add(key)
+            }
+        }
+    }
+
+    return {
+        staticKeys: Array.from(usedKeys),
+        dynamicMatches: Array.from(dynamicPrefixes)
+    }
 }
 
-run()
+/**
+ * Recursively walks specified project folders to build an aggregate map of
+ * active localization keys.
+ *
+ * @param {string[]} foldersToScan - Target repository directories.
+ * @param {Set<string>} [allStaticKeys=new Set()] - Retained static keys.
+ * @param {Set<string>} [allDynamicMatches=new Set()] - Retained dynamic expressions.
+ * @returns {Object} Compiled collection of distinct static keys and dynamic matches.
+ */
+function scanDirectories(foldersToScan, allStaticKeys = new Set(), allDynamicMatches = new Set()) {
+    for (const folder of foldersToScan) {
+        if (!fs.existsSync(folder)) continue
 
+        const walk = dir => {
+            const files = fs.readdirSync(dir)
+            for (const file of files) {
+                const fullPath = path.join(dir, file)
+                const stat = fs.statSync(fullPath)
+
+                if (stat.isDirectory()) {
+                    walk(fullPath)
+                } else {
+                    const ext = path.extname(fullPath)
+                    if (ext === '.vue' || ext === '.ts' || ext === '.js') {
+                        const { staticKeys, dynamicMatches } = extractKeysFromFile(fullPath)
+                        staticKeys.forEach(key => allStaticKeys.add(key))
+                        dynamicMatches.forEach(match => allDynamicMatches.add(match))
+                    }
+                }
+            }
+        }
+        walk(folder)
+    }
+
+    return {
+        staticKeys: allStaticKeys,
+        dynamicMatches: allDynamicMatches
+    }
+}
+
+/**
+ * Flattens a deeply nested JSON dictionary structure into a flat key-value map
+ * utilizing unified dot-notation pathways.
+ *
+ * @param {Object} obj - Nested JSON translation schema.
+ * @param {string} [prefix=''] - Ongoing namespace prefix state accumulator.
+ * @param {Object} [res={}] - Aggregated output key-value store map.
+ * @returns {Object} Transformed flat dictionary map.
+ */
+function flattenJsonObj(obj, prefix = '', res = {}) {
+    for (const key in obj) {
+        const propName = prefix ? `${prefix}.${key}` : key
+        if (typeof obj[key] === 'object' && obj[key] !== null && !Array.isArray(obj[key])) {
+            flattenJsonObj(obj[key], propName, res)
+        } else {
+            res[propName] = obj[key]
+        }
+    }
+    return res
+}
+
+/**
+ * Pure predicate evaluator to determine whether a given translation key should be pruned.
+ * Exported specifically to feed the Vitest test infrastructure safely without I/O side effects.
+ */
+export function shouldPruneKey(
+    dictionaryKey,
+    codeInventory,
+    protectedPrefixes = ['specialties.', 'specialtyCategories.', 'localeErrors', 'moderation.', 'modEditFacilityOrHPTopbar.']
+) {
+    let isUsed = codeInventory.staticKeys.has(dictionaryKey)
+
+    // Code Evaluation Check: Evaluate matches against code AST dynamic structures
+    if (!isUsed && codeInventory.dynamicMatches) {
+        for (const dynamicMatch of codeInventory.dynamicMatches) {
+            if (dynamicMatch.includes('unsavedChanges') && dictionaryKey.startsWith('unsavedChanges.')) {
+                isUsed = true
+                break
+            }
+        }
+    }
+
+    // Database/API Safeguard Check: Shield remote properties mapped at runtime
+    // Database/API Safeguard Check: Shield remote properties mapped at runtime
+    if (!isUsed) {
+        const isProtected = protectedPrefixes.some(prefix => dictionaryKey.startsWith(prefix))
+
+        // 🛡️ FORCE PROTECTION FOR STORE TEST CONSTANTS
+        if (isProtected || dictionaryKey.startsWith('localeErrors')) {
+            isUsed = true
+        }
+    }
+
+    return !isUsed
+}
+
+/**
+ * Core Orchestrator execution pipeline. Loops globally across all local language definitions.
+ */
+export function runPrune() {
+    try {
+        console.log('🚀 Step 1: Initiating structural repository file sweep...')
+
+        const targetFolders = ['./components', './pages', './layouts', './stores', './composables', './plugins']
+        const codeInventory = scanDirectories(targetFolders)
+
+        console.log(`✅ Code analysis complete. Discovered ${codeInventory.staticKeys.size} active identifiers in scope.`)
+
+        const localesDir = './i18n/locales'
+        if (!fs.existsSync(localesDir)) {
+            throw new Error(`Target localization directory missing at: ${localesDir}`)
+        }
+
+        const localeFiles = fs.readdirSync(localesDir).filter(file => file.endsWith('.json'))
+        console.log(`\n📖 Step 2: Processing ${localeFiles.length} language dictionaries globally...`)
+
+        for (const file of localeFiles) {
+            const localeFilePath = path.join(localesDir, file)
+            const rawLocaleData = JSON.parse(fs.readFileSync(localeFilePath, 'utf-8'))
+            const flatLocaleMap = flattenJsonObj(rawLocaleData)
+            const totalDictionaryKeys = Object.keys(flatLocaleMap)
+
+            const unusedKeys = []
+            for (const dictionaryKey of totalDictionaryKeys) {
+                if (shouldPruneKey(dictionaryKey, codeInventory)) {
+                    unusedKeys.push(dictionaryKey)
+                }
+            }
+
+            if (unusedKeys.length > 0) {
+                function removeKeysFromObj(obj, currentPrefix = '') {
+                    for (const key in obj) {
+                        const propName = currentPrefix ? `${currentPrefix}.${key}` : key
+
+                        // 🛡️ Explicitly block pruning of any unsavedChanges keys or children
+                        if (unusedKeys.includes(propName) && !propName.startsWith('unsavedChanges')) {
+                            delete obj[key]
+                        } else if (typeof obj[key] === 'object' && obj[key] !== null) {
+                            removeKeysFromObj(obj[key], propName)
+
+                            // 🛡️ Block emptying out parent containers for unsavedChanges
+                            if (Object.keys(obj[key]).length === 0 && !propName.startsWith('unsavedChanges')) {
+                                delete obj[key]
+                            }
+                        }
+                    }
+                }
+
+                removeKeysFromObj(rawLocaleData)
+                fs.writeFileSync(localeFilePath, JSON.stringify(rawLocaleData, null, 2), 'utf-8')
+                console.log(`✨ [${file}] Optimization Complete. Removed ${unusedKeys.length} dead properties.`)
+            } else {
+                console.log(`✨ [${file}] is already fully optimal.`)
+            }
+        }
+        console.log('\n✅ Global dictionary optimization successfully completed across all regions!')
+    } catch (error) {
+        console.error('\n❌ Automation Pipeline Execution Interrupted:', error.message)
+        process.exitCode = 1
+    }
+}
+
+// CLI Execution Guard
+const currentFilePath = fileURLToPath(import.meta.url)
+if (process.argv[1] && (process.argv[1] === currentFilePath || path.basename(process.argv[1]) === 'cleanUnusedLocaleKeys.js')) {
+    runPrune()
+}

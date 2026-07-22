@@ -114,7 +114,11 @@
                 <div
                     v-for="(nameLocale, index) in healthcareProfessionalsStore.createHealthcareProfessionalSectionFields.names"
                     :key="`${nameLocale.firstName}-${nameLocale.lastName}-${index}`"
+                    role="button"
+                    tabindex="0"
                     @click="() => setChosenLocaleNameInput(index)"
+                    @keydown.enter="() => setChosenLocaleNameInput(index)"
+                    @keydown.space.prevent="() => setChosenLocaleNameInput(index)"
                 >
                     <ModDashboardHealthProfessionalCard
                         :healthcare-professional="{} as HealthcareProfessional"
@@ -383,29 +387,25 @@ const autofillNameLocaleInputWithChosenHealthcareProfessional = (localizedNameIn
 const setChosenLocaleNameInput = (index: number) => {
     chosenLocaleIndex.value = index
 
+    const namesList = healthcareProfessionalsStore.createHealthcareProfessionalSectionFields.names
     //This will keep track of the healthcare professional to not lose it but we can swap it later with the chosen one
-    const tempToHoldZeroIndexedHealthcareProfessionalToSwap
-        = healthcareProfessionalsStore.createHealthcareProfessionalSectionFields.names[0]
+    const tempToHoldZeroIndexedHealthcareProfessionalToSwap = namesList[0]
 
     //This finds the chosen healthcare professional to edit
-    chosenHealthcareProfessionalToEdit.value
-        = healthcareProfessionalsStore.createHealthcareProfessionalSectionFields
-            .names.find((_, index) => index === chosenLocaleIndex.value)
+    const foundName = namesList.find((_, idx) => idx === index)
+    chosenHealthcareProfessionalToEdit.value = foundName
 
-    if (chosenHealthcareProfessionalToEdit.value) {
-        healthcareProfessionalsStore.createHealthcareProfessionalSectionFields.names[0]
-            = chosenHealthcareProfessionalToEdit.value
-            // Put the temp one in the index where the old locale name was
-        healthcareProfessionalsStore.createHealthcareProfessionalSectionFields.names[chosenLocaleIndex.value]
-            = tempToHoldZeroIndexedHealthcareProfessionalToSwap
+    if (foundName && tempToHoldZeroIndexedHealthcareProfessionalToSwap) {
+        namesList[0] = foundName
+        // Put the temp one in the index where the old locale name was
+        namesList[index] = tempToHoldZeroIndexedHealthcareProfessionalToSwap
 
         //Autofill with the chosen healthcare professional locale name
-        autofillNameLocaleInputWithChosenHealthcareProfessional(chosenHealthcareProfessionalToEdit.value)
+        autofillNameLocaleInputWithChosenHealthcareProfessional(foundName)
         // Set the chosenLocaleIndex to 0 so the correct pencil is showing
         chosenLocaleIndex.value = 0
     }
 }
-
 const handleUpdateExistingName = () => {
     const localizedNameToAdd: LocalizedNameInput = {
         firstName: nameLocaleInputs.firstName,

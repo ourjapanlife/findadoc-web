@@ -3,7 +3,7 @@
         <div class="facility-hp-topbar-actions flex justify p-2 font-bold ">
             <button
                 type="button"
-                :class="[buttonBaseClass, buttonPrimaryClass, 'w-28 text-lg mr-2']"
+                :class="[buttonBaseClass, buttonPrimaryClass, buttonPaddingClass, 'text-lg mr-2']"
                 data-testid="mod-create-facility-hp-topbar-create"
                 @click="createFacilityOrHealthcareProfessional"
             >
@@ -13,7 +13,7 @@
             </button>
             <button
                 type="button"
-                :class="[buttonBaseClass, buttonOutlineClass, 'w-28 text-lg mr-2']"
+                :class="[buttonBaseClass, buttonOutlineClass, buttonPaddingClass, 'text-lg mr-2']"
                 data-testid="mod-create-facility-hp-topbar-exit"
                 @click="openExitConfirmation"
             >
@@ -80,6 +80,7 @@ const toast = useToast()
 
 const { t } = useI18n()
 const buttonBaseClass = 'inline-flex justify-center items-center rounded-full border-2 font-bold'
+const buttonPaddingClass = 'px-5 py-2 whitespace-nowrap'
 const buttonOutlineClass = 'bg-secondary-bg border-primary-text-muted text-primary-text hover:bg-accent-bg/20'
 const buttonPrimaryClass = 'bg-primary border-primary text-primary-text-inverted hover:bg-primary-hover'
 const buttonDangerFilledClass = 'bg-error border-error text-primary-text-inverted hover:opacity-90'

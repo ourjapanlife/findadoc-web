@@ -89,10 +89,14 @@
                             class="flex flex-col gap-6 px-4 mt-6 mb-1"
                         >
                             <!-- Home Link -->
-                            <NuxtLink to="/">
+                            <NuxtLink
+                                to="/"
+                                @click="handleHomeClick"
+                            >
                                 <div
                                     class="text-primary"
                                     @click="closeMenu()"
+                                    @keydown.enter="closeMenu()"
                                 >
                                     {{ t('topNav.home') }}
                                 </div>
@@ -102,6 +106,7 @@
                                 <div
                                     class="text-primary"
                                     @click="closeMenu()"
+                                    @keydown.enter="closeMenu()"
                                 >
                                     {{ t('hamburgerMenu.about') }}
                                 </div>
@@ -114,6 +119,7 @@
                                 <div
                                     class="text-primary"
                                     @click="closeMenu()"
+                                    @keydown.enter="closeMenu()"
                                 >
                                     {{ t('hamburgerMenu.contact') }}
                                 </div>
@@ -123,6 +129,7 @@
                                 <div
                                     class="text-primary"
                                     @click="closeMenu()"
+                                    @keydown.enter="closeMenu()"
                                 >
                                     {{ t('hamburgerMenu.submit') }}
                                 </div>
@@ -176,7 +183,7 @@
                                 class="text-primary"
                             >
                                 <NuxtLink
-                                    to="/login"
+                                    :to="loginRoute"
                                     @click="closeMenu()"
                                 >
                                     {{ t('hamburgerMenu.login') }}
@@ -206,6 +213,7 @@
                                             <span
                                                 class="text-primary-text"
                                                 @click="closeMenu()"
+                                                @keydown.enter="closeMenu()"
                                             >
                                                 {{ t('footer.terms') }}
                                             </span>
@@ -217,6 +225,7 @@
                                             <span
                                                 class="text-primary-text"
                                                 @click="closeMenu()"
+                                                @keydown.enter="closeMenu()"
                                             >
                                                 {{ t('footer.privacy') }}
                                             </span>
@@ -306,7 +315,7 @@
 
 <script lang="ts" setup>
 import { useToast } from 'vue-toastification'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { ref } from 'vue'
 import { vCloseOnOutsideClick } from '~/composables/closeOnOutsideClick'
 import SVGHamburgerMenuIcon from '~/assets/icons/hamburger-menu.svg'
@@ -314,13 +323,24 @@ import SVGGithubIcon from '~/assets/icons/social-github.svg'
 import SVGUserIcon from '~/assets/icons/user-icon.svg'
 import SVGSignOutIcon from '~/assets/icons/sign-out-icon.svg'
 import { useAuthStore } from '~/stores/authStore'
+import { buildLoginRoute, resolveAuthReturnPath } from '~/utils/auth0Config'
+import { useModerationScreenStore } from '~/stores/moderationScreenStore'
+import { useModerationSubmissionUnsavedStore } from '~/stores/moderationSubmissionUnsavedStore'
+import { isMyPageFormRoute, leaveToAppHome } from '~/utils/moderationUtils'
 
 const authStore = useAuthStore()
+const moderationScreenStore = useModerationScreenStore()
+const moderationSubmissionUnsavedStore = useModerationSubmissionUnsavedStore()
+const modalStore = useModalStore()
 const toast = useToast()
 const router = useRouter()
+const route = useRoute()
 const { t } = useI18n()
 
 const isMenuOpen = ref(false)
+const loginRoute = computed(() => buildLoginRoute(
+    route.path === '/login' ? resolveAuthReturnPath(route.fullPath) : route.fullPath
+))
 
 function openMenu() {
     isMenuOpen.value = true
@@ -328,6 +348,18 @@ function openMenu() {
 
 function closeMenu() {
     isMenuOpen.value = false
+}
+
+function handleHomeClick(event: MouseEvent) {
+    closeMenu()
+
+    if (!isMyPageFormRoute(route.path)) {
+        return
+    }
+
+    event.preventDefault()
+    moderationSubmissionUnsavedStore.runLeaveOr(() =>
+        leaveToAppHome(router, moderationScreenStore, modalStore))
 }
 
 async function logout() {

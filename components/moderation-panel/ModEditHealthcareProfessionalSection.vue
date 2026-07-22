@@ -123,7 +123,11 @@
                     <div
                         v-for="(nameLocale, index) in hpStore.healthcareProfessionalSectionFields.names"
                         :key="`${nameLocale.firstName}-${nameLocale.lastName}-${index}`"
+                        role="button"
+                        tabindex="0"
                         @click="() => setChosenLocaleNameInput(index)"
+                        @keydown.enter="() => setChosenLocaleNameInput(index)"
+                        @keydown.space.prevent="() => setChosenLocaleNameInput(index)"
                     >
                         <ModDashboardHealthProfessionalCard
                             :healthcare-professional="hpStore.healthcareProfessionalSectionFields"
@@ -289,25 +293,23 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, nextTick, onBeforeMount, reactive, ref, watch, type Ref } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { computed, nextTick, onBeforeMount, onUnmounted, reactive, ref, watch, type Ref } from 'vue'
+import { useRoute } from 'vue-router'
 import { useToast } from 'vue-toastification'
 import { useHealthcareProfessionalsStore } from '~/stores/healthcareProfessionalsStore'
 import { useFacilitiesStore } from '~/stores/facilitiesStore'
-import { useModerationScreenStore, ModerationScreen } from '~/stores/moderationScreenStore'
+import { useModerationScreenStore } from '~/stores/moderationScreenStore'
 import { useLocaleStore } from '~/stores/localeStore'
 import { Insurance, Locale, Degree, Specialty, type LocalizedNameInput, type Facility } from '~/typedefs/gqlTypes'
 import { useI18n } from '#imports'
 import { validateNameLocaleMatchesLanguage } from '~/utils/formValidations'
 import { stableStringify } from '~/utils/stableStringify'
 import { filterByCaseInsensitiveIncludes, matchesFacilitySearch } from '~/utils/moderationSearchUtils'
-
-import { useModerationSubmissionsStore } from '~/stores/moderationSubmissionsStore'
+import { useModerationSubmissionUnsavedStore } from '~/stores/moderationSubmissionUnsavedStore'
 // Keeps track of if the search bar inputs have been autofilled with existing facilities
 
 const toast = useToast()
 const route = useRoute()
-const router = useRouter()
 const { t } = useI18n()
 
 const loadingStore = useLoadingStore()
@@ -338,13 +340,10 @@ const selectedFacilitiesModel = computed({
 
 const hpFormState = computed(() =>
     JSON.parse(stableStringify(hpStore.healthcareProfessionalSectionFields)))
-const { makeNonDirty: makeHpFormNonDirty } = useUnsavedChanges({
+const moderationSubmissionUnsavedStore = useModerationSubmissionUnsavedStore()
+const { makeNonDirty: makeHpFormNonDirty, tryLeave: tryLeaveHpForm } = useUnsavedChanges({
     data: { source: hpFormState },
-    mode: 'update',
-    onClose: () => {
-        moderationScreenStore.setActiveScreen(ModerationScreen.Dashboard)
-        router.push('/my-page?view=healthcare-professionals')
-    }
+    mode: 'update'
 })
 
 watch(
@@ -431,15 +430,14 @@ const setChosenLocaleNameInput = (index: number) => {
 
     //This finds the chosen healthcare professional to edit
     chosenHealthcareProfessionalToEdit.value
-        = hpStore.healthcareProfessionalSectionFields.names.find((_, index) =>
-            index === chosenLocaleIndex.value)
+        = hpStore.healthcareProfessionalSectionFields.names.find((_, idx) => idx === index)
 
     const chosen = chosenHealthcareProfessionalToEdit.value
-    if (chosen && tempToHoldZeroIndexedHealthcareProfessionalToSwap !== undefined) {
+    if (chosen && tempToHoldZeroIndexedHealthcareProfessionalToSwap) {
         //Set the chosen healthcare professional name to move it closer to the input
         hpStore.healthcareProfessionalSectionFields.names[0] = chosen
         // Put the temp one in the index where the old locale name was
-        hpStore.healthcareProfessionalSectionFields.names[chosenLocaleIndex.value]
+        hpStore.healthcareProfessionalSectionFields.names[index]
             = tempToHoldZeroIndexedHealthcareProfessionalToSwap
         //Autofill with the chosen healthcare professional locale name
         autofillNameLocaleInputWithChosenHealthcareProfessional(chosen)
@@ -637,6 +635,7 @@ onBeforeMount(async () => {
 
     isHealthcareProfessionalInitialized.value = true
     makeHpFormNonDirty()
+    moderationSubmissionUnsavedStore.registerEditFormTryLeave(tryLeaveHpForm)
     loadingStore.setIsLoading(false)
 
     await nextTick()
@@ -647,5 +646,9 @@ watch(nameLocaleInputs, () => {
         hpStore.healthcareProfessionalUpdatedNames.push('locale')
     }
     console.log(useHealthcareProfessionalsStore().healthcareProfessionalUpdatedNames)
+})
+
+onUnmounted(() => {
+    moderationSubmissionUnsavedStore.registerEditFormTryLeave(null)
 })
 </script>

@@ -27,7 +27,7 @@ export default defineNuxtPlugin({
             const submissionUnsavedStore = useModerationSubmissionUnsavedStore(nuxtApp.$pinia)
 
             nuxtApp.$router.beforeEach(() => {
-                if (!isGloballyDirty.value && !submissionUnsavedStore.isEditSubmissionFormDirty) return true
+                if (!isGloballyDirty.value) return true
 
                 return new Promise<boolean>(resolve => {
                     const message = nuxtApp.$i18n?.t('modEditFacilityOrHPTopbar.hasUnsavedChanges')
@@ -37,7 +37,11 @@ export default defineNuxtPlugin({
                         resolve(true)
                         return
                     }
-                    confirm(() => resolve(true), {
+                    confirm(() => {
+                        activeDirtyIds.clear()
+                        submissionUnsavedStore.setEditSubmissionFormDirty(false)
+                        resolve(true)
+                    }, {
                         mode: confirmationMode.value,
                         onCancel: () => resolve(false),
                         message
@@ -53,7 +57,8 @@ export default defineNuxtPlugin({
             provide: {
                 unsavedChangesRegistry: {
                     register: (id: symbol, mode: 'create' | 'update') => activeDirtyIds.set(id, mode),
-                    unregister: (id: symbol) => activeDirtyIds.delete(id)
+                    unregister: (id: symbol) => activeDirtyIds.delete(id),
+                    clearAll: () => activeDirtyIds.clear()
                 }
             }
         }

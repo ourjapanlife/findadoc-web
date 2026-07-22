@@ -35,7 +35,11 @@
                     >
                         <div
                             class="cursor-pointer"
+                            role="button"
+                            tabindex="0"
                             @click="() => addHealthcareProfessional(healthcareProfessional.id)"
+                            @keydown.enter="() => addHealthcareProfessional(healthcareProfessional.id)"
+                            @keydown.space.prevent="() => addHealthcareProfessional(healthcareProfessional.id)"
                         >
                             <div class="font-bold">
                                 <span
