@@ -1,6 +1,6 @@
 import type { Maybe } from 'graphql/jsutils/Maybe'
 import { defineStore } from 'pinia'
-import { reactive, ref, type Ref, computed, type Reactive } from 'vue'
+import { reactive, ref, type Ref, computed } from 'vue'
 import { gql } from 'graphql-request'
 import { fetchHealthcareProfessionalsWithCount } from '../utils/graphqlHelpers'
 import { type Insurance,
@@ -172,8 +172,6 @@ export const useHealthcareProfessionalsStore = defineStore(
                 }
             }
 
-            console.log(updateHealthcareProfessionalGqlMutation())
-
             const currentFacilityIds = currentProfessionalData.facilityIds ?? []
             const nextFacilityIds = healthcareProfessionalSectionFields.facilityIds ?? []
             const changedFacilityIds = Array.from(new Set([...currentFacilityIds, ...nextFacilityIds]))
@@ -219,58 +217,15 @@ export const useHealthcareProfessionalsStore = defineStore(
                 }
             }
 
-            const updateInput = () => {
-                const hpFields = Array.from(useHealthcareProfessionalsStore().healthcareProfessionalUpdatedFields)
-                const healthcareArgsObject = {
-                    id: currentProfessionalData.id,
-                    input: {
-                        acceptedInsurance: [],
-                        additionalInfoForPatients: '',
-                        degrees: [],
-                        facilityIds: [],
-                        names: [],
-                        specialties: [],
-                        spokenLanguages: []
-                    } as UpdateHealthcareProfessionalInput
-                } as MutationUpdateHealthcareProfessionalArgs
-
-                console.log(selectedHealthcareProfessionalId.value)
-                console.log(healthcareArgsObject)
-
-                for (const field of hpFields) {
-                    // healthcareArgsObject[field] = hpFields[field]
-
-                    if (field === 'acceptedInsurance') {
-                        healthcareArgsObject.input.acceptedInsurance = Array.from(healthcareProfessionalSectionFields.acceptedInsurance)
-                        console.log('Found accepted insurance!')
-                    }
-                    if (field === 'additionalInfoForPatients') {
-                        healthcareArgsObject.input.additionalInfoForPatients = healthcareProfessionalSectionFields.additionalInfoForPatients
-                    }
-                    if (field === 'degrees') {
-                        healthcareArgsObject.input.degrees = Array.from(healthcareProfessionalSectionFields.degrees)
-                        console.log('Found degrees!')
-                    }
-                    if (field === 'names') {
-                        healthcareArgsObject.input.names = Array.from(healthcareProfessionalSectionFields.names)
-                        console.log('Found names! ')
-                        console.log(healthcareArgsObject.input.names)
-                    }
-                    if (field === 'specialties') {
-                        healthcareArgsObject.input.specialties = Array.from(healthcareProfessionalSectionFields.specialties)
-                    }
-                    if (field === 'spokenLanguages') {
-                        healthcareArgsObject.input.spokenLanguages = Array.from(healthcareProfessionalSectionFields.spokenLanguages)
-                    }
-                }
-                console.log(healthcareArgsObject)
-                return healthcareArgsObject
+            const updateInput: MutationUpdateHealthcareProfessionalArgs = {
+                id: selectedHealthcareProfessionalId.value,
+                input: patch
             }
 
             const serverResponse = await graphQLClientRequestWithRetry<Mutation>(
                 gqlClient.request.bind(gqlClient),
                 updateHealthcareProfessionalGqlMutation(),
-                updateInput()
+                updateInput
             )
 
             const responseData = serverResponse.data?.updateHealthcareProfessional

@@ -149,7 +149,7 @@
                 <h2
                     :id="ModHealthcareProfessionalsLeftNavbarSections.HealthcareProfessionalMedicalInfo"
                     class="mod-healthcare-professional-section
-                     my-3.5 text-start text-primary-text text-2xl font-bold font-sans leading-normal"
+                    my-3.5 text-start text-primary-text text-2xl font-bold font-sans leading-normal"
                 >
                     {{ t('modHealthcareProfessionalSection.healthcareProfessionalMedicalInfoHeading') }}
                 </h2>
@@ -254,7 +254,7 @@
                     </li>
                 </ol>
                 <NoteInputField
-                    v-model="hpStore.healthcareProfessionalSectionFields.additionalInfoForPatients as Array"
+                    v-model="hpStore.healthcareProfessionalSectionFields.additionalInfoForPatients as string"
                     :label="t('modHealthcareProfessionalSection.labelAdditionalNotesForPatients')"
                     :placeholder="t('modHealthcareProfessionalSection.placeholderAdditionalNotesForPatients')"
                     :required="false"
@@ -265,7 +265,7 @@
                 <h2
                     :id="ModHealthcareProfessionalsLeftNavbarSections.HealthcareProfessionalFacilities"
                     class="mod-healthcare-professional-section
-                 my-3.5 text-start text-primary-text text-2xl font-bold font-sans leading-normal"
+                my-3.5 text-start text-primary-text text-2xl font-bold font-sans leading-normal"
                 >
                     {{ t("modHealthcareProfessionalSection.facilities") }}
                 </h2>
@@ -595,7 +595,6 @@ function notesUpdated() {
         hpStore.healthcareProfessionalUpdatedFields.push('additionalInfoForPatients')
         notesUpdateValue = true
     }
-    console.log(hpStore.healthcareProfessionalSectionFields.names)
 }
 
 const facilitiesFieldsToDisplayCallback = (item: Facility) => [item.nameEn, item.nameJa]
@@ -645,7 +644,6 @@ watch(nameLocaleInputs, () => {
     if (!hpStore.healthcareProfessionalUpdatedNames.find(entry => entry === 'locale')) {
         hpStore.healthcareProfessionalUpdatedNames.push('locale')
     }
-    console.log(useHealthcareProfessionalsStore().healthcareProfessionalUpdatedNames)
 })
 
 onUnmounted(() => {

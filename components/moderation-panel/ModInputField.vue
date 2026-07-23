@@ -84,11 +84,7 @@ watch(
                 hpStore.healthcareProfessionalUpdatedFields.push('names')
             }
             hpNamesForUpdating.push(name)
-
-            console.log(hpNamesForUpdating)
         }
-        console.log('Names are here: ')
-        console.log(hpNamesForUpdating)
     }
 )
 </script>
