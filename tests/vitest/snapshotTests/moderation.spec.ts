@@ -16,6 +16,14 @@ vi.mock('~/stores/authStore', () => ({
     useAuthStore: () => mockAuthStore
 }))
 
+const { mockRouter } = vi.hoisted(() => ({
+    mockRouter: {
+        push: vi.fn(),
+        replace: vi.fn(),
+        back: vi.fn()
+    }
+}))
+
 vi.mock('vue-router', () => ({
     useRoute: () => ({
         path: '/moderation',
@@ -23,7 +31,8 @@ vi.mock('vue-router', () => ({
         query: {
             view: 'submissions'
         }
-    })
+    }),
+    useRouter: () => mockRouter
 }))
 
 const i18n = createI18n({
