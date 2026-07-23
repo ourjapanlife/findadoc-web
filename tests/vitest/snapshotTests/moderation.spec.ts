@@ -3,12 +3,14 @@ import { mount } from '@vue/test-utils'
 import { createI18n } from 'vue-i18n'
 import Moderation from '~/pages/moderation.vue'
 
-const mockAuthStore = {
-    isTestingMode: true,
-    isLoggedIn: true,
-    isLoadingAuth: false,
-    redirectIfUnauthenticatedUser: vi.fn()
-}
+const { mockAuthStore } = vi.hoisted(() => ({
+    mockAuthStore: {
+        isTestingMode: true,
+        isLoggedIn: true,
+        isLoadingAuth: false,
+        redirectIfUnauthenticatedUser: vi.fn()
+    }
+}))
 
 vi.mock('~/stores/authStore', () => ({
     useAuthStore: () => mockAuthStore
