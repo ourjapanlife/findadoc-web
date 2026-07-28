@@ -38,6 +38,23 @@ const validationCheckedPreviously: Ref<boolean> = ref(false)
 
 const model = defineModel<string>()
 
+function convertNumbers() {
+    const fullToHalfwidthMap = {
+        '０': '0',
+        '１': '1',
+        '２': '2',
+        '３': '3',
+        '４': '4',
+        '５': '5',
+        '６': '6',
+        '７': '7',
+        '８': '8',
+        '９': '9'
+    }
+
+    model.value = model.value.replace(/[０-９]/g, number => fullToHalfwidthMap[number])
+}
+
 const props = defineProps({
     label: {
         type: String,
@@ -71,6 +88,7 @@ watch(
         if (validationCheckedPreviously.value && props.inputValidationCheck) {
             isTheInputValueValid.value = props.inputValidationCheck(model.value)
         }
+        convertNumbers()
     }
 )
 </script>
