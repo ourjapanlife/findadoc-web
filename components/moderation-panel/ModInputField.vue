@@ -30,6 +30,7 @@
 <script setup lang="ts">
 import { ref, type Ref, watch, nextTick } from 'vue'
 import { useI18n } from '#imports'
+import { convertNumbers } from '~/utils/facilitiesUtils'
 
 const { t } = useI18n()
 
@@ -37,23 +38,6 @@ const isTheInputValueValid: Ref<boolean> = ref(true)
 const validationCheckedPreviously: Ref<boolean> = ref(false)
 
 const model = defineModel<string>()
-
-function convertNumbers() {
-    const fullToHalfwidthMap = {
-        '０': '0',
-        '１': '1',
-        '２': '2',
-        '３': '3',
-        '４': '4',
-        '５': '5',
-        '６': '6',
-        '７': '7',
-        '８': '8',
-        '９': '9'
-    }
-
-    model.value = model.value.replace(/[０-９]/g, number => fullToHalfwidthMap[number])
-}
 
 const props = defineProps({
     label: {
@@ -64,8 +48,11 @@ const props = defineProps({
     placeholder: String,
     required: Boolean,
     invalidInputErrorMessage: String,
-    inputValidationCheck: Function
+    inputValidationCheck: Function,
+    numberConverter: Boolean
 })
+
+// console.log(convertNumbers('２５'))
 
 const labelsToOnlyValidateOnBlur = [
     t('modSubmissionForm.labelHealthcareProfessionalLastName'),
@@ -88,7 +75,9 @@ watch(
         if (validationCheckedPreviously.value && props.inputValidationCheck) {
             isTheInputValueValid.value = props.inputValidationCheck(model.value)
         }
-        convertNumbers()
+        if (props.numberConverter) {
+            model.value = convertNumbers(model.value)
+        }
     }
 )
 </script>
