@@ -114,7 +114,12 @@ export const convertNumbers = (form) => {
         '９': '9'
     }
 
+    // form = form.replace(/ー/g, '-')
+
     form = form.replace(/ー/g, '-')
+        .replace(/−/g, '-')
+        .replace(/–/g, '-')
+        .replace(/—/g, '-')
 
     return form.replace(/[０-９]/g, number => fullToHalfwidthMap[number])
 }
