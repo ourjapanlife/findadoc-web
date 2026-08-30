@@ -46,60 +46,49 @@ export default defineNuxtConfig({
                 },
                 { charset: 'utf-8' },
                 { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-                { hid: 'description', name: 'description', content: SITE_DESCRIPTION },
+                { name: 'description', content: SITE_DESCRIPTION },
                 { name: 'format-detection', content: 'telephone=no' },
                 {
-                    hid: 'twitter:card',
                     name: 'twitter:card',
                     content: 'summary'
                 },
                 {
-                    hid: 'twitter:title',
                     name: 'twitter:title',
                     content: SITE_TITLE
                 },
                 {
-                    hid: 'twitter:description',
                     name: 'twitter:description',
                     content: SITE_DESCRIPTION
                 },
                 {
-                    hid: 'twitter:image',
                     name: 'twitter:image',
                     content: 'https://www.findadoc.jp/findadoc-social.png'
                 },
                 {
-                    hid: 'twitter:image:alt',
                     name: 'twitter:image:alt',
                     content: SITE_TITLE
                 },
                 {
-                    hid: 'og:title',
                     property: 'og:title',
                     content: SITE_TITLE
                 },
                 {
-                    hid: 'og:description',
                     property: 'og:description',
                     content: SITE_DESCRIPTION
                 },
                 {
-                    hid: 'og:image',
                     property: 'og:image',
                     content: 'https://www.findadoc.jp/findadoc-social.png'
                 },
                 {
-                    hid: 'og:image:secure_url',
                     property: 'og:image:secure_url',
                     content: 'https://www.findadoc.jp/findadoc-social.png'
                 },
                 {
-                    hid: 'og:image:alt',
                     property: 'og:image:alt',
                     content: SITE_TITLE
                 },
                 {
-                    hid: 'og:url',
                     property: 'og:url',
                     content: 'https://www.findadoc.jp'
                 }
