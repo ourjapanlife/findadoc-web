@@ -4,10 +4,11 @@ export const AUTH0_API_AUDIENCE = 'findadoc'
 const LOGIN_PATH = '/login'
 export const AUTH_RETURN_TO_QUERY = 'returnTo'
 
-export function getAuth0AuthorizationParams(redirectUri = window.location.origin) {
+export function getAuth0AuthorizationParams(redirectUri?: string) {
     return {
         audience: AUTH0_API_AUDIENCE,
-        redirect_uri: redirectUri // eslint-disable-line camelcase
+        // eslint-disable-next-line camelcase
+        redirect_uri: redirectUri ?? (import.meta.client ? window.location.origin : '')
     }
 }
 

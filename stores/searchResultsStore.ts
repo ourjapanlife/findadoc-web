@@ -12,20 +12,22 @@ import type { Locale,
     FacilitySearchFilters,
     HealthcareProfessional,
     HealthcareProfessionalSearchFilters } from '~/typedefs/gqlTypes.js'
+import type { ServerError } from '~/typedefs/serverResponse.js'
 
 type FacilitySearchResult = Facility & {
     healthcareProfessionals: HealthcareProfessional[]
 }
-const toast = useToast()
-
-function notifyServerErrorsIfPresent(errors: { code: string }[] | undefined) {
-    if (!errors?.length) {
-        return
-    }
-    handleServerErrorMessaging(errors, toast, useTranslation)
-}
 
 export const useSearchResultsStore = defineStore('searchResultsStore', () => {
+    const toast = useToast()
+
+    function notifyServerErrorsIfPresent(errors: ServerError[] | undefined) {
+        if (!errors?.length) {
+            return
+        }
+        handleServerErrorMessaging(errors, toast, useTranslation)
+    }
+
     const activeFacilityId: Ref<string | undefined> = ref()
     const activeFacility: Ref<FacilitySearchResult | undefined> = ref()
     const activeProfessional: Ref<HealthcareProfessional | undefined> = ref()
@@ -204,6 +206,96 @@ export const useSearchResultsStore = defineStore('searchResultsStore', () => {
         activeProfessional.value = undefined
     }
 
+    async function queryProfessionals(
+    searchSpecialties: Specialty[],
+    searchLanguages: Locale[],
+    professionalIDs?: string[]
+    ): Promise<HealthcareProfessional[]> {
+        try {
+            const searchProfessionalsData = {
+                filters: {
+                    limit: 1000,
+                    offset: 0,
+                    ids: professionalIDs ?? undefined,
+                    specialties: searchSpecialties,
+                    spokenLanguages: searchLanguages,
+                    acceptedInsurance: undefined,
+                    degrees: undefined,
+                    names: undefined,
+                    orderBy: undefined,
+                    createdDate: undefined,
+                    updatedDate: undefined
+                } satisfies HealthcareProfessionalSearchFilters
+            }
+
+            const serverResponse = await graphQLClientRequestWithRetry<
+                { healthcareProfessionals: HealthcareProfessional[] }
+            >(
+                gqlClient.request.bind(gqlClient),
+                searchProfessionalsQuery,
+                searchProfessionalsData
+            )
+
+            notifyServerErrorsIfPresent(serverResponse.errors)
+
+            const professionalsSearchResult = serverResponse.data.healthcareProfessionals ?? []
+            return professionalsSearchResult
+        } catch (error) {
+            console.error(useTranslation('searchResultsErrors.gettingProfessionals'), ` ${JSON.stringify(error)}`)
+            // eslint-disable-next-line no-alert
+            alert(useTranslation('searchResultsErrors.gettingData'))
+            return []
+        }
+    }
+
+    async function queryFacilities(
+    searchCity?: string,
+    healthcareProfessionalIDs?: string[],
+    limit: number = 100,
+    offset: number = 0
+    ): Promise<Facility[]> {
+        try {
+            const searchFacilitiesData = {
+                filters: {
+                    limit: limit,
+                    offset: offset,
+                    healthcareProfessionalIds: healthcareProfessionalIDs ?? undefined,
+                    contact: undefined,
+                    createdDate: undefined,
+                    healthcareProfessionalName: undefined,
+                    nameEn: undefined,
+                    nameJa: undefined,
+                    orderBy: undefined,
+                    updatedDate: undefined
+                } satisfies FacilitySearchFilters
+            }
+
+            const serverResponse = await graphQLClientRequestWithRetry<
+                { facilities: Facility[] }
+            >(
+                gqlClient.request.bind(gqlClient),
+                searchFacilitiesQuery,
+                searchFacilitiesData
+            )
+
+            notifyServerErrorsIfPresent(serverResponse.errors)
+
+            const facilitiesSearchResults = serverResponse.data.facilities ?? []
+
+            const locationFilteredSearchResults = searchCity
+                ? facilitiesSearchResults.filter(facility =>
+                    facility.contact?.address.cityEn === searchCity || facility.contact?.address.cityJa === searchCity)
+                : facilitiesSearchResults
+
+            return locationFilteredSearchResults
+        } catch (error) {
+            console.error(useTranslation('searchResultsErrors.gettingFacilities'), `${JSON.stringify(error)}`)
+            // eslint-disable-next-line no-alert
+            alert(useTranslation('searchResultsErrors.gettingData'))
+            return []
+        }
+    }
+
     return {
         activeFacilityId,
         activeFacility,
@@ -224,96 +316,6 @@ export const useSearchResultsStore = defineStore('searchResultsStore', () => {
         hasMore
     }
 })
-
-async function queryProfessionals(
-    searchSpecialties: Specialty[],
-    searchLanguages: Locale[],
-    professionalIDs?: string[]
-): Promise<HealthcareProfessional[]> {
-    try {
-        const searchProfessionalsData = {
-            filters: {
-                limit: 1000,
-                offset: 0,
-                ids: professionalIDs ?? undefined,
-                specialties: searchSpecialties,
-                spokenLanguages: searchLanguages,
-                acceptedInsurance: undefined,
-                degrees: undefined,
-                names: undefined,
-                orderBy: undefined,
-                createdDate: undefined,
-                updatedDate: undefined
-            } satisfies HealthcareProfessionalSearchFilters
-        }
-
-        const serverResponse = await graphQLClientRequestWithRetry<
-            { healthcareProfessionals: HealthcareProfessional[] }
-        >(
-            gqlClient.request.bind(gqlClient),
-            searchProfessionalsQuery,
-            searchProfessionalsData
-        )
-
-        notifyServerErrorsIfPresent(serverResponse.errors)
-
-        const professionalsSearchResult = serverResponse.data.healthcareProfessionals ?? []
-        return professionalsSearchResult
-    } catch (error) {
-        console.error(useTranslation('searchResultsErrors.gettingProfessionals'), ` ${JSON.stringify(error)}`)
-        // eslint-disable-next-line no-alert
-        alert(useTranslation('searchResultsErrors.gettingData'))
-        return []
-    }
-}
-
-async function queryFacilities(
-    searchCity?: string,
-    healthcareProfessionalIDs?: string[],
-    limit: number = 100,
-    offset: number = 0
-): Promise<Facility[]> {
-    try {
-        const searchFacilitiesData = {
-            filters: {
-                limit: limit,
-                offset: offset,
-                healthcareProfessionalIds: healthcareProfessionalIDs ?? undefined,
-                contact: undefined,
-                createdDate: undefined,
-                healthcareProfessionalName: undefined,
-                nameEn: undefined,
-                nameJa: undefined,
-                orderBy: undefined,
-                updatedDate: undefined
-            } satisfies FacilitySearchFilters
-        }
-
-        const serverResponse = await graphQLClientRequestWithRetry<
-            { facilities: Facility[] }
-        >(
-            gqlClient.request.bind(gqlClient),
-            searchFacilitiesQuery,
-            searchFacilitiesData
-        )
-
-        notifyServerErrorsIfPresent(serverResponse.errors)
-
-        const facilitiesSearchResults = serverResponse.data.facilities ?? []
-
-        const locationFilteredSearchResults = searchCity
-            ? facilitiesSearchResults.filter(facility =>
-                facility.contact?.address.cityEn === searchCity || facility.contact?.address.cityJa === searchCity)
-            : facilitiesSearchResults
-
-        return locationFilteredSearchResults
-    } catch (error) {
-        console.error(useTranslation('searchResultsErrors.gettingFacilities'), `${JSON.stringify(error)}`)
-        // eslint-disable-next-line no-alert
-        alert(useTranslation('searchResultsErrors.gettingData'))
-        return []
-    }
-}
 
 const searchProfessionalsQuery = gql`
     query searchHealthcareProfessionals($filters: HealthcareProfessionalSearchFilters!) {

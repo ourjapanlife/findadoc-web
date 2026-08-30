@@ -92,6 +92,7 @@ onMounted(() => {
 })
 
 onUnmounted(() => {
+    if (!import.meta.client) return
     window.removeEventListener('scroll', onScroll)
 })
 </script>

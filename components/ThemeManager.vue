@@ -116,7 +116,9 @@ function closeTheme() {
 
 function toggleLightDarkMode(returnedDarkModeValue: boolean) {
     isDarkMode.value = returnedDarkModeValue
-    localStorage.setItem('isDarkMode', `${isDarkMode.value}`)
+    if (import.meta.client) {
+        localStorage.setItem('isDarkMode', `${isDarkMode.value}`)
+    }
     setTheme(currentTheme.value, isDarkMode.value)
 }
 
@@ -129,6 +131,11 @@ function setTheme(newTheme: string, darkModeValue: boolean) {
     const identifiedTheme = themes.find(theme => theme.themeId === newTheme)
     if (identifiedTheme) {
         identifiedTheme.isSelected = true
+    }
+
+    if (!import.meta.client) {
+        currentTheme.value = newTheme
+        return
     }
 
     document.documentElement.classList.remove(

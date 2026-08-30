@@ -8,7 +8,7 @@ export interface SectionInformation {
 export const handleScroll
     = (sectionDetailsObject: SectionInformation[], isScrolling: Ref<boolean> = ref(false),
         activeSection: Ref<string> = ref('')) => {
-        if (isScrolling.value) return
+        if (!import.meta.client || isScrolling.value) return
         let newActiveSection: string | null = null
         sectionDetailsObject.forEach(section => {
             let rect = null
@@ -32,6 +32,7 @@ export const handleScroll
 
 export const scrollToSectionOfForm
     = (sectionId: string, activeSection: Ref<string> = ref('')) => {
+        if (!import.meta.client) return
         document.getElementById(sectionId)?.scrollIntoView({
             behavior: 'smooth'
         })
@@ -44,6 +45,7 @@ export const observeFormSections = (
     activeSection: Ref<string> = ref(''),
     thresholdValue: number = 0.70
 ) => {
+    if (!import.meta.client) return
     // Map the sectionInfo objects given to DOM elements and filter out any null elements
     const sections: Element[]
         = sectionsInfo.map(info => document.getElementById(info.sectionElementIdToScrollTo)!).filter(element => element !== null)

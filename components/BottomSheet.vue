@@ -2,54 +2,56 @@
  but rewritten due to it no longer being maintained -->
 <!-- It's been customized to allow for multiple positions, simplified the code, and added a few features -->
 <template>
-    <Teleport to="body">
-        <div
-            ref="bottomSheet"
-            :class="[
-                'transition-[visibility]',
-                showSheet ? 'visible pointer-events-auto' : 'invisible pointer-events-none',
-                `z-${zIndex}`,
-                `aria-hidden:${showSheet ? 'true' : 'false'}`,
-            ]"
-            role="dialog"
-        >
-            <transition>
-                <div
-                    v-show="overlay && showSheet"
-                    class="absolute inset-0 z-10 bg-primary-bg/20"
-                    @click="clickOnOverlayHandler"
-                    @keydown.enter="clickOnOverlayHandler"
-                />
-            </transition>
+    <ClientOnly>
+        <Teleport to="body">
             <div
-                ref="bottomSheetContent"
-                class="fixed inset-0 flex flex-col mx-1 rounded-t-2xl bg-primary-bg overflow-x-hidden
-                    box-border pointer-events-auto"
-                :style="{
-                    transform: `translate3d(0, ${translateValue}%, 0)`,
-                    height: sheetHeight,
-                    transition: !isDragging ? `${props.transitionDuration}s ease` : undefined,
-                }"
+                ref="bottomSheet"
+                :class="[
+                    'transition-[visibility]',
+                    showSheet ? 'visible pointer-events-auto' : 'invisible pointer-events-none',
+                    `z-${zIndex}`,
+                    `aria-hidden:${showSheet ? 'true' : 'false'}`,
+                ]"
+                role="dialog"
             >
-                <header
-                    ref="bottomSheetDraggableArea"
-                    class="w-full mx-auto p-6 cursor-grab touch-none select-none"
+                <transition>
+                    <div
+                        v-show="overlay && showSheet"
+                        class="absolute inset-0 z-10 bg-primary-bg/20"
+                        @click="clickOnOverlayHandler"
+                        @keydown.enter="clickOnOverlayHandler"
+                    />
+                </transition>
+                <div
+                    ref="bottomSheetContent"
+                    class="fixed inset-0 flex flex-col mx-1 rounded-t-2xl bg-primary-bg overflow-x-hidden
+                    box-border pointer-events-auto"
+                    :style="{
+                        transform: `translate3d(0, ${translateValue}%, 0)`,
+                        height: sheetHeight,
+                        transition: !isDragging ? `${props.transitionDuration}s ease` : undefined,
+                    }"
                 >
-                    <div class="w-10 h-1 bg-accent/30 rounded-lg mx-auto" />
-                </header>
-                <main
-                    ref="bottomSheetMain"
-                    class="flex flex-col grow overflow-y-auto box-border"
-                >
-                    <slot />
-                </main>
+                    <header
+                        ref="bottomSheetDraggableArea"
+                        class="w-full mx-auto p-6 cursor-grab touch-none select-none"
+                    >
+                        <div class="w-10 h-1 bg-accent/30 rounded-lg mx-auto" />
+                    </header>
+                    <main
+                        ref="bottomSheetMain"
+                        class="flex flex-col grow overflow-y-auto box-border"
+                    >
+                        <slot />
+                    </main>
+                </div>
             </div>
-        </div>
-    </Teleport>
+        </Teleport>
+    </ClientOnly>
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { onMounted, onUnmounted, ref } from 'vue'
 import Hammer from 'hammerjs'
 import { useBottomSheetStore } from '@/stores/bottomSheetStore'
 
@@ -145,7 +147,7 @@ const bottomSheetDraggableArea = ref<HTMLElement | null>(null)
    * @param element
    */
 const isFocused = (element: HTMLElement) => document.activeElement === element
-window.addEventListener('keyup', (event: KeyboardEvent) => {
+const onEscapeKey = (event: KeyboardEvent) => {
     const isSheetElementFocused
         = bottomSheet.value && bottomSheet.value.contains(event.target as HTMLElement)
           && isFocused(event.target as HTMLElement)
@@ -153,7 +155,7 @@ window.addEventListener('keyup', (event: KeyboardEvent) => {
     if (event.key === 'Escape' && !isSheetElementFocused) {
         close()
     }
-})
+}
 
 // Functions
 
@@ -238,8 +240,10 @@ const dragHandler = (event: HammerInput | IEvent, type: 'draghandle' | 'dragcont
 const open = () => {
     // Honor the initialPosition (already set by initHeight) when opening
     // Do not force to 0, or the sheet will cover the whole screen
-    document.documentElement.style.overflowY = 'hidden'
-    document.documentElement.style.overscrollBehavior = 'none'
+    if (import.meta.client) {
+        document.documentElement.style.overflowY = 'hidden'
+        document.documentElement.style.overscrollBehavior = 'none'
+    }
     showSheet.value = true
     emit('opened')
 }
@@ -252,8 +256,10 @@ const close = async () => {
     showSheet.value = false
     translateValue.value = 100
     setTimeout(() => {
-        document.documentElement.style.overflowY = 'auto'
-        document.documentElement.style.overscrollBehavior = ''
+        if (import.meta.client) {
+            document.documentElement.style.overflowY = 'auto'
+            document.documentElement.style.overscrollBehavior = ''
+        }
         emit('closed')
     }, props.transitionDuration * 1000)
 }
@@ -280,6 +286,7 @@ const setPosition = (position: number) => {
 let hammerMainInstance: HammerManager | null = null
 
 onMounted(() => {
+    window.addEventListener('keyup', onEscapeKey)
     initHeight()
 
     /**
@@ -307,6 +314,11 @@ onMounted(() => {
         const pan = hammerMainInstance?.get('pan')
         pan?.set({ enable: !props.canScroll })
     }
+})
+
+onUnmounted(() => {
+    if (!import.meta.client) return
+    window.removeEventListener('keyup', onEscapeKey)
 })
 
 watch(() => props.canScroll, newCanScrollValue => {

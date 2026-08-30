@@ -10,7 +10,7 @@ let observerInitialized = false
  */
 export const useThemeColors = () => {
     onMounted(() => {
-        if (observerInitialized || typeof window === 'undefined') return
+        if (observerInitialized || !import.meta.client) return
         observerInitialized = true
 
         new MutationObserver(() => themeChanged.value++)
@@ -23,7 +23,7 @@ export const useThemeColors = () => {
     }
 
     const getColor = (varName: string, fallback: string): string => {
-        if (typeof window === 'undefined') return fallback
+        if (!import.meta.client) return fallback
         void themeChanged.value // reactive dependency
 
         const rgb = getComputedStyle(document.documentElement).getPropertyValue(varName).trim()
