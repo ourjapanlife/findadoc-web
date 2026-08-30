@@ -1,6 +1,7 @@
 import { defineNuxtConfig } from 'nuxt/config'
 import i18nLocales from './i18n'
 import tailwindcss from '@tailwindcss/vite'
+import { VIEWPORT_BREAKPOINTS, VIEWPORT_FALLBACK_BREAKPOINT } from './utils/viewport'
 
 const SITE_TITLE = 'Find a Doc, Japan!'
 const SITE_DESCRIPTION
@@ -183,17 +184,7 @@ export default defineNuxtConfig({
         defaultImport: 'component'
     },
     viewport: {
-        breakpoints: {
-            desktop: 1024,
-            desktopMedium: 1280,
-            desktopWide: 1600,
-
-            mobile: 320,
-            mobileMedium: 375,
-            mobileWide: 425,
-
-            tablet: 768
-        },
+        breakpoints: { ...VIEWPORT_BREAKPOINTS },
 
         cookie: {
             name: 'viewport'
@@ -205,6 +196,6 @@ export default defineNuxtConfig({
             tablet: 'tablet'
         },
 
-        fallbackBreakpoint: 'desktop'
+        fallbackBreakpoint: VIEWPORT_FALLBACK_BREAKPOINT
     }
 })

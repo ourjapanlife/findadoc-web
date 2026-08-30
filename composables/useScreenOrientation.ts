@@ -3,11 +3,11 @@ https://vuejs.org/guide/reusability/composables.html#composables-are-only-suppos
 */
 
 import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { SSR_VIEWPORT_SIZE } from '~/utils/viewport'
 
 export const useScreenOrientation = () => {
-    // Match nuxt-viewport fallbackBreakpoint: 'desktop' so SSR HTML is landscape.
-    const width = ref(import.meta.client ? window.innerWidth : 1024)
-    const height = ref(import.meta.client ? window.innerHeight : 768)
+    const width = ref<number>(SSR_VIEWPORT_SIZE.width)
+    const height = ref<number>(SSR_VIEWPORT_SIZE.height)
 
     const updateWidth = () => {
         if (!import.meta.client) return
