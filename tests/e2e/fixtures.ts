@@ -12,13 +12,24 @@ export function moderationSuccessToastPattern(expectedMessage: string, keySuffix
 }
 
 /**
- * Skip onboarding by setting localStorage. Call before visiting app pages that check onboarding.
+ * Persist completed onboarding before the app boots.
+ * With SSR, a first `goto('/')` would serialize "not-started" into the payload
+ * and ignore a later localStorage write — set storage via init script instead.
  */
 export async function skipOnboarding(page: Page) {
-    await page.goto('/')
-    await page.evaluate(() => {
-        localStorage.setItem('onboardingState', '"completed"')
-    })
+    const completed = JSON.stringify('completed')
+    await page.addInitScript((value) => {
+        localStorage.setItem('onboardingState', value)
+    }, completed)
+
+    // Already on a document (e.g. moderation setup): apply immediately too.
+    try {
+        await page.evaluate((value) => {
+            localStorage.setItem('onboardingState', value)
+        }, completed)
+    } catch {
+        // No document yet; addInitScript covers the first navigation.
+    }
 }
 
 /** Run moderation tests: always in CI; locally only when Auth0 credentials are present. */
