@@ -18,13 +18,13 @@ export function moderationSuccessToastPattern(expectedMessage: string, keySuffix
  */
 export async function skipOnboarding(page: Page) {
     const completed = JSON.stringify('completed')
-    await page.addInitScript((value) => {
+    await page.addInitScript(value => {
         localStorage.setItem('onboardingState', value)
     }, completed)
 
     // Already on a document (e.g. moderation setup): apply immediately too.
     try {
-        await page.evaluate((value) => {
+        await page.evaluate(value => {
             localStorage.setItem('onboardingState', value)
         }, completed)
     } catch {
