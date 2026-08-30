@@ -3,7 +3,9 @@
 # writes `/* /404.html 404` into `_redirects`, which is processed before
 # netlify.toml — so a toml `/* → /index.html 200` catch-all never wins.
 # Specific 200 rewrites here run first; keep the 404 catch-all last.
-# Add new dynamic prefixes here rather than a blanket 200 rewrite (see #1785).
+# CI `nuxi start` uses `serve`, which ignores this file — keep public/serve.json
+# in sync for the same fallbacks (see #1785).
+# Add new dynamic prefixes here rather than a blanket 200 rewrite.
 /u/*            /200.html   200
 /login          /200.html   200
 /login/*        /200.html   200
