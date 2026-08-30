@@ -133,7 +133,7 @@
 import { type Ref, computed, ref, watch, onMounted, onUnmounted } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useRouter } from 'vue-router'
-import { useToast } from 'vue-toastification'
+import { useAppToast } from '~/composables/useAppToast'
 import { useModerationSubmissionsStore } from '~/stores/moderationSubmissionsStore'
 import { Locale,
     type Submission,
@@ -154,7 +154,7 @@ import {
     validateModerationFacilityFields
 } from '~/utils/moderationFormValidationUtils'
 
-const toast = useToast()
+const toast = useAppToast()
 const { t } = useI18n()
 const router = useRouter()
 

@@ -50,7 +50,7 @@
 </template>
 
 <script setup lang="ts">
-import { useToast } from 'vue-toastification'
+import { useAppToast } from '~/composables/useAppToast'
 import { useRouter } from 'vue-router'
 import { useI18n } from '#imports'
 import { useHealthcareProfessionalsStore } from '~/stores/healthcareProfessionalsStore'
@@ -76,7 +76,7 @@ const moderationScreenStore = useModerationScreenStore()
 const modalStore = useModalStore()
 const moderationSubmissionsStore = useModerationSubmissionsStore()
 
-const toast = useToast()
+const toast = useAppToast()
 
 const { t } = useI18n()
 const buttonBaseClass = 'inline-flex justify-center items-center rounded-full border-2 font-bold'

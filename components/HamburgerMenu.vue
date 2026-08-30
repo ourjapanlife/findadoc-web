@@ -314,7 +314,7 @@
 </template>
 
 <script lang="ts" setup>
-import { useToast } from 'vue-toastification'
+import { useAppToast } from '~/composables/useAppToast'
 import { useRoute, useRouter } from 'vue-router'
 import { ref } from 'vue'
 import { vCloseOnOutsideClick } from '~/composables/closeOnOutsideClick'
@@ -332,7 +332,7 @@ const authStore = useAuthStore()
 const moderationScreenStore = useModerationScreenStore()
 const moderationSubmissionUnsavedStore = useModerationSubmissionUnsavedStore()
 const modalStore = useModalStore()
-const toast = useToast()
+const toast = useAppToast()
 const router = useRouter()
 const route = useRoute()
 const { t } = useI18n()

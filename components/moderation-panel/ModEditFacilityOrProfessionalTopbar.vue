@@ -121,7 +121,7 @@
 <script setup lang="ts">
 import { computed, ref, watch, type ComputedRef, type Ref } from 'vue'
 import { storeToRefs } from 'pinia'
-import { useToast } from 'vue-toastification'
+import { useAppToast } from '~/composables/useAppToast'
 import { useRouter } from 'vue-router'
 import { useI18n } from '#imports'
 import SVGCopyContent from '~/assets/icons/content-copy.svg'
@@ -203,7 +203,7 @@ const modalType = ref<ModalType.UnsavedChanges | ModalType.DeleteConfirmation | 
 // Disable the buttons if there are no changes
 const hasPendingChanges = computed(() => hasPendingFormChanges())
 
-const toast = useToast()
+const toast = useAppToast()
 
 const { t } = useI18n()
 

@@ -279,7 +279,7 @@
 
 <script lang="ts" setup>
 import { computed, reactive, type Ref, ref } from 'vue'
-import { useToast } from 'vue-toastification'
+import { useAppToast } from '~/composables/useAppToast'
 import { useHealthcareProfessionalsStore } from '~/stores/healthcareProfessionalsStore'
 import { useFacilitiesStore } from '~/stores/facilitiesStore'
 import { useLocaleStore } from '~/stores/localeStore'
@@ -294,7 +294,7 @@ import { Insurance,
 import { useI18n } from '#imports'
 import { filterByCaseInsensitiveIncludes, matchesFacilitySearch } from '~/utils/moderationSearchUtils'
 
-const toast = useToast()
+const toast = useAppToast()
 
 const { t } = useI18n()
 

@@ -1,11 +1,11 @@
 import { gql } from 'graphql-request'
 import { defineStore } from 'pinia'
 import { ref, computed, type Ref } from 'vue'
-import { useToast } from 'vue-toastification'
 import { gqlClient } from '../utils/graphql.js'
 import { useLoadingStore } from './loadingStore.js'
 import { handleServerErrorMessaging } from '#imports'
 import { useTranslation } from '~/composables/useTranslation.js'
+import { useAppToast } from '~/composables/useAppToast.js'
 import type { Locale,
     Specialty,
     Facility,
@@ -19,7 +19,7 @@ type FacilitySearchResult = Facility & {
 }
 
 export const useSearchResultsStore = defineStore('searchResultsStore', () => {
-    const toast = useToast()
+    const toast = useAppToast()
 
     function notifyServerErrorsIfPresent(errors: ServerError[] | undefined) {
         if (!errors?.length) {
