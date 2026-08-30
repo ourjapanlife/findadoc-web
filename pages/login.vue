@@ -3,3 +3,9 @@
         <LoginForm />
     </div>
 </template>
+
+<script setup lang="ts">
+definePageMeta({
+    ssr: false
+})
+</script>
