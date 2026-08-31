@@ -13,37 +13,37 @@
             ]"
             role="dialog"
         >
-                <transition>
-                    <div
-                        v-show="overlay && showSheet"
-                        class="absolute inset-0 z-10 bg-primary-bg/20"
-                        @click="clickOnOverlayHandler"
-                        @keydown.enter="clickOnOverlayHandler"
-                    />
-                </transition>
+            <transition>
                 <div
-                    ref="bottomSheetContent"
-                    class="fixed inset-0 flex flex-col mx-1 rounded-t-2xl bg-primary-bg overflow-x-hidden
+                    v-show="overlay && showSheet"
+                    class="absolute inset-0 z-10 bg-primary-bg/20"
+                    @click="clickOnOverlayHandler"
+                    @keydown.enter="clickOnOverlayHandler"
+                />
+            </transition>
+            <div
+                ref="bottomSheetContent"
+                class="fixed inset-0 flex flex-col mx-1 rounded-t-2xl bg-primary-bg overflow-x-hidden
                     box-border pointer-events-auto"
-                    :style="{
-                        transform: `translate3d(0, ${translateValue}%, 0)`,
-                        height: sheetHeight,
-                        transition: !isDragging ? `${props.transitionDuration}s ease` : undefined,
-                    }"
+                :style="{
+                    transform: `translate3d(0, ${translateValue}%, 0)`,
+                    height: sheetHeight,
+                    transition: !isDragging ? `${props.transitionDuration}s ease` : undefined,
+                }"
+            >
+                <header
+                    ref="bottomSheetDraggableArea"
+                    class="w-full mx-auto p-6 cursor-grab touch-none select-none"
                 >
-                    <header
-                        ref="bottomSheetDraggableArea"
-                        class="w-full mx-auto p-6 cursor-grab touch-none select-none"
-                    >
-                        <div class="w-10 h-1 bg-accent/30 rounded-lg mx-auto" />
-                    </header>
-                    <main
-                        ref="bottomSheetMain"
-                        class="flex flex-col grow overflow-y-auto box-border"
-                    >
-                        <slot />
-                    </main>
-                </div>
+                    <div class="w-10 h-1 bg-accent/30 rounded-lg mx-auto" />
+                </header>
+                <main
+                    ref="bottomSheetMain"
+                    class="flex flex-col grow overflow-y-auto box-border"
+                >
+                    <slot />
+                </main>
+            </div>
         </div>
     </Teleport>
 </template>
