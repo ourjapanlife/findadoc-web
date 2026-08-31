@@ -2,18 +2,17 @@
  but rewritten due to it no longer being maintained -->
 <!-- It's been customized to allow for multiple positions, simplified the code, and added a few features -->
 <template>
-    <ClientOnly>
-        <Teleport to="body">
-            <div
-                ref="bottomSheet"
-                :class="[
-                    'transition-[visibility]',
-                    showSheet ? 'visible pointer-events-auto' : 'invisible pointer-events-none',
-                    `z-${zIndex}`,
-                    `aria-hidden:${showSheet ? 'true' : 'false'}`,
-                ]"
-                role="dialog"
-            >
+    <Teleport to="body">
+        <div
+            ref="bottomSheet"
+            :class="[
+                'transition-[visibility]',
+                showSheet ? 'visible pointer-events-auto' : 'invisible pointer-events-none',
+                `z-${zIndex}`,
+                `aria-hidden:${showSheet ? 'true' : 'false'}`,
+            ]"
+            role="dialog"
+        >
                 <transition>
                     <div
                         v-show="overlay && showSheet"
@@ -45,13 +44,12 @@
                         <slot />
                     </main>
                 </div>
-            </div>
-        </Teleport>
-    </ClientOnly>
+        </div>
+    </Teleport>
 </template>
 
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref } from 'vue'
+import { onMounted, onUnmounted, ref, nextTick } from 'vue'
 import Hammer from 'hammerjs'
 import { useBottomSheetStore } from '@/stores/bottomSheetStore'
 
@@ -283,42 +281,46 @@ const setPosition = (position: number) => {
     }
 }
 
+let hammerHandleInstance: HammerManager | null = null
 let hammerMainInstance: HammerManager | null = null
 
-onMounted(() => {
-    window.addEventListener('keyup', onEscapeKey)
-    initHeight()
-
-    /**
-     * Create instances of Hammerjs
-     */
-    if (bottomSheetDraggableArea.value) {
-        const newAreaInstance = new Hammer(bottomSheetDraggableArea.value, {
+function attachHammer() {
+    if (bottomSheetDraggableArea.value && !hammerHandleInstance) {
+        hammerHandleInstance = new Hammer(bottomSheetDraggableArea.value, {
             inputClass: Hammer.TouchMouseInput,
             recognizers: [[Hammer.Pan, { direction: Hammer.DIRECTION_VERTICAL }]]
         })
-        newAreaInstance.on('panstart panup pandown panend', (e: HammerInput) => {
+        hammerHandleInstance.on('panstart panup pandown panend', (e: HammerInput) => {
             dragHandler(e, 'draghandle')
         })
     }
-    if (bottomSheetMain.value) {
-        const newMainInstance = new Hammer(bottomSheetMain.value, {
+    if (bottomSheetMain.value && !hammerMainInstance) {
+        hammerMainInstance = new Hammer(bottomSheetMain.value, {
             inputClass: Hammer.TouchMouseInput,
             recognizers: [[Hammer.Pan, { direction: Hammer.DIRECTION_VERTICAL }]]
         })
-        newMainInstance.on('panstart panup pandown panend', (e: HammerInput) => {
+        hammerMainInstance.on('panstart panup pandown panend', (e: HammerInput) => {
             dragHandler(e, 'dragcontent')
         })
-        hammerMainInstance = newMainInstance
-        // Sets initial state based on canScroll prop
-        const pan = hammerMainInstance?.get('pan')
+        const pan = hammerMainInstance.get('pan')
         pan?.set({ enable: !props.canScroll })
     }
+}
+
+onMounted(async () => {
+    window.addEventListener('keyup', onEscapeKey)
+    initHeight()
+    await nextTick()
+    attachHammer()
 })
 
 onUnmounted(() => {
     if (!import.meta.client) return
     window.removeEventListener('keyup', onEscapeKey)
+    hammerHandleInstance?.destroy()
+    hammerMainInstance?.destroy()
+    hammerHandleInstance = null
+    hammerMainInstance = null
 })
 
 watch(() => props.canScroll, newCanScrollValue => {

@@ -37,9 +37,7 @@
                 class="h-svh"
             >
                 <Loader />
-                <ClientOnly>
-                    <BottomSheetContainer />
-                </ClientOnly>
+                <BottomSheetContainer />
                 <ClientOnly>
                     <MapContainer
                         class="h-[calc(100vh)]"
