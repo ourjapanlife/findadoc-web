@@ -1,4 +1,11 @@
 {
+  "pageMeta": {
+    "homeTitle": "Health Services in Japan",
+    "aboutTitle": "About Us",
+    "submitTitle": "Submit a Provider",
+    "termsTitle": "Terms of Service",
+    "privacyTitle": "Privacy Policy"
+  },
   "common": {
     "menu": "Menu",
     "siteName": "Find a Doc Japan",

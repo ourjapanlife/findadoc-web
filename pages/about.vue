@@ -531,6 +531,11 @@ interface Member {
 
 const { t } = useI18n()
 const { scrollTo } = useSmoothScroll()
+
+useHead({
+    title: () => t('pageMeta.aboutTitle')
+})
+
 const contributors = ref<Member[]>(shuffleArray(data.members))
 const cofounders = ref<Member[]>(data.cofounders)
 const boardMembers = ref<Member[]>(data.board)

@@ -9,4 +9,10 @@
 import { useSubmissionStore } from '~/stores/submissionStore'
 
 const submissionStore = useSubmissionStore()
+
+const { t } = useI18n()
+
+useHead({
+    title: () => t('pageMeta.submitTitle')
+})
 </script>

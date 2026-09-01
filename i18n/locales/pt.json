@@ -1,4 +1,11 @@
 {
+  "pageMeta": {
+    "homeTitle": "Serviços de saúde no Japão",
+    "aboutTitle": "Sobre nós",
+    "submitTitle": "Enviar um profissional",
+    "termsTitle": "Termos de serviço",
+    "privacyTitle": "Política de Privacidade"
+  },
   "common": {
     "menu": "Menu",
     "siteName": "Find a Doc Japan",

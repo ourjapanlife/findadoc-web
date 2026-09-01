@@ -1,4 +1,11 @@
 {
+  "pageMeta": {
+    "homeTitle": "Mga Serbisyong Pangkalusugan sa Japan",
+    "aboutTitle": "Tungkol sa Amin",
+    "submitTitle": "Magsumite ng Provider",
+    "termsTitle": "Mga Tuntunin ng Serbisyo",
+    "privacyTitle": "Patakaran sa Privacy"
+  },
   "common": {
     "menu": "Menu",
     "siteName": "Find a Doc Japan",

@@ -1,4 +1,11 @@
 {
+  "pageMeta": {
+    "homeTitle": "日本の医療サービス",
+    "aboutTitle": "私たちについて",
+    "submitTitle": "医療提供者の登録",
+    "termsTitle": "利用規約",
+    "privacyTitle": "プライバシーポリシー"
+  },
   "common": {
     "menu": "メニュー",
     "siteName": "Find a Doc Japan",

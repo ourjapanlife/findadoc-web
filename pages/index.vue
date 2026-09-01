@@ -13,4 +13,10 @@ import { definePageMeta } from '#imports'
 definePageMeta({
     layout: 'onboarding'
 })
+
+const { t } = useI18n()
+
+useHead({
+    title: () => t('pageMeta.homeTitle')
+})
 </script>

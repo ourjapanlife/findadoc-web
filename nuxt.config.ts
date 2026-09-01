@@ -2,8 +2,8 @@ import { defineNuxtConfig } from 'nuxt/config'
 import i18nLocales from './i18n'
 import tailwindcss from '@tailwindcss/vite'
 import { VIEWPORT_BREAKPOINTS, VIEWPORT_FALLBACK_BREAKPOINT } from './utils/viewport'
+import { SITE_TITLE } from './utils/site'
 
-const SITE_TITLE = 'Find a Doc, Japan!'
 const SITE_DESCRIPTION
     = 'Health service information for the international community in Japan'
 
@@ -34,8 +34,6 @@ export default defineNuxtConfig({
     app: {
     // Global page headers: https://nuxt.com/docs/getting-started/seo-meta
         head: {
-            titleTemplate: 'Health Services in Japan',
-            title: SITE_TITLE,
             htmlAttrs: {
                 lang: 'en'
             },

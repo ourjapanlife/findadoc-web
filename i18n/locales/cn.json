@@ -1,4 +1,11 @@
 {
+  "pageMeta": {
+    "homeTitle": "日本的医疗服务",
+    "aboutTitle": "关于我们",
+    "submitTitle": "提交医疗服务",
+    "termsTitle": "服务条款",
+    "privacyTitle": "隐私政策"
+  },
   "common": {
     "menu": "菜单",
     "siteName": "Find a Doc Japan",

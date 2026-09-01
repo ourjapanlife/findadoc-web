@@ -1,4 +1,11 @@
 {
+  "pageMeta": {
+    "homeTitle": "Медицинские услуги в Японии",
+    "aboutTitle": "О нас",
+    "submitTitle": "Добавить специалиста",
+    "termsTitle": "Условия использования",
+    "privacyTitle": "Политика конфиденциальности"
+  },
   "common": {
     "menu": "Меню",
     "siteName": "Find a Doc Japan",

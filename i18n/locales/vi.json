@@ -1,4 +1,11 @@
 {
+  "pageMeta": {
+    "homeTitle": "Dịch vụ y tế tại Nhật Bản",
+    "aboutTitle": "Về chúng tôi",
+    "submitTitle": "Gửi thông tin nhà cung cấp",
+    "termsTitle": "Điều khoản dịch vụ",
+    "privacyTitle": "Chính sách bảo mật"
+  },
   "common": {
     "menu": "Menu",
     "siteName": "Find a Doc Japan",

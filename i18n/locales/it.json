@@ -1,4 +1,11 @@
 {
+  "pageMeta": {
+    "homeTitle": "Servizi sanitari in Giappone",
+    "aboutTitle": "Chi siamo",
+    "submitTitle": "Invia un professionista",
+    "termsTitle": "Termini di servizio",
+    "privacyTitle": "Informativa sulla privacy"
+  },
   "common": {
     "menu": "Menu",
     "siteName": "Find a Doc Japan",

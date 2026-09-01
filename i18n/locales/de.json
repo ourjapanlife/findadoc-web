@@ -1,4 +1,11 @@
 {
+  "pageMeta": {
+    "homeTitle": "Gesundheitsdienstleistungen in Japan",
+    "aboutTitle": "Über uns",
+    "submitTitle": "Anbieter einreichen",
+    "termsTitle": "Nutzungsbedingungen",
+    "privacyTitle": "Datenschutzerklärung"
+  },
   "common": {
     "menu": "Menü",
     "siteName": "Find a Doc Japan",
