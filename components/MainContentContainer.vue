@@ -23,7 +23,9 @@
                     fixed top-24 left-0 h-[calc(95vh-96px)] rounded-r-md"
                     />
                     <div class="flex-1 relative">
-                        <MapContainer class="h-full" />
+                        <ClientOnly>
+                            <MapContainer class="h-full" />
+                        </ClientOnly>
                         <SlidingRightPanel />
                     </div>
                 </div>
@@ -36,10 +38,12 @@
             >
                 <Loader />
                 <BottomSheetContainer />
-                <MapContainer
-                    class="h-[calc(100vh)]"
-                    @map-moved="handleMapMoved"
-                />
+                <ClientOnly>
+                    <MapContainer
+                        class="h-[calc(100vh)]"
+                        @map-moved="handleMapMoved"
+                    />
+                </ClientOnly>
             </div>
             <Footer class="z-20 absolute bottom-0 left-0 right-0 mx-2" />
         </div>

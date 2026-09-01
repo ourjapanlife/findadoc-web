@@ -67,7 +67,9 @@ export const useAuthStore = defineStore('authStore', () => {
         useCookie('authToken').value = null
 
         //Logout from Auth0
-        await auth0.logout({ logoutParams: { returnTo: window.location.origin } })
+        await auth0.logout({
+            logoutParams: { returnTo: import.meta.client ? window.location.origin : undefined }
+        })
     }
 
     async function getAuthBearerToken() {

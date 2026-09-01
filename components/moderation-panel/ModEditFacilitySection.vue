@@ -296,7 +296,7 @@
 <script lang="ts" setup>
 import { type Ref, ref, computed, onBeforeMount, onUnmounted, nextTick, watch } from 'vue'
 import { storeToRefs } from 'pinia'
-import { useToast } from 'vue-toastification'
+import { useAppToast } from '~/composables/useAppToast'
 import { useRoute } from 'vue-router'
 import { useModerationScreenStore } from '~/stores/moderationScreenStore'
 import { useFacilitiesStore } from '~/stores/facilitiesStore'
@@ -321,7 +321,7 @@ import { matchesHealthcareProfessionalSearch } from '~/utils/moderationSearchUti
 import { formatFirstLocalizedFullName } from '~/utils/nameUtils'
 import { useModerationSubmissionUnsavedStore } from '~/stores/moderationSubmissionUnsavedStore'
 
-const toast = useToast()
+const toast = useAppToast()
 const route = useRoute()
 const { t } = useI18n()
 const loadingStore = useLoadingStore()

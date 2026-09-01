@@ -16,7 +16,7 @@ export const useOnboardingStore = defineStore('onboarding', () => {
     function setOnboardingState(value: OnboardingState) {
         onboardingState.value = value
 
-        if (typeof window !== 'undefined') {
+        if (import.meta.client) {
             localStorage.setItem(ONBOARDING_STORAGE_KEY, JSON.stringify(value))
         }
     }
@@ -26,7 +26,7 @@ export const useOnboardingStore = defineStore('onboarding', () => {
 
 // Initialize from localStorage or default to 'not started'
 const getInitialState = (): OnboardingState => {
-    if (typeof window == 'undefined')
+    if (!import.meta.client)
         return OnboardingState.NotStarted
 
     const stored = localStorage.getItem(ONBOARDING_STORAGE_KEY)

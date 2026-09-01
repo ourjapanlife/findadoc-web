@@ -155,6 +155,7 @@ const searchResultCount = ref(0)
 const isInputFocused = ref(false)
 
 const handleListScroll = () => {
+    if (!import.meta.client) return
     const selectedElement = document.getElementById(`search-list-item-${selectedItemIndex.value}`)
 
     if (!selectedElement) return
@@ -259,7 +260,7 @@ const handleSearchInputFocus = (event: Event) => {
 
 // Displays the dropdown above the searchInputElement if its position is greater than window.innerHeight / 1.5
 const isNearPageBottom = computed(() => {
-    if (!searchInputElement.value) return
+    if (!import.meta.client || !searchInputElement.value) return
     return searchInputElement.value.getBoundingClientRect().bottom >= window.innerHeight / 1.5
 })
 

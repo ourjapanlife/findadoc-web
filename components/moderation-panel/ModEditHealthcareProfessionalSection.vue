@@ -286,7 +286,7 @@
 <script lang="ts" setup>
 import { computed, nextTick, onBeforeMount, onUnmounted, reactive, ref, watch, type Ref } from 'vue'
 import { useRoute } from 'vue-router'
-import { useToast } from 'vue-toastification'
+import { useAppToast } from '~/composables/useAppToast'
 import { useHealthcareProfessionalsStore } from '~/stores/healthcareProfessionalsStore'
 import { useFacilitiesStore } from '~/stores/facilitiesStore'
 import { useModerationScreenStore } from '~/stores/moderationScreenStore'
@@ -299,7 +299,7 @@ import { filterByCaseInsensitiveIncludes, matchesFacilitySearch } from '~/utils/
 import { useModerationSubmissionUnsavedStore } from '~/stores/moderationSubmissionUnsavedStore'
 // Keeps track of if the search bar inputs have been autofilled with existing facilities
 
-const toast = useToast()
+const toast = useAppToast()
 const route = useRoute()
 const { t } = useI18n()
 

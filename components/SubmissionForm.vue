@@ -158,7 +158,7 @@
 
 <script lang="ts" setup>
 import { ref, watch, nextTick, type Ref, onMounted } from 'vue'
-import { useToast } from 'vue-toastification'
+import { useAppToast } from '~/composables/useAppToast'
 import * as validations from '../utils/formValidations'
 import { useSubmissionStore } from '~/stores/submissionStore'
 import type { Locale, MutationCreateSubmissionArgs } from '~/typedefs/gqlTypes'
@@ -166,7 +166,7 @@ import { useLocaleStore } from '~/stores/localeStore'
 import { useI18n } from '#imports'
 import { handleServerErrorMessaging } from '~/composables/handleServerErrorMessaging'
 
-const toast = useToast()
+const toast = useAppToast()
 const { t } = useI18n()
 
 const submissionStore = useSubmissionStore()

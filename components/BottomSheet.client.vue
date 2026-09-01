@@ -49,7 +49,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { onMounted, onUnmounted, ref, nextTick } from 'vue'
 import Hammer from 'hammerjs'
 import { useBottomSheetStore } from '@/stores/bottomSheetStore'
 
@@ -145,7 +145,7 @@ const bottomSheetDraggableArea = ref<HTMLElement | null>(null)
    * @param element
    */
 const isFocused = (element: HTMLElement) => document.activeElement === element
-window.addEventListener('keyup', (event: KeyboardEvent) => {
+const onEscapeKey = (event: KeyboardEvent) => {
     const isSheetElementFocused
         = bottomSheet.value && bottomSheet.value.contains(event.target as HTMLElement)
           && isFocused(event.target as HTMLElement)
@@ -153,7 +153,7 @@ window.addEventListener('keyup', (event: KeyboardEvent) => {
     if (event.key === 'Escape' && !isSheetElementFocused) {
         close()
     }
-})
+}
 
 // Functions
 
@@ -238,8 +238,10 @@ const dragHandler = (event: HammerInput | IEvent, type: 'draghandle' | 'dragcont
 const open = () => {
     // Honor the initialPosition (already set by initHeight) when opening
     // Do not force to 0, or the sheet will cover the whole screen
-    document.documentElement.style.overflowY = 'hidden'
-    document.documentElement.style.overscrollBehavior = 'none'
+    if (import.meta.client) {
+        document.documentElement.style.overflowY = 'hidden'
+        document.documentElement.style.overscrollBehavior = 'none'
+    }
     showSheet.value = true
     emit('opened')
 }
@@ -252,8 +254,10 @@ const close = async () => {
     showSheet.value = false
     translateValue.value = 100
     setTimeout(() => {
-        document.documentElement.style.overflowY = 'auto'
-        document.documentElement.style.overscrollBehavior = ''
+        if (import.meta.client) {
+            document.documentElement.style.overflowY = 'auto'
+            document.documentElement.style.overscrollBehavior = ''
+        }
         emit('closed')
     }, props.transitionDuration * 1000)
 }
@@ -277,36 +281,46 @@ const setPosition = (position: number) => {
     }
 }
 
+let hammerHandleInstance: HammerManager | null = null
 let hammerMainInstance: HammerManager | null = null
 
-onMounted(() => {
-    initHeight()
-
-    /**
-     * Create instances of Hammerjs
-     */
-    if (bottomSheetDraggableArea.value) {
-        const newAreaInstance = new Hammer(bottomSheetDraggableArea.value, {
+function attachHammer() {
+    if (bottomSheetDraggableArea.value && !hammerHandleInstance) {
+        hammerHandleInstance = new Hammer(bottomSheetDraggableArea.value, {
             inputClass: Hammer.TouchMouseInput,
             recognizers: [[Hammer.Pan, { direction: Hammer.DIRECTION_VERTICAL }]]
         })
-        newAreaInstance.on('panstart panup pandown panend', (e: HammerInput) => {
+        hammerHandleInstance.on('panstart panup pandown panend', (e: HammerInput) => {
             dragHandler(e, 'draghandle')
         })
     }
-    if (bottomSheetMain.value) {
-        const newMainInstance = new Hammer(bottomSheetMain.value, {
+    if (bottomSheetMain.value && !hammerMainInstance) {
+        hammerMainInstance = new Hammer(bottomSheetMain.value, {
             inputClass: Hammer.TouchMouseInput,
             recognizers: [[Hammer.Pan, { direction: Hammer.DIRECTION_VERTICAL }]]
         })
-        newMainInstance.on('panstart panup pandown panend', (e: HammerInput) => {
+        hammerMainInstance.on('panstart panup pandown panend', (e: HammerInput) => {
             dragHandler(e, 'dragcontent')
         })
-        hammerMainInstance = newMainInstance
-        // Sets initial state based on canScroll prop
-        const pan = hammerMainInstance?.get('pan')
+        const pan = hammerMainInstance.get('pan')
         pan?.set({ enable: !props.canScroll })
     }
+}
+
+onMounted(async () => {
+    window.addEventListener('keyup', onEscapeKey)
+    initHeight()
+    await nextTick()
+    attachHammer()
+})
+
+onUnmounted(() => {
+    if (!import.meta.client) return
+    window.removeEventListener('keyup', onEscapeKey)
+    hammerHandleInstance?.destroy()
+    hammerMainInstance?.destroy()
+    hammerHandleInstance = null
+    hammerMainInstance = null
 })
 
 watch(() => props.canScroll, newCanScrollValue => {

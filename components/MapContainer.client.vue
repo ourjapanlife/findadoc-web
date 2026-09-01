@@ -1,56 +1,58 @@
 <template>
-    <div class="">
-        <GoogleMap
-            v-if="isMapReady"
-            ref="mapRef"
-            data-testid="map-of-japan"
-            :api-key="runtimeConfig.public.GOOGLE_MAPS_API_KEY as string ?? undefined"
-            :libraries="['marker']"
-            map-id="153d718018a2577e"
-            :disable-default-ui="true"
-            :options="{
-                gestureHandling: 'cooperative',
-            }"
-            class="h-full w-full"
-            :center="currentLocation"
-            :zoom="currentZoom"
-            :gesture-handling="'greedy'"
-            @click="handleMapClick"
-            @drag="handleMapMovement"
-            @zoom_changed="handleZoomChanged"
-        >
-            <MarkerCluster
-                ref="markerClusterRef"
+    <ClientOnly>
+        <div class="h-full w-full">
+            <GoogleMap
+                v-if="isMapReady"
+                ref="mapRef"
+                data-testid="map-of-japan"
+                :api-key="runtimeConfig.public.GOOGLE_MAPS_API_KEY as string ?? undefined"
+                :libraries="['marker']"
+                map-id="153d718018a2577e"
+                :disable-default-ui="true"
                 :options="{
-                    //vue3-google-map's Renderer type expects legacy Marker,
-                    // but we use AdvancedMarkerElement which works at runtime because their types aren't updated,
-                    // but it's valid according to the underlying google maps API type
-                    renderer: clusterRenderer as unknown as Renderer,
+                    gestureHandling: 'cooperative',
                 }"
+                class="h-full w-full"
+                :center="currentLocation"
+                :zoom="currentZoom"
+                :gesture-handling="'greedy'"
+                @click="handleMapClick"
+                @drag="handleMapMovement"
+                @zoom_changed="handleZoomChanged"
             >
-                <AdvancedMarker
-                    v-for="location in searchResultsStore.searchResultsList"
-                    :key="location.id"
+                <MarkerCluster
+                    ref="markerClusterRef"
                     :options="{
-                        position: {
-                            lat: location.mapLatitude ?? defaultLocation.lat,
-                            lng: location.mapLongitude ?? defaultLocation.lng,
-                        },
-                        title: location.nameEn || location.nameJa || 'Facility',
+                        //vue3-google-map's Renderer type expects legacy Marker,
+                        // but we use AdvancedMarkerElement which works at runtime because their types aren't updated,
+                        // but it's valid according to the underlying google maps API type
+                        renderer: clusterRenderer as unknown as Renderer,
                     }"
-                    @click="() => handlePinClick(location.id)"
                 >
-                    <template #content>
-                        <img
-                            :src="renderMarkerIcon(location.id)"
-                            alt=""
-                            class="h-16 w-18 block gmp-clickable"
-                        >
-                    </template>
-                </AdvancedMarker>
-            </MarkerCluster>
-        </GoogleMap>
-    </div>
+                    <AdvancedMarker
+                        v-for="location in searchResultsStore.searchResultsList"
+                        :key="location.id"
+                        :options="{
+                            position: {
+                                lat: location.mapLatitude ?? defaultLocation.lat,
+                                lng: location.mapLongitude ?? defaultLocation.lng,
+                            },
+                            title: location.nameEn || location.nameJa || 'Facility',
+                        }"
+                        @click="() => handlePinClick(location.id)"
+                    >
+                        <template #content>
+                            <img
+                                :src="renderMarkerIcon(location.id)"
+                                alt=""
+                                class="h-16 w-18 block gmp-clickable"
+                            >
+                        </template>
+                    </AdvancedMarker>
+                </MarkerCluster>
+            </GoogleMap>
+        </div>
+    </ClientOnly>
 </template>
 
 <script setup lang="ts">
@@ -110,7 +112,7 @@ const createPinIcon = (color: string, width: number, height: number, centerConte
         .replace('{{CENTER_CONTENT}}', centerContent)
         .replace('preserveAspectRatio="xMidYMid meet"', `width="${width}" height="${height}" preserveAspectRatio="xMidYMid meet"`)
 
-    return `data:image/svg+xml;base64,${window.btoa(svg)}`
+    return `data:image/svg+xml;base64,${import.meta.client ? window.btoa(svg) : ''}`
 }
 
 const createMarkerIcon = (isActive: boolean): string => {
@@ -191,7 +193,9 @@ const clusterRenderer = {
     ): google.maps.marker.AdvancedMarkerElement => {
         const { count, position } = cluster
 
-        const AdvancedMarkerElement = window.google?.maps?.marker?.AdvancedMarkerElement
+        const AdvancedMarkerElement = import.meta.client
+            ? window.google?.maps?.marker?.AdvancedMarkerElement
+            : undefined
         if (!AdvancedMarkerElement) {
             throw new Error('AdvancedMarkerElement not available')
         }

@@ -52,7 +52,7 @@
 
 <script setup lang="ts">
 import { ref, watch, nextTick } from 'vue'
-import type BottomSheet from '~/components/BottomSheet.vue'
+import type BottomSheet from '~/components/BottomSheet.client.vue'
 import SearchResultDetails from '~/components/SearchResultDetails.vue'
 import SearchResultsList from '~/components/SearchResultsList.vue'
 import FiltersPanel from '~/components/FiltersPanel.vue'

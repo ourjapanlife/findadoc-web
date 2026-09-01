@@ -205,7 +205,7 @@
 </template>
 
 <script lang="ts" setup>
-import { useToast } from 'vue-toastification'
+import { useAppToast } from '~/composables/useAppToast'
 import { useRoute, useRouter } from 'vue-router'
 import HamburgerMenu from './HamburgerMenu.vue'
 import SVGSiteLogo from '~/assets/icons/site-logo.svg'
@@ -221,7 +221,7 @@ import { buildLoginRoute, resolveAuthReturnPath } from '~/utils/auth0Config'
 import { isMyPageFormRoute, leaveToAppHome } from '~/utils/moderationUtils'
 
 const { t } = useI18n()
-const toast = useToast()
+const toast = useAppToast()
 const router = useRouter()
 const route = useRoute()
 
