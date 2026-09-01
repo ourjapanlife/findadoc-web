@@ -110,6 +110,7 @@ import { useSpecialtiesStore } from '~/stores/specialtiesStore.js'
 import { useLocaleStore } from '~/stores/localeStore.js'
 import { type Specialty, Locale } from '~/typedefs/gqlTypes.js'
 import { BottomSheetType, useBottomSheetStore } from '~/stores/bottomSheetStore'
+import { useSearchFiltersUrlSync } from '~/composables/useSearchFiltersUrlSync'
 
 const { t } = useI18n()
 
@@ -118,6 +119,7 @@ const locationsStore = useLocationsStore()
 const searchResultsStore = useSearchResultsStore()
 const specialtiesStore = useSpecialtiesStore()
 const bottomSheetStore = useBottomSheetStore()
+const { syncUrlWithActiveFilters } = useSearchFiltersUrlSync({ observeHistory: false })
 
 const locationDropdownOptions: Ref<LocationDropdownOption[]> = ref([])
 const specialtyDropdownOptions: Ref<DropdownOption[]> = ref([])
@@ -126,6 +128,12 @@ const languageDropdownOptions: Ref<DropdownOption[]> = ref([])
 const selectedSpecialties: Ref<string> = ref('')
 const selectedLocations: Ref<string> = ref('')
 const selectedLanguages: Ref<string> = ref(localeStore.activeLocale.code)
+
+// Restore the visible dropdown values when filters arrive from a shared URL or history navigation.
+selectedSpecialties.value = searchResultsStore.selectedSpecialties?.[0] ?? ''
+selectedLocations.value = searchResultsStore.selectedCity ?? ''
+selectedLanguages.value = searchResultsStore.selectedLanguages?.[0]
+  ?? localeStore.activeLocale.code
 
 interface DropdownOption {
     displayText: string
@@ -218,7 +226,19 @@ watch(selectedLanguages, () => {
     searchResultsStore.selectedLanguages = selectedLanguages.value ? [selectedLanguages.value as Locale] : []
 })
 
+watch(() => [
+    searchResultsStore.selectedSpecialties,
+    searchResultsStore.selectedCity,
+    searchResultsStore.selectedLanguages
+], () => {
+    selectedSpecialties.value = searchResultsStore.selectedSpecialties?.[0] ?? ''
+    selectedLocations.value = searchResultsStore.selectedCity ?? ''
+    selectedLanguages.value = searchResultsStore.selectedLanguages?.[0]
+      ?? localeStore.activeLocale.code
+})
+
 async function search() {
+    await syncUrlWithActiveFilters()
     await searchResultsStore.search()
     bottomSheetStore.showBottomSheet(BottomSheetType.SearchResultsList)
 }

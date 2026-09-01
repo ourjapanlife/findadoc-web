@@ -52,6 +52,20 @@ import { useOnboardingStore } from '@/stores/onboardingStore'
 import { useBottomSheetStore } from '@/stores/bottomSheetStore'
 import SlidingRightPanel from '~/components/SlidingRightPanel.vue'
 import { useScreenOrientation } from '~/composables/useScreenOrientation'
+import { useSearchFiltersUrlSync } from '~/composables/useSearchFiltersUrlSync'
+
+const {
+    hasSearchFiltersInUrl,
+    initializeFiltersFromUrl
+} = useSearchFiltersUrlSync()
+
+useHead({
+    meta: computed(() => hasSearchFiltersInUrl.value
+        ? [{ name: 'robots', content: 'noindex' }]
+        : [])
+})
+
+initializeFiltersFromUrl()
 
 const onboardingStore = useOnboardingStore()
 const { onboardingState } = storeToRefs(onboardingStore)
