@@ -236,7 +236,6 @@ const modalStore = useModalStore()
 const { isLandscape } = useScreenOrientation()
 const showGlobalSearch = computed(() =>
     isLandscape.value
-    && !route.path.startsWith('/moderation')
     && !route.path.startsWith('/my-page'))
 
 const showLogoText = ref(false)
