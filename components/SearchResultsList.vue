@@ -46,12 +46,22 @@
                 <div
                     v-for="(searchResult, index) in searchResultsStore.paginatedResults"
                     :key="searchResult.id"
-                    class="flex flex-col drop-shadow-md my-4 mx-4 py-1 min-h-36 rounded-md border-t-2
-                            border-primary/10 transition-all cursor-pointer"
+                    class="flex flex-col drop-shadow-md my-4 mx-4 py-1 min-h-36 rounded-md
+                            transition-all cursor-pointer"
                     :class="[
+                        /*
+                         * Every border utility lives in this branch, never in the static class
+                         * above. Tailwind emits `border-primary` and `border-primary/10` at equal
+                         * specificity, so a base-class border colour silently wins over the
+                         * selected one depending on stylesheet order, not template order.
+                         *
+                         * The selected card is marked by a solid 2px border rather than a tint:
+                         * the previous 10% coral wash carried the state at 1.07:1 against the
+                         * page, and encoded it in hue alone.
+                         */
                         searchResultsStore.activeFacilityId === searchResult.id
-                            ? 'bg-secondary/10 hover:bg-secondary/30 border-2 border-secondary/10'
-                            : 'bg-primary-bg hover:bg-primary-hover/50',
+                            ? 'border-2 border-primary bg-primary/5 hover:bg-primary/10'
+                            : 'border-t-2 border-primary/10 bg-primary-bg hover:bg-primary-hover/50',
                     ]"
                     role="button"
                     tabindex="0"

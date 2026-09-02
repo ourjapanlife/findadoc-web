@@ -33,21 +33,22 @@
                     <button
                         id="welcome-screen-arrow-button"
                         type="button"
-                        class="relative group flex items-center self-start focus:outline-none
-                        bg-secondary hover:bg-secondary/90 transition-colors
+                        class="relative group flex items-center self-start
+                        focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-text-inverted
+                        bg-secondary-bg hover:bg-accent-bg transition-colors
                         px-6 py-3 landscape:mt-24 mt-14
                         rounded-full welcome-lets-go z-10"
                         :aria-label="t('onboarding.letsGoButtonText')"
                         @click="expandBackground"
                     >
                         <!-- Button text -->
-                        <span class="text-xl font-bold text-primary-text-inverted">
+                        <span class="text-xl font-bold text-primary">
                             {{ t('onboarding.letsGoButtonText') }}
                         </span>
                         <!-- Right-pointing Arrow SVG -->
                         <svg
                             aria-hidden="true"
-                            class="w-6 h-6 pt-1 text-primary-text-inverted transform
+                            class="w-6 h-6 pt-1 text-primary transform
                                 group-hover:translate-x-1 transition-transform"
                             fill="none"
                             stroke="currentColor"
