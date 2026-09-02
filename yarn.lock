@@ -1201,6 +1201,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fontsource/noto-sans-jp@npm:^5.3.0":
+  version: 5.3.0
+  resolution: "@fontsource/noto-sans-jp@npm:5.3.0"
+  checksum: 10/16ffa0e3a705f0e2e738723781708b025847b5350b672d7d4ad4c610e400939caffe46122a73edd94f1a23fd3f9c7cf2dd06d4c98b8acf9cf8f47399b700fac1
+  languageName: node
+  linkType: hard
+
 "@googlemaps/js-api-loader@npm:^2.0.1":
   version: 2.0.2
   resolution: "@googlemaps/js-api-loader@npm:2.0.2"
@@ -9741,6 +9748,7 @@ __metadata:
   resolution: "findadoc-web@workspace:."
   dependencies:
     "@auth0/auth0-vue": "npm:^2.5.0"
+    "@fontsource/noto-sans-jp": "npm:^5.3.0"
     "@graphql-codegen/cli": "npm:^6.1.0"
     "@graphql-codegen/typescript": "npm:^5.0.7"
     "@graphql-codegen/typescript-resolvers": "npm:^5.1.5"
