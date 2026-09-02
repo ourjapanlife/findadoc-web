@@ -18,6 +18,21 @@ type FacilitySearchResult = Facility & {
     healthcareProfessionals: HealthcareProfessional[]
 }
 
+/**
+ * Narrows facilities to a single city, matching either the English or Japanese city name.
+ *
+ * Must be applied only after all batches have been fetched — see `fetchAllFacilities`.
+ */
+function filterFacilitiesByCity(facilities: Facility[], searchCity?: string): Facility[] {
+    if (!searchCity) {
+        return facilities
+    }
+
+    return facilities.filter(facility =>
+        facility.contact?.address.cityEn === searchCity
+        || facility.contact?.address.cityJa === searchCity)
+}
+
 export const useSearchResultsStore = defineStore('searchResultsStore', () => {
     const toast = useAppToast()
 
@@ -74,16 +89,21 @@ export const useSearchResultsStore = defineStore('searchResultsStore', () => {
         let hasMoreBatches = true
 
         while (hasMoreBatches) {
-            const batch = await queryFacilities(searchCity, healthcareProfessionalIDs, batchSize, offset)
+            const batch = await queryFacilities(healthcareProfessionalIDs, batchSize, offset)
 
             allFacilities.push(...batch)
 
-            // If we got less than batchSize, we've reached the end
+            /*
+             * Paginate on how many rows the server returned, never on how many survive the city
+             * filter below. Filtering first and then comparing against batchSize ends the loop as
+             * soon as a batch is partially filtered out, which silently truncated every
+             * city-filtered search to the first batch.
+             */
             hasMoreBatches = batch.length === batchSize
             offset += batchSize
         }
 
-        return allFacilities
+        return filterFacilitiesByCity(allFacilities, searchCity)
     }
 
     // We have the numbers of HelathcareProfessional on runtime
@@ -249,7 +269,6 @@ export const useSearchResultsStore = defineStore('searchResultsStore', () => {
     }
 
     async function queryFacilities(
-    searchCity?: string,
     healthcareProfessionalIDs?: string[],
     limit: number = 100,
     offset: number = 0
@@ -280,14 +299,7 @@ export const useSearchResultsStore = defineStore('searchResultsStore', () => {
 
             notifyServerErrorsIfPresent(serverResponse.errors)
 
-            const facilitiesSearchResults = serverResponse.data.facilities ?? []
-
-            const locationFilteredSearchResults = searchCity
-                ? facilitiesSearchResults.filter(facility =>
-                    facility.contact?.address.cityEn === searchCity || facility.contact?.address.cityJa === searchCity)
-                : facilitiesSearchResults
-
-            return locationFilteredSearchResults
+            return serverResponse.data.facilities ?? []
         } catch (error) {
             console.error(useTranslation('searchResultsErrors.gettingFacilities'), `${JSON.stringify(error)}`)
             // eslint-disable-next-line no-alert
