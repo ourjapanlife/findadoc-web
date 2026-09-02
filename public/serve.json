@@ -4,8 +4,6 @@
     { "source": "/login", "destination": "/200.html" },
     { "source": "/login/:path*", "destination": "/200.html" },
     { "source": "/my-page", "destination": "/200.html" },
-    { "source": "/my-page/:path*", "destination": "/200.html" },
-    { "source": "/moderation", "destination": "/200.html" },
-    { "source": "/moderation/:path*", "destination": "/200.html" }
+    { "source": "/my-page/:path*", "destination": "/200.html" }
   ]
 }

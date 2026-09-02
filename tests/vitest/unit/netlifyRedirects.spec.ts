@@ -19,7 +19,7 @@ describe('SPA fallbacks', () => {
 
     it('rewrites other non-prerendered app routes to the SPA shell', () => {
         const redirects = readRedirects()
-        for (const path of ['/login', '/my-page', '/moderation']) {
+        for (const path of ['/login', '/my-page']) {
             const exact = new RegExp(`^${path}\\s+/200\\.html\\s+200`, 'm')
             const nested = new RegExp(`^${path}/\\*\\s+/200\\.html\\s+200`, 'm')
             expect(redirectRuleIndex(redirects, exact), `${path} exact rewrite`).to.be.greaterThan(-1)

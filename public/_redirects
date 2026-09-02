@@ -11,8 +11,6 @@
 /login/*        /200.html   200
 /my-page        /200.html   200
 /my-page/*      /200.html   200
-/moderation     /200.html   200
-/moderation/*   /200.html   200
 
 # Unknown paths stay a real 404 (not a soft 200 SPA shell).
 /*              /404.html   404

@@ -146,9 +146,7 @@ export default defineNuxtConfig({
         '/submit': { prerender: true },
         '/login': { ssr: false },
         '/my-page': { ssr: false },
-        '/my-page/**': { ssr: false },
-        '/moderation': { ssr: false },
-        '/moderation/**': { ssr: false }
+        '/my-page/**': { ssr: false }
     },
     sourcemap: {
         client: true
