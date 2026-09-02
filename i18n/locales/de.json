@@ -1,9 +1,20 @@
 {
+  "npoPage": {
+    "heading": "Offenlegung der gemeinnützigen Organisation",
+    "intro": "Find a Doc, Japan ist eine in Japan eingetragene gemeinnützige Organisation. Die folgenden Dokumente werden hier veröffentlicht, wie es für eingetragene gemeinnützige Organisationen vorgeschrieben ist.",
+    "entityLabel": "Eingetragener Name",
+    "numberLabel": "Registernummer",
+    "documentsHeading": "Eingereichte Dokumente",
+    "balanceSheet": "Bilanz",
+    "balanceSheetNote": "Jährlich veröffentlicht, wie für eingetragene gemeinnützige Organisationen vorgeschrieben.",
+    "contact": "Für weitere eingereichte Dokumente oder Fragen zu den obigen Angaben kontaktieren Sie uns:"
+  },
   "common": {
     "menu": "Menü",
     "siteName": "Find a Doc Japan",
     "siteNameLine1": "Find a Doc",
-    "siteNameLine2": "Japan"
+    "siteNameLine2": "Japan",
+    "loading": "Loading"
   },
   "about": {
     "heroHeading": "Find a Doc, Japan",
@@ -40,12 +51,13 @@
   },
   "footer": {
     "terms": "Nutzungsbedingungen",
+    "npo": "Gemeinnützigkeit",
     "privacy": "Datenschutz",
     "poweredBy": "Unterstützt von",
-    "contribute": "Beitragen auf",
+    "contribute": "Mitmachen",
     "feedback": "Haben Sie Feedback?",
     "clickHere": "Klicken Sie hier",
-    "copyright": "Find a Doc, Japan"
+    "copyright": "NPO法人Find a Doc, Japan"
   },
   "hamburgerMenu": {
     "about": "Über Find a Doc, Japan",
@@ -53,8 +65,7 @@
     "submit": "Arzt hinzufügen",
     "logout": "Abmelden",
     "languageDropdownTitle": "Sprache:",
-    "copyright": "Find a Doc, Japan",
-    "balancesheet": "Balance Sheet",
+    "copyright": "NPO法人Find a Doc, Japan",
     "login": "Login",
     "logoutToast": "Successfully logged out"
   },
@@ -456,5 +467,36 @@
       "cancel": "Weiter bearbeiten",
       "confirm": "Änderungen verwerfen"
     }
+  },
+  "home": {
+    "heroHeading": "Finden Sie eine Ärztin oder einen Arzt, die Ihre Sprache sprechen",
+    "heroImageAlt": "Vier medizinische Fachkräfte unterschiedlicher Herkunft nebeneinander",
+    "heroLead": "Durchsuchen Sie Kliniken und medizinisches Fachpersonal in ganz Japan, gefiltert nach den Sprachen, die das Personal tatsächlich spricht.",
+    "searchSpecialtyLabel": "Was brauchen Sie?",
+    "searchLanguageLabel": "In welcher Sprache?",
+    "searchAreaLabel": "Wo?",
+    "searchAnyArea": "Überall in Japan",
+    "searchAnyLanguage": "Beliebige Sprache",
+    "searchSubmit": "Suchen",
+    "browseNeedHeading": "Nach Bedarf suchen",
+    "browseNeedLead": "Direkt zur passenden Versorgungsart.",
+    "browseAreaHeading": "Nach Region suchen",
+    "browseAreaLead": "Wo die meisten unserer Einträge derzeit liegen.",
+    "browseAreaAll": "Alle Regionen ansehen",
+    "howHeading": "So funktioniert es",
+    "howStep1Title": "Sagen Sie uns, was Sie brauchen",
+    "howStep1Body": "Wählen Sie eine Versorgungsart, eine Sprache oder eine Region. Eines davon genügt zum Start.",
+    "howStep2Title": "Sehen Sie, wer Ihre Sprache spricht",
+    "howStep2Body": "Jeder Eintrag zeigt die Sprachen, die das Personal der Klinik tatsächlich spricht — nicht nur, ob sie sich als ausländerfreundlich bezeichnet.",
+    "howStep3Title": "Nehmen Sie direkt Kontakt auf",
+    "howStep3Body": "Telefonnummer, Adresse und Website jeder Klinik. Wir stellen uns nicht zwischen Sie und Ihre Ärztin oder Ihren Arzt.",
+    "statFacilities": "{n} Kliniken gelistet",
+    "statProfessionals": "{n} Ärztinnen, Ärzte und Fachkräfte",
+    "statLanguages": "{n} Sprachen gesprochen",
+    "impactHeading": "Von Freiwilligen aufgebaut, kostenlos für alle",
+    "missionLink": "Mehr über uns",
+    "contributeHeading": "Kennen Sie eine Klinik, die uns fehlt?",
+    "contributeBody": "Jede und jeder kann eine Klinik oder eine Ärztin bzw. einen Arzt vorschlagen. Unsere Moderatorinnen und Moderatoren prüfen jede Einreichung vor der Veröffentlichung.",
+    "contributeCta": "Arzt hinzufügen"
   }
 }

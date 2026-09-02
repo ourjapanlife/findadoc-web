@@ -1,18 +1,19 @@
 <template>
     <!--
-    The main app should se h-dvh (dynamic viewport height) so the app fits the visible viewport on mobile
-    which helps us avoid any 100vh / h-screen issue where the browser address bars change the viewport and
-    can cause jumpy layouts or inconsistencies with fixed positioning.
-  - We often add overflow-y-auto to the main area so the main app should have a
-    flex column layout where only the <main> area scrolls. This helps keep the
-    TopNav and Footer always visible without needing position.
-  - The TopNav and Footer should use shrink-0 they don’t shrink when the middle content grows;
-    the main content gets the remaining space via flex-1.
--->
-    <div class="h-dvh w-full font-sans text-primary-text bg-primary-bg flex flex-col">
+        Normal document flow: the page itself scrolls, and the footer sits after the
+        content rather than being pinned above it.
+
+        This layout used to lock to h-dvh with an internally scrolling <main>, which is
+        the right shape for the map app but wrong for content pages — it pinned the
+        footer to the viewport on every screen and left the document unscrollable, so
+        browser scroll restoration and mobile chrome auto-hide had nothing to act on.
+        The map app now has its own `search` layout, so this one is free to be a
+        document.
+    -->
+    <div class="min-h-dvh w-full font-sans text-primary-text bg-primary-bg flex flex-col">
         <TopNav class="shrink-0" />
 
-        <main class="flex-1 overflow-y-auto">
+        <main class="flex-1">
             <slot />
         </main>
 

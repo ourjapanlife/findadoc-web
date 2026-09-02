@@ -1,9 +1,20 @@
 {
+  "npoPage": {
+    "heading": "Pagsisiwalat ng NPO",
+    "intro": "Ang Find a Doc, Japan ay isang rehistradong non-profit na organisasyon sa Japan. Ang mga dokumento sa ibaba ay inilalathala dito ayon sa hinihingi sa mga rehistradong non-profit.",
+    "entityLabel": "Rehistradong pangalan",
+    "numberLabel": "Numero ng pagpaparehistro ng NPO",
+    "documentsHeading": "Mga isinumiteng dokumento",
+    "balanceSheet": "Balanseng pahayag",
+    "balanceSheetNote": "Inilalathala taun-taon, ayon sa hinihingi sa mga rehistradong non-profit na organisasyon.",
+    "contact": "Para sa iba pang isinumiteng dokumento, o tanong tungkol sa nasa itaas, makipag-ugnayan sa amin:"
+  },
   "common": {
     "menu": "Menu",
     "siteName": "Find a Doc Japan",
     "siteNameLine1": "Find a Doc",
-    "siteNameLine2": "Japan"
+    "siteNameLine2": "Japan",
+    "loading": "Loading"
   },
   "about": {
     "heroHeading": "Find a Doc, Japan",
@@ -40,21 +51,21 @@
   },
   "footer": {
     "terms": "Tuntunin",
+    "npo": "NPO",
     "privacy": "Pribasiya",
     "poweredBy": "Powered by",
-    "contribute": "Mag-contribute sa",
+    "contribute": "Mag-ambag",
     "feedback": "Mga Komento?",
     "clickHere": "I-click dito",
-    "copyright": "Find a Doc, Japan"
+    "copyright": "NPO法人Find a Doc, Japan"
   },
   "hamburgerMenu": {
     "about": "Tungkol sa Find a Doc, Japan",
-    "balancesheet": "Balanseng Pahayag",
     "contact": "Kontakt",
     "submit": "Magdagdag ng Doktor",
     "logout": "Log out",
     "languageDropdownTitle": "Lengwahe:",
-    "copyright": "Find a Doc, Japan",
+    "copyright": "NPO法人Find a Doc, Japan",
     "login": "Login",
     "logoutToast": "Successfully logged out"
   },
@@ -456,5 +467,36 @@
       "cancel": "Magpatuloy sa pag-edit",
       "confirm": "Itapon ang mga pagbabago"
     }
+  },
+  "home": {
+    "heroHeading": "Maghanap ng doktor na marunong ng wika mo",
+    "heroImageAlt": "Apat na manggagawang pangkalusugan mula sa iba’t ibang pinagmulan",
+    "heroLead": "Maghanap ng mga klinika at propesyonal sa kalusugan sa buong Japan, sinasala ayon sa mga wikang talagang sinasalita ng kanilang mga tauhan.",
+    "searchSpecialtyLabel": "Ano ang kailangan mo?",
+    "searchLanguageLabel": "Sa anong wika?",
+    "searchAreaLabel": "Saan?",
+    "searchAnyArea": "Kahit saan sa Japan",
+    "searchAnyLanguage": "Kahit anong wika",
+    "searchSubmit": "Maghanap",
+    "browseNeedHeading": "Ayon sa pangangailangan",
+    "browseNeedLead": "Dumiretso sa uri ng pangangalagang kailangan mo.",
+    "browseAreaHeading": "Ayon sa lugar",
+    "browseAreaLead": "Kung saan naroon ang karamihan ng aming listahan ngayon.",
+    "browseAreaAll": "Tingnan lahat ng lugar",
+    "howHeading": "Paano ito gumagana",
+    "howStep1Title": "Sabihin sa amin ang kailangan mo",
+    "howStep1Body": "Pumili ng uri ng pangangalaga, wika, o lugar. Sapat na ang isa sa mga ito para magsimula.",
+    "howStep2Title": "Tingnan kung sino ang marunong ng wika mo",
+    "howStep2Body": "Ipinapakita sa bawat listahan ang mga wikang talagang sinasalita ng mga tauhan ng klinika, hindi lamang kung tinatawag nila ang sarili nilang bukas sa mga dayuhan.",
+    "howStep3Title": "Direktang makipag-ugnayan",
+    "howStep3Body": "Numero ng telepono, address at website ng bawat klinika. Hindi kami pumapagitna sa iyo at sa iyong doktor.",
+    "statFacilities": "{n} klinika sa listahan",
+    "statProfessionals": "{n} doktor at espesyalista",
+    "statLanguages": "{n} wikang sinasalita",
+    "impactHeading": "Ginawa ng mga boluntaryo, libre para sa lahat",
+    "missionLink": "Higit pa tungkol sa amin",
+    "contributeHeading": "May alam ka bang klinikang wala pa sa amin?",
+    "contributeBody": "Sinuman ay maaaring magmungkahi ng klinika o doktor. Sinusuri ng aming mga moderator ang bawat isinumite bago ito mailathala.",
+    "contributeCta": "Magdagdag ng doktor"
   }
 }

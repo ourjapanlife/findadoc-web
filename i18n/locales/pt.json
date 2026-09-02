@@ -1,9 +1,20 @@
 {
+  "npoPage": {
+    "heading": "Divulgações da ONG",
+    "intro": "A Find a Doc, Japan é uma organização sem fins lucrativos registada no Japão. Os documentos abaixo são publicados aqui conforme exigido às organizações registadas.",
+    "entityLabel": "Nome registado",
+    "numberLabel": "Número de registo da ONG",
+    "documentsHeading": "Documentos apresentados",
+    "balanceSheet": "Balanço",
+    "balanceSheetNote": "Publicado anualmente, conforme exigido às organizações sem fins lucrativos registadas.",
+    "contact": "Para qualquer outro documento apresentado, ou uma questão sobre o acima, contacte-nos:"
+  },
   "common": {
     "menu": "Menu",
     "siteName": "Find a Doc Japan",
     "siteNameLine1": "Find a Doc",
-    "siteNameLine2": "Japan"
+    "siteNameLine2": "Japan",
+    "loading": "Loading"
   },
   "about": {
     "heroHeading": "Find a Doc, Japan",
@@ -40,21 +51,21 @@
   },
   "footer": {
     "terms": "Termos",
+    "npo": "ONG",
     "privacy": "Privacidade",
     "poweredBy": "Criado por",
     "contribute": "Contribuir",
     "feedback": "Tem uma sugestão?",
     "clickHere": "Clique aqui",
-    "copyright": "Find a Doc, Japão"
+    "copyright": "NPO法人Find a Doc, Japan"
   },
   "hamburgerMenu": {
     "about": "Sobre Find a Doc, Japão",
     "contact": "Contato",
     "submit": "Addicionar um Médico",
     "languageDropdownTitle": "Idioma:",
-    "copyright": "Find a Doc, Japão",
+    "copyright": "NPO法人Find a Doc, Japan",
     "logout": "Log out",
-    "balancesheet": "Balance Sheet",
     "login": "Login",
     "logoutToast": "Successfully logged out"
   },
@@ -456,5 +467,36 @@
       "cancel": "Continuar editando",
       "confirm": "Descartar alterações"
     }
+  },
+  "home": {
+    "heroHeading": "Encontre um médico que fala a sua língua",
+    "heroImageAlt": "Quatro profissionais de saúde de diferentes origens lado a lado",
+    "heroLead": "Pesquise clínicas e profissionais de saúde em todo o Japão, filtrando pelas línguas que a equipa realmente fala.",
+    "searchSpecialtyLabel": "Do que precisa?",
+    "searchLanguageLabel": "Em que língua?",
+    "searchAreaLabel": "Onde?",
+    "searchAnyArea": "Em todo o Japão",
+    "searchAnyLanguage": "Qualquer língua",
+    "searchSubmit": "Pesquisar",
+    "browseNeedHeading": "Procurar por necessidade",
+    "browseNeedLead": "Vá diretamente a um tipo de cuidado.",
+    "browseAreaHeading": "Procurar por região",
+    "browseAreaLead": "Onde estão hoje a maioria dos nossos registos.",
+    "browseAreaAll": "Ver todas as regiões",
+    "howHeading": "Como funciona",
+    "howStep1Title": "Diga-nos do que precisa",
+    "howStep1Body": "Escolha um tipo de cuidado, uma língua ou uma região. Qualquer um deles basta para começar.",
+    "howStep2Title": "Veja quem fala a sua língua",
+    "howStep2Body": "Cada registo mostra as línguas que a equipa da clínica realmente fala, e não apenas se se descreve como acolhedora para estrangeiros.",
+    "howStep3Title": "Contacte diretamente",
+    "howStep3Body": "Telefone, morada e site de cada clínica. Não nos colocamos entre si e o seu médico.",
+    "statFacilities": "{n} clínicas registadas",
+    "statProfessionals": "{n} médicos e especialistas",
+    "statLanguages": "{n} línguas faladas",
+    "impactHeading": "Construído por voluntários, gratuito para todos",
+    "missionLink": "Saber mais sobre nós",
+    "contributeHeading": "Conhece uma clínica que nos falta?",
+    "contributeBody": "Qualquer pessoa pode sugerir uma clínica ou um médico. Os nossos moderadores verificam cada submissão antes de ser publicada.",
+    "contributeCta": "Adicionar um médico"
   }
 }

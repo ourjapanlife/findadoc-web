@@ -144,6 +144,14 @@ export default defineNuxtConfig({
         '/terms': { prerender: true },
         '/privacypolicy': { prerender: true },
         '/submit': { prerender: true },
+        '/npo': { prerender: true },
+        /*
+         * /search is the map application: it mounts the Google Maps SDK, reads its
+         * filters from the query string and fetches everything client-side, so there is
+         * no meaningful HTML to prerender and a prerendered shell would only ship an
+         * empty result list. The homepage is what carries the indexable content now.
+         */
+        '/search': { ssr: false },
         '/login': { ssr: false },
         '/my-page': { ssr: false },
         '/my-page/**': { ssr: false }
@@ -156,7 +164,7 @@ export default defineNuxtConfig({
     nitro: {
         prerender: {
             crawlLinks: true,
-            routes: ['/', '/about', '/terms', '/privacypolicy', '/submit']
+            routes: ['/', '/about', '/terms', '/privacypolicy', '/submit', '/npo']
         }
     },
 
@@ -181,6 +189,7 @@ export default defineNuxtConfig({
         locales: i18nLocales,
         defaultLocale: 'en-US',
         langDir: 'locales',
+        vueI18n: './i18n.config.ts',
         detectBrowserLanguage: {
             useCookie: true,
             cookieKey: 'i18n_redirected',

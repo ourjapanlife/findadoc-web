@@ -1,9 +1,20 @@
 {
+  "npoPage": {
+    "heading": "Informazioni legali dell’ente",
+    "intro": "Find a Doc, Japan è un ente non profit registrato in Giappone. I documenti seguenti sono pubblicati qui come richiesto agli enti non profit registrati.",
+    "entityLabel": "Denominazione registrata",
+    "numberLabel": "Numero di registrazione",
+    "documentsHeading": "Documenti depositati",
+    "balanceSheet": "Bilancio",
+    "balanceSheetNote": "Pubblicato ogni anno, come richiesto agli enti non profit registrati.",
+    "contact": "Per altri documenti depositati o per domande su quanto sopra, contattaci:"
+  },
   "common": {
     "menu": "Menu",
     "siteName": "Find a Doc Japan",
     "siteNameLine1": "Find a Doc",
-    "siteNameLine2": "Japan"
+    "siteNameLine2": "Japan",
+    "loading": "Loading"
   },
   "about": {
     "heroHeading": "Find a Doc, Japan",
@@ -44,21 +55,21 @@
   },
   "footer": {
     "terms": "Termini",
+    "npo": "Ente non profit",
     "privacy": "Privacy",
     "poweredBy": "Offerto da",
-    "contribute": "Contribuisci su",
+    "contribute": "Contribuisci",
     "feedback": "Hai qualche feedback?",
     "clickHere": "Clicca qui",
-    "copyright": "Find a Doc, Japan"
+    "copyright": "NPO法人Find a Doc, Japan"
   },
   "hamburgerMenu": {
     "about": "Informazioni su Find a Doc, Japan",
-    "balancesheet": "Bilancio",
     "contact": "Contatto",
     "submit": "Aggiungi un medico",
     "logout": "Esci",
     "languageDropdownTitle": "Lingua:",
-    "copyright": "Find a Doc, Japan",
+    "copyright": "NPO法人Find a Doc, Japan",
     "login": "Login",
     "logoutToast": "Successfully logged out"
   },
@@ -456,5 +467,36 @@
       "cancel": "Continua a modificare",
       "confirm": "Elimina modifiche"
     }
+  },
+  "home": {
+    "heroHeading": "Trova un medico che parla la tua lingua",
+    "heroImageAlt": "Quattro operatori sanitari di origini diverse affiancati",
+    "heroLead": "Cerca cliniche e professionisti sanitari in tutto il Giappone, filtrando per le lingue che il personale parla davvero.",
+    "searchSpecialtyLabel": "Di cosa hai bisogno?",
+    "searchLanguageLabel": "In quale lingua?",
+    "searchAreaLabel": "Dove?",
+    "searchAnyArea": "In tutto il Giappone",
+    "searchAnyLanguage": "Qualsiasi lingua",
+    "searchSubmit": "Cerca",
+    "browseNeedHeading": "Sfoglia per esigenza",
+    "browseNeedLead": "Vai direttamente al tipo di cura che ti serve.",
+    "browseAreaHeading": "Sfoglia per zona",
+    "browseAreaLead": "Dove si concentrano oggi le nostre schede.",
+    "browseAreaAll": "Vedi tutte le zone",
+    "howHeading": "Come funziona",
+    "howStep1Title": "Dicci di cosa hai bisogno",
+    "howStep1Body": "Scegli un tipo di cura, una lingua o una zona. Ne basta uno per iniziare.",
+    "howStep2Title": "Scopri chi parla la tua lingua",
+    "howStep2Body": "Ogni scheda mostra le lingue che il personale della clinica parla davvero, non solo se si definisce accogliente per gli stranieri.",
+    "howStep3Title": "Contattali direttamente",
+    "howStep3Body": "Telefono, indirizzo e sito web di ogni clinica. Non ci mettiamo tra te e il tuo medico.",
+    "statFacilities": "{n} cliniche in elenco",
+    "statProfessionals": "{n} medici e specialisti",
+    "statLanguages": "{n} lingue parlate",
+    "impactHeading": "Costruito da volontari, gratuito per tutti",
+    "missionLink": "Chi siamo",
+    "contributeHeading": "Conosci una clinica che ci manca?",
+    "contributeBody": "Chiunque può segnalare una clinica o un medico. I nostri moderatori verificano ogni segnalazione prima della pubblicazione.",
+    "contributeCta": "Aggiungi un medico"
   }
 }

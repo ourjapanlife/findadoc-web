@@ -1,6 +1,6 @@
 import { test as setup } from '@playwright/test'
 
-import { auth0Login, skipOnboarding } from './fixtures'
+import { auth0Login } from './fixtures'
 
 /**
  * Resource-owner login + cookies used by Nuxt testing mode (auth_token / id_token).
@@ -9,6 +9,5 @@ import { auth0Login, skipOnboarding } from './fixtures'
 setup('moderation auth', async ({ page, baseURL }) => {
     await page.goto(baseURL ?? 'http://localhost:4242/')
     await auth0Login(page)
-    await skipOnboarding(page)
     await page.context().storageState({ path: 'playwright/.auth/moderation.json' })
 })

@@ -1,11 +1,9 @@
 import enUS from '../../i18n/locales/en.json' with { type: 'json' }
 import { test, expect } from '@playwright/test'
-import { skipOnboarding } from './fixtures'
 
 test.describe('Submit page', () => {
     test.describe('Desktop resolution', () => {
         test.beforeEach(async ({ page }) => {
-            await skipOnboarding(page)
             await page.setViewportSize({ width: 1728, height: 1077 })
             await page.goto('/submit')
             await page.getByRole('combobox').first().selectOption('en_US')
@@ -55,7 +53,6 @@ test.describe('Submit page', () => {
 
     test.describe('Portrait mode', () => {
         test.beforeEach(async ({ page }) => {
-            await skipOnboarding(page)
             await page.setViewportSize({ width: 320, height: 568 })
             await page.goto('/submit')
         })

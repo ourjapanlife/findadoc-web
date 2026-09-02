@@ -1,9 +1,20 @@
 {
+  "npoPage": {
+    "heading": "信息公开",
+    "intro": "Find a Doc, Japan 是在日本登记的特定非营利活动法人。以下文件依照对非营利法人的公开要求在此发布。",
+    "entityLabel": "法人名称",
+    "numberLabel": "法人编号",
+    "documentsHeading": "提交文件",
+    "balanceSheet": "资产负债表",
+    "balanceSheetNote": "依照对非营利法人的要求，每年度公开。",
+    "contact": "如需其他提交文件或对以上内容有疑问，请联系我们:"
+  },
   "common": {
     "menu": "菜单",
     "siteName": "Find a Doc Japan",
     "siteNameLine1": "Find a Doc",
-    "siteNameLine2": "Japan"
+    "siteNameLine2": "Japan",
+    "loading": "Loading"
   },
   "about": {
     "heroHeading": "Find a Doc, Japan",
@@ -40,12 +51,13 @@
   },
   "footer": {
     "terms": "条款",
+    "npo": "信息公开",
     "privacy": "隐私政策",
     "poweredBy": "支持",
-    "contribute": "参与创建本项目",
+    "contribute": "参与贡献",
     "feedback": "反馈或建议",
     "clickHere": "点击这里",
-    "copyright": "Find a Doc, Japan"
+    "copyright": "NPO法人Find a Doc, Japan"
   },
   "hamburgerMenu": {
     "about": "关于 Find a Doc, Japan",
@@ -53,8 +65,7 @@
     "submit": "添加一位医师",
     "logout": "退出登录",
     "languageDropdownTitle": "语言:",
-    "copyright": "Find a Doc, Japan",
-    "balancesheet": "Balance Sheet",
+    "copyright": "NPO法人Find a Doc, Japan",
     "login": "Login",
     "logoutToast": "Successfully logged out"
   },
@@ -456,5 +467,36 @@
       "cancel": "继续编辑",
       "confirm": "放弃更改"
     }
+  },
+  "home": {
+    "heroHeading": "寻找会说您语言的医生",
+    "heroImageAlt": "四位来自不同背景的医护人员",
+    "heroLead": "搜索日本各地的诊所和医疗专业人员，按其工作人员实际使用的语言筛选。",
+    "searchSpecialtyLabel": "您需要什么？",
+    "searchLanguageLabel": "使用哪种语言？",
+    "searchAreaLabel": "在哪里？",
+    "searchAnyArea": "日本全国",
+    "searchAnyLanguage": "所有语言",
+    "searchSubmit": "搜索",
+    "browseNeedHeading": "按需求浏览",
+    "browseNeedLead": "直接找到您需要的诊疗类型。",
+    "browseAreaHeading": "按地区浏览",
+    "browseAreaLead": "目前收录最多的地区。",
+    "browseAreaAll": "查看所有地区",
+    "howHeading": "使用方法",
+    "howStep1Title": "告诉我们您的需求",
+    "howStep1Body": "选择诊疗类型、语言或地区，任选其一即可开始。",
+    "howStep2Title": "查看谁会说您的语言",
+    "howStep2Body": "每条信息都会显示该诊所工作人员实际会说的语言，而不仅仅是标注“接待外国人”。",
+    "howStep3Title": "直接联系他们",
+    "howStep3Body": "每家诊所都提供电话、地址和网站。我们不会介入您与医生之间。",
+    "statFacilities": "收录诊所 {n} 家",
+    "statProfessionals": "医生与专科医师 {n} 位",
+    "statLanguages": "支持语言 {n} 种",
+    "impactHeading": "由志愿者建设，向所有人免费开放",
+    "missionLink": "了解我们",
+    "contributeHeading": "有我们遗漏的诊所吗？",
+    "contributeBody": "任何人都可以提交诊所或医生信息。我们的审核人员会在发布前逐一核实。",
+    "contributeCta": "添加医生"
   }
 }

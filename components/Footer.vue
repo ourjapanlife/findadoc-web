@@ -2,75 +2,83 @@
     <footer
         role="contentinfo"
         data-testid="footer"
-        class="footer portrait:hidden flex border-t-4 border-secondary-bg/40 bg-secondary-bg
-        text-sm text-primary-text font-semibold py-2 rounded-t-md"
+        class="footer flex flex-col landscape:flex-row landscape:items-center gap-3 landscape:gap-6
+               border-t border-accent-bg bg-secondary-bg
+               px-6 landscape:px-8 py-4 landscape:py-3
+               text-sm text-primary-text"
     >
-        <div class="left-footer-section flex flex-none justify-start">
+        <!-- Identity and legal -->
+        <div class="flex flex-wrap items-center gap-x-2 gap-y-1 landscape:flex-none">
             <NuxtLink
                 to="/"
-                class="self-center ml-8 mr-2 hover:text-primary-hover transition-colors"
-            >© {{ new
-                Date().getUTCFullYear() }} {{ t('footer.copyright') }}</NuxtLink>
-            <span class="self-center">·</span>
-            <nav class="flex mx-2">
-                <NuxtLink
-                    to="/privacypolicy"
-                    class="self-center hover:text-primary-hover transition-colors"
-                    data-testid="privacy-link"
-                >{{ t('footer.privacy') }}</NuxtLink>
-            </nav>
-            <span class="self-center">·</span>
-            <nav class="flex mx-2">
-                <NuxtLink
-                    to="/terms"
-                    class="self-center hover:text-primary-hover transition-colors"
-                    data-testid="terms-link"
-                >{{ t('footer.terms') }}</NuxtLink>
-            </nav>
+                class="font-semibold hover:text-primary-hover transition-colors"
+            >© {{ currentYear }} {{ t('footer.copyright') }}</NuxtLink>
+            <span
+                class="text-primary-text-muted"
+                aria-hidden="true"
+            >·</span>
+            <NuxtLink
+                to="/privacypolicy"
+                class="hover:text-primary-hover transition-colors"
+                data-testid="privacy-link"
+            >{{ t('footer.privacy') }}</NuxtLink>
+            <span
+                class="text-primary-text-muted"
+                aria-hidden="true"
+            >·</span>
+            <NuxtLink
+                to="/terms"
+                class="hover:text-primary-hover transition-colors"
+                data-testid="terms-link"
+            >{{ t('footer.terms') }}</NuxtLink>
+            <span
+                class="text-primary-text-muted"
+                aria-hidden="true"
+            >·</span>
+            <NuxtLink
+                to="/npo"
+                class="hover:text-primary-hover transition-colors"
+                data-testid="npo-link"
+            >{{ t('footer.npo') }}</NuxtLink>
         </div>
-        <div class="middle-footer-section flex flex-1 align-middle justify-center">
-            <span class="self-center">{{ t('footer.poweredBy') }}</span>
-            <nav class="flex mx-2 self-center">
-                <NuxtLink
-                    to="https://www.netlify.com/"
-                    target="_blank"
-                    class="underline hover:text-primary-hover transition-colors"
-                    data-testid="netlify-link"
-                >Netlify
-                </NuxtLink>
-            </nav>
-        </div>
-        <div class="right-footer-section flex flex-none flex-row gap-6 justify-start px-8 text-xs">
-            <!-- Theme Changer -->
+
+        <!-- Community links -->
+        <nav class="flex flex-wrap items-center gap-x-4 gap-y-1 landscape:flex-1 landscape:justify-end">
+            <NuxtLink
+                to="https://docs.findadoc.jp"
+                target="_blank"
+                rel="noopener"
+                class="hover:text-primary-hover transition-colors"
+                data-testid="contribute-link"
+            >{{ t('footer.contribute') }}</NuxtLink>
+            <NuxtLink
+                to="https://forms.gle/4E763qfaq46kEsn99"
+                target="_blank"
+                rel="noopener"
+                class="underline hover:text-primary-hover transition-colors"
+                data-testid="feedback-link"
+            >{{ t('footer.feedback') }} {{ t('footer.clickHere') }}</NuxtLink>
             <ThemeManager />
-            <span class="self-center">·</span>
-            <div class="mx-2 hover:text-primary-hover transition-colors">
-                <NuxtLink
-                    to="https://github.com/ourjapanlife/findadoc-web/"
-                    target="_blank"
-                    class="flex flex-col flex-wrap"
-                    data-testid="github-link"
-                >
-                    <div>{{ t('footer.contribute') }}</div>
-                    <div class="self-center">
-                        GitHub
-                    </div>
-                </NuxtLink>
-            </div>
-            <span class="self-center">·</span>
-            <div class="flex flex-col flex-wrap hover:text-primary-hover transition-colors">
-                <span>{{ t('footer.feedback') }}</span>
-                <NuxtLink
-                    to="https://forms.gle/4E763qfaq46kEsn99"
-                    target="_blank"
-                    class="px-2 mx-auto underline font-bold"
-                    data-testid="feedback-link"
-                >{{ t('footer.clickHere') }}</NuxtLink>
-            </div>
-        </div>
+        </nav>
+
+        <!-- Hosting credit, deliberately the quietest thing here -->
+        <p class="text-xs text-primary-text-muted landscape:flex-none m-0">
+            {{ t('footer.poweredBy') }}
+            <NuxtLink
+                to="https://www.netlify.com/"
+                target="_blank"
+                rel="noopener"
+                class="underline hover:text-primary-hover transition-colors"
+                data-testid="netlify-link"
+            >Netlify</NuxtLink>
+        </p>
     </footer>
 </template>
 
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n'
+
 const { t } = useI18n()
+
+const currentYear = new Date().getUTCFullYear()
 </script>

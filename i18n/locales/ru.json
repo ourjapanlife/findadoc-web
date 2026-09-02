@@ -1,9 +1,20 @@
 {
+  "npoPage": {
+    "heading": "Раскрытие информации НКО",
+    "intro": "Find a Doc, Japan — зарегистрированная в Японии некоммерческая организация. Документы ниже публикуются здесь в соответствии с требованиями к зарегистрированным НКО.",
+    "entityLabel": "Зарегистрированное наименование",
+    "numberLabel": "Регистрационный номер НКО",
+    "documentsHeading": "Поданные документы",
+    "balanceSheet": "Бухгалтерский баланс",
+    "balanceSheetNote": "Публикуется ежегодно, как требуется от зарегистрированных некоммерческих организаций.",
+    "contact": "По другим поданным документам или вопросам о вышеизложенном свяжитесь с нами:"
+  },
   "common": {
     "menu": "Меню",
     "siteName": "Find a Doc Japan",
     "siteNameLine1": "Find a Doc",
-    "siteNameLine2": "Japan"
+    "siteNameLine2": "Japan",
+    "loading": "Loading"
   },
   "about": {
     "heroHeading": "Find a Doc, Japan",
@@ -40,21 +51,21 @@
   },
   "footer": {
     "terms": "Правила",
+    "npo": "НКО",
     "privacy": "Конфиденциальность",
     "poweredBy": "Разработка",
-    "contribute": "Сотрудничество",
+    "contribute": "Присоединиться",
     "feedback": "Обратная связь",
     "clickHere": "Пройдите по ссылке",
-    "copyright": "Найди своего доктора, Япония"
+    "copyright": "NPO法人Find a Doc, Japan"
   },
   "hamburgerMenu": {
     "about": "О \"Найди своего доктора, Япония\"",
     "contact": "Контакты",
     "submit": "Добавить доктора",
     "languageDropdownTitle": "Язык:",
-    "copyright": "Найди своего доктора, Япония",
+    "copyright": "NPO法人Find a Doc, Japan",
     "logout": "Log out",
-    "balancesheet": "Balance Sheet",
     "login": "Login",
     "logoutToast": "Successfully logged out"
   },
@@ -456,5 +467,36 @@
       "cancel": "Продолжить редактирование",
       "confirm": "Отменить изменения"
     }
+  },
+  "home": {
+    "heroHeading": "Найдите врача, говорящего на вашем языке",
+    "heroImageAlt": "Четверо медицинских работников разного происхождения",
+    "heroLead": "Ищите клиники и медицинских специалистов по всей Японии с фильтром по языкам, на которых действительно говорит персонал.",
+    "searchSpecialtyLabel": "Что вам нужно?",
+    "searchLanguageLabel": "На каком языке?",
+    "searchAreaLabel": "Где?",
+    "searchAnyArea": "По всей Японии",
+    "searchAnyLanguage": "Любой язык",
+    "searchSubmit": "Поиск",
+    "browseNeedHeading": "По виду помощи",
+    "browseNeedLead": "Перейдите сразу к нужному виду помощи.",
+    "browseAreaHeading": "По региону",
+    "browseAreaLead": "Где сейчас больше всего наших записей.",
+    "browseAreaAll": "Все регионы",
+    "howHeading": "Как это работает",
+    "howStep1Title": "Скажите, что вам нужно",
+    "howStep1Body": "Выберите вид помощи, язык или регион. Достаточно чего-то одного.",
+    "howStep2Title": "Посмотрите, кто говорит на вашем языке",
+    "howStep2Body": "В каждой записи указаны языки, на которых действительно говорит персонал клиники, а не просто отметка «принимаем иностранцев».",
+    "howStep3Title": "Свяжитесь напрямую",
+    "howStep3Body": "Телефон, адрес и сайт каждой клиники. Мы не встаём между вами и вашим врачом.",
+    "statFacilities": "Клиник в каталоге: {n}",
+    "statProfessionals": "Врачей и специалистов: {n}",
+    "statLanguages": "Языков: {n}",
+    "impactHeading": "Создано волонтёрами, бесплатно для всех",
+    "missionLink": "Подробнее о нас",
+    "contributeHeading": "Знаете клинику, которой у нас нет?",
+    "contributeBody": "Любой может предложить клинику или врача. Наши модераторы проверяют каждую заявку перед публикацией.",
+    "contributeCta": "Добавить врача"
   }
 }

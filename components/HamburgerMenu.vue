@@ -46,7 +46,7 @@
                                     data-testid="logo"
                                 >
                                     <div class="text-lg font-semibold text-primary-text group-hover:text-primary-hover">
-                                        {{ t('hamburgerMenu.copyright') }}
+                                        {{ t('common.siteName') }}
                                     </div>
                                 </div>
                             </div>
@@ -230,6 +230,18 @@
                                                 {{ t('footer.privacy') }}
                                             </span>
                                         </NuxtLink>
+                                        <NuxtLink
+                                            to="/npo"
+                                            data-testid="hamburger-menu-footer-legal-npo"
+                                        >
+                                            <span
+                                                class="text-primary-text"
+                                                @click="closeMenu()"
+                                                @keydown.enter="closeMenu()"
+                                            >
+                                                {{ t('footer.npo') }}
+                                            </span>
+                                        </NuxtLink>
                                     </div>
 
                                     <!-- Github and Netify -->
@@ -265,42 +277,13 @@
                                         </NuxtLink>
                                     </div>
 
-                                    <!-- Copyright NPO number and Balance Sheet -->
-
+                                    <!-- Copyright -->
                                     <div
                                         data-testid="hamburger-menu-footer-copyright"
                                         class="text-xs text-primary-text-muted"
                                     >
                                         <div>
                                             © {{ new Date().getUTCFullYear() }} {{ t('hamburgerMenu.copyright') }}
-                                        </div>
-                                        <div
-                                            data-testid="hamburger-menu-footer-legal"
-                                            class="flex"
-                                        >
-                                            <span
-                                                data-testid="npo-link"
-                                                class="mt-0.5"
-                                            >
-                                                NPO
-                                                <NuxtLink
-                                                    to="https://www.npo-hiroba.or.jp/search/zoom.php?pk=121289"
-                                                    target="_blank"
-                                                    class="underline"
-                                                >#9011005010215
-                                                </NuxtLink>
-                                            </span>
-                                            <span
-                                                data-testid="npo-balance-sheet-link"
-                                                class="ml-2 mt-0.5"
-                                            >
-                                                <NuxtLink
-                                                    to="https://docs.google.com/spreadsheets/d/1CafQoHn1NNNoRy35QSt_nUZcgKL8QN2M"
-                                                    target="_blank"
-                                                    class="underline"
-                                                >{{ t('hamburgerMenu.balancesheet') }}
-                                                </NuxtLink>
-                                            </span>
                                         </div>
                                     </div>
                                 </div>
