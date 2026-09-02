@@ -1,4 +1,4 @@
-import { defineStore } from 'pinia'
+import { defineStore, skipHydrate } from 'pinia'
 import { ref } from 'vue'
 
 const ONBOARDING_STORAGE_KEY = 'onboardingState'
@@ -8,27 +8,44 @@ export enum OnboardingState {
     NotStarted = 'not-started'
 }
 
-export const useOnboardingStore = defineStore('onboarding', () => {
-    // State
-    const onboardingState = ref(getInitialState())
+function readStoredState(): OnboardingState | null {
+    if (!import.meta.client)
+        return null
 
-    // Actions
+    const stored = localStorage.getItem(ONBOARDING_STORAGE_KEY)
+    if (!stored)
+        return null
+
+    try {
+        const parsed = JSON.parse(stored) as OnboardingState
+        if (parsed === OnboardingState.Completed || parsed === OnboardingState.NotStarted)
+            return parsed
+    } catch {
+        // ignore corrupt storage
+    }
+
+    return null
+}
+
+export const useOnboardingStore = defineStore('onboarding', () => {
+    // localStorage is the source of truth. Skip Pinia payload hydration so a
+    // server-rendered "not-started" value cannot overwrite a completed visit.
+    const onboardingState = skipHydrate(ref(OnboardingState.NotStarted))
+
+    function hydrateFromStorage() {
+        const stored = readStoredState()
+        if (stored)
+            onboardingState.value = stored
+    }
+
     function setOnboardingState(value: OnboardingState) {
         onboardingState.value = value
 
-        if (import.meta.client) {
+        if (import.meta.client)
             localStorage.setItem(ONBOARDING_STORAGE_KEY, JSON.stringify(value))
-        }
     }
 
-    return { onboardingState, setOnboardingState }
+    hydrateFromStorage()
+
+    return { onboardingState, setOnboardingState, hydrateFromStorage }
 })
-
-// Initialize from localStorage or default to 'not started'
-const getInitialState = (): OnboardingState => {
-    if (!import.meta.client)
-        return OnboardingState.NotStarted
-
-    const stored = localStorage.getItem(ONBOARDING_STORAGE_KEY)
-    return stored ? JSON.parse(stored) : OnboardingState.NotStarted
-}

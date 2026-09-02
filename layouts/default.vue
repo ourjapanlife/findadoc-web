@@ -13,7 +13,7 @@
         <TopNav class="shrink-0" />
 
         <main class="flex-1 overflow-y-auto">
-            <NuxtPage />
+            <slot />
         </main>
 
         <Footer class="shrink-0" />

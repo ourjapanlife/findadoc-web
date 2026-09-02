@@ -22,7 +22,7 @@ export default defineNuxtConfig({
 
     // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
     plugins: [],
-    ssr: false,
+    ssr: true,
 
     // Auto import components: https://nuxt.com/docs/guide/directory-structure/components#component-names
     components: [
@@ -134,10 +134,31 @@ export default defineNuxtConfig({
             }
         }
     },
+
+    // Public directory pages are prerendered (keeps the static Netlify generate model).
+    // Authenticated surfaces stay SPA. ISR would need a server runtime — see #1787.
+    // Non-prerendered app routes (e.g. /u/*) are SPA-rewritten in public/_redirects — see #1785.
+    routeRules: {
+        '/': { prerender: true },
+        '/about': { prerender: true },
+        '/terms': { prerender: true },
+        '/privacypolicy': { prerender: true },
+        '/submit': { prerender: true },
+        '/login': { ssr: false },
+        '/my-page': { ssr: false },
+        '/my-page/**': { ssr: false }
+    },
     sourcemap: {
         client: true
     },
     compatibilityDate: '2025-01-17',
+
+    nitro: {
+        prerender: {
+            crawlLinks: true,
+            routes: ['/', '/about', '/terms', '/privacypolicy', '/submit']
+        }
+    },
 
     vite: { plugins: [
         tailwindcss()

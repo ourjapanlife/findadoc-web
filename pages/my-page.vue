@@ -80,7 +80,8 @@ import { definePageMeta, useI18n } from '#imports'
 
 definePageMeta({
     layout: 'my-page',
-    key: 'my-page'
+    key: 'my-page',
+    ssr: false
 })
 
 const { t } = useI18n()
