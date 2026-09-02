@@ -80,17 +80,24 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch, onUnmounted } from 'vue'
+import { computed, ref, shallowRef, watch, onUnmounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { vCloseOnOutsideClick } from '~/composables/closeOnOutsideClick'
 
 const modal = ref<HTMLElement | null>(null)
 
-const {
-    confirmation,
-    cancelAction,
-    confirmAction
-} = useNuxtApp().$confirmationDialog
+/*
+ * Destructuring $confirmationDialog directly threw during SSR — it comes from a
+ * .client plugin, so it is undefined on the server, and the crash took down every
+ * prerendered route. The ClientOnly wrapper in app.vue is the real guard; this
+ * fallback keeps the component from being able to break a build again if it is ever
+ * rendered somewhere else.
+ */
+const confirmationDialog = useNuxtApp().$confirmationDialog
+
+const confirmation = confirmationDialog?.confirmation ?? shallowRef(undefined)
+const cancelAction = confirmationDialog?.cancelAction ?? (() => {})
+const confirmAction = confirmationDialog?.confirmAction ?? (() => {})
 
 const { t } = useI18n()
 
