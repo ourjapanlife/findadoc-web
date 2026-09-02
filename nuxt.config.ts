@@ -109,7 +109,13 @@ export default defineNuxtConfig({
     },
 
     // Global CSS: https://go.nuxtjs.dev/config-css
-    css: ['~/assets/css/tailwind.css'],
+    css: [
+        // Noto Sans JP, self-hosted. Each weight ships ~124 unicode-range subsets, so a
+        // Latin-only visitor fetches ~16 KB and never downloads the ~1 MB CJK chunk.
+        '@fontsource/noto-sans-jp/400.css',
+        '@fontsource/noto-sans-jp/700.css',
+        '~/assets/css/tailwind.css'
+    ],
 
     runtimeConfig: {
         public: {
