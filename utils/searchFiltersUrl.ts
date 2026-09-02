@@ -1,8 +1,9 @@
+import type { LocationQuery, LocationQueryRaw, LocationQueryValue } from 'vue-router'
 import type { Locale, Specialty } from '~/typedefs/gqlTypes.js'
 
-export type SearchFilterQueryValue = string | number | null | Array<string | number>
+export type SearchFilterQueryValue = LocationQueryValue | LocationQueryValue[]
 
-export type SearchFilterQuery = Record<string, SearchFilterQueryValue>
+export type SearchFilterQuery = LocationQuery
 
 export type SearchFilters = {
     city?: string
@@ -19,7 +20,7 @@ const CITY_QUERY_KEY = 'city'
 const SPECIALTY_QUERY_KEY = 'specialty'
 const LANGUAGE_QUERY_KEY = 'language'
 
-function getFirstQueryValue(value: SearchFilterQueryValue) {
+function getFirstQueryValue(value: SearchFilterQueryValue | undefined) {
     const firstValue = Array.isArray(value) ? value[0] : value
     return firstValue === null || firstValue === undefined ? '' : String(firstValue).trim()
 }
@@ -41,7 +42,7 @@ export function languageToUrlValue(language: Locale) {
 }
 
 export function specialtyFromUrlValue(
-    value: SearchFilterQueryValue,
+    value: SearchFilterQueryValue | undefined,
     specialtyCodes: Specialty[]
 ) {
     const normalizedValue = normalizeSpecialtyCode(getFirstQueryValue(value))
@@ -53,7 +54,7 @@ export function specialtyFromUrlValue(
 }
 
 export function languageFromUrlValue(
-    value: SearchFilterQueryValue,
+    value: SearchFilterQueryValue | undefined,
     languageCodes: Locale[]
 ) {
     const normalizedValue = normalizeLanguageCode(getFirstQueryValue(value))
@@ -91,8 +92,8 @@ export function readSearchFiltersFromQuery(
 export function buildSearchFilterQuery(
     currentQuery: SearchFilterQuery,
     filters: SearchFilters
-): SearchFilterQuery {
-    const nextQuery = { ...currentQuery }
+): LocationQueryRaw {
+    const nextQuery: LocationQueryRaw = { ...currentQuery }
 
     if (filters.city) {
         nextQuery[CITY_QUERY_KEY] = filters.city
