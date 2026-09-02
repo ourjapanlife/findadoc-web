@@ -137,6 +137,7 @@ export default defineNuxtConfig({
 
     // Public directory pages are prerendered (keeps the static Netlify generate model).
     // Authenticated surfaces stay SPA. ISR would need a server runtime — see #1787.
+    // Non-prerendered app routes (e.g. /u/*) are SPA-rewritten in public/_redirects — see #1785.
     routeRules: {
         '/': { prerender: true },
         '/about': { prerender: true },
