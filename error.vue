@@ -1,5 +1,3 @@
 <template>
-    <NuxtLayout name="error-layout">
-        <NuxtPage />
-    </NuxtLayout>
+    <NuxtLayout name="error-layout" />
 </template>

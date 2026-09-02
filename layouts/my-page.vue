@@ -5,7 +5,7 @@
     >
         <TopNav class="shrink-0" />
         <main class="flex-1 min-h-0 overflow-hidden flex flex-col">
-            <NuxtPage />
+            <slot />
         </main>
     </div>
 </template>
