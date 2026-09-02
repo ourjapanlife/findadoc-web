@@ -59,7 +59,7 @@
                 group transition-colors items-start p-2 rounded-2xl"
                 >
                     <NuxtLink
-                        class="flex"
+                        class="flex items-center"
                         to="/"
                         :aria-label="t('common.siteName')"
                         @click="handleHomeClick"
@@ -70,10 +70,19 @@
                             class="mr-1 w-10 h-10 shrink-0 align-middle fill-primary group-hover:fill-primary-hover"
                         />
                         <!-- Find a Doc, Japan Logo Text -->
+                        <!--
+                            Nudged up 4.5% of the mark's height. The mark is a circle with
+                            a handle running down-right, so centring on its bounding box
+                            leaves the wordmark visibly low — the eye reads the circle as
+                            the logo. Aligning fully to the circle centre (11.9%) then
+                            overshoots, because the handle still carries visual weight.
+                            4.5% puts "Find a Doc" level with the lens and "Japan" against
+                            the handle; chosen by rendering 0 / 3 / 4.5 / 6 / 8 / 11.9.
+                        -->
                         <div
                             role="img"
                             :aria-label="t('common.siteName')"
-                            class="title-text flex flex-col shrink-0"
+                            class="title-text flex flex-col shrink-0 -translate-y-[4.5%]"
                             data-testid="landscape-logo"
                         >
                             <div class="text-lg text-primary group-hover:text-primary-hover">
