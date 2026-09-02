@@ -74,7 +74,8 @@ import { definePageMeta, useI18n } from '#imports'
 
 // tell nuxt to our moderation layout
 definePageMeta({
-    layout: 'my-page'
+    layout: 'my-page',
+    ssr: false
 })
 
 const { t } = useI18n()
