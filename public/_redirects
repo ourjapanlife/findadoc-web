@@ -7,7 +7,6 @@
 # in sync for the same fallbacks (see #1785).
 # Add new dynamic prefixes here rather than a blanket 200 rewrite.
 /search         /200.html   200
-/search/*       /200.html   200
 /u/*            /200.html   200
 /login          /200.html   200
 /login/*        /200.html   200

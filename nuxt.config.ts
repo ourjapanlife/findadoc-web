@@ -3,6 +3,28 @@ import i18nLocales from './i18n'
 import tailwindcss from '@tailwindcss/vite'
 import { VIEWPORT_BREAKPOINTS, VIEWPORT_FALLBACK_BREAKPOINT } from './utils/viewport'
 
+/**
+ * The analytics tag, only when it is actually configured.
+ *
+ * A bare truthiness check is not enough: the deploy environment sets these to the
+ * literal two-character string `""`, which is truthy, so the build emitted
+ * `<script src='""'>`. An empty `src` resolves against the current document, so every
+ * page requested itself as JavaScript — normally a harmless 404, but fatal on any path
+ * covered by an SPA rewrite, where it returns HTML with 200 and the parser throws
+ * `Unexpected token '<'` before the app can hydrate.
+ */
+function umamiScript() {
+    const clean = (value?: string) => value?.replace(/^["']|["']$/g, '').trim() ?? ''
+    const url = clean(process.env.NUXT_PUBLIC_UMAMI_URL)
+    const siteId = clean(process.env.NUXT_PUBLIC_UMAMI_SITE_ID)
+
+    if (!url || !siteId || process.env.NODE_ENV !== 'production') {
+        return []
+    }
+
+    return [{ src: url, async: true, defer: true, 'data-website-id': siteId }]
+}
+
 const SITE_TITLE = 'Find a Doc, Japan!'
 const SITE_DESCRIPTION
     = 'Health service information for the international community in Japan'
@@ -94,17 +116,7 @@ export default defineNuxtConfig({
                 }
             ],
             link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.svg' }],
-            script:
-            process.env.NUXT_PUBLIC_UMAMI_URL && process.env.NUXT_PUBLIC_UMAMI_SITE_ID && process.env.NODE_ENV === 'production'
-                ? [
-                    {
-                        src: `${process.env.NUXT_PUBLIC_UMAMI_URL}`,
-                        async: true,
-                        defer: true,
-                        'data-website-id': process.env.NUXT_PUBLIC_UMAMI_SITE_ID
-                    }
-                ]
-                : []
+            script: umamiScript()
         }
     },
 

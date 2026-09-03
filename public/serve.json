@@ -1,7 +1,6 @@
 {
   "rewrites": [
     { "source": "/search", "destination": "/200.html" },
-    { "source": "/search/:path*", "destination": "/200.html" },
     { "source": "/u/:username", "destination": "/200.html" },
     { "source": "/login", "destination": "/200.html" },
     { "source": "/login/:path*", "destination": "/200.html" },
