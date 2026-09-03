@@ -1,11 +1,9 @@
 import enUS from '../../i18n/locales/en.json' with { type: 'json' }
 import { test, expect } from '@playwright/test'
-import { skipOnboarding } from './fixtures'
 
 test.describe('About page', () => {
     test.describe('Desktop resolution', () => {
         test.beforeEach(async ({ page }) => {
-            await skipOnboarding(page)
             await page.setViewportSize({ width: 1728, height: 1077 })
             await page.goto('/about')
         })
@@ -28,7 +26,14 @@ test.describe('About page', () => {
 
         test('shows member details', async ({ page }) => {
             await expect(page.getByRole('img').first()).toBeVisible()
-            await expect(page.getByText(/linkedin|github/i).first()).toBeVisible()
+            /*
+             * Match on accessible name, as the portrait test below does. The previous
+             * getByText(/github/i) was matching the footer's "Contribute on GitHub"
+             * rather than anything in the member list, so it passed without asserting
+             * that members had rendered at all.
+             */
+            await expect(page.getByRole('link', { name: /linkedin/i }).first()).toBeVisible()
+            await expect(page.getByRole('link', { name: /github/i }).first()).toBeVisible()
         })
 
         test('shows the footer', async ({ page }) => {
@@ -38,7 +43,6 @@ test.describe('About page', () => {
 
     test.describe('Portrait mode', () => {
         test.beforeEach(async ({ page }) => {
-            await skipOnboarding(page)
             await page.setViewportSize({ width: 320, height: 568 })
             await page.goto('/about')
         })

@@ -1,10 +1,8 @@
 import { test, expect } from '@playwright/test'
-import { skipOnboarding } from './fixtures'
 
 test.describe('Privacy Policy page', () => {
     test.describe('Landscape resolution', () => {
         test.beforeEach(async ({ page }) => {
-            await skipOnboarding(page)
             await page.setViewportSize({ width: 1728, height: 1077 })
             await page.goto('/privacypolicy')
         })
@@ -28,7 +26,6 @@ test.describe('Privacy Policy page', () => {
 
     test.describe('Portrait mode', () => {
         test.beforeEach(async ({ page }) => {
-            await skipOnboarding(page)
             await page.setViewportSize({ width: 320, height: 568 })
             await page.goto('/privacypolicy')
         })

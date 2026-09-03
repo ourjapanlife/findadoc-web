@@ -5,7 +5,7 @@ exports[`submit.vue (vitest snapshot) > renders correctly 1`] = `
   <div>
     <div class="h-full w-full bg-primary-bg/70 z-10 absolute" style="">
       <div class="flex justify-center align-middle mt-12">
-        <div class="flex text-primary self-center text-4xl"> Loading </div><svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid" viewBox="0 25 100 50" role="img" alt="loading animation" title="loading animation" class="flex h-12">
+        <div class="flex text-primary self-center text-4xl">common.loading</div><svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid" viewBox="0 25 100 50" role="img" alt="loading animation" title="loading animation" class="flex h-12">
           <circle cx="18" cy="50" r="4" fill="#0EB0C0">
             <animate attributeName="cy" begin="0s" calcMode="spline" dur="1.4492753623188404s" keySplines="0.5 0 0.5 1;0.5 0 0.5 1" repeatCount="indefinite" values="34;66;34"></animate>
           </circle>

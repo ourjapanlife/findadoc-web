@@ -1,9 +1,20 @@
 {
+  "npoPage": {
+    "heading": "情報公開",
+    "intro": "NPO法人Find a Doc, Japanは、日本で登記された特定非営利活動法人です。以下の書類は、特定非営利活動法人に義務づけられた公告として掲載しています。",
+    "entityLabel": "法人名",
+    "numberLabel": "法人番号",
+    "documentsHeading": "提出書類",
+    "balanceSheet": "貸借対照表",
+    "balanceSheetNote": "特定非営利活動法人に義務づけられた公告として、毎年度公開しています。",
+    "contact": "その他の提出書類、または上記に関するお問い合わせはこちら:"
+  },
   "common": {
     "menu": "メニュー",
     "siteName": "Find a Doc Japan",
     "siteNameLine1": "Find a Doc",
-    "siteNameLine2": "Japan"
+    "siteNameLine2": "Japan",
+    "loading": "Loading"
   },
   "about": {
     "heroHeading": "Find a Doc, Japan",
@@ -40,12 +51,13 @@
   },
   "footer": {
     "terms": "利用規約",
+    "npo": "情報公開",
     "privacy": "プライバシーポリシー",
     "poweredBy": "Powered by",
-    "contribute": "本活動に寄与する",
+    "contribute": "活動に参加する",
     "feedback": "ご意見・ご質問",
     "clickHere": "こちらをクリック",
-    "copyright": "Find a Doc, Japan"
+    "copyright": "NPO法人Find a Doc, Japan"
   },
   "hamburgerMenu": {
     "about": "私たちについて",
@@ -53,8 +65,7 @@
     "submit": "医師情報の追加",
     "logout": "ログアウト",
     "languageDropdownTitle": "対応言語:",
-    "copyright": "Find a Doc, Japan",
-    "balancesheet": "Balance Sheet",
+    "copyright": "NPO法人Find a Doc, Japan",
     "login": "Login",
     "logoutToast": "Successfully logged out"
   },
@@ -456,5 +467,36 @@
       "cancel": "編集を続ける",
       "confirm": "変更を破棄する"
     }
+  },
+  "home": {
+    "heroHeading": "あなたの言語で診てくれる医師を探す",
+    "heroImageAlt": "さまざまな背景を持つ4人の医療従事者",
+    "heroLead": "日本全国のクリニックと医療従事者を、スタッフが実際に話せる言語で絞り込んで検索できます。",
+    "searchSpecialtyLabel": "どのような診療をお探しですか？",
+    "searchLanguageLabel": "希望する言語は？",
+    "searchAreaLabel": "エリアは？",
+    "searchAnyArea": "日本全国",
+    "searchAnyLanguage": "すべての言語",
+    "searchSubmit": "検索",
+    "browseNeedHeading": "診療科から探す",
+    "browseNeedLead": "お探しの診療内容からすぐに見つけられます。",
+    "browseAreaHeading": "エリアから探す",
+    "browseAreaLead": "現在、掲載の多い地域です。",
+    "browseAreaAll": "すべてのエリアを見る",
+    "howHeading": "ご利用の流れ",
+    "howStep1Title": "必要な情報を選ぶ",
+    "howStep1Body": "診療科、言語、エリアのいずれかを選ぶだけで検索を始められます。",
+    "howStep2Title": "対応言語を確認する",
+    "howStep2Body": "各掲載には、そのクリニックのスタッフが実際に話せる言語を表示しています。「外国人対応可」という表記だけではありません。",
+    "howStep3Title": "直接連絡する",
+    "howStep3Body": "すべてのクリニックの電話番号・住所・ウェブサイトを掲載しています。当団体が仲介することはありません。",
+    "statFacilities": "掲載クリニック {n} 件",
+    "statProfessionals": "医師・専門医 {n} 名",
+    "statLanguages": "対応言語 {n} 言語",
+    "impactHeading": "ボランティアによる運営、どなたでも無料でご利用いただけます",
+    "missionLink": "私たちについて",
+    "contributeHeading": "掲載されていないクリニックをご存じですか？",
+    "contributeBody": "どなたでもクリニックや医師の情報をお寄せいただけます。公開前にモデレーターがすべて確認します。",
+    "contributeCta": "医師情報を追加する"
   }
 }

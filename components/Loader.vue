@@ -5,7 +5,7 @@
     >
         <div class="flex justify-center align-middle mt-12">
             <div class="flex text-primary self-center text-4xl">
-                Loading
+                {{ t('common.loading') }}
             </div>
             <SVGLoadingIcon
                 role="img"
@@ -18,8 +18,10 @@
 </template>
 
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n'
 import { useLoadingStore } from '../stores/loadingStore.js'
 import SVGLoadingIcon from '~/assets/icons/loading.svg'
 
+const { t } = useI18n()
 const loadingStore = useLoadingStore()
 </script>

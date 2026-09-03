@@ -1,9 +1,20 @@
 {
+  "npoPage": {
+    "heading": "Công bố thông tin tổ chức phi lợi nhuận",
+    "intro": "Find a Doc, Japan là tổ chức phi lợi nhuận đã đăng ký tại Nhật Bản. Các tài liệu dưới đây được công bố tại đây theo quy định đối với tổ chức phi lợi nhuận đã đăng ký.",
+    "entityLabel": "Tên đăng ký",
+    "numberLabel": "Số đăng ký tổ chức",
+    "documentsHeading": "Tài liệu đã nộp",
+    "balanceSheet": "Bảng cân đối kế toán",
+    "balanceSheetNote": "Được công bố hằng năm theo quy định đối với tổ chức phi lợi nhuận đã đăng ký.",
+    "contact": "Đối với tài liệu đã nộp khác, hoặc câu hỏi về nội dung trên, hãy liên hệ với chúng tôi:"
+  },
   "common": {
     "menu": "Menu",
     "siteName": "Find a Doc Japan",
     "siteNameLine1": "Find a Doc",
-    "siteNameLine2": "Japan"
+    "siteNameLine2": "Japan",
+    "loading": "Loading"
   },
   "about": {
     "heroHeading": "Find a Doc, Japan",
@@ -40,21 +51,21 @@
   },
   "footer": {
     "terms": "Điều khoản",
+    "npo": "Tổ chức",
     "privacy": "Chính Sách Bảo Mật",
     "poweredBy": "Được hỗ trợ bởi",
-    "contribute": "Đóng góp tại",
+    "contribute": "Đóng góp",
     "feedback": "Có góp ý",
     "clickHere": "Nhấn vào đây",
-    "copyright": "Find a Doc, Japan"
+    "copyright": "NPO法人Find a Doc, Japan"
   },
   "hamburgerMenu": {
     "about": "Về Find a Doc, Japan",
-    "balancesheet": "Bảng Cân Đối Kế Toán",
     "contact": "Liên Hệ",
     "submit": "Thêm Bác Sĩ",
     "logout": "Đăng xuất",
     "languageDropdownTitle": "Ngôn Ngữ:",
-    "copyright": "Find a Doc, Japan",
+    "copyright": "NPO法人Find a Doc, Japan",
     "login": "Login",
     "logoutToast": "Successfully logged out"
   },
@@ -456,5 +467,36 @@
       "cancel": "Tiếp tục chỉnh sửa",
       "confirm": "Hủy thay đổi"
     }
+  },
+  "home": {
+    "heroHeading": "Tìm bác sĩ nói ngôn ngữ của bạn",
+    "heroImageAlt": "Bốn nhân viên y tế với xuất thân khác nhau đứng cạnh nhau",
+    "heroLead": "Tìm kiếm phòng khám và nhân viên y tế trên khắp Nhật Bản, lọc theo những ngôn ngữ mà nhân viên thực sự nói được.",
+    "searchSpecialtyLabel": "Bạn cần gì?",
+    "searchLanguageLabel": "Bằng ngôn ngữ nào?",
+    "searchAreaLabel": "Ở đâu?",
+    "searchAnyArea": "Toàn Nhật Bản",
+    "searchAnyLanguage": "Mọi ngôn ngữ",
+    "searchSubmit": "Tìm kiếm",
+    "browseNeedHeading": "Tìm theo nhu cầu",
+    "browseNeedLead": "Đi thẳng đến loại hình chăm sóc bạn cần.",
+    "browseAreaHeading": "Tìm theo khu vực",
+    "browseAreaLead": "Nơi có nhiều cơ sở nhất hiện nay.",
+    "browseAreaAll": "Xem tất cả khu vực",
+    "howHeading": "Cách hoạt động",
+    "howStep1Title": "Cho chúng tôi biết bạn cần gì",
+    "howStep1Body": "Chọn loại hình chăm sóc, ngôn ngữ hoặc khu vực. Chỉ cần một trong số đó là đủ để bắt đầu.",
+    "howStep2Title": "Xem ai nói được ngôn ngữ của bạn",
+    "howStep2Body": "Mỗi cơ sở đều hiển thị những ngôn ngữ mà nhân viên phòng khám thực sự nói được, không chỉ là việc họ tự nhận thân thiện với người nước ngoài.",
+    "howStep3Title": "Liên hệ trực tiếp",
+    "howStep3Body": "Số điện thoại, địa chỉ và trang web của từng phòng khám. Chúng tôi không đứng giữa bạn và bác sĩ của bạn.",
+    "statFacilities": "{n} phòng khám được liệt kê",
+    "statProfessionals": "{n} bác sĩ và chuyên gia",
+    "statLanguages": "{n} ngôn ngữ được sử dụng",
+    "impactHeading": "Được xây dựng bởi tình nguyện viên, miễn phí cho mọi người",
+    "missionLink": "Tìm hiểu thêm về chúng tôi",
+    "contributeHeading": "Bạn biết phòng khám nào chúng tôi còn thiếu?",
+    "contributeBody": "Bất kỳ ai cũng có thể đề xuất một phòng khám hoặc bác sĩ. Người kiểm duyệt của chúng tôi xem xét mọi đề xuất trước khi đăng.",
+    "contributeCta": "Thêm bác sĩ"
   }
 }

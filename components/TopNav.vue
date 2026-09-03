@@ -245,6 +245,8 @@ const modalStore = useModalStore()
 const { isLandscape } = useScreenOrientation()
 const showGlobalSearch = computed(() =>
     isLandscape.value
+    // The homepage carries its own search entry; a second one in the nav duplicates it.
+    && route.path !== '/'
     && !route.path.startsWith('/my-page'))
 
 const showLogoText = ref(false)

@@ -57,7 +57,7 @@ export const useSpecialtiesStore = defineStore('specialtiesStore', () => {
     ] as SpecialtyDisplayOption[])
 
     // This helps us map what specialties belong under a category.
-    // This is used in the onboarding flow and helpful for search results
+    // Used by the homepage category tiles and the search filter panel.
     const categoryToSpecialtyMap = computed(() => ({
         [SpecialtyCategory.Dental]: [Specialty.Dentistry],
         [SpecialtyCategory.Dermatology]: [Specialty.Dermatology],

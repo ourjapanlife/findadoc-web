@@ -23,14 +23,24 @@ type FacilitySearchResult = Facility & {
  *
  * Must be applied only after all batches have been fetched — see `fetchAllFacilities`.
  */
-function filterFacilitiesByCity(facilities: Facility[], searchCity?: string): Facility[] {
-    if (!searchCity) {
-        return facilities
-    }
+function filterFacilitiesByLocation(
+    facilities: Facility[],
+    searchCity?: string,
+    searchPrefecture?: string
+): Facility[] {
+    return facilities.filter(facility => {
+        const address = facility.contact?.address
 
-    return facilities.filter(facility =>
-        facility.contact?.address.cityEn === searchCity
-        || facility.contact?.address.cityJa === searchCity)
+        const cityMatches = !searchCity
+          || address?.cityEn === searchCity
+          || address?.cityJa === searchCity
+
+        const prefectureMatches = !searchPrefecture
+          || address?.prefectureEn === searchPrefecture
+          || address?.prefectureJa === searchPrefecture
+
+        return cityMatches && prefectureMatches
+    })
 }
 
 export const useSearchResultsStore = defineStore('searchResultsStore', () => {
@@ -50,6 +60,7 @@ export const useSearchResultsStore = defineStore('searchResultsStore', () => {
     const totalResults = ref(0)
 
     const selectedCity: Ref<string | undefined> = ref()
+    const selectedPrefecture: Ref<string | undefined> = ref()
     const selectedSpecialties: Ref<Specialty[] | undefined> = ref()
     const selectedLanguages: Ref<Locale[] | undefined> = ref()
 
@@ -81,6 +92,7 @@ export const useSearchResultsStore = defineStore('searchResultsStore', () => {
 
     async function fetchAllFacilities(
         searchCity?: string,
+        searchPrefecture?: string,
         healthcareProfessionalIDs?: string[]
     ): Promise<Facility[]> {
         const allFacilities: Facility[] = []
@@ -103,7 +115,7 @@ export const useSearchResultsStore = defineStore('searchResultsStore', () => {
             offset += batchSize
         }
 
-        return filterFacilitiesByCity(allFacilities, searchCity)
+        return filterFacilitiesByLocation(allFacilities, searchCity, searchPrefecture)
     }
 
     // We have the numbers of HelathcareProfessional on runtime
@@ -155,7 +167,7 @@ export const useSearchResultsStore = defineStore('searchResultsStore', () => {
         allMapPoints.value = mapPointsResult.data.facilities ?? []
 
         // Fetch ALL facilities using automatic pagination
-        const facilitiesSearchResults = await fetchAllFacilities(selectedCity.value)
+        const facilitiesSearchResults = await fetchAllFacilities(selectedCity.value, selectedPrefecture.value)
 
         // Extract all unique professional IDs
         const allProfessionalIds = facilitiesSearchResults
@@ -321,6 +333,7 @@ export const useSearchResultsStore = defineStore('searchResultsStore', () => {
         clearActiveSearchResult,
         clearActiveProfessional,
         selectedCity,
+        selectedPrefecture,
         selectedSpecialties,
         selectedLanguages,
         totalResults,

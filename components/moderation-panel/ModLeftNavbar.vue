@@ -5,8 +5,14 @@
         border border-accent-bg bg-secondary-bg rounded-xl shadow-sm"
     >
         <h2 class="text-3xl md:text-4xl font-semibold mb-4 md:mb-6 text-primary-text">
-            My Page
+            {{ t('topNav.myPage') }}
         </h2>
         <MyPageAccessPanel />
     </aside>
 </template>
+
+<script setup lang="ts">
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
+</script>

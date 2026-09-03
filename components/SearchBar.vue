@@ -9,7 +9,7 @@
                    cursor-pointer"
             alt="filters panel"
             data-testid="filters-panel-summary"
-            @click="openFiltersPanel()"
+            @click="handleSearchClick()"
         >
             <div class="flex items-center gap-2">
                 <FiltersIcon
@@ -57,8 +57,9 @@
                 </span>
             </div>
         </div>
-        <!-- Results count -->
+        <!-- Results count, only where a search has actually run -->
         <span
+            v-if="isOnSearchPage"
             class="block text-sm text-center
                    text-primary-text-muted self-center"
         >
@@ -70,6 +71,8 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { useRoute } from 'vue-router'
+import { navigateTo } from '#imports'
 import FiltersIcon from '~/assets/icons/equalizer-icon.svg'
 import { useSearchResultsStore } from '~/stores/searchResultsStore.js'
 import { useLocaleStore } from '~/stores/localeStore.js'
@@ -77,6 +80,8 @@ import { useSpecialtiesStore } from '~/stores/specialtiesStore.js'
 
 const { t } = useI18n()
 
+const route = useRoute()
+const isOnSearchPage = computed(() => route.path === '/search')
 const searchResultsStore = useSearchResultsStore()
 const localeStore = useLocaleStore()
 const specialtiesStore = useSpecialtiesStore()
@@ -95,7 +100,17 @@ const selectedLanguageText = computed(() => {
     return selectedLanguage.displayText
 })
 
-function openFiltersPanel() {
+/**
+ * The filters panel lives inside the search page's bottom sheet, which is not mounted
+ * anywhere else. Off the search page this control therefore has to navigate rather than
+ * try to open a sheet that does not exist — which is what it used to do, silently.
+ */
+function handleSearchClick() {
+    if (!isOnSearchPage.value) {
+        void navigateTo('/search')
+        return
+    }
+
     useBottomSheetStore().showBottomSheet(BottomSheetType.FiltersPanel)
 }
 </script>
