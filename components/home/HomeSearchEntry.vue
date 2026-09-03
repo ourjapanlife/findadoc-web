@@ -21,7 +21,6 @@
             >{{ t('home.searchSpecialtyLabel') }}</label>
             <select
                 id="home-specialty"
-                v-model="selectedSpecialty"
                 name="specialty"
                 data-testid="home-specialty"
                 class="h-12 px-3 rounded-lg border border-primary-text-muted bg-secondary-bg
@@ -47,7 +46,6 @@
             >{{ t('home.searchLanguageLabel') }}</label>
             <select
                 id="home-language"
-                v-model="selectedLanguage"
                 name="language"
                 data-testid="home-language"
                 class="h-12 px-3 rounded-lg border border-primary-text-muted bg-secondary-bg
@@ -73,7 +71,6 @@
             >{{ t('home.searchAreaLabel') }}</label>
             <select
                 id="home-area"
-                v-model="selectedPrefecture"
                 name="prefecture"
                 data-testid="home-area"
                 class="h-12 px-3 rounded-lg border border-primary-text-muted bg-secondary-bg
@@ -105,7 +102,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { navigateTo } from '#imports'
 import { useSpecialtiesStore } from '~/stores/specialtiesStore'
@@ -114,10 +111,6 @@ import { ALL_PREFECTURES, SEARCHABLE_LANGUAGES, type PrefectureEntry } from '~/u
 
 const { t, locale } = useI18n()
 const specialtiesStore = useSpecialtiesStore()
-
-const selectedSpecialty = ref('')
-const selectedLanguage = ref('')
-const selectedPrefecture = ref('')
 
 const prefectures = ALL_PREFECTURES
 
@@ -144,12 +137,24 @@ const languageOptions = computed(() =>
         .map(code => localeDisplayOptions.find(option => option.code === code))
         .filter((option): option is NonNullable<typeof option> => !!option))
 
-function submitSearch() {
+/*
+ * Read the selections off the form rather than from refs.
+ *
+ * With v-model, a value chosen before hydration was wiped the moment Vue hydrated
+ * and reset each <select> from its own (empty) reactive state — the user's choice
+ * silently vanished and the search ran unfiltered. The form element is the single
+ * source of truth for both the JS path and the no-JS path, so there is nothing left
+ * to clobber.
+ */
+function submitSearch(event: Event) {
+    const form = event.target as HTMLFormElement
     const query: Record<string, string> = {}
 
-    if (selectedSpecialty.value) query.specialty = selectedSpecialty.value
-    if (selectedLanguage.value) query.language = selectedLanguage.value
-    if (selectedPrefecture.value) query.prefecture = selectedPrefecture.value
+    for (const [key, value] of new FormData(form).entries()) {
+        if (typeof value === 'string' && value !== '') {
+            query[key] = value
+        }
+    }
 
     void navigateTo({ path: '/search', query })
 }

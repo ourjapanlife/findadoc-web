@@ -19,7 +19,7 @@ describe('SPA fallbacks', () => {
 
     it('rewrites other non-prerendered app routes to the SPA shell', () => {
         const redirects = readRedirects()
-        for (const path of ['/login', '/my-page']) {
+        for (const path of ['/search', '/login', '/my-page']) {
             const exact = new RegExp(`^${path}\\s+/200\\.html\\s+200`, 'm')
             const nested = new RegExp(`^${path}/\\*\\s+/200\\.html\\s+200`, 'm')
             expect(redirectRuleIndex(redirects, exact), `${path} exact rewrite`).to.be.greaterThan(-1)
@@ -35,5 +35,21 @@ describe('SPA fallbacks', () => {
         const rewrites = readServeJson().rewrites ?? []
         expect(rewrites.some(rule => rule.source.startsWith('/u/') && rule.destination === '/200.html')).to.equal(true)
         expect(rewrites.some(rule => rule.source === '/**' || rule.source === '*')).to.equal(false)
+    })
+
+    /*
+     * /search is ssr: false, so generate emits no page for it and the 404 catch-all
+     * claims it unless a fallback is listed first. Missing it took the deploy preview
+     * and CI to a 404 while dev worked, because dev never consults either file.
+     */
+    it('gives /search a fallback in both files', () => {
+        const redirects = readRedirects()
+        const spa = redirectRuleIndex(redirects, /^\/search\s+\/200\.html\s+200/m)
+        const notFound = redirectRuleIndex(redirects, /^\/\*\s+\/404\.html\s+404/m)
+        expect(spa, '/search rewrite in _redirects').to.be.greaterThan(-1)
+        expect(spa).to.be.lessThan(notFound)
+
+        const rewrites = readServeJson().rewrites ?? []
+        expect(rewrites.some(rule => rule.source === '/search' && rule.destination === '/200.html')).to.equal(true)
     })
 })
