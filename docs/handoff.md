@@ -99,6 +99,29 @@ All of it is in `stores/searchResultsStore.ts`:
 
 **Target:** 1 request, <300 ms, ~30 KB to first paint, versus ~10 / 5.9 s / 570 KB.
 
+### 2c. Harden the map, deferred here on purpose
+
+`/search` currently dies if the Google Maps SDK fails to authorise. Verified against the
+deploy preview:
+
+```
+maps allowed  -> error page, no search UI
+maps BLOCKED  -> renders correctly, results list intact
+```
+
+The SDK loads, fails with `RefererNotAllowedMapError`, and takes the whole route down —
+so a Maps outage, an exhausted quota or a rotated key removes search entirely rather
+than degrading to the results list. That sits badly with the list-first decision, where
+the map is meant to be secondary.
+
+This is pre-existing (same `MapContainer`), not introduced by the homepage work, and it
+does not affect production: `www.findadoc.jp` is in the key's allowed referrers and the
+map renders there. Only `deploy-preview-*.netlify.app` is not whitelisted, which is a
+console setting rather than a code change.
+
+Fold the fix into the search work: wrap the map so its failure is contained and the
+results list survives on its own.
+
 **Regression guard:** `tests/vitest/piniaTests/searchResultsStore.spec.ts` mocks the GraphQL layer and drives the real pagination loop. Keep it meaningful as the store is rewritten — it is what proves the #1807 class of bug cannot return.
 
 ---
@@ -125,4 +148,8 @@ Learned the hard way today.
 - **Do not reformat locale files.** `json.dump` reindents all ~450 lines of ten files and buries the real change in 4,500 lines of churn. Edit the text surgically.
 - **The production API rejects CORS from `localhost`.** Search returns nothing in local dev regardless of branch. Mock the API with Playwright's `page.route` to exercise result-dependent UI.
 - **Prerendered pages are interactive before hydration.** A control in prerendered HTML can be clicked before Vue wires it. Forms need `action`/`method`/`name` so the pre-hydration path still works — see `components/home/HomeSearchEntry.vue`.
+- **The error page lies about what went wrong.** `errorPage.title` is hardcoded to
+  `"404 - Diagnosis : Page not Found"` and `error.vue` never reads `statusCode`, so a
+  runtime crash is indistinguishable from a missing route. Do not trust the words on
+  screen — check the console for the real error. Worth fixing on its own.
 - **Nitro reports SSR failures only as `[500] Server Error`.** To get the real stack, add a temporary server plugin hooking `vue:error`, build, and read the console. That is how #1814 was diagnosed.
