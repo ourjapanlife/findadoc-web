@@ -366,6 +366,28 @@ type Facility {
 
 Blocked on 2a. Almost entirely deletion once it lands.
 
+> **Evaluate TanStack Query as part of this work, not before and not after.**
+>
+> Today every filter change is free: the directory is loaded once and filtered in memory, so
+> there is nothing to race. The moment filtering moves server-side, **every filter change is a
+> request again — and the race condition comes back**. The audit recorded it in the original
+> code: a fast filter-clicker had several fetches in flight at once, applied in completion
+> order, so a stale response could overwrite a newer one. Loading once removed that
+> structurally. Server-side filtering reintroduces it, and it has to be solved properly with
+> request keying and cancellation, not a debounce.
+>
+> That, plus flicker-free pagination (`keepPreviousData`) and caching of filter combinations a
+> user toggles between, is the shape of problem `@tanstack/vue-query` exists to solve. Adopting
+> it *during* this rewrite is one migration; adopting it now, while there is a single query to
+> manage, would be two.
+>
+> The swap is already contained: components touch 17 members of `searchResultsStore`, and only
+> `loadDirectory` / `reloadDirectory` name the current strategy. Results, filters, status,
+> pagination and the active facility are all data-source-agnostic and survive either choice.
+>
+> What would be a mistake is hand-rolling request cancellation, dedup and pagination caching
+> again — that is precisely where the bug was last time.
+
 All of it is in `stores/searchResultsStore.ts`:
 
 - **Delete `fetchAllFacilities`** — the sequential batch loop.
