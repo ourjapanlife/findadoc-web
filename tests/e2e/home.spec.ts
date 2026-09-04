@@ -13,7 +13,7 @@ test.describe('Home page', () => {
         })
 
         test('displays the logo', async ({ page }) => {
-            await expect(page.getByRole('img', { name: /Find a Doc Japan/i }).first()).toBeVisible()
+            await expect(page.getByRole('img', { name: /Find a Doc, Japan/i }).first()).toBeVisible()
         })
 
         test('offers a search entry without loading the map', async ({ page }) => {
@@ -90,7 +90,7 @@ test.describe('Home page', () => {
         })
 
         test('shows the logo', async ({ page }) => {
-            await expect(page.getByRole('img', { name: /Find a Doc Japan/i }).first()).toBeVisible()
+            await expect(page.getByRole('img', { name: /Find a Doc, Japan/i }).first()).toBeVisible()
         })
 
         test('shows the heading and search entry', async ({ page }) => {

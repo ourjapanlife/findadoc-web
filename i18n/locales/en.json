@@ -43,28 +43,19 @@
   "common": {
     "loading": "Loading",
     "menu": "Menu",
-    "siteName": "Find a Doc Japan",
+    "siteName": "Find a Doc, Japan",
     "siteNameLine1": "Find a Doc",
-    "siteNameLine2": "Japan"
+    "siteNameLine2": "Japan",
+    "close": "Close"
   },
   "about": {
     "heroHeading": "Find a Doc, Japan",
     "heroSubheading": "Connecting you to the healthcare services you need, in your language",
     "heroGetStarted": "Get Started",
-    "heroLearnMore": "Learn More",
     "storyHeader": "Our Story",
     "storyParagraph1": "Founded in 2020 during the pandemic by LaShawn Toyoda and Phil Ermish, our mission is to promote a healthier and more inclusive society. We offer quality health information for free in many languages for everyone, including foreigners and medical professionals. We aim for a Japan where all people, regardless of nationality or language, can confidently navigate the healthcare system, find the right doctors and get the healthcare they need.",
     "storyParagraph2": "We are a non-profit organization driven by the ideal that everyone should have access to health information as part of a flourishing life. Our activities are guided by a sense of social justice, cultural sensitivity and innovation. We are always happy to connect with partners in the governmental, non-profit and medical communities. Together with our partners, we hope to create a Japan where everyone has access to healthcare, feels included and can live well.",
-    "btnImpact": "Our Impact So Far",
-    "btnContributors": "Contributors",
-    "btnCofounders": "Co-Founders",
-    "btnBoard": "NPO Board",
-    "btnMascots": "Mascots",
-    "btnInvolve": "Get Involved",
     "impactHeader": "Our Impact So Far",
-    "impactDoctors": "300+ Doctors Registered",
-    "impactUsers": "100+ Monthly Users",
-    "impactVolunteer": "Volunteer and Community Driven",
     "contributorsHeader": "Contributors",
     "cofoundersHeader": "Co-Founders",
     "boardHeader": "NPO Board",
@@ -76,12 +67,14 @@
     "mascotsChiko": "Chiko",
     "involveHeader": "Get Involved",
     "involveAdd": "Add a Doctor",
-    "involveGit": "Contribute",
     "involveLinkedin": "Follow Us",
-    "involveFeedback": "Give Feedback"
+    "involveFeedback": "Give Feedback",
+    "involveContribute": "Contribute",
+    "sectionNavLabel": "On this page"
   },
   "localeErrors": {
-    "notSpecified": "Not Specified"
+    "notSpecified": "Not Specified",
+    "notFound": "Unknown language"
   },
   "serverErrorMessages": {
     "errorCodeMessagingNeeded": "The server error code does not have a message for the user. Please add one.",
@@ -93,14 +86,12 @@
     "privacy": "Privacy",
     "poweredBy": "Powered by",
     "contribute": "Contribute",
-    "feedback": "Got feedback?",
-    "clickHere": "Click here",
-    "copyright": "NPO法人Find a Doc, Japan"
+    "copyright": "NPO法人Find a Doc, Japan",
+    "exploreHeading": "Explore",
+    "communityHeading": "Community",
+    "legalHeading": "Legal"
   },
   "hamburgerMenu": {
-    "about": "About Find a Doc, Japan",
-    "contact": "Contact",
-    "submit": "Add a Doctor",
     "logout": "Log out",
     "languageDropdownTitle": "Language:",
     "copyright": "NPO法人Find a Doc, Japan",
@@ -108,7 +99,10 @@
     "logoutToast": "Successfully logged out"
   },
   "themeManager": {
-    "colorThemes": "Themes"
+    "label": "Appearance",
+    "light": "Light",
+    "dark": "Dark",
+    "auto": "Auto"
   },
   "privacyPage": {
     "heading": "Privacy Policy",
@@ -154,25 +148,19 @@
     "otherNotes": "Other notes"
   },
   "searchBar": {
-    "selectSpecialty": "Select a specialty...",
-    "selectLocation": "Select a location...",
-    "allLocations": "All Locations",
     "allSpecialties": "All Specialties",
-    "search": "Search",
-    "searchAndFilterDoctors": "Search and filter doctors",
     "resultsFound": "No results | 1 result found | {n} results found"
   },
   "searchResultsList": {
     "loadMore": "Load More",
     "remaining": "remaining",
     "noResults": "No Results Found",
-    "noResultsSubtext": "Please try a different filter combination."
+    "noResultsSubtext": "Please try a different filter combination.",
+    "loadMoreCount": "Load more ({n} remaining)"
   },
   "searchResultsDetails": {
     "speaks": "This doctor speaks",
-    "contact": "Contact",
     "lastUpdate": "Last updated",
-    "additionalInfo": "Additional Info",
     "healthcareProfessionals": "Healthcare Professionals",
     "callNow": "Call"
   },
@@ -189,7 +177,8 @@
     "logout": "Log out",
     "login": "Login",
     "myPage": "My Page",
-    "logoutToast": "Successfully logged out"
+    "logoutToast": "Successfully logged out",
+    "search": "Search"
   },
   "login": {
     "checkingauth": "Checking Authentication...",
@@ -197,13 +186,6 @@
     "unauthorizedline1": "It looks like you don't have the necessary permissions to access this page. Redirecting in 10 seconds...",
     "unauthorizedline2": "If you want to become a moderator or have any questions, please contact us ",
     "unauthorizedline3": "here"
-  },
-  "onboarding": {
-    "welcometo": "Welcome to",
-    "selectcategory": "Please select a category to get started",
-    "notsurebutton": "Something else",
-    "searchloading": "Finding your care now",
-    "letsGoButtonText": "Find a Doctor!"
   },
   "specialties": {
     "allergyAndImmunology": "Allergist",
@@ -498,5 +480,26 @@
       "cancel": "Continue editing",
       "confirm": "Discard changes"
     }
+  },
+  "search": {
+    "filters": "Filters",
+    "clearFilters": "Clear filters",
+    "showMap": "Show map",
+    "hideMap": "Hide map",
+    "loading": "Loading the directory…",
+    "loadError": "We could not load the directory. Check your connection and try again.",
+    "retry": "Try again",
+    "backToResults": "Back to results",
+    "website": "Website",
+    "openInMaps": "Open in Google Maps",
+    "email": "Email",
+    "phone": "Phone",
+    "languagesSpoken": "Languages spoken",
+    "resultsRegion": "Search results",
+    "moreProfessionals": "+{n} more",
+    "professionalsAtFacility": "No professionals listed | 1 professional | {n} professionals",
+    "pageHeading": "Find a doctor in Japan",
+    "mapUnavailable": "The map could not be loaded.",
+    "mapUnavailableHint": "The rest of the results are unaffected."
   }
 }

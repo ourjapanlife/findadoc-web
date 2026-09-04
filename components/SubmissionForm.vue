@@ -1,169 +1,226 @@
 <template>
-    <div>
-        <Loader v-show="!isFormInitialized" />
-        <form
-            v-show="isFormInitialized"
-            class="flex flex-col items-center"
+    <div class="flex flex-col gap-6">
+        <h1
+            data-testid="submit-heading"
+            class="page-title-sm"
         >
-            <h1
-                data-testid="submit-heading"
-                class="mb-3.5 text-center text-primary-text text-2xl font-bold font-sans leading-normal"
-            >
-                {{ t('submitPage.heading') }}
-            </h1>
-            <p
-                data-testid="submit-subheading"
-                class="mb-10 w-96 text-center text-primary-text-muted text-sm font-normal font-sans"
-            >
-                {{ t('submitPage.subheading') }}
-            </p>
-            <span
-                class="mb-2 text-primary-text text-sm font-normal font-sans"
-            >{{ t('submitPage.googleMaps') }}</span>
+            {{ t('submitPage.heading') }}
+        </h1>
+        <p
+            data-testid="submit-subheading"
+            class="text-lg text-primary-text-muted"
+        >
+            {{ t('submitPage.subheading') }}
+        </p>
 
-            <input
-                v-model="location"
-                data-testid="submit-input-googlemaps"
-                type="text"
-                required
-                class="px-3 py-3.5 w-96 h-12 bg-secondary-bg rounded-lg border border-primary-text-muted
-                text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
-                :placeholder="t('submitPage.location')"
-                @blur="initialValidationCheck(location, 'googleMaps')"
-            >
-            <div class="google-maps-validation-container flex text-error text-xs font-sans h-3 mt-1 mb-3">
-                <span
-                    v-show="!isValidInput.googleMapsUrl.value"
-                    class="text-error text-xs font-sans"
+        <form
+            novalidate
+            class="card flex flex-col gap-5 p-6"
+            @submit.prevent="submitNewSubmission"
+        >
+            <div>
+                <label
+                    for="submit-googlemaps"
+                    class="field-label"
+                >{{ t('submitPage.googleMaps') }}</label>
+                <input
+                    id="submit-googlemaps"
+                    v-model="location"
+                    data-testid="submit-input-googlemaps"
+                    type="url"
+                    class="field"
+                    autocomplete="off"
+                    :placeholder="t('submitPage.location')"
+                    :aria-invalid="hasVisibleError('googleMapsUrl') ? 'true' : undefined"
+                    :aria-describedby="hasVisibleError('googleMapsUrl') ? 'submit-googlemaps-error' : undefined"
+                    @blur="initialValidationCheck(location, 'googleMaps')"
+                >
+                <p
+                    v-if="hasVisibleError('googleMapsUrl')"
+                    id="submit-googlemaps-error"
+                    class="field-error"
                 >
                     {{ t('submitPage.googleMapsValidation') }}
-                </span>
+                </p>
             </div>
-            <span
-                class="mb-2 text-primary-text text-sm font-normal font-sans"
-            >{{ t('submitPage.healthcareProfessionalName') }}</span>
+
+            <fieldset class="m-0 min-w-0 border-0 p-0">
+                <legend class="field-label">
+                    {{ t('submitPage.healthcareProfessionalName') }}
+                </legend>
+                <div class="grid grid-cols-1 gap-3 landscape:grid-cols-2">
+                    <div>
+                        <label
+                            for="submit-lastname"
+                            class="sr-only"
+                        >{{ t('submitPage.lastName') }}</label>
+                        <input
+                            id="submit-lastname"
+                            v-model="lastName"
+                            data-testid="submit-input-lastname"
+                            type="text"
+                            class="field"
+                            maxlength="30"
+                            :placeholder="t('submitPage.lastName')"
+                            :aria-invalid="hasVisibleError('lastName') ? 'true' : undefined"
+                            :aria-describedby="hasVisibleError('lastName') ? 'submit-lastname-error' : undefined"
+                            @blur="initialValidationCheck(lastName, 'lastName')"
+                        >
+                        <p
+                            v-if="hasVisibleError('lastName')"
+                            id="submit-lastname-error"
+                            class="field-error"
+                        >
+                            {{ t('submitPage.lastNameValidation') }}
+                        </p>
+                    </div>
+                    <div>
+                        <label
+                            for="submit-firstname"
+                            class="sr-only"
+                        >{{ t('submitPage.firstName') }}</label>
+                        <input
+                            id="submit-firstname"
+                            v-model="firstName"
+                            data-testid="submit-input-firstname"
+                            type="text"
+                            class="field"
+                            maxlength="30"
+                            :placeholder="t('submitPage.firstName')"
+                            :aria-invalid="hasVisibleError('firstName') ? 'true' : undefined"
+                            :aria-describedby="hasVisibleError('firstName') ? 'submit-firstname-error' : undefined"
+                            @blur="initialValidationCheck(firstName, 'firstName')"
+                        >
+                        <p
+                            v-if="hasVisibleError('firstName')"
+                            id="submit-firstname-error"
+                            class="field-error"
+                        >
+                            {{ t('submitPage.firstNameValidation') }}
+                        </p>
+                    </div>
+                </div>
+            </fieldset>
 
             <div>
-                <input
-                    v-model="lastName"
-                    data-testid="submit-input-lastname"
-                    class="mr-1 px-3 py-3.5 w-48 h-12 bg-secondary-bg rounded-lg border border-primary-text-muted
-                text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
-                    type="text"
-                    required
-                    maxlength="30"
-                    :placeholder="t('submitPage.lastName')"
-                    @blur="initialValidationCheck(lastName, 'lastName')"
+                <label
+                    for="submit-language1"
+                    class="field-label"
+                >{{ t('submitPage.spokenLanguage1') }}</label>
+                <select
+                    id="submit-language1"
+                    v-model="selectLanguage1"
+                    data-testid="submit-select-language1"
+                    class="field"
+                    :aria-invalid="hasVisibleError('primarySpokeLangauge') ? 'true' : undefined"
+                    :aria-describedby="hasVisibleError('primarySpokeLangauge') ? 'submit-language1-error' : undefined"
+                    @change="initialValidationCheck(selectLanguage1, 'primaryLanguage')"
                 >
-                <input
-                    v-model="firstName"
-                    data-testid="submit-input-firstname"
-                    class="px-3 py-3.5 w-48 h-12 bg-secondary-bg rounded-lg border border-primary-text-muted
-                text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
-                    type="text"
-                    maxlength="30"
-                    :placeholder="t('submitPage.firstName')"
-                    @blur="initialValidationCheck(firstName, 'firstName')"
-                >
-            </div>
-            <div class="name-validation-container flex text-error text-xs font-sans h-3 mt-1 mb-3">
-                <div class="last-name-validation-container w-44 mr-5">
-                    <span
-                        v-show="!isValidInput.lastName.value"
+                    <option
+                        value=""
+                        disabled
                     >
-                        {{ t('submitPage.lastNameValidation') }}
-                    </span>
-                </div>
-
-                <div class="last-name-validation-container w-44">
-                    <span
-                        v-show="!isValidInput.firstName.value"
-                    >   {{ t('submitPage.firstNameValidation') }}
-                    </span>
-                </div>
+                        {{ t('submitPage.selectLanguage1') }}
+                    </option>
+                    <option
+                        v-for="locale in localeStore.localeDisplayOptions"
+                        :key="locale.code"
+                        :value="locale.code"
+                    >
+                        {{ locale.displayText }}
+                    </option>
+                </select>
+                <p
+                    v-if="hasVisibleError('primarySpokeLangauge')"
+                    id="submit-language1-error"
+                    role="alert"
+                    class="field-error"
+                >
+                    {{ t('submitPage.spokenLanguageValidation') }}
+                </p>
             </div>
-            <span
-                class="mb-2 text-primary-text text-sm font-normal font-sans"
-            >{{ t('submitPage.spokenLanguage1') }}</span>
-            <p
-                v-show="!isValidInput.primarySpokeLangauge.value"
-                role="alert"
-                class="text-error text-xs font-sans"
-            >
-                {{ t('submitPage.spokenLanguageValidation') }}
-            </p>
-            <select
-                v-model="selectLanguage1"
-                data-testid="submit-select-language1"
-                class="mb-5 px-3 py-3.5 w-96 h-12 bg-secondary-bg rounded-lg border border-primary-text-muted
-                        text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
-                :placeholder="t('submitPage.selectLanguage1')"
-                @change="initialValidationCheck(selectLanguage1, 'primaryLanguage')"
-            >
-                <option
-                    v-for="(locale, index) in localeStore.localeDisplayOptions"
-                    :key="index"
-                    :value="locale.code"
+
+            <div>
+                <label
+                    for="submit-language2"
+                    class="field-label"
                 >
-                    {{ locale.displayText }}
-                </option>
-            </select>
-            <span
-                class="mb-2 text-primary-text text-sm font-normal font-sans"
-            >{{ t('submitPage.spokenLanguage2') + " (" + t('submitPage.optional') + ")" }}</span>
-            <p
-                v-show="!isValidInput.secondarySpokenLanguage.value"
-                class="text-error text-xs font-sans"
-            >
-                {{ t('submitPage.invalidOption') }}
-            </p>
-            <select
-                v-model="selectLanguage2"
-                data-testid="submit-select-language2"
-                class="mb-5 px-3 py-3.5 w-96 h-12 bg-primary-text-inverted rounded-lg border border-primary-text-muted
-                        text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
-                :placeholder="t('submitPage.selectLanguage2')"
-                @change="selectLanguage2 ? initialValidationCheck(selectLanguage2, 'secondaryLanguage') : null"
-            >
-                <option
-                    v-for="(locale, index) in localeStore.localeDisplayOptions"
-                    :key="index"
-                    :value="locale.code"
+                    {{ t('submitPage.spokenLanguage2') }}
+                    <span class="font-normal text-primary-text-muted">({{ t('submitPage.optional') }})</span>
+                </label>
+                <select
+                    id="submit-language2"
+                    v-model="selectLanguage2"
+                    data-testid="submit-select-language2"
+                    class="field"
+                    :aria-invalid="hasVisibleError('secondarySpokenLanguage') ? 'true' : undefined"
+                    :aria-describedby="hasVisibleError('secondarySpokenLanguage') ? 'submit-language2-error' : undefined"
+                    @change="initialValidationCheck(selectLanguage2, 'secondaryLanguage')"
                 >
-                    {{ locale.displayText }}
-                </option>
-            </select>
-            <span
-                class="mb-2 text-primary-text text-sm font-normal font-sans"
-            >{{ t('submitPage.otherNotes') + " (" + t('submitPage.optional') + ")" }}</span>
-            <textarea
-                v-model="otherNotes"
-                data-testid="submit-input-notes"
-                class="mb-5 landscape:mb-20 px-3 py-3.5 w-96 h-28 bg-secondary-bg rounded-lg border border-primary-text-muted"
-                maxlength="300"
-            />
+                    <option value="">
+                        {{ t('submitPage.selectLanguage2') }}
+                    </option>
+                    <option
+                        v-for="locale in localeStore.localeDisplayOptions"
+                        :key="locale.code"
+                        :value="locale.code"
+                    >
+                        {{ locale.displayText }}
+                    </option>
+                </select>
+                <p
+                    v-if="hasVisibleError('secondarySpokenLanguage')"
+                    id="submit-language2-error"
+                    class="field-error"
+                >
+                    {{ t('submitPage.invalidOption') }}
+                </p>
+            </div>
+
+            <div>
+                <label
+                    for="submit-notes"
+                    class="field-label"
+                >
+                    {{ t('submitPage.otherNotes') }}
+                    <span class="font-normal text-primary-text-muted">({{ t('submitPage.optional') }})</span>
+                </label>
+                <textarea
+                    id="submit-notes"
+                    v-model="otherNotes"
+                    data-testid="submit-input-notes"
+                    class="field field-textarea"
+                    maxlength="300"
+                    aria-describedby="submit-notes-hint"
+                />
+                <p
+                    id="submit-notes-hint"
+                    class="field-hint"
+                >
+                    {{ otherNotes.length }}/300
+                </p>
+            </div>
+
             <button
-                data-testid="submit-submitbutton"
                 type="submit"
-                class="px-20 py-3 mb-40 landscape:mb-0 rounded-full bg-primary w-96 text-center
-                 text-primary-inverted font-medium font-sans"
-                @click="submitNewSubmission"
+                data-testid="submit-submitbutton"
+                class="btn btn-primary w-full"
+                :disabled="isSubmitting"
             >
                 {{ t('submitPage.submitButton') }}
             </button>
         </form>
-        <div />
     </div>
 </template>
 
 <script lang="ts" setup>
-import { ref, watch, nextTick, type Ref, onMounted } from 'vue'
+import { ref, watch, nextTick, onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useAppToast } from '~/composables/useAppToast'
-import * as validations from '../utils/formValidations'
+import * as validations from '~/utils/formValidations'
 import { useSubmissionStore } from '~/stores/submissionStore'
 import type { Locale, MutationCreateSubmissionArgs } from '~/typedefs/gqlTypes'
 import { useLocaleStore } from '~/stores/localeStore'
-import { useI18n } from '#imports'
 import { handleServerErrorMessaging } from '~/composables/handleServerErrorMessaging'
 
 const toast = useAppToast()
@@ -172,15 +229,13 @@ const { t } = useI18n()
 const submissionStore = useSubmissionStore()
 const localeStore = useLocaleStore()
 
-// This variable makes sure everything is ready before displaying the form
-const isFormInitialized: Ref<boolean> = ref(false)
-
-const location: Ref = ref('')
-const firstName: Ref = ref('')
-const lastName: Ref = ref('')
-const selectLanguage1: Ref = ref('')
-const selectLanguage2: Ref = ref('')
-const otherNotes: Ref = ref('')
+const location = ref('')
+const firstName = ref('')
+const lastName = ref('')
+const selectLanguage1 = ref('')
+const selectLanguage2 = ref('')
+const otherNotes = ref('')
+const isSubmitting = ref(false)
 
 const validationCheckedPreviously = {
     googleMapsUrl: ref(false),
@@ -197,6 +252,15 @@ const isValidInput = {
     primarySpokeLangauge: ref(false),
     secondarySpokenLanguage: ref(true)
 }
+
+type ValidatedField = keyof typeof isValidInput
+
+/*
+ * An error is only shown once the field has been blurred/changed or a submit was attempted.
+ * The page is prerendered, so anything shown on first render would flash on every visit.
+ */
+const hasVisibleError = (field: ValidatedField) =>
+    validationCheckedPreviously[field].value && !isValidInput[field].value
 
 const validateFields = () => {
     validationCheckedPreviously.googleMapsUrl.value = true
@@ -225,8 +289,8 @@ const validateFields = () => {
     return true
 }
 
-async function submitNewSubmission(e: Event) {
-    e.preventDefault()
+async function submitNewSubmission() {
+    if (isSubmitting.value) return
 
     const isValid = validateFields()
     if (!isValid) return
@@ -249,15 +313,20 @@ async function submitNewSubmission(e: Event) {
             notes: otherNotes.value
         } }
 
-    const response = await submissionStore.createNewSubmission(newSubmission)
-    // This is used in the component and not graphQL call as it is user messaging and needs the mounted toast library
-    if (response?.hasErrors || response?.errors?.length) {
-        handleServerErrorMessaging(response.errors ?? [], toast, t)
-        return
-    }
+    isSubmitting.value = true
+    try {
+        const response = await submissionStore.createNewSubmission(newSubmission)
+        // This is used in the component and not graphQL call as it is user messaging and needs the mounted toast library
+        if (response?.hasErrors || response?.errors?.length) {
+            handleServerErrorMessaging(response.errors ?? [], toast, t)
+            return
+        }
 
-    submissionStore.submissionCompleted = true
-    toast.success(t('submitPage.submissionSuccessful'))
+        submissionStore.submissionCompleted = true
+        toast.success(t('submitPage.submissionSuccessful'))
+    } finally {
+        isSubmitting.value = false
+    }
 }
 
 function resetForm() {
@@ -296,7 +365,12 @@ const initialValidationCheck = async (inputValue: string, field: string) => {
         case 'secondaryLanguage':
             validationCheckedPreviously.secondarySpokenLanguage.value = true
             await nextTick()
-            isValidInput.secondarySpokenLanguage.value = validations.validateSecondSpokenLanguage(inputValue)
+            // Empty is valid: the field is optional, and validateFields() agrees. Without this
+            // guard, clearing the select back to "no selection" showed an error for a choice
+            // the form is happy to submit.
+            isValidInput.secondarySpokenLanguage.value = inputValue
+                ? validations.validateSecondSpokenLanguage(inputValue)
+                : true
             break
     }
 }
@@ -323,17 +397,13 @@ watch(() => selectLanguage1.value, newValue => {
 })
 watch(() => selectLanguage2.value, newValue => {
     if (validationCheckedPreviously.secondarySpokenLanguage.value) {
-        isValidInput.secondarySpokenLanguage.value = validations.validateSecondSpokenLanguage(newValue)
+        isValidInput.secondarySpokenLanguage.value = newValue
+            ? validations.validateSecondSpokenLanguage(newValue)
+            : true
     }
 })
 
-onMounted(async () => {
+onMounted(() => {
     resetForm()
-
-    /**  `await nextTick()` waits until the next DOM update cycle, allowing any changes made to reactive data to be applied
-     before the code execution continues. */
-    await nextTick()
-
-    isFormInitialized.value = true
 })
 </script>

@@ -21,7 +21,10 @@ test.describe('About page', () => {
         })
 
         test('has the hero subheading', async ({ page }) => {
-            await expect(page.getByText(enUS.about.heroSubheading)).toBeVisible()
+            // Scoped by test id: the footer's brand blurb reuses the same string, so a text match is ambiguous.
+            const subheading = page.getByTestId('about-hero-subheading')
+            await expect(subheading).toBeVisible()
+            await expect(subheading).toHaveText(enUS.about.heroSubheading)
         })
 
         test('shows member details', async ({ page }) => {

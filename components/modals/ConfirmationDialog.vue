@@ -2,7 +2,7 @@
     <div
         v-if="isOpen"
         data-testid="confirmation-modal"
-        class="fixed top-0 left-0 flex items-center justify-center h-full w-full z-50 bg-secondary bg-opacity-40"
+        class="fixed top-0 left-0 flex items-center justify-center h-full w-full z-50 bg-scrim/50"
     >
         <div
             ref="modal"

@@ -1,50 +1,55 @@
 <template>
-    <div class="flex flex-col justify-center items-center text-center p-5">
-        <h1 class="text-3xl font-bold mt-4 mb-8">
-            {{ t("errorPage.title") }}
-        </h1>
-        <h2 class="mb-8">
-            {{ t("errorPage.description") }}
-        </h2>
-        <a
-            href="/"
-            class="
-        px-6 py-2 bg-primary hover:bg-primary/60
-        text-primary-inverted rounded-md no-underline text-2xl my-8
-      "
-        >
-            {{ t("errorPage.returnHome") }}
-        </a>
-        <SVGCharactersTogetherWelcomeScreen
-            v-if="randomCharacter === CharacterOptions.TogetherWelcomeScreen"
-            class="mt-16 w-11/12 landscape:w-7/12 landscape:max-w-2xl"
-        />
-        <SVGCharactersSachiQuestioning
-            v-if="randomCharacter === CharacterOptions.SachiQuestioning"
-            class="mt-16 w-7/12 landscape:w-72 landscape:max-w-2xl"
-        />
-        <SVGCharactersChikoTherapyDogPrimary
-            v-if="randomCharacter === CharacterOptions.ChikoTherapyDogPrimary"
-            class="mt-16 w-11/12 landscape:w-80 landscape:max-w-2xl"
-        />
+    <div class="flex min-h-dvh w-full flex-col bg-primary-bg font-sans text-primary-text">
+        <TopNav class="shrink-0" />
+
+        <main class="page-section flex flex-1 items-center">
+            <div
+                class="page-container flex flex-col items-center gap-8 text-center
+                       landscape:flex-row landscape:justify-between landscape:text-left"
+            >
+                <div class="flex max-w-xl flex-col gap-4">
+                    <h1 class="page-title">
+                        {{ t('errorPage.title') }}
+                    </h1>
+                    <p class="text-lg text-primary-text-muted">
+                        {{ t('errorPage.description') }}
+                    </p>
+                    <div class="mt-2 flex flex-wrap justify-center gap-3 landscape:justify-start">
+                        <a
+                            href="/"
+                            class="btn btn-primary"
+                        >
+                            {{ t('errorPage.returnHome') }}
+                        </a>
+                        <NuxtLink
+                            to="/search"
+                            class="btn btn-secondary"
+                        >
+                            {{ t('topNav.search') }}
+                        </NuxtLink>
+                    </div>
+                </div>
+                <img
+                    :src="illustration"
+                    alt=""
+                    width="1024"
+                    height="1536"
+                    loading="lazy"
+                    decoding="async"
+                    class="h-auto w-48 shrink-0 landscape:w-64"
+                >
+            </div>
+        </main>
+
+        <Footer class="shrink-0" />
     </div>
 </template>
 
 <script lang="ts" setup>
-import SVGCharactersTogetherWelcomeScreen from '~/assets/icons/characters-together-welcomescreen.svg'
-import SVGCharactersSachiQuestioning from '~/assets/icons/characters-sachi-questioning.svg'
-import SVGCharactersChikoTherapyDogPrimary from '~/assets/icons/characters-chiko-therapy-dog-primary.svg'
-
-enum CharacterOptions {
-    TogetherWelcomeScreen = 'TOGETHER_WELCOME_SCREEN',
-    SachiQuestioning = 'SACHI_QUESTIONING',
-    ChikoTherapyDogPrimary = 'CHIKO_THERAPY_DOG_PRIMARY'
-}
+import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
 
-const randomCharacter = computed(() => {
-    const characters = Object.values(CharacterOptions)
-    return characters[Math.floor(Math.random() * characters.length)]
-})
+// Bound rather than static so the compiler leaves the public URL alone.
+const illustration = '/illustrations/characters-sachi-questioning.svg'
 </script>

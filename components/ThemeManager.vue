@@ -1,174 +1,76 @@
 <template>
     <div
-        v-close-on-outside-click="{
-            onOutside: closeTheme,
-            when: () => !colorThemeAccordionIsClosed,
-        }"
+        role="group"
+        :aria-label="t('themeManager.label')"
+        data-testid="theme-manager"
+        class="inline-flex items-center gap-0.5 rounded-full border border-accent-bg bg-secondary-bg p-0.5"
     >
-        <div
-            id="color-changer"
-            :class="colorThemeAccordionIsClosed
-                ? 'transition-discrete duration-300 h-0 opacity-0 delay-(invisible) rounded-t-2xl border-t'
-                    + 'border-primary/20 portrait:translate-y-20 overflow-hidden landscape:absolute landscape:-translate-y-2/3'
-                : 'transition-discreet duration-300 portrait:rounded-t-2xl landscape:rounded-md border-t'
-                    + 'border-primary/20 overflow-hidden landscape:absolute landscape:-translate-y-90'"
+        <button
+            v-for="option in options"
+            :key="option.value"
+            type="button"
+            :aria-pressed="scheme === option.value"
+            :data-testid="`theme-option-${option.value}`"
+            class="inline-flex h-9 items-center gap-1.5 rounded-full px-3 text-sm font-medium transition-colors"
+            :class="scheme === option.value
+                ? 'bg-primary/10 text-primary'
+                : 'text-primary-text-muted hover:text-primary-text'"
+            @click="setScheme(option.value)"
         >
-            <ThemeOption
-                v-for="theme in themes"
-                :key="theme.themeId"
-                :theme-id="theme.themeId"
-                :dot-color="theme.dotColor"
-                :theme-name="theme.themeName"
-                :is-selected="theme.isSelected"
-                :is-dark-mode="isDarkMode"
-                @click="setTheme(theme.themeId, isDarkMode)"
-                @lightdarkmode-toggle="toggleLightDarkMode"
+            <component
+                :is="option.icon"
+                class="h-4 w-4 shrink-0"
+                aria-hidden="true"
             />
-        </div>
-
-        <div class="portrait:bg-primary-bg z-10 cursor-pointer">
-            <div
-                class="flex px-4 py-2 gap-3 landscape:gap-1 items-center"
-                role="button"
-                tabindex="0"
-                @click="toggleThemeVisibility"
-                @keydown.enter="toggleThemeVisibility"
-                @keydown.space.prevent="toggleThemeVisibility"
-            >
-                <div
-                    class="w-7 h-7 landscape:w-5 landscape:h-5 mr-1 rounded-full bg-primary"
-                />
-                <p
-                    id="theme-text"
-                    class="text-primary"
-                >
-                    {{ t('themeManager.colorThemes') }}
-                </p>
-                <SvgoAccordionArrow
-                    id="accordion"
-                    role="img"
-                    title="accordion arrow"
-                    :class="colorThemeAccordionIsClosed
-                        ? 'w-6 h-6 transition duration-300 fill-primary'
-                        : 'w-6 h-6 transition duration-300 fill-primary -rotate-180'"
-                />
-            </div>
-        </div>
+            <span>{{ option.label }}</span>
+        </button>
     </div>
 </template>
 
-<script lang="ts" setup>
-import { vCloseOnOutsideClick } from '~/composables/closeOnOutsideClick'
+<script setup lang="ts">
+import { computed, h, onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
+import { initColorScheme, useColorScheme, type ColorScheme } from '~/composables/useColorScheme'
 
 const { t } = useI18n()
+const { scheme, setScheme } = useColorScheme()
 
-const currentTheme = ref('original')
+/*
+ * Small inline icons rather than SVG imports: these three glyphs exist nowhere else, and
+ * keeping them here means the picker is one self-contained file.
+ */
+const iconAttrs = {
+    viewBox: '0 0 24 24',
+    fill: 'none',
+    stroke: 'currentColor',
+    'stroke-width': '2',
+    'stroke-linecap': 'round',
+    'stroke-linejoin': 'round'
+}
 
-const isDarkMode = ref(false)
-
-const themes = reactive([
-    {
-        themeId: 'original',
-        dotColor: '#0EB0C0',
-        themeName: 'Original',
-        isSelected: true,
-        isDarkMode: isDarkMode
-    },
-    {
-        themeId: 'coral',
-        dotColor: '#ED6C5A',
-        themeName: 'Coral',
-        isSelected: false,
-        isDarkMode: isDarkMode
-    },
-    {
-        themeId: 'violet',
-        dotColor: '#A45D9A',
-        themeName: 'Violet',
-        isSelected: false,
-        isDarkMode: isDarkMode
-    },
-    {
-        themeId: 'accessible-high-contrast',
-        dotColor: '#006872',
-        themeName: 'High Contrast',
-        isSelected: false,
-        isDarkMode: isDarkMode
-    },
-    {
-        themeId: 'accessible-red-green',
-        dotColor: '#007BFF',
-        themeName: 'Red-Green Color Blindness',
-        isSelected: false,
-        isDarkMode: isDarkMode
-    }
+const SunIcon = () => h('svg', iconAttrs, [
+    h('circle', { cx: 12, cy: 12, r: 4 }),
+    h('path', { d: 'M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4m11.4-11.4 1.4-1.4' })
 ])
 
-const colorThemeAccordionIsClosed = ref(true)
+const MoonIcon = () => h('svg', iconAttrs, [
+    h('path', { d: 'M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z' })
+])
 
-function toggleThemeVisibility() {
-    colorThemeAccordionIsClosed.value = !colorThemeAccordionIsClosed.value
-}
+const AutoIcon = () => h('svg', iconAttrs, [
+    h('rect', { x: 3, y: 4, width: 18, height: 13, rx: 2 }),
+    h('path', { d: 'M8 21h8m-4-4v4' })
+])
 
-function closeTheme() {
-    colorThemeAccordionIsClosed.value = true
-}
+const options = computed(() => [
+    { value: 'light' as ColorScheme, label: t('themeManager.light'), icon: SunIcon },
+    { value: 'dark' as ColorScheme, label: t('themeManager.dark'), icon: MoonIcon },
+    { value: 'auto' as ColorScheme, label: t('themeManager.auto'), icon: AutoIcon }
+])
 
-function toggleLightDarkMode(returnedDarkModeValue: boolean) {
-    isDarkMode.value = returnedDarkModeValue
-    if (import.meta.client) {
-        localStorage.setItem('isDarkMode', `${isDarkMode.value}`)
-    }
-    setTheme(currentTheme.value, isDarkMode.value)
-}
-
-function setTheme(newTheme: string, darkModeValue: boolean) {
-    const selectedTheme = themes.find(theme => theme.isSelected)
-    if (selectedTheme) {
-        selectedTheme.isSelected = false
-    }
-
-    const identifiedTheme = themes.find(theme => theme.themeId === newTheme)
-    if (identifiedTheme) {
-        identifiedTheme.isSelected = true
-    }
-
-    if (!import.meta.client) {
-        currentTheme.value = newTheme
-        return
-    }
-
-    document.documentElement.classList.remove(
-        'theme-original',
-        'theme-coral',
-        'theme-violet',
-        'theme-original-dark',
-        'theme-coral-dark',
-        'theme-violet-dark',
-        'theme-accessible-high-contrast',
-        'theme-accessible-red-green',
-        'theme-accessible-high-contrast-dark',
-        'theme-accessible-red-green-dark'
-    )
-
-    if (!darkModeValue) {
-        document.documentElement.classList.add(`theme-${newTheme}`)
-    } else {
-        document.documentElement.classList.add(`theme-${newTheme}-dark`)
-    }
-    localStorage.setItem('theme', newTheme)
-    localStorage.setItem('isDarkMode', `${darkModeValue}`)
-    currentTheme.value = newTheme
-}
-
-onMounted(() => {
-    const savedTheme = localStorage.getItem('theme')
-    if (savedTheme) {
-        const savedColorMode = localStorage.getItem('isDarkMode') === 'true'
-        isDarkMode.value = savedColorMode
-        setTheme(savedTheme, savedColorMode)
-    } else {
-        setTheme('original', false)
-    }
-})
+/*
+ * Prerendered pages render the control with `auto` selected; the real value is only known
+ * on the client, so it is read after hydration and the pressed state corrects itself then.
+ */
+onMounted(initColorScheme)
 </script>

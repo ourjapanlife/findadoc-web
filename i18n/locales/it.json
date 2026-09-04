@@ -11,29 +11,20 @@
   },
   "common": {
     "menu": "Menu",
-    "siteName": "Find a Doc Japan",
+    "siteName": "Find a Doc, Japan",
     "siteNameLine1": "Find a Doc",
     "siteNameLine2": "Japan",
-    "loading": "Loading"
+    "loading": "Loading",
+    "close": "Close"
   },
   "about": {
     "heroHeading": "Find a Doc, Japan",
     "heroSubheading": "Ti mettiamo in contatto con i servizi sanitari di cui hai bisogno, nella tua lingua",
     "heroGetStarted": "Inizia",
-    "heroLearnMore": "Scopri di più",
     "storyHeader": "La nostra storia",
     "storyParagraph1": "Fondata nel 2020 durante la pandemia da LaShawn Toyoda e Phil Ermish, la nostra missione è promuovere una società più sana e inclusiva. Offriamo informazioni sanitarie di qualità gratuitamente e in molte lingue per tutti, inclusi stranieri e professionisti sanitari. Il nostro obiettivo è un Giappone in cui tutte le persone, indipendentemente da nazionalità o lingua, possano orientarsi nel sistema sanitario, trovare i medici giusti e ottenere l’assistenza necessaria.",
     "storyParagraph2": "Siamo un’organizzazione non profit guidata dall’idea che tutti dovrebbero avere accesso alle informazioni sanitarie per vivere una vita piena. Le nostre attività sono guidate dalla giustizia sociale, dalla sensibilità culturale e dall’innovazione. Siamo sempre felici di collaborare con partner governativi, non profit e del settore medico. Insieme speriamo di creare un Giappone in cui tutti possano accedere all’assistenza sanitaria, sentirsi inclusi e vivere bene.",
-    "btnImpact": "Il nostro impatto",
-    "btnContributors": "Collaboratori",
-    "btnCofounders": "Co-fondatori",
-    "btnBoard": "Consiglio direttivo",
-    "btnMascots": "Mascotte",
-    "btnInvolve": "Partecipa",
     "impactHeader": "Il nostro impatto",
-    "impactDoctors": "300+ medici registrati",
-    "impactUsers": "100+ utenti mensili",
-    "impactVolunteer": "Guidato da volontari e dalla comunità",
     "contributorsHeader": "Collaboratori",
     "cofoundersHeader": "Co-fondatori",
     "boardHeader": "Consiglio direttivo",
@@ -45,9 +36,10 @@
     "mascotsChiko": "Chiko",
     "involveHeader": "Partecipa",
     "involveAdd": "Aggiungi un medico",
-    "involveGit": "Contribuisci",
     "involveLinkedin": "Seguici",
-    "involveFeedback": "Lascia un feedback"
+    "involveFeedback": "Lascia un feedback",
+    "involveContribute": "Contribuisci",
+    "sectionNavLabel": "On this page"
   },
   "serverErrorMessages": {
     "errorCodeMessagingNeeded": "Il codice di errore del server non ha un messaggio per l'utente. Si prega di aggiungerne uno.",
@@ -59,14 +51,12 @@
     "privacy": "Privacy",
     "poweredBy": "Offerto da",
     "contribute": "Contribuisci",
-    "feedback": "Hai qualche feedback?",
-    "clickHere": "Clicca qui",
-    "copyright": "NPO法人Find a Doc, Japan"
+    "copyright": "NPO法人Find a Doc, Japan",
+    "exploreHeading": "Explore",
+    "communityHeading": "Community",
+    "legalHeading": "Legal"
   },
   "hamburgerMenu": {
-    "about": "Informazioni su Find a Doc, Japan",
-    "contact": "Contatto",
-    "submit": "Aggiungi un medico",
     "logout": "Esci",
     "languageDropdownTitle": "Lingua:",
     "copyright": "NPO法人Find a Doc, Japan",
@@ -94,13 +84,6 @@
     "paragraph15": "Ci riserviamo il diritto di aggiornare questa Informativa sulla privacy per riflettere i cambiamenti nelle nostre pratiche e nei nostri servizi. Ti informeremo di eventuali modifiche significative pubblicando l'informativa aggiornata sul nostro sito web.",
     "paragraph16": "Utilizzando il nostro servizio, accetti i termini descritti in questa Informativa sulla privacy."
   },
-  "onboarding": {
-    "letsGoButtonText": "Trova un medico!",
-    "welcometo": "Benvenuto su",
-    "selectcategory": "Seleziona una categoria per iniziare.",
-    "notsurebutton": "Non sono sicuro o altro",
-    "searchloading": "Il tuo viaggio inizia qui"
-  },
   "submitPage": {
     "firstName": "Nome",
     "firstNameValidation": "Inserisci un nome",
@@ -124,25 +107,19 @@
     "otherNotes": "Altre note"
   },
   "searchBar": {
-    "selectSpecialty": "Seleziona una specialità...",
-    "selectLocation": "Seleziona una posizione...",
-    "allLocations": "Tutte le località",
     "allSpecialties": "Tutte le specialità",
-    "search": "Cerca",
-    "searchAndFilterDoctors": "Cerca e filtra i medici",
     "resultsFound": "Nessun risultato | 1 risultato trovato | {n} risultati trovati"
   },
   "searchResultsList": {
     "loadMore": "Carica altro",
     "remaining": "rimanenti",
     "noResults": "Nessun risultato trovato",
-    "noResultsSubtext": "Prova con una combinazione di filtri diversa"
+    "noResultsSubtext": "Prova con una combinazione di filtri diversa",
+    "loadMoreCount": "Load more ({n} remaining)"
   },
   "searchResultsDetails": {
     "speaks": "Questo medico parla",
-    "contact": "Contatta",
     "lastUpdate": "Last updated",
-    "additionalInfo": "Additional Info",
     "healthcareProfessionals": "Healthcare Professionals",
     "callNow": "Chiama"
   },
@@ -159,7 +136,8 @@
     "logout": "Esci",
     "login": "Login",
     "myPage": "La mia pagina",
-    "logoutToast": "Successfully logged out"
+    "logoutToast": "Successfully logged out",
+    "search": "Search"
   },
   "login": {
     "checkingauth": "Verifica autenticazione...",
@@ -344,12 +322,12 @@
     "submissionConfirmationMessage": "Sei sicuro di inviare questo form?",
     "rejectSubmissionConfirmationMessage": "Are you sure you want to reject this submission?",
     "rejectSubmissionConfirmationButton": "Yes, reject the submission",
-    "successMessageUpdated": "Submission updated successfully",
-    "successMessageApproved": "Submission approved successfully",
     "searchExistingFacilities": "Search for existing facility",
     "searchExistingHealthcareProfessionals": "Search for existing healthcare professionals",
     "labelModNoteInput": "Moderator Notes",
-    "placeholderTextNoteInput": "e.g. waiting for call back from clinic"
+    "placeholderTextNoteInput": "e.g. waiting for call back from clinic",
+    "successMessageUpdated": "Submission updated successfully",
+    "successMessageApproved": "Submission approved successfully"
   },
   "specialties": {
     "allergyAndImmunology": "Allergologo/Allergologa",
@@ -449,10 +427,14 @@
     "updateFailed": "Profile update failed"
   },
   "localeErrors": {
-    "notSpecified": "Not Specified"
+    "notSpecified": "Not Specified",
+    "notFound": "Unknown language"
   },
   "themeManager": {
-    "colorThemes": "Color Themes"
+    "label": "Appearance",
+    "light": "Light",
+    "dark": "Dark",
+    "auto": "Auto"
   },
   "unsavedChanges": {
     "create": {
@@ -498,5 +480,26 @@
     "contributeHeading": "Conosci una clinica che ci manca?",
     "contributeBody": "Chiunque può segnalare una clinica o un medico. I nostri moderatori verificano ogni segnalazione prima della pubblicazione.",
     "contributeCta": "Aggiungi un medico"
+  },
+  "search": {
+    "filters": "Filters",
+    "clearFilters": "Clear filters",
+    "showMap": "Show map",
+    "hideMap": "Hide map",
+    "loading": "Loading the directory…",
+    "loadError": "We could not load the directory. Check your connection and try again.",
+    "retry": "Try again",
+    "backToResults": "Back to results",
+    "website": "Website",
+    "openInMaps": "Open in Google Maps",
+    "email": "Email",
+    "phone": "Phone",
+    "languagesSpoken": "Languages spoken",
+    "resultsRegion": "Search results",
+    "moreProfessionals": "+{n} more",
+    "professionalsAtFacility": "No professionals listed | 1 professional | {n} professionals",
+    "pageHeading": "Find a doctor in Japan",
+    "mapUnavailable": "The map could not be loaded.",
+    "mapUnavailableHint": "The rest of the results are unaffected."
   }
 }

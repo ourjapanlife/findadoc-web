@@ -18,12 +18,15 @@
                             class="w-20 h-20 rounded-full border-2 border-accent-bg overflow-hidden
                             flex items-center justify-center"
                         >
-                            <SVGChiko
-                                role="img"
-                                alt="Chiko the therapy dog"
-                                title="Chiko"
+                            <img
+                                :src="mascotIllustration"
+                                alt=""
+                                width="1024"
+                                height="1024"
+                                loading="lazy"
+                                decoding="async"
                                 class="w-16 h-16 stroke-primary"
-                            />
+                            >
                         </div>
                     </div>
                 </div>
@@ -53,7 +56,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useI18n } from '#imports'
-import SVGChiko from '~/assets/icons/characters-chiko-therapy-dog-primary.svg'
+// Served as a cached file rather than inlined into the chunk; bound so the compiler leaves the URL alone.
+const mascotIllustration = '/illustrations/characters-chiko-therapy-dog-primary.svg'
 
 const { t } = useI18n()
 const displayName = ref('')

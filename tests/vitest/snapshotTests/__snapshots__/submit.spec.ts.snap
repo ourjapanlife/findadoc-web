@@ -1,164 +1,155 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`submit.vue (vitest snapshot) > renders correctly 1`] = `
-"<div class="flex flex-col h-full w-full place-self-center overflow-y-auto pb-8">
-  <div>
-    <div class="h-full w-full bg-primary-bg/70 z-10 absolute" style="">
-      <div class="flex justify-center align-middle mt-12">
-        <div class="flex text-primary self-center text-4xl">common.loading</div><svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid" viewBox="0 25 100 50" role="img" alt="loading animation" title="loading animation" class="flex h-12">
-          <circle cx="18" cy="50" r="4" fill="#0EB0C0">
-            <animate attributeName="cy" begin="0s" calcMode="spline" dur="1.4492753623188404s" keySplines="0.5 0 0.5 1;0.5 0 0.5 1" repeatCount="indefinite" values="34;66;34"></animate>
-          </circle>
-          <circle cx="27" cy="61.314" r="4" fill="#fca5a5">
-            <animate attributeName="cy" begin="-0.18115942028985504s" calcMode="spline" dur="1.4492753623188404s" keySplines="0.5 0 0.5 1;0.5 0 0.5 1" repeatCount="indefinite" values="34;66;34"></animate>
-          </circle>
-          <circle cx="36" cy="66" r="4" fill="#f6e6e6">
-            <animate attributeName="cy" begin="-0.3623188405797101s" calcMode="spline" dur="1.4492753623188404s" keySplines="0.5 0 0.5 1;0.5 0 0.5 1" repeatCount="indefinite" values="34;66;34"></animate>
-          </circle>
-          <circle cx="45" cy="61.314" r="4" fill="#1e40af">
-            <animate attributeName="cy" begin="-0.5434782608695652s" calcMode="spline" dur="1.4492753623188404s" keySplines="0.5 0 0.5 1;0.5 0 0.5 1" repeatCount="indefinite" values="34;66;34"></animate>
-          </circle>
-          <circle cx="54" cy="50" r="4" fill="#0EB0C0">
-            <animate attributeName="cy" begin="-0.7246376811594202s" calcMode="spline" dur="1.4492753623188404s" keySplines="0.5 0 0.5 1;0.5 0 0.5 1" repeatCount="indefinite" values="34;66;34"></animate>
-          </circle>
-          <circle cx="63" cy="38.686" r="4" fill="#fca5a5">
-            <animate attributeName="cy" begin="-0.9057971014492753s" calcMode="spline" dur="1.4492753623188404s" keySplines="0.5 0 0.5 1;0.5 0 0.5 1" repeatCount="indefinite" values="34;66;34"></animate>
-          </circle>
-          <circle cx="72" cy="34" r="4" fill="#f6e6e6">
-            <animate attributeName="cy" begin="-1.0869565217391304s" calcMode="spline" dur="1.4492753623188404s" keySplines="0.5 0 0.5 1;0.5 0 0.5 1" repeatCount="indefinite" values="34;66;34"></animate>
-          </circle>
-          <circle cx="81" cy="38.686" r="4" fill="#1e40af">
-            <animate attributeName="cy" begin="-1.2681159420289854s" calcMode="spline" dur="1.4492753623188404s" keySplines="0.5 0 0.5 1;0.5 0 0.5 1" repeatCount="indefinite" values="34;66;34"></animate>
-          </circle>
-        </svg>
-      </div>
+"<section data-testid="submit-page" class="page-section">
+  <div class="page-container grid gap-10 landscape:grid-cols-[minmax(0,1fr)_minmax(0,20rem)] landscape:gap-16">
+    <div class="flex flex-col gap-6">
+      <h1 data-testid="submit-heading" class="page-title-sm">submitPage.heading</h1>
+      <p data-testid="submit-subheading" class="text-lg text-primary-text-muted">submitPage.subheading</p>
+      <form novalidate="" class="card flex flex-col gap-5 p-6">
+        <div><label for="submit-googlemaps" class="field-label">submitPage.googleMaps</label><input id="submit-googlemaps" data-testid="submit-input-googlemaps" type="url" class="field" autocomplete="off" placeholder="submitPage.location">
+          <!--v-if-->
+        </div>
+        <fieldset class="m-0 min-w-0 border-0 p-0">
+          <legend class="field-label">submitPage.healthcareProfessionalName</legend>
+          <div class="grid grid-cols-1 gap-3 landscape:grid-cols-2">
+            <div><label for="submit-lastname" class="sr-only">submitPage.lastName</label><input id="submit-lastname" data-testid="submit-input-lastname" type="text" class="field" maxlength="30" placeholder="submitPage.lastName">
+              <!--v-if-->
+            </div>
+            <div><label for="submit-firstname" class="sr-only">submitPage.firstName</label><input id="submit-firstname" data-testid="submit-input-firstname" type="text" class="field" maxlength="30" placeholder="submitPage.firstName">
+              <!--v-if-->
+            </div>
+          </div>
+        </fieldset>
+        <div><label for="submit-language1" class="field-label">submitPage.spokenLanguage1</label><select id="submit-language1" data-testid="submit-select-language1" class="field">
+            <option disabled="" value="">submitPage.selectLanguage1</option>
+            <option value="en_US">English (US)</option>
+            <option value="ak_GH">Akan (Ghana)</option>
+            <option value="am_ET">Amharic (Ethiopia)</option>
+            <option value="ar_AE">اَلْعَرَبِيَّة (United Arab Emirates)</option>
+            <option value="bm_ML">Bambara (Mali)</option>
+            <option value="bn_BD">Bengali (Bangladesh)</option>
+            <option value="bs_BA">Bosnian (Bosnia and Herzegovina)</option>
+            <option value="ca_ES">Catalan (Spain)</option>
+            <option value="cs_CZ">Czech (Czech Republic)</option>
+            <option value="chr_US">Cherokee (United States)</option>
+            <option value="cy_GB">Welsh (United Kingdom)</option>
+            <option value="da_DK">Danish (Denmark)</option>
+            <option value="de_DE">German (Germany)</option>
+            <option value="ee_GH">Ewe (Ghana)</option>
+            <option value="el_GR">Greek (Greece)</option>
+            <option value="es_ES">Spanish (Spain)</option>
+            <option value="et_EE">Estonian (Estonia)</option>
+            <option value="fa_AF">Persian (Afghanistan)</option>
+            <option value="tl_PH">Tagalog (Philippines)</option>
+            <option value="fi_FI">Finnish (Finland)</option>
+            <option value="fr_FR">French (France)</option>
+            <option value="guz_KE">Gusii (Kenya)</option>
+            <option value="he_IL">עִבְרִית (Israel)</option>
+            <option value="hi_IN">Hindi (India)</option>
+            <option value="hr_HR">Croatian (Croatia)</option>
+            <option value="hu_HU">Hungarian (Hungary)</option>
+            <option value="hy_AM">Armenian (Armenia)</option>
+            <option value="id_ID">Indonesian (Indonesia)</option>
+            <option value="ig_NG">Igbo (Nigeria)</option>
+            <option value="is_IS">Icelandic (Iceland)</option>
+            <option value="it_IT">Italiano (Italy)</option>
+            <option value="ja_JP">日本語 (Japan)</option>
+            <option value="kab_DZ">Kabyle (Algeria)</option>
+            <option value="km_KH">Khmer (Cambodia)</option>
+            <option value="kn_IN">Kannada (India)</option>
+            <option value="ko_KR">한국어 (South Korea)</option>
+            <option value="lag_TZ">Langi (Tanzania)</option>
+            <option value="lg_UG">Ganda (Uganda)</option>
+            <option value="lv_LV">Latvian (Latvia)</option>
+            <option value="nb_NO">Norwegian Bokmål (Norway)</option>
+            <option value="ne_NP">Nepali (Nepal)</option>
+            <option value="nl_BE">Dutch (Belgium)</option>
+            <option value="pl_PL">Polish (Poland)</option>
+            <option value="pt_BR">Português (Brasil)</option>
+            <option value="ru_RU">Russian (Russia)</option>
+            <option value="si_LK">Sinhala (Sri Lanka)</option>
+            <option value="sq_AL">Albanian (Albania)</option>
+            <option value="sr_Cyrl">Serbian (Cyrillic)</option>
+            <option value="sw_KE">Swahili (Kenya)</option>
+            <option value="th_TH">ภาษาไทย (Thailand)</option>
+            <option value="tr_TR">Turkish (Turkey)</option>
+            <option value="vi_VN">tiếng Việt (Vietnam)</option>
+            <option value="zh_CN">Chinese (Simplified, China)</option>
+            <option value="zh_HK">Chinese (Traditional, Hong Kong SAR China)</option>
+            <option value="zh_TW">Chinese (Traditional, Taiwan)</option>
+          </select>
+          <!--v-if-->
+        </div>
+        <div><label for="submit-language2" class="field-label">submitPage.spokenLanguage2 <span class="font-normal text-primary-text-muted">(submitPage.optional)</span></label><select id="submit-language2" data-testid="submit-select-language2" class="field">
+            <option value="">submitPage.selectLanguage2</option>
+            <option value="en_US">English (US)</option>
+            <option value="ak_GH">Akan (Ghana)</option>
+            <option value="am_ET">Amharic (Ethiopia)</option>
+            <option value="ar_AE">اَلْعَرَبِيَّة (United Arab Emirates)</option>
+            <option value="bm_ML">Bambara (Mali)</option>
+            <option value="bn_BD">Bengali (Bangladesh)</option>
+            <option value="bs_BA">Bosnian (Bosnia and Herzegovina)</option>
+            <option value="ca_ES">Catalan (Spain)</option>
+            <option value="cs_CZ">Czech (Czech Republic)</option>
+            <option value="chr_US">Cherokee (United States)</option>
+            <option value="cy_GB">Welsh (United Kingdom)</option>
+            <option value="da_DK">Danish (Denmark)</option>
+            <option value="de_DE">German (Germany)</option>
+            <option value="ee_GH">Ewe (Ghana)</option>
+            <option value="el_GR">Greek (Greece)</option>
+            <option value="es_ES">Spanish (Spain)</option>
+            <option value="et_EE">Estonian (Estonia)</option>
+            <option value="fa_AF">Persian (Afghanistan)</option>
+            <option value="tl_PH">Tagalog (Philippines)</option>
+            <option value="fi_FI">Finnish (Finland)</option>
+            <option value="fr_FR">French (France)</option>
+            <option value="guz_KE">Gusii (Kenya)</option>
+            <option value="he_IL">עִבְרִית (Israel)</option>
+            <option value="hi_IN">Hindi (India)</option>
+            <option value="hr_HR">Croatian (Croatia)</option>
+            <option value="hu_HU">Hungarian (Hungary)</option>
+            <option value="hy_AM">Armenian (Armenia)</option>
+            <option value="id_ID">Indonesian (Indonesia)</option>
+            <option value="ig_NG">Igbo (Nigeria)</option>
+            <option value="is_IS">Icelandic (Iceland)</option>
+            <option value="it_IT">Italiano (Italy)</option>
+            <option value="ja_JP">日本語 (Japan)</option>
+            <option value="kab_DZ">Kabyle (Algeria)</option>
+            <option value="km_KH">Khmer (Cambodia)</option>
+            <option value="kn_IN">Kannada (India)</option>
+            <option value="ko_KR">한국어 (South Korea)</option>
+            <option value="lag_TZ">Langi (Tanzania)</option>
+            <option value="lg_UG">Ganda (Uganda)</option>
+            <option value="lv_LV">Latvian (Latvia)</option>
+            <option value="nb_NO">Norwegian Bokmål (Norway)</option>
+            <option value="ne_NP">Nepali (Nepal)</option>
+            <option value="nl_BE">Dutch (Belgium)</option>
+            <option value="pl_PL">Polish (Poland)</option>
+            <option value="pt_BR">Português (Brasil)</option>
+            <option value="ru_RU">Russian (Russia)</option>
+            <option value="si_LK">Sinhala (Sri Lanka)</option>
+            <option value="sq_AL">Albanian (Albania)</option>
+            <option value="sr_Cyrl">Serbian (Cyrillic)</option>
+            <option value="sw_KE">Swahili (Kenya)</option>
+            <option value="th_TH">ภาษาไทย (Thailand)</option>
+            <option value="tr_TR">Turkish (Turkey)</option>
+            <option value="vi_VN">tiếng Việt (Vietnam)</option>
+            <option value="zh_CN">Chinese (Simplified, China)</option>
+            <option value="zh_HK">Chinese (Traditional, Hong Kong SAR China)</option>
+            <option value="zh_TW">Chinese (Traditional, Taiwan)</option>
+          </select>
+          <!--v-if-->
+        </div>
+        <div><label for="submit-notes" class="field-label">submitPage.otherNotes <span class="font-normal text-primary-text-muted">(submitPage.optional)</span></label><textarea id="submit-notes" data-testid="submit-input-notes" class="field field-textarea" maxlength="300" aria-describedby="submit-notes-hint"></textarea>
+          <p id="submit-notes-hint" class="field-hint">0/300 </p>
+        </div><button type="submit" data-testid="submit-submitbutton" class="btn btn-primary w-full">submitPage.submitButton</button>
+      </form>
     </div>
-    <form class="flex flex-col items-center" style="display: none;">
-      <h1 data-testid="submit-heading" class="mb-3.5 text-center text-primary-text text-2xl font-bold font-sans leading-normal">submitPage.heading</h1>
-      <p data-testid="submit-subheading" class="mb-10 w-96 text-center text-primary-text-muted text-sm font-normal font-sans">submitPage.subheading</p><span class="mb-2 text-primary-text text-sm font-normal font-sans">submitPage.googleMaps</span><input data-testid="submit-input-googlemaps" type="text" required="" class="px-3 py-3.5 w-96 h-12 bg-secondary-bg rounded-lg border border-primary-text-muted text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted" placeholder="submitPage.location">
-      <div class="google-maps-validation-container flex text-error text-xs font-sans h-3 mt-1 mb-3"><span class="text-error text-xs font-sans" style="display: none;">submitPage.googleMapsValidation</span></div><span class="mb-2 text-primary-text text-sm font-normal font-sans">submitPage.healthcareProfessionalName</span>
-      <div><input data-testid="submit-input-lastname" class="mr-1 px-3 py-3.5 w-48 h-12 bg-secondary-bg rounded-lg border border-primary-text-muted text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted" type="text" required="" maxlength="30" placeholder="submitPage.lastName"><input data-testid="submit-input-firstname" class="px-3 py-3.5 w-48 h-12 bg-secondary-bg rounded-lg border border-primary-text-muted text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted" type="text" maxlength="30" placeholder="submitPage.firstName"></div>
-      <div class="name-validation-container flex text-error text-xs font-sans h-3 mt-1 mb-3">
-        <div class="last-name-validation-container w-44 mr-5"><span style="display: none;">submitPage.lastNameValidation</span></div>
-        <div class="last-name-validation-container w-44"><span style="display: none;">submitPage.firstNameValidation</span></div>
-      </div><span class="mb-2 text-primary-text text-sm font-normal font-sans">submitPage.spokenLanguage1</span>
-      <p role="alert" class="text-error text-xs font-sans">submitPage.spokenLanguageValidation</p><select data-testid="submit-select-language1" class="mb-5 px-3 py-3.5 w-96 h-12 bg-secondary-bg rounded-lg border border-primary-text-muted text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted" placeholder="submitPage.selectLanguage1">
-        <option value="en_US">English (US)</option>
-        <option value="ak_GH">Akan (Ghana)</option>
-        <option value="am_ET">Amharic (Ethiopia)</option>
-        <option value="ar_AE">اَلْعَرَبِيَّة (United Arab Emirates)</option>
-        <option value="bm_ML">Bambara (Mali)</option>
-        <option value="bn_BD">Bengali (Bangladesh)</option>
-        <option value="bs_BA">Bosnian (Bosnia and Herzegovina)</option>
-        <option value="ca_ES">Catalan (Spain)</option>
-        <option value="cs_CZ">Czech (Czech Republic)</option>
-        <option value="chr_US">Cherokee (United States)</option>
-        <option value="cy_GB">Welsh (United Kingdom)</option>
-        <option value="da_DK">Danish (Denmark)</option>
-        <option value="de_DE">German (Germany)</option>
-        <option value="ee_GH">Ewe (Ghana)</option>
-        <option value="el_GR">Greek (Greece)</option>
-        <option value="es_ES">Spanish (Spain)</option>
-        <option value="et_EE">Estonian (Estonia)</option>
-        <option value="fa_AF">Persian (Afghanistan)</option>
-        <option value="tl_PH">Tagalog (Philippines)</option>
-        <option value="fi_FI">Finnish (Finland)</option>
-        <option value="fr_FR">French (France)</option>
-        <option value="guz_KE">Gusii (Kenya)</option>
-        <option value="he_IL">עִבְרִית (Israel)</option>
-        <option value="hi_IN">Hindi (India)</option>
-        <option value="hr_HR">Croatian (Croatia)</option>
-        <option value="hu_HU">Hungarian (Hungary)</option>
-        <option value="hy_AM">Armenian (Armenia)</option>
-        <option value="id_ID">Indonesian (Indonesia)</option>
-        <option value="ig_NG">Igbo (Nigeria)</option>
-        <option value="is_IS">Icelandic (Iceland)</option>
-        <option value="it_IT">Italiano (Italy)</option>
-        <option value="ja_JP">日本語 (Japan)</option>
-        <option value="kab_DZ">Kabyle (Algeria)</option>
-        <option value="km_KH">Khmer (Cambodia)</option>
-        <option value="kn_IN">Kannada (India)</option>
-        <option value="ko_KR">한국어 (South Korea)</option>
-        <option value="lag_TZ">Langi (Tanzania)</option>
-        <option value="lg_UG">Ganda (Uganda)</option>
-        <option value="lv_LV">Latvian (Latvia)</option>
-        <option value="nb_NO">Norwegian Bokmål (Norway)</option>
-        <option value="ne_NP">Nepali (Nepal)</option>
-        <option value="nl_BE">Dutch (Belgium)</option>
-        <option value="pl_PL">Polish (Poland)</option>
-        <option value="pt_BR">Português (Brasil)</option>
-        <option value="ru_RU">Russian (Russia)</option>
-        <option value="si_LK">Sinhala (Sri Lanka)</option>
-        <option value="sq_AL">Albanian (Albania)</option>
-        <option value="sr_Cyrl">Serbian (Cyrillic)</option>
-        <option value="sw_KE">Swahili (Kenya)</option>
-        <option value="th_TH">ภาษาไทย (Thailand)</option>
-        <option value="tr_TR">Turkish (Turkey)</option>
-        <option value="vi_VN">tiếng Việt (Vietnam)</option>
-        <option value="zh_CN">Chinese (Simplified, China)</option>
-        <option value="zh_HK">Chinese (Traditional, Hong Kong SAR China)</option>
-        <option value="zh_TW">Chinese (Traditional, Taiwan)</option>
-      </select><span class="mb-2 text-primary-text text-sm font-normal font-sans">submitPage.spokenLanguage2 (submitPage.optional)</span>
-      <p class="text-error text-xs font-sans" style="display: none;">submitPage.invalidOption</p><select data-testid="submit-select-language2" class="mb-5 px-3 py-3.5 w-96 h-12 bg-primary-text-inverted rounded-lg border border-primary-text-muted text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted" placeholder="submitPage.selectLanguage2">
-        <option value="en_US">English (US)</option>
-        <option value="ak_GH">Akan (Ghana)</option>
-        <option value="am_ET">Amharic (Ethiopia)</option>
-        <option value="ar_AE">اَلْعَرَبِيَّة (United Arab Emirates)</option>
-        <option value="bm_ML">Bambara (Mali)</option>
-        <option value="bn_BD">Bengali (Bangladesh)</option>
-        <option value="bs_BA">Bosnian (Bosnia and Herzegovina)</option>
-        <option value="ca_ES">Catalan (Spain)</option>
-        <option value="cs_CZ">Czech (Czech Republic)</option>
-        <option value="chr_US">Cherokee (United States)</option>
-        <option value="cy_GB">Welsh (United Kingdom)</option>
-        <option value="da_DK">Danish (Denmark)</option>
-        <option value="de_DE">German (Germany)</option>
-        <option value="ee_GH">Ewe (Ghana)</option>
-        <option value="el_GR">Greek (Greece)</option>
-        <option value="es_ES">Spanish (Spain)</option>
-        <option value="et_EE">Estonian (Estonia)</option>
-        <option value="fa_AF">Persian (Afghanistan)</option>
-        <option value="tl_PH">Tagalog (Philippines)</option>
-        <option value="fi_FI">Finnish (Finland)</option>
-        <option value="fr_FR">French (France)</option>
-        <option value="guz_KE">Gusii (Kenya)</option>
-        <option value="he_IL">עִבְרִית (Israel)</option>
-        <option value="hi_IN">Hindi (India)</option>
-        <option value="hr_HR">Croatian (Croatia)</option>
-        <option value="hu_HU">Hungarian (Hungary)</option>
-        <option value="hy_AM">Armenian (Armenia)</option>
-        <option value="id_ID">Indonesian (Indonesia)</option>
-        <option value="ig_NG">Igbo (Nigeria)</option>
-        <option value="is_IS">Icelandic (Iceland)</option>
-        <option value="it_IT">Italiano (Italy)</option>
-        <option value="ja_JP">日本語 (Japan)</option>
-        <option value="kab_DZ">Kabyle (Algeria)</option>
-        <option value="km_KH">Khmer (Cambodia)</option>
-        <option value="kn_IN">Kannada (India)</option>
-        <option value="ko_KR">한국어 (South Korea)</option>
-        <option value="lag_TZ">Langi (Tanzania)</option>
-        <option value="lg_UG">Ganda (Uganda)</option>
-        <option value="lv_LV">Latvian (Latvia)</option>
-        <option value="nb_NO">Norwegian Bokmål (Norway)</option>
-        <option value="ne_NP">Nepali (Nepal)</option>
-        <option value="nl_BE">Dutch (Belgium)</option>
-        <option value="pl_PL">Polish (Poland)</option>
-        <option value="pt_BR">Português (Brasil)</option>
-        <option value="ru_RU">Russian (Russia)</option>
-        <option value="si_LK">Sinhala (Sri Lanka)</option>
-        <option value="sq_AL">Albanian (Albania)</option>
-        <option value="sr_Cyrl">Serbian (Cyrillic)</option>
-        <option value="sw_KE">Swahili (Kenya)</option>
-        <option value="th_TH">ภาษาไทย (Thailand)</option>
-        <option value="tr_TR">Turkish (Turkey)</option>
-        <option value="vi_VN">tiếng Việt (Vietnam)</option>
-        <option value="zh_CN">Chinese (Simplified, China)</option>
-        <option value="zh_HK">Chinese (Traditional, Hong Kong SAR China)</option>
-        <option value="zh_TW">Chinese (Traditional, Taiwan)</option>
-      </select><span class="mb-2 text-primary-text text-sm font-normal font-sans">submitPage.otherNotes (submitPage.optional)</span><textarea data-testid="submit-input-notes" class="mb-5 landscape:mb-20 px-3 py-3.5 w-96 h-28 bg-secondary-bg rounded-lg border border-primary-text-muted" maxlength="300"></textarea><button data-testid="submit-submitbutton" type="submit" class="px-20 py-3 mb-40 landscape:mb-0 rounded-full bg-primary w-96 text-center text-primary-inverted font-medium font-sans">submitPage.submitButton</button>
-    </form>
-    <div></div>
+    <aside class="card flex flex-col gap-3 self-start p-6">
+      <h2 class="text-lg font-semibold text-primary-text">home.contributeHeading</h2>
+      <p class="text-primary-text-muted">home.contributeBody</p><img src="/illustrations/characters-sachi.svg" alt="" width="355" height="638" loading="lazy" decoding="async" class="mt-2 h-32 w-auto self-center">
+    </aside>
   </div>
-  <!--v-if-->
-</div>"
+</section>"
 `;

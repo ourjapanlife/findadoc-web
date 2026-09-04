@@ -60,6 +60,19 @@ export const ALL_PREFECTURES: readonly PrefectureEntry[] = [
     { name: 'Nagasaki', nameJa: '長崎県', approximateFacilities: 1 }
 ] as const
 
+/**
+ * The directory's size, measured against production on 2026-09-02.
+ *
+ * Shown on the homepage and the about page. Carried statically for the same reason as the
+ * prefecture list, and framed in copy as approximate so it never reads as a live counter.
+ * Re-measure when the directory grows — the query is in docs/refresh-audit.md, Appendix.
+ */
+export const DIRECTORY_STATS = {
+    facilities: 465,
+    professionals: 400,
+    languages: 14
+} as const
+
 /** The subset shown as chips under "Browse by area". The dropdown offers all of them. */
 export const TOP_PREFECTURES: readonly PrefectureEntry[] = ALL_PREFECTURES.slice(0, 8)
 

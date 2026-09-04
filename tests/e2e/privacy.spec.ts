@@ -16,7 +16,7 @@ test.describe('Privacy Policy page', () => {
         })
 
         test('has a heading', async ({ page }) => {
-            await expect(page.getByRole('heading', { name: /privacy/i })).toBeVisible()
+            await expect(page.getByRole('heading', { name: /privacy/i, level: 1 })).toBeVisible()
         })
 
         test('shows the footer', async ({ page }) => {

@@ -11,29 +11,20 @@
   },
   "common": {
     "menu": "Menu",
-    "siteName": "Find a Doc Japan",
+    "siteName": "Find a Doc, Japan",
     "siteNameLine1": "Find a Doc",
     "siteNameLine2": "Japan",
-    "loading": "Loading"
+    "loading": "Loading",
+    "close": "Close"
   },
   "about": {
     "heroHeading": "Find a Doc, Japan",
     "heroSubheading": "Kết nối bạn với các dịch vụ chăm sóc sức khỏe bạn cần, bằng ngôn ngữ của bạn",
     "heroGetStarted": "Bắt đầu",
-    "heroLearnMore": "Tìm hiểu thêm",
     "storyHeader": "Câu chuyện của chúng tôi",
     "storyParagraph1": "Được thành lập năm 2020 trong thời kỳ đại dịch bởi LaShawn Toyoda và Phil Ermish, sứ mệnh của chúng tôi là thúc đẩy một xã hội khỏe mạnh và hòa nhập hơn. Chúng tôi cung cấp miễn phí thông tin y tế chất lượng bằng nhiều ngôn ngữ cho tất cả mọi người, bao gồm người nước ngoài và các chuyên gia y tế. Chúng tôi mong muốn một Nhật Bản nơi mọi người, bất kể quốc tịch hay ngôn ngữ, đều có thể tự tin tiếp cận hệ thống y tế, tìm đúng bác sĩ và nhận được dịch vụ chăm sóc cần thiết.",
     "storyParagraph2": "Chúng tôi là một tổ chức phi lợi nhuận, được thúc đẩy bởi niềm tin rằng mọi người nên có quyền tiếp cận thông tin y tế như một phần của cuộc sống tốt đẹp. Các hoạt động của chúng tôi được định hướng bởi công bằng xã hội, sự nhạy cảm văn hóa và đổi mới. Chúng tôi luôn sẵn lòng hợp tác với các đối tác trong chính phủ, tổ chức phi lợi nhuận và cộng đồng y tế. Cùng với các đối tác, chúng tôi hy vọng xây dựng một Nhật Bản nơi mọi người đều có thể tiếp cận dịch vụ chăm sóc sức khỏe, cảm thấy được hòa nhập và có cuộc sống tốt đẹp.",
-    "btnImpact": "Tác động của chúng tôi",
-    "btnContributors": "Những người đóng góp",
-    "btnCofounders": "Đồng sáng lập",
-    "btnBoard": "Ban điều hành NPO",
-    "btnMascots": "Linh vật",
-    "btnInvolve": "Tham gia",
     "impactHeader": "Tác động của chúng tôi",
-    "impactDoctors": "300+ bác sĩ đã đăng ký",
-    "impactUsers": "100+ người dùng hàng tháng",
-    "impactVolunteer": "Dựa trên cộng đồng và tình nguyện",
     "contributorsHeader": "Những người đóng góp",
     "cofoundersHeader": "Đồng sáng lập",
     "boardHeader": "Ban điều hành NPO",
@@ -45,9 +36,10 @@
     "mascotsChiko": "Chiko",
     "involveHeader": "Tham gia",
     "involveAdd": "Thêm bác sĩ",
-    "involveGit": "Đóng góp",
     "involveLinkedin": "Theo dõi chúng tôi",
-    "involveFeedback": "Gửi phản hồi"
+    "involveFeedback": "Gửi phản hồi",
+    "involveContribute": "Đóng góp",
+    "sectionNavLabel": "On this page"
   },
   "footer": {
     "terms": "Điều khoản",
@@ -55,14 +47,12 @@
     "privacy": "Chính Sách Bảo Mật",
     "poweredBy": "Được hỗ trợ bởi",
     "contribute": "Đóng góp",
-    "feedback": "Có góp ý",
-    "clickHere": "Nhấn vào đây",
-    "copyright": "NPO法人Find a Doc, Japan"
+    "copyright": "NPO法人Find a Doc, Japan",
+    "exploreHeading": "Explore",
+    "communityHeading": "Community",
+    "legalHeading": "Legal"
   },
   "hamburgerMenu": {
-    "about": "Về Find a Doc, Japan",
-    "contact": "Liên Hệ",
-    "submit": "Thêm Bác Sĩ",
     "logout": "Đăng xuất",
     "languageDropdownTitle": "Ngôn Ngữ:",
     "copyright": "NPO法人Find a Doc, Japan",
@@ -90,13 +80,6 @@
     "paragraph15": "Chúng tôi có quyền cập nhật Chính sách Bảo mật này để phản ánh những thay đổi trong thực tiễn và dịch vụ của mình. Chúng tôi sẽ thông báo cho bạn về bất kỳ thay đổi quan trọng nào bằng cách đăng chính sách đã cập nhật trên trang web của chúng tôi.",
     "paragraph16": "Bằng cách sử dụng dịch vụ của chúng tôi, bạn đồng ý với các điều khoản được nêu trong Chính sách Bảo mật này."
   },
-  "onboarding": {
-    "letsGoButtonText": "Tìm bác sĩ!",
-    "welcometo": "Chào mừng đến với",
-    "selectcategory": "Vui lòng chọn một danh mục để bắt đầu.",
-    "notsurebutton": "Tôi không chắc hoặc khác",
-    "searchloading": "Hành trình của bạn bắt đầu từ đây"
-  },
   "submitPage": {
     "firstName": "Tên",
     "firstNameValidation": "Nhập tên của bạn",
@@ -120,25 +103,19 @@
     "submissionSuccessful": "Cảm ơn bạn đã đóng góp! Bài gửi của bạn về bác sĩ đã được ghi nhận thành công. Chúng tôi rất biết ơn sự hỗ trợ của bạn!"
   },
   "searchBar": {
-    "selectSpecialty": "Chọn chuyên khoa...",
-    "selectLocation": "Chọn vị trí...",
-    "allLocations": "Tất cả địa điểm",
     "allSpecialties": "Tất cả chuyên khoa",
-    "search": "Tìm kiếm",
-    "searchAndFilterDoctors": "Tìm kiếm và lọc bác sĩ",
     "resultsFound": "Không có kết quả | 1 kết quả | {n} kết quả"
   },
   "searchResultsList": {
     "loadMore": "Tải thêm",
     "remaining": "còn lại",
     "noResults": "Không tìm thấy kết quả",
-    "noResultsSubtext": "Vui lòng thử kết hợp bộ lọc khác."
+    "noResultsSubtext": "Vui lòng thử kết hợp bộ lọc khác.",
+    "loadMoreCount": "Load more ({n} remaining)"
   },
   "searchResultsDetails": {
     "speaks": "Bác sĩ này nói",
-    "contact": "Liên hệ",
     "lastUpdate": "Last updated",
-    "additionalInfo": "Additional Info",
     "healthcareProfessionals": "Healthcare Professionals",
     "callNow": "Gọi"
   },
@@ -155,7 +132,8 @@
     "logout": "Đăng xuất",
     "login": "Login",
     "myPage": "Trang của tôi",
-    "logoutToast": "Successfully logged out"
+    "logoutToast": "Successfully logged out",
+    "search": "Search"
   },
   "login": {
     "checkingauth": "Đang kiểm tra xác thực...",
@@ -340,12 +318,12 @@
     "facilitySuccessfullyRejected": "Facility rejected successfully",
     "rejectSubmissionConfirmationMessage": "Are you sure you want to reject this submission?",
     "rejectSubmissionConfirmationButton": "Yes, reject the submission",
-    "successMessageUpdated": "Submission updated successfully",
-    "successMessageApproved": "Submission approved successfully",
     "searchExistingFacilities": "Search for existing Facility",
     "searchExistingHealthcareProfessionals": "Search for existing Healthcare Professionals",
     "labelModNoteInput": "Moderator Notes",
-    "placeholderTextNoteInput": "e.g. waiting for call back from clinic"
+    "placeholderTextNoteInput": "e.g. waiting for call back from clinic",
+    "successMessageUpdated": "Submission updated successfully",
+    "successMessageApproved": "Submission approved successfully"
   },
   "serverErrorMessages": {
     "errorCodeMessagingNeeded": "The server error code does not have a message for the user. Please add one.",
@@ -449,10 +427,14 @@
     "updateFailed": "Profile update failed"
   },
   "localeErrors": {
-    "notSpecified": "Not Specified"
+    "notSpecified": "Not Specified",
+    "notFound": "Unknown language"
   },
   "themeManager": {
-    "colorThemes": "Color Themes"
+    "label": "Appearance",
+    "light": "Light",
+    "dark": "Dark",
+    "auto": "Auto"
   },
   "unsavedChanges": {
     "create": {
@@ -498,5 +480,26 @@
     "contributeHeading": "Bạn biết phòng khám nào chúng tôi còn thiếu?",
     "contributeBody": "Bất kỳ ai cũng có thể đề xuất một phòng khám hoặc bác sĩ. Người kiểm duyệt của chúng tôi xem xét mọi đề xuất trước khi đăng.",
     "contributeCta": "Thêm bác sĩ"
+  },
+  "search": {
+    "filters": "Filters",
+    "clearFilters": "Clear filters",
+    "showMap": "Show map",
+    "hideMap": "Hide map",
+    "loading": "Loading the directory…",
+    "loadError": "We could not load the directory. Check your connection and try again.",
+    "retry": "Try again",
+    "backToResults": "Back to results",
+    "website": "Website",
+    "openInMaps": "Open in Google Maps",
+    "email": "Email",
+    "phone": "Phone",
+    "languagesSpoken": "Languages spoken",
+    "resultsRegion": "Search results",
+    "moreProfessionals": "+{n} more",
+    "professionalsAtFacility": "No professionals listed | 1 professional | {n} professionals",
+    "pageHeading": "Find a doctor in Japan",
+    "mapUnavailable": "The map could not be loaded.",
+    "mapUnavailableHint": "The rest of the results are unaffected."
   }
 }

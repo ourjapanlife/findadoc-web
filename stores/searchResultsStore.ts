@@ -1,88 +1,100 @@
 import { gql } from 'graphql-request'
 import { defineStore } from 'pinia'
-import { ref, computed, type Ref } from 'vue'
-import { gqlClient } from '../utils/graphql.js'
-import { useLoadingStore } from './loadingStore.js'
-import { handleServerErrorMessaging } from '#imports'
-import { useTranslation } from '~/composables/useTranslation.js'
-import { useAppToast } from '~/composables/useAppToast.js'
-import type { Locale,
-    Specialty,
-    Facility,
+import { computed, ref, watch, type Ref } from 'vue'
+import { gqlClient, graphQLClientRequestWithRetry } from '../utils/graphql.js'
+import { filterDirectory, type FacilitySearchResult, type SearchFilters } from '~/utils/searchDirectory'
+import type { Facility,
     FacilitySearchFilters,
     HealthcareProfessional,
-    HealthcareProfessionalSearchFilters } from '~/typedefs/gqlTypes.js'
-import type { ServerError } from '~/typedefs/serverResponse.js'
+    HealthcareProfessionalSearchFilters,
+    Locale,
+    Specialty } from '~/typedefs/gqlTypes.js'
 
-type FacilitySearchResult = Facility & {
-    healthcareProfessionals: HealthcareProfessional[]
-}
+export type DirectoryStatus = 'idle' | 'loading' | 'ready' | 'error'
 
 /**
- * Narrows facilities to a single city, matching either the English or Japanese city name.
+ * 100 rows a page for both tables.
  *
- * Must be applied only after all batches have been fetched — see `fetchAllFacilities`.
+ * Facilities are clamped to 100 server-side whatever we ask for (findadoc-server
+ * `facilityService.searchFacilities`). Professionals are *validated* up to 1000, but the
+ * endpoint actually fails somewhere between 300 and 400 rows — measured against
+ * api.findadoc.jp, which holds 400 professionals, so a single "give me everything" page could
+ * never succeed. It returns a 200 carrying a `Validation Failed` / `INTERNAL_SERVER_ERROR`
+ * body rather than a clean limit error, so there is nothing to detect and back off from.
+ *
+ * 100 is the size the previous implementation used in production, and it is verified here at
+ * every offset across the whole table. Do not raise it to the validator's ceiling: that number
+ * describes what the input parser accepts, not what the query can serve.
+ *
+ * Both loaders page on the *count the server reports*, never on the length of a filtered
+ * batch — that is how #1807 lost 79% of the directory.
  */
-function filterFacilitiesByLocation(
-    facilities: Facility[],
-    searchCity?: string,
-    searchPrefecture?: string
-): Facility[] {
-    return facilities.filter(facility => {
-        const address = facility.contact?.address
+const FACILITY_PAGE_SIZE = 100
+const PROFESSIONAL_PAGE_SIZE = 100
 
-        const cityMatches = !searchCity
-          || address?.cityEn === searchCity
-          || address?.cityJa === searchCity
+/** Ceiling on in-flight page requests, so a larger directory cannot become a thundering herd. */
+const MAX_CONCURRENT_PAGE_REQUESTS = 6
 
-        const prefectureMatches = !searchPrefecture
-          || address?.prefectureEn === searchPrefecture
-          || address?.prefectureJa === searchPrefecture
+/**
+ * Anonymous reads: no Auth0 wait, a short gap between retries so a dead API fails in seconds
+ * rather than 15, and a hard per-attempt deadline so a hung connection surfaces the error state
+ * instead of leaving the page on skeletons indefinitely.
+ */
+const PUBLIC_REQUEST_OPTIONS = {
+    skipAuth: true,
+    retryAmount: 2,
+    requestTimeoutInMilliseconds: 1500,
+    abortAfterMs: 10000
+}
 
-        return cityMatches && prefectureMatches
-    })
+interface Page<T> {
+    rows: T[]
+    totalCount: number
 }
 
 export const useSearchResultsStore = defineStore('searchResultsStore', () => {
-    const toast = useAppToast()
+    // -- Directory (loaded once, then filtered locally) --
 
-    function notifyServerErrorsIfPresent(errors: ServerError[] | undefined) {
-        if (!errors?.length) {
-            return
-        }
-        handleServerErrorMessaging(errors, toast, useTranslation)
-    }
+    const directoryFacilities: Ref<Facility[]> = ref([])
+    const directoryProfessionals: Ref<HealthcareProfessional[]> = ref([])
+    const directoryStatus: Ref<DirectoryStatus> = ref('idle')
+    let inFlightLoad: Promise<void> | null = null
 
-    const activeFacilityId: Ref<string | undefined> = ref()
-    const activeFacility: Ref<FacilitySearchResult | undefined> = ref()
-    const activeProfessional: Ref<HealthcareProfessional | undefined> = ref()
-    const searchResultsList: Ref<FacilitySearchResult[]> = ref([])
-    const totalResults = ref(0)
+    // -- Filters --
 
     const selectedCity: Ref<string | undefined> = ref()
     const selectedPrefecture: Ref<string | undefined> = ref()
     const selectedSpecialties: Ref<Specialty[] | undefined> = ref()
     const selectedLanguages: Ref<Locale[] | undefined> = ref()
 
+    const filters = computed<SearchFilters>(() => ({
+        city: selectedCity.value,
+        prefecture: selectedPrefecture.value,
+        specialties: selectedSpecialties.value,
+        languages: selectedLanguages.value
+    }))
+
+    // -- Results --
+
+    const searchResultsList = computed<FacilitySearchResult[]>(() =>
+        filterDirectory(directoryFacilities.value, directoryProfessionals.value, filters.value))
+
+    const totalResults = computed(() => searchResultsList.value.length)
+
     const currentPage = ref(1)
     const itemsPerPage = 25
 
-    const FETCH_BATCH_SIZE = 100
+    const paginatedResults = computed(() => searchResultsList.value.slice(0, currentPage.value * itemsPerPage))
+    const hasMore = computed(() => paginatedResults.value.length < totalResults.value)
 
-    const allMapPoints = ref<Array<{
-        id: string
-        nameEn: string
-        nameJa: string
-        mapLatitude: number
-        mapLongitude: number
-    }>>([])
+    const isLoading = computed(() => directoryStatus.value === 'loading')
+    const hasLoadError = computed(() => directoryStatus.value === 'error')
+    const isReady = computed(() => directoryStatus.value === 'ready')
 
-    const paginatedResults = computed(() => {
-        const endIndex = currentPage.value * itemsPerPage
-        return searchResultsList.value.slice(0, endIndex)
+    // A new filter combination starts from the first page.
+    watch(filters, () => {
+        currentPage.value = 1
     })
-
-    const hasMore = computed(() => (itemsPerPage * currentPage.value) < totalResults.value)
 
     function loadMore() {
         if (hasMore.value) {
@@ -90,293 +102,236 @@ export const useSearchResultsStore = defineStore('searchResultsStore', () => {
         }
     }
 
-    async function fetchAllFacilities(
-        searchCity?: string,
-        searchPrefecture?: string,
-        healthcareProfessionalIDs?: string[]
-    ): Promise<Facility[]> {
-        const allFacilities: Facility[] = []
-        const batchSize = FETCH_BATCH_SIZE
-        let offset = 0
-        let hasMoreBatches = true
+    // -- Active result --
 
-        while (hasMoreBatches) {
-            const batch = await queryFacilities(healthcareProfessionalIDs, batchSize, offset)
+    const activeFacilityId: Ref<string | undefined> = ref()
 
-            allFacilities.push(...batch)
+    /**
+     * Resolved from the current results first, then from the whole directory: a shared link
+     * to a facility should still open even when the link's filters exclude every professional
+     * there. In that case the panel shows everyone at the facility.
+     */
+    const activeFacility = computed<FacilitySearchResult | undefined>(() => {
+        const id = activeFacilityId.value
+        if (!id) return undefined
 
-            /*
-             * Paginate on how many rows the server returned, never on how many survive the city
-             * filter below. Filtering first and then comparing against batchSize ends the loop as
-             * soon as a batch is partially filtered out, which silently truncated every
-             * city-filtered search to the first batch.
-             */
-            hasMoreBatches = batch.length === batchSize
-            offset += batchSize
+        const fromResults = searchResultsList.value.find(facility => facility.id === id)
+        if (fromResults) return fromResults
+
+        const facility = directoryFacilities.value.find(candidate => candidate.id === id)
+        if (!facility) return undefined
+
+        const professionalIds = new Set(facility.healthcareProfessionalIds)
+        return {
+            ...facility,
+            healthcareProfessionals: directoryProfessionals.value.filter(professional => professionalIds.has(professional.id))
         }
-
-        return filterFacilitiesByLocation(allFacilities, searchCity, searchPrefecture)
-    }
-
-    // We have the numbers of HelathcareProfessional on runtime
-    // Becuase fetchAllFacilities also cointain number of healthcareProfessional
-    // Use Promise.all for work in parallel
-    async function fetchAllProfessionals(
-    searchSpecialties: Specialty[],
-    searchLanguages: Locale[],
-    professionalIDs: string[]
-    ): Promise<HealthcareProfessional[]> {
-        if (professionalIDs.length === 0) {
-            return []
-        }
-
-        const batchSize = FETCH_BATCH_SIZE
-        // Calculate number of batches
-        const batchCount = Math.ceil(professionalIDs.length / batchSize)
-        const batchIndices = Array.from({ length: batchCount }, (_, i) => i)
-        // Fetch all batches in PARALLEL
-        const batches = await Promise.all(
-            batchIndices.map(async batchIndex => {
-                const start = batchIndex * batchSize
-                const batchIds = professionalIDs.slice(start, start + batchSize)
-                return queryProfessionals(searchSpecialties, searchLanguages, batchIds)
-            })
-        )
-        return batches.flat()
-    }
-
-    async function search() {
-        const loadingStore = useLoadingStore()
-        loadingStore.setIsLoading(true)
-
-        // Fetch lightweight map points FIRST
-        const mapPointsResult = await graphQLClientRequestWithRetry<{
-            facilities: Array<{
-                id: string
-                nameEn: string
-                nameJa: string
-                mapLatitude: number
-                mapLongitude: number
-            }>
-        }>(
-            gqlClient.request.bind(gqlClient),
-            mapPointsQuery,
-            { filters: { limit: 1000 } }
-        )
-
-        allMapPoints.value = mapPointsResult.data.facilities ?? []
-
-        // Fetch ALL facilities using automatic pagination
-        const facilitiesSearchResults = await fetchAllFacilities(selectedCity.value, selectedPrefecture.value)
-
-        // Extract all unique professional IDs
-        const allProfessionalIds = facilitiesSearchResults
-            .map(facility => facility.healthcareProfessionalIds)
-            .flat()
-
-        const uniqueProfessionalIds = [...new Set(allProfessionalIds)]
-
-        // Fetch ALL professionals using automatic batching
-        const professionalsSearchResults = await fetchAllProfessionals(
-            selectedSpecialties.value ?? [],
-            selectedLanguages.value ?? [],
-            uniqueProfessionalIds
-        )
-
-        // Combine the professionals and facilities into a single search result
-        // Filter out any facilities that don't have any matching professionals
-        const combinedResults = facilitiesSearchResults.flatMap(facilityResult => {
-            const associatedProfessionals = professionalsSearchResults.filter(professionalResult =>
-                facilityResult.healthcareProfessionalIds.includes(professionalResult.id))
-
-            return associatedProfessionals.length
-                ? [{
-                    ...facilityResult,
-                    healthcareProfessionals: associatedProfessionals
-                }]
-                : []
-        })
-
-        // Clear any active result when new search results are loaded
-        clearActiveSearchResult()
-
-        currentPage.value = 1
-
-        // Update the state with the new results
-        searchResultsList.value = combinedResults
-        totalResults.value = combinedResults.length
-
-        loadingStore.setIsLoading(false)
-    }
+    })
 
     function setActiveFacility(facilityId: string) {
-        const newFacility = searchResultsList.value.find(facilityItem => facilityItem.id === facilityId)
-
-        activeFacility.value = newFacility
-        activeFacilityId.value = newFacility?.id
-
-        activeProfessional.value = undefined
-    }
-
-    function setActiveProfessional(professionalId: string) {
-        if (!activeFacility.value) return
-
-        const newProfessional = activeFacility.value.healthcareProfessionals.find(
-            professional => professional.id === professionalId
-        )
-
-        activeProfessional.value = newProfessional
+        activeFacilityId.value = facilityId
     }
 
     function clearActiveSearchResult() {
         activeFacilityId.value = undefined
-        activeFacility.value = undefined
-        activeProfessional.value = undefined
     }
 
-    function clearActiveProfessional() {
-        activeProfessional.value = undefined
+    function clearFilters() {
+        selectedCity.value = undefined
+        selectedPrefecture.value = undefined
+        selectedSpecialties.value = undefined
+        selectedLanguages.value = undefined
     }
 
-    async function queryProfessionals(
-    searchSpecialties: Specialty[],
-    searchLanguages: Locale[],
-    professionalIDs?: string[]
-    ): Promise<HealthcareProfessional[]> {
-        try {
-            const searchProfessionalsData = {
-                filters: {
-                    limit: 1000,
-                    offset: 0,
-                    ids: professionalIDs ?? undefined,
-                    specialties: searchSpecialties,
-                    spokenLanguages: searchLanguages,
-                    acceptedInsurance: undefined,
-                    degrees: undefined,
-                    names: undefined,
-                    orderBy: undefined,
-                    createdDate: undefined,
-                    updatedDate: undefined
-                } satisfies HealthcareProfessionalSearchFilters
+    // -- Loading --
+
+    /**
+     * Fetches the directory once. Concurrent callers share the same request; a completed load
+     * is never repeated for the lifetime of the store, so navigating away and back is free.
+     */
+    async function loadDirectory(): Promise<void> {
+        if (directoryStatus.value === 'ready') return
+        if (inFlightLoad) return inFlightLoad
+
+        directoryStatus.value = 'loading'
+
+        inFlightLoad = (async () => {
+            try {
+                // Independent tables, so both loads start at once instead of one behind the other.
+                const [facilities, professionals] = await Promise.all([
+                    fetchAllFacilities(),
+                    fetchAllProfessionals()
+                ])
+
+                directoryFacilities.value = facilities
+                directoryProfessionals.value = professionals
+                directoryStatus.value = 'ready'
+            } catch (error) {
+                console.error('Loading the directory failed', error)
+                directoryStatus.value = 'error'
+            } finally {
+                inFlightLoad = null
             }
+        })()
 
-            const serverResponse = await graphQLClientRequestWithRetry<
-                { healthcareProfessionals: HealthcareProfessional[] }
-            >(
+        return inFlightLoad
+    }
+
+    /** Retry after a failed load. */
+    async function reloadDirectory(): Promise<void> {
+        if (directoryStatus.value === 'error') {
+            directoryStatus.value = 'idle'
+        }
+        return loadDirectory()
+    }
+
+    /**
+     * Kept as the entry point components call: ensures the directory is loaded and resets the
+     * view. Results themselves are derived from the filters, so there is nothing else to run.
+     */
+    async function search(): Promise<void> {
+        currentPage.value = 1
+        clearActiveSearchResult()
+        await loadDirectory()
+    }
+
+    /**
+     * First page tells us the total; the remaining pages are fetched together. The page size
+     * is taken from what the server actually returned, so a lower server-side cap still pages
+     * correctly rather than silently truncating.
+     */
+    async function fetchAllPages<T>(requestPage: (offset: number) => Promise<Page<T>>): Promise<T[]> {
+        const first = await requestPage(0)
+        const pageSize = first.rows.length
+
+        if (!pageSize || first.totalCount <= pageSize) {
+            return first.rows
+        }
+
+        const offsets: number[] = []
+        for (let offset = pageSize; offset < first.totalCount; offset += pageSize) {
+            offsets.push(offset)
+        }
+
+        const rest = await fetchWithLimitedConcurrency(offsets, requestPage)
+        return [...first.rows, ...rest.flatMap(page => page.rows)]
+    }
+
+    /**
+     * Runs the page requests a few at a time rather than all at once. At today's five pages the
+     * difference is nil, but the number of pages grows with the directory and this endpoint has
+     * already shown it fails under load rather than degrading.
+     */
+    async function fetchWithLimitedConcurrency<T>(
+        offsets: number[],
+        requestPage: (offset: number) => Promise<Page<T>>
+    ): Promise<Page<T>[]> {
+        const pages: Page<T>[] = new Array(offsets.length)
+        let next = 0
+
+        const worker = async () => {
+            while (next < offsets.length) {
+                const index = next++
+                pages[index] = await requestPage(offsets[index]!)
+            }
+        }
+
+        const workerCount = Math.min(MAX_CONCURRENT_PAGE_REQUESTS, offsets.length)
+        await Promise.all(Array.from({ length: workerCount }, worker))
+
+        return pages
+    }
+
+    function fetchAllFacilities(): Promise<Facility[]> {
+        return fetchAllPages(async offset => {
+            const filtersInput = {
+                limit: FACILITY_PAGE_SIZE,
+                offset
+            } satisfies FacilitySearchFilters
+
+            const response = await graphQLClientRequestWithRetry<{
+                facilities: Facility[]
+                facilitiesTotalCount: number
+            }>(
                 gqlClient.request.bind(gqlClient),
-                searchProfessionalsQuery,
-                searchProfessionalsData
+                searchFacilitiesPageQuery,
+                { filters: filtersInput, countFilters: {} satisfies FacilitySearchFilters },
+                PUBLIC_REQUEST_OPTIONS
             )
 
-            notifyServerErrorsIfPresent(serverResponse.errors)
-
-            const professionalsSearchResult = serverResponse.data.healthcareProfessionals ?? []
-            return professionalsSearchResult
-        } catch (error) {
-            console.error(useTranslation('searchResultsErrors.gettingProfessionals'), ` ${JSON.stringify(error)}`)
-            // eslint-disable-next-line no-alert
-            alert(useTranslation('searchResultsErrors.gettingData'))
-            return []
-        }
-    }
-
-    async function queryFacilities(
-    healthcareProfessionalIDs?: string[],
-    limit: number = 100,
-    offset: number = 0
-    ): Promise<Facility[]> {
-        try {
-            const searchFacilitiesData = {
-                filters: {
-                    limit: limit,
-                    offset: offset,
-                    healthcareProfessionalIds: healthcareProfessionalIDs ?? undefined,
-                    contact: undefined,
-                    createdDate: undefined,
-                    healthcareProfessionalName: undefined,
-                    nameEn: undefined,
-                    nameJa: undefined,
-                    orderBy: undefined,
-                    updatedDate: undefined
-                } satisfies FacilitySearchFilters
+            if (response.hasErrors) {
+                throw new Error(response.errors.map(error => error.message).join('; ') || 'facilities request failed')
             }
 
-            const serverResponse = await graphQLClientRequestWithRetry<
-                { facilities: Facility[] }
-            >(
+            return {
+                rows: response.data.facilities ?? [],
+                totalCount: response.data.facilitiesTotalCount ?? response.data.facilities?.length ?? 0
+            }
+        })
+    }
+
+    function fetchAllProfessionals(): Promise<HealthcareProfessional[]> {
+        return fetchAllPages(async offset => {
+            const filtersInput = {
+                limit: PROFESSIONAL_PAGE_SIZE,
+                offset
+            } satisfies HealthcareProfessionalSearchFilters
+
+            const response = await graphQLClientRequestWithRetry<{
+                healthcareProfessionals: HealthcareProfessional[]
+                healthcareProfessionalsTotalCount: number
+            }>(
                 gqlClient.request.bind(gqlClient),
-                searchFacilitiesQuery,
-                searchFacilitiesData
+                searchProfessionalsPageQuery,
+                { filters: filtersInput, countFilters: {} satisfies HealthcareProfessionalSearchFilters },
+                PUBLIC_REQUEST_OPTIONS
             )
 
-            notifyServerErrorsIfPresent(serverResponse.errors)
+            if (response.hasErrors) {
+                throw new Error(response.errors.map(error => error.message).join('; ') || 'professionals request failed')
+            }
 
-            return serverResponse.data.facilities ?? []
-        } catch (error) {
-            console.error(useTranslation('searchResultsErrors.gettingFacilities'), `${JSON.stringify(error)}`)
-            // eslint-disable-next-line no-alert
-            alert(useTranslation('searchResultsErrors.gettingData'))
-            return []
-        }
+            return {
+                rows: response.data.healthcareProfessionals ?? [],
+                totalCount: response.data.healthcareProfessionalsTotalCount
+                  ?? response.data.healthcareProfessionals?.length
+                  ?? 0
+            }
+        })
     }
 
     return {
-        activeFacilityId,
-        activeFacility,
-        activeProfessional,
-        searchResultsList,
-        paginatedResults,
-        allMapPoints,
-        search,
-        setActiveFacility,
-        setActiveProfessional,
-        clearActiveSearchResult,
-        clearActiveProfessional,
+        // directory
+        directoryStatus,
+        isLoading,
+        isReady,
+        hasLoadError,
+        loadDirectory,
+        reloadDirectory,
+        // filters
         selectedCity,
         selectedPrefecture,
         selectedSpecialties,
         selectedLanguages,
+        filters,
+        clearFilters,
+        // results
+        search,
+        searchResultsList,
+        paginatedResults,
         totalResults,
+        hasMore,
         loadMore,
-        hasMore
+        // active
+        activeFacilityId,
+        activeFacility,
+        setActiveFacility,
+        clearActiveSearchResult
     }
 })
 
-const searchProfessionalsQuery = gql`
-    query searchHealthcareProfessionals($filters: HealthcareProfessionalSearchFilters!) {
-        healthcareProfessionals(filters: $filters) {
-            id
-            names {
-                lastName
-                firstName
-                middleName
-                locale
-            }
-            degrees
-            specialties
-            facilityIds
-            spokenLanguages
-            acceptedInsurance
-            additionalInfoForPatients
-            createdDate
-            updatedDate
-        }
-    }
-`
-const mapPointsQuery = gql`
-    query MapPoints($filters: FacilitySearchFilters!) {
-        facilities(filters: $filters) {
-            id
-            nameEn
-            nameJa
-            mapLatitude
-            mapLongitude
-        }
-    }
-`
-
-const searchFacilitiesQuery = gql`
-    query QueryFacilities($filters: FacilitySearchFilters!) {
+const searchFacilitiesPageQuery = gql`
+    query SearchFacilitiesPage($filters: FacilitySearchFilters!, $countFilters: FacilitySearchFilters!) {
         facilities(filters: $filters) {
             id
             nameEn
@@ -401,6 +356,33 @@ const searchFacilitiesQuery = gql`
                 phone
                 website
             }
+            updatedDate
         }
+        facilitiesTotalCount(filters: $countFilters)
+    }
+`
+
+const searchProfessionalsPageQuery = gql`
+    query SearchProfessionalsPage(
+        $filters: HealthcareProfessionalSearchFilters!
+        $countFilters: HealthcareProfessionalSearchFilters!
+    ) {
+        healthcareProfessionals(filters: $filters) {
+            id
+            names {
+                lastName
+                firstName
+                middleName
+                locale
+            }
+            degrees
+            specialties
+            facilityIds
+            spokenLanguages
+            acceptedInsurance
+            additionalInfoForPatients
+            updatedDate
+        }
+        healthcareProfessionalsTotalCount(filters: $countFilters)
     }
 `

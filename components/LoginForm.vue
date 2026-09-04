@@ -1,22 +1,20 @@
 <template>
-    <h1
-        data-testid="login-heading"
-        class="mt-16 mb-16 text-primary-text text-2xl font-bold
-                flex self-center justify-items-center justify-center text-center w-full h-full"
-    >
+    <div class="card flex flex-col items-center gap-4 p-8 text-center max-w-md w-full">
         <SVGLoadingIcon
-            role="img"
-            alt="loading animation"
-            title="loading animation"
-            class="h-8"
+            aria-hidden="true"
+            class="h-10 w-10 text-primary"
         />
-        <span>
-            {{ statusMessage }}...
-        </span>
-    </h1>
+        <h1
+            data-testid="login-heading"
+            class="page-title-sm"
+        >
+            {{ displayMessage }}
+        </h1>
+    </div>
 </template>
 
 <script lang="ts" setup>
+import { computed, ref } from 'vue'
 import SVGLoadingIcon from '~/assets/icons/loading.svg'
 import { useAuthStore } from '~/stores/authStore'
 import { resolveAuthReturnPath } from '~/utils/auth0Config'
@@ -26,6 +24,9 @@ const route = useRoute()
 const router = useRouter()
 const { t } = useI18n()
 const statusMessage = ref(t('login.checkingauth'))
+
+// Every locale's checkingauth string already ends in "...": strip any trailing dots so the ellipsis renders once.
+const displayMessage = computed(() => `${statusMessage.value.replace(/[.…]+$/u, '')}…`)
 
 await authStore.waitForAuth0ToLoad()
 

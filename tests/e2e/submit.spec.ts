@@ -6,7 +6,12 @@ test.describe('Submit page', () => {
         test.beforeEach(async ({ page }) => {
             await page.setViewportSize({ width: 1728, height: 1077 })
             await page.goto('/submit')
-            await page.getByRole('combobox').first().selectOption('en_US')
+            /*
+             * Force the English locale so text assertions match. The hamburger menu carries a
+             * second, hidden locale selector that is teleported ahead of the app root in the
+             * prerendered HTML, so pick the visible one rather than the first in DOM order.
+             */
+            await page.locator('[data-testid="locale-selector"] select:visible').selectOption('en_US')
         })
 
         test('shows the desktop top nav', async ({ page }) => {
@@ -44,9 +49,14 @@ test.describe('Submit page', () => {
             await expect(page.getByText(enUS.submitPage.googleMapsValidation)).toBeVisible()
         })
 
+        test('shows no validation errors before the user interacts', async ({ page }) => {
+            await expect(page.getByText(enUS.submitPage.spokenLanguageValidation)).toBeHidden()
+        })
+
         test('requires Spoken Language 1 to be selected', async ({ page }) => {
+            await page.getByRole('button', { name: enUS.submitPage.submitButton }).click()
             await expect(page.getByText(enUS.submitPage.spokenLanguageValidation)).toBeVisible()
-            await page.getByRole('combobox').first().selectOption('ja_JP')
+            await page.getByTestId('submit-select-language1').selectOption('ja_JP')
             await expect(page.getByText(enUS.submitPage.spokenLanguageValidation)).toBeHidden()
         })
     })

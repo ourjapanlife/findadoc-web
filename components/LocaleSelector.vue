@@ -1,16 +1,20 @@
 <template>
     <div
-        class="w-24"
+        class="relative"
         data-testid="locale-selector"
     >
+        <label
+            :for="selectId"
+            class="sr-only"
+        >{{ t('hamburgerMenu.languageDropdownTitle') }}</label>
         <select
+            :id="selectId"
             v-model="selectedLocale"
-            class="text-center rounded-full landscape:w-full px-2 py-1 landscape:px-1 landscape:py-1.5 border-2 border-primary/80
-      landscape:border-primary/60 drop-shadow-md text-primary-text bg-secondary-bg/5
-      landscape:bg-primary-bg hover:bg-primary-hover/10 transition-colors"
+            class="h-10 appearance-none rounded-lg border border-border-strong bg-secondary-bg pl-3 pr-8
+                   text-sm font-medium text-primary-text transition-colors hover:border-primary"
         >
             <option
-                v-for="(localeOption) in localeStore.mvpLocaleDisplayOptions"
+                v-for="localeOption in localeStore.mvpLocaleDisplayOptions"
                 :key="localeOption.code"
                 :data-testid="`locale-option-${localeOption.code}`"
                 :value="localeOption.code"
@@ -18,6 +22,17 @@
                 {{ localeOption.simpleText }}
             </option>
         </select>
+        <svg
+            class="pointer-events-none absolute right-2.5 top-1/2 h-4 w-4 -translate-y-1/2 stroke-primary-text-muted"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+        >
+            <path d="m6 9 6 6 6-6" />
+        </svg>
     </div>
 </template>
 
@@ -25,11 +40,14 @@
 // Nuxt vue-i18n documentation:
 // https://i18n.nuxtjs.org/docs/v8/api/vue-i18n
 
+import { ref, useId, watch } from 'vue'
 import type { Locale } from '#i18n'
 import type { Locale as GqlLocale } from '~/typedefs/gqlTypes.js'
+import { useLocaleStore } from '~/stores/localeStore'
 
-const { setLocale, getLocaleCookie } = useI18n()
+const { t, setLocale, getLocaleCookie } = useI18n()
 const localeStore = useLocaleStore()
+const selectId = useId()
 
 // getLocaleCookie to set the initial locale, if there is no cookie, it will default based on the nuxt.config.js
 // Browser's code language is using "-" instead of "_".

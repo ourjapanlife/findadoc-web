@@ -11,29 +11,20 @@
   },
   "common": {
     "menu": "菜单",
-    "siteName": "Find a Doc Japan",
+    "siteName": "Find a Doc, Japan",
     "siteNameLine1": "Find a Doc",
     "siteNameLine2": "Japan",
-    "loading": "Loading"
+    "loading": "Loading",
+    "close": "Close"
   },
   "about": {
     "heroHeading": "Find a Doc, Japan",
     "heroSubheading": "用您的语言连接您与所需的医疗服务",
     "heroGetStarted": "开始使用",
-    "heroLearnMore": "了解更多",
     "storyHeader": "我们的故事",
     "storyParagraph1": "我们由 LaShawn Toyoda 和 Phil Ermish 于2020年疫情期间创立，使命是促进更健康、更包容的社会。我们为所有人——包括外国人和医疗专业人员——免费提供多语言的高质量健康信息。我们希望无论国籍或语言，每个人都能自信地了解医疗体系，找到合适的医生，并获得所需的医疗服务。",
     "storyParagraph2": "我们是一个非营利组织，秉持人人都应获得健康信息以享受美好生活的理念。我们的活动贯穿社会正义、文化敏感性和创新精神。我们始终乐于与政府、非营利组织和医疗领域的合作伙伴建立联系。与伙伴们一起，我们希望创造一个人人都能获得医疗服务、感受到包容并享有美好生活的日本。",
-    "btnImpact": "我们的影响",
-    "btnContributors": "贡献者",
-    "btnCofounders": "联合创始人",
-    "btnBoard": "NPO 董事会",
-    "btnMascots": "吉祥物",
-    "btnInvolve": "参与我们",
     "impactHeader": "我们的影响",
-    "impactDoctors": "300+ 名注册医生",
-    "impactUsers": "100+ 月活用户",
-    "impactVolunteer": "志愿者与社区驱动",
     "contributorsHeader": "贡献者",
     "cofoundersHeader": "联合创始人",
     "boardHeader": "NPO 董事会",
@@ -45,9 +36,10 @@
     "mascotsChiko": "Chiko",
     "involveHeader": "参与我们",
     "involveAdd": "添加医生",
-    "involveGit": "贡献代码",
     "involveLinkedin": "关注我们",
-    "involveFeedback": "反馈意见"
+    "involveFeedback": "反馈意见",
+    "involveContribute": "贡献",
+    "sectionNavLabel": "On this page"
   },
   "footer": {
     "terms": "条款",
@@ -55,14 +47,12 @@
     "privacy": "隐私政策",
     "poweredBy": "支持",
     "contribute": "参与贡献",
-    "feedback": "反馈或建议",
-    "clickHere": "点击这里",
-    "copyright": "NPO法人Find a Doc, Japan"
+    "copyright": "NPO法人Find a Doc, Japan",
+    "exploreHeading": "Explore",
+    "communityHeading": "Community",
+    "legalHeading": "Legal"
   },
   "hamburgerMenu": {
-    "about": "关于 Find a Doc, Japan",
-    "contact": "联系我们",
-    "submit": "添加一位医师",
     "logout": "退出登录",
     "languageDropdownTitle": "语言:",
     "copyright": "NPO法人Find a Doc, Japan",
@@ -90,13 +80,6 @@
     "paragraph15": "我们保留更新本隐私政策的权利，以适应我们工作和服务过程中可能存在的变化。我们将通过在网站上发布更新的隐私政策来通知您任何重大变更。",
     "paragraph16": "使用我们的服务即表示您同意本隐私政策中列出的条款。"
   },
-  "onboarding": {
-    "welcometo": "欢迎来到",
-    "selectcategory": "请选择一个类别以开始。",
-    "notsurebutton": "我不确定或其他",
-    "searchloading": "您的旅程从这里开始",
-    "letsGoButtonText": "Find a Doctor!"
-  },
   "submitPage": {
     "firstName": "名",
     "firstNameValidation": "请输入名字（不含姓）",
@@ -120,25 +103,19 @@
     "submissionSuccessful": "Thank you for contributing! Your submission about the doctor has been successfully recorded. We’re grateful for your support!"
   },
   "searchBar": {
-    "selectSpecialty": "请选择一个专科...",
-    "selectLocation": "请选择一个地点...",
-    "allLocations": "所有地点",
     "allSpecialties": "所有专科",
-    "search": "搜索",
-    "searchAndFilterDoctors": "搜索和筛选医生",
     "resultsFound": "无结果 | 1 条结果 | {n} 条结果"
   },
   "searchResultsList": {
     "loadMore": "加载更多",
     "remaining": "剩余",
     "noResults": "无符合条件的结果",
-    "noResultsSubtext": "请使用不同的筛选条件"
+    "noResultsSubtext": "请使用不同的筛选条件",
+    "loadMoreCount": "Load more ({n} remaining)"
   },
   "searchResultsDetails": {
     "speaks": "这位医师可以说",
-    "contact": "联系",
     "lastUpdate": "Last updated",
-    "additionalInfo": "Additional Info",
     "healthcareProfessionals": "Healthcare Professionals",
     "callNow": "拨打"
   },
@@ -155,7 +132,8 @@
     "logout": "退出登录",
     "login": "Login",
     "myPage": "我的页面",
-    "logoutToast": "Successfully logged out"
+    "logoutToast": "Successfully logged out",
+    "search": "Search"
   },
   "login": {
     "checkingauth": "正在认证...",
@@ -253,12 +231,12 @@
     "facilitySuccessfullyRejected": "Facility rejected successfully",
     "rejectSubmissionConfirmationMessage": "Are you sure you want to reject this submission?",
     "rejectSubmissionConfirmationButton": "Yes, reject the submission",
-    "successMessageUpdated": "Submission updated successfully",
-    "successMessageApproved": "Submission approved successfully",
     "searchExistingFacilities": "Search for existing Facility",
     "searchExistingHealthcareProfessionals": "Search for existing Healthcare Professionals",
     "labelModNoteInput": "Moderator Notes",
-    "placeholderTextNoteInput": "e.g. waiting for call back from clinic"
+    "placeholderTextNoteInput": "e.g. waiting for call back from clinic",
+    "successMessageUpdated": "Submission updated successfully",
+    "successMessageApproved": "Submission approved successfully"
   },
   "modPanelSubmissionLeftNavbar": {
     "facilityNameUnknown": "Facility Name Unknown",
@@ -449,10 +427,14 @@
     "updateFailed": "Profile update failed"
   },
   "localeErrors": {
-    "notSpecified": "Not Specified"
+    "notSpecified": "Not Specified",
+    "notFound": "Unknown language"
   },
   "themeManager": {
-    "colorThemes": "Color Themes"
+    "label": "Appearance",
+    "light": "Light",
+    "dark": "Dark",
+    "auto": "Auto"
   },
   "unsavedChanges": {
     "create": {
@@ -498,5 +480,26 @@
     "contributeHeading": "有我们遗漏的诊所吗？",
     "contributeBody": "任何人都可以提交诊所或医生信息。我们的审核人员会在发布前逐一核实。",
     "contributeCta": "添加医生"
+  },
+  "search": {
+    "filters": "Filters",
+    "clearFilters": "Clear filters",
+    "showMap": "Show map",
+    "hideMap": "Hide map",
+    "loading": "Loading the directory…",
+    "loadError": "We could not load the directory. Check your connection and try again.",
+    "retry": "Try again",
+    "backToResults": "Back to results",
+    "website": "Website",
+    "openInMaps": "Open in Google Maps",
+    "email": "Email",
+    "phone": "Phone",
+    "languagesSpoken": "Languages spoken",
+    "resultsRegion": "Search results",
+    "moreProfessionals": "+{n} more",
+    "professionalsAtFacility": "No professionals listed | 1 professional | {n} professionals",
+    "pageHeading": "Find a doctor in Japan",
+    "mapUnavailable": "The map could not be loaded.",
+    "mapUnavailableHint": "The rest of the results are unaffected."
   }
 }

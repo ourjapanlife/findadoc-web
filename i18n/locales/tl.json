@@ -11,29 +11,20 @@
   },
   "common": {
     "menu": "Menu",
-    "siteName": "Find a Doc Japan",
+    "siteName": "Find a Doc, Japan",
     "siteNameLine1": "Find a Doc",
     "siteNameLine2": "Japan",
-    "loading": "Loading"
+    "loading": "Loading",
+    "close": "Close"
   },
   "about": {
     "heroHeading": "Find a Doc, Japan",
     "heroSubheading": "Ikokonekta ka namin sa mga serbisyong pangkalusugan na kailangan mo, sa iyong wika",
     "heroGetStarted": "Magsimula",
-    "heroLearnMore": "Alamin pa",
     "storyHeader": "Aming Kuwento",
     "storyParagraph1": "Itinatag noong 2020 sa panahon ng pandemya nina LaShawn Toyoda at Phil Ermish, ang aming layunin ay isulong ang isang mas malusog at mas inklusibong lipunan. Nagbibigay kami ng dekalidad na impormasyong pangkalusugan nang libre at sa maraming wika para sa lahat, kabilang ang mga dayuhan at mga propesyonal sa pangangalagang pangkalusugan. Layunin namin ang isang Japan kung saan ang lahat, anuman ang nasyonalidad o wika, ay makakagalaw nang may kumpiyansa sa sistema ng pangangalagang pangkalusugan, makakahanap ng tamang doktor, at makakakuha ng kinakailangang serbisyong medikal.",
     "storyParagraph2": "Kami ay isang non-profit na organisasyon na pinapatakbo ng paniniwalang ang lahat ay dapat magkaroon ng access sa impormasyong pangkalusugan bilang bahagi ng masagana at makabuluhang buhay. Ang aming mga gawain ay ginagabayan ng katarungang panlipunan, pagkakaunawa sa kultura, at inobasyon. Lagi kaming bukas para makipagtulungan sa mga kasosyo mula sa pamahalaan, mga non-profit, at komunidad ng medisina. Kasama ng aming mga katuwang, umaasa kami na makalikha ng isang Japan kung saan ang lahat ay may access sa pangangalagang pangkalusugan, nararamdaman ang pagiging kabilang, at may kakayahang mamuhay nang maayos.",
-    "btnImpact": "Aming Epekto",
-    "btnContributors": "Mga Kontributor",
-    "btnCofounders": "Mga Co-Founder",
-    "btnBoard": "Lupon ng NPO",
-    "btnMascots": "Mga Maskot",
-    "btnInvolve": "Sumali",
     "impactHeader": "Aming Epekto",
-    "impactDoctors": "300+ Nakarehistrong Doktor",
-    "impactUsers": "100+ Buwanang Gumagamit",
-    "impactVolunteer": "Boluntaryo at Pinapatakbo ng Komunidad",
     "contributorsHeader": "Mga Kontributor",
     "cofoundersHeader": "Mga Co-Founder",
     "boardHeader": "Lupon ng NPO",
@@ -45,9 +36,10 @@
     "mascotsChiko": "Chiko",
     "involveHeader": "Sumali",
     "involveAdd": "Magdagdag ng Doktor",
-    "involveGit": "Mag-ambag",
     "involveLinkedin": "I-follow Kami",
-    "involveFeedback": "Magbigay ng Puna"
+    "involveFeedback": "Magbigay ng Puna",
+    "involveContribute": "Mag-ambag",
+    "sectionNavLabel": "On this page"
   },
   "footer": {
     "terms": "Tuntunin",
@@ -55,14 +47,12 @@
     "privacy": "Pribasiya",
     "poweredBy": "Powered by",
     "contribute": "Mag-ambag",
-    "feedback": "Mga Komento?",
-    "clickHere": "I-click dito",
-    "copyright": "NPO法人Find a Doc, Japan"
+    "copyright": "NPO法人Find a Doc, Japan",
+    "exploreHeading": "Explore",
+    "communityHeading": "Community",
+    "legalHeading": "Legal"
   },
   "hamburgerMenu": {
-    "about": "Tungkol sa Find a Doc, Japan",
-    "contact": "Kontakt",
-    "submit": "Magdagdag ng Doktor",
     "logout": "Log out",
     "languageDropdownTitle": "Lengwahe:",
     "copyright": "NPO法人Find a Doc, Japan",
@@ -90,13 +80,6 @@
     "paragraph15": "Inilalaan namin ang karapatang baguhin ang Patakaran sa Pribasiya na ito upang ipakita ang mga pagbabago sa aming serbisyo. Ibabahagi namin ang anumang mahahalagang impormasyon sa pamamagitan ng pag-post ng anumang pagbabago ng mga patakaran sa aming website.",
     "paragraph16": "Sa paggamit ng aming serbisyo, ikaw ay sumasang-ayon sa mga tuntunin na nakasaad sa Patakaran sa Pribasiya na ito."
   },
-  "onboarding": {
-    "letsGoButtonText": "Maghanap ng Doktor!",
-    "welcometo": "Maligayang pagdating sa",
-    "selectcategory": "Pumili ng kategorya upang magsimula.",
-    "notsurebutton": "Hindi ako sigurado o iba pa",
-    "searchloading": "Dito nagsisimula ang iyong paglalakbay"
-  },
   "submitPage": {
     "firstName": "Pangalan",
     "firstNameValidation": "Ilagay ang Pangalan",
@@ -120,25 +103,19 @@
     "spokenLanguageValidation": "Pumili ng Lengwahe"
   },
   "searchBar": {
-    "selectSpecialty": "Pumili ng espesyalidad...",
-    "selectLocation": "Pumili ng lokasyon...",
-    "allLocations": "Lahat ng Lokasyon",
     "allSpecialties": "Lahat ng Espesyalidad",
-    "search": "Maghanap",
-    "searchAndFilterDoctors": "Maghanap at mag-filter ng mga doktor",
     "resultsFound": "Walang resulta | 1 resulta | {n} resulta"
   },
   "searchResultsList": {
     "loadMore": "โหลดเพิ่มเติม",
     "remaining": "เหลืออยู่",
     "noResults": "Walang natagpuang resulta",
-    "noResultsSubtext": "Paki-subukang gumamit ng ibang kombinasyon ng filter."
+    "noResultsSubtext": "Paki-subukang gumamit ng ibang kombinasyon ng filter.",
+    "loadMoreCount": "Load more ({n} remaining)"
   },
   "searchResultsDetails": {
     "speaks": "Itong Doktor ay nakakapagsalita ng",
-    "contact": "Kontakt",
     "lastUpdate": "Last updated",
-    "additionalInfo": "Additional Info",
     "healthcareProfessionals": "Healthcare Professionals",
     "callNow": "Tumawag"
   },
@@ -155,7 +132,8 @@
     "logout": "Log out",
     "login": "Login",
     "myPage": "Aking Pahina",
-    "logoutToast": "Successfully logged out"
+    "logoutToast": "Successfully logged out",
+    "search": "Search"
   },
   "login": {
     "checkingauth": "Sinusuri ang Authentication...",
@@ -300,12 +278,12 @@
     "facilitySuccessfullyRejected": "Matagumpay na hindi na-apprubahan ang pasilidad",
     "rejectSubmissionConfirmationMessage": "Are you sure you want to reject this submission?",
     "rejectSubmissionConfirmationButton": "Yes, reject the submission",
-    "successMessageUpdated": "Submission updated successfully",
-    "successMessageApproved": "Submission approved successfully",
     "searchExistingFacilities": "Search for existing Facility",
     "searchExistingHealthcareProfessionals": "Search for existing Healthcare Professionals",
     "labelModNoteInput": "Moderator Notes",
-    "placeholderTextNoteInput": "e.g. waiting for call back from clinic"
+    "placeholderTextNoteInput": "e.g. waiting for call back from clinic",
+    "successMessageUpdated": "Submission updated successfully",
+    "successMessageApproved": "Submission approved successfully"
   },
   "serverErrorMessages": {
     "errorCodeMessagingNeeded": "Walang mensahe sa user ang error code ng server. Pakidagdagan ng isa.",
@@ -449,10 +427,14 @@
     "updateFailed": "Profile update failed"
   },
   "localeErrors": {
-    "notSpecified": "Not Specified"
+    "notSpecified": "Not Specified",
+    "notFound": "Unknown language"
   },
   "themeManager": {
-    "colorThemes": "Color Themes"
+    "label": "Appearance",
+    "light": "Light",
+    "dark": "Dark",
+    "auto": "Auto"
   },
   "unsavedChanges": {
     "create": {
@@ -498,5 +480,26 @@
     "contributeHeading": "May alam ka bang klinikang wala pa sa amin?",
     "contributeBody": "Sinuman ay maaaring magmungkahi ng klinika o doktor. Sinusuri ng aming mga moderator ang bawat isinumite bago ito mailathala.",
     "contributeCta": "Magdagdag ng doktor"
+  },
+  "search": {
+    "filters": "Filters",
+    "clearFilters": "Clear filters",
+    "showMap": "Show map",
+    "hideMap": "Hide map",
+    "loading": "Loading the directory…",
+    "loadError": "We could not load the directory. Check your connection and try again.",
+    "retry": "Try again",
+    "backToResults": "Back to results",
+    "website": "Website",
+    "openInMaps": "Open in Google Maps",
+    "email": "Email",
+    "phone": "Phone",
+    "languagesSpoken": "Languages spoken",
+    "resultsRegion": "Search results",
+    "moreProfessionals": "+{n} more",
+    "professionalsAtFacility": "No professionals listed | 1 professional | {n} professionals",
+    "pageHeading": "Find a doctor in Japan",
+    "mapUnavailable": "The map could not be loaded.",
+    "mapUnavailableHint": "The rest of the results are unaffected."
   }
 }
