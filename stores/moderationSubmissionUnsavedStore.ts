@@ -28,7 +28,10 @@ export const useModerationSubmissionUnsavedStore = defineStore('moderationSubmis
             registerEditFormTryLeave(null)
             return
         }
-        registerEditFormTryLeave(onLeave => onLeave(fn))
+        registerEditFormTryLeave(onLeave => {
+            fn()
+            onLeave()
+        })
     }
 
     function runLeaveOr(onLeave: () => void | Promise<void>) {

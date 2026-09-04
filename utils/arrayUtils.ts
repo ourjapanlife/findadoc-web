@@ -37,7 +37,7 @@ export function shuffleArray<T>(inputArray: T[]): T[] {
     // Fisher-Yates shuffle algorithm
     for (let i = copiedArray.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
-        [copiedArray[i], copiedArray[j]] = [copiedArray[j], copiedArray[i]]
+        [copiedArray[i], copiedArray[j]] = [copiedArray[j]!, copiedArray[i]!]
     }
     return copiedArray
 }

@@ -12,6 +12,7 @@
         "lint:locales": "node i18n/checkLocaleKeys.js",
         "lint:cleanlocales": "node i18n/cleanUnusedLocaleKeys.js",
         "lint:ci": "yarn prepare:ci && ESLINT_USE_FLAT_CONFIG=true eslint . -c eslint.config.js",
+        "typecheck": "yarn prepare:ci && nuxi typecheck",
         "prod:build": "yarn && yarn generate && nuxi generate",
         "prod:start": "nuxi start",
         "ci:build": "yarn && yarn generate && nuxi generate",
@@ -105,6 +106,7 @@
         "vite": "^7.3.0",
         "vitest": "^4.0.16",
         "vue-eslint-parser": "^10.2.0",
+        "vue-tsc": "^3.3.11",
         "wait-on": "^8.0.1"
     }
 }

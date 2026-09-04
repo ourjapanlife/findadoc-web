@@ -101,7 +101,7 @@ function syncSelectedModerationViewFromQuery() {
 const setActiveScreenBasedOnRoute = async () => {
     await nextTick()
     // grab the relevant part of the path
-    const pathSnippet = routePathForModerationScreen.value.split('/')[2]
+    const pathSnippet = routePathForModerationScreen.value.split('/')[2] ?? ''
 
     // for routes that require a selected ID, check before entering the switch
     const editRoutes = ['edit-submission', 'edit-facility', 'edit-healthcare-professional']

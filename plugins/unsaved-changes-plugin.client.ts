@@ -1,4 +1,12 @@
+import type { Pinia } from 'pinia'
+import type { Router } from 'vue-router'
 import { useModerationSubmissionUnsavedStore } from '~/stores/moderationSubmissionUnsavedStore'
+
+// nuxtApp.$i18n isn't picked up as the full vue-i18n Composer type here, so
+// this covers only the one method this plugin actually calls.
+interface I18nLike {
+    t: (key: string) => string
+}
 
 export default defineNuxtPlugin({
     name: 'unsaved-changes',
@@ -24,13 +32,15 @@ export default defineNuxtPlugin({
             if (registeredRouterGuard) return
             registeredRouterGuard = true
 
-            const submissionUnsavedStore = useModerationSubmissionUnsavedStore(nuxtApp.$pinia)
+            const submissionUnsavedStore = useModerationSubmissionUnsavedStore(nuxtApp.$pinia as Pinia)
 
-            nuxtApp.$router.beforeEach(() => {
+            const router = nuxtApp.$router as Router
+            router.beforeEach(() => {
                 if (!isGloballyDirty.value) return true
 
                 return new Promise<boolean>(resolve => {
-                    const message = nuxtApp.$i18n?.t('modEditFacilityOrHPTopbar.hasUnsavedChanges')
+                    const i18n = nuxtApp.$i18n as I18nLike | undefined
+                    const message = i18n?.t('modEditFacilityOrHPTopbar.hasUnsavedChanges')
                       ?? 'You have unsaved changes'
                     const confirm = nuxtApp.$withConfirmation
                     if (typeof confirm !== 'function') {
