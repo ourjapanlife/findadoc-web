@@ -183,6 +183,18 @@ accepts, not what the query can serve. Measure the endpoint.
 
 ### Second round of browser feedback, fixed
 
+- **Moving search to `/search` silently broke the map on Netlify previews.** The Maps API key's
+  HTTP-referrer allowlist carried `*findadoc.netlify.app/` — a path of `/` and nothing else.
+  That was fine while the map lived on the homepage. Once the map moved to `/search` the path
+  stopped matching and Google returned `RefererNotAllowedMapError` on every preview. The fix was
+  one character: `*findadoc.netlify.app/*`. Partial-label wildcards do work, so the host pattern
+  was never the problem.
+
+  **The allowlist is coupled to our route structure.** Moving or adding a page that renders a
+  map can break previews without any code looking wrong. `MapContainer` now implements
+  `gm_authFailure`, which is the SDK's only failure hook — without it Google logs to the console
+  and leaves an empty box, which is exactly why this went unnoticed.
+
 - **The map never rendered.** `watch(..., { immediate: true })` ran during setup and called a
   `const` arrow function declared further down the file, so it threw *Cannot access
   'recenterMap' before initialization* and the whole component died. Watchers now sit at the
