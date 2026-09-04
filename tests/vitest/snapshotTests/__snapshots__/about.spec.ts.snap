@@ -20,7 +20,7 @@ exports[`about.vue (vitest snapshot) > renders correctly 1`] = `
                     public URL alone.
                 --><img src="/illustrations/characters-together-welcomescreen.svg" alt="home.heroImageAlt" width="1536" height="1024" decoding="async" class="h-auto w-full self-center landscape:max-w-sm landscape:flex-1">
     </div><!-- Section navigation: plain anchors, the sticky header is 64px so targets carry scroll-mt-20 -->
-    <nav aria-label="about.storyHeader" class="page-container mt-10">
+    <nav aria-label="about.sectionNavLabel" class="page-container mt-10">
       <ul class="m-0 flex list-none flex-wrap gap-2 p-0">
         <li><a href="#story" class="chip h-11 px-4 transition-colors hover:border-primary hover:bg-primary/5">about.storyHeader</a></li>
         <li><a href="#impact" class="chip h-11 px-4 transition-colors hover:border-primary hover:bg-primary/5">about.impactHeader</a></li>

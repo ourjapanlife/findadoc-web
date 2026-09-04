@@ -22,6 +22,7 @@
         >
             <div
                 v-if="open"
+                ref="panelRef"
                 role="dialog"
                 aria-modal="true"
                 aria-labelledby="search-details-title"
@@ -29,7 +30,6 @@
                 class="fixed inset-y-0 right-0 z-50 flex w-full flex-col bg-primary-bg
                        landscape:w-[560px] landscape:max-w-[92vw] landscape:border-l landscape:border-accent-bg
                        landscape:shadow-overlay"
-                @keydown.esc="emit('close')"
             >
                 <div class="flex h-16 shrink-0 items-center justify-between border-b border-accent-bg px-3 landscape:px-4">
                     <button
@@ -62,36 +62,27 @@
 </template>
 
 <script setup lang="ts">
-import { computed, nextTick, ref, watch } from 'vue'
+import { computed, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useScrollLock } from '~/composables/useScrollLock'
+import { useFocusTrap } from '~/composables/useFocusTrap'
 
 const props = defineProps<{ open: boolean }>()
 const emit = defineEmits<{ (e: 'close'): void }>()
 
 const { t } = useI18n()
 
+const panelRef = ref<HTMLElement | null>(null)
 const closeButtonRef = ref<HTMLButtonElement | null>(null)
-let previouslyFocused: HTMLElement | null = null
+const isOpen = computed(() => props.open)
 
 // Released on unmount as well as on close, so leaving the route with the panel open cannot
 // strand the document with `overflow: hidden`.
-useScrollLock(computed(() => props.open))
+useScrollLock(isOpen)
 
 /*
- * Focus moves into the panel when it opens and back to whatever opened it when it closes.
- * This is what makes the panel usable from the keyboard without a full focus-trap library.
+ * The panel declares aria-modal, so Tab has to stay inside it and Escape has to work wherever
+ * focus is — binding Escape to the panel element only worked until focus left.
  */
-watch(() => props.open, async open => {
-    if (!import.meta.client) return
-
-    if (open) {
-        previouslyFocused = document.activeElement as HTMLElement | null
-        await nextTick()
-        closeButtonRef.value?.focus()
-    } else {
-        previouslyFocused?.focus?.()
-        previouslyFocused = null
-    }
-})
+useFocusTrap(panelRef, isOpen, { onEscape: () => emit('close'), initialFocus: closeButtonRef })
 </script>

@@ -38,7 +38,8 @@
     "involveAdd": "医師を追加",
     "involveLinkedin": "フォローする",
     "involveFeedback": "フィードバックを送る",
-    "involveContribute": "貢献する"
+    "involveContribute": "貢献する",
+    "sectionNavLabel": "このページの内容"
   },
   "footer": {
     "terms": "利用規約",
@@ -497,6 +498,8 @@
     "resultsRegion": "検索結果",
     "moreProfessionals": "他 {n} 名",
     "professionalsAtFacility": "医療従事者の掲載なし | 医療従事者 1 名 | 医療従事者 {n} 名",
-    "pageHeading": "日本で医師を探す"
+    "pageHeading": "日本で医師を探す",
+    "mapUnavailable": "地図を読み込めませんでした。",
+    "mapUnavailableHint": "検索結果の表示には影響ありません。"
   }
 }

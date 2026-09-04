@@ -134,11 +134,18 @@ function openDetails(facilityId: string) {
 function closeDetails() {
     if (!searchResultsStore.activeFacilityId) return
 
-    const cameFromThisPage = import.meta.client
-      && typeof window.history.state?.back === 'string'
-      && window.history.state.back.startsWith(route.path)
+    /*
+     * Back is only the right gesture when the previous entry is this page *without* a facility
+     * open. If it carries its own ?facility=, going back reopens that one instead of closing,
+     * which reads as the panel refusing to shut.
+     */
+    const previous = import.meta.client && typeof window.history.state?.back === 'string'
+        ? window.history.state.back
+        : ''
+    const previousIsListView = previous.startsWith(route.path)
+      && !new URLSearchParams(previous.split('?')[1] ?? '').has('facility')
 
-    if (cameFromThisPage) {
+    if (previousIsListView) {
         router.back()
         return
     }

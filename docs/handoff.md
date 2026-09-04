@@ -101,7 +101,7 @@ Measured on the `nuxi generate` output:
 | `/submit` | 35 KB | 8.1 KB |
 | `/search` | 3.8 KB (SPA shell) | 1.6 KB |
 
-The homepage carries no Google Maps or Auth0 request. `/about` is large raw because 44 members
+The homepage's generated HTML requests neither Google Maps nor Auth0. The Auth0 SDK is still initialised at runtime by `vue-auth0-plugin.client.ts` on every route — see the bundle-splitting item below; what `skipAuth` removed is the token wait in front of public GraphQL requests, not the SDK itself. `/about` is large raw because 44 members
 each inline two icon SVGs, but the repetition gzips away — not worth a sprite.
 
 `tests/e2e/search.spec.ts` originally asserted the map by Google's own `region` accessible name.
@@ -146,10 +146,10 @@ verification and were fixed:
 
 Of 42 raw findings, 25 survived an adversarial verify pass. Those not fixed are recorded below.
 
-**Knowingly left:** `fetchAllPages` assumes a fixed page stride and fans out its remaining pages
-in parallel without a concurrency cap. At 465 facilities that is four requests; it only matters
-if the directory grows an order of magnitude, and the whole loader is meant to be replaced by a
-server-side filter first (§2a). Two Tagalog strings in `searchResultsList` are actually Thai —
+**Knowingly left:** `fetchAllPages` assumes a fixed page stride — it derives it from the first
+page's row count, so a short page in the middle of a result set would leave a gap. That cannot
+happen against a stable dataset, and the whole loader is meant to be replaced by a server-side
+filter first (§2a). Parallel fan-out *is* capped, at six requests in flight. Two Tagalog strings in `searchResultsList` are actually Thai —
 verified identical at `HEAD`, so pre-existing, and not something to guess at. Several copy nits
 in the new Japanese strings are worth a native reader's eye rather than mine.
 
@@ -301,10 +301,11 @@ grid, so `/` and `/about` cannot drift apart again.
 - The city filter has no UI (prefecture only) for the normalisation reason in §2a; the `city`
   query param still works for deep links.
 - `Loader.vue`, `locationsStore` and `loadingStore` survive only for the moderation panel.
-- **Pre-existing, not introduced here:** 12 keys referenced in code have never existed in
+- **Pre-existing, not introduced here:** 11 keys referenced in code have never existed in
   `en.json` — `authErrors.*` (3), `healthcareProfessionalsErrors.*` (3),
-  `moderationSubmissionErrors.*` (2), `modSubmissionForm.errorMessage*` (3) and
-  `localeErrors.notFound`. They are all `useTranslation()` fallbacks in stores and the
+  `moderationSubmissionErrors.*` (2) and `modSubmissionForm.errorMessage*` (3). A twelfth,
+  `localeErrors.notFound`, was in that group and **was added in this pass**, because the search
+  cards rendered it as literal text. They are all `useTranslation()` fallbacks in stores and the
   moderation panel, so the raw key string is what surfaces. Verified absent at HEAD too; the
   locale prune in this pass removed none of them. All ten locale files are otherwise aligned
   at 414 keys, so the `lint:locales` CI gate passes.

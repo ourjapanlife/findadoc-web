@@ -72,7 +72,7 @@
                         type="button"
                         data-testid="topnav-profile-section"
                         :aria-expanded="profileMenuIsOpen"
-                        aria-haspopup="true"
+                        aria-controls="topnav-profile-menu"
                         class="inline-flex h-10 items-center gap-2 rounded-lg px-3 font-medium text-primary-text
                                transition-colors hover:bg-accent-bg/60"
                         @click="toggleProfileMenu"
@@ -98,6 +98,7 @@
 
                     <div
                         v-if="profileMenuIsOpen"
+                        id="topnav-profile-menu"
                         role="group"
                         :aria-label="t('topNav.myPage')"
                         class="card absolute right-0 mt-2 min-w-56 p-2 shadow-raised"

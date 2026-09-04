@@ -38,8 +38,8 @@ Every pair below passes WCAG AA; the ratios were computed with the script in §7
 | `accent-bg` | `#DFE7EA` | hairline borders, subtle fills, skeletons | — |
 | `border-strong` | `#768A91` | form-control edges | 3.61:1 (UI boundary ≥ 3:1) |
 | `accent` | `#1E40AF` | reserved for informational emphasis | 8.72:1 |
-| `secondary` | `#FB9999` | the map's active pin and nothing else — it fails as text (2.08:1) |
-| `scrim` | shadow colour | modal backdrops, at `/50`. Dark in **both** themes on purpose |
+| `secondary` | `#FB9999` | the map's active pin and nothing else | 2.08:1 — never use as text |
+| `scrim` | shadow colour | modal backdrops, at `/50`; dark in **both** themes on purpose | — |
 | `success` / `error` / `warning` / `info` | `#0B815A` / `#E21313` / `#9E6506` / `#1368F4` | status text and icons | 4.84–4.88:1 |
 
 ### Dark

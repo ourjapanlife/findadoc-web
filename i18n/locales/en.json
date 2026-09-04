@@ -69,7 +69,8 @@
     "involveAdd": "Add a Doctor",
     "involveLinkedin": "Follow Us",
     "involveFeedback": "Give Feedback",
-    "involveContribute": "Contribute"
+    "involveContribute": "Contribute",
+    "sectionNavLabel": "On this page"
   },
   "localeErrors": {
     "notSpecified": "Not Specified",
@@ -497,6 +498,8 @@
     "resultsRegion": "Search results",
     "moreProfessionals": "+{n} more",
     "professionalsAtFacility": "No professionals listed | 1 professional | {n} professionals",
-    "pageHeading": "Find a doctor in Japan"
+    "pageHeading": "Find a doctor in Japan",
+    "mapUnavailable": "The map could not be loaded.",
+    "mapUnavailableHint": "The rest of the results are unaffected."
   }
 }

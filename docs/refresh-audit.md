@@ -16,7 +16,11 @@ The site is slow and the first-run flow is broken, and neither is primarily a de
 2. **Every search re-downloads the entire database over ~10 GraphQL round trips, ~5 of them strictly sequential.** Measured against production: **~5.9 s of network time and ~570 KB** before a single result can render — and that is *after* the 2.5 MB JS bundle has booted, on a fast connection. — §4.2
 3. **The onboarding flow is a splash screen and a hardcoded 3-second fake loading animation, and nothing else.** The category-selection step it was built around is **unreachable dead code** — nothing ever sets `currentStep` to `Categories`, so `CategorySelection.vue` never renders. First-run users click one button, wait 3 s for a timer that does no work, and land on an unfiltered list. — §3.2
 
-Fixing #1 and #2 is largely deleting code: the API already supports server-side filtering that the client is reimplementing badly. Fixing #3 is uncommenting and finishing ~8 lines.
+Fixing #1 and #2 is largely deleting code — but only partly. The API already filters
+professionals by specialty and spoken language, which the client re-implements in memory. It
+does **not** filter facilities by location: `FacilitySearchFilters` exposes no prefecture or
+city field (§6), so the city filter cannot move server-side until the schema gains one. That
+backend change is the long pole. Fixing #3 is uncommenting and finishing ~8 lines.
 
 Separately, the route tree carries a **byte-identical duplicate of the entire moderation surface** (§2.2) and a **placeholder profile page that tells users their changes were saved when nothing is persisted** (§2.3).
 

@@ -365,7 +365,12 @@ const initialValidationCheck = async (inputValue: string, field: string) => {
         case 'secondaryLanguage':
             validationCheckedPreviously.secondarySpokenLanguage.value = true
             await nextTick()
-            isValidInput.secondarySpokenLanguage.value = validations.validateSecondSpokenLanguage(inputValue)
+            // Empty is valid: the field is optional, and validateFields() agrees. Without this
+            // guard, clearing the select back to "no selection" showed an error for a choice
+            // the form is happy to submit.
+            isValidInput.secondarySpokenLanguage.value = inputValue
+                ? validations.validateSecondSpokenLanguage(inputValue)
+                : true
             break
     }
 }
@@ -392,7 +397,9 @@ watch(() => selectLanguage1.value, newValue => {
 })
 watch(() => selectLanguage2.value, newValue => {
     if (validationCheckedPreviously.secondarySpokenLanguage.value) {
-        isValidInput.secondarySpokenLanguage.value = validations.validateSecondSpokenLanguage(newValue)
+        isValidInput.secondarySpokenLanguage.value = newValue
+            ? validations.validateSecondSpokenLanguage(newValue)
+            : true
     }
 })
 

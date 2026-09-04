@@ -55,7 +55,7 @@
 
             <!-- Section navigation: plain anchors, the sticky header is 64px so targets carry scroll-mt-20 -->
             <nav
-                :aria-label="t('about.storyHeader')"
+                :aria-label="t('about.sectionNavLabel')"
                 class="page-container mt-10"
             >
                 <ul class="m-0 flex list-none flex-wrap gap-2 p-0">

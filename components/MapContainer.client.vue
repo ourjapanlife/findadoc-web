@@ -1,7 +1,24 @@
 <template>
     <div class="h-full w-full">
+        <!--
+            Google rejects the key silently: it logs to the console and leaves an empty box, which
+            is how a referrer misconfiguration on deploy previews went unnoticed. gm_authFailure
+            is the only hook it offers, so the failure is surfaced here instead.
+        -->
+        <div
+            v-if="authFailed"
+            data-testid="map-unavailable"
+            class="flex h-full w-full flex-col items-center justify-center gap-1 p-6 text-center"
+        >
+            <p class="m-0 font-semibold text-primary-text">
+                {{ t('search.mapUnavailable') }}
+            </p>
+            <p class="m-0 text-sm text-primary-text-muted">
+                {{ t('search.mapUnavailableHint') }}
+            </p>
+        </div>
         <GoogleMap
-            v-if="isMapReady"
+            v-else-if="isMapReady"
             ref="mapRef"
             data-testid="map-of-japan"
             :api-key="runtimeConfig.public.GOOGLE_MAPS_API_KEY as string ?? undefined"
@@ -54,7 +71,8 @@
 
 <script setup lang="ts">
 /// <reference types="google.maps" />
-import { ref, watch, nextTick, onMounted } from 'vue'
+import { ref, watch, nextTick, onMounted, onUnmounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { GoogleMap, AdvancedMarker, MarkerCluster } from 'vue3-google-map'
 import type { Renderer } from '@googlemaps/markerclusterer'
 import { useUmami } from '~/composables/useUmamiTracking'
@@ -86,6 +104,8 @@ const runtimeConfig = useRuntimeConfig()
 const markerIcons = ref<Record<string, string>>({})
 
 const isMapReady = ref(false)
+const authFailed = ref(false)
+let previousAuthFailureHandler: (() => void) | undefined
 const { getPrimaryColor, getSecondaryColor, themeChanged } = useThemeColors()
 
 type Location = {
@@ -102,6 +122,7 @@ interface MarkerClustererInstance {
     clusters: ClusterData[]
 }
 
+const { t } = useI18n()
 const { track } = useUmami()
 
 // Base function to create pin icon with swappable center content
@@ -231,6 +252,20 @@ onMounted(() => {
     // This Google Maps Library Component will try to render before the component and throw a JS error.
     // This is a trick to prevent it from rendering until the component is mounted.
     setTimeout(() => { isMapReady.value = true }, 10)
+
+    // The SDK calls this global on an auth failure — a bad key, or a referrer the key does not
+    // allow, which is what every Netlify deploy preview hits.
+
+    previousAuthFailureHandler = window.gm_authFailure
+    // eslint-disable-next-line camelcase -- as above
+    window.gm_authFailure = () => {
+        authFailed.value = true
+    }
+})
+
+onUnmounted(() => {
+    // eslint-disable-next-line camelcase -- as above
+    window.gm_authFailure = previousAuthFailureHandler
 })
 
 const handleZoomChanged = () => {

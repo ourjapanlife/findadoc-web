@@ -260,6 +260,36 @@ test.describe('Search page', () => {
             await expect(page).not.toHaveURL(/facility=/)
         })
 
+        /*
+         * Regression guard: closing used to go Back whenever the previous entry was any /search
+         * URL, so opening a second facility and closing it reopened the first.
+         */
+        test('closing after opening two facilities in a row returns to the list', async ({ page }) => {
+            await page.goto('/search')
+            await page.getByRole('link', { name: 'Tokyo Family Clinic' }).click()
+            await expect(page.getByTestId('search-details-panel')).toBeVisible()
+            await page.getByTestId('search-details-close').click()
+            await expect(page.getByTestId('search-details-panel')).toBeHidden()
+
+            await page.getByRole('link', { name: 'Osaka Dental' }).click()
+            await expect(page.getByTestId('search-details-panel')).toBeVisible()
+            await page.getByTestId('search-details-close').click()
+
+            await expect(page.getByTestId('search-details-panel')).toBeHidden()
+            await expect(page).not.toHaveURL(/facility=/)
+            await expect(page.getByTestId('search-result-card')).toHaveCount(3)
+        })
+
+        test('Escape closes the details panel from anywhere in it', async ({ page }) => {
+            await page.goto('/search')
+            await page.getByRole('link', { name: 'Tokyo Family Clinic' }).click()
+            await expect(page.getByTestId('search-details-panel')).toBeVisible()
+
+            await page.keyboard.press('Escape')
+
+            await expect(page.getByTestId('search-details-panel')).toBeHidden()
+        })
+
         test('a shared link opens the facility directly', async ({ page }) => {
             await page.goto('/search?facility=f3')
 

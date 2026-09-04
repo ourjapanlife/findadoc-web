@@ -52,7 +52,6 @@
                     data-testid="hamburger-menu"
                     class="fixed inset-y-0 right-0 z-50 flex w-80 max-w-[88vw] flex-col
                            border-l border-accent-bg bg-primary-bg shadow-overlay"
-                    @keydown.esc="closeMenu"
                 >
                     <!-- Header -->
                     <div
@@ -223,11 +222,12 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, nextTick, ref } from 'vue'
+import { computed, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRoute, useRouter } from 'vue-router'
 import { useAppToast } from '~/composables/useAppToast'
 import { useScrollLock } from '~/composables/useScrollLock'
+import { useFocusTrap } from '~/composables/useFocusTrap'
 import SVGHamburgerMenuIcon from '~/assets/icons/hamburger-menu.svg'
 import SVGGithubIcon from '~/assets/icons/social-github.svg'
 import SVGUserIcon from '~/assets/icons/user-icon.svg'
@@ -281,19 +281,20 @@ function menuLinkClass(path: string): string {
         : `${base} text-primary-text hover:bg-accent-bg/60`
 }
 
-async function openMenu() {
+function openMenu() {
     isMenuOpen.value = true
-    await nextTick()
-    closeButtonRef.value?.focus()
 }
 
-/** Focus returns to the trigger, so closing does not drop the keyboard at the top of the page. */
 function closeMenu() {
-    if (!isMenuOpen.value) return
-
     isMenuOpen.value = false
-    triggerRef.value?.focus()
 }
+
+/*
+ * Tab cycles inside the panel and Escape is bound to the document, so the dialog honours the
+ * aria-modal it declares. Focus moves to the close button on open and back to the trigger on
+ * close, both handled by the trap.
+ */
+useFocusTrap(panelRef, isMenuOpen, { onEscape: closeMenu, initialFocus: closeButtonRef })
 
 // Released on unmount as well as on close, and reference-counted so closing this sheet cannot
 // unlock the page while the search details panel is still open.

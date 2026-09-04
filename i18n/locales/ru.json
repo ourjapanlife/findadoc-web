@@ -38,7 +38,8 @@
     "involveAdd": "Добавить врача",
     "involveLinkedin": "Подписаться на нас",
     "involveFeedback": "Оставить отзыв",
-    "involveContribute": "Внести вклад"
+    "involveContribute": "Внести вклад",
+    "sectionNavLabel": "On this page"
   },
   "footer": {
     "terms": "Правила",
@@ -497,6 +498,8 @@
     "resultsRegion": "Search results",
     "moreProfessionals": "+{n} more",
     "professionalsAtFacility": "No professionals listed | 1 professional | {n} professionals",
-    "pageHeading": "Find a doctor in Japan"
+    "pageHeading": "Find a doctor in Japan",
+    "mapUnavailable": "The map could not be loaded.",
+    "mapUnavailableHint": "The rest of the results are unaffected."
   }
 }
