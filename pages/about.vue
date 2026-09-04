@@ -1,524 +1,293 @@
 <template>
-    <div class="w-full bg-primary-bg">
-        <!-- Hero Section  -->
-        <div
-            ref="heroSectionRef"
-            class="relative flex flex-col items-center p-10 landscape:p-14"
-        >
-            <SvgHeartPlus
-                role="img"
-                alt="pink heart with a white plus in the middle to symbolize health"
-                title="heart icon"
-                class="my-4 h-32 z-10"
-            />
-            <h1
-                data-testid="about-hero-heading"
-                class="mb-12 font-bold text-4xl text-primary-text text-center z-10"
-            >
-                {{ t("about.heroHeading") }}
-            </h1>
-            <p
-                data-testid="about-hero-subheading"
-                class="mb-12 text-2xl text-primary-text text-center z-10"
-            >
-                {{ t("about.heroSubheading") }}
-            </p>
-            <div class="flex gap-8 mb-4 z-10">
-                <NuxtLink
-                    to="/"
-                    class="outline rounded-xl p-4 bg-primary text-primary-text-inverted
-                    text-lg font-bold transition-colors text-center"
-                >{{ t("about.heroGetStarted") }}
-                </NuxtLink>
-                <button
-                    class="outline outline-primary/70 rounded-xl text-primary
-                    font-bold text-xl p-4 shadow-lg text-center"
-                    @click="scrollTo('about-header-container')"
-                >
-                    {{ t("about.heroLearnMore") }}
-                </button>
-            </div>
-            <SvgCharactersTogether
-                role="img"
-                alt="Characters Together SVG Icon"
-                title="Characters Together"
-                class="landscape:w-1/3 landscape:mr-4"
-            />
-        </div>
-        <!-- Our Story section -->
-        <div
-            id="about-header-container"
-            data-testid="about-header-container"
-            class="scroll-mt-4 flex justify-center items-center"
-        >
+    <div
+        id="about"
+        data-testid="about-page"
+        class="w-full bg-primary-bg"
+    >
+        <!-- Hero -->
+        <section class="page-section py-12 landscape:py-16">
             <div
-                id="about-header"
-                data-testid="about-header"
-                class="flex w-4/5 my-12"
+                class="page-container flex flex-col gap-8 landscape:flex-row landscape:items-center landscape:gap-12"
             >
-                <div class="flex-1 border-currentColor/70 border self-center" />
-                <div class="text-primary-text text-2xl font-bold mx-4 p-2 whitespace-nowrap">
-                    {{ t("about.storyHeader") }}
+                <div class="flex flex-col gap-5 landscape:max-w-xl landscape:flex-1">
+                    <h1
+                        data-testid="about-hero-heading"
+                        class="page-title"
+                    >
+                        {{ t('about.heroHeading') }}
+                    </h1>
+                    <p
+                        data-testid="about-hero-subheading"
+                        class="text-lg text-primary-text-muted landscape:text-xl"
+                    >
+                        {{ t('about.heroSubheading') }}
+                    </p>
+                    <div class="flex flex-wrap gap-3">
+                        <NuxtLink
+                            to="/search"
+                            class="btn btn-primary"
+                        >
+                            {{ t('about.heroGetStarted') }}
+                        </NuxtLink>
+                        <NuxtLink
+                            to="/submit"
+                            class="btn btn-secondary"
+                        >
+                            {{ t('about.involveAdd') }}
+                        </NuxtLink>
+                    </div>
                 </div>
-                <div class="flex-1 border-currentColor/70 border self-center" />
+                <!--
+                    An <img>, not an inline SVG component, as on the homepage: the illustration
+                    is 127 KB even after svgo, and inlining it puts that in the prerendered HTML
+                    on the critical path. Bound rather than static so the compiler leaves the
+                    public URL alone.
+                -->
+                <img
+                    :src="heroIllustration"
+                    :alt="t('home.heroImageAlt')"
+                    width="1536"
+                    height="1024"
+                    decoding="async"
+                    class="h-auto w-full self-center landscape:max-w-sm landscape:flex-1"
+                >
             </div>
-        </div>
-        <div
-            id="about-findadoc-section"
-            ref="aboutSectionRef"
-            class="flex flex-col items-center px-10 landscape:px-32"
-        >
-            <p
-                data-testid="about-paragraph1"
-                class="mb-6 text-md text-primary-text text-center"
-            >
-                {{ t("about.storyParagraph1") }}
-            </p>
-            <p
-                data-testid="about-paragraph2"
-                class="text-md text-primary-text text-center"
-            >
-                {{ t("about.storyParagraph2") }}
-            </p>
-            <!-- Scroll buttons -->
+
+            <!-- Section navigation: plain anchors, the sticky header is 64px so targets carry scroll-mt-20 -->
             <nav
-                id="button-section"
-                class="w-full flex justify-center my-6 landscape:p-10"
+                :aria-label="t('about.storyHeader')"
+                class="page-container mt-10"
             >
-                <div
-                    class="grid grid-cols-1 gap-4 gap-y-8 mt-10 landscape:grid-cols-3 landscape:mr-8
-                landscape:w-4/5 landscape:flex landscape:flex-wrap landscape:justify-around"
-                >
-                    <button
-                        class="outline outline-primary/70 rounded-xl text-primary hover:text-primary-text-inverted
-                    hover:bg-primary font-bold text-xl p-4 shadow-lg text-center"
-                        @click="scrollTo('impact-header-container')"
+                <ul class="m-0 flex list-none flex-wrap gap-2 p-0">
+                    <li
+                        v-for="section in sectionLinks"
+                        :key="section.id"
                     >
-                        {{ t("about.btnImpact") }}
-                    </button>
-
-                    <button
-                        class="outline outline-primary/70 rounded-xl text-primary hover:text-primary-text-inverted
-                    hover:bg-primary font-bold text-xl p-4 shadow-lg"
-                        @click="scrollTo('contributor-header-container')"
-                    >
-                        {{ t("about.btnContributors") }}
-                    </button>
-
-                    <button
-                        class="outline outline-primary/70 rounded-xl text-primary hover:text-primary-text-inverted
-                    hover:bg-primary font-bold text-xl p-4 shadow-lg"
-                        @click="scrollTo('npo-header-container')"
-                    >
-                        {{ t("about.btnBoard") }}
-                    </button>
-
-                    <button
-                        class="outline outline-primary/70 rounded-xl text-primary hover:text-primary-text-inverted
-                    hover:bg-primary font-bold text-xl p-4 shadow-lg"
-                        @click="scrollTo('cofounder-header-container')"
-                    >
-                        {{ t("about.btnCofounders") }}
-                    </button>
-
-                    <button
-                        class="outline outline-primary/70 rounded-xl text-primary hover:text-primary-text-inverted
-                    hover:bg-primary font-bold text-xl p-4 shadow-lg"
-                        @click="scrollTo('mascot-header-container')"
-                    >
-                        {{ t("about.btnMascots") }}
-                    </button>
-
-                    <button
-                        class="outline outline-primary/70 rounded-xl text-primary hover:text-primary-text-inverted
-                    hover:bg-primary font-bold text-xl p-4 shadow-lg"
-                        @click="scrollTo('involve-header-container')"
-                    >
-                        {{ t("about.btnInvolve") }}
-                    </button>
-                </div>
+                        <a
+                            :href="`#${section.id}`"
+                            class="chip h-11 px-4 transition-colors hover:border-primary hover:bg-primary/5"
+                        >
+                            {{ section.label }}
+                        </a>
+                    </li>
+                </ul>
             </nav>
-        </div>
-        <!-- Impact Section  -->
-        <div
-            id="impact-header-container"
-            data-testid="impact-header-container"
-            class="scroll-mt-4 flex justify-center items-center"
-        >
-            <div
-                id="impact-header"
-                data-testid="impact-header"
-                class="flex w-4/5 my-14"
-            >
-                <div class="flex-1 border-currentColor/70 border self-center" />
-                <div class="text-primary-text text-2xl font-bold mx-4 p-2 whitespace-nowrap">
-                    {{ t("about.impactHeader") }}
-                </div>
-                <div class="flex-1 border-currentColor/70 border self-center" />
-            </div>
-        </div>
-        <div class="grid grid-cols-1 landscape:grid-cols-3 my-0 landscape:my-12">
-            <div class="flex flex-col items-center my-6 landscape:my-0">
-                <SvgDoctor
-                    role="img"
-                    alt="Doctor SVG Icon"
-                    title="Doctor Icon"
-                    class="my-4 h-32 fill-primary"
-                />
-                <p class="font-semibold text-xl text-primary-text">
-                    {{ t("about.impactDoctors") }}
-                </p>
-            </div>
+        </section>
 
-            <div class="flex flex-col items-center my-6 landscape:my-0">
-                <SvgUser
-                    role="img"
-                    alt="User SVG Icon"
-                    title="User Icon"
-                    class="my-4 h-32 fill-primary"
-                />
-                <p class="font-semibold text-xl text-primary-text">
-                    {{ t("about.impactUsers") }}
-                </p>
+        <!-- Our story -->
+        <section
+            id="story"
+            data-testid="about-header-container"
+            class="page-section scroll-mt-20 border-y border-accent-bg bg-secondary-bg"
+        >
+            <div class="page-container flex flex-col gap-6">
+                <h2 class="section-heading">
+                    {{ t('about.storyHeader') }}
+                </h2>
+                <div class="flex max-w-3xl flex-col gap-4 text-primary-text">
+                    <p data-testid="about-paragraph1">
+                        {{ t('about.storyParagraph1') }}
+                    </p>
+                    <p data-testid="about-paragraph2">
+                        {{ t('about.storyParagraph2') }}
+                    </p>
+                </div>
             </div>
+        </section>
 
-            <div class="flex flex-col items-center my-6 landscape:my-0">
-                <SvgVolunteer
-                    role="img"
-                    alt="Volunteer SVG Icon"
-                    title="Volunteer Icon"
-                    class="my-4 h-32 fill-primary"
-                />
-                <p class="font-semibold text-xl text-primary-text">
-                    {{ t("about.impactVolunteer") }}
-                </p>
-            </div>
-        </div>
-        <!-- Contributor Section -->
-        <div
-            id="contributor-header-container"
-            data-testid="contributor-header-container"
-            class="scroll-mt-4 flex justify-center items-center my-4"
+        <!-- Impact -->
+        <section
+            id="impact"
+            class="page-section scroll-mt-20"
         >
-            <div
-                id="contributor-header"
-                data-testid="members-header"
-                class="flex w-4/5 my-14"
-            >
-                <div class="flex-1 border-currentColor/70 border self-center" />
-                <div class="text-primary-text text-2xl font-bold mx-4 p-2 whitespace-nowrap">
-                    {{ t("about.contributorsHeader") }}
-                </div>
-                <div class="flex-1 border-currentColor/70 border self-center" />
+            <div class="page-container flex flex-col gap-6">
+                <h2 class="section-heading">
+                    {{ t('about.impactHeader') }}
+                </h2>
+                <ul class="m-0 grid list-none grid-cols-1 gap-4 p-0 landscape:grid-cols-3">
+                    <li
+                        v-for="stat in stats"
+                        :key="stat"
+                        class="card px-5 py-6 text-lg font-semibold text-primary-text"
+                    >
+                        {{ stat }}
+                    </li>
+                </ul>
             </div>
-        </div>
-        <div
-            id="contributor-container"
-            data-testid="contributor-container"
-            class="flex justify-center items-center"
+        </section>
+
+        <!-- Contributors -->
+        <section
+            id="contributors"
+            class="page-section scroll-mt-20 border-y border-accent-bg bg-secondary-bg"
         >
-            <div
-                id="contributors"
-                data-testid="contributors"
-                class="grid grid-cols-2 landscape:grid-cols-5 mx-4 gap-16 pb-10 landscape:pb-12"
-            >
-                <div
-                    v-for="(member, index) in contributors"
-                    :key="member.avatarImg"
-                    data-testid="member"
-                    class="members-list grid"
+            <div class="page-container flex flex-col gap-8">
+                <h2 class="section-heading">
+                    {{ t('about.contributorsHeader') }}
+                </h2>
+                <ul
+                    data-testid="contributors"
+                    class="m-0 grid list-none grid-cols-2 gap-8 p-0 landscape:grid-cols-4"
                 >
-                    <MemberComponent
-                        :avatar-img="member.avatarImg"
-                        :github-url="member.githubUrl"
-                        :linked-in-url="member.linkedInUrl"
-                        :name="member.name"
-                        :data-test-id="index"
-                        :title="member.title"
-                    />
-                </div>
+                    <li
+                        v-for="(member, index) in contributors"
+                        :key="member.avatarImg"
+                        data-testid="member"
+                    >
+                        <MemberComponent
+                            :avatar-img="member.avatarImg"
+                            :github-url="member.githubUrl"
+                            :linked-in-url="member.linkedInUrl"
+                            :name="member.name"
+                            :data-test-id="index"
+                            :title="member.title"
+                        />
+                    </li>
+                </ul>
             </div>
-        </div>
-        <!-- NPO Board Section  -->
-        <div
-            id="npo-header-container"
-            data-testid="npo-header-container"
-            class="scroll-mt-4 flex justify-center items-center"
+        </section>
+
+        <!-- NPO board -->
+        <section
+            id="board"
+            class="page-section scroll-mt-20"
         >
-            <div
-                id="npo-header"
-                data-testid="npo-header"
-                class="flex w-4/5 my-14"
-            >
-                <div class="flex-1 border-currentColor/70 border self-center" />
-                <div class="text-primary-text text-2xl font-bold mx-4 p-2 whitespace-nowrap">
-                    {{ t("about.boardHeader") }}
-                </div>
-                <div class="flex-1 border-currentColor/70 border self-center" />
-            </div>
-        </div>
-        <div
-            id="npo-container"
-            data-testid="npo-container"
-            class="flex justify-center items-center"
-        >
-            <div
-                id="npo"
-                data-testid="npo"
-                class="grid grid-cols-2 landscape:grid-cols-4 mx-4 gap-16 pb-10 landscape:pb-12"
-            >
-                <div
-                    v-for="(member, index) in boardMembers"
-                    :key="member.avatarImg"
-                    data-testid="member"
-                    class="members-list grid"
+            <div class="page-container flex flex-col gap-8">
+                <h2 class="section-heading">
+                    {{ t('about.boardHeader') }}
+                </h2>
+                <ul
+                    data-testid="npo"
+                    class="m-0 grid list-none grid-cols-2 gap-8 p-0 landscape:grid-cols-4"
                 >
-                    <MemberComponent
-                        :avatar-img="member.avatarImg"
-                        :github-url="member.githubUrl"
-                        :linked-in-url="member.linkedInUrl"
-                        :name="member.name"
-                        :data-test-id="index"
-                        :title="member.title"
-                    />
-                </div>
+                    <li
+                        v-for="(member, index) in boardMembers"
+                        :key="member.avatarImg"
+                        data-testid="member"
+                    >
+                        <MemberComponent
+                            :avatar-img="member.avatarImg"
+                            :github-url="member.githubUrl"
+                            :linked-in-url="member.linkedInUrl"
+                            :name="member.name"
+                            :data-test-id="index"
+                            :title="member.title"
+                        />
+                    </li>
+                </ul>
             </div>
-        </div>
-        <!-- Co-Founders Section -->
-        <div
-            id="cofounder-header-container"
-            data-testid="cofounder-header-container"
-            class="scroll-mt-4 flex justify-center items-center"
+        </section>
+
+        <!-- Co-founders -->
+        <section
+            id="cofounders"
+            class="page-section scroll-mt-20 border-y border-accent-bg bg-secondary-bg"
         >
-            <div
-                id="cofounder-header"
-                data-testid="cofounder-header"
-                class="flex w-4/5 my-14"
-            >
-                <div class="flex-1 border-currentColor/70 border self-center" />
-                <div class="text-primary-text text-2xl font-bold mx-4 p-2 whitespace-nowrap">
-                    {{ t("about.cofoundersHeader") }}
-                </div>
-                <div class="flex-1 border-currentColor/70 border self-center" />
-            </div>
-        </div>
-        <div
-            id="cofounder-container"
-            data-testid="cofounder-container"
-            class="flex justify-center items-center"
-        >
-            <div
-                id="cofounders"
-                data-testid="cofounders"
-                class="flex flex-wrap justify-center gap-16 mx-4 pb-10 landscape:pb-12"
-            >
-                <div
-                    v-for="(member, index) in cofounders"
-                    :key="member.avatarImg"
-                    data-testid="member"
-                    class="members-list grid"
+            <div class="page-container flex flex-col gap-8">
+                <h2 class="section-heading">
+                    {{ t('about.cofoundersHeader') }}
+                </h2>
+                <ul
+                    data-testid="cofounders"
+                    class="m-0 grid list-none grid-cols-2 gap-8 p-0 landscape:grid-cols-4"
                 >
-                    <MemberComponent
-                        :avatar-img="member.avatarImg"
-                        :github-url="member.githubUrl"
-                        :linked-in-url="member.linkedInUrl"
-                        :name="member.name"
-                        :data-test-id="index"
-                        :title="member.title"
-                    />
-                </div>
+                    <li
+                        v-for="(member, index) in cofounders"
+                        :key="member.avatarImg"
+                        data-testid="member"
+                    >
+                        <MemberComponent
+                            :avatar-img="member.avatarImg"
+                            :github-url="member.githubUrl"
+                            :linked-in-url="member.linkedInUrl"
+                            :name="member.name"
+                            :data-test-id="index"
+                            :title="member.title"
+                        />
+                    </li>
+                </ul>
             </div>
-        </div>
-        <!-- Mascot Section  -->
-        <div
-            id="mascot-header-container"
-            data-testid="mascot-header-container"
-            class="scroll-mt-4 flex justify-center items-center"
+        </section>
+
+        <!-- Mascots -->
+        <section
+            id="mascots"
+            class="page-section scroll-mt-20"
         >
-            <div
-                id="mascot-header"
-                data-testid="mascot-header"
-                class="flex w-4/5 my-14"
-            >
-                <div class="flex-1 border-currentColor/70 border self-center" />
-                <div class="text-primary-text text-2xl font-bold mx-4 p-2 whitespace-nowrap">
-                    {{ t("about.mascotsHeader") }}
-                </div>
-                <div class="flex-1 border-currentColor/70 border self-center" />
+            <div class="page-container flex flex-col gap-8">
+                <h2 class="section-heading">
+                    {{ t('about.mascotsHeader') }}
+                </h2>
+                <ul class="m-0 grid list-none grid-cols-2 gap-6 p-0 landscape:grid-cols-5">
+                    <li
+                        v-for="mascot in mascots"
+                        :key="mascot.name"
+                        class="card flex flex-col items-center gap-3 p-4"
+                    >
+                        <img
+                            :src="mascot.src"
+                            :alt="mascot.name"
+                            :width="mascot.width"
+                            :height="mascot.height"
+                            loading="lazy"
+                            decoding="async"
+                            class="h-28 w-auto"
+                        >
+                        <h3 class="text-base font-semibold text-primary-text">
+                            {{ mascot.name }}
+                        </h3>
+                    </li>
+                </ul>
             </div>
-        </div>
-        <div class="grid grid-cols-2 landscape:grid-cols-5 my-0 landscape:my-12">
-            <div class="flex flex-col items-center my-8 landscape:my-0">
-                <h1>{{ t("about.mascotsAwa") }}</h1>
-                <SvgAwa
-                    role="img"
-                    alt="Awa SVG Icon"
-                    title="Awa"
-                    class="my-4 h-40"
-                />
-            </div>
-            <div class="flex flex-col items-center my-8 landscape:my-0">
-                <h1>{{ t("about.mascotsMichael") }}</h1>
-                <SvgMichael
-                    role="img"
-                    alt="Michael SVG Icon"
-                    title="Michael"
-                    class="my-4 h-40"
-                />
-            </div>
-            <div class="flex flex-col items-center my-8 landscape:my-0">
-                <h1>{{ t("about.mascotsTamika") }}</h1>
-                <SvgTamika
-                    role="img"
-                    alt="Tamika SVG Icon"
-                    title="Tamika"
-                    class="my-4 h-40"
-                />
-            </div>
-            <div class="flex flex-col items-center my-8 landscape:my-0">
-                <h1>{{ t("about.mascotsSachi") }}</h1>
-                <SvgSachi
-                    role="img"
-                    alt="Sachi SVG Icon"
-                    title="Sachi"
-                    class="my-4 h-40"
-                />
-            </div>
-            <div class="flex flex-col items-center my-8 landscape:my-0 landscape:mt-10">
-                <h1>{{ t("about.mascotsChiko") }}</h1>
-                <SvgChiko
-                    role="img"
-                    alt="Chiko SVG Icon"
-                    title="Chiko"
-                    class="my-4 h-32"
-                />
-            </div>
-        </div>
-        <!-- Get Involved section  -->
-        <div
-            id="involve-header-container"
-            data-testid="involve-header-container"
-            class="scroll-mt-4 flex justify-center items-center"
+        </section>
+
+        <!-- Get involved -->
+        <section
+            id="involve"
+            class="page-section scroll-mt-20 border-y border-accent-bg bg-secondary-bg"
         >
-            <div
-                id="involve-header"
-                data-testid="involve-header"
-                class="flex w-4/5 my-14"
-            >
-                <div class="flex-1 border-currentColor/70 border self-center" />
-                <div class="text-primary-text text-2xl font-bold mx-4 p-2 whitespace-nowrap">
-                    {{ t("about.involveHeader") }}
-                </div>
-                <div class="flex-1 border-currentColor/70 border self-center" />
+            <div class="page-container flex flex-col gap-8">
+                <h2 class="section-heading">
+                    {{ t('about.involveHeader') }}
+                </h2>
+                <ul class="m-0 grid list-none grid-cols-1 gap-4 p-0 landscape:grid-cols-4">
+                    <li
+                        v-for="link in involveLinks"
+                        :key="link.to"
+                    >
+                        <NuxtLink
+                            :to="link.to"
+                            :target="link.external ? '_blank' : undefined"
+                            :rel="link.external ? 'noopener' : undefined"
+                            class="card flex items-center gap-4 p-5 transition-colors hover:border-primary hover:bg-primary/5"
+                        >
+                            <component
+                                :is="link.icon"
+                                class="h-8 w-8 shrink-0 fill-primary"
+                                :class="link.iconClass"
+                                aria-hidden="true"
+                            />
+                            <span class="font-semibold text-primary-text">{{ link.label }}</span>
+                        </NuxtLink>
+                    </li>
+                </ul>
             </div>
-        </div>
-        <div class="mb-14 grid grid-cols-2 pb-32 landscape:grid-cols-4 landscape:gap-0 landscape:pb-16">
-            <div class="flex flex-col items-center my-6 landscape:my-0">
-                <SvgAdd
-                    role="img"
-                    alt="Add Doctor SVG Icon"
-                    title="Add Doctor Icon"
-                    class="my-4 w-20"
-                />
-                <NuxtLink
-                    to="/submit"
-                    class="hover:text-primary-hover text-lg font-bold underline transition-colors"
-                >{{
-                    t("about.involveAdd") }}
-                </NuxtLink>
-            </div>
-            <div class="flex flex-col items-center my-6 landscape:my-0">
-                <SvgGithub
-                    role="img"
-                    alt="GitHub SVG Icon"
-                    title="Github Icon"
-                    class="my-4 w-20"
-                />
-                <a
-                    href="https://github.com/ourjapanlife"
-                    class="underline font-bold hover:text-primary-hover text-lg transition-colors"
-                    target="_blank"
-                >{{
-                    t("about.involveGit") }}</a>
-            </div>
-            <div class="flex flex-col items-center my-6 landscape:my-0">
-                <SvgLinkedin
-                    role="img"
-                    alt="LinkedIn SVG Icon"
-                    title="LinkedIn Icon"
-                    class="my-4 w-20"
-                />
-                <a
-                    href="https://www.linkedin.com/company/find-a-doc-japan/"
-                    class="underline font-bold hover:text-primary-hover text-lg transition-colors"
-                    target="_blank"
-                >{{
-                    t("about.involveLinkedin") }}</a>
-            </div>
-            <div class="flex flex-col items-center my-6 landscape:my-0">
-                <SvgFeedback
-                    role="img"
-                    alt="LinkedIn SVG Icon"
-                    title="LinkedIn Icon"
-                    class="ml-4 my-4 w-20"
-                />
-                <a
-                    href="https://docs.google.com/forms/d/e/1FAIpQLScx9cXurA6BhbBPUFH2nFAVWPP6Pm3yqXQj-NvJiaI2CUhh0Q/viewform"
-                    class="underline font-bold hover:text-primary-hover text-lg transition-colors"
-                    target="_blank"
-                >{{
-                    t("about.involveFeedback") }}</a>
-            </div>
-        </div>
-        <!-- Back to Top Button  -->
-        <Transition
-            enter-from-class="opacity-0 translate-y-3"
-            enter-active-class="transition ease-out duration-300"
-            enter-to-class="opacity-100 translate-y-0"
-            leave-from-class="opacity-100 translate-y-0"
-            leave-active-class="transition ease-in duration-200"
-            leave-to-class="opacity-0 translate-y-3"
-        >
-            <a
-                v-show="showScrollUpButton"
-                class="fixed bottom-4 left-1/2 -translate-x-1/2
-                    landscape:bottom-4 landscape:left-auto landscape:right-6
-                     z-50"
-            >
-                <SvgArrow
-                    role="img"
-                    alt="Arrow SVG Icon"
-                    title="Arrow Icon"
-                    class="my-8 h-24 fill-primary cursor-pointer"
-                    @click="scrollTo('about-header-container')"
-                />
-            </a>
-        </Transition>
+        </section>
     </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue'
+import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { useHead, useState } from '#imports'
 import data from '../member_directory/members.json'
 import MemberComponent from '~/components/MemberComponent.vue'
-import { useSmoothScroll } from '~/composables/useSmoothScroll'
 import { shuffleArray } from '~/utils/arrayUtils'
-import SvgHeartPlus from '~/assets/icons/heart-plus.svg'
-import SvgDoctor from '~/assets/icons/doctor-icon.svg'
-import SvgUser from '~/assets/icons/user-icon.svg'
-import SvgVolunteer from '~/assets/icons/volunteer-icon.svg'
-import SvgGithub from '~/assets/icons/social-github.svg'
+import { DIRECTORY_STATS } from '~/utils/homeDirectory'
+import SvgNotes from '~/assets/icons/note-stack-add.svg'
 import SvgLinkedin from '~/assets/icons/social-linkedin.svg'
 import SvgFeedback from '~/assets/icons/feedback-icon.svg'
 import SvgAdd from '~/assets/icons/add-square-icon.svg'
-import SvgChiko from '~/assets/icons/characters-chiko-therapy-dog-primary.svg'
-import SvgAwa from '~/assets/icons/characters-awa.svg'
-import SvgMichael from '~/assets/icons/characters-michael.svg'
-import SvgSachi from '~/assets/icons/characters-sachi.svg'
-import SvgTamika from '~/assets/icons/characters-tamika.svg'
-import SvgCharactersTogether from '~/assets/icons/characters-together-welcomescreen.svg'
-import SvgArrow from '~/assets/icons/arrow-icon.svg'
 
 interface Member {
     avatarImg: string
@@ -530,37 +299,95 @@ interface Member {
 }
 
 const { t } = useI18n()
-const { scrollTo } = useSmoothScroll()
-const contributors = ref<Member[]>(shuffleArray(data.members))
-const cofounders = ref<Member[]>(data.cofounders)
-const boardMembers = ref<Member[]>(data.board)
-const showScrollUpButton = ref(false)
-const aboutSectionRef = ref<HTMLElement | null>(null)
-const heroSectionRef = ref<HTMLElement | null>(null)
-const aboutVisible = ref(true)
-const heroVisible = ref(true)
-let scrollUpButtonObserver: IntersectionObserver
 
-onMounted(() => {
-    scrollUpButtonObserver = new IntersectionObserver(entries => {
-        for (const entry of entries) {
-            if (entry.target === aboutSectionRef.value) {
-                aboutVisible.value = entry.isIntersecting
-            }
-            if (entry.target === heroSectionRef.value) {
-                heroVisible.value = entry.isIntersecting
-            }
-        }
+useHead({ title: computed(() => t('topNav.about')) })
 
-        showScrollUpButton.value = !aboutVisible.value && !heroVisible.value
-    })
+const heroIllustration = '/illustrations/characters-together-welcomescreen.svg'
 
-    if (aboutSectionRef.value) scrollUpButtonObserver.observe(aboutSectionRef.value)
-    if (heroSectionRef.value) scrollUpButtonObserver.observe(heroSectionRef.value)
-})
+const cofounders: Member[] = data.cofounders
+const boardMembers: Member[] = data.board
 
-onUnmounted(() => {
-    if (aboutSectionRef.value) scrollUpButtonObserver.unobserve(aboutSectionRef.value)
-    if (heroSectionRef.value) scrollUpButtonObserver.unobserve(heroSectionRef.value)
-})
+/*
+ * Contributors are shown in a random order so nobody is always last. The shuffle runs
+ * once, on the server, and the resulting order travels in the payload: shuffling at
+ * setup on both sides gave the server one order and the client another, and hydration
+ * then paired each name with the previous member's avatar and links.
+ */
+const contributorOrder = useState<number[]>('about-contributor-order',
+                                            () => shuffleArray(data.members.map((_, index) => index)))
+const contributors = computed<Member[]>(() =>
+    contributorOrder.value.flatMap(index => data.members[index] ?? []))
+
+const sectionLinks = computed(() => [
+    { id: 'story', label: t('about.storyHeader') },
+    { id: 'impact', label: t('about.impactHeader') },
+    { id: 'contributors', label: t('about.contributorsHeader') },
+    { id: 'board', label: t('about.boardHeader') },
+    { id: 'cofounders', label: t('about.cofoundersHeader') },
+    { id: 'mascots', label: t('about.mascotsHeader') },
+    { id: 'involve', label: t('about.involveHeader') }
+])
+
+// Framed as approximate so they do not read as a live counter; see DIRECTORY_STATS.
+const stats = computed(() => [
+    t('home.statFacilities', { n: DIRECTORY_STATS.facilities }),
+    t('home.statProfessionals', { n: DIRECTORY_STATS.professionals }),
+    t('home.statLanguages', { n: DIRECTORY_STATS.languages })
+])
+
+/*
+ * Served from /public rather than inlined: together the five files are ~236 KB of SVG,
+ * which would otherwise land in the prerendered HTML. Width and height are each file's
+ * viewBox, so the browser reserves the right aspect ratio before the lazy load completes.
+ */
+const mascots = computed(() => [
+    { name: t('about.mascotsAwa'), src: '/illustrations/characters-awa.svg', width: 341, height: 605 },
+    { name: t('about.mascotsMichael'), src: '/illustrations/characters-michael.svg', width: 330, height: 637 },
+    { name: t('about.mascotsTamika'), src: '/illustrations/characters-tamika.svg', width: 330, height: 636 },
+    { name: t('about.mascotsSachi'), src: '/illustrations/characters-sachi.svg', width: 355, height: 638 },
+    { name: t('about.mascotsChiko'), src: '/illustrations/characters-chiko-therapy-dog-primary.svg', width: 1024, height: 1024 }
+])
+
+/*
+ * These icons carry hardcoded fills on their paths, which a fill utility on the root
+ * cannot override, so each item names the descendant rule that recolours it. LinkedIn
+ * recolours its box and gives the "in" the surface colour, so the glyph stays legible
+ * on the teal box in both themes instead of keeping the icon's hardcoded white.
+ */
+const involveLinks = computed(() => [
+    {
+        label: t('about.involveAdd'),
+        to: '/submit',
+        icon: SvgAdd,
+        iconClass: '**:fill-primary',
+        external: false
+    },
+    /*
+     * "Contribute" is the one entry point for getting involved, and it always goes to the docs
+     * site — which is where every kind of contribution starts, code included. It used to link
+     * straight to the repository, so the same word pointed at two different places depending on
+     * whether you read it here or in the footer.
+     */
+    {
+        label: t('about.involveContribute'),
+        to: 'https://docs.findadoc.jp',
+        icon: SvgNotes,
+        iconClass: '**:fill-primary',
+        external: true
+    },
+    {
+        label: t('about.involveLinkedin'),
+        to: 'https://www.linkedin.com/company/find-a-doc-japan/',
+        icon: SvgLinkedin,
+        iconClass: '[&_path:first-child]:fill-primary [&_path:last-child]:fill-secondary-bg',
+        external: true
+    },
+    {
+        label: t('about.involveFeedback'),
+        to: 'https://forms.gle/4E763qfaq46kEsn99',
+        icon: SvgFeedback,
+        iconClass: '**:fill-primary',
+        external: true
+    }
+])
 </script>

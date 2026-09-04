@@ -1,14 +1,15 @@
 @import "tailwindcss";
 
-/* We use these custom variants to target portrait and landscape orientation instead of using screen sizes.
-   This is because screen sizes are not consistent across devices and can cause unexpected behavior. */
+/*
+ * Orientation variants instead of screen sizes. Screen sizes are inconsistent across devices;
+ * "is this wider than it is tall" is the question the layouts actually ask.
+ */
 @custom-variant portrait (@media (orientation: portrait));
 @custom-variant landscape (@media (orientation: landscape));
 
 @theme {
   --color-transparent: transparent;
   --color-current: currentColor;
-  --color-currentColor: #ED6C5A;
   --color-primary: rgb(var(--theme-color-primary));
   --color-secondary: rgb(var(--theme-color-secondary));
   --color-accent: rgb(var(--theme-color-accent));
@@ -17,6 +18,7 @@
   --color-primary-bg: rgb(var(--theme-color-bg-primary));
   --color-secondary-bg: rgb(var(--theme-color-bg-secondary));
   --color-accent-bg: rgb(var(--theme-color-bg-accent));
+  --color-border-strong: rgb(var(--theme-color-border-strong));
   --color-primary-text: rgb(var(--theme-color-text-base));
   --color-primary-text-muted: rgb(var(--theme-color-text-muted));
   --color-primary-text-inverted: rgb(var(--theme-color-text-inverted));
@@ -27,47 +29,43 @@
   --color-error: rgb(var(--theme-color-error));
   --color-warning: rgb(var(--theme-color-warning));
   --color-info: rgb(var(--theme-color-info));
+  --color-currentColor: #ED6C5A;
   --color-blue: #245A7D;
 
-  /* Brand typeface. Noto Sans has no CJK coverage, so Noto Sans JP is stacked explicitly. */
+  /*
+   * Modal scrim. Deliberately not `primary-text`: that token inverts to near-white in dark
+   * mode, which turned every backdrop into a white wash instead of dimming the page. A scrim
+   * is dark in both themes, which is exactly what the shadow colour already is.
+   */
+  --color-scrim: rgb(var(--theme-shadow-color));
+
+  /*
+   * Brand typeface. Both families are self-hosted, subsetted woff2 from @fontsource (see
+   * nuxt.config.ts `css`). Noto Sans has no CJK coverage, so Noto Sans JP is stacked explicitly.
+   */
   --font-sans: "Noto Sans", "Noto Sans JP", -apple-system, BlinkMacSystemFont,
     "Segoe UI", Roboto, sans-serif;
-}
 
-@font-face {
-  font-family: "Noto Sans";
-  font-weight: 400;
-  font-display: swap;
-  src: url('../fonts/Noto_Sans/NotoSans-Regular.ttf') format('truetype');
-}
+  /* Elevation. Resting surfaces have none; these are for things that float. */
+  --shadow-card: 0 1px 2px rgb(var(--theme-shadow-color) / 0.06), 0 1px 3px rgb(var(--theme-shadow-color) / 0.05);
+  --shadow-raised: 0 4px 12px rgb(var(--theme-shadow-color) / 0.10), 0 1px 3px rgb(var(--theme-shadow-color) / 0.06);
+  --shadow-overlay: 0 16px 48px rgb(var(--theme-shadow-color) / 0.22), 0 2px 6px rgb(var(--theme-shadow-color) / 0.08);
 
-@font-face {
-  font-family: "Noto Sans";
-  font-weight: 600;
-  font-display: swap;
-  src: url('../fonts/Noto_Sans/NotoSans-SemiBold.ttf') format('truetype');
-}
-
-@font-face {
-  font-family: "Noto Sans";
-  font-weight: 700;
-  font-display: swap;
-  src: url('../fonts/Noto_Sans/NotoSans-Bold.ttf') format('truetype');
-}
-
-@layer utilities {
-  .pause {
-    animation-play-state: paused;
-  }
+  /* Motion. One curve, short durations; reduced-motion users get none (see @layer base). */
+  --ease-soft: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @layer base {
   html {
     font-size: 16px;
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
   }
 
   body {
     @apply text-base leading-relaxed;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
   }
 
   h1 {
@@ -90,712 +88,314 @@
     @apply cursor-pointer;
   }
 
+  /*
+   * One focus treatment everywhere. Components do not set their own.
+   *
+   * Two-tone on purpose. A single primary ring vanished on a `bg-primary` band — which is
+   * exactly where the homepage's main call to action sits — and no single colour clears 3:1
+   * against the page ground, a white card and the primary band at once. So the indicator is a
+   * surface-coloured halo filling the 2px offset, then a text-coloured outline around it:
+   * whatever it lands on, one of the two bands contrasts. Worst case is the primary band, where
+   * the halo carries it (4.88:1 light, 6.85:1 dark) and the outline contrasts against the halo.
+   */
+  :focus-visible {
+    outline: 2px solid rgb(var(--theme-color-text-base));
+    outline-offset: 2px;
+    box-shadow: 0 0 0 2px rgb(var(--theme-color-bg-secondary));
+  }
+
+  ::selection {
+    background: rgb(var(--theme-color-primary) / 0.2);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    ::before,
+    ::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  /*
+   * Colour tokens. Values are space-separated RGB triplets so Tailwind's opacity modifiers
+   * work: `bg-primary/10` becomes `rgb(10 125 137 / 0.1)`. Every documented pair passes
+   * WCAG AA — the ratio is noted beside each value. Verify with docs/brand.md's script when
+   * changing anything here.
+   *
+   * Three states: light (default), dark (`.theme-dark` on <html>, or the OS preference when
+   * no explicit choice is stored), and light forced (`.theme-light`). The class is set by
+   * an inline script in <head> before first paint, then managed by useColorScheme().
+   */
   :root {
-    /* These colors are using a syntax special to tailwind to allow for alpha changes. Uncomment hex value for reference */
-    /* https://tailwindcss.com/docs/customizing-colors#using-css-variables */
-    /* Example: rgb(14 176 192 / 0.5) for 50% opacity */
+    color-scheme: light;
+    --theme-shadow-color: 18 33 43;
 
-    /* general branding colors */
-    --theme-color-primary:
-      /* #0A7D89 - AA 4.65:1 on the page ground */
-      10 125 137;
-    --theme-color-secondary:
-      /* #FB9999 */
-      251 153 153;
-    --theme-color-accent:
-      /* #1e40af */
-      30 64 175;
-    --theme-color-primary-inverted:
-      /* #FFFFFF */
-      255 255 255;
-    --theme-color-primary-hover:
-      /* #08646E - AA 6.55:1 */
-      8 100 110;
-    --theme-color-secondary-inverted:
-      /* #7f1d1d */
-      127 29 29;
-    --theme-color-secondary-hover:
-      /* #f87171 */
-      248 113 113;
+    /* brand */
+    --theme-color-primary: 10 125 137;           /* #0A7D89 — 4.65:1 on the page ground */
+    --theme-color-primary-hover: 8 100 110;      /* #08646E — 6.55:1 */
+    --theme-color-secondary: 251 153 153;        /* #FB9999 — decorative only, never text */
+    --theme-color-secondary-hover: 248 113 113;  /* #F87171 */
+    --theme-color-secondary-inverted: 127 29 29; /* #7F1D1D */
+    --theme-color-accent: 30 64 175;             /* #1E40AF — 8.72:1 */
+    --theme-color-primary-inverted: 255 255 255; /* #FFFFFF — text on primary, 4.88:1 */
 
-    /* element specific colors */
-    --theme-color-text-base:
-      /* #12212B - AA 15.66:1 */
-      18 33 43;
-    --theme-color-text-muted:
-      /* #4F636B - AA 6.01:1 */
-      79 99 107;
-    --theme-color-text-inverted:
-      /* #ffffff */
-      255 255 255;
-    --theme-color-bg-primary:
-      /* #F7FAFB */
-      247 250 251;
-    --theme-color-bg-secondary:
-      /* #ffffff */
-      255 255 255;
-    --theme-color-bg-accent:
-      /* #DFE7EA */
-      223 231 234;
-    --theme-color-success:
-      /* #0B815A - AA 4.65:1 */
-      11 129 90;
-    --theme-color-error:
-      /* #E21313 - AA 4.62:1 */
-      226 19 19;
-    --theme-color-warning:
-      /* #9E6506 - AA 4.64:1 */
-      158 101 6;
-    --theme-color-info:
-      /* #1368F4 - AA 4.64:1 */
-      19 104 244;
+    /* text */
+    --theme-color-text-base: 18 33 43;           /* #12212B — 15.66:1 */
+    --theme-color-text-muted: 79 99 107;         /* #4F636B — 6.01:1 */
+    --theme-color-text-inverted: 255 255 255;    /* #FFFFFF */
+
+    /* surfaces */
+    --theme-color-bg-primary: 247 250 251;       /* #F7FAFB — page ground */
+    --theme-color-bg-secondary: 255 255 255;     /* #FFFFFF — cards, inputs */
+    --theme-color-bg-accent: 223 231 234;        /* #DFE7EA — hairlines, subtle fills */
+    --theme-color-border-strong: 118 138 145;    /* #768A91 — form-control edges, 3.61:1 */
+
+    /* status */
+    --theme-color-success: 11 129 90;            /* #0B815A — 4.88:1 */
+    --theme-color-error: 226 19 19;              /* #E21313 — 4.84:1 */
+    --theme-color-warning: 158 101 6;            /* #9E6506 — 4.86:1 */
+    --theme-color-info: 19 104 244;              /* #1368F4 — 4.87:1 */
   }
 
-  .theme-original-dark {
-    /* branding colors - dark mode*/
-    --theme-color-primary:
-      /* #0EB0C0 */
-      14 176 192;
-    --theme-color-secondary:
-      /* #FB9999 */
-      251 153 153;
-    --theme-color-accent:
-      /* #4065DE */
-      128 158 255;
-    --theme-color-primary-inverted:
-      /* #FFFFFF */
-      255 255 255;
-    --theme-color-primary-hover:
-      /* #7FFFD4 */
-      127 255 212;
-    --theme-color-secondary-inverted:
-      /* #046666 */
-      4 102 102;
-    --theme-color-secondary-hover:
-      /* #F87171 */
-      248 113 113;
-    --theme-color-success:
-      /* #10B981 */
-      16 185 129;
-    --theme-color-error:
-      /* #EF4444 */
-      239 68 68;
-    --theme-color-warning:
-      /* #F59E0B */
-      245 158 11;
-    --theme-color-info:
-      /* #3b82f6 */
-      59 130 246;
+  @media (prefers-color-scheme: dark) {
+    :root:not(.theme-light) {
+      color-scheme: dark;
+      --theme-shadow-color: 0 0 0;
 
-    /* text - dark mode */
-    --theme-color-text-base:
-      /* #FFFFFF */
-      255 255 255;
-    --theme-color-text-muted:
-      /* #C0C0C0 */
-      192 192 192;
-    --theme-color-text-inverted:
-      /* #000000 */
-      0 0 0;
+      --theme-color-primary: 43 183 198;           /* #2BB7C6 — 7.56:1 on the page ground */
+      --theme-color-primary-hover: 79 203 215;     /* #4FCBD7 — 8.56:1 */
+      --theme-color-secondary: 251 153 153;
+      --theme-color-secondary-hover: 248 113 113;
+      --theme-color-secondary-inverted: 4 102 102;
+      --theme-color-accent: 128 158 255;           /* #809EFF — 6.51:1 */
+      --theme-color-primary-inverted: 11 18 20;    /* #0B1214 — text on primary, 7.82:1 */
 
-    /* background - dark mode */
-    --theme-color-bg-primary:
-      /* #212626 */
-      33 38 38;
-    --theme-color-bg-secondary:
-      /* #1A1A1A */
-      26 26 26;
-    --theme-color-bg-accent:
-      /* #EDF3FC */
-      237 243 252;
+      --theme-color-text-base: 241 245 246;        /* #F1F5F6 — 16.65:1 */
+      --theme-color-text-muted: 169 184 189;       /* #A9B8BD — 8.94:1 */
+      --theme-color-text-inverted: 11 18 20;
+
+      --theme-color-bg-primary: 16 22 23;          /* #101617 */
+      --theme-color-bg-secondary: 24 32 34;        /* #182022 */
+      --theme-color-bg-accent: 42 53 56;           /* #2A3538 */
+      --theme-color-border-strong: 106 124 130;    /* #6A7C82 — 3.80:1 */
+
+      --theme-color-success: 52 211 153;           /* #34D399 — 8.61:1 */
+      --theme-color-error: 248 113 113;            /* #F87171 — 5.98:1 */
+      --theme-color-warning: 251 191 36;           /* #FBBF24 — 9.92:1 */
+      --theme-color-info: 96 165 250;              /* #60A5FA — 6.51:1 */
+    }
   }
 
-  .theme-coral {
-    /* general branding colors */
-    --theme-color-primary:
-      /* #ED6C5A */
-      237 108 90;
-    --theme-color-secondary:
-      /* #245A7D */
-      36 90 125;
-    --theme-color-accent:
-      /* #245A7D */
-      36 90 125;
-    --theme-color-primary-inverted:
-      /* #ffffff */
-      255 255 255;
-    --theme-color-primary-hover:
-      /* #d66051 */
-      214 96 81;
-    --theme-color-secondary-inverted:
-      /* #ffffff */
-      255 255 255;
-    --theme-color-secondary-hover:
-      /* #d66051 */
-      214 96 81;
+  :root.theme-dark {
+    color-scheme: dark;
+    --theme-shadow-color: 0 0 0;
 
-    /* element specific colors */
-    --theme-color-text-base:
-      /* #252525 */
-      37 37 37;
-    --theme-color-text-muted:
-      /* #999999 */
-      153 153 153;
-    --theme-color-text-inverted:
-      /* #000000 */
-      255 255 255;
-    --theme-color-bg-primary:
-      /* #fcfcfc */
-      252 252 252;
-    --theme-color-bg-secondary:
-      /* #fff1ef */
-      255 241 239;
-    --theme-color-bg-accent:
-      /* #e5e7eb */
-      229 231 235;
-    --theme-color-success:
-      /* #007ccf */
-      0 124 207;
-    --theme-color-error:
-      /* #d1523f */
-      209 82 63;
-    --theme-color-warning:
-      /* #f59e0b */
-      245 158 11;
-    --theme-color-info:
-      /* #3b82f6 */
-      59 130 246;
+    --theme-color-primary: 43 183 198;
+    --theme-color-primary-hover: 79 203 215;
+    --theme-color-secondary: 251 153 153;
+    --theme-color-secondary-hover: 248 113 113;
+    --theme-color-secondary-inverted: 4 102 102;
+    --theme-color-accent: 128 158 255;
+    --theme-color-primary-inverted: 11 18 20;
+
+    --theme-color-text-base: 241 245 246;
+    --theme-color-text-muted: 169 184 189;
+    --theme-color-text-inverted: 11 18 20;
+
+    --theme-color-bg-primary: 16 22 23;
+    --theme-color-bg-secondary: 24 32 34;
+    --theme-color-bg-accent: 42 53 56;
+    --theme-color-border-strong: 106 124 130;
+
+    --theme-color-success: 52 211 153;
+    --theme-color-error: 248 113 113;
+    --theme-color-warning: 251 191 36;
+    --theme-color-info: 96 165 250;
   }
 
-  .theme-coral-dark {
-    /* coral - branding colors*/
-    --theme-color-primary:
-      /* #ED6C5A */
-      237 108 90;
-    --theme-color-secondary:
-      /* #245A7D */
-      36 90 125;
-    --theme-color-accent:
-      /* #3A91C9 */
-      58 145 201;
-    --theme-color-primary-inverted:
-      /* #ffffff */
-      255 255 255;
-    --theme-color-primary-hover:
-      /* #d66051 */
-      214 96 81;
-    --theme-color-secondary-inverted:
-      /* #FB9999 */
-      251 153 153;
-    --theme-color-secondary-hover:
-      /* #13537D */
-      19 83 125;
-    --theme-color-success:
-      /* #10B981 */
-      16 185 129;
-    --theme-color-error:
-      /* #EF4444 */
-      239 68 68;
-    --theme-color-warning:
-      /* #f59e0b */
-      245 158 11;
-    --theme-color-info:
-      /* #3B82F6 */
-      59 130 246;
+  /*
+   * High contrast is a preference, not a theme. Muted copy becomes full-strength and the
+   * hairlines darken so every boundary clears 3:1 without a second palette to maintain.
+   */
+  @media (prefers-contrast: more) {
+    :root {
+      --theme-color-text-muted: 18 33 43;
+      --theme-color-bg-accent: 118 138 145;
+      --theme-color-border-strong: 18 33 43;
+    }
 
-    /* text - dark mode */
-    --theme-color-text-base:
-      /* #FFFFFF */
-      255 255 255;
-    --theme-color-text-muted:
-      /* #C0C0C0 */
-      192 192 192;
-    --theme-color-text-inverted:
-      /* #000000 */
-      0 0 0;
+    :root.theme-dark {
+      --theme-color-text-muted: 241 245 246;
+      --theme-color-bg-accent: 106 124 130;
+      --theme-color-border-strong: 241 245 246;
+    }
 
-    /* background - dark mode */
-    --theme-color-bg-primary:
-      /* #22201F */
-      34 32 31;
-    --theme-color-bg-secondary:
-      /* #1A1A1A */
-      26 26 26;
-    --theme-color-bg-accent:
-      /* #FFFFFF */
-      255 255 255;
+    @media (prefers-color-scheme: dark) {
+      :root:not(.theme-light) {
+        --theme-color-text-muted: 241 245 246;
+        --theme-color-bg-accent: 106 124 130;
+        --theme-color-border-strong: 241 245 246;
+      }
+    }
+  }
+}
+
+/*
+ * Component primitives. These are the vocabulary every page is built from; pages compose
+ * them with utilities rather than restating the same twelve classes. Keep this list short.
+ */
+@layer components {
+  /* Layout */
+  .page-section {
+    @apply w-full px-6 py-12 landscape:px-12;
   }
 
-  .theme-violet {
-    /* general branding colors */
-    --theme-color-primary:
-      /* #A45D9A */
-      164 93 154;
-    --theme-color-secondary:
-      /* #DA5550 */
-      218 85 80;
-    --theme-color-accent:
-      /* #F4F3E9 */
-      244 243 233;
-    --theme-color-primary-inverted:
-      /* #ffffff */
-      255 255 255;
-    --theme-color-primary-hover:
-      /* #c46fb8 */
-      196 111 184;
-    --theme-color-secondary-inverted:
-      /* #ffffff */
-      255 255 255;
-    --theme-color-secondary-hover:
-      /* #d66051 */
-      214 96 81;
-
-    /* element specific colors */
-    --theme-color-text-base:
-      /* #252525 */
-      37 37 37;
-    --theme-color-text-muted:
-      /* #464646 */
-      70 70 70;
-    --theme-color-text-inverted:
-      /* #000000 */
-      255 255 255;
-    --theme-color-bg-primary:
-      /* #fcfcfc */
-      252 252 252;
-    --theme-color-bg-secondary:
-      /* #E5D9F2 */
-      229 217 242;
-    --theme-color-bg-accent:
-      /* #e5e7eb */
-      229 231 235;
-    --theme-color-success:
-      /* #007ccf */
-      0 124 207;
-    --theme-color-error:
-      /* #d1523f */
-      209 82 63;
-    --theme-color-warning:
-      /* #f59e0b */
-      245 158 11;
-    --theme-color-info:
-      /* #3b82f6 */
-      59 130 246;
+  .page-container {
+    @apply mx-auto w-full max-w-5xl;
   }
 
-  .theme-violet-dark {
-    /* violet - branding colors */
-    --theme-color-primary:
-      /* #A45D9A */
-      164 93 154;
-    --theme-color-secondary:
-      /* #99A6FB */
-      153 166 251;
-    --theme-color-accent:
-      /* #DBB4CE */
-      219 180 206;
-    --theme-color-primary-inverted:
-      /* #ffffff */
-      255 255 255;
-    --theme-color-primary-hover:
-      /* #c46fb8 */
-      196 111 184;
-    --theme-color-secondary-inverted:
-      /* #25AAAF */
-      37 170 175;
-    --theme-color-secondary-hover:
-      /* #DA342E */
-      218 52 46;
-    --theme-color-success:
-      /* #10B981 */
-      16 185 129;
-    --theme-color-error:
-      /* #EF4444 */
-      239 68 68;
-    --theme-color-warning:
-      /* #f59e0b */
-      245 158 11;
-    --theme-color-info:
-      /* #3b82f6 */
-      59 130 246;
-
-
-    /* text - dark mode */
-    --theme-color-text-base:
-      /* #FFFFFF */
-      255 255 255;
-    --theme-color-text-muted:
-      /* #C0C0C0 */
-      192 192 192;
-    --theme-color-text-inverted:
-      /* #000000 */
-      0 0 0;
-
-    /* background - dark mode */
-    --theme-color-bg-primary:
-      /* #262125 */
-      38 33 37;
-    --theme-color-bg-secondary:
-      /* #1A1A1A */
-      26 26 26;
-    --theme-color-bg-accent:
-      /* #FFFFFF */
-      255 255 255;
+  .page-container-narrow {
+    @apply mx-auto w-full max-w-3xl;
   }
 
-  .theme-ocean {
-    /* general branding colors */
-    --theme-color-primary:
-      /* #77A6CD */
-      119 166 205;
-    --theme-color-secondary:
-      /* #DA5550 */
-      218 85 80;
-    --theme-color-accent:
-      /* #F4F3E9 */
-      244 243 233;
-    --theme-color-primary-inverted:
-      /* #ffffff */
-      255 255 255;
-    --theme-color-primary-hover:
-      /* #007ccf */
-      0 124 207;
-    --theme-color-secondary-inverted:
-      /* #ffffff */
-      255 255 255;
-    --theme-color-secondary-hover:
-      /* #d66051 */
-      214 96 81;
-
-    /* element specific colors */
-    --theme-color-text-base:
-      /* #252525 */
-      37 37 37;
-    --theme-color-text-muted:
-      /* #464646 */
-      70 70 70;
-    --theme-color-text-inverted:
-      /* #000000 */
-      255 255 255;
-    --theme-color-bg-primary:
-      /* #fcfcfc */
-      252 252 252;
-    --theme-color-bg-secondary:
-      /* bde5ff */
-      189 229 255;
-    --theme-color-bg-accent:
-      /* #e5e7eb */
-      229 231 235;
-    --theme-color-success:
-      /* #007ccf */
-      0 124 207;
-    --theme-color-error:
-      /* #d1523f */
-      209 82 63;
-    --theme-color-warning:
-      /* #f59e0b */
-      245 158 11;
-    --theme-color-info:
-      /* #3b82f6 */
-      59 130 246;
+  /* Type */
+  /*
+   * Two page-title scales, both legitimate: the larger one introduces a landing surface, the
+   * smaller one heads a document. Naming them stops a third and fourth scale appearing by
+   * accident, which is what happened before these existed.
+   */
+  .page-title {
+    @apply text-4xl font-bold text-balance tracking-tight text-primary-text landscape:text-5xl;
   }
 
-  .theme-neon {
-    /* general branding colors */
-    --theme-color-primary:
-      /* #006D6A */
-      0 109 106;
-    --theme-color-secondary:
-      /* #524c4c */
-      82 76 76;
-    --theme-color-accent:
-      /* #FF3377 */
-      255 51 119;
-    --theme-color-primary-inverted:
-      /* #ffffff */
-      255 255 255;
-    --theme-color-primary-hover:
-      /* #1abb85 */
-      26 187 133;
-    --theme-color-secondary-inverted:
-      /* #ffffff */
-      255 255 255;
-    --theme-color-secondary-hover:
-      /* #d66051 */
-      214 96 81;
-
-    /* element specific colors */
-    --theme-color-text-base:
-      /* #88eecc */
-      136 238 204;
-    --theme-color-text-muted:
-      /* #36846A */
-      54 132 106;
-    --theme-color-text-inverted:
-      /* #252525 */
-      37 37 37;
-    --theme-color-bg-primary:
-      /* #383434 */
-      56 52 52;
-    --theme-color-bg-secondary:
-      /* #524c4c */
-      82 76 76;
-    --theme-color-bg-accent:
-      /* #e5e7eb */
-      82 82 82;
-    --theme-color-success:
-      /* #007ccf */
-      0 124 207;
-    --theme-color-error:
-      /* #525252 */
-      209 82 63;
-    --theme-color-warning:
-      /* #f59e0b */
-      245 158 11;
-    --theme-color-info:
-      /* #3b82f6 */
-      59 130 246;
+  .page-title-sm {
+    @apply text-3xl font-bold tracking-tight text-primary-text landscape:text-4xl;
   }
 
-  /* MARK: Accessible Themes */
-
-  /* accessible high contrast theme */
-    .theme-accessible-high-contrast {
-    /* high contrast - general branding colors */
-    --theme-color-primary:
-      /* #006872 */
-      0 104 114;
-    --theme-color-secondary:
-      /* #FFFF00 */
-      255 255 0;
-    --theme-color-accent:
-      /* #BD00BD */
-      189 0 189;
-    --theme-color-primary-inverted:
-      /* #000000 */
-      0 0 0;
-    --theme-color-primary-hover:
-      /* #7FFFD4 */
-      127 255 212;
-    --theme-color-secondary-inverted:
-      /* #000000 */
-      0 0 0;
-    --theme-color-secondary-hover:
-      /* #FFFACD */
-      255 250 205;
-    --theme-color-success:
-      /* #10B981 */
-      16 185 129;
-    --theme-color-error:
-      /* #EF4444 */
-      239 68 68;
-    --theme-color-warning:
-      /* #f59e0b */
-      245 158 11;
-    --theme-color-info:
-      /* #3b82f6 */
-      59 130 246;
-
-    /* high contrast - text */
-    --theme-color-text-base:
-      /* #1E3B3B */
-      30 59 59;
-    --theme-color-text-muted:
-      /* #C0C0C0 */
-      192 192 192;
-    --theme-color-text-inverted:
-      /* #FFFFFF */
-      255 255 255;
-
-    /* high contrast - background */
-    --theme-color-bg-primary:
-      /* #F8FAFC */
-      248 250 252;
-    --theme-color-bg-secondary:
-      /* #DAF2F2 */
-      218 242 242;
-    --theme-color-bg-accent:
-      /* #e1f0f0 */
-      255 240 240;
+  .section-heading {
+    @apply text-2xl font-bold tracking-tight text-primary-text landscape:text-3xl;
   }
 
-  .theme-accessible-high-contrast-dark {
-    /* high contrast - general branding colors */
-    --theme-color-primary:
-      /* #00FFFF */
-      0 255 255;
-    --theme-color-secondary:
-      /* #FFFF00 */
-      255 255 0;
-    --theme-color-accent:
-      /* #FF00FF */
-      255 0 255;
-    --theme-color-primary-inverted:
-      /* #000000 */
-      0 0 0;
-    --theme-color-primary-hover:
-      /* #7FFFD4 */
-      127 255 212;
-    --theme-color-secondary-inverted:
-      /* #000000 */
-      0 0 0;
-    --theme-color-secondary-hover:
-      /* #FFFACD */
-      255 250 205;
-    --theme-color-success:
-      /* #10B981 */
-      16 185 129;
-    --theme-color-error:
-      /* #EF4444 */
-      239 68 68;
-    --theme-color-warning:
-      /* #f59e0b */
-      245 158 11;
-    --theme-color-info:
-      /* #3b82f6 */
-      59 130 246;
-
-    /* high contrast - text */
-    --theme-color-text-base:
-      /* #FFFFFF */
-      255 255 255;
-    --theme-color-text-muted:
-      /* #C0C0C0 */
-      192 192 192;
-    --theme-color-text-inverted:
-      /* #000000 */
-      0 0 0;
-
-    /* high contrast - background */
-    --theme-color-bg-primary:
-      /* #000000 */
-      0 0 0;
-    --theme-color-bg-secondary:
-      /* #2B3636 */
-      43 54 54;
-    --theme-color-bg-accent:
-      /* #FFFFFF */
-      255 255 255;
+  .section-lead {
+    @apply text-lg text-primary-text-muted;
   }
 
-  /* accessible r-g color blindness friendly theme (daltonism) */
-  .theme-accessible-red-green {
-    /* red green - general branding colors */
-    --theme-color-primary:
-      /* #007BFF */
-      0 123 255;
-    --theme-color-secondary:
-      /* #D97706 */
-      217 119 6;
-    --theme-color-accent:
-      /* #DEA807 */
-      222 168 7;
-    --theme-color-primary-inverted:
-      /* #FFFFFF */
-      255 255 255;
-    --theme-color-primary-hover:
-      /* #2563EB */
-      37 99 235;
-    --theme-color-secondary-inverted:
-      /* #FFFFFF */
-      255 255 255;
-    --theme-color-secondary-hover:
-      /* #F59E0B */
-      245 158 11;
-    --theme-color-success:
-      /* #10B981 */
-      16 185 129;
-    --theme-color-error:
-      /* #EF4444 */
-      239 68 68;
-    --theme-color-warning:
-      /* #f59e0b */
-      245 158 11;
-    --theme-color-info:
-      /* #3b82f6 */
-      59 130 246;
-
-    /* red green - text */
-    --theme-color-text-base:
-      /* #1E2C3B */
-      30 44 59;
-    --theme-color-text-muted:
-      /* #9CA3AF */
-      156 163 175;
-    --theme-color-text-inverted:
-      /* #FFFFFF */
-      255 255 255;
-
-    /* red green - background */
-    --theme-color-bg-primary:
-      /* #F7FAFC */
-      247 250 252;
-    --theme-color-bg-secondary:
-      /* #DAE6F2 */
-      218 230 242;
-    --theme-color-bg-accent:
-      /* #E1E8F0 */
-      225 232 240;
+  .eyebrow {
+    @apply text-sm font-semibold uppercase tracking-wide text-primary;
   }
 
+  .link {
+    @apply font-semibold text-primary underline decoration-primary/40 underline-offset-4
+      transition-colors hover:text-primary-hover hover:decoration-primary-hover;
+  }
 
+  /* Buttons */
+  .btn {
+    @apply inline-flex h-12 items-center justify-center gap-2 whitespace-nowrap rounded-lg px-6
+      font-semibold transition-colors disabled:pointer-events-none disabled:opacity-50;
+  }
 
-.theme-accessible-red-green-dark {
-    /* red green - general branding colors */
-    --theme-color-primary:
-      /* #007BFF */
-      0 123 255;
-    --theme-color-secondary:
-      /* #D97706 */
-      217 119 6;
-    --theme-color-accent:
-      /* #FFC107 */
-      255 193 7;
-    --theme-color-primary-inverted:
-      /* #FFFFFF */
-      255 255 255;
-    --theme-color-primary-hover:
-      /* #2563EB */
-      37 99 235;
-    --theme-color-secondary-inverted:
-      /* #FFFFFF */
-      255 255 255;
-    --theme-color-secondary-hover:
-      /* #F59E0B */
-      245 158 11;
-    --theme-color-success:
-      /* #10B981 */
-      16 185 129;
-    --theme-color-error:
-      /* #EF4444 */
-      239 68 68;
-    --theme-color-warning:
-      /* #f59e0b */
-      245 158 11;
-    --theme-color-info:
-      /* #3b82f6 */
-      59 130 246;
+  .btn-sm {
+    @apply h-10 px-4;
+  }
 
-    /* red green - text */
-    --theme-color-text-base:
-      /* #E5E7EB */
-      229 231 235;
-    --theme-color-text-muted:
-      /* #9CA3AF */
-      156 163 175;
-    --theme-color-text-inverted:
-      /* #111827 */
-      17 24 39;
+  .btn-primary {
+    @apply bg-primary text-primary-text-inverted hover:bg-primary-hover;
+  }
 
-    /* red green - background */
-    --theme-color-bg-primary:
-      /* #1F2937 */
-      31 41 55;
-    --theme-color-bg-secondary:
-      /* #374151 */
-      55 65 81;
-    --theme-color-bg-accent:
-      /* #F3F4F6 */
-      243 244 246;
+  .btn-secondary {
+    @apply border border-accent-bg bg-secondary-bg text-primary hover:border-primary hover:bg-primary/5;
+  }
+
+  .btn-ghost {
+    @apply text-primary hover:bg-primary/10;
+  }
+
+  /*
+   * Sits on a `bg-primary` band, so its hover must stay a solid light surface. `accent-bg`
+   * looked right until `prefers-contrast: more` turned that token into a mid grey and the
+   * primary label fell to 1.35:1; a primary tint is worse still, since a tint of primary over
+   * a primary band is the band. The page ground keeps the label at its documented ratio in
+   * every contrast mode.
+   */
+  .btn-on-primary {
+    @apply bg-secondary-bg text-primary hover:bg-primary-bg;
+  }
+
+  /* Surfaces */
+  .card {
+    @apply rounded-xl border border-accent-bg bg-secondary-bg;
+  }
+
+  .chip {
+    @apply inline-flex h-8 items-center whitespace-nowrap rounded-full border border-accent-bg
+      bg-secondary-bg px-3 text-sm font-medium text-primary-text;
+  }
+
+  .chip-primary {
+    @apply border-primary/30 bg-primary/10 text-primary;
+  }
+
+  /* Forms */
+  .field-label {
+    @apply mb-1.5 block text-sm font-semibold text-primary-text;
+  }
+
+  .field {
+    @apply block h-12 w-full rounded-lg border border-border-strong bg-secondary-bg px-3
+      text-primary-text transition-colors placeholder:text-primary-text-muted
+      hover:border-primary-text-muted focus-visible:border-primary
+      aria-[invalid=true]:border-error;
+  }
+
+  .field-textarea {
+    @apply h-auto min-h-28 py-3;
+  }
+
+  .field-hint {
+    @apply mt-1.5 text-sm text-primary-text-muted;
+  }
+
+  .field-error {
+    @apply mt-1.5 text-sm font-medium text-error;
+  }
+
+  /* Loading */
+  .skeleton {
+    @apply animate-pulse rounded-md bg-accent-bg;
+  }
+
+  /* Long-form legal copy: real headings and paragraphs, styled once. */
+  .prose-legal h2 {
+    @apply mb-3 mt-10 text-xl font-bold text-primary-text;
+  }
+
+  .prose-legal h3 {
+    @apply mb-2 mt-6 text-base font-semibold text-primary-text;
+  }
+
+  .prose-legal p,
+  .prose-legal li {
+    @apply mb-4 text-primary-text-muted;
+  }
+
+  .prose-legal ul {
+    @apply mb-4 list-disc pl-6;
+  }
+
+  .prose-legal a {
+    @apply font-semibold text-primary underline underline-offset-4 hover:text-primary-hover;
+  }
+}
+
+@layer utilities {
+  .pause {
+    animation-play-state: paused;
   }
 }

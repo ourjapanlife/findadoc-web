@@ -1,58 +1,55 @@
 <template>
-    <ClientOnly>
-        <div class="h-full w-full">
-            <GoogleMap
-                v-if="isMapReady"
-                ref="mapRef"
-                data-testid="map-of-japan"
-                :api-key="runtimeConfig.public.GOOGLE_MAPS_API_KEY as string ?? undefined"
-                :libraries="['marker']"
-                map-id="153d718018a2577e"
-                :disable-default-ui="true"
+    <div class="h-full w-full">
+        <GoogleMap
+            v-if="isMapReady"
+            ref="mapRef"
+            data-testid="map-of-japan"
+            :api-key="runtimeConfig.public.GOOGLE_MAPS_API_KEY as string ?? undefined"
+            :libraries="['marker']"
+            map-id="153d718018a2577e"
+            :disable-default-ui="true"
+            :options="{
+                gestureHandling: 'cooperative',
+            }"
+            class="h-full w-full"
+            :center="currentLocation"
+            :zoom="currentZoom"
+            :gesture-handling="'greedy'"
+            @click="handleMapClick"
+            @zoom_changed="handleZoomChanged"
+        >
+            <MarkerCluster
+                ref="markerClusterRef"
                 :options="{
-                    gestureHandling: 'cooperative',
+                    //vue3-google-map's Renderer type expects legacy Marker,
+                    // but we use AdvancedMarkerElement which works at runtime because their types aren't updated,
+                    // but it's valid according to the underlying google maps API type
+                    renderer: clusterRenderer as unknown as Renderer,
                 }"
-                class="h-full w-full"
-                :center="currentLocation"
-                :zoom="currentZoom"
-                :gesture-handling="'greedy'"
-                @click="handleMapClick"
-                @drag="handleMapMovement"
-                @zoom_changed="handleZoomChanged"
             >
-                <MarkerCluster
-                    ref="markerClusterRef"
+                <AdvancedMarker
+                    v-for="location in searchResultsStore.searchResultsList"
+                    :key="location.id"
                     :options="{
-                        //vue3-google-map's Renderer type expects legacy Marker,
-                        // but we use AdvancedMarkerElement which works at runtime because their types aren't updated,
-                        // but it's valid according to the underlying google maps API type
-                        renderer: clusterRenderer as unknown as Renderer,
+                        position: {
+                            lat: location.mapLatitude ?? defaultLocation.lat,
+                            lng: location.mapLongitude ?? defaultLocation.lng,
+                        },
+                        title: location.nameEn || location.nameJa || 'Facility',
                     }"
+                    @click="() => handlePinClick(location.id)"
                 >
-                    <AdvancedMarker
-                        v-for="location in searchResultsStore.searchResultsList"
-                        :key="location.id"
-                        :options="{
-                            position: {
-                                lat: location.mapLatitude ?? defaultLocation.lat,
-                                lng: location.mapLongitude ?? defaultLocation.lng,
-                            },
-                            title: location.nameEn || location.nameJa || 'Facility',
-                        }"
-                        @click="() => handlePinClick(location.id)"
-                    >
-                        <template #content>
-                            <img
-                                :src="renderMarkerIcon(location.id)"
-                                alt=""
-                                class="h-16 w-18 block gmp-clickable"
-                            >
-                        </template>
-                    </AdvancedMarker>
-                </MarkerCluster>
-            </GoogleMap>
-        </div>
-    </ClientOnly>
+                    <template #content>
+                        <img
+                            :src="renderMarkerIcon(location.id)"
+                            alt=""
+                            class="h-16 w-18 block gmp-clickable"
+                        >
+                    </template>
+                </AdvancedMarker>
+            </MarkerCluster>
+        </GoogleMap>
+    </div>
 </template>
 
 <script setup lang="ts">
@@ -61,13 +58,21 @@ import { ref, watch, nextTick, onMounted } from 'vue'
 import { GoogleMap, AdvancedMarker, MarkerCluster } from 'vue3-google-map'
 import type { Renderer } from '@googlemaps/markerclusterer'
 import { useUmami } from '~/composables/useUmamiTracking'
-
 import { useSearchResultsStore } from '../stores/searchResultsStore'
 import { useRuntimeConfig } from '#imports'
-import { BottomSheetType, useBottomSheetStore } from '~/stores/bottomSheetStore'
-import { useScreenOrientation } from '~/composables/useScreenOrientation'
 import { useThemeColors } from '~/composables/useThemeColors'
 import pinTemplate from '~/assets/icons/map-pin-template.svg?raw'
+
+/*
+ * The map is a view over the store's results and nothing more: pins mirror
+ * `searchResultsList`, the active pin mirrors `activeFacility`, and interaction is reported
+ * upward as events. The page decides what a pin click means (it opens the details panel via
+ * the URL), so this component knows nothing about panels or sheets.
+ */
+const emit = defineEmits<{
+    (e: 'select', facilityId: string): void
+    (e: 'deselect'): void
+}>()
 
 const defaultLocation = { lat: 35.6804, lng: 139.769 } as Location
 const currentLocation = ref(defaultLocation)
@@ -77,15 +82,10 @@ const searchResultsStore = useSearchResultsStore()
 const mapRef = ref<{ map: google.maps.Map } | null>(null)
 const markerClusterRef = ref<typeof MarkerCluster | null>(null)
 const runtimeConfig = useRuntimeConfig()
-const bottomSheetStore = useBottomSheetStore()
 
 const markerIcons = ref<Record<string, string>>({})
 
-// Emit events for map movement
-const emit = defineEmits(['map-moved'])
-
 const isMapReady = ref(false)
-const { isLandscape } = useScreenOrientation()
 const { getPrimaryColor, getSecondaryColor, themeChanged } = useThemeColors()
 
 type Location = {
@@ -216,31 +216,14 @@ watch(themeChanged, () => {
 })
 watch(() => searchResultsStore.activeFacility, renderMarkerIcons)
 
-// UX hack: When the map is moved from search results, we don't want to minimize the bottom sheet
-// This is because the map movement is triggered by the search results list changing,
-// which is also triggered by the bottom sheet opening
-const isMapMovingFromSearchResults = ref(false)
-
 const handlePinClick = (resultId: string) => {
-    //Let's show the result details
-    searchResultsStore.setActiveFacility(resultId)
-    bottomSheetStore.showBottomSheet(BottomSheetType.SearchResultDetails)
-    bottomSheetStore.isMinimized = false
-
-    //Even though the watch() will update the location, we need to set it here to ensure the map is centered on the new result
-    nextTick(() => {
-        setLocation(currentLocation.value.lat, currentLocation.value.lng)
-    })
-    track('Map Pin Clicked', {
-        facilityId: resultId
-    })
+    emit('select', resultId)
+    track('Map Pin Clicked', { facilityId: resultId })
 }
 
 const handleMapClick = () => {
-    // Close the panel if a facility is active
     if (searchResultsStore.activeFacilityId) {
-        bottomSheetStore.showBottomSheet(BottomSheetType.SearchResultsList)
-        searchResultsStore.clearActiveSearchResult()
+        emit('deselect')
     }
 }
 
@@ -250,76 +233,25 @@ onMounted(() => {
     setTimeout(() => { isMapReady.value = true }, 10)
 })
 
-watch(() => searchResultsStore.activeFacility, () => {
-    adjustMapToActiveResult()
-})
-
-// Center map when search results list changes
-watch(() => searchResultsStore.searchResultsList, () => {
-    adjustMapToSearchResults()
-}, { deep: true })
-
-const handleMapMovement = () => {
-    if (isMapMovingFromSearchResults.value) {
-        return
-    }
-    emit('map-moved')
-}
-
 const handleZoomChanged = () => {
     const zoom = mapRef.value?.map?.getZoom()
     if (typeof zoom === 'number') {
         currentZoom.value = zoom
     }
-
-    if (isMapMovingFromSearchResults.value) {
-        return
-    }
-    emit('map-moved')
 }
 
 const adjustMapToActiveResult = () => {
-    if (!searchResultsStore.activeFacility) {
+    const active = searchResultsStore.activeFacility
+    if (!active) {
         return
     }
 
-    isMapMovingFromSearchResults.value = true
-
-    // We want to prevent the emit of the map-moved event when the user selects a location
-    // because this wasn't a real movement of the map by the user
-    nextTick(() => {
-        setTimeout(() => {
-            isMapMovingFromSearchResults.value = false
-        }, 100)
-    })
-
-    // When the user selects a location, let's zoom in a bit to make it easier to see the location
+    // When the user selects a location, zoom in a bit to make it easier to see
     if (currentZoom.value < 8) {
         currentZoom.value = 10
     }
 
-    const lng = searchResultsStore.activeFacility.mapLongitude ?? defaultLocation.lng
-    // Offset the center slightly south to account for bottom sheet overlay
-    const latOffset = calculateOffset(currentZoom.value)
-    const lat = searchResultsStore.activeFacility.mapLatitude
-        ? searchResultsStore.activeFacility.mapLatitude - latOffset
-        : defaultLocation.lat
-
-    setLocation(lat, lng)
-}
-
-const adjustMapToSearchResults = () => {
-    isMapMovingFromSearchResults.value = true
-
-    // We want to prevent the emit of the map-moved event when the user selects a location
-    // because this wasn't a real movement of the map by the user
-    nextTick(() => {
-        setTimeout(() => {
-            isMapMovingFromSearchResults.value = false
-        }, 100)
-    })
-
-    recenterMap()
+    setLocation(active.mapLatitude ?? defaultLocation.lat, active.mapLongitude ?? defaultLocation.lng)
 }
 
 const setLocation = (lat: number, lng: number) => {
@@ -333,13 +265,10 @@ const recenterMap = () => {
     if (!allCoordinates || !allCoordinates.length)
         return
 
-    // Calculate and set appropriate zoom level
     currentZoom.value = calculateZoomLevel(allCoordinates)
 
     const center = calculateAvgCenter(allCoordinates)
-    // Offset the center slightly south to account for bottom sheet overlay
-    const latOffset = calculateOffset(currentZoom.value)
-    setLocation(center.lat - latOffset, center.lng)
+    setLocation(center.lat, center.lng)
 }
 
 const getAllCurrentCoordinates = () => {
@@ -347,29 +276,12 @@ const getAllCurrentCoordinates = () => {
     if (!currentLocations || !currentLocations.length)
         return
 
-    const allCoordinates = currentLocations
+    return currentLocations
         .filter(facility => facility.mapLatitude && facility.mapLongitude)
         .map(facility => ({
             lat: facility.mapLatitude!,
             lng: facility.mapLongitude!
         }))
-
-    return allCoordinates
-}
-
-const calculateOffset = (zoomLevel: number) => {
-    // We don't need to offset landscape mode
-    if (isLandscape.value) {
-        return 0
-    }
-
-    // Calculate proper latitude offset based on zoom level
-    // Use a gentler scaling factor that provides more consistent visual positioning
-    const baseLatOffset = 0.05 // Base offset at zoom 12 to position at 40% from top
-    const zoomDiff = 12 - zoomLevel
-    const scalingFactor = Math.pow(2, zoomDiff) // Even gentler scaling for better consistency
-    const latOffset = baseLatOffset * scalingFactor
-    return latOffset
 }
 
 const calculateAvgCenter = (coordinates: { lat: number, lng: number }[]): Location => {
@@ -404,4 +316,17 @@ const calculateZoomLevel = (coordinates: { lat: number, lng: number }[]) => {
         default: return 12
     }
 }
+
+/*
+ * Watchers live at the end, after every function they call.
+ *
+ * `immediate: true` runs the callback synchronously during setup, so when this sat above the
+ * `const` arrow functions it referenced, it threw "Cannot access 'recenterMap' before
+ * initialization" and the map never mounted at all. Function declarations would hoist; these
+ * do not.
+ */
+watch(() => searchResultsStore.activeFacility, adjustMapToActiveResult)
+
+// Fit the map to the results whenever they change, including the set already loaded on mount.
+watch(() => searchResultsStore.searchResultsList, recenterMap, { immediate: true })
 </script>

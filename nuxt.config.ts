@@ -25,9 +25,25 @@ function umamiScript() {
     return [{ src: url, async: true, defer: true, 'data-website-id': siteId }]
 }
 
-const SITE_TITLE = 'Find a Doc, Japan!'
+const SITE_TITLE = 'Find a Doc, Japan'
 const SITE_DESCRIPTION
     = 'Health service information for the international community in Japan'
+
+/**
+ * Applies the stored colour scheme before first paint.
+ *
+ * Runs inline in <head> so a returning dark-mode visitor never sees a light flash on a
+ * prerendered page. Mirrors the migration in composables/useColorScheme.ts: only an explicit
+ * dark choice survives from the old five-colourway picker. Anything else means "auto", which
+ * is no class at all — the stylesheet then follows prefers-color-scheme.
+ */
+const COLOR_SCHEME_BOOTSTRAP = `(function () {
+  try {
+    var s = localStorage.getItem('colorScheme')
+    if (s !== 'dark' && s !== 'light') s = localStorage.getItem('isDarkMode') === 'true' ? 'dark' : ''
+    if (s) document.documentElement.classList.add('theme-' + s)
+  } catch (e) {}
+})()`
 
 export default defineNuxtConfig({
 
@@ -56,8 +72,9 @@ export default defineNuxtConfig({
     app: {
     // Global page headers: https://nuxt.com/docs/getting-started/seo-meta
         head: {
-            titleTemplate: 'Health Services in Japan',
-            title: SITE_TITLE,
+            // Pages set their own title with useHead(); the brand is appended here.
+            titleTemplate: `%s · ${SITE_TITLE}`,
+            title: 'Health services in Japan, in your language',
             htmlAttrs: {
                 lang: 'en'
             },
@@ -69,6 +86,9 @@ export default defineNuxtConfig({
                 { charset: 'utf-8' },
                 { name: 'viewport', content: 'width=device-width, initial-scale=1' },
                 { name: 'description', content: SITE_DESCRIPTION },
+                { name: 'color-scheme', content: 'light dark' },
+                { name: 'theme-color', content: '#F7FAFB', media: '(prefers-color-scheme: light)' },
+                { name: 'theme-color', content: '#101617', media: '(prefers-color-scheme: dark)' },
                 { name: 'format-detection', content: 'telephone=no' },
                 {
                     name: 'twitter:card',
@@ -115,15 +135,28 @@ export default defineNuxtConfig({
                     content: 'https://www.findadoc.jp'
                 }
             ],
-            link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.svg' }],
-            script: umamiScript()
+            link: [{ rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' }],
+            script: [
+                { innerHTML: COLOR_SCHEME_BOOTSTRAP, tagPosition: 'head' },
+                ...umamiScript()
+            ]
         }
     },
 
     // Global CSS: https://go.nuxtjs.dev/config-css
     css: [
-        // Noto Sans JP, self-hosted. Each weight ships ~124 unicode-range subsets, so a
-        // Latin-only visitor fetches ~16 KB and never downloads the ~1 MB CJK chunk.
+        /*
+         * Both brand families are self-hosted, subsetted woff2 from @fontsource. Each file
+         * declares one @font-face per unicode-range subset, so a Latin-only visitor fetches
+         * ~15 KB per weight of Noto Sans and never downloads the ~1 MB CJK chunk of Noto Sans JP.
+         * This replaced 8.3 MB of unsubsetted TTFs that were declared but never actually used.
+         */
+        '@fontsource/noto-sans/400.css',
+        // 500 is loaded because `font-medium` is used across the nav and cards; without the
+        // face the browser silently substitutes 400 and the weight has no effect.
+        '@fontsource/noto-sans/500.css',
+        '@fontsource/noto-sans/600.css',
+        '@fontsource/noto-sans/700.css',
         '@fontsource/noto-sans-jp/400.css',
         '@fontsource/noto-sans-jp/700.css',
         '~/assets/css/tailwind.css'
@@ -158,10 +191,15 @@ export default defineNuxtConfig({
         '/submit': { prerender: true },
         '/npo': { prerender: true },
         /*
-         * /search is the map application: it mounts the Google Maps SDK, reads its
-         * filters from the query string and fetches everything client-side, so there is
-         * no meaningful HTML to prerender and a prerendered shell would only ship an
-         * empty result list. The homepage is what carries the indexable content now.
+         * /search reads its filters from the query string and loads the directory from the
+         * API in the browser, so there is nothing to prerender: a static shell would ship an
+         * empty result list under a real heading, which is worse for crawlers than no page.
+         * The homepage carries the indexable content instead.
+         *
+         * This becomes worth revisiting once the server can filter by location (handoff §2a):
+         * a single filtered query is cheap enough to run server-side, at which point results
+         * could be rendered into the HTML and the per-facility URLs the SEO tickets want
+         * (?facility=… already identifies one) could become real, indexable pages.
          */
         '/search': { ssr: false },
         '/login': { ssr: false },

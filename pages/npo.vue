@@ -1,17 +1,17 @@
 <template>
-    <div
+    <section
         data-testid="npo-page"
-        class="w-full px-6 landscape:px-12 py-12"
+        class="page-section"
     >
-        <div class="max-w-3xl mx-auto flex flex-col gap-8">
-            <div class="flex flex-col gap-3">
-                <h1 class="text-primary-text font-bold text-3xl landscape:text-4xl">
+        <div class="page-container-narrow flex flex-col gap-8">
+            <header class="flex flex-col gap-3">
+                <h1 class="page-title-sm">
                     {{ t('npoPage.heading') }}
                 </h1>
-                <p class="text-primary-text-muted text-lg">
+                <p class="text-lg text-primary-text-muted">
                     {{ t('npoPage.intro') }}
                 </p>
-            </div>
+            </header>
 
             <!-- Entity identity -->
             <dl class="flex flex-col gap-5 m-0">
@@ -41,22 +41,21 @@
 
             <!-- Statutory documents -->
             <section class="flex flex-col gap-4">
-                <h2 class="text-primary-text font-bold text-xl">
+                <h2 class="text-xl font-bold text-primary-text">
                     {{ t('npoPage.documentsHeading') }}
                 </h2>
                 <ul class="flex flex-col gap-3 list-none p-0 m-0">
                     <li
                         v-for="document in documents"
                         :key="document.key"
-                        class="flex flex-col gap-1 p-4 rounded-xl border border-accent-bg bg-secondary-bg"
+                        class="card flex flex-col gap-1 p-5"
                     >
                         <NuxtLink
                             :to="document.url"
                             target="_blank"
                             rel="noopener"
                             :data-testid="`npo-document-${document.key}`"
-                            class="text-primary font-semibold underline w-fit
-                                   focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                            class="link inline-flex min-h-11 items-center w-fit"
                         >
                             {{ document.label }}
                         </NuxtLink>
@@ -65,24 +64,27 @@
                 </ul>
             </section>
 
-            <p class="text-sm text-primary-text-muted">
+            <p class="text-primary-text-muted">
                 {{ t('npoPage.contact') }}
                 <NuxtLink
                     to="https://forms.gle/4E763qfaq46kEsn99"
                     target="_blank"
                     rel="noopener"
-                    class="text-primary underline"
-                >{{ t('footer.clickHere') }}</NuxtLink>
+                    class="link"
+                >{{ t('about.involveFeedback') }}</NuxtLink>
             </p>
         </div>
-    </div>
+    </section>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { useHead } from '#imports'
 
 const { t } = useI18n()
+
+useHead({ title: computed(() => t('npoPage.heading')) })
 
 /**
  * Statutory disclosure for a 特定非営利活動法人.

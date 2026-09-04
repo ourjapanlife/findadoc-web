@@ -2,7 +2,15 @@
     <div class="relative flex flex-col h-full w-full min-h-0">
         <div class="flex flex-col h-full min-h-0 overflow-hidden">
             <div class="absolute inset-0 z-0 opacity-10 pointer-events-none flex items-center justify-center">
-                <SVGCharactersTogetherWelcomeScreen class="w-3/5 h-3/5 object-contain" />
+                <img
+                    :src="emptyStateIllustration"
+                    alt=""
+                    width="1536"
+                    height="1024"
+                    loading="lazy"
+                    decoding="async"
+                    class="w-3/5 h-3/5 object-contain"
+                >
             </div>
 
             <div class="relative z-10 flex-1 min-h-0 overflow-y-auto">
@@ -125,7 +133,8 @@ import { computed, onMounted } from 'vue'
 import { SelectedModerationListView, useModerationSubmissionsStore } from '~/stores/moderationSubmissionsStore'
 import { useHealthcareProfessionalsStore } from '~/stores/healthcareProfessionalsStore'
 import { useFacilitiesStore } from '~/stores/facilitiesStore'
-import SVGCharactersTogetherWelcomeScreen from '~/assets/icons/characters-together-welcomescreen.svg'
+// Served as a cached file rather than inlined into the chunk; bound so the compiler leaves the URL alone.
+const emptyStateIllustration = '/illustrations/characters-together-welcomescreen.svg'
 
 const { t } = useI18n()
 

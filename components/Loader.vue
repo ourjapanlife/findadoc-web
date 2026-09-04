@@ -11,7 +11,7 @@
                 role="img"
                 alt="loading animation"
                 title="loading animation"
-                class="flex h-12"
+                class="flex h-12 text-primary"
             />
         </div>
     </div>

@@ -1,75 +1,80 @@
 <template>
-    <div class="overflow-y-auto w-full px-10 landscape:px-32">
-        <div>
-            <h1
-                data-testid="privacy-heading"
-                class="mb-20 text-primary-text text-5xl font-bold font-sans"
-            >
-                {{ t("privacyPage.heading") }}
-            </h1>
+    <section
+        data-testid="privacy-page"
+        class="page-section"
+    >
+        <div class="page-container-narrow flex flex-col gap-8">
+            <header class="flex flex-col gap-3">
+                <h1
+                    data-testid="privacy-heading"
+                    class="page-title-sm"
+                >
+                    {{ t('privacyPage.heading') }}
+                </h1>
+                <p
+                    data-testid="privacy-subheading"
+                    class="text-lg text-primary-text-muted"
+                >
+                    {{ t('privacyPage.subheading') }}
+                </p>
+                <p class="text-sm text-primary-text-muted">
+                    {{ t('privacyPage.date') }}
+                </p>
+            </header>
+
+            <div class="prose-legal">
+                <p>
+                    {{ t('privacyPage.paragraph1') }}
+                </p>
+
+                <h2>{{ t('privacyPage.paragraph2') }}</h2>
+                <p>
+                    {{ t('privacyPage.paragraph3') }}
+                </p>
+
+                <h2>{{ t('privacyPage.paragraph4') }}</h2>
+                <p>
+                    {{ t('privacyPage.paragraph5') }}
+                </p>
+
+                <h2>{{ t('privacyPage.paragraph6') }}</h2>
+                <p>
+                    {{ t('privacyPage.paragraph7') }}
+                </p>
+
+                <h2>{{ t('privacyPage.paragraph8') }}</h2>
+                <p>
+                    {{ t('privacyPage.paragraph9') }}
+                </p>
+
+                <h2>{{ t('privacyPage.paragraph10') }}</h2>
+                <p>
+                    {{ t('privacyPage.paragraph11') }}
+                </p>
+
+                <h2>{{ t('privacyPage.paragraph12') }}</h2>
+                <p>
+                    {{ t('privacyPage.paragraph13') }}
+                </p>
+
+                <h2>{{ t('privacyPage.paragraph14') }}</h2>
+                <p>
+                    {{ t('privacyPage.paragraph15') }}
+                </p>
+                <p>
+                    {{ t('privacyPage.paragraph16') }}
+                </p>
+            </div>
         </div>
-        <p
-            data-testid="privacy-subheading"
-            class="mb-10 text-primary-text text-2xl font-normal font-sans"
-        >
-            {{ t("privacyPage.subheading") }}
-        </p>
-        <div class="text-primary-text-muted text-lg font-normal font-sans">
-            <p class="mb-10">
-                {{ t("privacyPage.date") }}
-            </p>
-            <p class="mb-10">
-                {{ t("privacyPage.paragraph1") }}
-            </p>
-            <p class="mb-2 font-bold">
-                {{ t("privacyPage.paragraph2") }}
-            </p>
-            <p class="mb-10">
-                {{ t("privacyPage.paragraph3") }}
-            </p>
-            <p class="mb-2 font-bold">
-                {{ t("privacyPage.paragraph4") }}
-            </p>
-            <p class="mb-10">
-                {{ t("privacyPage.paragraph5") }}
-            </p>
-            <p class="mb-2 font-bold">
-                {{ t("privacyPage.paragraph6") }}:
-            </p>
-            <p class="mb-10">
-                {{ t("privacyPage.paragraph7") }}
-            </p>
-            <p class="mb-2 font-bold">
-                {{ t("privacyPage.paragraph8") }}:
-            </p>
-            <p class="mb-10">
-                {{ t("privacyPage.paragraph9") }}
-            </p>
-            <p class="mb-2 font-bold">
-                {{ t("privacyPage.paragraph10") }}
-            </p>
-            <p class="mb-10">
-                {{ t("privacyPage.paragraph11") }}
-            </p>
-            <p class="mb-2 font-bold">
-                {{ t("privacyPage.paragraph12") }}
-            </p>
-            <p class="mb-10">
-                {{ t("privacyPage.paragraph13") }}
-            </p>
-            <p class="mb-2 font-bold">
-                {{ t("privacyPage.paragraph14") }}
-            </p>
-            <p class="mb-10">
-                {{ t("privacyPage.paragraph15") }}
-            </p>
-            <p class="mb-10">
-                {{ t("privacyPage.paragraph16") }}
-            </p>
-        </div>
-    </div>
+    </section>
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
+import { useHead } from '#imports'
+
 const { t } = useI18n()
+
+useHead({ title: computed(() => t('privacyPage.heading')) })
 </script>

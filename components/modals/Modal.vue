@@ -60,7 +60,7 @@ const route = useRoute()
 
 const stylingForSelectedHealthcareProfessionalMainPage = computed(() => route.path === '/'
     ? ''
-    : 'bg-secondary bg-opacity-40')
+    : 'bg-scrim/50')
 
 const emit = defineEmits(['modal-closed'])
 const hideModalAndEmitClosedEvent = () => {

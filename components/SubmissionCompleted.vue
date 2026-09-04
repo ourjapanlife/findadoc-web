@@ -1,55 +1,45 @@
 <template>
     <div
         data-testid="submit-completed"
-        class="flex flex-col place-items-center"
+        class="card flex flex-col items-center gap-4 p-8 text-center"
     >
-        <img
-            class="mb-10"
-            src="../assets/images/heart-circle.png"
-            alt="heart circle icon"
-        >
-        <p
-            class="mb-3.5 text-primary-text text-2xl font-bold font-sans leading-normal"
-        >
+        <SvgHeartIcon
+            class="h-20 w-20 text-primary"
+            aria-hidden="true"
+        />
+        <h1 class="page-title-sm">
             {{ t('thankYouPage.heading') }}
-        </p>
-        <p
-            class="mb-20 text-center text-primary-text-muted text-sm font-bold font-sans"
-        >
+        </h1>
+        <p class="max-w-md text-lg text-primary-text-muted">
             {{ t('thankYouPage.submission') }}
         </p>
-        <div
-            class="action-button-container flex flex-col"
-        >
+        <div class="mt-2 flex flex-wrap justify-center gap-3">
             <button
-                class="px-20 py-3 rounded-full bg-currentColor w-96 text-center
-        text-primary-text-inverted text-base font-medium font-sans mb-2"
+                type="button"
+                class="btn btn-primary"
                 @click="resetFormCompleted"
             >
                 {{ t('thankYouPage.submitAnotherDoctor') }}
             </button>
             <NuxtLink
-                class="flex"
                 to="/"
+                class="btn btn-secondary"
             >
-                <button
-                    class="px-20 py-3 rounded-full bg-currentColor w-96 text-center
-        text-primary-text-inverted text-base font-medium font-sans"
-                >{{ t('thankYouPage.home') }}</button>
+                {{ t('thankYouPage.home') }}
             </NuxtLink>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n'
+import SvgHeartIcon from '~/assets/icons/heart-icon.svg'
 import { useSubmissionStore } from '~/stores/submissionStore'
 
 const { t } = useI18n()
-
 const submissionStore = useSubmissionStore()
 
 const resetFormCompleted = () => {
     submissionStore.submissionCompleted = false
 }
 </script>
-

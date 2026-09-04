@@ -1,40 +1,48 @@
 <template>
-    <div class="member flex flex-col items-center text-center">
-        <FadeInTransitionImage
-            :data-test-id="`member-avatar-${dataTestId}`"
+    <div class="flex flex-col items-center gap-2 text-center">
+        <img
+            :src="avatarImg"
             :alt="name"
-            border-radius="rounded-full"
-            height="h-32"
-            :img-src="avatarImg"
-            object-styling="object-cover"
-            width="w-32"
-        />
+            :data-testid="`member-avatar-${dataTestId}`"
+            loading="lazy"
+            decoding="async"
+            width="96"
+            height="96"
+            class="h-24 w-24 rounded-full bg-accent-bg object-cover"
+        >
         <div
             data-testid="member-name"
-            class="member-name mt-1 text-xl font-bold"
+            class="font-semibold text-primary-text"
         >
             {{ name }}
         </div>
         <div
             data-testid="member-title"
-            class="member-title text-md text-primary-text-muted"
+            class="text-sm text-primary-text-muted"
         >
             {{ title }}
         </div>
-        <div class="member-social flex flex-row mt-2">
+        <!--
+            Both icons ship with hardcoded fills on their paths, so a fill utility on the
+            root cannot recolour them; the first-path rule targets the GitHub mark and the
+            LinkedIn box. LinkedIn's "in" takes the surface colour rather than its hardcoded
+            white, which would vanish on the light grey box in dark mode.
+        -->
+        <div class="flex gap-1">
             <a
                 v-if="linkedInUrl"
                 data-testid="member-linkedin"
                 :href="linkedInUrl"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="social-link"
+                aria-label="LinkedIn"
+                title="LinkedIn"
+                class="inline-flex h-11 w-11 items-center justify-center rounded-lg text-primary-text-muted
+                       transition-colors hover:bg-accent-bg/60 hover:text-primary"
             >
                 <SVGLinkedinIcon
-                    role="img"
-                    alt="linkedin icon"
-                    title="linkedin icon"
-                    class="social-icon w-8 h-8 mx-2"
+                    class="h-5 w-5 [&_path:first-child]:fill-current [&_path:last-child]:fill-secondary-bg"
+                    aria-hidden="true"
                 />
             </a>
             <a
@@ -43,13 +51,14 @@
                 :href="githubUrl"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="social-link"
+                aria-label="GitHub"
+                title="GitHub"
+                class="inline-flex h-11 w-11 items-center justify-center rounded-lg text-primary-text-muted
+                       transition-colors hover:bg-accent-bg/60 hover:text-primary"
             >
                 <SVGGithubIcon
-                    role="img"
-                    alt="github icon"
-                    title="github icon"
-                    class="social-icon w-8 h-8 mx-2"
+                    class="h-5 w-5 [&_path:first-child]:fill-current"
+                    aria-hidden="true"
                 />
             </a>
         </div>

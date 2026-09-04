@@ -11,29 +11,20 @@
   },
   "common": {
     "menu": "メニュー",
-    "siteName": "Find a Doc Japan",
+    "siteName": "Find a Doc, Japan",
     "siteNameLine1": "Find a Doc",
     "siteNameLine2": "Japan",
-    "loading": "Loading"
+    "loading": "Loading",
+    "close": "閉じる"
   },
   "about": {
     "heroHeading": "Find a Doc, Japan",
     "heroSubheading": "必要な医療サービスを、あなたの言語でつなげます",
     "heroGetStarted": "はじめる",
-    "heroLearnMore": "詳しく見る",
     "storyHeader": "私たちのストーリー",
     "storyParagraph1": "私たちは2020年のパンデミック中に、LaShawn ToyodaとPhil Ermishによって設立され、より健康で包括的な社会の実現を使命としています。外国人や医療従事者を含むすべての人々に、多言語で質の高い健康情報を無料で提供しています。国籍や言語に関係なく、誰もが自信を持って医療制度を理解し、適切な医師を見つけ、必要な医療を受けられる日本を目指しています。",
     "storyParagraph2": "私たちは、すべての人が充実した生活を送るために医療情報へアクセスできるべきだという理念に基づく非営利団体です。社会正義、文化的感受性、そして革新性を指針として活動しています。私たちは政府、非営利団体、医療関係者との協力を歓迎しています。パートナーと共に、誰もが医療にアクセスでき、包摂され、安心して暮らせる日本をつくっていきたいと考えています。",
-    "btnImpact": "活動実績",
-    "btnContributors": "貢献者",
-    "btnCofounders": "共同創設者",
-    "btnBoard": "NPO理事会",
-    "btnMascots": "マスコット",
-    "btnInvolve": "参加する",
     "impactHeader": "活動実績",
-    "impactDoctors": "300名以上の登録医師",
-    "impactUsers": "月間100人以上のユーザー",
-    "impactVolunteer": "ボランティアとコミュニティ主導",
     "contributorsHeader": "貢献者",
     "cofoundersHeader": "共同創設者",
     "boardHeader": "NPO理事会",
@@ -45,9 +36,9 @@
     "mascotsChiko": "Chiko",
     "involveHeader": "参加する",
     "involveAdd": "医師を追加",
-    "involveGit": "貢献する",
     "involveLinkedin": "フォローする",
-    "involveFeedback": "フィードバックを送る"
+    "involveFeedback": "フィードバックを送る",
+    "involveContribute": "貢献する"
   },
   "footer": {
     "terms": "利用規約",
@@ -55,14 +46,12 @@
     "privacy": "プライバシーポリシー",
     "poweredBy": "Powered by",
     "contribute": "活動に参加する",
-    "feedback": "ご意見・ご質問",
-    "clickHere": "こちらをクリック",
-    "copyright": "NPO法人Find a Doc, Japan"
+    "copyright": "NPO法人Find a Doc, Japan",
+    "exploreHeading": "サイト内",
+    "communityHeading": "コミュニティ",
+    "legalHeading": "法的情報"
   },
   "hamburgerMenu": {
-    "about": "私たちについて",
-    "contact": "お問い合わせ",
-    "submit": "医師情報の追加",
     "logout": "ログアウト",
     "languageDropdownTitle": "対応言語:",
     "copyright": "NPO法人Find a Doc, Japan",
@@ -90,13 +79,6 @@
     "paragraph15": "We reserve the right to update this Privacy Policy to reflect changes in our practices and services. We will notify you of any significant changes by posting the updated policy on our website.",
     "paragraph16": "By using our service, you agree to the terms outlined in this Privacy Policy."
   },
-  "onboarding": {
-    "letsGoButtonText": "医者を探す！",
-    "welcometo": "ようこそ",
-    "selectcategory": "はじめにカテゴリを選択してください。",
-    "notsurebutton": "よく分からない・その他",
-    "searchloading": "あなたの旅はここから始まります"
-  },
   "submitPage": {
     "firstName": "名",
     "firstNameValidation": "Enter a first name",
@@ -120,25 +102,19 @@
     "submissionSuccessful": "Thank you for contributing! Your submission about the doctor has been successfully recorded. We’re grateful for your support!"
   },
   "searchBar": {
-    "selectSpecialty": "専門を選択",
-    "selectLocation": "場所を選択",
-    "allLocations": "すべての場所",
     "allSpecialties": "すべての専門分野",
-    "search": "検索",
-    "searchAndFilterDoctors": "医師を検索・フィルター",
     "resultsFound": "結果なし | 1件の結果 | {n}件の結果"
   },
   "searchResultsList": {
     "loadMore": "さらに読み込む",
     "remaining": "残り",
     "noResults": "もう一度お試しください",
-    "noResultsSubtext": "それぞれ別のフィルターでお試しください"
+    "noResultsSubtext": "それぞれ別のフィルターでお試しください",
+    "loadMoreCount": "さらに読み込む（残り {n} 件）"
   },
   "searchResultsDetails": {
     "speaks": "この医師は話す",
-    "contact": "アクセス",
     "lastUpdate": "Last updated",
-    "additionalInfo": "Additional Info",
     "healthcareProfessionals": "Healthcare Professionals",
     "callNow": "電話"
   },
@@ -155,7 +131,8 @@
     "logout": "ログアウト",
     "login": "Login",
     "myPage": "マイページ",
-    "logoutToast": "Successfully logged out"
+    "logoutToast": "Successfully logged out",
+    "search": "検索"
   },
   "login": {
     "checkingauth": "認証の確認...",
@@ -253,12 +230,12 @@
     "facilitySuccessfullyRejected": "Facility rejected successfully",
     "rejectSubmissionConfirmationMessage": "Are you sure you want to reject this submission?",
     "rejectSubmissionConfirmationButton": "Yes, reject the submission",
-    "successMessageUpdated": "Submission updated successfully",
-    "successMessageApproved": "Submission approved successfully",
     "searchExistingFacilities": "Search for existing Facility",
     "searchExistingHealthcareProfessionals": "Search for existing Healthcare Professionals",
     "labelModNoteInput": "Moderator Notes",
-    "placeholderTextNoteInput": "e.g. waiting for call back from clinic"
+    "placeholderTextNoteInput": "e.g. waiting for call back from clinic",
+    "successMessageUpdated": "Submission updated successfully",
+    "successMessageApproved": "Submission approved successfully"
   },
   "modPanelSubmissionLeftNavbar": {
     "facilityNameUnknown": "Facility Name Unknown",
@@ -449,10 +426,14 @@
     "updateFailed": "Profile update failed"
   },
   "localeErrors": {
-    "notSpecified": "Not Specified"
+    "notSpecified": "Not Specified",
+    "notFound": "不明な言語"
   },
   "themeManager": {
-    "colorThemes": "Color Themes"
+    "label": "表示テーマ",
+    "light": "ライト",
+    "dark": "ダーク",
+    "auto": "自動"
   },
   "unsavedChanges": {
     "create": {
@@ -498,5 +479,24 @@
     "contributeHeading": "掲載されていないクリニックをご存じですか？",
     "contributeBody": "どなたでもクリニックや医師の情報をお寄せいただけます。公開前にモデレーターがすべて確認します。",
     "contributeCta": "医師情報を追加する"
+  },
+  "search": {
+    "filters": "絞り込み",
+    "clearFilters": "条件をクリア",
+    "showMap": "地図を表示",
+    "hideMap": "地図を隠す",
+    "loading": "データを読み込んでいます…",
+    "loadError": "データを読み込めませんでした。通信状況を確認して、もう一度お試しください。",
+    "retry": "再試行",
+    "backToResults": "検索結果に戻る",
+    "website": "ウェブサイト",
+    "openInMaps": "Google マップで開く",
+    "email": "メール",
+    "phone": "電話",
+    "languagesSpoken": "対応言語",
+    "resultsRegion": "検索結果",
+    "moreProfessionals": "他 {n} 名",
+    "professionalsAtFacility": "医療従事者の掲載なし | 医療従事者 1 名 | 医療従事者 {n} 名",
+    "pageHeading": "日本で医師を探す"
   }
 }

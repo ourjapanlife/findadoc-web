@@ -13,8 +13,13 @@ export const useThemeColors = () => {
         if (observerInitialized || !import.meta.client) return
         observerInitialized = true
 
+        // An explicit light/dark choice lands as a class on <html>.
         new MutationObserver(() => themeChanged.value++)
             .observe(document.documentElement, { attributes: true, attributeFilter: ['class'] })
+
+        // In "auto", the OS can flip the palette with no DOM change at all.
+        window.matchMedia('(prefers-color-scheme: dark)')
+            .addEventListener('change', () => themeChanged.value++)
     })
 
     const rgbToHex = (rgb: string): string => {
@@ -31,7 +36,7 @@ export const useThemeColors = () => {
     }
 
     return {
-        getPrimaryColor: () => getColor('--theme-color-primary', '#0EB0C0'),
+        getPrimaryColor: () => getColor('--theme-color-primary', '#0A7D89'),
         getSecondaryColor: () => getColor('--theme-color-secondary', '#FB9999'),
         themeChanged
     }

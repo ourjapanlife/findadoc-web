@@ -10,21 +10,19 @@
         action="/search"
         method="get"
         data-testid="home-search-entry"
-        class="w-full max-w-xl bg-secondary-bg border border-accent-bg rounded-2xl shadow-lg
-               p-5 flex flex-col gap-3"
+        class="card flex w-full max-w-xl flex-col gap-3 p-5"
         @submit.prevent="submitSearch"
     >
         <div class="flex flex-col gap-1.5 flex-1 min-w-0">
             <label
                 for="home-specialty"
-                class="text-sm font-semibold text-primary-text"
+                class="field-label mb-0"
             >{{ t('home.searchSpecialtyLabel') }}</label>
             <select
                 id="home-specialty"
                 name="specialty"
                 data-testid="home-specialty"
-                class="h-12 px-3 rounded-lg border border-primary-text-muted bg-secondary-bg
-                       text-primary-text w-full"
+                class="field"
             >
                 <option value="">
                     {{ t('searchBar.allSpecialties') }}
@@ -42,14 +40,13 @@
         <div class="flex flex-col gap-1.5 flex-1 min-w-0">
             <label
                 for="home-language"
-                class="text-sm font-semibold text-primary-text"
+                class="field-label mb-0"
             >{{ t('home.searchLanguageLabel') }}</label>
             <select
                 id="home-language"
                 name="language"
                 data-testid="home-language"
-                class="h-12 px-3 rounded-lg border border-primary-text-muted bg-secondary-bg
-                       text-primary-text w-full"
+                class="field"
             >
                 <option value="">
                     {{ t('home.searchAnyLanguage') }}
@@ -67,14 +64,13 @@
         <div class="flex flex-col gap-1.5 flex-1 min-w-0">
             <label
                 for="home-area"
-                class="text-sm font-semibold text-primary-text"
+                class="field-label mb-0"
             >{{ t('home.searchAreaLabel') }}</label>
             <select
                 id="home-area"
                 name="prefecture"
                 data-testid="home-area"
-                class="h-12 px-3 rounded-lg border border-primary-text-muted bg-secondary-bg
-                       text-primary-text w-full"
+                class="field"
             >
                 <option value="">
                     {{ t('home.searchAnyArea') }}
@@ -92,9 +88,7 @@
         <button
             type="submit"
             data-testid="home-search-submit"
-            class="h-12 mt-1 w-full rounded-lg bg-primary hover:bg-primary-hover transition-colors
-                   text-primary-text-inverted font-bold
-                   focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+            class="btn btn-primary mt-1 w-full"
         >
             {{ t('home.searchSubmit') }}
         </button>
