@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /moderation
+Disallow: /my-page
+Disallow: /login
+
+Sitemap: https://www.findadoc.jp/sitemap.xml

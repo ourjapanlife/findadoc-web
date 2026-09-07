@@ -1,11 +1,21 @@
 /**
- * The brand name used in the global title template and social meta tags.
+ * Site-wide identity used in titles, canonicals, and social meta.
  *
  * Keep this in one place: nuxt.config.ts cannot hold a function `titleTemplate`
  * (it is serialized into the app manifest and functions are dropped), so app.vue
- * formats titles at runtime with `formatPageTitle`.
+ * formats titles at runtime with `formatPageTitle`. Canonicals always use
+ * SITE_ORIGIN so prerendered HTML points at production, not localhost.
  */
 export const SITE_TITLE = 'Find a Doc, Japan'
+
+export const SITE_ORIGIN = 'https://www.findadoc.jp'
+
+export const SITE_DESCRIPTION
+    = 'Health service information for the international community in Japan'
+
+export const SITE_SOCIAL_IMAGE = `${SITE_ORIGIN}/findadoc-social.png`
+
+export const SITE_SITEMAP_URL = `${SITE_ORIGIN}/sitemap.xml`
 
 const BRAND_SUFFIX = ` · ${SITE_TITLE}`
 
