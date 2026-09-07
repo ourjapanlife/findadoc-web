@@ -13,8 +13,9 @@ test.describe('Page titles', () => {
             const expected = formatPageTitle(enUS.pageMeta[key])
 
             await page.goto(path)
-            // /search and /login are client-only after generate, so the HTML shell still
-            // has the nuxt.config fallback until useHead runs. toHaveTitle waits for that.
+            // Client-only routes ship the generate shell. /login also suspends on Auth0,
+            // so the Vue route can lag behind the URL; toHaveTitle waits until useHead
+            // reads window.location and applies the mapped title.
             await expect(page).toHaveTitle(expected)
             expect(expected, path).toContain(SITE_TITLE)
             expect(expected.length, `${path}: ${expected}`).toBeLessThanOrEqual(60)

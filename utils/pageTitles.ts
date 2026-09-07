@@ -52,6 +52,15 @@ export function pageTitleKeyForPath(path: string): PageMetaTitleKey | undefined 
     return undefined
 }
 
+/**
+ * The Vue route can lag behind the address bar: `/login` awaits Auth0 in setup, so a
+ * generate SPA shell stays on the payload route (`/`) until that finishes. Titles should
+ * follow the URL the visitor actually opened.
+ */
+export function documentTitlePath(routePath: string, locationPath?: string): string {
+    return normalisePagePath(locationPath || routePath)
+}
+
 export function isUntitledRoute(path: string): boolean {
     const normalised = normalisePagePath(path)
     return UNTITLED_ROUTE_PREFIXES.some(prefix => normalised === prefix || normalised.startsWith(`${prefix}/`))

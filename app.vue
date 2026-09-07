@@ -17,7 +17,7 @@
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { initializeGqlClient } from './utils/graphql.js'
-import { pageMetaI18nKey, pageTitleKeyForPath } from '~/utils/pageTitles'
+import { documentTitlePath, pageMetaI18nKey, pageTitleKeyForPath } from '~/utils/pageTitles'
 import { formatPageTitle } from '~/utils/site'
 import { useHead, useRoute } from '#imports'
 
@@ -32,7 +32,14 @@ const { t } = useI18n()
 // manifest, and functions declared there are silently dropped.
 useHead({
     title: computed(() => {
-        const key = pageTitleKeyForPath(route.path)
+        // route.fullPath keeps this reactive on in-app navigations. On a generate
+        // SPA shell the payload route can still be `/` while LoginForm awaits Auth0;
+        // documentTitlePath prefers the URL the visitor actually opened.
+        const path = documentTitlePath(
+            route.path,
+            import.meta.client ? window.location.pathname : undefined
+        )
+        const key = pageTitleKeyForPath(path)
         return key ? t(pageMetaI18nKey(key)) : ''
     }),
     titleTemplate: (title?: string) => formatPageTitle(title)
