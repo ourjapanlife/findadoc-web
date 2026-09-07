@@ -16,3 +16,10 @@ declare module '@vue/runtime-core' {
     interface ComponentCustomProperties extends _ComponentCustomProperties {}
     interface ComponentCustomOptions extends _ComponentCustomOptions {}
 }
+
+declare module '#clinic-directory' {
+    import type { FacilitySearchResult } from './utils/searchDirectory'
+
+    const directory: Record<string, FacilitySearchResult>
+    export default directory
+}

@@ -139,6 +139,17 @@ export function joinClinicDirectory(
     return directory
 }
 
+export function clinicFromPrerenderDirectory(
+    directory: Record<string, FacilitySearchResult> | undefined | null,
+    id: string
+): FacilitySearchResult | null | undefined {
+    if (!directory || Object.keys(directory).length === 0) {
+        return undefined
+    }
+
+    return directory[id] ?? null
+}
+
 export function clinicPrerenderCachePath(cwd = process.cwd()): string {
     return process.env[CLINIC_PRERENDER_CACHE_ENV] || join(cwd, '.nuxt', 'clinic-prerender-cache.json')
 }
@@ -168,14 +179,17 @@ export function readClinicPrerenderCache(id: string): FacilitySearchResult | nul
  * Concrete `/clinic/...` paths for `nuxi generate`. Unknown IDs must stay a real
  * HTTP 404, so these are listed explicitly rather than given an SPA rewrite.
  *
- * The full directory is fetched in a handful of paged requests and written to
- * disk so each clinic page does not hit `facility(id)` during prerender — that
- * path 429'd production (~900 requests) and failed Netlify / snapshot generate.
+ * The directory is stored on private `runtimeConfig` so prerender workers can
+ * fill each page without calling `facility(id)`. Disk cache + env were invisible
+ * to those workers, which 429'd production and failed Netlify.
  *
  * If the API is unreachable the generate still succeeds — it just ships no clinic
  * HTML, and those URLs 404 until the next build that can see the directory.
  */
-export async function listClinicPrerenderPaths(): Promise<string[]> {
+export async function buildClinicPrerenderDirectory(): Promise<{
+    directory: Record<string, FacilitySearchResult>
+    paths: string[]
+} | null> {
     const facilities = await fetchAllPages(async offset => {
         const data = await graphqlPost<FacilitiesPage>(FACILITIES_QUERY, {
             filters: { limit: PAGE_SIZE, offset },
@@ -190,7 +204,7 @@ export async function listClinicPrerenderPaths(): Promise<string[]> {
 
     if (!facilities) {
         console.warn('[clinic prerender] directory API unavailable; skipping clinic routes')
-        return []
+        return null
     }
 
     const professionals = await fetchAllPages(async offset => {
@@ -208,7 +222,14 @@ export async function listClinicPrerenderPaths(): Promise<string[]> {
     const directory = joinClinicDirectory(facilities, professionals)
     writeClinicPrerenderCache(directory)
 
-    return Object.values(directory).map(facility => facilityPath(facility))
+    return {
+        directory,
+        paths: Object.values(directory).map(facility => facilityPath(facility))
+    }
+}
+
+export async function listClinicPrerenderPaths(): Promise<string[]> {
+    return (await buildClinicPrerenderDirectory())?.paths ?? []
 }
 
 export function isNuxtGenerateCommand(argv: readonly string[] = process.argv): boolean {

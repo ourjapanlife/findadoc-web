@@ -2,6 +2,7 @@ import { gql } from 'graphql-request'
 import { gqlClient, graphQLClientRequestWithRetry } from './graphql'
 import type { Facility, HealthcareProfessional } from '~/typedefs/gqlTypes'
 import type { FacilitySearchResult } from './searchDirectory'
+import { useRuntimeConfig } from '#imports'
 
 const PUBLIC_REQUEST_OPTIONS = {
     skipAuth: true,
@@ -104,12 +105,40 @@ async function fetchProfessionalsByIds(ids: readonly string[]): Promise<Healthca
         .filter((professional): professional is HealthcareProfessional => !!professional)
 }
 
+function clinicFromRuntimeConfig(id: string): FacilitySearchResult | null | undefined {
+    const directory = useRuntimeConfig().clinicPrerenderDirectory as
+        Record<string, FacilitySearchResult> | undefined
+
+    if (!directory || Object.keys(directory).length === 0) {
+        return undefined
+    }
+
+    return directory[id] ?? null
+}
+
+async function clinicFromBundledDirectory(id: string): Promise<FacilitySearchResult | null | undefined> {
+    try {
+        const mod = await import('#clinic-directory')
+        const directory = (mod.default ?? mod) as Record<string, FacilitySearchResult>
+        if (!directory || Object.keys(directory).length === 0) {
+            return undefined
+        }
+        return directory[id] ?? null
+    } catch {
+        return undefined
+    }
+}
+
 export async function fetchClinicById(id: string): Promise<FacilitySearchResult | null> {
-    if (import.meta.prerender) {
-        const { readClinicPrerenderCache } = await import('./clinicPrerender')
-        const cached = readClinicPrerenderCache(id)
-        if (cached) {
-            return cached
+    if (import.meta.server) {
+        const fromConfig = clinicFromRuntimeConfig(id)
+        if (fromConfig !== undefined) {
+            return fromConfig
+        }
+
+        const fromBundle = await clinicFromBundledDirectory(id)
+        if (fromBundle !== undefined) {
+            return fromBundle
         }
     }
 

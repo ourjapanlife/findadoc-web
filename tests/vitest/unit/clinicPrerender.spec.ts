@@ -5,6 +5,7 @@ import { join } from 'node:path'
 import { expect } from 'chai'
 import {
     CLINIC_PRERENDER_CACHE_ENV,
+    clinicFromPrerenderDirectory,
     joinClinicDirectory,
     writeClinicPrerenderCache
 } from '@/utils/clinicPrerender'
@@ -54,6 +55,19 @@ describe('joinClinicDirectory', () => {
 
         expect(Object.keys(directory)).to.deep.equal(['c1'])
         expect(directory.c1?.healthcareProfessionals.map(row => row.id)).to.deep.equal(['p2', 'p1'])
+    })
+})
+
+describe('clinicFromPrerenderDirectory', () => {
+    it('returns undefined when generate did not load a directory, so live fetch can run', () => {
+        expect(clinicFromPrerenderDirectory(undefined, 'c1')).to.equal(undefined)
+        expect(clinicFromPrerenderDirectory({}, 'c1')).to.equal(undefined)
+    })
+
+    it('returns the record or null when generate loaded the directory', () => {
+        const directory = joinClinicDirectory([facility('c1', [])], [])
+        expect(clinicFromPrerenderDirectory(directory, 'c1')?.id).to.equal('c1')
+        expect(clinicFromPrerenderDirectory(directory, 'missing')).to.equal(null)
     })
 })
 

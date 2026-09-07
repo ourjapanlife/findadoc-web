@@ -2,9 +2,50 @@ import { defineNuxtConfig } from 'nuxt/config'
 import i18nLocales from './i18n'
 import tailwindcss from '@tailwindcss/vite'
 import { VIEWPORT_BREAKPOINTS, VIEWPORT_FALLBACK_BREAKPOINT } from './utils/viewport'
-import { isNuxtGenerateCommand, listClinicPrerenderPaths } from './utils/clinicPrerender'
+import { isNuxtGenerateCommand, buildClinicPrerenderDirectory } from './utils/clinicPrerender'
 import { publicSitemapUrls, SITEMAP_EXCLUDE } from './utils/sitemap'
 import { SITE_DESCRIPTION, SITE_ORIGIN, SITE_SOCIAL_IMAGE, SITE_TITLE } from './utils/site'
+
+type ClinicPrerenderBuild = Awaited<ReturnType<typeof buildClinicPrerenderDirectory>>
+
+let clinicDirectoryBuild: ClinicPrerenderBuild | undefined
+let clinicDirectoryBuildPromise: Promise<ClinicPrerenderBuild> | undefined
+
+async function clinicDirectoryForGenerate(): Promise<ClinicPrerenderBuild> {
+    if (!isNuxtGenerateCommand()) {
+        return null
+    }
+
+    clinicDirectoryBuildPromise ??= buildClinicPrerenderDirectory().then(built => {
+        clinicDirectoryBuild = built
+        return built
+    })
+
+    return clinicDirectoryBuildPromise
+}
+
+function clinicDirectoryVitePlugin() {
+    return {
+        name: 'clinic-directory',
+        resolveId(id: string) {
+            if (id === '#clinic-directory') {
+                return '\0clinic-directory'
+            }
+        },
+        load(this: { environment?: { name?: string } }, id: string) {
+            if (id !== '\0clinic-directory') {
+                return
+            }
+
+            if (this.environment?.name === 'client') {
+                return 'export default {}'
+            }
+
+            const directory = clinicDirectoryBuild?.directory ?? {}
+            return `export default ${JSON.stringify(directory)}`
+        }
+    }
+}
 
 /**
  * The analytics tag, only when it is actually configured.
@@ -171,6 +212,9 @@ export default defineNuxtConfig({
     },
 
     runtimeConfig: {
+        // Filled during `nuxi generate` so clinic pages prerender from memory.
+        // Private: not sent to the browser. Empty in `nuxi dev` (live GraphQL).
+        clinicPrerenderDirectory: {},
         public: {
             isTestingMode: process.env.NUXT_IS_TESTING_MODE,
 
@@ -226,22 +270,38 @@ export default defineNuxtConfig({
     },
 
     vite: { plugins: [
-        tailwindcss()
+        tailwindcss(),
+        clinicDirectoryVitePlugin()
     ] },
     telemetry: false,
 
     hooks: {
-        async 'nitro:config'(nitroConfig) {
-            if (nitroConfig.dev || !isNuxtGenerateCommand()) {
+        async ready(nuxt) {
+            const built = await clinicDirectoryForGenerate()
+            if (!built) {
                 return
             }
 
-            const clinicRoutes = await listClinicPrerenderPaths()
+            nuxt.options.runtimeConfig.clinicPrerenderDirectory = built.directory
+        },
+        async 'nitro:config'(nitroConfig) {
+            const built = await clinicDirectoryForGenerate()
+            if (!built || nitroConfig.dev) {
+                return
+            }
+
+            console.warn(`[clinic prerender] ${built.paths.length} clinic pages from directory payload`)
+            nitroConfig.runtimeConfig ??= {}
+            nitroConfig.runtimeConfig.clinicPrerenderDirectory = built.directory
+            nitroConfig.virtual = {
+                ...nitroConfig.virtual,
+                '#clinic-directory': `export default ${JSON.stringify(built.directory)}`
+            }
             nitroConfig.prerender ??= {}
             const existing = nitroConfig.prerender.routes
             nitroConfig.prerender.routes = Array.isArray(existing)
-                ? [...existing, ...clinicRoutes]
-                : clinicRoutes
+                ? [...existing, ...built.paths]
+                : built.paths
         }
     },
     eslint: {
