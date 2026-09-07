@@ -3,6 +3,7 @@ import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { expect } from 'chai'
 import {
+    isEntityRoute,
     isUntitledRoute,
     PAGE_META_TITLE_ROUTES,
     pageMetaI18nKey,
@@ -86,9 +87,10 @@ describe('pageMeta titles', () => {
             const route = vuePageFileToRoute(file)
             const titled = pageTitleKeyForPath(route) !== undefined
             const skipped = isUntitledRoute(route)
+            const entity = isEntityRoute(route)
             expect(
-                titled || skipped,
-                `${file} (${route}) needs an entry in PAGE_META_TITLE_ROUTES or an untitled prefix`
+                titled || skipped || entity,
+                `${file} (${route}) needs an entry in PAGE_META_TITLE_ROUTES, an untitled prefix, or an entity prefix`
             ).to.equal(true)
         }
 
@@ -112,7 +114,17 @@ describe('pageTitleKeyForPath', () => {
     it('returns undefined for untitled and unknown routes', () => {
         expect(pageTitleKeyForPath('/my-page')).to.equal(undefined)
         expect(pageTitleKeyForPath('/login')).to.equal(undefined)
+        expect(pageTitleKeyForPath('/clinic/tokyo/nakano/a-one--f1')).to.equal(undefined)
         expect(pageTitleKeyForPath('/not-a-page')).to.equal(undefined)
+    })
+})
+
+describe('isEntityRoute', () => {
+    it('treats clinic detail URLs as entity pages that own their titles', () => {
+        expect(isEntityRoute('/clinic')).to.equal(true)
+        expect(isEntityRoute('/clinic/tokyo/nakano/a-one--f1')).to.equal(true)
+        expect(isEntityRoute('/search')).to.equal(false)
+        expect(isEntityRoute('/about')).to.equal(false)
     })
 })
 

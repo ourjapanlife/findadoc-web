@@ -510,5 +510,9 @@
     "pageHeading": "日本で医師を探す",
     "mapUnavailable": "地図を読み込めませんでした。",
     "mapUnavailableHint": "検索結果の表示には影響ありません。"
+  },
+  "clinicPage": {
+    "backToSearch": "Back to search",
+    "metaDescription": "{name} in {city}, {prefecture}. Address, phone and the languages spoken by staff."
   }
 }

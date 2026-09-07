@@ -26,8 +26,6 @@
         "test:e2e:local:ui": "cross-env E2E_WEB_SERVER_EXTERNAL=true start-server-and-test dev:e2e http://localhost:4242 \"playwright test --ui\"",
         "test:e2e:local:prod": "start-server-and-test \"cross-env NUXT_IS_TESTING_MODE=true yarn ci:build && cross-env NUXT_IS_TESTING_MODE=true PORT=4242 yarn ci:start\" http://localhost:4242 \"PLAYWRIGHT_BASE_URL=http://localhost:4242 playwright test\"",
         "test:e2e:ci": "playwright test",
-        "test:snapshot": "vitest run -c vitest.snapshot.config.ts",
-        "test:snapshot:update": "vitest run -c vitest.snapshot.config.ts --update",
         "storybook": "NUXT_STORYBOOK=true nuxi dev -p 7331 && storybook dev -p 6006"
     },
     "packageManager": "yarn@4.12.0",
@@ -73,7 +71,6 @@
         "@swc/core": "^1.15.8",
         "@tailwindcss/postcss": "^4.1.18",
         "@tailwindcss/vite": "^4.1.18",
-        "@testing-library/vue": "^8.1.0",
         "@types/google.maps": "^3.58.1",
         "@vitejs/plugin-vue": "^6.0.3",
         "@vitest/coverage-v8": "^4.0.16",

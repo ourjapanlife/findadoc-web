@@ -64,4 +64,14 @@ describe('SPA fallbacks', () => {
         const rewrites = readServeJson().rewrites ?? []
         expect(rewrites.some(rule => rule.source === '/search' && rule.destination === '/200.html')).to.equal(true)
     })
+
+    /*
+     * Clinic pages are prerendered by id. An SPA rewrite would turn unknown IDs into
+     * 200 HTML, which #1789 forbids. Missing files must hit the 404 catch-all.
+     */
+    it('does not give /clinic an SPA rewrite', () => {
+        expect(readRedirects()).to.not.match(/^\/clinic/m)
+        const rewrites = readServeJson().rewrites ?? []
+        expect(rewrites.some(rule => rule.source.startsWith('/clinic'))).to.equal(false)
+    })
 })

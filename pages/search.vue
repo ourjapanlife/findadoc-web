@@ -122,6 +122,10 @@ watch(queryFromStore, query => {
     }
 })
 
+/*
+ * Map pins stay on /search and open the details panel. List cards are the
+ * indexable clinic URLs; leaving search from a pin lost the results and map.
+ */
 function openDetails(facilityId: string) {
     router.push({ query: { ...queryFromStore(), facility: facilityId } })
 }

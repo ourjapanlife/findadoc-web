@@ -1,4 +1,6 @@
 import { gql, GraphQLClient } from 'graphql-request'
+import { facilityPath } from './clinicPath'
+import { graphqlEndpoint } from './graphqlEndpoint'
 import type { FacilitySearchFilters, HealthcareProfessionalSearchFilters } from '~/typedefs/gqlTypes'
 
 /**
@@ -8,14 +10,15 @@ import type { FacilitySearchFilters, HealthcareProfessionalSearchFilters } from 
 export const SITEMAP_DIRECTORY_PAGE_SIZE = 100
 
 /**
- * Entity URL prefixes. `undefined` until the matching page tree ships:
- * facility #1789, professional #1790. The sitemap fetch is skipped while every
- * prefix is unset so `nuxi generate` does not advertise URLs that 404.
+ * Entity URL prefixes. A set prefix means that kind is listed. Facility locs
+ * are `facilityPath` (#1789); the prefix is only the enable flag. Professional
+ * stays unset until #1790. The sitemap fetch is skipped while every prefix is
+ * unset so `nuxi generate` does not advertise URLs that 404.
  *
  * Hub and facet pages (#1791, #1792) add their own prefixes here the same way.
  */
 export const DIRECTORY_SITEMAP_PATHS = {
-    facility: undefined as string | undefined,
+    facility: '/clinic' as string | undefined,
     professional: undefined as string | undefined
 }
 
@@ -25,6 +28,9 @@ export type SitemapDirectoryEntry = {
     kind: SitemapDirectoryKind
     id: string
     updatedDate?: string | null
+    nameEn?: string | null
+    cityEn?: string | null
+    prefectureEn?: string | null
 }
 
 export type SitemapDirectoryUrl = {
@@ -38,22 +44,34 @@ type DirectoryPage<T> = {
 }
 
 export function directorySitemapLoc(
-    kind: SitemapDirectoryKind,
-    id: string,
+    entry: SitemapDirectoryEntry,
     paths: typeof DIRECTORY_SITEMAP_PATHS = DIRECTORY_SITEMAP_PATHS
 ): string | undefined {
-    const prefix = paths[kind]
-    if (!prefix) {
+    if (!paths[entry.kind]) {
         return undefined
     }
-    return `${prefix}/${id}`
+
+    if (entry.kind === 'facility') {
+        return facilityPath({
+            id: entry.id,
+            nameEn: entry.nameEn ?? '',
+            contact: {
+                address: {
+                    cityEn: entry.cityEn,
+                    prefectureEn: entry.prefectureEn
+                }
+            }
+        })
+    }
+
+    return `${paths[entry.kind]}/${entry.id}`
 }
 
 export function sitemapUrlFromEntry(
     entry: SitemapDirectoryEntry,
     paths: typeof DIRECTORY_SITEMAP_PATHS = DIRECTORY_SITEMAP_PATHS
 ): SitemapDirectoryUrl | undefined {
-    const loc = directorySitemapLoc(entry.kind, entry.id, paths)
+    const loc = directorySitemapLoc(entry, paths)
     if (!loc) {
         return undefined
     }
@@ -95,7 +113,14 @@ const sitemapFacilitiesQuery = gql`
     query SitemapFacilities($filters: FacilitySearchFilters!, $countFilters: FacilitySearchFilters!) {
         facilities(filters: $filters) {
             id
+            nameEn
             updatedDate
+            contact {
+                address {
+                    cityEn
+                    prefectureEn
+                }
+            }
         }
         facilitiesTotalCount(filters: $countFilters)
     }
@@ -114,16 +139,24 @@ const sitemapProfessionalsQuery = gql`
     }
 `
 
-function directoryApiUrl(): string {
-    return process.env.NUXT_USE_LOCAL_API ? 'http://127.0.0.1:4000' : 'https://api.findadoc.jp'
+type SitemapFacilityRow = {
+    id: string
+    nameEn?: string | null
+    updatedDate?: string | null
+    contact?: {
+        address?: {
+            cityEn?: string | null
+            prefectureEn?: string | null
+        } | null
+    } | null
 }
 
 type DirectoryFetcher = {
-    fetchFacilities: (offset: number) => Promise<DirectoryPage<{ id: string, updatedDate?: string | null }>>
+    fetchFacilities: (offset: number) => Promise<DirectoryPage<SitemapFacilityRow>>
     fetchProfessionals: (offset: number) => Promise<DirectoryPage<{ id: string, updatedDate?: string | null }>>
 }
 
-function graphqlDirectoryFetcher(apiUrl = directoryApiUrl()): DirectoryFetcher {
+function graphqlDirectoryFetcher(apiUrl = graphqlEndpoint()): DirectoryFetcher {
     const client = new GraphQLClient(apiUrl)
 
     return {
@@ -134,7 +167,7 @@ function graphqlDirectoryFetcher(apiUrl = directoryApiUrl()): DirectoryFetcher {
             } satisfies FacilitySearchFilters
 
             const data = await client.request<{
-                facilities: Array<{ id: string, updatedDate?: string | null }>
+                facilities: SitemapFacilityRow[]
                 facilitiesTotalCount: number
             }>(sitemapFacilitiesQuery, {
                 filters,
@@ -177,28 +210,38 @@ export async function loadDirectorySitemapUrls(
         return []
     }
 
-    const entries: SitemapDirectoryEntry[] = []
+    try {
+        const entries: SitemapDirectoryEntry[] = []
 
-    if (kinds.includes('facility')) {
-        const facilities = await collectPagedRows(offset => fetcher.fetchFacilities(offset))
-        entries.push(...facilities.map(row => ({
-            kind: 'facility' as const,
-            id: row.id,
-            updatedDate: row.updatedDate
-        })))
+        if (kinds.includes('facility')) {
+            const facilities = await collectPagedRows(offset => fetcher.fetchFacilities(offset))
+            entries.push(...facilities.map(row => ({
+                kind: 'facility' as const,
+                id: row.id,
+                nameEn: row.nameEn,
+                cityEn: row.contact?.address?.cityEn,
+                prefectureEn: row.contact?.address?.prefectureEn,
+                updatedDate: row.updatedDate
+            })))
+        }
+
+        if (kinds.includes('professional')) {
+            const professionals = await collectPagedRows(offset => fetcher.fetchProfessionals(offset))
+            entries.push(...professionals.map(row => ({
+                kind: 'professional' as const,
+                id: row.id,
+                updatedDate: row.updatedDate
+            })))
+        }
+
+        return entries.flatMap(entry => {
+            const url = sitemapUrlFromEntry(entry, paths)
+            return url ? [url] : []
+        })
+    } catch (error) {
+        // Dev/e2e often have no directory API. A broken sitemap.xml is worse than
+        // omitting entity URLs until generate can reach production.
+        console.warn('[sitemap] directory API unavailable; omitting entity URLs', error)
+        return []
     }
-
-    if (kinds.includes('professional')) {
-        const professionals = await collectPagedRows(offset => fetcher.fetchProfessionals(offset))
-        entries.push(...professionals.map(row => ({
-            kind: 'professional' as const,
-            id: row.id,
-            updatedDate: row.updatedDate
-        })))
-    }
-
-    return entries.flatMap(entry => {
-        const url = sitemapUrlFromEntry(entry, paths)
-        return url ? [url] : []
-    })
 }
