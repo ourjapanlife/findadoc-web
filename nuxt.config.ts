@@ -2,6 +2,7 @@ import { defineNuxtConfig } from 'nuxt/config'
 import i18nLocales from './i18n'
 import tailwindcss from '@tailwindcss/vite'
 import { VIEWPORT_BREAKPOINTS, VIEWPORT_FALLBACK_BREAKPOINT } from './utils/viewport'
+import { isNuxtGenerateCommand, listClinicPrerenderPaths } from './utils/clinicPrerender'
 import { publicSitemapUrls, SITEMAP_EXCLUDE } from './utils/sitemap'
 import { SITE_DESCRIPTION, SITE_ORIGIN, SITE_SOCIAL_IMAGE, SITE_TITLE } from './utils/site'
 
@@ -201,12 +202,8 @@ export default defineNuxtConfig({
          * /search reads its filters from the query string and loads the directory from the
          * API in the browser, so there is nothing to prerender: a static shell would ship an
          * empty result list under a real heading, which is worse for crawlers than no page.
-         * The homepage carries the indexable content instead.
-         *
-         * This becomes worth revisiting once the server can filter by location (handoff §2a):
-         * a single filtered query is cheap enough to run server-side, at which point results
-         * could be rendered into the HTML and the per-facility URLs the SEO tickets want
-         * (?facility=… already identifies one) could become real, indexable pages.
+         * Clinic URLs (`/clinic/…`, #1789) are the indexable entity pages; they are listed
+         * for generate in the nitro:config hook, not here, so unknown IDs stay a real 404.
          */
         '/search': { ssr: false },
         '/login': { ssr: false },
@@ -229,6 +226,21 @@ export default defineNuxtConfig({
         tailwindcss()
     ] },
     telemetry: false,
+
+    hooks: {
+        async 'nitro:config'(nitroConfig) {
+            if (nitroConfig.dev || !isNuxtGenerateCommand()) {
+                return
+            }
+
+            const clinicRoutes = await listClinicPrerenderPaths()
+            nitroConfig.prerender ??= {}
+            const existing = nitroConfig.prerender.routes
+            nitroConfig.prerender.routes = Array.isArray(existing)
+                ? [...existing, ...clinicRoutes]
+                : clinicRoutes
+        }
+    },
     eslint: {
         config: {
             stylistic: true

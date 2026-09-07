@@ -9,8 +9,8 @@
                 <h3 class="text-lg font-semibold leading-snug text-primary-text">
                     <!--
                         Stretched link: the heading is the one focusable control, and its
-                        ::after covers the card so the whole surface is clickable. Being a real
-                        link to ?facility=… gives open-in-new-tab and Back-closes-it for free.
+                        ::after covers the card so the whole surface is clickable. The href is
+                        the indexable clinic URL (#1789); Back returns to this search.
                     -->
                     <NuxtLink
                         :to="detailsRoute"
@@ -82,11 +82,11 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { useRoute } from 'vue-router'
 import { localeDisplayOptions } from '~/stores/localeStore'
 import { useSpecialtiesStore } from '~/stores/specialtiesStore'
 import { formatHealthcareProfessionalName } from '~/utils/nameUtils'
 import { isJapaneseLocale, toGqlLocale } from '~/utils/activeLocale'
+import { facilityPath } from '~/utils/clinicPath'
 import type { FacilitySearchResult } from '~/utils/searchDirectory'
 
 const props = defineProps<{
@@ -97,7 +97,6 @@ const props = defineProps<{
 const MAX_VISIBLE_PROFESSIONALS = 3
 
 const { t, locale } = useI18n()
-const route = useRoute()
 const specialtiesStore = useSpecialtiesStore()
 
 // Keyed off vue-i18n, not localeStore: the store lags behind a cookie-driven locale.
@@ -149,8 +148,5 @@ const hiddenProfessionalCount = computed(() => Math.max(0, professionals.value.l
 // In script rather than the template: i18n/cleanUnusedLocaleKeys.js only sees template t() calls with no second argument.
 const moreProfessionalsText = computed(() => t('search.moreProfessionals', { n: hiddenProfessionalCount.value }))
 
-const detailsRoute = computed(() => ({
-    path: route.path,
-    query: { ...route.query, facility: props.result.id }
-}))
+const detailsRoute = computed(() => facilityPath(props.result))
 </script>

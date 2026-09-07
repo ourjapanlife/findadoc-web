@@ -233,25 +233,25 @@ test.describe('Search page', () => {
             await expect(page.getByTestId('search-result-card')).toHaveCount(3)
         })
 
-        test('opens a facility in a panel, puts it in the URL, and Back closes it', async ({ page }) => {
+        test('search result cards link to the clinic page, not a query-param panel', async ({ page }) => {
             await page.goto('/search')
-            await page.getByRole('link', { name: 'Tokyo Family Clinic' }).click()
 
-            const panel = page.getByTestId('search-details-panel')
-            await expect(panel).toBeVisible()
-            await expect(panel.getByRole('heading', { name: 'Tokyo Family Clinic' })).toBeVisible()
-            await expect(panel.getByTestId('search-details-professional')).toHaveCount(2)
-            await expect(page).toHaveURL(/facility=f1/)
-
-            await page.goBack()
-
-            await expect(panel).toBeHidden()
-            await expect(page).not.toHaveURL(/facility=/)
+            await expect(page.getByRole('link', { name: 'Tokyo Family Clinic' }))
+                .toHaveAttribute('href', '/clinic/tokyo/shibuya/tokyo-family-clinic--f1')
+            await expect(page.getByRole('link', { name: 'Osaka Dental' }))
+                .toHaveAttribute('href', '/clinic/osaka/kita/osaka-dental--f2')
         })
 
-        test('the back-to-results button closes the panel', async ({ page }) => {
-            await page.goto('/search')
-            await page.getByRole('link', { name: 'Osaka Dental' }).click()
+        test('a shared ?facility= link still opens the details panel', async ({ page }) => {
+            await page.goto('/search?facility=f3')
+
+            const panel = page.getByTestId('search-details-panel')
+            await expect(panel.getByRole('heading', { name: 'Sapporo Skin Clinic' })).toBeVisible()
+            await expect(page).toHaveURL(/facility=f3/)
+        })
+
+        test('the back-to-results button closes a panel opened from a shared link', async ({ page }) => {
+            await page.goto('/search?facility=f2')
             await expect(page.getByTestId('search-details-panel')).toBeVisible()
 
             await page.getByTestId('search-details-close').click()
@@ -265,13 +265,12 @@ test.describe('Search page', () => {
          * URL, so opening a second facility and closing it reopened the first.
          */
         test('closing after opening two facilities in a row returns to the list', async ({ page }) => {
-            await page.goto('/search')
-            await page.getByRole('link', { name: 'Tokyo Family Clinic' }).click()
+            await page.goto('/search?facility=f1')
             await expect(page.getByTestId('search-details-panel')).toBeVisible()
             await page.getByTestId('search-details-close').click()
             await expect(page.getByTestId('search-details-panel')).toBeHidden()
 
-            await page.getByRole('link', { name: 'Osaka Dental' }).click()
+            await page.goto('/search?facility=f2')
             await expect(page.getByTestId('search-details-panel')).toBeVisible()
             await page.getByTestId('search-details-close').click()
 
@@ -281,20 +280,12 @@ test.describe('Search page', () => {
         })
 
         test('Escape closes the details panel from anywhere in it', async ({ page }) => {
-            await page.goto('/search')
-            await page.getByRole('link', { name: 'Tokyo Family Clinic' }).click()
+            await page.goto('/search?facility=f1')
             await expect(page.getByTestId('search-details-panel')).toBeVisible()
 
             await page.keyboard.press('Escape')
 
             await expect(page.getByTestId('search-details-panel')).toBeHidden()
-        })
-
-        test('a shared link opens the facility directly', async ({ page }) => {
-            await page.goto('/search?facility=f3')
-
-            const panel = page.getByTestId('search-details-panel')
-            await expect(panel.getByRole('heading', { name: 'Sapporo Skin Clinic' })).toBeVisible()
         })
 
         test('shows an empty state with a way out', async ({ page }) => {
@@ -337,13 +328,19 @@ test.describe('Search page', () => {
             await expect(page.getByTestId('search-specialty')).toBeVisible()
         })
 
-        test('opens details full screen and Back returns to the list', async ({ page }) => {
+        test('clinic page links are real hrefs in portrait too', async ({ page }) => {
             await page.goto('/search')
-            await page.getByRole('link', { name: 'Tokyo Family Clinic' }).click()
+
+            await expect(page.getByRole('link', { name: 'Tokyo Family Clinic' }))
+                .toHaveAttribute('href', '/clinic/tokyo/shibuya/tokyo-family-clinic--f1')
+        })
+
+        test('a shared ?facility= link opens details full screen', async ({ page }) => {
+            await page.goto('/search?facility=f1')
 
             await expect(page.getByTestId('search-details-panel')).toBeVisible()
 
-            await page.goBack()
+            await page.getByTestId('search-details-close').click()
 
             await expect(page.getByTestId('search-details-panel')).toBeHidden()
             await expect(page.getByTestId('search-result-card').first()).toBeVisible()

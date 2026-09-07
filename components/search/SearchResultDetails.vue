@@ -5,12 +5,20 @@
     >
         <header class="flex flex-col gap-3">
             <div class="flex flex-col gap-1">
-                <h2
+                <component
+                    :is="heading"
                     id="search-details-title"
                     class="text-2xl font-bold leading-tight text-primary-text"
                 >
                     {{ facilityName }}
-                </h2>
+                </component>
+                <p
+                    v-if="otherLanguageName"
+                    class="m-0 text-lg text-primary-text-muted"
+                    data-testid="clinic-other-name"
+                >
+                    {{ otherLanguageName }}
+                </p>
                 <p class="m-0 text-primary-text-muted">
                     {{ addressLine1 }}
                     <template v-if="addressLine2">
@@ -113,6 +121,7 @@
                     class="card flex flex-col gap-3 p-4"
                 >
                     <div class="flex flex-col">
+                        <!-- Names stay text until #1790 ships /doctor/[slug]--[id] pages. -->
                         <p class="m-0 text-lg font-semibold leading-snug text-primary-text">
                             {{ professional.name }}
                         </p>
@@ -185,7 +194,12 @@ import { facilityEmail,
     facilityWebsiteUrl,
     type FacilitySearchResult } from '~/utils/searchDirectory'
 
-const props = defineProps<{ facility: FacilitySearchResult }>()
+const props = withDefaults(defineProps<{
+    facility: FacilitySearchResult
+    heading?: 'h1' | 'h2'
+}>(), {
+    heading: 'h2'
+})
 
 const { t, locale } = useI18n()
 const specialtiesStore = useSpecialtiesStore()
@@ -195,6 +209,14 @@ const { track } = useUmami()
 const isJapanese = computed(() => isJapaneseLocale(locale.value))
 
 const facilityName = computed(() => (isJapanese.value ? props.facility.nameJa : props.facility.nameEn) || props.facility.nameEn)
+
+const otherLanguageName = computed(() => {
+    const other = isJapanese.value ? props.facility.nameEn : props.facility.nameJa
+    if (!other || other === facilityName.value) {
+        return ''
+    }
+    return other
+})
 
 const address = computed(() => props.facility.contact?.address)
 

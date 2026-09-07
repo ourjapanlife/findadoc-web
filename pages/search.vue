@@ -41,6 +41,7 @@ import { onMounted, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRoute, useRouter, type LocationQuery, type LocationQueryRaw } from 'vue-router'
 import { useSearchResultsStore } from '~/stores/searchResultsStore'
+import { facilityPath } from '~/utils/clinicPath'
 import { buildSearchQuery, parseSearchQuery } from '~/utils/searchDirectory'
 
 const { t } = useI18n()
@@ -123,6 +124,13 @@ watch(queryFromStore, query => {
 })
 
 function openDetails(facilityId: string) {
+    const facility = searchResultsStore.searchResultsList.find(result => result.id === facilityId)
+
+    if (facility) {
+        router.push(facilityPath(facility))
+        return
+    }
+
     router.push({ query: { ...queryFromStore(), facility: facilityId } })
 }
 
