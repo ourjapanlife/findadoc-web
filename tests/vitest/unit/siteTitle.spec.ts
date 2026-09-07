@@ -3,7 +3,6 @@ import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { expect } from 'chai'
 import {
-    documentTitlePath,
     isUntitledRoute,
     PAGE_META_TITLE_ROUTES,
     pageMetaI18nKey,
@@ -112,15 +111,17 @@ describe('pageTitleKeyForPath', () => {
 
     it('returns undefined for untitled and unknown routes', () => {
         expect(pageTitleKeyForPath('/my-page')).to.equal(undefined)
+        expect(pageTitleKeyForPath('/login')).to.equal(undefined)
         expect(pageTitleKeyForPath('/not-a-page')).to.equal(undefined)
     })
 })
 
 describe('isUntitledRoute', () => {
-    it('treats authenticated surfaces as untitled, including nested paths', () => {
+    it('treats authenticated and Auth0 surfaces as untitled, including nested paths', () => {
         expect(isUntitledRoute('/my-page')).to.equal(true)
         expect(isUntitledRoute('/my-page/edit-facility/1')).to.equal(true)
         expect(isUntitledRoute('/u/someone/')).to.equal(true)
+        expect(isUntitledRoute('/login')).to.equal(true)
         expect(isUntitledRoute('/about')).to.equal(false)
     })
 })
@@ -128,16 +129,5 @@ describe('isUntitledRoute', () => {
 describe('pageMetaI18nKey', () => {
     it('builds a pageMeta message path', () => {
         expect(pageMetaI18nKey('aboutTitle')).to.equal('pageMeta.aboutTitle')
-    })
-})
-
-describe('documentTitlePath', () => {
-    it('prefers the browser URL when the Vue route has not caught up', () => {
-        expect(documentTitlePath('/', '/login')).to.equal('/login')
-        expect(documentTitlePath('/search', '/login/')).to.equal('/login')
-    })
-
-    it('uses the Vue route when no location is available', () => {
-        expect(documentTitlePath('/about')).to.equal('/about')
     })
 })

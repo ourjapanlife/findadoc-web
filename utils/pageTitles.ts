@@ -13,7 +13,7 @@ export function pageMetaI18nKey(key: PageMetaTitleKey): `pageMeta.${PageMetaTitl
  *
  * New `pages/*.vue` files are a different axis: TypeScript cannot see the filesystem,
  * so `tests/vitest/unit/siteTitle.spec.ts` asserts every page is either in this map
- * or under an untitled prefix (`/my-page`, `/u`).
+ * or under an untitled prefix (`/my-page`, `/u`, `/login`).
  */
 export const PAGE_META_TITLE_ROUTES = {
     homeTitle: '/',
@@ -22,16 +22,15 @@ export const PAGE_META_TITLE_ROUTES = {
     termsTitle: '/terms',
     privacyTitle: '/privacypolicy',
     npoTitle: '/npo',
-    searchTitle: '/search',
-    loginTitle: '/login'
+    searchTitle: '/search'
 } as const satisfies Record<PageMetaTitleKey, string>
 
 /**
  * Authenticated / non-indexable surfaces that deliberately use the brand-only
- * fallback from `formatPageTitle`. A new page that is neither titled nor listed
- * here fails the exhaustive pages test.
+ * fallback from `formatPageTitle`. `/login` is here because it is an Auth0
+ * interstitial (ssr: false, not prerendered, not in the sitemap) — not a search result.
  */
-const UNTITLED_ROUTE_PREFIXES = ['/my-page', '/u'] as const
+const UNTITLED_ROUTE_PREFIXES = ['/my-page', '/u', '/login'] as const
 
 function normalisePagePath(path: string): string {
     if (path.length > 1 && path.endsWith('/')) {
@@ -50,15 +49,6 @@ export function pageTitleKeyForPath(path: string): PageMetaTitleKey | undefined 
     }
 
     return undefined
-}
-
-/**
- * The Vue route can lag behind the address bar: `/login` awaits Auth0 in setup, so a
- * generate SPA shell stays on the payload route (`/`) until that finishes. Titles should
- * follow the URL the visitor actually opened.
- */
-export function documentTitlePath(routePath: string, locationPath?: string): string {
-    return normalisePagePath(locationPath || routePath)
 }
 
 export function isUntitledRoute(path: string): boolean {
