@@ -218,6 +218,9 @@ export default defineNuxtConfig({
     nitro: {
         prerender: {
             crawlLinks: true,
+            // Clinic HTML is filled from the generate-time directory cache, not live
+            // facility(id) calls. Parallel prerender is then just disk, not API.
+            concurrency: 8,
             routes: ['/', '/about', '/terms', '/privacypolicy', '/submit', '/npo', '/sitemap.xml']
         }
     },

@@ -105,6 +105,14 @@ async function fetchProfessionalsByIds(ids: readonly string[]): Promise<Healthca
 }
 
 export async function fetchClinicById(id: string): Promise<FacilitySearchResult | null> {
+    if (import.meta.prerender) {
+        const { readClinicPrerenderCache } = await import('./clinicPrerender')
+        const cached = readClinicPrerenderCache(id)
+        if (cached) {
+            return cached
+        }
+    }
+
     const response = await graphQLClientRequestWithRetry<{ facility?: Facility | null }>(
         gqlClient.request.bind(gqlClient),
         clinicFacilityQuery,
