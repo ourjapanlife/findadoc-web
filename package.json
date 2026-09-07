@@ -62,6 +62,7 @@
         "@nuxt/test-utils": "^3.21.0",
         "@nuxt/types": "^2.18.1",
         "@nuxtjs/i18n": "^10.2.1",
+        "@nuxtjs/sitemap": "^8.5.0",
         "@nuxtjs/storybook": "^9.0.1",
         "@pinia/testing": "^1.0.3",
         "@playwright/test": "^1.49.0",

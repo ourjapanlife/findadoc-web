@@ -20,6 +20,27 @@ test.describe('Discovery and social meta', () => {
         expect(body).toContain(`Sitemap: ${SITE_SITEMAP_URL}`)
     })
 
+    test('sitemap.xml lists every public URL and none of the private trees', async ({ request }) => {
+        const response = await request.get('/sitemap.xml')
+
+        expect(response.status()).toBe(200)
+        expect(response.headers()['content-type']).toMatch(/xml/)
+
+        const body = await response.text()
+        expect(body).toMatch(/<urlset\b/)
+
+        const locs = [...body.matchAll(/<loc>\s*([^<]+)\s*<\/loc>/g)].map(match => match[1].trim())
+        const paths = locs.map(loc => {
+            const pathname = new URL(loc).pathname
+            return pathname.length > 1 && pathname.endsWith('/') ? pathname.slice(0, -1) : pathname || '/'
+        })
+
+        expect(paths.sort()).toEqual([...publicPaths].sort())
+        expect(body).not.toContain(`${new URL(locs[0] ?? 'http://localhost/').origin}/login`)
+        expect(body).not.toContain('/my-page')
+        expect(body).not.toContain('/moderation')
+    })
+
     test('the social preview image is reachable', async ({ request }) => {
         const response = await request.get('/findadoc-social.png')
         expect(response.status()).toBe(200)

@@ -2,7 +2,8 @@ import { defineNuxtConfig } from 'nuxt/config'
 import i18nLocales from './i18n'
 import tailwindcss from '@tailwindcss/vite'
 import { VIEWPORT_BREAKPOINTS, VIEWPORT_FALLBACK_BREAKPOINT } from './utils/viewport'
-import { SITE_DESCRIPTION, SITE_SOCIAL_IMAGE, SITE_TITLE } from './utils/site'
+import { publicSitemapUrls, SITEMAP_EXCLUDE } from './utils/sitemap'
+import { SITE_DESCRIPTION, SITE_ORIGIN, SITE_SOCIAL_IMAGE, SITE_TITLE } from './utils/site'
 
 /**
  * The analytics tag, only when it is actually configured.
@@ -46,6 +47,7 @@ export default defineNuxtConfig({
 
     modules: [
         '@nuxtjs/i18n',
+        '@nuxtjs/sitemap',
         '@pinia/nuxt',
         'nuxt-viewport',
         'nuxt-svgo',
@@ -162,6 +164,10 @@ export default defineNuxtConfig({
         '@fontsource/noto-sans-jp/700.css',
         '~/assets/css/tailwind.css'
     ],
+    site: {
+        url: SITE_ORIGIN,
+        name: SITE_TITLE
+    },
 
     runtimeConfig: {
         public: {
@@ -215,7 +221,7 @@ export default defineNuxtConfig({
     nitro: {
         prerender: {
             crawlLinks: true,
-            routes: ['/', '/about', '/terms', '/privacypolicy', '/submit', '/npo']
+            routes: ['/', '/about', '/terms', '/privacypolicy', '/submit', '/npo', '/sitemap.xml']
         }
     },
 
@@ -247,6 +253,20 @@ export default defineNuxtConfig({
             fallbackLocale: 'en-US',
             alwaysRedirect: true
         }
+    },
+    sitemap: {
+        // One loc per public page until #1796 adds locale prefixes. Entity URLs
+        // join via /api/__sitemap__/directory once #1789 / #1790 set path prefixes.
+        autoI18n: false,
+        excludeAppSources: true,
+        exclude: [...SITEMAP_EXCLUDE],
+        urls: publicSitemapUrls(),
+        sources: ['/api/__sitemap__/directory'],
+        // Google's per-file cap. A sitemap index is unnecessary until locale × entity
+        // URLs cross this; keep /sitemap.xml stable for robots.txt until then.
+        defaultSitemapsChunkSize: 50000,
+        discoverImages: false,
+        discoverVideos: false
     },
 
     storybook: {
