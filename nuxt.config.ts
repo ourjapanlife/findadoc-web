@@ -2,7 +2,7 @@ import { defineNuxtConfig } from 'nuxt/config'
 import i18nLocales from './i18n'
 import tailwindcss from '@tailwindcss/vite'
 import { VIEWPORT_BREAKPOINTS, VIEWPORT_FALLBACK_BREAKPOINT } from './utils/viewport'
-import { SITE_TITLE } from './utils/site'
+import { SITE_DESCRIPTION, SITE_SOCIAL_IMAGE, SITE_TITLE } from './utils/site'
 
 /**
  * The analytics tag, only when it is actually configured.
@@ -25,9 +25,6 @@ function umamiScript() {
 
     return [{ src: url, async: true, defer: true, 'data-website-id': siteId }]
 }
-
-const SITE_DESCRIPTION
-    = 'Health service information for the international community in Japan'
 
 /**
  * Applies the stored colour scheme before first paint.
@@ -92,7 +89,7 @@ export default defineNuxtConfig({
                 { name: 'format-detection', content: 'telephone=no' },
                 {
                     name: 'twitter:card',
-                    content: 'summary'
+                    content: 'summary_large_image'
                 },
                 {
                     name: 'twitter:title',
@@ -104,10 +101,18 @@ export default defineNuxtConfig({
                 },
                 {
                     name: 'twitter:image',
-                    content: 'https://www.findadoc.jp/findadoc-social.png'
+                    content: SITE_SOCIAL_IMAGE
                 },
                 {
                     name: 'twitter:image:alt',
+                    content: SITE_TITLE
+                },
+                {
+                    property: 'og:type',
+                    content: 'website'
+                },
+                {
+                    property: 'og:site_name',
                     content: SITE_TITLE
                 },
                 {
@@ -120,19 +125,15 @@ export default defineNuxtConfig({
                 },
                 {
                     property: 'og:image',
-                    content: 'https://www.findadoc.jp/findadoc-social.png'
+                    content: SITE_SOCIAL_IMAGE
                 },
                 {
                     property: 'og:image:secure_url',
-                    content: 'https://www.findadoc.jp/findadoc-social.png'
+                    content: SITE_SOCIAL_IMAGE
                 },
                 {
                     property: 'og:image:alt',
                     content: SITE_TITLE
-                },
-                {
-                    property: 'og:url',
-                    content: 'https://www.findadoc.jp'
                 }
             ],
             link: [{ rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' }],
