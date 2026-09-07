@@ -2,6 +2,7 @@ import { defineNuxtConfig } from 'nuxt/config'
 import i18nLocales from './i18n'
 import tailwindcss from '@tailwindcss/vite'
 import { VIEWPORT_BREAKPOINTS, VIEWPORT_FALLBACK_BREAKPOINT } from './utils/viewport'
+import { SITE_TITLE } from './utils/site'
 
 /**
  * The analytics tag, only when it is actually configured.
@@ -25,7 +26,6 @@ function umamiScript() {
     return [{ src: url, async: true, defer: true, 'data-website-id': siteId }]
 }
 
-const SITE_TITLE = 'Find a Doc, Japan'
 const SITE_DESCRIPTION
     = 'Health service information for the international community in Japan'
 
@@ -72,9 +72,9 @@ export default defineNuxtConfig({
     app: {
     // Global page headers: https://nuxt.com/docs/getting-started/seo-meta
         head: {
-            // Pages set their own title with useHead(); the brand is appended here.
-            titleTemplate: `%s · ${SITE_TITLE}`,
-            title: 'Health services in Japan, in your language',
+            // Descriptive titles come from PAGE_META_TITLE_ROUTES via app.vue, which also
+            // wraps them with the brand. Untitled routes fall back to the brand alone.
+            title: 'Health services in Japan',
             htmlAttrs: {
                 lang: 'en'
             },

@@ -31,15 +31,11 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { useHead } from '#imports'
 import { useSubmissionStore } from '~/stores/submissionStore'
 
 const { t } = useI18n()
 const submissionStore = useSubmissionStore()
-
-useHead({ title: computed(() => t('submitPage.heading')) })
 
 // A cached file rather than an inline SVG component; bound so the compiler leaves the URL alone.
 const illustration = '/illustrations/characters-sachi.svg'

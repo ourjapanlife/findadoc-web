@@ -1,4 +1,13 @@
 {
+  "pageMeta": {
+    "homeTitle": "Serbisyong pangkalusugan sa Japan",
+    "aboutTitle": "Tungkol sa amin",
+    "submitTitle": "Magdagdag ng doktor",
+    "termsTitle": "Mga tuntunin",
+    "privacyTitle": "Patakaran sa privacy",
+    "npoTitle": "Pagsisiwalat ng NPO",
+    "searchTitle": "Maghanap ng klinika"
+  },
   "npoPage": {
     "heading": "Pagsisiwalat ng NPO",
     "intro": "Ang Find a Doc, Japan ay isang rehistradong non-profit na organisasyon sa Japan. Ang mga dokumento sa ibaba ay inilalathala dito ayon sa hinihingi sa mga rehistradong non-profit.",

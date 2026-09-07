@@ -37,10 +37,9 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, onMounted, ref, watch } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRoute, useRouter, type LocationQuery, type LocationQueryRaw } from 'vue-router'
-import { useHead } from '#imports'
 import { useSearchResultsStore } from '~/stores/searchResultsStore'
 import { buildSearchQuery, parseSearchQuery } from '~/utils/searchDirectory'
 
@@ -48,8 +47,6 @@ const { t } = useI18n()
 const route = useRoute()
 const router = useRouter()
 const searchResultsStore = useSearchResultsStore()
-
-useHead({ title: computed(() => t('topNav.search')) })
 
 const SHOW_MAP_STORAGE_KEY = 'search.showMap'
 const showMap = ref(false)
@@ -101,8 +98,11 @@ function sameQuery(a: LocationQueryRaw, b: LocationQuery): boolean {
     const normalise = (query: LocationQueryRaw | LocationQuery) =>
         JSON.stringify(Object.entries(query)
             .filter(([, value]) => value !== undefined && value !== null && value !== '')
-            .map(([key, value]) => [key, Array.isArray(value) ? value[0] : value])
-            .sort(([a1], [b1]) => a1.localeCompare(b1)))
+            .map(([key, value]): [string, unknown] => [
+                String(key),
+                Array.isArray(value) ? value[0] : value
+            ])
+            .sort(([leftKey], [rightKey]) => leftKey.localeCompare(rightKey)))
 
     return normalise(a) === normalise(b)
 }

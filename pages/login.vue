@@ -7,15 +7,9 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
-import { useI18n } from 'vue-i18n'
-import { definePageMeta, useHead } from '#imports'
+import { definePageMeta } from '#imports'
 
 definePageMeta({
     ssr: false
 })
-
-const { t } = useI18n()
-
-useHead({ title: computed(() => t('topNav.login')) })
 </script>

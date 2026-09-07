@@ -1,4 +1,13 @@
 {
+  "pageMeta": {
+    "homeTitle": "Serviços de saúde no Japão",
+    "aboutTitle": "Sobre nós",
+    "submitTitle": "Adicionar um médico",
+    "termsTitle": "Termos de serviço",
+    "privacyTitle": "Política de privacidade",
+    "npoTitle": "Transparência da ONG",
+    "searchTitle": "Pesquisar clínicas"
+  },
   "npoPage": {
     "heading": "Divulgações da ONG",
     "intro": "A Find a Doc, Japan é uma organização sem fins lucrativos registada no Japão. Os documentos abaixo são publicados aqui conforme exigido às organizações registadas.",
