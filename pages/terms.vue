@@ -113,9 +113,3 @@
         </div>
     </section>
 </template>
-
-<script setup lang="ts">
-import { useHead } from '#imports'
-
-useHead({ title: 'Terms and Conditions' })
-</script>

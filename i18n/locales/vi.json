@@ -1,4 +1,14 @@
 {
+  "pageMeta": {
+    "homeTitle": "Dịch vụ y tế tại Nhật Bản",
+    "aboutTitle": "Về chúng tôi",
+    "submitTitle": "Thêm bác sĩ",
+    "termsTitle": "Điều khoản dịch vụ",
+    "privacyTitle": "Chính sách bảo mật",
+    "npoTitle": "Công bố NPO",
+    "searchTitle": "Tìm phòng khám",
+    "loginTitle": "Đăng nhập"
+  },
   "npoPage": {
     "heading": "Công bố thông tin tổ chức phi lợi nhuận",
     "intro": "Find a Doc, Japan là tổ chức phi lợi nhuận đã đăng ký tại Nhật Bản. Các tài liệu dưới đây được công bố tại đây theo quy định đối với tổ chức phi lợi nhuận đã đăng ký.",

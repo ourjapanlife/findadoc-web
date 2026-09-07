@@ -1,4 +1,14 @@
 {
+  "pageMeta": {
+    "homeTitle": "Gesundheitsdienste in Japan",
+    "aboutTitle": "Über uns",
+    "submitTitle": "Arzt hinzufügen",
+    "termsTitle": "Nutzungsbedingungen",
+    "privacyTitle": "Datenschutzerklärung",
+    "npoTitle": "NPO-Offenlegung",
+    "searchTitle": "Kliniken suchen",
+    "loginTitle": "Anmelden"
+  },
   "npoPage": {
     "heading": "Offenlegung der gemeinnützigen Organisation",
     "intro": "Find a Doc, Japan ist eine in Japan eingetragene gemeinnützige Organisation. Die folgenden Dokumente werden hier veröffentlicht, wie es für eingetragene gemeinnützige Organisationen vorgeschrieben ist.",

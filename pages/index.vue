@@ -180,15 +180,12 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { useHead } from '#imports'
 import { useSpecialtiesStore } from '~/stores/specialtiesStore'
 import { BROWSE_CATEGORIES, DIRECTORY_STATS, TOP_PREFECTURES, type PrefectureEntry } from '~/utils/homeDirectory'
 import type { SpecialtyCategory } from '~/typedefs/gqlTypes'
 
 const { t, locale } = useI18n()
 const specialtiesStore = useSpecialtiesStore()
-
-useHead({ title: computed(() => t('home.heroHeading')) })
 
 const heroIllustration = '/illustrations/characters-together-welcomescreen.svg'
 

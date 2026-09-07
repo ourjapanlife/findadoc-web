@@ -1,4 +1,14 @@
 {
+  "pageMeta": {
+    "homeTitle": "日本的医疗服务",
+    "aboutTitle": "关于我们",
+    "submitTitle": "添加医师",
+    "termsTitle": "服务条款",
+    "privacyTitle": "隐私政策",
+    "npoTitle": "信息公开",
+    "searchTitle": "搜索诊所",
+    "loginTitle": "登录"
+  },
   "npoPage": {
     "heading": "信息公开",
     "intro": "Find a Doc, Japan 是在日本登记的特定非营利活动法人。以下文件依照对非营利法人的公开要求在此发布。",

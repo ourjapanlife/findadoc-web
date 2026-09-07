@@ -279,7 +279,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { useHead, useState } from '#imports'
+import { useState } from '#imports'
 import data from '../member_directory/members.json'
 import MemberComponent from '~/components/MemberComponent.vue'
 import { shuffleArray } from '~/utils/arrayUtils'
@@ -299,8 +299,6 @@ interface Member {
 }
 
 const { t } = useI18n()
-
-useHead({ title: computed(() => t('topNav.about')) })
 
 const heroIllustration = '/illustrations/characters-together-welcomescreen.svg'
 

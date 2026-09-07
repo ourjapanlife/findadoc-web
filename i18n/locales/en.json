@@ -1,4 +1,14 @@
 {
+  "pageMeta": {
+    "homeTitle": "Health services in Japan",
+    "aboutTitle": "About us",
+    "submitTitle": "Add a doctor",
+    "termsTitle": "Terms of service",
+    "privacyTitle": "Privacy policy",
+    "npoTitle": "NPO disclosures",
+    "searchTitle": "Search clinics",
+    "loginTitle": "Log in"
+  },
   "npoPage": {
     "heading": "NPO disclosures",
     "intro": "Find a Doc, Japan is a registered specified non-profit corporation in Japan. The documents below are published here as required of registered non-profits.",

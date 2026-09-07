@@ -80,11 +80,8 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { useHead } from '#imports'
 
 const { t } = useI18n()
-
-useHead({ title: computed(() => t('npoPage.heading')) })
 
 /**
  * Statutory disclosure for a 特定非営利活動法人.

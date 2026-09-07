@@ -1,4 +1,14 @@
 {
+  "pageMeta": {
+    "homeTitle": "日本の医療サービス",
+    "aboutTitle": "私たちについて",
+    "submitTitle": "医師を追加",
+    "termsTitle": "利用規約",
+    "privacyTitle": "プライバシーポリシー",
+    "npoTitle": "情報公開",
+    "searchTitle": "クリニックを探す",
+    "loginTitle": "ログイン"
+  },
   "npoPage": {
     "heading": "情報公開",
     "intro": "NPO法人Find a Doc, Japanは、日本で登記された特定非営利活動法人です。以下の書類は、特定非営利活動法人に義務づけられた公告として掲載しています。",
