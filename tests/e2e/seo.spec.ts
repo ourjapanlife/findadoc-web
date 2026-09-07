@@ -35,7 +35,14 @@ test.describe('Discovery and social meta', () => {
             return pathname.length > 1 && pathname.endsWith('/') ? pathname.slice(0, -1) : pathname || '/'
         })
 
-        expect(paths.sort()).toEqual([...publicPaths].sort())
+        const clinicPath = /^\/clinic\/[^/]+\/[^/]+\/.+--.+$/
+        const staticPaths = paths.filter(path => !path.startsWith('/clinic/'))
+        expect(staticPaths.sort()).toEqual([...publicPaths].sort())
+        for (const path of paths) {
+            if (path.startsWith('/clinic/')) {
+                expect(path).toMatch(clinicPath)
+            }
+        }
         expect(body).not.toContain(`${new URL(locs[0] ?? 'http://localhost/').origin}/login`)
         expect(body).not.toContain('/my-page')
         expect(body).not.toContain('/moderation')

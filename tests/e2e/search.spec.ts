@@ -242,6 +242,10 @@ test.describe('Search page', () => {
                 .toHaveAttribute('href', '/clinic/osaka/kita/osaka-dental--f2')
         })
 
+        /*
+         * Map pins keep the visitor on /search (`?facility=`). Leaving for the clinic
+         * page from a marker dropped the results list and the map on Back.
+         */
         test('a shared ?facility= link still opens the details panel', async ({ page }) => {
             await page.goto('/search?facility=f3')
 

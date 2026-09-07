@@ -32,19 +32,31 @@ describe('SITEMAP_EXCLUDE', () => {
 })
 
 describe('sitemapUrlFromEntry', () => {
-    const paths = { facility: '/facilities', professional: '/professionals' }
+    const paths = { facility: '/clinic', professional: '/professionals' }
 
-    it('omits entries until the entity page prefix exists', () => {
-        expect(sitemapUrlFromEntry({ kind: 'facility', id: 'abc', updatedDate: '2026-08-01' })).to.equal(undefined)
-        expect(DIRECTORY_SITEMAP_PATHS.facility).to.equal(undefined)
+    it('omits professionals until that page tree exists, and lists clinics at facilityPath', () => {
+        expect(DIRECTORY_SITEMAP_PATHS.facility).to.equal('/clinic')
         expect(DIRECTORY_SITEMAP_PATHS.professional).to.equal(undefined)
+        expect(sitemapUrlFromEntry({ kind: 'professional', id: 'p1', updatedDate: '2026-08-01' }))
+            .to.equal(undefined)
+        expect(sitemapUrlFromEntry({
+            kind: 'facility',
+            id: 'abc',
+            nameEn: 'Tokyo Family Clinic',
+            cityEn: 'Shibuya',
+            prefectureEn: 'Tokyo',
+            updatedDate: '2026-08-01T00:00:00.000Z'
+        })).to.deep.equal({
+            loc: '/clinic/tokyo/shibuya/tokyo-family-clinic--abc',
+            lastmod: '2026-08-01T00:00:00.000Z'
+        })
     })
 
     it('uses updatedDate as lastmod when the prefix is set', () => {
         expect(sitemapUrlFromEntry(
-            { kind: 'facility', id: 'abc', updatedDate: '2026-08-01T00:00:00.000Z' },
+            { kind: 'professional', id: 'p1', updatedDate: '2026-08-01T00:00:00.000Z' },
             paths
-        )).to.deep.equal({ loc: '/facilities/abc', lastmod: '2026-08-01T00:00:00.000Z' })
+        )).to.deep.equal({ loc: '/professionals/p1', lastmod: '2026-08-01T00:00:00.000Z' })
     })
 
     it('omits lastmod when the API did not send updatedDate', () => {
@@ -73,7 +85,7 @@ describe('collectPagedRows', () => {
 })
 
 describe('loadDirectorySitemapUrls', () => {
-    it('does not hit the API while entity routes are unset', async () => {
+    it('does not hit the API while every entity prefix is unset', async () => {
         let called = false
         const urls = await loadDirectorySitemapUrls({
             fetchFacilities: async () => {
@@ -84,10 +96,45 @@ describe('loadDirectorySitemapUrls', () => {
                 called = true
                 return { rows: [], totalCount: 0 }
             }
+        }, { facility: undefined, professional: undefined })
+
+        expect(directoryKindsToFetch({ facility: undefined, professional: undefined })).to.deep.equal([])
+        expect(called).to.equal(false)
+        expect(urls).to.deep.equal([])
+    })
+
+    it('does not fetch professionals while that prefix is unset', async () => {
+        const urls = await loadDirectorySitemapUrls({
+            fetchFacilities: async () => ({
+                rows: [{
+                    id: 'f1',
+                    nameEn: 'Tokyo Family Clinic',
+                    contact: { address: { cityEn: 'Shibuya', prefectureEn: 'Tokyo' } },
+                    updatedDate: '2026-08-01T00:00:00.000Z'
+                }],
+                totalCount: 1
+            }),
+            fetchProfessionals: async () => {
+                throw new Error('professionals should not be fetched')
+            }
         })
 
-        expect(directoryKindsToFetch()).to.deep.equal([])
-        expect(called).to.equal(false)
+        expect(directoryKindsToFetch()).to.deep.equal(['facility'])
+        expect(urls).to.deep.equal([
+            { loc: '/clinic/tokyo/shibuya/tokyo-family-clinic--f1', lastmod: '2026-08-01T00:00:00.000Z' }
+        ])
+    })
+
+    it('omits entity URLs when the directory API fails', async () => {
+        const urls = await loadDirectorySitemapUrls({
+            fetchFacilities: async () => {
+                throw new Error('ECONNREFUSED')
+            },
+            fetchProfessionals: async () => {
+                throw new Error('professionals should not be fetched')
+            }
+        })
+
         expect(urls).to.deep.equal([])
     })
 
@@ -96,7 +143,12 @@ describe('loadDirectorySitemapUrls', () => {
             {
                 fetchFacilities: async offset => ({
                     rows: offset === 0
-                        ? [{ id: 'f1', updatedDate: '2026-08-01T00:00:00.000Z' }]
+                        ? [{
+                            id: 'f1',
+                            nameEn: 'Tokyo Family Clinic',
+                            contact: { address: { cityEn: 'Shibuya', prefectureEn: 'Tokyo' } },
+                            updatedDate: '2026-08-01T00:00:00.000Z'
+                        }]
                         : [],
                     totalCount: 1
                 }),
@@ -104,11 +156,11 @@ describe('loadDirectorySitemapUrls', () => {
                     throw new Error('professionals should not be fetched')
                 }
             },
-            { facility: '/facilities', professional: undefined }
+            { facility: '/clinic', professional: undefined }
         )
 
         expect(urls).to.deep.equal([
-            { loc: '/facilities/f1', lastmod: '2026-08-01T00:00:00.000Z' }
+            { loc: '/clinic/tokyo/shibuya/tokyo-family-clinic--f1', lastmod: '2026-08-01T00:00:00.000Z' }
         ])
     })
 })

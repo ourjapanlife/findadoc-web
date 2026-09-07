@@ -330,8 +330,8 @@ export default defineNuxtConfig({
         }
     },
     sitemap: {
-        // One loc per public page until #1796 adds locale prefixes. Entity URLs
-        // join via /api/__sitemap__/directory once #1789 / #1790 set path prefixes.
+        // One loc per public page until #1796 adds locale prefixes. Clinic URLs
+        // join via /api/__sitemap__/directory; professionals wait on #1790.
         autoI18n: false,
         excludeAppSources: true,
         exclude: [...SITEMAP_EXCLUDE],

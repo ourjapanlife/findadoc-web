@@ -41,7 +41,6 @@ import { onMounted, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRoute, useRouter, type LocationQuery, type LocationQueryRaw } from 'vue-router'
 import { useSearchResultsStore } from '~/stores/searchResultsStore'
-import { facilityPath } from '~/utils/clinicPath'
 import { buildSearchQuery, parseSearchQuery } from '~/utils/searchDirectory'
 
 const { t } = useI18n()
@@ -123,14 +122,11 @@ watch(queryFromStore, query => {
     }
 })
 
+/*
+ * Map pins stay on /search and open the details panel. List cards are the
+ * indexable clinic URLs; leaving search from a pin lost the results and map.
+ */
 function openDetails(facilityId: string) {
-    const facility = searchResultsStore.searchResultsList.find(result => result.id === facilityId)
-
-    if (facility) {
-        router.push(facilityPath(facility))
-        return
-    }
-
     router.push({ query: { ...queryFromStore(), facility: facilityId } })
 }
 
