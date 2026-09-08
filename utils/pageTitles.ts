@@ -1,4 +1,5 @@
 import type enMessages from '../i18n/locales/en.json'
+import { isGeographyHubRoute } from './hubPath'
 
 export type PageMetaTitleKey = Extract<keyof typeof enMessages.pageMeta, string>
 
@@ -13,8 +14,8 @@ export function pageMetaI18nKey(key: PageMetaTitleKey): `pageMeta.${PageMetaTitl
  *
  * New `pages/*.vue` files are a different axis: TypeScript cannot see the filesystem,
  * so `tests/vitest/unit/siteTitle.spec.ts` asserts every page is either in this map,
- * under an untitled prefix (`/my-page`, `/u`, `/login`), or an entity prefix
- * (`/clinic`, `/doctor`) that owns its title.
+ * under an untitled prefix (`/my-page`, `/u`, `/login`), an entity prefix
+ * (`/clinic`, `/doctor`) that owns its title, or a geography hub (`/tokyo`).
  */
 export const PAGE_META_TITLE_ROUTES = {
     homeTitle: '/',
@@ -66,5 +67,8 @@ export function isUntitledRoute(path: string): boolean {
 
 export function isEntityRoute(path: string): boolean {
     const normalised = normalisePagePath(path)
-    return ENTITY_ROUTE_PREFIXES.some(prefix => normalised === prefix || normalised.startsWith(`${prefix}/`))
+    if (ENTITY_ROUTE_PREFIXES.some(prefix => normalised === prefix || normalised.startsWith(`${prefix}/`))) {
+        return true
+    }
+    return isGeographyHubRoute(normalised)
 }

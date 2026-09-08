@@ -76,7 +76,7 @@ export async function applyEntityDirectoryToNitro(nitroConfig: NitroConfig) {
         return
     }
 
-    console.warn(`[clinic prerender] ${built.paths.length} clinic pages, ${built.professionalPaths.length} doctor pages from directory payload`)
+    console.warn(`[clinic prerender] ${built.paths.length} clinic pages, ${built.professionalPaths.length} doctor pages, ${built.hubPaths.length} hub pages from directory payload`)
     nitroConfig.runtimeConfig ??= {}
     nitroConfig.runtimeConfig.clinicPrerenderDirectory = built.directory
     nitroConfig.runtimeConfig.doctorPrerenderDirectory = built.professionalDirectory
@@ -87,7 +87,7 @@ export async function applyEntityDirectoryToNitro(nitroConfig: NitroConfig) {
     }
     nitroConfig.prerender ??= {}
     const existing = nitroConfig.prerender.routes
-    const entityPaths = [...built.paths, ...built.professionalPaths]
+    const entityPaths = [...built.paths, ...built.professionalPaths, ...built.hubPaths]
     nitroConfig.prerender.routes = Array.isArray(existing)
         ? [...existing, ...entityPaths]
         : entityPaths

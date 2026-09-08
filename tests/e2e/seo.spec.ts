@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test'
 import { PAGE_META_TITLE_ROUTES } from '../../utils/pageTitles'
+import { isGeographyHubRoute } from '../../utils/hubPath'
 import { canonicalUrl } from '../../utils/seo'
 import { SITE_SITEMAP_URL, SITE_SOCIAL_IMAGE, SITE_TITLE } from '../../utils/site'
 
@@ -39,7 +40,11 @@ test.describe('Discovery and social meta', () => {
 
         const clinicPath = /^\/clinic\/[^/]+\/[^/]+\/.+--.+$/
         const doctorPath = /^\/doctor\/.+--.+$/
-        const staticPaths = paths.filter(path => !path.startsWith('/clinic/') && !path.startsWith('/doctor/'))
+        const staticPaths = paths.filter(path => (
+            !path.startsWith('/clinic/')
+            && !path.startsWith('/doctor/')
+            && !isGeographyHubRoute(path)
+        ))
         expect(staticPaths.sort()).toEqual([...publicPaths].sort())
         for (const path of paths) {
             if (path.startsWith('/clinic/')) {
@@ -47,6 +52,9 @@ test.describe('Discovery and social meta', () => {
             }
             if (path.startsWith('/doctor/')) {
                 expect(path).toMatch(doctorPath)
+            }
+            if (isGeographyHubRoute(path)) {
+                expect(path.split('/').filter(Boolean).length).toBeLessThanOrEqual(2)
             }
         }
         expect(body).not.toContain(`${new URL(locs[0] ?? 'http://localhost/').origin}/login`)

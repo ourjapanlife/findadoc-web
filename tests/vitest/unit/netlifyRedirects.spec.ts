@@ -66,8 +66,9 @@ describe('SPA fallbacks', () => {
     })
 
     /*
-     * Clinic pages are prerendered by id. An SPA rewrite would turn unknown IDs into
-     * 200 HTML, which #1789 forbids. Missing files must hit the 404 catch-all.
+     * Clinic, doctor, and geography hub pages are prerendered. An SPA rewrite
+     * would turn unknown IDs or locations into 200 HTML. Missing files must hit
+     * the 404 catch-all.
      */
     it('does not give /clinic or /doctor an SPA rewrite', () => {
         expect(readRedirects()).to.not.match(/^\/clinic/m)

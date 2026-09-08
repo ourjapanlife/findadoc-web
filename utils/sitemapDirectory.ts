@@ -1,6 +1,7 @@
 import { gql, GraphQLClient } from 'graphql-request'
 import { facilityPath } from './clinicPath'
 import { professionalPath } from './doctorPath'
+import { hubSitemapUrls } from './hubIndex'
 import { graphqlEndpoint } from './graphqlEndpoint'
 import type { FacilitySearchFilters, HealthcareProfessionalSearchFilters, LocalizedName } from '~/typedefs/gqlTypes'
 
@@ -16,7 +17,9 @@ export const SITEMAP_DIRECTORY_PAGE_SIZE = 100
  * The prefix is only the enable flag. The sitemap fetch is skipped while every
  * prefix is unset so `nuxi generate` does not advertise URLs that 404.
  *
- * Hub and facet pages (#1791, #1792) add their own prefixes here the same way.
+ * Hub pages (#1791) are derived from the facility rows already fetched — not a
+ * separate kind — so they share that request. City hubs with a single facility
+ * are omitted (noindex / thin content).
  */
 export const DIRECTORY_SITEMAP_PATHS = {
     facility: '/clinic' as string | undefined,
@@ -229,10 +232,11 @@ export async function loadDirectorySitemapUrls(
 
     try {
         const entries: SitemapDirectoryEntry[] = []
+        let facilityRows: SitemapFacilityRow[] = []
 
         if (kinds.includes('facility')) {
-            const facilities = await collectPagedRows(offset => fetcher.fetchFacilities(offset))
-            entries.push(...facilities.map(row => ({
+            facilityRows = await collectPagedRows(offset => fetcher.fetchFacilities(offset))
+            entries.push(...facilityRows.map(row => ({
                 kind: 'facility' as const,
                 id: row.id,
                 nameEn: row.nameEn,
@@ -252,10 +256,16 @@ export async function loadDirectorySitemapUrls(
             })))
         }
 
-        return entries.flatMap(entry => {
+        const urls = entries.flatMap(entry => {
             const url = sitemapUrlFromEntry(entry, paths)
             return url ? [url] : []
         })
+
+        if (facilityRows.length) {
+            urls.push(...hubSitemapUrls(facilityRows))
+        }
+
+        return urls
     } catch (error) {
         // Dev/e2e often have no directory API. A broken sitemap.xml is worse than
         // omitting entity URLs until generate can reach production.

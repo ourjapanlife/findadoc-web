@@ -2,6 +2,7 @@ import { mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { facilityPath } from './clinicPath'
 import { professionalPath } from './doctorPath'
+import { hubPathsFromFacilities } from './hubIndex'
 import { graphqlEndpoint } from './graphqlEndpoint'
 import type { Facility, HealthcareProfessional } from '~/typedefs/gqlTypes'
 import type { FacilitySearchResult } from './searchDirectory'
@@ -198,23 +199,9 @@ export function readClinicPrerenderCache(id: string): FacilitySearchResult | nul
     }
 }
 
-/**
- * Concrete `/clinic/...` and `/doctor/...` paths for `nuxi generate`. Unknown
- * IDs must stay a real HTTP 404, so these are listed explicitly rather than
- * given an SPA rewrite.
- *
- * The directory is stored on private `runtimeConfig` so prerender workers can
- * fill each page without calling `facility(id)`. Disk cache + env were invisible
- * to those workers, which 429'd production and failed Netlify.
- *
- * If the API is unreachable the generate still succeeds — it just ships no clinic
- * or doctor HTML, and those URLs 404 until the next build that can see the directory.
- */
-export async function buildClinicPrerenderDirectory(): Promise<{
-    directory: Record<string, FacilitySearchResult>
-    professionalDirectory: Record<string, ProfessionalSearchResult>
-    paths: string[]
-    professionalPaths: string[]
+async function fetchDirectoryRows(): Promise<{
+    facilities: Facility[]
+    professionals: HealthcareProfessional[]
 } | null> {
     const facilities = await fetchAllPages(async offset => {
         const data = await graphqlPost<FacilitiesPage>(FACILITIES_QUERY, {
@@ -229,7 +216,6 @@ export async function buildClinicPrerenderDirectory(): Promise<{
     })
 
     if (!facilities) {
-        console.warn('[clinic prerender] directory API unavailable; skipping clinic routes')
         return null
     }
 
@@ -245,15 +231,45 @@ export async function buildClinicPrerenderDirectory(): Promise<{
         }
     }) ?? []
 
-    const directory = joinClinicDirectory(facilities, professionals)
-    const professionalDirectory = joinDoctorDirectory(facilities, professionals)
+    return { facilities, professionals }
+}
+
+/**
+ * Concrete `/clinic/...`, `/doctor/...`, and geography hub paths for `nuxi generate`.
+ * Unknown IDs and locations must stay a real HTTP 404, so these are listed
+ * explicitly rather than given an SPA rewrite.
+ *
+ * The directory is stored on private `runtimeConfig` so prerender workers can
+ * fill each page without calling `facility(id)`. Disk cache + env were invisible
+ * to those workers, which 429'd production and failed Netlify.
+ *
+ * If the API is unreachable the generate still succeeds — it just ships no clinic,
+ * doctor, or hub HTML, and those URLs 404 until the next build that can see the directory.
+ */
+export async function buildClinicPrerenderDirectory(): Promise<{
+    directory: Record<string, FacilitySearchResult>
+    professionalDirectory: Record<string, ProfessionalSearchResult>
+    paths: string[]
+    professionalPaths: string[]
+    hubPaths: string[]
+} | null> {
+    const rows = await fetchDirectoryRows()
+
+    if (!rows) {
+        console.warn('[clinic prerender] directory API unavailable; skipping clinic routes')
+        return null
+    }
+
+    const directory = joinClinicDirectory(rows.facilities, rows.professionals)
+    const professionalDirectory = joinDoctorDirectory(rows.facilities, rows.professionals)
     writeClinicPrerenderCache(directory)
 
     return {
         directory,
         professionalDirectory,
         paths: Object.values(directory).map(facility => facilityPath(facility)),
-        professionalPaths: Object.values(professionalDirectory).map(professional => professionalPath(professional))
+        professionalPaths: Object.values(professionalDirectory).map(professional => professionalPath(professional)),
+        hubPaths: hubPathsFromFacilities(Object.values(directory))
     }
 }
 

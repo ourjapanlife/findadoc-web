@@ -22,8 +22,12 @@ export function slugifySegment(value: string | null | undefined): string {
     return slug
 }
 
-function segmentOrFallback(value: string | null | undefined, fallback: string): string {
-    return slugifySegment(value) || fallback
+export function locationPrefectureSlug(value: string | null | undefined): string {
+    return slugifySegment(value) || 'japan'
+}
+
+export function locationCitySlug(value: string | null | undefined): string {
+    return slugifySegment(value) || 'unknown'
 }
 
 export function facilityIdFromSlugParam(slugParam: string | null | undefined): string | undefined {
@@ -45,9 +49,9 @@ export function facilityPath(facility: Pick<Facility, 'id' | 'nameEn'> & {
         } | null
     } | null
 }): string {
-    const prefecture = segmentOrFallback(facility.contact?.address?.prefectureEn, 'japan')
-    const city = segmentOrFallback(facility.contact?.address?.cityEn, 'unknown')
-    const slug = segmentOrFallback(facility.nameEn, FALLBACK_SLUG)
+    const prefecture = locationPrefectureSlug(facility.contact?.address?.prefectureEn)
+    const city = locationCitySlug(facility.contact?.address?.cityEn)
+    const slug = slugifySegment(facility.nameEn) || FALLBACK_SLUG
 
     return `/clinic/${prefecture}/${city}/${slug}${FACILITY_ID_SEPARATOR}${facility.id}`
 }

@@ -173,9 +173,10 @@ export default defineNuxtConfig({
          * /search reads its filters from the query string and loads the directory from the
          * API in the browser, so there is nothing to prerender: a static shell would ship an
          * empty result list under a real heading, which is worse for crawlers than no page.
-         * Clinic URLs (`/clinic/…`, #1789) and doctor URLs (`/doctor/…`, #1790) are the
-         * indexable entity pages; they are listed for generate in the nitro:config hook,
-         * not here, so unknown IDs stay a real 404.
+         * Clinic URLs (`/clinic/…`, #1789), doctor URLs (`/doctor/…`, #1790), and
+         * geography hubs (`/tokyo`, #1791) are the indexable directory pages; they
+         * are listed for generate in the nitro:config hook, not here, so unknown
+         * IDs and locations stay a real 404.
          */
         '/search': { ssr: false },
         '/login': { ssr: false },
@@ -190,9 +191,9 @@ export default defineNuxtConfig({
     nitro: {
         prerender: {
             crawlLinks: true,
-            // Clinic and doctor HTML is filled from the generate-time directory cache, not
-            // live facility(id)/healthcareProfessional(id) calls. Parallel prerender is then
-            // just disk, not API.
+            // Clinic, doctor, and hub HTML is filled from the generate-time directory
+            // cache, not live facility(id)/healthcareProfessional(id) calls. Parallel
+            // prerender is then just disk, not API.
             concurrency: 8,
             routes: ['/', '/about', '/terms', '/privacypolicy', '/submit', '/npo', '/sitemap.xml']
         }
@@ -238,8 +239,8 @@ export default defineNuxtConfig({
         }
     },
     sitemap: {
-        // One loc per public page until #1796 adds locale prefixes. Clinic and
-        // doctor URLs join via /api/__sitemap__/directory.
+        // One loc per public page until #1796 adds locale prefixes. Clinic,
+        // doctor, and geography hub URLs join via /api/__sitemap__/directory.
         autoI18n: false,
         excludeAppSources: true,
         exclude: [...SITEMAP_EXCLUDE],
