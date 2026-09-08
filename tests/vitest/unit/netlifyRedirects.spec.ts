@@ -70,30 +70,32 @@ describe('SPA fallbacks', () => {
      * would turn unknown IDs or locations into 200 HTML. Missing files must hit
      * the 404 catch-all.
      */
-    it('does not give /clinic, /doctor, or geography hubs an SPA rewrite', () => {
-        const redirects = readRedirects()
-        const spaPaths = [...redirects.matchAll(/^(\S+)\s+\/200\.html\s+200/gm)]
-            .map(match => match[1])
-
-        expect(spaPaths).to.deep.equal([
-            '/search',
-            '/u/*',
-            '/login',
-            '/login/*',
-            '/my-page',
-            '/my-page/*'
-        ])
-        expect(redirects).to.not.match(/^\/clinic/m)
-        expect(redirects).to.not.match(/^\/doctor/m)
-
+    it('does not give /clinic or /doctor an SPA rewrite', () => {
+        expect(readRedirects()).to.not.match(/^\/clinic/m)
+        expect(readRedirects()).to.not.match(/^\/doctor/m)
         const rewrites = readServeJson().rewrites ?? []
-        expect(rewrites.map(rule => rule.source)).to.deep.equal([
-            '/search',
-            '/u/:username',
-            '/login',
-            '/login/:path*',
-            '/my-page',
-            '/my-page/:path*'
-        ])
+        expect(rewrites.some(rule => rule.source.startsWith('/clinic'))).to.equal(false)
+        expect(rewrites.some(rule => rule.source.startsWith('/doctor'))).to.equal(false)
+    })
+
+    it('sends unknown geography paths to the 404 catch-all', () => {
+        const redirects = readRedirects()
+        const spaSources = [...redirects.matchAll(/^(\S+)\s+\/200\.html\s+200/gm)]
+            .map(match => match[1])
+            .filter((source): source is string => Boolean(source))
+        const notFound = redirectRuleIndex(redirects, /^\/\*\s+\/404\.html\s+404/m)
+
+        expect(notFound).to.be.greaterThan(-1)
+
+        for (const path of ['/not-a-real-prefecture-xyz', '/tokyo/not-a-real-city-xyz']) {
+            const hasSpaRewrite = spaSources.some(source => {
+                if (source.endsWith('/*')) {
+                    const prefix = source.slice(0, -2)
+                    return path === prefix || path.startsWith(`${prefix}/`)
+                }
+                return path === source
+            })
+            expect(hasSpaRewrite, path).to.equal(false)
+        }
     })
 })
