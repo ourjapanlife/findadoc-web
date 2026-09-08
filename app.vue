@@ -32,7 +32,7 @@ const canonical = computed(() => canonicalUrl(route.path))
 // Titles live in PAGE_META_TITLE_ROUTES, not in each page, so a missing public
 // route is a type/test failure instead of a forgotten useHead. Canonical, og:url,
 // and noindex follow the same path so they cannot drift from the document title.
-// Entity routes (`/clinic/…`, `/doctor/…`, `/tokyo`) set their own title from the
+// Entity routes (`/clinic/…`, `/doctor/…`, `/tokyo`, `/tokyo/dentistry`) set their own title from the
 // record — omitting `title` here lets that win instead of the brand-only fallback.
 // The template function must be set at runtime: nuxt.config head is serialized
 // into the app manifest, and functions declared there are silently dropped.

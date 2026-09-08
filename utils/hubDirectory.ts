@@ -1,5 +1,7 @@
 import { useRuntimeConfig } from '#imports'
 import { graphqlEndpoint } from './graphqlEndpoint'
+import { buildFacetIndex, type FacetPage } from './facetIndex'
+import { parsePrefectureSecondSegment } from './facetPath'
 import { buildHubIndex, type HubCity, type HubPrefecture } from './hubIndex'
 import type { FacilitySearchResult } from './searchDirectory'
 import type { Facility, HealthcareProfessional } from '~/typedefs/gqlTypes'
@@ -192,40 +194,73 @@ export async function loadFacilityDirectory(): Promise<FacilitySearchResult[] | 
     return fetchFacilitiesLive()
 }
 
-type HubIndex = ReturnType<typeof buildHubIndex>
+type DirectoryIndexes = {
+    hub: ReturnType<typeof buildHubIndex>
+    facets: ReturnType<typeof buildFacetIndex>
+}
 
-let cachedHubIndex: HubIndex | undefined
-let hubIndexLoad: Promise<HubIndex | null> | undefined
+let cachedIndexes: DirectoryIndexes | undefined
+let indexesLoad: Promise<DirectoryIndexes | null> | undefined
 
-async function loadHubIndex(): Promise<HubIndex | null> {
-    if (cachedHubIndex) {
-        return cachedHubIndex
+async function loadDirectoryIndexes(): Promise<DirectoryIndexes | null> {
+    if (cachedIndexes) {
+        return cachedIndexes
     }
 
-    hubIndexLoad ??= (async () => {
+    indexesLoad ??= (async () => {
         try {
             const facilities = await loadFacilityDirectory()
             if (!facilities?.length) {
                 return null
             }
-            cachedHubIndex = buildHubIndex(facilities)
-            return cachedHubIndex
+            cachedIndexes = {
+                hub: buildHubIndex(facilities),
+                facets: buildFacetIndex(facilities)
+            }
+            return cachedIndexes
         } finally {
-            if (!cachedHubIndex) {
-                hubIndexLoad = undefined
+            if (!cachedIndexes) {
+                indexesLoad = undefined
             }
         }
     })()
 
-    return hubIndexLoad
+    return indexesLoad
 }
 
 export async function loadPrefectureHub(prefectureSlug: string): Promise<HubPrefecture | null> {
-    const index = await loadHubIndex()
-    return index?.byPrefecture[prefectureSlug] ?? null
+    const indexes = await loadDirectoryIndexes()
+    return indexes?.hub.byPrefecture[prefectureSlug] ?? null
 }
 
 export async function loadCityHub(prefectureSlug: string, citySlug: string): Promise<HubCity | null> {
     const prefecture = await loadPrefectureHub(prefectureSlug)
     return prefecture?.cities.find(city => city.citySlug === citySlug) ?? null
+}
+
+export async function loadPrefectureFacets(
+    prefectureSlug: string
+): Promise<{ specialties: FacetPage[], languages: FacetPage[] }> {
+    const indexes = await loadDirectoryIndexes()
+    return indexes?.facets.byPrefecture[prefectureSlug] ?? { specialties: [], languages: [] }
+}
+
+export async function loadPrefectureLeaf(
+    prefectureSlug: string,
+    secondSlug: string
+): Promise<{ type: 'city', city: HubCity } | { type: 'facet', facet: FacetPage } | null> {
+    const parsed = parsePrefectureSecondSegment(secondSlug)
+    if (!parsed) {
+        return null
+    }
+
+    if (parsed.kind === 'specialty' || parsed.kind === 'language') {
+        const facets = await loadPrefectureFacets(prefectureSlug)
+        const list = parsed.kind === 'specialty' ? facets.specialties : facets.languages
+        const facet = list.find(entry => entry.slug === parsed.slug)
+        return facet ? { type: 'facet', facet } : null
+    }
+
+    const city = await loadCityHub(prefectureSlug, parsed.slug)
+    return city ? { type: 'city', city } : null
 }
