@@ -1,14 +1,18 @@
 /// <reference types="vitest/globals" />
 import { expect } from 'chai'
-import { buildHubIndex, hubPathsFromFacilities, hubSitemapUrls } from '@/utils/hubIndex'
-import type { FacilitySearchResult } from '@/utils/searchDirectory'
+import {
+    buildHubIndex,
+    hubPathsFromFacilities,
+    hubSitemapUrls,
+    type HubLocationSource
+} from '@/utils/hubIndex'
 
 function facility(
     id: string,
     prefectureEn: string,
     cityEn: string,
     updatedDate = '2026-08-01T00:00:00.000Z'
-): FacilitySearchResult {
+): HubLocationSource {
     return {
         id,
         nameEn: id,
@@ -21,9 +25,8 @@ function facility(
                 cityJa: `${cityEn}-ja`
             }
         },
-        healthcareProfessionals: [],
         updatedDate
-    } as FacilitySearchResult
+    }
 }
 
 describe('buildHubIndex', () => {
