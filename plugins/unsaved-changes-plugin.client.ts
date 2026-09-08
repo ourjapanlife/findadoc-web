@@ -1,3 +1,5 @@
+import type { Pinia } from 'pinia'
+import type { Router } from 'vue-router'
 import { useModerationSubmissionUnsavedStore } from '~/stores/moderationSubmissionUnsavedStore'
 
 export default defineNuxtPlugin({
@@ -24,13 +26,15 @@ export default defineNuxtPlugin({
             if (registeredRouterGuard) return
             registeredRouterGuard = true
 
-            const submissionUnsavedStore = useModerationSubmissionUnsavedStore(nuxtApp.$pinia)
+            const submissionUnsavedStore = useModerationSubmissionUnsavedStore(nuxtApp.$pinia as Pinia)
+            const router = nuxtApp.$router as Router
+            const i18n = nuxtApp.$i18n as { t?: (key: string) => string } | undefined
 
-            nuxtApp.$router.beforeEach(() => {
+            router.beforeEach(() => {
                 if (!isGloballyDirty.value) return true
 
                 return new Promise<boolean>(resolve => {
-                    const message = nuxtApp.$i18n?.t('modEditFacilityOrHPTopbar.hasUnsavedChanges')
+                    const message = i18n?.t?.('modEditFacilityOrHPTopbar.hasUnsavedChanges')
                       ?? 'You have unsaved changes'
                     const confirm = nuxtApp.$withConfirmation
                     if (typeof confirm !== 'function') {

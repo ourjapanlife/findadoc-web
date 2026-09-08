@@ -86,7 +86,7 @@ export function filterDirectory(
 const SPECIALTIES = new Set<string>(Object.values(Specialty))
 const LOCALES = new Set<string>(Object.values(Locale))
 
-function firstString(value: LocationQuery[string]): string | undefined {
+function firstString(value: LocationQuery[string] | undefined): string | undefined {
     const single = Array.isArray(value) ? value[0] : value
     return typeof single === 'string' && single.length ? single : undefined
 }

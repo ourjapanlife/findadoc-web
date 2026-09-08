@@ -133,7 +133,7 @@ import { useSpecialtiesStore } from '~/stores/specialtiesStore'
 import { formatHealthcareProfessionalName } from '~/utils/nameUtils'
 import { isJapaneseLocale, toGqlLocale } from '~/utils/activeLocale'
 import { facilityPath } from '~/utils/clinicPath'
-import type { ProfessionalSearchResult } from '~/utils/doctorProfessional'
+import type { ProfessionalSearchResult } from '~/utils/clinicPrerender'
 import { Insurance, Locale, type LocalizedName } from '~/typedefs/gqlTypes'
 
 const props = defineProps<{
