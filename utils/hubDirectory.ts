@@ -5,6 +5,7 @@ import type { FacilitySearchResult } from './searchDirectory'
 import type { Facility } from '~/typedefs/gqlTypes'
 
 const PAGE_SIZE = 100
+const LIVE_FETCH_TIMEOUT_MS = 10000
 
 const FACILITIES_QUERY = `
     query HubFacilities($filters: FacilitySearchFilters!, $countFilters: FacilitySearchFilters!) {
@@ -72,7 +73,8 @@ async function fetchFacilitiesLive(): Promise<FacilitySearchResult[] | null> {
                         filters: { limit: PAGE_SIZE, offset },
                         countFilters: {}
                     }
-                })
+                }),
+                signal: AbortSignal.timeout(LIVE_FETCH_TIMEOUT_MS)
             })
             if (!response.ok) {
                 return null
@@ -116,12 +118,37 @@ export async function loadFacilityDirectory(): Promise<FacilitySearchResult[] | 
     return fetchFacilitiesLive()
 }
 
-export async function loadPrefectureHub(prefectureSlug: string): Promise<HubPrefecture | null> {
-    const facilities = await loadFacilityDirectory()
-    if (!facilities) {
-        return null
+type HubIndex = ReturnType<typeof buildHubIndex>
+
+let cachedHubIndex: HubIndex | undefined
+let hubIndexLoad: Promise<HubIndex | null> | undefined
+
+async function loadHubIndex(): Promise<HubIndex | null> {
+    if (cachedHubIndex) {
+        return cachedHubIndex
     }
-    return buildHubIndex(facilities).byPrefecture[prefectureSlug] ?? null
+
+    hubIndexLoad ??= (async () => {
+        try {
+            const facilities = await loadFacilityDirectory()
+            if (!facilities?.length) {
+                return null
+            }
+            cachedHubIndex = buildHubIndex(facilities)
+            return cachedHubIndex
+        } finally {
+            if (!cachedHubIndex) {
+                hubIndexLoad = undefined
+            }
+        }
+    })()
+
+    return hubIndexLoad
+}
+
+export async function loadPrefectureHub(prefectureSlug: string): Promise<HubPrefecture | null> {
+    const index = await loadHubIndex()
+    return index?.byPrefecture[prefectureSlug] ?? null
 }
 
 export async function loadCityHub(prefectureSlug: string, citySlug: string): Promise<HubCity | null> {

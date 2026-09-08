@@ -19,7 +19,7 @@ test.describe('Geography hub pages', () => {
             const response = await request.post('http://127.0.0.1:4000', {
                 data: {
                     query: `query {
-                        facilities(filters: { limit: 1 }) {
+                        facilities(filters: { limit: 50 }) {
                             id
                             nameEn
                             contact { address { cityEn prefectureEn } }
@@ -30,7 +30,10 @@ test.describe('Geography hub pages', () => {
             const json = await response.json() as {
                 data?: { facilities?: typeof facility[] }
             }
-            facility = json.data?.facilities?.[0]
+            facility = json.data?.facilities?.find(row => (
+                Boolean(row?.contact?.address?.prefectureEn)
+                && Boolean(row?.contact?.address?.cityEn)
+            ))
         } catch {
             test.skip(true, 'local API is not running')
             return

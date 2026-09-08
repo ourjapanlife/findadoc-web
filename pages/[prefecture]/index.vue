@@ -85,7 +85,7 @@ if (!prefectureSlug || isReservedHubSegment(prefectureSlug)) {
     throw createError({ statusCode: 404, statusMessage: 'Page not found' })
 }
 
-const { data } = await useAsyncData(`hub-prefecture-${prefectureSlug}`, () => loadPrefectureHub(prefectureSlug))
+const { data } = await useAsyncData(`hub-prefecture:${prefectureSlug}`, () => loadPrefectureHub(prefectureSlug))
 
 if (!data.value) {
     throw createError({ statusCode: 404, statusMessage: 'Page not found' })

@@ -23,24 +23,24 @@
         </NuxtLink>
 
         <nav
-            v-if="prefectureHub || cityHub"
+            v-if="showPrefectureHub || showCityHub"
             class="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-primary-text-muted"
             data-testid="clinic-hub-links"
             :aria-label="t('clinicPage.locationNav')"
         >
             <NuxtLink
-                v-if="prefectureHub"
+                v-if="showPrefectureHub"
                 :to="prefectureHub"
                 class="link link-hover"
             >
                 {{ locationPrefecture }}
             </NuxtLink>
             <span
-                v-if="prefectureHub && cityHub"
+                v-if="showPrefectureHub && showCityHub"
                 aria-hidden="true"
             >/</span>
             <NuxtLink
-                v-if="cityHub"
+                v-if="showCityHub"
                 :to="cityHub"
                 class="link link-hover"
             >
@@ -131,6 +131,8 @@ const cityHub = computed(() => cityHubPath(
     facility.value.contact?.address?.prefectureEn,
     facility.value.contact?.address?.cityEn
 ))
+const showPrefectureHub = computed(() => Boolean(prefectureHub.value && locationPrefecture.value))
+const showCityHub = computed(() => Boolean(cityHub.value && locationCity.value))
 
 useHead({
     title: documentTitle,

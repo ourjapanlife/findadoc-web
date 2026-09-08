@@ -70,11 +70,30 @@ describe('SPA fallbacks', () => {
      * would turn unknown IDs or locations into 200 HTML. Missing files must hit
      * the 404 catch-all.
      */
-    it('does not give /clinic or /doctor an SPA rewrite', () => {
-        expect(readRedirects()).to.not.match(/^\/clinic/m)
-        expect(readRedirects()).to.not.match(/^\/doctor/m)
+    it('does not give /clinic, /doctor, or geography hubs an SPA rewrite', () => {
+        const redirects = readRedirects()
+        const spaPaths = [...redirects.matchAll(/^(\S+)\s+\/200\.html\s+200/gm)]
+            .map(match => match[1])
+
+        expect(spaPaths).to.deep.equal([
+            '/search',
+            '/u/*',
+            '/login',
+            '/login/*',
+            '/my-page',
+            '/my-page/*'
+        ])
+        expect(redirects).to.not.match(/^\/clinic/m)
+        expect(redirects).to.not.match(/^\/doctor/m)
+
         const rewrites = readServeJson().rewrites ?? []
-        expect(rewrites.some(rule => rule.source.startsWith('/clinic'))).to.equal(false)
-        expect(rewrites.some(rule => rule.source.startsWith('/doctor'))).to.equal(false)
+        expect(rewrites.map(rule => rule.source)).to.deep.equal([
+            '/search',
+            '/u/:username',
+            '/login',
+            '/login/:path*',
+            '/my-page',
+            '/my-page/:path*'
+        ])
     })
 })

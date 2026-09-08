@@ -61,7 +61,7 @@ if (!prefectureSlug || !citySlug || isReservedHubSegment(prefectureSlug)) {
 }
 
 const { data } = await useAsyncData(
-    `hub-city-${prefectureSlug}-${citySlug}`,
+    `hub-city:${prefectureSlug}:${citySlug}`,
     () => loadCityHub(prefectureSlug, citySlug)
 )
 
