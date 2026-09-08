@@ -34,7 +34,7 @@ import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { createError, navigateTo, useAsyncData, useHead, useRoute } from '#imports'
 import { fetchClinicById } from '~/utils/clinicFacility'
-import { facilityDocumentTitle, facilityIdFromSlugParam, facilityPath } from '~/utils/clinicPath'
+import { canonicalPathMatches, facilityDocumentTitle, facilityIdFromSlugParam, facilityPath } from '~/utils/clinicPath'
 import { isJapaneseLocale } from '~/utils/activeLocale'
 import { formatPageTitle } from '~/utils/site'
 
@@ -54,11 +54,8 @@ if (!data.value) {
 }
 
 const canonicalPath = facilityPath(data.value)
-const currentPath = route.path.length > 1 && route.path.endsWith('/')
-    ? route.path.slice(0, -1)
-    : route.path
 
-if (currentPath !== canonicalPath) {
+if (!canonicalPathMatches(route.path, canonicalPath)) {
     await navigateTo(canonicalPath, { redirectCode: 301, replace: true })
 }
 

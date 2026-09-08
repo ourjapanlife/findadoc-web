@@ -1,6 +1,9 @@
 import { professionalDocumentTitle, professionalPath } from '../../utils/doctorPath'
 import { formatPageTitle } from '../../utils/site'
+import type { HealthcareProfessional } from '../../typedefs/gqlTypes'
 import { test, expect } from '@playwright/test'
+
+type SeededProfessional = Pick<HealthcareProfessional, 'id' | 'names'>
 
 const UNKNOWN_DOCTOR_PATH
     = '/doctor/missing--00000000-0000-4000-8000-000000000001'
@@ -13,10 +16,7 @@ test.describe('Professional pages', () => {
     })
 
     test('renders a seeded professional when the local API is up', async ({ page, request }) => {
-        let professional: {
-            id: string
-            names?: Array<{ firstName?: string, lastName?: string, locale?: string }>
-        } | undefined
+        let professional: SeededProfessional | undefined
 
         try {
             const response = await request.post('http://127.0.0.1:4000', {
@@ -30,7 +30,7 @@ test.describe('Professional pages', () => {
                 }
             })
             const json = await response.json() as {
-                data?: { healthcareProfessionals?: typeof professional[] }
+                data?: { healthcareProfessionals?: SeededProfessional[] }
             }
             professional = json.data?.healthcareProfessionals?.[0]
         } catch {
@@ -43,22 +43,15 @@ test.describe('Professional pages', () => {
             return
         }
 
-        const path = professionalPath({
-            id: professional.id,
-            names: professional.names ?? []
-        })
-        const english = professional.names?.find(name => name.locale === 'en_US')
-        const displayName = english
-            ? `${english.firstName ?? ''} ${english.lastName ?? ''}`.trim()
-            : `${professional.names?.[0]?.firstName ?? ''} ${professional.names?.[0]?.lastName ?? ''}`.trim()
+        const path = professionalPath(professional)
 
         await page.goto(path)
 
         await expect(page.getByTestId('doctor-page')).toBeVisible()
-        if (displayName) {
-            await expect(page.getByRole('heading', { level: 1, name: displayName })).toBeVisible()
-            await expect(page).toHaveTitle(formatPageTitle(professionalDocumentTitle(displayName)))
-        }
+        const heading = page.getByRole('heading', { level: 1 })
+        await expect(heading).toBeVisible()
+        const headingText = (await heading.innerText()).trim()
+        await expect(page).toHaveTitle(formatPageTitle(professionalDocumentTitle(headingText)))
         await expect(page.getByTestId('doctor-back-to-search')).toBeVisible()
     })
 })

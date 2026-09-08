@@ -31,6 +31,7 @@ import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { createError, navigateTo, useAsyncData, useHead, useRoute } from '#imports'
 import { fetchDoctorById } from '~/utils/doctorProfessional'
+import { canonicalPathMatches } from '~/utils/clinicPath'
 import { professionalDocumentTitle, professionalIdFromSlugParam, professionalPath } from '~/utils/doctorPath'
 import { formatHealthcareProfessionalName } from '~/utils/nameUtils'
 import { toGqlLocale } from '~/utils/activeLocale'
@@ -55,11 +56,8 @@ if (!data.value) {
 }
 
 const canonicalPath = professionalPath(data.value)
-const currentPath = route.path.length > 1 && route.path.endsWith('/')
-    ? route.path.slice(0, -1)
-    : route.path
 
-if (currentPath !== canonicalPath) {
+if (!canonicalPathMatches(route.path, canonicalPath)) {
     await navigateTo(canonicalPath, { redirectCode: 301, replace: true })
 }
 
