@@ -91,10 +91,6 @@ if (!data.value) {
     throw createError({ statusCode: 404, statusMessage: 'Page not found' })
 }
 
-if (!canonicalPathMatches(route.path, data.value.path)) {
-    await navigateTo(data.value.path, { redirectCode: 301, replace: true })
-}
-
 const prefecture = computed(() => data.value!)
 const isJapanese = computed(() => isJapaneseLocale(locale.value))
 
@@ -117,14 +113,18 @@ function cityLabel(city: HubCity): string {
         : city.cityEn
 }
 
-useHead({
-    title: documentTitle,
-    meta: computed(() => [
-        { name: 'description', content: metaDescription.value, key: 'description' },
-        { property: 'og:title', content: brandedTitle.value, key: 'og:title' },
-        { property: 'og:description', content: metaDescription.value, key: 'og:description' },
-        { name: 'twitter:title', content: brandedTitle.value, key: 'twitter:title' },
-        { name: 'twitter:description', content: metaDescription.value, key: 'twitter:description' }
-    ])
-})
+if (!canonicalPathMatches(route.path, data.value.path)) {
+    await navigateTo(data.value.path, { redirectCode: 301, replace: true })
+} else {
+    useHead({
+        title: documentTitle,
+        meta: computed(() => [
+            { name: 'description', content: metaDescription.value, key: 'description' },
+            { property: 'og:title', content: brandedTitle.value, key: 'og:title' },
+            { property: 'og:description', content: metaDescription.value, key: 'og:description' },
+            { name: 'twitter:title', content: brandedTitle.value, key: 'twitter:title' },
+            { name: 'twitter:description', content: metaDescription.value, key: 'twitter:description' }
+        ])
+    })
+}
 </script>

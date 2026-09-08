@@ -69,10 +69,6 @@ if (!data.value) {
     throw createError({ statusCode: 404, statusMessage: 'Page not found' })
 }
 
-if (!canonicalPathMatches(route.path, data.value.path)) {
-    await navigateTo(data.value.path, { redirectCode: 301, replace: true })
-}
-
 const city = computed(() => data.value!)
 const prefecturePath = computed(() => prefectureHubPathFromSlug(city.value.prefectureSlug) ?? '/search')
 const isJapanese = computed(() => isJapaneseLocale(locale.value))
@@ -105,15 +101,19 @@ const metaDescription = computed(() => t('hubPage.cityMeta', {
 }))
 const robots = computed(() => (isIndexableCityHub(city.value.facilities.length) ? undefined : 'noindex'))
 
-useHead({
-    title: documentTitle,
-    meta: computed(() => [
-        { name: 'description', content: metaDescription.value, key: 'description' },
-        { property: 'og:title', content: brandedTitle.value, key: 'og:title' },
-        { property: 'og:description', content: metaDescription.value, key: 'og:description' },
-        { name: 'twitter:title', content: brandedTitle.value, key: 'twitter:title' },
-        { name: 'twitter:description', content: metaDescription.value, key: 'twitter:description' },
-        ...(robots.value ? [{ name: 'robots', content: robots.value, key: 'robots' }] : [])
-    ])
-})
+if (!canonicalPathMatches(route.path, data.value.path)) {
+    await navigateTo(data.value.path, { redirectCode: 301, replace: true })
+} else {
+    useHead({
+        title: documentTitle,
+        meta: computed(() => [
+            { name: 'description', content: metaDescription.value, key: 'description' },
+            { property: 'og:title', content: brandedTitle.value, key: 'og:title' },
+            { property: 'og:description', content: metaDescription.value, key: 'og:description' },
+            { name: 'twitter:title', content: brandedTitle.value, key: 'twitter:title' },
+            { name: 'twitter:description', content: metaDescription.value, key: 'twitter:description' },
+            ...(robots.value ? [{ name: 'robots', content: robots.value, key: 'robots' }] : [])
+        ])
+    })
+}
 </script>

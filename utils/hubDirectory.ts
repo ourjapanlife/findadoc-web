@@ -65,7 +65,7 @@ const PROFESSIONALS_QUERY = `
 function directoryValues(
     directory: Record<string, FacilitySearchResult> | undefined | null
 ): FacilitySearchResult[] | undefined {
-    if (!directory || Object.keys(directory).length === 0) {
+    if (directory == null) {
         return undefined
     }
     return Object.values(directory)
@@ -179,12 +179,12 @@ export async function loadFacilityDirectory(): Promise<FacilitySearchResult[] | 
         const fromConfig = directoryValues(
             useRuntimeConfig().clinicPrerenderDirectory as Record<string, FacilitySearchResult> | undefined
         )
-        if (fromConfig) {
+        if (fromConfig?.length) {
             return fromConfig
         }
 
         const fromBundle = await directoryFromBundle()
-        if (fromBundle) {
+        if (fromBundle?.length) {
             return fromBundle
         }
     }
