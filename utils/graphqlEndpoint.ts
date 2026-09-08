@@ -4,8 +4,8 @@
  * `useRuntimeConfig`.
  *
  * Pass the flag in when you have it (runtime config). Omit it to read
- * `NUXT_USE_LOCAL_API` from the environment — that is how clinic (and later
- * doctor) prerender paging reaches the same host the app will query.
+ * `NUXT_USE_LOCAL_API` from the environment — that is how clinic and doctor
+ * prerender paging reaches the same host the app will query.
  */
 export const PRODUCTION_GRAPHQL_URL = 'https://api.findadoc.jp'
 export const LOCAL_GRAPHQL_URL = 'http://127.0.0.1:4000'

@@ -115,14 +115,17 @@ describe('pageTitleKeyForPath', () => {
         expect(pageTitleKeyForPath('/my-page')).to.equal(undefined)
         expect(pageTitleKeyForPath('/login')).to.equal(undefined)
         expect(pageTitleKeyForPath('/clinic/tokyo/nakano/a-one--f1')).to.equal(undefined)
+        expect(pageTitleKeyForPath('/doctor/aiko-tanaka--p1')).to.equal(undefined)
         expect(pageTitleKeyForPath('/not-a-page')).to.equal(undefined)
     })
 })
 
 describe('isEntityRoute', () => {
-    it('treats clinic detail URLs as entity pages that own their titles', () => {
+    it('treats clinic and doctor detail URLs as entity pages that own their titles', () => {
         expect(isEntityRoute('/clinic')).to.equal(true)
         expect(isEntityRoute('/clinic/tokyo/nakano/a-one--f1')).to.equal(true)
+        expect(isEntityRoute('/doctor')).to.equal(true)
+        expect(isEntityRoute('/doctor/aiko-tanaka--p1')).to.equal(true)
         expect(isEntityRoute('/search')).to.equal(false)
         expect(isEntityRoute('/about')).to.equal(false)
     })

@@ -121,10 +121,12 @@
                     class="card flex flex-col gap-3 p-4"
                 >
                     <div class="flex flex-col">
-                        <!-- Names stay text until #1790 ships /doctor/[slug]--[id] pages. -->
-                        <p class="m-0 text-lg font-semibold leading-snug text-primary-text">
+                        <NuxtLink
+                            :to="professional.path"
+                            class="text-lg font-semibold leading-snug text-primary hover:underline"
+                        >
                             {{ professional.name }}
-                        </p>
+                        </NuxtLink>
                         <p
                             v-if="professional.degrees"
                             class="m-0 text-sm text-primary-text-muted"
@@ -186,6 +188,7 @@ import { formatHealthcareProfessionalName } from '~/utils/nameUtils'
 import { isJapaneseLocale, toGqlLocale } from '~/utils/activeLocale'
 import { formatToReadableDate } from '~/utils/dateUtils'
 import { useUmami } from '~/composables/useUmamiTracking'
+import { professionalPath } from '~/utils/doctorPath'
 import { facilityEmail,
     facilityMapsUrl,
     facilityPhone,
@@ -251,6 +254,7 @@ const email = computed(() => facilityEmail(props.facility))
 
 const professionals = computed(() => props.facility.healthcareProfessionals.map(professional => ({
     id: professional.id,
+    path: professionalPath(professional),
     name: formatHealthcareProfessionalName(professional.names, toGqlLocale(locale.value)),
     degrees: (professional.degrees ?? []).join(', '),
     specialties: (professional.specialties ?? [])

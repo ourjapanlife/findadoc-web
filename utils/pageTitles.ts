@@ -14,7 +14,7 @@ export function pageMetaI18nKey(key: PageMetaTitleKey): `pageMeta.${PageMetaTitl
  * New `pages/*.vue` files are a different axis: TypeScript cannot see the filesystem,
  * so `tests/vitest/unit/siteTitle.spec.ts` asserts every page is either in this map,
  * under an untitled prefix (`/my-page`, `/u`, `/login`), or an entity prefix
- * (`/clinic`) that owns its title.
+ * (`/clinic`, `/doctor`) that owns its title.
  */
 export const PAGE_META_TITLE_ROUTES = {
     homeTitle: '/',
@@ -35,10 +35,10 @@ const UNTITLED_ROUTE_PREFIXES = ['/my-page', '/u', '/login'] as const
 
 /**
  * Directory entity pages set their own `<title>` from the record. They are not
- * in PAGE_META_TITLE_ROUTES (one key cannot cover 465 clinics) and must not
- * fall through to the brand-only title in `app.vue`.
+ * in PAGE_META_TITLE_ROUTES (one key cannot cover hundreds of clinics or
+ * doctors) and must not fall through to the brand-only title in `app.vue`.
  */
-const ENTITY_ROUTE_PREFIXES = ['/clinic'] as const
+const ENTITY_ROUTE_PREFIXES = ['/clinic', '/doctor'] as const
 
 function normalisePagePath(path: string): string {
     if (path.length > 1 && path.endsWith('/')) {

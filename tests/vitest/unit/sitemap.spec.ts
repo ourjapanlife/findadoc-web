@@ -10,6 +10,7 @@ import {
     SITEMAP_DIRECTORY_PAGE_SIZE,
     sitemapUrlFromEntry
 } from '@/utils/sitemapDirectory'
+import { Locale } from '~/typedefs/gqlTypes'
 
 describe('publicSitemapUrls', () => {
     it('lists every titled public page and none of the robots-disallowed trees', () => {
@@ -32,13 +33,9 @@ describe('SITEMAP_EXCLUDE', () => {
 })
 
 describe('sitemapUrlFromEntry', () => {
-    const paths = { facility: '/clinic', professional: '/professionals' }
-
-    it('omits professionals until that page tree exists, and lists clinics at facilityPath', () => {
+    it('lists clinics and doctors at their canonical paths', () => {
         expect(DIRECTORY_SITEMAP_PATHS.facility).to.equal('/clinic')
-        expect(DIRECTORY_SITEMAP_PATHS.professional).to.equal(undefined)
-        expect(sitemapUrlFromEntry({ kind: 'professional', id: 'p1', updatedDate: '2026-08-01' }))
-            .to.equal(undefined)
+        expect(DIRECTORY_SITEMAP_PATHS.professional).to.equal('/doctor')
         expect(sitemapUrlFromEntry({
             kind: 'facility',
             id: 'abc',
@@ -50,18 +47,30 @@ describe('sitemapUrlFromEntry', () => {
             loc: '/clinic/tokyo/shibuya/tokyo-family-clinic--abc',
             lastmod: '2026-08-01T00:00:00.000Z'
         })
-    })
-
-    it('uses updatedDate as lastmod when the prefix is set', () => {
-        expect(sitemapUrlFromEntry(
-            { kind: 'professional', id: 'p1', updatedDate: '2026-08-01T00:00:00.000Z' },
-            paths
-        )).to.deep.equal({ loc: '/professionals/p1', lastmod: '2026-08-01T00:00:00.000Z' })
+        expect(sitemapUrlFromEntry({
+            kind: 'professional',
+            id: 'p1',
+            names: [{ firstName: 'Aiko', lastName: 'Tanaka', locale: Locale.EnUs }],
+            updatedDate: '2026-08-01T00:00:00.000Z'
+        })).to.deep.equal({
+            loc: '/doctor/aiko-tanaka--p1',
+            lastmod: '2026-08-01T00:00:00.000Z'
+        })
     })
 
     it('omits lastmod when the API did not send updatedDate', () => {
-        expect(sitemapUrlFromEntry({ kind: 'professional', id: 'p1' }, paths))
-            .to.deep.equal({ loc: '/professionals/p1' })
+        expect(sitemapUrlFromEntry({
+            kind: 'professional',
+            id: 'p1',
+            names: [{ firstName: 'Aiko', lastName: 'Tanaka', locale: Locale.EnUs }]
+        })).to.deep.equal({ loc: '/doctor/aiko-tanaka--p1' })
+    })
+
+    it('omits a kind when that prefix is unset', () => {
+        expect(sitemapUrlFromEntry(
+            { kind: 'professional', id: 'p1' },
+            { facility: '/clinic', professional: undefined }
+        )).to.equal(undefined)
     })
 })
 
@@ -103,7 +112,7 @@ describe('loadDirectorySitemapUrls', () => {
         expect(urls).to.deep.equal([])
     })
 
-    it('does not fetch professionals while that prefix is unset', async () => {
+    it('pages facilities and professionals once both prefixes exist', async () => {
         const urls = await loadDirectorySitemapUrls({
             fetchFacilities: async () => ({
                 rows: [{
@@ -114,14 +123,20 @@ describe('loadDirectorySitemapUrls', () => {
                 }],
                 totalCount: 1
             }),
-            fetchProfessionals: async () => {
-                throw new Error('professionals should not be fetched')
-            }
+            fetchProfessionals: async () => ({
+                rows: [{
+                    id: 'p1',
+                    names: [{ firstName: 'Aiko', lastName: 'Tanaka', locale: Locale.EnUs }],
+                    updatedDate: '2026-08-01T00:00:00.000Z'
+                }],
+                totalCount: 1
+            })
         })
 
-        expect(directoryKindsToFetch()).to.deep.equal(['facility'])
+        expect(directoryKindsToFetch()).to.deep.equal(['facility', 'professional'])
         expect(urls).to.deep.equal([
-            { loc: '/clinic/tokyo/shibuya/tokyo-family-clinic--f1', lastmod: '2026-08-01T00:00:00.000Z' }
+            { loc: '/clinic/tokyo/shibuya/tokyo-family-clinic--f1', lastmod: '2026-08-01T00:00:00.000Z' },
+            { loc: '/doctor/aiko-tanaka--p1', lastmod: '2026-08-01T00:00:00.000Z' }
         ])
     })
 
@@ -138,7 +153,7 @@ describe('loadDirectorySitemapUrls', () => {
         expect(urls).to.deep.equal([])
     })
 
-    it('pages facilities and maps lastmod once a prefix exists', async () => {
+    it('pages facilities and maps lastmod when only the clinic prefix exists', async () => {
         const urls = await loadDirectorySitemapUrls(
             {
                 fetchFacilities: async offset => ({

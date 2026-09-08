@@ -8,7 +8,7 @@ const LEGACY_KEYS = ['theme', 'isDarkMode']
 /*
  * Module-level so every ThemeManager (footer, hamburger menu) shares one source of truth.
  * The <html> class is also set by an inline script in <head> before first paint — see
- * nuxt.config.ts — so this composable only has to keep the two in step after hydration.
+ * utils/nuxt/appHead.ts — so this composable only has to keep the two in step after hydration.
  */
 const scheme = ref<ColorScheme>('auto')
 let initialized = false
