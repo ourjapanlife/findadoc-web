@@ -29,7 +29,9 @@ test.describe('Discovery and social meta', () => {
         const body = await response.text()
         expect(body).toMatch(/<urlset\b/)
 
-        const locs = [...body.matchAll(/<loc>\s*([^<]+)\s*<\/loc>/g)].map(match => match[1].trim())
+        const locs = [...body.matchAll(/<loc>\s*([^<]+)\s*<\/loc>/g)]
+            .map(match => match[1]?.trim())
+            .filter((loc): loc is string => Boolean(loc))
         const paths = locs.map(loc => {
             const pathname = new URL(loc).pathname
             return pathname.length > 1 && pathname.endsWith('/') ? pathname.slice(0, -1) : pathname || '/'

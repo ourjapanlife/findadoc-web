@@ -4,8 +4,6 @@ import type { Facility, HealthcareProfessional } from '~/typedefs/gqlTypes'
 import type { ProfessionalSearchResult } from './clinicPrerender'
 import { useRuntimeConfig } from '#imports'
 
-export type { ProfessionalSearchResult }
-
 const PUBLIC_REQUEST_OPTIONS = {
     skipAuth: true,
     retryAmount: 2,

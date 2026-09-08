@@ -260,7 +260,7 @@ export const useSearchResultsStore = defineStore('searchResultsStore', () => {
             )
 
             if (response.hasErrors) {
-                throw new Error(response.errors.map(error => error.message).join('; ') || 'facilities request failed')
+                throw new Error((response.errors ?? []).map(error => error.message).join('; ') || 'facilities request failed')
             }
 
             return {
@@ -288,7 +288,7 @@ export const useSearchResultsStore = defineStore('searchResultsStore', () => {
             )
 
             if (response.hasErrors) {
-                throw new Error(response.errors.map(error => error.message).join('; ') || 'professionals request failed')
+                throw new Error((response.errors ?? []).map(error => error.message).join('; ') || 'professionals request failed')
             }
 
             return {

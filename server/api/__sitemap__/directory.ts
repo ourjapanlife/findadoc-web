@@ -1,4 +1,4 @@
-import { defineSitemapEventHandler } from '#imports'
+import { defineEventHandler } from 'h3'
 import { loadDirectorySitemapUrls } from '~/utils/sitemapDirectory'
 
-export default defineSitemapEventHandler(() => loadDirectorySitemapUrls())
+export default defineEventHandler(() => loadDirectorySitemapUrls())
