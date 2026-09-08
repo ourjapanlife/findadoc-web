@@ -514,5 +514,23 @@
   "clinicPage": {
     "backToSearch": "Back to search",
     "metaDescription": "{name} in {city}, {prefecture}. Address, phone and the languages spoken by staff."
+  },
+  "doctorPage": {
+    "backToSearch": "Back to search",
+    "metaDescription": "{name} — {specialties}. Languages spoken: {languages}.",
+    "specialtiesFallback": "healthcare professional",
+    "languagesFallback": "languages listed on the profile",
+    "specialties": "Specialties",
+    "languages": "Languages spoken",
+    "insurance": "Accepted insurance",
+    "additionalInfo": "For patients",
+    "facilities": "Clinics",
+    "insuranceLabels": {
+      "INSURANCE_NOT_ACCEPTED": "Does not accept insurance",
+      "INTERNATIONAL_HEALTH_INSURANCE": "International health insurance",
+      "JAPANESE_HEALTH_INSURANCE": "Japanese health insurance",
+      "TRAVEL_INSURANCE": "Travel insurance",
+      "UNINSURED": "Uninsured / self-pay"
+    }
   }
 }

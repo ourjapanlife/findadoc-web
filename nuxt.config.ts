@@ -2,88 +2,14 @@ import { defineNuxtConfig } from 'nuxt/config'
 import i18nLocales from './i18n'
 import tailwindcss from '@tailwindcss/vite'
 import { VIEWPORT_BREAKPOINTS, VIEWPORT_FALLBACK_BREAKPOINT } from './utils/viewport'
-import { isNuxtGenerateCommand, buildClinicPrerenderDirectory } from './utils/clinicPrerender'
 import { publicSitemapUrls, SITEMAP_EXCLUDE } from './utils/sitemap'
 import { SITE_DESCRIPTION, SITE_ORIGIN, SITE_SOCIAL_IMAGE, SITE_TITLE } from './utils/site'
-
-type ClinicPrerenderBuild = Awaited<ReturnType<typeof buildClinicPrerenderDirectory>>
-
-let clinicDirectoryBuild: ClinicPrerenderBuild | undefined
-let clinicDirectoryBuildPromise: Promise<ClinicPrerenderBuild> | undefined
-
-async function clinicDirectoryForGenerate(): Promise<ClinicPrerenderBuild> {
-    if (!isNuxtGenerateCommand()) {
-        return null
-    }
-
-    clinicDirectoryBuildPromise ??= buildClinicPrerenderDirectory().then(built => {
-        clinicDirectoryBuild = built
-        return built
-    })
-
-    return clinicDirectoryBuildPromise
-}
-
-function clinicDirectoryVitePlugin() {
-    return {
-        name: 'clinic-directory',
-        resolveId(id: string) {
-            if (id === '#clinic-directory') {
-                return '\0clinic-directory'
-            }
-        },
-        load(this: { environment?: { name?: string } }, id: string) {
-            if (id !== '\0clinic-directory') {
-                return
-            }
-
-            if (this.environment?.name === 'client') {
-                return 'export default {}'
-            }
-
-            const directory = clinicDirectoryBuild?.directory ?? {}
-            return `export default ${JSON.stringify(directory)}`
-        }
-    }
-}
-
-/**
- * The analytics tag, only when it is actually configured.
- *
- * A bare truthiness check is not enough: the deploy environment sets these to the
- * literal two-character string `""`, which is truthy, so the build emitted
- * `<script src='""'>`. An empty `src` resolves against the current document, so every
- * page requested itself as JavaScript — normally a harmless 404, but fatal on any path
- * covered by an SPA rewrite, where it returns HTML with 200 and the parser throws
- * `Unexpected token '<'` before the app can hydrate.
- */
-function umamiScript() {
-    const clean = (value?: string) => value?.replace(/^["']|["']$/g, '').trim() ?? ''
-    const url = clean(process.env.NUXT_PUBLIC_UMAMI_URL)
-    const siteId = clean(process.env.NUXT_PUBLIC_UMAMI_SITE_ID)
-
-    if (!url || !siteId || process.env.NODE_ENV !== 'production') {
-        return []
-    }
-
-    return [{ src: url, async: true, defer: true, 'data-website-id': siteId }]
-}
-
-/**
- * Applies the stored colour scheme before first paint.
- *
- * Runs inline in <head> so a returning dark-mode visitor never sees a light flash on a
- * prerendered page. Mirrors the migration in composables/useColorScheme.ts: only an explicit
- * dark choice survives from the old five-colourway picker. Anything else means "auto", which
- * is no class at all — the stylesheet then follows prefers-color-scheme.
- */
-const COLOR_SCHEME_BOOTSTRAP = `(function () {
-  try {
-    var s = localStorage.getItem('colorScheme')
-    if (s !== 'dark' && s !== 'light') s = localStorage.getItem('isDarkMode') === 'true' ? 'dark' : ''
-    if (s) document.documentElement.classList.add('theme-' + s)
-  } catch (e) {}
-})()`
+import { COLOR_SCHEME_BOOTSTRAP, umamiScript } from './utils/nuxt/appHead'
+import {
+    applyEntityDirectoryToNitro,
+    applyEntityDirectoryToNuxt,
+    entityDirectoryVitePlugins
+} from './utils/nuxt/entityDirectoryGenerate'
 
 export default defineNuxtConfig({
 
@@ -212,9 +138,10 @@ export default defineNuxtConfig({
     },
 
     runtimeConfig: {
-        // Filled during `nuxi generate` so clinic pages prerender from memory.
+        // Filled during `nuxi generate` so clinic and doctor pages prerender from memory.
         // Private: not sent to the browser. Empty in `nuxi dev` (live GraphQL).
         clinicPrerenderDirectory: {},
+        doctorPrerenderDirectory: {},
         public: {
             isTestingMode: process.env.NUXT_IS_TESTING_MODE,
 
@@ -246,8 +173,9 @@ export default defineNuxtConfig({
          * /search reads its filters from the query string and loads the directory from the
          * API in the browser, so there is nothing to prerender: a static shell would ship an
          * empty result list under a real heading, which is worse for crawlers than no page.
-         * Clinic URLs (`/clinic/…`, #1789) are the indexable entity pages; they are listed
-         * for generate in the nitro:config hook, not here, so unknown IDs stay a real 404.
+         * Clinic URLs (`/clinic/…`, #1789) and doctor URLs (`/doctor/…`, #1790) are the
+         * indexable entity pages; they are listed for generate in the nitro:config hook,
+         * not here, so unknown IDs stay a real 404.
          */
         '/search': { ssr: false },
         '/login': { ssr: false },
@@ -262,8 +190,9 @@ export default defineNuxtConfig({
     nitro: {
         prerender: {
             crawlLinks: true,
-            // Clinic HTML is filled from the generate-time directory cache, not live
-            // facility(id) calls. Parallel prerender is then just disk, not API.
+            // Clinic and doctor HTML is filled from the generate-time directory cache, not
+            // live facility(id)/healthcareProfessional(id) calls. Parallel prerender is then
+            // just disk, not API.
             concurrency: 8,
             routes: ['/', '/about', '/terms', '/privacypolicy', '/submit', '/npo', '/sitemap.xml']
         }
@@ -271,37 +200,16 @@ export default defineNuxtConfig({
 
     vite: { plugins: [
         tailwindcss(),
-        clinicDirectoryVitePlugin()
+        ...entityDirectoryVitePlugins()
     ] },
     telemetry: false,
 
     hooks: {
         async ready(nuxt) {
-            const built = await clinicDirectoryForGenerate()
-            if (!built) {
-                return
-            }
-
-            nuxt.options.runtimeConfig.clinicPrerenderDirectory = built.directory
+            await applyEntityDirectoryToNuxt(nuxt)
         },
         async 'nitro:config'(nitroConfig) {
-            const built = await clinicDirectoryForGenerate()
-            if (!built || nitroConfig.dev) {
-                return
-            }
-
-            console.warn(`[clinic prerender] ${built.paths.length} clinic pages from directory payload`)
-            nitroConfig.runtimeConfig ??= {}
-            nitroConfig.runtimeConfig.clinicPrerenderDirectory = built.directory
-            nitroConfig.virtual = {
-                ...nitroConfig.virtual,
-                '#clinic-directory': `export default ${JSON.stringify(built.directory)}`
-            }
-            nitroConfig.prerender ??= {}
-            const existing = nitroConfig.prerender.routes
-            nitroConfig.prerender.routes = Array.isArray(existing)
-                ? [...existing, ...built.paths]
-                : built.paths
+            await applyEntityDirectoryToNitro(nitroConfig)
         }
     },
     eslint: {
@@ -330,8 +238,8 @@ export default defineNuxtConfig({
         }
     },
     sitemap: {
-        // One loc per public page until #1796 adds locale prefixes. Clinic URLs
-        // join via /api/__sitemap__/directory; professionals wait on #1790.
+        // One loc per public page until #1796 adds locale prefixes. Clinic and
+        // doctor URLs join via /api/__sitemap__/directory.
         autoI18n: false,
         excludeAppSources: true,
         exclude: [...SITEMAP_EXCLUDE],

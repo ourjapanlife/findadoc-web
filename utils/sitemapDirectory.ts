@@ -1,7 +1,8 @@
 import { gql, GraphQLClient } from 'graphql-request'
 import { facilityPath } from './clinicPath'
+import { professionalPath } from './doctorPath'
 import { graphqlEndpoint } from './graphqlEndpoint'
-import type { FacilitySearchFilters, HealthcareProfessionalSearchFilters } from '~/typedefs/gqlTypes'
+import type { FacilitySearchFilters, HealthcareProfessionalSearchFilters, LocalizedName } from '~/typedefs/gqlTypes'
 
 /**
  * Same cap the directory store uses. The API silently truncates or errors above this
@@ -11,15 +12,15 @@ export const SITEMAP_DIRECTORY_PAGE_SIZE = 100
 
 /**
  * Entity URL prefixes. A set prefix means that kind is listed. Facility locs
- * are `facilityPath` (#1789); the prefix is only the enable flag. Professional
- * stays unset until #1790. The sitemap fetch is skipped while every prefix is
- * unset so `nuxi generate` does not advertise URLs that 404.
+ * are `facilityPath` (#1789); professional locs are `professionalPath` (#1790).
+ * The prefix is only the enable flag. The sitemap fetch is skipped while every
+ * prefix is unset so `nuxi generate` does not advertise URLs that 404.
  *
  * Hub and facet pages (#1791, #1792) add their own prefixes here the same way.
  */
 export const DIRECTORY_SITEMAP_PATHS = {
     facility: '/clinic' as string | undefined,
-    professional: undefined as string | undefined
+    professional: '/doctor' as string | undefined
 }
 
 export type SitemapDirectoryKind = keyof typeof DIRECTORY_SITEMAP_PATHS
@@ -31,6 +32,7 @@ export type SitemapDirectoryEntry = {
     nameEn?: string | null
     cityEn?: string | null
     prefectureEn?: string | null
+    names?: LocalizedName[] | null
 }
 
 export type SitemapDirectoryUrl = {
@@ -64,7 +66,10 @@ export function directorySitemapLoc(
         })
     }
 
-    return `${paths[entry.kind]}/${entry.id}`
+    return professionalPath({
+        id: entry.id,
+        names: entry.names ?? []
+    })
 }
 
 export function sitemapUrlFromEntry(
@@ -134,6 +139,12 @@ const sitemapProfessionalsQuery = gql`
         healthcareProfessionals(filters: $filters) {
             id
             updatedDate
+            names {
+                firstName
+                middleName
+                lastName
+                locale
+            }
         }
         healthcareProfessionalsTotalCount(filters: $countFilters)
     }
@@ -151,9 +162,15 @@ type SitemapFacilityRow = {
     } | null
 }
 
+type SitemapProfessionalRow = {
+    id: string
+    updatedDate?: string | null
+    names?: LocalizedName[] | null
+}
+
 type DirectoryFetcher = {
     fetchFacilities: (offset: number) => Promise<DirectoryPage<SitemapFacilityRow>>
-    fetchProfessionals: (offset: number) => Promise<DirectoryPage<{ id: string, updatedDate?: string | null }>>
+    fetchProfessionals: (offset: number) => Promise<DirectoryPage<SitemapProfessionalRow>>
 }
 
 function graphqlDirectoryFetcher(apiUrl = graphqlEndpoint()): DirectoryFetcher {
@@ -186,7 +203,7 @@ function graphqlDirectoryFetcher(apiUrl = graphqlEndpoint()): DirectoryFetcher {
             } satisfies HealthcareProfessionalSearchFilters
 
             const data = await client.request<{
-                healthcareProfessionals: Array<{ id: string, updatedDate?: string | null }>
+                healthcareProfessionals: SitemapProfessionalRow[]
                 healthcareProfessionalsTotalCount: number
             }>(sitemapProfessionalsQuery, {
                 filters,
@@ -230,6 +247,7 @@ export async function loadDirectorySitemapUrls(
             entries.push(...professionals.map(row => ({
                 kind: 'professional' as const,
                 id: row.id,
+                names: row.names ?? [],
                 updatedDate: row.updatedDate
             })))
         }

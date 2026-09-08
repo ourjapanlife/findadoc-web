@@ -1,12 +1,12 @@
 <template>
     <div
-        data-testid="clinic-page"
+        data-testid="doctor-page"
         class="page-container flex flex-col gap-6 px-4 py-8"
     >
         <NuxtLink
             to="/search"
             class="btn btn-ghost btn-sm -ml-1 self-start"
-            data-testid="clinic-back-to-search"
+            data-testid="doctor-back-to-search"
         >
             <svg
                 class="h-5 w-5 stroke-current"
@@ -19,13 +19,10 @@
             >
                 <path d="M19 12H5m7-7-7 7 7 7" />
             </svg>
-            {{ t('clinicPage.backToSearch') }}
+            {{ t('doctorPage.backToSearch') }}
         </NuxtLink>
 
-        <SearchResultDetails
-            :facility="facility"
-            heading="h1"
-        />
+        <DoctorDetails :professional="professional" />
     </div>
 </template>
 
@@ -33,56 +30,59 @@
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { createError, navigateTo, useAsyncData, useHead, useRoute } from '#imports'
-import { fetchClinicById } from '~/utils/clinicFacility'
-import { canonicalPathMatches, facilityDocumentTitle, facilityIdFromSlugParam, facilityPath } from '~/utils/clinicPath'
-import { isJapaneseLocale } from '~/utils/activeLocale'
+import { fetchDoctorById } from '~/utils/doctorProfessional'
+import { canonicalPathMatches } from '~/utils/clinicPath'
+import { professionalDocumentTitle, professionalIdFromSlugParam, professionalPath } from '~/utils/doctorPath'
+import { formatHealthcareProfessionalName } from '~/utils/nameUtils'
+import { toGqlLocale } from '~/utils/activeLocale'
 import { formatPageTitle } from '~/utils/site'
+import { localeDisplayOptions } from '~/stores/localeStore'
+import { useSpecialtiesStore } from '~/stores/specialtiesStore'
 
 const route = useRoute()
 const { t, locale } = useI18n()
+const specialtiesStore = useSpecialtiesStore()
 
-const facilityId = facilityIdFromSlugParam(String(route.params.slug ?? ''))
+const professionalId = professionalIdFromSlugParam(String(route.params.slug ?? ''))
 
-if (!facilityId) {
+if (!professionalId) {
     throw createError({ statusCode: 404, statusMessage: 'Page not found' })
 }
 
-const { data } = await useAsyncData(`clinic-${facilityId}`, () => fetchClinicById(facilityId))
+const { data } = await useAsyncData(`doctor-${professionalId}`, () => fetchDoctorById(professionalId))
 
 if (!data.value) {
     throw createError({ statusCode: 404, statusMessage: 'Page not found' })
 }
 
-const canonicalPath = facilityPath(data.value)
+const canonicalPath = professionalPath(data.value)
 
 if (!canonicalPathMatches(route.path, canonicalPath)) {
     await navigateTo(canonicalPath, { redirectCode: 301, replace: true })
 }
 
-const facility = computed(() => data.value!)
+const professional = computed(() => data.value!)
 
-const displayName = computed(() => {
-    const record = facility.value
-    return (isJapaneseLocale(locale.value) ? record.nameJa : record.nameEn) || record.nameEn
-})
+const displayName = computed(() => formatHealthcareProfessionalName(professional.value.names, toGqlLocale(locale.value)))
 
 const metaDescription = computed(() => {
-    const address = facility.value.contact?.address
-    const city = isJapaneseLocale(locale.value)
-        ? (address?.cityJa || address?.cityEn || '')
-        : (address?.cityEn || address?.cityJa || '')
-    const prefecture = isJapaneseLocale(locale.value)
-        ? (address?.prefectureJa || address?.prefectureEn || '')
-        : (address?.prefectureEn || address?.prefectureJa || '')
+    const specialties = (professional.value.specialties ?? [])
+        .map(code => specialtiesStore.specialtyDisplayOptions.find(option => option.code === code)?.displayText)
+        .filter((name): name is string => !!name)
+        .join(', ')
+    const languages = (professional.value.spokenLanguages ?? [])
+        .map(code => localeDisplayOptions.find(option => option.code === code)?.simpleText)
+        .filter((name): name is string => !!name)
+        .join(', ')
 
-    return t('clinicPage.metaDescription', {
+    return t('doctorPage.metaDescription', {
         name: displayName.value,
-        city,
-        prefecture
+        specialties: specialties || t('doctorPage.specialtiesFallback'),
+        languages: languages || t('doctorPage.languagesFallback')
     })
 })
 
-const documentTitle = computed(() => facilityDocumentTitle(displayName.value))
+const documentTitle = computed(() => professionalDocumentTitle(displayName.value))
 const brandedTitle = computed(() => formatPageTitle(documentTitle.value))
 
 useHead({

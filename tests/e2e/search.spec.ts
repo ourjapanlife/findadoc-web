@@ -233,13 +233,17 @@ test.describe('Search page', () => {
             await expect(page.getByTestId('search-result-card')).toHaveCount(3)
         })
 
-        test('search result cards link to the clinic page, not a query-param panel', async ({ page }) => {
+        test('search result cards link to clinic pages, and staff names to doctor pages', async ({ page }) => {
             await page.goto('/search')
 
             await expect(page.getByRole('link', { name: 'Tokyo Family Clinic' }))
                 .toHaveAttribute('href', '/clinic/tokyo/shibuya/tokyo-family-clinic--f1')
             await expect(page.getByRole('link', { name: 'Osaka Dental' }))
                 .toHaveAttribute('href', '/clinic/osaka/kita/osaka-dental--f2')
+            await expect(page.getByRole('link', { name: 'Aiko Tanaka' }))
+                .toHaveAttribute('href', '/doctor/aiko-tanaka--p1')
+            await expect(page.getByRole('link', { name: 'Maria Lopez' }))
+                .toHaveAttribute('href', '/doctor/maria-lopez--p3')
         })
 
         /*
@@ -251,6 +255,8 @@ test.describe('Search page', () => {
 
             const panel = page.getByTestId('search-details-panel')
             await expect(panel.getByRole('heading', { name: 'Sapporo Skin Clinic' })).toBeVisible()
+            await expect(panel.getByRole('link', { name: 'Yuki Mori' }))
+                .toHaveAttribute('href', '/doctor/yuki-mori--p4')
             await expect(page).toHaveURL(/facility=f3/)
         })
 

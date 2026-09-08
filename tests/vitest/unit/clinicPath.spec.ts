@@ -2,9 +2,11 @@
 import { expect } from 'chai'
 import {
     FACILITY_ID_SEPARATOR,
+    canonicalPathMatches,
     facilityDocumentTitle,
     facilityIdFromSlugParam,
     facilityPath,
+    normaliseRoutePath,
     slugifySegment
 } from '@/utils/clinicPath'
 import { formatPageTitle, SITE_TITLE } from '@/utils/site'
@@ -83,6 +85,24 @@ describe('facilityIdFromSlugParam', () => {
     it('returns undefined when the separator is missing', () => {
         expect(facilityIdFromSlugParam('tokyo-family-clinic-f1')).to.equal(undefined)
         expect(facilityIdFromSlugParam('')).to.equal(undefined)
+    })
+})
+
+describe('canonicalPathMatches', () => {
+    const unicodePath = '/doctor/輝-山口--dba9e895-cb00-49af-bedb-1a993a16b704'
+
+    it('treats percent-encoded Unicode slugs as the same path', () => {
+        expect(canonicalPathMatches(encodeURI(unicodePath), unicodePath)).to.equal(true)
+        expect(normaliseRoutePath(encodeURI(unicodePath))).to.equal(unicodePath)
+    })
+
+    it('ignores a trailing slash', () => {
+        expect(canonicalPathMatches(`${unicodePath}/`, unicodePath)).to.equal(true)
+    })
+
+    it('still redirects when the slug actually differs', () => {
+        expect(canonicalPathMatches('/doctor/other--dba9e895-cb00-49af-bedb-1a993a16b704', unicodePath))
+            .to.equal(false)
     })
 })
 

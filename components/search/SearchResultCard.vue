@@ -58,7 +58,12 @@
                 class="flex flex-col"
             >
                 <span class="leading-snug">
-                    <span class="font-medium">{{ professional.name }}</span>
+                    <NuxtLink
+                        :to="professional.path"
+                        class="relative z-10 font-medium text-primary hover:underline"
+                    >
+                        {{ professional.name }}
+                    </NuxtLink>
                     <span
                         v-if="professional.degrees"
                         class="text-sm text-primary-text-muted"
@@ -87,6 +92,7 @@ import { useSpecialtiesStore } from '~/stores/specialtiesStore'
 import { formatHealthcareProfessionalName } from '~/utils/nameUtils'
 import { isJapaneseLocale, toGqlLocale } from '~/utils/activeLocale'
 import { facilityPath } from '~/utils/clinicPath'
+import { professionalPath } from '~/utils/doctorPath'
 import type { FacilitySearchResult } from '~/utils/searchDirectory'
 
 const props = defineProps<{
@@ -134,6 +140,7 @@ const languages = computed(() => {
 
 const professionals = computed(() => props.result.healthcareProfessionals.map(professional => ({
     id: professional.id,
+    path: professionalPath(professional),
     name: formatHealthcareProfessionalName(professional.names, toGqlLocale(locale.value)),
     degrees: (professional.degrees ?? []).join(', '),
     specialties: (professional.specialties ?? [])

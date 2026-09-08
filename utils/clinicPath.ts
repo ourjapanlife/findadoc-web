@@ -53,6 +53,26 @@ export function facilityPath(facility: Pick<Facility, 'id' | 'nameEn'> & {
 }
 
 /**
+ * Vue Router / browsers may percent-encode Unicode path segments. Decode and
+ * NFC-normalise so `/doctor/輝-山口--id` matches the encoded form and we do
+ * not 301-loop on Japanese (or other non-ASCII) slugs.
+ */
+export function normaliseRoutePath(path: string): string {
+    const trimmed = path.length > 1 && path.endsWith('/') ? path.slice(0, -1) : path
+    let decoded = trimmed
+    try {
+        decoded = decodeURI(trimmed)
+    } catch {
+        // Malformed percent-encoding — compare the trimmed path as-is.
+    }
+    return decoded.normalize('NFC')
+}
+
+export function canonicalPathMatches(currentPath: string, canonicalPath: string): boolean {
+    return normaliseRoutePath(currentPath) === normaliseRoutePath(canonicalPath)
+}
+
+/**
  * Document title *before* `formatPageTitle` adds the brand suffix, so the
  * branded result stays within 60 characters.
  */

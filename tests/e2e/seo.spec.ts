@@ -36,11 +36,15 @@ test.describe('Discovery and social meta', () => {
         })
 
         const clinicPath = /^\/clinic\/[^/]+\/[^/]+\/.+--.+$/
-        const staticPaths = paths.filter(path => !path.startsWith('/clinic/'))
+        const doctorPath = /^\/doctor\/.+--.+$/
+        const staticPaths = paths.filter(path => !path.startsWith('/clinic/') && !path.startsWith('/doctor/'))
         expect(staticPaths.sort()).toEqual([...publicPaths].sort())
         for (const path of paths) {
             if (path.startsWith('/clinic/')) {
                 expect(path).toMatch(clinicPath)
+            }
+            if (path.startsWith('/doctor/')) {
+                expect(path).toMatch(doctorPath)
             }
         }
         expect(body).not.toContain(`${new URL(locs[0] ?? 'http://localhost/').origin}/login`)
