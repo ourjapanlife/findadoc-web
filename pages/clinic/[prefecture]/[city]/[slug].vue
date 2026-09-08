@@ -22,6 +22,32 @@
             {{ t('clinicPage.backToSearch') }}
         </NuxtLink>
 
+        <nav
+            v-if="showPrefectureHub || showCityHub"
+            class="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-primary-text-muted"
+            data-testid="clinic-hub-links"
+            :aria-label="t('clinicPage.locationNav')"
+        >
+            <NuxtLink
+                v-if="showPrefectureHub"
+                :to="prefectureHub"
+                class="link link-hover"
+            >
+                {{ locationPrefecture }}
+            </NuxtLink>
+            <span
+                v-if="showPrefectureHub && showCityHub"
+                aria-hidden="true"
+            >/</span>
+            <NuxtLink
+                v-if="showCityHub"
+                :to="cityHub"
+                class="link link-hover"
+            >
+                {{ locationCity }}
+            </NuxtLink>
+        </nav>
+
         <SearchResultDetails
             :facility="facility"
             heading="h1"
@@ -35,6 +61,7 @@ import { useI18n } from 'vue-i18n'
 import { createError, navigateTo, useAsyncData, useHead, useRoute } from '#imports'
 import { fetchClinicById } from '~/utils/clinicFacility'
 import { canonicalPathMatches, facilityDocumentTitle, facilityIdFromSlugParam, facilityPath } from '~/utils/clinicPath'
+import { cityHubPath, prefectureHubPath } from '~/utils/hubPath'
 import { isJapaneseLocale } from '~/utils/activeLocale'
 import { formatPageTitle } from '~/utils/site'
 
@@ -84,6 +111,28 @@ const metaDescription = computed(() => {
 
 const documentTitle = computed(() => facilityDocumentTitle(displayName.value))
 const brandedTitle = computed(() => formatPageTitle(documentTitle.value))
+
+const locationPrefecture = computed(() => {
+    const address = facility.value.contact?.address
+    return isJapaneseLocale(locale.value)
+        ? (address?.prefectureJa || address?.prefectureEn || '')
+        : (address?.prefectureEn || address?.prefectureJa || '')
+})
+
+const locationCity = computed(() => {
+    const address = facility.value.contact?.address
+    return isJapaneseLocale(locale.value)
+        ? (address?.cityJa || address?.cityEn || '')
+        : (address?.cityEn || address?.cityJa || '')
+})
+
+const prefectureHub = computed(() => prefectureHubPath(facility.value.contact?.address?.prefectureEn))
+const cityHub = computed(() => cityHubPath(
+    facility.value.contact?.address?.prefectureEn,
+    facility.value.contact?.address?.cityEn
+))
+const showPrefectureHub = computed(() => Boolean(prefectureHub.value && locationPrefecture.value))
+const showCityHub = computed(() => Boolean(cityHub.value && locationCity.value))
 
 useHead({
     title: documentTitle,

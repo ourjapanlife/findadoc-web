@@ -136,7 +136,8 @@ describe('loadDirectorySitemapUrls', () => {
         expect(directoryKindsToFetch()).to.deep.equal(['facility', 'professional'])
         expect(urls).to.deep.equal([
             { loc: '/clinic/tokyo/shibuya/tokyo-family-clinic--f1', lastmod: '2026-08-01T00:00:00.000Z' },
-            { loc: '/doctor/aiko-tanaka--p1', lastmod: '2026-08-01T00:00:00.000Z' }
+            { loc: '/doctor/aiko-tanaka--p1', lastmod: '2026-08-01T00:00:00.000Z' },
+            { loc: '/tokyo', lastmod: '2026-08-01T00:00:00.000Z' }
         ])
     })
 
@@ -175,7 +176,38 @@ describe('loadDirectorySitemapUrls', () => {
         )
 
         expect(urls).to.deep.equal([
-            { loc: '/clinic/tokyo/shibuya/tokyo-family-clinic--f1', lastmod: '2026-08-01T00:00:00.000Z' }
+            { loc: '/clinic/tokyo/shibuya/tokyo-family-clinic--f1', lastmod: '2026-08-01T00:00:00.000Z' },
+            { loc: '/tokyo', lastmod: '2026-08-01T00:00:00.000Z' }
+        ])
+    })
+
+    it('lists a city hub once that city has two facilities', async () => {
+        const urls = await loadDirectorySitemapUrls({
+            fetchFacilities: async () => ({
+                rows: [
+                    {
+                        id: 'f1',
+                        nameEn: 'Tokyo Family Clinic',
+                        contact: { address: { cityEn: 'Shibuya', prefectureEn: 'Tokyo' } },
+                        updatedDate: '2026-08-01T00:00:00.000Z'
+                    },
+                    {
+                        id: 'f2',
+                        nameEn: 'Shibuya Dental',
+                        contact: { address: { cityEn: 'Shibuya', prefectureEn: 'Tokyo' } },
+                        updatedDate: '2026-08-02T00:00:00.000Z'
+                    }
+                ],
+                totalCount: 2
+            }),
+            fetchProfessionals: async () => ({ rows: [], totalCount: 0 })
+        }, { facility: '/clinic', professional: undefined })
+
+        expect(urls.map(url => url.loc)).to.deep.equal([
+            '/clinic/tokyo/shibuya/tokyo-family-clinic--f1',
+            '/clinic/tokyo/shibuya/shibuya-dental--f2',
+            '/tokyo',
+            '/tokyo/shibuya'
         ])
     })
 })

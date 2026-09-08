@@ -1,9 +1,28 @@
 import { test, expect } from '@playwright/test'
 import { PAGE_META_TITLE_ROUTES } from '../../utils/pageTitles'
+import { facilityIdFromSlugParam } from '../../utils/clinicPath'
+import { hubSitemapUrls } from '../../utils/hubIndex'
 import { canonicalUrl } from '../../utils/seo'
 import { SITE_SITEMAP_URL, SITE_SOCIAL_IMAGE, SITE_TITLE } from '../../utils/site'
 
 const publicPaths = Object.values(PAGE_META_TITLE_ROUTES)
+
+function facilitiesFromClinicSitemapPaths(clinicPaths: readonly string[]) {
+    return clinicPaths.flatMap(path => {
+        const parts = path.split('/').filter(Boolean)
+        const prefectureEn = parts[1]
+        const cityEn = parts[2]
+        const slugParam = parts[3]
+        const id = facilityIdFromSlugParam(slugParam)
+        if (!prefectureEn || !cityEn || !id) {
+            return []
+        }
+        return [{
+            id,
+            contact: { address: { prefectureEn, cityEn } }
+        }]
+    })
+}
 
 test.describe('Discovery and social meta', () => {
     test('robots.txt is plaintext, disallows private trees, and names the sitemap', async ({ request }) => {
@@ -39,15 +58,24 @@ test.describe('Discovery and social meta', () => {
 
         const clinicPath = /^\/clinic\/[^/]+\/[^/]+\/.+--.+$/
         const doctorPath = /^\/doctor\/.+--.+$/
-        const staticPaths = paths.filter(path => !path.startsWith('/clinic/') && !path.startsWith('/doctor/'))
-        expect(staticPaths.sort()).toEqual([...publicPaths].sort())
-        for (const path of paths) {
-            if (path.startsWith('/clinic/')) {
-                expect(path).toMatch(clinicPath)
-            }
-            if (path.startsWith('/doctor/')) {
-                expect(path).toMatch(doctorPath)
-            }
+        const clinicPaths = paths.filter(path => path.startsWith('/clinic/'))
+        const doctorPaths = paths.filter(path => path.startsWith('/doctor/'))
+        const publicPathSet = new Set<string>(publicPaths)
+        const expectedHubPaths = hubSitemapUrls(facilitiesFromClinicSitemapPaths(clinicPaths))
+            .map(url => url.loc)
+        const leftoverPaths = paths.filter(path => (
+            !path.startsWith('/clinic/')
+            && !path.startsWith('/doctor/')
+            && !publicPathSet.has(path)
+        ))
+
+        expect(paths.filter(path => publicPathSet.has(path)).sort()).toEqual([...publicPaths].sort())
+        expect(leftoverPaths.sort()).toEqual([...expectedHubPaths].sort())
+        for (const path of clinicPaths) {
+            expect(path).toMatch(clinicPath)
+        }
+        for (const path of doctorPaths) {
+            expect(path).toMatch(doctorPath)
         }
         expect(body).not.toContain(`${new URL(locs[0] ?? 'http://localhost/').origin}/login`)
         expect(body).not.toContain('/my-page')

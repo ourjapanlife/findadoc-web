@@ -126,6 +126,8 @@ describe('isEntityRoute', () => {
         expect(isEntityRoute('/clinic/tokyo/nakano/a-one--f1')).to.equal(true)
         expect(isEntityRoute('/doctor')).to.equal(true)
         expect(isEntityRoute('/doctor/aiko-tanaka--p1')).to.equal(true)
+        expect(isEntityRoute('/tokyo')).to.equal(true)
+        expect(isEntityRoute('/tokyo/shibuya')).to.equal(true)
         expect(isEntityRoute('/search')).to.equal(false)
         expect(isEntityRoute('/about')).to.equal(false)
     })

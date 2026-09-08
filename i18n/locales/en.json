@@ -513,6 +513,7 @@
   },
   "clinicPage": {
     "backToSearch": "Back to search",
+    "locationNav": "Location",
     "metaDescription": "{name} in {city}, {prefecture}. Address, phone and the languages spoken by staff."
   },
   "doctorPage": {
@@ -532,5 +533,16 @@
       "TRAVEL_INSURANCE": "Travel insurance",
       "UNINSURED": "Uninsured / self-pay"
     }
+  },
+  "hubPage": {
+    "prefectureHeading": "Healthcare in {prefecture}",
+    "cityHeading": "Healthcare in {city}, {prefecture}",
+    "prefectureMeta": "Clinics and health services in {prefecture}, Japan. Browse cities and facilities.",
+    "cityMeta": "Clinics and health services in {city}, {prefecture}. Address, phone and the languages spoken by staff.",
+    "citiesHeading": "Cities",
+    "facilitiesHeading": "Clinics",
+    "facilityCount": "No clinics | 1 clinic | {n} clinics",
+    "backToPrefecture": "Back to {prefecture}",
+    "backToSearch": "Back to search"
   }
 }
