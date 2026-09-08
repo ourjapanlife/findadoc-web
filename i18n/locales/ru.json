@@ -543,6 +543,14 @@
     "facilitiesHeading": "Clinics",
     "facilityCount": "No clinics | 1 clinic | {n} clinics",
     "backToPrefecture": "Back to {prefecture}",
-    "backToSearch": "Back to search"
+    "backToSearch": "Back to search",
+    "professionalCount": "No professionals | 1 professional | {n} professionals",
+    "specialtiesHeading": "Specialties",
+    "languagesHeading": "Languages",
+    "languageChip": "{language}-speaking",
+    "specialtyHeading": "{specialty} in {prefecture}",
+    "languageHeading": "{language}-speaking care in {prefecture}",
+    "specialtyMeta": "Clinics and {specialty} in {prefecture}, Japan. Address, phone and the languages spoken by staff.",
+    "languageMeta": "{language}-speaking clinics and health services in {prefecture}, Japan."
   }
 }

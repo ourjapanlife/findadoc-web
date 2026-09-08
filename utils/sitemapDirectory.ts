@@ -2,8 +2,10 @@ import { gql, GraphQLClient } from 'graphql-request'
 import { facilityPath } from './clinicPath'
 import { professionalPath } from './doctorPath'
 import { hubSitemapUrls } from './hubIndex'
+import { attachProfessionalsToFacilities, facetSitemapUrls } from './facetIndex'
 import { graphqlEndpoint } from './graphqlEndpoint'
-import type { FacilitySearchFilters, HealthcareProfessionalSearchFilters, LocalizedName } from '~/typedefs/gqlTypes'
+import type { FacilitySearchFilters, HealthcareProfessionalSearchFilters,
+    Locale, LocalizedName, Specialty } from '~/typedefs/gqlTypes'
 
 /**
  * Same cap the directory store uses. The API silently truncates or errors above this
@@ -17,9 +19,10 @@ export const SITEMAP_DIRECTORY_PAGE_SIZE = 100
  * The prefix is only the enable flag. The sitemap fetch is skipped while every
  * prefix is unset so `nuxi generate` does not advertise URLs that 404.
  *
- * Hub pages (#1791) are derived from the facility rows already fetched — not a
- * separate kind — so they share that request. City hubs with a single facility
- * are omitted (noindex / thin content).
+ * Hub pages (#1791) and specialty/language facets (#1792) are derived from the
+ * facility and professional rows already fetched — not a separate kind. City
+ * hubs with a single facility are omitted (noindex / thin content). Facets
+ * below three matching professionals 404 and are omitted.
  */
 export const DIRECTORY_SITEMAP_PATHS = {
     facility: '/clinic' as string | undefined,
@@ -123,6 +126,7 @@ const sitemapFacilitiesQuery = gql`
             id
             nameEn
             updatedDate
+            healthcareProfessionalIds
             contact {
                 address {
                     cityEn
@@ -142,6 +146,9 @@ const sitemapProfessionalsQuery = gql`
         healthcareProfessionals(filters: $filters) {
             id
             updatedDate
+            specialties
+            spokenLanguages
+            facilityIds
             names {
                 firstName
                 middleName
@@ -169,6 +176,9 @@ type SitemapProfessionalRow = {
     id: string
     updatedDate?: string | null
     names?: LocalizedName[] | null
+    specialties?: Specialty[] | null
+    spokenLanguages?: Locale[] | null
+    facilityIds?: string[] | null
 }
 
 type DirectoryFetcher = {
@@ -233,6 +243,7 @@ export async function loadDirectorySitemapUrls(
     try {
         const entries: SitemapDirectoryEntry[] = []
         let facilityRows: SitemapFacilityRow[] = []
+        let professionalRows: SitemapProfessionalRow[] = []
 
         if (kinds.includes('facility')) {
             facilityRows = await collectPagedRows(offset => fetcher.fetchFacilities(offset))
@@ -247,8 +258,8 @@ export async function loadDirectorySitemapUrls(
         }
 
         if (kinds.includes('professional')) {
-            const professionals = await collectPagedRows(offset => fetcher.fetchProfessionals(offset))
-            entries.push(...professionals.map(row => ({
+            professionalRows = await collectPagedRows(offset => fetcher.fetchProfessionals(offset))
+            entries.push(...professionalRows.map(row => ({
                 kind: 'professional' as const,
                 id: row.id,
                 names: row.names ?? [],
@@ -263,6 +274,7 @@ export async function loadDirectorySitemapUrls(
 
         if (facilityRows.length) {
             urls.push(...hubSitemapUrls(facilityRows))
+            urls.push(...facetSitemapUrls(attachProfessionalsToFacilities(facilityRows, professionalRows)))
         }
 
         return urls
