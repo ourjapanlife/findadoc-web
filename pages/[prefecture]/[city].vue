@@ -4,24 +4,7 @@
         data-testid="hub-city-page"
         class="page-container flex flex-col gap-6 px-4 py-8"
     >
-        <NuxtLink
-            :to="prefecturePath"
-            class="btn btn-ghost btn-sm -ml-1 self-start"
-            data-testid="hub-back-to-prefecture"
-        >
-            <svg
-                class="h-5 w-5 stroke-current"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                aria-hidden="true"
-            >
-                <path d="M19 12H5m7-7-7 7 7 7" />
-            </svg>
-            {{ backToPrefectureText }}
-        </NuxtLink>
+        <BreadcrumbNav :items="crumbs" />
 
         <header class="flex flex-col gap-2">
             <h1 class="text-2xl font-bold leading-tight text-primary-text">
@@ -32,6 +15,17 @@
             </p>
         </header>
 
+        <HubRelatedFacets
+            :heading="t('hubPage.specialtiesHeading')"
+            :items="citySpecialtyItems"
+            test-id="hub-city-specialty-list"
+        />
+        <HubRelatedFacets
+            :heading="t('hubPage.languagesHeading')"
+            :items="cityLanguageItems"
+            test-id="hub-city-language-list"
+        />
+
         <HubFacilityList :facilities="city.facilities" />
     </div>
 
@@ -40,24 +34,7 @@
         data-testid="hub-facet-page"
         class="page-container flex flex-col gap-6 px-4 py-8"
     >
-        <NuxtLink
-            :to="prefecturePath"
-            class="btn btn-ghost btn-sm -ml-1 self-start"
-            data-testid="hub-back-to-prefecture"
-        >
-            <svg
-                class="h-5 w-5 stroke-current"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                aria-hidden="true"
-            >
-                <path d="M19 12H5m7-7-7 7 7 7" />
-            </svg>
-            {{ backToPrefectureText }}
-        </NuxtLink>
+        <BreadcrumbNav :items="crumbs" />
 
         <header class="flex flex-col gap-2">
             <h1 class="text-2xl font-bold leading-tight text-primary-text">
@@ -67,6 +44,17 @@
                 {{ professionalCountText }}
             </p>
         </header>
+
+        <HubRelatedFacets
+            :heading="samePlaceHeading"
+            :items="samePlaceItems"
+            test-id="hub-related-same-place"
+        />
+        <HubRelatedFacets
+            :heading="nearbyHeading"
+            :items="nearbyItems"
+            test-id="hub-related-nearby"
+        />
 
         <HubFacilityList :facilities="facet.facilities" />
     </div>
@@ -78,8 +66,10 @@ import { useI18n } from 'vue-i18n'
 import { createError, navigateTo, useAsyncData, useHead, useRoute } from '#imports'
 import { isJapaneseLocale } from '~/utils/activeLocale'
 import { canonicalPathMatches, slugifySegment } from '~/utils/clinicPath'
+import { cityHubCrumbs, facetCrumbs } from '~/utils/directoryLinks'
 import { facetDocumentTitle } from '~/utils/facetIndex'
 import { loadPrefectureLeaf } from '~/utils/hubDirectory'
+import { useDirectoryRelatedLinks } from '~/composables/useDirectoryLinks'
 import {
     hubCityDocumentTitle,
     isIndexableCityHub,
@@ -107,12 +97,14 @@ if (!data.value) {
     throw createError({ statusCode: 404, statusMessage: 'Page not found' })
 }
 
+const related = await useDirectoryRelatedLinks(data.value)
+
 const city = computed(() => data.value?.type === 'city' ? data.value.city : undefined)
 const facet = computed(() => data.value?.type === 'facet' ? data.value.facet : undefined)
 const canonicalPath = computed(() => city.value?.path ?? facet.value?.path ?? '')
 const prefecturePath = computed(() => prefectureHubPathFromSlug(
     city.value?.prefectureSlug ?? facet.value?.prefectureSlug ?? prefectureSlug
-) ?? '/search')
+))
 const isJapanese = computed(() => isJapaneseLocale(locale.value))
 
 const displayPrefecture = computed(() => {
@@ -151,9 +143,51 @@ const heading = computed(() => {
         prefecture: displayPrefecture.value
     })
 })
+const crumbs = computed(() => {
+    const shared = {
+        homeLabel: t('breadcrumbs.home'),
+        prefectureLabel: displayPrefecture.value,
+        prefecturePath: prefecturePath.value
+    }
+    if (facet.value) {
+        return facetCrumbs({
+            ...shared,
+            facetLabel: facet.value.label
+        })
+    }
+    return cityHubCrumbs({
+        ...shared,
+        cityLabel: displayCity.value
+    })
+})
 const facilityCountText = computed(() => t('hubPage.facilityCount', city.value?.facilities.length ?? 0))
 const professionalCountText = computed(() => t('hubPage.professionalCount', facet.value?.professionalCount ?? 0))
-const backToPrefectureText = computed(() => t('hubPage.backToPrefecture', { prefecture: displayPrefecture.value }))
+const citySpecialtyItems = computed(() => related.value?.prefectureSpecialties ?? [])
+const cityLanguageItems = computed(() => (related.value?.prefectureLanguages ?? []).map(item => ({
+    path: item.path,
+    label: t('hubPage.languageChip', { language: item.label })
+})))
+const samePlaceHeading = computed(() => (
+    facet.value?.kind === 'language'
+        ? t('hubPage.relatedLanguagesHeading')
+        : t('hubPage.relatedSpecialtiesHeading')
+))
+const nearbyHeading = computed(() => {
+    if (facet.value?.kind === 'language') {
+        return t('hubPage.nearbyLanguageHeading', { language: facet.value.label })
+    }
+    return t('hubPage.nearbySpecialtyHeading', { specialty: facet.value?.label ?? '' })
+})
+const samePlaceItems = computed(() => (related.value?.samePlace ?? []).map(item => ({
+    path: item.path,
+    label: facet.value?.kind === 'language'
+        ? t('hubPage.languageChip', { language: item.label })
+        : item.label
+})))
+const nearbyItems = computed(() => (related.value?.nearbySame ?? []).map(item => ({
+    path: item.path,
+    label: isJapanese.value ? item.labelJa : item.label
+})))
 const documentTitle = computed(() => {
     if (facet.value) {
         return facetDocumentTitle({
