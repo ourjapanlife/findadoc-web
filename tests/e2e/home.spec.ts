@@ -38,16 +38,16 @@ test.describe('Home page', () => {
         })
 
         test('the search entry carries its filters into the URL', async ({ page }) => {
-            await page.getByTestId('home-specialty').selectOption('DENTISTRY')
-            await page.getByTestId('home-language').selectOption('en_US')
-            await page.getByTestId('home-area').selectOption('Tokyo')
+            await page.getByTestId('home-specialty').selectOption('dentistry')
+            await page.getByTestId('home-language').selectOption('en')
+            await page.getByTestId('home-area').selectOption('tokyo')
             await page.getByTestId('home-search-submit').click()
 
             await expect(page).toHaveURL(/\/search\?/)
             const url = new URL(page.url())
-            expect(url.searchParams.get('specialty')).toBe('DENTISTRY')
-            expect(url.searchParams.get('language')).toBe('en_US')
-            expect(url.searchParams.get('prefecture')).toBe('Tokyo')
+            expect(url.searchParams.get('specialty')).toBe('dentistry')
+            expect(url.searchParams.get('language')).toBe('en')
+            expect(url.searchParams.get('prefecture')).toBe('tokyo')
         })
 
         /*
@@ -57,24 +57,24 @@ test.describe('Home page', () => {
          */
         test('the search entry works before hydration', async ({ page }) => {
             await page.goto('/', { waitUntil: 'commit' })
-            await page.getByTestId('home-specialty').selectOption('DENTISTRY')
-            await page.getByTestId('home-area').selectOption('Tokyo')
+            await page.getByTestId('home-specialty').selectOption('dentistry')
+            await page.getByTestId('home-area').selectOption('tokyo')
             await page.getByTestId('home-search-submit').click()
 
             await expect(page).toHaveURL(/\/search\?/)
             const url = new URL(page.url())
-            expect(url.searchParams.get('specialty')).toBe('DENTISTRY')
-            expect(url.searchParams.get('prefecture')).toBe('Tokyo')
+            expect(url.searchParams.get('specialty')).toBe('dentistry')
+            expect(url.searchParams.get('prefecture')).toBe('tokyo')
         })
 
         test('a category tile links into a filtered search', async ({ page }) => {
             await page.getByTestId('home-category-DENTAL').click()
-            await expect(page).toHaveURL(/\/search\?specialty=DENTISTRY/)
+            await expect(page).toHaveURL(/\/search\?specialty=dentistry/)
         })
 
         test('an area link filters by prefecture', async ({ page }) => {
             await page.getByTestId('home-prefecture-Tokyo').click()
-            await expect(page).toHaveURL(/\/search\?prefecture=Tokyo/)
+            await expect(page).toHaveURL(/\/search\?prefecture=tokyo/)
         })
 
         test('links to the submission form', async ({ page }) => {

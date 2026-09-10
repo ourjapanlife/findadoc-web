@@ -1,4 +1,3 @@
-import type { LocationQuery, LocationQueryRaw } from 'vue-router'
 import { Locale, Specialty, type Facility, type HealthcareProfessional } from '~/typedefs/gqlTypes'
 
 /**
@@ -24,20 +23,48 @@ export interface SearchFilters {
 
 export interface SearchQueryState extends SearchFilters {
     facilityId?: string
+    /** 1-based load-more page. Omitted from the URL when it is 1. */
+    page?: number
+}
+
+/** Route query bag. Kept structural so this module does not import vue-router. */
+export type SearchLocationQuery = Record<string, unknown>
+
+function firstString(value: unknown): string | undefined {
+    const single = Array.isArray(value) ? value[0] : value
+    return typeof single === 'string' && single.length ? single : undefined
+}
+
+function slugify(value: string | null | undefined): string {
+    return (value ?? '')
+        .normalize('NFKD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .toLowerCase()
+        .replace(/--+/g, '-')
+        .replace(/[^\p{Letter}\p{Number}]+/gu, '-')
+        .replace(/^-+|-+$/g, '')
+}
+
+/**
+ * Location filters in the URL are slugs (`setagaya`, `tokyo`). The directory still stores
+ * display names, so a selected value matches the English name, the Japanese name, or either
+ * side's slug.
+ */
+function placeMatches(selected: string | undefined, en: string | undefined, ja: string | undefined): boolean {
+    if (!selected) return true
+    if (en === selected || ja === selected) return true
+
+    const selectedSlug = slugify(selected)
+    if (!selectedSlug) return false
+
+    return slugify(en) === selectedSlug || slugify(ja) === selectedSlug
 }
 
 function matchesLocation(facility: Facility, filters: SearchFilters): boolean {
     const address = facility.contact?.address
 
-    const cityMatches = !filters.city
-      || address?.cityEn === filters.city
-      || address?.cityJa === filters.city
-
-    const prefectureMatches = !filters.prefecture
-      || address?.prefectureEn === filters.prefecture
-      || address?.prefectureJa === filters.prefecture
-
-    return cityMatches && prefectureMatches
+    return placeMatches(filters.city, address?.cityEn, address?.cityJa)
+      && placeMatches(filters.prefecture, address?.prefectureEn, address?.prefectureJa)
 }
 
 function intersects<T>(selected: T[] | undefined, actual: T[] | undefined): boolean {
@@ -83,42 +110,123 @@ export function filterDirectory(
     return results
 }
 
-const SPECIALTIES = new Set<string>(Object.values(Specialty))
-const LOCALES = new Set<string>(Object.values(Locale))
+const SPECIALTY_VALUES = Object.values(Specialty) as Specialty[]
+const SPECIALTY_SET = new Set<string>(SPECIALTY_VALUES)
+const LOCALE_VALUES = Object.values(Locale) as Locale[]
+const LOCALE_SET = new Set<string>(LOCALE_VALUES)
 
-function firstString(value: LocationQuery[string] | undefined): string | undefined {
-    const single = Array.isArray(value) ? value[0] : value
-    return typeof single === 'string' && single.length ? single : undefined
+const specialtyToParam = new Map<Specialty, string>()
+const paramToSpecialty = new Map<string, Specialty>()
+for (const specialty of SPECIALTY_VALUES) {
+    const param = slugify(specialty.replaceAll('_', ' '))
+    if (!param) continue
+    specialtyToParam.set(specialty, param)
+    paramToSpecialty.set(param, specialty)
+}
+
+const localeToLanguageParam = new Map<Locale, string>()
+const languageParamToLocale = new Map<string, Locale>()
+const localesByLanguage = new Map<string, Locale[]>()
+for (const locale of LOCALE_VALUES) {
+    const language = (locale.split('_')[0] ?? locale).toLowerCase()
+    const group = localesByLanguage.get(language) ?? []
+    group.push(locale)
+    localesByLanguage.set(language, group)
+}
+for (const locale of LOCALE_VALUES) {
+    const [languageTag, region] = locale.split('_')
+    const language = (languageTag ?? locale).toLowerCase()
+    const group = localesByLanguage.get(language) ?? []
+    const param = group.length > 1 && region
+        ? `${language}-${region.toLowerCase()}`
+        : language
+    localeToLanguageParam.set(locale, param)
+    languageParamToLocale.set(param, locale)
+    languageParamToLocale.set(locale, locale)
+    languageParamToLocale.set(locale.toLowerCase(), locale)
+}
+
+export function specialtySearchParam(specialty: Specialty): string {
+    return specialtyToParam.get(specialty) ?? specialty
+}
+
+export function languageSearchParam(locale: string): string {
+    return localeToLanguageParam.get(locale as Locale) ?? locale
+}
+
+export function prefectureSearchParam(name: string): string {
+    return slugify(name) || name
+}
+
+function parseSpecialty(raw: string | undefined): Specialty | undefined {
+    if (!raw) return undefined
+    if (SPECIALTY_SET.has(raw)) return raw as Specialty
+    return paramToSpecialty.get(raw.toLowerCase())
+}
+
+function parseLanguage(raw: string | undefined): Locale | undefined {
+    if (!raw) return undefined
+    if (LOCALE_SET.has(raw)) return raw as Locale
+    return languageParamToLocale.get(raw.toLowerCase())
+}
+
+function parsePlace(raw: string | undefined): string | undefined {
+    if (!raw) return undefined
+    return slugify(raw) || raw
+}
+
+function parsePage(raw: string | undefined): number | undefined {
+    if (!raw) return undefined
+    const page = Number.parseInt(raw, 10)
+    return Number.isInteger(page) && page > 1 ? page : undefined
 }
 
 /**
- * Reads the search state out of the URL, dropping anything that is not a real enum value so a
- * mistyped or stale link degrades to a broader search rather than an empty one.
+ * Reads the search state out of the URL, dropping anything that is not a real specialty or
+ * language so a mistyped or stale link degrades to a broader search rather than an empty one.
+ *
+ * Human-readable params (`specialty=pediatrics&language=en&city=setagaya`) are the stored
+ * form. GraphQL enum values (`DENTISTRY`, `en_US`) are still accepted so older links keep
+ * working.
  */
-export function parseSearchQuery(query: LocationQuery): SearchQueryState {
-    const specialty = firstString(query.specialty)
-    const language = firstString(query.language)
+export function parseSearchQuery(query: SearchLocationQuery): SearchQueryState {
+    const specialty = parseSpecialty(firstString(query.specialty))
+    const language = parseLanguage(firstString(query.language))
 
     return {
-        city: firstString(query.city),
-        prefecture: firstString(query.prefecture),
-        specialties: specialty && SPECIALTIES.has(specialty) ? [specialty as Specialty] : undefined,
-        languages: language && LOCALES.has(language) ? [language as Locale] : undefined,
-        facilityId: firstString(query.facility)
+        city: parsePlace(firstString(query.city)),
+        prefecture: parsePlace(firstString(query.prefecture)),
+        specialties: specialty ? [specialty] : undefined,
+        languages: language ? [language] : undefined,
+        facilityId: firstString(query.facility),
+        page: parsePage(firstString(query.page))
     }
 }
 
 /** The inverse of parseSearchQuery: only set keys are emitted, so clean URLs stay clean. */
-export function buildSearchQuery(state: SearchQueryState): LocationQueryRaw {
+export function buildSearchQuery(state: SearchQueryState): Record<string, string> {
     const query: Record<string, string> = {}
 
-    if (state.specialties?.[0]) query.specialty = state.specialties[0]
-    if (state.languages?.[0]) query.language = state.languages[0]
-    if (state.prefecture) query.prefecture = state.prefecture
-    if (state.city) query.city = state.city
+    if (state.specialties?.[0]) query.specialty = specialtySearchParam(state.specialties[0])
+    if (state.languages?.[0]) query.language = languageSearchParam(state.languages[0])
+    if (state.prefecture) query.prefecture = prefectureSearchParam(state.prefecture)
+    if (state.city) query.city = parsePlace(state.city) ?? state.city
+    if ((state.page ?? 1) > 1) query.page = String(state.page)
     if (state.facilityId) query.facility = state.facilityId
 
     return query
+}
+
+export function sameSearchQueryState(left: SearchLocationQuery, right: SearchLocationQuery): boolean {
+    const a = parseSearchQuery(left)
+    const b = parseSearchQuery(right)
+
+    return a.city === b.city
+      && a.prefecture === b.prefecture
+      && (a.specialties?.[0] ?? '') === (b.specialties?.[0] ?? '')
+      && (a.languages?.[0] ?? '') === (b.languages?.[0] ?? '')
+      && a.facilityId === b.facilityId
+      && (a.page ?? 1) === (b.page ?? 1)
 }
 
 export function hasActiveFilters(filters: SearchFilters): boolean {

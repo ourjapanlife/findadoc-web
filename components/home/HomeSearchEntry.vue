@@ -30,7 +30,7 @@
                 <option
                     v-for="option in specialtyOptions"
                     :key="option.code"
-                    :value="option.code"
+                    :value="specialtyQueryParam(option.code)"
                 >
                     {{ option.displayText }}
                 </option>
@@ -54,7 +54,7 @@
                 <option
                     v-for="option in languageOptions"
                     :key="option.code"
-                    :value="option.code"
+                    :value="languageQueryParam(option.code)"
                 >
                     {{ option.simpleText }}
                 </option>
@@ -78,7 +78,7 @@
                 <option
                     v-for="prefecture in prefectures"
                     :key="prefecture.name"
-                    :value="prefecture.name"
+                    :value="prefectureQueryParam(prefecture.name)"
                 >
                     {{ prefectureLabel(prefecture) }} ({{ prefecture.approximateFacilities }})
                 </option>
@@ -116,6 +116,24 @@ const prefectures = ALL_PREFECTURES
  */
 function prefectureLabel(prefecture: PrefectureEntry) {
     return locale.value === 'ja-JP' ? prefecture.nameJa : prefecture.name
+}
+
+/** Same encoding as the search URL: `dentistry`, `en`, `tokyo`. */
+function specialtyQueryParam(code: string): string {
+    return code.replaceAll('_', '-').toLowerCase()
+}
+
+function prefectureQueryParam(name: string): string {
+    return name.toLowerCase()
+}
+
+function languageQueryParam(code: string): string {
+    const [language, region] = code.split('_')
+    const languageTag = (language ?? code).toLowerCase()
+    if (languageTag === 'zh' && region) {
+        return `zh-${region.toLowerCase()}`
+    }
+    return languageTag
 }
 
 /*
