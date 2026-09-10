@@ -551,6 +551,14 @@
     "specialtyHeading": "{specialty} in {prefecture}",
     "languageHeading": "{language}-speaking care in {prefecture}",
     "specialtyMeta": "Clinics and {specialty} in {prefecture}, Japan. Address, phone and the languages spoken by staff.",
-    "languageMeta": "{language}-speaking clinics and health services in {prefecture}, Japan."
+    "languageMeta": "{language}-speaking clinics and health services in {prefecture}, Japan.",
+    "relatedSpecialtiesHeading": "Other specialties in this prefecture",
+    "relatedLanguagesHeading": "Other languages in this prefecture",
+    "nearbySpecialtyHeading": "{specialty} in other prefectures",
+    "nearbyLanguageHeading": "{language}-speaking care in other prefectures"
+  },
+  "breadcrumbs": {
+    "navLabel": "Breadcrumb",
+    "home": "Home"
   }
 }
