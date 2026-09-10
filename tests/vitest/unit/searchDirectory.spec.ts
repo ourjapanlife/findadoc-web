@@ -72,6 +72,11 @@ describe('filterDirectory', () => {
         expect(filterDirectory(facilities, professionals, { city: '渋谷' }).map(r => r.id)).toEqual(['tokyo-clinic'])
     })
 
+    it('filters location by slug so URL params match display names', () => {
+        expect(filterDirectory(facilities, professionals, { city: 'shibuya' }).map(r => r.id)).toEqual(['tokyo-clinic'])
+        expect(filterDirectory(facilities, professionals, { prefecture: 'osaka' }).map(r => r.id)).toEqual(['osaka-clinic'])
+    })
+
     it('ignores professional IDs the directory does not contain', () => {
         const results = filterDirectory([facility('ghost', ['missing'])], professionals, {})
 
@@ -80,7 +85,26 @@ describe('filterDirectory', () => {
 })
 
 describe('parseSearchQuery / buildSearchQuery', () => {
-    it('reads valid values and drops anything that is not a real enum member', () => {
+    it('reads human-readable params and drops unknown specialties', () => {
+        const state = parseSearchQuery({
+            specialty: 'dentistry',
+            language: 'en',
+            prefecture: 'tokyo',
+            city: 'setagaya',
+            facility: 'abc'
+        })
+
+        expect(state).toEqual({
+            city: 'setagaya',
+            prefecture: 'tokyo',
+            specialties: [Specialty.Dentistry],
+            languages: [Locale.EnUs],
+            facilityId: 'abc',
+            page: undefined
+        })
+    })
+
+    it('still accepts GraphQL enum values from older links', () => {
         const state = parseSearchQuery({
             specialty: 'DENTISTRY',
             language: 'NOT_A_LOCALE',
@@ -90,24 +114,48 @@ describe('parseSearchQuery / buildSearchQuery', () => {
 
         expect(state).toEqual({
             city: undefined,
-            prefecture: 'Tokyo',
+            prefecture: 'tokyo',
             specialties: [Specialty.Dentistry],
             languages: undefined,
-            facilityId: 'abc'
+            facilityId: 'abc',
+            page: undefined
         })
     })
 
     it('takes the first value of a repeated parameter', () => {
-        const state = parseSearchQuery({ specialty: ['DENTISTRY', 'DERMATOLOGY'] })
+        const state = parseSearchQuery({ specialty: ['dentistry', 'dermatology'] })
 
         expect(state.specialties).toEqual([Specialty.Dentistry])
     })
 
     it('round-trips through the URL and omits empty keys', () => {
+        const state = parseSearchQuery({ specialty: 'dentistry', language: 'en', prefecture: 'tokyo', page: '2' })
+
+        expect(buildSearchQuery(state)).toEqual({
+            specialty: 'dentistry',
+            language: 'en',
+            prefecture: 'tokyo',
+            page: '2'
+        })
+        expect(buildSearchQuery({})).toEqual({})
+        expect(buildSearchQuery({ page: 1 })).toEqual({})
+    })
+
+    it('canonicalises enum-style query strings to the human-readable form', () => {
         const state = parseSearchQuery({ specialty: 'DENTISTRY', language: 'en_US', prefecture: 'Tokyo' })
 
-        expect(buildSearchQuery(state)).toEqual({ specialty: 'DENTISTRY', language: 'en_US', prefecture: 'Tokyo' })
-        expect(buildSearchQuery({})).toEqual({})
+        expect(buildSearchQuery(state)).toEqual({
+            specialty: 'dentistry',
+            language: 'en',
+            prefecture: 'tokyo'
+        })
+    })
+
+    it('accepts language tags and disambiguates Chinese locales', () => {
+        expect(parseSearchQuery({ language: 'en' }).languages).toEqual([Locale.EnUs])
+        expect(parseSearchQuery({ language: 'zh-cn' }).languages).toEqual([Locale.ZhCn])
+        expect(parseSearchQuery({ language: 'zh-tw' }).languages).toEqual([Locale.ZhTw])
+        expect(buildSearchQuery({ languages: [Locale.ZhCn] })).toEqual({ language: 'zh-cn' })
     })
 })
 

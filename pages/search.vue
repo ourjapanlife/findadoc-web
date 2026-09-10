@@ -41,7 +41,7 @@ import { onMounted, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRoute, useRouter, type LocationQuery, type LocationQueryRaw } from 'vue-router'
 import { useSearchResultsStore } from '~/stores/searchResultsStore'
-import { buildSearchQuery, parseSearchQuery } from '~/utils/searchDirectory'
+import { buildSearchQuery, parseSearchQuery, sameSearchQueryState } from '~/utils/searchDirectory'
 
 const { t } = useI18n()
 const route = useRoute()
@@ -52,10 +52,10 @@ const SHOW_MAP_STORAGE_KEY = 'search.showMap'
 const showMap = ref(false)
 
 /*
- * The URL is the source of truth for the search state: filters and the open facility both
- * live in the query string, so every state is linkable and Back/Forward move through them.
- * Two watchers keep the store and the URL in step; each checks for a real difference first,
- * so the pair cannot ping-pong.
+ * The URL is the source of truth for the search state: filters, pagination, and the open
+ * facility live in the query string, so every state is linkable and Back/Forward move
+ * through them. Two watchers keep the store and the URL in step; each checks for a real
+ * difference first, so the pair cannot ping-pong.
  */
 function sameList<T>(a: readonly T[] | undefined, b: readonly T[] | undefined): boolean {
     if (a === b) return true
@@ -85,12 +85,19 @@ function applyQuery(query: LocationQuery) {
         searchResultsStore.selectedLanguages = state.languages
     }
     searchResultsStore.activeFacilityId = state.facilityId
+
+    // After filters: the store resets the page to 1 whenever they change.
+    const page = state.page ?? 1
+    if (searchResultsStore.currentPage !== page) {
+        searchResultsStore.currentPage = page
+    }
 }
 
 function queryFromStore(): LocationQueryRaw {
     return buildSearchQuery({
         ...searchResultsStore.filters,
-        facilityId: searchResultsStore.activeFacilityId
+        facilityId: searchResultsStore.activeFacilityId,
+        page: searchResultsStore.currentPage
     })
 }
 
@@ -117,9 +124,18 @@ watch(() => route.query, query => {
 })
 
 watch(queryFromStore, query => {
-    if (!sameQuery(query, route.query)) {
-        router.replace({ query })
+    if (sameQuery(query, route.query)) return
+
+    /*
+     * Same filters in a different spelling (`DENTISTRY` vs `dentistry`) rewrite in place.
+     * A real filter change pushes, so Back/Forward walk through searches.
+     */
+    if (sameSearchQueryState(query, route.query)) {
+        void router.replace({ query })
+        return
     }
+
+    void router.push({ query })
 })
 
 /*

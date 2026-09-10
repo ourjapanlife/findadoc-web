@@ -82,7 +82,7 @@
                         :key="prefecture.name"
                     >
                         <NuxtLink
-                            :to="{ path: '/search', query: { prefecture: prefecture.name } }"
+                            :to="{ path: '/search', query: { prefecture: prefecture.name.toLowerCase() } }"
                             :data-testid="`home-prefecture-${prefecture.name}`"
                             class="chip h-11 px-4 transition-colors hover:border-primary hover:bg-primary/5"
                         >
@@ -215,7 +215,7 @@ const categories = computed(() =>
 function categoryLink(code: SpecialtyCategory) {
     const specialty = specialtiesStore.categoryToSpecialtyMap[code]?.[0]
     return specialty
-        ? { path: '/search', query: { specialty } }
+        ? { path: '/search', query: { specialty: specialty.replaceAll('_', '-').toLowerCase() } }
         : { path: '/search' }
 }
 
