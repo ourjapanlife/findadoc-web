@@ -1,5 +1,5 @@
 import { relatedFacetLinks, type RelatedFacetLink } from '~/utils/directoryLinks'
-import { loadFacetIndex, loadPrefectureFacets, type loadPrefectureLeaf } from '~/utils/hubDirectory'
+import { loadFacetLinkCatalog, type loadPrefectureLeaf } from '~/utils/hubDirectory'
 import { useAsyncData } from '#imports'
 
 export type DirectoryRelatedLinks = {
@@ -21,14 +21,16 @@ export async function useDirectoryRelatedLinks(leaf: DirectoryLeaf) {
         : `related-facets:${leaf.facet.path}`
 
     const { data } = await useAsyncData(key, async (): Promise<DirectoryRelatedLinks> => {
+        const catalog = await loadFacetLinkCatalog()
+
         if (leaf.type === 'city') {
-            const facets = await loadPrefectureFacets(leaf.city.prefectureSlug)
+            const bucket = catalog?.[leaf.city.prefectureSlug]
             return {
-                prefectureSpecialties: facets.specialties.map(facet => ({
+                prefectureSpecialties: (bucket?.specialties ?? []).map(facet => ({
                     path: facet.path,
                     label: facet.label
                 })),
-                prefectureLanguages: facets.languages.map(facet => ({
+                prefectureLanguages: (bucket?.languages ?? []).map(facet => ({
                     path: facet.path,
                     label: facet.label
                 })),
@@ -37,8 +39,7 @@ export async function useDirectoryRelatedLinks(leaf: DirectoryLeaf) {
             }
         }
 
-        const index = await loadFacetIndex()
-        const related = relatedFacetLinks(leaf.facet, index?.byPrefecture ?? {})
+        const related = relatedFacetLinks(leaf.facet, catalog ?? {})
         return {
             prefectureSpecialties: [],
             prefectureLanguages: [],

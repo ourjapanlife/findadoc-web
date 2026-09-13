@@ -25,9 +25,12 @@ export type RelatedFacetLink = {
     labelJa: string
 }
 
+/** Facet metadata used for cross-links. Facilities stay off this shape so pages do not serialize the directory. */
+export type FacetLinkEntry = Omit<FacetPage, 'facilities'>
+
 export type FacetIndexByPrefecture = Record<string, {
-    specialties: readonly FacetPage[]
-    languages: readonly FacetPage[]
+    specialties: readonly FacetLinkEntry[]
+    languages: readonly FacetLinkEntry[]
 }>
 
 export type ProfessionalFacetLink = {
@@ -151,7 +154,7 @@ export function relatedFacetLinks(
             labelJa: facet.label
         }))
 
-    const nearby: FacetPage[] = []
+    const nearby: FacetLinkEntry[] = []
     for (const [prefectureSlug, entry] of Object.entries(byPrefecture)) {
         if (prefectureSlug === current.prefectureSlug) {
             continue

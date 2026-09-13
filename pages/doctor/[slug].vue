@@ -26,7 +26,7 @@
 
         <DoctorDetails
             :professional="professional"
-            :facet-links="facetLinks"
+            :facet-links="facetLinks ?? []"
         />
     </div>
 </template>
@@ -40,7 +40,7 @@ import { canonicalPathMatches } from '~/utils/clinicPath'
 import { professionalCrumbs, professionalFacetLinks } from '~/utils/directoryLinks'
 import { professionalDocumentTitle, professionalIdFromSlugParam, professionalPath } from '~/utils/doctorPath'
 import { prefectureHubPath } from '~/utils/hubPath'
-import { loadFacetIndex } from '~/utils/hubDirectory'
+import { loadFacetLinkCatalog } from '~/utils/hubDirectory'
 import { formatHealthcareProfessionalName } from '~/utils/nameUtils'
 import { isJapaneseLocale, toGqlLocale } from '~/utils/activeLocale'
 import { formatPageTitle } from '~/utils/site'
@@ -58,9 +58,16 @@ if (!professionalId) {
 }
 
 const { data } = await useAsyncData(`doctor-${professionalId}`, () => fetchDoctorById(professionalId))
-const { data: facetIndex } = await useAsyncData(
-    `doctor-facets:${professionalId}`,
-    () => loadFacetIndex()
+const { data: facetLinks } = await useAsyncData(
+    `doctor-facet-links:${professionalId}`,
+    async () => {
+        const record = data.value
+        if (!record) {
+            return []
+        }
+        const catalog = await loadFacetLinkCatalog()
+        return professionalFacetLinks(record, record.facilities, catalog ?? {})
+    }
 )
 
 if (!data.value) {
@@ -96,12 +103,6 @@ const metaDescription = computed(() => {
 
 const documentTitle = computed(() => professionalDocumentTitle(displayName.value))
 const brandedTitle = computed(() => formatPageTitle(documentTitle.value))
-
-const facetLinks = computed(() => professionalFacetLinks(
-    professional.value,
-    professional.value.facilities,
-    facetIndex.value?.byPrefecture ?? {}
-))
 
 const crumbs = computed(() => {
     const firstFacility = professional.value.facilities[0]
