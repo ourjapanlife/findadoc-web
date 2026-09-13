@@ -94,10 +94,10 @@ export function isFacetSecondSegment(slug: string): boolean {
     return Boolean(specialtyFromFacetSlug(slug) || languageFromFacetSlug(slug))
 }
 
-export type PrefectureSecondSegment =
-    | { kind: 'language', locale: Locale, slug: string }
-    | { kind: 'specialty', specialty: Specialty, slug: string }
-    | { kind: 'city', slug: string }
+export type PrefectureSecondSegment
+    = | { kind: 'language', locale: Locale, slug: string }
+      | { kind: 'specialty', specialty: Specialty, slug: string }
+      | { kind: 'city', slug: string }
 
 export function parsePrefectureSecondSegment(slug: string): PrefectureSecondSegment | undefined {
     if (!slug) {

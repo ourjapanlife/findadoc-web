@@ -119,11 +119,11 @@
                         <option value="">
                             {{ t('home.searchAnyArea') }}
                         </option>
-                    <option
-                        v-for="entry in prefectures"
-                        :key="entry.name"
-                        :value="entry.name.toLowerCase()"
-                    >
+                        <option
+                            v-for="entry in prefectures"
+                            :key="entry.name"
+                            :value="entry.name.toLowerCase()"
+                        >
                             {{ prefectureLabel(entry) }} ({{ entry.approximateFacilities }})
                         </option>
                     </select>
