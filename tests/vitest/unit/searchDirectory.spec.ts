@@ -139,6 +139,9 @@ describe('parseSearchQuery / buildSearchQuery', () => {
         })
         expect(buildSearchQuery({})).toEqual({})
         expect(buildSearchQuery({ page: 1 })).toEqual({})
+        expect(parseSearchQuery({ page: '2abc' }).page).toBeUndefined()
+        expect(parseSearchQuery({ page: '2.5' }).page).toBeUndefined()
+        expect(parseSearchQuery({ page: '2' }).page).toBe(2)
     })
 
     it('canonicalises enum-style query strings to the human-readable form', () => {

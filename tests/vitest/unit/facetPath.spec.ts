@@ -31,6 +31,7 @@ describe('facet slugs', () => {
         expect(languageFacetSlug(Locale.ZhCn)).to.not.equal(languageFacetSlug(Locale.ZhTw))
         expect(languageFromFacetSlug(languageFacetSlug(Locale.ZhCn)!)).to.equal(Locale.ZhCn)
         expect(languageFromFacetSlug(languageFacetSlug(Locale.ZhTw)!)).to.equal(Locale.ZhTw)
+        expect(languageFacetSlug(Locale.Und)).to.equal(undefined)
     })
 
     it('parses the second segment as language, then specialty, then city', () => {

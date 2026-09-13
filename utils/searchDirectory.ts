@@ -176,8 +176,8 @@ function parsePlace(raw: string | undefined): string | undefined {
 }
 
 function parsePage(raw: string | undefined): number | undefined {
-    if (!raw) return undefined
-    const page = Number.parseInt(raw, 10)
+    if (!raw || !/^\d+$/.test(raw)) return undefined
+    const page = Number(raw)
     return Number.isInteger(page) && page > 1 ? page : undefined
 }
 

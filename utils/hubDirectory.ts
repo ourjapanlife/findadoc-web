@@ -125,7 +125,7 @@ function joinFacilities(
     }))
 }
 
-async function fetchProfessionalsByIds(ids: readonly string[]): Promise<HealthcareProfessional[]> {
+async function fetchProfessionalsByIds(ids: readonly string[]): Promise<HealthcareProfessional[] | null> {
     if (!ids.length) {
         return []
     }
@@ -138,7 +138,7 @@ async function fetchProfessionalsByIds(ids: readonly string[]): Promise<Healthca
             { filters: { ids: idsChunk, limit: PAGE_SIZE } }
         )
         if (!data) {
-            continue
+            return null
         }
         professionals.push(...(data.healthcareProfessionals ?? []))
     }
@@ -174,6 +174,9 @@ async function fetchFacilitiesLive(): Promise<FacilitySearchResult[] | null> {
 
     const professionalIds = [...new Set(rows.flatMap(facility => facility.healthcareProfessionalIds ?? []))]
     const professionals = await fetchProfessionalsByIds(professionalIds)
+    if (!professionals) {
+        return null
+    }
     return joinFacilities(rows, professionals)
 }
 

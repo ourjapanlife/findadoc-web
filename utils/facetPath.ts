@@ -8,7 +8,7 @@ export const INDEXABLE_FACET_MIN_RESULTS = 3
 export const LANGUAGE_FACET_SUFFIX = '-speaking'
 
 const SPECIALTY_VALUES = Object.values(Specialty) as Specialty[]
-const LOCALE_VALUES = Object.values(Locale) as Locale[]
+const LOCALE_VALUES = (Object.values(Locale) as Locale[]).filter(locale => locale !== Locale.Und)
 
 const specialtyToSlug = new Map<Specialty, string>()
 const slugToSpecialty = new Map<string, Specialty>()

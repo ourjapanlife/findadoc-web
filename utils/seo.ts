@@ -41,11 +41,14 @@ export function openGraphLocale(i18nCode: string): string {
  */
 const SEARCH_NOINDEX_QUERY_KEYS = ['city', 'specialty', 'language', 'prefecture', 'page', 'facility'] as const
 
+function queryValueIsPresent(value: unknown): boolean {
+    return typeof value === 'string' ? value.length > 0 : value != null && String(value).length > 0
+}
+
 function queryParamHasValue(query: Record<string, unknown> | undefined, key: string): boolean {
     if (!query) return false
     const value = query[key]
-    const single = Array.isArray(value) ? value[0] : value
-    return typeof single === 'string' ? single.length > 0 : single != null && String(single).length > 0
+    return Array.isArray(value) ? value.some(queryValueIsPresent) : queryValueIsPresent(value)
 }
 
 function queryFromPath(path: string): Record<string, string> | undefined {
