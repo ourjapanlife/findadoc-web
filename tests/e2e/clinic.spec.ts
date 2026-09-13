@@ -52,5 +52,6 @@ test.describe('Facility pages', () => {
         await expect(page.getByRole('heading', { level: 1, name: facility.nameEn })).toBeVisible()
         await expect(page).toHaveTitle(formatPageTitle(facilityDocumentTitle(facility.nameEn)))
         await expect(page.getByTestId('clinic-back-to-search')).toBeVisible()
+        await expect(page.getByTestId('breadcrumbs')).toBeVisible()
     })
 })

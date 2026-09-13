@@ -72,9 +72,8 @@ test.describe('Home page', () => {
             await expect(page).toHaveURL(/\/search\?specialty=dentistry/)
         })
 
-        test('an area link filters by prefecture', async ({ page }) => {
-            await page.getByTestId('home-prefecture-Tokyo').click()
-            await expect(page).toHaveURL(/\/search\?prefecture=tokyo/)
+        test('an area link opens the prefecture hub', async ({ page }) => {
+            await expect(page.getByTestId('home-prefecture-Tokyo')).toHaveAttribute('href', '/tokyo')
         })
 
         test('links to the submission form', async ({ page }) => {

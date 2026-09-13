@@ -73,7 +73,7 @@ test.describe('Specialty and language facet pages', () => {
 
         await page.goto(facetPath)
         await expect(page.getByTestId('hub-facet-page')).toBeVisible()
-        await expect(page.getByTestId('hub-back-to-prefecture')).toHaveAttribute('href', prefecturePath)
+        await expect(page.getByTestId('breadcrumbs').locator(`a[href="${prefecturePath}"]`)).toBeVisible()
         await expect(page.getByTestId('search-result-card').first()).toBeVisible()
         expect(languageFacetPathFromSlugs(prefecturePath.slice(1), Locale.EnUs)).toMatch(/-speaking$/)
     })

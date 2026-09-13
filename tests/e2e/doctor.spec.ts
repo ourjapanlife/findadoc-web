@@ -53,5 +53,6 @@ test.describe('Professional pages', () => {
         const headingText = (await heading.innerText()).trim()
         await expect(page).toHaveTitle(formatPageTitle(professionalDocumentTitle(headingText)))
         await expect(page.getByTestId('doctor-back-to-search')).toBeVisible()
+        await expect(page.getByTestId('breadcrumbs')).toBeVisible()
     })
 })
