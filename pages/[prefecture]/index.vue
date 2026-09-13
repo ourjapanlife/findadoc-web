@@ -3,24 +3,7 @@
         data-testid="hub-prefecture-page"
         class="page-container flex flex-col gap-6 px-4 py-8"
     >
-        <NuxtLink
-            to="/search"
-            class="btn btn-ghost btn-sm -ml-1 self-start"
-            data-testid="hub-back-to-search"
-        >
-            <svg
-                class="h-5 w-5 stroke-current"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                aria-hidden="true"
-            >
-                <path d="M19 12H5m7-7-7 7 7 7" />
-            </svg>
-            {{ t('hubPage.backToSearch') }}
-        </NuxtLink>
+        <BreadcrumbNav :items="crumbs" />
 
         <header class="flex flex-col gap-2">
             <h1 class="text-2xl font-bold leading-tight text-primary-text">
@@ -122,6 +105,7 @@ import { createError, navigateTo, useAsyncData, useHead, useRoute } from '#impor
 import { isJapaneseLocale } from '~/utils/activeLocale'
 import { canonicalPathMatches, slugifySegment } from '~/utils/clinicPath'
 import { loadPrefectureFacets, loadPrefectureHub } from '~/utils/hubDirectory'
+import { prefectureHubCrumbs } from '~/utils/directoryLinks'
 import { hubPrefectureDocumentTitle, isReservedHubSegment } from '~/utils/hubPath'
 import { formatPageTitle } from '~/utils/site'
 import type { HubCity } from '~/utils/hubIndex'
@@ -157,6 +141,10 @@ const displayPrefecture = computed(() => {
 })
 
 const heading = computed(() => t('hubPage.prefectureHeading', { prefecture: displayPrefecture.value }))
+const crumbs = computed(() => prefectureHubCrumbs({
+    homeLabel: t('breadcrumbs.home'),
+    prefectureLabel: displayPrefecture.value
+}))
 const facilityCountText = computed(() => t('hubPage.facilityCount', prefecture.value.facilities.length))
 const documentTitle = computed(() => hubPrefectureDocumentTitle(displayPrefecture.value))
 const brandedTitle = computed(() => formatPageTitle(documentTitle.value))

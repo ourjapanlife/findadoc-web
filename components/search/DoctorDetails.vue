@@ -28,7 +28,7 @@
         </header>
 
         <section
-            v-if="specialties.length"
+            v-if="specialtyItems.length"
             class="flex flex-col gap-3"
         >
             <h2 class="text-sm font-semibold uppercase tracking-wide text-primary-text-muted">
@@ -36,17 +36,29 @@
             </h2>
             <ul class="m-0 flex list-none flex-wrap gap-1.5 p-0">
                 <li
-                    v-for="specialty in specialties"
-                    :key="specialty"
-                    class="chip chip-primary h-7 px-2.5 text-xs"
+                    v-for="item in specialtyItems"
+                    :key="item.label"
                 >
-                    {{ specialty }}
+                    <NuxtLink
+                        v-if="item.to"
+                        :to="item.to"
+                        class="chip chip-primary h-7 px-2.5 text-xs"
+                        data-testid="doctor-specialty-link"
+                    >
+                        {{ item.label }}
+                    </NuxtLink>
+                    <span
+                        v-else
+                        class="chip chip-primary h-7 px-2.5 text-xs"
+                    >
+                        {{ item.label }}
+                    </span>
                 </li>
             </ul>
         </section>
 
         <section
-            v-if="languages.length"
+            v-if="languageItems.length"
             class="flex flex-col gap-3"
         >
             <h2 class="text-sm font-semibold uppercase tracking-wide text-primary-text-muted">
@@ -54,11 +66,23 @@
             </h2>
             <ul class="m-0 flex list-none flex-wrap gap-1.5 p-0">
                 <li
-                    v-for="languageName in languages"
-                    :key="languageName"
-                    class="chip h-7 px-2.5 text-xs"
+                    v-for="item in languageItems"
+                    :key="item.label"
                 >
-                    {{ languageName }}
+                    <NuxtLink
+                        v-if="item.to"
+                        :to="item.to"
+                        class="chip h-7 px-2.5 text-xs"
+                        data-testid="doctor-language-link"
+                    >
+                        {{ item.label }}
+                    </NuxtLink>
+                    <span
+                        v-else
+                        class="chip h-7 px-2.5 text-xs"
+                    >
+                        {{ item.label }}
+                    </span>
                 </li>
             </ul>
         </section>
@@ -134,10 +158,12 @@ import { formatHealthcareProfessionalName } from '~/utils/nameUtils'
 import { isJapaneseLocale, toGqlLocale } from '~/utils/activeLocale'
 import { facilityPath } from '~/utils/clinicPath'
 import type { ProfessionalSearchResult } from '~/utils/clinicPrerender'
-import { Insurance, Locale, type LocalizedName } from '~/typedefs/gqlTypes'
+import type { ProfessionalFacetLink } from '~/utils/directoryLinks'
+import { Insurance, Locale, type LocalizedName, type Specialty } from '~/typedefs/gqlTypes'
 
 const props = defineProps<{
     professional: ProfessionalSearchResult
+    facetLinks?: ProfessionalFacetLink[]
 }>()
 
 const { t, locale } = useI18n()
@@ -167,13 +193,27 @@ const otherLanguageName = computed(() => {
 
 const degrees = computed(() => (props.professional.degrees ?? []).join(', '))
 
-const specialties = computed(() => (props.professional.specialties ?? [])
-    .map(code => specialtiesStore.specialtyDisplayOptions.find(option => option.code === code)?.displayText)
-    .filter((name): name is string => !!name))
+const specialtyItems = computed(() => (props.professional.specialties ?? [])
+    .map(code => ({
+        label: specialtiesStore.specialtyDisplayOptions.find(option => option.code === code)?.displayText,
+        to: facetPathForSpecialty(code)
+    }))
+    .filter((item): item is { label: string, to: string | undefined } => Boolean(item.label)))
 
-const languages = computed(() => (props.professional.spokenLanguages ?? [])
-    .map(code => localeDisplayOptions.find(option => option.code === code)?.simpleText)
-    .filter((name): name is string => !!name))
+const languageItems = computed(() => (props.professional.spokenLanguages ?? [])
+    .map(code => ({
+        label: localeDisplayOptions.find(option => option.code === code)?.simpleText,
+        to: facetPathForLocale(code)
+    }))
+    .filter((item): item is { label: string, to: string | undefined } => Boolean(item.label)))
+
+function facetPathForSpecialty(code: Specialty): string | undefined {
+    return (props.facetLinks ?? []).find(link => link.specialty === code)?.path
+}
+
+function facetPathForLocale(code: Locale): string | undefined {
+    return (props.facetLinks ?? []).find(link => link.locale === code)?.path
+}
 
 function insuranceLabel(code: Insurance): string {
     switch (code) {

@@ -56,7 +56,7 @@ useHead(computed(() => {
         head.title = key ? t(pageMetaI18nKey(key)) : ''
     }
 
-    if (isNoindexRoute(route.path)) {
+    if (isNoindexRoute(route.path, route.query)) {
         head.meta.push({ name: 'robots', content: 'noindex', key: 'robots' })
     }
 

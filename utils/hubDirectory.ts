@@ -238,11 +238,16 @@ export async function loadCityHub(prefectureSlug: string, citySlug: string): Pro
     return prefecture?.cities.find(city => city.citySlug === citySlug) ?? null
 }
 
+export async function loadFacetIndex(): Promise<ReturnType<typeof buildFacetIndex> | null> {
+    const indexes = await loadDirectoryIndexes()
+    return indexes?.facets ?? null
+}
+
 export async function loadPrefectureFacets(
     prefectureSlug: string
 ): Promise<{ specialties: FacetPage[], languages: FacetPage[] }> {
-    const indexes = await loadDirectoryIndexes()
-    return indexes?.facets.byPrefecture[prefectureSlug] ?? { specialties: [], languages: [] }
+    const index = await loadFacetIndex()
+    return index?.byPrefecture[prefectureSlug] ?? { specialties: [], languages: [] }
 }
 
 export async function loadPrefectureLeaf(

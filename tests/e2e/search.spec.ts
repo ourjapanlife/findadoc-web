@@ -204,11 +204,11 @@ test.describe('Search page', () => {
         })
 
         test('applies specialty, language and prefecture from the URL and reflects them in the controls', async ({ page }) => {
-            await page.goto('/search?specialty=DENTISTRY&language=en_US&prefecture=Tokyo')
+            await page.goto('/search?specialty=dentistry&language=en&prefecture=tokyo')
 
             await expect(page.getByTestId('search-specialty')).toHaveValue('DENTISTRY')
             await expect(page.getByTestId('search-language')).toHaveValue('en_US')
-            await expect(page.getByTestId('search-area')).toHaveValue('Tokyo')
+            await expect(page.getByTestId('search-area')).toHaveValue('tokyo')
             await expect(page.getByTestId('search-result-card')).toHaveCount(1)
             await expect(page.getByRole('link', { name: 'Tokyo Family Clinic' })).toBeVisible()
         })
@@ -217,7 +217,7 @@ test.describe('Search page', () => {
             await page.goto('/search')
             await page.getByTestId('search-specialty').selectOption('DERMATOLOGY')
 
-            await expect(page).toHaveURL(/specialty=DERMATOLOGY/)
+            await expect(page).toHaveURL(/specialty=dermatology/)
             await expect(page.getByTestId('search-result-card')).toHaveCount(1)
             await expect(page.getByRole('link', { name: 'Sapporo Skin Clinic' })).toBeVisible()
 
@@ -225,6 +225,39 @@ test.describe('Search page', () => {
 
             await expect(page).not.toHaveURL(/specialty=/)
             await expect(page.getByTestId('search-result-card')).toHaveCount(3)
+        })
+
+        test('browser back restores the previous filter state', async ({ page }) => {
+            await page.goto('/search')
+            await page.getByTestId('search-specialty').selectOption('DENTISTRY')
+            await expect(page).toHaveURL(/specialty=dentistry/)
+
+            await page.getByTestId('search-specialty').selectOption('DERMATOLOGY')
+            await expect(page).toHaveURL(/specialty=dermatology/)
+
+            await page.goBack()
+
+            await expect(page).toHaveURL(/specialty=dentistry/)
+            await expect(page.getByTestId('search-specialty')).toHaveValue('DENTISTRY')
+            await expect(page.getByRole('link', { name: 'Tokyo Family Clinic' })).toBeVisible()
+        })
+
+        test('filtered search URLs are noindex so they do not compete with facet pages', async ({ page }) => {
+            await page.goto('/search')
+            await expect(page.locator('meta[name="robots"][content="noindex"]')).toHaveCount(0)
+
+            await page.goto('/search?specialty=dentistry')
+            await expect(page.locator('meta[name="robots"][content="noindex"]')).toHaveCount(1)
+        })
+
+        test('still restores filters from GraphQL enum query params', async ({ page }) => {
+            await page.goto('/search?specialty=DENTISTRY&language=en_US&prefecture=Tokyo')
+
+            await expect(page.getByTestId('search-specialty')).toHaveValue('DENTISTRY')
+            await expect(page.getByTestId('search-result-card')).toHaveCount(1)
+            await expect(page).toHaveURL(/specialty=dentistry/)
+            await expect(page).toHaveURL(/language=en/)
+            await expect(page).toHaveURL(/prefecture=tokyo/)
         })
 
         test('ignores a specialty that is not a real enum value', async ({ page }) => {
@@ -299,7 +332,7 @@ test.describe('Search page', () => {
         })
 
         test('shows an empty state with a way out', async ({ page }) => {
-            await page.goto('/search?specialty=DENTISTRY&prefecture=Hokkaido')
+            await page.goto('/search?specialty=dentistry&prefecture=hokkaido')
 
             const empty = page.getByTestId('search-empty')
             await expect(empty).toBeVisible()

@@ -50,6 +50,10 @@ describe('isNoindexRoute', () => {
         expect(isNoindexRoute('/about')).to.equal(false)
         expect(isNoindexRoute('/u/someone')).to.equal(false)
         expect(isNoindexRoute('/search')).to.equal(false)
+        expect(isNoindexRoute('/search?specialty=dentistry')).to.equal(true)
+        expect(isNoindexRoute('/search', { specialty: 'dentistry' })).to.equal(true)
+        expect(isNoindexRoute('/search?facility=abc')).to.equal(true)
+        expect(isNoindexRoute('/search?page=2')).to.equal(true)
     })
 })
 
