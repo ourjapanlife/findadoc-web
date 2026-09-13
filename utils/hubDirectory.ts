@@ -1,6 +1,7 @@
 import { useRuntimeConfig } from '#imports'
 import { graphqlEndpoint } from './graphqlEndpoint'
 import { buildFacetIndex, type FacetPage } from './facetIndex'
+import type { FacetIndexByPrefecture } from './directoryLinks'
 import { parsePrefectureSecondSegment } from './facetPath'
 import { buildHubIndex, type HubCity, type HubPrefecture } from './hubIndex'
 import type { FacilitySearchResult } from './searchDirectory'
@@ -238,9 +239,64 @@ export async function loadCityHub(prefectureSlug: string, citySlug: string): Pro
     return prefecture?.cities.find(city => city.citySlug === citySlug) ?? null
 }
 
-export async function loadFacetIndex(): Promise<ReturnType<typeof buildFacetIndex> | null> {
+async function loadFacetIndex(): Promise<ReturnType<typeof buildFacetIndex> | null> {
     const indexes = await loadDirectoryIndexes()
     return indexes?.facets ?? null
+}
+
+function withoutFacilities(facet: FacetPage): Omit<FacetPage, 'facilities'> {
+    return {
+        kind: facet.kind,
+        prefectureSlug: facet.prefectureSlug,
+        prefectureEn: facet.prefectureEn,
+        prefectureJa: facet.prefectureJa,
+        path: facet.path,
+        slug: facet.slug,
+        specialty: facet.specialty,
+        locale: facet.locale,
+        label: facet.label,
+        professionalCount: facet.professionalCount,
+        updatedDate: facet.updatedDate
+    }
+}
+
+let cachedLinkCatalog: FacetIndexByPrefecture | undefined
+let linkCatalogLoad: Promise<FacetIndexByPrefecture | null> | undefined
+
+/**
+ * Prefecture → specialty/language paths without nested facilities. Doctor pages
+ * must use this (not `loadFacetIndex`) so prerender does not JSON-serialize the
+ * whole directory into every `/doctor/…` payload.
+ */
+export async function loadFacetLinkCatalog(): Promise<FacetIndexByPrefecture | null> {
+    if (cachedLinkCatalog) {
+        return cachedLinkCatalog
+    }
+
+    linkCatalogLoad ??= (async () => {
+        try {
+            const index = await loadFacetIndex()
+            if (!index) {
+                return null
+            }
+
+            const byPrefecture: FacetIndexByPrefecture = {}
+            for (const [slug, bucket] of Object.entries(index.byPrefecture)) {
+                byPrefecture[slug] = {
+                    specialties: bucket.specialties.map(withoutFacilities),
+                    languages: bucket.languages.map(withoutFacilities)
+                }
+            }
+            cachedLinkCatalog = byPrefecture
+            return cachedLinkCatalog
+        } finally {
+            if (!cachedLinkCatalog) {
+                linkCatalogLoad = undefined
+            }
+        }
+    })()
+
+    return linkCatalogLoad
 }
 
 export async function loadPrefectureFacets(
