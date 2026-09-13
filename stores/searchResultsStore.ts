@@ -320,6 +320,7 @@ export const useSearchResultsStore = defineStore('searchResultsStore', () => {
         searchResultsList,
         paginatedResults,
         totalResults,
+        currentPage,
         hasMore,
         loadMore,
         // active

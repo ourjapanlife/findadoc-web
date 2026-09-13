@@ -3,6 +3,7 @@ import { dirname, join } from 'node:path'
 import { facilityPath } from './clinicPath'
 import { professionalPath } from './doctorPath'
 import { hubPathsFromFacilities } from './hubIndex'
+import { facetPathsFromFacilities } from './facetIndex'
 import { graphqlEndpoint } from './graphqlEndpoint'
 import type { Facility, HealthcareProfessional } from '~/typedefs/gqlTypes'
 import type { FacilitySearchResult } from './searchDirectory'
@@ -235,9 +236,9 @@ async function fetchDirectoryRows(): Promise<{
 }
 
 /**
- * Concrete `/clinic/...`, `/doctor/...`, and geography hub paths for `nuxi generate`.
- * Unknown IDs and locations must stay a real HTTP 404, so these are listed
- * explicitly rather than given an SPA rewrite.
+ * Concrete `/clinic/...`, `/doctor/...`, geography hub, and facet paths for
+ * `nuxi generate`. Unknown IDs and locations must stay a real HTTP 404, so
+ * these are listed explicitly rather than given an SPA rewrite.
  *
  * The directory is stored on private `runtimeConfig` so prerender workers can
  * fill each page without calling `facility(id)`. Disk cache + env were invisible
@@ -252,6 +253,7 @@ export async function buildClinicPrerenderDirectory(): Promise<{
     paths: string[]
     professionalPaths: string[]
     hubPaths: string[]
+    facetPaths: string[]
 } | null> {
     const rows = await fetchDirectoryRows()
 
@@ -269,7 +271,8 @@ export async function buildClinicPrerenderDirectory(): Promise<{
         professionalDirectory,
         paths: Object.values(directory).map(facility => facilityPath(facility)),
         professionalPaths: Object.values(professionalDirectory).map(professional => professionalPath(professional)),
-        hubPaths: hubPathsFromFacilities(Object.values(directory))
+        hubPaths: hubPathsFromFacilities(Object.values(directory)),
+        facetPaths: facetPathsFromFacilities(Object.values(directory))
     }
 }
 

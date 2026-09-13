@@ -22,31 +22,7 @@
             {{ t('clinicPage.backToSearch') }}
         </NuxtLink>
 
-        <nav
-            v-if="showPrefectureHub || showCityHub"
-            class="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-primary-text-muted"
-            data-testid="clinic-hub-links"
-            :aria-label="t('clinicPage.locationNav')"
-        >
-            <NuxtLink
-                v-if="showPrefectureHub"
-                :to="prefectureHub"
-                class="link link-hover"
-            >
-                {{ locationPrefecture }}
-            </NuxtLink>
-            <span
-                v-if="showPrefectureHub && showCityHub"
-                aria-hidden="true"
-            >/</span>
-            <NuxtLink
-                v-if="showCityHub"
-                :to="cityHub"
-                class="link link-hover"
-            >
-                {{ locationCity }}
-            </NuxtLink>
-        </nav>
+        <BreadcrumbNav :items="crumbs" />
 
         <SearchResultDetails
             :facility="facility"
@@ -61,7 +37,7 @@ import { useI18n } from 'vue-i18n'
 import { createError, navigateTo, useAsyncData, useHead, useRoute } from '#imports'
 import { fetchClinicById } from '~/utils/clinicFacility'
 import { canonicalPathMatches, facilityDocumentTitle, facilityIdFromSlugParam, facilityPath } from '~/utils/clinicPath'
-import { cityHubPath, prefectureHubPath } from '~/utils/hubPath'
+import { facilityCrumbs, facilityHubPaths } from '~/utils/directoryLinks'
 import { isJapaneseLocale } from '~/utils/activeLocale'
 import { formatPageTitle } from '~/utils/site'
 
@@ -126,13 +102,17 @@ const locationCity = computed(() => {
         : (address?.cityEn || address?.cityJa || '')
 })
 
-const prefectureHub = computed(() => prefectureHubPath(facility.value.contact?.address?.prefectureEn))
-const cityHub = computed(() => cityHubPath(
-    facility.value.contact?.address?.prefectureEn,
-    facility.value.contact?.address?.cityEn
-))
-const showPrefectureHub = computed(() => Boolean(prefectureHub.value && locationPrefecture.value))
-const showCityHub = computed(() => Boolean(cityHub.value && locationCity.value))
+const crumbs = computed(() => {
+    const hubs = facilityHubPaths(facility.value.contact?.address)
+    return facilityCrumbs({
+        homeLabel: t('breadcrumbs.home'),
+        prefectureLabel: locationPrefecture.value,
+        prefecturePath: hubs.prefecturePath,
+        cityLabel: locationCity.value,
+        cityPath: hubs.cityPath,
+        facilityLabel: displayName.value
+    })
+})
 
 useHead({
     title: documentTitle,

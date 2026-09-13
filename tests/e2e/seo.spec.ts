@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test'
 import { PAGE_META_TITLE_ROUTES } from '../../utils/pageTitles'
 import { facilityIdFromSlugParam } from '../../utils/clinicPath'
+import { isFacetSecondSegment } from '../../utils/facetPath'
 import { hubSitemapUrls } from '../../utils/hubIndex'
 import { canonicalUrl } from '../../utils/seo'
 import { SITE_SITEMAP_URL, SITE_SOCIAL_IMAGE, SITE_TITLE } from '../../utils/site'
@@ -68,9 +69,18 @@ test.describe('Discovery and social meta', () => {
             && !path.startsWith('/doctor/')
             && !publicPathSet.has(path)
         ))
+        const leftoverSet = new Set(leftoverPaths)
+        const extraPaths = leftoverPaths.filter(path => !expectedHubPaths.includes(path))
 
         expect(paths.filter(path => publicPathSet.has(path)).sort()).toEqual([...publicPaths].sort())
-        expect(leftoverPaths.sort()).toEqual([...expectedHubPaths].sort())
+        for (const hubPath of expectedHubPaths) {
+            expect(leftoverSet.has(hubPath), hubPath).toBe(true)
+        }
+        for (const path of extraPaths) {
+            const parts = path.split('/').filter(Boolean)
+            expect(parts, path).toHaveLength(2)
+            expect(isFacetSecondSegment(parts[1] ?? ''), path).toBe(true)
+        }
         for (const path of clinicPaths) {
             expect(path).toMatch(clinicPath)
         }
