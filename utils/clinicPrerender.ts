@@ -151,12 +151,42 @@ export function joinClinicDirectory(
     professionals: readonly HealthcareProfessional[]
 ): Record<string, FacilitySearchResult> {
     const byId = new Map(professionals.map(professional => [professional.id, professional]))
+    const reverseIds = new Map<string, string[]>()
+
+    /*
+     * Seed and some API rows only link one direction. Facet pages need professionals
+     * on each facility, so also walk `professional.facilityIds`.
+     */
+    for (const professional of professionals) {
+        for (const facilityId of professional.facilityIds ?? []) {
+            const ids = reverseIds.get(facilityId)
+            if (ids) {
+                ids.push(professional.id)
+            } else {
+                reverseIds.set(facilityId, [professional.id])
+            }
+        }
+    }
+
     const directory: Record<string, FacilitySearchResult> = {}
 
     for (const facility of facilities) {
-        const healthcareProfessionals = (facility.healthcareProfessionalIds ?? [])
-            .map(id => byId.get(id))
-            .filter((professional): professional is HealthcareProfessional => !!professional)
+        const seen = new Set<string>()
+        const healthcareProfessionals: HealthcareProfessional[] = []
+
+        for (const id of [
+            ...(facility.healthcareProfessionalIds ?? []),
+            ...(reverseIds.get(facility.id) ?? [])
+        ]) {
+            if (seen.has(id)) {
+                continue
+            }
+            seen.add(id)
+            const professional = byId.get(id)
+            if (professional) {
+                healthcareProfessionals.push(professional)
+            }
+        }
 
         directory[facility.id] = { ...facility, healthcareProfessionals }
     }

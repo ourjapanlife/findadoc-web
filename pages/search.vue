@@ -129,6 +129,7 @@ watch(queryFromStore, query => {
     /*
      * Same filters in a different spelling (`DENTISTRY` vs `dentistry`) rewrite in place.
      * A real filter change pushes, so Back/Forward walk through searches.
+     * `immediate` covers the first paint after applyQuery seeded enum-style params.
      */
     if (sameSearchQueryState(query, route.query)) {
         void router.replace({ query })
@@ -136,7 +137,7 @@ watch(queryFromStore, query => {
     }
 
     void router.push({ query })
-})
+}, { immediate: true })
 
 /*
  * Map pins stay on /search and open the details panel. List cards are the

@@ -117,12 +117,39 @@ function joinFacilities(
     professionals: readonly HealthcareProfessional[]
 ): FacilitySearchResult[] {
     const byId = new Map(professionals.map(professional => [professional.id, professional]))
-    return facilities.map(facility => ({
-        ...facility,
-        healthcareProfessionals: (facility.healthcareProfessionalIds ?? [])
-            .map(id => byId.get(id))
-            .filter((professional): professional is HealthcareProfessional => !!professional)
-    }))
+    const reverseIds = new Map<string, string[]>()
+
+    for (const professional of professionals) {
+        for (const facilityId of professional.facilityIds ?? []) {
+            const ids = reverseIds.get(facilityId)
+            if (ids) {
+                ids.push(professional.id)
+            } else {
+                reverseIds.set(facilityId, [professional.id])
+            }
+        }
+    }
+
+    return facilities.map(facility => {
+        const seen = new Set<string>()
+        const healthcareProfessionals: HealthcareProfessional[] = []
+
+        for (const id of [
+            ...(facility.healthcareProfessionalIds ?? []),
+            ...(reverseIds.get(facility.id) ?? [])
+        ]) {
+            if (seen.has(id)) {
+                continue
+            }
+            seen.add(id)
+            const professional = byId.get(id)
+            if (professional) {
+                healthcareProfessionals.push(professional)
+            }
+        }
+
+        return { ...facility, healthcareProfessionals }
+    })
 }
 
 async function fetchProfessionalsByIds(ids: readonly string[]): Promise<HealthcareProfessional[] | null> {

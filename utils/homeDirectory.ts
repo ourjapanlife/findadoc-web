@@ -80,25 +80,6 @@ export const TOP_PREFECTURES: readonly PrefectureEntry[] = ALL_PREFECTURES.slice
 export type AreaPrefectureLink = string | { path: string, query: { prefecture: string } }
 
 /**
- * Public runtimeConfig cannot hold an array (Nuxt types it as a string), so
- * generate stores `JSON.stringify(hubs)`. Empty / invalid means do not filter.
- */
-export function parseGeneratedPrefectureHubs(value: string | undefined): string[] | null {
-    if (!value) {
-        return null
-    }
-
-    try {
-        const parsed: unknown = JSON.parse(value)
-        return Array.isArray(parsed) && parsed.every(item => typeof item === 'string')
-            ? parsed
-            : null
-    } catch {
-        return null
-    }
-}
-
-/**
  * Homepage area chips prefer the prefecture hub (`/tokyo`) so crawlers walk the
  * directory from `/`. During `nuxi generate`, only hubs present in this build
  * are linked — a chip for Osaka against a Tokyo-only seed would 404 and abort

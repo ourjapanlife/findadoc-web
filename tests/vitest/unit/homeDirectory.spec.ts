@@ -3,7 +3,6 @@ import { expect } from 'chai'
 import {
     ALL_PREFECTURES,
     areaPrefectureLink,
-    parseGeneratedPrefectureHubs,
     type PrefectureEntry
 } from '@/utils/homeDirectory'
 
@@ -17,26 +16,6 @@ function prefecture(name: string): PrefectureEntry {
 
 const tokyo = prefecture('Tokyo')
 const osaka = prefecture('Osaka')
-
-describe('parseGeneratedPrefectureHubs', () => {
-    it('treats an empty runtimeConfig value as unfiltered', () => {
-        expect(parseGeneratedPrefectureHubs(undefined)).to.equal(null)
-        expect(parseGeneratedPrefectureHubs('')).to.equal(null)
-    })
-
-    it('reads the JSON array stored during generate', () => {
-        expect(parseGeneratedPrefectureHubs('["/tokyo","/hokkaido"]')).to.deep.equal([
-            '/tokyo',
-            '/hokkaido'
-        ])
-        expect(parseGeneratedPrefectureHubs('[]')).to.deep.equal([])
-    })
-
-    it('ignores values that are not a JSON string array', () => {
-        expect(parseGeneratedPrefectureHubs('not-json')).to.equal(null)
-        expect(parseGeneratedPrefectureHubs('["/tokyo",1]')).to.equal(null)
-    })
-})
 
 describe('areaPrefectureLink', () => {
     it('points at the prefecture hub when generate has not filtered the list', () => {

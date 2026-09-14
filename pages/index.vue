@@ -186,16 +186,13 @@ import {
     DIRECTORY_STATS,
     TOP_PREFECTURES,
     areaPrefectureLink,
-    parseGeneratedPrefectureHubs,
     type PrefectureEntry
 } from '~/utils/homeDirectory'
 import type { SpecialtyCategory } from '~/typedefs/gqlTypes'
+import generatedPrefectureHubs from '#generated-prefecture-hubs'
 
 const { t, locale } = useI18n()
 const specialtiesStore = useSpecialtiesStore()
-const generatedPrefectureHubs = parseGeneratedPrefectureHubs(
-    useRuntimeConfig().public.generatedPrefectureHubs
-)
 
 const heroIllustration = '/illustrations/characters-together-welcomescreen.svg'
 
