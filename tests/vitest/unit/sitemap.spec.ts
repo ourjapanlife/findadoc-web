@@ -10,7 +10,7 @@ import {
     SITEMAP_DIRECTORY_PAGE_SIZE,
     sitemapUrlFromEntry
 } from '@/utils/sitemapDirectory'
-import { Locale } from '~/typedefs/gqlTypes'
+import { Locale, Specialty } from '~/typedefs/gqlTypes'
 
 describe('publicSitemapUrls', () => {
     it('lists every titled public page and none of the robots-disallowed trees', () => {
@@ -136,7 +136,8 @@ describe('loadDirectorySitemapUrls', () => {
         expect(directoryKindsToFetch()).to.deep.equal(['facility', 'professional'])
         expect(urls).to.deep.equal([
             { loc: '/clinic/tokyo/shibuya/tokyo-family-clinic--f1', lastmod: '2026-08-01T00:00:00.000Z' },
-            { loc: '/doctor/aiko-tanaka--p1', lastmod: '2026-08-01T00:00:00.000Z' }
+            { loc: '/doctor/aiko-tanaka--p1', lastmod: '2026-08-01T00:00:00.000Z' },
+            { loc: '/tokyo', lastmod: '2026-08-01T00:00:00.000Z' }
         ])
     })
 
@@ -175,7 +176,89 @@ describe('loadDirectorySitemapUrls', () => {
         )
 
         expect(urls).to.deep.equal([
-            { loc: '/clinic/tokyo/shibuya/tokyo-family-clinic--f1', lastmod: '2026-08-01T00:00:00.000Z' }
+            { loc: '/clinic/tokyo/shibuya/tokyo-family-clinic--f1', lastmod: '2026-08-01T00:00:00.000Z' },
+            { loc: '/tokyo', lastmod: '2026-08-01T00:00:00.000Z' }
         ])
+    })
+
+    it('lists a city hub once that city has two facilities', async () => {
+        const urls = await loadDirectorySitemapUrls({
+            fetchFacilities: async () => ({
+                rows: [
+                    {
+                        id: 'f1',
+                        nameEn: 'Tokyo Family Clinic',
+                        contact: { address: { cityEn: 'Shibuya', prefectureEn: 'Tokyo' } },
+                        updatedDate: '2026-08-01T00:00:00.000Z'
+                    },
+                    {
+                        id: 'f2',
+                        nameEn: 'Shibuya Dental',
+                        contact: { address: { cityEn: 'Shibuya', prefectureEn: 'Tokyo' } },
+                        updatedDate: '2026-08-02T00:00:00.000Z'
+                    }
+                ],
+                totalCount: 2
+            }),
+            fetchProfessionals: async () => ({ rows: [], totalCount: 0 })
+        }, { facility: '/clinic', professional: undefined })
+
+        expect(urls.map(url => url.loc)).to.deep.equal([
+            '/clinic/tokyo/shibuya/tokyo-family-clinic--f1',
+            '/clinic/tokyo/shibuya/shibuya-dental--f2',
+            '/tokyo',
+            '/tokyo/shibuya'
+        ])
+    })
+
+    it('lists a specialty facet once three professionals in that prefecture share it', async () => {
+        const urls = await loadDirectorySitemapUrls({
+            fetchFacilities: async () => ({
+                rows: [
+                    {
+                        id: 'f1',
+                        nameEn: 'Tokyo Family Clinic',
+                        contact: { address: { cityEn: 'Shibuya', prefectureEn: 'Tokyo' } },
+                        updatedDate: '2026-08-01T00:00:00.000Z'
+                    }
+                ],
+                totalCount: 1
+            }),
+            fetchProfessionals: async () => ({
+                rows: [
+                    {
+                        id: 'p1',
+                        facilityIds: ['f1'],
+                        specialties: [Specialty.Dentistry],
+                        spokenLanguages: [Locale.EnUs],
+                        names: [{ firstName: 'Aiko', lastName: 'Tanaka', locale: Locale.EnUs }],
+                        updatedDate: '2026-08-01T00:00:00.000Z'
+                    },
+                    {
+                        id: 'p2',
+                        facilityIds: ['f1'],
+                        specialties: [Specialty.Dentistry],
+                        spokenLanguages: [Locale.EnUs],
+                        names: [{ firstName: 'Ken', lastName: 'Mori', locale: Locale.EnUs }],
+                        updatedDate: '2026-08-02T00:00:00.000Z'
+                    },
+                    {
+                        id: 'p3',
+                        facilityIds: ['f1'],
+                        specialties: [Specialty.Dentistry],
+                        spokenLanguages: [Locale.EnUs],
+                        names: [{ firstName: 'Yuri', lastName: 'Sato', locale: Locale.EnUs }],
+                        updatedDate: '2026-08-03T00:00:00.000Z'
+                    }
+                ],
+                totalCount: 3
+            })
+        })
+
+        expect(urls.map(url => url.loc)).to.include.members([
+            '/tokyo/dentistry',
+            '/tokyo/english-speaking'
+        ])
+        expect(urls.map(url => url.loc)).to.not.include('/tokyo/japanese-speaking')
     })
 })

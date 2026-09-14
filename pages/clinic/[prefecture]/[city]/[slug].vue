@@ -22,6 +22,8 @@
             {{ t('clinicPage.backToSearch') }}
         </NuxtLink>
 
+        <BreadcrumbNav :items="crumbs" />
+
         <SearchResultDetails
             :facility="facility"
             heading="h1"
@@ -35,6 +37,7 @@ import { useI18n } from 'vue-i18n'
 import { createError, navigateTo, useAsyncData, useHead, useRoute } from '#imports'
 import { fetchClinicById } from '~/utils/clinicFacility'
 import { canonicalPathMatches, facilityDocumentTitle, facilityIdFromSlugParam, facilityPath } from '~/utils/clinicPath'
+import { facilityCrumbs, facilityHubPaths } from '~/utils/directoryLinks'
 import { isJapaneseLocale } from '~/utils/activeLocale'
 import { formatPageTitle } from '~/utils/site'
 
@@ -84,6 +87,32 @@ const metaDescription = computed(() => {
 
 const documentTitle = computed(() => facilityDocumentTitle(displayName.value))
 const brandedTitle = computed(() => formatPageTitle(documentTitle.value))
+
+const locationPrefecture = computed(() => {
+    const address = facility.value.contact?.address
+    return isJapaneseLocale(locale.value)
+        ? (address?.prefectureJa || address?.prefectureEn || '')
+        : (address?.prefectureEn || address?.prefectureJa || '')
+})
+
+const locationCity = computed(() => {
+    const address = facility.value.contact?.address
+    return isJapaneseLocale(locale.value)
+        ? (address?.cityJa || address?.cityEn || '')
+        : (address?.cityEn || address?.cityJa || '')
+})
+
+const crumbs = computed(() => {
+    const hubs = facilityHubPaths(facility.value.contact?.address)
+    return facilityCrumbs({
+        homeLabel: t('breadcrumbs.home'),
+        prefectureLabel: locationPrefecture.value,
+        prefecturePath: hubs.prefecturePath,
+        cityLabel: locationCity.value,
+        cityPath: hubs.cityPath,
+        facilityLabel: displayName.value
+    })
+})
 
 useHead({
     title: documentTitle,

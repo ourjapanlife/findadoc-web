@@ -31,13 +31,13 @@ function facility(id: string, professionalIds: string[]): Facility {
     } as Facility
 }
 
-function professional(id: string): HealthcareProfessional {
+function professional(id: string, facilityIds: string[] = []): HealthcareProfessional {
     return {
         id,
         names: [{ firstName: id, middleName: '', lastName: 'Doc', locale: Locale.EnUs }],
         degrees: [],
         specialties: [],
-        facilityIds: [],
+        facilityIds,
         spokenLanguages: [],
         acceptedInsurance: [],
         additionalInfoForPatients: '',
@@ -55,6 +55,15 @@ describe('joinClinicDirectory', () => {
 
         expect(Object.keys(directory)).to.deep.equal(['c1'])
         expect(directory.c1?.healthcareProfessionals.map(row => row.id)).to.deep.equal(['p2', 'p1'])
+    })
+
+    it('also attaches professionals that only list the facility on facilityIds', () => {
+        const directory = joinClinicDirectory(
+            [facility('c1', [])],
+            [professional('p1', ['c1']), professional('p2', ['c1', 'other'])]
+        )
+
+        expect(directory.c1?.healthcareProfessionals.map(row => row.id)).to.deep.equal(['p1', 'p2'])
     })
 })
 

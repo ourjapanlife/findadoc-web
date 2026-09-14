@@ -1,6 +1,7 @@
 import type { Nuxt } from '@nuxt/schema'
 import type { NitroConfig } from 'nitropack'
 import { buildClinicPrerenderDirectory, isNuxtGenerateCommand } from '../clinicPrerender'
+import { prefectureHubPaths } from '../hubIndex'
 
 type EntityDirectoryBuild = Awaited<ReturnType<typeof buildClinicPrerenderDirectory>>
 
@@ -53,14 +54,60 @@ function directoryVitePlugin(
     }
 }
 
+/**
+ * Prefecture hubs that exist in this generate (`["/tokyo","/hokkaido"]`), or
+ * `null` outside generate. Baked into the client and SSR bundles so homepage
+ * chips and hydration stay in sync — public runtimeConfig cannot hold an array
+ * and JSON strings were unreliable across Nitro workers.
+ */
+function generatedPrefectureHubsModuleSource(): string {
+    if (!isNuxtGenerateCommand()) {
+        return 'export default null'
+    }
+
+    const hubs = entityDirectoryBuild
+        ? prefectureHubPaths(entityDirectoryBuild.hubPaths)
+        : []
+    return `export default ${JSON.stringify(hubs)}`
+}
+
+function generatedPrefectureHubsVitePlugin() {
+    const resolvedId = '\0generated-prefecture-hubs'
+
+    return {
+        name: 'generated-prefecture-hubs',
+        resolveId(id: string) {
+            if (id === '#generated-prefecture-hubs') {
+                return resolvedId
+            }
+        },
+        async load(id: string) {
+            if (id !== resolvedId) {
+                return
+            }
+
+            if (isNuxtGenerateCommand()) {
+                await entityDirectoryForGenerate()
+            }
+
+            return generatedPrefectureHubsModuleSource()
+        }
+    }
+}
+
 export function entityDirectoryVitePlugins() {
     return [
         directoryVitePlugin('#clinic-directory', built => built.directory),
-        directoryVitePlugin('#doctor-directory', built => built.professionalDirectory)
+        directoryVitePlugin('#doctor-directory', built => built.professionalDirectory),
+        generatedPrefectureHubsVitePlugin()
     ]
 }
 
 export async function applyEntityDirectoryToNuxt(nuxt: Nuxt) {
+    if (!isNuxtGenerateCommand()) {
+        return
+    }
+
     const built = await entityDirectoryForGenerate()
     if (!built) {
         return
@@ -71,23 +118,32 @@ export async function applyEntityDirectoryToNuxt(nuxt: Nuxt) {
 }
 
 export async function applyEntityDirectoryToNitro(nitroConfig: NitroConfig) {
-    const built = await entityDirectoryForGenerate()
-    if (!built || nitroConfig.dev) {
+    if (nitroConfig.dev || !isNuxtGenerateCommand()) {
         return
     }
 
-    console.warn(`[clinic prerender] ${built.paths.length} clinic pages, ${built.professionalPaths.length} doctor pages from directory payload`)
+    const built = await entityDirectoryForGenerate()
+    if (!built) {
+        nitroConfig.virtual = {
+            ...nitroConfig.virtual,
+            '#generated-prefecture-hubs': generatedPrefectureHubsModuleSource()
+        }
+        return
+    }
+
+    console.warn(`[clinic prerender] ${built.paths.length} clinic pages, ${built.professionalPaths.length} doctor pages, ${built.hubPaths.length} hub pages, ${built.facetPaths.length} facet pages from directory payload`)
     nitroConfig.runtimeConfig ??= {}
     nitroConfig.runtimeConfig.clinicPrerenderDirectory = built.directory
     nitroConfig.runtimeConfig.doctorPrerenderDirectory = built.professionalDirectory
     nitroConfig.virtual = {
         ...nitroConfig.virtual,
         '#clinic-directory': `export default ${JSON.stringify(built.directory)}`,
-        '#doctor-directory': `export default ${JSON.stringify(built.professionalDirectory)}`
+        '#doctor-directory': `export default ${JSON.stringify(built.professionalDirectory)}`,
+        '#generated-prefecture-hubs': generatedPrefectureHubsModuleSource()
     }
     nitroConfig.prerender ??= {}
     const existing = nitroConfig.prerender.routes
-    const entityPaths = [...built.paths, ...built.professionalPaths]
+    const entityPaths = [...built.paths, ...built.professionalPaths, ...built.hubPaths, ...built.facetPaths]
     nitroConfig.prerender.routes = Array.isArray(existing)
         ? [...existing, ...entityPaths]
         : entityPaths

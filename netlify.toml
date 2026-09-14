@@ -5,6 +5,9 @@
   NETLIFY_USE_YARN="true"
   YARN_VERSION="4.12.0"
   NODE_VERSION="22.12.0"
+  # nuxi generate prerenders ~1,100 directory pages. V8's default heap is ~2 GB and
+  # that OOMs on Netlify once clinic/doctor/hub/facet HTML is in the same run.
+  NODE_OPTIONS="--max-old-space-size=4096"
 
 # SPA fallbacks for non-prerendered routes live in public/_redirects so they
 # land in the publish directory ahead of Nitro's /* → /404.html 404 rule.

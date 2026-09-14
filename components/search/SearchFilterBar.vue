@@ -122,7 +122,7 @@
                         <option
                             v-for="entry in prefectures"
                             :key="entry.name"
-                            :value="entry.name"
+                            :value="entry.name.toLowerCase()"
                         >
                             {{ prefectureLabel(entry) }} ({{ entry.approximateFacilities }})
                         </option>
@@ -185,7 +185,7 @@ const language = computed({
 })
 
 const prefecture = computed({
-    get: () => searchResultsStore.selectedPrefecture ?? '',
+    get: () => searchResultsStore.selectedPrefecture?.toLowerCase() ?? '',
     set: value => {
         searchResultsStore.selectedPrefecture = value || undefined
     }

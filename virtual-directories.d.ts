@@ -11,3 +11,9 @@ declare module '#doctor-directory' {
     const directory: Record<string, ProfessionalSearchResult>
     export default directory
 }
+
+declare module '#generated-prefecture-hubs' {
+    /** Prefecture hub paths for this generate, or `null` outside generate. */
+    const hubs: string[] | null
+    export default hubs
+}

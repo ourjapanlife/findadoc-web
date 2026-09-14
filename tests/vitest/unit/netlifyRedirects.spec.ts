@@ -66,8 +66,9 @@ describe('SPA fallbacks', () => {
     })
 
     /*
-     * Clinic pages are prerendered by id. An SPA rewrite would turn unknown IDs into
-     * 200 HTML, which #1789 forbids. Missing files must hit the 404 catch-all.
+     * Clinic, doctor, and geography hub pages are prerendered. An SPA rewrite
+     * would turn unknown IDs or locations into 200 HTML. Missing files must hit
+     * the 404 catch-all.
      */
     it('does not give /clinic or /doctor an SPA rewrite', () => {
         expect(readRedirects()).to.not.match(/^\/clinic/m)
@@ -75,5 +76,26 @@ describe('SPA fallbacks', () => {
         const rewrites = readServeJson().rewrites ?? []
         expect(rewrites.some(rule => rule.source.startsWith('/clinic'))).to.equal(false)
         expect(rewrites.some(rule => rule.source.startsWith('/doctor'))).to.equal(false)
+    })
+
+    it('sends unknown geography paths to the 404 catch-all', () => {
+        const redirects = readRedirects()
+        const spaSources = [...redirects.matchAll(/^(\S+)\s+\/200\.html\s+200/gm)]
+            .map(match => match[1])
+            .filter((source): source is string => Boolean(source))
+        const notFound = redirectRuleIndex(redirects, /^\/\*\s+\/404\.html\s+404/m)
+
+        expect(notFound).to.be.greaterThan(-1)
+
+        for (const path of ['/not-a-real-prefecture-xyz', '/tokyo/not-a-real-city-xyz']) {
+            const hasSpaRewrite = spaSources.some(source => {
+                if (source.endsWith('/*')) {
+                    const prefix = source.slice(0, -2)
+                    return path === prefix || path.startsWith(`${prefix}/`)
+                }
+                return path === source
+            })
+            expect(hasSpaRewrite, path).to.equal(false)
+        }
     })
 })

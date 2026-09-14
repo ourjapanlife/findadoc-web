@@ -1,4 +1,5 @@
 import { Locale, SpecialtyCategory } from '~/typedefs/gqlTypes'
+import { prefectureHubPath } from './hubPath'
 
 /**
  * Entry points for the homepage.
@@ -75,6 +76,36 @@ export const DIRECTORY_STATS = {
 
 /** The subset shown as chips under "Browse by area". The dropdown offers all of them. */
 export const TOP_PREFECTURES: readonly PrefectureEntry[] = ALL_PREFECTURES.slice(0, 8)
+
+export type AreaPrefectureLink = string | { path: string, query: { prefecture: string } }
+
+/**
+ * Homepage area chips prefer the prefecture hub (`/tokyo`) so crawlers walk the
+ * directory from `/`. During `nuxi generate`, only hubs present in this build
+ * are linked — a chip for Osaka against a Tokyo-only seed would 404 and abort
+ * Nitro. Those chips fall back to `/search?prefecture=…`, which is SPA
+ * (`ssr: false`) and skipped by the crawler.
+ *
+ * `generatedPrefectureHubs` is an array only during generate (`[]` if the
+ * directory fetch failed). Anything else, including `null` in `nuxi dev`,
+ * means do not filter.
+ */
+export function areaPrefectureLink(
+    prefecture: PrefectureEntry,
+    generatedPrefectureHubs: readonly string[] | null | undefined
+): AreaPrefectureLink {
+    const hub = prefectureHubPath(prefecture.name)
+    const searchLink = {
+        path: '/search',
+        query: { prefecture: prefecture.name.toLowerCase() }
+    }
+
+    if (Array.isArray(generatedPrefectureHubs)) {
+        return hub && generatedPrefectureHubs.includes(hub) ? hub : searchLink
+    }
+
+    return hub ?? searchLink
+}
 
 /**
  * Every language at least one registered professional speaks, most-spoken first.

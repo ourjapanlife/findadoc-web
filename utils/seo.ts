@@ -34,9 +34,40 @@ export function openGraphLocale(i18nCode: string): string {
     return i18nCode.replaceAll('-', '_')
 }
 
-export function isNoindexRoute(path: string): boolean {
+/**
+ * Query keys that turn `/search` into a filter combination. Those URLs stay out of
+ * the index so they cannot compete with the curated facet pages (`/tokyo/dentistry`).
+ * Bare `/search` remains indexable.
+ */
+const SEARCH_NOINDEX_QUERY_KEYS = ['city', 'specialty', 'language', 'prefecture', 'page', 'facility'] as const
+
+function queryValueIsPresent(value: unknown): boolean {
+    return typeof value === 'string' ? value.length > 0 : value != null && String(value).length > 0
+}
+
+function queryParamHasValue(query: Record<string, unknown> | undefined, key: string): boolean {
+    if (!query) return false
+    const value = query[key]
+    return Array.isArray(value) ? value.some(queryValueIsPresent) : queryValueIsPresent(value)
+}
+
+function queryFromPath(path: string): Record<string, string> | undefined {
+    const search = path.split('?')[1]
+    return search ? Object.fromEntries(new URLSearchParams(search)) : undefined
+}
+
+export function isNoindexRoute(path: string, query?: Record<string, unknown>): boolean {
     const normalised = normalisePagePath(path)
-    return ROBOTS_DISALLOW_PATHS.some(
+    if (ROBOTS_DISALLOW_PATHS.some(
         prefix => normalised === prefix || normalised.startsWith(`${prefix}/`)
-    )
+    )) {
+        return true
+    }
+
+    if (normalised === '/search') {
+        const params = query ?? queryFromPath(path)
+        return SEARCH_NOINDEX_QUERY_KEYS.some(key => queryParamHasValue(params, key))
+    }
+
+    return false
 }

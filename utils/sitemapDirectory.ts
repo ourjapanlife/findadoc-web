@@ -1,8 +1,11 @@
 import { gql, GraphQLClient } from 'graphql-request'
 import { facilityPath } from './clinicPath'
 import { professionalPath } from './doctorPath'
+import { hubSitemapUrls } from './hubIndex'
+import { attachProfessionalsToFacilities, facetSitemapUrls } from './facetIndex'
 import { graphqlEndpoint } from './graphqlEndpoint'
-import type { FacilitySearchFilters, HealthcareProfessionalSearchFilters, LocalizedName } from '~/typedefs/gqlTypes'
+import type { FacilitySearchFilters, HealthcareProfessionalSearchFilters,
+    Locale, LocalizedName, Specialty } from '~/typedefs/gqlTypes'
 
 /**
  * Same cap the directory store uses. The API silently truncates or errors above this
@@ -16,7 +19,10 @@ export const SITEMAP_DIRECTORY_PAGE_SIZE = 100
  * The prefix is only the enable flag. The sitemap fetch is skipped while every
  * prefix is unset so `nuxi generate` does not advertise URLs that 404.
  *
- * Hub and facet pages (#1791, #1792) add their own prefixes here the same way.
+ * Hub pages (#1791) and specialty/language facets (#1792) are derived from the
+ * facility and professional rows already fetched — not a separate kind. City
+ * hubs with a single facility are omitted (noindex / thin content). Facets
+ * below three matching professionals 404 and are omitted.
  */
 export const DIRECTORY_SITEMAP_PATHS = {
     facility: '/clinic' as string | undefined,
@@ -120,6 +126,7 @@ const sitemapFacilitiesQuery = gql`
             id
             nameEn
             updatedDate
+            healthcareProfessionalIds
             contact {
                 address {
                     cityEn
@@ -139,6 +146,9 @@ const sitemapProfessionalsQuery = gql`
         healthcareProfessionals(filters: $filters) {
             id
             updatedDate
+            specialties
+            spokenLanguages
+            facilityIds
             names {
                 firstName
                 middleName
@@ -166,6 +176,9 @@ type SitemapProfessionalRow = {
     id: string
     updatedDate?: string | null
     names?: LocalizedName[] | null
+    specialties?: Specialty[] | null
+    spokenLanguages?: Locale[] | null
+    facilityIds?: string[] | null
 }
 
 type DirectoryFetcher = {
@@ -229,10 +242,12 @@ export async function loadDirectorySitemapUrls(
 
     try {
         const entries: SitemapDirectoryEntry[] = []
+        let facilityRows: SitemapFacilityRow[] = []
+        let professionalRows: SitemapProfessionalRow[] = []
 
         if (kinds.includes('facility')) {
-            const facilities = await collectPagedRows(offset => fetcher.fetchFacilities(offset))
-            entries.push(...facilities.map(row => ({
+            facilityRows = await collectPagedRows(offset => fetcher.fetchFacilities(offset))
+            entries.push(...facilityRows.map(row => ({
                 kind: 'facility' as const,
                 id: row.id,
                 nameEn: row.nameEn,
@@ -243,8 +258,8 @@ export async function loadDirectorySitemapUrls(
         }
 
         if (kinds.includes('professional')) {
-            const professionals = await collectPagedRows(offset => fetcher.fetchProfessionals(offset))
-            entries.push(...professionals.map(row => ({
+            professionalRows = await collectPagedRows(offset => fetcher.fetchProfessionals(offset))
+            entries.push(...professionalRows.map(row => ({
                 kind: 'professional' as const,
                 id: row.id,
                 names: row.names ?? [],
@@ -252,10 +267,17 @@ export async function loadDirectorySitemapUrls(
             })))
         }
 
-        return entries.flatMap(entry => {
+        const urls = entries.flatMap(entry => {
             const url = sitemapUrlFromEntry(entry, paths)
             return url ? [url] : []
         })
+
+        if (facilityRows.length) {
+            urls.push(...hubSitemapUrls(facilityRows))
+            urls.push(...facetSitemapUrls(attachProfessionalsToFacilities(facilityRows, professionalRows)))
+        }
+
+        return urls
     } catch (error) {
         // Dev/e2e often have no directory API. A broken sitemap.xml is worse than
         // omitting entity URLs until generate can reach production.

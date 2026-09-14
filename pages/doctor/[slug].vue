@@ -22,7 +22,12 @@
             {{ t('doctorPage.backToSearch') }}
         </NuxtLink>
 
-        <DoctorDetails :professional="professional" />
+        <BreadcrumbNav :items="crumbs" />
+
+        <DoctorDetails
+            :professional="professional"
+            :facet-links="facetLinks ?? []"
+        />
     </div>
 </template>
 
@@ -32,9 +37,12 @@ import { useI18n } from 'vue-i18n'
 import { createError, navigateTo, useAsyncData, useHead, useRoute } from '#imports'
 import { fetchDoctorById } from '~/utils/doctorProfessional'
 import { canonicalPathMatches } from '~/utils/clinicPath'
+import { professionalCrumbs, professionalFacetLinks } from '~/utils/directoryLinks'
 import { professionalDocumentTitle, professionalIdFromSlugParam, professionalPath } from '~/utils/doctorPath'
+import { prefectureHubPath } from '~/utils/hubPath'
+import { loadFacetLinkCatalog } from '~/utils/hubDirectory'
 import { formatHealthcareProfessionalName } from '~/utils/nameUtils'
-import { toGqlLocale } from '~/utils/activeLocale'
+import { isJapaneseLocale, toGqlLocale } from '~/utils/activeLocale'
 import { formatPageTitle } from '~/utils/site'
 import { localeDisplayOptions } from '~/stores/localeStore'
 import { useSpecialtiesStore } from '~/stores/specialtiesStore'
@@ -50,6 +58,17 @@ if (!professionalId) {
 }
 
 const { data } = await useAsyncData(`doctor-${professionalId}`, () => fetchDoctorById(professionalId))
+const { data: facetLinks } = await useAsyncData(
+    `doctor-facet-links:${professionalId}`,
+    async () => {
+        const record = data.value
+        if (!record) {
+            return []
+        }
+        const catalog = await loadFacetLinkCatalog()
+        return professionalFacetLinks(record, record.facilities, catalog ?? {})
+    }
+)
 
 if (!data.value) {
     throw createError({ statusCode: 404, statusMessage: 'Page not found' })
@@ -84,6 +103,22 @@ const metaDescription = computed(() => {
 
 const documentTitle = computed(() => professionalDocumentTitle(displayName.value))
 const brandedTitle = computed(() => formatPageTitle(documentTitle.value))
+
+const crumbs = computed(() => {
+    const firstFacility = professional.value.facilities[0]
+    const address = firstFacility?.contact?.address
+    const prefecturePath = prefectureHubPath(address?.prefectureEn)
+    const prefectureLabel = isJapaneseLocale(locale.value)
+        ? (address?.prefectureJa || address?.prefectureEn || '')
+        : (address?.prefectureEn || address?.prefectureJa || '')
+
+    return professionalCrumbs({
+        homeLabel: t('breadcrumbs.home'),
+        prefectureLabel: prefecturePath ? prefectureLabel : undefined,
+        prefecturePath,
+        professionalLabel: displayName.value
+    })
+})
 
 useHead({
     title: documentTitle,

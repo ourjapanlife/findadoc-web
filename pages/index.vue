@@ -82,7 +82,7 @@
                         :key="prefecture.name"
                     >
                         <NuxtLink
-                            :to="{ path: '/search', query: { prefecture: prefecture.name } }"
+                            :to="areaLink(prefecture)"
                             :data-testid="`home-prefecture-${prefecture.name}`"
                             class="chip h-11 px-4 transition-colors hover:border-primary hover:bg-primary/5"
                         >
@@ -181,8 +181,15 @@
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useSpecialtiesStore } from '~/stores/specialtiesStore'
-import { BROWSE_CATEGORIES, DIRECTORY_STATS, TOP_PREFECTURES, type PrefectureEntry } from '~/utils/homeDirectory'
+import {
+    BROWSE_CATEGORIES,
+    DIRECTORY_STATS,
+    TOP_PREFECTURES,
+    areaPrefectureLink,
+    type PrefectureEntry
+} from '~/utils/homeDirectory'
 import type { SpecialtyCategory } from '~/typedefs/gqlTypes'
+import generatedPrefectureHubs from '#generated-prefecture-hubs'
 
 const { t, locale } = useI18n()
 const specialtiesStore = useSpecialtiesStore()
@@ -215,8 +222,13 @@ const categories = computed(() =>
 function categoryLink(code: SpecialtyCategory) {
     const specialty = specialtiesStore.categoryToSpecialtyMap[code]?.[0]
     return specialty
-        ? { path: '/search', query: { specialty } }
+        ? { path: '/search', query: { specialty: specialty.replaceAll('_', '-').toLowerCase() } }
         : { path: '/search' }
+}
+
+/** Area chips land on prefecture hubs so crawlers can reach the directory graph from the homepage. */
+function areaLink(prefecture: PrefectureEntry) {
+    return areaPrefectureLink(prefecture, generatedPrefectureHubs)
 }
 
 const steps = computed(() => [
