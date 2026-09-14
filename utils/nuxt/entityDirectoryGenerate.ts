@@ -1,6 +1,7 @@
 import type { Nuxt } from '@nuxt/schema'
 import type { NitroConfig } from 'nitropack'
 import { buildClinicPrerenderDirectory, isNuxtGenerateCommand } from '../clinicPrerender'
+import { prefectureHubPaths } from '../hubIndex'
 
 type EntityDirectoryBuild = Awaited<ReturnType<typeof buildClinicPrerenderDirectory>>
 
@@ -60,8 +61,18 @@ export function entityDirectoryVitePlugins() {
     ]
 }
 
+function generatedPrefectureHubsFromBuild(built: EntityDirectoryBuild): string[] {
+    return built ? prefectureHubPaths(built.hubPaths) : []
+}
+
 export async function applyEntityDirectoryToNuxt(nuxt: Nuxt) {
+    if (!isNuxtGenerateCommand()) {
+        return
+    }
+
     const built = await entityDirectoryForGenerate()
+    nuxt.options.runtimeConfig.public.generatedPrefectureHubs = generatedPrefectureHubsFromBuild(built)
+
     if (!built) {
         return
     }
@@ -71,13 +82,22 @@ export async function applyEntityDirectoryToNuxt(nuxt: Nuxt) {
 }
 
 export async function applyEntityDirectoryToNitro(nitroConfig: NitroConfig) {
+    if (nitroConfig.dev || !isNuxtGenerateCommand()) {
+        return
+    }
+
     const built = await entityDirectoryForGenerate()
-    if (!built || nitroConfig.dev) {
+    nitroConfig.runtimeConfig ??= {}
+    nitroConfig.runtimeConfig.public = {
+        ...nitroConfig.runtimeConfig.public,
+        generatedPrefectureHubs: generatedPrefectureHubsFromBuild(built)
+    }
+
+    if (!built) {
         return
     }
 
     console.warn(`[clinic prerender] ${built.paths.length} clinic pages, ${built.professionalPaths.length} doctor pages, ${built.hubPaths.length} hub pages, ${built.facetPaths.length} facet pages from directory payload`)
-    nitroConfig.runtimeConfig ??= {}
     nitroConfig.runtimeConfig.clinicPrerenderDirectory = built.directory
     nitroConfig.runtimeConfig.doctorPrerenderDirectory = built.professionalDirectory
     nitroConfig.virtual = {

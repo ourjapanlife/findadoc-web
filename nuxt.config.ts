@@ -147,6 +147,14 @@ export default defineNuxtConfig({
 
             GOOGLE_MAPS_API_KEY: process.env.GOOGLE_MAPS_API_KEY,
 
+            /*
+             * During `nuxi generate`, filled with prefecture hubs that exist in this
+             * build (`/tokyo`, `/hokkaido`, …). Homepage chips only link those so
+             * crawlLinks does not 404 on TOP_PREFECTURES the seed/API does not have.
+             * Null in `nuxi dev` means do not filter — chips always use hub URLs.
+             */
+            generatedPrefectureHubs: null as string[] | null,
+
             NUXT_PUBLIC_LOAD_STORES: process.env.NUXT_PUBLIC_LOAD_STORES,
 
             NUXT_USE_LOCAL_API: process.env.NUXT_USE_LOCAL_API,

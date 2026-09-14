@@ -232,6 +232,11 @@ export function hubPathsFromFacilities(facilities: readonly HubLocationSource[])
     return prefectures.flatMap(prefecture => [prefecture.path, ...prefecture.cities.map(city => city.path)])
 }
 
+/** One-segment hubs (`/tokyo`), excluding city hubs (`/tokyo/shibuya`). */
+export function prefectureHubPaths(hubPaths: readonly string[]): string[] {
+    return hubPaths.filter(path => path.split('/').filter(Boolean).length === 1)
+}
+
 export function hubSitemapUrls(facilities: readonly HubLocationSource[]): Array<{ loc: string, lastmod?: string }> {
     const { prefectures } = buildHubIndex(facilities)
     const urls: Array<{ loc: string, lastmod?: string }> = []

@@ -181,12 +181,18 @@
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useSpecialtiesStore } from '~/stores/specialtiesStore'
-import { BROWSE_CATEGORIES, DIRECTORY_STATS, TOP_PREFECTURES, type PrefectureEntry } from '~/utils/homeDirectory'
-import { prefectureHubPath } from '~/utils/hubPath'
+import {
+    BROWSE_CATEGORIES,
+    DIRECTORY_STATS,
+    TOP_PREFECTURES,
+    areaPrefectureLink,
+    type PrefectureEntry
+} from '~/utils/homeDirectory'
 import type { SpecialtyCategory } from '~/typedefs/gqlTypes'
 
 const { t, locale } = useI18n()
 const specialtiesStore = useSpecialtiesStore()
+const generatedPrefectureHubs = useRuntimeConfig().public.generatedPrefectureHubs as string[] | null
 
 const heroIllustration = '/illustrations/characters-together-welcomescreen.svg'
 
@@ -222,10 +228,7 @@ function categoryLink(code: SpecialtyCategory) {
 
 /** Area chips land on prefecture hubs so crawlers can reach the directory graph from the homepage. */
 function areaLink(prefecture: PrefectureEntry) {
-    return prefectureHubPath(prefecture.name) ?? {
-        path: '/search',
-        query: { prefecture: prefecture.name.toLowerCase() }
-    }
+    return areaPrefectureLink(prefecture, generatedPrefectureHubs)
 }
 
 const steps = computed(() => [

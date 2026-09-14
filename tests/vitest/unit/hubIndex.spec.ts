@@ -4,6 +4,7 @@ import {
     buildHubIndex,
     hubPathsFromFacilities,
     hubSitemapUrls,
+    prefectureHubPaths,
     type HubLocationSource
 } from '@/utils/hubIndex'
 
@@ -80,5 +81,6 @@ describe('hub sitemap and prerender paths', () => {
             { loc: '/tokyo', lastmod: '2026-08-03T00:00:00.000Z' },
             { loc: '/tokyo/shibuya', lastmod: '2026-08-02T00:00:00.000Z' }
         ])
+        expect(prefectureHubPaths(hubPathsFromFacilities(facilities))).to.deep.equal(['/tokyo'])
     })
 })
