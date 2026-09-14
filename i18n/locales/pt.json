@@ -514,7 +514,9 @@
   "clinicPage": {
     "backToSearch": "Back to search",
     "metaDescription": "{name} in {city}, {prefecture}. Address, phone and the languages spoken by staff.",
-    "locationNav": "Location"
+    "locationNav": "Location",
+    "relatedSpecialtiesHeading": "Browse by specialty",
+    "relatedLanguagesHeading": "Browse by language"
   },
   "doctorPage": {
     "backToSearch": "Back to search",
@@ -555,7 +557,8 @@
     "relatedSpecialtiesHeading": "Other specialties in this prefecture",
     "relatedLanguagesHeading": "Other languages in this prefecture",
     "nearbySpecialtyHeading": "{specialty} in other prefectures",
-    "nearbyLanguageHeading": "{language}-speaking care in other prefectures"
+    "nearbyLanguageHeading": "{language}-speaking care in other prefectures",
+    "siblingCitiesHeading": "Other cities in this prefecture"
   },
   "breadcrumbs": {
     "navLabel": "Breadcrumb",
