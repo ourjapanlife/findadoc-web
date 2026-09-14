@@ -33,6 +33,7 @@
                     type="text"
                     :placeholder="t('modFacilitySection.placeholderTextFacilityPhoneNumber')"
                     :required="true"
+                    :number-converter="true"
                     :input-validation-check="validatePhoneNumber"
                     :invalid-input-error-message="t('modFacilitySection.inputErrorMessageFacilityPhoneNumber')"
                 />
@@ -70,6 +71,7 @@
                         type="text"
                         :placeholder="t('modFacilitySection.placeholderTextFacilityPostalCode')"
                         :required="true"
+                        :number-converter="true"
                         :input-validation-check="validatePostalCode"
                         :invalid-input-error-message="t('modFacilitySection.inputErrorMessageFacilityPostalCode')"
                     />

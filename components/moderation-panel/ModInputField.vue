@@ -30,6 +30,7 @@
 <script setup lang="ts">
 import { ref, type Ref, watch, nextTick } from 'vue'
 import { useI18n } from '#imports'
+import { convertNumbers } from '~/utils/facilitiesUtils'
 
 const { t } = useI18n()
 
@@ -47,8 +48,11 @@ const props = defineProps({
     placeholder: String,
     required: Boolean,
     invalidInputErrorMessage: String,
-    inputValidationCheck: Function
+    inputValidationCheck: Function,
+    numberConverter: Boolean
 })
+
+// console.log(convertNumbers('２５'))
 
 const labelsToOnlyValidateOnBlur = [
     t('modSubmissionForm.labelHealthcareProfessionalLastName'),
@@ -70,6 +74,9 @@ watch(
     () => {
         if (validationCheckedPreviously.value && props.inputValidationCheck) {
             isTheInputValueValid.value = props.inputValidationCheck(model.value)
+        }
+        if (props.numberConverter) {
+            model.value = convertNumbers(model.value)
         }
     }
 )
