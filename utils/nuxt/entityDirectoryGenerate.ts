@@ -61,8 +61,8 @@ export function entityDirectoryVitePlugins() {
     ]
 }
 
-function generatedPrefectureHubsFromBuild(built: EntityDirectoryBuild): string[] {
-    return built ? prefectureHubPaths(built.hubPaths) : []
+function generatedPrefectureHubsFromBuild(built: EntityDirectoryBuild): string {
+    return JSON.stringify(built ? prefectureHubPaths(built.hubPaths) : [])
 }
 
 export async function applyEntityDirectoryToNuxt(nuxt: Nuxt) {
