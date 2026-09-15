@@ -63,4 +63,33 @@ describe('LocalStore', () => {
 
         expect(result).to.deep.equal(['Not Specified'])
     })
+
+    it('lists English, then Japanese, then site languages by foreign-resident population', () => {
+        const localeStore = useLocaleStore()
+        const codes = localeStore.mvpLocaleDisplayOptions.map(option => option.code)
+
+        expect(codes[0]).to.equal(Locale.EnUs)
+        expect(codes[1]).to.equal(Locale.JaJp)
+        expect(codes).to.deep.equal([
+            Locale.EnUs,
+            Locale.JaJp,
+            Locale.ZhCn,
+            Locale.ViVn,
+            Locale.KoKr,
+            Locale.TlPh,
+            Locale.PtBr,
+            Locale.FrFr,
+            Locale.RuRu,
+            Locale.DeDe,
+            Locale.ItIt
+        ])
+    })
+
+    it('should update locale when Korean is selected', () => {
+        const localeStore = useLocaleStore()
+        localeStore.setLocale(Locale.KoKr)
+
+        expect(localeStore.activeLocale.code).to.equal(Locale.KoKr)
+        expect(localeStore.activeLocale.simpleText).to.equal('한국어')
+    })
 })

@@ -108,24 +108,29 @@ export function areaPrefectureLink(
 }
 
 /**
- * Every language at least one registered professional speaks, most-spoken first.
+ * Every language at least one registered professional speaks.
+ *
+ * English is first because it is the default. Japanese is next as the host-country
+ * language. Remaining locales follow foreign-resident population in Japan
+ * (Immigration Services Agency, end of 2025) among languages that actually appear
+ * in the directory.
  *
  * Deliberately not the whole `Locale` enum, which carries 40+ values: offering a
  * language nobody in the directory speaks sends the user to a guaranteed empty result.
  */
 export const SEARCHABLE_LANGUAGES: readonly Locale[] = [
-    Locale.JaJp,
     Locale.EnUs,
+    Locale.JaJp,
     Locale.ZhCn,
     Locale.KoKr,
-    Locale.FrFr,
-    Locale.ZhHk,
-    Locale.DeDe,
     Locale.TlPh,
-    Locale.EsEs,
-    Locale.ArAe,
-    Locale.IdId,
     Locale.NeNp,
+    Locale.IdId,
+    Locale.ZhHk,
+    Locale.EsEs,
+    Locale.FrFr,
+    Locale.ArAe,
+    Locale.DeDe,
     Locale.NlBe,
     Locale.SwKe
 ] as const
