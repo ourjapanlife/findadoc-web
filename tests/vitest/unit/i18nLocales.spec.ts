@@ -49,7 +49,13 @@ describe('site UI locales', () => {
         const files = new Set(readdirSync(localesDir).filter(name => name.endsWith('.json')))
 
         for (const locale of i18nLocales) {
-            expect(files.has(locale.file), locale.file).to.equal(true)
+            const configuredFile = locale.file
+            if (configuredFile === undefined) {
+                throw new Error(`Locale ${locale.code} has no file`)
+            }
+
+            const filename = typeof configuredFile === 'string' ? configuredFile : configuredFile.path
+            expect(files.has(filename), filename).to.equal(true)
         }
     })
 })

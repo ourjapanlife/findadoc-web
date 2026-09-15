@@ -46,7 +46,7 @@
     "impactHeading": "자원봉사자가 운영하며, 누구나 무료로 이용할 수 있습니다",
     "missionLink": "단체 소개",
     "contributeHeading": "아직 없는 병원을 알고 계신가요?",
-    "contributeBody": "누구나 병원이나 의사를 제안할 수 있습니다. 공개 전에  моде레이터가 모든 제보를 확인합니다.",
+    "contributeBody": "누구나 병원이나 의사를 제안할 수 있습니다. 공개 전에 모더레이터가 모든 제보를 확인합니다.",
     "contributeCta": "의사 추가"
   },
   "common": {
@@ -150,7 +150,7 @@
     "spokenLanguage1": "구사 언어 1",
     "spokenLanguage2": "구사 언어 2",
     "spokenLanguageValidation": "언어를 하나 선택해 주세요",
-    "subheading": "데이터베이스에 의사를 추가하고 싶으신가요? 아래 양식을 작성해 주시면  моде레이터가 검토합니다.",
+    "subheading": "데이터베이스에 의사를 추가하고 싶으신가요? 아래 양식을 작성해 주시면 모더레이터가 검토합니다.",
     "submissionSuccessful": "기여해 주셔서 감사합니다! 의사에 관한 제보가 접수되었습니다. 감사합니다!",
     "submitButton": "제출",
     "optional": "선택",
@@ -175,7 +175,7 @@
   },
   "thankYouPage": {
     "heading": "감사합니다!",
-    "submission": "제보는 곧  моде레이터가 검토합니다.",
+    "submission": "제보는 곧 모더레이터가 검토합니다.",
     "home": "홈으로 돌아가기",
     "submitAnotherDoctor": "다른 의사 추가"
   },
@@ -193,7 +193,7 @@
     "checkingauth": "인증 확인 중…",
     "redirectingtoauth0": "인증을 위해 Auth0으로 이동합니다",
     "unauthorizedline1": "이 페이지에 접근할 권한이 없는 것 같습니다. 10초 후 이동합니다…",
-    "unauthorizedline2": " моде레이터가 되고 싶거나 궁금한 점이 있으면 다음으로 연락해 주세요 ",
+    "unauthorizedline2": "모더레이터가 되고 싶거나 궁금한 점이 있으면 다음으로 연락해 주세요 ",
     "unauthorizedline3": "여기"
   },
   "specialties": {
@@ -266,7 +266,7 @@
     "roles": "역할:",
     "sections": {
       "settings": "설정",
-      "moderation": " моде레이션"
+      "moderation": "모더레이션"
     },
     "none": "—"
   },
@@ -415,7 +415,7 @@
     "labelHealthcareProfessionalFirstName": "이름",
     "labelHealthcareProfessionalLastName": "성",
     "labelHealthcareProfessionalMiddleName": "중간 이름",
-    "labelModNoteInput": " моде레이터 메모",
+    "labelModNoteInput": "모더레이터 메모",
     "placeholderTextHealthcareProfessionalSearchbar": "이름 또는 ID로 검색하여 의사 추가",
     "placeholderTextNoteInput": "예: 병원 회신 대기 중",
     "searchExistingFacilities": "기존 의료기관 검색",
