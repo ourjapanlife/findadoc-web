@@ -3,8 +3,10 @@ import { expect } from 'chai'
 import {
     ALL_PREFECTURES,
     areaPrefectureLink,
+    categorySpecialtyLink,
     type PrefectureEntry
 } from '@/utils/homeDirectory'
+import { Specialty } from '~/typedefs/gqlTypes'
 
 function prefecture(name: string): PrefectureEntry {
     const entry = ALL_PREFECTURES.find(item => item.name === name)
@@ -37,6 +39,24 @@ describe('areaPrefectureLink', () => {
         expect(areaPrefectureLink(tokyo, [])).to.deep.equal({
             path: '/search',
             query: { prefecture: 'tokyo' }
+        })
+    })
+})
+
+describe('categorySpecialtyLink', () => {
+    it('prefers the Tokyo specialty facet outside generate', () => {
+        expect(categorySpecialtyLink(Specialty.Dentistry, null)).to.equal('/tokyo/dentistry')
+        expect(categorySpecialtyLink(Specialty.Dentistry, undefined)).to.equal('/tokyo/dentistry')
+    })
+
+    it('uses a Tokyo facet from this generate, or another prefecture, else search', () => {
+        expect(categorySpecialtyLink(Specialty.Dentistry, ['/tokyo/dentistry', '/osaka/dentistry']))
+            .to.equal('/tokyo/dentistry')
+        expect(categorySpecialtyLink(Specialty.Dentistry, ['/osaka/dentistry']))
+            .to.equal('/osaka/dentistry')
+        expect(categorySpecialtyLink(Specialty.Dentistry, [])).to.deep.equal({
+            path: '/search',
+            query: { specialty: 'dentistry' }
         })
     })
 })
