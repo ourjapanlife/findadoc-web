@@ -1,8 +1,10 @@
 /// <reference types="vitest/globals" />
 import { expect } from 'chai'
+import { Locale } from '~/typedefs/gqlTypes'
 import {
     ALL_PREFECTURES,
     areaPrefectureLink,
+    SEARCHABLE_LANGUAGES,
     type PrefectureEntry
 } from '@/utils/homeDirectory'
 
@@ -38,5 +40,18 @@ describe('areaPrefectureLink', () => {
             path: '/search',
             query: { prefecture: 'tokyo' }
         })
+    })
+})
+
+describe('SEARCHABLE_LANGUAGES', () => {
+    it('lists English, then Japanese, then languages by foreign-resident population', () => {
+        expect(SEARCHABLE_LANGUAGES[0]).to.equal(Locale.EnUs)
+        expect(SEARCHABLE_LANGUAGES[1]).to.equal(Locale.JaJp)
+        expect(SEARCHABLE_LANGUAGES.indexOf(Locale.ZhCn)).to.be.lessThan(
+            SEARCHABLE_LANGUAGES.indexOf(Locale.KoKr)
+        )
+        expect(SEARCHABLE_LANGUAGES.indexOf(Locale.KoKr)).to.be.lessThan(
+            SEARCHABLE_LANGUAGES.indexOf(Locale.TlPh)
+        )
     })
 })
