@@ -1,7 +1,7 @@
 import type { Locale, Specialty } from '../typedefs/gqlTypes'
 import type { FacetPage } from './facetIndex'
 import { locationPrefectureSlug } from './clinicPath'
-import { prefectureHubPath, cityHubPath } from './hubPath'
+import { prefectureHubPath, cityHubPath, isIndexableCityHub } from './hubPath'
 
 /**
  * Cross-links and breadcrumb trails for directory pages (#1794, #1828).
@@ -198,6 +198,7 @@ export function relatedFacetLinks(
 /**
  * Other cities in the same prefecture, busiest first, so a city hub can point at
  * sibling places without sending the reader back through the prefecture list.
+ * Thin (noindex) city hubs are omitted — same threshold as the sitemap.
  */
 export function siblingCityLinks(
     current: { path: string },
@@ -210,7 +211,10 @@ export function siblingCityLinks(
     limit = RELATED_LINK_LIMIT
 ): RelatedCityLink[] {
     return cities
-        .filter(city => city.path !== current.path)
+        .filter(city => (
+            city.path !== current.path
+            && isIndexableCityHub(city.facilities.length)
+        ))
         .slice()
         .sort((left, right) => (
             right.facilities.length - left.facilities.length

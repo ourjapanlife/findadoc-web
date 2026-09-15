@@ -515,8 +515,8 @@
     "backToSearch": "Back to search",
     "metaDescription": "{name} in {city}, {prefecture}. Address, phone and the languages spoken by staff.",
     "locationNav": "Location",
-    "relatedSpecialtiesHeading": "Browse by specialty",
-    "relatedLanguagesHeading": "Browse by language"
+    "relatedSpecialtiesHeading": "按专科浏览",
+    "relatedLanguagesHeading": "按语言浏览"
   },
   "doctorPage": {
     "backToSearch": "Back to search",
@@ -554,11 +554,11 @@
     "languageHeading": "{language}-speaking care in {prefecture}",
     "specialtyMeta": "Clinics and {specialty} in {prefecture}, Japan. Address, phone and the languages spoken by staff.",
     "languageMeta": "{language}-speaking clinics and health services in {prefecture}, Japan.",
-    "relatedSpecialtiesHeading": "Other specialties in this prefecture",
-    "relatedLanguagesHeading": "Other languages in this prefecture",
+    "relatedSpecialtiesHeading": "本都道府县的其他专科",
+    "relatedLanguagesHeading": "本都道府县的其他语言",
     "nearbySpecialtyHeading": "{specialty} in other prefectures",
     "nearbyLanguageHeading": "{language}-speaking care in other prefectures",
-    "siblingCitiesHeading": "Other cities in this prefecture"
+    "siblingCitiesHeading": "本都道府县的其他城市"
   },
   "breadcrumbs": {
     "navLabel": "Breadcrumb",

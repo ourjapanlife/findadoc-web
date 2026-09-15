@@ -144,7 +144,7 @@ describe('directory breadcrumb trails', () => {
 })
 
 describe('siblingCityLinks', () => {
-    it('lists other cities in the prefecture, busiest first', () => {
+    it('lists other indexable cities in the prefecture, busiest first', () => {
         const links = siblingCityLinks(
             { path: '/tokyo/shibuya' },
             [
@@ -165,13 +165,20 @@ describe('siblingCityLinks', () => {
                     cityEn: 'Setagaya',
                     cityJa: '世田谷',
                     facilities: [{}, {}, {}]
+                },
+                {
+                    path: '/tokyo/meguro',
+                    cityEn: 'Meguro',
+                    cityJa: '目黒',
+                    facilities: [{}, {}]
                 }
             ]
         )
 
+        // Nakano (1 facility) is noindex — omit it; Shibuya is the current city.
         expect(links.map(link => link.path)).to.deep.equal([
             '/tokyo/setagaya',
-            '/tokyo/nakano'
+            '/tokyo/meguro'
         ])
         expect(links[0]).to.deep.include({
             label: 'Setagaya',

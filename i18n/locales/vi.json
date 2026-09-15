@@ -515,8 +515,8 @@
     "backToSearch": "Back to search",
     "metaDescription": "{name} in {city}, {prefecture}. Address, phone and the languages spoken by staff.",
     "locationNav": "Location",
-    "relatedSpecialtiesHeading": "Browse by specialty",
-    "relatedLanguagesHeading": "Browse by language"
+    "relatedSpecialtiesHeading": "Duyệt theo chuyên khoa",
+    "relatedLanguagesHeading": "Duyệt theo ngôn ngữ"
   },
   "doctorPage": {
     "backToSearch": "Back to search",
@@ -554,11 +554,11 @@
     "languageHeading": "{language}-speaking care in {prefecture}",
     "specialtyMeta": "Clinics and {specialty} in {prefecture}, Japan. Address, phone and the languages spoken by staff.",
     "languageMeta": "{language}-speaking clinics and health services in {prefecture}, Japan.",
-    "relatedSpecialtiesHeading": "Other specialties in this prefecture",
-    "relatedLanguagesHeading": "Other languages in this prefecture",
+    "relatedSpecialtiesHeading": "Các chuyên khoa khác trong tỉnh này",
+    "relatedLanguagesHeading": "Các ngôn ngữ khác trong tỉnh này",
     "nearbySpecialtyHeading": "{specialty} in other prefectures",
     "nearbyLanguageHeading": "{language}-speaking care in other prefectures",
-    "siblingCitiesHeading": "Other cities in this prefecture"
+    "siblingCitiesHeading": "Các thành phố khác trong tỉnh này"
   },
   "breadcrumbs": {
     "navLabel": "Breadcrumb",
