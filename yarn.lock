@@ -1230,6 +1230,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fontsource/noto-sans-kr@npm:^5.3.0":
+  version: 5.3.0
+  resolution: "@fontsource/noto-sans-kr@npm:5.3.0"
+  checksum: 10/50d9a45261344298d53dcb0ac3e8addf4a101f2612b83eb1aa05edc2780b530a4ccbd005e15f0865dd34693002226797abd4f63ccd0f6aa7105c8c3a4affa6e7
+  languageName: node
+  linkType: hard
+
 "@fontsource/noto-sans@npm:5.3.0":
   version: 5.3.0
   resolution: "@fontsource/noto-sans@npm:5.3.0"
@@ -10064,6 +10071,7 @@ __metadata:
     "@auth0/auth0-vue": "npm:^2.5.0"
     "@fontsource/noto-sans": "npm:5.3.0"
     "@fontsource/noto-sans-jp": "npm:^5.3.0"
+    "@fontsource/noto-sans-kr": "npm:^5.3.0"
     "@graphql-codegen/cli": "npm:^6.1.0"
     "@graphql-codegen/typescript": "npm:^5.0.7"
     "@graphql-codegen/typescript-resolvers": "npm:^5.1.5"
