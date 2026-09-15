@@ -1,14 +1,14 @@
 import type { Locale, Specialty } from '../typedefs/gqlTypes'
 import type { FacetPage } from './facetIndex'
 import { locationPrefectureSlug } from './clinicPath'
-import { prefectureHubPath, cityHubPath } from './hubPath'
+import { prefectureHubPath, cityHubPath, isIndexableCityHub } from './hubPath'
 
 /**
- * Cross-links and breadcrumb trails for directory pages (#1794).
+ * Cross-links and breadcrumb trails for directory pages (#1794, #1828).
  *
  * Templates should call these helpers rather than assembling relationships inline:
- * nearby prefectures, sibling specialties, and professional → facet links all come
- * from the same facet index that gates `/tokyo/dentistry`.
+ * nearby prefectures, sibling cities/specialties, and facility/professional → facet
+ * links all come from the same indexes that gate `/tokyo/dentistry`.
  */
 
 export const RELATED_LINK_LIMIT = 8
@@ -23,6 +23,13 @@ export type RelatedFacetLink = {
     path: string
     label: string
     labelJa: string
+}
+
+export type RelatedCityLink = {
+    path: string
+    label: string
+    labelJa: string
+    facilityCount: number
 }
 
 /** Facet metadata used for cross-links. Facilities stay off this shape so pages do not serialize the directory. */
@@ -108,11 +115,16 @@ export function professionalCrumbs(input: {
     homeLabel: string
     prefectureLabel?: string
     prefecturePath?: string
+    cityLabel?: string
+    cityPath?: string
     professionalLabel: string
 }): BreadcrumbItem[] {
     const crumbs: BreadcrumbItem[] = [{ label: input.homeLabel, to: '/' }]
     if (input.prefectureLabel && input.prefecturePath) {
         crumbs.push({ label: input.prefectureLabel, to: input.prefecturePath })
+    }
+    if (input.cityLabel && input.cityPath) {
+        crumbs.push({ label: input.cityLabel, to: input.cityPath })
     }
     crumbs.push({ label: input.professionalLabel })
     return crumbs
@@ -183,6 +195,40 @@ export function relatedFacetLinks(
     return { samePlace, nearbySame }
 }
 
+/**
+ * Other cities in the same prefecture, busiest first, so a city hub can point at
+ * sibling places without sending the reader back through the prefecture list.
+ * Thin (noindex) city hubs are omitted — same threshold as the sitemap.
+ */
+export function siblingCityLinks(
+    current: { path: string },
+    cities: readonly {
+        path: string
+        cityEn: string
+        cityJa: string
+        facilities: readonly unknown[]
+    }[],
+    limit = RELATED_LINK_LIMIT
+): RelatedCityLink[] {
+    return cities
+        .filter(city => (
+            city.path !== current.path
+            && isIndexableCityHub(city.facilities.length)
+        ))
+        .slice()
+        .sort((left, right) => (
+            right.facilities.length - left.facilities.length
+            || compareLabel(left.cityEn, right.cityEn)
+        ))
+        .slice(0, limit)
+        .map(city => ({
+            path: city.path,
+            label: city.cityEn,
+            labelJa: city.cityJa || city.cityEn,
+            facilityCount: city.facilities.length
+        }))
+}
+
 function uniquePrefectureSlugs(
     facilities: readonly { contact?: { address?: { prefectureEn?: string | null } | null } | null }[]
 ): string[] {
@@ -250,4 +296,33 @@ export function professionalFacetLinks(
     }
 
     return links
+}
+
+/**
+ * Facet pages this facility's staff qualify for in its prefecture. Uses the same
+ * thresholded catalog as professional pages so thin combinations stay unlinkable.
+ */
+export function facilityFacetLinks(
+    facility: {
+        contact?: { address?: { prefectureEn?: string | null } | null } | null
+        healthcareProfessionals?: readonly {
+            specialties?: Specialty[] | null
+            spokenLanguages?: Locale[] | null
+        }[] | null
+    },
+    byPrefecture: FacetIndexByPrefecture
+): ProfessionalFacetLink[] {
+    const professionals = facility.healthcareProfessionals ?? []
+    if (!professionals.length) {
+        return []
+    }
+
+    return professionalFacetLinks(
+        {
+            specialties: [...new Set(professionals.flatMap(professional => professional.specialties ?? []))],
+            spokenLanguages: [...new Set(professionals.flatMap(professional => professional.spokenLanguages ?? []))]
+        },
+        [facility],
+        byPrefecture
+    )
 }

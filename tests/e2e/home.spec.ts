@@ -67,9 +67,16 @@ test.describe('Home page', () => {
             expect(url.searchParams.get('prefecture')).toBe('tokyo')
         })
 
-        test('a category tile links into a filtered search', async ({ page }) => {
-            await page.getByTestId('home-category-DENTAL').click()
-            await expect(page).toHaveURL(/\/search\?specialty=dentistry/)
+        test('a category tile prefers an indexable specialty facet', async ({ page }) => {
+            const href = await page.getByTestId('home-category-DENTAL').getAttribute('href')
+            /*
+             * Production generate links to /tokyo/dentistry. Sparse CI seeds often
+             * have no facet pages, so the chip falls back to filtered search.
+             */
+            expect(
+                href === '/tokyo/dentistry'
+                || href === '/search?specialty=dentistry'
+            ).toBe(true)
         })
 
         test('an area link opens the prefecture hub', async ({ page }) => {

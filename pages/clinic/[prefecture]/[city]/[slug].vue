@@ -28,6 +28,17 @@
             :facility="facility"
             heading="h1"
         />
+
+        <HubRelatedFacets
+            :heading="t('clinicPage.relatedSpecialtiesHeading')"
+            :items="specialtyFacetItems"
+            test-id="clinic-related-specialties"
+        />
+        <HubRelatedFacets
+            :heading="t('clinicPage.relatedLanguagesHeading')"
+            :items="languageFacetItems"
+            test-id="clinic-related-languages"
+        />
     </div>
 </template>
 
@@ -37,7 +48,8 @@ import { useI18n } from 'vue-i18n'
 import { createError, navigateTo, useAsyncData, useHead, useRoute } from '#imports'
 import { fetchClinicById } from '~/utils/clinicFacility'
 import { canonicalPathMatches, facilityDocumentTitle, facilityIdFromSlugParam, facilityPath } from '~/utils/clinicPath'
-import { facilityCrumbs, facilityHubPaths } from '~/utils/directoryLinks'
+import { facilityCrumbs, facilityFacetLinks, facilityHubPaths } from '~/utils/directoryLinks'
+import { loadFacetLinkCatalog } from '~/utils/hubDirectory'
 import { isJapaneseLocale } from '~/utils/activeLocale'
 import { formatPageTitle } from '~/utils/site'
 
@@ -51,6 +63,17 @@ if (!facilityId) {
 }
 
 const { data } = await useAsyncData(`clinic-${facilityId}`, () => fetchClinicById(facilityId))
+const { data: facetLinks } = await useAsyncData(
+    `clinic-facet-links:${facilityId}`,
+    async () => {
+        const record = data.value
+        if (!record) {
+            return []
+        }
+        const catalog = await loadFacetLinkCatalog()
+        return facilityFacetLinks(record, catalog ?? {})
+    }
+)
 
 if (!data.value) {
     throw createError({ statusCode: 404, statusMessage: 'Page not found' })
@@ -63,6 +86,15 @@ if (!canonicalPathMatches(route.path, canonicalPath)) {
 }
 
 const facility = computed(() => data.value!)
+const specialtyFacetItems = computed(() => (facetLinks.value ?? [])
+    .filter(link => link.kind === 'specialty')
+    .map(link => ({ path: link.path, label: link.label })))
+const languageFacetItems = computed(() => (facetLinks.value ?? [])
+    .filter(link => link.kind === 'language')
+    .map(link => ({
+        path: link.path,
+        label: t('hubPage.languageChip', { language: link.label })
+    })))
 
 const displayName = computed(() => {
     const record = facility.value

@@ -1,7 +1,8 @@
 <template>
-    <section
+    <nav
         v-if="items.length"
         class="flex flex-col gap-3"
+        :aria-label="heading"
         :data-testid="testId"
     >
         <h2 class="text-lg font-semibold text-primary-text">
@@ -20,7 +21,7 @@
                 </NuxtLink>
             </li>
         </ul>
-    </section>
+    </nav>
 </template>
 
 <script setup lang="ts">

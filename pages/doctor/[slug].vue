@@ -37,9 +37,8 @@ import { useI18n } from 'vue-i18n'
 import { createError, navigateTo, useAsyncData, useHead, useRoute } from '#imports'
 import { fetchDoctorById } from '~/utils/doctorProfessional'
 import { canonicalPathMatches } from '~/utils/clinicPath'
-import { professionalCrumbs, professionalFacetLinks } from '~/utils/directoryLinks'
+import { facilityHubPaths, professionalCrumbs, professionalFacetLinks } from '~/utils/directoryLinks'
 import { professionalDocumentTitle, professionalIdFromSlugParam, professionalPath } from '~/utils/doctorPath'
-import { prefectureHubPath } from '~/utils/hubPath'
 import { loadFacetLinkCatalog } from '~/utils/hubDirectory'
 import { formatHealthcareProfessionalName } from '~/utils/nameUtils'
 import { isJapaneseLocale, toGqlLocale } from '~/utils/activeLocale'
@@ -107,15 +106,21 @@ const brandedTitle = computed(() => formatPageTitle(documentTitle.value))
 const crumbs = computed(() => {
     const firstFacility = professional.value.facilities[0]
     const address = firstFacility?.contact?.address
-    const prefecturePath = prefectureHubPath(address?.prefectureEn)
-    const prefectureLabel = isJapaneseLocale(locale.value)
+    const hubs = facilityHubPaths(address)
+    const japanese = isJapaneseLocale(locale.value)
+    const prefectureLabel = japanese
         ? (address?.prefectureJa || address?.prefectureEn || '')
         : (address?.prefectureEn || address?.prefectureJa || '')
+    const cityLabel = japanese
+        ? (address?.cityJa || address?.cityEn || '')
+        : (address?.cityEn || address?.cityJa || '')
 
     return professionalCrumbs({
         homeLabel: t('breadcrumbs.home'),
-        prefectureLabel: prefecturePath ? prefectureLabel : undefined,
-        prefecturePath,
+        prefectureLabel: hubs.prefecturePath ? prefectureLabel : undefined,
+        prefecturePath: hubs.prefecturePath,
+        cityLabel: hubs.cityPath ? cityLabel : undefined,
+        cityPath: hubs.cityPath,
         professionalLabel: displayName.value
     })
 })

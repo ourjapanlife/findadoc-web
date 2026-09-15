@@ -17,3 +17,9 @@ declare module '#generated-prefecture-hubs' {
     const hubs: string[] | null
     export default hubs
 }
+
+declare module '#generated-facet-paths' {
+    /** Specialty/language facet paths for this generate, or `null` outside generate. */
+    const paths: string[] | null
+    export default paths
+}
