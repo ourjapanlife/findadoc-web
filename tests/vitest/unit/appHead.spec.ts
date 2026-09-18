@@ -59,6 +59,11 @@ describe('COLOR_SCHEME_BOOTSTRAP', () => {
 describe('entityDirectoryVitePlugins', () => {
     it('exposes the clinic and doctor virtual modules', () => {
         expect(entityDirectoryVitePlugins().map(plugin => plugin.name))
-            .to.deep.equal(['clinic-directory', 'doctor-directory', 'generated-prefecture-hubs'])
+            .to.deep.equal([
+                'clinic-directory',
+                'doctor-directory',
+                'generated-prefecture-hubs',
+                'generated-facet-paths'
+            ])
     })
 })

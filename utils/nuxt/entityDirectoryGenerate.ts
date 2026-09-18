@@ -71,13 +71,24 @@ function generatedPrefectureHubsModuleSource(): string {
     return `export default ${JSON.stringify(hubs)}`
 }
 
-function generatedPrefectureHubsVitePlugin() {
-    const resolvedId = '\0generated-prefecture-hubs'
+function generatedFacetPathsModuleSource(): string {
+    if (!isNuxtGenerateCommand()) {
+        return 'export default null'
+    }
+
+    return `export default ${JSON.stringify(entityDirectoryBuild?.facetPaths ?? [])}`
+}
+
+function generatedDirectoryLinksVitePlugin(
+    moduleId: '#generated-prefecture-hubs' | '#generated-facet-paths',
+    sourceOf: () => string
+) {
+    const resolvedId = `\0${moduleId.slice(1)}`
 
     return {
-        name: 'generated-prefecture-hubs',
+        name: moduleId.slice(1),
         resolveId(id: string) {
-            if (id === '#generated-prefecture-hubs') {
+            if (id === moduleId) {
                 return resolvedId
             }
         },
@@ -90,7 +101,7 @@ function generatedPrefectureHubsVitePlugin() {
                 await entityDirectoryForGenerate()
             }
 
-            return generatedPrefectureHubsModuleSource()
+            return sourceOf()
         }
     }
 }
@@ -99,7 +110,8 @@ export function entityDirectoryVitePlugins() {
     return [
         directoryVitePlugin('#clinic-directory', built => built.directory),
         directoryVitePlugin('#doctor-directory', built => built.professionalDirectory),
-        generatedPrefectureHubsVitePlugin()
+        generatedDirectoryLinksVitePlugin('#generated-prefecture-hubs', generatedPrefectureHubsModuleSource),
+        generatedDirectoryLinksVitePlugin('#generated-facet-paths', generatedFacetPathsModuleSource)
     ]
 }
 
@@ -126,7 +138,8 @@ export async function applyEntityDirectoryToNitro(nitroConfig: NitroConfig) {
     if (!built) {
         nitroConfig.virtual = {
             ...nitroConfig.virtual,
-            '#generated-prefecture-hubs': generatedPrefectureHubsModuleSource()
+            '#generated-prefecture-hubs': generatedPrefectureHubsModuleSource(),
+            '#generated-facet-paths': generatedFacetPathsModuleSource()
         }
         return
     }
@@ -139,7 +152,8 @@ export async function applyEntityDirectoryToNitro(nitroConfig: NitroConfig) {
         ...nitroConfig.virtual,
         '#clinic-directory': `export default ${JSON.stringify(built.directory)}`,
         '#doctor-directory': `export default ${JSON.stringify(built.professionalDirectory)}`,
-        '#generated-prefecture-hubs': generatedPrefectureHubsModuleSource()
+        '#generated-prefecture-hubs': generatedPrefectureHubsModuleSource(),
+        '#generated-facet-paths': generatedFacetPathsModuleSource()
     }
     nitroConfig.prerender ??= {}
     const existing = nitroConfig.prerender.routes

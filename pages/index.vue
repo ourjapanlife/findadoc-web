@@ -186,10 +186,12 @@ import {
     DIRECTORY_STATS,
     TOP_PREFECTURES,
     areaPrefectureLink,
+    categorySpecialtyLink,
     type PrefectureEntry
 } from '~/utils/homeDirectory'
 import type { SpecialtyCategory } from '~/typedefs/gqlTypes'
 import generatedPrefectureHubs from '#generated-prefecture-hubs'
+import generatedFacetPaths from '#generated-facet-paths'
 
 const { t, locale } = useI18n()
 const specialtiesStore = useSpecialtiesStore()
@@ -218,11 +220,11 @@ const categories = computed(() =>
         .map(code => specialtiesStore.specialtyCategories.find(option => option.code === code))
         .filter((option): option is NonNullable<typeof option> => !!option))
 
-/** A category maps to several specialties; the first is the representative filter. */
+/** Prefer an indexable Tokyo specialty facet over noindex filtered search (#1828). */
 function categoryLink(code: SpecialtyCategory) {
     const specialty = specialtiesStore.categoryToSpecialtyMap[code]?.[0]
     return specialty
-        ? { path: '/search', query: { specialty: specialty.replaceAll('_', '-').toLowerCase() } }
+        ? categorySpecialtyLink(specialty, generatedFacetPaths)
         : { path: '/search' }
 }
 

@@ -25,6 +25,11 @@
             :items="cityLanguageItems"
             test-id="hub-city-language-list"
         />
+        <HubRelatedFacets
+            :heading="t('hubPage.siblingCitiesHeading')"
+            :items="siblingCityItems"
+            test-id="hub-city-sibling-list"
+        />
 
         <HubFacilityList :facilities="city.facilities" />
     </div>
@@ -166,6 +171,10 @@ const citySpecialtyItems = computed(() => related.value?.prefectureSpecialties ?
 const cityLanguageItems = computed(() => (related.value?.prefectureLanguages ?? []).map(item => ({
     path: item.path,
     label: t('hubPage.languageChip', { language: item.label })
+})))
+const siblingCityItems = computed(() => (related.value?.siblingCities ?? []).map(item => ({
+    path: item.path,
+    label: isJapanese.value ? item.labelJa : item.label
 })))
 const samePlaceHeading = computed(() => (
     facet.value?.kind === 'language'

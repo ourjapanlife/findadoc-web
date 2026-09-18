@@ -3,12 +3,14 @@ import { expect } from 'chai'
 import {
     cityHubCrumbs,
     facilityCrumbs,
+    facilityFacetLinks,
     facetCrumbs,
     prefectureHubCrumbs,
     professionalCrumbs,
     professionalFacetLinks,
     RELATED_LINK_LIMIT,
     relatedFacetLinks,
+    siblingCityLinks,
     type FacetIndexByPrefecture
 } from '@/utils/directoryLinks'
 import { buildFacetIndex } from '@/utils/facetIndex'
@@ -119,12 +121,70 @@ describe('directory breadcrumb trails', () => {
             homeLabel: 'Home',
             prefectureLabel: 'Tokyo',
             prefecturePath: '/tokyo',
+            cityLabel: 'Shibuya',
+            cityPath: '/tokyo/shibuya',
+            professionalLabel: 'Dr A'
+        })).to.deep.equal([
+            { label: 'Home', to: '/' },
+            { label: 'Tokyo', to: '/tokyo' },
+            { label: 'Shibuya', to: '/tokyo/shibuya' },
+            { label: 'Dr A' }
+        ])
+        expect(professionalCrumbs({
+            homeLabel: 'Home',
+            prefectureLabel: 'Tokyo',
+            prefecturePath: '/tokyo',
             professionalLabel: 'Dr A'
         })).to.deep.equal([
             { label: 'Home', to: '/' },
             { label: 'Tokyo', to: '/tokyo' },
             { label: 'Dr A' }
         ])
+    })
+})
+
+describe('siblingCityLinks', () => {
+    it('lists other indexable cities in the prefecture, busiest first', () => {
+        const links = siblingCityLinks(
+            { path: '/tokyo/shibuya' },
+            [
+                {
+                    path: '/tokyo/shibuya',
+                    cityEn: 'Shibuya',
+                    cityJa: '渋谷',
+                    facilities: [{}, {}]
+                },
+                {
+                    path: '/tokyo/nakano',
+                    cityEn: 'Nakano',
+                    cityJa: '中野',
+                    facilities: [{}]
+                },
+                {
+                    path: '/tokyo/setagaya',
+                    cityEn: 'Setagaya',
+                    cityJa: '世田谷',
+                    facilities: [{}, {}, {}]
+                },
+                {
+                    path: '/tokyo/meguro',
+                    cityEn: 'Meguro',
+                    cityJa: '目黒',
+                    facilities: [{}, {}]
+                }
+            ]
+        )
+
+        // Nakano (1 facility) is noindex — omit it; Shibuya is the current city.
+        expect(links.map(link => link.path)).to.deep.equal([
+            '/tokyo/setagaya',
+            '/tokyo/meguro'
+        ])
+        expect(links[0]).to.deep.include({
+            label: 'Setagaya',
+            labelJa: '世田谷',
+            facilityCount: 3
+        })
     })
 })
 
@@ -223,5 +283,26 @@ describe('professionalFacetLinks', () => {
             byPrefecture
         )
         expect(links).to.deep.equal([])
+    })
+})
+
+describe('facilityFacetLinks', () => {
+    it('aggregates staff specialties and languages into thresholded facet chips', () => {
+        const tokyoFacility = facility(
+            'tokyo-dent',
+            'Tokyo',
+            'Shibuya',
+            threeOf('td', [Specialty.Dentistry], [Locale.EnUs])
+        )
+        const { byPrefecture } = buildFacetIndex([tokyoFacility])
+
+        expect(facilityFacetLinks(tokyoFacility, byPrefecture).map(link => link.path)).to.deep.equal([
+            '/tokyo/dentistry',
+            '/tokyo/english-speaking'
+        ])
+        expect(facilityFacetLinks({
+            contact: tokyoFacility.contact,
+            healthcareProfessionals: []
+        }, byPrefecture)).to.deep.equal([])
     })
 })

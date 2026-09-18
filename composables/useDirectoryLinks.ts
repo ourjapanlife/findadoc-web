@@ -1,10 +1,16 @@
-import { relatedFacetLinks, type RelatedFacetLink } from '~/utils/directoryLinks'
-import { loadFacetLinkCatalog, type loadPrefectureLeaf } from '~/utils/hubDirectory'
+import {
+    relatedFacetLinks,
+    siblingCityLinks,
+    type RelatedCityLink,
+    type RelatedFacetLink
+} from '~/utils/directoryLinks'
+import { loadFacetLinkCatalog, loadPrefectureHub, type loadPrefectureLeaf } from '~/utils/hubDirectory'
 import { useAsyncData } from '#imports'
 
 export type DirectoryRelatedLinks = {
     prefectureSpecialties: { path: string, label: string }[]
     prefectureLanguages: { path: string, label: string }[]
+    siblingCities: RelatedCityLink[]
     samePlace: RelatedFacetLink[]
     nearbySame: RelatedFacetLink[]
 }
@@ -13,7 +19,7 @@ type DirectoryLeaf = NonNullable<Awaited<ReturnType<typeof loadPrefectureLeaf>>>
 
 /**
  * Related directory chips for city and facet pages. Matching rules live in
- * `directoryLinks` so templates do not hardcode nearby-prefecture or sibling-specialty logic.
+ * `directoryLinks` so templates do not hardcode nearby-prefecture or sibling-city logic.
  */
 export async function useDirectoryRelatedLinks(leaf: DirectoryLeaf) {
     const key = leaf.type === 'city'
@@ -25,6 +31,7 @@ export async function useDirectoryRelatedLinks(leaf: DirectoryLeaf) {
 
         if (leaf.type === 'city') {
             const bucket = catalog?.[leaf.city.prefectureSlug]
+            const prefecture = await loadPrefectureHub(leaf.city.prefectureSlug)
             return {
                 prefectureSpecialties: (bucket?.specialties ?? []).map(facet => ({
                     path: facet.path,
@@ -34,6 +41,7 @@ export async function useDirectoryRelatedLinks(leaf: DirectoryLeaf) {
                     path: facet.path,
                     label: facet.label
                 })),
+                siblingCities: siblingCityLinks(leaf.city, prefecture?.cities ?? []),
                 samePlace: [],
                 nearbySame: []
             }
@@ -43,6 +51,7 @@ export async function useDirectoryRelatedLinks(leaf: DirectoryLeaf) {
         return {
             prefectureSpecialties: [],
             prefectureLanguages: [],
+            siblingCities: [],
             ...related
         }
     })

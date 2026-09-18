@@ -1,5 +1,8 @@
 import { Locale, SpecialtyCategory } from '~/typedefs/gqlTypes'
+import type { Specialty } from '~/typedefs/gqlTypes'
+import { specialtyFacetPathFromSlugs, specialtyFacetSlug } from './facetPath'
 import { prefectureHubPath } from './hubPath'
+import { specialtySearchParam } from './searchDirectory'
 
 /**
  * Entry points for the homepage.
@@ -105,6 +108,48 @@ export function areaPrefectureLink(
     }
 
     return hub ?? searchLink
+}
+
+/**
+ * Largest directory coverage. Homepage "Browse by need" chips prefer this
+ * prefecture's specialty facet (`/tokyo/dentistry`) so crawlers and people land
+ * on an indexable page instead of noindex `/search?specialty=…` (#1828).
+ */
+export const HOME_NEED_PREFECTURE_SLUG = 'tokyo'
+
+export type CategorySpecialtyLink = string | { path: string, query: { specialty: string } }
+
+/**
+ * Prefer the Tokyo specialty facet when it exists. During generate, only facets
+ * present in this build are linked; otherwise fall back to filtered search
+ * (SPA, skipped by the prerender crawler). Outside generate, always prefer the
+ * Tokyo facet path.
+ */
+export function categorySpecialtyLink(
+    specialty: Specialty,
+    generatedFacetPaths: readonly string[] | null | undefined
+): CategorySpecialtyLink {
+    const searchLink = {
+        path: '/search',
+        query: { specialty: specialtySearchParam(specialty) }
+    }
+    const preferred = specialtyFacetPathFromSlugs(HOME_NEED_PREFECTURE_SLUG, specialty)
+    const slug = specialtyFacetSlug(specialty)
+
+    if (Array.isArray(generatedFacetPaths)) {
+        if (preferred && generatedFacetPaths.includes(preferred)) {
+            return preferred
+        }
+        if (slug) {
+            const alternate = generatedFacetPaths.find(path => path.endsWith(`/${slug}`))
+            if (alternate) {
+                return alternate
+            }
+        }
+        return searchLink
+    }
+
+    return preferred ?? searchLink
 }
 
 /**
