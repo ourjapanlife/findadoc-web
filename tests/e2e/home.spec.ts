@@ -1,4 +1,5 @@
 import enUS from '../../i18n/locales/en.json' with { type: 'json' }
+import koKR from '../../i18n/locales/ko.json' with { type: 'json' }
 import { test, expect } from '@playwright/test'
 
 test.describe('Home page', () => {
@@ -84,8 +85,22 @@ test.describe('Home page', () => {
         })
 
         test('links to the submission form', async ({ page }) => {
+            await expect(page.getByTestId('home-contribute-cta')).toBeVisible()
             await page.getByTestId('home-contribute-cta').click()
             await expect(page).toHaveURL(/\/submit/)
+        })
+
+        test('switches the site into Korean from the language picker', async ({ page }) => {
+            const localeSelect = page.locator('[data-testid="locale-selector"] select:visible')
+            const labels = await localeSelect.locator('option').allTextContents()
+
+            expect(labels[0]).toBe('English')
+            expect(labels[1]).toBe('日本語')
+            expect(labels).toContain('한국어')
+            expect(labels.indexOf('简体中文')).toBeLessThan(labels.indexOf('한국어'))
+
+            await localeSelect.selectOption('ko_KR')
+            await expect(page.getByTestId('home-heading')).toHaveText(koKR.home.heroHeading)
         })
     })
 

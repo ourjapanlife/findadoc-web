@@ -112,15 +112,24 @@ export const localeDisplayOptions = [
     { code: Locale.ZhTw, simpleText: '國語', displayText: 'Chinese (Traditional, Taiwan)' }
 ] satisfies LocaleDisplay[]
 
+/**
+ * Languages the site UI is translated into, shown in the picker.
+ *
+ * English is first because it is the default. Japanese is next as the host-country
+ * language. Remaining locales follow foreign-resident population in Japan
+ * (Immigration Services Agency, end of 2025): Chinese, Vietnamese, Korean, Tagalog,
+ * Portuguese, then smaller European communities.
+ */
 export const mvpLocaleDisplayOptions = [
     { code: Locale.EnUs, simpleText: 'English', displayText: 'English (US)' },
     { code: Locale.JaJp, simpleText: '日本語', displayText: '日本語 (Japan)' },
+    { code: Locale.ZhCn, simpleText: '简体中文', displayText: 'Chinese (Simplified, China)' },
+    { code: Locale.ViVn, simpleText: 'Tiếng Việt', displayText: 'tiếng Việt (Vietnam)' },
+    { code: Locale.KoKr, simpleText: '한국어', displayText: '한국어 (South Korea)' },
+    { code: Locale.TlPh, simpleText: 'Tagalog', displayText: 'Tagalog (Philippines)' },
     { code: Locale.PtBr, simpleText: 'Português', displayText: 'Português (Brasil)' },
+    { code: Locale.FrFr, simpleText: 'Français', displayText: 'Français (France)' },
     { code: Locale.RuRu, simpleText: 'русский', displayText: 'Russian (Russia)' },
     { code: Locale.DeDe, simpleText: 'Deutsch', displayText: 'Deutsch(Deutschland)' },
-    { code: Locale.ZhCn, simpleText: '简体中文', displayText: 'Chinese (Simplified, China)' },
-    { code: Locale.FrFr, simpleText: 'Français', displayText: 'Français (France)' },
-    { code: Locale.TlPh, simpleText: 'Tagalog', displayText: 'Tagalog (Philippines)' },
-    { code: Locale.ViVn, simpleText: 'tiếng', displayText: 'tiếng Việt (Vietnam)' },
     { code: Locale.ItIt, simpleText: 'Italiano', displayText: 'Italiano (Italy)' }
 ] satisfies LocaleDisplay[]

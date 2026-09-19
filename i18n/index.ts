@@ -21,16 +21,23 @@ type CustomLocale = Record<keyof typeof OriginalLocale, string>
 const Locale = {
     EnUs: 'en-US',
     JaJp: 'ja-JP',
+    ZhCn: 'zh-CN',
+    ViVn: 'vi-VN',
+    KoKr: 'ko-KR',
+    TlPh: 'tl-PH',
     PtBr: 'pt-BR',
+    FrFr: 'fr-FR',
     RuRu: 'ru-RU',
     DeDe: 'de-DE',
-    ZhCn: 'zh-CN',
-    FrFr: 'fr-FR',
-    TlPh: 'tl-PH',
-    ViVn: 'vi-VN',
     ItIt: 'it-IT'
 } as const satisfies Partial<CustomLocale>
 
+/**
+ * Site UI locales. English is first because it is the default. Japanese is next as
+ * the host-country language. Remaining locales follow foreign-resident population
+ * in Japan (Immigration Services Agency, end of 2025): Chinese, Vietnamese, Korean,
+ * Tagalog, Portuguese, then smaller European communities.
+ */
 const i18n: LocaleObject[] = [
     {
         code: Locale.EnUs,
@@ -41,8 +48,28 @@ const i18n: LocaleObject[] = [
         file: 'ja.json'
     },
     {
+        code: Locale.ZhCn,
+        file: 'cn.json'
+    },
+    {
+        code: Locale.ViVn,
+        file: 'vi.json'
+    },
+    {
+        code: Locale.KoKr,
+        file: 'ko.json'
+    },
+    {
+        code: Locale.TlPh,
+        file: 'tl.json'
+    },
+    {
         code: Locale.PtBr,
         file: 'pt.json'
+    },
+    {
+        code: Locale.FrFr,
+        file: 'fr.json'
     },
     {
         code: Locale.RuRu,
@@ -53,26 +80,9 @@ const i18n: LocaleObject[] = [
         file: 'de.json'
     },
     {
-        code: Locale.ZhCn,
-        file: 'cn.json'
-    },
-    {
-        code: Locale.FrFr,
-        file: 'fr.json'
-    },
-    {
-        code: Locale.TlPh,
-        file: 'tl.json'
-    },
-    {
-        code: Locale.ViVn,
-        file: 'vi.json'
-    },
-    {
         code: Locale.ItIt,
         file: 'it.json'
     }
 ]
 
 export default i18n
-

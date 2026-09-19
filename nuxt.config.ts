@@ -117,10 +117,10 @@ export default defineNuxtConfig({
     // Global CSS: https://go.nuxtjs.dev/config-css
     css: [
         /*
-         * Both brand families are self-hosted, subsetted woff2 from @fontsource. Each file
+         * Brand families are self-hosted, subsetted woff2 from @fontsource. Each file
          * declares one @font-face per unicode-range subset, so a Latin-only visitor fetches
-         * ~15 KB per weight of Noto Sans and never downloads the ~1 MB CJK chunk of Noto Sans JP.
-         * This replaced 8.3 MB of unsubsetted TTFs that were declared but never actually used.
+         * ~15 KB per weight of Noto Sans and never downloads the CJK chunks of Noto Sans JP
+         * or KR. This replaced 8.3 MB of unsubsetted TTFs that were declared but never used.
          */
         '@fontsource/noto-sans/400.css',
         // 500 is loaded because `font-medium` is used across the nav and cards; without the
@@ -130,6 +130,8 @@ export default defineNuxtConfig({
         '@fontsource/noto-sans/700.css',
         '@fontsource/noto-sans-jp/400.css',
         '@fontsource/noto-sans-jp/700.css',
+        '@fontsource/noto-sans-kr/400.css',
+        '@fontsource/noto-sans-kr/700.css',
         '~/assets/css/tailwind.css'
     ],
     site: {

@@ -4,9 +4,10 @@ import {
     ALL_PREFECTURES,
     areaPrefectureLink,
     categorySpecialtyLink,
+    SEARCHABLE_LANGUAGES,
     type PrefectureEntry
 } from '@/utils/homeDirectory'
-import { Specialty } from '~/typedefs/gqlTypes'
+import { Specialty, Locale } from '~/typedefs/gqlTypes'
 
 function prefecture(name: string): PrefectureEntry {
     const entry = ALL_PREFECTURES.find(item => item.name === name)
@@ -58,5 +59,18 @@ describe('categorySpecialtyLink', () => {
             path: '/search',
             query: { specialty: 'dentistry' }
         })
+    })
+})
+
+describe('SEARCHABLE_LANGUAGES', () => {
+    it('lists English, then Japanese, then languages by foreign-resident population', () => {
+        expect(SEARCHABLE_LANGUAGES[0]).to.equal(Locale.EnUs)
+        expect(SEARCHABLE_LANGUAGES[1]).to.equal(Locale.JaJp)
+        expect(SEARCHABLE_LANGUAGES.indexOf(Locale.ZhCn)).to.be.lessThan(
+            SEARCHABLE_LANGUAGES.indexOf(Locale.KoKr)
+        )
+        expect(SEARCHABLE_LANGUAGES.indexOf(Locale.KoKr)).to.be.lessThan(
+            SEARCHABLE_LANGUAGES.indexOf(Locale.TlPh)
+        )
     })
 })
