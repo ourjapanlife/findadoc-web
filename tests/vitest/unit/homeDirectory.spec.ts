@@ -1,6 +1,5 @@
 /// <reference types="vitest/globals" />
 import { expect } from 'chai'
-import { Locale } from '~/typedefs/gqlTypes'
 import {
     ALL_PREFECTURES,
     areaPrefectureLink,
@@ -8,7 +7,7 @@ import {
     SEARCHABLE_LANGUAGES,
     type PrefectureEntry
 } from '@/utils/homeDirectory'
-import { Specialty } from '~/typedefs/gqlTypes'
+import { Specialty, Locale } from '~/typedefs/gqlTypes'
 
 function prefecture(name: string): PrefectureEntry {
     const entry = ALL_PREFECTURES.find(item => item.name === name)
