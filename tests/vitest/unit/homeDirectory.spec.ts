@@ -4,7 +4,9 @@ import {
     ALL_PREFECTURES,
     areaPrefectureLink,
     categorySpecialtyLink,
+    homeAreaPrefectures,
     SEARCHABLE_LANGUAGES,
+    TOP_PREFECTURES,
     type PrefectureEntry
 } from '@/utils/homeDirectory'
 import { Specialty, Locale } from '~/typedefs/gqlTypes'
@@ -41,6 +43,27 @@ describe('areaPrefectureLink', () => {
             path: '/search',
             query: { prefecture: 'tokyo' }
         })
+    })
+})
+
+describe('homeAreaPrefectures', () => {
+    it('shows the static top eight outside generate', () => {
+        expect(homeAreaPrefectures(null)).to.equal(TOP_PREFECTURES)
+        expect(homeAreaPrefectures(undefined)).to.equal(TOP_PREFECTURES)
+    })
+
+    it('keeps volume order among hubs this generate actually built', () => {
+        expect(homeAreaPrefectures(['/hokkaido', '/tokyo']).map(entry => entry.name))
+            .to.deep.equal(['Tokyo', 'Hokkaido'])
+    })
+
+    it('falls back to generated hubs outside the top eight when the seed missed them', () => {
+        expect(homeAreaPrefectures(['/kanagawa']).map(entry => entry.name))
+            .to.deep.equal(['Kanagawa'])
+    })
+
+    it('keeps the static top eight when generate found no hubs', () => {
+        expect(homeAreaPrefectures([])).to.equal(TOP_PREFECTURES)
     })
 })
 

@@ -184,9 +184,9 @@ import { useSpecialtiesStore } from '~/stores/specialtiesStore'
 import {
     BROWSE_CATEGORIES,
     DIRECTORY_STATS,
-    TOP_PREFECTURES,
     areaPrefectureLink,
     categorySpecialtyLink,
+    homeAreaPrefectures,
     type PrefectureEntry
 } from '~/utils/homeDirectory'
 import type { SpecialtyCategory } from '~/typedefs/gqlTypes'
@@ -203,7 +203,7 @@ const heroIllustration = '/illustrations/characters-together-welcomescreen.svg'
  * from static enums and translated copy, so the homepage can paint without waiting on
  * the API — the search waterfall belongs to /search.
  */
-const prefectures = TOP_PREFECTURES
+const prefectures = homeAreaPrefectures(generatedPrefectureHubs)
 
 /**
  * Compare against vue-i18n's active locale, not localeStore. localeStore.activeLocale

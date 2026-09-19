@@ -69,19 +69,39 @@ test.describe('Home page', () => {
         })
 
         test('a category tile prefers an indexable specialty facet', async ({ page }) => {
-            const href = await page.getByTestId('home-category-DENTAL').getAttribute('href')
+            const tile = page.getByTestId('home-category-DENTAL')
+            const href = await tile.getAttribute('href')
             /*
-             * Production generate links to /tokyo/dentistry. Sparse CI seeds often
-             * have no facet pages, so the chip falls back to filtered search.
+             * Production generate links to /tokyo/dentistry. If Tokyo has no
+             * dentistry facet in this build, categorySpecialtyLink uses another
+             * prefecture's facet. Sparse CI seeds often have none, so the tile
+             * falls back to filtered search.
              */
-            expect(
-                href === '/tokyo/dentistry'
-                || href === '/search?specialty=dentistry'
-            ).toBe(true)
+            expect(href === '/search?specialty=dentistry' || /^\/[a-z0-9-]+\/[a-z0-9-]+$/.test(href ?? '')).toBe(true)
+
+            if (href && !href.startsWith('/search')) {
+                await tile.click()
+                await expect(page.getByTestId('hub-facet-page')).toBeVisible()
+            }
         })
 
-        test('an area link opens the prefecture hub', async ({ page }) => {
-            await expect(page.getByTestId('home-prefecture-Tokyo')).toHaveAttribute('href', '/tokyo')
+        test('an area chip opens a prefecture hub when this generate built one', async ({ page }) => {
+            const chip = page.locator('[data-testid^="home-prefecture-"]').first()
+            const href = await chip.getAttribute('href')
+            /*
+             * Production generate links Tokyo at /tokyo. Sparse CI seeds often
+             * have no Tokyo row — the homepage then shows hubs this build did
+             * prerender, not a noindex /search?prefecture=tokyo chip. Search is
+             * only the fallback when generate found no prefecture hubs at all.
+             */
+            if (href?.startsWith('/search')) {
+                await expect(chip).toHaveAttribute('href', /\/search\?prefecture=/)
+                return
+            }
+
+            expect(href).toMatch(/^\/[a-z0-9-]+$/)
+            await chip.click()
+            await expect(page.getByTestId('hub-prefecture-page')).toBeVisible()
         })
 
         test('links to the submission form', async ({ page }) => {
