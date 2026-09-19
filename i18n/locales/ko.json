@@ -518,7 +518,9 @@
   "clinicPage": {
     "backToSearch": "검색으로 돌아가기",
     "locationNav": "위치",
-    "metaDescription": "{prefecture} {city}의 {name}. 주소, 전화, 직원이 구사하는 언어."
+    "metaDescription": "{prefecture} {city}의 {name}. 주소, 전화, 직원이 구사하는 언어.",
+    "relatedSpecialtiesHeading": "전문 과목으로 찾기",
+    "relatedLanguagesHeading": "언어로 찾기"
   },
   "doctorPage": {
     "backToSearch": "검색으로 돌아가기",
@@ -559,6 +561,7 @@
     "relatedSpecialtiesHeading": "이 도도부현의 다른 전문 과목",
     "relatedLanguagesHeading": "이 도도부현의 다른 언어",
     "nearbySpecialtyHeading": "다른 도도부현의 {specialty}",
-    "nearbyLanguageHeading": "다른 도도부현의 {language} 진료"
+    "nearbyLanguageHeading": "다른 도도부현의 {language} 진료",
+    "siblingCitiesHeading": "이 도도부현의 다른 시·구"
   }
 }
