@@ -77,10 +77,44 @@ export const DIRECTORY_STATS = {
     languages: 14
 } as const
 
-/** The subset shown as chips under "Browse by area". The dropdown offers all of them. */
+/** The subset shown as chips under "Browse by area" when generate has not filtered them. */
 export const TOP_PREFECTURES: readonly PrefectureEntry[] = ALL_PREFECTURES.slice(0, 8)
 
 export type AreaPrefectureLink = string | { path: string, query: { prefecture: string } }
+
+function prefectureIsInGenerate(
+    prefecture: PrefectureEntry,
+    generatedPrefectureHubs: readonly string[]
+): boolean {
+    const hub = prefectureHubPath(prefecture.name)
+    return Boolean(hub && generatedPrefectureHubs.includes(hub))
+}
+
+/**
+ * Area chips shown on the homepage.
+ *
+ * Production generate has the full directory, so this is the volume-ordered
+ * top eight, each linking at `/tokyo` etc. Sparse CI seeds often have no Tokyo
+ * row — emitting that chip as noindex `/search?prefecture=tokyo` is worse SEO
+ * than showing the hubs this build actually prerendered. If generate found no
+ * hubs at all (`[]`), keep the static top eight and let `areaPrefectureLink`
+ * fall back to search so Nitro is not asked to crawl missing `/tokyo`.
+ */
+export function homeAreaPrefectures(
+    generatedPrefectureHubs: readonly string[] | null | undefined
+): readonly PrefectureEntry[] {
+    if (!Array.isArray(generatedPrefectureHubs) || generatedPrefectureHubs.length === 0) {
+        return TOP_PREFECTURES
+    }
+
+    const top = TOP_PREFECTURES.filter(entry => prefectureIsInGenerate(entry, generatedPrefectureHubs))
+    if (top.length > 0) {
+        return top
+    }
+
+    const rest = ALL_PREFECTURES.filter(entry => prefectureIsInGenerate(entry, generatedPrefectureHubs))
+    return rest.length > 0 ? rest.slice(0, TOP_PREFECTURES.length) : TOP_PREFECTURES
+}
 
 /**
  * Homepage area chips prefer the prefecture hub (`/tokyo`) so crawlers walk the
