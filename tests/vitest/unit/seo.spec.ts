@@ -81,3 +81,12 @@ describe('inert Nuxt 2 head leftovers', () => {
         expect(existsSync(join(rootDir, 'pages', '_headers'))).to.equal(false)
     })
 })
+
+describe('prerender HTML layout', () => {
+    it('writes extensionful files so Netlify Pretty URLs match slashless canonicals', () => {
+        const nuxtConfig = readFileSync(join(rootDir, 'nuxt.config.ts'), 'utf8')
+        expect(nuxtConfig).to.match(/autoSubfolderIndex:\s*false/)
+        expect(canonicalUrl('/about/')).to.equal(`${SITE_ORIGIN}/about`)
+        expect(canonicalUrl('/tokyo/')).to.equal(`${SITE_ORIGIN}/tokyo`)
+    })
+})
