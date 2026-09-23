@@ -86,8 +86,52 @@ describe('inert Nuxt 2 head leftovers', () => {
 describe('prerender HTML layout', () => {
     it('writes extensionful files so Netlify Pretty URLs match slashless canonicals', () => {
         const nuxtConfig = readFileSync(join(rootDir, 'nuxt.config.ts'), 'utf8')
-        expect(nuxtConfig).to.match(/autoSubfolderIndex:\s*false/)
+        const prerender = nitroPrerenderBlock(nuxtConfig)
+
+        expect(prerender).to.match(/autoSubfolderIndex:\s*false\b/)
+        expect(prerender).not.to.match(/autoSubfolderIndex:\s*true\b/)
         expect(canonicalUrl('/about/')).to.equal(`${SITE_ORIGIN}/about`)
         expect(canonicalUrl('/tokyo/')).to.equal(`${SITE_ORIGIN}/tokyo`)
     })
 })
+
+/** `nitro.prerender { … }` with comment lines removed, so this cannot pass on comment text. */
+function nitroPrerenderBlock(nuxtConfig: string): string {
+    const code = nuxtConfig
+        .split('\n')
+        .filter(line => {
+            const trimmed = line.trim()
+            return trimmed.length > 0
+                && !trimmed.startsWith('//')
+                && !trimmed.startsWith('/*')
+                && !trimmed.startsWith('*')
+        })
+        .join('\n')
+
+    const nitroStart = code.search(/^\s*nitro:\s*\{/m)
+    if (nitroStart < 0) {
+        return ''
+    }
+
+    const fromNitro = code.slice(nitroStart)
+    const prerenderStart = fromNitro.search(/prerender:\s*\{/)
+    if (prerenderStart < 0) {
+        return ''
+    }
+
+    const fromPrerender = fromNitro.slice(prerenderStart)
+    const open = fromPrerender.indexOf('{')
+    let depth = 0
+    for (let index = open; index < fromPrerender.length; index++) {
+        if (fromPrerender[index] === '{') {
+            depth++
+        } else if (fromPrerender[index] === '}') {
+            depth--
+            if (depth === 0) {
+                return fromPrerender.slice(open + 1, index)
+            }
+        }
+    }
+
+    return ''
+}

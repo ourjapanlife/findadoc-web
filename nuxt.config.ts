@@ -75,7 +75,7 @@ export default defineNuxtConfig({
                 },
                 {
                     name: 'twitter:image:alt',
-                    content: SITE_TITLE
+                    content: `${SITE_TITLE} mascots`
                 },
                 {
                     property: 'og:type',
@@ -103,7 +103,7 @@ export default defineNuxtConfig({
                 },
                 {
                     property: 'og:image:alt',
-                    content: SITE_TITLE
+                    content: `${SITE_TITLE} mascots`
                 }
             ],
             link: [{ rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' }],
