@@ -18,7 +18,8 @@ export const RESERVED_HUB_SEGMENTS = new Set([
     'clinic',
     'doctor',
     'u',
-    'moderation'
+    'moderation',
+    '404'
 ])
 
 /** City hubs with fewer than this many facilities get `noindex` and stay out of the sitemap. */
