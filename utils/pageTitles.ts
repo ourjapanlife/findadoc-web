@@ -14,7 +14,7 @@ export function pageMetaI18nKey(key: PageMetaTitleKey): `pageMeta.${PageMetaTitl
  *
  * New `pages/*.vue` files are a different axis: TypeScript cannot see the filesystem,
  * so `tests/vitest/unit/siteTitle.spec.ts` asserts every page is either in this map,
- * under an untitled prefix (`/my-page`, `/u`, `/login`), an entity prefix
+ * under an untitled prefix (`/my-page`, `/u`, `/login`, `/404`), an entity prefix
  * (`/clinic`, `/doctor`) that owns its title, or a geography hub (`/tokyo`)
  * or facet (`/tokyo/dentistry`).
  */
@@ -33,7 +33,7 @@ export const PAGE_META_TITLE_ROUTES = {
  * fallback from `formatPageTitle`. `/login` is here because it is an Auth0
  * interstitial (ssr: false, not prerendered, not in the sitemap) — not a search result.
  */
-const UNTITLED_ROUTE_PREFIXES = ['/my-page', '/u', '/login'] as const
+const UNTITLED_ROUTE_PREFIXES = ['/my-page', '/u', '/login', '/404'] as const
 
 /**
  * Directory entity pages set their own `<title>` from the record. They are not

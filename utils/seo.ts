@@ -73,5 +73,9 @@ export function isNoindexRoute(path: string, query?: Record<string, unknown>): b
         return SEARCH_NOINDEX_QUERY_KEYS.some(key => queryParamHasValue(params, key))
     }
 
+    if (normalised === '/404') {
+        return true
+    }
+
     return false
 }

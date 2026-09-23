@@ -3,7 +3,11 @@ import { join } from 'node:path'
 
 export type ServeRewrite = { source: string, destination: string }
 
-export type ServeJson = { rewrites?: ServeRewrite[] }
+export type ServeJson = {
+    cleanUrls?: boolean
+    trailingSlash?: boolean
+    rewrites?: ServeRewrite[]
+}
 
 function publicPath(filename: string): string {
     return join(process.cwd(), 'public', filename)

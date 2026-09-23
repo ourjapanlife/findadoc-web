@@ -197,7 +197,7 @@ export default defineNuxtConfig({
             // Clinic, doctor, hub, and facet HTML is filled from the generate-time
             // directory cache, not live facility(id)/healthcareProfessional(id) calls.
             concurrency: 8,
-            routes: ['/', '/about', '/terms', '/privacypolicy', '/submit', '/npo', '/sitemap.xml'],
+            routes: ['/', '/about', '/terms', '/privacypolicy', '/submit', '/npo', '/sitemap.xml', '/404'],
             /*
              * `about.html`, not `about/index.html`. Netlify Pretty URLs 301 `/about` →
              * `/about/` when the file is a subfolder index, while sitemap locs and

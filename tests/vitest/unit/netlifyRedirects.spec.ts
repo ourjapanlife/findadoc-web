@@ -32,7 +32,10 @@ describe('SPA fallbacks', () => {
     })
 
     it('mirrors profile SPA fallbacks in serve.json for nuxi start / CI', () => {
-        const rewrites = readServeJson().rewrites ?? []
+        const serve = readServeJson()
+        const rewrites = serve.rewrites ?? []
+        expect(serve.cleanUrls).to.equal(true)
+        expect(serve.trailingSlash).to.equal(false)
         expect(rewrites.some(rule => rule.source.startsWith('/u/') && rule.destination === '/200.html')).to.equal(true)
         expect(rewrites.some(rule => rule.source === '/**' || rule.source === '*')).to.equal(false)
     })
