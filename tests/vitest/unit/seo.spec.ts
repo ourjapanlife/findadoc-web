@@ -102,9 +102,9 @@ function nitroPrerenderBlock(nuxtConfig: string): string {
         .filter(line => {
             const trimmed = line.trim()
             return trimmed.length > 0
-                && !trimmed.startsWith('//')
-                && !trimmed.startsWith('/*')
-                && !trimmed.startsWith('*')
+              && !trimmed.startsWith('//')
+              && !trimmed.startsWith('/*')
+              && !trimmed.startsWith('*')
         })
         .join('\n')
 
