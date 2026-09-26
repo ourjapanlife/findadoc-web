@@ -75,7 +75,7 @@ export default defineNuxtConfig({
                 },
                 {
                     name: 'twitter:image:alt',
-                    content: SITE_TITLE
+                    content: `${SITE_TITLE} mascots`
                 },
                 {
                     property: 'og:type',
@@ -103,7 +103,7 @@ export default defineNuxtConfig({
                 },
                 {
                     property: 'og:image:alt',
-                    content: SITE_TITLE
+                    content: `${SITE_TITLE} mascots`
                 }
             ],
             link: [{ rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' }],
@@ -197,7 +197,16 @@ export default defineNuxtConfig({
             // Clinic, doctor, hub, and facet HTML is filled from the generate-time
             // directory cache, not live facility(id)/healthcareProfessional(id) calls.
             concurrency: 8,
-            routes: ['/', '/about', '/terms', '/privacypolicy', '/submit', '/npo', '/sitemap.xml']
+            routes: ['/', '/about', '/terms', '/privacypolicy', '/submit', '/npo', '/sitemap.xml', '/404'],
+            /*
+             * `about.html`, not `about/index.html`. Netlify Pretty URLs 301 `/about` →
+             * `/about/` when the file is a subfolder index, while sitemap locs and
+             * `canonicalUrl()` are slashless. That loop is GSC "Page with redirect" +
+             * "Alternate page with proper canonical". Nitro's netlify-static preset
+             * already wants false; an explicit `prerender` block here would otherwise
+             * fall back to Nitro's default true. See tests/vitest/unit/seo.spec.ts.
+             */
+            autoSubfolderIndex: false
         }
     },
 

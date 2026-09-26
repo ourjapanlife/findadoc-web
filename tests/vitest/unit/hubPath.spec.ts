@@ -22,6 +22,7 @@ describe('hub paths', () => {
     it('does not steal existing first-segment routes', () => {
         expect(isReservedHubSegment('search')).to.equal(true)
         expect(isReservedHubSegment('doctor')).to.equal(true)
+        expect(isReservedHubSegment('404')).to.equal(true)
         expect(prefectureHubPath('Search')).to.equal(undefined)
         expect(cityHubPath('Doctor', 'Shibuya')).to.equal(undefined)
     })
@@ -43,6 +44,7 @@ describe('isGeographyHubRoute', () => {
         expect(isGeographyHubRoute('/clinic/tokyo/nakano/a-one--f1')).to.equal(false)
         expect(isGeographyHubRoute('/doctor/aiko-tanaka--p1')).to.equal(false)
         expect(isGeographyHubRoute('/my-page')).to.equal(false)
+        expect(isGeographyHubRoute('/404')).to.equal(false)
     })
 })
 

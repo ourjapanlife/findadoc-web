@@ -13,6 +13,10 @@
 # land in the publish directory ahead of Nitro's /* → /404.html 404 rule.
 # Do not add a toml /* → /index.html 200 catch-all: it either loses to that
 # 404 rule or turns unknown URLs into soft 200s. See #1785.
+#
+# Pretty URLs stay on (Netlify default). Paired with nitro.prerender
+# autoSubfolderIndex: false, files are `about.html` so `/about` is 200 and
+# `/about/` 301s onto the slashless canonical — not the reverse.
 
 [[headers]]
   # Define which paths this specific [[headers]] block will cover.

@@ -1,4 +1,6 @@
 {
+  "cleanUrls": true,
+  "trailingSlash": false,
   "rewrites": [
     { "source": "/search", "destination": "/200.html" },
     { "source": "/u/:username", "destination": "/200.html" },

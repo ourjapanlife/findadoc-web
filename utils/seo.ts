@@ -23,6 +23,10 @@ function normalisePagePath(path: string): string {
  * Self-referencing canonical for the current route. Query strings are stripped so
  * `/search?specialty=…` does not mint a unique URL until those filters are
  * indexable pages. Locale prefixes land with #1796.
+ *
+ * Trailing slashes are stripped to match sitemap locs. Generate must emit
+ * `about.html` (`nitro.prerender.autoSubfolderIndex: false`) so Netlify Pretty
+ * URLs serve `/about` as 200 instead of 301ing it to `/about/`.
  */
 export function canonicalUrl(path: string): string {
     const normalised = normalisePagePath(path)
@@ -67,6 +71,10 @@ export function isNoindexRoute(path: string, query?: Record<string, unknown>): b
     if (normalised === '/search') {
         const params = query ?? queryFromPath(path)
         return SEARCH_NOINDEX_QUERY_KEYS.some(key => queryParamHasValue(params, key))
+    }
+
+    if (normalised === '/404') {
+        return true
     }
 
     return false
