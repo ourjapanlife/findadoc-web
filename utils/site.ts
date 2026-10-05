@@ -40,3 +40,11 @@ export function formatPageTitle(title?: string | null): string {
 
     return `${trimmed}${BRAND_SUFFIX}`
 }
+
+/**
+ * The organisation's public contact address. It replaced a Google Form everywhere the site
+ * asks people to get in touch, so the contact a bank or partner sees is on our own domain.
+ */
+export const CONTACT_EMAIL = 'contact@findadoc.jp'
+
+export const CONTACT_MAILTO = `mailto:${CONTACT_EMAIL}`

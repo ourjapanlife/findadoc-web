@@ -16,7 +16,16 @@
     "documentsHeading": "제출 서류",
     "balanceSheet": "대차대조표",
     "balanceSheetNote": "등록 비영리법인에 요구되는 공고로서 매년 공개합니다.",
-    "contact": "그 밖의 제출 서류나 위 내용에 관한 문의는 다음으로 연락해 주세요:"
+    "contact": "그 밖의 제출 서류나 위 내용에 관한 문의는 다음으로 연락해 주세요:",
+    "representativeLabel": "대표자",
+    "representativeRole": "대표이사",
+    "certifiedLabel": "NPO 인증일",
+    "certifiedDate": "2023년 8월 28일",
+    "addressLabel": "소재지",
+    "addressValue": "당 법인은 원격으로 활동합니다. 등기상 소재지는 문의해 주시면 안내해 드립니다.",
+    "activitiesLabel": "사업 내용",
+    "activitiesValue": "일본에 사는 일본인과 외국인을 필요한 언어로 필요한 의료 서비스와 연결하기 위해, 무료로 이용할 수 있는 고품질 다국어 의료 정보 플랫폼을 구축·보급·운영하는 사업 및 자원봉사 프로그래머 육성 프로그램 사업",
+    "contactLabel": "연락처"
   },
   "home": {
     "heroHeading": "당신이 쓰는 말로 진료하는 의사를 찾으세요",
@@ -64,6 +73,7 @@
     "storyHeader": "우리의 이야기",
     "storyParagraph1": "2020년 팬데믹 중에 LaShawn Toyoda와 Phil Ermish가 설립한 저희의 사명은 더 건강하고 포용적인 사회를 만드는 것입니다. 외국인과 의료인을 포함해 누구나 여러 언어로 양질의 건강 정보를 무료로 이용할 수 있도록 합니다. 국적이나 언어와 관계없이 모든 사람이 자신 있게 의료 제도를 이용하고, 알맞은 의사를 찾아 필요한 진료를 받을 수 있는 일본을 지향합니다.",
     "storyParagraph2": "우리는 모든 사람이 풍요로운 삶의 일부로서 건강 정보에 접근할 수 있어야 한다는 이상을 바탕으로 하는 비영리단체입니다. 사회 정의, 문화적 감수성, 혁신을 지침으로 활동합니다. 정부, 비영리, 의료 분야의 파트너와 언제나 기꺼이 협력합니다. 파트너와 함께 누구나 의료에 접근하고, 소속감을 느끼며, 잘 살 수 있는 일본을 만들고자 합니다.",
+    "storyIncorporated": "2023년 8월, 도쿄도의 인증을 받아 특정비영리활동법인(NPO법인)이 되었습니다.",
     "impactHeader": "지금까지의 성과",
     "contributorsHeader": "기여자",
     "cofoundersHeader": "공동 설립자",
@@ -77,7 +87,6 @@
     "involveHeader": "참여하기",
     "involveAdd": "의사 추가",
     "involveLinkedin": "팔로우",
-    "involveFeedback": "의견 보내기",
     "involveContribute": "기여하기",
     "sectionNavLabel": "이 페이지의 내용"
   },
@@ -95,6 +104,7 @@
     "privacy": "개인정보 처리방침",
     "poweredBy": "제공",
     "contribute": "기여하기",
+    "contact": "문의하기",
     "copyright": "NPO法人Find a Doc, Japan",
     "exploreHeading": "둘러보기",
     "communityHeading": "커뮤니티",

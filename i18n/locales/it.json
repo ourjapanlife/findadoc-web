@@ -16,7 +16,16 @@
     "documentsHeading": "Documenti depositati",
     "balanceSheet": "Bilancio",
     "balanceSheetNote": "Pubblicato ogni anno, come richiesto agli enti non profit registrati.",
-    "contact": "Per altri documenti depositati o per domande su quanto sopra, contattaci:"
+    "contact": "Per altri documenti depositati o per domande su quanto sopra, contattaci:",
+    "representativeLabel": "Rappresentante",
+    "representativeRole": "Consigliere rappresentante",
+    "certifiedLabel": "Riconosciuta come NPO il",
+    "certifiedDate": "28 agosto 2023",
+    "addressLabel": "Sede",
+    "addressValue": "Operiamo da remoto. L’indirizzo della sede registrata è disponibile su richiesta.",
+    "activitiesLabel": "Attività",
+    "activitiesValue": "Costruire, promuovere e mantenere una piattaforma di informazione sanitaria multilingue, gratuita e di qualità, che mette in contatto chi vive in Giappone, giapponesi e residenti stranieri, con i servizi medici di cui ha bisogno nella propria lingua; e gestire un programma di formazione per programmatori volontari.",
+    "contactLabel": "Contatti"
   },
   "common": {
     "menu": "Menu",
@@ -33,6 +42,7 @@
     "storyHeader": "La nostra storia",
     "storyParagraph1": "Fondata nel 2020 durante la pandemia da LaShawn Toyoda e Phil Ermish, la nostra missione è promuovere una società più sana e inclusiva. Offriamo informazioni sanitarie di qualità gratuitamente e in molte lingue per tutti, inclusi stranieri e professionisti sanitari. Il nostro obiettivo è un Giappone in cui tutte le persone, indipendentemente da nazionalità o lingua, possano orientarsi nel sistema sanitario, trovare i medici giusti e ottenere l’assistenza necessaria.",
     "storyParagraph2": "Siamo un’organizzazione non profit guidata dall’idea che tutti dovrebbero avere accesso alle informazioni sanitarie per vivere una vita piena. Le nostre attività sono guidate dalla giustizia sociale, dalla sensibilità culturale e dall’innovazione. Siamo sempre felici di collaborare con partner governativi, non profit e del settore medico. Insieme speriamo di creare un Giappone in cui tutti possano accedere all’assistenza sanitaria, sentirsi inclusi e vivere bene.",
+    "storyIncorporated": "Nell’agosto 2023 siamo stati riconosciuti dal Governo metropolitano di Tokyo come organizzazione non profit (NPO法人).",
     "impactHeader": "Il nostro impatto",
     "contributorsHeader": "Collaboratori",
     "cofoundersHeader": "Co-fondatori",
@@ -46,7 +56,6 @@
     "involveHeader": "Partecipa",
     "involveAdd": "Aggiungi un medico",
     "involveLinkedin": "Seguici",
-    "involveFeedback": "Lascia un feedback",
     "involveContribute": "Contribuisci",
     "sectionNavLabel": "On this page"
   },
@@ -60,6 +69,7 @@
     "privacy": "Privacy",
     "poweredBy": "Offerto da",
     "contribute": "Contribuisci",
+    "contact": "Contatti",
     "copyright": "NPO法人Find a Doc, Japan",
     "exploreHeading": "Explore",
     "communityHeading": "Community",

@@ -103,13 +103,13 @@
                 </p>
                 <p>
                     If you have any questions or concerns about these terms and conditions, get in touch:
-                    <a
-                        href="https://forms.gle/4E763qfaq46kEsn99"
-                        target="_blank"
-                        rel="noopener"
-                    >Give Feedback</a>.
+                    <a :href="CONTACT_MAILTO">{{ CONTACT_EMAIL }}</a>.
                 </p>
             </div>
         </div>
     </section>
 </template>
+
+<script setup lang="ts">
+import { CONTACT_EMAIL, CONTACT_MAILTO } from '~/utils/site'
+</script>

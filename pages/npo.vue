@@ -37,6 +37,33 @@
                         {{ NPO_REGISTRATION_NUMBER }}
                     </dd>
                 </div>
+                <div
+                    v-for="row in profileRows"
+                    :key="row.key"
+                    class="flex flex-col gap-1"
+                >
+                    <dt class="text-sm font-semibold text-primary-text-muted">
+                        {{ row.label }}
+                    </dt>
+                    <dd
+                        :data-testid="`npo-${row.key}`"
+                        class="m-0 text-primary-text"
+                    >
+                        {{ row.value }}
+                    </dd>
+                </div>
+                <div class="flex flex-col gap-1">
+                    <dt class="text-sm font-semibold text-primary-text-muted">
+                        {{ t('npoPage.contactLabel') }}
+                    </dt>
+                    <dd class="m-0">
+                        <a
+                            :href="CONTACT_MAILTO"
+                            data-testid="npo-contact-email"
+                            class="link inline-flex min-h-11 items-center"
+                        >{{ CONTACT_EMAIL }}</a>
+                    </dd>
+                </div>
             </dl>
 
             <!-- Statutory documents -->
@@ -66,12 +93,10 @@
 
             <p class="text-primary-text-muted">
                 {{ t('npoPage.contact') }}
-                <NuxtLink
-                    to="https://forms.gle/4E763qfaq46kEsn99"
-                    target="_blank"
-                    rel="noopener"
+                <a
+                    :href="CONTACT_MAILTO"
                     class="link"
-                >{{ t('about.involveFeedback') }}</NuxtLink>
+                >{{ CONTACT_EMAIL }}</a>
             </p>
         </div>
     </section>
@@ -80,6 +105,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { CONTACT_EMAIL, CONTACT_MAILTO } from '~/utils/site'
 
 const { t } = useI18n()
 
@@ -95,6 +121,24 @@ const { t } = useI18n()
  * the entity, and the directory that used to be linked is a third party, not a registry.
  */
 const NPO_REGISTRATION_NUMBER = '9011005010215'
+
+/**
+ * The 団体概要 a bank or partner checks against the registry (東京都 NPO法人台帳). Keep the
+ * representative and activities in step with the 登記 and 定款. The registered office is a
+ * virtual office, so the address is offered on request rather than published here.
+ */
+const NPO_REPRESENTATIVE = 'Russell James Miller'
+
+const profileRows = computed(() => [
+    {
+        key: 'representative',
+        label: t('npoPage.representativeLabel'),
+        value: `${NPO_REPRESENTATIVE} (${t('npoPage.representativeRole')})`
+    },
+    { key: 'certified', label: t('npoPage.certifiedLabel'), value: t('npoPage.certifiedDate') },
+    { key: 'address', label: t('npoPage.addressLabel'), value: t('npoPage.addressValue') },
+    { key: 'activities', label: t('npoPage.activitiesLabel'), value: t('npoPage.activitiesValue') }
+])
 
 const documents = computed(() => [
     {
