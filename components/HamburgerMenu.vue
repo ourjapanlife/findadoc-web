@@ -264,7 +264,7 @@ const navItems = computed(() => [
     { to: '/search', label: t('topNav.search') },
     { to: '/about', label: t('topNav.about') },
     { to: '/submit', label: t('topNav.submit') },
-    { to: CONTACT_MAILTO, label: t('about.involveFeedback') }
+    { to: CONTACT_MAILTO, label: t('footer.contact') }
 ])
 
 function isActive(path: string): boolean {

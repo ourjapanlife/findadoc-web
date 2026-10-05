@@ -385,7 +385,7 @@ const involveLinks = computed(() => [
         external: true
     },
     {
-        label: t('about.involveFeedback'),
+        label: t('footer.contact'),
         to: CONTACT_MAILTO,
         icon: SvgFeedback,
         iconClass: '**:fill-primary',
