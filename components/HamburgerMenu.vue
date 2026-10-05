@@ -237,6 +237,7 @@ import { useModerationScreenStore } from '~/stores/moderationScreenStore'
 import { useModerationSubmissionUnsavedStore } from '~/stores/moderationSubmissionUnsavedStore'
 import { buildLoginRoute, resolveAuthReturnPath } from '~/utils/auth0Config'
 import { isMyPageFormRoute, leaveToAppHome } from '~/utils/moderationUtils'
+import { CONTACT_MAILTO } from '~/utils/site'
 
 const { t } = useI18n()
 const toast = useAppToast()
@@ -263,7 +264,7 @@ const navItems = computed(() => [
     { to: '/search', label: t('topNav.search') },
     { to: '/about', label: t('topNav.about') },
     { to: '/submit', label: t('topNav.submit') },
-    { to: 'https://forms.gle/4E763qfaq46kEsn99', label: t('about.involveFeedback'), external: true }
+    { to: CONTACT_MAILTO, label: t('about.involveFeedback') }
 ])
 
 function isActive(path: string): boolean {

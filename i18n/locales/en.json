@@ -16,7 +16,16 @@
     "documentsHeading": "Filed documents",
     "balanceSheet": "Balance sheet",
     "balanceSheetNote": "Published annually, as required for registered non-profit corporations.",
-    "contact": "For any other filed document, or a question about the above, get in touch:"
+    "contact": "For any other filed document, or a question about the above, get in touch:",
+    "representativeLabel": "Representative",
+    "representativeRole": "Representative Director",
+    "certifiedLabel": "Certified as an NPO",
+    "certifiedDate": "28 August 2023",
+    "addressLabel": "Office",
+    "addressValue": "We operate remotely. Our registered office address is available on request.",
+    "activitiesLabel": "Activities",
+    "activitiesValue": "Building, promoting and maintaining a free, high-quality multilingual healthcare information platform that connects people living in Japan, Japanese and international residents alike, with the medical services they need in the language they need; and running a volunteer programmer development programme.",
+    "contactLabel": "Contact"
   },
   "home": {
     "heroHeading": "Find a doctor who speaks your language",
@@ -64,6 +73,7 @@
     "storyHeader": "Our Story",
     "storyParagraph1": "Founded in 2020 during the pandemic by LaShawn Toyoda and Phil Ermish, our mission is to promote a healthier and more inclusive society. We offer quality health information for free in many languages for everyone, including foreigners and medical professionals. We aim for a Japan where all people, regardless of nationality or language, can confidently navigate the healthcare system, find the right doctors and get the healthcare they need.",
     "storyParagraph2": "We are a non-profit organization driven by the ideal that everyone should have access to health information as part of a flourishing life. Our activities are guided by a sense of social justice, cultural sensitivity and innovation. We are always happy to connect with partners in the governmental, non-profit and medical communities. Together with our partners, we hope to create a Japan where everyone has access to healthcare, feels included and can live well.",
+    "storyIncorporated": "In August 2023 we were certified by the Tokyo Metropolitan Government as a specified non-profit corporation (NPO法人).",
     "impactHeader": "Our Impact So Far",
     "contributorsHeader": "Contributors",
     "cofoundersHeader": "Co-Founders",

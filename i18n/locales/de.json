@@ -16,7 +16,16 @@
     "documentsHeading": "Eingereichte Dokumente",
     "balanceSheet": "Bilanz",
     "balanceSheetNote": "Jährlich veröffentlicht, wie für eingetragene gemeinnützige Organisationen vorgeschrieben.",
-    "contact": "Für weitere eingereichte Dokumente oder Fragen zu den obigen Angaben kontaktieren Sie uns:"
+    "contact": "Für weitere eingereichte Dokumente oder Fragen zu den obigen Angaben kontaktieren Sie uns:",
+    "representativeLabel": "Vertretung",
+    "representativeRole": "Vertretungsberechtigtes Vorstandsmitglied",
+    "certifiedLabel": "Als NPO anerkannt",
+    "certifiedDate": "28. August 2023",
+    "addressLabel": "Sitz",
+    "addressValue": "Wir arbeiten ortsunabhängig. Die eingetragene Geschäftsadresse teilen wir auf Anfrage mit.",
+    "activitiesLabel": "Tätigkeiten",
+    "activitiesValue": "Aufbau, Förderung und Betrieb einer kostenlosen, hochwertigen mehrsprachigen Gesundheitsinformationsplattform, die Menschen in Japan – Japaner wie internationale Einwohner – in ihrer Sprache mit den medizinischen Leistungen verbindet, die sie brauchen; sowie ein Förderprogramm für ehrenamtliche Programmierer.",
+    "contactLabel": "Kontakt"
   },
   "common": {
     "menu": "Menü",
@@ -33,6 +42,7 @@
     "storyHeader": "Unsere Geschichte",
     "storyParagraph1": "Gegründet im Jahr 2020 während der Pandemie von LaShawn Toyoda und Phil Ermish ist es unsere Mission, eine gesündere und integrativere Gesellschaft zu fördern. Wir bieten hochwertige Gesundheitsinformationen kostenlos und in vielen Sprachen für alle an, einschließlich Ausländer und medizinisches Fachpersonal. Wir streben ein Japan an, in dem alle Menschen – unabhängig von Nationalität oder Sprache – sich im Gesundheitssystem zurechtfinden, die richtigen Ärzte finden und die benötigte medizinische Versorgung erhalten können.",
     "storyParagraph2": "Wir sind eine gemeinnützige Organisation, die von der Überzeugung geleitet wird, dass jeder Zugang zu Gesundheitsinformationen haben sollte, um ein gutes Leben zu führen. Unsere Arbeit wird von sozialer Gerechtigkeit, kultureller Sensibilität und Innovation getragen. Wir freuen uns immer über Kooperationen mit Partnern aus Regierung, Non-Profit-Organisationen und dem medizinischen Bereich. Gemeinsam mit unseren Partnern hoffen wir, ein Japan zu schaffen, in dem jeder Zugang zu Gesundheitsversorgung hat, sich integriert fühlt und gut leben kann.",
+    "storyIncorporated": "Im August 2023 wurden wir von der Präfekturverwaltung Tokio als gemeinnützige Körperschaft (NPO法人) anerkannt.",
     "impactHeader": "Unsere Wirkung",
     "contributorsHeader": "Mitwirkende",
     "cofoundersHeader": "Mitgründer",

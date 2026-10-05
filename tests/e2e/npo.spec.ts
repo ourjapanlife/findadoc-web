@@ -15,6 +15,21 @@ test.describe('NPO disclosure page', () => {
         await expect(page.getByTestId('npo-registration-number')).toHaveText('9011005010215')
     })
 
+    test('shows the representative, certification date, address note and activities', async ({ page }) => {
+        await page.goto('/npo')
+        await expect(page.getByTestId('npo-representative')).toContainText('Russell James Miller')
+        await expect(page.getByTestId('npo-representative')).toContainText(enUS.npoPage.representativeRole)
+        await expect(page.getByTestId('npo-certified')).toHaveText(enUS.npoPage.certifiedDate)
+        await expect(page.getByTestId('npo-address')).toHaveText(enUS.npoPage.addressValue)
+        await expect(page.getByTestId('npo-activities')).toHaveText(enUS.npoPage.activitiesValue)
+    })
+
+    test('gives a findadoc.jp email as the contact, not a form', async ({ page }) => {
+        await page.goto('/npo')
+        await expect(page.getByTestId('npo-contact-email')).toHaveAttribute('href', 'mailto:contact@findadoc.jp')
+        await expect(page.locator('a[href*="forms.gle"]')).toHaveCount(0)
+    })
+
     test('the registration number is plain text, not a link', async ({ page }) => {
         await page.goto('/npo')
         await expect(page.getByTestId('npo-registration-number').locator('a')).toHaveCount(0)

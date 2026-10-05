@@ -16,7 +16,16 @@
     "documentsHeading": "Tài liệu đã nộp",
     "balanceSheet": "Bảng cân đối kế toán",
     "balanceSheetNote": "Được công bố hằng năm theo quy định đối với tổ chức phi lợi nhuận đã đăng ký.",
-    "contact": "Đối với tài liệu đã nộp khác, hoặc câu hỏi về nội dung trên, hãy liên hệ với chúng tôi:"
+    "contact": "Đối với tài liệu đã nộp khác, hoặc câu hỏi về nội dung trên, hãy liên hệ với chúng tôi:",
+    "representativeLabel": "Người đại diện",
+    "representativeRole": "Giám đốc đại diện",
+    "certifiedLabel": "Được công nhận là NPO",
+    "certifiedDate": "28 tháng 8 năm 2023",
+    "addressLabel": "Địa chỉ",
+    "addressValue": "Chúng tôi hoạt động từ xa. Địa chỉ trụ sở đăng ký được cung cấp khi có yêu cầu.",
+    "activitiesLabel": "Hoạt động",
+    "activitiesValue": "Xây dựng, quảng bá và duy trì một nền tảng thông tin y tế đa ngôn ngữ miễn phí, chất lượng cao, giúp người sống tại Nhật Bản — cả người Nhật và người nước ngoài — tiếp cận dịch vụ y tế họ cần bằng ngôn ngữ họ cần; và thực hiện chương trình đào tạo lập trình viên tình nguyện.",
+    "contactLabel": "Liên hệ"
   },
   "common": {
     "menu": "Menu",
@@ -33,6 +42,7 @@
     "storyHeader": "Câu chuyện của chúng tôi",
     "storyParagraph1": "Được thành lập năm 2020 trong thời kỳ đại dịch bởi LaShawn Toyoda và Phil Ermish, sứ mệnh của chúng tôi là thúc đẩy một xã hội khỏe mạnh và hòa nhập hơn. Chúng tôi cung cấp miễn phí thông tin y tế chất lượng bằng nhiều ngôn ngữ cho tất cả mọi người, bao gồm người nước ngoài và các chuyên gia y tế. Chúng tôi mong muốn một Nhật Bản nơi mọi người, bất kể quốc tịch hay ngôn ngữ, đều có thể tự tin tiếp cận hệ thống y tế, tìm đúng bác sĩ và nhận được dịch vụ chăm sóc cần thiết.",
     "storyParagraph2": "Chúng tôi là một tổ chức phi lợi nhuận, được thúc đẩy bởi niềm tin rằng mọi người nên có quyền tiếp cận thông tin y tế như một phần của cuộc sống tốt đẹp. Các hoạt động của chúng tôi được định hướng bởi công bằng xã hội, sự nhạy cảm văn hóa và đổi mới. Chúng tôi luôn sẵn lòng hợp tác với các đối tác trong chính phủ, tổ chức phi lợi nhuận và cộng đồng y tế. Cùng với các đối tác, chúng tôi hy vọng xây dựng một Nhật Bản nơi mọi người đều có thể tiếp cận dịch vụ chăm sóc sức khỏe, cảm thấy được hòa nhập và có cuộc sống tốt đẹp.",
+    "storyIncorporated": "Tháng 8 năm 2023, chúng tôi được Chính quyền Thủ đô Tokyo công nhận là pháp nhân phi lợi nhuận đặc định (NPO法人).",
     "impactHeader": "Tác động của chúng tôi",
     "contributorsHeader": "Những người đóng góp",
     "cofoundersHeader": "Đồng sáng lập",

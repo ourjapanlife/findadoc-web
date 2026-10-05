@@ -68,9 +68,7 @@
                     </li>
                     <li>
                         <NuxtLink
-                            to="https://forms.gle/4E763qfaq46kEsn99"
-                            target="_blank"
-                            rel="noopener"
+                            :to="CONTACT_MAILTO"
                             :class="footerLink"
                             data-testid="feedback-link"
                         >{{ t('about.involveFeedback') }}</NuxtLink>
@@ -153,6 +151,7 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
 import SVGSiteLogo from '~/assets/icons/site-logo.svg'
+import { CONTACT_MAILTO } from '~/utils/site'
 
 const { t } = useI18n()
 

@@ -16,7 +16,16 @@
     "documentsHeading": "提交文件",
     "balanceSheet": "资产负债表",
     "balanceSheetNote": "依照对非营利法人的要求，每年度公开。",
-    "contact": "如需其他提交文件或对以上内容有疑问，请联系我们:"
+    "contact": "如需其他提交文件或对以上内容有疑问，请联系我们:",
+    "representativeLabel": "代表人",
+    "representativeRole": "代表理事",
+    "certifiedLabel": "NPO认证日期",
+    "certifiedDate": "2023年8月28日",
+    "addressLabel": "所在地",
+    "addressValue": "本法人以远程方式开展活动。如需登记地址，请与我们联系。",
+    "activitiesLabel": "业务内容",
+    "activitiesValue": "为帮助在日本生活的日本人和外国人以所需语言获得所需的医疗服务，构建、推广并运营免费的高质量多语言医疗信息平台；以及开展志愿者程序员培养项目。",
+    "contactLabel": "联系方式"
   },
   "common": {
     "menu": "菜单",
@@ -33,6 +42,7 @@
     "storyHeader": "我们的故事",
     "storyParagraph1": "我们由 LaShawn Toyoda 和 Phil Ermish 于2020年疫情期间创立，使命是促进更健康、更包容的社会。我们为所有人——包括外国人和医疗专业人员——免费提供多语言的高质量健康信息。我们希望无论国籍或语言，每个人都能自信地了解医疗体系，找到合适的医生，并获得所需的医疗服务。",
     "storyParagraph2": "我们是一个非营利组织，秉持人人都应获得健康信息以享受美好生活的理念。我们的活动贯穿社会正义、文化敏感性和创新精神。我们始终乐于与政府、非营利组织和医疗领域的合作伙伴建立联系。与伙伴们一起，我们希望创造一个人人都能获得医疗服务、感受到包容并享有美好生活的日本。",
+    "storyIncorporated": "2023年8月，我们获得东京都认证，成为特定非营利活动法人（NPO法人）。",
     "impactHeader": "我们的影响",
     "contributorsHeader": "贡献者",
     "cofoundersHeader": "联合创始人",

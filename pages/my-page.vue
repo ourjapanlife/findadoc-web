@@ -23,8 +23,7 @@
                         <span>{{ t('login.unauthorizedline1') }}</span>
                         <span>{{ t('login.unauthorizedline2') }}</span>
                         <NuxtLink
-                            to="https://forms.gle/4E763qfaq46kEsn99"
-                            target="_blank"
+                            :to="CONTACT_MAILTO"
                             class="inline text-primary underline"
                         >
                             {{ t('login.unauthorizedline3') }}
@@ -77,6 +76,7 @@ import { computed, ref, type Ref, onMounted, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { useAuthStore } from '~/stores/authStore'
 import { definePageMeta, useI18n } from '#imports'
+import { CONTACT_MAILTO } from '~/utils/site'
 
 definePageMeta({
     layout: 'my-page',

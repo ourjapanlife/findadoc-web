@@ -16,7 +16,16 @@
     "documentsHeading": "Documents déposés",
     "balanceSheet": "Bilan",
     "balanceSheetNote": "Publié chaque année, comme l’exige la réglementation applicable aux organisations à but non lucratif enregistrées.",
-    "contact": "Pour tout autre document déposé, ou une question sur ce qui précède, contactez-nous :"
+    "contact": "Pour tout autre document déposé, ou une question sur ce qui précède, contactez-nous :",
+    "representativeLabel": "Représentant",
+    "representativeRole": "Administrateur représentant",
+    "certifiedLabel": "Reconnue comme NPO le",
+    "certifiedDate": "28 août 2023",
+    "addressLabel": "Siège",
+    "addressValue": "Nous fonctionnons à distance. L’adresse du siège enregistré est communiquée sur demande.",
+    "activitiesLabel": "Activités",
+    "activitiesValue": "Créer, promouvoir et maintenir une plateforme d’information médicale multilingue, gratuite et de qualité, qui met en relation les habitants du Japon, japonais comme internationaux, avec les services médicaux dont ils ont besoin, dans leur langue ; et mener un programme de formation de programmeurs bénévoles.",
+    "contactLabel": "Contact"
   },
   "common": {
     "menu": "Menu",
@@ -33,6 +42,7 @@
     "storyHeader": "Notre histoire",
     "storyParagraph1": "Fondée en 2020 pendant la pandémie par LaShawn Toyoda et Phil Ermish, notre mission est de promouvoir une société plus saine et plus inclusive. Nous offrons gratuitement des informations de santé de qualité en plusieurs langues pour tous, y compris les étrangers et les professionnels de santé. Nous visons un Japon où chacun, quelle que soit sa nationalité ou sa langue, peut naviguer dans le système de santé, trouver les bons médecins et obtenir les soins dont il a besoin.",
     "storyParagraph2": "Nous sommes une organisation à but non lucratif, motivée par l’idée que chacun devrait avoir accès aux informations de santé pour mener une vie épanouie. Nos activités sont guidées par la justice sociale, la sensibilité culturelle et l’innovation. Nous sommes toujours heureux de collaborer avec des partenaires gouvernementaux, non lucratifs et médicaux. Ensemble, nous espérons créer un Japon où chacun a accès aux soins, se sent inclus et peut vivre sereinement.",
+    "storyIncorporated": "En août 2023, nous avons été reconnus par le gouvernement métropolitain de Tokyo comme organisation à but non lucratif (NPO法人).",
     "impactHeader": "Notre impact",
     "contributorsHeader": "Contributeurs",
     "cofoundersHeader": "Co-fondateurs",

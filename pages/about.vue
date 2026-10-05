@@ -91,6 +91,9 @@
                     <p data-testid="about-paragraph2">
                         {{ t('about.storyParagraph2') }}
                     </p>
+                    <p data-testid="about-incorporated">
+                        {{ t('about.storyIncorporated') }}
+                    </p>
                 </div>
             </div>
         </section>
@@ -284,6 +287,7 @@ import data from '../member_directory/members.json'
 import MemberComponent from '~/components/MemberComponent.vue'
 import { shuffleArray } from '~/utils/arrayUtils'
 import { DIRECTORY_STATS } from '~/utils/homeDirectory'
+import { CONTACT_MAILTO } from '~/utils/site'
 import SvgNotes from '~/assets/icons/note-stack-add.svg'
 import SvgLinkedin from '~/assets/icons/social-linkedin.svg'
 import SvgFeedback from '~/assets/icons/feedback-icon.svg'
@@ -382,10 +386,10 @@ const involveLinks = computed(() => [
     },
     {
         label: t('about.involveFeedback'),
-        to: 'https://forms.gle/4E763qfaq46kEsn99',
+        to: CONTACT_MAILTO,
         icon: SvgFeedback,
         iconClass: '**:fill-primary',
-        external: true
+        external: false
     }
 ])
 </script>
