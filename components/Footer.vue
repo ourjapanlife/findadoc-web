@@ -70,8 +70,8 @@
                         <NuxtLink
                             :to="CONTACT_MAILTO"
                             :class="footerLink"
-                            data-testid="feedback-link"
-                        >{{ t('about.involveFeedback') }}</NuxtLink>
+                            data-testid="contact-link"
+                        >{{ t('footer.contact') }}</NuxtLink>
                     </li>
                     <li>
                         <NuxtLink
