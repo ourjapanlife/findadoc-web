@@ -106,8 +106,6 @@
                                 v-for="item in navItems"
                                 :key="item.to"
                                 :to="item.to"
-                                :target="item.external ? '_blank' : undefined"
-                                :rel="item.external ? 'noopener' : undefined"
                                 :class="menuLinkClass(item.to)"
                                 @click="item.to === '/' ? handleHomeClick($event) : closeMenu()"
                             >
