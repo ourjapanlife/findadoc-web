@@ -494,7 +494,9 @@ async function saveSubmissionDraft(
 
     const submissionResult = result.data
     if (submissionResult) {
+        const selectedCityId = facilitiesStore.facilitySectionFields.cityId
         initializeSubmissionFormValues(submissionResult.updateSubmission)
+        facilitiesStore.facilitySectionFields.cityId = selectedCityId
     }
     makeNonDirty()
 

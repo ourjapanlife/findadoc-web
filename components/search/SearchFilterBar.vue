@@ -230,8 +230,8 @@ let cityRequest = 0
 
 watch(prefecture, async value => {
     const request = ++cityRequest
+    cityOptions.value = []
     if (!value) {
-        cityOptions.value = []
         return
     }
 

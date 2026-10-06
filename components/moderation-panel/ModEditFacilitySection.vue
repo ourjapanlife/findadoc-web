@@ -408,9 +408,12 @@ function applyEditCity(city: CityOption | null) {
     const fields = facilityStore.facilitySectionFields
     if (!city) {
         const saved = facilityStore.selectedFacilityData?.contact?.address
+        const samePrefecture = fields.prefectureEn.trim().toLowerCase()
+          === (saved?.prefectureEn ?? '').trim().toLowerCase()
+          && fields.prefectureJa.trim() === (saved?.prefectureJa ?? '').trim()
         fields.cityId = ''
-        fields.cityEn = saved?.cityEn ?? ''
-        fields.cityJa = saved?.cityJa ?? ''
+        fields.cityEn = samePrefecture ? (saved?.cityEn ?? '') : ''
+        fields.cityJa = samePrefecture ? (saved?.cityJa ?? '') : ''
         return
     }
 
