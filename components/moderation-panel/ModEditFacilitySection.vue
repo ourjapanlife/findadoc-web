@@ -103,6 +103,7 @@
                     name="prefecture-japan-en"
                     class="mb-5 px-3 py-3.5 w-96 h-12 bg-secondary-bg rounded-lg border border-primary-text-muted
                 text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
+                    @change="clearEditCity"
                 >
                     <option
                         v-for="(prefecture, index) in listPrefectureJapanEn"
@@ -112,16 +113,20 @@
                     </option>
                 </select>
             </div>
-            <ModInputField
-                v-model="facilityStore.facilitySectionFields.cityEn"
-                data-testid="mod-facility-section-cityEn"
+            <ModCityPicker
+                id="mod-edit-facility-section-city"
                 :label="t('modFacilitySection.labelFacilityCityEn')"
-                type="text"
-                :placeholder="t('modFacilitySection.placeholderTextFacilityCityEn')"
-                :required="true"
-                :input-validation-check="validateCityEn"
-                :invalid-input-error-message="t('modFacilitySection.inputErrorMessageFacilityCityEn')"
+                :prefecture-en="facilityStore.facilitySectionFields.prefectureEn"
+                :city-id="facilityStore.facilitySectionFields.cityId"
+                test-id="mod-facility-section-cityEn"
+                @select="applyEditCity"
             />
+            <p
+                v-if="!facilityStore.facilitySectionFields.cityId && facilityStore.facilitySectionFields.cityEn"
+                class="text-primary-text-muted text-xs font-sans -mt-3 mb-5"
+            >
+                {{ facilityStore.facilitySectionFields.cityEn }} / {{ facilityStore.facilitySectionFields.cityJa }}
+            </p>
             <ModInputField
                 v-model="facilityStore.facilitySectionFields.addressLine1En"
                 data-testid="mod-facility-section-addressLine1En"
@@ -163,6 +168,7 @@
                     name="prefecture-japan-ja"
                     class="mb-5 px-3 py-3.5 w-96 h-12 bg-secondary-bg rounded-lg border border-primary-text-muted
                 text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
+                    @change="clearEditCity"
                 >
                     <option
                         v-for="(prefecture, index) in listPrefectureJapanJa"
@@ -172,16 +178,20 @@
                     </option>
                 </select>
             </div>
-            <ModInputField
-                v-model="facilityStore.facilitySectionFields.cityJa"
-                data-testid="mod-facility-section-cityJa"
-                :label="t('modFacilitySection.labelFacilityCityJa')"
-                type="text"
-                :placeholder="t('modFacilitySection.placeholderTextFacilityCityJa')"
-                :required="true"
-                :input-validation-check="validateCityJa"
-                :invalid-input-error-message="t('modFacilitySection.inputErrorMessageFacilityCityJa')"
-            />
+            <div
+                v-if="facilityStore.facilitySectionFields.cityJa"
+                class="mb-5 flex flex-col"
+            >
+                <span class="mb-2 text-primary-text text-sm font-bold font-sans">
+                    {{ t('modFacilitySection.labelFacilityCityJa') }}
+                </span>
+                <p
+                    data-testid="mod-facility-section-cityJa"
+                    class="text-sm font-sans text-primary-text"
+                >
+                    {{ facilityStore.facilitySectionFields.cityJa }}
+                </p>
+            </div>
             <ModInputField
                 v-model="facilityStore.facilitySectionFields.addressLine1Ja"
                 data-testid="mod-facility-section-addressLine1Ja"
@@ -307,13 +317,12 @@ import { validateAddressLineEn,
     validateNameEn,
     validateNameJa,
     validatePhoneNumber,
-    validateCityEn,
     validateEmail,
     validateFloat,
     validatePostalCode,
-    validateWebsite,
-    validateCityJa } from '~/utils/formValidations'
+    validateWebsite } from '~/utils/formValidations'
 import { RelationshipAction, type HealthcareProfessional } from '~/typedefs/gqlTypes'
+import type { CityOption } from '~/utils/cityOptions'
 import { listPrefectureJapanEn, listPrefectureJapanJa } from '~/stores/locationsStore'
 import { checkPrefectureNameMatch } from '~/utils/facilitiesUtils'
 import { stableStringify } from '~/utils/stableStringify'
@@ -386,6 +395,29 @@ const handleHealthcareProfessionalsInputChange = (filteredItems: Ref<HealthcareP
 
 const healthcareProfessionalsToDisplayCallback = (healthcareProfessional: HealthcareProfessional) =>
     [formatFirstLocalizedFullName(healthcareProfessional.names)]
+
+function clearEditCity() {
+    if (!isFacilitySectionInitialized.value) return
+
+    facilityStore.facilitySectionFields.cityId = ''
+    facilityStore.facilitySectionFields.cityEn = ''
+    facilityStore.facilitySectionFields.cityJa = ''
+}
+
+function applyEditCity(city: CityOption | null) {
+    const fields = facilityStore.facilitySectionFields
+    if (!city) {
+        const saved = facilityStore.selectedFacilityData?.contact?.address
+        fields.cityId = ''
+        fields.cityEn = saved?.cityEn ?? ''
+        fields.cityJa = saved?.cityJa ?? ''
+        return
+    }
+
+    fields.cityId = city.id
+    fields.cityEn = city.nameEn
+    fields.cityJa = city.nameJa
+}
 
 onBeforeMount(async () => {
     // This onBeforeMount can be skipped on other screens since this logic is handled there when active

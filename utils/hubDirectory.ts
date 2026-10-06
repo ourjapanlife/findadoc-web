@@ -4,6 +4,7 @@ import { buildFacetIndex, type FacetPage } from './facetIndex'
 import type { FacetIndexByPrefecture } from './directoryLinks'
 import { parsePrefectureSecondSegment } from './facetPath'
 import { buildHubIndex, type HubCity, type HubPrefecture } from './hubIndex'
+import { fetchCities } from './cityOptions'
 import type { FacilitySearchResult } from './searchDirectory'
 import type { Facility, HealthcareProfessional } from '~/typedefs/gqlTypes'
 
@@ -244,8 +245,12 @@ async function loadDirectoryIndexes(): Promise<DirectoryIndexes | null> {
             if (!facilities?.length) {
                 return null
             }
+            const officialCities = await fetchCities().catch(error => {
+                console.error('Loading cities for hubs failed', error)
+                return []
+            })
             cachedIndexes = {
-                hub: buildHubIndex(facilities),
+                hub: buildHubIndex(facilities, officialCities),
                 facets: buildFacetIndex(facilities)
             }
             return cachedIndexes

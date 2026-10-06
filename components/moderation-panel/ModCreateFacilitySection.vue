@@ -103,15 +103,14 @@
                             </option>
                         </select>
                     </div>
-                    <ModInputField
-                        v-model="facilityStore.createFacilityFields.contact.address.cityEn"
-                        data-testid="mod-facility-section-cityEn"
+                    <ModCityPicker
+                        id="mod-create-facility-section-city"
                         :label="t('modFacilitySection.labelFacilityCityEn')"
-                        type="text"
-                        :placeholder="t('modFacilitySection.placeholderTextFacilityCityEn')"
-                        :required="true"
-                        :input-validation-check="validateCityEn"
-                        :invalid-input-error-message="t('modFacilitySection.inputErrorMessageFacilityCityEn')"
+                        :prefecture-en="facilityStore.createFacilityFields.contact.address.prefectureEn"
+                        :city-id="facilityStore.createFacilityFields.cityId"
+                        test-id="mod-facility-section-cityEn"
+                        required
+                        @select="applyCreateCity"
                     />
                     <ModInputField
                         v-model="facilityStore.createFacilityFields.contact.address.addressLine1En"
@@ -151,6 +150,7 @@
                             name="prefecture-japan-ja"
                             class="mb-5 px-3 py-3.5 w-96 h-12 bg-secondary-bg rounded-lg border border-primary-text-muted
                 text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
+                            @change="clearCreateCity"
                         >
                             <option
                                 v-for="(prefecture, index) in listPrefectureJapanJa"
@@ -160,16 +160,20 @@
                             </option>
                         </select>
                     </div>
-                    <ModInputField
-                        v-model="facilityStore.createFacilityFields.contact.address.cityJa"
-                        data-testid="mod-facility-section-cityJa"
-                        :label="t('modFacilitySection.labelFacilityCityJa')"
-                        type="text"
-                        :placeholder="t('modFacilitySection.placeholderTextFacilityCityJa')"
-                        :required="true"
-                        :input-validation-check="validateCityJa"
-                        :invalid-input-error-message="t('modFacilitySection.inputErrorMessageFacilityCityJa')"
-                    />
+                    <div
+                        v-if="facilityStore.createFacilityFields.contact.address.cityJa"
+                        class="mb-5 flex flex-col"
+                    >
+                        <span class="mb-2 text-primary-text text-sm font-bold font-sans">
+                            {{ t('modFacilitySection.labelFacilityCityJa') }}
+                        </span>
+                        <p
+                            data-testid="mod-facility-section-cityJa"
+                            class="text-sm font-sans text-primary-text"
+                        >
+                            {{ facilityStore.createFacilityFields.contact.address.cityJa }}
+                        </p>
+                    </div>
                     <ModInputField
                         v-model="facilityStore.createFacilityFields.contact.address.addressLine1Ja"
                         data-testid="mod-facility-section-addressLine1Ja"
@@ -277,14 +281,13 @@ import {
     validateNameEn,
     validateNameJa,
     validatePhoneNumber,
-    validateCityEn,
     validateEmail,
     validateFloat,
     validatePostalCode,
-    validateWebsite,
-    validateCityJa
+    validateWebsite
 } from '~/utils/formValidations'
 import type { HealthcareProfessional } from '~/typedefs/gqlTypes'
+import type { CityOption } from '~/utils/cityOptions'
 import { listPrefectureJapanEn, listPrefectureJapanJa, prefectureLanguageMatch } from '~/stores/locationsStore'
 import { checkPrefectureNameMatch } from '~/utils/facilitiesUtils'
 import { matchesHealthcareProfessionalSearch } from '~/utils/moderationSearchUtils'
@@ -338,6 +341,29 @@ const syncPrefectureJaFromEn = () => {
     if (prefectureJaFromEn) {
         facilityStore.createFacilityFields.contact.address.prefectureJa = prefectureJaFromEn
     }
+
+    clearCreateCity()
+}
+
+function clearCreateCity() {
+    if (!isFacilitySectionInitialized.value) return
+
+    facilityStore.createFacilityFields.cityId = ''
+    facilityStore.createFacilityFields.contact.address.cityEn = ''
+    facilityStore.createFacilityFields.contact.address.cityJa = ''
+}
+
+function applyCreateCity(city: CityOption | null) {
+    const fields = facilityStore.createFacilityFields
+    fields.cityId = city?.id ?? ''
+    if (!city) {
+        fields.contact.address.cityEn = ''
+        fields.contact.address.cityJa = ''
+        return
+    }
+
+    fields.contact.address.cityEn = city.nameEn
+    fields.contact.address.cityJa = city.nameJa
 }
 
 onBeforeMount(async () => {

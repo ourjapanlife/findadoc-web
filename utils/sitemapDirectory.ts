@@ -2,6 +2,7 @@ import { gql, GraphQLClient } from 'graphql-request'
 import { facilityPath } from './clinicPath'
 import { professionalPath } from './doctorPath'
 import { hubSitemapUrls } from './hubIndex'
+import { fetchCities } from './cityOptions'
 import { attachProfessionalsToFacilities, facetSitemapUrls } from './facetIndex'
 import { graphqlEndpoint } from './graphqlEndpoint'
 import type { FacilitySearchFilters, HealthcareProfessionalSearchFilters,
@@ -130,7 +131,9 @@ const sitemapFacilitiesQuery = gql`
             contact {
                 address {
                     cityEn
+                    cityJa
                     prefectureEn
+                    prefectureJa
                 }
             }
         }
@@ -167,7 +170,9 @@ type SitemapFacilityRow = {
     contact?: {
         address?: {
             cityEn?: string | null
+            cityJa?: string | null
             prefectureEn?: string | null
+            prefectureJa?: string | null
         } | null
     } | null
 }
@@ -273,7 +278,11 @@ export async function loadDirectorySitemapUrls(
         })
 
         if (facilityRows.length) {
-            urls.push(...hubSitemapUrls(facilityRows))
+            const officialCities = await fetchCities().catch(error => {
+                console.warn('[sitemap] city list unavailable; hub names stay as stored', error)
+                return []
+            })
+            urls.push(...hubSitemapUrls(facilityRows, officialCities))
             urls.push(...facetSitemapUrls(attachProfessionalsToFacilities(facilityRows, professionalRows)))
         }
 

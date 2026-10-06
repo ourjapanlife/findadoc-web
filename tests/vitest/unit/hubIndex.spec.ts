@@ -46,16 +46,38 @@ describe('buildHubIndex', () => {
         expect(byPrefecture.tokyo?.facilities.map(row => row.id)).to.deep.equal(['f1', 'f2'])
     })
 
-    it('keeps Chuo Ward and Chuo City as separate hubs until server normalisation lands', () => {
+    it('keeps a stored Chuo City spelling off Tokyo Chuo when the Japanese name does not match', () => {
         const { byPrefecture } = buildHubIndex([
             facility('w1', 'Tokyo', 'Chuo Ward'),
             facility('c1', 'Tokyo', 'Chuo City')
-        ])
+        ], [{
+            id: 'city-chuo',
+            prefectureEn: 'Tokyo',
+            slug: 'chuo',
+            nameEn: 'Chuo',
+            nameJa: '中央区'
+        }])
 
         expect(byPrefecture.tokyo?.cities.map(city => city.citySlug).sort()).to.deep.equal([
             'chuo-city',
             'chuo-ward'
         ])
+    })
+
+    it('uses the official English name when the Japanese name matches the city table', () => {
+        const source = facility('f1', 'Tokyo', 'Minato City')
+        const { byPrefecture } = buildHubIndex([source], [{
+            id: 'city-minato',
+            prefectureEn: 'Tokyo',
+            slug: 'minato',
+            nameEn: 'Minato',
+            nameJa: 'Minato City-ja'
+        }])
+
+        expect(byPrefecture.tokyo?.cities.map(city => ({
+            slug: city.citySlug,
+            name: city.cityEn
+        }))).to.deep.equal([{ slug: 'minato', name: 'Minato' }])
     })
 
     it('omits reserved first segments so /search cannot become a hub', () => {

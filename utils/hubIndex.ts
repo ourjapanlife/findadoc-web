@@ -1,4 +1,5 @@
 import { locationCitySlug, locationPrefectureSlug } from './clinicPath'
+import { matchOfficialCity, type CityOption } from './cityOptions'
 import {
     cityHubPathFromSlugs,
     isIndexableCityHub,
@@ -106,10 +107,22 @@ function pushLabel(labels: string[], value: string | null | undefined) {
     }
 }
 
-function addFacilityToCity(cities: Map<string, MutableCity>, facility: HubLocationSource) {
+function addFacilityToCity(
+    cities: Map<string, MutableCity>,
+    facility: HubLocationSource,
+    officialCities: readonly CityOption[]
+) {
     const address = facility.contact?.address
+    const official = matchOfficialCity(
+        officialCities,
+        address?.prefectureEn,
+        address?.cityEn,
+        address?.cityJa
+    )
     const prefectureSlug = locationPrefectureSlug(address?.prefectureEn)
-    const citySlug = locationCitySlug(address?.cityEn)
+    const citySlug = official?.slug ?? locationCitySlug(address?.cityEn)
+    const cityEn = official?.nameEn ?? address?.cityEn
+    const cityJa = official?.nameJa ?? address?.cityJa
     const prefecturePath = prefectureHubPathFromSlug(prefectureSlug)
     const cityPath = cityHubPathFromSlugs(prefectureSlug, citySlug)
     if (!prefecturePath || !cityPath) {
@@ -127,8 +140,8 @@ function addFacilityToCity(cities: Map<string, MutableCity>, facility: HubLocati
         }
         pushLabel(existing.prefectureEnLabels, address?.prefectureEn)
         pushLabel(existing.prefectureJaLabels, address?.prefectureJa)
-        pushLabel(existing.cityEnLabels, address?.cityEn)
-        pushLabel(existing.cityJaLabels, address?.cityJa)
+        pushLabel(existing.cityEnLabels, cityEn)
+        pushLabel(existing.cityJaLabels, cityJa)
         return
     }
 
@@ -137,15 +150,15 @@ function addFacilityToCity(cities: Map<string, MutableCity>, facility: HubLocati
         citySlug,
         prefectureEn: address?.prefectureEn?.trim() || prefectureSlug,
         prefectureJa: address?.prefectureJa?.trim() || '',
-        cityEn: address?.cityEn?.trim() || citySlug,
-        cityJa: address?.cityJa?.trim() || '',
+        cityEn: cityEn?.trim() || citySlug,
+        cityJa: cityJa?.trim() || '',
         path: cityPath,
         facilities: [result],
         updatedDates: facility.updatedDate ? [facility.updatedDate] : [],
         prefectureEnLabels: address?.prefectureEn ? [address.prefectureEn] : [],
         prefectureJaLabels: address?.prefectureJa ? [address.prefectureJa] : [],
-        cityEnLabels: address?.cityEn ? [address.cityEn] : [],
-        cityJaLabels: address?.cityJa ? [address.cityJa] : []
+        cityEnLabels: cityEn ? [cityEn] : [],
+        cityJaLabels: cityJa ? [cityJa] : []
     })
 }
 
@@ -205,11 +218,12 @@ function finishPrefecture(prefecture: HubPrefecture): HubPrefecture {
 }
 
 export function buildHubIndex(
-    facilities: readonly HubLocationSource[]
+    facilities: readonly HubLocationSource[],
+    officialCities: readonly CityOption[] = []
 ): { prefectures: HubPrefecture[], byPrefecture: Record<string, HubPrefecture> } {
     const cities = new Map<string, MutableCity>()
     for (const facility of facilities) {
-        addFacilityToCity(cities, facility)
+        addFacilityToCity(cities, facility, officialCities)
     }
 
     const byPrefecture = new Map<string, HubPrefecture>()
@@ -227,8 +241,11 @@ export function buildHubIndex(
     }
 }
 
-export function hubPathsFromFacilities(facilities: readonly HubLocationSource[]): string[] {
-    const { prefectures } = buildHubIndex(facilities)
+export function hubPathsFromFacilities(
+    facilities: readonly HubLocationSource[],
+    officialCities: readonly CityOption[] = []
+): string[] {
+    const { prefectures } = buildHubIndex(facilities, officialCities)
     return prefectures.flatMap(prefecture => [prefecture.path, ...prefecture.cities.map(city => city.path)])
 }
 
@@ -237,8 +254,11 @@ export function prefectureHubPaths(hubPaths: readonly string[]): string[] {
     return hubPaths.filter(path => path.split('/').filter(Boolean).length === 1)
 }
 
-export function hubSitemapUrls(facilities: readonly HubLocationSource[]): Array<{ loc: string, lastmod?: string }> {
-    const { prefectures } = buildHubIndex(facilities)
+export function hubSitemapUrls(
+    facilities: readonly HubLocationSource[],
+    officialCities: readonly CityOption[] = []
+): Array<{ loc: string, lastmod?: string }> {
+    const { prefectures } = buildHubIndex(facilities, officialCities)
     const urls: Array<{ loc: string, lastmod?: string }> = []
 
     for (const prefecture of prefectures) {
