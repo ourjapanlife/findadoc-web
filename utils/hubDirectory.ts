@@ -4,6 +4,7 @@ import { buildFacetIndex, type FacetPage } from './facetIndex'
 import type { FacetIndexByPrefecture } from './directoryLinks'
 import { parsePrefectureSecondSegment } from './facetPath'
 import { buildHubIndex, type HubCity, type HubPrefecture } from './hubIndex'
+import { cityHubSlugToLoad } from './legacyCityHubs'
 import { fetchCities, type CityOption } from './cityOptions'
 import type { FacilitySearchResult } from './searchDirectory'
 import type { Facility, HealthcareProfessional } from '~/typedefs/gqlTypes'
@@ -383,6 +384,9 @@ export async function loadPrefectureLeaf(
         return facet ? { type: 'facet', facet } : null
     }
 
-    const city = await loadCityHub(prefectureSlug, parsed.slug)
+    const prefecture = await loadPrefectureHub(prefectureSlug)
+    const published = new Set(prefecture?.cities.map(city => city.citySlug) ?? [])
+    const citySlug = cityHubSlugToLoad(prefectureSlug, parsed.slug, published)
+    const city = prefecture?.cities.find(entry => entry.citySlug === citySlug) ?? null
     return city ? { type: 'city', city } : null
 }
