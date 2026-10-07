@@ -255,22 +255,31 @@ async function loadDirectoryIndexes(): Promise<DirectoryIndexes | null> {
             // Generate already fetched this list once. Another request per hub page
             // 429s production and then 404s the route Nitro is prerendering.
             const bakedCities = prerenderedCities()
-            const officialCitiesPromise = bakedCities
-                ? Promise.resolve(bakedCities)
-                : fetchCities().catch(error => {
+            let officialCities: CityOption[]
+            let citiesUnavailable = false
+            if (bakedCities) {
+                officialCities = bakedCities
+            } else {
+                try {
+                    officialCities = await fetchCities()
+                } catch (error) {
                     console.error('Loading cities for hubs failed', error)
-                    return []
-                })
+                    officialCities = []
+                    citiesUnavailable = true
+                }
+            }
             const facilities = await loadFacilityDirectory()
             if (!facilities?.length) {
                 return null
             }
-            const officialCities = await officialCitiesPromise
-            cachedIndexes = {
+            const indexes = {
                 hub: buildHubIndex(facilities, officialCities),
                 facets: buildFacetIndex(facilities)
             }
-            return cachedIndexes
+            if (!citiesUnavailable) {
+                cachedIndexes = indexes
+            }
+            return indexes
         } finally {
             if (!cachedIndexes) {
                 indexesLoad = undefined

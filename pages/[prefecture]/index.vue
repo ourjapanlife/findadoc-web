@@ -127,7 +127,7 @@ if (
       && Array.isArray(generatedPrefectureHubs)
       && !generatedPrefectureHubs.includes(`/${prefectureSlug}`)
 ) {
-    throw createError({ statusCode: 404, statusMessage: 'Page not found' })
+    throw createError({ fatal: true, statusCode: 404, statusMessage: 'Page not found' })
 }
 
 const { data } = await useAsyncData(`hub-prefecture:${prefectureSlug}`, () => loadPrefectureHub(prefectureSlug))

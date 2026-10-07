@@ -285,7 +285,8 @@ export async function buildClinicPrerenderDirectory(): Promise<{
     professionalPaths: string[]
     hubPaths: string[]
     facetPaths: string[]
-    officialCities: CityOption[]
+    /** Null when the city fetch failed. An empty array is a successful empty result. */
+    officialCities: CityOption[] | null
 } | null> {
     const rows = await fetchDirectoryRows()
 
@@ -299,7 +300,7 @@ export async function buildClinicPrerenderDirectory(): Promise<{
     writeClinicPrerenderCache(directory)
     const officialCities = await fetchCities().catch(error => {
         console.warn('[clinic prerender] city list unavailable; hub names stay as stored', error)
-        return []
+        return null
     })
 
     return {
@@ -307,7 +308,7 @@ export async function buildClinicPrerenderDirectory(): Promise<{
         professionalDirectory,
         paths: Object.values(directory).map(facility => facilityPath(facility)),
         professionalPaths: Object.values(professionalDirectory).map(professional => professionalPath(professional)),
-        hubPaths: hubPathsFromFacilities(Object.values(directory), officialCities),
+        hubPaths: hubPathsFromFacilities(Object.values(directory), officialCities ?? []),
         facetPaths: facetPathsFromFacilities(Object.values(directory)),
         officialCities
     }
