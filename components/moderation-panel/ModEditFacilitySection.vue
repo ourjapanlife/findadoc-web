@@ -1,17 +1,19 @@
 <template>
     <Loader v-if="moderationScreenStore.editFacilityScreenIsActive()" />
-    <div v-if="isFacilitySectionInitialized">
-        <h1
-            v-if="moderationScreenStore.editFacilityScreenIsActive()"
-            class="section-heading mb-4 text-start"
-        >
-            {{ t('modFacilitySection.facilityHeading') }}
-        </h1>
+    <div
+        v-if="isFacilitySectionInitialized"
+        class="mod-sheet"
+    >
+        <ModFormKind
+            kind="facility"
+            :label="t('modFacilitySection.facilityHeading')"
+        />
         <ModAccordion
+            tone="facility"
             class="mod-facility-section"
             :title="t('modFacilitySection.contactInformation')"
         >
-            <div class="grid landscape:grid-cols-2 landscape:gap-x-4">
+            <div class="mod-form-grid">
                 <ModInputField
                     v-model="facilityStore.facilitySectionFields.nameEn"
                     data-testid="mod-facility-section-nameEn"
@@ -58,7 +60,7 @@
                     :label="t('modFacilitySection.labelFacilityWebsite')"
                     type="url"
                     :placeholder="t('modFacilitySection.placeholderTextFacilityWebsite')"
-                    class="landscape:col-span-2"
+                    class="mod-span-2"
                     :required="false"
                     :input-validation-check="validateWebsite"
                     :invalid-input-error-message="t('modFacilitySection.inputErrorMessageFacilityWebsite')"
@@ -66,6 +68,7 @@
             </div>
         </ModAccordion>
         <ModAccordion
+            tone="facility"
             class="mod-facility-address-section"
             :title="t('modFacilitySection.addresses')"
         >
@@ -88,7 +91,7 @@
             >
                 {{ t('modFacilitySection.inputErrorMessagePrefectureMismatch') }}
             </p>
-            <div class="grid gap-4 landscape:grid-cols-2">
+            <div class="mod-form-grid">
                 <div class="min-w-0">
                     <label
                         for="mod-edit-facility-section-prefecture-select-en"
@@ -136,7 +139,7 @@
                     </select>
                 </div>
             </div>
-            <div class="mt-4 grid items-end gap-4 landscape:grid-cols-2">
+            <div class="mod-form-grid mt-4 items-end">
                 <div class="min-w-0">
                     <ModCityPicker
                         id="mod-edit-facility-section-city"
@@ -168,7 +171,7 @@
                     </p>
                 </div>
             </div>
-            <div class="grid landscape:grid-cols-2 landscape:gap-x-4">
+            <div class="mod-form-grid">
                 <ModInputField
                     v-model="facilityStore.facilitySectionFields.addressLine1En"
                     data-testid="mod-facility-section-addressLine1En"
@@ -208,17 +211,18 @@
             </div>
         </ModAccordion>
         <ModAccordion
+            tone="facility"
             class="google-maps-section"
             :title="t('modFacilitySection.googleMapsInformation')"
         >
-            <div class="grid landscape:grid-cols-2 landscape:gap-x-4">
+            <div class="mod-form-grid">
                 <ModInputField
                     v-model="facilityStore.facilitySectionFields.googlemapsURL"
                     data-testid="mod-facility-section-google-maps"
                     :label="t('modFacilitySection.labelFacilityGoogleMapsUrl')"
                     type="url"
                     :placeholder="t('modFacilitySection.placeholderTextFacilityGoogleMapsUrl')"
-                    class="landscape:col-span-2"
+                    class="mod-span-2"
                     :required="true"
                     :input-validation-check="validateGoogleMapsUrlInput"
                     :invalid-input-error-message="t('modFacilitySection.inputErrorMessageFacilityGoogleMapsUrl')"
@@ -248,6 +252,7 @@
         </ModAccordion>
         <ModAccordion
             v-if="moderationScreenStore.editFacilityScreenIsActive()"
+            tone="facility"
             :title="t('modFacilitySection.addHealthcareProfessional')"
         >
             <ModSearchBar
@@ -277,21 +282,22 @@
                 />
             </div>
         </ModAccordion>
-    </div>
-    <ModAccordion
-        v-if="moderationScreenStore.editFacilityScreenIsActive()"
-        :title="t('modFacilitySection.existingHPHeading')"
-    >
-        <div
-            v-for="(healthcareProfessional, index) in healthcareProfessionalRelatedToFacilityFiltered"
-            :key="`${healthcareProfessional.id}-${index}`"
+        <ModAccordion
+            v-if="moderationScreenStore.editFacilityScreenIsActive()"
+            tone="facility"
+            :title="t('modFacilitySection.existingHPHeading')"
         >
-            <ModDashboardHealthProfessionalCard
-                :healthcare-professional="healthcareProfessional"
-                :healthcare-professionals-related-to-facility="healthcareProfessionalsRelatedToFacility"
-            />
-        </div>
-    </ModAccordion>
+            <div
+                v-for="(healthcareProfessional, index) in healthcareProfessionalRelatedToFacilityFiltered"
+                :key="`${healthcareProfessional.id}-${index}`"
+            >
+                <ModDashboardHealthProfessionalCard
+                    :healthcare-professional="healthcareProfessional"
+                    :healthcare-professionals-related-to-facility="healthcareProfessionalsRelatedToFacility"
+                />
+            </div>
+        </ModAccordion>
+    </div>
 </template>
 
 <script lang="ts" setup>

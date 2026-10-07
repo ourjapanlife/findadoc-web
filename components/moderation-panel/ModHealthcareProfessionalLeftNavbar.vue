@@ -4,46 +4,44 @@
             {{ moderationSubmissionsStore.selectedSubmissionData?.facility?.nameEn
                 || t("modPanelSubmissionLeftNavbar.facilityNameUnknown") }}
         </h1>
-        <div class="flex flex-col items-start">
+        <div class="flex w-full flex-col items-start gap-1">
             <button
                 data-testid="submission-form-leftnav-healthcare-professional-name"
-                :class="{
-                    'bg-secondary': activeSection === ModHealthcareProfessionalsLeftNavbarSections.HealthcareProfessionalName,
-                    'bg-primary-inverted': activeSection
-                        !== ModHealthcareProfessionalsLeftNavbarSections.HealthcareProfessionalName,
-                }"
-                class="w-full py-4 my-2 text-sm text-start pl-2 rounded border-b-2 border-accent-bg"
+                :class="navButtonClass(ModHealthcareProfessionalsLeftNavbarSections.HealthcareProfessionalName)"
+                class="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-start text-sm font-semibold"
                 @click="handleNavClick(ModHealthcareProfessionalsLeftNavbarSections.HealthcareProfessionalName)"
             >
+                <span
+                    class="h-4 w-1 shrink-0 rounded-full bg-accent"
+                    aria-hidden="true"
+                />
                 {{ t("modPanelSubmissionLeftNavbar.healthcareProfessionalName") }}
             </button>
 
             <button
                 data-testid="submission-form-leftnav-healthcare-professional-medical-info"
-                :class="{
-                    'bg-secondary': activeSection
-                        === ModHealthcareProfessionalsLeftNavbarSections.HealthcareProfessionalMedicalInfo,
-                    'bg-primary-inverted': activeSection
-                        !== ModHealthcareProfessionalsLeftNavbarSections.HealthcareProfessionalMedicalInfo,
-                }"
-                class="w-full py-4 my-2 text-sm text-start pl-2 rounded border-b-2 border-accent-bg"
+                :class="navButtonClass(ModHealthcareProfessionalsLeftNavbarSections.HealthcareProfessionalMedicalInfo)"
+                class="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-start text-sm font-semibold"
                 @click="handleNavClick(ModHealthcareProfessionalsLeftNavbarSections.HealthcareProfessionalMedicalInfo)"
             >
+                <span
+                    class="h-4 w-1 shrink-0 rounded-full bg-accent"
+                    aria-hidden="true"
+                />
                 {{ t("modPanelSubmissionLeftNavbar.healthcareProfessionalMedicalInfo") }}
             </button>
 
             <button
                 data-testid="submission-form-leftnav-healthcare-professional-facilities"
-                :class="{
-                    'bg-secondary': activeSection
-                        === ModHealthcareProfessionalsLeftNavbarSections.HealthcareProfessionalFacilities,
-                    'bg-primary-inverted': activeSection
-                        !== ModHealthcareProfessionalsLeftNavbarSections.HealthcareProfessionalFacilities,
-                }"
-                class="w-full py-4 my-2 text-sm text-start pl-2 rounded border-b-2 border-accent-bg"
+                :class="navButtonClass(ModHealthcareProfessionalsLeftNavbarSections.HealthcareProfessionalFacilities)"
+                class="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-start text-sm font-semibold"
                 @click="handleNavClick(
                     ModHealthcareProfessionalsLeftNavbarSections.HealthcareProfessionalFacilities)"
             >
+                <span
+                    class="h-4 w-1 shrink-0 rounded-full bg-accent"
+                    aria-hidden="true"
+                />
                 {{ t("modPanelSubmissionLeftNavbar.healthcareProfessionalFacilities") }}
             </button>
         </div>
@@ -76,6 +74,11 @@ const modLeftNavElementIdArray: SectionInformation[] = [
         sectionElementIdToScrollTo: ModHealthcareProfessionalsLeftNavbarSections.HealthcareProfessionalName
     }
 ]
+
+const navButtonClass = (sectionId: string) =>
+    activeSection.value === sectionId
+        ? 'bg-accent/15 text-primary-text'
+        : 'text-primary-text-muted hover:bg-secondary-bg'
 
 const onScroll = () => {
     handleScroll(modLeftNavElementIdArray, isScrolling, activeSection)

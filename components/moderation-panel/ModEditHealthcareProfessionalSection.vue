@@ -1,12 +1,20 @@
 <template>
     <Loader v-if="moderationScreenStore.editHealthcareProfessionalScreenIsActive()" />
-    <div v-if="isHealthcareProfessionalInitialized">
+    <div
+        v-if="isHealthcareProfessionalInitialized"
+        class="mod-sheet"
+    >
+        <ModFormKind
+            kind="healthcare"
+            :label="t('modDashboardLeftNav.healthcareProfessionals')"
+        />
         <ModAccordion
             :id="ModHealthcareProfessionalsLeftNavbarSections.HealthcareProfessionalName"
+            tone="healthcare"
             class="mod-healthcare-professional-section"
             :title="t('modHealthcareProfessionalSection.healthcareProfessionalNameHeading')"
         >
-            <div class="input-fields flex flex-col my-4">
+            <div class="input-fields flex flex-col gap-3">
                 <Transition
                     enter-active-class="transition-all ease-in-out duration-300"
                     leave-active-class="transition-all ease-in-out duration-300"
@@ -18,7 +26,7 @@
                     <div
                         v-show="addingLocaleName || editingLocaleName"
                         :class="[
-                            'name-locale-input-fields flex flex-col rounded-lg border border-accent-bg bg-secondary-bg p-4',
+                            'name-locale-input-fields mod-form-grid rounded-lg border border-accent-bg bg-secondary-bg p-4',
                             editingLocaleName ? 'rounded-b-none border-b-0' : '',
                         ]"
                     >
@@ -46,70 +54,72 @@
                             :placeholder="t('modHealthcareProfessionalSection.placeholderTextHealthcareProfessionalMiddleName')"
                             :required="false"
                         />
-                        <label
-                            for="mod-edit-healthcare-professional-section-select-name-locales"
-                            class="field-label"
-                        >
-                            {{ t('modHealthcareProfessionalSection.labelHealthcareProfessionalNameLocale') }}
-                        </label>
-                        <select
-                            id="mod-edit-healthcare-professional-section-select-name-locales"
-                            v-model="nameLocaleInputs.locale"
-                            data-testid="mod-healthcare-professional-section-name-locale"
-                            name="name-locales"
-                            class="field mb-5"
-                        >
-                            <option
-                                v-for="(locale, index) in Locale"
-                                :key="`${locale}-${index}`"
-                                :value="locale"
+                        <div class="mod-span-2">
+                            <label
+                                for="mod-edit-healthcare-professional-section-select-name-locales"
+                                class="field-label"
                             >
-                                {{ localesStore.formatLanguageCodeToSimpleText(locale) }}
-                            </option>
-                        </select>
-                        <div
-                            v-show="addingLocaleName"
-                            class="flex gap-2"
-                        >
-                            <button
-                                class="btn btn-primary btn-sm"
-                                type="button"
-                                @click="handleAddLocalizedName"
+                                {{ t('modHealthcareProfessionalSection.labelHealthcareProfessionalNameLocale') }}
+                            </label>
+                            <select
+                                id="mod-edit-healthcare-professional-section-select-name-locales"
+                                v-model="nameLocaleInputs.locale"
+                                data-testid="mod-healthcare-professional-section-name-locale"
+                                name="name-locales"
+                                class="field"
                             >
-                                {{ t('modHealthcareProfessionalSection.save') }}
-                            </button>
-                            <button
-                                class="btn btn-sm bg-error text-primary-text-inverted"
-                                type="button"
-                                @click="handleCloseAddingNewLocalizedName"
+                                <option
+                                    v-for="(locale, index) in Locale"
+                                    :key="`${locale}-${index}`"
+                                    :value="locale"
+                                >
+                                    {{ localesStore.formatLanguageCodeToSimpleText(locale) }}
+                                </option>
+                            </select>
+                            <div
+                                v-show="addingLocaleName"
+                                class="flex gap-2"
                             >
-                                {{ t('modHealthcareProfessionalSection.exit') }}
-                            </button>
-                        </div>
-                        <div
-                            v-show="editingLocaleName"
-                            class="flex gap-2"
-                        >
-                            <button
-                                class="btn btn-primary btn-sm"
-                                type="button"
-                                @click="handleUpdateExistingName"
+                                <button
+                                    class="btn btn-primary btn-sm"
+                                    type="button"
+                                    @click="handleAddLocalizedName"
+                                >
+                                    {{ t('modHealthcareProfessionalSection.save') }}
+                                </button>
+                                <button
+                                    class="btn btn-sm bg-error text-primary-text-inverted"
+                                    type="button"
+                                    @click="handleCloseAddingNewLocalizedName"
+                                >
+                                    {{ t('modHealthcareProfessionalSection.exit') }}
+                                </button>
+                            </div>
+                            <div
+                                v-show="editingLocaleName"
+                                class="flex gap-2"
                             >
-                                {{ t('modHealthcareProfessionalSection.update') }}
-                            </button>
-                            <button
-                                class="btn btn-sm bg-error text-primary-text-inverted"
-                                type="button"
-                                @click="handleDeleteExistingName"
-                            >
-                                {{ t('modHealthcareProfessionalSection.delete') }}
-                            </button>
+                                <button
+                                    class="btn btn-primary btn-sm"
+                                    type="button"
+                                    @click="handleUpdateExistingName"
+                                >
+                                    {{ t('modHealthcareProfessionalSection.update') }}
+                                </button>
+                                <button
+                                    class="btn btn-sm bg-error text-primary-text-inverted"
+                                    type="button"
+                                    @click="handleDeleteExistingName"
+                                >
+                                    {{ t('modHealthcareProfessionalSection.delete') }}
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </Transition>
                 <div
                     v-if="hpStore.healthcareProfessionalSectionFields.names"
-                    class="flex flex-col"
+                    class="grid gap-3"
                 >
                     <div
                         v-for="(nameLocale, index) in hpStore.healthcareProfessionalSectionFields.names"
@@ -141,10 +151,11 @@
         </ModAccordion>
         <ModAccordion
             :id="ModHealthcareProfessionalsLeftNavbarSections.HealthcareProfessionalMedicalInfo"
+            tone="healthcare"
             :title="t('modHealthcareProfessionalSection.healthcareProfessionalMedicalInfoHeading')"
         >
-            <div class="grid gap-4 landscape:grid-cols-2">
-                <div class="min-w-0">
+            <div class="mod-form-grid">
+                <div class="mod-picker">
                     <label
                         for="accepted-insurances"
                         class="field-label"
@@ -162,7 +173,7 @@
                     />
                     <ModTokenList :labels="tokenLabels(hpStore.healthcareProfessionalSectionFields.acceptedInsurance)" />
                 </div>
-                <div class="min-w-0">
+                <div class="mod-picker">
                     <label
                         for="degrees"
                         class="field-label"
@@ -180,7 +191,7 @@
                     />
                     <ModTokenList :labels="tokenLabels(hpStore.healthcareProfessionalSectionFields.degrees)" />
                 </div>
-                <div class="min-w-0">
+                <div class="mod-picker">
                     <label
                         for="specialties"
                         class="field-label"
@@ -198,7 +209,7 @@
                     />
                     <ModTokenList :labels="tokenLabels(hpStore.healthcareProfessionalSectionFields.specialties)" />
                 </div>
-                <div class="min-w-0">
+                <div class="mod-picker">
                     <label
                         for="locales"
                         class="field-label"
@@ -218,7 +229,7 @@
                 </div>
                 <NoteInputField
                     v-model="hpStore.healthcareProfessionalSectionFields.additionalInfoForPatients as string"
-                    class="landscape:col-span-2"
+                    class="mod-span-2"
                     :label="t('modHealthcareProfessionalSection.labelAdditionalNotesForPatients')"
                     :placeholder="t('modHealthcareProfessionalSection.placeholderAdditionalNotesForPatients')"
                     :required="false"
@@ -228,6 +239,7 @@
         <ModAccordion
             v-if="moderationScreenStore.editHealthcareProfessionalScreenIsActive()"
             :id="ModHealthcareProfessionalsLeftNavbarSections.HealthcareProfessionalFacilities"
+            tone="healthcare"
             :title="t('modHealthcareProfessionalSection.facilities')"
         >
             <ModSearchBar

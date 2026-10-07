@@ -367,6 +367,35 @@
     @apply mt-1.5 text-sm font-medium text-error;
   }
 
+  /* Moderation sheets. One grid, two kinds: facility uses primary, healthcare uses accent. */
+  .mod-sheet {
+    @apply flex min-w-0 flex-col gap-3;
+  }
+
+  .mod-kind {
+    @apply inline-flex w-fit items-center gap-2 rounded-full border px-3 py-1 text-sm font-semibold;
+  }
+
+  .mod-kind-facility {
+    @apply border-primary/30 bg-primary/10 text-primary;
+  }
+
+  .mod-kind-healthcare {
+    @apply border-accent/40 bg-accent/15 text-primary-text;
+  }
+
+  .mod-form-grid {
+    @apply grid items-start gap-x-4 landscape:grid-cols-2;
+  }
+
+  .mod-span-2 {
+    @apply landscape:col-span-2;
+  }
+
+  .mod-picker {
+    @apply flex min-w-0 flex-col rounded-lg border border-accent-bg bg-secondary-bg p-3;
+  }
+
   /* Loading */
   .skeleton {
     @apply animate-pulse rounded-md bg-accent-bg;

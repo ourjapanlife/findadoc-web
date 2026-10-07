@@ -2,29 +2,27 @@
     <div
         :class="[
             'mod-dashboard-healthcare-professional-card',
-            'flex items-center justify-center',
-            'border-2 border-primary',
-            'rounded-lg p-2 h-32 w-fit',
+            'flex w-full items-center rounded-lg border border-accent-bg bg-secondary-bg p-3',
             (isEditable && chosenLocaleIndex === 0)
-                ? 'border-t-0 mt-0 rounded-t-none'
-                : 'my-3',
+                ? 'border-primary'
+                : '',
         ]"
     >
-        <div class="w-96">
-            <div class="flex justify-between items-center p-1">
-                <div class="w-16 self-start">
+        <div class="flex min-w-0 flex-1 items-center gap-3">
+            <div class="flex w-full min-w-0 items-center gap-3">
+                <div class="w-10 shrink-0 self-start">
                     <SVGProfileIcon
                         role="img"
                         alt="profile icon"
                         title="profile icon"
-                        class="profile-icon stroke-primary w-16 h-16 stroke-1 inline mx-1 self-start"
+                        class="profile-icon inline h-10 w-10 stroke-primary stroke-1"
                     />
                 </div>
                 <div
                     v-if="healthcareProfessionalsRelatedToFacility && healthcareProfessional"
                     class="min-w-44"
                 >
-                    <div class="flex flex-col h-full w-64 pl-1 mb-1">
+                    <div class="mb-1 flex h-full min-w-0 flex-1 flex-col pl-1">
                         <div
                             id="healthcare-professional-related-to-facility-name-display-container"
                             class="flex font-bold pt-2"
@@ -77,7 +75,7 @@
                 <div
                     v-if="healthcareProfessionalNameByLocale"
                     id="healthcare-professional-name-by-locale-container"
-                    class="flex flex-col justify-center items-center min-w-44"
+                    class="flex min-w-0 flex-1 flex-col items-start justify-center"
                 >
                     <div
                         id="healthcare-professional-name-display-container"

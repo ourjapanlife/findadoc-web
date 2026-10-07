@@ -1,24 +1,21 @@
 <template>
     <div
-        class="container flex gap-1 w-fit"
+        class="relative flex w-full gap-1"
         :class="[
             isNearPageBottom ? 'flex-col-reverse' : 'flex-col',
         ]"
     >
         <div
-            class="flex items-center px-3 py-3.5 w-96 h-12 bg-secondary-bg
-    rounded-lg border border-primary-text-muted text-primary-text
-    text-sm font-normal font-sans placeholder-primary-text-muted
-    focus-within:outline-currentColor
-    focus-within:outline-2
-    "
+            class="flex h-12 w-full items-center gap-2 rounded-lg border border-border-strong bg-secondary-bg px-3
+                focus-within:border-primary"
         >
             <input
                 ref="searchInputElement"
                 type="text"
                 :placeholder="placeHolderText"
                 :data-testid="`${dataTestId}`"
-                class="grow focus-visible:outline-none bg-secondary-bg text-primary-text placeholder-primary-text-muted"
+                class="min-w-0 grow bg-transparent text-primary-text placeholder-primary-text-muted
+                    focus-visible:outline-none"
                 @blur="handleSearchInputBlur"
                 @keydown.esc="handleSearchInputBlur"
                 @keydown.down="handleSearchInputArrowDown"
@@ -44,13 +41,13 @@
                 />
             </button>
         </div>
-        <div class="container relative">
+        <div class="relative w-full">
             <ul
                 v-if="isInputFocused"
                 id="search-list"
-                class="bg-primary-bg shadow-md border-2 border-primary/50 rounded-lg absolute
-                w-full flex flex-col divide-y-2 max-h-64 overflow-y-auto overflow-x-hidden
-                "
+                class="absolute z-20 flex max-h-64 w-full flex-col divide-y divide-accent-bg
+                    overflow-y-auto overflow-x-hidden rounded-lg border border-accent-bg
+                    bg-primary-bg shadow-raised"
                 :class="[
                     isNearPageBottom ? '-translate-y-full' : '',
                 ]"
@@ -59,10 +56,10 @@
                     v-for="(item, index) in filteredItems"
                     :id="`search-list-item-${index}`"
                     :key="item.id"
-                    class="flex justify-between divide-x cursor-pointer"
+                    class="flex cursor-pointer justify-between"
                     :class="[
-                        selectedItems.includes(item) ? 'bg-primary/90' : '',
-                        selectedItemIndex === index ? 'bg-primary-hover text-primary-inverted' : 'opacity-95',
+                        selectedItems.includes(item) ? 'bg-primary/10' : '',
+                        selectedItemIndex === index ? 'bg-accent-bg' : '',
                     ]"
                     data-testid="mod-search-bar-search-result"
                     role="button"
@@ -74,19 +71,17 @@
                     @keydown.enter="handleListItem"
                     @keydown.space.prevent="handleListItem"
                 >
-                    <div class="flex items-center m-3 gap-3 overflow-x-auto">
-                        <span>{{ index + 1 }}</span>
-                        <div class="flex flex-col overflow-x-auto whitespace-nowrap">
-                            <span class="text-xs">{{ item.id }}</span>
-                            <div class="divide-x-2 mt-1">
-                                <span
-                                    v-for="(field, fieldIndex) in fieldsToDisplayCallback(item as ArrayType<T>)"
-                                    :key="fieldIndex"
-                                    class="px-2 first-of-type:pl-0 last-of-type:pr-0"
-                                >
-                                    {{ field }}
-                                </span>
-                            </div>
+                    <div class="flex min-w-0 items-center gap-3 px-3 py-2">
+                        <div class="flex min-w-0 flex-col">
+                            <span class="truncate font-medium text-primary-text">
+                                {{ fieldsToDisplayCallback(item as ArrayType<T>).join(' · ') }}
+                            </span>
+                            <span
+                                v-if="showResultId(item)"
+                                class="truncate text-xs text-primary-text-muted"
+                            >
+                                {{ item.id }}
+                            </span>
                         </div>
                     </div>
                     <div class="flex items-center">
@@ -146,6 +141,12 @@ type Props = {
 }
 
 const { placeHolderText, noMatchText, fieldsToDisplayCallback, defaultSuggestions } = defineProps<Props>()
+
+const showResultId = (item: { id?: unknown }) => {
+    const id = item.id == null ? '' : String(item.id)
+    if (!id) return false
+    return !fieldsToDisplayCallback(item as ArrayType<T>).some(field => String(field) === id)
+}
 
 const searchInputElement = ref<HTMLInputElement>()
 const searchInputValue = ref('')

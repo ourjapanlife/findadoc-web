@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col mt-4">
+    <div class="flex flex-col">
         <label class="field-label">
             {{ label }}
             <span
@@ -20,7 +20,7 @@
             :type="type"
             :placeholder="placeholder"
             :required="required"
-            class="mod-input-field field mb-5"
+            class="mod-input-field field"
             @blur="initialValidationCheck"
         >
     </div>

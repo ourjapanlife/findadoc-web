@@ -1,15 +1,22 @@
 <template>
     <details
         :id="id"
-        class="group mb-4 rounded-lg border border-accent-bg bg-primary-bg"
+        class="group overflow-hidden rounded-lg border border-accent-bg bg-primary-bg"
         open
     >
         <summary
             class="flex cursor-pointer list-none items-center justify-between gap-3 px-4 py-3
                 md:px-5 [&::-webkit-details-marker]:hidden"
         >
-            <span class="text-lg font-bold tracking-tight text-primary-text">
-                {{ title }}
+            <span class="flex min-w-0 items-center gap-3">
+                <span
+                    class="h-5 w-1 shrink-0 rounded-full"
+                    :class="tone === 'healthcare' ? 'bg-accent' : 'bg-primary'"
+                    aria-hidden="true"
+                />
+                <span class="text-base font-semibold tracking-tight text-primary-text">
+                    {{ title }}
+                </span>
             </span>
             <svg
                 class="h-4 w-4 shrink-0 text-primary-text-muted transition-transform group-open:rotate-180"
@@ -36,5 +43,6 @@
 defineProps<{
     title: string
     id?: string
+    tone?: 'facility' | 'healthcare'
 }>()
 </script>
