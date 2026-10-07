@@ -76,8 +76,9 @@ describe('buildHubIndex', () => {
 
         expect(byPrefecture.tokyo?.cities.map(city => ({
             slug: city.citySlug,
-            name: city.cityEn
-        }))).to.deep.equal([{ slug: 'minato', name: 'Minato' }])
+            name: city.cityEn,
+            path: city.path
+        }))).to.deep.equal([{ slug: 'minato-city', name: 'Minato', path: '/tokyo/minato-city' }])
     })
 
     it('omits reserved first segments so /search cannot become a hub', () => {

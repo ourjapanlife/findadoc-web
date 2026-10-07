@@ -120,7 +120,9 @@ function addFacilityToCity(
         address?.cityJa
     )
     const prefectureSlug = locationPrefectureSlug(address?.prefectureEn)
-    const citySlug = official?.slug ?? locationCitySlug(address?.cityEn)
+    // Clinic and doctor pages link to the stored English slug. Rewriting the
+    // path to the official slug makes those links 404 during prerender.
+    const citySlug = locationCitySlug(address?.cityEn)
     const cityEn = official?.nameEn ?? address?.cityEn
     const cityJa = official?.nameJa ?? address?.cityJa
     const prefecturePath = prefectureHubPathFromSlug(prefectureSlug)
