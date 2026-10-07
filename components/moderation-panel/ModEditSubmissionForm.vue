@@ -39,15 +39,15 @@
             </div>
         </Modal>
     </div>
-    <div class="flex">
-        <div
-
-            class="flex flex-col mr-8"
-        >
-            <div v-if="!currentExistingHealthcareProfessionals.length">
+    <div class="grid items-start gap-6 landscape:grid-cols-2">
+        <section class="mod-sheet">
+            <div
+                v-if="!currentExistingHealthcareProfessionals.length"
+                class="mod-picker"
+            >
                 <label
                     for="mod-edit-submission-form-facilities"
-                    class="my-2 text-primary-text text-sm font-bold font-sans"
+                    class="field-label"
                 >
                     {{ t('modSubmissionForm.searchExistingFacilities') }}
                 </label>
@@ -59,35 +59,23 @@
                     :default-suggestions="facilitiesStore.facilityData"
                     @search-input-change="handleFacilitySearchInputChange"
                 />
-                <ol class="list-disc text-primary-text/60 font-semibold my-2 px-2 ">
-                    <li
-                        v-for="facility in currentFacilityRelations"
-                        :key="facility.id"
-                        class="py-1"
-                    >
-                        {{ `${facility.id} / ${facility.nameEn} / ${facility.nameJa}` }}
-                    </li>
-                </ol>
+                <ModTokenList :labels="linkedFacilityLabels" />
             </div>
             <div
                 v-show="!currentFacilityRelations.length"
                 class="mod-edit-facility-section"
             >
-                <h1
-                    class="mb-3.5 text-start text-primary-text text-3xl font-bold font-sans leading-normal"
-                >
-                    {{ t('modFacilitySection.facilityHeading') }}
-                </h1>
                 <ModEditFacilitySection />
             </div>
-        </div>
-        <div
-            class="flex flex-col"
-        >
-            <div v-if="!currentFacilityRelations.length">
+        </section>
+        <section class="mod-sheet">
+            <div
+                v-if="!currentFacilityRelations.length"
+                class="mod-picker"
+            >
                 <label
                     for="mod-edit-submission-form-healthcare-professionals"
-                    class="my-2 text-primary-text text-sm font-bold font-sans"
+                    class="field-label"
                 >
                     {{ t('modSubmissionForm.searchExistingHealthcareProfessionals') }}
                 </label>
@@ -100,16 +88,7 @@
                     :default-suggestions="healthcareProfessionalsStore.healthcareProfessionalsData"
                     @search-input-change="handleHealthcareProfessionalsInputChange"
                 />
-                <ol class="list-disc text-primary-text/60 font-semibold my-2 px-2 ">
-                    <li
-                        v-for="healthcareProfessional in currentExistingHealthcareProfessionals"
-                        :key="healthcareProfessional.id"
-                        class="py-1"
-                    >
-                        {{ `${healthcareProfessional.id} / ${healthcareProfessional.names[0]?.lastName}
-                    / ${healthcareProfessional.names[0]?.firstName}` }}
-                    </li>
-                </ol>
+                <ModTokenList :labels="linkedHealthcareProfessionalLabels" />
             </div>
             <div
                 v-show="!currentExistingHealthcareProfessionals.length"
@@ -123,9 +102,8 @@
                 :label="t('modSubmissionForm.labelModNoteInput')"
                 :placeholder="t('modSubmissionForm.placeholderTextNoteInput')"
                 :required="false"
-                :text-size="'text-2xl'"
             />
-        </div>
+        </section>
     </div>
 </template>
 
@@ -196,6 +174,14 @@ const submissionBeforeChanges: Ref<Submission | undefined> = ref(undefined)
 const currentFacilityRelations: Ref<Facility[]> = ref([])
 // Keeps track of existing healthcare professionals related to new facility submission
 const currentExistingHealthcareProfessionals: Ref<HealthcareProfessional[]> = ref([])
+const linkedFacilityLabels = computed(() =>
+    currentFacilityRelations.value.map(facility =>
+        [facility.nameEn, facility.nameJa].filter(Boolean).join(' · ')))
+const linkedHealthcareProfessionalLabels = computed(() =>
+    currentExistingHealthcareProfessionals.value.map(healthcareProfessional =>
+        [healthcareProfessional.names[0]?.lastName, healthcareProfessional.names[0]?.firstName]
+            .filter(Boolean)
+            .join(' ')))
 const selectedFacilityRelationsModel = computed({
     get: () => currentFacilityRelations.value,
     set: (newValue: Facility[]) => {

@@ -1,17 +1,20 @@
 <template>
     <Loader v-if="moderationScreenStore.editHealthcareProfessionalScreenIsActive()" />
-    <div v-if="isHealthcareProfessionalInitialized">
-        <div
+    <div
+        v-if="isHealthcareProfessionalInitialized"
+        class="mod-sheet"
+    >
+        <ModFormKind
+            kind="healthcare"
+            :label="t('modDashboardLeftNav.healthcareProfessionals')"
+        />
+        <ModAccordion
             :id="ModHealthcareProfessionalsLeftNavbarSections.HealthcareProfessionalName"
+            tone="healthcare"
             class="mod-healthcare-professional-section"
+            :title="t('modHealthcareProfessionalSection.healthcareProfessionalNameHeading')"
         >
-            <h2
-                class="mb-3.5 text-start text-primary-text
-            text-2xl font-bold font-sans leading-normal"
-            >
-                {{ t('modHealthcareProfessionalSection.healthcareProfessionalNameHeading') }}
-            </h2>
-            <div class="input-fields flex flex-col my-4">
+            <div class="input-fields flex flex-col gap-3">
                 <Transition
                     enter-active-class="transition-all ease-in-out duration-300"
                     leave-active-class="transition-all ease-in-out duration-300"
@@ -23,8 +26,8 @@
                     <div
                         v-show="addingLocaleName || editingLocaleName"
                         :class="[
-                            'name-locale-input-fields rounded-lg border-2 border-primary flex flex-col px-2 w-fit',
-                            editingLocaleName ? 'rounded-b-none border-b-0 pb-5' : 'rounded-lg border-2 border-primary',
+                            'name-locale-input-fields mod-form-grid rounded-lg border border-accent-bg bg-secondary-bg p-4',
+                            editingLocaleName ? 'rounded-b-none border-b-0' : '',
                         ]"
                     >
                         <ModInputField
@@ -51,71 +54,72 @@
                             :placeholder="t('modHealthcareProfessionalSection.placeholderTextHealthcareProfessionalMiddleName')"
                             :required="false"
                         />
-                        <label
-                            for="mod-edit-healthcare-professional-section-select-name-locales"
-                            class="my-2 text-primary-text text-sm font-bold font-sans"
-                        >
-                            {{ t('modHealthcareProfessionalSection.labelHealthcareProfessionalNameLocale') }}
-                        </label>
-                        <select
-                            id="mod-edit-healthcare-professional-section-select-name-locales"
-                            v-model="nameLocaleInputs.locale"
-                            data-testid="mod-healthcare-professional-section-name-locale"
-                            name="name-locales"
-                            class="mb-5 px-3 py-3.5 w-96 h-12 bg-secondary-bg rounded-lg border border-primary-text-muted
-                                text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
-                        >
-                            <option
-                                v-for="(locale, index) in Locale"
-                                :key="`${locale}-${index}`"
-                                :value="locale"
+                        <div class="mod-span-2">
+                            <label
+                                for="mod-edit-healthcare-professional-section-select-name-locales"
+                                class="field-label"
                             >
-                                {{ localesStore.formatLanguageCodeToSimpleText(locale) }}
-                            </option>
-                        </select>
-                        <div
-                            v-show="addingLocaleName"
-                            class="flex justify-between w-96"
-                        >
-                            <button
-                                class="bg-primary text-primary-text-inverted font-bold py-2 px-4 my-2 rounded w-36"
-                                type="button"
-                                @click="handleAddLocalizedName"
+                                {{ t('modHealthcareProfessionalSection.labelHealthcareProfessionalNameLocale') }}
+                            </label>
+                            <select
+                                id="mod-edit-healthcare-professional-section-select-name-locales"
+                                v-model="nameLocaleInputs.locale"
+                                data-testid="mod-healthcare-professional-section-name-locale"
+                                name="name-locales"
+                                class="field"
                             >
-                                {{ t('modHealthcareProfessionalSection.save') }}
-                            </button>
-                            <button
-                                class="bg-error text-primary-text-inverted font-bold py-2 px-4 my-2 rounded w-36"
-                                type="button"
-                                @click="handleCloseAddingNewLocalizedName"
+                                <option
+                                    v-for="(locale, index) in Locale"
+                                    :key="`${locale}-${index}`"
+                                    :value="locale"
+                                >
+                                    {{ localesStore.formatLanguageCodeToSimpleText(locale) }}
+                                </option>
+                            </select>
+                            <div
+                                v-show="addingLocaleName"
+                                class="flex gap-2"
                             >
-                                {{ t('modHealthcareProfessionalSection.exit') }}
-                            </button>
-                        </div>
-                        <div
-                            v-show="editingLocaleName"
-                            class="flex justify-between w-96"
-                        >
-                            <button
-                                class="bg-primary text-primary-text-inverted font-bold py-2 px-4 my-2 rounded w-36"
-                                type="button"
-                                @click="handleUpdateExistingName"
+                                <button
+                                    class="btn btn-primary btn-sm"
+                                    type="button"
+                                    @click="handleAddLocalizedName"
+                                >
+                                    {{ t('modHealthcareProfessionalSection.save') }}
+                                </button>
+                                <button
+                                    class="btn btn-sm bg-error text-primary-text-inverted"
+                                    type="button"
+                                    @click="handleCloseAddingNewLocalizedName"
+                                >
+                                    {{ t('modHealthcareProfessionalSection.exit') }}
+                                </button>
+                            </div>
+                            <div
+                                v-show="editingLocaleName"
+                                class="flex gap-2"
                             >
-                                {{ t('modHealthcareProfessionalSection.update') }}
-                            </button>
-                            <button
-                                class="bg-error text-primary-text-inverted font-bold py-2 px-4 my-2 rounded w-36"
-                                type="button"
-                                @click="handleDeleteExistingName"
-                            >
-                                {{ t('modHealthcareProfessionalSection.delete') }}
-                            </button>
+                                <button
+                                    class="btn btn-primary btn-sm"
+                                    type="button"
+                                    @click="handleUpdateExistingName"
+                                >
+                                    {{ t('modHealthcareProfessionalSection.update') }}
+                                </button>
+                                <button
+                                    class="btn btn-sm bg-error text-primary-text-inverted"
+                                    type="button"
+                                    @click="handleDeleteExistingName"
+                                >
+                                    {{ t('modHealthcareProfessionalSection.delete') }}
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </Transition>
                 <div
                     v-if="hpStore.healthcareProfessionalSectionFields.names"
-                    class="flex flex-col"
+                    class="grid gap-3"
                 >
                     <div
                         v-for="(nameLocale, index) in hpStore.healthcareProfessionalSectionFields.names"
@@ -138,148 +142,116 @@
                 <button
                     type="button"
                     data-testid="mod-healthcare-add-name-button"
-                    class="bg-accent text-primary-text-inverted font-bold py-2 px-4 my-2 rounded w-44"
+                    class="btn btn-primary btn-sm"
                     @click="handleOpenAddNewNameWithReset"
                 >
                     {{ t('modHealthcareProfessionalSection.addHealthCareProfessionalLocaleName') }}
                 </button>
-                <h2
-                    :id="ModHealthcareProfessionalsLeftNavbarSections.HealthcareProfessionalMedicalInfo"
-                    class="mod-healthcare-professional-section
-                     my-3.5 text-start text-primary-text text-2xl font-bold font-sans leading-normal"
-                >
-                    {{ t('modHealthcareProfessionalSection.healthcareProfessionalMedicalInfoHeading') }}
-                </h2>
-                <label
-                    for="accepted-insurances"
-                    class="my-2 text-primary-text text-sm font-bold font-sans"
-                >
-                    {{ t("modHealthcareProfessionalSection.selectInsurances") }}
-                </label>
-                <ModSearchBar
-                    v-model="hpStore.healthcareProfessionalSectionFields.acceptedInsurance"
-                    data-test-id="mod-healthcare-professional-section-accepted-insurances"
-                    :place-holder-text="t('modHealthcareProfessionalSection.placeholderTextAcceptedInsurances')"
-                    :no-match-text="t('modHealthcareProfessionalSection.noInsurancesWereFound')"
-                    :fields-to-display-callback="insurancesToDisplayCallback"
-                    :default-suggestions="Object.values(Insurance)"
-                    @search-input-change="handleInsuranceInputChange"
-                />
-                <ol class="list-disc text-primary-text/60 font-semibold my-2 px-2">
-                    <li
-                        v-for="insurance in hpStore.healthcareProfessionalSectionFields.acceptedInsurance"
-                        :key="`accepted-${insurance}`"
-                        class="py-1"
+            </div>
+        </ModAccordion>
+        <ModAccordion
+            :id="ModHealthcareProfessionalsLeftNavbarSections.HealthcareProfessionalMedicalInfo"
+            tone="healthcare"
+            :title="t('modHealthcareProfessionalSection.healthcareProfessionalMedicalInfoHeading')"
+        >
+            <div class="mod-form-grid">
+                <div class="mod-picker">
+                    <label
+                        for="accepted-insurances"
+                        class="field-label"
                     >
-                        {{ insurance }}
-                    </li>
-                </ol>
-                <label
-                    for="degrees"
-                    class="my-2 text-primary-text text-sm font-bold font-sans"
-                >
-                    {{ t("modHealthcareProfessionalSection.selectDegrees") }}
-                </label>
-                <ModSearchBar
-                    v-model="hpStore.healthcareProfessionalSectionFields.degrees"
-                    data-test-id="mod-healthcare-professional-section-degrees"
-                    :place-holder-text="t('modHealthcareProfessionalSection.placeholderTextDegrees')"
-                    :no-match-text="t('modHealthcareProfessionalSection.noDegreesWereFound')"
-                    :fields-to-display-callback="degreesToDisplayCallback"
-                    :default-suggestions="Object.values(Degree)"
-                    @search-input-change="handleDegreeInputChange"
-                />
-                <ol class="list-disc text-primary-text/60 font-semibold my-2 px-2">
-                    <li
-                        v-for="degree in hpStore.healthcareProfessionalSectionFields.degrees"
-                        :key="`current-${degree}`"
-                        class="py-1"
+                        {{ t("modHealthcareProfessionalSection.selectInsurances") }}
+                    </label>
+                    <ModSearchBar
+                        v-model="hpStore.healthcareProfessionalSectionFields.acceptedInsurance"
+                        data-test-id="mod-healthcare-professional-section-accepted-insurances"
+                        :place-holder-text="t('modHealthcareProfessionalSection.placeholderTextAcceptedInsurances')"
+                        :no-match-text="t('modHealthcareProfessionalSection.noInsurancesWereFound')"
+                        :fields-to-display-callback="insurancesToDisplayCallback"
+                        :default-suggestions="Object.values(Insurance)"
+                        @search-input-change="handleInsuranceInputChange"
+                    />
+                    <ModTokenList :labels="tokenLabels(hpStore.healthcareProfessionalSectionFields.acceptedInsurance)" />
+                </div>
+                <div class="mod-picker">
+                    <label
+                        for="degrees"
+                        class="field-label"
                     >
-                        {{ degree }}
-                    </li>
-                </ol>
-                <label
-                    for="specialties"
-                    class="my-2 text-primary-text text-sm font-bold font-sans"
-                >
-                    {{ t("modHealthcareProfessionalSection.selectSpecialties") }}
-                </label>
-                <ModSearchBar
-                    v-model="hpStore.healthcareProfessionalSectionFields.specialties"
-                    data-test-id="mod-healthcare-professional-section-specialties"
-                    :place-holder-text="t('modHealthcareProfessionalSection.placeholderTextSpecialties')"
-                    :no-match-text="t('modHealthcareProfessionalSection.noSpecialtiesWereFound')"
-                    :fields-to-display-callback="specialtiesToDisplayCallback"
-                    :default-suggestions="Object.values(Specialty)"
-                    @search-input-change="handleSpecialtyInputChange"
-                />
-                <ol class="list-disc text-primary-text/60 font-semibold my-2 px-2">
-                    <li
-                        v-for="specialty in hpStore.healthcareProfessionalSectionFields.specialties"
-                        :key="`current-${specialty}`"
-                        class="py-1"
+                        {{ t("modHealthcareProfessionalSection.selectDegrees") }}
+                    </label>
+                    <ModSearchBar
+                        v-model="hpStore.healthcareProfessionalSectionFields.degrees"
+                        data-test-id="mod-healthcare-professional-section-degrees"
+                        :place-holder-text="t('modHealthcareProfessionalSection.placeholderTextDegrees')"
+                        :no-match-text="t('modHealthcareProfessionalSection.noDegreesWereFound')"
+                        :fields-to-display-callback="degreesToDisplayCallback"
+                        :default-suggestions="Object.values(Degree)"
+                        @search-input-change="handleDegreeInputChange"
+                    />
+                    <ModTokenList :labels="tokenLabels(hpStore.healthcareProfessionalSectionFields.degrees)" />
+                </div>
+                <div class="mod-picker">
+                    <label
+                        for="specialties"
+                        class="field-label"
                     >
-                        {{ specialty }}
-                    </li>
-                </ol>
-                <label
-                    for="locales"
-                    class="my-2 text-primary-text text-sm font-bold font-sans"
-                >
-                    {{ t("modHealthcareProfessionalSection.selectLocales") }}
-                </label>
-                <ModSearchBar
-                    v-model="hpStore.healthcareProfessionalSectionFields.spokenLanguages"
-                    data-test-id="mod-healthcare-professional-section-spoken-locales"
-                    :place-holder-text="t('modHealthcareProfessionalSection.placeholderTextLocales')"
-                    :no-match-text="t('modHealthcareProfessionalSection.noLocalesWereFound')"
-                    :fields-to-display-callback="localesToDisplayCallback"
-                    :default-suggestions="Object.values(Locale)"
-                    @search-input-change="handleLocaleInputChange"
-                />
-                <ol class="list-disc text-primary-text/60 font-semibold my-2 px-2">
-                    <li
-                        v-for="locale in hpStore.healthcareProfessionalSectionFields.spokenLanguages"
-                        :key="`spoken-${locale}`"
-                        class="py-1"
+                        {{ t("modHealthcareProfessionalSection.selectSpecialties") }}
+                    </label>
+                    <ModSearchBar
+                        v-model="hpStore.healthcareProfessionalSectionFields.specialties"
+                        data-test-id="mod-healthcare-professional-section-specialties"
+                        :place-holder-text="t('modHealthcareProfessionalSection.placeholderTextSpecialties')"
+                        :no-match-text="t('modHealthcareProfessionalSection.noSpecialtiesWereFound')"
+                        :fields-to-display-callback="specialtiesToDisplayCallback"
+                        :default-suggestions="Object.values(Specialty)"
+                        @search-input-change="handleSpecialtyInputChange"
+                    />
+                    <ModTokenList :labels="tokenLabels(hpStore.healthcareProfessionalSectionFields.specialties)" />
+                </div>
+                <div class="mod-picker">
+                    <label
+                        for="locales"
+                        class="field-label"
                     >
-                        {{ localesStore.formatLanguageCodeToSimpleText(locale) }}
-                    </li>
-                </ol>
+                        {{ t("modHealthcareProfessionalSection.selectLocales") }}
+                    </label>
+                    <ModSearchBar
+                        v-model="hpStore.healthcareProfessionalSectionFields.spokenLanguages"
+                        data-test-id="mod-healthcare-professional-section-spoken-locales"
+                        :place-holder-text="t('modHealthcareProfessionalSection.placeholderTextLocales')"
+                        :no-match-text="t('modHealthcareProfessionalSection.noLocalesWereFound')"
+                        :fields-to-display-callback="localesToDisplayCallback"
+                        :default-suggestions="Object.values(Locale)"
+                        @search-input-change="handleLocaleInputChange"
+                    />
+                    <ModTokenList :labels="spokenLanguageLabels" />
+                </div>
                 <NoteInputField
                     v-model="hpStore.healthcareProfessionalSectionFields.additionalInfoForPatients as string"
+                    class="mod-span-2"
                     :label="t('modHealthcareProfessionalSection.labelAdditionalNotesForPatients')"
                     :placeholder="t('modHealthcareProfessionalSection.placeholderAdditionalNotesForPatients')"
                     :required="false"
                 />
             </div>
-            <div v-if="moderationScreenStore.editHealthcareProfessionalScreenIsActive()">
-                <h2
-                    :id="ModHealthcareProfessionalsLeftNavbarSections.HealthcareProfessionalFacilities"
-                    class="mod-healthcare-professional-section
-                 my-3.5 text-start text-primary-text text-2xl font-bold font-sans leading-normal"
-                >
-                    {{ t("modHealthcareProfessionalSection.facilities") }}
-                </h2>
-                <ModSearchBar
-                    v-model="selectedFacilitiesModel"
-                    :place-holder-text="t('modHealthcareProfessionalSection.placeholderTextFacilitySearchBar')"
-                    :no-match-text="t('modHealthcareProfessionalSection.noFacilitiesWereFound')"
-                    :fields-to-display-callback="facilitiesFieldsToDisplayCallback"
-                    :default-suggestions="facilitiesStore.facilityData"
-                    @search-input-change="handleFacilitySearchInputChange"
-                />
-                <ol class="list-disc text-primary-text/60 font-semibold my-2 px-2 ">
-                    <li
-                        v-for="facility in currentFacilityRelations"
-                        :key="facility.id"
-                        class="py-1"
-                    >
-                        {{ `${facility.id} / ${facility.nameEn} / ${facility.nameJa}` }}
-                    </li>
-                </ol>
-            </div>
-        </div>
+        </ModAccordion>
+        <ModAccordion
+            v-if="moderationScreenStore.editHealthcareProfessionalScreenIsActive()"
+            :id="ModHealthcareProfessionalsLeftNavbarSections.HealthcareProfessionalFacilities"
+            tone="healthcare"
+            :title="t('modHealthcareProfessionalSection.facilities')"
+        >
+            <ModSearchBar
+                v-model="selectedFacilitiesModel"
+                :place-holder-text="t('modHealthcareProfessionalSection.placeholderTextFacilitySearchBar')"
+                :no-match-text="t('modHealthcareProfessionalSection.noFacilitiesWereFound')"
+                :fields-to-display-callback="facilitiesFieldsToDisplayCallback"
+                :default-suggestions="facilitiesStore.facilityData"
+                @search-input-change="handleFacilitySearchInputChange"
+            />
+            <ModTokenList :labels="selectedFacilityLabels" />
+        </ModAccordion>
     </div>
 </template>
 
@@ -348,6 +320,14 @@ watch(
 const currentFacilityRelations = computed(() =>
     facilitiesStore.facilityData.filter(facility =>
         hpStore.healthcareProfessionalSectionFields.facilityIds.includes(facility.id)))
+const tokenLabels = (values: readonly unknown[] | null | undefined) =>
+    (values ?? []).map(item => String(item))
+const spokenLanguageLabels = computed(() =>
+    (hpStore.healthcareProfessionalSectionFields.spokenLanguages ?? [])
+        .map(locale => localesStore.formatLanguageCodeToSimpleText(locale)))
+const selectedFacilityLabels = computed(() =>
+    currentFacilityRelations.value.map(facility =>
+        [facility.nameEn, facility.nameJa].filter(Boolean).join(' · ')))
 
 // Tracks whether we want to display adding a new name
 const addingLocaleName: Ref<boolean> = ref(false)

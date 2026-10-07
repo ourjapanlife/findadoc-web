@@ -1,71 +1,77 @@
 <template>
     <Loader v-if="moderationScreenStore.editFacilityScreenIsActive()" />
-    <div v-if="isFacilitySectionInitialized">
-        <div class="mod-facility-section mb-6 rounded-lg border border-accent-bg bg-primary-bg p-4 md:p-5">
-            <h1
-                v-if="moderationScreenStore.editFacilityScreenIsActive()"
-                class="section-heading mb-4 text-start"
-            >
-                {{ t('modFacilitySection.facilityHeading') }}
-            </h1>
-            <h3 class="section-heading mb-4 text-start">
-                {{ t('modFacilitySection.contactInformation') }}
-            </h3>
-            <ModInputField
-                v-model="facilityStore.facilitySectionFields.nameEn"
-                data-testid="mod-facility-section-nameEn"
-                :label="t('modFacilitySection.labelFacilityNameEn')"
-                type="text"
-                :placeholder="t('modFacilitySection.placeholderTextFacilityNameEn')"
-                :required="true"
-                :input-validation-check="validateNameEn"
-                :invalid-input-error-message="t('modFacilitySection.inputErrorMessageFacilityNameEn')"
-            />
-            <ModInputField
-                v-model="facilityStore.facilitySectionFields.nameJa"
-                data-testid="mod-facility-section-nameJa"
-                :label="t('modFacilitySection.labelFacilityNameJa')"
-                type="text"
-                :placeholder="t('modFacilitySection.placeholderTextFacilityNameJa')"
-                :required="true"
-                :input-validation-check="validateNameJa"
-                :invalid-input-error-message="t('modFacilitySection.inputErrorMessageFacilityNameJa')"
-            />
-            <ModInputField
-                v-model="facilityStore.facilitySectionFields.phone"
-                data-testid="mod-facility-section-phone"
-                :label="t('modFacilitySection.labelFacilityPhoneNumber')"
-                type="text"
-                :placeholder="t('modFacilitySection.placeholderTextFacilityPhoneNumber')"
-                :required="true"
-                :input-validation-check="validatePhoneNumber"
-                :invalid-input-error-message="t('modFacilitySection.inputErrorMessageFacilityPhoneNumber')"
-            />
-            <ModInputField
-                v-model="facilityStore.facilitySectionFields.email"
-                data-testid="mod-facility-section-email"
-                :label="t('modFacilitySection.labelFacilityEmail')"
-                type="email"
-                :placeholder="t('modFacilitySection.placeholderTextFacilityEmail')"
-                :required="false"
-                :input-validation-check="validateEmail"
-                :invalid-input-error-message="t('modFacilitySection.inputErrorMessageFacilityEmail')"
-            />
-            <ModInputField
-                v-model="facilityStore.facilitySectionFields.website"
-                data-testid="mod-facility-section-website"
-                :label="t('modFacilitySection.labelFacilityWebsite')"
-                type="url"
-                :placeholder="t('modFacilitySection.placeholderTextFacilityWebsite')"
-                :required="false"
-                :input-validation-check="validateWebsite"
-                :invalid-input-error-message="t('modFacilitySection.inputErrorMessageFacilityWebsite')"
-            />
-        </div>
-        <div class="mod-facility-address-section mb-6 rounded-lg border border-accent-bg bg-primary-bg p-4 md:p-5">
-            <h3 class="section-heading mb-4 text-start">
-                {{ t('modFacilitySection.addresses') }}
-            </h3>
+    <div
+        v-if="isFacilitySectionInitialized"
+        class="mod-sheet"
+    >
+        <ModFormKind
+            kind="facility"
+            :label="t('modFacilitySection.facilityHeading')"
+        />
+        <ModAccordion
+            tone="facility"
+            class="mod-facility-section"
+            :title="t('modFacilitySection.contactInformation')"
+        >
+            <div class="mod-form-grid">
+                <ModInputField
+                    v-model="facilityStore.facilitySectionFields.nameEn"
+                    data-testid="mod-facility-section-nameEn"
+                    :label="t('modFacilitySection.labelFacilityNameEn')"
+                    type="text"
+                    :placeholder="t('modFacilitySection.placeholderTextFacilityNameEn')"
+                    :required="true"
+                    :input-validation-check="validateNameEn"
+                    :invalid-input-error-message="t('modFacilitySection.inputErrorMessageFacilityNameEn')"
+                />
+                <ModInputField
+                    v-model="facilityStore.facilitySectionFields.nameJa"
+                    data-testid="mod-facility-section-nameJa"
+                    :label="t('modFacilitySection.labelFacilityNameJa')"
+                    type="text"
+                    :placeholder="t('modFacilitySection.placeholderTextFacilityNameJa')"
+                    :required="true"
+                    :input-validation-check="validateNameJa"
+                    :invalid-input-error-message="t('modFacilitySection.inputErrorMessageFacilityNameJa')"
+                />
+                <ModInputField
+                    v-model="facilityStore.facilitySectionFields.phone"
+                    data-testid="mod-facility-section-phone"
+                    :label="t('modFacilitySection.labelFacilityPhoneNumber')"
+                    type="text"
+                    :placeholder="t('modFacilitySection.placeholderTextFacilityPhoneNumber')"
+                    :required="true"
+                    :input-validation-check="validatePhoneNumber"
+                    :invalid-input-error-message="t('modFacilitySection.inputErrorMessageFacilityPhoneNumber')"
+                />
+                <ModInputField
+                    v-model="facilityStore.facilitySectionFields.email"
+                    data-testid="mod-facility-section-email"
+                    :label="t('modFacilitySection.labelFacilityEmail')"
+                    type="email"
+                    :placeholder="t('modFacilitySection.placeholderTextFacilityEmail')"
+                    :required="false"
+                    :input-validation-check="validateEmail"
+                    :invalid-input-error-message="t('modFacilitySection.inputErrorMessageFacilityEmail')"
+                />
+                <ModInputField
+                    v-model="facilityStore.facilitySectionFields.website"
+                    data-testid="mod-facility-section-website"
+                    :label="t('modFacilitySection.labelFacilityWebsite')"
+                    type="url"
+                    :placeholder="t('modFacilitySection.placeholderTextFacilityWebsite')"
+                    class="mod-span-2"
+                    :required="false"
+                    :input-validation-check="validateWebsite"
+                    :invalid-input-error-message="t('modFacilitySection.inputErrorMessageFacilityWebsite')"
+                />
+            </div>
+        </ModAccordion>
+        <ModAccordion
+            tone="facility"
+            class="mod-facility-address-section"
+            :title="t('modFacilitySection.addresses')"
+        >
             <ModInputField
                 v-model="facilityStore.facilitySectionFields.postalCode"
                 data-testid="mod-facility-section-postalCode"
@@ -85,7 +91,7 @@
             >
                 {{ t('modFacilitySection.inputErrorMessagePrefectureMismatch') }}
             </p>
-            <div class="grid gap-4 landscape:grid-cols-2">
+            <div class="mod-form-grid">
                 <div class="min-w-0">
                     <label
                         for="mod-edit-facility-section-prefecture-select-en"
@@ -133,7 +139,7 @@
                     </select>
                 </div>
             </div>
-            <div class="mt-4 grid items-end gap-4 landscape:grid-cols-2">
+            <div class="mod-form-grid mt-4 items-end">
                 <div class="min-w-0">
                     <ModCityPicker
                         id="mod-edit-facility-section-city"
@@ -165,7 +171,7 @@
                     </p>
                 </div>
             </div>
-            <div class="grid landscape:grid-cols-2 landscape:gap-x-4">
+            <div class="mod-form-grid">
                 <ModInputField
                     v-model="facilityStore.facilitySectionFields.addressLine1En"
                     data-testid="mod-facility-section-addressLine1En"
@@ -203,50 +209,52 @@
                     :required="false"
                 />
             </div>
-        </div>
-        <div class="google-maps-section mb-6 rounded-lg border border-accent-bg bg-primary-bg p-4 md:p-5">
-            <h3 class="section-heading mb-4 text-start">
-                {{ t('modFacilitySection.googleMapsInformation') }}
-            </h3>
-            <ModInputField
-                v-model="facilityStore.facilitySectionFields.googlemapsURL"
-                data-testid="mod-facility-section-google-maps"
-                :label="t('modFacilitySection.labelFacilityGoogleMapsUrl')"
-                type="url"
-                :placeholder="t('modFacilitySection.placeholderTextFacilityGoogleMapsUrl')"
-                :required="true"
-                :input-validation-check="validateGoogleMapsUrlInput"
-                :invalid-input-error-message="t('modFacilitySection.inputErrorMessageFacilityGoogleMapsUrl')"
-                :autofill="facilityStore.facilitySectionFields.googlemapsURL"
-            />
-            <ModInputField
-                v-model="facilityStore.facilitySectionFields.mapLatitude"
-                data-testid="mod-facility-section-mapLatitude"
-                :label="t('modFacilitySection.labelFacilityMapLatitude')"
-                type="text"
-                :placeholder="t('modFacilitySection.placeholderTextFacilityMapLatitude')"
-                :required="true"
-                :input-validation-check="validateFloat"
-                :invalid-input-error-message="t('modFacilitySection.inputErrorMessageFacilityMapLatitude')"
-            />
-            <ModInputField
-                v-model="facilityStore.facilitySectionFields.mapLongitude"
-                data-testid="mod-facility-section-mapLongitude"
-                :label="t('modFacilitySection.labelFacilityMapLongitude')"
-                type="text"
-                :placeholder="t('modFacilitySection.placeholderTextFacilityMapLongitude')"
-                :required="true"
-                :input-validation-check="validateFloat"
-                :invalid-input-error-message="t('modFacilitySection.inputErrorMessageFacilityMapLongitude')"
-            />
-        </div>
-        <div
-            v-if="moderationScreenStore.editFacilityScreenIsActive()"
-            class="mb-6 flex flex-col rounded-lg border border-accent-bg bg-primary-bg p-4 md:p-5"
+        </ModAccordion>
+        <ModAccordion
+            tone="facility"
+            class="google-maps-section"
+            :title="t('modFacilitySection.googleMapsInformation')"
         >
-            <h3 class="section-heading mb-4 text-start">
-                {{ t('modFacilitySection.addHealthcareProfessional') }}
-            </h3>
+            <div class="mod-form-grid">
+                <ModInputField
+                    v-model="facilityStore.facilitySectionFields.googlemapsURL"
+                    data-testid="mod-facility-section-google-maps"
+                    :label="t('modFacilitySection.labelFacilityGoogleMapsUrl')"
+                    type="url"
+                    :placeholder="t('modFacilitySection.placeholderTextFacilityGoogleMapsUrl')"
+                    class="mod-span-2"
+                    :required="true"
+                    :input-validation-check="validateGoogleMapsUrlInput"
+                    :invalid-input-error-message="t('modFacilitySection.inputErrorMessageFacilityGoogleMapsUrl')"
+                    :autofill="facilityStore.facilitySectionFields.googlemapsURL"
+                />
+                <ModInputField
+                    v-model="facilityStore.facilitySectionFields.mapLatitude"
+                    data-testid="mod-facility-section-mapLatitude"
+                    :label="t('modFacilitySection.labelFacilityMapLatitude')"
+                    type="text"
+                    :placeholder="t('modFacilitySection.placeholderTextFacilityMapLatitude')"
+                    :required="true"
+                    :input-validation-check="validateFloat"
+                    :invalid-input-error-message="t('modFacilitySection.inputErrorMessageFacilityMapLatitude')"
+                />
+                <ModInputField
+                    v-model="facilityStore.facilitySectionFields.mapLongitude"
+                    data-testid="mod-facility-section-mapLongitude"
+                    :label="t('modFacilitySection.labelFacilityMapLongitude')"
+                    type="text"
+                    :placeholder="t('modFacilitySection.placeholderTextFacilityMapLongitude')"
+                    :required="true"
+                    :input-validation-check="validateFloat"
+                    :invalid-input-error-message="t('modFacilitySection.inputErrorMessageFacilityMapLongitude')"
+                />
+            </div>
+        </ModAccordion>
+        <ModAccordion
+            v-if="moderationScreenStore.editFacilityScreenIsActive()"
+            tone="facility"
+            :title="t('modFacilitySection.addHealthcareProfessional')"
+        >
             <ModSearchBar
                 v-model="selectedHealthcareProfessionalsModel"
                 data-testid="mod-facility-section-doctor-search"
@@ -256,11 +264,12 @@
                 :default-suggestions="defaultHealthcareProfessionalSuggestions"
                 @search-input-change="handleHealthcareProfessionalsInputChange"
             />
-            <span
+            <p
                 v-show="!selectedHealthcareProfessionals.length"
-                class="font-semibold my-3"
-            >- {{ t('modFacilitySection.noHPSelected') }}
-            </span>
+                class="mt-3 text-sm text-primary-text-muted"
+            >
+                {{ t('modFacilitySection.noHPSelected') }}
+            </p>
             <div
                 v-for="(healthcareProfessional, index) in selectedHealthcareProfessionals"
                 :key="`${healthcareProfessional.id}-${index}`"
@@ -272,23 +281,22 @@
                     :show-trash-can="false"
                 />
             </div>
-        </div>
-    </div>
-    <div
-        v-if="moderationScreenStore.editFacilityScreenIsActive()"
-    >
-        <h3 class="section-heading mb-4 text-start">
-            {{ t('modFacilitySection.existingHPHeading') }}
-        </h3>
-        <div
-            v-for="(healthcareProfessional, index) in healthcareProfessionalRelatedToFacilityFiltered"
-            :key="`${healthcareProfessional.id}-${index}`"
+        </ModAccordion>
+        <ModAccordion
+            v-if="moderationScreenStore.editFacilityScreenIsActive()"
+            tone="facility"
+            :title="t('modFacilitySection.existingHPHeading')"
         >
-            <ModDashboardHealthProfessionalCard
-                :healthcare-professional="healthcareProfessional"
-                :healthcare-professionals-related-to-facility="healthcareProfessionalsRelatedToFacility"
-            />
-        </div>
+            <div
+                v-for="(healthcareProfessional, index) in healthcareProfessionalRelatedToFacilityFiltered"
+                :key="`${healthcareProfessional.id}-${index}`"
+            >
+                <ModDashboardHealthProfessionalCard
+                    :healthcare-professional="healthcareProfessional"
+                    :healthcare-professionals-related-to-facility="healthcareProfessionalsRelatedToFacility"
+                />
+            </div>
+        </ModAccordion>
     </div>
 </template>
 
