@@ -1,7 +1,9 @@
 import { gql, GraphQLClient } from 'graphql-request'
+import { useRuntimeConfig } from '#imports'
 import { facilityPath } from './clinicPath'
 import { professionalPath } from './doctorPath'
 import { hubSitemapUrls } from './hubIndex'
+import { fetchCities, type CityOption } from './cityOptions'
 import { attachProfessionalsToFacilities, facetSitemapUrls } from './facetIndex'
 import { graphqlEndpoint } from './graphqlEndpoint'
 import type { FacilitySearchFilters, HealthcareProfessionalSearchFilters,
@@ -130,7 +132,9 @@ const sitemapFacilitiesQuery = gql`
             contact {
                 address {
                     cityEn
+                    cityJa
                     prefectureEn
+                    prefectureJa
                 }
             }
         }
@@ -167,7 +171,9 @@ type SitemapFacilityRow = {
     contact?: {
         address?: {
             cityEn?: string | null
+            cityJa?: string | null
             prefectureEn?: string | null
+            prefectureJa?: string | null
         } | null
     } | null
 }
@@ -231,6 +237,32 @@ function graphqlDirectoryFetcher(apiUrl = graphqlEndpoint()): DirectoryFetcher {
     }
 }
 
+function bakedPrerenderCities(): CityOption[] | undefined {
+    if (!import.meta.server) {
+        return undefined
+    }
+    try {
+        const baked = useRuntimeConfig().prerenderCities
+        if (!baked?.baked) {
+            return undefined
+        }
+        return baked.cities
+    } catch {
+        return undefined
+    }
+}
+
+async function officialCitiesForSitemap(): Promise<CityOption[]> {
+    const baked = bakedPrerenderCities()
+    if (baked) {
+        return baked
+    }
+    return fetchCities().catch(error => {
+        console.warn('[sitemap] city list unavailable; hub names stay as stored', error)
+        return []
+    })
+}
+
 export async function loadDirectorySitemapUrls(
     fetcher: DirectoryFetcher = graphqlDirectoryFetcher(),
     paths: typeof DIRECTORY_SITEMAP_PATHS = DIRECTORY_SITEMAP_PATHS
@@ -273,7 +305,7 @@ export async function loadDirectorySitemapUrls(
         })
 
         if (facilityRows.length) {
-            urls.push(...hubSitemapUrls(facilityRows))
+            urls.push(...hubSitemapUrls(facilityRows, await officialCitiesForSitemap()))
             urls.push(...facetSitemapUrls(attachProfessionalsToFacilities(facilityRows, professionalRows)))
         }
 

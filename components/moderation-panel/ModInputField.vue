@@ -1,6 +1,6 @@
 <template>
     <div class="flex flex-col mt-4">
-        <label class="mb-2 text-primary-text text-sm font-bold font-sans">
+        <label class="field-label">
             {{ label }}
             <span
                 v-if="!required"
@@ -20,8 +20,7 @@
             :type="type"
             :placeholder="placeholder"
             :required="required"
-            class="mod-input-field mb-5 px-3 py-3.5 w-96 h-12 bg-secondary-bg rounded-lg border border-primary-text-muted
-            text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
+            class="mod-input-field field mb-5"
             @blur="initialValidationCheck"
         >
     </div>

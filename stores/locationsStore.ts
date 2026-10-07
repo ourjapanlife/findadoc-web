@@ -1,74 +1,32 @@
-import { gql } from 'graphql-request'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import { gqlClient } from '../utils/graphql.js'
 import { useLoadingStore } from './loadingStore.js'
-import type { Facility, FacilitySearchFilters } from '~/typedefs/gqlTypes.js'
+import { fetchCities } from '~/utils/cityOptions'
 
 export const useLocationsStore = defineStore('locationsStore', () => {
     const allCitiesEnglishList = ref<string[]>([])
     const allCitiesJapaneseList = ref<string[]>([])
 
     async function fetchLocations() {
-        //set the loading visual state
         const loadingStore = useLoadingStore()
         loadingStore.setIsLoading(true)
 
-        const facilitiesSearchResults = await queryFacilities()
-
-        allCitiesEnglishList.value = facilitiesSearchResults.map(facility => facility.contact?.address.cityEn)
-        allCitiesJapaneseList.value = facilitiesSearchResults.map(facility => facility.contact?.address.cityJa)
-
-        //set the loading visual state back to normal
-        loadingStore.setIsLoading(false)
+        try {
+            const cities = await fetchCities()
+            allCitiesEnglishList.value = cities.map(city => city.nameEn)
+            allCitiesJapaneseList.value = cities.map(city => city.nameJa)
+        } catch (error) {
+            console.error('Loading cities failed', error)
+            allCitiesEnglishList.value = []
+            allCitiesJapaneseList.value = []
+        } finally {
+            loadingStore.setIsLoading(false)
+        }
     }
 
     return { allCitiesEnglishList, allCitiesJapaneseList, fetchLocations }
 })
 
-async function queryFacilities(): Promise<Facility[]> {
-    try {
-        const searchFacilitiesData = {
-            filters: {
-                limit: 1000,
-                offset: 0,
-                contact: undefined,
-                createdDate: undefined,
-                healthcareProfessionalIds: undefined,
-                healthcareProfessionalName: undefined,
-                nameEn: undefined,
-                nameJa: undefined,
-                orderBy: undefined,
-                updatedDate: undefined
-            } satisfies FacilitySearchFilters
-        }
-
-        const result = await graphQLClientRequestWithRetry<{ facilities: Facility[] }>(
-            gqlClient.request.bind(gqlClient),
-            searchFacilitiesQuery,
-            searchFacilitiesData
-        )
-
-        return result.data.facilities ?? []
-    } catch (error) {
-        // Callers render their own empty state; a blocking native dialog is never the right surface.
-        console.error('Loading facility locations failed', error)
-        return []
-    }
-}
-
-const searchFacilitiesQuery = gql`query QueryFacilities($filters: FacilitySearchFilters!) {
-    facilities(filters: $filters) {
-    id
-    contact {
-        address {
-          cityJa
-          cityEn
-          }
-        }
-    }
-}
-`
 export const listPrefectureJapanEn: string[] = [
     'Hokkaido', 'Aomori', 'Iwate', 'Miyagi', 'Akita', 'Yamagata', 'Fukushima',
     'Ibaraki', 'Tochigi', 'Gunma', 'Saitama', 'Chiba', 'Tokyo', 'Kanagawa',
@@ -137,4 +95,15 @@ export const prefectureLanguageMatch: Record<string, string> = {
     miyazaki: '宮崎県',
     kagoshima: '鹿児島県',
     okinawa: '沖縄県'
+}
+
+export function pairedPrefectureJa(prefectureEn: string): string {
+    return prefectureLanguageMatch[prefectureEn.trim().toLowerCase()] ?? ''
+}
+
+export function pairedPrefectureEn(prefectureJa: string): string {
+    const englishKey = Object.entries(prefectureLanguageMatch)
+        .find(([, nameJa]) => nameJa === prefectureJa.trim())?.[0]
+    if (!englishKey) return ''
+    return listPrefectureJapanEn.find(name => name.toLowerCase() === englishKey) ?? ''
 }

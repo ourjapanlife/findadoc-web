@@ -337,6 +337,7 @@ function initializeSubmissionFormValues(submissionData: Submission | undefined) 
         = submissionData?.facility?.contact?.address.prefectureJa ?? ''
     facilitySectionFields.cityJa
         = submissionData?.facility?.contact?.address.cityJa ?? ''
+    facilitySectionFields.cityId = ''
     facilitySectionFields.addressLine1Ja
         = submissionData?.facility?.contact?.address.addressLine1Ja ?? ''
     facilitySectionFields.addressLine2Ja
@@ -457,7 +458,10 @@ async function saveSubmissionDraft(
         },
         healthcareProfessionalIds: facilitiesStore.facilitySectionFields.healthcareProfessionalIds,
         mapLatitude: parseFloat(facilitiesStore.facilitySectionFields.mapLatitude) || 0,
-        mapLongitude: parseFloat(facilitiesStore.facilitySectionFields.mapLongitude) || 0
+        mapLongitude: parseFloat(facilitiesStore.facilitySectionFields.mapLongitude) || 0,
+        ...(facilitiesStore.facilitySectionFields.cityId
+            ? { cityId: facilitiesStore.facilitySectionFields.cityId }
+            : {})
     }
 
     const healthcareProfessionalUpdate = [
@@ -490,7 +494,9 @@ async function saveSubmissionDraft(
 
     const submissionResult = result.data
     if (submissionResult) {
+        const selectedCityId = facilitiesStore.facilitySectionFields.cityId
         initializeSubmissionFormValues(submissionResult.updateSubmission)
+        facilitiesStore.facilitySectionFields.cityId = selectedCityId
     }
     makeNonDirty()
 

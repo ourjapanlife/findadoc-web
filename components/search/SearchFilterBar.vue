@@ -54,7 +54,7 @@
                 id="search-filters"
                 data-testid="search-filters"
                 :class="filtersOpen ? 'grid' : 'hidden landscape:grid'"
-                class="grid-cols-1 gap-3 landscape:grid-cols-[1fr_1fr_1fr_auto] landscape:items-end"
+                class="grid-cols-1 gap-3 landscape:grid-cols-2 xl:grid-cols-[1fr_1fr_1fr_1fr_auto] landscape:items-end"
                 @submit.prevent
             >
                 <div class="min-w-0">
@@ -129,6 +129,31 @@
                     </select>
                 </div>
 
+                <div class="min-w-0">
+                    <label
+                        for="search-city"
+                        class="field-label"
+                    >{{ t('home.searchCityLabel') }}</label>
+                    <select
+                        id="search-city"
+                        v-model="city"
+                        data-testid="search-city"
+                        class="field"
+                        :disabled="!prefecture"
+                    >
+                        <option value="">
+                            {{ t('home.searchAnyCity') }}
+                        </option>
+                        <option
+                            v-for="option in cityOptions"
+                            :key="option.id"
+                            :value="option.slug"
+                        >
+                            {{ locale === 'ja-JP' ? option.nameJa : option.nameEn }}
+                        </option>
+                    </select>
+                </div>
+
                 <button
                     type="button"
                     data-testid="search-clear-filters"
@@ -145,7 +170,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import SVGFiltersIcon from '~/assets/icons/equalizer-icon.svg'
 import SVGMapPinIcon from '~/assets/icons/map-pin-icon.svg'
@@ -154,6 +179,7 @@ import { useSpecialtiesStore } from '~/stores/specialtiesStore'
 import { localeDisplayOptions } from '~/stores/localeStore'
 import { ALL_PREFECTURES, SEARCHABLE_LANGUAGES, type PrefectureEntry } from '~/utils/homeDirectory'
 import { hasActiveFilters } from '~/utils/searchDirectory'
+import { fetchCities, type CityOption } from '~/utils/cityOptions'
 import type { Locale, Specialty } from '~/typedefs/gqlTypes'
 
 defineProps<{ showMap: boolean }>()
@@ -166,9 +192,9 @@ const specialtiesStore = useSpecialtiesStore()
 const filtersOpen = ref(false)
 
 /*
- * The same three controls as the homepage entry form, bound straight to the store. Results
- * are derived from the filters, so a change applies as soon as it is made — no Search button.
- * The area list is prefectures, not cities: city names are not normalised upstream.
+ * The same three controls as the homepage entry form, plus a city list from the city table,
+ * bound straight to the store. Results are derived from the filters, so a change applies as
+ * soon as it is made — no Search button.
  */
 const specialty = computed({
     get: () => searchResultsStore.selectedSpecialties?.[0] ?? '',
@@ -188,8 +214,37 @@ const prefecture = computed({
     get: () => searchResultsStore.selectedPrefecture?.toLowerCase() ?? '',
     set: value => {
         searchResultsStore.selectedPrefecture = value || undefined
+        searchResultsStore.selectedCity = undefined
     }
 })
+
+const city = computed({
+    get: () => searchResultsStore.selectedCity ?? '',
+    set: value => {
+        searchResultsStore.selectedCity = value || undefined
+    }
+})
+
+const cityOptions = ref<CityOption[]>([])
+let cityRequest = 0
+
+watch(prefecture, async value => {
+    const request = ++cityRequest
+    cityOptions.value = []
+    if (!value) {
+        return
+    }
+
+    try {
+        const nextCities = await fetchCities(value)
+        if (request !== cityRequest) return
+        cityOptions.value = nextCities
+    } catch (error) {
+        if (request !== cityRequest) return
+        console.error('Loading cities failed', error)
+        cityOptions.value = []
+    }
+}, { immediate: true })
 
 const specialtyOptions = computed(() => specialtiesStore.specialtyDisplayOptions)
 

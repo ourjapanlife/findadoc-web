@@ -3,6 +3,7 @@ import { dirname, join } from 'node:path'
 import { facilityPath } from './clinicPath'
 import { professionalPath } from './doctorPath'
 import { hubPathsFromFacilities } from './hubIndex'
+import { fetchCities, type CityOption } from './cityOptions'
 import { facetPathsFromFacilities } from './facetIndex'
 import { graphqlEndpoint } from './graphqlEndpoint'
 import type { Facility, HealthcareProfessional } from '~/typedefs/gqlTypes'
@@ -284,6 +285,8 @@ export async function buildClinicPrerenderDirectory(): Promise<{
     professionalPaths: string[]
     hubPaths: string[]
     facetPaths: string[]
+    /** Null when the city fetch failed. An empty array is a successful empty result. */
+    officialCities: CityOption[] | null
 } | null> {
     const rows = await fetchDirectoryRows()
 
@@ -295,14 +298,19 @@ export async function buildClinicPrerenderDirectory(): Promise<{
     const directory = joinClinicDirectory(rows.facilities, rows.professionals)
     const professionalDirectory = joinDoctorDirectory(rows.facilities, rows.professionals)
     writeClinicPrerenderCache(directory)
+    const officialCities = await fetchCities().catch(error => {
+        console.warn('[clinic prerender] city list unavailable; hub names stay as stored', error)
+        return null
+    })
 
     return {
         directory,
         professionalDirectory,
         paths: Object.values(directory).map(facility => facilityPath(facility)),
         professionalPaths: Object.values(professionalDirectory).map(professional => professionalPath(professional)),
-        hubPaths: hubPathsFromFacilities(Object.values(directory)),
-        facetPaths: facetPathsFromFacilities(Object.values(directory))
+        hubPaths: hubPathsFromFacilities(Object.values(directory), officialCities ?? []),
+        facetPaths: facetPathsFromFacilities(Object.values(directory)),
+        officialCities
     }
 }
 

@@ -68,6 +68,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
+import generatedPrefectureHubs from '#generated-prefecture-hubs'
 import { createError, navigateTo, useAsyncData, useHead, useRoute } from '#imports'
 import { isJapaneseLocale } from '~/utils/activeLocale'
 import { canonicalPathMatches, slugifySegment } from '~/utils/clinicPath'
@@ -91,6 +92,14 @@ const secondSlug = slugifySegment(String(route.params.city ?? ''))
 
 if (!prefectureSlug || !secondSlug || isReservedHubSegment(prefectureSlug)) {
     throw createError({ statusCode: 404, statusMessage: 'Page not found' })
+}
+
+if (
+    import.meta.client
+      && Array.isArray(generatedPrefectureHubs)
+      && !generatedPrefectureHubs.includes(`/${prefectureSlug}`)
+) {
+    throw createError({ fatal: true, statusCode: 404, statusMessage: 'Page not found' })
 }
 
 const { data } = await useAsyncData(

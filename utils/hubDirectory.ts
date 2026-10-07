@@ -4,6 +4,7 @@ import { buildFacetIndex, type FacetPage } from './facetIndex'
 import type { FacetIndexByPrefecture } from './directoryLinks'
 import { parsePrefectureSecondSegment } from './facetPath'
 import { buildHubIndex, type HubCity, type HubPrefecture } from './hubIndex'
+import { fetchCities, type CityOption } from './cityOptions'
 import type { FacilitySearchResult } from './searchDirectory'
 import type { Facility, HealthcareProfessional } from '~/typedefs/gqlTypes'
 
@@ -233,6 +234,17 @@ type DirectoryIndexes = {
 let cachedIndexes: DirectoryIndexes | undefined
 let indexesLoad: Promise<DirectoryIndexes | null> | undefined
 
+function prerenderedCities(): CityOption[] | undefined {
+    if (!import.meta.server) {
+        return undefined
+    }
+    const baked = useRuntimeConfig().prerenderCities
+    if (!baked?.baked) {
+        return undefined
+    }
+    return baked.cities
+}
+
 async function loadDirectoryIndexes(): Promise<DirectoryIndexes | null> {
     if (cachedIndexes) {
         return cachedIndexes
@@ -240,15 +252,34 @@ async function loadDirectoryIndexes(): Promise<DirectoryIndexes | null> {
 
     indexesLoad ??= (async () => {
         try {
+            // Generate already fetched this list once. Another request per hub page
+            // 429s production and then 404s the route Nitro is prerendering.
+            const bakedCities = prerenderedCities()
+            let officialCities: CityOption[]
+            let citiesUnavailable = false
+            if (bakedCities) {
+                officialCities = bakedCities
+            } else {
+                try {
+                    officialCities = await fetchCities()
+                } catch (error) {
+                    console.error('Loading cities for hubs failed', error)
+                    officialCities = []
+                    citiesUnavailable = true
+                }
+            }
             const facilities = await loadFacilityDirectory()
             if (!facilities?.length) {
                 return null
             }
-            cachedIndexes = {
-                hub: buildHubIndex(facilities),
+            const indexes = {
+                hub: buildHubIndex(facilities, officialCities),
                 facets: buildFacetIndex(facilities)
             }
-            return cachedIndexes
+            if (!citiesUnavailable) {
+                cachedIndexes = indexes
+            }
+            return indexes
         } finally {
             if (!cachedIndexes) {
                 indexesLoad = undefined

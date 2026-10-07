@@ -47,6 +47,23 @@ export type AuditLog = {
   updatedDate: Scalars['String']['output'];
 };
 
+/** A search city owned by one prefecture. The same English slug may exist in two prefectures. */
+export type City = {
+  __typename?: 'City';
+  /** Optional Google place id. Display fields are not stored here. */
+  googlePlaceId?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  /** Six-digit national local-government code. A register refresh matches on this. */
+  localGovernmentCode: Scalars['String']['output'];
+  /** English name with no City or Ward suffix. */
+  nameEn: Scalars['String']['output'];
+  /** Japanese name, keeping 区, 市, 町, or 村. */
+  nameJa: Scalars['String']['output'];
+  prefecture: Prefecture;
+  /** Unique within the prefecture. Tokyo Chuo and Yamanashi Chuo are both chuo. */
+  slug: Scalars['String']['output'];
+};
+
 /** Contact information for a facility. */
 export type Contact = {
   __typename?: 'Contact';
@@ -78,8 +95,12 @@ export type ContactInput = {
 
 /** Input for creating a new facility. */
 export type CreateFacilityInput = {
+  /** Id of a city in the vocabulary. Publishing under a city requires this. */
+  cityId?: InputMaybe<Scalars['ID']['input']>;
   /** Contact information for the facility. */
   contact: ContactInput;
+  /** Google place id. Optional, and not a Places payload. */
+  googlePlaceId?: InputMaybe<Scalars['String']['input']>;
   /** IDs of healthcare professionals to associate with this facility. */
   healthcareProfessionalIds?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** Latitude coordinate for map placement. */
@@ -92,6 +113,10 @@ export type CreateFacilityInput = {
   nameJa: Scalars['String']['input'];
   /** Payment options for the facility, Type and Brand */
   paymentOptions?: InputMaybe<Array<PaymentOptionsInput>>;
+  /** Where this facility record came from. */
+  source?: InputMaybe<FacilitySource>;
+  /** CONFIRMED requires cityId. Omit this to leave an unresolved facility as UNVERIFIED_LOCATION. */
+  verificationStatus?: InputMaybe<FacilityVerificationStatus>;
 };
 
 /** Input for creating a new healthcare professional. */
@@ -203,10 +228,16 @@ export type DeleteResult = {
 /** A medical facility (hospital, clinic, etc.) registered in the Find a Doc database. */
 export type Facility = {
   __typename?: 'Facility';
+  /** The city record for cityId. Null when the facility has no city. */
+  city?: Maybe<City>;
+  /** City this facility is published under. Null until a city we own is chosen. */
+  cityId?: Maybe<Scalars['ID']['output']>;
   /** Contact information for the facility. */
   contact: Contact;
   /** ISO 8601 timestamp of when this facility was created. */
   createdDate: Scalars['String']['output'];
+  /** Google place id for this facility. Display fields are not stored from Places. */
+  googlePlaceId?: Maybe<Scalars['String']['output']>;
   /** IDs of healthcare professionals associated with this facility. */
   healthcareProfessionalIds: Array<Scalars['ID']['output']>;
   /** Unique identifier for the facility. */
@@ -221,8 +252,12 @@ export type Facility = {
   nameJa: Scalars['String']['output'];
   /** The payment methods accepted by this facility. */
   paymentOptions?: Maybe<Array<PaymentOption>>;
+  /** Where the facility record came from. Null on rows that have not been classified. */
+  source?: Maybe<FacilitySource>;
   /** ISO 8601 timestamp of the last update to this facility. */
   updatedDate: Scalars['String']['output'];
+  /** Whether the location is confirmed. Unresolved rows are UNVERIFIED_LOCATION. */
+  verificationStatus: FacilityVerificationStatus;
 };
 
 /** Search filters for querying facilities. All filters are combined with AND logic. */
@@ -264,6 +299,12 @@ export type FacilitySearchFilters = {
   updatedDate?: InputMaybe<Scalars['String']['input']>;
 };
 
+/** Where a facility record came from. */
+export enum FacilitySource {
+  Manual = 'MANUAL',
+  MhlwMultilingualInstitutions = 'MHLW_MULTILINGUAL_INSTITUTIONS'
+}
+
 /** Facility data embedded within a submission. */
 export type FacilitySubmission = {
   __typename?: 'FacilitySubmission';
@@ -282,6 +323,13 @@ export type FacilitySubmission = {
   /** Submitted facility name in Japanese. */
   nameJa?: Maybe<Scalars['String']['output']>;
 };
+
+/** Location check for a facility. UNVERIFIED_LOCATION means there is no cityId. */
+export enum FacilityVerificationStatus {
+  Confirmed = 'CONFIRMED',
+  Unverified = 'UNVERIFIED',
+  UnverifiedLocation = 'UNVERIFIED_LOCATION'
+}
 
 /** A healthcare professional registered in the Find a Doc database. */
 export type HealthcareProfessional = {
@@ -707,10 +755,26 @@ export type PhysicalAddressInput = {
   prefectureJa: Scalars['String']['input'];
 };
 
+/** A prefecture from the frozen key list. */
+export type Prefecture = {
+  __typename?: 'Prefecture';
+  id: Scalars['ID']['output'];
+  /** English key, for example Tokyo or Hyogo. */
+  nameEn: Scalars['String']['output'];
+  /** Japanese name, including 都, 道, 府, or 県. */
+  nameJa: Scalars['String']['output'];
+  /** Lowercase English key. */
+  slug: Scalars['String']['output'];
+};
+
 export type Query = {
   __typename?: 'Query';
   /** Look up a single audit log entry by its ID. Returns null if not found. */
   auditLog?: Maybe<AuditLog>;
+  /** Every current municipality. Pass a prefecture key or Japanese name to filter. */
+  cities: Array<City>;
+  /** Facilities published under one city. Unresolved locations are excluded. */
+  cityFacilities: Array<Facility>;
   /** Roles and effective API scopes for the authenticated user (always allowed when a user context exists). */
   currentUserAccess: CurrentUserAccess;
   /** Search for facilities matching the given filters. Returns an empty list if no matches. */
@@ -725,6 +789,8 @@ export type Query = {
   healthcareProfessionals: Array<HealthcareProfessional>;
   /** Get the total count of healthcare professionals matching the given filters. Useful for pagination. */
   healthcareProfessionalsTotalCount: Scalars['Int']['output'];
+  /** Prefectures this server owns. One row per prefecture in the frozen key list. */
+  prefectures: Array<Prefecture>;
   /** Look up a single reservation by its unique ID. Returns null if not found. */
   reservation?: Maybe<Reservation>;
   /** Look up a single submission by its unique ID. Returns null if not found. */
@@ -740,6 +806,17 @@ export type Query = {
 
 export type QueryAuditLogArgs = {
   id?: InputMaybe<Scalars['ID']['input']>;
+};
+
+
+export type QueryCitiesArgs = {
+  prefecture?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryCityFacilitiesArgs = {
+  citySlug: Scalars['String']['input'];
+  prefecture: Scalars['String']['input'];
 };
 
 
@@ -1007,8 +1084,12 @@ export type SubmissionSearchFilters = {
 
 /** Input for updating an existing facility. All fields are optional — only provided fields are updated. */
 export type UpdateFacilityInput = {
+  /** Id of a city in the vocabulary. Null clears the city and marks the row unresolved. */
+  cityId?: InputMaybe<Scalars['ID']['input']>;
   /** Updated contact information. */
   contact?: InputMaybe<ContactInput>;
+  /** Google place id. Optional, and not a Places payload. */
+  googlePlaceId?: InputMaybe<Scalars['String']['input']>;
   /** Healthcare professional relationships to add, update, or remove. */
   healthcareProfessionalIds?: InputMaybe<Array<Relationship>>;
   /** Updated latitude coordinate. */
@@ -1021,6 +1102,10 @@ export type UpdateFacilityInput = {
   nameJa?: InputMaybe<Scalars['String']['input']>;
   /** Payment options for the facility, Type and Brand */
   paymentOptions?: InputMaybe<Array<PaymentOptionsInput>>;
+  /** Where this facility record came from. */
+  source?: InputMaybe<FacilitySource>;
+  /** CONFIRMED requires a cityId on the facility. */
+  verificationStatus?: InputMaybe<FacilityVerificationStatus>;
 };
 
 /** Input for updating an existing healthcare professional. All fields are optional — only provided fields are updated. */
@@ -1170,6 +1255,7 @@ export type ResolversTypes = {
   ActionType: ActionType;
   AuditLog: ResolverTypeWrapper<AuditLog>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
+  City: ResolverTypeWrapper<City>;
   Contact: ResolverTypeWrapper<Contact>;
   ContactInput: ContactInput;
   CreateFacilityInput: CreateFacilityInput;
@@ -1182,7 +1268,9 @@ export type ResolversTypes = {
   DeleteResult: ResolverTypeWrapper<DeleteResult>;
   Facility: ResolverTypeWrapper<Facility>;
   FacilitySearchFilters: FacilitySearchFilters;
+  FacilitySource: FacilitySource;
   FacilitySubmission: ResolverTypeWrapper<FacilitySubmission>;
+  FacilityVerificationStatus: FacilityVerificationStatus;
   Float: ResolverTypeWrapper<Scalars['Float']['output']>;
   HealthcareProfessional: ResolverTypeWrapper<HealthcareProfessional>;
   HealthcareProfessionalSearchFilters: HealthcareProfessionalSearchFilters;
@@ -1202,6 +1290,7 @@ export type ResolversTypes = {
   PaymentType: PaymentType;
   PhysicalAddress: ResolverTypeWrapper<PhysicalAddress>;
   PhysicalAddressInput: PhysicalAddressInput;
+  Prefecture: ResolverTypeWrapper<Prefecture>;
   Query: ResolverTypeWrapper<Record<PropertyKey, never>>;
   Relationship: Relationship;
   RelationshipAction: RelationshipAction;
@@ -1225,6 +1314,7 @@ export type ResolversTypes = {
 export type ResolversParentTypes = {
   AuditLog: AuditLog;
   Boolean: Scalars['Boolean']['output'];
+  City: City;
   Contact: Contact;
   ContactInput: ContactInput;
   CreateFacilityInput: CreateFacilityInput;
@@ -1251,6 +1341,7 @@ export type ResolversParentTypes = {
   PaymentOptionsInput: PaymentOptionsInput;
   PhysicalAddress: PhysicalAddress;
   PhysicalAddressInput: PhysicalAddressInput;
+  Prefecture: Prefecture;
   Query: Record<PropertyKey, never>;
   Relationship: Relationship;
   Reservation: Reservation;
@@ -1276,6 +1367,16 @@ export type AuditLogResolvers<ContextType = any, ParentType extends ResolversPar
   updatedDate?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
 };
 
+export type CityResolvers<ContextType = any, ParentType extends ResolversParentTypes['City'] = ResolversParentTypes['City']> = {
+  googlePlaceId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  localGovernmentCode?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  nameEn?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  nameJa?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  prefecture?: Resolver<ResolversTypes['Prefecture'], ParentType, ContextType>;
+  slug?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+};
+
 export type ContactResolvers<ContextType = any, ParentType extends ResolversParentTypes['Contact'] = ResolversParentTypes['Contact']> = {
   address?: Resolver<ResolversTypes['PhysicalAddress'], ParentType, ContextType>;
   email?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -1295,8 +1396,11 @@ export type DeleteResultResolvers<ContextType = any, ParentType extends Resolver
 };
 
 export type FacilityResolvers<ContextType = any, ParentType extends ResolversParentTypes['Facility'] = ResolversParentTypes['Facility']> = {
+  city?: Resolver<Maybe<ResolversTypes['City']>, ParentType, ContextType>;
+  cityId?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
   contact?: Resolver<ResolversTypes['Contact'], ParentType, ContextType>;
   createdDate?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  googlePlaceId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   healthcareProfessionalIds?: Resolver<Array<ResolversTypes['ID']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   mapLatitude?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
@@ -1304,7 +1408,9 @@ export type FacilityResolvers<ContextType = any, ParentType extends ResolversPar
   nameEn?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   nameJa?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   paymentOptions?: Resolver<Maybe<Array<ResolversTypes['PaymentOption']>>, ParentType, ContextType>;
+  source?: Resolver<Maybe<ResolversTypes['FacilitySource']>, ParentType, ContextType>;
   updatedDate?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  verificationStatus?: Resolver<ResolversTypes['FacilityVerificationStatus'], ParentType, ContextType>;
 };
 
 export type FacilitySubmissionResolvers<ContextType = any, ParentType extends ResolversParentTypes['FacilitySubmission'] = ResolversParentTypes['FacilitySubmission']> = {
@@ -1381,8 +1487,17 @@ export type PhysicalAddressResolvers<ContextType = any, ParentType extends Resol
   prefectureJa?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
 };
 
+export type PrefectureResolvers<ContextType = any, ParentType extends ResolversParentTypes['Prefecture'] = ResolversParentTypes['Prefecture']> = {
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  nameEn?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  nameJa?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  slug?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+};
+
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   auditLog?: Resolver<Maybe<ResolversTypes['AuditLog']>, ParentType, ContextType, Partial<QueryAuditLogArgs>>;
+  cities?: Resolver<Array<ResolversTypes['City']>, ParentType, ContextType, Partial<QueryCitiesArgs>>;
+  cityFacilities?: Resolver<Array<ResolversTypes['Facility']>, ParentType, ContextType, RequireFields<QueryCityFacilitiesArgs, 'citySlug' | 'prefecture'>>;
   currentUserAccess?: Resolver<ResolversTypes['CurrentUserAccess'], ParentType, ContextType>;
   facilities?: Resolver<Array<ResolversTypes['Facility']>, ParentType, ContextType, RequireFields<QueryFacilitiesArgs, 'filters'>>;
   facilitiesTotalCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType, RequireFields<QueryFacilitiesTotalCountArgs, 'filters'>>;
@@ -1390,6 +1505,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   healthcareProfessional?: Resolver<Maybe<ResolversTypes['HealthcareProfessional']>, ParentType, ContextType, RequireFields<QueryHealthcareProfessionalArgs, 'id'>>;
   healthcareProfessionals?: Resolver<Array<ResolversTypes['HealthcareProfessional']>, ParentType, ContextType, RequireFields<QueryHealthcareProfessionalsArgs, 'filters'>>;
   healthcareProfessionalsTotalCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType, RequireFields<QueryHealthcareProfessionalsTotalCountArgs, 'filters'>>;
+  prefectures?: Resolver<Array<ResolversTypes['Prefecture']>, ParentType, ContextType>;
   reservation?: Resolver<Maybe<ResolversTypes['Reservation']>, ParentType, ContextType, RequireFields<QueryReservationArgs, 'id'>>;
   submission?: Resolver<Maybe<ResolversTypes['Submission']>, ParentType, ContextType, RequireFields<QuerySubmissionArgs, 'id'>>;
   submissions?: Resolver<Array<ResolversTypes['Submission']>, ParentType, ContextType, RequireFields<QuerySubmissionsArgs, 'filters'>>;
@@ -1430,6 +1546,7 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
 
 export type Resolvers<ContextType = any> = {
   AuditLog?: AuditLogResolvers<ContextType>;
+  City?: CityResolvers<ContextType>;
   Contact?: ContactResolvers<ContextType>;
   CurrentUserAccess?: CurrentUserAccessResolvers<ContextType>;
   DeleteResult?: DeleteResultResolvers<ContextType>;
@@ -1441,6 +1558,7 @@ export type Resolvers<ContextType = any> = {
   Mutation?: MutationResolvers<ContextType>;
   PaymentOption?: PaymentOptionResolvers<ContextType>;
   PhysicalAddress?: PhysicalAddressResolvers<ContextType>;
+  Prefecture?: PrefectureResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   Reservation?: ReservationResolvers<ContextType>;
   Submission?: SubmissionResolvers<ContextType>;

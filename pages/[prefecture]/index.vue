@@ -101,6 +101,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
+import generatedPrefectureHubs from '#generated-prefecture-hubs'
 import { createError, navigateTo, useAsyncData, useHead, useRoute } from '#imports'
 import { isJapaneseLocale } from '~/utils/activeLocale'
 import { canonicalPathMatches, slugifySegment } from '~/utils/clinicPath'
@@ -117,6 +118,16 @@ const prefectureSlug = slugifySegment(String(route.params.prefecture ?? ''))
 
 if (!prefectureSlug || isReservedHubSegment(prefectureSlug)) {
     throw createError({ statusCode: 404, statusMessage: 'Page not found' })
+}
+
+// Client only: the static 404 hydrates onto this route for unknown URLs.
+// Prerender must not throw here, or a list mismatch fails the Netlify build.
+if (
+    import.meta.client
+      && Array.isArray(generatedPrefectureHubs)
+      && !generatedPrefectureHubs.includes(`/${prefectureSlug}`)
+) {
+    throw createError({ fatal: true, statusCode: 404, statusMessage: 'Page not found' })
 }
 
 const { data } = await useAsyncData(`hub-prefecture:${prefectureSlug}`, () => loadPrefectureHub(prefectureSlug))
