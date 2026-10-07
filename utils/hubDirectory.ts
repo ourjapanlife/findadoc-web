@@ -4,7 +4,7 @@ import { buildFacetIndex, type FacetPage } from './facetIndex'
 import type { FacetIndexByPrefecture } from './directoryLinks'
 import { parsePrefectureSecondSegment } from './facetPath'
 import { buildHubIndex, type HubCity, type HubPrefecture } from './hubIndex'
-import { fetchCities } from './cityOptions'
+import { fetchCities, type CityOption } from './cityOptions'
 import type { FacilitySearchResult } from './searchDirectory'
 import type { Facility, HealthcareProfessional } from '~/typedefs/gqlTypes'
 
@@ -234,6 +234,14 @@ type DirectoryIndexes = {
 let cachedIndexes: DirectoryIndexes | undefined
 let indexesLoad: Promise<DirectoryIndexes | null> | undefined
 
+function prerenderedCities(): CityOption[] | undefined {
+    if (!import.meta.server) {
+        return undefined
+    }
+    const cities = useRuntimeConfig().prerenderCities
+    return Array.isArray(cities) ? cities as CityOption[] : undefined
+}
+
 async function loadDirectoryIndexes(): Promise<DirectoryIndexes | null> {
     if (cachedIndexes) {
         return cachedIndexes
@@ -241,10 +249,15 @@ async function loadDirectoryIndexes(): Promise<DirectoryIndexes | null> {
 
     indexesLoad ??= (async () => {
         try {
-            const officialCitiesPromise = fetchCities().catch(error => {
-                console.error('Loading cities for hubs failed', error)
-                return []
-            })
+            // Generate already fetched this list once. Another request per hub page
+            // 429s production and then 404s the route Nitro is prerendering.
+            const bakedCities = prerenderedCities()
+            const officialCitiesPromise = bakedCities
+                ? Promise.resolve(bakedCities)
+                : fetchCities().catch(error => {
+                    console.error('Loading cities for hubs failed', error)
+                    return []
+                })
             const facilities = await loadFacilityDirectory()
             if (!facilities?.length) {
                 return null

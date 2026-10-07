@@ -144,6 +144,14 @@ export default defineNuxtConfig({
         // Private: not sent to the browser. Empty in `nuxi dev` (live GraphQL).
         clinicPrerenderDirectory: {},
         doctorPrerenderDirectory: {},
+        // null until generate. An array (possibly empty) means workers must not refetch cities.
+        prerenderCities: null as null | Array<{
+            id: string
+            nameEn: string
+            nameJa: string
+            slug: string
+            prefectureEn: string
+        }>,
         public: {
             isTestingMode: process.env.NUXT_IS_TESTING_MODE,
 

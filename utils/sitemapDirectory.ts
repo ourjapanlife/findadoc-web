@@ -1,8 +1,9 @@
 import { gql, GraphQLClient } from 'graphql-request'
+import { useRuntimeConfig } from '#imports'
 import { facilityPath } from './clinicPath'
 import { professionalPath } from './doctorPath'
 import { hubSitemapUrls } from './hubIndex'
-import { fetchCities } from './cityOptions'
+import { fetchCities, type CityOption } from './cityOptions'
 import { attachProfessionalsToFacilities, facetSitemapUrls } from './facetIndex'
 import { graphqlEndpoint } from './graphqlEndpoint'
 import type { FacilitySearchFilters, HealthcareProfessionalSearchFilters,
@@ -236,6 +237,29 @@ function graphqlDirectoryFetcher(apiUrl = graphqlEndpoint()): DirectoryFetcher {
     }
 }
 
+function bakedPrerenderCities(): CityOption[] | undefined {
+    if (!import.meta.server) {
+        return undefined
+    }
+    try {
+        const cities = useRuntimeConfig().prerenderCities
+        return Array.isArray(cities) ? cities as CityOption[] : undefined
+    } catch {
+        return undefined
+    }
+}
+
+async function officialCitiesForSitemap(): Promise<CityOption[]> {
+    const baked = bakedPrerenderCities()
+    if (baked) {
+        return baked
+    }
+    return fetchCities().catch(error => {
+        console.warn('[sitemap] city list unavailable; hub names stay as stored', error)
+        return []
+    })
+}
+
 export async function loadDirectorySitemapUrls(
     fetcher: DirectoryFetcher = graphqlDirectoryFetcher(),
     paths: typeof DIRECTORY_SITEMAP_PATHS = DIRECTORY_SITEMAP_PATHS
@@ -278,11 +302,7 @@ export async function loadDirectorySitemapUrls(
         })
 
         if (facilityRows.length) {
-            const officialCities = await fetchCities().catch(error => {
-                console.warn('[sitemap] city list unavailable; hub names stay as stored', error)
-                return []
-            })
-            urls.push(...hubSitemapUrls(facilityRows, officialCities))
+            urls.push(...hubSitemapUrls(facilityRows, await officialCitiesForSitemap()))
             urls.push(...facetSitemapUrls(attachProfessionalsToFacilities(facilityRows, professionalRows)))
         }
 

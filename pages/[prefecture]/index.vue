@@ -120,9 +120,13 @@ if (!prefectureSlug || isReservedHubSegment(prefectureSlug)) {
     throw createError({ statusCode: 404, statusMessage: 'Page not found' })
 }
 
-// Generate publishes only real hubs. An unknown slug is already a static 404;
-// don't crawl the live directory (and the city table) before showing it.
-if (Array.isArray(generatedPrefectureHubs) && !generatedPrefectureHubs.includes(`/${prefectureSlug}`)) {
+// Client only: the static 404 hydrates onto this route for unknown URLs.
+// Prerender must not throw here, or a list mismatch fails the Netlify build.
+if (
+    import.meta.client
+      && Array.isArray(generatedPrefectureHubs)
+      && !generatedPrefectureHubs.includes(`/${prefectureSlug}`)
+) {
     throw createError({ statusCode: 404, statusMessage: 'Page not found' })
 }
 

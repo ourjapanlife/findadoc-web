@@ -36,6 +36,7 @@ type CitiesResponse = {
 }
 
 const cache = new Map<string, CityOption[]>()
+const pending = new Map<string, Promise<CityOption[]>>()
 
 /**
  * Cities for one prefecture, or every current municipality when prefecture is omitted.
@@ -48,6 +49,19 @@ export async function fetchCities(prefecture?: string): Promise<CityOption[]> {
         return cached
     }
 
+    const inflight = pending.get(key)
+    if (inflight) {
+        return inflight
+    }
+
+    const request = loadCities(key).finally(() => {
+        pending.delete(key)
+    })
+    pending.set(key, request)
+    return request
+}
+
+async function loadCities(key: string): Promise<CityOption[]> {
     const response = await fetch(graphqlEndpoint(), {
         method: 'POST',
         headers: { 'content-type': 'application/json' },

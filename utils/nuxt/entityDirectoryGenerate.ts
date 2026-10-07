@@ -127,6 +127,7 @@ export async function applyEntityDirectoryToNuxt(nuxt: Nuxt) {
 
     nuxt.options.runtimeConfig.clinicPrerenderDirectory = built.directory
     nuxt.options.runtimeConfig.doctorPrerenderDirectory = built.professionalDirectory
+    nuxt.options.runtimeConfig.prerenderCities = built.officialCities
 }
 
 export async function applyEntityDirectoryToNitro(nitroConfig: NitroConfig) {
@@ -148,6 +149,7 @@ export async function applyEntityDirectoryToNitro(nitroConfig: NitroConfig) {
     nitroConfig.runtimeConfig ??= {}
     nitroConfig.runtimeConfig.clinicPrerenderDirectory = built.directory
     nitroConfig.runtimeConfig.doctorPrerenderDirectory = built.professionalDirectory
+    nitroConfig.runtimeConfig.prerenderCities = built.officialCities
     nitroConfig.virtual = {
         ...nitroConfig.virtual,
         '#clinic-directory': `export default ${JSON.stringify(built.directory)}`,

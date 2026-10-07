@@ -3,7 +3,7 @@ import { dirname, join } from 'node:path'
 import { facilityPath } from './clinicPath'
 import { professionalPath } from './doctorPath'
 import { hubPathsFromFacilities } from './hubIndex'
-import { fetchCities } from './cityOptions'
+import { fetchCities, type CityOption } from './cityOptions'
 import { facetPathsFromFacilities } from './facetIndex'
 import { graphqlEndpoint } from './graphqlEndpoint'
 import type { Facility, HealthcareProfessional } from '~/typedefs/gqlTypes'
@@ -285,6 +285,7 @@ export async function buildClinicPrerenderDirectory(): Promise<{
     professionalPaths: string[]
     hubPaths: string[]
     facetPaths: string[]
+    officialCities: CityOption[]
 } | null> {
     const rows = await fetchDirectoryRows()
 
@@ -307,7 +308,8 @@ export async function buildClinicPrerenderDirectory(): Promise<{
         paths: Object.values(directory).map(facility => facilityPath(facility)),
         professionalPaths: Object.values(professionalDirectory).map(professional => professionalPath(professional)),
         hubPaths: hubPathsFromFacilities(Object.values(directory), officialCities),
-        facetPaths: facetPathsFromFacilities(Object.values(directory))
+        facetPaths: facetPathsFromFacilities(Object.values(directory)),
+        officialCities
     }
 }
 

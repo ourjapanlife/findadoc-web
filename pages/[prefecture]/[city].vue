@@ -94,7 +94,11 @@ if (!prefectureSlug || !secondSlug || isReservedHubSegment(prefectureSlug)) {
     throw createError({ statusCode: 404, statusMessage: 'Page not found' })
 }
 
-if (Array.isArray(generatedPrefectureHubs) && !generatedPrefectureHubs.includes(`/${prefectureSlug}`)) {
+if (
+    import.meta.client
+      && Array.isArray(generatedPrefectureHubs)
+      && !generatedPrefectureHubs.includes(`/${prefectureSlug}`)
+) {
     throw createError({ statusCode: 404, statusMessage: 'Page not found' })
 }
 
