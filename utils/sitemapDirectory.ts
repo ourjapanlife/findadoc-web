@@ -242,8 +242,11 @@ function bakedPrerenderCities(): CityOption[] | undefined {
         return undefined
     }
     try {
-        const cities = useRuntimeConfig().prerenderCities
-        return Array.isArray(cities) ? cities as CityOption[] : undefined
+        const baked = useRuntimeConfig().prerenderCities
+        if (!baked?.baked) {
+            return undefined
+        }
+        return baked.cities
     } catch {
         return undefined
     }

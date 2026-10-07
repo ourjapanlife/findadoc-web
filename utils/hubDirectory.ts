@@ -238,8 +238,11 @@ function prerenderedCities(): CityOption[] | undefined {
     if (!import.meta.server) {
         return undefined
     }
-    const cities = useRuntimeConfig().prerenderCities
-    return Array.isArray(cities) ? cities as CityOption[] : undefined
+    const baked = useRuntimeConfig().prerenderCities
+    if (!baked?.baked) {
+        return undefined
+    }
+    return baked.cities
 }
 
 async function loadDirectoryIndexes(): Promise<DirectoryIndexes | null> {
