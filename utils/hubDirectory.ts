@@ -241,14 +241,15 @@ async function loadDirectoryIndexes(): Promise<DirectoryIndexes | null> {
 
     indexesLoad ??= (async () => {
         try {
+            const officialCitiesPromise = fetchCities().catch(error => {
+                console.error('Loading cities for hubs failed', error)
+                return []
+            })
             const facilities = await loadFacilityDirectory()
             if (!facilities?.length) {
                 return null
             }
-            const officialCities = await fetchCities().catch(error => {
-                console.error('Loading cities for hubs failed', error)
-                return []
-            })
+            const officialCities = await officialCitiesPromise
             cachedIndexes = {
                 hub: buildHubIndex(facilities, officialCities),
                 facets: buildFacetIndex(facilities)

@@ -101,6 +101,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
+import generatedPrefectureHubs from '#generated-prefecture-hubs'
 import { createError, navigateTo, useAsyncData, useHead, useRoute } from '#imports'
 import { isJapaneseLocale } from '~/utils/activeLocale'
 import { canonicalPathMatches, slugifySegment } from '~/utils/clinicPath'
@@ -116,6 +117,12 @@ const { t, locale } = useI18n()
 const prefectureSlug = slugifySegment(String(route.params.prefecture ?? ''))
 
 if (!prefectureSlug || isReservedHubSegment(prefectureSlug)) {
+    throw createError({ statusCode: 404, statusMessage: 'Page not found' })
+}
+
+// Generate publishes only real hubs. An unknown slug is already a static 404;
+// don't crawl the live directory (and the city table) before showing it.
+if (Array.isArray(generatedPrefectureHubs) && !generatedPrefectureHubs.includes(`/${prefectureSlug}`)) {
     throw createError({ statusCode: 404, statusMessage: 'Page not found' })
 }
 
