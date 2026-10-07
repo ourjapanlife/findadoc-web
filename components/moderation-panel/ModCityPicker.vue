@@ -2,7 +2,7 @@
     <div class="flex flex-col">
         <label
             :for="id"
-            class="mb-2 text-primary-text text-sm font-bold font-sans"
+            class="field-label"
         >
             {{ label }}
         </label>
@@ -12,8 +12,7 @@
             :required="required"
             :disabled="!prefectureEn || loading"
             :data-testid="testId"
-            class="mb-5 px-3 py-3.5 w-96 h-12 bg-secondary-bg rounded-lg border border-primary-text-muted
-                text-primary-text text-sm font-normal font-sans"
+            class="field disabled:cursor-not-allowed disabled:opacity-60"
             @change="onChange"
         >
             <option value="">
@@ -29,7 +28,7 @@
         </select>
         <p
             v-if="loadError"
-            class="text-error text-xs font-sans -mt-3 mb-5"
+            class="mt-1.5 text-xs font-sans text-error"
         >
             {{ t('modFacilitySection.cityListUnavailable') }}
         </p>

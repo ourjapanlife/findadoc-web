@@ -96,3 +96,14 @@ export const prefectureLanguageMatch: Record<string, string> = {
     kagoshima: '鹿児島県',
     okinawa: '沖縄県'
 }
+
+export function pairedPrefectureJa(prefectureEn: string): string {
+    return prefectureLanguageMatch[prefectureEn.trim().toLowerCase()] ?? ''
+}
+
+export function pairedPrefectureEn(prefectureJa: string): string {
+    const englishKey = Object.entries(prefectureLanguageMatch)
+        .find(([, nameJa]) => nameJa === prefectureJa.trim())?.[0]
+    if (!englishKey) return ''
+    return listPrefectureJapanEn.find(name => name.toLowerCase() === englishKey) ?? ''
+}

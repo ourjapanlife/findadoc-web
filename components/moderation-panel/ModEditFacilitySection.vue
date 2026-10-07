@@ -1,18 +1,16 @@
 <template>
     <Loader v-if="moderationScreenStore.editFacilityScreenIsActive()" />
     <div v-if="isFacilitySectionInitialized">
-        <div
-            class="mod-facility-section"
-        >
+        <div class="mod-facility-section mb-6 rounded-lg border border-accent-bg bg-primary-bg p-4 md:p-5">
             <h1
                 v-if="moderationScreenStore.editFacilityScreenIsActive()"
-                class="mb-3.5 text-start text-primary-text text-3xl font-bold font-sans leading-normal"
+                class="section-heading mb-4 text-start"
             >
                 {{ t('modFacilitySection.facilityHeading') }}
             </h1>
-            <span class="mb-3.5 text-center text-primary-text text-2xl font-bold font-sans leading-normal">
+            <h3 class="section-heading mb-4 text-start">
                 {{ t('modFacilitySection.contactInformation') }}
-            </span>
+            </h3>
             <ModInputField
                 v-model="facilityStore.facilitySectionFields.nameEn"
                 data-testid="mod-facility-section-nameEn"
@@ -64,12 +62,10 @@
                 :invalid-input-error-message="t('modFacilitySection.inputErrorMessageFacilityWebsite')"
             />
         </div>
-        <div
-            class="mod-facility-address-section"
-        >
-            <span class="mb-3.5 text-center text-primary-text text-2xl font-bold font-sans leading-normal">
+        <div class="mod-facility-address-section mb-6 rounded-lg border border-accent-bg bg-primary-bg p-4 md:p-5">
+            <h3 class="section-heading mb-4 text-start">
                 {{ t('modFacilitySection.addresses') }}
-            </span>
+            </h3>
             <ModInputField
                 v-model="facilityStore.facilitySectionFields.postalCode"
                 data-testid="mod-facility-section-postalCode"
@@ -80,143 +76,138 @@
                 :input-validation-check="validatePostalCode"
                 :invalid-input-error-message="t('modFacilitySection.inputErrorMessageFacilityPostalCode')"
             />
-            <div class="flex flex-col mt-4">
-                <label
-                    for="mod-edit-facility-section-prefecture-select-en"
-                    class="mb-2 text-primary-text text-sm font-bold font-sans"
-                >
-                    {{ t('modFacilitySection.labelFacilityPrefectureEn') }}
-                </label>
-                <p
-                    v-if="!checkPrefectureNameMatch({
-                        prefectureEn: facilityStore.facilitySectionFields.prefectureEn,
-                        prefectureJa: facilityStore.facilitySectionFields.prefectureJa,
-                    })"
-                    class="text-error text-xs font-sans mt-1"
-                >
-                    {{ t('modFacilitySection.inputErrorMessagePrefectureMismatch') }}
-                </p>
-                <select
-                    id="mod-edit-facility-section-prefecture-select-en"
-                    v-model="facilityStore.facilitySectionFields.prefectureEn"
-                    data-testid="mod-facility-section-prefectureEn"
-                    name="prefecture-japan-en"
-                    class="mb-5 px-3 py-3.5 w-96 h-12 bg-secondary-bg rounded-lg border border-primary-text-muted
-                text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
-                    @change="clearEditCity"
-                >
-                    <option
-                        v-for="(prefecture, index) in listPrefectureJapanEn"
-                        :key="index"
-                    >
-                        {{ prefecture }}
-                    </option>
-                </select>
-            </div>
-            <ModCityPicker
-                id="mod-edit-facility-section-city"
-                :label="t('modFacilitySection.labelFacilityCityEn')"
-                :prefecture-en="facilityStore.facilitySectionFields.prefectureEn"
-                :city-id="facilityStore.facilitySectionFields.cityId"
-                test-id="mod-facility-section-cityEn"
-                @select="applyEditCity"
-            />
             <p
-                v-if="!facilityStore.facilitySectionFields.cityId && facilityStore.facilitySectionFields.cityEn"
-                class="text-primary-text-muted text-xs font-sans -mt-3 mb-5"
+                v-if="!checkPrefectureNameMatch({
+                    prefectureEn: facilityStore.facilitySectionFields.prefectureEn,
+                    prefectureJa: facilityStore.facilitySectionFields.prefectureJa,
+                })"
+                class="mb-2 font-sans text-xs text-error"
             >
-                {{ facilityStore.facilitySectionFields.cityEn }} / {{ facilityStore.facilitySectionFields.cityJa }}
+                {{ t('modFacilitySection.inputErrorMessagePrefectureMismatch') }}
             </p>
-            <ModInputField
-                v-model="facilityStore.facilitySectionFields.addressLine1En"
-                data-testid="mod-facility-section-addressLine1En"
-                :label="t('modFacilitySection.labelFacilityAddressLine1En')"
-                type="text"
-                :placeholder="t('modFacilitySection.placeholderTextFacilityAddressLine1En')"
-                :required="true"
-                :input-validation-check="validateAddressLineEn"
-                :invalid-input-error-message="t('modFacilitySection.inputErrorMessageFacilityAddressLine1En')"
-            />
-            <ModInputField
-                v-model="facilityStore.facilitySectionFields.addressLine2En"
-                data-testid="mod-facility-section-addressLine2En"
-                :label="t('modFacilitySection.labelFacilityAddressLine2En')"
-                type="text"
-                :placeholder="t('modFacilitySection.placeholderTextFacilityAddressLine2En')"
-                :required="false"
-            />
-            <div class="flex flex-col mt-4">
-                <label
-                    for="mod-edit-facility-section-prefecture-select-ja"
-                    class="mb-2 text-primary-text text-sm font-bold font-sans"
-                >
-                    {{ t('modFacilitySection.labelFacilityPrefectureJa') }}
-                </label>
-                <p
-                    v-if="!checkPrefectureNameMatch({
-                        prefectureEn: facilityStore.facilitySectionFields.prefectureEn,
-                        prefectureJa: facilityStore.facilitySectionFields.prefectureJa,
-                    })"
-                    class="text-error text-xs font-sans mt-1"
-                >
-                    {{ t('modFacilitySection.inputErrorMessagePrefectureMismatch') }}
-                </p>
-                <select
-                    id="mod-edit-facility-section-prefecture-select-ja"
-                    v-model="facilityStore.facilitySectionFields.prefectureJa"
-                    data-testid="mod-facility-section-prefectureJa"
-                    name="prefecture-japan-ja"
-                    class="mb-5 px-3 py-3.5 w-96 h-12 bg-secondary-bg rounded-lg border border-primary-text-muted
-                text-primary-text text-sm font-normal font-sans placeholder-primary-text-muted"
-                    @change="clearEditCity"
-                >
-                    <option
-                        v-for="(prefecture, index) in listPrefectureJapanJa"
-                        :key="index"
+            <div class="grid gap-4 landscape:grid-cols-2">
+                <div class="min-w-0">
+                    <label
+                        for="mod-edit-facility-section-prefecture-select-en"
+                        class="field-label"
                     >
-                        {{ prefecture }}
-                    </option>
-                </select>
+                        {{ t('modFacilitySection.labelFacilityPrefectureEn') }}
+                    </label>
+                    <select
+                        id="mod-edit-facility-section-prefecture-select-en"
+                        v-model="facilityStore.facilitySectionFields.prefectureEn"
+                        data-testid="mod-facility-section-prefectureEn"
+                        name="prefecture-japan-en"
+                        class="field"
+                        @change="onEditPrefectureEn"
+                    >
+                        <option
+                            v-for="(prefecture, index) in listPrefectureJapanEn"
+                            :key="index"
+                        >
+                            {{ prefecture }}
+                        </option>
+                    </select>
+                </div>
+                <div class="min-w-0">
+                    <label
+                        for="mod-edit-facility-section-prefecture-select-ja"
+                        class="field-label"
+                    >
+                        {{ t('modFacilitySection.labelFacilityPrefectureJa') }}
+                    </label>
+                    <select
+                        id="mod-edit-facility-section-prefecture-select-ja"
+                        v-model="facilityStore.facilitySectionFields.prefectureJa"
+                        data-testid="mod-facility-section-prefectureJa"
+                        name="prefecture-japan-ja"
+                        class="field"
+                        @change="onEditPrefectureJa"
+                    >
+                        <option
+                            v-for="(prefecture, index) in listPrefectureJapanJa"
+                            :key="index"
+                        >
+                            {{ prefecture }}
+                        </option>
+                    </select>
+                </div>
             </div>
-            <div
-                v-if="facilityStore.facilitySectionFields.cityJa"
-                class="mb-5 flex flex-col"
-            >
-                <span class="mb-2 text-primary-text text-sm font-bold font-sans">
-                    {{ t('modFacilitySection.labelFacilityCityJa') }}
-                </span>
-                <p
-                    data-testid="mod-facility-section-cityJa"
-                    class="text-sm font-sans text-primary-text"
+            <div class="mt-4 grid items-end gap-4 landscape:grid-cols-2">
+                <div class="min-w-0">
+                    <ModCityPicker
+                        id="mod-edit-facility-section-city"
+                        :label="t('modFacilitySection.labelFacilityCityEn')"
+                        :prefecture-en="facilityStore.facilitySectionFields.prefectureEn"
+                        :city-id="facilityStore.facilitySectionFields.cityId"
+                        test-id="mod-facility-section-cityEn"
+                        @select="applyEditCity"
+                    />
+                    <p
+                        v-if="!facilityStore.facilitySectionFields.cityId && facilityStore.facilitySectionFields.cityEn"
+                        class="mt-1.5 font-sans text-xs text-primary-text-muted"
+                    >
+                        {{ facilityStore.facilitySectionFields.cityEn }} / {{ facilityStore.facilitySectionFields.cityJa }}
+                    </p>
+                </div>
+                <div
+                    v-if="facilityStore.facilitySectionFields.cityJa"
+                    class="min-w-0"
                 >
-                    {{ facilityStore.facilitySectionFields.cityJa }}
-                </p>
+                    <span class="field-label">
+                        {{ t('modFacilitySection.labelFacilityCityJa') }}
+                    </span>
+                    <p
+                        data-testid="mod-facility-section-cityJa"
+                        class="chip"
+                    >
+                        {{ facilityStore.facilitySectionFields.cityJa }}
+                    </p>
+                </div>
             </div>
-            <ModInputField
-                v-model="facilityStore.facilitySectionFields.addressLine1Ja"
-                data-testid="mod-facility-section-addressLine1Ja"
-                :label="t('modFacilitySection.labelFacilityAddressLine1Ja')"
-                type="text"
-                :placeholder="t('modFacilitySection.placeholderTextFacilityAddressLine1Ja')"
-                :required="true"
-                :input-validation-check="validateAddressLineJa"
-                :invalid-input-error-message="t('modFacilitySection.inputErrorMessageFacilityAddressLine1Ja')"
-            />
-            <ModInputField
-                v-model="facilityStore.facilitySectionFields.addressLine2Ja"
-                data-testid="mod-facility-section-addressLine2Ja"
-                :label="t('modFacilitySection.labelFacilityAddressLine2Ja')"
-                type="text"
-                :placeholder="t('modFacilitySection.placeholderTextFacilityAddressLine2Ja')"
-                :required="false"
-            />
+            <div class="grid landscape:grid-cols-2 landscape:gap-x-4">
+                <ModInputField
+                    v-model="facilityStore.facilitySectionFields.addressLine1En"
+                    data-testid="mod-facility-section-addressLine1En"
+                    :label="t('modFacilitySection.labelFacilityAddressLine1En')"
+                    type="text"
+                    :placeholder="t('modFacilitySection.placeholderTextFacilityAddressLine1En')"
+                    :required="true"
+                    :input-validation-check="validateAddressLineEn"
+                    :invalid-input-error-message="t('modFacilitySection.inputErrorMessageFacilityAddressLine1En')"
+                />
+                <ModInputField
+                    v-model="facilityStore.facilitySectionFields.addressLine1Ja"
+                    data-testid="mod-facility-section-addressLine1Ja"
+                    :label="t('modFacilitySection.labelFacilityAddressLine1Ja')"
+                    type="text"
+                    :placeholder="t('modFacilitySection.placeholderTextFacilityAddressLine1Ja')"
+                    :required="true"
+                    :input-validation-check="validateAddressLineJa"
+                    :invalid-input-error-message="t('modFacilitySection.inputErrorMessageFacilityAddressLine1Ja')"
+                />
+                <ModInputField
+                    v-model="facilityStore.facilitySectionFields.addressLine2En"
+                    data-testid="mod-facility-section-addressLine2En"
+                    :label="t('modFacilitySection.labelFacilityAddressLine2En')"
+                    type="text"
+                    :placeholder="t('modFacilitySection.placeholderTextFacilityAddressLine2En')"
+                    :required="false"
+                />
+                <ModInputField
+                    v-model="facilityStore.facilitySectionFields.addressLine2Ja"
+                    data-testid="mod-facility-section-addressLine2Ja"
+                    :label="t('modFacilitySection.labelFacilityAddressLine2Ja')"
+                    type="text"
+                    :placeholder="t('modFacilitySection.placeholderTextFacilityAddressLine2Ja')"
+                    :required="false"
+                />
+            </div>
         </div>
-        <div
-            class="google-maps-section"
-        >
-            <span class="mb-3.5 text-center text-primary-text text-2xl font-bold font-sans leading-normal">
+        <div class="google-maps-section mb-6 rounded-lg border border-accent-bg bg-primary-bg p-4 md:p-5">
+            <h3 class="section-heading mb-4 text-start">
                 {{ t('modFacilitySection.googleMapsInformation') }}
-            </span>
+            </h3>
             <ModInputField
                 v-model="facilityStore.facilitySectionFields.googlemapsURL"
                 data-testid="mod-facility-section-google-maps"
@@ -251,13 +242,11 @@
         </div>
         <div
             v-if="moderationScreenStore.editFacilityScreenIsActive()"
-            class="flex flex-col"
+            class="mb-6 flex flex-col rounded-lg border border-accent-bg bg-primary-bg p-4 md:p-5"
         >
-            <span
-                class="mb-1 text-primary-text text-2xl font-bold font-sans leading-normal"
-            >
+            <h3 class="section-heading mb-4 text-start">
                 {{ t('modFacilitySection.addHealthcareProfessional') }}
-            </span>
+            </h3>
             <ModSearchBar
                 v-model="selectedHealthcareProfessionalsModel"
                 data-testid="mod-facility-section-doctor-search"
@@ -288,9 +277,9 @@
     <div
         v-if="moderationScreenStore.editFacilityScreenIsActive()"
     >
-        <span class="mb-3.5 text-center text-primary-text text-2xl font-bold font-sans leading-normal">
+        <h3 class="section-heading mb-4 text-start">
             {{ t('modFacilitySection.existingHPHeading') }}
-        </span>
+        </h3>
         <div
             v-for="(healthcareProfessional, index) in healthcareProfessionalRelatedToFacilityFiltered"
             :key="`${healthcareProfessional.id}-${index}`"
@@ -323,7 +312,7 @@ import { validateAddressLineEn,
     validateWebsite } from '~/utils/formValidations'
 import { RelationshipAction, type HealthcareProfessional } from '~/typedefs/gqlTypes'
 import type { CityOption } from '~/utils/cityOptions'
-import { listPrefectureJapanEn, listPrefectureJapanJa } from '~/stores/locationsStore'
+import { listPrefectureJapanEn, listPrefectureJapanJa, pairedPrefectureEn, pairedPrefectureJa } from '~/stores/locationsStore'
 import { checkPrefectureNameMatch } from '~/utils/facilitiesUtils'
 import { stableStringify } from '~/utils/stableStringify'
 import { matchesHealthcareProfessionalSearch } from '~/utils/moderationSearchUtils'
@@ -395,6 +384,20 @@ const handleHealthcareProfessionalsInputChange = (filteredItems: Ref<HealthcareP
 
 const healthcareProfessionalsToDisplayCallback = (healthcareProfessional: HealthcareProfessional) =>
     [formatFirstLocalizedFullName(healthcareProfessional.names)]
+
+function onEditPrefectureEn() {
+    const fields = facilityStore.facilitySectionFields
+    const prefectureJa = pairedPrefectureJa(fields.prefectureEn)
+    if (prefectureJa) fields.prefectureJa = prefectureJa
+    clearEditCity()
+}
+
+function onEditPrefectureJa() {
+    const fields = facilityStore.facilitySectionFields
+    const prefectureEn = pairedPrefectureEn(fields.prefectureJa)
+    if (prefectureEn) fields.prefectureEn = prefectureEn
+    clearEditCity()
+}
 
 function clearEditCity() {
     if (!isFacilitySectionInitialized.value) return
