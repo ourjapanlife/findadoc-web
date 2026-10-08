@@ -272,7 +272,7 @@ import { useAppToast } from '~/composables/useAppToast'
 import * as validations from '~/utils/formValidations'
 import { useSubmissionStore } from '~/stores/submissionStore'
 import { Locale, type MutationCreateSubmissionArgs } from '~/typedefs/gqlTypes'
-import { useLocaleStore } from '~/stores/localeStore'
+import { spokenLanguageSortKey, useLocaleStore } from '~/stores/localeStore'
 import { handleServerErrorMessaging } from '~/composables/handleServerErrorMessaging'
 
 const toast = useAppToast()
@@ -291,8 +291,12 @@ const isSubmitting = ref(false)
 
 const japaneseLabel = computed(() => languageLabel(Locale.JaJp))
 const languagesAvailableToAdd = computed(() =>
-    localeStore.localeDisplayOptions.filter(locale =>
-        locale.code !== Locale.JaJp && !extraLanguages.value.includes(locale.code as Locale)))
+    localeStore.localeDisplayOptions
+        .filter(locale =>
+            locale.code !== Locale.JaJp && !extraLanguages.value.includes(locale.code as Locale))
+        .sort((left, right) => spokenLanguageSortKey(left).localeCompare(
+            spokenLanguageSortKey(right), 'en', { sensitivity: 'base' }
+        )))
 const mapsLinkIsValid = computed(() => validations.validateGoogleMapsUrlInput(location.value))
 const placeLabel = computed(() => validations.placeLabelFromMapsUrl(location.value))
 const submittedName = computed(() => [firstName.value, lastName.value].map(part => part.trim()).filter(Boolean).join(' '))
