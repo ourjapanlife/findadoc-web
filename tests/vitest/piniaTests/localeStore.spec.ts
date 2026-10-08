@@ -1,6 +1,6 @@
 import { setActivePinia, createPinia } from 'pinia'
 import { expect } from 'chai'
-import { localeDisplayOptions, spokenLanguageSortKey, useLocaleStore } from '@/stores/localeStore'
+import { localeDisplayOptions as spokenLanguageOptions, spokenLanguageSortKey, useLocaleStore } from '@/stores/localeStore'
 import { Locale } from '~/typedefs/gqlTypes.js'
 
 describe('LocalStore', () => {
@@ -86,7 +86,7 @@ describe('LocalStore', () => {
     })
 
     it('orders spoken languages from Akan through Welsh', () => {
-        const sorted = localeDisplayOptions
+        const sorted = spokenLanguageOptions
             .filter(option => option.code !== Locale.JaJp)
             .sort((left, right) =>
                 spokenLanguageSortKey(left).localeCompare(spokenLanguageSortKey(right), 'en', { sensitivity: 'base' }))

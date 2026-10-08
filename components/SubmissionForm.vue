@@ -295,7 +295,8 @@ const languagesAvailableToAdd = computed(() =>
         .filter(locale =>
             locale.code !== Locale.JaJp && !extraLanguages.value.includes(locale.code as Locale))
         .sort((left, right) => spokenLanguageSortKey(left).localeCompare(
-            spokenLanguageSortKey(right), 'en', { sensitivity: 'base' })))
+            spokenLanguageSortKey(right), 'en', { sensitivity: 'base' }
+        )))
 const mapsLinkIsValid = computed(() => validations.validateGoogleMapsUrlInput(location.value))
 const placeLabel = computed(() => validations.placeLabelFromMapsUrl(location.value))
 const submittedName = computed(() => [firstName.value, lastName.value].map(part => part.trim()).filter(Boolean).join(' '))
