@@ -1,6 +1,6 @@
 import { setActivePinia, createPinia } from 'pinia'
 import { expect } from 'chai'
-import { useLocaleStore } from '@/stores/localeStore'
+import { localeDisplayOptions, spokenLanguageSortKey, useLocaleStore } from '@/stores/localeStore'
 import { Locale } from '~/typedefs/gqlTypes.js'
 
 describe('LocalStore', () => {
@@ -83,6 +83,24 @@ describe('LocalStore', () => {
             Locale.DeDe,
             Locale.ItIt
         ])
+    })
+
+    it('orders spoken languages from Akan through Welsh', () => {
+        const sorted = localeDisplayOptions
+            .filter(option => option.code !== Locale.JaJp)
+            .sort((left, right) =>
+                spokenLanguageSortKey(left).localeCompare(spokenLanguageSortKey(right), 'en', { sensitivity: 'base' }))
+        const indexOf = (code: Locale) => sorted.findIndex(option => option.code === code)
+        const keys = sorted.map(spokenLanguageSortKey)
+
+        expect(sorted[0]?.code).to.equal(Locale.AkGh)
+        expect(sorted.at(-1)?.code).to.equal(Locale.CyGb)
+        expect(keys).to.deep.equal([...keys].sort((left, right) => left.localeCompare(right, 'en', { sensitivity: 'base' })))
+        expect(indexOf(Locale.ChrUs)).to.be.lessThan(indexOf(Locale.CsCz))
+        expect(indexOf(Locale.ArAe)).to.be.lessThan(indexOf(Locale.HyAm))
+        expect(indexOf(Locale.KmKh)).to.be.lessThan(indexOf(Locale.KoKr))
+        expect(indexOf(Locale.KoKr)).to.be.lessThan(indexOf(Locale.LagTz))
+        expect(indexOf(Locale.ViVn)).to.be.lessThan(indexOf(Locale.CyGb))
     })
 
     it('should update locale when Korean is selected', () => {

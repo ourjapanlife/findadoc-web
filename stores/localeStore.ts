@@ -113,6 +113,26 @@ export const localeDisplayOptions = [
 ] satisfies LocaleDisplay[]
 
 /**
+ * These options are labeled in their own script. The sort key uses the English
+ * name so they land with the other languages. The menu still shows displayText.
+ */
+const SPOKEN_LANGUAGE_ENGLISH_NAMES: Record<string, string> = {
+    [Locale.ArAe]: 'Arabic',
+    [Locale.HeIl]: 'Hebrew',
+    [Locale.KoKr]: 'Korean',
+    [Locale.ThTh]: 'Thai',
+    [Locale.ViVn]: 'Vietnamese'
+}
+
+export function spokenLanguageSortKey(option: LocaleDisplay): string {
+    const englishName = SPOKEN_LANGUAGE_ENGLISH_NAMES[option.code]
+    if (englishName) {
+        return `${englishName} ${option.displayText}`
+    }
+    return option.displayText
+}
+
+/**
  * Languages the site UI is translated into, shown in the picker.
  *
  * English is first because it is the default. Japanese is next as the host-country
