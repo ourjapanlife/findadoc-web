@@ -127,6 +127,8 @@
     "previewPin": "Lokasyon sa mapa",
     "previewOpenMap": "Buksan sa Google Maps",
     "previewLookingUp": "Binabasa ang link na ito sa Maps",
+    "existingPlace": "Nasa database na namin ang klinikang ito:",
+    "existingPlaceContact": "Makipag-ugnayan sa amin kung sa palagay mo ay mali ito.",
     "subheading": "Kung nais magdagdag ng doktor sa database, Kumpletuhin ang form sa ibaba at ito ay susuriin ng aming mga tagapamagitan.",
     "submitButton": "Ipasa",
     "optional": "Opsyonal",

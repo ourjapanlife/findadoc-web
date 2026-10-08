@@ -155,11 +155,11 @@
                         {{ t('submitPage.addLanguage') }}
                     </option>
                     <option
-                        v-for="locale in languagesAvailableToAdd"
-                        :key="locale.code"
-                        :value="locale.code"
+                        v-for="languageOption in languagesAvailableToAdd"
+                        :key="languageOption.code"
+                        :value="languageOption.code"
                     >
-                        {{ locale.displayText }}
+                        {{ languageOption.displayText }}
                     </option>
                 </select>
                 <p
@@ -204,6 +204,24 @@
                 <h2 class="text-base font-semibold text-primary-text">
                     {{ t('submitPage.previewHeading') }}
                 </h2>
+                <p
+                    v-if="existingFacility"
+                    data-testid="submit-existing-place"
+                    class="rounded-md bg-secondary-bg p-3 text-sm text-primary-text"
+                    role="status"
+                >
+                    {{ t('submitPage.existingPlace') }}
+                    <a
+                        :href="existingFacilityHref"
+                        class="text-primary"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >{{ existingFacilityLabel }}</a>
+                    <a
+                        :href="CONTACT_MAILTO"
+                        class="text-primary"
+                    >{{ t('submitPage.existingPlaceContact') }}</a>
+                </p>
                 <dl class="grid gap-3 text-sm">
                     <div v-if="placeLabel">
                         <dt class="font-semibold text-primary-text">
@@ -287,9 +305,13 @@ import { useSubmissionStore } from '~/stores/submissionStore'
 import { Locale, type MutationCreateSubmissionArgs } from '~/typedefs/gqlTypes'
 import { spokenLanguageSortKey, useLocaleStore } from '~/stores/localeStore'
 import { handleServerErrorMessaging } from '~/composables/handleServerErrorMessaging'
+import { facilityPath } from '~/utils/clinicPath'
+import { CONTACT_MAILTO } from '~/utils/site'
+import { isJapaneseLocale } from '~/utils/activeLocale'
+import { fetchFacilityByGooglePlaceId, type ExistingFacilityMatch } from '~/utils/existingFacility'
 
 const toast = useAppToast()
-const { t } = useI18n()
+const { t, locale } = useI18n()
 
 const submissionStore = useSubmissionStore()
 const localeStore = useLocaleStore()
@@ -316,6 +338,27 @@ const mapsPlaceLoading = ref(false)
 let mapsPlaceRequest = 0
 let mapsPlaceTimer: ReturnType<typeof setTimeout> | undefined
 const placeLabel = computed(() => mapsPlace.value?.name ?? null)
+const existingFacility = ref<ExistingFacilityMatch | null>(null)
+let existingFacilityRequest = 0
+const existingFacilityLabel = computed(() => {
+    const facility = existingFacility.value
+    if (!facility) return ''
+    return isJapaneseLocale(locale.value) ? facility.nameJa : facility.nameEn
+})
+const existingFacilityHref = computed(() => {
+    const facility = existingFacility.value
+    if (!facility) return ''
+    return facilityPath({
+        id: facility.id,
+        nameEn: facility.nameEn,
+        contact: {
+            address: {
+                prefectureEn: facility.prefectureEn,
+                cityEn: facility.cityEn
+            }
+        }
+    })
+})
 const placePin = computed(() => {
     const latitude = mapsPlace.value?.latitude
     const longitude = mapsPlace.value?.longitude
@@ -463,6 +506,26 @@ watch(() => location.value, newValue => {
     }
     scheduleMapsPlace(newValue)
 })
+
+watch(() => mapsPlace.value?.placeId ?? null, placeId => {
+    void lookupExistingFacility(placeId)
+})
+
+async function lookupExistingFacility(placeId: string | null) {
+    const request = ++existingFacilityRequest
+    existingFacility.value = null
+    if (!placeId) return
+
+    try {
+        const match = await fetchFacilityByGooglePlaceId(placeId)
+        if (request !== existingFacilityRequest) return
+        existingFacility.value = match
+    } catch (error) {
+        if (request !== existingFacilityRequest) return
+        console.error('Checking for an existing clinic failed', error)
+        existingFacility.value = null
+    }
+}
 
 function scheduleMapsPlace(value: string) {
     if (mapsPlaceTimer) clearTimeout(mapsPlaceTimer)

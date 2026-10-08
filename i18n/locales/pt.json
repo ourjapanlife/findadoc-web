@@ -127,6 +127,8 @@
     "previewPin": "Local no mapa",
     "previewOpenMap": "Abrir no Google Maps",
     "previewLookingUp": "Lendo este link do Maps",
+    "existingPlace": "Esta clínica já está na nossa base:",
+    "existingPlaceContact": "Fale conosco se achar que isto está errado.",
     "spokenLanguageValidation": "Escolha pelo menos um idioma além do japonês",
     "subheading": "Gostaria de adicionar um profissional de saúde ao banco de dados? Comlete o formulário abaixo e será revisado por um de nossos moderadores.",
     "submitButton": "Enviar",

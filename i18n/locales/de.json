@@ -127,6 +127,8 @@
     "previewPin": "Kartenposition",
     "previewOpenMap": "In Google Maps öffnen",
     "previewLookingUp": "Dieser Maps-Link wird gelesen",
+    "existingPlace": "Diese Klinik ist bereits in unserer Datenbank:",
+    "existingPlaceContact": "Kontaktieren Sie uns, wenn das nicht stimmt.",
     "spokenLanguageValidation": "Wählen Sie mindestens eine Sprache neben Japanisch",
     "subheading": "Möchten Sie einen Arzt zur Datenbank hinzufügen? Füllen Sie das untenstehende Formular aus und es wird von unseren Moderatoren überprüft.",
     "submitButton": "Einreichen",

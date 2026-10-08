@@ -127,6 +127,8 @@
     "previewPin": "地图位置",
     "previewOpenMap": "在 Google 地图中打开",
     "previewLookingUp": "正在读取这个地图链接",
+    "existingPlace": "这家医疗机构已在我们的数据库中：",
+    "existingPlaceContact": "如果您认为这不对，请联系我们。",
     "spokenLanguageValidation": "请至少再选择一种日语以外的语言",
     "subheading": "您想在我们的数据库中添加一位医师吗？请填写以下表格以完成添加。我们的后台人员将会对您提交的信息进行人工审核。",
     "submitButton": "提交",

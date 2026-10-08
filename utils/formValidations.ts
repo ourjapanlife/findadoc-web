@@ -220,6 +220,7 @@ export type MapsPlacePreview = {
     name: string | null
     latitude: number | null
     longitude: number | null
+    placeId: string | null
 }
 
 const COORDINATE_PAIR = /^(-?\d+(?:\.\d+)?),\s*(-?\d+(?:\.\d+)?)$/
@@ -257,7 +258,8 @@ export function parseMapsPlace(url: string): MapsPlacePreview | null {
         return {
             name: placeName(placeMatch?.[1]) ?? placeName(queryName, true),
             latitude: pin?.latitude ?? null,
-            longitude: pin?.longitude ?? null
+            longitude: pin?.longitude ?? null,
+            placeId: googlePlaceIdFromUrl(parsed)
         }
     } catch {
         return null
@@ -279,6 +281,31 @@ function placeName(value: string | null | undefined, rejectCoordinates = false):
     }
     if (!label || label.startsWith('@') || (rejectCoordinates && readCoordinatePair(label))) return null
     return label
+}
+
+const PLACE_ID_TOKEN = /^[A-Za-z0-9_-]{8,}$/
+
+/** A Places id written into the Maps URL. Hex feature ids (0x…) are not place ids. */
+function googlePlaceIdFromUrl(parsed: URL): string | null {
+    const explicit = placeIdToken(parsed.searchParams.get('query_place_id'))
+      ?? placeIdToken(parsed.searchParams.get('place_id'))
+    if (explicit) return explicit
+
+    const query = parsed.searchParams.get('q') ?? parsed.searchParams.get('query') ?? ''
+    const fromQuery = query.match(/place_id:([A-Za-z0-9_-]{8,})/)
+    const queryToken = placeIdToken(fromQuery?.[1])
+    if (queryToken) return queryToken
+
+    const embedded = `${parsed.pathname}${parsed.search}`.match(/!1s([A-Za-z0-9_-]{8,})/)
+    const embeddedToken = placeIdToken(embedded?.[1])
+    if (embeddedToken && !embeddedToken.startsWith('0x')) return embeddedToken
+    return null
+}
+
+function placeIdToken(value: string | null | undefined): string | null {
+    if (!value) return null
+    const trimmed = value.trim().replace(/^places\//, '')
+    return PLACE_ID_TOKEN.test(trimmed) ? trimmed : null
 }
 
 function mapPin(parsed: URL): { latitude: number, longitude: number } | null {

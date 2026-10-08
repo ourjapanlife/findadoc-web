@@ -127,6 +127,8 @@
     "previewPin": "Vị trí trên bản đồ",
     "previewOpenMap": "Mở trong Google Maps",
     "previewLookingUp": "Đang đọc liên kết Maps này",
+    "existingPlace": "Phòng khám này đã có trong cơ sở dữ liệu của chúng tôi:",
+    "existingPlaceContact": "Hãy liên hệ nếu bạn nghĩ điều này không đúng.",
     "spokenLanguageValidation": "Chọn ít nhất một ngôn ngữ ngoài tiếng Nhật",
     "subheading": "Bạn muốn thêm bác sĩ vào cơ sở dữ liệu? Hãy điền vào mẫu dưới đây và nó sẽ được xem xét bởi các quản trị viên của chúng tôi.",
     "submitButton": "Gửi",

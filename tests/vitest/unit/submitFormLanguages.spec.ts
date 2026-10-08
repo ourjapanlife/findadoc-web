@@ -35,8 +35,19 @@ describe('submit form languages and maps preview', () => {
         expect(parseMapsPlace('https://maps.google.com/?q=35.6595,139.7004')).to.deep.equal({
             name: null,
             latitude: 35.6595,
-            longitude: 139.7004
+            longitude: 139.7004,
+            placeId: null
         })
+    })
+
+    it('reads a Google place id and ignores a hex feature id', () => {
+        const withPlaceId = 'https://www.google.com/maps/place/Clinic/@35.66,139.70,17z/data=!1sChIJshibuyaClinic!8m2'
+        expect(parseMapsPlace(withPlaceId)?.placeId).to.equal('ChIJshibuyaClinic')
+        expect(parseMapsPlace('https://www.google.com/maps?query_place_id=ChIJfromQuery12')?.placeId)
+            .to.equal('ChIJfromQuery12')
+        expect(parseMapsPlace(
+            'https://www.google.com/maps/place/Clinic/@35.66,139.70,17z/data=!1s0x60188b563f2b1c19'
+        )?.placeId).to.equal(null)
     })
 
     it('opens a share link and reads the clinic from the page it reaches', async () => {

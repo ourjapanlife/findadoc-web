@@ -131,6 +131,8 @@
     "previewPin": "Posizione sulla mappa",
     "previewOpenMap": "Apri in Google Maps",
     "previewLookingUp": "Lettura di questo link di Maps",
+    "existingPlace": "Questa clinica è già nel nostro database:",
+    "existingPlaceContact": "Contattaci se pensi che sia un errore.",
     "spokenLanguageValidation": "Scegli almeno una lingua oltre al giapponese",
     "subheading": "Vuoi aggiungere un medico al database? Completa il modulo qui sotto e sarà esaminato dai nostri moderatori.",
     "submissionSuccessful": "Grazie per il tuo contributo! La tua segnalazione sul medico è stata registrata con successo. Siamo grati per il tuo supporto!",
