@@ -118,7 +118,7 @@
     "optional": " Необязательно ",
     "otherNotes": " Другие заметки ",
     "firstNameValidation": "Введите имя",
-    "spokenLanguageValidation": "Выберите язык",
+    "spokenLanguageValidation": "Выберите хотя бы один язык кроме японского",
     "submissionSuccessful": "Thank you for contributing! Your submission about the doctor has been successfully recorded. We’re grateful for your support!"
   },
   "searchBar": {

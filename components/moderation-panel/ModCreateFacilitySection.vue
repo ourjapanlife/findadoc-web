@@ -136,6 +136,12 @@
                     </select>
                 </div>
             </div>
+            <ModCitySuggest
+                id="mod-create-facility-city-suggest"
+                class="mt-4"
+                test-id="mod-facility-city-suggest"
+                @select="applySuggestedCreateCity"
+            />
             <div class="mod-form-grid mt-4 items-end">
                 <ModCityPicker
                     id="mod-create-facility-section-city"
@@ -359,6 +365,18 @@ function clearCreateCity() {
     facilityStore.createFacilityFields.cityId = ''
     facilityStore.createFacilityFields.contact.address.cityEn = ''
     facilityStore.createFacilityFields.contact.address.cityJa = ''
+}
+
+function applySuggestedCreateCity(city: (CityOption & { prefectureJa: string }) | null) {
+    const address = facilityStore.createFacilityFields.contact.address
+    if (!city) {
+        applyCreateCity(null)
+        return
+    }
+
+    address.prefectureEn = city.prefectureEn
+    address.prefectureJa = city.prefectureJa
+    applyCreateCity(city)
 }
 
 function applyCreateCity(city: CityOption | null) {

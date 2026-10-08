@@ -114,7 +114,7 @@
     "selectLanguage2": "选择第二语言",
     "spokenLanguage1": "会话语言 1",
     "spokenLanguage2": "会话语言 2",
-    "spokenLanguageValidation": "选择一种语言",
+    "spokenLanguageValidation": "请至少再选择一种日语以外的语言",
     "subheading": "您想在我们的数据库中添加一位医师吗？请填写以下表格以完成添加。我们的后台人员将会对您提交的信息进行人工审核。",
     "submitButton": "提交",
     "optional": "可选",
