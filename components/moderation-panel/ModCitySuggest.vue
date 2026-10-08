@@ -128,6 +128,8 @@ async function search(value: string) {
 }
 
 async function choose(suggestion: CitySuggestion) {
+    requestId++
+    if (timer) clearTimeout(timer)
     suggestions.value = []
     query.value = ''
     if (!suggestion.city) {

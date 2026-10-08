@@ -54,7 +54,8 @@ export async function fetchCitySuggestions(input: string): Promise<CitySuggestio
     const response = await graphQLClientRequestWithRetry<SuggestResponse>(
         gqlClient.request.bind(gqlClient),
         SUGGEST_CITIES,
-        { input }
+        { input },
+        { retryAmount: 1, abortAfterMs: 10000 }
     )
 
     if (response.hasErrors || !response.data?.suggestCities) {

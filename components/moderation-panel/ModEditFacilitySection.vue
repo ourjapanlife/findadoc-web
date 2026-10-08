@@ -146,12 +146,6 @@
                     @select="applySuggestedEditCity"
                 />
             </div>
-            <ModCitySuggest
-                id="mod-edit-facility-city-suggest"
-                class="mt-4"
-                test-id="mod-facility-city-suggest"
-                @select="applySuggestedEditCity"
-            />
             <div class="mod-form-grid mt-4 items-end">
                 <div class="min-w-0">
                     <ModCityPicker
@@ -430,7 +424,10 @@ function clearEditCity() {
 
 function applySuggestedEditCity(city: (CityOption & { prefectureJa: string }) | null) {
     if (!city) {
-        applyEditCity(null)
+        const fields = facilityStore.facilitySectionFields
+        fields.cityId = ''
+        fields.cityEn = ''
+        fields.cityJa = ''
         return
     }
 
