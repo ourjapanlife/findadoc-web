@@ -18,290 +18,296 @@
             class="card flex flex-col gap-5 p-6"
             @submit.prevent="submitNewSubmission"
         >
-            <div>
-                <label
-                    for="submit-googlemaps"
-                    class="field-label"
-                >{{ t('submitPage.googleMaps') }}</label>
-                <input
-                    id="submit-googlemaps"
-                    v-model="location"
-                    data-testid="submit-input-googlemaps"
-                    type="url"
-                    class="field"
-                    autocomplete="off"
-                    :placeholder="t('submitPage.location')"
-                    :aria-invalid="hasVisibleError('googleMapsUrl') ? 'true' : undefined"
-                    :aria-describedby="hasVisibleError('googleMapsUrl') ? 'submit-googlemaps-error' : undefined"
-                    @blur="initialValidationCheck(location, 'googleMaps')"
-                >
-                <p
-                    v-if="hasVisibleError('googleMapsUrl')"
-                    id="submit-googlemaps-error"
-                    class="field-error"
-                >
-                    {{ t('submitPage.googleMapsValidation') }}
-                </p>
-            </div>
-
-            <fieldset class="m-0 min-w-0 border-0 p-0">
-                <legend class="field-label">
-                    {{ t('submitPage.healthcareProfessionalName') }}
-                </legend>
-                <div class="grid grid-cols-1 gap-3 landscape:grid-cols-2">
-                    <div>
-                        <label
-                            for="submit-lastname"
-                            class="sr-only"
-                        >{{ t('submitPage.lastName') }}</label>
-                        <input
-                            id="submit-lastname"
-                            v-model="lastName"
-                            data-testid="submit-input-lastname"
-                            type="text"
-                            class="field"
-                            maxlength="30"
-                            :placeholder="t('submitPage.lastName')"
-                            :aria-invalid="hasVisibleError('lastName') ? 'true' : undefined"
-                            :aria-describedby="hasVisibleError('lastName') ? 'submit-lastname-error' : undefined"
-                            @blur="initialValidationCheck(lastName, 'lastName')"
-                        >
-                        <p
-                            v-if="hasVisibleError('lastName')"
-                            id="submit-lastname-error"
-                            class="field-error"
-                        >
-                            {{ t('submitPage.lastNameValidation') }}
-                        </p>
-                    </div>
-                    <div>
-                        <label
-                            for="submit-firstname"
-                            class="sr-only"
-                        >{{ t('submitPage.firstName') }}</label>
-                        <input
-                            id="submit-firstname"
-                            v-model="firstName"
-                            data-testid="submit-input-firstname"
-                            type="text"
-                            class="field"
-                            maxlength="30"
-                            :placeholder="t('submitPage.firstName')"
-                            :aria-invalid="hasVisibleError('firstName') ? 'true' : undefined"
-                            :aria-describedby="hasVisibleError('firstName') ? 'submit-firstname-error' : undefined"
-                            @blur="initialValidationCheck(firstName, 'firstName')"
-                        >
-                        <p
-                            v-if="hasVisibleError('firstName')"
-                            id="submit-firstname-error"
-                            class="field-error"
-                        >
-                            {{ t('submitPage.firstNameValidation') }}
-                        </p>
-                    </div>
-                </div>
-            </fieldset>
-
-            <fieldset class="m-0 min-w-0 border-0 p-0">
-                <legend class="field-label">
-                    {{ t('submitPage.spokenLanguages') }}
-                </legend>
-                <p
-                    id="submit-languages-hint"
-                    class="field-hint mb-2"
-                >
-                    {{ t('submitPage.spokenLanguagesHint') }}
-                </p>
-                <div
-                    class="mb-2 flex flex-wrap gap-2"
-                    aria-describedby="submit-languages-hint"
-                >
-                    <span
-                        class="chip chip-primary"
-                        data-testid="submit-language-ja"
-                    >
-                        {{ japaneseLabel }}
-                    </span>
-                    <span
-                        v-for="code in extraLanguages"
-                        :key="code"
-                        class="chip gap-2"
-                    >
-                        {{ languageLabel(code) }}
-                        <button
-                            type="button"
-                            class="text-primary-text-muted"
-                            :aria-label="t('submitPage.removeLanguage', { language: languageLabel(code) })"
-                            @click="removeLanguage(code)"
-                        >
-                            ×
-                        </button>
-                    </span>
-                </div>
-                <label
-                    for="submit-add-language"
-                    class="sr-only"
-                >{{ t('submitPage.addLanguage') }}</label>
-                <select
-                    id="submit-add-language"
-                    v-model="languageToAdd"
-                    data-testid="submit-add-language"
-                    class="field"
-                    :aria-invalid="hasVisibleError('spokenLanguages') ? 'true' : undefined"
-                    :aria-describedby="hasVisibleError('spokenLanguages') ? 'submit-languages-error' : undefined"
-                    @change="addLanguage"
-                >
-                    <option value="">
-                        {{ t('submitPage.addLanguage') }}
-                    </option>
-                    <option
-                        v-for="languageOption in languagesAvailableToAdd"
-                        :key="languageOption.code"
-                        :value="languageOption.code"
-                    >
-                        {{ languageOption.displayText }}
-                    </option>
-                </select>
-                <p
-                    v-if="hasVisibleError('spokenLanguages')"
-                    id="submit-languages-error"
-                    role="alert"
-                    class="field-error"
-                >
-                    {{ t('submitPage.spokenLanguageValidation') }}
-                </p>
-            </fieldset>
-
-            <div>
-                <label
-                    for="submit-notes"
-                    class="field-label"
-                >
-                    {{ t('submitPage.otherNotes') }}
-                    <span class="font-normal text-primary-text-muted">({{ t('submitPage.optional') }})</span>
-                </label>
-                <textarea
-                    id="submit-notes"
-                    v-model="otherNotes"
-                    data-testid="submit-input-notes"
-                    class="field field-textarea"
-                    maxlength="300"
-                    aria-describedby="submit-notes-hint"
-                />
-                <p
-                    id="submit-notes-hint"
-                    class="field-hint"
-                >
-                    {{ otherNotes.length }}/300
-                </p>
-            </div>
-
             <div
-                v-if="mapsLinkIsValid"
-                data-testid="submit-preview"
-                class="flex flex-col gap-3 rounded-lg border border-accent-bg p-4"
+                class="grid grid-cols-1 items-start gap-5"
+                :class="{ 'lg:grid-cols-2': mapsLinkIsValid }"
             >
-                <h2 class="text-base font-semibold text-primary-text">
-                    {{ t('submitPage.previewHeading') }}
-                </h2>
-                <p
-                    v-if="existingFacility"
-                    data-testid="submit-existing-place"
-                    class="rounded-md bg-secondary-bg p-3 text-sm text-primary-text"
-                    role="status"
-                >
-                    {{ t('submitPage.existingPlace') }}
-                    <a
-                        :href="existingFacilityHref"
-                        class="text-primary"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >{{ existingFacilityLabel }}</a>
-                    <a
-                        :href="CONTACT_MAILTO"
-                        class="text-primary"
-                    >{{ t('submitPage.existingPlaceContact') }}</a>
-                </p>
-                <div
-                    v-if="placeLabel || placeAddress || mapsPlaceLoading"
-                    data-testid="submit-place-card"
-                    class="flex flex-col gap-1"
-                >
-                    <p
-                        v-if="placeLabel"
-                        data-testid="submit-place-name"
-                        class="text-base font-semibold text-primary-text"
-                    >
-                        {{ placeLabel }}
-                    </p>
-                    <p
-                        v-if="placeCategory"
-                        data-testid="submit-place-category"
-                        class="text-sm text-primary-text-muted"
-                    >
-                        <span class="sr-only">{{ t('submitPage.previewCategory') }}</span>
-                        {{ placeCategory }}
-                    </p>
-                    <p
-                        v-if="placeAddress"
-                        data-testid="submit-place-address"
-                        class="text-sm text-primary-text"
-                    >
-                        <span class="sr-only">{{ t('submitPage.previewAddress') }}</span>
-                        {{ placeAddress }}
-                    </p>
-                    <p
-                        v-else-if="mapsPlaceLoading"
-                        class="text-sm text-primary-text-muted"
-                    >
-                        {{ t('submitPage.previewLookingUp') }}
-                    </p>
-                    <p
-                        v-if="placeAddress"
-                        class="text-xs text-primary-text-muted"
-                    >
-                        Google
-                    </p>
+                <div class="flex min-w-0 flex-col gap-5">
+                    <div>
+                        <label
+                            for="submit-googlemaps"
+                            class="field-label"
+                        >{{ t('submitPage.googleMaps') }}</label>
+                        <input
+                            id="submit-googlemaps"
+                            v-model="location"
+                            data-testid="submit-input-googlemaps"
+                            type="url"
+                            class="field"
+                            autocomplete="off"
+                            :placeholder="t('submitPage.location')"
+                            :aria-invalid="hasVisibleError('googleMapsUrl') ? 'true' : undefined"
+                            :aria-describedby="hasVisibleError('googleMapsUrl') ? 'submit-googlemaps-error' : undefined"
+                            @blur="initialValidationCheck(location, 'googleMaps')"
+                        >
+                        <p
+                            v-if="hasVisibleError('googleMapsUrl')"
+                            id="submit-googlemaps-error"
+                            class="field-error"
+                        >
+                            {{ t('submitPage.googleMapsValidation') }}
+                        </p>
+                    </div>
+
+                    <fieldset class="m-0 min-w-0 border-0 p-0">
+                        <legend class="field-label">
+                            {{ t('submitPage.healthcareProfessionalName') }}
+                        </legend>
+                        <div class="grid grid-cols-1 gap-3 landscape:grid-cols-2">
+                            <div>
+                                <label
+                                    for="submit-lastname"
+                                    class="sr-only"
+                                >{{ t('submitPage.lastName') }}</label>
+                                <input
+                                    id="submit-lastname"
+                                    v-model="lastName"
+                                    data-testid="submit-input-lastname"
+                                    type="text"
+                                    class="field"
+                                    maxlength="30"
+                                    :placeholder="t('submitPage.lastName')"
+                                    :aria-invalid="hasVisibleError('lastName') ? 'true' : undefined"
+                                    :aria-describedby="hasVisibleError('lastName') ? 'submit-lastname-error' : undefined"
+                                    @blur="initialValidationCheck(lastName, 'lastName')"
+                                >
+                                <p
+                                    v-if="hasVisibleError('lastName')"
+                                    id="submit-lastname-error"
+                                    class="field-error"
+                                >
+                                    {{ t('submitPage.lastNameValidation') }}
+                                </p>
+                            </div>
+                            <div>
+                                <label
+                                    for="submit-firstname"
+                                    class="sr-only"
+                                >{{ t('submitPage.firstName') }}</label>
+                                <input
+                                    id="submit-firstname"
+                                    v-model="firstName"
+                                    data-testid="submit-input-firstname"
+                                    type="text"
+                                    class="field"
+                                    maxlength="30"
+                                    :placeholder="t('submitPage.firstName')"
+                                    :aria-invalid="hasVisibleError('firstName') ? 'true' : undefined"
+                                    :aria-describedby="hasVisibleError('firstName') ? 'submit-firstname-error' : undefined"
+                                    @blur="initialValidationCheck(firstName, 'firstName')"
+                                >
+                                <p
+                                    v-if="hasVisibleError('firstName')"
+                                    id="submit-firstname-error"
+                                    class="field-error"
+                                >
+                                    {{ t('submitPage.firstNameValidation') }}
+                                </p>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="m-0 min-w-0 border-0 p-0">
+                        <legend class="field-label">
+                            {{ t('submitPage.spokenLanguages') }}
+                        </legend>
+                        <p
+                            id="submit-languages-hint"
+                            class="field-hint mb-2"
+                        >
+                            {{ t('submitPage.spokenLanguagesHint') }}
+                        </p>
+                        <div
+                            class="mb-2 flex flex-wrap gap-2"
+                            aria-describedby="submit-languages-hint"
+                        >
+                            <span
+                                class="chip chip-primary"
+                                data-testid="submit-language-ja"
+                            >
+                                {{ japaneseLabel }}
+                            </span>
+                            <span
+                                v-for="code in extraLanguages"
+                                :key="code"
+                                class="chip gap-2"
+                            >
+                                {{ languageLabel(code) }}
+                                <button
+                                    type="button"
+                                    class="text-primary-text-muted"
+                                    :aria-label="t('submitPage.removeLanguage', { language: languageLabel(code) })"
+                                    @click="removeLanguage(code)"
+                                >
+                                    ×
+                                </button>
+                            </span>
+                        </div>
+                        <label
+                            for="submit-add-language"
+                            class="sr-only"
+                        >{{ t('submitPage.addLanguage') }}</label>
+                        <select
+                            id="submit-add-language"
+                            v-model="languageToAdd"
+                            data-testid="submit-add-language"
+                            class="field"
+                            :aria-invalid="hasVisibleError('spokenLanguages') ? 'true' : undefined"
+                            :aria-describedby="hasVisibleError('spokenLanguages') ? 'submit-languages-error' : undefined"
+                            @change="addLanguage"
+                        >
+                            <option value="">
+                                {{ t('submitPage.addLanguage') }}
+                            </option>
+                            <option
+                                v-for="languageOption in languagesAvailableToAdd"
+                                :key="languageOption.code"
+                                :value="languageOption.code"
+                            >
+                                {{ languageOption.displayText }}
+                            </option>
+                        </select>
+                        <p
+                            v-if="hasVisibleError('spokenLanguages')"
+                            id="submit-languages-error"
+                            role="alert"
+                            class="field-error"
+                        >
+                            {{ t('submitPage.spokenLanguageValidation') }}
+                        </p>
+                    </fieldset>
+
+                    <div>
+                        <label
+                            for="submit-notes"
+                            class="field-label"
+                        >
+                            {{ t('submitPage.otherNotes') }}
+                            <span class="font-normal text-primary-text-muted">({{ t('submitPage.optional') }})</span>
+                        </label>
+                        <textarea
+                            id="submit-notes"
+                            v-model="otherNotes"
+                            data-testid="submit-input-notes"
+                            class="field field-textarea"
+                            maxlength="300"
+                            aria-describedby="submit-notes-hint"
+                        />
+                        <p
+                            id="submit-notes-hint"
+                            class="field-hint"
+                        >
+                            {{ otherNotes.length }}/300
+                        </p>
+                    </div>
                 </div>
-                <dl class="grid gap-3 text-sm">
-                    <div>
-                        <dt class="font-semibold text-primary-text">
-                            {{ t('submitPage.previewLocation') }}
-                        </dt>
-                        <dd>
-                            <a
-                                :href="location.trim()"
-                                class="text-primary"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >{{ t('submitPage.previewOpenMap') }}</a>
-                        </dd>
+                <div
+                    v-if="mapsLinkIsValid"
+                    data-testid="submit-preview"
+                    class="flex flex-col gap-3 self-start rounded-lg border border-accent-bg p-4 lg:sticky lg:top-6"
+                >
+                    <h2 class="text-base font-semibold text-primary-text">
+                        {{ t('submitPage.previewHeading') }}
+                    </h2>
+                    <p
+                        v-if="existingFacility"
+                        data-testid="submit-existing-place"
+                        class="rounded-md bg-secondary-bg p-3 text-sm text-primary-text"
+                        role="status"
+                    >
+                        {{ t('submitPage.existingPlace') }}
+                        <a
+                            :href="existingFacilityHref"
+                            class="text-primary"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >{{ existingFacilityLabel }}</a>
+                        <a
+                            :href="CONTACT_MAILTO"
+                            class="text-primary"
+                        >{{ t('submitPage.existingPlaceContact') }}</a>
+                    </p>
+                    <div
+                        v-if="placeLabel || placeAddress || mapsPlaceLoading"
+                        data-testid="submit-place-card"
+                        class="flex flex-col gap-1"
+                    >
+                        <p
+                            v-if="placeLabel"
+                            data-testid="submit-place-name"
+                            class="text-base font-semibold text-primary-text"
+                        >
+                            {{ placeLabel }}
+                        </p>
+                        <p
+                            v-if="placeCategory"
+                            data-testid="submit-place-category"
+                            class="text-sm text-primary-text-muted"
+                        >
+                            <span class="sr-only">{{ t('submitPage.previewCategory') }}</span>
+                            {{ placeCategory }}
+                        </p>
+                        <p
+                            v-if="placeAddress"
+                            data-testid="submit-place-address"
+                            class="text-sm text-primary-text"
+                        >
+                            <span class="sr-only">{{ t('submitPage.previewAddress') }}</span>
+                            {{ placeAddress }}
+                        </p>
+                        <p
+                            v-else-if="mapsPlaceLoading"
+                            class="text-sm text-primary-text-muted"
+                        >
+                            {{ t('submitPage.previewLookingUp') }}
+                        </p>
+                        <p
+                            v-if="placeAddress"
+                            class="text-xs text-primary-text-muted"
+                        >
+                            Google
+                        </p>
                     </div>
-                    <div v-if="submittedName">
-                        <dt class="font-semibold text-primary-text">
-                            {{ t('submitPage.previewName') }}
-                        </dt>
-                        <dd class="text-primary-text-muted">
-                            {{ submittedName }}
-                        </dd>
-                    </div>
-                    <div>
-                        <dt class="font-semibold text-primary-text">
-                            {{ t('submitPage.previewLanguages') }}
-                        </dt>
-                        <dd class="text-primary-text-muted">
-                            {{ submittedLanguageLabels }}
-                        </dd>
-                    </div>
-                    <div v-if="otherNotes.trim()">
-                        <dt class="font-semibold text-primary-text">
-                            {{ t('submitPage.previewNotes') }}
-                        </dt>
-                        <dd class="whitespace-pre-wrap text-primary-text-muted">
-                            {{ otherNotes.trim() }}
-                        </dd>
-                    </div>
-                </dl>
+                    <dl class="grid gap-3 text-sm">
+                        <div>
+                            <dt class="font-semibold text-primary-text">
+                                {{ t('submitPage.previewLocation') }}
+                            </dt>
+                            <dd>
+                                <a
+                                    :href="location.trim()"
+                                    class="text-primary"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >{{ t('submitPage.previewOpenMap') }}</a>
+                            </dd>
+                        </div>
+                        <div v-if="submittedName">
+                            <dt class="font-semibold text-primary-text">
+                                {{ t('submitPage.previewName') }}
+                            </dt>
+                            <dd class="text-primary-text-muted">
+                                {{ submittedName }}
+                            </dd>
+                        </div>
+                        <div>
+                            <dt class="font-semibold text-primary-text">
+                                {{ t('submitPage.previewLanguages') }}
+                            </dt>
+                            <dd class="text-primary-text-muted">
+                                {{ submittedLanguageLabels }}
+                            </dd>
+                        </div>
+                        <div v-if="otherNotes.trim()">
+                            <dt class="font-semibold text-primary-text">
+                                {{ t('submitPage.previewNotes') }}
+                            </dt>
+                            <dd class="whitespace-pre-wrap text-primary-text-muted">
+                                {{ otherNotes.trim() }}
+                            </dd>
+                        </div>
+                    </dl>
+                </div>
             </div>
 
             <button
@@ -356,7 +362,11 @@ const languagesAvailableToAdd = computed(() =>
 const mapsLinkIsValid = computed(() => validations.validateGoogleMapsUrlInput(location.value))
 const mapsPlace = ref<validations.MapsPlacePreview | null>(null)
 const mapsPlaceLoading = ref(false)
+const PLACE_LOOKUP_LIMIT = 8
+const PLACE_LOOKUP_DELAY_MS = 800
 let mapsPlaceRequest = 0
+let mapsPlaceLookups = 0
+let lastLookupKey = ''
 let mapsPlaceTimer: ReturnType<typeof setTimeout> | undefined
 const placeLabel = computed(() => mapsPlace.value?.name ?? null)
 const placeAddress = computed(() => mapsPlace.value?.address ?? null)
@@ -544,6 +554,10 @@ async function lookupExistingFacility(placeId: string | null) {
     }
 }
 
+function placeLookupKey(url: string): string {
+    return `${isJapaneseLocale(locale.value) ? 'ja' : 'en'}:${url}`
+}
+
 function scheduleMapsPlace(value: string) {
     if (mapsPlaceTimer) clearTimeout(mapsPlaceTimer)
     const trimmed = value.trim()
@@ -551,12 +565,19 @@ function scheduleMapsPlace(value: string) {
     if (!parsed) {
         mapsPlace.value = null
         mapsPlaceLoading.value = false
+        lastLookupKey = ''
+        return
+    }
+
+    const lookupKey = placeLookupKey(trimmed)
+    if (lookupKey === lastLookupKey && mapsPlace.value) {
+        mapsPlaceLoading.value = false
         return
     }
 
     mapsPlace.value = parsed
     const canLookUp = Boolean(parsed.name || parsed.placeId || validations.isResolvableShortMapsUrl(trimmed))
-    if (!canLookUp) {
+    if (!canLookUp || mapsPlaceLookups >= PLACE_LOOKUP_LIMIT) {
         mapsPlaceLoading.value = false
         return
     }
@@ -565,33 +586,45 @@ function scheduleMapsPlace(value: string) {
     const request = ++mapsPlaceRequest
     mapsPlaceTimer = setTimeout(() => {
         void loadMapsPlace(trimmed, parsed, request)
-    }, 400)
+    }, PLACE_LOOKUP_DELAY_MS)
 }
 
 async function loadMapsPlace(url: string, parsed: validations.MapsPlacePreview, request: number) {
+    const lookupKey = placeLookupKey(url)
     try {
         let place = parsed
+        let lookupUrl = url
         if (validations.isResolvableShortMapsUrl(url)) {
             const preview = await $fetch<{
                 name: string | null
                 latitude: number | null
                 longitude: number | null
                 placeId: string | null
+                resolvedUrl: string
             }>('/api/maps-preview', { query: { url } })
             if (request !== mapsPlaceRequest) return
-            place = { ...preview, address: null, category: null }
+            place = {
+                name: preview.name,
+                latitude: preview.latitude,
+                longitude: preview.longitude,
+                placeId: preview.placeId,
+                address: null,
+                category: null
+            }
+            lookupUrl = preview.resolvedUrl
             mapsPlace.value = place
         }
 
-        if (!place.name && !place.placeId) return
-        const details = await fetchMapsPlaceDetails({
-            name: place.name,
-            latitude: place.latitude,
-            longitude: place.longitude,
-            placeId: place.placeId,
-            languageCode: isJapaneseLocale(locale.value) ? 'ja' : 'en'
-        })
-        if (request !== mapsPlaceRequest || !details) return
+        if (validations.isResolvableShortMapsUrl(lookupUrl)) return
+        if (mapsPlaceLookups >= PLACE_LOOKUP_LIMIT) return
+        mapsPlaceLookups += 1
+        const details = await fetchMapsPlaceDetails(
+            lookupUrl,
+            isJapaneseLocale(locale.value) ? 'ja' : 'en'
+        )
+        if (request !== mapsPlaceRequest) return
+        lastLookupKey = lookupKey
+        if (!details) return
         mapsPlace.value = {
             ...place,
             name: details.name ?? place.name,

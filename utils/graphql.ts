@@ -50,7 +50,7 @@ export const graphQLClientRequestWithRetry = async <T>(
     retryOptions?: graphQLClientRequestWithRetryOptions
 ): Promise<ServerResponse<T>> => {
     let attempts = 0
-    const retryAmount = retryOptions?.retryAmount || 3
+    const retryAmount = retryOptions?.retryAmount ?? 3
     const requestTimeoutInMilliseconds = retryOptions?.requestTimeoutInMilliseconds || 5000
 
     const executeGQLClientRequest = async (): Promise<ServerResponse<T>> => {

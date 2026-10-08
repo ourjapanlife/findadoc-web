@@ -16,8 +16,7 @@ describe('graphQLClientRequestWithRetry: per-attempt deadline', () => {
     })
 
     /*
-     * retryAmount is read as `retryOptions?.retryAmount || 3`, so 0 is indistinguishable from
-     * unset and still retries three times. 1 is the smallest value that actually limits it.
+     * retryAmount 0 is a single attempt. 1 allows one retry. An omitted value still retries three times.
      */
     const publicOptions = { skipAuth: true, retryAmount: 1, requestTimeoutInMilliseconds: 1 }
 
