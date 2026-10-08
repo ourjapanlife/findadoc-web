@@ -213,6 +213,19 @@
                             {{ placeLabel }}
                         </dd>
                     </div>
+                    <div v-else-if="mapsPlaceLoading">
+                        <dd class="text-primary-text-muted">
+                            {{ t('submitPage.previewLookingUp') }}
+                        </dd>
+                    </div>
+                    <div v-if="placePin">
+                        <dt class="font-semibold text-primary-text">
+                            {{ t('submitPage.previewPin') }}
+                        </dt>
+                        <dd class="text-primary-text-muted">
+                            {{ placePin }}
+                        </dd>
+                    </div>
                     <div>
                         <dt class="font-semibold text-primary-text">
                             {{ t('submitPage.previewLocation') }}
@@ -220,10 +233,10 @@
                         <dd>
                             <a
                                 :href="location.trim()"
-                                class="break-all text-primary"
+                                class="text-primary"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                            >{{ location.trim() }}</a>
+                            >{{ t('submitPage.previewOpenMap') }}</a>
                         </dd>
                     </div>
                     <div v-if="submittedName">
@@ -266,7 +279,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref, watch, nextTick, onMounted } from 'vue'
+import { computed, ref, watch, nextTick, onMounted, onUnmounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useAppToast } from '~/composables/useAppToast'
 import * as validations from '~/utils/formValidations'
@@ -298,7 +311,17 @@ const languagesAvailableToAdd = computed(() =>
             spokenLanguageSortKey(right), 'en', { sensitivity: 'base' }
         )))
 const mapsLinkIsValid = computed(() => validations.validateGoogleMapsUrlInput(location.value))
-const placeLabel = computed(() => validations.placeLabelFromMapsUrl(location.value))
+const mapsPlace = ref<validations.MapsPlacePreview | null>(null)
+const mapsPlaceLoading = ref(false)
+let mapsPlaceRequest = 0
+let mapsPlaceTimer: ReturnType<typeof setTimeout> | undefined
+const placeLabel = computed(() => mapsPlace.value?.name ?? null)
+const placePin = computed(() => {
+    const latitude = mapsPlace.value?.latitude
+    const longitude = mapsPlace.value?.longitude
+    if (latitude == null || longitude == null) return null
+    return `${latitude.toFixed(5)}, ${longitude.toFixed(5)}`
+})
 const submittedName = computed(() => [firstName.value, lastName.value].map(part => part.trim()).filter(Boolean).join(' '))
 const submittedLanguageLabels = computed(() =>
     [Locale.JaJp, ...extraLanguages.value].map(code => languageLabel(code)).join(', '))
@@ -438,7 +461,44 @@ watch(() => location.value, newValue => {
     if (validationCheckedPreviously.googleMapsUrl.value) {
         isValidInput.googleMapsUrl.value = validations.validateGoogleMapsUrlInput(newValue)
     }
+    scheduleMapsPlace(newValue)
 })
+
+function scheduleMapsPlace(value: string) {
+    if (mapsPlaceTimer) clearTimeout(mapsPlaceTimer)
+    const trimmed = value.trim()
+    const parsed = validations.parseMapsPlace(trimmed)
+    if (!parsed) {
+        mapsPlace.value = null
+        mapsPlaceLoading.value = false
+        return
+    }
+    if (!validations.isResolvableShortMapsUrl(trimmed)) {
+        mapsPlace.value = parsed
+        mapsPlaceLoading.value = false
+        return
+    }
+
+    mapsPlaceLoading.value = true
+    const request = ++mapsPlaceRequest
+    mapsPlaceTimer = setTimeout(() => {
+        void loadMapsPlace(trimmed, request)
+    }, 400)
+}
+
+async function loadMapsPlace(url: string, request: number) {
+    try {
+        const preview = await $fetch<validations.MapsPlacePreview>('/api/maps-preview', { query: { url } })
+        if (request !== mapsPlaceRequest) return
+        mapsPlace.value = preview
+    } catch (error) {
+        if (request !== mapsPlaceRequest) return
+        console.error('Reading a Maps link failed', error)
+        mapsPlace.value = validations.parseMapsPlace(url)
+    } finally {
+        if (request === mapsPlaceRequest) mapsPlaceLoading.value = false
+    }
+}
 watch(() => lastName.value, newValue => {
     if (validationCheckedPreviously.lastName.value) {
         isValidInput.lastName.value = validations.validateUserSubmittedLastName(newValue)
@@ -454,6 +514,10 @@ watch(extraLanguages, () => {
         isValidInput.spokenLanguages.value = validations.validateSubmittedSpokenLanguages(extraLanguages.value)
     }
 }, { deep: true })
+
+onUnmounted(() => {
+    if (mapsPlaceTimer) clearTimeout(mapsPlaceTimer)
+})
 
 onMounted(() => {
     resetForm()

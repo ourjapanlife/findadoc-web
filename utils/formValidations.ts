@@ -216,19 +216,91 @@ export function validateUserSubmittedFirstName(name: string): boolean {
     return true
 }
 
-/** The place name a Maps URL already carries in its path. Short links have none. */
-export function placeLabelFromMapsUrl(url: string): string | null {
+export type MapsPlacePreview = {
+    name: string | null
+    latitude: number | null
+    longitude: number | null
+}
+
+const COORDINATE_PAIR = /^(-?\d+(?:\.\d+)?),\s*(-?\d+(?:\.\d+)?)$/
+
+/** A share link with an id long enough to open. The prefix alone is not one. */
+export function isResolvableShortMapsUrl(url: string): boolean {
+    try {
+        const parsed = new URL(url.trim())
+        if (parsed.protocol !== 'https:') return false
+        if (parsed.hostname === 'maps.app.goo.gl') {
+            return parsed.pathname.replace(/^\//, '').length >= 4
+        }
+        if (parsed.hostname === 'goo.gl' && parsed.pathname.startsWith('/maps/')) {
+            return parsed.pathname.slice('/maps/'.length).length >= 4
+        }
+        return false
+    } catch {
+        return false
+    }
+}
+
+/**
+ * Name and pin already written into a Maps URL.
+ * A short share link has neither until it is opened.
+ */
+export function parseMapsPlace(url: string): MapsPlacePreview | null {
     const trimmed = url.trim()
     if (!validateGoogleMapsUrlInput(trimmed)) return null
 
     try {
-        const match = new URL(trimmed).pathname.match(/\/place\/([^/]+)/)
-        if (!match?.[1]) return null
-        const label = decodeURIComponent(match[1]).replace(/\+/g, ' ').trim()
-        return label || null
+        const parsed = new URL(trimmed)
+        const placeMatch = parsed.pathname.match(/\/(?:place|search)\/([^/]+)/)
+        const queryName = parsed.searchParams.get('q') ?? parsed.searchParams.get('query')
+        const pin = mapPin(parsed)
+        return {
+            name: placeName(placeMatch?.[1]) ?? placeName(queryName, true),
+            latitude: pin?.latitude ?? null,
+            longitude: pin?.longitude ?? null
+        }
     } catch {
         return null
     }
+}
+
+/** The place name a Maps URL already carries. Short links have none. */
+export function placeLabelFromMapsUrl(url: string): string | null {
+    return parseMapsPlace(url)?.name ?? null
+}
+
+function placeName(value: string | null | undefined, rejectCoordinates = false): string | null {
+    if (!value) return null
+    let label: string
+    try {
+        label = decodeURIComponent(value).replace(/\+/g, ' ').trim()
+    } catch {
+        return null
+    }
+    if (!label || label.startsWith('@') || (rejectCoordinates && readCoordinatePair(label))) return null
+    return label
+}
+
+function mapPin(parsed: URL): { latitude: number, longitude: number } | null {
+    const dataPin = parsed.pathname.match(/!3d(-?\d+(?:\.\d+)?)!4d(-?\d+(?:\.\d+)?)/)
+    const atPin = parsed.pathname.match(/@(-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?)/)
+    const queryPin = parsed.searchParams.get('ll')
+      ?? parsed.searchParams.get('q')
+      ?? parsed.searchParams.get('query')
+    return readCoordinatePair(dataPin ? `${dataPin[1]},${dataPin[2]}` : null)
+      ?? readCoordinatePair(atPin ? `${atPin[1]},${atPin[2]}` : null)
+      ?? readCoordinatePair(queryPin)
+}
+
+function readCoordinatePair(value: string | null | undefined): { latitude: number, longitude: number } | null {
+    if (!value) return null
+    const match = value.trim().match(COORDINATE_PAIR)
+    if (!match?.[1] || !match[2]) return null
+    const latitude = Number(match[1])
+    const longitude = Number(match[2])
+    if (!Number.isFinite(latitude) || !Number.isFinite(longitude)) return null
+    if (Math.abs(latitude) > 90 || Math.abs(longitude) > 180) return null
+    return { latitude, longitude }
 }
 
 export function validateGoogleMapsUrlInput(url: string): boolean {
