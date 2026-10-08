@@ -440,18 +440,6 @@ function applySuggestedEditCity(city: (CityOption & { prefectureJa: string }) | 
     applyEditCity(city)
 }
 
-function applySuggestedEditCity(city: (CityOption & { prefectureJa: string }) | null) {
-    if (!city) {
-        applyEditCity(null)
-        return
-    }
-
-    const fields = facilityStore.facilitySectionFields
-    fields.prefectureEn = city.prefectureEn
-    fields.prefectureJa = city.prefectureJa
-    applyEditCity(city)
-}
-
 function applyEditCity(city: CityOption | null) {
     const fields = facilityStore.facilitySectionFields
     if (!city) {
