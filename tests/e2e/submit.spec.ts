@@ -53,11 +53,21 @@ test.describe('Submit page', () => {
             await expect(page.getByText(enUS.submitPage.spokenLanguageValidation)).toBeHidden()
         })
 
-        test('requires Spoken Language 1 to be selected', async ({ page }) => {
+        test('requires a language besides Japanese', async ({ page }) => {
             await page.getByRole('button', { name: enUS.submitPage.submitButton }).click()
             await expect(page.getByText(enUS.submitPage.spokenLanguageValidation)).toBeVisible()
-            await page.getByTestId('submit-select-language1').selectOption('ja_JP')
+            await page.getByTestId('submit-add-language').selectOption('en_US')
             await expect(page.getByText(enUS.submitPage.spokenLanguageValidation)).toBeHidden()
+            await expect(page.getByTestId('submit-language-ja')).toBeVisible()
+        })
+
+        test('shows a summary once the maps link is valid', async ({ page }) => {
+            const urlInput = page.getByPlaceholder(enUS.submitPage.location)
+            await urlInput.fill('https://www.google.com/maps/place/Shibuya+Clinic')
+            await urlInput.blur()
+            await expect(page.getByTestId('submit-preview')).toBeVisible()
+            await expect(page.getByTestId('submit-preview')).toContainText('Shibuya Clinic')
+            await expect(page.getByTestId('submit-preview')).toContainText('日本語')
         })
     })
 

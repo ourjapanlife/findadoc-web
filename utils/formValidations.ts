@@ -216,6 +216,21 @@ export function validateUserSubmittedFirstName(name: string): boolean {
     return true
 }
 
+/** The place name a Maps URL already carries in its path. Short links have none. */
+export function placeLabelFromMapsUrl(url: string): string | null {
+    const trimmed = url.trim()
+    if (!validateGoogleMapsUrlInput(trimmed)) return null
+
+    try {
+        const match = new URL(trimmed).pathname.match(/\/place\/([^/]+)/)
+        if (!match?.[1]) return null
+        const label = decodeURIComponent(match[1]).replace(/\+/g, ' ').trim()
+        return label || null
+    } catch {
+        return null
+    }
+}
+
 export function validateGoogleMapsUrlInput(url: string): boolean {
     url = url.trim()
     if (url.startsWith('https://www.google.com/maps') || url.startsWith('https://www.google.co.jp/maps')
@@ -233,6 +248,12 @@ export function validateFirstSpokenLanguage(localeCode: string): boolean {
         return true
     }
     return false
+}
+
+/** Japanese is assumed. At least one other real locale is required. */
+export function validateSubmittedSpokenLanguages(locales: readonly string[]): boolean {
+    const extra = locales.filter(locale => locale !== Locale.JaJp)
+    return extra.length > 0 && extra.every(locale => Object.values<string>(Locale).includes(locale))
 }
 
 export function validateSecondSpokenLanguage(localeCode: string): boolean {

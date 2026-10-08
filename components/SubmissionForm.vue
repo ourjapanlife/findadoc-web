@@ -102,28 +102,60 @@
                 </div>
             </fieldset>
 
-            <div>
-                <label
-                    for="submit-language1"
-                    class="field-label"
-                >{{ t('submitPage.spokenLanguage1') }}</label>
-                <select
-                    id="submit-language1"
-                    v-model="selectLanguage1"
-                    data-testid="submit-select-language1"
-                    class="field"
-                    :aria-invalid="hasVisibleError('primarySpokeLangauge') ? 'true' : undefined"
-                    :aria-describedby="hasVisibleError('primarySpokeLangauge') ? 'submit-language1-error' : undefined"
-                    @change="initialValidationCheck(selectLanguage1, 'primaryLanguage')"
+            <fieldset class="m-0 min-w-0 border-0 p-0">
+                <legend class="field-label">
+                    {{ t('submitPage.spokenLanguages') }}
+                </legend>
+                <p
+                    id="submit-languages-hint"
+                    class="field-hint mb-2"
                 >
-                    <option
-                        value=""
-                        disabled
+                    {{ t('submitPage.spokenLanguagesHint') }}
+                </p>
+                <div
+                    class="mb-2 flex flex-wrap gap-2"
+                    aria-describedby="submit-languages-hint"
+                >
+                    <span
+                        class="chip chip-primary"
+                        data-testid="submit-language-ja"
                     >
-                        {{ t('submitPage.selectLanguage1') }}
+                        {{ japaneseLabel }}
+                    </span>
+                    <span
+                        v-for="code in extraLanguages"
+                        :key="code"
+                        class="chip gap-2"
+                    >
+                        {{ languageLabel(code) }}
+                        <button
+                            type="button"
+                            class="text-primary-text-muted"
+                            :aria-label="t('submitPage.removeLanguage', { language: languageLabel(code) })"
+                            @click="removeLanguage(code)"
+                        >
+                            ×
+                        </button>
+                    </span>
+                </div>
+                <label
+                    for="submit-add-language"
+                    class="sr-only"
+                >{{ t('submitPage.addLanguage') }}</label>
+                <select
+                    id="submit-add-language"
+                    v-model="languageToAdd"
+                    data-testid="submit-add-language"
+                    class="field"
+                    :aria-invalid="hasVisibleError('spokenLanguages') ? 'true' : undefined"
+                    :aria-describedby="hasVisibleError('spokenLanguages') ? 'submit-languages-error' : undefined"
+                    @change="addLanguage"
+                >
+                    <option value="">
+                        {{ t('submitPage.addLanguage') }}
                     </option>
                     <option
-                        v-for="locale in localeStore.localeDisplayOptions"
+                        v-for="locale in languagesAvailableToAdd"
                         :key="locale.code"
                         :value="locale.code"
                     >
@@ -131,51 +163,14 @@
                     </option>
                 </select>
                 <p
-                    v-if="hasVisibleError('primarySpokeLangauge')"
-                    id="submit-language1-error"
+                    v-if="hasVisibleError('spokenLanguages')"
+                    id="submit-languages-error"
                     role="alert"
                     class="field-error"
                 >
                     {{ t('submitPage.spokenLanguageValidation') }}
                 </p>
-            </div>
-
-            <div>
-                <label
-                    for="submit-language2"
-                    class="field-label"
-                >
-                    {{ t('submitPage.spokenLanguage2') }}
-                    <span class="font-normal text-primary-text-muted">({{ t('submitPage.optional') }})</span>
-                </label>
-                <select
-                    id="submit-language2"
-                    v-model="selectLanguage2"
-                    data-testid="submit-select-language2"
-                    class="field"
-                    :aria-invalid="hasVisibleError('secondarySpokenLanguage') ? 'true' : undefined"
-                    :aria-describedby="hasVisibleError('secondarySpokenLanguage') ? 'submit-language2-error' : undefined"
-                    @change="initialValidationCheck(selectLanguage2, 'secondaryLanguage')"
-                >
-                    <option value="">
-                        {{ t('submitPage.selectLanguage2') }}
-                    </option>
-                    <option
-                        v-for="locale in localeStore.localeDisplayOptions"
-                        :key="locale.code"
-                        :value="locale.code"
-                    >
-                        {{ locale.displayText }}
-                    </option>
-                </select>
-                <p
-                    v-if="hasVisibleError('secondarySpokenLanguage')"
-                    id="submit-language2-error"
-                    class="field-error"
-                >
-                    {{ t('submitPage.invalidOption') }}
-                </p>
-            </div>
+            </fieldset>
 
             <div>
                 <label
@@ -201,6 +196,63 @@
                 </p>
             </div>
 
+            <div
+                v-if="mapsLinkIsValid"
+                data-testid="submit-preview"
+                class="flex flex-col gap-3 rounded-lg border border-accent-bg p-4"
+            >
+                <h2 class="text-base font-semibold text-primary-text">
+                    {{ t('submitPage.previewHeading') }}
+                </h2>
+                <dl class="grid gap-3 text-sm">
+                    <div v-if="placeLabel">
+                        <dt class="font-semibold text-primary-text">
+                            {{ t('submitPage.previewPlace') }}
+                        </dt>
+                        <dd class="text-primary-text-muted">
+                            {{ placeLabel }}
+                        </dd>
+                    </div>
+                    <div>
+                        <dt class="font-semibold text-primary-text">
+                            {{ t('submitPage.previewLocation') }}
+                        </dt>
+                        <dd>
+                            <a
+                                :href="location.trim()"
+                                class="break-all text-primary"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >{{ location.trim() }}</a>
+                        </dd>
+                    </div>
+                    <div v-if="submittedName">
+                        <dt class="font-semibold text-primary-text">
+                            {{ t('submitPage.previewName') }}
+                        </dt>
+                        <dd class="text-primary-text-muted">
+                            {{ submittedName }}
+                        </dd>
+                    </div>
+                    <div>
+                        <dt class="font-semibold text-primary-text">
+                            {{ t('submitPage.previewLanguages') }}
+                        </dt>
+                        <dd class="text-primary-text-muted">
+                            {{ submittedLanguageLabels }}
+                        </dd>
+                    </div>
+                    <div v-if="otherNotes.trim()">
+                        <dt class="font-semibold text-primary-text">
+                            {{ t('submitPage.previewNotes') }}
+                        </dt>
+                        <dd class="whitespace-pre-wrap text-primary-text-muted">
+                            {{ otherNotes.trim() }}
+                        </dd>
+                    </div>
+                </dl>
+            </div>
+
             <button
                 type="submit"
                 data-testid="submit-submitbutton"
@@ -214,12 +266,12 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, watch, nextTick, onMounted } from 'vue'
+import { computed, ref, watch, nextTick, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useAppToast } from '~/composables/useAppToast'
 import * as validations from '~/utils/formValidations'
 import { useSubmissionStore } from '~/stores/submissionStore'
-import type { Locale, MutationCreateSubmissionArgs } from '~/typedefs/gqlTypes'
+import { Locale, type MutationCreateSubmissionArgs } from '~/typedefs/gqlTypes'
 import { useLocaleStore } from '~/stores/localeStore'
 import { handleServerErrorMessaging } from '~/composables/handleServerErrorMessaging'
 
@@ -232,25 +284,51 @@ const localeStore = useLocaleStore()
 const location = ref('')
 const firstName = ref('')
 const lastName = ref('')
-const selectLanguage1 = ref('')
-const selectLanguage2 = ref('')
+const extraLanguages = ref<Locale[]>([])
+const languageToAdd = ref('')
 const otherNotes = ref('')
 const isSubmitting = ref(false)
+
+const japaneseLabel = computed(() => languageLabel(Locale.JaJp))
+const languagesAvailableToAdd = computed(() =>
+    localeStore.localeDisplayOptions.filter(locale =>
+        locale.code !== Locale.JaJp && !extraLanguages.value.includes(locale.code as Locale)))
+const mapsLinkIsValid = computed(() => validations.validateGoogleMapsUrlInput(location.value))
+const placeLabel = computed(() => validations.placeLabelFromMapsUrl(location.value))
+const submittedName = computed(() => [firstName.value, lastName.value].map(part => part.trim()).filter(Boolean).join(' '))
+const submittedLanguageLabels = computed(() =>
+    [Locale.JaJp, ...extraLanguages.value].map(code => languageLabel(code)).join(', '))
+
+function languageLabel(code: string): string {
+    return localeStore.localeDisplayOptions.find(locale => locale.code === code)?.displayText ?? code
+}
+
+function addLanguage() {
+    const code = languageToAdd.value as Locale
+    languageToAdd.value = ''
+    if (!code || code === Locale.JaJp || extraLanguages.value.includes(code)) return
+    extraLanguages.value = [...extraLanguages.value, code]
+    void initialValidationCheck('', 'spokenLanguages')
+}
+
+function removeLanguage(code: Locale) {
+    if (code === Locale.JaJp) return
+    extraLanguages.value = extraLanguages.value.filter(language => language !== code)
+    void initialValidationCheck('', 'spokenLanguages')
+}
 
 const validationCheckedPreviously = {
     googleMapsUrl: ref(false),
     lastName: ref(false),
     firstName: ref(false),
-    primarySpokeLangauge: ref(false),
-    secondarySpokenLanguage: ref(false)
+    spokenLanguages: ref(false)
 }
 
 const isValidInput = {
     googleMapsUrl: ref(true),
     lastName: ref(true),
     firstName: ref(true),
-    primarySpokeLangauge: ref(false),
-    secondarySpokenLanguage: ref(true)
+    spokenLanguages: ref(false)
 }
 
 type ValidatedField = keyof typeof isValidInput
@@ -269,19 +347,14 @@ const validateFields = () => {
     isValidInput.lastName.value = validations.validateUserSubmittedLastName(lastName.value)
     validationCheckedPreviously.firstName.value = true
     isValidInput.firstName.value = validations.validateUserSubmittedFirstName(firstName.value)
-    validationCheckedPreviously.primarySpokeLangauge.value = true
-    isValidInput.primarySpokeLangauge.value = validations.validateFirstSpokenLanguage(selectLanguage1.value)
-    validationCheckedPreviously.secondarySpokenLanguage.value = true
-    isValidInput.secondarySpokenLanguage.value = selectLanguage2.value
-        ? validations.validateSecondSpokenLanguage(selectLanguage2.value)
-        : true
+    validationCheckedPreviously.spokenLanguages.value = true
+    isValidInput.spokenLanguages.value = validations.validateSubmittedSpokenLanguages(extraLanguages.value)
 
     if (
         !isValidInput.googleMapsUrl.value
         || !isValidInput.lastName.value
         || !isValidInput.firstName.value
-        || !isValidInput.primarySpokeLangauge.value
-        || !isValidInput.secondarySpokenLanguage.value
+        || !isValidInput.spokenLanguages.value
     ) {
         return false
     }
@@ -295,15 +368,7 @@ async function submitNewSubmission() {
     const isValid = validateFields()
     if (!isValid) return
 
-    const spokenLanguages: Locale[] = []
-
-    if (selectLanguage1.value !== '') {
-        spokenLanguages.push(selectLanguage1.value as Locale)
-    }
-
-    if (selectLanguage2.value !== '') {
-        spokenLanguages.push(selectLanguage2.value as Locale)
-    }
+    const spokenLanguages = [Locale.JaJp, ...extraLanguages.value]
 
     const newSubmission: MutationCreateSubmissionArgs
         = { input: {
@@ -334,8 +399,8 @@ function resetForm() {
     location.value = ''
     firstName.value = ''
     lastName.value = ''
-    selectLanguage1.value = ''
-    selectLanguage2.value = ''
+    extraLanguages.value = []
+    languageToAdd.value = ''
     otherNotes.value = ''
 }
 
@@ -357,20 +422,10 @@ const initialValidationCheck = async (inputValue: string, field: string) => {
             await nextTick()
             isValidInput.firstName.value = validations.validateUserSubmittedFirstName(inputValue)
             break
-        case 'primaryLanguage':
-            validationCheckedPreviously.primarySpokeLangauge.value = true
+        case 'spokenLanguages':
+            validationCheckedPreviously.spokenLanguages.value = true
             await nextTick()
-            isValidInput.primarySpokeLangauge.value = validations.validateFirstSpokenLanguage(inputValue)
-            break
-        case 'secondaryLanguage':
-            validationCheckedPreviously.secondarySpokenLanguage.value = true
-            await nextTick()
-            // Empty is valid: the field is optional, and validateFields() agrees. Without this
-            // guard, clearing the select back to "no selection" showed an error for a choice
-            // the form is happy to submit.
-            isValidInput.secondarySpokenLanguage.value = inputValue
-                ? validations.validateSecondSpokenLanguage(inputValue)
-                : true
+            isValidInput.spokenLanguages.value = validations.validateSubmittedSpokenLanguages(extraLanguages.value)
             break
     }
 }
@@ -390,18 +445,11 @@ watch(() => firstName.value, newValue => {
         isValidInput.firstName.value = validations.validateUserSubmittedFirstName(newValue)
     }
 })
-watch(() => selectLanguage1.value, newValue => {
-    if (validationCheckedPreviously.primarySpokeLangauge.value) {
-        isValidInput.primarySpokeLangauge.value = validations.validateFirstSpokenLanguage(newValue)
+watch(extraLanguages, () => {
+    if (validationCheckedPreviously.spokenLanguages.value) {
+        isValidInput.spokenLanguages.value = validations.validateSubmittedSpokenLanguages(extraLanguages.value)
     }
-})
-watch(() => selectLanguage2.value, newValue => {
-    if (validationCheckedPreviously.secondarySpokenLanguage.value) {
-        isValidInput.secondarySpokenLanguage.value = newValue
-            ? validations.validateSecondSpokenLanguage(newValue)
-            : true
-    }
-})
+}, { deep: true })
 
 onMounted(() => {
     resetForm()

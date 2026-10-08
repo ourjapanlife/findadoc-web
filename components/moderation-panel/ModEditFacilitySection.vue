@@ -139,6 +139,13 @@
                     </select>
                 </div>
             </div>
+            <div class="mod-span-2 mt-4">
+                <ModCitySuggest
+                    id="mod-edit-facility-city-suggest"
+                    test-id="mod-facility-city-suggest"
+                    @select="applySuggestedEditCity"
+                />
+            </div>
             <div class="mod-form-grid mt-4 items-end">
                 <div class="min-w-0">
                     <ModCityPicker
@@ -413,6 +420,21 @@ function clearEditCity() {
     facilityStore.facilitySectionFields.cityId = ''
     facilityStore.facilitySectionFields.cityEn = ''
     facilityStore.facilitySectionFields.cityJa = ''
+}
+
+function applySuggestedEditCity(city: (CityOption & { prefectureJa: string }) | null) {
+    if (!city) {
+        const fields = facilityStore.facilitySectionFields
+        fields.cityId = ''
+        fields.cityEn = ''
+        fields.cityJa = ''
+        return
+    }
+
+    const fields = facilityStore.facilitySectionFields
+    fields.prefectureEn = city.prefectureEn
+    fields.prefectureJa = city.prefectureJa
+    applyEditCity(city)
 }
 
 function applyEditCity(city: CityOption | null) {
