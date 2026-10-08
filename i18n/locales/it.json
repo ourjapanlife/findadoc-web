@@ -124,6 +124,8 @@
     "removeLanguage": "Rimuovi {language}",
     "previewHeading": "Cosa stai inviando",
     "previewPlace": "Luogo",
+    "previewAddress": "Indirizzo",
+    "previewCategory": "Tipo",
     "previewLocation": "Google Maps",
     "previewName": "Nome",
     "previewLanguages": "Lingue",

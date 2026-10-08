@@ -120,6 +120,8 @@
     "removeLanguage": "Remover {language}",
     "previewHeading": "O que você está enviando",
     "previewPlace": "Local",
+    "previewAddress": "Endereço",
+    "previewCategory": "Tipo",
     "previewLocation": "Google Maps",
     "previewName": "Nome",
     "previewLanguages": "Idiomas",

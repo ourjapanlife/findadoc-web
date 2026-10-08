@@ -222,28 +222,48 @@
                         class="text-primary"
                     >{{ t('submitPage.existingPlaceContact') }}</a>
                 </p>
+                <div
+                    v-if="placeLabel || placeAddress || mapsPlaceLoading"
+                    data-testid="submit-place-card"
+                    class="flex flex-col gap-1"
+                >
+                    <p
+                        v-if="placeLabel"
+                        data-testid="submit-place-name"
+                        class="text-base font-semibold text-primary-text"
+                    >
+                        {{ placeLabel }}
+                    </p>
+                    <p
+                        v-if="placeCategory"
+                        data-testid="submit-place-category"
+                        class="text-sm text-primary-text-muted"
+                    >
+                        <span class="sr-only">{{ t('submitPage.previewCategory') }}</span>
+                        {{ placeCategory }}
+                    </p>
+                    <p
+                        v-if="placeAddress"
+                        data-testid="submit-place-address"
+                        class="text-sm text-primary-text"
+                    >
+                        <span class="sr-only">{{ t('submitPage.previewAddress') }}</span>
+                        {{ placeAddress }}
+                    </p>
+                    <p
+                        v-else-if="mapsPlaceLoading"
+                        class="text-sm text-primary-text-muted"
+                    >
+                        {{ t('submitPage.previewLookingUp') }}
+                    </p>
+                    <p
+                        v-if="placeAddress"
+                        class="text-xs text-primary-text-muted"
+                    >
+                        Google
+                    </p>
+                </div>
                 <dl class="grid gap-3 text-sm">
-                    <div v-if="placeLabel">
-                        <dt class="font-semibold text-primary-text">
-                            {{ t('submitPage.previewPlace') }}
-                        </dt>
-                        <dd class="text-primary-text-muted">
-                            {{ placeLabel }}
-                        </dd>
-                    </div>
-                    <div v-else-if="mapsPlaceLoading">
-                        <dd class="text-primary-text-muted">
-                            {{ t('submitPage.previewLookingUp') }}
-                        </dd>
-                    </div>
-                    <div v-if="placePin">
-                        <dt class="font-semibold text-primary-text">
-                            {{ t('submitPage.previewPin') }}
-                        </dt>
-                        <dd class="text-primary-text-muted">
-                            {{ placePin }}
-                        </dd>
-                    </div>
                     <div>
                         <dt class="font-semibold text-primary-text">
                             {{ t('submitPage.previewLocation') }}
@@ -309,6 +329,7 @@ import { facilityPath } from '~/utils/clinicPath'
 import { CONTACT_MAILTO } from '~/utils/site'
 import { isJapaneseLocale } from '~/utils/activeLocale'
 import { fetchFacilityByGooglePlaceId, type ExistingFacilityMatch } from '~/utils/existingFacility'
+import { fetchMapsPlaceDetails } from '~/utils/mapsPlaceDetails'
 
 const toast = useAppToast()
 const { t, locale } = useI18n()
@@ -338,6 +359,8 @@ const mapsPlaceLoading = ref(false)
 let mapsPlaceRequest = 0
 let mapsPlaceTimer: ReturnType<typeof setTimeout> | undefined
 const placeLabel = computed(() => mapsPlace.value?.name ?? null)
+const placeAddress = computed(() => mapsPlace.value?.address ?? null)
+const placeCategory = computed(() => mapsPlace.value?.category ?? null)
 const existingFacility = ref<ExistingFacilityMatch | null>(null)
 let existingFacilityRequest = 0
 const existingFacilityLabel = computed(() => {
@@ -358,12 +381,6 @@ const existingFacilityHref = computed(() => {
             }
         }
     })
-})
-const placePin = computed(() => {
-    const latitude = mapsPlace.value?.latitude
-    const longitude = mapsPlace.value?.longitude
-    if (latitude == null || longitude == null) return null
-    return `${latitude.toFixed(5)}, ${longitude.toFixed(5)}`
 })
 const submittedName = computed(() => [firstName.value, lastName.value].map(part => part.trim()).filter(Boolean).join(' '))
 const submittedLanguageLabels = computed(() =>
@@ -536,8 +553,10 @@ function scheduleMapsPlace(value: string) {
         mapsPlaceLoading.value = false
         return
     }
-    if (!validations.isResolvableShortMapsUrl(trimmed)) {
-        mapsPlace.value = parsed
+
+    mapsPlace.value = parsed
+    const canLookUp = Boolean(parsed.name || parsed.placeId || validations.isResolvableShortMapsUrl(trimmed))
+    if (!canLookUp) {
         mapsPlaceLoading.value = false
         return
     }
@@ -545,23 +564,52 @@ function scheduleMapsPlace(value: string) {
     mapsPlaceLoading.value = true
     const request = ++mapsPlaceRequest
     mapsPlaceTimer = setTimeout(() => {
-        void loadMapsPlace(trimmed, request)
+        void loadMapsPlace(trimmed, parsed, request)
     }, 400)
 }
 
-async function loadMapsPlace(url: string, request: number) {
+async function loadMapsPlace(url: string, parsed: validations.MapsPlacePreview, request: number) {
     try {
-        const preview = await $fetch<validations.MapsPlacePreview>('/api/maps-preview', { query: { url } })
-        if (request !== mapsPlaceRequest) return
-        mapsPlace.value = preview
+        let place = parsed
+        if (validations.isResolvableShortMapsUrl(url)) {
+            const preview = await $fetch<{
+                name: string | null
+                latitude: number | null
+                longitude: number | null
+                placeId: string | null
+            }>('/api/maps-preview', { query: { url } })
+            if (request !== mapsPlaceRequest) return
+            place = { ...preview, address: null, category: null }
+            mapsPlace.value = place
+        }
+
+        if (!place.name && !place.placeId) return
+        const details = await fetchMapsPlaceDetails({
+            name: place.name,
+            latitude: place.latitude,
+            longitude: place.longitude,
+            placeId: place.placeId,
+            languageCode: isJapaneseLocale(locale.value) ? 'ja' : 'en'
+        })
+        if (request !== mapsPlaceRequest || !details) return
+        mapsPlace.value = {
+            ...place,
+            name: details.name ?? place.name,
+            placeId: details.placeId ?? place.placeId,
+            address: details.address,
+            category: details.category
+        }
     } catch (error) {
         if (request !== mapsPlaceRequest) return
         console.error('Reading a Maps link failed', error)
-        mapsPlace.value = validations.parseMapsPlace(url)
     } finally {
         if (request === mapsPlaceRequest) mapsPlaceLoading.value = false
     }
 }
+
+watch(locale, () => {
+    if (location.value.trim()) scheduleMapsPlace(location.value)
+})
 watch(() => lastName.value, newValue => {
     if (validationCheckedPreviously.lastName.value) {
         isValidInput.lastName.value = validations.validateUserSubmittedLastName(newValue)

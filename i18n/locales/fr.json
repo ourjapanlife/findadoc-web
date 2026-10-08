@@ -119,6 +119,8 @@
     "removeLanguage": "Retirer {language}",
     "previewHeading": "Ce que vous envoyez",
     "previewPlace": "Lieu",
+    "previewAddress": "Adresse",
+    "previewCategory": "Type",
     "previewLocation": "Google Maps",
     "previewName": "Nom",
     "previewLanguages": "Langues",

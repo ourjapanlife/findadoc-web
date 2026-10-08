@@ -167,6 +167,8 @@
     "removeLanguage": "{language} 제거",
     "previewHeading": "제출 내용",
     "previewPlace": "장소",
+    "previewAddress": "주소",
+    "previewCategory": "종류",
     "previewLocation": "Google 지도",
     "previewName": "이름",
     "previewLanguages": "언어",

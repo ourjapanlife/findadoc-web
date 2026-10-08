@@ -120,6 +120,8 @@
     "removeLanguage": "{language}を外す",
     "previewHeading": "送信内容",
     "previewPlace": "施設",
+    "previewAddress": "住所",
+    "previewCategory": "種類",
     "previewLocation": "Googleマップ",
     "previewName": "氏名",
     "previewLanguages": "言語",

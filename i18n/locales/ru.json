@@ -119,6 +119,8 @@
     "removeLanguage": "Удалить {language}",
     "previewHeading": "Что вы отправляете",
     "previewPlace": "Место",
+    "previewAddress": "Адрес",
+    "previewCategory": "Тип",
     "previewLocation": "Google Карты",
     "previewName": "Имя",
     "previewLanguages": "Языки",

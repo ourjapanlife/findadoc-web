@@ -120,6 +120,8 @@
     "removeLanguage": "Xóa {language}",
     "previewHeading": "Nội dung bạn gửi",
     "previewPlace": "Địa điểm",
+    "previewAddress": "Địa chỉ",
+    "previewCategory": "Loại",
     "previewLocation": "Google Maps",
     "previewName": "Tên",
     "previewLanguages": "Ngôn ngữ",

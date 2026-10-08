@@ -36,7 +36,9 @@ describe('submit form languages and maps preview', () => {
             name: null,
             latitude: 35.6595,
             longitude: 139.7004,
-            placeId: null
+            placeId: null,
+            address: null,
+            category: null
         })
     })
 
@@ -48,6 +50,14 @@ describe('submit form languages and maps preview', () => {
         expect(parseMapsPlace(
             'https://www.google.com/maps/place/Clinic/@35.66,139.70,17z/data=!1s0x60188b563f2b1c19'
         )?.placeId).to.equal(null)
+
+        const tokyoStation = 'https://www.google.com/maps/place/Tokyo+Station+International+Clinic/@35.6791006,139.767714,17z/data=!3m1!4b1!4m6!3m5!1s0x60188bf5d2aa2fe7:0xe80be270a19ad1f8!8m2!3d35.6791006!4d139.767714!16s%2Fg%2F11l6yc1_d0?entry=ttu'
+        const parsed = parseMapsPlace(tokyoStation)
+        expect(parsed?.name).to.equal('Tokyo Station International Clinic')
+        expect(parsed?.latitude).to.equal(35.6791006)
+        expect(parsed?.longitude).to.equal(139.767714)
+        expect(parsed?.placeId).to.equal(null)
+        expect(parsed?.address).to.equal(null)
     })
 
     it('opens a share link and reads the clinic from the page it reaches', async () => {

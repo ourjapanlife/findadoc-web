@@ -167,6 +167,8 @@
     "removeLanguage": "Remove {language}",
     "previewHeading": "What you're submitting",
     "previewPlace": "Place",
+    "previewAddress": "Address",
+    "previewCategory": "Category",
     "previewLocation": "Google Maps",
     "previewName": "Name",
     "previewLanguages": "Languages",

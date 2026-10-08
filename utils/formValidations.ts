@@ -221,6 +221,8 @@ export type MapsPlacePreview = {
     latitude: number | null
     longitude: number | null
     placeId: string | null
+    address: string | null
+    category: string | null
 }
 
 const COORDINATE_PAIR = /^(-?\d+(?:\.\d+)?),\s*(-?\d+(?:\.\d+)?)$/
@@ -259,7 +261,9 @@ export function parseMapsPlace(url: string): MapsPlacePreview | null {
             name: placeName(placeMatch?.[1]) ?? placeName(queryName, true),
             latitude: pin?.latitude ?? null,
             longitude: pin?.longitude ?? null,
-            placeId: googlePlaceIdFromUrl(parsed)
+            placeId: googlePlaceIdFromUrl(parsed),
+            address: null,
+            category: null
         }
     } catch {
         return null

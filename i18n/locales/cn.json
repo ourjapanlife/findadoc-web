@@ -120,6 +120,8 @@
     "removeLanguage": "移除{language}",
     "previewHeading": "即将提交的内容",
     "previewPlace": "地点",
+    "previewAddress": "地址",
+    "previewCategory": "类别",
     "previewLocation": "Google 地图",
     "previewName": "姓名",
     "previewLanguages": "语言",

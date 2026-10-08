@@ -120,6 +120,8 @@
     "removeLanguage": "{language} entfernen",
     "previewHeading": "Das reichen Sie ein",
     "previewPlace": "Ort",
+    "previewAddress": "Adresse",
+    "previewCategory": "Art",
     "previewLocation": "Google Maps",
     "previewName": "Name",
     "previewLanguages": "Sprachen",

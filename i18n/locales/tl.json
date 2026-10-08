@@ -120,6 +120,8 @@
     "removeLanguage": "Alisin ang {language}",
     "previewHeading": "Ang iyong isinusumite",
     "previewPlace": "Lugar",
+    "previewAddress": "Address",
+    "previewCategory": "Uri",
     "previewLocation": "Google Maps",
     "previewName": "Pangalan",
     "previewLanguages": "Mga wika",
