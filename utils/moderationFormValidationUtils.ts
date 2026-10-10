@@ -57,7 +57,7 @@ type FacilityValidationFields = {
 
 type HealthcareProfessionalValidationFields = Pick<
     CreateHealthcareProfessionalInput,
-    'acceptedInsurance' | 'degrees' | 'spokenLanguages'
+    'acceptedInsurance' | 'degrees' | 'specialties' | 'spokenLanguages'
 >
 
 type NormalizedFacilityValidationFields = {
@@ -167,5 +167,6 @@ export function hasRequiredHealthcareProfessionalSelections(
 ): boolean {
     return (fields.acceptedInsurance?.length ?? 0) > 0
       && (fields.degrees?.length ?? 0) > 0
+      && (fields.specialties?.length ?? 0) > 0
       && (fields.spokenLanguages?.length ?? 0) > 0
 }
