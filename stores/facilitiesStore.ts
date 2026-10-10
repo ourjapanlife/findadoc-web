@@ -509,6 +509,7 @@ const updateExistingFacilityGqlMutation = gql`
     mutation Mutation($id: ID!, $input: UpdateFacilityInput!) {
         updateFacility(id: $id, input: $input) {
             id
+            googlePlaceId
             nameEn
             nameJa
             cityId
@@ -549,6 +550,7 @@ const createFacilityGqlMutation = gql`
     mutation Mutation($input: CreateFacilityInput!) {
         createFacility(input: $input) {
             id
+            googlePlaceId
             nameEn
             nameJa
             cityId

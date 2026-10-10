@@ -70,7 +70,7 @@ const PROFESSIONALS_QUERY = `
 function directoryValues(
     directory: Record<string, FacilitySearchResult> | undefined | null
 ): FacilitySearchResult[] | undefined {
-    if (directory == null) {
+    if (directory === null || directory === undefined) {
         return undefined
     }
     return Object.values(directory)

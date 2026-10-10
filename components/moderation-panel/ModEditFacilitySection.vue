@@ -256,6 +256,7 @@
                     :invalid-input-error-message="t('modFacilitySection.inputErrorMessageFacilityMapLongitude')"
                 />
             </div>
+            <ModFacilityPlaceConfirm v-if="moderationScreenStore.editFacilityScreenIsActive()" />
         </ModAccordion>
         <ModAccordion
             v-if="moderationScreenStore.editFacilityScreenIsActive()"

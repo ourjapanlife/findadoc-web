@@ -51,6 +51,7 @@ export default withNuxt(
 
             // JS specific rules
             ...eslintJsPlugin.configs.recommended.rules,
+            eqeqeq: ['error', 'always', { null: 'always' }],
             // HACK: this eslint core rule is turned off so that the typescript-eslint version can be used instead
             'no-unused-vars': 'off',
             'block-scoped-var': 'error',
@@ -98,6 +99,7 @@ export default withNuxt(
             'vuejs-accessibility': vuejsAccessibility // <-- ADD THIS TO REGISTER THE PLUGIN
         },
         rules: {
+            eqeqeq: ['error', 'always', { null: 'always' }],
             'vue/multi-word-component-names': 'off',
             'vue/html-indent': ['error', 4],
 
