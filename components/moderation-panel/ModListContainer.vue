@@ -31,12 +31,18 @@
                     </div>
                 </div>
 
+                <p
+                    v-else-if="hasFacilities && facilitiesModerationListViewChosen && !filteredFacilities.length"
+                    class="text-center py-8 px-4"
+                >
+                    {{ t('searchResultsList.noResults') }}
+                </p>
                 <div
                     v-else-if="hasFacilities && facilitiesModerationListViewChosen"
                     class="grid grid-cols-1 landscape:grid-cols-2 gap-4 items-start justify-start p-3 md:p-4"
                 >
                     <div
-                        v-for="(facility, index) in facilitiesStore.facilityData"
+                        v-for="(facility, index) in filteredFacilities"
                         :key="index"
                     >
                         <ModListContainerItem
@@ -48,12 +54,19 @@
                     </div>
                 </div>
 
+                <p
+                    v-else-if="hasHealthcareProfessionals && healthcareProfessionalsModerationListViewChosen
+                        && !filteredHealthcareProfessionals.length"
+                    class="text-center py-8 px-4"
+                >
+                    {{ t('searchResultsList.noResults') }}
+                </p>
                 <div
                     v-else-if="hasHealthcareProfessionals && healthcareProfessionalsModerationListViewChosen"
                     class="grid grid-cols-1 landscape:grid-cols-2 gap-4 items-start justify-start p-3 md:p-4"
                 >
                     <div
-                        v-for="(healthcareProfessional, index) in healthcareProfessionalsStore.healthcareProfessionalsData"
+                        v-for="(healthcareProfessional, index) in filteredHealthcareProfessionals"
                         :key="index"
                     >
                         <ModListContainerItem
@@ -161,6 +174,8 @@ onMounted(async () => {
 const hasSubmissions = computed(() => modSubmissionsStore.filteredSubmissionDataForListComponent.length)
 const hasFacilities = computed(() => facilitiesStore.facilityData.length)
 const hasHealthcareProfessionals = computed(() => healthcareProfessionalsStore.healthcareProfessionalsData.length)
+const filteredFacilities = computed(() => facilitiesStore.filteredFacilityData)
+const filteredHealthcareProfessionals = computed(() => healthcareProfessionalsStore.filteredHealthcareProfessionalsData)
 
 function getGlobalRowNumber(offset: number, index: number): number {
     return offset + index + 1

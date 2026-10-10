@@ -22,6 +22,7 @@ import { stableStringify } from '~/utils/stableStringify'
 import { useLocaleStore } from '~/stores/localeStore'
 import type { ServerResponse } from '~/typedefs/serverResponse'
 import { useTranslation } from '~/composables/useTranslation'
+import { healthcareProfessionalMatchesSearch } from '~/utils/moderationListSearch'
 
 export const useHealthcareProfessionalsStore = defineStore(
     'healthcareProfessionalsStore',
@@ -36,6 +37,10 @@ export const useHealthcareProfessionalsStore = defineStore(
         // Used for store the starting index (offset) for the current page of results.
         const currentOffset: Ref<number> = ref(0)
         const itemsPerPage: Ref<number> = ref(25)
+        const listSearchQuery: Ref<string> = ref('')
+        const filteredHealthcareProfessionalsData = computed(() =>
+            healthcareProfessionalsData.value.filter(professional =>
+                healthcareProfessionalMatchesSearch(professional, listSearchQuery.value)))
         const hasNextPage = computed(() => currentOffset.value + itemsPerPage.value < totalHealthcareProfessionalsCount.value)
         const hasPrevPage = computed(() => currentOffset.value > 0)
         const healthcareProfessionalSectionFields = reactive<HealthcareProfessional>({
@@ -341,9 +346,16 @@ export const useHealthcareProfessionalsStore = defineStore(
             itemsPerPage.value = newLimit
         }
 
+        function setListSearchQuery(newQuery: string) {
+            listSearchQuery.value = newQuery
+        }
+
         return {
             getHealthcareProfessionals,
             healthcareProfessionalsData,
+            filteredHealthcareProfessionalsData,
+            listSearchQuery,
+            setListSearchQuery,
             updateHealthcareProfessional,
             selectedHealthcareProfessionalId,
             deleteHealthcareProfessional,

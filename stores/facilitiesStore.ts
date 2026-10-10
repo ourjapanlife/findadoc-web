@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { ref, type Ref, reactive } from 'vue'
+import { computed, ref, type Ref, reactive } from 'vue'
 import { gql } from 'graphql-request'
 import { fetchFacilitiesWithCount } from '../utils/graphqlHelpers'
 import type {
@@ -17,6 +17,7 @@ import type {
     MutationCreateFacilityArgs
 } from '~/typedefs/gqlTypes'
 import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql'
+import { facilityMatchesSearch } from '~/utils/moderationListSearch'
 import type { ServerResponse } from '~/typedefs/serverResponse'
 import { arraysAreEqual } from '~/utils/arrayUtils'
 import { validateCreateFacility, validateUpdateFacility } from '~/utils/facilitiesUtils'
@@ -163,6 +164,9 @@ export const useFacilitiesStore = defineStore('facilitiesStore', () => {
     // Used for store the starting index (offset) for the current page of results.
     const currentOffset: Ref<number> = ref(0)
     const itemsPerPage: Ref<number> = ref(25)
+    const listSearchQuery: Ref<string> = ref('')
+    const filteredFacilityData = computed(() =>
+        facilityData.value.filter(facility => facilityMatchesSearch(facility, listSearchQuery.value)))
     const hasNextPage = computed(() => currentOffset.value + itemsPerPage.value < totalFacilitiesCount.value)
     const hasPrevPage = computed(() => currentOffset.value > 0)
     // This reactive object is used to share data changes of the updated facility or submission across the components
@@ -480,11 +484,18 @@ export const useFacilitiesStore = defineStore('facilitiesStore', () => {
         itemsPerPage.value = newLimit
     }
 
+    function setListSearchQuery(newQuery: string) {
+        listSearchQuery.value = newQuery
+    }
+
     return {
         getFacilities,
         createFacility,
         createFacilityFields,
         facilityData,
+        filteredFacilityData,
+        listSearchQuery,
+        setListSearchQuery,
         totalFacilitiesCount,
         updateFacility,
         facilitySectionFields,
