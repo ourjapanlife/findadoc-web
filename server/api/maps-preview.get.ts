@@ -16,6 +16,8 @@ export default defineEventHandler(async event => {
     return {
         name: place.name,
         latitude: place.latitude,
-        longitude: place.longitude
+        longitude: place.longitude,
+        placeId: place.placeId,
+        resolvedUrl: place.resolvedUrl
     }
 })

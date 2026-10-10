@@ -23,14 +23,16 @@ const MAPS_HOSTS = new Set([
 export async function resolveMapsPlace(
     url: string,
     fetchImpl: typeof fetch = fetch
-): Promise<MapsPlacePreview | null> {
+): Promise<(MapsPlacePreview & { resolvedUrl: string }) | null> {
     const direct = parseMapsPlace(url)
     if (!direct) return null
-    if (!isResolvableShortMapsUrl(url)) return direct
+    if (!isResolvableShortMapsUrl(url)) return { ...direct, resolvedUrl: url.trim() }
 
     const expanded = await expandShortMapsUrl(url, fetchImpl)
-    if (!expanded) return direct
-    return parseMapsPlace(expanded) ?? direct
+    if (!expanded) return { ...direct, resolvedUrl: url.trim() }
+    const parsed = parseMapsPlace(expanded)
+    if (!parsed) return { ...direct, resolvedUrl: url.trim() }
+    return { ...parsed, resolvedUrl: expanded }
 }
 
 async function expandShortMapsUrl(url: string, fetchImpl: typeof fetch): Promise<string | null> {
