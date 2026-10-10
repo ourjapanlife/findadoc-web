@@ -137,6 +137,7 @@ export const facilitiesAndCountGqlQuery = gql`
         facilities(filters: $listFilters) {
             id
             cityId
+            googlePlaceId
             nameEn
             nameJa
             mapLatitude

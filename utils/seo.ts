@@ -46,7 +46,8 @@ export function openGraphLocale(i18nCode: string): string {
 const SEARCH_NOINDEX_QUERY_KEYS = ['city', 'specialty', 'language', 'prefecture', 'page', 'facility'] as const
 
 function queryValueIsPresent(value: unknown): boolean {
-    return typeof value === 'string' ? value.length > 0 : value != null && String(value).length > 0
+    if (typeof value === 'string') return value.length > 0
+    return value !== null && value !== undefined && String(value).length > 0
 }
 
 function queryParamHasValue(query: Record<string, unknown> | undefined, key: string): boolean {

@@ -143,7 +143,7 @@ type Props = {
 const { placeHolderText, noMatchText, fieldsToDisplayCallback, defaultSuggestions } = defineProps<Props>()
 
 const showResultId = (item: { id?: unknown }) => {
-    const id = item.id == null ? '' : String(item.id)
+    const id = item.id === null || item.id === undefined ? '' : String(item.id)
     if (!id) return false
     return !fieldsToDisplayCallback(item as ArrayType<T>).some(field => String(field) === id)
 }
