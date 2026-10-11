@@ -11,9 +11,10 @@ export const SITE_TITLE = 'Find a Doc, Japan'
 export const SITE_ORIGIN = 'https://www.findadoc.jp'
 
 export const SITE_DESCRIPTION
-    = 'Health service information for the international community in Japan'
+    = 'Find English-speaking and multilingual doctors and clinics in Japan. '
+      + 'Search by language, medical specialty, and location to find healthcare providers who speak your language. Free to use.'
 
-export const SITE_SOCIAL_IMAGE = `${SITE_ORIGIN}/findadoc-social.png`
+export const SITE_SOCIAL_IMAGE = `${SITE_ORIGIN}/findadoc-social.jpg`
 
 export const SITE_SITEMAP_URL = `${SITE_ORIGIN}/sitemap.xml`
 

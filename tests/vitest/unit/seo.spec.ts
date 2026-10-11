@@ -70,8 +70,8 @@ describe('robots.txt', () => {
 
 describe('social preview assets', () => {
     it('serves the Open Graph image from the publish root', () => {
-        expect(existsSync(join(rootDir, 'public', 'findadoc-social.png'))).to.equal(true)
-        expect(SITE_SOCIAL_IMAGE).to.equal(`${SITE_ORIGIN}/findadoc-social.png`)
+        expect(existsSync(join(rootDir, 'public', 'findadoc-social.jpg'))).to.equal(true)
+        expect(SITE_SOCIAL_IMAGE).to.equal(`${SITE_ORIGIN}/findadoc-social.jpg`)
     })
 })
 
