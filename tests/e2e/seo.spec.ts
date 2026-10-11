@@ -95,7 +95,7 @@ test.describe('Discovery and social meta', () => {
     test('the social preview image is reachable', async ({ request }) => {
         const response = await request.get('/findadoc-social.jpg')
         expect(response.status()).toBe(200)
-        expect(response.headers()['content-type']).toMatch(/image\/png/)
+        expect(response.headers()['content-type']).toMatch(/image\/jpeg/)
         expect(new URL(SITE_SOCIAL_IMAGE).pathname).toBe('/findadoc-social.jpg')
     })
 
