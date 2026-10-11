@@ -7,6 +7,11 @@ test.describe('Submit page', () => {
             await page.setViewportSize({ width: 1728, height: 1077 })
             await page.goto('/submit')
             /*
+             * The page is prerendered, and mount clears the form. Typing before that
+             * lands in HTML that Vue then resets, so wait until the form is live.
+             */
+            await expect(page.getByTestId('submit-form')).toHaveAttribute('data-hydrated', 'true')
+            /*
              * Force the English locale so text assertions match. The hamburger menu carries a
              * second, hidden locale selector that is teleported ahead of the app root in the
              * prerendered HTML, so pick the visible one rather than the first in DOM order.

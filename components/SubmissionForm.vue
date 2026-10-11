@@ -15,6 +15,8 @@
 
         <form
             novalidate
+            data-testid="submit-form"
+            :data-hydrated="formReady || undefined"
             class="card flex flex-col gap-5 p-6"
             @submit.prevent="submitNewSubmission"
         >
@@ -350,6 +352,7 @@ const extraLanguages = ref<Locale[]>([])
 const languageToAdd = ref('')
 const otherNotes = ref('')
 const isSubmitting = ref(false)
+const formReady = ref(false)
 
 const japaneseLabel = computed(() => languageLabel(Locale.JaJp))
 const languagesAvailableToAdd = computed(() =>
@@ -665,5 +668,6 @@ onUnmounted(() => {
 
 onMounted(() => {
     resetForm()
+    formReady.value = true
 })
 </script>

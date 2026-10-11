@@ -21,10 +21,11 @@ test.describe('Professional pages', () => {
         try {
             const response = await request.post('http://127.0.0.1:4000', {
                 data: {
+                    // middleName is part of the public slug. Omitting it requests a path that was never generated.
                     query: `query {
                         healthcareProfessionals(filters: { limit: 1 }) {
                             id
-                            names { firstName lastName locale }
+                            names { firstName middleName lastName locale }
                         }
                     }`
                 }
