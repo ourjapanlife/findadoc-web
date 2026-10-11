@@ -1,7 +1,13 @@
 /// <reference types="vitest/globals" />
 import { expect } from 'chai'
 import { Locale } from '~/typedefs/gqlTypes'
-import { parseMapsPlace, placeLabelFromMapsUrl, validateSubmittedSpokenLanguages } from '@/utils/formValidations'
+import {
+    featureIdToPlaceId,
+    parseMapsPlace,
+    placeLabelFromMapsUrl,
+    validateGoogleMapsUrlInput,
+    validateSubmittedSpokenLanguages
+} from '@/utils/formValidations'
 import { resolveMapsPlace } from '@/utils/mapsLinkPreview'
 
 describe('submit form languages and maps preview', () => {
@@ -42,7 +48,7 @@ describe('submit form languages and maps preview', () => {
         })
     })
 
-    it('reads a Google place id and ignores a hex feature id', () => {
+    it('reads a Google place id and the hex feature id used by an iPhone link', () => {
         const withPlaceId = 'https://www.google.com/maps/place/Clinic/@35.66,139.70,17z/data=!1sChIJshibuyaClinic!8m2'
         expect(parseMapsPlace(withPlaceId)?.placeId).to.equal('ChIJshibuyaClinic')
         expect(parseMapsPlace('https://www.google.com/maps?query_place_id=ChIJfromQuery12')?.placeId)
@@ -50,13 +56,20 @@ describe('submit form languages and maps preview', () => {
         expect(parseMapsPlace(
             'https://www.google.com/maps/place/Clinic/@35.66,139.70,17z/data=!1s0x60188b563f2b1c19'
         )?.placeId).to.equal(null)
+        expect(featureIdToPlaceId('0x6b12ae37b47f5b37', '0x8eaddfcd1b32ca52'))
+            .to.equal('ChIJN1t_tDeuEmsRUsoyG83frY4')
+
+        const iphone = 'https://maps.google.com?q=A-ONE%20Dental&ftid=0x6b12ae37b47f5b37:0x8eaddfcd1b32ca52&g_st=ic'
+        expect(validateGoogleMapsUrlInput(iphone)).to.equal(true)
+        expect(parseMapsPlace(iphone)?.placeId).to.equal('ChIJN1t_tDeuEmsRUsoyG83frY4')
+        expect(parseMapsPlace(iphone)?.name).to.equal('A-ONE Dental')
 
         const tokyoStation = 'https://www.google.com/maps/place/Tokyo+Station+International+Clinic/@35.6791006,139.767714,17z/data=!3m1!4b1!4m6!3m5!1s0x60188bf5d2aa2fe7:0xe80be270a19ad1f8!8m2!3d35.6791006!4d139.767714!16s%2Fg%2F11l6yc1_d0?entry=ttu'
         const parsed = parseMapsPlace(tokyoStation)
         expect(parsed?.name).to.equal('Tokyo Station International Clinic')
         expect(parsed?.latitude).to.equal(35.6791006)
         expect(parsed?.longitude).to.equal(139.767714)
-        expect(parsed?.placeId).to.equal(null)
+        expect(parsed?.placeId).to.equal(featureIdToPlaceId('0x60188bf5d2aa2fe7', '0xe80be270a19ad1f8'))
         expect(parsed?.address).to.equal(null)
     })
 

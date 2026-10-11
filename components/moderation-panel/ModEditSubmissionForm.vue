@@ -51,6 +51,21 @@
                 >
                     {{ t('modSubmissionForm.searchExistingFacilities') }}
                 </label>
+                <p
+                    v-if="matchedFacility && !currentFacilityRelations.length"
+                    data-testid="mod-existing-place"
+                    class="rounded-md bg-secondary-bg p-3 text-sm text-primary-text"
+                    role="status"
+                >
+                    {{ t('submitPage.existingPlace') }}
+                    <button
+                        type="button"
+                        class="text-primary"
+                        @click="useMatchedFacility"
+                    >
+                        {{ matchedFacilityLabel }}
+                    </button>
+                </p>
                 <ModSearchBar
                     v-model="selectedFacilityRelationsModel"
                     :place-holder-text="t('modHealthcareProfessionalSection.placeholderTextFacilitySearchBar')"
@@ -125,6 +140,8 @@ import { guardWithErrorToastAndEffect } from '~/composables/useModerationGuardFe
 import { handleModerationResponseErrors } from '~/composables/useModerationResponseHandling'
 import { ModerationSubmissionActionType, useModerationSubmissionActions } from '~/composables/useModerationSubmissionActions'
 import { mapIdsToEntities, matchesFacilitySearch, matchesHealthcareProfessionalSearch } from '~/utils/moderationSearchUtils'
+import { fetchFacilityMatchingMapsUrl, type ExistingFacilityMatch } from '~/utils/existingFacility'
+import { validateGoogleMapsUrlInput } from '~/utils/formValidations'
 import { formatFirstLocalizedFullName, hasEnglishLocalizedName } from '~/utils/nameUtils'
 import { leaveToModerationDashboard } from '~/utils/moderationUtils'
 import {
@@ -202,6 +219,51 @@ const selectedHealthcareProfessionalsModel = computed({
         }
     }
 })
+
+const matchedFacility = ref<ExistingFacilityMatch | null>(null)
+let matchedFacilityRequest = 0
+let matchedFacilityTimer: ReturnType<typeof setTimeout> | undefined
+const matchedFacilityLabel = computed(() => {
+    const facility = matchedFacility.value
+    if (!facility) return ''
+    return [facility.nameEn, facility.nameJa].filter(Boolean).join(' · ')
+})
+
+watch(() => facilitiesStore.facilitySectionFields.googlemapsURL, url => {
+    if (matchedFacilityTimer) clearTimeout(matchedFacilityTimer)
+    const trimmed = url.trim()
+    if (!validateGoogleMapsUrlInput(trimmed)) {
+        matchedFacility.value = null
+        return
+    }
+    const request = ++matchedFacilityRequest
+    matchedFacilityTimer = setTimeout(() => {
+        void lookupMatchedFacility(trimmed, request)
+    }, 800)
+})
+
+async function lookupMatchedFacility(url: string, request: number) {
+    try {
+        const match = await fetchFacilityMatchingMapsUrl(url)
+        if (request !== matchedFacilityRequest) return
+        matchedFacility.value = match
+    } catch (error) {
+        if (request !== matchedFacilityRequest) return
+        console.error('Checking for an existing clinic failed', error)
+        matchedFacility.value = null
+    }
+}
+
+function useMatchedFacility() {
+    const match = matchedFacility.value
+    if (!match) return
+    const known = facilitiesStore.facilityData.find(facility => facility.id === match.id)
+    selectedFacilityRelationsModel.value = [known ?? {
+        id: match.id,
+        nameEn: match.nameEn,
+        nameJa: match.nameJa
+    } as Facility]
+}
 
 const handleFacilitySearchInputChange = (filteredItems: Ref<Facility[]>, inputValue: string) => {
     filteredItems.value = facilitiesStore.facilityData.filter(facility => matchesFacilitySearch(facility, inputValue))
@@ -623,6 +685,7 @@ watch(
 )
 
 onUnmounted(() => {
+    if (matchedFacilityTimer) clearTimeout(matchedFacilityTimer)
     moderationSubmissionUnsavedStore.registerEditFormTryLeave(null)
     moderationSubmissionUnsavedStore.setEditSubmissionFormDirty(false)
 })

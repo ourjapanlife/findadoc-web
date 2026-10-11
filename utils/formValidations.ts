@@ -289,7 +289,25 @@ function placeName(value: string | null | undefined, rejectCoordinates = false):
 
 const PLACE_ID_TOKEN = /^[A-Za-z0-9_-]{8,}$/
 
-/** A Places id written into the Maps URL. Hex feature ids (0x…) are not place ids. */
+/**
+ * The 0x:0x pair in a Maps link is the same place as a ChIJ place id.
+ * It is a 20-byte id written as two little-endian numbers.
+ */
+export function featureIdToPlaceId(highHex: string, lowHex: string): string {
+    const bytes = [
+        0x0a,
+        0x12,
+        0x09,
+        ...hexToLittleEndianBytes(highHex),
+        0x11,
+        ...hexToLittleEndianBytes(lowHex)
+    ]
+    let binary = ''
+    for (const byte of bytes) binary += String.fromCharCode(byte)
+    return btoa(binary).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/g, '')
+}
+
+/** A Places id written into the Maps URL, including an iPhone ftid pair. */
 function googlePlaceIdFromUrl(parsed: URL): string | null {
     const explicit = placeIdToken(parsed.searchParams.get('query_place_id'))
       ?? placeIdToken(parsed.searchParams.get('place_id'))
@@ -300,10 +318,32 @@ function googlePlaceIdFromUrl(parsed: URL): string | null {
     const queryToken = placeIdToken(fromQuery?.[1])
     if (queryToken) return queryToken
 
-    const embedded = `${parsed.pathname}${parsed.search}`.match(/!1s([A-Za-z0-9_-]{8,})/)
+    const haystack = decodedMapsPath(parsed)
+    const embedded = haystack.match(/!1s([A-Za-z0-9_-]{8,})/)
     const embeddedToken = placeIdToken(embedded?.[1])
     if (embeddedToken && !embeddedToken.startsWith('0x')) return embeddedToken
+
+    const feature = haystack.match(/(?:!1s|[?&]ftid=)(0x[0-9a-f]{1,16}):(0x[0-9a-f]{1,16})/i)
+    if (feature?.[1] && feature[2]) return featureIdToPlaceId(feature[1], feature[2])
     return null
+}
+
+function decodedMapsPath(parsed: URL): string {
+    const raw = `${parsed.pathname}${parsed.search}`
+    try {
+        return decodeURIComponent(raw)
+    } catch {
+        return raw
+    }
+}
+
+function hexToLittleEndianBytes(hex: string): number[] {
+    const normalized = hex.replace(/^0x/i, '').padStart(16, '0')
+    const bytes: number[] = []
+    for (let index = 14; index >= 0; index -= 2) {
+        bytes.push(Number.parseInt(normalized.slice(index, index + 2), 16))
+    }
+    return bytes
 }
 
 function placeIdToken(value: string | null | undefined): string | null {
@@ -335,15 +375,25 @@ function readCoordinatePair(value: string | null | undefined): { latitude: numbe
 }
 
 export function validateGoogleMapsUrlInput(url: string): boolean {
-    url = url.trim()
-    if (url.startsWith('https://www.google.com/maps') || url.startsWith('https://www.google.co.jp/maps')
-      || url.startsWith('https://maps.google.com/')
-      // Short "Share" links produced by the Google Maps app/website. These are
-      // what most users actually paste, so they must be accepted.
-      || url.startsWith('https://maps.app.goo.gl/') || url.startsWith('https://goo.gl/maps/')) {
+    const trimmed = url.trim()
+    // Short "Share" links produced by the Google Maps app, including iPhone links.
+    if (trimmed.startsWith('https://maps.app.goo.gl/') || trimmed.startsWith('https://goo.gl/maps/')) {
         return true
     }
-    return false
+
+    try {
+        const parsed = new URL(trimmed)
+        if (parsed.protocol !== 'https:') return false
+        const host = parsed.hostname
+        if (host === 'maps.google.com' || host === 'maps.google.co.jp') return true
+        const googleHost = host === 'www.google.com'
+          || host === 'google.com'
+          || host === 'www.google.co.jp'
+          || host === 'google.co.jp'
+        return googleHost && (parsed.pathname === '/maps' || parsed.pathname.startsWith('/maps/'))
+    } catch {
+        return false
+    }
 }
 
 export function validateFirstSpokenLanguage(localeCode: string): boolean {
