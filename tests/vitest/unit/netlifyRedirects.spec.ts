@@ -7,6 +7,18 @@ import {
 } from '../helpers/spaFallbackConfig'
 
 describe('SPA fallbacks', () => {
+    it('proxies the umami tracker and collect endpoint before the 404 catch-all', () => {
+        const redirects = readRedirects()
+        const script = redirectRuleIndex(redirects, /^\/stats\.js\s+https:\/\/cloud\.umami\.is\/script\.js\s+200/m)
+        const collect = redirectRuleIndex(redirects, /^\/api\/send\s+https:\/\/gateway\.umami\.is\/api\/send\s+200/m)
+        const notFound = redirectRuleIndex(redirects, /^\/\*\s+\/404\.html\s+404/m)
+
+        expect(script, '/stats.js proxy').to.be.greaterThan(-1)
+        expect(collect, '/api/send proxy').to.be.greaterThan(-1)
+        expect(script).to.be.lessThan(notFound)
+        expect(collect).to.be.lessThan(notFound)
+    })
+
     it('rewrites profile deep links to the SPA shell before the 404 catch-all', () => {
         const redirects = readRedirects()
         const spa = redirectRuleIndex(redirects, /^\/u\/\*\s+\/200\.html\s+200/m)

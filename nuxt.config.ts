@@ -5,6 +5,7 @@ import { VIEWPORT_BREAKPOINTS, VIEWPORT_FALLBACK_BREAKPOINT } from './utils/view
 import { publicSitemapUrls, SITEMAP_EXCLUDE } from './utils/sitemap'
 import { SITE_DESCRIPTION, SITE_ORIGIN, SITE_SOCIAL_IMAGE, SITE_TITLE } from './utils/site'
 import { COLOR_SCHEME_BOOTSTRAP, umamiScript } from './utils/nuxt/appHead'
+import { writeUmamiProxyRedirects } from './utils/nuxt/umamiProxy'
 import {
     applyEntityDirectoryToNitro,
     applyEntityDirectoryToNuxt,
@@ -233,6 +234,11 @@ export default defineNuxtConfig({
         },
         async 'nitro:config'(nitroConfig) {
             await applyEntityDirectoryToNitro(nitroConfig)
+        },
+        'nitro:init'(nitro) {
+            // Generate is static, so the proxy destinations have to be baked into
+            // the publish dir. Dev never has the env vars in the browser tag.
+            nitro.hooks.hook('close', () => writeUmamiProxyRedirects(nitro.options.output.publicDir))
         }
     },
     eslint: {

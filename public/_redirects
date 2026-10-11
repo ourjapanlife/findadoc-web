@@ -6,6 +6,15 @@
 # CI `nuxi start` uses `serve`, which ignores this file — keep public/serve.json
 # in sync for the same fallbacks (see #1785).
 # Add new dynamic prefixes here rather than a blanket 200 rewrite.
+#
+# Umami. The page loads /stats.js and posts to /api/send on this origin.
+# These 200s proxy to Umami so ad blockers never see cloud.umami.is or
+# gateway.umami.is. `nuxi generate` rewrites the destinations from
+# NUXT_PUBLIC_UMAMI_URL when that host is not Umami Cloud. Keep them
+# above the 404 catch-all.
+/stats.js       https://cloud.umami.is/script.js       200
+/api/send       https://gateway.umami.is/api/send      200
+
 /search         /200.html   200
 /u/*            /200.html   200
 /login          /200.html   200
