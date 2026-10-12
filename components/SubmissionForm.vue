@@ -211,24 +211,58 @@
                     <h2 class="text-base font-semibold text-primary-text">
                         {{ t('submitPage.previewHeading') }}
                     </h2>
-                    <p
+                    <div
                         v-if="existingFacility"
                         data-testid="submit-existing-place"
-                        class="rounded-md bg-secondary-bg p-3 text-sm text-primary-text"
+                        class="flex flex-col gap-3 rounded-md bg-secondary-bg p-3 text-sm text-primary-text"
                         role="status"
                     >
-                        {{ t('submitPage.existingPlace') }}
-                        <a
-                            :href="existingFacilityHref"
-                            class="text-primary"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >{{ existingFacilityLabel }}</a>
-                        <a
-                            :href="CONTACT_MAILTO"
-                            class="text-primary"
-                        >{{ t('submitPage.existingPlaceContact') }}</a>
-                    </p>
+                        <p class="m-0">
+                            {{ t('submitPage.existingPlace') }}
+                        </p>
+                        <dl class="grid gap-3">
+                            <div v-if="existingFacilityMapsHref">
+                                <dt class="font-semibold text-primary-text">
+                                    {{ t('submitPage.previewLocation') }}
+                                </dt>
+                                <dd>
+                                    <a
+                                        :href="existingFacilityMapsHref"
+                                        class="text-primary"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        data-testid="submit-existing-place-map"
+                                    >{{ t('submitPage.previewOpenMap') }}</a>
+                                </dd>
+                            </div>
+                            <div>
+                                <dt class="font-semibold text-primary-text">
+                                    {{ t('submitPage.existingPlacePage') }}
+                                </dt>
+                                <dd>
+                                    <NuxtLink
+                                        :to="existingFacilityHref"
+                                        class="text-primary"
+                                        data-testid="submit-existing-place-page"
+                                    >
+                                        {{ existingFacilityLabel }}
+                                    </NuxtLink>
+                                </dd>
+                            </div>
+                            <div>
+                                <dt class="font-semibold text-primary-text">
+                                    {{ t('submitPage.existingPlaceContact') }}
+                                </dt>
+                                <dd>
+                                    <a
+                                        :href="CONTACT_MAILTO"
+                                        class="text-primary"
+                                        data-testid="submit-existing-place-contact"
+                                    >{{ CONTACT_EMAIL }}</a>
+                                </dd>
+                            </div>
+                        </dl>
+                    </div>
                     <div
                         v-if="placeLabel || placeAddress || mapsPlaceLoading"
                         data-testid="submit-place-card"
@@ -334,7 +368,8 @@ import { Locale, type MutationCreateSubmissionArgs } from '~/typedefs/gqlTypes'
 import { spokenLanguageSortKey, useLocaleStore } from '~/stores/localeStore'
 import { handleServerErrorMessaging } from '~/composables/handleServerErrorMessaging'
 import { facilityPath } from '~/utils/clinicPath'
-import { CONTACT_MAILTO } from '~/utils/site'
+import { CONTACT_EMAIL, CONTACT_MAILTO } from '~/utils/site'
+import { facilityMapsUrl } from '~/utils/searchDirectory'
 import { isJapaneseLocale } from '~/utils/activeLocale'
 import { fetchFacilityMatchingMapsUrl, type ExistingFacilityMatch } from '~/utils/existingFacility'
 import { fetchMapsPlaceDetails } from '~/utils/mapsPlaceDetails'
@@ -394,6 +429,17 @@ const existingFacilityHref = computed(() => {
             }
         }
     })
+})
+const existingFacilityMapsHref = computed(() => {
+    const facility = existingFacility.value
+    if (!facility) return ''
+    return facilityMapsUrl({
+        nameEn: facility.nameEn,
+        nameJa: facility.nameJa,
+        mapLatitude: facility.mapLatitude,
+        mapLongitude: facility.mapLongitude,
+        contact: { googleMapsUrl: facility.googleMapsUrl }
+    }, isJapaneseLocale(locale.value))
 })
 const submittedName = computed(() => [firstName.value, lastName.value].map(part => part.trim()).filter(Boolean).join(' '))
 const submittedLanguageLabels = computed(() =>
