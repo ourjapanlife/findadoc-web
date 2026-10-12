@@ -39,6 +39,51 @@ type FacilityByPlaceIdResponse = {
     } | null
 }
 
+const facilityMatchingMapsUrlQuery = gql`
+    query FacilityMatchingMapsUrl($url: String!) {
+        facilityMatchingMapsUrl(url: $url) {
+            id
+            nameEn
+            nameJa
+            contact {
+                address {
+                    prefectureEn
+                    cityEn
+                }
+            }
+        }
+    }
+`
+
+type FacilityMatchingMapsUrlResponse = {
+    facilityMatchingMapsUrl?: FacilityByPlaceIdResponse['facilityByGooglePlaceId']
+}
+
+/** The clinic this Maps link already is, after the link is normalized. */
+export async function fetchFacilityMatchingMapsUrl(url: string): Promise<ExistingFacilityMatch | null> {
+    const response = await graphQLClientRequestWithRetry<FacilityMatchingMapsUrlResponse>(
+        gqlClient.request.bind(gqlClient),
+        facilityMatchingMapsUrlQuery,
+        { url },
+        { skipAuth: true, retryAmount: 1, requestTimeoutInMilliseconds: 8000, abortAfterMs: 12000 }
+    )
+
+    return matchFromFacility(response.hasErrors ? null : response.data?.facilityMatchingMapsUrl)
+}
+
+function matchFromFacility(
+    facility: FacilityByPlaceIdResponse['facilityByGooglePlaceId'] | null | undefined
+): ExistingFacilityMatch | null {
+    if (!facility) return null
+    return {
+        id: facility.id,
+        nameEn: facility.nameEn,
+        nameJa: facility.nameJa,
+        prefectureEn: facility.contact?.address?.prefectureEn ?? '',
+        cityEn: facility.contact?.address?.cityEn ?? ''
+    }
+}
+
 /** The published clinic that already stores this Google place id. */
 export async function fetchFacilityByGooglePlaceId(placeId: string): Promise<ExistingFacilityMatch | null> {
     const response = await graphQLClientRequestWithRetry<FacilityByPlaceIdResponse>(
@@ -48,16 +93,5 @@ export async function fetchFacilityByGooglePlaceId(placeId: string): Promise<Exi
         { skipAuth: true, retryAmount: 1, requestTimeoutInMilliseconds: 4000, abortAfterMs: 8000 }
     )
 
-    const facility = response.data?.facilityByGooglePlaceId
-    if (response.hasErrors || !facility) {
-        return null
-    }
-
-    return {
-        id: facility.id,
-        nameEn: facility.nameEn,
-        nameJa: facility.nameJa,
-        prefectureEn: facility.contact?.address?.prefectureEn ?? '',
-        cityEn: facility.contact?.address?.cityEn ?? ''
-    }
+    return matchFromFacility(response.hasErrors ? null : response.data?.facilityByGooglePlaceId)
 }

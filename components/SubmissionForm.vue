@@ -336,7 +336,7 @@ import { handleServerErrorMessaging } from '~/composables/handleServerErrorMessa
 import { facilityPath } from '~/utils/clinicPath'
 import { CONTACT_MAILTO } from '~/utils/site'
 import { isJapaneseLocale } from '~/utils/activeLocale'
-import { fetchFacilityByGooglePlaceId, type ExistingFacilityMatch } from '~/utils/existingFacility'
+import { fetchFacilityMatchingMapsUrl, type ExistingFacilityMatch } from '~/utils/existingFacility'
 import { fetchMapsPlaceDetails } from '~/utils/mapsPlaceDetails'
 
 const toast = useAppToast()
@@ -537,17 +537,15 @@ watch(() => location.value, newValue => {
     scheduleMapsPlace(newValue)
 })
 
-watch(() => mapsPlace.value?.placeId ?? null, placeId => {
-    void lookupExistingFacility(placeId)
-})
-
-async function lookupExistingFacility(placeId: string | null) {
+async function lookupExistingFacility(url: string | null) {
     const request = ++existingFacilityRequest
-    existingFacility.value = null
-    if (!placeId) return
+    if (!url || !validations.validateGoogleMapsUrlInput(url)) {
+        existingFacility.value = null
+        return
+    }
 
     try {
-        const match = await fetchFacilityByGooglePlaceId(placeId)
+        const match = await fetchFacilityMatchingMapsUrl(url)
         if (request !== existingFacilityRequest) return
         existingFacility.value = match
     } catch (error) {
@@ -569,6 +567,7 @@ function scheduleMapsPlace(value: string) {
         mapsPlace.value = null
         mapsPlaceLoading.value = false
         lastLookupKey = ''
+        void lookupExistingFacility(null)
         return
     }
 
@@ -580,15 +579,12 @@ function scheduleMapsPlace(value: string) {
 
     mapsPlace.value = parsed
     const canLookUp = Boolean(parsed.name || parsed.placeId || validations.isResolvableShortMapsUrl(trimmed))
-    if (!canLookUp || mapsPlaceLookups >= PLACE_LOOKUP_LIMIT) {
-        mapsPlaceLoading.value = false
-        return
-    }
-
-    mapsPlaceLoading.value = true
+      && mapsPlaceLookups < PLACE_LOOKUP_LIMIT
+    mapsPlaceLoading.value = canLookUp
     const request = ++mapsPlaceRequest
     mapsPlaceTimer = setTimeout(() => {
-        void loadMapsPlace(trimmed, parsed, request)
+        void lookupExistingFacility(trimmed)
+        if (canLookUp) void loadMapsPlace(trimmed, parsed, request)
     }, PLACE_LOOKUP_DELAY_MS)
 }
 
@@ -598,27 +594,32 @@ async function loadMapsPlace(url: string, parsed: validations.MapsPlacePreview, 
         let place = parsed
         let lookupUrl = url
         if (validations.isResolvableShortMapsUrl(url)) {
-            const preview = await $fetch<{
-                name: string | null
-                latitude: number | null
-                longitude: number | null
-                placeId: string | null
-                resolvedUrl: string
-            }>('/api/maps-preview', { query: { url } })
-            if (request !== mapsPlaceRequest) return
-            place = {
-                name: preview.name,
-                latitude: preview.latitude,
-                longitude: preview.longitude,
-                placeId: preview.placeId,
-                address: null,
-                category: null
+            try {
+                const preview = await $fetch<{
+                    name: string | null
+                    latitude: number | null
+                    longitude: number | null
+                    placeId: string | null
+                    resolvedUrl: string
+                }>('/api/maps-preview', { query: { url } })
+                if (request !== mapsPlaceRequest) return
+                place = {
+                    name: preview.name,
+                    latitude: preview.latitude,
+                    longitude: preview.longitude,
+                    placeId: preview.placeId,
+                    address: null,
+                    category: null
+                }
+                lookupUrl = preview.resolvedUrl || url
+                mapsPlace.value = place
+            } catch (error) {
+                if (request !== mapsPlaceRequest) return
+                console.error('Opening a Maps share link failed', error)
+                lookupUrl = url
             }
-            lookupUrl = preview.resolvedUrl
-            mapsPlace.value = place
         }
 
-        if (validations.isResolvableShortMapsUrl(lookupUrl)) return
         if (mapsPlaceLookups >= PLACE_LOOKUP_LIMIT) return
         mapsPlaceLookups += 1
         const details = await fetchMapsPlaceDetails(
