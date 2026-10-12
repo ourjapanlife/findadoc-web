@@ -64,6 +64,17 @@ export type City = {
   slug: Scalars['String']['output'];
 };
 
+/** A live Places city suggestion. Only placeId may be stored, and only on the matched city. */
+export type CitySuggestion = {
+  __typename?: 'CitySuggestion';
+  /** Our city when the suggestion maps onto exactly one municipality. */
+  city?: Maybe<City>;
+  /** Live suggestion text. Not a stored field. */
+  label: Scalars['String']['output'];
+  /** Google place id for the suggested city. */
+  placeId: Scalars['String']['output'];
+};
+
 /** Contact information for a facility. */
 export type Contact = {
   __typename?: 'Contact';
@@ -260,6 +271,16 @@ export type Facility = {
   verificationStatus: FacilityVerificationStatus;
 };
 
+/** A live Google place a moderator can confirm. Do not store the name or address from this type. */
+export type FacilityPlaceCandidate = {
+  __typename?: 'FacilityPlaceCandidate';
+  address?: Maybe<Scalars['String']['output']>;
+  category?: Maybe<Scalars['String']['output']>;
+  confidence: PlaceMatchConfidence;
+  name?: Maybe<Scalars['String']['output']>;
+  placeId: Scalars['String']['output'];
+};
+
 /** Search filters for querying facilities. All filters are combined with AND logic. */
 export type FacilitySearchFilters = {
   /** Filter by contact information. */
@@ -364,6 +385,8 @@ export type HealthcareProfessionalSearchFilters = {
   createdDate?: InputMaybe<Scalars['String']['input']>;
   /** Filter by degrees. */
   degrees?: InputMaybe<Array<Degree>>;
+  /** Filter to professionals linked to at least one of these facility IDs. */
+  facilityIds?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** Filter by specific healthcare professional IDs. */
   ids?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** Maximum number of results to return. */
@@ -560,8 +583,23 @@ export type LocalizedNameInput = {
   middleName?: InputMaybe<Scalars['String']['input']>;
 };
 
+/** Live place details for the submit form. Do not store the name, address, or category. */
+export type MapsPlacePreview = {
+  __typename?: 'MapsPlacePreview';
+  address?: Maybe<Scalars['String']['output']>;
+  /** Short place type, such as Medical clinic. */
+  category?: Maybe<Scalars['String']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+  placeId?: Maybe<Scalars['String']['output']>;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
+  /**
+   * Store a Google place id a moderator confirmed.
+   * The facility name and address are not changed.
+   */
+  confirmFacilityPlaceId: Facility;
   /** Create a new facility record. */
   createFacility: Facility;
   /** Create a new healthcare professional record. */
@@ -578,6 +616,8 @@ export type Mutation = {
   deleteHealthcareProfessional: DeleteResult;
   /** Delete a submission by ID. */
   deleteSubmission: DeleteResult;
+  /** Store a city place id. Does not store a Places name, address, or coordinate. */
+  recordCityPlaceId: City;
   /** Update an existing facility by ID. */
   updateFacility: Facility;
   /** Update an existing healthcare professional by ID. */
@@ -588,6 +628,12 @@ export type Mutation = {
   updateSubmission: Submission;
   /** Update an existing user by ID. */
   updateUser: User;
+};
+
+
+export type MutationConfirmFacilityPlaceIdArgs = {
+  facilityId: Scalars['ID']['input'];
+  placeId: Scalars['String']['input'];
 };
 
 
@@ -628,6 +674,12 @@ export type MutationDeleteHealthcareProfessionalArgs = {
 
 export type MutationDeleteSubmissionArgs = {
   id: Scalars['ID']['input'];
+};
+
+
+export type MutationRecordCityPlaceIdArgs = {
+  cityId: Scalars['ID']['input'];
+  placeId: Scalars['String']['input'];
 };
 
 
@@ -755,6 +807,11 @@ export type PhysicalAddressInput = {
   prefectureJa: Scalars['String']['input'];
 };
 
+export enum PlaceMatchConfidence {
+  High = 'HIGH',
+  Low = 'LOW'
+}
+
 /** A prefecture from the frozen key list. */
 export type Prefecture = {
   __typename?: 'Prefecture';
@@ -783,12 +840,22 @@ export type Query = {
   facilitiesTotalCount: Scalars['Int']['output'];
   /** Look up a single facility by its unique ID. Returns null if not found. */
   facility?: Maybe<Facility>;
+  /**
+   * The facility that already stores this Google place id.
+   * Null when the id is unknown or we have no matching row.
+   */
+  facilityByGooglePlaceId?: Maybe<Facility>;
   /** Look up a single healthcare professional by their unique ID. Returns null if not found. */
   healthcareProfessional?: Maybe<HealthcareProfessional>;
   /** Search for healthcare professionals matching the given filters. Returns an empty list if no matches. */
   healthcareProfessionals: Array<HealthcareProfessional>;
   /** Get the total count of healthcare professionals matching the given filters. Useful for pagination. */
   healthcareProfessionalsTotalCount: Scalars['Int']['output'];
+  /**
+   * Live name, address, and category for a Maps link on the submit form.
+   * Nothing in this response is saved.
+   */
+  mapsPlacePreview?: Maybe<MapsPlacePreview>;
   /** Prefectures this server owns. One row per prefecture in the frozen key list. */
   prefectures: Array<Prefecture>;
   /** Look up a single reservation by its unique ID. Returns null if not found. */
@@ -799,6 +866,16 @@ export type Query = {
   submissions: Array<Submission>;
   /** Get the total count of submissions matching the given filters. Useful for pagination. */
   submissionsTotalCount: Scalars['Int']['output'];
+  /**
+   * Japan-only city suggestions from Places. The label is live Google text for this screen.
+   * Do not store it. A suggestion with no city is not in our vocabulary.
+   */
+  suggestCities: Array<CitySuggestion>;
+  /**
+   * Live place candidates for a moderator. Nothing in this list is saved.
+   * A coordinate by itself is not a match.
+   */
+  suggestFacilityPlaces: Array<FacilityPlaceCandidate>;
   /** Look up a single user by their unique ID. Returns null if not found. */
   user?: Maybe<User>;
 };
@@ -835,6 +912,11 @@ export type QueryFacilityArgs = {
 };
 
 
+export type QueryFacilityByGooglePlaceIdArgs = {
+  placeId: Scalars['String']['input'];
+};
+
+
 export type QueryHealthcareProfessionalArgs = {
   id: Scalars['ID']['input'];
 };
@@ -847,6 +929,12 @@ export type QueryHealthcareProfessionalsArgs = {
 
 export type QueryHealthcareProfessionalsTotalCountArgs = {
   filters: HealthcareProfessionalSearchFilters;
+};
+
+
+export type QueryMapsPlacePreviewArgs = {
+  languageCode?: InputMaybe<Scalars['String']['input']>;
+  url: Scalars['String']['input'];
 };
 
 
@@ -867,6 +955,22 @@ export type QuerySubmissionsArgs = {
 
 export type QuerySubmissionsTotalCountArgs = {
   filters: SubmissionSearchFilters;
+};
+
+
+export type QuerySuggestCitiesArgs = {
+  input: Scalars['String']['input'];
+};
+
+
+export type QuerySuggestFacilityPlacesArgs = {
+  address?: InputMaybe<Scalars['String']['input']>;
+  languageCode?: InputMaybe<Scalars['String']['input']>;
+  latitude?: InputMaybe<Scalars['Float']['input']>;
+  longitude?: InputMaybe<Scalars['Float']['input']>;
+  nameEn?: InputMaybe<Scalars['String']['input']>;
+  nameJa?: InputMaybe<Scalars['String']['input']>;
+  url?: InputMaybe<Scalars['String']['input']>;
 };
 
 
@@ -1256,6 +1360,7 @@ export type ResolversTypes = {
   AuditLog: ResolverTypeWrapper<AuditLog>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
   City: ResolverTypeWrapper<City>;
+  CitySuggestion: ResolverTypeWrapper<CitySuggestion>;
   Contact: ResolverTypeWrapper<Contact>;
   ContactInput: ContactInput;
   CreateFacilityInput: CreateFacilityInput;
@@ -1267,6 +1372,7 @@ export type ResolversTypes = {
   Degree: Degree;
   DeleteResult: ResolverTypeWrapper<DeleteResult>;
   Facility: ResolverTypeWrapper<Facility>;
+  FacilityPlaceCandidate: ResolverTypeWrapper<FacilityPlaceCandidate>;
   FacilitySearchFilters: FacilitySearchFilters;
   FacilitySource: FacilitySource;
   FacilitySubmission: ResolverTypeWrapper<FacilitySubmission>;
@@ -1281,6 +1387,7 @@ export type ResolversTypes = {
   Locale: Locale;
   LocalizedName: ResolverTypeWrapper<LocalizedName>;
   LocalizedNameInput: LocalizedNameInput;
+  MapsPlacePreview: ResolverTypeWrapper<MapsPlacePreview>;
   Mutation: ResolverTypeWrapper<Record<PropertyKey, never>>;
   ObjectType: ObjectType;
   OrderBy: OrderBy;
@@ -1290,6 +1397,7 @@ export type ResolversTypes = {
   PaymentType: PaymentType;
   PhysicalAddress: ResolverTypeWrapper<PhysicalAddress>;
   PhysicalAddressInput: PhysicalAddressInput;
+  PlaceMatchConfidence: PlaceMatchConfidence;
   Prefecture: ResolverTypeWrapper<Prefecture>;
   Query: ResolverTypeWrapper<Record<PropertyKey, never>>;
   Relationship: Relationship;
@@ -1315,6 +1423,7 @@ export type ResolversParentTypes = {
   AuditLog: AuditLog;
   Boolean: Scalars['Boolean']['output'];
   City: City;
+  CitySuggestion: CitySuggestion;
   Contact: Contact;
   ContactInput: ContactInput;
   CreateFacilityInput: CreateFacilityInput;
@@ -1325,6 +1434,7 @@ export type ResolversParentTypes = {
   CurrentUserAccess: CurrentUserAccess;
   DeleteResult: DeleteResult;
   Facility: Facility;
+  FacilityPlaceCandidate: FacilityPlaceCandidate;
   FacilitySearchFilters: FacilitySearchFilters;
   FacilitySubmission: FacilitySubmission;
   Float: Scalars['Float']['output'];
@@ -1335,6 +1445,7 @@ export type ResolversParentTypes = {
   Int: Scalars['Int']['output'];
   LocalizedName: LocalizedName;
   LocalizedNameInput: LocalizedNameInput;
+  MapsPlacePreview: MapsPlacePreview;
   Mutation: Record<PropertyKey, never>;
   OrderBy: OrderBy;
   PaymentOption: PaymentOption;
@@ -1377,6 +1488,12 @@ export type CityResolvers<ContextType = any, ParentType extends ResolversParentT
   slug?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
 };
 
+export type CitySuggestionResolvers<ContextType = any, ParentType extends ResolversParentTypes['CitySuggestion'] = ResolversParentTypes['CitySuggestion']> = {
+  city?: Resolver<Maybe<ResolversTypes['City']>, ParentType, ContextType>;
+  label?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  placeId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+};
+
 export type ContactResolvers<ContextType = any, ParentType extends ResolversParentTypes['Contact'] = ResolversParentTypes['Contact']> = {
   address?: Resolver<ResolversTypes['PhysicalAddress'], ParentType, ContextType>;
   email?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -1411,6 +1528,14 @@ export type FacilityResolvers<ContextType = any, ParentType extends ResolversPar
   source?: Resolver<Maybe<ResolversTypes['FacilitySource']>, ParentType, ContextType>;
   updatedDate?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   verificationStatus?: Resolver<ResolversTypes['FacilityVerificationStatus'], ParentType, ContextType>;
+};
+
+export type FacilityPlaceCandidateResolvers<ContextType = any, ParentType extends ResolversParentTypes['FacilityPlaceCandidate'] = ResolversParentTypes['FacilityPlaceCandidate']> = {
+  address?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  category?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  confidence?: Resolver<ResolversTypes['PlaceMatchConfidence'], ParentType, ContextType>;
+  name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  placeId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
 };
 
 export type FacilitySubmissionResolvers<ContextType = any, ParentType extends ResolversParentTypes['FacilitySubmission'] = ResolversParentTypes['FacilitySubmission']> = {
@@ -1454,7 +1579,15 @@ export type LocalizedNameResolvers<ContextType = any, ParentType extends Resolve
   middleName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
 };
 
+export type MapsPlacePreviewResolvers<ContextType = any, ParentType extends ResolversParentTypes['MapsPlacePreview'] = ResolversParentTypes['MapsPlacePreview']> = {
+  address?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  category?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  placeId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+};
+
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
+  confirmFacilityPlaceId?: Resolver<ResolversTypes['Facility'], ParentType, ContextType, RequireFields<MutationConfirmFacilityPlaceIdArgs, 'facilityId' | 'placeId'>>;
   createFacility?: Resolver<ResolversTypes['Facility'], ParentType, ContextType, RequireFields<MutationCreateFacilityArgs, 'input'>>;
   createHealthcareProfessional?: Resolver<ResolversTypes['HealthcareProfessional'], ParentType, ContextType, RequireFields<MutationCreateHealthcareProfessionalArgs, 'input'>>;
   createReservation?: Resolver<ResolversTypes['Reservation'], ParentType, ContextType, RequireFields<MutationCreateReservationArgs, 'input'>>;
@@ -1463,6 +1596,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   deleteFacility?: Resolver<ResolversTypes['DeleteResult'], ParentType, ContextType, RequireFields<MutationDeleteFacilityArgs, 'id'>>;
   deleteHealthcareProfessional?: Resolver<ResolversTypes['DeleteResult'], ParentType, ContextType, RequireFields<MutationDeleteHealthcareProfessionalArgs, 'id'>>;
   deleteSubmission?: Resolver<ResolversTypes['DeleteResult'], ParentType, ContextType, RequireFields<MutationDeleteSubmissionArgs, 'id'>>;
+  recordCityPlaceId?: Resolver<ResolversTypes['City'], ParentType, ContextType, RequireFields<MutationRecordCityPlaceIdArgs, 'cityId' | 'placeId'>>;
   updateFacility?: Resolver<ResolversTypes['Facility'], ParentType, ContextType, RequireFields<MutationUpdateFacilityArgs, 'id' | 'input'>>;
   updateHealthcareProfessional?: Resolver<ResolversTypes['HealthcareProfessional'], ParentType, ContextType, RequireFields<MutationUpdateHealthcareProfessionalArgs, 'id' | 'input'>>;
   updateReservation?: Resolver<ResolversTypes['Reservation'], ParentType, ContextType, RequireFields<MutationUpdateReservationArgs, 'input'>>;
@@ -1502,14 +1636,18 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   facilities?: Resolver<Array<ResolversTypes['Facility']>, ParentType, ContextType, RequireFields<QueryFacilitiesArgs, 'filters'>>;
   facilitiesTotalCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType, RequireFields<QueryFacilitiesTotalCountArgs, 'filters'>>;
   facility?: Resolver<Maybe<ResolversTypes['Facility']>, ParentType, ContextType, RequireFields<QueryFacilityArgs, 'id'>>;
+  facilityByGooglePlaceId?: Resolver<Maybe<ResolversTypes['Facility']>, ParentType, ContextType, RequireFields<QueryFacilityByGooglePlaceIdArgs, 'placeId'>>;
   healthcareProfessional?: Resolver<Maybe<ResolversTypes['HealthcareProfessional']>, ParentType, ContextType, RequireFields<QueryHealthcareProfessionalArgs, 'id'>>;
   healthcareProfessionals?: Resolver<Array<ResolversTypes['HealthcareProfessional']>, ParentType, ContextType, RequireFields<QueryHealthcareProfessionalsArgs, 'filters'>>;
   healthcareProfessionalsTotalCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType, RequireFields<QueryHealthcareProfessionalsTotalCountArgs, 'filters'>>;
+  mapsPlacePreview?: Resolver<Maybe<ResolversTypes['MapsPlacePreview']>, ParentType, ContextType, RequireFields<QueryMapsPlacePreviewArgs, 'url'>>;
   prefectures?: Resolver<Array<ResolversTypes['Prefecture']>, ParentType, ContextType>;
   reservation?: Resolver<Maybe<ResolversTypes['Reservation']>, ParentType, ContextType, RequireFields<QueryReservationArgs, 'id'>>;
   submission?: Resolver<Maybe<ResolversTypes['Submission']>, ParentType, ContextType, RequireFields<QuerySubmissionArgs, 'id'>>;
   submissions?: Resolver<Array<ResolversTypes['Submission']>, ParentType, ContextType, RequireFields<QuerySubmissionsArgs, 'filters'>>;
   submissionsTotalCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType, RequireFields<QuerySubmissionsTotalCountArgs, 'filters'>>;
+  suggestCities?: Resolver<Array<ResolversTypes['CitySuggestion']>, ParentType, ContextType, RequireFields<QuerySuggestCitiesArgs, 'input'>>;
+  suggestFacilityPlaces?: Resolver<Array<ResolversTypes['FacilityPlaceCandidate']>, ParentType, ContextType, Partial<QuerySuggestFacilityPlacesArgs>>;
   user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryUserArgs, 'id'>>;
 };
 
@@ -1547,14 +1685,17 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
 export type Resolvers<ContextType = any> = {
   AuditLog?: AuditLogResolvers<ContextType>;
   City?: CityResolvers<ContextType>;
+  CitySuggestion?: CitySuggestionResolvers<ContextType>;
   Contact?: ContactResolvers<ContextType>;
   CurrentUserAccess?: CurrentUserAccessResolvers<ContextType>;
   DeleteResult?: DeleteResultResolvers<ContextType>;
   Facility?: FacilityResolvers<ContextType>;
+  FacilityPlaceCandidate?: FacilityPlaceCandidateResolvers<ContextType>;
   FacilitySubmission?: FacilitySubmissionResolvers<ContextType>;
   HealthcareProfessional?: HealthcareProfessionalResolvers<ContextType>;
   HealthcareProfessionalSubmission?: HealthcareProfessionalSubmissionResolvers<ContextType>;
   LocalizedName?: LocalizedNameResolvers<ContextType>;
+  MapsPlacePreview?: MapsPlacePreviewResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   PaymentOption?: PaymentOptionResolvers<ContextType>;
   PhysicalAddress?: PhysicalAddressResolvers<ContextType>;
