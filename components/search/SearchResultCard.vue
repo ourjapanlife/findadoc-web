@@ -16,6 +16,7 @@
                         :to="detailsRoute"
                         :aria-current="active ? 'true' : undefined"
                         class="after:absolute after:inset-0 after:rounded-xl after:content-['']"
+                        @click="track('Clinic opened', { from })"
                     >
                         {{ facilityName }}
                     </NuxtLink>
@@ -61,6 +62,7 @@
                     <NuxtLink
                         :to="professional.path"
                         class="relative z-10 font-medium text-primary hover:underline"
+                        @click="track('Doctor opened', { from })"
                     >
                         {{ professional.name }}
                     </NuxtLink>
@@ -93,12 +95,16 @@ import { formatHealthcareProfessionalName } from '~/utils/nameUtils'
 import { isJapaneseLocale, toGqlLocale } from '~/utils/activeLocale'
 import { facilityPath } from '~/utils/clinicPath'
 import { professionalPath } from '~/utils/doctorPath'
+import { useUmami } from '~/composables/useUmamiTracking'
 import type { FacilitySearchResult } from '~/utils/searchDirectory'
 
 const props = defineProps<{
     result: FacilitySearchResult
+    from: 'results' | 'hub'
     active?: boolean
 }>()
+
+const { track } = useUmami()
 
 const MAX_VISIBLE_PROFESSIONALS = 3
 

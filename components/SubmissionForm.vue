@@ -337,10 +337,12 @@ import { facilityPath } from '~/utils/clinicPath'
 import { CONTACT_MAILTO } from '~/utils/site'
 import { isJapaneseLocale } from '~/utils/activeLocale'
 import { fetchFacilityMatchingMapsUrl, type ExistingFacilityMatch } from '~/utils/existingFacility'
+import { useUmami } from '~/composables/useUmamiTracking'
 import { fetchMapsPlaceDetails } from '~/utils/mapsPlaceDetails'
 
 const toast = useAppToast()
 const { t, locale } = useI18n()
+const { track } = useUmami()
 
 const submissionStore = useSubmissionStore()
 const localeStore = useLocaleStore()
@@ -466,7 +468,10 @@ async function submitNewSubmission() {
     if (isSubmitting.value) return
 
     const isValid = validateFields()
-    if (!isValid) return
+    if (!isValid) {
+        track('Submit rejected', { reason: 'validation' })
+        return
+    }
 
     const spokenLanguages = [Locale.JaJp, ...extraLanguages.value]
 
@@ -484,9 +489,11 @@ async function submitNewSubmission() {
         // This is used in the component and not graphQL call as it is user messaging and needs the mounted toast library
         if (response?.hasErrors || response?.errors?.length) {
             handleServerErrorMessaging(response.errors ?? [], toast, t)
+            track('Submit rejected', { reason: 'server' })
             return
         }
 
+        track('Submit completed')
         submissionStore.submissionCompleted = true
         toast.success(t('submitPage.submissionSuccessful'))
     } finally {

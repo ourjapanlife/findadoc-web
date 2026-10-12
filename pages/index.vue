@@ -59,6 +59,7 @@
                             class="flex h-full min-h-16 items-center rounded-xl border border-accent-bg bg-primary-bg
                                    px-4 py-3 font-semibold text-primary-text transition-colors
                                    hover:border-primary hover:bg-primary/5"
+                            @click="track('Browse clicked', { kind: 'specialty' })"
                         >
                             {{ category.displayText }}
                         </NuxtLink>
@@ -85,6 +86,7 @@
                             :to="areaLink(prefecture)"
                             :data-testid="`home-prefecture-${prefecture.name}`"
                             class="chip h-11 px-4 transition-colors hover:border-primary hover:bg-primary/5"
+                            @click="track('Browse clicked', { kind: 'prefecture' })"
                         >
                             {{ prefectureLabel(prefecture) }}
                         </NuxtLink>
@@ -93,6 +95,7 @@
                         <NuxtLink
                             to="/search"
                             class="link inline-flex h-11 items-center px-2"
+                            @click="track('Browse clicked', { kind: 'all' })"
                         >
                             {{ t('home.browseAreaAll') }}
                         </NuxtLink>
@@ -181,6 +184,7 @@
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useSpecialtiesStore } from '~/stores/specialtiesStore'
+import { useUmami } from '~/composables/useUmamiTracking'
 import {
     BROWSE_CATEGORIES,
     DIRECTORY_STATS,
@@ -195,6 +199,7 @@ import generatedFacetPaths from '#generated-facet-paths'
 
 const { t, locale } = useI18n()
 const specialtiesStore = useSpecialtiesStore()
+const { track } = useUmami()
 
 const heroIllustration = '/illustrations/characters-together-welcomescreen.svg'
 

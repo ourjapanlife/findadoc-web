@@ -7,6 +7,7 @@
             to="/search"
             class="btn btn-ghost btn-sm -ml-1 self-start"
             data-testid="clinic-back-to-search"
+            @click="track('Back to search', { from: 'clinic' })"
         >
             <svg
                 class="h-5 w-5 stroke-current"
@@ -27,23 +28,28 @@
         <SearchResultDetails
             :facility="facility"
             heading="h1"
+            surface="clinic"
         />
 
         <HubRelatedFacets
             :heading="t('clinicPage.relatedSpecialtiesHeading')"
             :items="specialtyFacetItems"
             test-id="clinic-related-specialties"
+            kind="specialty"
+            from="clinic"
         />
         <HubRelatedFacets
             :heading="t('clinicPage.relatedLanguagesHeading')"
             :items="languageFacetItems"
             test-id="clinic-related-languages"
+            kind="language"
+            from="clinic"
         />
     </div>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { createError, navigateTo, useAsyncData, useHead, useRoute } from '#imports'
 import { fetchClinicById } from '~/utils/clinicFacility'
@@ -52,9 +58,12 @@ import { facilityCrumbs, facilityFacetLinks, facilityHubPaths } from '~/utils/di
 import { loadFacetLinkCatalog } from '~/utils/hubDirectory'
 import { isJapaneseLocale } from '~/utils/activeLocale'
 import { formatPageTitle } from '~/utils/site'
+import { useUmami } from '~/composables/useUmamiTracking'
+import { clinicViewedProps } from '~/utils/analyticsEvents'
 
 const route = useRoute()
 const { t, locale } = useI18n()
+const { track } = useUmami()
 
 const facilityId = facilityIdFromSlugParam(String(route.params.slug ?? ''))
 
@@ -155,5 +164,9 @@ useHead({
         { name: 'twitter:title', content: brandedTitle.value, key: 'twitter:title' },
         { name: 'twitter:description', content: metaDescription.value, key: 'twitter:description' }
     ])
+})
+
+onMounted(() => {
+    track('Clinic viewed', clinicViewedProps(facility.value))
 })
 </script>

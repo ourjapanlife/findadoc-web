@@ -44,9 +44,12 @@ import { ref, useId, watch } from 'vue'
 import type { Locale } from '#i18n'
 import type { Locale as GqlLocale } from '~/typedefs/gqlTypes.js'
 import { useLocaleStore } from '~/stores/localeStore'
+import { useUmami } from '~/composables/useUmamiTracking'
+import { siteLanguage } from '~/utils/analyticsEvents'
 
 const { t, setLocale, getLocaleCookie } = useI18n()
 const localeStore = useLocaleStore()
+const { track } = useUmami()
 const selectId = useId()
 
 // getLocaleCookie to set the initial locale, if there is no cookie, it will default based on the nuxt.config.js
@@ -60,5 +63,7 @@ watch(selectedLocale, newLocale => {
     localeStore.setLocale(newLocale as GqlLocale)
     // setLocale to update the i18n plugin and set the 'i18n_redirected' cookie
     setLocale(newLocale.replace('_', '-') as Locale)
+    const to = siteLanguage(newLocale)
+    if (to) track('Language switched', { to })
 })
 </script>

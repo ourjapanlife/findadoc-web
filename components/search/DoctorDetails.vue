@@ -44,6 +44,7 @@
                         :to="item.to"
                         class="chip chip-primary h-7 px-2.5 text-xs"
                         data-testid="doctor-specialty-link"
+                        @click="track('Related clicked', { kind: 'specialty', from: 'doctor' })"
                     >
                         {{ item.label }}
                     </NuxtLink>
@@ -74,6 +75,7 @@
                         :to="item.to"
                         class="chip h-7 px-2.5 text-xs"
                         data-testid="doctor-language-link"
+                        @click="track('Related clicked', { kind: 'language', from: 'doctor' })"
                     >
                         {{ item.label }}
                     </NuxtLink>
@@ -134,6 +136,7 @@
                     <NuxtLink
                         :to="facility.path"
                         class="text-lg font-semibold leading-snug text-primary hover:underline"
+                        @click="track('Clinic opened', { from: 'doctor' })"
                     >
                         {{ facility.name }}
                     </NuxtLink>
@@ -154,6 +157,7 @@ import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { localeDisplayOptions } from '~/stores/localeStore'
 import { useSpecialtiesStore } from '~/stores/specialtiesStore'
+import { useUmami } from '~/composables/useUmamiTracking'
 import { formatHealthcareProfessionalName } from '~/utils/nameUtils'
 import { isJapaneseLocale, toGqlLocale } from '~/utils/activeLocale'
 import { facilityPath } from '~/utils/clinicPath'
@@ -168,6 +172,7 @@ const props = defineProps<{
 
 const { t, locale } = useI18n()
 const specialtiesStore = useSpecialtiesStore()
+const { track } = useUmami()
 
 const isJapanese = computed(() => isJapaneseLocale(locale.value))
 const gqlLocale = computed(() => toGqlLocale(locale.value))

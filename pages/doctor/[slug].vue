@@ -7,6 +7,7 @@
             to="/search"
             class="btn btn-ghost btn-sm -ml-1 self-start"
             data-testid="doctor-back-to-search"
+            @click="track('Back to search', { from: 'doctor' })"
         >
             <svg
                 class="h-5 w-5 stroke-current"
@@ -32,7 +33,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { createError, navigateTo, useAsyncData, useHead, useRoute } from '#imports'
 import { fetchDoctorById } from '~/utils/doctorProfessional'
@@ -43,12 +44,15 @@ import { loadFacetLinkCatalog } from '~/utils/hubDirectory'
 import { formatHealthcareProfessionalName } from '~/utils/nameUtils'
 import { isJapaneseLocale, toGqlLocale } from '~/utils/activeLocale'
 import { formatPageTitle } from '~/utils/site'
+import { useUmami } from '~/composables/useUmamiTracking'
+import { doctorViewedProps } from '~/utils/analyticsEvents'
 import { localeDisplayOptions } from '~/stores/localeStore'
 import { useSpecialtiesStore } from '~/stores/specialtiesStore'
 
 const route = useRoute()
 const { t, locale } = useI18n()
 const specialtiesStore = useSpecialtiesStore()
+const { track } = useUmami()
 
 const professionalId = professionalIdFromSlugParam(String(route.params.slug ?? ''))
 
@@ -134,5 +138,9 @@ useHead({
         { name: 'twitter:title', content: brandedTitle.value, key: 'twitter:title' },
         { name: 'twitter:description', content: metaDescription.value, key: 'twitter:description' }
     ])
+})
+
+onMounted(() => {
+    track('Doctor viewed', doctorViewedProps(professional.value))
 })
 </script>

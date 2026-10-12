@@ -20,7 +20,7 @@
                         :aria-expanded="filtersOpen"
                         aria-controls="search-filters"
                         class="btn btn-secondary btn-sm landscape:hidden"
-                        @click="filtersOpen = !filtersOpen"
+                        @click="toggleFilters"
                     >
                         <SVGFiltersIcon
                             class="h-4 w-4 fill-current"
@@ -38,7 +38,7 @@
                         data-testid="search-map-toggle"
                         :aria-pressed="showMap"
                         class="btn btn-secondary btn-sm"
-                        @click="emit('update:showMap', !showMap)"
+                        @click="toggleMap"
                     >
                         <SVGMapPinIcon
                             class="h-4 w-4 stroke-current"
@@ -67,6 +67,7 @@
                         v-model="specialty"
                         data-testid="search-specialty"
                         class="field"
+                        @change="onFilterChange"
                     >
                         <option value="">
                             {{ t('searchBar.allSpecialties') }}
@@ -91,6 +92,7 @@
                         v-model="language"
                         data-testid="search-language"
                         class="field"
+                        @change="onFilterChange"
                     >
                         <option value="">
                             {{ t('home.searchAnyLanguage') }}
@@ -115,6 +117,7 @@
                         v-model="prefecture"
                         data-testid="search-area"
                         class="field"
+                        @change="onFilterChange"
                     >
                         <option value="">
                             {{ t('home.searchAnyArea') }}
@@ -129,7 +132,7 @@
                     </select>
                 </div>
 
-                <div class="min-w-0">
+                <div class="relative min-w-0">
                     <label
                         for="search-city"
                         class="field-label"
@@ -140,6 +143,7 @@
                         data-testid="search-city"
                         class="field"
                         :disabled="!prefecture"
+                        @change="onFilterChange"
                     >
                         <option value="">
                             {{ t('home.searchAnyCity') }}
@@ -152,6 +156,17 @@
                             {{ locale === 'ja-JP' ? option.nameJa : option.nameEn }}
                         </option>
                     </select>
+                    <!--
+                        A disabled select does not receive clicks, so the attempt has to be a
+                        control of its own. It only exists until a prefecture is chosen.
+                    -->
+                    <button
+                        v-if="!prefecture"
+                        type="button"
+                        class="absolute inset-0 cursor-not-allowed"
+                        :aria-label="t('home.searchCityLabel')"
+                        @click="onCityFieldClick"
+                    />
                 </div>
 
                 <button
@@ -160,7 +175,7 @@
                     class="btn btn-ghost h-12 px-4"
                     :class="hasFilters ? '' : 'invisible portrait:hidden'"
                     :tabindex="hasFilters ? undefined : -1"
-                    @click="searchResultsStore.clearFilters()"
+                    @click="clearFromBar"
                 >
                     {{ t('search.clearFilters') }}
                 </button>
@@ -177,17 +192,20 @@ import SVGMapPinIcon from '~/assets/icons/map-pin-icon.svg'
 import { useSearchResultsStore } from '~/stores/searchResultsStore'
 import { useSpecialtiesStore } from '~/stores/specialtiesStore'
 import { localeDisplayOptions } from '~/stores/localeStore'
+import { useUmami } from '~/composables/useUmamiTracking'
+import { searchFilterFlags } from '~/utils/analyticsEvents'
 import { ALL_PREFECTURES, SEARCHABLE_LANGUAGES, type PrefectureEntry } from '~/utils/homeDirectory'
 import { hasActiveFilters } from '~/utils/searchDirectory'
 import { fetchCities, type CityOption } from '~/utils/cityOptions'
 import type { Locale, Specialty } from '~/typedefs/gqlTypes'
 
-defineProps<{ showMap: boolean }>()
+const props = defineProps<{ showMap: boolean }>()
 const emit = defineEmits<{ (e: 'update:showMap', value: boolean): void }>()
 
 const { t, locale } = useI18n()
 const searchResultsStore = useSearchResultsStore()
 const specialtiesStore = useSpecialtiesStore()
+const { track } = useUmami()
 
 const filtersOpen = ref(false)
 
@@ -260,6 +278,31 @@ function prefectureLabel(entry: PrefectureEntry) {
 }
 
 const hasFilters = computed(() => hasActiveFilters(searchResultsStore.filters))
+
+function toggleFilters() {
+    filtersOpen.value = !filtersOpen.value
+    if (filtersOpen.value) track('Filters opened')
+}
+
+function toggleMap() {
+    const next = !props.showMap
+    emit('update:showMap', next)
+    track('Map toggled', { state: next ? 'shown' : 'hidden' })
+}
+
+function onFilterChange() {
+    track('Filters changed', searchFilterFlags(searchResultsStore.filters))
+}
+
+function onCityFieldClick() {
+    if (prefecture.value) return
+    track('Filter unavailable', { control: 'city' })
+}
+
+function clearFromBar() {
+    searchResultsStore.clearFilters()
+    track('Filters cleared', { from: 'filter_bar' })
+}
 
 const activeFilterCount = computed(() =>
     [specialty.value, language.value, prefecture.value, searchResultsStore.selectedCity].filter(Boolean).length)
