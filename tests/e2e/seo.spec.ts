@@ -93,10 +93,10 @@ test.describe('Discovery and social meta', () => {
     })
 
     test('the social preview image is reachable', async ({ request }) => {
-        const response = await request.get('/findadoc-social.png')
+        const response = await request.get('/findadoc-social.jpg')
         expect(response.status()).toBe(200)
-        expect(response.headers()['content-type']).toMatch(/image\/png/)
-        expect(new URL(SITE_SOCIAL_IMAGE).pathname).toBe('/findadoc-social.png')
+        expect(response.headers()['content-type']).toMatch(/image\/jpeg/)
+        expect(new URL(SITE_SOCIAL_IMAGE).pathname).toBe('/findadoc-social.jpg')
     })
 
     test('every public page has one canonical, Open Graph type/site/locale, and a large Twitter card', async ({ page }) => {
