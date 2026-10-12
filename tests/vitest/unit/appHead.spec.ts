@@ -36,16 +36,32 @@ describe('umamiScript', () => {
         expect(umamiScript()).to.deep.equal([])
     })
 
-    it('emits the tag when production has a real URL and site id', () => {
+    it('emits a same-origin tag when production has a real URL and site id', () => {
         process.env.NODE_ENV = 'production'
         process.env.NUXT_PUBLIC_UMAMI_URL = 'https://analytics.example/script.js'
         process.env.NUXT_PUBLIC_UMAMI_SITE_ID = 'site-1'
         expect(umamiScript()).to.deep.equal([{
-            src: 'https://analytics.example/script.js',
+            src: '/stats.js',
             async: true,
             defer: true,
-            'data-website-id': 'site-1'
+            'data-website-id': 'site-1',
+            'data-host-url': '/',
+            'data-domains': 'www.findadoc.jp,findadoc.jp'
         }])
+    })
+
+    it('does not put the upstream host in the page', () => {
+        process.env.NODE_ENV = 'production'
+        process.env.NUXT_PUBLIC_UMAMI_URL = 'https://cloud.umami.is/script.js'
+        process.env.NUXT_PUBLIC_UMAMI_SITE_ID = 'site-1'
+        expect(JSON.stringify(umamiScript())).to.not.include('umami.is')
+    })
+
+    it('emits nothing when the script URL is not http(s)', () => {
+        process.env.NODE_ENV = 'production'
+        process.env.NUXT_PUBLIC_UMAMI_URL = 'not a url'
+        process.env.NUXT_PUBLIC_UMAMI_SITE_ID = 'site-1'
+        expect(umamiScript()).to.deep.equal([])
     })
 })
 
