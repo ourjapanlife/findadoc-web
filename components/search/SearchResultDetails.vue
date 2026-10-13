@@ -33,7 +33,7 @@
                     :href="`tel:${phoneHref}`"
                     data-testid="search-details-call"
                     class="btn btn-primary btn-sm"
-                    @click="handleCallNow"
+                    @click="trackContact('Call clicked')"
                 >
                     <SVGPhoneIcon
                         class="h-4 w-4 stroke-current"
@@ -47,6 +47,7 @@
                     target="_blank"
                     rel="noopener noreferrer"
                     class="btn btn-secondary btn-sm"
+                    @click="trackContact('Website clicked')"
                 >
                     <SVGGlobeIcon
                         class="h-4 w-4 stroke-current"
@@ -60,6 +61,7 @@
                     target="_blank"
                     rel="noopener noreferrer"
                     class="btn btn-secondary btn-sm"
+                    @click="trackContact('Maps clicked')"
                 >
                     <SVGMapPinIcon
                         class="h-4 w-4 stroke-current"
@@ -71,6 +73,7 @@
                     v-if="email"
                     :href="`mailto:${email}`"
                     class="btn btn-secondary btn-sm"
+                    @click="trackContact('Email clicked')"
                 >
                     <SVGEmailIcon
                         class="h-4 w-4 stroke-current"
@@ -124,6 +127,7 @@
                         <NuxtLink
                             :to="professional.path"
                             class="text-lg font-semibold leading-snug text-primary hover:underline"
+                            @click="track('Doctor opened', { from: surface })"
                         >
                             {{ professional.name }}
                         </NuxtLink>
@@ -188,6 +192,7 @@ import { formatHealthcareProfessionalName } from '~/utils/nameUtils'
 import { isJapaneseLocale, toGqlLocale } from '~/utils/activeLocale'
 import { formatToReadableDate } from '~/utils/dateUtils'
 import { useUmami } from '~/composables/useUmamiTracking'
+import { noteSearchDetailsContact, type EventProps } from '~/utils/analyticsEvents'
 import { professionalPath } from '~/utils/doctorPath'
 import { facilityEmail,
     facilityMapsUrl,
@@ -200,8 +205,10 @@ import { facilityEmail,
 const props = withDefaults(defineProps<{
     facility: FacilitySearchResult
     heading?: 'h1' | 'h2'
+    surface?: EventProps['Call clicked']['surface']
 }>(), {
-    heading: 'h2'
+    heading: 'h2',
+    surface: 'search_details'
 })
 
 const { t, locale } = useI18n()
@@ -271,12 +278,8 @@ const professionals = computed(() => props.facility.healthcareProfessionals.map(
 // In script rather than the template: i18n/cleanUnusedLocaleKeys.js only sees template t() calls with no second argument.
 const professionalsCountText = computed(() => t('search.professionalsAtFacility', professionals.value.length))
 
-function handleCallNow() {
-    track('Call button clicked', {
-        facilityName: facilityName.value,
-        phone: phone.value,
-        website: website.value,
-        addressLine1: addressLine1.value
-    })
+function trackContact(name: 'Call clicked' | 'Website clicked' | 'Email clicked' | 'Maps clicked') {
+    if (props.surface === 'search_details') noteSearchDetailsContact()
+    track(name, { surface: props.surface })
 }
 </script>

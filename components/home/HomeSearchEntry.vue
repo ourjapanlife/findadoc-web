@@ -99,12 +99,15 @@
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { navigateTo } from '#imports'
+import { useUmami } from '~/composables/useUmamiTracking'
+import { searchSubmittedProps } from '~/utils/analyticsEvents'
 import { useSpecialtiesStore } from '~/stores/specialtiesStore'
 import { localeDisplayOptions } from '~/stores/localeStore'
 import { ALL_PREFECTURES, SEARCHABLE_LANGUAGES, type PrefectureEntry } from '~/utils/homeDirectory'
 
 const { t, locale } = useI18n()
 const specialtiesStore = useSpecialtiesStore()
+const { track } = useUmami()
 
 const prefectures = ALL_PREFECTURES
 
@@ -168,6 +171,11 @@ function submitSearch(event: Event) {
         }
     }
 
+    track('Search submitted', searchSubmittedProps({
+        specialty: Boolean(query.specialty),
+        language: Boolean(query.language),
+        prefecture: Boolean(query.prefecture)
+    }))
     void navigateTo({ path: '/search', query })
 }
 </script>

@@ -18,12 +18,14 @@
                         <a
                             href="/"
                             class="btn btn-primary"
+                            @click="track('Not found escaped', { to: 'home' })"
                         >
                             {{ t('errorPage.returnHome') }}
                         </a>
                         <NuxtLink
                             to="/search"
                             class="btn btn-secondary"
+                            @click="track('Not found escaped', { to: 'search' })"
                         >
                             {{ t('topNav.search') }}
                         </NuxtLink>
@@ -46,10 +48,18 @@
 </template>
 
 <script lang="ts" setup>
+import { onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { useUmami } from '~/composables/useUmamiTracking'
+import { notFoundArea } from '~/utils/analyticsEvents'
 
 const { t } = useI18n()
+const { track } = useUmami()
 
 // Bound rather than static so the compiler leaves the public URL alone.
 const illustration = '/illustrations/characters-sachi-questioning.svg'
+
+onMounted(() => {
+    track('Not found', { area: notFoundArea(window.location.pathname) })
+})
 </script>

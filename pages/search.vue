@@ -41,6 +41,7 @@ import { onMounted, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRoute, useRouter, type LocationQuery, type LocationQueryRaw } from 'vue-router'
 import { useSearchResultsStore } from '~/stores/searchResultsStore'
+import { resetSearchDetailsContact, takeSearchDetailsActed, track } from '~/utils/analyticsEvents'
 import { buildSearchQuery, parseSearchQuery, sameSearchQueryState } from '~/utils/searchDirectory'
 
 const { t } = useI18n()
@@ -191,5 +192,18 @@ watch(showMap, value => {
     } catch {
         // Same as above: a preference that cannot be stored is still honoured for this visit.
     }
+})
+
+/*
+ * Closing is not only the button. Back, and a shared link whose facility param
+ * disappears, shut the panel too. A switch from one facility to another is not
+ * a close: the contact flag resets so the next close describes the new listing.
+ */
+watch(() => searchResultsStore.activeFacilityId, (id, previous) => {
+    if (previous && !id) {
+        track('Details closed', { acted: takeSearchDetailsActed() })
+        return
+    }
+    if (id && id !== previous) resetSearchDetailsContact()
 })
 </script>

@@ -14,6 +14,7 @@
                     v-if="item.to"
                     :to="item.to"
                     class="link link-hover"
+                    @click="onCrumb(item.to)"
                 >
                     {{ item.label }}
                 </NuxtLink>
@@ -35,6 +36,8 @@
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
+import { useUmami } from '~/composables/useUmamiTracking'
+import { breadcrumbLevel } from '~/utils/analyticsEvents'
 import type { BreadcrumbItem } from '~/utils/directoryLinks'
 
 defineProps<{
@@ -42,4 +45,11 @@ defineProps<{
 }>()
 
 const { t } = useI18n()
+const { track } = useUmami()
+
+function onCrumb(to: string) {
+    const level = breadcrumbLevel(to)
+    if (!level) return
+    track('Breadcrumb clicked', { level })
+}
 </script>

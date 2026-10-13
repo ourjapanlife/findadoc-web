@@ -17,7 +17,7 @@
             <button
                 type="button"
                 class="btn btn-primary btn-sm"
-                @click="searchResultsStore.reloadDirectory()"
+                @click="retrySearch"
             >
                 {{ t('search.retry') }}
             </button>
@@ -68,7 +68,7 @@
                 v-if="hasFilters"
                 type="button"
                 class="btn btn-secondary btn-sm"
-                @click="searchResultsStore.clearFilters()"
+                @click="clearFromEmpty"
             >
                 {{ t('search.clearFilters') }}
             </button>
@@ -87,6 +87,7 @@
                 >
                     <SearchResultCard
                         :result="result"
+                        from="results"
                         :active="searchResultsStore.activeFacilityId === result.id"
                     />
                 </li>
@@ -110,12 +111,13 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import SVGNoSearchResults from '~/assets/icons/no-search-results-graphic.svg'
 import SearchResultCard from '~/components/search/SearchResultCard.vue'
 import { useSearchResultsStore } from '~/stores/searchResultsStore'
 import { useUmami } from '~/composables/useUmamiTracking'
+import { resultsShownProps } from '~/utils/analyticsEvents'
 import { hasActiveFilters } from '~/utils/searchDirectory'
 
 const { t } = useI18n()
@@ -137,9 +139,47 @@ const loadMoreLabel = computed(() => t('searchResultsList.loadMoreCount', { n: r
 function handleLoadMore() {
     searchResultsStore.loadMore()
 
-    track('Load More Results', {
-        currentCount: searchResultsStore.paginatedResults.length,
-        totalCount: searchResultsStore.totalResults
+    track('Load more results', {
+        shown: searchResultsStore.paginatedResults.length,
+        total: searchResultsStore.totalResults
     })
 }
+
+function retrySearch() {
+    track('Search retried')
+    void searchResultsStore.reloadDirectory()
+}
+
+function clearFromEmpty() {
+    searchResultsStore.clearFilters()
+    track('Filters cleared', { from: 'empty_results' })
+}
+
+/*
+ * The signature includes the filter values so two searches with the same result
+ * count still report separately. Those values are not part of the event.
+ */
+const resultsSignature = computed(() => {
+    if (!searchResultsStore.isReady) return ''
+    const filters = searchResultsStore.filters
+    return [
+        filters.specialties?.[0] ?? '',
+        filters.languages?.[0] ?? '',
+        filters.prefecture ?? '',
+        filters.city ?? '',
+        searchResultsStore.totalResults
+    ].join('|')
+})
+
+watch(resultsSignature, () => {
+    if (!searchResultsStore.isReady) return
+    track('Results shown', resultsShownProps(
+        searchResultsStore.totalResults ? 'some' : 'empty',
+        hasFilters.value
+    ))
+}, { immediate: true })
+
+watch(() => searchResultsStore.hasLoadError, failed => {
+    if (failed) track('Search failed')
+}, { immediate: true })
 </script>

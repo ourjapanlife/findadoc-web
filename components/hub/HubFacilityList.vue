@@ -7,7 +7,10 @@
             v-for="facility in facilities"
             :key="facility.id"
         >
-            <SearchResultCard :result="facility" />
+            <SearchResultCard
+                :result="facility"
+                from="hub"
+            />
         </li>
     </ul>
 </template>

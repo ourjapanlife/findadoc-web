@@ -239,7 +239,7 @@ watch(() => searchResultsStore.activeFacility, renderMarkerIcons)
 
 const handlePinClick = (resultId: string) => {
     emit('select', resultId)
-    track('Map Pin Clicked', { facilityId: resultId })
+    track('Map pin clicked')
 }
 
 const handleMapClick = () => {
@@ -259,7 +259,9 @@ onMounted(() => {
     previousAuthFailureHandler = window.gm_authFailure
     // eslint-disable-next-line camelcase -- as above
     window.gm_authFailure = () => {
+        if (authFailed.value) return
         authFailed.value = true
+        track('Map failed')
     }
 })
 
