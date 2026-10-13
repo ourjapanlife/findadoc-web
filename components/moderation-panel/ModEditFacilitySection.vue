@@ -480,7 +480,7 @@ onBeforeMount(async () => {
         await facilityStore.getFacilities()
     }
     // This will fetch the healthcare professionals if sent here by link or a page is refreshed
-    if (!healthcareProfessionalsStore.healthcareProfessionalsData) {
+    if (!healthcareProfessionalsStore.healthcareProfessionalsData.length) {
         await healthcareProfessionalsStore.getHealthcareProfessionals()
     }
     facilityStore.selectedFacilityId = id as string

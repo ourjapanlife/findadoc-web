@@ -32,13 +32,13 @@
                 </div>
 
                 <p
-                    v-else-if="hasFacilities && facilitiesModerationListViewChosen && !filteredFacilities.length"
+                    v-else-if="facilitiesModerationListViewChosen && !filteredFacilities.length"
                     class="text-center py-8 px-4"
                 >
                     {{ t('searchResultsList.noResults') }}
                 </p>
                 <div
-                    v-else-if="hasFacilities && facilitiesModerationListViewChosen"
+                    v-else-if="facilitiesModerationListViewChosen"
                     class="grid grid-cols-1 landscape:grid-cols-2 gap-4 items-start justify-start p-3 md:p-4"
                 >
                     <div
@@ -55,14 +55,14 @@
                 </div>
 
                 <p
-                    v-else-if="hasHealthcareProfessionals && healthcareProfessionalsModerationListViewChosen
+                    v-else-if="healthcareProfessionalsModerationListViewChosen
                         && !filteredHealthcareProfessionals.length"
                     class="text-center py-8 px-4"
                 >
                     {{ t('searchResultsList.noResults') }}
                 </p>
                 <div
-                    v-else-if="hasHealthcareProfessionals && healthcareProfessionalsModerationListViewChosen"
+                    v-else-if="healthcareProfessionalsModerationListViewChosen"
                     class="grid grid-cols-1 landscape:grid-cols-2 gap-4 items-start justify-start p-3 md:p-4"
                 >
                     <div
@@ -167,13 +167,11 @@ const submissionsModerationListViewChosen = computed(() => modSubmissionsStore.s
 onMounted(async () => {
     await modSubmissionsStore.getSubmissions()
     await modSubmissionsStore.fetchStatusCounts()
-    await facilitiesStore.getFacilities()
-    await healthcareProfessionalsStore.getHealthcareProfessionals()
+    await facilitiesStore.loadFacilityList()
+    await healthcareProfessionalsStore.loadHealthcareProfessionalList()
 })
 
 const hasSubmissions = computed(() => modSubmissionsStore.filteredSubmissionDataForListComponent.length)
-const hasFacilities = computed(() => facilitiesStore.facilityData.length)
-const hasHealthcareProfessionals = computed(() => healthcareProfessionalsStore.healthcareProfessionalsData.length)
 const filteredFacilities = computed(() => facilitiesStore.filteredFacilityData)
 const filteredHealthcareProfessionals = computed(() => healthcareProfessionalsStore.filteredHealthcareProfessionalsData)
 
@@ -204,13 +202,11 @@ async function handleItemsPerPageChange(event: Event) {
             break
         case SelectedModerationListView.Facilities:
             facilitiesStore.setItemsPerPage(newItemsPerPage)
-            facilitiesStore.setOffset(0)
-            await facilitiesStore.getFacilities()
+            await facilitiesStore.setOffset(0)
             break
         case SelectedModerationListView.HealthcareProfessionals:
             healthcareProfessionalsStore.setItemsPerPage(newItemsPerPage)
-            healthcareProfessionalsStore.setOffset(0)
-            await healthcareProfessionalsStore.getHealthcareProfessionals()
+            await healthcareProfessionalsStore.setOffset(0)
             break
     }
 }

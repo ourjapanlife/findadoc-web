@@ -49,6 +49,19 @@
             </div>
         </div>
         <div
+            v-if="showLicenseReviewFilter"
+            class="flex items-end border-b border-accent-bg -mb-px"
+        >
+            <button
+                type="button"
+                data-testid="mod-license-review-filter"
+                :class="queueFilterClass(healthcareProfessionalsStore.licenseReviewFilter !== null)"
+                @click="healthcareProfessionalsStore.setLicenseReviewFilter(healthcareProfessionalsStore.licenseReviewFilter === null)"
+            >
+                {{ t('modDashboardTopbar.licenseReview') }}
+            </button>
+        </div>
+        <div
             v-if="moderationSubmissionsStore.selectedModerationListViewChosen === SelectedModerationListView.Submissions"
             class="flex items-end border-b border-accent-bg -mb-px"
         >
@@ -128,6 +141,10 @@ const showAddFacilityButton = computed(() =>
         || accessStore.hasScope('write:facilities')
     ))
 
+const showLicenseReviewFilter = computed(() =>
+    moderationSubmissionsStore.selectedModerationListViewChosen
+    === SelectedModerationListView.HealthcareProfessionals)
+
 const listSearchQuery = computed({
     get() {
         switch (moderationSubmissionsStore.selectedModerationListViewChosen) {
@@ -159,6 +176,10 @@ async function updateSubmissionListViewState(newValue: SelectedSubmissionListVie
 
 function statusFilterClass(tab: SelectedSubmissionListViewTab): string {
     const isActive = moderationSubmissionsStore.selectedModerationListViewTabChosen === tab
+    return queueFilterClass(isActive)
+}
+
+function queueFilterClass(isActive: boolean): string {
     const baseClass = 'px-4 py-2.5 text-sm font-medium transition-colors border-b-2 -mb-px'
 
     return isActive

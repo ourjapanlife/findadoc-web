@@ -251,7 +251,17 @@
     "update": "Update",
     "charactersOfLanguageDoNotMatchNameLocale": "The characters of the Healthcare Professional's name are invalid in chosen language",
     "labelAdditionalNotesForPatients": "Additional Notes for Patients",
-    "placeholderAdditionalNotesForPatients": "e.g. English speaking doctors only available from 2-4"
+    "placeholderAdditionalNotesForPatients": "e.g. English speaking doctors only available from 2-4",
+    "selectPrimaryLicense": "Primary license",
+    "selectAdditionalCredentials": "Additional credentials",
+    "placeholderPrimaryLicense": "Choose a primary license",
+    "placeholderAdditionalCredentials": "Search credentials such as PhD or MPH",
+    "keepBothLicenses": "Keep both licenses",
+    "licenseRecommendationMd": "Suggested primary license: MD. Patients still see the saved degrees until you choose.",
+    "licenseRecommendationDental": "Suggested collapse: one dental license. Patients still see the saved degrees until you choose.",
+    "licenseRecommendationConfirm": "More than one clinical license is stored. Choose the primary license, or keep both.",
+    "storedHiddenDegrees": "Also stored, and still shown on the public listing: {degrees}",
+    "listingShowsSavedDegrees": "The public listing shows every degree saved here."
   },
   "modSubmissionForm": {
     "healthcareProfessionalId": "Healthcare Professional IDs",
@@ -285,7 +295,8 @@
     "placeholderText": "Enter name or ID to search",
     "healthcareProfessionals": "Healthcare Professionals",
     "facilities": "Facilities",
-    "addHealthcareProfessional": "Add Healthcare Professional"
+    "addHealthcareProfessional": "Add Healthcare Professional",
+    "licenseReview": "Needs license review"
   },
   "modFacilitySection": {
     "addresses": "Addresses",

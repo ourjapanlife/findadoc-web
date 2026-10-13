@@ -406,7 +406,7 @@ onBeforeMount(async () => {
     moderationScreenStore.setActiveScreen(ModerationScreen.CreateFacility)
 
     // Fetch data first if not loaded yet
-    if (!healthcareProfessionalsStore.healthcareProfessionalsData) {
+    if (!healthcareProfessionalsStore.healthcareProfessionalsData.length) {
         await healthcareProfessionalsStore.getHealthcareProfessionals()
     }
 

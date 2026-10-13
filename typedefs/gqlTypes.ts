@@ -229,6 +229,14 @@ export enum Degree {
   PsyD = 'PsyD'
 }
 
+/** Moderator queue for a professional license. CONFIRMED keeps a dual license. */
+export enum LicenseReviewStatus {
+  /** A moderator still needs to choose the primary license. */
+  NeedsReview = 'NEEDS_REVIEW',
+  /** A moderator confirmed that more than one clinical license should stay. */
+  Confirmed = 'CONFIRMED'
+}
+
 /** Result returned from delete mutations indicating success or failure. */
 export type DeleteResult = {
   __typename?: 'DeleteResult';
@@ -297,6 +305,11 @@ export type FacilitySearchFilters = {
   nameEn?: InputMaybe<Scalars['String']['input']>;
   /** Filter by facility name in Japanese (partial match). */
   nameJa?: InputMaybe<Scalars['String']['input']>;
+  /**
+   * One text query matched against the English name, Japanese name, or id.
+   * Applied before pagination. Blank leaves the list unfiltered.
+   */
+  query?: InputMaybe<Scalars['String']['input']>;
   /** Number of results to skip for pagination. */
   offset?: InputMaybe<Scalars['Int']['input']>;
   /** Ordering rules for the results. */
@@ -361,14 +374,20 @@ export type HealthcareProfessional = {
   additionalInfoForPatients?: Maybe<Scalars['String']['output']>;
   /** ISO 8601 timestamp of when this record was created. */
   createdDate: Scalars['String']['output'];
-  /** Academic or professional degrees held. */
+  /** Academic or professional degrees held. The public listing still shows this list. */
   degrees: Array<Degree>;
   /** IDs of facilities where this professional practices. */
   facilityIds: Array<Scalars['ID']['output']>;
   /** Unique identifier for the healthcare professional. */
   id: Scalars['ID']['output'];
+  /** Suggestion for a dual license. A moderator decides whether to apply it. */
+  licenseRecommendation?: Maybe<Scalars['String']['output']>;
+  /** NEEDS_REVIEW is the moderator queue. CONFIRMED keeps a dual license. */
+  licenseReview?: Maybe<LicenseReviewStatus>;
   /** Localized names of the healthcare professional (e.g. English and Japanese). */
   names: Array<LocalizedName>;
+  /** One clinical license. Empty while a dual license is unresolved or confirmed as dual. */
+  primaryLicense?: Maybe<Degree>;
   /** Medical specialties practiced. */
   specialties: Array<Specialty>;
   /** Languages the healthcare professional speaks. */
@@ -389,10 +408,17 @@ export type HealthcareProfessionalSearchFilters = {
   facilityIds?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** Filter by specific healthcare professional IDs. */
   ids?: InputMaybe<Array<Scalars['ID']['input']>>;
+  /** Only professionals in this license queue. NEEDS_REVIEW is the dual-license queue. */
+  licenseReview?: InputMaybe<LicenseReviewStatus>;
   /** Maximum number of results to return. */
   limit?: InputMaybe<Scalars['Int']['input']>;
   /** Filter by localized names. */
   names?: InputMaybe<Array<LocalizedNameInput>>;
+  /**
+   * One text query matched against any localized given name, middle name, family name, or id.
+   * Applied before pagination. Blank leaves the list unfiltered.
+   */
+  query?: InputMaybe<Scalars['String']['input']>;
   /** Number of results to skip for pagination. */
   offset?: InputMaybe<Scalars['Int']['input']>;
   /** Ordering rules for the results. */
@@ -1222,6 +1248,8 @@ export type UpdateHealthcareProfessionalInput = {
   degrees?: InputMaybe<Array<Degree>>;
   /** Facility relationships to add, update, or remove. */
   facilityIds?: InputMaybe<Array<Relationship>>;
+  /** CONFIRMED keeps a dual license. Omit this to classify the degrees you send. */
+  licenseReview?: InputMaybe<LicenseReviewStatus>;
   /** Updated localized names. */
   names?: InputMaybe<Array<LocalizedNameInput>>;
   /** Updated specialties. */
