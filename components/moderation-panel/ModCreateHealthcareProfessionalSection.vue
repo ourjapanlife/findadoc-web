@@ -171,25 +171,10 @@
                     />
                     <ModTokenList :labels="tokenLabels(createHealthcareProfessionalSectionFields.acceptedInsurance)" />
                 </div>
-                <div class="mod-picker">
-                    <label
-                        for="degrees"
-                        class="field-label"
-                    >
-                        {{ t("modHealthcareProfessionalSection.selectDegrees") }}
-                    </label>
-                    <ModSearchBar
-                        v-if="createHealthcareProfessionalSectionFields.degrees"
-                        v-model="createHealthcareProfessionalSectionFields.degrees"
-                        data-testid="mod-healthcare-professional-section-degrees"
-                        :place-holder-text="t('modHealthcareProfessionalSection.placeholderTextDegrees')"
-                        :no-match-text="t('modHealthcareProfessionalSection.noDegreesWereFound')"
-                        :fields-to-display-callback="degreesToDisplayCallback"
-                        :default-suggestions="Object.values(Degree)"
-                        @search-input-change="handleDegreeInputChange"
-                    />
-                    <ModTokenList :labels="tokenLabels(createHealthcareProfessionalSectionFields.degrees)" />
-                </div>
+                <ModProfessionalLicenseFields
+                    v-if="createHealthcareProfessionalSectionFields.degrees"
+                    v-model:degrees="createHealthcareProfessionalSectionFields.degrees"
+                />
                 <div class="mod-picker">
                     <label
                         for="specialties"
@@ -264,7 +249,6 @@ import { useLocaleStore } from '~/stores/localeStore'
 import { useModerationScreenStore } from '~/stores/moderationScreenStore'
 import { Insurance,
     Locale,
-    Degree,
     Specialty,
     type LocalizedNameInput,
     type Facility,
@@ -511,11 +495,6 @@ const handleInsuranceInputChange = (filteredItems: Ref<Insurance[]>, inputValue:
     filteredItems.value = filterByCaseInsensitiveIncludes(arrayOfInsurances, inputValue)
 }
 
-const handleDegreeInputChange = (filteredItems: Ref<Degree[]>, inputValue: string) => {
-    const degree = Object.values(Degree) as Degree[]
-    filteredItems.value = filterByCaseInsensitiveIncludes(degree, inputValue)
-}
-
 const handleSpecialtyInputChange = (filteredItems: Ref<Specialty[]>, inputValue: string) => {
     const arrayOfSpecialties = Object.values(Specialty) as Specialty[]
     filteredItems.value = filterByCaseInsensitiveIncludes(arrayOfSpecialties, inputValue)
@@ -534,7 +513,6 @@ const handleLocaleInputChange = (filteredItems: Ref<Locale[]>, inputValue: strin
 
 const facilitiesFieldsToDisplayCallback = (item: Facility) => [item.nameEn, item.nameJa]
 const specialtiesToDisplayCallback = (specialty: Specialty) => [specialty]
-const degreesToDisplayCallback = (degree: Degree) => [degree]
 const insurancesToDisplayCallback = (insurance: Insurance) => [insurance]
 const localesToDisplayCallback = (locale: Locale) => [localesStore.formatLanguageCodeToSimpleText(locale)]
 </script>

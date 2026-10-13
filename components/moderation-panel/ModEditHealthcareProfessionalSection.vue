@@ -173,24 +173,10 @@
                     />
                     <ModTokenList :labels="tokenLabels(hpStore.healthcareProfessionalSectionFields.acceptedInsurance)" />
                 </div>
-                <div class="mod-picker">
-                    <label
-                        for="degrees"
-                        class="field-label"
-                    >
-                        {{ t("modHealthcareProfessionalSection.selectDegrees") }}
-                    </label>
-                    <ModSearchBar
-                        v-model="hpStore.healthcareProfessionalSectionFields.degrees"
-                        data-test-id="mod-healthcare-professional-section-degrees"
-                        :place-holder-text="t('modHealthcareProfessionalSection.placeholderTextDegrees')"
-                        :no-match-text="t('modHealthcareProfessionalSection.noDegreesWereFound')"
-                        :fields-to-display-callback="degreesToDisplayCallback"
-                        :default-suggestions="Object.values(Degree)"
-                        @search-input-change="handleDegreeInputChange"
-                    />
-                    <ModTokenList :labels="tokenLabels(hpStore.healthcareProfessionalSectionFields.degrees)" />
-                </div>
+                <ModProfessionalLicenseFields
+                    v-model:degrees="hpStore.healthcareProfessionalSectionFields.degrees"
+                    v-model:license-review="hpStore.healthcareProfessionalSectionFields.licenseReview"
+                />
                 <div class="mod-picker">
                     <label
                         for="specialties"
@@ -263,7 +249,7 @@ import { useHealthcareProfessionalsStore } from '~/stores/healthcareProfessional
 import { useFacilitiesStore } from '~/stores/facilitiesStore'
 import { useModerationScreenStore } from '~/stores/moderationScreenStore'
 import { useLocaleStore } from '~/stores/localeStore'
-import { Insurance, Locale, Degree, Specialty, type LocalizedNameInput, type Facility } from '~/typedefs/gqlTypes'
+import { Insurance, Locale, Specialty, type LocalizedNameInput, type Facility } from '~/typedefs/gqlTypes'
 import { useI18n } from '#imports'
 import { validateNameLocaleMatchesLanguage } from '~/utils/formValidations'
 import { stableStringify } from '~/utils/stableStringify'
@@ -543,11 +529,6 @@ const handleInsuranceInputChange = (filteredItems: Ref<Insurance[]>, inputValue:
     filteredItems.value = filterByCaseInsensitiveIncludes(arrayOfInsurances, inputValue)
 }
 
-const handleDegreeInputChange = (filteredItems: Ref<Degree[]>, inputValue: string) => {
-    const degree = Object.values(Degree) as Degree[]
-    filteredItems.value = filterByCaseInsensitiveIncludes(degree, inputValue)
-}
-
 const handleSpecialtyInputChange = (filteredItems: Ref<Specialty[]>, inputValue: string) => {
     const arrayOfSpecialties = Object.values(Specialty) as Specialty[]
     filteredItems.value = filterByCaseInsensitiveIncludes(arrayOfSpecialties, inputValue)
@@ -566,7 +547,6 @@ const handleLocaleInputChange = (filteredItems: Ref<Locale[]>, inputValue: strin
 
 const facilitiesFieldsToDisplayCallback = (item: Facility) => [item.nameEn, item.nameJa]
 const specialtiesToDisplayCallback = (specialty: Specialty) => [specialty]
-const degreesToDisplayCallback = (degree: Degree) => [degree]
 const insurancesToDisplayCallback = (insurance: Insurance) => [insurance]
 const localesToDisplayCallback = (locale: Locale) => [localesStore.formatLanguageCodeToSimpleText(locale)]
 

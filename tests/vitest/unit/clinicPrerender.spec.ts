@@ -36,6 +36,7 @@ function professional(id: string, facilityIds: string[] = []): HealthcareProfess
         id,
         names: [{ firstName: id, middleName: '', lastName: 'Doc', locale: Locale.EnUs }],
         degrees: [],
+        additionalCredentials: [],
         specialties: [],
         facilityIds,
         spokenLanguages: [],

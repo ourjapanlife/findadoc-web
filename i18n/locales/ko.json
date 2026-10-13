@@ -311,7 +311,8 @@
     "addFacility": "의료기관 추가",
     "placeholderText": "이름 또는 ID로 검색",
     "healthcareProfessionals": "의료인",
-    "facilities": "의료기관"
+    "facilities": "의료기관",
+    "licenseReview": "Needs license review"
   },
   "modEditFacilityOrHPTopbar": {
     "copyFailure": "ID를 복사하지 못했습니다",
@@ -376,7 +377,17 @@
     "noInsurancesWereFound": "보험을 찾을 수 없습니다",
     "noDegreesWereFound": "학위를 찾을 수 없습니다",
     "noLocalesWereFound": "언어를 찾을 수 없습니다",
-    "update": "업데이트"
+    "update": "업데이트",
+    "selectPrimaryLicense": "Primary license",
+    "selectAdditionalCredentials": "Additional credentials",
+    "placeholderPrimaryLicense": "Choose a primary license",
+    "placeholderAdditionalCredentials": "Search credentials such as PhD or MPH",
+    "keepBothLicenses": "Keep both licenses",
+    "licenseRecommendationMd": "Suggested primary license: MD. Patients still see the saved degrees until you choose.",
+    "licenseRecommendationDental": "Suggested collapse: one dental license. Patients still see the saved degrees until you choose.",
+    "licenseRecommendationConfirm": "More than one clinical license is stored. Choose the primary license, or keep both.",
+    "storedHiddenDegrees": "Also stored, and still shown on the public listing: {degrees}",
+    "listingShowsSavedDegrees": "The public listing shows every degree saved here."
   },
   "modFacilitySection": {
     "addresses": "주소",

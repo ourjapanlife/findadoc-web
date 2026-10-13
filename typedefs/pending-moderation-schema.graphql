@@ -1,0 +1,24 @@
+enum LicenseReviewStatus {
+  NEEDS_REVIEW
+  CONFIRMED
+}
+
+extend type HealthcareProfessional {
+  primaryLicense: Degree
+  additionalCredentials: [Degree!]!
+  licenseReview: LicenseReviewStatus
+  licenseRecommendation: String
+}
+
+extend input FacilitySearchFilters {
+  query: String
+}
+
+extend input HealthcareProfessionalSearchFilters {
+  query: String
+  licenseReview: LicenseReviewStatus
+}
+
+extend input UpdateHealthcareProfessionalInput {
+  licenseReview: LicenseReviewStatus
+}

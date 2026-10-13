@@ -118,6 +118,10 @@ const healthcareProfessionalsAndCountGqlQuery = gql`
             }
             spokenLanguages
             degrees
+            primaryLicense
+            additionalCredentials
+            licenseReview
+            licenseRecommendation
             specialties
             acceptedInsurance
             additionalInfoForPatients

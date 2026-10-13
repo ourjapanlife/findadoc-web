@@ -17,7 +17,6 @@ import type {
     MutationCreateFacilityArgs
 } from '~/typedefs/gqlTypes'
 import { gqlClient, graphQLClientRequestWithRetry } from '~/utils/graphql'
-import { facilityMatchesSearch } from '~/utils/moderationListSearch'
 import type { ServerResponse } from '~/typedefs/serverResponse'
 import { arraysAreEqual } from '~/utils/arrayUtils'
 import { validateCreateFacility, validateUpdateFacility } from '~/utils/facilitiesUtils'
@@ -165,8 +164,10 @@ export const useFacilitiesStore = defineStore('facilitiesStore', () => {
     const currentOffset: Ref<number> = ref(0)
     const itemsPerPage: Ref<number> = ref(25)
     const listSearchQuery: Ref<string> = ref('')
-    const filteredFacilityData = computed(() =>
-        facilityData.value.filter(facility => facilityMatchesSearch(facility, listSearchQuery.value)))
+    const facilityList: Ref<Facility[]> = ref([])
+    const filteredFacilityData = computed(() => facilityList.value)
+    let facilitySearchTimer: ReturnType<typeof setTimeout> | undefined
+    let facilityListRequest = 0
     const hasNextPage = computed(() => currentOffset.value + itemsPerPage.value < totalFacilitiesCount.value)
     const hasPrevPage = computed(() => currentOffset.value > 0)
     // This reactive object is used to share data changes of the updated facility or submission across the components
@@ -227,7 +228,9 @@ export const useFacilitiesStore = defineStore('facilitiesStore', () => {
 
     function setSelectedFacilityData(facilityId: string) {
         selectedFacilityId.value = facilityId
-        selectedFacilityData.value = facilityData.value.find(
+        selectedFacilityData.value = facilityList.value.find(
+            (facility: Facility) => facility.id === facilityId
+        ) ?? facilityData.value.find(
             (facility: Facility) => facility.id === facilityId
         )
     }
@@ -286,26 +289,46 @@ export const useFacilitiesStore = defineStore('facilitiesStore', () => {
 
     async function getFacilities() {
         const filters: FacilitySearchFilters = {
-            offset: currentOffset.value,
+            offset: 0,
             limit: itemsPerPage.value
         }
         try {
-            // Call the utility function to fetch the paginated data and the total count.
-            const { filteredSearchResults, totalCount } = await fetchFacilitiesWithCount(filters)
+            const { filteredSearchResults } = await fetchFacilitiesWithCount(filters)
             facilityData.value = filteredSearchResults
-            totalFacilitiesCount.value = totalCount
         } catch (error) {
             console.error(`Error fetching facilities: ${JSON.stringify(error)}`)
             // eslint-disable-next-line no-alert
             alert('Error during loading data of Facility, try again')
             facilityData.value = []
+        }
+    }
+
+    async function loadFacilityList() {
+        const request = ++facilityListRequest
+        const query = listSearchQuery.value.trim()
+        const filters: FacilitySearchFilters = {
+            offset: currentOffset.value,
+            limit: itemsPerPage.value,
+            ...(query ? { query } : {})
+        }
+        try {
+            const { filteredSearchResults, totalCount } = await fetchFacilitiesWithCount(filters)
+            if (request !== facilityListRequest) return
+            facilityList.value = filteredSearchResults
+            totalFacilitiesCount.value = totalCount
+        } catch (error) {
+            if (request !== facilityListRequest) return
+            console.error(`Error fetching facilities: ${JSON.stringify(error)}`)
+            // eslint-disable-next-line no-alert
+            alert('Error during loading data of Facility, try again')
+            facilityList.value = []
             totalFacilitiesCount.value = 0
         }
     }
 
     function setOffset(newOffset: number) {
         currentOffset.value = newOffset
-        getFacilities()
+        return loadFacilityList()
     }
 
     async function createFacility(): Promise<ServerResponse<Facility>> {
@@ -357,7 +380,7 @@ export const useFacilitiesStore = defineStore('facilitiesStore', () => {
         const responseData = serverResponse.data?.createFacility
 
         if (!serverResponse.errors?.length && responseData) {
-            await getFacilities()
+            await Promise.all([getFacilities(), loadFacilityList()])
             selectedFacilityData.value = responseData
             initializeFacilitySectionValues(responseData)
         }
@@ -401,7 +424,7 @@ export const useFacilitiesStore = defineStore('facilitiesStore', () => {
         const responseData = serverResponse.data?.updateFacility
 
         if (!serverResponse.errors?.length && responseData) {
-            await getFacilities()
+            await Promise.all([getFacilities(), loadFacilityList()])
 
             selectedFacilityData.value = {
                 ...selectedFacilityData.value,
@@ -470,7 +493,7 @@ export const useFacilitiesStore = defineStore('facilitiesStore', () => {
             !serverResponse.errors?.length
             && serverResponse.data?.deleteFacility?.isSuccessful
         ) {
-            await getFacilities()
+            await Promise.all([getFacilities(), loadFacilityList()])
             if (selectedFacilityId.value === facilityId.id) {
                 selectedFacilityId.value = ''
                 selectedFacilityData.value = undefined
@@ -486,10 +509,16 @@ export const useFacilitiesStore = defineStore('facilitiesStore', () => {
 
     function setListSearchQuery(newQuery: string) {
         listSearchQuery.value = newQuery
+        currentOffset.value = 0
+        if (facilitySearchTimer) clearTimeout(facilitySearchTimer)
+        facilitySearchTimer = setTimeout(() => {
+            loadFacilityList()
+        }, 300)
     }
 
     return {
         getFacilities,
+        loadFacilityList,
         createFacility,
         createFacilityFields,
         facilityData,
