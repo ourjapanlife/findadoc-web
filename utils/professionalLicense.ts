@@ -84,8 +84,12 @@ export function formStateFromDegrees(degrees: readonly Degree[] | null | undefin
     const additionalCredentials = unique.filter(degree => PICKER_CREDENTIALS.includes(degree))
     const hiddenDegrees = unique.filter(degree => HIDDEN_FROM_PICKER.includes(degree))
 
+    const onlyClinicalLicense = preservedClinicalLicenses.length === 1
+        ? preservedClinicalLicenses[0] ?? null
+        : null
+
     return {
-        primaryLicense: preservedClinicalLicenses.length === 1 ? preservedClinicalLicenses[0] : null,
+        primaryLicense: onlyClinicalLicense,
         additionalCredentials,
         preservedClinicalLicenses,
         hiddenDegrees,

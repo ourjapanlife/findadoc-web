@@ -23,6 +23,42 @@ import { stableStringify } from '~/utils/stableStringify'
 import { useLocaleStore } from '~/stores/localeStore'
 import type { ServerResponse } from '~/typedefs/serverResponse'
 import { useTranslation } from '~/composables/useTranslation'
+
+function healthcareProfessionalUpdatePatch(
+    current: HealthcareProfessional,
+    next: HealthcareProfessional,
+    facilityIds: Relationship[]
+): UpdateHealthcareProfessionalInput {
+    const patch: UpdateHealthcareProfessionalInput = {}
+
+    if (stableStringify(next.acceptedInsurance ?? []) !== stableStringify(current.acceptedInsurance ?? [])) {
+        patch.acceptedInsurance = next.acceptedInsurance ?? []
+    }
+    if ((next.additionalInfoForPatients ?? '') !== (current.additionalInfoForPatients ?? '')) {
+        patch.additionalInfoForPatients = next.additionalInfoForPatients ?? ''
+    }
+    if (stableStringify(next.degrees ?? []) !== stableStringify(current.degrees ?? [])) {
+        patch.degrees = next.degrees ?? []
+    }
+    if ((next.licenseReview ?? null) !== (current.licenseReview ?? null)) {
+        patch.licenseReview = next.licenseReview ?? null
+    }
+    if (stableStringify(next.names ?? []) !== stableStringify(current.names ?? [])) {
+        patch.names = next.names ?? []
+    }
+    if (stableStringify(next.specialties ?? []) !== stableStringify(current.specialties ?? [])) {
+        patch.specialties = next.specialties ?? []
+    }
+    if (stableStringify(next.spokenLanguages ?? []) !== stableStringify(current.spokenLanguages ?? [])) {
+        patch.spokenLanguages = next.spokenLanguages ?? []
+    }
+    if (facilityIds.length > 0) {
+        patch.facilityIds = facilityIds
+    }
+
+    return patch
+}
+
 export const useHealthcareProfessionalsStore = defineStore(
     'healthcareProfessionalsStore',
     () => {
@@ -50,6 +86,7 @@ export const useHealthcareProfessionalsStore = defineStore(
             additionalInfoForPatients: '',
             createdDate: '',
             degrees: [],
+            additionalCredentials: [],
             facilityIds: [],
             id: '', // Empty string, assuming the ID will be set later
             licenseReview: null,
@@ -77,10 +114,11 @@ export const useHealthcareProfessionalsStore = defineStore(
 
         function setSelectedHealthcareProfessional(healthcareProfessionalId: string) {
             selectedHealthcareProfessionalId.value = healthcareProfessionalId
-            const foundHP = healthcareProfessionalList.value
-                .find((healthcareProfessional: HealthcareProfessional) => healthcareProfessional.id === healthcareProfessionalId)
-                ?? healthcareProfessionalsData.value
-                    .find((healthcareProfessional: HealthcareProfessional) => healthcareProfessional.id === healthcareProfessionalId)
+            const inModerationList = healthcareProfessionalList.value.find(professional =>
+                professional.id === healthcareProfessionalId)
+            const inPickerCache = healthcareProfessionalsData.value.find(professional =>
+                professional.id === healthcareProfessionalId)
+            const foundHP = inModerationList ?? inPickerCache
             selectedHealthcareProfessionalData.value = foundHP
             if (foundHP) {
                 updateHealthcareProfessionalSectionFields(foundHP)
@@ -94,6 +132,7 @@ export const useHealthcareProfessionalsStore = defineStore(
             healthcareProfessionalSectionFields.additionalInfoForPatients = healthcareProfessional.additionalInfoForPatients
             healthcareProfessionalSectionFields.createdDate = healthcareProfessional.createdDate
             healthcareProfessionalSectionFields.degrees = healthcareProfessional.degrees
+            healthcareProfessionalSectionFields.additionalCredentials = healthcareProfessional.additionalCredentials ?? []
             healthcareProfessionalSectionFields.licenseReview = healthcareProfessional.licenseReview ?? null
             healthcareProfessionalSectionFields.facilityIds = healthcareProfessional.facilityIds
             healthcareProfessionalSectionFields.id = healthcareProfessional.id
@@ -110,6 +149,7 @@ export const useHealthcareProfessionalsStore = defineStore(
             healthcareProfessionalSectionFields.additionalInfoForPatients = ''
             healthcareProfessionalSectionFields.createdDate = ''
             healthcareProfessionalSectionFields.degrees = []
+            healthcareProfessionalSectionFields.additionalCredentials = []
             healthcareProfessionalSectionFields.licenseReview = null
             healthcareProfessionalSectionFields.facilityIds = []
             healthcareProfessionalSectionFields.id = ''
@@ -190,6 +230,7 @@ export const useHealthcareProfessionalsStore = defineStore(
                 return {
                     data: {
                         acceptedInsurance: [],
+                        additionalCredentials: [],
                         additionalInfoForPatients: '',
                         createdDate: '',
                         degrees: [],
@@ -214,34 +255,11 @@ export const useHealthcareProfessionalsStore = defineStore(
                     .filter(facilityId => currentFacilityIds.includes(facilityId) !== nextFacilityIds.includes(facilityId))
                     .map(facilityId => createFacilityRelation(facilityId, currentFacilityIds))
 
-            const sec = healthcareProfessionalSectionFields
-            const cur = currentProfessionalData
-            const patch: UpdateHealthcareProfessionalInput = {}
-
-            if (stableStringify(sec.acceptedInsurance ?? []) !== stableStringify(cur.acceptedInsurance ?? [])) {
-                patch.acceptedInsurance = sec.acceptedInsurance ?? []
-            }
-            if ((sec.additionalInfoForPatients ?? '') !== (cur.additionalInfoForPatients ?? '')) {
-                patch.additionalInfoForPatients = sec.additionalInfoForPatients ?? ''
-            }
-            if (stableStringify(sec.degrees ?? []) !== stableStringify(cur.degrees ?? [])) {
-                patch.degrees = sec.degrees ?? []
-            }
-            if ((sec.licenseReview ?? null) !== (cur.licenseReview ?? null)) {
-                patch.licenseReview = sec.licenseReview ?? null
-            }
-            if (stableStringify(sec.names ?? []) !== stableStringify(cur.names ?? [])) {
-                patch.names = sec.names ?? []
-            }
-            if (stableStringify(sec.specialties ?? []) !== stableStringify(cur.specialties ?? [])) {
-                patch.specialties = sec.specialties ?? []
-            }
-            if (stableStringify(sec.spokenLanguages ?? []) !== stableStringify(cur.spokenLanguages ?? [])) {
-                patch.spokenLanguages = sec.spokenLanguages ?? []
-            }
-            if (facilitiesRelationsToSelectedHealthcareProfessional.length > 0) {
-                patch.facilityIds = facilitiesRelationsToSelectedHealthcareProfessional
-            }
+            const patch = healthcareProfessionalUpdatePatch(
+                currentProfessionalData,
+                healthcareProfessionalSectionFields,
+                facilitiesRelationsToSelectedHealthcareProfessional
+            )
 
             if (Object.keys(patch).length < 1) {
                 unsavedChangesResetTick.value++
@@ -268,8 +286,10 @@ export const useHealthcareProfessionalsStore = defineStore(
             if (!serverResponse.errors?.length && responseData) {
                 const index = healthcareProfessionalsData.value.findIndex(hp => hp.id === responseData.id)
                 if (index !== -1) healthcareProfessionalsData.value[index] = responseData
+                selectedHealthcareProfessionalData.value = responseData
                 updateHealthcareProfessionalSectionFields(responseData)
                 removedHealthcareProfessionalNames.value = []
+                await loadHealthcareProfessionalList()
             }
             if (!serverResponse.errors?.length) {
                 unsavedChangesResetTick.value++

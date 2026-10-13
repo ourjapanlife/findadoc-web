@@ -76,7 +76,7 @@
 
 <script setup lang="ts">
 import { computed, ref, watch, type Ref } from 'vue'
-import { Degree, LicenseReviewStatus, type Maybe } from '~/typedefs/gqlTypes'
+import { LicenseReviewStatus, type Degree, type Maybe } from '~/typedefs/gqlTypes'
 import { filterByCaseInsensitiveIncludes } from '~/utils/moderationSearchUtils'
 import {
     PICKER_CREDENTIALS,
@@ -129,8 +129,8 @@ function load(
     preservedClinicalLicenses.value = [...state.preservedClinicalLicenses]
     hiddenDegrees.value = [...state.hiddenDegrees]
     recommendation.value = state.recommendation
-    keepBoth.value = licenseReview === LicenseReviewStatus.Confirmed
-        && state.preservedClinicalLicenses.length > 1
+    const confirmedDual = licenseReview === LicenseReviewStatus.Confirmed
+    keepBoth.value = confirmedDual && state.preservedClinicalLicenses.length > 1
 }
 
 watch(

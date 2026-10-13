@@ -10,7 +10,7 @@ import {
 
 describe('professional license picker', () => {
     it('hides unused degrees and keeps clinical licenses separate from credentials', () => {
-        expect(PICKER_PRIMARY_LICENSES).not.toEqual(expect.arrayContaining(HIDDEN_FROM_PICKER))
+        expect(PICKER_PRIMARY_LICENSES).not.toEqual(expect.arrayContaining([...HIDDEN_FROM_PICKER]))
         expect(PICKER_CREDENTIALS).toEqual([Degree.DSc, Degree.Mph, Degree.PhD])
         expect(HIDDEN_FROM_PICKER).toEqual([Degree.Dsw, Degree.Dvm, Degree.EdD])
         expect(PICKER_PRIMARY_LICENSES).toEqual(expect.arrayContaining([

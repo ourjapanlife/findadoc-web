@@ -56,7 +56,7 @@
                 type="button"
                 data-testid="mod-license-review-filter"
                 :class="queueFilterClass(healthcareProfessionalsStore.licenseReviewFilter !== null)"
-                @click="healthcareProfessionalsStore.setLicenseReviewFilter(healthcareProfessionalsStore.licenseReviewFilter === null)"
+                @click="toggleLicenseReviewFilter"
             >
                 {{ t('modDashboardTopbar.licenseReview') }}
             </button>
@@ -169,6 +169,11 @@ const listSearchQuery = computed({
         }
     }
 })
+
+function toggleLicenseReviewFilter() {
+    const reviewIsOff = healthcareProfessionalsStore.licenseReviewFilter === null
+    healthcareProfessionalsStore.setLicenseReviewFilter(reviewIsOff)
+}
 
 async function updateSubmissionListViewState(newValue: SelectedSubmissionListViewTab) {
     await moderationSubmissionsStore.setSelectedModerationListViewTabChosen(newValue)
