@@ -7,6 +7,9 @@ export type ExistingFacilityMatch = {
     nameJa: string
     prefectureEn: string
     cityEn: string
+    googleMapsUrl: string
+    mapLatitude: number
+    mapLongitude: number
 }
 
 const facilityByGooglePlaceIdQuery = gql`
@@ -15,7 +18,10 @@ const facilityByGooglePlaceIdQuery = gql`
             id
             nameEn
             nameJa
+            mapLatitude
+            mapLongitude
             contact {
+                googleMapsUrl
                 address {
                     prefectureEn
                     cityEn
@@ -30,7 +36,10 @@ type FacilityByPlaceIdResponse = {
         id: string
         nameEn: string
         nameJa: string
+        mapLatitude?: number | null
+        mapLongitude?: number | null
         contact?: {
+            googleMapsUrl?: string | null
             address?: {
                 prefectureEn?: string | null
                 cityEn?: string | null
@@ -45,7 +54,10 @@ const facilityMatchingMapsUrlQuery = gql`
             id
             nameEn
             nameJa
+            mapLatitude
+            mapLongitude
             contact {
+                googleMapsUrl
                 address {
                     prefectureEn
                     cityEn
@@ -80,7 +92,10 @@ function matchFromFacility(
         nameEn: facility.nameEn,
         nameJa: facility.nameJa,
         prefectureEn: facility.contact?.address?.prefectureEn ?? '',
-        cityEn: facility.contact?.address?.cityEn ?? ''
+        cityEn: facility.contact?.address?.cityEn ?? '',
+        googleMapsUrl: facility.contact?.googleMapsUrl ?? '',
+        mapLatitude: facility.mapLatitude ?? 0,
+        mapLongitude: facility.mapLongitude ?? 0
     }
 }
 

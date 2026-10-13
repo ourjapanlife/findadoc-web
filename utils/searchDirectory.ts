@@ -243,7 +243,13 @@ export function hasActiveFilters(filters: SearchFilters): boolean {
  * anchored at the clinic's own position: Google resolves the business, and the map is centred
  * on the right spot even when the name is ambiguous.
  */
-export function facilityMapsUrl(facility: Facility, preferJapanese = false): string {
+export function facilityMapsUrl(facility: {
+    nameEn?: string | null
+    nameJa?: string | null
+    mapLatitude?: number | null
+    mapLongitude?: number | null
+    contact?: { googleMapsUrl?: string | null } | null
+}, preferJapanese = false): string {
     const stored = (facility.contact?.googleMapsUrl ?? '').trim()
 
     // A place page is the best link there is, and a Google short link resolves to one.
