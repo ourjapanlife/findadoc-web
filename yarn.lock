@@ -5083,19 +5083,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@simple-git/args-pathspec@npm:^1.0.3":
+"@simple-git/args-pathspec@npm:^1.0.3, @simple-git/args-pathspec@npm:^1.0.4":
   version: 1.0.4
   resolution: "@simple-git/args-pathspec@npm:1.0.4"
   checksum: 10/9d46cc712a7edd138a792be083e77c4843d8424165d02fddee2cdbb69d42b824f0a93fec5d0a37b2b78f6199f69e6686271fd9a5ae6dcb06df92588ff50ae659
   languageName: node
   linkType: hard
 
-"@simple-git/argv-parser@npm:^1.1.0":
-  version: 1.1.1
-  resolution: "@simple-git/argv-parser@npm:1.1.1"
+"@simple-git/argv-parser@npm:2.0.1":
+  version: 2.0.1
+  resolution: "@simple-git/argv-parser@npm:2.0.1"
   dependencies:
-    "@simple-git/args-pathspec": "npm:^1.0.3"
-  checksum: 10/89f49ee1e9a936318d443a21b04fa8adcd7a3fa4d2d9ebc947d6d4f347d65db5fbcfec37f3d75711f2724d7886506f3003144735e244e1eea6badef58696d99f
+    "@simple-git/args-pathspec": "npm:^1.0.4"
+  checksum: 10/9070117b85a33ec76994327ca3284c7ad3b107148dc78420588b032053e144d5591f25b5d26a31313440001ff4778ebfa44fe5d7c84e6281307ebb7ce1b3de03
   languageName: node
   linkType: hard
 
