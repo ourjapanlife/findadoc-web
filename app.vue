@@ -36,30 +36,35 @@ const canonical = computed(() => canonicalUrl(route.path))
 // record — omitting `title` here lets that win instead of the brand-only fallback.
 // The template function must be set at runtime: nuxt.config head is serialized
 // into the app manifest, and functions declared there are silently dropped.
-useHead(computed(() => {
-    const head: {
-        title?: string
-        titleTemplate: (title?: string) => string
-        link: { rel: string, href: string, key: string }[]
-        meta: Array<{ name?: string, property?: string, content: string, key?: string }>
-    } = {
-        titleTemplate: (title?: string) => formatPageTitle(title),
-        link: [{ rel: 'canonical', href: canonical.value, key: 'canonical' }],
-        meta: [
-            { property: 'og:url', content: canonical.value, key: 'og:url' },
-            { property: 'og:locale', content: openGraphLocale(String(locale.value)), key: 'og:locale' }
-        ]
-    }
-
-    if (!isEntityRoute(route.path)) {
-        const key = pageTitleKeyForPath(route.path)
-        head.title = key ? t(pageMetaI18nKey(key)) : ''
-    }
+useHead(() => {
+    // Unhead's meta and link inputs are discriminated unions. A shared
+    // `{ name?: string, property?: string }` element is not assignable to any
+    // member, so each tag keeps its own literal shape.
+    const meta: Array<
+      | { property: 'og:url' | 'og:locale', content: string, key: string }
+      | { name: 'robots', content: 'noindex', key: string }
+    > = [
+        { property: 'og:url', content: canonical.value, key: 'og:url' },
+        { property: 'og:locale', content: openGraphLocale(String(locale.value)), key: 'og:locale' }
+    ]
 
     if (isNoindexRoute(route.path, route.query)) {
-        head.meta.push({ name: 'robots', content: 'noindex', key: 'robots' })
+        meta.push({ name: 'robots', content: 'noindex', key: 'robots' })
     }
 
-    return head
-}))
+    // Entity routes set their own title from the record. Omitting `title` lets that
+    // win. A public route with no catalog key still sends '' so the brand fallback applies.
+    let title: string | undefined
+    if (!isEntityRoute(route.path)) {
+        const key = pageTitleKeyForPath(route.path)
+        title = key ? t(pageMetaI18nKey(key)) : ''
+    }
+
+    return {
+        ...(title !== undefined ? { title } : {}),
+        titleTemplate: (title?: string) => formatPageTitle(title),
+        link: [{ rel: 'canonical' as const, href: canonical.value, key: 'canonical' }],
+        meta
+    }
+})
 </script>
