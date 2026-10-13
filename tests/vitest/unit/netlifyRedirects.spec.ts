@@ -43,7 +43,7 @@ describe('SPA fallbacks', () => {
         expect(readRedirects()).to.not.match(/^\/\*\s+\/(?:index|200)\.html\s+200/m)
     })
 
-    it('mirrors profile SPA fallbacks in serve.json for nuxi start / CI', () => {
+    it('mirrors profile SPA fallbacks in serve.json for the static preview server', () => {
         const serve = readServeJson()
         const rewrites = serve.rewrites ?? []
         expect(serve.cleanUrls).to.equal(true)

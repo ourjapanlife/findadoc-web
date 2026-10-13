@@ -14,7 +14,7 @@ jobs:
         name: Running Tests 🚀
         strategy:
             matrix:
-                node-version: [22.12.0]
+                node-version: [24.21.0]
         runs-on: ubuntu-latest
         steps:
             - name: Checkout Code
