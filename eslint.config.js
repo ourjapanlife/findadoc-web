@@ -111,6 +111,15 @@ export default withNuxt(
             'vuejs-accessibility/mouse-events-have-key-events': 'warn'
         }
     },
+    // The app tsconfig excludes server/. Point typed linting at Nuxt's server project.
+    {
+        files: ['server/**/*.ts'],
+        languageOptions: {
+            parserOptions: {
+                project: './.nuxt/tsconfig.server.json'
+            }
+        }
+    },
     // Linting for Vitest (https://github.com/vitest-dev/eslint-plugin-vitest)
     {
         files: ['tests/vitest/**/*'],
