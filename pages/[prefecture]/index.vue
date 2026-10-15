@@ -107,6 +107,7 @@ import { isJapaneseLocale } from '~/utils/activeLocale'
 import { canonicalPathMatches, slugifySegment } from '~/utils/clinicPath'
 import { loadPrefectureFacets, loadPrefectureHub } from '~/utils/hubDirectory'
 import { prefectureHubCrumbs } from '~/utils/directoryLinks'
+import { breadcrumbListJsonLd, jsonLdScript } from '~/utils/structuredData'
 import { hubPrefectureDocumentTitle, isReservedHubSegment } from '~/utils/hubPath'
 import { formatPageTitle } from '~/utils/site'
 import type { HubCity } from '~/utils/hubIndex'
@@ -178,6 +179,9 @@ if (!canonicalPathMatches(route.path, data.value.path)) {
             { property: 'og:description', content: metaDescription.value, key: 'og:description' },
             { name: 'twitter:title', content: brandedTitle.value, key: 'twitter:title' },
             { name: 'twitter:description', content: metaDescription.value, key: 'twitter:description' }
+        ]),
+        script: computed(() => [
+            jsonLdScript('ld-breadcrumb', breadcrumbListJsonLd(crumbs.value, prefecture.value.path))
         ])
     })
 }

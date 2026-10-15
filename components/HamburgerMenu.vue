@@ -190,7 +190,7 @@
                                 @click="closeMenu"
                             >{{ t('footer.npo') }}</NuxtLink>
                             <NuxtLink
-                                to="https://github.com/ourjapanlife"
+                                :to="GITHUB_ORGANIZATION_URL"
                                 target="_blank"
                                 rel="noopener"
                                 aria-label="GitHub"
@@ -235,7 +235,7 @@ import { useModerationScreenStore } from '~/stores/moderationScreenStore'
 import { useModerationSubmissionUnsavedStore } from '~/stores/moderationSubmissionUnsavedStore'
 import { buildLoginRoute, resolveAuthReturnPath } from '~/utils/auth0Config'
 import { isMyPageFormRoute, leaveToAppHome } from '~/utils/moderationUtils'
-import { CONTACT_MAILTO } from '~/utils/site'
+import { CONTACT_MAILTO, GITHUB_ORGANIZATION_URL } from '~/utils/site'
 
 const { t } = useI18n()
 const toast = useAppToast()

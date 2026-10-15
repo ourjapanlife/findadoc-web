@@ -73,6 +73,7 @@ import { createError, navigateTo, useAsyncData, useHead, useRoute } from '#impor
 import { isJapaneseLocale } from '~/utils/activeLocale'
 import { canonicalPathMatches, slugifySegment } from '~/utils/clinicPath'
 import { cityHubCrumbs, facetCrumbs } from '~/utils/directoryLinks'
+import { breadcrumbListJsonLd, jsonLdScript } from '~/utils/structuredData'
 import { facetDocumentTitle } from '~/utils/facetIndex'
 import { loadPrefectureLeaf } from '~/utils/hubDirectory'
 import { useDirectoryRelatedLinks } from '~/composables/useDirectoryLinks'
@@ -254,6 +255,9 @@ if (!canonicalPathMatches(route.path, canonicalPath.value)) {
             { name: 'twitter:title', content: brandedTitle.value, key: 'twitter:title' },
             { name: 'twitter:description', content: metaDescription.value, key: 'twitter:description' },
             ...(robots.value ? [{ name: 'robots', content: robots.value, key: 'robots' }] : [])
+        ]),
+        script: computed(() => [
+            jsonLdScript('ld-breadcrumb', breadcrumbListJsonLd(crumbs.value, canonicalPath.value))
         ])
     })
 }

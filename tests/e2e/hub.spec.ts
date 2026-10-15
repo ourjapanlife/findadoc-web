@@ -1,5 +1,6 @@
 import { cityHubPath, prefectureHubPath } from '../../utils/hubPath'
 import { test, expect } from '@playwright/test'
+import { jsonLdBlocks } from './jsonLd'
 
 test.describe('Geography hub pages', () => {
     test('an unknown prefecture is a real HTTP 404, not an SPA 200', async ({ request }) => {
@@ -53,12 +54,17 @@ test.describe('Geography hub pages', () => {
         await expect(page.getByTestId('hub-prefecture-page')).toBeVisible()
         await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
         await expect(page.getByTestId('breadcrumbs').getByRole('link').first()).toHaveAttribute('href', '/')
+        const prefectureBlocks = await jsonLdBlocks(page)
+        const prefectureCrumbs = prefectureBlocks.find(block => block['@type'] === 'BreadcrumbList')
+        expect(Array.isArray(prefectureCrumbs?.itemListElement)).toBe(true)
         await expect(page.getByTestId('hub-city-list').getByRole('link').first()).toBeVisible()
         await expect(page.getByTestId('search-result-card').filter({ hasText: facility.nameEn })).toBeVisible()
 
         await page.goto(cityPath)
         await expect(page.getByTestId('hub-city-page')).toBeVisible()
         await expect(page.getByTestId('breadcrumbs').locator(`a[href="${prefecturePath}"]`)).toBeVisible()
+        const cityBlocks = await jsonLdBlocks(page)
+        expect(cityBlocks.some(block => block['@type'] === 'BreadcrumbList')).toBe(true)
         await expect(page.getByTestId('search-result-card').filter({ hasText: facility.nameEn })).toBeVisible()
     })
 })

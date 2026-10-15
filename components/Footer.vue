@@ -75,7 +75,7 @@
                     </li>
                     <li>
                         <NuxtLink
-                            to="https://github.com/ourjapanlife"
+                            :to="GITHUB_ORGANIZATION_URL"
                             target="_blank"
                             rel="noopener"
                             :class="footerLink"
@@ -83,7 +83,7 @@
                     </li>
                     <li>
                         <NuxtLink
-                            to="https://www.linkedin.com/company/find-a-doc-japan/"
+                            :to="LINKEDIN_ORGANIZATION_URL"
                             target="_blank"
                             rel="noopener"
                             :class="footerLink"
@@ -151,7 +151,7 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
 import SVGSiteLogo from '~/assets/icons/site-logo.svg'
-import { CONTACT_MAILTO } from '~/utils/site'
+import { CONTACT_MAILTO, GITHUB_ORGANIZATION_URL, LINKEDIN_ORGANIZATION_URL } from '~/utils/site'
 
 const { t } = useI18n()
 

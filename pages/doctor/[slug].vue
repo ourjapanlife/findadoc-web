@@ -37,17 +37,19 @@ import { computed, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { createError, navigateTo, useAsyncData, useHead, useRoute } from '#imports'
 import { fetchDoctorById } from '~/utils/doctorProfessional'
-import { canonicalPathMatches } from '~/utils/clinicPath'
+import { canonicalPathMatches, facilityPath } from '~/utils/clinicPath'
 import { facilityHubPaths, professionalCrumbs, professionalFacetLinks } from '~/utils/directoryLinks'
 import { professionalDocumentTitle, professionalIdFromSlugParam, professionalPath } from '~/utils/doctorPath'
 import { loadFacetLinkCatalog } from '~/utils/hubDirectory'
 import { formatHealthcareProfessionalName } from '~/utils/nameUtils'
 import { isJapaneseLocale, toGqlLocale } from '~/utils/activeLocale'
 import { formatPageTitle } from '~/utils/site'
+import { breadcrumbListJsonLd, displayedLanguageCodes, jsonLdScript, physicianJsonLd } from '~/utils/structuredData'
 import { useUmami } from '~/composables/useUmamiTracking'
 import { doctorViewedProps } from '~/utils/analyticsEvents'
 import { localeDisplayOptions } from '~/stores/localeStore'
 import { useSpecialtiesStore } from '~/stores/specialtiesStore'
+import { Locale } from '~/typedefs/gqlTypes'
 
 const route = useRoute()
 const { t, locale } = useI18n()
@@ -86,6 +88,49 @@ if (!canonicalPathMatches(route.path, canonicalPath)) {
 const professional = computed(() => data.value!)
 
 const displayName = computed(() => formatHealthcareProfessionalName(professional.value.names, toGqlLocale(locale.value)))
+
+const alternateName = computed(() => {
+    const other = formatHealthcareProfessionalName(
+        professional.value.names,
+        isJapaneseLocale(locale.value) ? Locale.EnUs : Locale.JaJp
+    )
+    return other && other !== displayName.value ? other : undefined
+})
+
+const knownLanguageCodes = localeDisplayOptions.map(option => option.code)
+
+const physicianSpecialties = computed(() => (professional.value.specialties ?? [])
+    .map(code => ({
+        code,
+        label: specialtiesStore.specialtyDisplayOptions
+            .find(option => option.code === code)?.displayText ?? ''
+    })))
+
+const knowsLanguage = computed(() => displayedLanguageCodes(
+    professional.value.spokenLanguages ?? [],
+    knownLanguageCodes
+))
+
+const worksFor = computed(() => {
+    const japanese = isJapaneseLocale(locale.value)
+    return professional.value.facilities.flatMap(facility => {
+        const name = ((japanese ? facility.nameJa : facility.nameEn) || facility.nameEn).trim()
+        if (!name) {
+            return []
+        }
+        const address = facility.contact?.address
+        return [{
+            name,
+            pagePath: facilityPath(facility),
+            city: japanese
+                ? (address?.cityJa || address?.cityEn || '')
+                : (address?.cityEn || address?.cityJa || ''),
+            prefecture: japanese
+                ? (address?.prefectureJa || address?.prefectureEn || '')
+                : (address?.prefectureEn || address?.prefectureJa || '')
+        }]
+    })
+})
 
 const metaDescription = computed(() => {
     const specialties = (professional.value.specialties ?? [])
@@ -137,6 +182,17 @@ useHead({
         { property: 'og:description', content: metaDescription.value, key: 'og:description' },
         { name: 'twitter:title', content: brandedTitle.value, key: 'twitter:title' },
         { name: 'twitter:description', content: metaDescription.value, key: 'twitter:description' }
+    ]),
+    script: computed(() => [
+        jsonLdScript('ld-physician', physicianJsonLd({
+            name: displayName.value,
+            alternateName: alternateName.value,
+            pagePath: canonicalPath,
+            specialties: physicianSpecialties.value,
+            knowsLanguage: knowsLanguage.value,
+            worksFor: worksFor.value
+        })),
+        jsonLdScript('ld-breadcrumb', breadcrumbListJsonLd(crumbs.value, canonicalPath))
     ])
 })
 

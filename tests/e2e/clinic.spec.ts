@@ -1,6 +1,8 @@
 import { facilityDocumentTitle, facilityPath } from '../../utils/clinicPath'
+import { canonicalUrl } from '../../utils/seo'
 import { formatPageTitle } from '../../utils/site'
 import { test, expect } from '@playwright/test'
+import { jsonLdBlocks } from './jsonLd'
 
 const UNKNOWN_CLINIC_PATH
     = '/clinic/tokyo/shibuya/missing--00000000-0000-4000-8000-000000000001'
@@ -53,5 +55,12 @@ test.describe('Facility pages', () => {
         await expect(page).toHaveTitle(formatPageTitle(facilityDocumentTitle(facility.nameEn)))
         await expect(page.getByTestId('clinic-back-to-search')).toBeVisible()
         await expect(page.getByTestId('breadcrumbs')).toBeVisible()
+
+        const blocks = await jsonLdBlocks(page)
+        const clinic = blocks.find(block => block['@type'] === 'MedicalClinic')
+        expect(clinic?.name).toBe(facility.nameEn)
+        expect(clinic?.url).toBe(canonicalUrl(path))
+        const crumbs = blocks.find(block => block['@type'] === 'BreadcrumbList')
+        expect(Array.isArray(crumbs?.itemListElement)).toBe(true)
     })
 })

@@ -19,6 +19,7 @@ import { useI18n } from 'vue-i18n'
 import { initializeGqlClient } from './utils/graphql.js'
 import { isEntityRoute, pageMetaI18nKey, pageTitleKeyForPath } from '~/utils/pageTitles'
 import { canonicalUrl, isNoindexRoute, openGraphLocale } from '~/utils/seo'
+import { jsonLdScript, organizationJsonLd } from '~/utils/structuredData'
 import { formatPageTitle } from '~/utils/site'
 import { useHead, useRoute } from '#imports'
 
@@ -64,7 +65,8 @@ useHead(() => {
         ...(title !== undefined ? { title } : {}),
         titleTemplate: (title?: string) => formatPageTitle(title),
         link: [{ rel: 'canonical' as const, href: canonical.value, key: 'canonical' }],
-        meta
+        meta,
+        script: [jsonLdScript('ld-organization', organizationJsonLd())]
     }
 })
 </script>
