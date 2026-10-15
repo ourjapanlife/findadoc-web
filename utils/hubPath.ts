@@ -13,6 +13,7 @@ export const RESERVED_HUB_SEGMENTS = new Set([
     'privacypolicy',
     'submit',
     'npo',
+    'contact',
     'search',
     'login',
     'my-page',

@@ -9,6 +9,7 @@ import {
     isNoindexRoute,
     openGraphLocale,
     robotsDisallowPaths,
+    robotsTxt,
     ROBOTS_DISALLOW_PATHS
 } from '@/utils/seo'
 import { SITE_ORIGIN, SITE_SITEMAP_URL, SITE_SOCIAL_IMAGE } from '@/utils/site'
@@ -83,9 +84,15 @@ describe('robots.txt', () => {
     it('disallows the private prefixes and points at the sitemap URL', () => {
         const { disallows, sitemap } = parseRobotsTxt(readPublic('robots.txt'))
 
-        expect(disallows).to.deep.equal(robotsDisallowPaths())
+        expect(readPublic('robots.txt')).to.equal(robotsTxt())
+        expect(disallows.filter((path, index) => disallows.indexOf(path) === index))
+            .to.deep.equal(robotsDisallowPaths())
         expect(robotsDisallowPaths().slice(0, ROBOTS_DISALLOW_PATHS.length)).to.deep.equal([...ROBOTS_DISALLOW_PATHS])
         expect(disallows).to.include('/ja-JP/my-page')
+        expect(readPublic('robots.txt')).to.include('User-agent: OAI-SearchBot')
+        expect(readPublic('robots.txt')).to.include('User-agent: PerplexityBot')
+        expect(readPublic('robots.txt')).to.include('User-agent: ClaudeBot')
+        expect(readPublic('robots.txt')).to.include('User-agent: Google-Extended')
         expect(sitemap).to.equal(SITE_SITEMAP_URL)
     })
 })

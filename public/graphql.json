@@ -1,0 +1,9 @@
+{
+  "protocol": "graphql",
+  "endpoint": "https://api.findadoc.jp",
+  "method": "POST",
+  "authentication": "Public reads of facilities and healthcare professionals do not require an account.",
+  "website": "https://www.findadoc.jp",
+  "agentGuide": "https://www.findadoc.jp/llms.txt",
+  "sitemap": "https://www.findadoc.jp/sitemap.xml"
+}

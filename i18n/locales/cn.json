@@ -6,7 +6,18 @@
     "termsTitle": "服务条款",
     "privacyTitle": "隐私政策",
     "npoTitle": "信息公开",
-    "searchTitle": "搜索诊所"
+    "searchTitle": "搜索诊所",
+    "contactTitle": "联系我们"
+  },
+  "contactPage": {
+    "heading": "联系我们",
+    "intro": "Find a Doc, Japan 是已注册的非营利组织。需要找人而不是搜索框时，请写信给我们。",
+    "emailLabel": "电子邮件",
+    "whatHeading": "我们可以协助的事",
+    "whatBody": "请告诉我们应当收录的诊所或医生、已发布页面的更正，或使用网站时遇到的问题。我们也回答合作方、记者和公共机构关于本组织的问题。我们不提供医疗建议、诊断或代为预约。就医时请在名录中找到诊所，并直接联系该诊所。",
+    "npoHeading": "组织",
+    "npoBody": "注册名称为 NPO法人Find a Doc, Japan，登记号码 9011005010215，于 2023年8月28日 获得东京都认证。包括资产负债表在内的申报文件公布在信息公开页面。注册办事处是虚拟办公室，因此街道地址不印在这里，需要时来信索取。",
+    "addressNote": "我们在日本各地远程工作。"
   },
   "npoPage": {
     "heading": "信息公开",
@@ -465,7 +476,10 @@
   "errorPage": {
     "title": "404 - 诊断：页面未找到",
     "description": "此页面未通过健康检查。让我们带您到一个健康的页面吧！",
-    "returnHome": "返回首页"
+    "returnHome": "返回首页",
+    "sitemap": "网站地图",
+    "guide": "使用说明",
+    "recovery": "诊所和医生的网址列在网站地图中。如果本站链接失效，请从联系页面写信告诉我们。"
   },
   "modListContainerItem": {
     "newSubmission": "New",
