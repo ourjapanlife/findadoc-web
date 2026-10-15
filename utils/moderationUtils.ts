@@ -6,6 +6,7 @@ import {
 } from '~/stores/moderationSubmissionsStore'
 import { useModerationSubmissionUnsavedStore } from '~/stores/moderationSubmissionUnsavedStore'
 import type { ServerError } from '~/typedefs/serverResponse'
+import { localeCodeFromPath, localizedPath, unlocalizedPath } from './localePath'
 
 import type { Submission } from '~/typedefs/gqlTypes'
 
@@ -20,7 +21,7 @@ export type ModerationDashboardView = 'submissions' | 'facilities' | 'healthcare
 const MY_PAGE_FORM_ROUTE = /^\/(?:my-page|moderation)\/(?:edit-|create-)/
 
 export function isMyPageFormRoute(path: string): boolean {
-    return MY_PAGE_FORM_ROUTE.test(path)
+    return MY_PAGE_FORM_ROUTE.test(unlocalizedPath(path))
 }
 
 export function hasServerErrors(
@@ -85,7 +86,9 @@ export async function leaveToModerationDashboard(
     moderationScreenStore.setActiveScreen(ModerationScreen.Dashboard)
     modalStore?.hideModal()
 
-    const navigationResult = await router.push(`/my-page?view=${targetView}`)
+    const navigationResult = await router.push(
+        localizedPath(`/my-page?view=${targetView}`, localeCodeFromPath(router.currentRoute.value.path))
+    )
     if (isNavigationFailure(navigationResult)
       && !isNavigationFailure(navigationResult, NavigationFailureType.duplicated)) {
         return
@@ -101,7 +104,9 @@ export async function leaveToAppHome(
     moderationScreenStore.setActiveScreen(ModerationScreen.Dashboard)
     modalStore?.hideModal()
 
-    const navigationResult = await router.push('/')
+    const navigationResult = await router.push(
+        localizedPath('/', localeCodeFromPath(router.currentRoute.value.path))
+    )
     if (isNavigationFailure(navigationResult)
       && !isNavigationFailure(navigationResult, NavigationFailureType.duplicated)) {
         return

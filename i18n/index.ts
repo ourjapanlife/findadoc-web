@@ -41,46 +41,57 @@ const Locale = {
 const i18n: LocaleObject[] = [
     {
         code: Locale.EnUs,
+        language: Locale.EnUs,
         file: 'en.json'
     },
     {
         code: Locale.JaJp,
+        language: Locale.JaJp,
         file: 'ja.json'
     },
     {
         code: Locale.ZhCn,
+        language: Locale.ZhCn,
         file: 'cn.json'
     },
     {
         code: Locale.ViVn,
+        language: Locale.ViVn,
         file: 'vi.json'
     },
     {
         code: Locale.KoKr,
+        language: Locale.KoKr,
         file: 'ko.json'
     },
     {
         code: Locale.TlPh,
+        language: Locale.TlPh,
         file: 'tl.json'
     },
     {
         code: Locale.PtBr,
+        language: Locale.PtBr,
         file: 'pt.json'
     },
     {
         code: Locale.FrFr,
+        language: Locale.FrFr,
         file: 'fr.json'
     },
     {
         code: Locale.RuRu,
+        language: Locale.RuRu,
         file: 'ru.json'
     },
     {
         code: Locale.DeDe,
+        language: Locale.DeDe,
         file: 'de.json'
     },
     {
         code: Locale.ItIt,
+        language: Locale.ItIt,
         file: 'it.json'
     }
 ]

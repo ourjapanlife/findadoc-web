@@ -6,6 +6,7 @@ import { getAuth0AuthorizationParams, resolveAuthReturnPath } from '~/utils/auth
 import { useLoadingStore } from './loadingStore.js'
 import { useCookie, useRuntimeConfig } from '#app'
 import { useTranslation } from '~/composables/useTranslation.js'
+import { localeCodeFromPath, localizedPath, unlocalizedPath } from '~/utils/localePath'
 
 export const useAuthStore = defineStore('authStore', () => {
     const runtimeConfig = useRuntimeConfig()
@@ -119,7 +120,9 @@ export const useAuthStore = defineStore('authStore', () => {
         routePath: string,
         doesTheUserHaveAccess: Ref<boolean>
     ) => {
-        if (!route.path.startsWith(routePath)) {
+        const currentPath = unlocalizedPath(route.path)
+        const guardedPath = unlocalizedPath(routePath)
+        if (currentPath !== guardedPath && !currentPath.startsWith(`${guardedPath}/`)) {
             return
         }
 
@@ -134,8 +137,9 @@ export const useAuthStore = defineStore('authStore', () => {
 
         doesTheUserHaveAccess.value = false
         setTimeout(() => {
-            if (!isLoggedIn.value && route.path.startsWith(routePath)) {
-                router.push('/')
+            const stillGuarded = unlocalizedPath(route.path)
+            if (!isLoggedIn.value && (stillGuarded === guardedPath || stillGuarded.startsWith(`${guardedPath}/`))) {
+                router.push(localizedPath('/', localeCodeFromPath(route.path)))
             }
         }, 10000)
     }

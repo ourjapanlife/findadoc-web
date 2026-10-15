@@ -100,6 +100,14 @@ describe('canonicalPathMatches', () => {
         expect(canonicalPathMatches(`${unicodePath}/`, unicodePath)).to.equal(true)
     })
 
+    it('treats a locale prefix as the same entity', () => {
+        expect(canonicalPathMatches(`/ja-JP${unicodePath}`, unicodePath)).to.equal(true)
+        expect(canonicalPathMatches(
+            '/ja-JP/clinic/tokyo/shibuya/clinic--abc',
+            '/clinic/tokyo/shibuya/clinic--abc'
+        )).to.equal(true)
+    })
+
     it('still redirects when the slug actually differs', () => {
         expect(canonicalPathMatches('/doctor/other--dba9e895-cb00-49af-bedb-1a993a16b704', unicodePath))
             .to.equal(false)

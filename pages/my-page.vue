@@ -76,6 +76,7 @@ import { computed, ref, type Ref, onMounted, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { useAuthStore } from '~/stores/authStore'
 import { definePageMeta, useI18n } from '#imports'
+import { unlocalizedPath } from '~/utils/localePath'
 import { CONTACT_MAILTO } from '~/utils/site'
 
 definePageMeta({
@@ -89,7 +90,7 @@ const authStore = useAuthStore()
 const route = useRoute()
 const doesTheUserHaveAccess: Ref<boolean> = ref(true)
 const isSettingsView = computed(() => {
-    if (route.path !== '/my-page') {
+    if (unlocalizedPath(route.path) !== '/my-page') {
         return false
     }
     const view = route.query.view

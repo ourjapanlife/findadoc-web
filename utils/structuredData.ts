@@ -1,4 +1,5 @@
 import { Specialty } from '~/typedefs/gqlTypes'
+import { DEFAULT_LOCALE_CODE, localizedPath } from './localePath'
 import { canonicalUrl } from './seo'
 import {
     CONTACT_EMAIL,
@@ -336,9 +337,11 @@ export function physicianJsonLd(input: PhysicianInput): JsonLdNode {
 
 export function breadcrumbListJsonLd(
     items: readonly BreadcrumbInput[],
-    currentPath: string
+    currentPath: string,
+    localeCode: string = DEFAULT_LOCALE_CODE
 ): JsonLdNode {
     const crumbs = items.filter(item => item.label.trim().length > 0)
+    const pathOf = (path: string) => localizedPath(path, localeCode)
 
     return {
         '@context': 'https://schema.org',
@@ -347,7 +350,7 @@ export function breadcrumbListJsonLd(
             '@type': 'ListItem',
             position: index + 1,
             name: item.label.trim(),
-            item: canonicalUrl(item.to ?? currentPath)
+            item: canonicalUrl(pathOf(item.to ?? currentPath))
         }))
     }
 }

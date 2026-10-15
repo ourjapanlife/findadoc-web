@@ -109,6 +109,8 @@ describe('pageTitleKeyForPath', () => {
         expect(pageTitleKeyForPath('/about')).to.equal('aboutTitle')
         expect(pageTitleKeyForPath('/about/')).to.equal('aboutTitle')
         expect(pageTitleKeyForPath('/')).to.equal('homeTitle')
+        expect(pageTitleKeyForPath('/ja-JP/about')).to.equal('aboutTitle')
+        expect(pageTitleKeyForPath('/ja-JP')).to.equal('homeTitle')
     })
 
     it('returns undefined for untitled and unknown routes', () => {
@@ -132,6 +134,10 @@ describe('isEntityRoute', () => {
         expect(isEntityRoute('/tokyo/english-speaking')).to.equal(true)
         expect(isEntityRoute('/search')).to.equal(false)
         expect(isEntityRoute('/about')).to.equal(false)
+        expect(isEntityRoute('/ja-JP/clinic/tokyo/nakano/a-one--f1')).to.equal(true)
+        expect(isEntityRoute('/ja-JP/tokyo/dentistry')).to.equal(true)
+        expect(isEntityRoute('/ja-JP/about')).to.equal(false)
+        expect(isEntityRoute('/ja-JP')).to.equal(false)
     })
 })
 

@@ -72,6 +72,7 @@ import generatedPrefectureHubs from '#generated-prefecture-hubs'
 import { createError, navigateTo, useAsyncData, useHead, useRoute } from '#imports'
 import { isJapaneseLocale } from '~/utils/activeLocale'
 import { canonicalPathMatches, slugifySegment } from '~/utils/clinicPath'
+import { localeCodeFromPath, localizedPath } from '~/utils/localePath'
 import { cityHubCrumbs, facetCrumbs } from '~/utils/directoryLinks'
 import { breadcrumbListJsonLd, jsonLdScript } from '~/utils/structuredData'
 import { facetDocumentTitle } from '~/utils/facetIndex'
@@ -244,7 +245,10 @@ const robots = computed(() => {
 })
 
 if (!canonicalPathMatches(route.path, canonicalPath.value)) {
-    await navigateTo(canonicalPath.value, { redirectCode: 301, replace: true })
+    await navigateTo(localizedPath(canonicalPath.value, localeCodeFromPath(route.path)), {
+        redirectCode: 301,
+        replace: true
+    })
 } else {
     useHead({
         title: documentTitle,
@@ -257,7 +261,7 @@ if (!canonicalPathMatches(route.path, canonicalPath.value)) {
             ...(robots.value ? [{ name: 'robots', content: robots.value, key: 'robots' }] : [])
         ]),
         script: computed(() => [
-            jsonLdScript('ld-breadcrumb', breadcrumbListJsonLd(crumbs.value, canonicalPath.value))
+            jsonLdScript('ld-breadcrumb', breadcrumbListJsonLd(crumbs.value, canonicalPath.value, locale.value))
         ])
     })
 }

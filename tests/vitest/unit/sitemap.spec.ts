@@ -1,6 +1,7 @@
 import { expect } from 'chai'
+import { LOCALE_CODES, localizedPath, unlocalizedPath } from '@/utils/localePath'
 import { PAGE_META_TITLE_ROUTES } from '@/utils/pageTitles'
-import { isNoindexRoute, ROBOTS_DISALLOW_PATHS } from '@/utils/seo'
+import { hreflangAlternates, isNoindexRoute, ROBOTS_DISALLOW_PATHS } from '@/utils/seo'
 import { publicSitemapUrls, SITEMAP_EXCLUDE } from '@/utils/sitemap'
 import {
     collectPagedRows,
@@ -12,14 +13,28 @@ import {
 } from '@/utils/sitemapDirectory'
 import { Locale, Specialty } from '~/typedefs/gqlTypes'
 
+function defaultLocaleEntries<T extends { loc: string, lastmod?: string }>(
+    urls: readonly T[]
+): Array<{ loc: string, lastmod?: string }> {
+    return urls
+        .filter(url => url.loc === unlocalizedPath(url.loc))
+        .map(url => url.lastmod ? { loc: url.loc, lastmod: url.lastmod } : { loc: url.loc })
+}
+
 describe('publicSitemapUrls', () => {
     it('lists every titled public page and none of the robots-disallowed trees', () => {
-        const locs = publicSitemapUrls().map(entry => entry.loc)
+        const urls = publicSitemapUrls()
+        const locs = defaultLocaleEntries(urls).map(entry => entry.loc)
 
         expect(locs.sort()).to.deep.equal(Object.values(PAGE_META_TITLE_ROUTES).slice().sort())
-        for (const loc of locs) {
+        expect(urls).to.have.length(locs.length * LOCALE_CODES.length)
+        for (const loc of urls.map(entry => entry.loc)) {
             expect(isNoindexRoute(loc), loc).to.equal(false)
         }
+
+        const about = urls.find(entry => entry.loc === '/about')
+        expect(about?.alternatives).to.deep.equal(hreflangAlternates('/about'))
+        expect(urls.map(entry => entry.loc)).to.include(localizedPath('/about', 'ja-JP'))
     })
 })
 
@@ -134,11 +149,14 @@ describe('loadDirectorySitemapUrls', () => {
         })
 
         expect(directoryKindsToFetch()).to.deep.equal(['facility', 'professional'])
-        expect(urls).to.deep.equal([
+        expect(defaultLocaleEntries(urls)).to.deep.equal([
             { loc: '/clinic/tokyo/shibuya/tokyo-family-clinic--f1', lastmod: '2026-08-01T00:00:00.000Z' },
             { loc: '/doctor/aiko-tanaka--p1', lastmod: '2026-08-01T00:00:00.000Z' },
             { loc: '/tokyo', lastmod: '2026-08-01T00:00:00.000Z' }
         ])
+        expect(urls.map(url => url.loc)).to.include('/ja-JP/tokyo')
+        expect(urls.find(url => url.loc === '/ja-JP/tokyo')?.alternatives?.map(alt => alt.hreflang))
+            .to.include('x-default')
     })
 
     it('omits entity URLs when the directory API fails', async () => {
@@ -175,7 +193,7 @@ describe('loadDirectorySitemapUrls', () => {
             { facility: '/clinic', professional: undefined }
         )
 
-        expect(urls).to.deep.equal([
+        expect(defaultLocaleEntries(urls)).to.deep.equal([
             { loc: '/clinic/tokyo/shibuya/tokyo-family-clinic--f1', lastmod: '2026-08-01T00:00:00.000Z' },
             { loc: '/tokyo', lastmod: '2026-08-01T00:00:00.000Z' }
         ])
@@ -203,7 +221,7 @@ describe('loadDirectorySitemapUrls', () => {
             fetchProfessionals: async () => ({ rows: [], totalCount: 0 })
         }, { facility: '/clinic', professional: undefined })
 
-        expect(urls.map(url => url.loc)).to.deep.equal([
+        expect(defaultLocaleEntries(urls).map(url => url.loc)).to.deep.equal([
             '/clinic/tokyo/shibuya/tokyo-family-clinic--f1',
             '/clinic/tokyo/shibuya/shibuya-dental--f2',
             '/tokyo',
@@ -255,10 +273,10 @@ describe('loadDirectorySitemapUrls', () => {
             })
         })
 
-        expect(urls.map(url => url.loc)).to.include.members([
+        expect(urls.map(url => unlocalizedPath(url.loc))).to.include.members([
             '/tokyo/dentistry',
             '/tokyo/english-speaking'
         ])
-        expect(urls.map(url => url.loc)).to.not.include('/tokyo/japanese-speaking')
+        expect(urls.map(url => unlocalizedPath(url.loc))).to.not.include('/tokyo/japanese-speaking')
     })
 })

@@ -54,6 +54,7 @@ import { useI18n } from 'vue-i18n'
 import { createError, navigateTo, useAsyncData, useHead, useRoute } from '#imports'
 import { fetchClinicById } from '~/utils/clinicFacility'
 import { canonicalPathMatches, facilityDocumentTitle, facilityIdFromSlugParam, facilityPath } from '~/utils/clinicPath'
+import { localeCodeFromPath, localizedPath } from '~/utils/localePath'
 import { facilityCrumbs, facilityFacetLinks, facilityHubPaths } from '~/utils/directoryLinks'
 import { loadFacetLinkCatalog } from '~/utils/hubDirectory'
 import { isJapaneseLocale } from '~/utils/activeLocale'
@@ -99,7 +100,10 @@ if (!data.value) {
 const canonicalPath = facilityPath(data.value)
 
 if (!canonicalPathMatches(route.path, canonicalPath)) {
-    await navigateTo(canonicalPath, { redirectCode: 301, replace: true })
+    await navigateTo(localizedPath(canonicalPath, localeCodeFromPath(route.path)), {
+        redirectCode: 301,
+        replace: true
+    })
 }
 
 const facility = computed(() => data.value!)
@@ -194,7 +198,7 @@ useHead({
             jsonLdScript('ld-medical-clinic', medicalClinicJsonLd({
                 name: displayName.value,
                 alternateName: alternateName.value,
-                pagePath: canonicalPath,
+                pagePath: localizedPath(canonicalPath, locale.value),
                 telephone: facilityPhone(record),
                 email: facilityEmail(record),
                 websiteUrl: facilityWebsiteUrl(record),
@@ -205,7 +209,7 @@ useHead({
                 longitude: record.mapLongitude,
                 availableLanguage: availableLanguage.value
             })),
-            jsonLdScript('ld-breadcrumb', breadcrumbListJsonLd(crumbs.value, canonicalPath))
+            jsonLdScript('ld-breadcrumb', breadcrumbListJsonLd(crumbs.value, canonicalPath, locale.value))
         ]
     })
 })

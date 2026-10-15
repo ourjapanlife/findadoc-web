@@ -1,5 +1,6 @@
+import { LOCALE_CODES, localizedPath } from './localePath'
 import { PAGE_META_TITLE_ROUTES } from './pageTitles'
-import { ROBOTS_DISALLOW_PATHS } from './seo'
+import { hreflangAlternates, ROBOTS_DISALLOW_PATHS, type HreflangAlternate } from './seo'
 
 /**
  * Private and non-enumerable trees the sitemap must never list. Matches
@@ -11,7 +12,31 @@ export const SITEMAP_EXCLUDE = [
     '/u/**'
 ] as const
 
-/** Public indexable paths. The same exhaustive map as document titles. */
-export function publicSitemapUrls(): Array<{ loc: string }> {
-    return Object.values(PAGE_META_TITLE_ROUTES).map(loc => ({ loc }))
+export type SitemapLocaleEntry = {
+    loc: string
+    lastmod?: string
+    alternatives: HreflangAlternate[]
+}
+
+/**
+ * One sitemap row per locale, each carrying the same `xhtml:link` set.
+ * `autoI18n` stays off so this remains a single `/sitemap.xml` (an i18n sitemap
+ * index would change the URL `robots.txt` publishes).
+ */
+export function withLocaleAlternates<T extends { loc: string, lastmod?: string }>(
+    entries: readonly T[]
+): Array<Omit<T, 'loc'> & SitemapLocaleEntry> {
+    return entries.flatMap(entry => {
+        const alternatives = hreflangAlternates(entry.loc)
+        return LOCALE_CODES.map(code => ({
+            ...entry,
+            loc: localizedPath(entry.loc, code),
+            alternatives
+        }))
+    })
+}
+
+/** Public indexable paths. The same exhaustive map as document titles, per locale. */
+export function publicSitemapUrls(): SitemapLocaleEntry[] {
+    return withLocaleAlternates(Object.values(PAGE_META_TITLE_ROUTES).map(loc => ({ loc })))
 }

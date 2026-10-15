@@ -1,3 +1,4 @@
+import { DEFAULT_LOCALE_CODE, LOCALE_CODES, localizedPath, unlocalizedPath } from './localePath'
 import { SITE_ORIGIN } from './site'
 
 /**
@@ -22,7 +23,8 @@ function normalisePagePath(path: string): string {
 /**
  * Self-referencing canonical for the current route. Query strings are stripped so
  * `/search?specialty=…` does not mint a unique URL until those filters are
- * indexable pages. Locale prefixes land with #1796.
+ * indexable pages. A locale prefix on `path` is kept, so `/ja-JP/about` canonicalises
+ * to that URL and the unprefixed path stays the English URL.
  *
  * Trailing slashes are stripped to match sitemap locs. Generate must emit
  * `about.html` (`nitro.prerender.autoSubfolderIndex: false`) so Netlify Pretty
@@ -36,6 +38,52 @@ export function canonicalUrl(path: string): string {
 /** Open Graph wants `en_US`; vue-i18n ships `en-US`. */
 export function openGraphLocale(i18nCode: string): string {
     return i18nCode.replaceAll('-', '_')
+}
+
+export type HreflangAlternate = {
+    hreflang: string
+    href: string
+}
+
+/**
+ * One alternate per site locale, plus `x-default` on the unprefixed English URL.
+ * Href is absolute so it matches `canonicalUrl` for that locale.
+ */
+export function hreflangAlternates(path: string): HreflangAlternate[] {
+    const alternates = LOCALE_CODES.map(code => ({
+        hreflang: code,
+        href: canonicalUrl(localizedPath(path, code))
+    }))
+    alternates.push({
+        hreflang: 'x-default',
+        href: canonicalUrl(localizedPath(path, DEFAULT_LOCALE_CODE))
+    })
+    return alternates
+}
+
+export function hreflangLinkTags(path: string): Array<{
+    rel: 'alternate'
+    hreflang: string
+    href: string
+    key: string
+}> {
+    return hreflangAlternates(path).map(alternate => ({
+        rel: 'alternate' as const,
+        hreflang: alternate.hreflang,
+        href: alternate.href,
+        key: `hreflang-${alternate.hreflang}`
+    }))
+}
+
+/**
+ * `robots.txt` has no patterns, so each private tree is listed again under every
+ * non-default locale prefix. `public/robots.txt` is locked to this list.
+ */
+export function robotsDisallowPaths(): string[] {
+    const prefixed = LOCALE_CODES
+        .filter(code => code !== DEFAULT_LOCALE_CODE)
+        .flatMap(code => ROBOTS_DISALLOW_PATHS.map(path => localizedPath(path, code)))
+    return [...ROBOTS_DISALLOW_PATHS, ...prefixed]
 }
 
 /**
@@ -62,7 +110,7 @@ function queryFromPath(path: string): Record<string, string> | undefined {
 }
 
 export function isNoindexRoute(path: string, query?: Record<string, unknown>): boolean {
-    const normalised = normalisePagePath(path)
+    const normalised = unlocalizedPath(normalisePagePath(path))
     if (ROBOTS_DISALLOW_PATHS.some(
         prefix => normalised === prefix || normalised.startsWith(`${prefix}/`)
     )) {

@@ -36,6 +36,9 @@ describe('site UI locales', () => {
             'it-IT'
         ])
         expect(i18nLocales.find(locale => locale.code === 'ko-KR')?.file).to.equal('ko.json')
+        for (const locale of i18nLocales) {
+            expect(locale.language, locale.code).to.equal(locale.code)
+        }
     })
 
     it('keeps Korean translation keys in lockstep with English', () => {
