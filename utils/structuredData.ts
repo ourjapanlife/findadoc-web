@@ -1,5 +1,5 @@
 import { Specialty } from '~/typedefs/gqlTypes'
-import { DEFAULT_LOCALE_CODE, localizedPath } from './localePath'
+import { DEFAULT_LOCALE_CODE, LOCALE_CODES, localizedPath } from './localePath'
 import { canonicalUrl } from './seo'
 import {
     CONTACT_EMAIL,
@@ -373,6 +373,20 @@ export function organizationJsonLd(): JsonLdNode {
         areaServed: {
             '@type': 'Country',
             name: 'Japan'
+        },
+        // The registered office is a virtual office and is not published.
+        // Country is the fact the site states; the street address stays on request.
+        address: {
+            '@type': 'PostalAddress',
+            addressCountry: 'JP'
+        },
+        contactPoint: {
+            '@type': 'ContactPoint',
+            contactType: 'customer support',
+            email: CONTACT_EMAIL,
+            url: `${SITE_ORIGIN}/contact`,
+            areaServed: 'JP',
+            availableLanguage: [...LOCALE_CODES]
         },
         sameAs: [...ORGANIZATION_PROFILE_URLS]
     }

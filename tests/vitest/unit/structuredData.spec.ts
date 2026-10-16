@@ -261,6 +261,15 @@ describe('organizationJsonLd', () => {
             'https://github.com/ourjapanlife',
             'https://www.linkedin.com/company/find-a-doc-japan/'
         ])
+        expect(node.address).to.deep.equal({
+            '@type': 'PostalAddress',
+            addressCountry: 'JP'
+        })
+        expect(node.contactPoint).to.deep.include({
+            '@type': 'ContactPoint',
+            email: CONTACT_EMAIL,
+            url: `${SITE_ORIGIN}/contact`
+        })
     })
 })
 

@@ -6,7 +6,18 @@
     "termsTitle": "Điều khoản dịch vụ",
     "privacyTitle": "Chính sách bảo mật",
     "npoTitle": "Công bố NPO",
-    "searchTitle": "Tìm phòng khám"
+    "searchTitle": "Tìm phòng khám",
+    "contactTitle": "Liên hệ"
+  },
+  "contactPage": {
+    "heading": "Liên hệ",
+    "intro": "Find a Doc, Japan là tổ chức phi lợi nhuận đã đăng ký. Hãy viết cho chúng tôi khi bạn cần một người, không chỉ ô tìm kiếm.",
+    "emailLabel": "Email",
+    "whatHeading": "Việc chúng tôi có thể giúp",
+    "whatBody": "Hãy cho chúng tôi biết phòng khám hoặc bác sĩ cần được liệt kê, chỗ cần sửa trên trang đã đăng, hoặc sự cố khi dùng trang web. Chúng tôi cũng trả lời câu hỏi của đối tác, nhà báo và cơ quan công về chính tổ chức. Chúng tôi không đưa ra lời khuyên y khoa, chẩn đoán hay đặt lịch hộ. Để được khám, hãy tìm phòng khám trong danh bạ và liên hệ trực tiếp phòng khám đó.",
+    "npoHeading": "Tổ chức",
+    "npoBody": "Tên đăng ký là NPO法人Find a Doc, Japan, số đăng ký 9011005010215, được Tokyo chứng nhận ngày 28 tháng 8 năm 2023. Hồ sơ đã nộp, kể cả bảng cân đối kế toán, được công bố trên trang công bố NPO. Văn phòng đăng ký là văn phòng ảo, nên địa chỉ đường phố không in ở đây mà cung cấp khi được yêu cầu.",
+    "addressNote": "Chúng tôi làm việc từ xa trên khắp Nhật Bản."
   },
   "npoPage": {
     "heading": "Công bố thông tin tổ chức phi lợi nhuận",
@@ -465,7 +476,10 @@
   "errorPage": {
     "title": "404 - Chẩn đoán: Không tìm thấy trang",
     "description": "Trang này đã không vượt qua kiểm tra sức khỏe. Hãy để chúng tôi đưa bạn đến một trang khỏe mạnh!",
-    "returnHome": "Về trang chủ"
+    "returnHome": "Về trang chủ",
+    "sitemap": "Sơ đồ trang",
+    "guide": "Hướng dẫn",
+    "recovery": "Địa chỉ phòng khám và bác sĩ nằm trong sơ đồ trang. Nếu một liên kết trên trang này hỏng, hãy viết cho chúng tôi từ trang liên hệ."
   },
   "modListContainerItem": {
     "newSubmission": "New",

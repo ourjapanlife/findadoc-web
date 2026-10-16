@@ -236,7 +236,7 @@ import { useModerationSubmissionUnsavedStore } from '~/stores/moderationSubmissi
 import { buildLoginRoute, resolveAuthReturnPath } from '~/utils/auth0Config'
 import { localeCodeFromPath, localizedPath, routeMatchesPath } from '~/utils/localePath'
 import { isMyPageFormRoute, leaveToAppHome } from '~/utils/moderationUtils'
-import { CONTACT_MAILTO, GITHUB_ORGANIZATION_URL } from '~/utils/site'
+import { GITHUB_ORGANIZATION_URL } from '~/utils/site'
 
 const { t } = useI18n()
 const toast = useAppToast()
@@ -263,7 +263,7 @@ const navItems = computed(() => [
     { to: '/search', label: t('topNav.search') },
     { to: '/about', label: t('topNav.about') },
     { to: '/submit', label: t('topNav.submit') },
-    { to: CONTACT_MAILTO, label: t('footer.contact') }
+    { to: '/contact', label: t('footer.contact') }
 ])
 
 function isActive(path: string): boolean {

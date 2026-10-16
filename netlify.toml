@@ -23,3 +23,9 @@
   for = "/*"
     [headers.values]
     Access-Control-Allow-Origin = "*"
+
+# Accept: text/markdown is rewritten to the sibling .md file. Static generate
+# cannot do that itself. See netlify/edge-functions/markdown.ts and #1797.
+[[edge_functions]]
+  function = "markdown"
+  path = "/*"

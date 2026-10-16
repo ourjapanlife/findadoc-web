@@ -6,7 +6,18 @@
     "termsTitle": "Nutzungsbedingungen",
     "privacyTitle": "Datenschutzerklärung",
     "npoTitle": "NPO-Offenlegung",
-    "searchTitle": "Kliniken suchen"
+    "searchTitle": "Kliniken suchen",
+    "contactTitle": "Kontakt"
+  },
+  "contactPage": {
+    "heading": "Kontakt",
+    "intro": "Find a Doc, Japan ist eine eingetragene gemeinnützige Organisation. Schreiben Sie uns, wenn Sie eine Person brauchen und nicht nur das Suchfeld.",
+    "emailLabel": "E-Mail",
+    "whatHeading": "Wobei wir helfen können",
+    "whatBody": "Nennen Sie eine Klinik oder einen Arzt, die aufgenommen werden sollten, eine Korrektur an einer bereits veröffentlichten Seite oder ein Problem mit der Website. Wir beantworten auch Fragen von Partnern, Journalisten und Behörden zur Organisation selbst. Wir geben keine medizinische Beratung, keine Diagnose und keine Termine. Für Behandlung finden Sie eine Klinik im Verzeichnis und kontaktieren diese direkt.",
+    "npoHeading": "Die Organisation",
+    "npoBody": "Der eingetragene Name ist NPO法人Find a Doc, Japan, Nummer 9011005010215, am 28. August 2023 in Tokio zertifiziert. Eingereichte Unterlagen, einschließlich der Bilanz, stehen auf der Seite zur NPO-Offenlegung. Der eingetragene Sitz ist ein virtuelles Büro, die Straße wird daher nicht abgedruckt und auf Anfrage mitgeteilt.",
+    "addressNote": "Wir arbeiten ortsunabhängig in ganz Japan."
   },
   "npoPage": {
     "heading": "Offenlegung der gemeinnützigen Organisation",
@@ -465,7 +476,10 @@
   "errorPage": {
     "title": "404 - Diagnose: Seite nicht gefunden",
     "description": "Diese Seite hat ihre Gesundheitsprüfung nicht bestanden. Lassen Sie uns Sie stattdessen zu einer gesunden Seite bringen!",
-    "returnHome": "Zur Startseite"
+    "returnHome": "Zur Startseite",
+    "sitemap": "Sitemap",
+    "guide": "Leitfaden",
+    "recovery": "Adressen von Kliniken und Ärzten stehen in der Sitemap. Wenn ein Link auf dieser Website kaputt ist, schreiben Sie uns über die Kontaktseite."
   },
   "modListContainerItem": {
     "newSubmission": "New",

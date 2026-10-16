@@ -1,5 +1,5 @@
 import { DEFAULT_LOCALE_CODE, LOCALE_CODES, localizedPath, unlocalizedPath } from './localePath'
-import { SITE_ORIGIN } from './site'
+import { SITE_ORIGIN, SITE_SITEMAP_URL } from './site'
 
 /**
  * Paths crawlers must not index. `public/robots.txt` Disallow lines are kept in
@@ -84,6 +84,36 @@ export function robotsDisallowPaths(): string[] {
         .filter(code => code !== DEFAULT_LOCALE_CODE)
         .flatMap(code => ROBOTS_DISALLOW_PATHS.map(path => localizedPath(path, code)))
     return [...ROBOTS_DISALLOW_PATHS, ...prefixed]
+}
+
+/**
+ * Named so a crawler that only reads its own group still sees the private-tree
+ * disallows. A specific user-agent group does not inherit `User-agent: *`.
+ * `Allow: /` is shorter than those Disallow paths, so the private trees stay out.
+ */
+export const AI_CRAWLER_AGENTS = [
+    'OAI-SearchBot',
+    'PerplexityBot',
+    'ClaudeBot',
+    'Google-Extended'
+] as const
+
+function robotsGroup(userAgent: string, allowAll: boolean): string {
+    const lines = [`User-agent: ${userAgent}`]
+    if (allowAll) {
+        lines.push('Allow: /')
+    }
+    lines.push(...robotsDisallowPaths().map(path => `Disallow: ${path}`))
+    return lines.join('\n')
+}
+
+/** `public/robots.txt` is locked to this text by `tests/vitest/unit/seo.spec.ts`. */
+export function robotsTxt(): string {
+    const groups = [
+        robotsGroup('*', false),
+        ...AI_CRAWLER_AGENTS.map(agent => robotsGroup(agent, true))
+    ]
+    return `${groups.join('\n\n')}\n\nSitemap: ${SITE_SITEMAP_URL}\n`
 }
 
 /**

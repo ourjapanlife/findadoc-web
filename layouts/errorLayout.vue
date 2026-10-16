@@ -29,7 +29,22 @@
                         >
                             {{ t('topNav.search') }}
                         </NuxtLink>
+                        <a
+                            href="/sitemap.xml"
+                            class="btn btn-ghost"
+                        >
+                            {{ t('errorPage.sitemap') }}
+                        </a>
+                        <a
+                            href="/llms.txt"
+                            class="btn btn-ghost"
+                        >
+                            {{ t('errorPage.guide') }}
+                        </a>
                     </div>
+                    <p class="text-primary-text-muted">
+                        {{ t('errorPage.recovery') }}
+                    </p>
                 </div>
                 <img
                     :src="illustration"

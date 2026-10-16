@@ -183,6 +183,7 @@ export default defineNuxtConfig({
         '/privacypolicy': { prerender: true },
         '/submit': { prerender: true },
         '/npo': { prerender: true },
+        '/contact': { prerender: true },
         /*
          * /search reads its filters from the query string and loads the directory from the
          * API in the browser, so there is nothing to prerender: a static shell would ship an
@@ -215,7 +216,7 @@ export default defineNuxtConfig({
             // directory cache, not live facility(id)/healthcareProfessional(id) calls.
             concurrency: 8,
             routes: [
-                ...withLocaleVariants(['/', '/about', '/terms', '/privacypolicy', '/submit', '/npo']),
+                ...withLocaleVariants(['/', '/about', '/terms', '/privacypolicy', '/submit', '/npo', '/contact']),
                 '/sitemap.xml',
                 '/404'
             ],
