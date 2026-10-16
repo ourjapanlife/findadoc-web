@@ -1,0 +1,30 @@
+# Find a Doc, Japan
+
+> A free directory of clinics and healthcare professionals in Japan, filtered by the languages the staff speak and by medical specialty. Published by the registered non-profit NPO法人Find a Doc, Japan.
+
+The site lists clinics and doctors so a person in Japan can find care in a language they speak. It does not give medical advice, diagnoses, or appointments. To get care, open a clinic or doctor page and contact that clinic directly.
+
+English pages have no locale prefix. Other languages use the locale code: `/ja-JP/about`, `/zh-CN/about`, and the same pattern for vi-VN, ko-KR, tl-PH, pt-BR, fr-FR, ru-RU, de-DE, and it-IT. Clinic and doctor slugs stay romanised in every language. The id is the suffix after `--`.
+
+Pages that have a markdown twin answer `Accept: text/markdown` on the production site. The same text is always available at the `.md` URL below, with no content negotiation.
+
+## Start here
+
+- [Home](https://www.findadoc.jp/index.md): what the directory is for
+- [About](https://www.findadoc.jp/about.md): the organisation and why it exists
+- [Contact](https://www.findadoc.jp/contact.md): email, and what we can and cannot help with
+- [Privacy](https://www.findadoc.jp/privacypolicy.md): what the site collects
+- [NPO disclosures](https://www.findadoc.jp/npo.md): registration number, representative, filed documents
+- [Sitemap](https://www.findadoc.jp/sitemap.xml): every public URL, including locale alternates
+- [Search](https://www.findadoc.jp/search): clinics and doctors, filtered in the browser
+
+## Data
+
+- [GraphQL API](https://api.findadoc.jp): public reads of facilities and healthcare professionals. Machine-readable description: https://www.findadoc.jp/graphql.json
+- [OpenAPI document](https://www.findadoc.jp/openapi.json): website resources, plus the GraphQL and MCP endpoints
+- [MCP server](https://mcp.findadoc.jp/mcp): streamable HTTP. Tools search and fetch facilities and professionals, and list specialties and languages. Discovery: https://www.findadoc.jp/.well-known/mcp.json
+- [MCP OpenAPI](https://mcp.findadoc.jp/openapi.yaml): the same tools as REST
+
+## If a URL 404s
+
+The HTML error page and [404.md](https://www.findadoc.jp/404.md) both point back at the sitemap, search, and this file. Do not guess a clinic id. Take the URL from the sitemap or from search.

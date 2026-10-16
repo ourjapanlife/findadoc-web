@@ -105,7 +105,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { CONTACT_EMAIL, CONTACT_MAILTO } from '~/utils/site'
+import { CONTACT_EMAIL, CONTACT_MAILTO, NPO_REGISTRATION_NUMBER } from '~/utils/site'
 
 const { t } = useI18n()
 
@@ -119,10 +119,7 @@ const { t } = useI18n()
  *
  * The registration number is shown as plain text rather than linked: it is a fact about
  * the entity, and the directory that used to be linked is a third party, not a registry.
- */
-const NPO_REGISTRATION_NUMBER = '9011005010215'
-
-/**
+ *
  * The 団体概要 a bank or partner checks against the registry (東京都 NPO法人台帳). Keep the
  * representative and activities in step with the 登記 and 定款. The registered office is a
  * virtual office, so the address is offered on request rather than published here.

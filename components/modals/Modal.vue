@@ -53,12 +53,13 @@ import { ref, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { vCloseOnOutsideClick } from '~/composables/closeOnOutsideClick'
 import { useModalStore } from '~/stores/modalStore'
+import { routeMatchesPath } from '~/utils/localePath'
 
 const modal = ref(null)
 const store = useModalStore()
 const route = useRoute()
 
-const stylingForSelectedHealthcareProfessionalMainPage = computed(() => route.path === '/'
+const stylingForSelectedHealthcareProfessionalMainPage = computed(() => routeMatchesPath(route.path, '/')
     ? ''
     : 'bg-scrim/50')
 

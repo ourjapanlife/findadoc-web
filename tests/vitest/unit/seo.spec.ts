@@ -5,8 +5,11 @@ import { expect } from 'chai'
 import {
     canonicalUrl,
     DEFAULT_OG_LOCALE,
+    hreflangAlternates,
     isNoindexRoute,
     openGraphLocale,
+    robotsDisallowPaths,
+    robotsTxt,
     ROBOTS_DISALLOW_PATHS
 } from '@/utils/seo'
 import { SITE_ORIGIN, SITE_SITEMAP_URL, SITE_SOCIAL_IMAGE } from '@/utils/site'
@@ -30,6 +33,20 @@ describe('canonicalUrl', () => {
         expect(canonicalUrl('/about/')).to.equal(`${SITE_ORIGIN}/about`)
         expect(canonicalUrl('/search?specialty=dentistry')).to.equal(`${SITE_ORIGIN}/search`)
         expect(canonicalUrl('/npo#documents')).to.equal(`${SITE_ORIGIN}/npo`)
+        expect(canonicalUrl('/ja-JP/about')).to.equal(`${SITE_ORIGIN}/ja-JP/about`)
+        expect(canonicalUrl('/ja-JP')).to.equal(`${SITE_ORIGIN}/ja-JP`)
+    })
+})
+
+describe('hreflangAlternates', () => {
+    it('lists every locale plus x-default on the unprefixed URL', () => {
+        const alternates = hreflangAlternates('/ja-JP/about')
+        const byLang = Object.fromEntries(alternates.map(alternate => [alternate.hreflang, alternate.href]))
+
+        expect(byLang['en-US']).to.equal(`${SITE_ORIGIN}/about`)
+        expect(byLang['ja-JP']).to.equal(`${SITE_ORIGIN}/ja-JP/about`)
+        expect(byLang['x-default']).to.equal(`${SITE_ORIGIN}/about`)
+        expect(alternates).to.have.length(12)
     })
 })
 
@@ -56,6 +73,10 @@ describe('isNoindexRoute', () => {
         expect(isNoindexRoute('/search?page=2')).to.equal(true)
         expect(isNoindexRoute('/search', { specialty: ['', 'dentistry'] })).to.equal(true)
         expect(isNoindexRoute('/404')).to.equal(true)
+        expect(isNoindexRoute('/ja-JP/my-page')).to.equal(true)
+        expect(isNoindexRoute('/ja-JP/my-page/edit-facility/1')).to.equal(true)
+        expect(isNoindexRoute('/ja-JP/about')).to.equal(false)
+        expect(isNoindexRoute('/ja-JP/search?specialty=dentistry')).to.equal(true)
     })
 })
 
@@ -63,7 +84,15 @@ describe('robots.txt', () => {
     it('disallows the private prefixes and points at the sitemap URL', () => {
         const { disallows, sitemap } = parseRobotsTxt(readPublic('robots.txt'))
 
-        expect(disallows).to.deep.equal([...ROBOTS_DISALLOW_PATHS])
+        expect(readPublic('robots.txt')).to.equal(robotsTxt())
+        expect(disallows.filter((path, index) => disallows.indexOf(path) === index))
+            .to.deep.equal(robotsDisallowPaths())
+        expect(robotsDisallowPaths().slice(0, ROBOTS_DISALLOW_PATHS.length)).to.deep.equal([...ROBOTS_DISALLOW_PATHS])
+        expect(disallows).to.include('/ja-JP/my-page')
+        expect(readPublic('robots.txt')).to.include('User-agent: OAI-SearchBot')
+        expect(readPublic('robots.txt')).to.include('User-agent: PerplexityBot')
+        expect(readPublic('robots.txt')).to.include('User-agent: ClaudeBot')
+        expect(readPublic('robots.txt')).to.include('User-agent: Google-Extended')
         expect(sitemap).to.equal(SITE_SITEMAP_URL)
     })
 })

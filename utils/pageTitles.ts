@@ -1,5 +1,6 @@
 import type enMessages from '../i18n/locales/en.json'
 import { isGeographyHubRoute } from './hubPath'
+import { unlocalizedPath } from './localePath'
 
 export type PageMetaTitleKey = Extract<keyof typeof enMessages.pageMeta, string>
 
@@ -25,8 +26,23 @@ export const PAGE_META_TITLE_ROUTES = {
     termsTitle: '/terms',
     privacyTitle: '/privacypolicy',
     npoTitle: '/npo',
-    searchTitle: '/search'
+    searchTitle: '/search',
+    contactTitle: '/contact'
 } as const satisfies Record<PageMetaTitleKey, string>
+
+/**
+ * Translated blurbs that already exist for pages whose body is localised.
+ * Terms and privacy stay on the English site description: that copy is still
+ * hardcoded English.
+ */
+const PAGE_META_DESCRIPTION_KEYS = {
+    homeTitle: 'home.heroLead',
+    aboutTitle: 'about.heroSubheading',
+    submitTitle: 'home.contributeBody',
+    npoTitle: 'npoPage.intro',
+    searchTitle: 'home.heroLead',
+    contactTitle: 'contactPage.intro'
+} as const satisfies Partial<Record<PageMetaTitleKey, string>>
 
 /**
  * Authenticated / non-indexable surfaces that deliberately use the brand-only
@@ -43,10 +59,7 @@ const UNTITLED_ROUTE_PREFIXES = ['/my-page', '/u', '/login', '/404'] as const
 const ENTITY_ROUTE_PREFIXES = ['/clinic', '/doctor'] as const
 
 function normalisePagePath(path: string): string {
-    if (path.length > 1 && path.endsWith('/')) {
-        return path.slice(0, -1)
-    }
-    return path || '/'
+    return unlocalizedPath(path)
 }
 
 export function pageTitleKeyForPath(path: string): PageMetaTitleKey | undefined {
@@ -59,6 +72,15 @@ export function pageTitleKeyForPath(path: string): PageMetaTitleKey | undefined 
     }
 
     return undefined
+}
+
+export function pageDescriptionKeyForPath(path: string): string | undefined {
+    const titleKey = pageTitleKeyForPath(path)
+    if (!titleKey) {
+        return undefined
+    }
+    const descriptions: Partial<Record<PageMetaTitleKey, string>> = PAGE_META_DESCRIPTION_KEYS
+    return descriptions[titleKey]
 }
 
 export function isUntitledRoute(path: string): boolean {

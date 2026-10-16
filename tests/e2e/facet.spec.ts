@@ -6,6 +6,7 @@ import {
 import { prefectureHubPath } from '../../utils/hubPath'
 import { test, expect } from '@playwright/test'
 import { Locale, Specialty } from '../../typedefs/gqlTypes'
+import { jsonLdBlocks } from './jsonLd'
 
 test.describe('Specialty and language facet pages', () => {
     test('an unknown specialty combination is a real HTTP 404', async ({ request }) => {
@@ -119,6 +120,8 @@ test.describe('Specialty and language facet pages', () => {
         await page.goto(facetPath)
         await expect(page.getByTestId('hub-facet-page')).toBeVisible()
         await expect(page.getByTestId('breadcrumbs').locator(`a[href="${prefecturePath}"]`)).toBeVisible()
+        const facetBlocks = await jsonLdBlocks(page)
+        expect(facetBlocks.some(block => block['@type'] === 'BreadcrumbList')).toBe(true)
         await expect(page.getByTestId('search-result-card').first()).toBeVisible()
         expect(languageFacetPathFromSlugs(prefecturePath.slice(1), Locale.EnUs)).toMatch(/-speaking$/)
     })

@@ -6,7 +6,18 @@
     "termsTitle": "Conditions d'utilisation",
     "privacyTitle": "Politique de confidentialité",
     "npoTitle": "Informations légales",
-    "searchTitle": "Rechercher des cliniques"
+    "searchTitle": "Rechercher des cliniques",
+    "contactTitle": "Contact"
+  },
+  "contactPage": {
+    "heading": "Contact",
+    "intro": "Find a Doc, Japan est une association à but non lucratif enregistrée. Écrivez-nous quand il vous faut une personne, pas seulement la recherche.",
+    "emailLabel": "E-mail",
+    "whatHeading": "Ce pour quoi nous pouvons aider",
+    "whatBody": "Signalez une clinique ou un médecin à ajouter, une correction sur une page déjà en ligne, ou un problème d'utilisation du site. Nous répondons aussi aux partenaires, aux journalistes et aux administrations au sujet de l'organisation. Nous ne donnons pas de conseil médical, de diagnostic, ni de rendez-vous. Pour des soins, trouvez une clinique dans l'annuaire et contactez-la directement.",
+    "npoHeading": "L'organisation",
+    "npoBody": "Le nom enregistré est NPO法人Find a Doc, Japan, numéro 9011005010215, certifiée à Tokyo le 28 août 2023. Les documents déposés, dont le bilan, sont sur la page d'informations légales. Le siège enregistré est un bureau virtuel : l'adresse n'est pas publiée ici et s'obtient sur demande.",
+    "addressNote": "Nous travaillons à distance, partout au Japon."
   },
   "npoPage": {
     "heading": "Informations légales de l’association",
@@ -465,7 +476,10 @@
   "errorPage": {
     "title": "404 - Diagnostic : Page non trouvée",
     "description": "Cette page n'a pas réussi son examen de santé. Dirigeons-vous vers une page saine à la place !",
-    "returnHome": "Retour à l'accueil"
+    "returnHome": "Retour à l'accueil",
+    "sitemap": "Plan du site",
+    "guide": "Guide",
+    "recovery": "Les adresses des cliniques et des médecins sont dans le plan du site. Si un lien de ce site est cassé, écrivez-nous depuis la page contact."
   },
   "modListContainerItem": {
     "newSubmission": "New",

@@ -2,6 +2,7 @@ import { defineNuxtConfig } from 'nuxt/config'
 import i18nLocales from './i18n'
 import tailwindcss from '@tailwindcss/vite'
 import { VIEWPORT_BREAKPOINTS, VIEWPORT_FALLBACK_BREAKPOINT } from './utils/viewport'
+import { withLocaleVariants } from './utils/localePath'
 import { publicSitemapUrls, SITEMAP_EXCLUDE } from './utils/sitemap'
 import { SITE_DESCRIPTION, SITE_ORIGIN, SITE_SOCIAL_IMAGE, SITE_TITLE } from './utils/site'
 import { COLOR_SCHEME_BOOTSTRAP, umamiScript } from './utils/nuxt/appHead'
@@ -43,9 +44,8 @@ export default defineNuxtConfig({
             // Descriptive titles come from PAGE_META_TITLE_ROUTES via app.vue, which also
             // wraps them with the brand. Untitled routes fall back to the brand alone.
             title: 'Health services in Japan',
-            htmlAttrs: {
-                lang: 'en'
-            },
+            // `lang` is set per locale in app.vue. A hardcoded `en` here wins over
+            // that and marks Japanese pages as English.
             meta: [
                 {
                     name: 'google-site-verification',
@@ -183,6 +183,7 @@ export default defineNuxtConfig({
         '/privacypolicy': { prerender: true },
         '/submit': { prerender: true },
         '/npo': { prerender: true },
+        '/contact': { prerender: true },
         /*
          * /search reads its filters from the query string and loads the directory from the
          * API in the browser, so there is nothing to prerender: a static shell would ship an
@@ -196,7 +197,12 @@ export default defineNuxtConfig({
         '/search': { ssr: false },
         '/login': { ssr: false },
         '/my-page': { ssr: false },
-        '/my-page/**': { ssr: false }
+        '/my-page/**': { ssr: false },
+        // prefix_except_default: the same SPA surfaces under /ja-JP/search and so on.
+        '/:locale/search': { ssr: false },
+        '/:locale/login': { ssr: false },
+        '/:locale/my-page': { ssr: false },
+        '/:locale/my-page/**': { ssr: false }
     },
     sourcemap: {
         client: true
@@ -209,7 +215,11 @@ export default defineNuxtConfig({
             // Clinic, doctor, hub, and facet HTML is filled from the generate-time
             // directory cache, not live facility(id)/healthcareProfessional(id) calls.
             concurrency: 8,
-            routes: ['/', '/about', '/terms', '/privacypolicy', '/submit', '/npo', '/sitemap.xml', '/404'],
+            routes: [
+                ...withLocaleVariants(['/', '/about', '/terms', '/privacypolicy', '/submit', '/npo', '/contact']),
+                '/sitemap.xml',
+                '/404'
+            ],
             /*
              * `about.html`, not `about/index.html`. Netlify Pretty URLs 301 `/about` →
              * `/about/` when the file is a subfolder index, while sitemap locs and
@@ -254,28 +264,34 @@ export default defineNuxtConfig({
     },
 
     i18n: {
-        strategy: 'no_prefix',
+        strategy: 'prefix_except_default',
         locales: i18nLocales,
         defaultLocale: 'en-US',
         langDir: 'locales',
         vueI18n: './i18n.config.ts',
+        baseUrl: SITE_ORIGIN,
+        // Only `/` follows the cookie or Accept-Language. A direct /about or
+        // /ja-JP/about stays put. Crawlers are stripped of both signals in
+        // server/middleware/i18n-crawler.ts so `/` is never a 302 for them.
         detectBrowserLanguage: {
             useCookie: true,
             cookieKey: 'i18n_redirected',
+            redirectOn: 'root',
             fallbackLocale: 'en-US',
-            alwaysRedirect: true
+            alwaysRedirect: false
         }
     },
     sitemap: {
-        // One loc per public page until #1796 adds locale prefixes. Clinic,
-        // doctor, geography hub, and facet URLs join via /api/__sitemap__/directory.
+        // Alternates are attached in publicSitemapUrls / the directory source.
+        // Leaving autoI18n on would split this into a sitemap index and change
+        // the URL robots.txt publishes.
         autoI18n: false,
         excludeAppSources: true,
         exclude: [...SITEMAP_EXCLUDE],
         urls: publicSitemapUrls(),
         sources: ['/api/__sitemap__/directory'],
-        // Google's per-file cap. A sitemap index is unnecessary until locale × entity
-        // URLs cross this; keep /sitemap.xml stable for robots.txt until then.
+        // Google's per-file cap. Locale × entity stays under this, so /sitemap.xml
+        // remains the single file robots.txt names.
         defaultSitemapsChunkSize: 50000,
         discoverImages: false,
         discoverVideos: false

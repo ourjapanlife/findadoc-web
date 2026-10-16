@@ -54,10 +54,19 @@ import { useI18n } from 'vue-i18n'
 import { createError, navigateTo, useAsyncData, useHead, useRoute } from '#imports'
 import { fetchClinicById } from '~/utils/clinicFacility'
 import { canonicalPathMatches, facilityDocumentTitle, facilityIdFromSlugParam, facilityPath } from '~/utils/clinicPath'
+import { localeCodeFromPath, localizedPath } from '~/utils/localePath'
 import { facilityCrumbs, facilityFacetLinks, facilityHubPaths } from '~/utils/directoryLinks'
 import { loadFacetLinkCatalog } from '~/utils/hubDirectory'
 import { isJapaneseLocale } from '~/utils/activeLocale'
 import { formatPageTitle } from '~/utils/site'
+import { breadcrumbListJsonLd, displayedLanguageCodes, jsonLdScript, medicalClinicJsonLd } from '~/utils/structuredData'
+import { localeDisplayOptions } from '~/stores/localeStore'
+import {
+    facilityEmail,
+    facilityMapsUrl,
+    facilityPhone,
+    facilityWebsiteUrl
+} from '~/utils/searchDirectory'
 import { useUmami } from '~/composables/useUmamiTracking'
 import { clinicViewedProps } from '~/utils/analyticsEvents'
 
@@ -91,7 +100,10 @@ if (!data.value) {
 const canonicalPath = facilityPath(data.value)
 
 if (!canonicalPathMatches(route.path, canonicalPath)) {
-    await navigateTo(canonicalPath, { redirectCode: 301, replace: true })
+    await navigateTo(localizedPath(canonicalPath, localeCodeFromPath(route.path)), {
+        redirectCode: 301,
+        replace: true
+    })
 }
 
 const facility = computed(() => data.value!)
@@ -105,17 +117,33 @@ const languageFacetItems = computed(() => (facetLinks.value ?? [])
         label: t('hubPage.languageChip', { language: link.label })
     })))
 
+const japanese = computed(() => isJapaneseLocale(locale.value))
+
 const displayName = computed(() => {
     const record = facility.value
-    return (isJapaneseLocale(locale.value) ? record.nameJa : record.nameEn) || record.nameEn
+    return (japanese.value ? record.nameJa : record.nameEn) || record.nameEn
 })
+
+const alternateName = computed(() => {
+    const record = facility.value
+    const other = japanese.value ? record.nameEn : record.nameJa
+    const value = other?.trim() ?? ''
+    return value && value !== displayName.value ? value : undefined
+})
+
+const knownLanguageCodes = localeDisplayOptions.map(option => option.code)
+
+const availableLanguage = computed(() => displayedLanguageCodes(
+    facility.value.healthcareProfessionals.flatMap(professional => professional.spokenLanguages ?? []),
+    knownLanguageCodes
+))
 
 const metaDescription = computed(() => {
     const address = facility.value.contact?.address
-    const city = isJapaneseLocale(locale.value)
+    const city = japanese.value
         ? (address?.cityJa || address?.cityEn || '')
         : (address?.cityEn || address?.cityJa || '')
-    const prefecture = isJapaneseLocale(locale.value)
+    const prefecture = japanese.value
         ? (address?.prefectureJa || address?.prefectureEn || '')
         : (address?.prefectureEn || address?.prefectureJa || '')
 
@@ -131,14 +159,14 @@ const brandedTitle = computed(() => formatPageTitle(documentTitle.value))
 
 const locationPrefecture = computed(() => {
     const address = facility.value.contact?.address
-    return isJapaneseLocale(locale.value)
+    return japanese.value
         ? (address?.prefectureJa || address?.prefectureEn || '')
         : (address?.prefectureEn || address?.prefectureJa || '')
 })
 
 const locationCity = computed(() => {
     const address = facility.value.contact?.address
-    return isJapaneseLocale(locale.value)
+    return japanese.value
         ? (address?.cityJa || address?.cityEn || '')
         : (address?.cityEn || address?.cityJa || '')
 })
@@ -163,7 +191,27 @@ useHead({
         { property: 'og:description', content: metaDescription.value, key: 'og:description' },
         { name: 'twitter:title', content: brandedTitle.value, key: 'twitter:title' },
         { name: 'twitter:description', content: metaDescription.value, key: 'twitter:description' }
-    ])
+    ]),
+    script: computed(() => {
+        const record = facility.value
+        return [
+            jsonLdScript('ld-medical-clinic', medicalClinicJsonLd({
+                name: displayName.value,
+                alternateName: alternateName.value,
+                pagePath: localizedPath(canonicalPath, locale.value),
+                telephone: facilityPhone(record),
+                email: facilityEmail(record),
+                websiteUrl: facilityWebsiteUrl(record),
+                mapsUrl: facilityMapsUrl(record, japanese.value),
+                address: record.contact?.address,
+                japanese: japanese.value,
+                latitude: record.mapLatitude,
+                longitude: record.mapLongitude,
+                availableLanguage: availableLanguage.value
+            })),
+            jsonLdScript('ld-breadcrumb', breadcrumbListJsonLd(crumbs.value, canonicalPath, locale.value))
+        ]
+    })
 })
 
 onMounted(() => {

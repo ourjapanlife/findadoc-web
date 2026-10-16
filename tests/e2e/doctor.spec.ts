@@ -2,6 +2,7 @@ import { professionalDocumentTitle, professionalPath } from '../../utils/doctorP
 import { formatPageTitle } from '../../utils/site'
 import type { HealthcareProfessional } from '../../typedefs/gqlTypes'
 import { test, expect } from '@playwright/test'
+import { jsonLdBlocks } from './jsonLd'
 
 type SeededProfessional = Pick<HealthcareProfessional, 'id' | 'names'>
 
@@ -55,5 +56,14 @@ test.describe('Professional pages', () => {
         await expect(page).toHaveTitle(formatPageTitle(professionalDocumentTitle(headingText)))
         await expect(page.getByTestId('doctor-back-to-search')).toBeVisible()
         await expect(page.getByTestId('breadcrumbs')).toBeVisible()
+
+        const blocks = await jsonLdBlocks(page)
+        const physician = blocks.find(block => {
+            const type = block['@type']
+            return type === 'Physician' || (Array.isArray(type) && type.includes('Physician'))
+        })
+        expect(physician?.name).toBe(headingText)
+        const crumbs = blocks.find(block => block['@type'] === 'BreadcrumbList')
+        expect(Array.isArray(crumbs?.itemListElement)).toBe(true)
     })
 })

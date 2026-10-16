@@ -69,6 +69,19 @@ describe('SPA fallbacks', () => {
         expect(rewrites.some(rule => rule.source.startsWith('/search/'))).to.equal(false)
     })
 
+    it('rewrites locale-prefixed SPA routes before the 404 catch-all', () => {
+        const redirects = readRedirects()
+        const spa = redirectRuleIndex(redirects, /^\/:locale\/search\s+\/200\.html\s+200/m)
+        const notFound = redirectRuleIndex(redirects, /^\/\*\s+\/404\.html\s+404/m)
+        expect(spa).to.be.greaterThan(-1)
+        expect(spa).to.be.lessThan(notFound)
+
+        const rewrites = readServeJson().rewrites ?? []
+        expect(rewrites.some(rule => rule.source === '/:locale/search' && rule.destination === '/200.html')).to.equal(true)
+        expect(rewrites.some(rule => rule.source === '/:locale/my-page/:path*' && rule.destination === '/200.html'))
+            .to.equal(true)
+    })
+
     it('gives /search a fallback in both files', () => {
         const redirects = readRedirects()
         const spa = redirectRuleIndex(redirects, /^\/search\s+\/200\.html\s+200/m)

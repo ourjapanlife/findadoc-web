@@ -49,3 +49,30 @@ export function formatPageTitle(title?: string | null): string {
 export const CONTACT_EMAIL = 'contact@findadoc.jp'
 
 export const CONTACT_MAILTO = `mailto:${CONTACT_EMAIL}`
+
+/** Registered name, as published in the footer and on /npo. */
+export const NPO_LEGAL_NAME = 'NPO法人Find a Doc, Japan'
+
+/** 東京都 NPO法人台帳 registration number. Shown on /npo. */
+export const NPO_REGISTRATION_NUMBER = '9011005010215'
+
+/** Certified by the Tokyo Metropolitan Government. Shown on /npo as 28 August 2023. */
+export const NPO_FOUNDING_DATE = '2023-08-28'
+
+/** Public profiles linked from the footer, menu, and about page. */
+export const GITHUB_ORGANIZATION_URL = 'https://github.com/ourjapanlife'
+
+export const LINKEDIN_ORGANIZATION_URL = 'https://www.linkedin.com/company/find-a-doc-japan/'
+
+export const ORGANIZATION_PROFILE_URLS = [
+    GITHUB_ORGANIZATION_URL,
+    LINKEDIN_ORGANIZATION_URL
+] as const
+
+/**
+ * Production MCP host from findadoc-mcp. Streamable HTTP is `/mcp`.
+ * The same process serves the REST OpenAPI document at `/openapi.yaml`.
+ */
+export const MCP_SERVER_URL = 'https://mcp.findadoc.jp/mcp'
+
+export const MCP_OPENAPI_URL = 'https://mcp.findadoc.jp/openapi.yaml'

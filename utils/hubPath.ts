@@ -1,4 +1,5 @@
 import { facilityDocumentTitle, locationCitySlug, locationPrefectureSlug } from './clinicPath'
+import { LOCALE_CODES } from './localePath'
 
 /**
  * First path segments that already belong to a real page. A geography hub at
@@ -12,6 +13,7 @@ export const RESERVED_HUB_SEGMENTS = new Set([
     'privacypolicy',
     'submit',
     'npo',
+    'contact',
     'search',
     'login',
     'my-page',
@@ -21,6 +23,12 @@ export const RESERVED_HUB_SEGMENTS = new Set([
     'moderation',
     '404'
 ])
+
+// A locale prefix must not be captured as a prefecture if it ever reaches this check.
+for (const code of LOCALE_CODES) {
+    RESERVED_HUB_SEGMENTS.add(code)
+    RESERVED_HUB_SEGMENTS.add(code.toLowerCase())
+}
 
 /** City hubs with fewer than this many facilities get `noindex` and stay out of the sitemap. */
 export const INDEXABLE_CITY_HUB_MIN_FACILITIES = 2

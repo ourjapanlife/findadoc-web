@@ -287,7 +287,7 @@ import data from '../member_directory/members.json'
 import MemberComponent from '~/components/MemberComponent.vue'
 import { shuffleArray } from '~/utils/arrayUtils'
 import { DIRECTORY_STATS } from '~/utils/homeDirectory'
-import { CONTACT_MAILTO } from '~/utils/site'
+import { CONTACT_MAILTO, LINKEDIN_ORGANIZATION_URL } from '~/utils/site'
 import SvgNotes from '~/assets/icons/note-stack-add.svg'
 import SvgLinkedin from '~/assets/icons/social-linkedin.svg'
 import SvgFeedback from '~/assets/icons/feedback-icon.svg'
@@ -379,7 +379,7 @@ const involveLinks = computed(() => [
     },
     {
         label: t('about.involveLinkedin'),
-        to: 'https://www.linkedin.com/company/find-a-doc-japan/',
+        to: LINKEDIN_ORGANIZATION_URL,
         icon: SvgLinkedin,
         iconClass: '[&_path:first-child]:fill-primary [&_path:last-child]:fill-secondary-bg',
         external: true

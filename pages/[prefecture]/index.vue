@@ -105,8 +105,10 @@ import generatedPrefectureHubs from '#generated-prefecture-hubs'
 import { createError, navigateTo, useAsyncData, useHead, useRoute } from '#imports'
 import { isJapaneseLocale } from '~/utils/activeLocale'
 import { canonicalPathMatches, slugifySegment } from '~/utils/clinicPath'
+import { localeCodeFromPath, localizedPath } from '~/utils/localePath'
 import { loadPrefectureFacets, loadPrefectureHub } from '~/utils/hubDirectory'
 import { prefectureHubCrumbs } from '~/utils/directoryLinks'
+import { breadcrumbListJsonLd, jsonLdScript } from '~/utils/structuredData'
 import { hubPrefectureDocumentTitle, isReservedHubSegment } from '~/utils/hubPath'
 import { formatPageTitle } from '~/utils/site'
 import type { HubCity } from '~/utils/hubIndex'
@@ -168,7 +170,10 @@ function cityLabel(city: HubCity): string {
 }
 
 if (!canonicalPathMatches(route.path, data.value.path)) {
-    await navigateTo(data.value.path, { redirectCode: 301, replace: true })
+    await navigateTo(localizedPath(data.value.path, localeCodeFromPath(route.path)), {
+        redirectCode: 301,
+        replace: true
+    })
 } else {
     useHead({
         title: documentTitle,
@@ -178,6 +183,9 @@ if (!canonicalPathMatches(route.path, data.value.path)) {
             { property: 'og:description', content: metaDescription.value, key: 'og:description' },
             { name: 'twitter:title', content: brandedTitle.value, key: 'twitter:title' },
             { name: 'twitter:description', content: metaDescription.value, key: 'twitter:description' }
+        ]),
+        script: computed(() => [
+            jsonLdScript('ld-breadcrumb', breadcrumbListJsonLd(crumbs.value, prefecture.value.path, locale.value))
         ])
     })
 }

@@ -3,8 +3,17 @@ import { PAGE_META_TITLE_ROUTES } from '../../utils/pageTitles'
 import { facilityIdFromSlugParam } from '../../utils/clinicPath'
 import { isFacetSecondSegment } from '../../utils/facetPath'
 import { hubSitemapUrls } from '../../utils/hubIndex'
+import { unlocalizedPath } from '../../utils/localePath'
 import { canonicalUrl } from '../../utils/seo'
-import { SITE_SITEMAP_URL, SITE_SOCIAL_IMAGE, SITE_TITLE } from '../../utils/site'
+import {
+    CONTACT_EMAIL,
+    NPO_LEGAL_NAME,
+    NPO_REGISTRATION_NUMBER,
+    SITE_SITEMAP_URL,
+    SITE_SOCIAL_IMAGE,
+    SITE_TITLE
+} from '../../utils/site'
+import { jsonLdBlocks } from './jsonLd'
 
 const publicPaths = Object.values(PAGE_META_TITLE_ROUTES)
 
@@ -52,10 +61,13 @@ test.describe('Discovery and social meta', () => {
         const locs = [...body.matchAll(/<loc>\s*([^<]+)\s*<\/loc>/g)]
             .map(match => match[1]?.trim())
             .filter((loc): loc is string => Boolean(loc))
-        const paths = locs.map(loc => {
+        const paths = [...new Set(locs.map(loc => {
             const pathname = new URL(loc).pathname
-            return pathname.length > 1 && pathname.endsWith('/') ? pathname.slice(0, -1) : pathname || '/'
-        })
+            const trimmed = pathname.length > 1 && pathname.endsWith('/') ? pathname.slice(0, -1) : pathname || '/'
+            return unlocalizedPath(trimmed)
+        }))]
+        expect(body).toContain('hreflang="ja-JP"')
+        expect(body).toContain('hreflang="x-default"')
 
         const clinicPath = /^\/clinic\/[^/]+\/[^/]+\/.+--.+$/
         const doctorPath = /^\/doctor\/.+--.+$/
@@ -114,6 +126,17 @@ test.describe('Discovery and social meta', () => {
             await expect(page.locator('meta[property="og:image"]')).toHaveAttribute('content', SITE_SOCIAL_IMAGE)
             await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute('content', 'summary_large_image')
             await expect(page.locator('meta[name="robots"][content="noindex"]')).toHaveCount(0)
+
+            const blocks = await jsonLdBlocks(page)
+            const organization = blocks.find(block => block['@type'] === 'NGO')
+            expect(organization?.name).toBe(SITE_TITLE)
+            expect(organization?.legalName).toBe(NPO_LEGAL_NAME)
+            expect(organization?.email).toBe(CONTACT_EMAIL)
+            expect(organization?.identifier).toEqual({
+                '@type': 'PropertyValue',
+                name: 'NPO registration number',
+                value: NPO_REGISTRATION_NUMBER
+            })
         }
     })
 })
