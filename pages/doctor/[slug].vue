@@ -38,6 +38,7 @@ import { useI18n } from 'vue-i18n'
 import { createError, navigateTo, useAsyncData, useHead, useRoute } from '#imports'
 import { fetchDoctorById } from '~/utils/doctorProfessional'
 import { canonicalPathMatches, facilityPath } from '~/utils/clinicPath'
+import { localeCodeFromPath, localizedPath } from '~/utils/localePath'
 import { facilityHubPaths, professionalCrumbs, professionalFacetLinks } from '~/utils/directoryLinks'
 import { professionalDocumentTitle, professionalIdFromSlugParam, professionalPath } from '~/utils/doctorPath'
 import { loadFacetLinkCatalog } from '~/utils/hubDirectory'
@@ -82,7 +83,10 @@ if (!data.value) {
 const canonicalPath = professionalPath(data.value)
 
 if (!canonicalPathMatches(route.path, canonicalPath)) {
-    await navigateTo(canonicalPath, { redirectCode: 301, replace: true })
+    await navigateTo(localizedPath(canonicalPath, localeCodeFromPath(route.path)), {
+        redirectCode: 301,
+        replace: true
+    })
 }
 
 const professional = computed(() => data.value!)
@@ -121,7 +125,7 @@ const worksFor = computed(() => {
         const address = facility.contact?.address
         return [{
             name,
-            pagePath: facilityPath(facility),
+            pagePath: localizedPath(facilityPath(facility), locale.value),
             city: japanese
                 ? (address?.cityJa || address?.cityEn || '')
                 : (address?.cityEn || address?.cityJa || ''),
@@ -187,12 +191,12 @@ useHead({
         jsonLdScript('ld-physician', physicianJsonLd({
             name: displayName.value,
             alternateName: alternateName.value,
-            pagePath: canonicalPath,
+            pagePath: localizedPath(canonicalPath, locale.value),
             specialties: physicianSpecialties.value,
             knowsLanguage: knowsLanguage.value,
             worksFor: worksFor.value
         })),
-        jsonLdScript('ld-breadcrumb', breadcrumbListJsonLd(crumbs.value, canonicalPath))
+        jsonLdScript('ld-breadcrumb', breadcrumbListJsonLd(crumbs.value, canonicalPath, locale.value))
     ])
 })
 

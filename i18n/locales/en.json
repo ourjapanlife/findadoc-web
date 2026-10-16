@@ -6,7 +6,18 @@
     "termsTitle": "Terms of service",
     "privacyTitle": "Privacy policy",
     "npoTitle": "NPO disclosures",
-    "searchTitle": "Search clinics"
+    "searchTitle": "Search clinics",
+    "contactTitle": "Contact"
+  },
+  "contactPage": {
+    "heading": "Contact",
+    "intro": "Find a Doc, Japan is a registered non-profit. Write to us when you need a person, not the search box.",
+    "emailLabel": "Email",
+    "whatHeading": "What we can help with",
+    "whatBody": "Tell us about a clinic or doctor that should be listed, a correction to a page that is already up, or a problem using the site. We also answer questions from partners, journalists, and public offices about the organisation itself. We do not provide medical advice, diagnoses, or appointments. For care, use the directory to find a clinic and contact that clinic directly.",
+    "npoHeading": "The organisation",
+    "npoBody": "The registered name is NPO法人Find a Doc, Japan, registration number 9011005010215, certified in Tokyo on 28 August 2023. Filed documents, including the balance sheet, are published on the NPO disclosures page. The registered office is a virtual office, so the street address is available on request rather than printed here.",
+    "addressNote": "We work remotely across Japan."
   },
   "npoPage": {
     "heading": "NPO disclosures",
@@ -513,7 +524,10 @@
   "errorPage": {
     "title": "404 - Diagnosis : Page not Found",
     "description": "This page has failed its health check. Let's head to a healthy page instead!",
-    "returnHome": "Return to Home"
+    "returnHome": "Return to Home",
+    "sitemap": "Sitemap",
+    "guide": "Agent guide",
+    "recovery": "Clinic and doctor addresses are listed in the sitemap. If a link on this site is broken, write to us from the contact page."
   },
   "modListContainer": {
     "resultsPerPage": "Results per page"

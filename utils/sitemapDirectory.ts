@@ -1,6 +1,7 @@
 import { gql, GraphQLClient } from 'graphql-request'
 import { useRuntimeConfig } from '#imports'
 import { facilityPath } from './clinicPath'
+import { withLocaleAlternates } from './sitemap'
 import { professionalPath } from './doctorPath'
 import { hubSitemapUrls } from './hubIndex'
 import { fetchCities, type CityOption } from './cityOptions'
@@ -46,6 +47,7 @@ export type SitemapDirectoryEntry = {
 export type SitemapDirectoryUrl = {
     loc: string
     lastmod?: string
+    alternatives?: Array<{ hreflang: string, href: string }>
 }
 
 type DirectoryPage<T> = {
@@ -309,7 +311,7 @@ export async function loadDirectorySitemapUrls(
             urls.push(...facetSitemapUrls(attachProfessionalsToFacilities(facilityRows, professionalRows)))
         }
 
-        return urls
+        return withLocaleAlternates(urls)
     } catch (error) {
         // Dev/e2e often have no directory API. A broken sitemap.xml is worse than
         // omitting entity URLs until generate can reach production.

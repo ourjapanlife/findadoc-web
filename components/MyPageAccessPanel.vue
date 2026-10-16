@@ -172,6 +172,7 @@ import {
 import { useModerationSubmissionsStore } from '~/stores/moderationSubmissionsStore'
 import { ModerationScreen, useModerationScreenStore } from '~/stores/moderationScreenStore'
 import SVGAccordionArrow from '~/assets/icons/accordion-arrow.svg'
+import { unlocalizedPath } from '~/utils/localePath'
 
 interface NavPage {
     id: string
@@ -263,7 +264,7 @@ function sidebarNavLinkClass(page: NavPage): string {
         : resolved.query.view
 
     const currentView = typeof route.query.view === 'string' ? route.query.view : 'settings'
-    const isActive = route.path === targetPath
+    const isActive = unlocalizedPath(route.path) === unlocalizedPath(targetPath)
       && (page.listView ? currentView === targetView : currentView === 'settings' || currentView === '')
 
     return isActive

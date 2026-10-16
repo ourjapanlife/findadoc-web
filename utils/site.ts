@@ -68,3 +68,11 @@ export const ORGANIZATION_PROFILE_URLS = [
     GITHUB_ORGANIZATION_URL,
     LINKEDIN_ORGANIZATION_URL
 ] as const
+
+/**
+ * Production MCP host from findadoc-mcp. Streamable HTTP is `/mcp`.
+ * The same process serves the REST OpenAPI document at `/openapi.yaml`.
+ */
+export const MCP_SERVER_URL = 'https://mcp.findadoc.jp/mcp'
+
+export const MCP_OPENAPI_URL = 'https://mcp.findadoc.jp/openapi.yaml'

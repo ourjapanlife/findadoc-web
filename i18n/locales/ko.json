@@ -6,7 +6,18 @@
     "termsTitle": "이용약관",
     "privacyTitle": "개인정보 처리방침",
     "npoTitle": "NPO 정보공개",
-    "searchTitle": "병원 검색"
+    "searchTitle": "병원 검색",
+    "contactTitle": "문의"
+  },
+  "contactPage": {
+    "heading": "문의",
+    "intro": "Find a Doc, Japan은 등록된 비영리단체입니다. 검색만으로 부족하면 사람에게 편지를 보내 주세요.",
+    "emailLabel": "이메일",
+    "whatHeading": "도움을 드릴 수 있는 일",
+    "whatBody": "목록에 올라야 할 병원이나 의사, 이미 공개된 페이지의 정정, 사이트를 쓰다가 생긴 문제를 알려 주세요. 단체 자체에 대한 취재, 협력, 공공기관의 질문에도 답합니다. 의학적 조언, 진단, 예약 대행은 하지 않습니다. 진료는 디렉터리에서 병원을 찾은 뒤 그 병원에 직접 연락하세요.",
+    "npoHeading": "단체",
+    "npoBody": "등록 명칭은 NPO법인Find a Doc, Japan이고 등록 번호는 9011005010215입니다. 2023년 8월 28일 도쿄도에서 인증받았습니다. 대차대조표를 포함한 제출 서류는 정보공개 페이지에 있습니다. 등록 사무소는 가상 사무실이라 번지는 여기에 적지 않고, 요청하시면 보내 드립니다.",
+    "addressNote": "일본 각지에서 원격으로 일합니다."
   },
   "npoPage": {
     "heading": "NPO 정보공개",
@@ -513,7 +524,10 @@
   "errorPage": {
     "title": "404 - 진단: 페이지를 찾을 수 없음",
     "description": "이 페이지는 상태 확인에 실패했습니다. 정상적인 페이지로 이동해 보세요!",
-    "returnHome": "홈으로 돌아가기"
+    "returnHome": "홈으로 돌아가기",
+    "sitemap": "사이트맵",
+    "guide": "이용 안내",
+    "recovery": "병원과 의사 주소는 사이트맵에 있습니다. 이 사이트의 링크가 깨졌다면 문의 페이지에서 알려 주세요."
   },
   "modListContainer": {
     "resultsPerPage": "페이지당 결과"

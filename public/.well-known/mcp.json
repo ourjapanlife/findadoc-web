@@ -1,0 +1,9 @@
+{
+  "name": "Find a Doc, Japan",
+  "description": "Search clinics and healthcare professionals in Japan by language, specialty, and location, and fetch one record by id.",
+  "endpoint": "https://mcp.findadoc.jp/mcp",
+  "transport": "streamable-http",
+  "documentation": "https://www.findadoc.jp/llms.txt",
+  "openapi": "https://mcp.findadoc.jp/openapi.yaml",
+  "serverCard": "https://www.findadoc.jp/.well-known/mcp/server-card.json"
+}

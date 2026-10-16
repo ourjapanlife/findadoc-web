@@ -68,7 +68,7 @@
                     </li>
                     <li>
                         <NuxtLink
-                            :to="CONTACT_MAILTO"
+                            to="/contact"
                             :class="footerLink"
                             data-testid="contact-link"
                         >{{ t('footer.contact') }}</NuxtLink>
@@ -151,7 +151,7 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
 import SVGSiteLogo from '~/assets/icons/site-logo.svg'
-import { CONTACT_MAILTO, GITHUB_ORGANIZATION_URL, LINKEDIN_ORGANIZATION_URL } from '~/utils/site'
+import { GITHUB_ORGANIZATION_URL, LINKEDIN_ORGANIZATION_URL } from '~/utils/site'
 
 const { t } = useI18n()
 

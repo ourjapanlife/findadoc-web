@@ -234,8 +234,9 @@ import { useModalStore } from '~/stores/modalStore'
 import { useModerationScreenStore } from '~/stores/moderationScreenStore'
 import { useModerationSubmissionUnsavedStore } from '~/stores/moderationSubmissionUnsavedStore'
 import { buildLoginRoute, resolveAuthReturnPath } from '~/utils/auth0Config'
+import { localeCodeFromPath, localizedPath, routeMatchesPath } from '~/utils/localePath'
 import { isMyPageFormRoute, leaveToAppHome } from '~/utils/moderationUtils'
-import { CONTACT_MAILTO, GITHUB_ORGANIZATION_URL } from '~/utils/site'
+import { GITHUB_ORGANIZATION_URL } from '~/utils/site'
 
 const { t } = useI18n()
 const toast = useAppToast()
@@ -254,7 +255,7 @@ const triggerRef = ref<HTMLButtonElement | null>(null)
 const currentYear = new Date().getUTCFullYear()
 
 const loginRoute = computed(() => buildLoginRoute(
-    route.path === '/login' ? resolveAuthReturnPath(route.fullPath) : route.fullPath
+    routeMatchesPath(route.path, '/login') ? resolveAuthReturnPath(route.fullPath) : route.fullPath
 ))
 
 const navItems = computed(() => [
@@ -262,14 +263,12 @@ const navItems = computed(() => [
     { to: '/search', label: t('topNav.search') },
     { to: '/about', label: t('topNav.about') },
     { to: '/submit', label: t('topNav.submit') },
-    { to: CONTACT_MAILTO, label: t('footer.contact') }
+    { to: '/contact', label: t('footer.contact') }
 ])
 
 function isActive(path: string): boolean {
     if (!path) return false
-    return path === '/'
-        ? route.path === '/'
-        : route.path === path || route.path.startsWith(`${path}/`)
+    return routeMatchesPath(route.path, path)
 }
 
 function menuLinkClass(path: string): string {
@@ -317,7 +316,7 @@ async function logout() {
     try {
         await authStore.logout()
         toast.success(t('hamburgerMenu.logoutToast'))
-        router.push('/')
+        router.push(localizedPath('/', localeCodeFromPath(route.path)))
     } catch (error) {
         toast.error(error)
     }

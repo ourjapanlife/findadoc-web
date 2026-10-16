@@ -1,4 +1,5 @@
 import type { Facility } from '~/typedefs/gqlTypes'
+import { unlocalizedPath } from './localePath'
 import { SITE_TITLE } from './site'
 
 /**
@@ -41,6 +42,11 @@ export function facilityIdFromSlugParam(slugParam: string | null | undefined): s
     return id || undefined
 }
 
+/**
+ * English/romanised slug in every locale. The locale is the URL prefix
+ * (`/ja-JP/clinic/...`), not the slug, so hreflang is a prefix swap and a
+ * copied link stays readable. Japanese names stay in the page title.
+ */
 export function facilityPath(facility: Pick<Facility, 'id' | 'nameEn'> & {
     contact?: {
         address?: {
@@ -73,7 +79,7 @@ export function normaliseRoutePath(path: string): string {
 }
 
 export function canonicalPathMatches(currentPath: string, canonicalPath: string): boolean {
-    return normaliseRoutePath(currentPath) === normaliseRoutePath(canonicalPath)
+    return unlocalizedPath(normaliseRoutePath(currentPath)) === unlocalizedPath(normaliseRoutePath(canonicalPath))
 }
 
 /**

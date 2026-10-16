@@ -18,6 +18,7 @@ export const professionalIdFromSlugParam = facilityIdFromSlugParam
 
 /**
  * Slug source: English name when present, then Japanese, then the first locale.
+ * The slug stays romanised in every locale; `/ja-JP` is only a prefix.
  */
 export function professionalSlugName(names: readonly LocalizedName[] | null | undefined): string {
     const english = names?.find(name => name.locale === 'en_US')

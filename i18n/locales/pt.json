@@ -6,7 +6,18 @@
     "termsTitle": "Termos de serviço",
     "privacyTitle": "Política de privacidade",
     "npoTitle": "Transparência da ONG",
-    "searchTitle": "Pesquisar clínicas"
+    "searchTitle": "Pesquisar clínicas",
+    "contactTitle": "Contato"
+  },
+  "contactPage": {
+    "heading": "Contato",
+    "intro": "A Find a Doc, Japan é uma organização sem fins lucrativos registrada. Escreva quando precisar de uma pessoa, e não só da busca.",
+    "emailLabel": "E-mail",
+    "whatHeading": "Com o que podemos ajudar",
+    "whatBody": "Conte sobre uma clínica ou um médico que deveria constar, uma correção numa página já publicada, ou um problema ao usar o site. Também respondemos a parceiros, jornalistas e órgãos públicos sobre a própria organização. Não damos conselho médico, diagnóstico nem marcamos consultas. Para se cuidar, encontre uma clínica no diretório e fale diretamente com ela.",
+    "npoHeading": "A organização",
+    "npoBody": "O nome registrado é NPO法人Find a Doc, Japan, número 9011005010215, certificada em Tóquio em 28 de agosto de 2023. Os documentos protocolados, inclusive o balanço, estão na página de transparência da ONG. O escritório registrado é virtual, então o endereço não é publicado aqui e fica disponível mediante pedido.",
+    "addressNote": "Trabalhamos à distância, em todo o Japão."
   },
   "npoPage": {
     "heading": "Divulgações da ONG",
@@ -465,7 +476,10 @@
   "errorPage": {
     "title": "404 - Diagnóstico: Página não encontrada",
     "description": "Esta página não passou no seu exame de saúde. Vamos levá-lo a uma página saudável!",
-    "returnHome": "Voltar ao início"
+    "returnHome": "Voltar ao início",
+    "sitemap": "Mapa do site",
+    "guide": "Guia",
+    "recovery": "Os endereços de clínicas e médicos estão no mapa do site. Se um link deste site estiver quebrado, escreva pela página de contato."
   },
   "modListContainerItem": {
     "newSubmission": "New",

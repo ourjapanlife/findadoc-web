@@ -47,22 +47,38 @@ import { useLocaleStore } from '~/stores/localeStore'
 import { useUmami } from '~/composables/useUmamiTracking'
 import { siteLanguage } from '~/utils/analyticsEvents'
 
-const { t, setLocale, getLocaleCookie } = useI18n()
+const { t, locale, setLocale } = useI18n()
 const localeStore = useLocaleStore()
 const { track } = useUmami()
 const selectId = useId()
 
-// getLocaleCookie to set the initial locale, if there is no cookie, it will default based on the nuxt.config.js
-// Browser's code language is using "-" instead of "_".
-const localeCookie = getLocaleCookie()?.replace('-', '_') || localeStore.activeLocale.code
+function toGqlCode(code: string): string {
+    return code.replace('-', '_')
+}
 
-// If cookie doesn't exist, set it to currently active locale. Default is EnUs
-const selectedLocale = ref(localeCookie ? localeCookie : localeStore.activeLocale.code)
+function toI18nCode(code: string): string {
+    return code.replace('_', '-')
+}
+
+// The URL is the locale. setLocale navigates to the prefixed path and writes
+// i18n_redirected, so a later visit to `/` still lands on the chosen language.
+const selectedLocale = ref(toGqlCode(locale.value))
+localeStore.setLocale(selectedLocale.value as GqlLocale)
+
+watch(locale, value => {
+    const gqlCode = toGqlCode(String(value))
+    if (selectedLocale.value !== gqlCode) {
+        selectedLocale.value = gqlCode
+    }
+})
 
 watch(selectedLocale, newLocale => {
+    const i18nCode = toI18nCode(newLocale)
+    if (i18nCode === locale.value) {
+        return
+    }
     localeStore.setLocale(newLocale as GqlLocale)
-    // setLocale to update the i18n plugin and set the 'i18n_redirected' cookie
-    setLocale(newLocale.replace('_', '-') as Locale)
+    void setLocale(i18nCode as Locale)
     const to = siteLanguage(newLocale)
     if (to) track('Language switched', { to })
 })

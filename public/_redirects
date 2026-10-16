@@ -15,12 +15,18 @@
 /stats.js       https://cloud.umami.is/script.js       200
 /api/send       https://gateway.umami.is/api/send      200
 
-/search         /200.html   200
-/u/*            /200.html   200
-/login          /200.html   200
-/login/*        /200.html   200
-/my-page        /200.html   200
-/my-page/*      /200.html   200
+/search             /200.html   200
+/u/*                /200.html   200
+/login              /200.html   200
+/login/*            /200.html   200
+/my-page            /200.html   200
+/my-page/*          /200.html   200
+/:locale/search     /200.html   200
+/:locale/u/*        /200.html   200
+/:locale/login      /200.html   200
+/:locale/login/*    /200.html   200
+/:locale/my-page    /200.html   200
+/:locale/my-page/*  /200.html   200
 
 # Unknown paths stay a real 404 (not a soft 200 SPA shell).
 /*              /404.html   404

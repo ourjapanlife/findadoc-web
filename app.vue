@@ -17,8 +17,9 @@
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { initializeGqlClient } from './utils/graphql.js'
-import { isEntityRoute, pageMetaI18nKey, pageTitleKeyForPath } from '~/utils/pageTitles'
-import { canonicalUrl, isNoindexRoute, openGraphLocale } from '~/utils/seo'
+import { LOCALE_CODES } from '~/utils/localePath'
+import { isEntityRoute, pageDescriptionKeyForPath, pageMetaI18nKey, pageTitleKeyForPath } from '~/utils/pageTitles'
+import { canonicalUrl, hreflangLinkTags, isNoindexRoute, openGraphLocale } from '~/utils/seo'
 import { jsonLdScript, organizationJsonLd } from '~/utils/structuredData'
 import { formatPageTitle } from '~/utils/site'
 import { useHead, useRoute } from '#imports'
@@ -42,12 +43,23 @@ useHead(() => {
     // `{ name?: string, property?: string }` element is not assignable to any
     // member, so each tag keeps its own literal shape.
     const meta: Array<
-      | { property: 'og:url' | 'og:locale', content: string, key: string }
-      | { name: 'robots', content: 'noindex', key: string }
+      | { property: 'og:url' | 'og:locale' | 'og:locale:alternate' | 'og:description', content: string, key: string }
+      | { name: 'robots' | 'description' | 'twitter:description', content: string, key: string }
     > = [
         { property: 'og:url', content: canonical.value, key: 'og:url' },
         { property: 'og:locale', content: openGraphLocale(String(locale.value)), key: 'og:locale' }
     ]
+
+    for (const code of LOCALE_CODES) {
+        if (code === locale.value) {
+            continue
+        }
+        meta.push({
+            property: 'og:locale:alternate',
+            content: openGraphLocale(code),
+            key: `og:locale:${code}`
+        })
+    }
 
     if (isNoindexRoute(route.path, route.query)) {
         meta.push({ name: 'robots', content: 'noindex', key: 'robots' })
@@ -59,12 +71,25 @@ useHead(() => {
     if (!isEntityRoute(route.path)) {
         const key = pageTitleKeyForPath(route.path)
         title = key ? t(pageMetaI18nKey(key)) : ''
+        const descriptionKey = pageDescriptionKeyForPath(route.path)
+        if (descriptionKey) {
+            const description = t(descriptionKey)
+            meta.push(
+                { name: 'description', content: description, key: 'description' },
+                { property: 'og:description', content: description, key: 'og:description' },
+                { name: 'twitter:description', content: description, key: 'twitter:description' }
+            )
+        }
     }
 
     return {
+        htmlAttrs: { lang: String(locale.value) },
         ...(title !== undefined ? { title } : {}),
         titleTemplate: (title?: string) => formatPageTitle(title),
-        link: [{ rel: 'canonical' as const, href: canonical.value, key: 'canonical' }],
+        link: [
+            { rel: 'canonical' as const, href: canonical.value, key: 'canonical' },
+            ...hreflangLinkTags(route.path)
+        ],
         meta,
         script: [jsonLdScript('ld-organization', organizationJsonLd())]
     }

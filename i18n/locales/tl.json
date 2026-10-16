@@ -6,7 +6,18 @@
     "termsTitle": "Mga tuntunin",
     "privacyTitle": "Patakaran sa privacy",
     "npoTitle": "Pagsisiwalat ng NPO",
-    "searchTitle": "Maghanap ng klinika"
+    "searchTitle": "Maghanap ng klinika",
+    "contactTitle": "Makipag-ugnayan"
+  },
+  "contactPage": {
+    "heading": "Makipag-ugnayan",
+    "intro": "Ang Find a Doc, Japan ay isang rehistradong non-profit. Sumulat sa amin kapag kailangan mo ng tao, hindi lang ng search box.",
+    "emailLabel": "Email",
+    "whatHeading": "Mga bagay na matutulungan namin",
+    "whatBody": "Sabihin sa amin ang klinik o doktor na dapat mailista, ang pagwawasto sa pahinang naka-publish na, o ang problemang nae-encounter sa paggamit ng site. Sinasagot din namin ang mga tanong ng kasosyo, mamamahayag, at tanggapan ng gobyerno tungkol sa samahan. Hindi kami nagbibigay ng medikal na payo, diagnosis, o appointment. Para magpagamot, hanapin ang klinik sa direktoryo at direktang kontakin ang klinik na iyon.",
+    "npoHeading": "Ang samahan",
+    "npoBody": "Ang rehistradong pangalan ay NPO法人Find a Doc, Japan, numerong 9011005010215, sertipikado sa Tokyo noong 28 Agosto 2023. Ang mga isinumiteng dokumento, kasama ang balance sheet, ay nasa pahina ng pagsisiwalat ng NPO. Virtual office ang rehistradong opisina, kaya ang street address ay ibinibigay kapag hiniling, hindi inilalathala rito.",
+    "addressNote": "Nagtatrabaho kami nang malayo sa iba't ibang lugar ng Japan."
   },
   "npoPage": {
     "heading": "Pagsisiwalat ng NPO",
@@ -465,7 +476,10 @@
   "errorPage": {
     "title": "404 - Diagnosis: Hindi Nahanap ang Pahina",
     "description": "Hindi nakapasa ang pahinang ito sa wellness exam. Dalhin ka namin sa malusog na pahina!",
-    "returnHome": "Bumalik sa home"
+    "returnHome": "Bumalik sa home",
+    "sitemap": "Sitemap",
+    "guide": "Gabay",
+    "recovery": "Nasa sitemap ang mga address ng klinik at doktor. Kung sira ang isang link sa site na ito, sumulat sa amin mula sa pahina ng contact."
   },
   "modListContainerItem": {
     "newSubmission": "New",

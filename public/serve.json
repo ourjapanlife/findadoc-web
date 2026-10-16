@@ -7,6 +7,12 @@
     { "source": "/login", "destination": "/200.html" },
     { "source": "/login/:path*", "destination": "/200.html" },
     { "source": "/my-page", "destination": "/200.html" },
-    { "source": "/my-page/:path*", "destination": "/200.html" }
+    { "source": "/my-page/:path*", "destination": "/200.html" },
+    { "source": "/:locale/search", "destination": "/200.html" },
+    { "source": "/:locale/u/:username", "destination": "/200.html" },
+    { "source": "/:locale/login", "destination": "/200.html" },
+    { "source": "/:locale/login/:path*", "destination": "/200.html" },
+    { "source": "/:locale/my-page", "destination": "/200.html" },
+    { "source": "/:locale/my-page/:path*", "destination": "/200.html" }
   ]
 }

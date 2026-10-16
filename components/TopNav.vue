@@ -165,6 +165,7 @@ import { useModerationScreenStore } from '~/stores/moderationScreenStore'
 import { useModerationSubmissionUnsavedStore } from '~/stores/moderationSubmissionUnsavedStore'
 import { vCloseOnOutsideClick } from '~/composables/closeOnOutsideClick'
 import { buildLoginRoute, resolveAuthReturnPath } from '~/utils/auth0Config'
+import { localeCodeFromPath, localizedPath, routeMatchesPath } from '~/utils/localePath'
 import { isMyPageFormRoute, leaveToAppHome } from '~/utils/moderationUtils'
 
 const { t } = useI18n()
@@ -181,7 +182,7 @@ const profileMenuIsOpen = ref(false)
 const profileMenuLabel = computed(() => authStore.userId || t('topNav.myPage'))
 
 const loginRoute = computed(() => buildLoginRoute(
-    route.path === '/login' ? resolveAuthReturnPath(route.fullPath) : route.fullPath
+    routeMatchesPath(route.path, '/login') ? resolveAuthReturnPath(route.fullPath) : route.fullPath
 ))
 
 const navItems = computed(() => [
@@ -192,9 +193,7 @@ const navItems = computed(() => [
 ])
 
 function isActive(path: string): boolean {
-    return path === '/'
-        ? route.path === '/'
-        : route.path === path || route.path.startsWith(`${path}/`)
+    return routeMatchesPath(route.path, path)
 }
 
 function navLinkClass(path: string): string {
@@ -234,7 +233,7 @@ async function logout() {
     try {
         await authStore.logout()
         toast.success(t('topNav.logoutToast'))
-        router.push('/')
+        router.push(localizedPath('/', localeCodeFromPath(route.path)))
     } catch (error) {
         toast.error(error)
     }

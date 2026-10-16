@@ -3,6 +3,7 @@ import { PAGE_META_TITLE_ROUTES } from '../../utils/pageTitles'
 import { facilityIdFromSlugParam } from '../../utils/clinicPath'
 import { isFacetSecondSegment } from '../../utils/facetPath'
 import { hubSitemapUrls } from '../../utils/hubIndex'
+import { unlocalizedPath } from '../../utils/localePath'
 import { canonicalUrl } from '../../utils/seo'
 import {
     CONTACT_EMAIL,
@@ -60,10 +61,13 @@ test.describe('Discovery and social meta', () => {
         const locs = [...body.matchAll(/<loc>\s*([^<]+)\s*<\/loc>/g)]
             .map(match => match[1]?.trim())
             .filter((loc): loc is string => Boolean(loc))
-        const paths = locs.map(loc => {
+        const paths = [...new Set(locs.map(loc => {
             const pathname = new URL(loc).pathname
-            return pathname.length > 1 && pathname.endsWith('/') ? pathname.slice(0, -1) : pathname || '/'
-        })
+            const trimmed = pathname.length > 1 && pathname.endsWith('/') ? pathname.slice(0, -1) : pathname || '/'
+            return unlocalizedPath(trimmed)
+        }))]
+        expect(body).toContain('hreflang="ja-JP"')
+        expect(body).toContain('hreflang="x-default"')
 
         const clinicPath = /^\/clinic\/[^/]+\/[^/]+\/.+--.+$/
         const doctorPath = /^\/doctor\/.+--.+$/
