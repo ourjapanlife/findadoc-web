@@ -211,58 +211,12 @@
                     <h2 class="text-base font-semibold text-primary-text">
                         {{ t('submitPage.previewHeading') }}
                     </h2>
-                    <div
+                    <ExistingFacilityNotice
                         v-if="existingFacility"
-                        data-testid="submit-existing-place"
-                        class="flex flex-col gap-3 rounded-md bg-secondary-bg p-3 text-sm text-primary-text"
-                        role="status"
-                    >
-                        <p class="m-0">
-                            {{ t('submitPage.existingPlace') }}
-                        </p>
-                        <dl class="grid gap-3">
-                            <div v-if="existingFacilityMapsHref">
-                                <dt class="font-semibold text-primary-text">
-                                    {{ t('submitPage.previewLocation') }}
-                                </dt>
-                                <dd>
-                                    <a
-                                        :href="existingFacilityMapsHref"
-                                        class="text-primary"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        data-testid="submit-existing-place-map"
-                                    >{{ t('submitPage.previewOpenMap') }}</a>
-                                </dd>
-                            </div>
-                            <div>
-                                <dt class="font-semibold text-primary-text">
-                                    {{ t('submitPage.existingPlacePage') }}
-                                </dt>
-                                <dd>
-                                    <NuxtLink
-                                        :to="existingFacilityHref"
-                                        class="text-primary"
-                                        data-testid="submit-existing-place-page"
-                                    >
-                                        {{ existingFacilityLabel }}
-                                    </NuxtLink>
-                                </dd>
-                            </div>
-                            <div>
-                                <dt class="font-semibold text-primary-text">
-                                    {{ t('submitPage.existingPlaceContact') }}
-                                </dt>
-                                <dd>
-                                    <a
-                                        :href="CONTACT_MAILTO"
-                                        class="text-primary"
-                                        data-testid="submit-existing-place-contact"
-                                    >{{ CONTACT_EMAIL }}</a>
-                                </dd>
-                            </div>
-                        </dl>
-                    </div>
+                        :facility="existingFacility"
+                        test-id="submit-existing-place"
+                        show-contact
+                    />
                     <div
                         v-if="placeLabel || placeAddress || mapsPlaceLoading"
                         data-testid="submit-place-card"
@@ -350,7 +304,8 @@
                 type="submit"
                 data-testid="submit-submitbutton"
                 class="btn btn-primary w-full"
-                :disabled="isSubmitting"
+                :disabled="isSubmitting || Boolean(existingFacility)"
+                :aria-describedby="existingFacility ? 'submit-existing-place' : undefined"
             >
                 {{ t('submitPage.submitButton') }}
             </button>
@@ -367,9 +322,6 @@ import { useSubmissionStore } from '~/stores/submissionStore'
 import { Locale, type MutationCreateSubmissionArgs } from '~/typedefs/gqlTypes'
 import { spokenLanguageSortKey, useLocaleStore } from '~/stores/localeStore'
 import { handleServerErrorMessaging } from '~/composables/handleServerErrorMessaging'
-import { facilityPath } from '~/utils/clinicPath'
-import { CONTACT_EMAIL, CONTACT_MAILTO } from '~/utils/site'
-import { facilityMapsUrl } from '~/utils/searchDirectory'
 import { isJapaneseLocale } from '~/utils/activeLocale'
 import { fetchFacilityMatchingMapsUrl, type ExistingFacilityMatch } from '~/utils/existingFacility'
 import { useUmami } from '~/composables/useUmamiTracking'
@@ -413,36 +365,6 @@ const placeAddress = computed(() => mapsPlace.value?.address ?? null)
 const placeCategory = computed(() => mapsPlace.value?.category ?? null)
 const existingFacility = ref<ExistingFacilityMatch | null>(null)
 let existingFacilityRequest = 0
-const existingFacilityLabel = computed(() => {
-    const facility = existingFacility.value
-    if (!facility) return ''
-    return isJapaneseLocale(locale.value) ? facility.nameJa : facility.nameEn
-})
-const existingFacilityHref = computed(() => {
-    const facility = existingFacility.value
-    if (!facility) return ''
-    return facilityPath({
-        id: facility.id,
-        nameEn: facility.nameEn,
-        contact: {
-            address: {
-                prefectureEn: facility.prefectureEn,
-                cityEn: facility.cityEn
-            }
-        }
-    })
-})
-const existingFacilityMapsHref = computed(() => {
-    const facility = existingFacility.value
-    if (!facility) return ''
-    return facilityMapsUrl({
-        nameEn: facility.nameEn,
-        nameJa: facility.nameJa,
-        mapLatitude: facility.mapLatitude,
-        mapLongitude: facility.mapLongitude,
-        contact: { googleMapsUrl: facility.googleMapsUrl }
-    }, isJapaneseLocale(locale.value))
-})
 const submittedName = computed(() => [firstName.value, lastName.value].map(part => part.trim()).filter(Boolean).join(' '))
 const submittedLanguageLabels = computed(() =>
     [Locale.JaJp, ...extraLanguages.value].map(code => languageLabel(code)).join(', '))
@@ -511,7 +433,7 @@ const validateFields = () => {
 }
 
 async function submitNewSubmission() {
-    if (isSubmitting.value) return
+    if (isSubmitting.value || existingFacility.value) return
 
     const isValid = validateFields()
     if (!isValid) {

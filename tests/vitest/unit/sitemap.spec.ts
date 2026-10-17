@@ -1,5 +1,5 @@
 import { expect } from 'chai'
-import { LOCALE_CODES, localizedPath, unlocalizedPath } from '@/utils/localePath'
+import { DIRECTORY_PRERENDER_LOCALE_CODES, LOCALE_CODES, localizedPath, unlocalizedPath } from '@/utils/localePath'
 import { PAGE_META_TITLE_ROUTES } from '@/utils/pageTitles'
 import { hreflangAlternates, isNoindexRoute, ROBOTS_DISALLOW_PATHS } from '@/utils/seo'
 import { publicSitemapUrls, SITEMAP_EXCLUDE } from '@/utils/sitemap'
@@ -155,8 +155,12 @@ describe('loadDirectorySitemapUrls', () => {
             { loc: '/tokyo', lastmod: '2026-08-01T00:00:00.000Z' }
         ])
         expect(urls.map(url => url.loc)).to.include('/ja-JP/tokyo')
+        expect(urls.map(url => url.loc)).to.not.include('/zh-CN/tokyo')
+        expect(urls.map(url => url.loc)).to.not.include('/zh-CN/clinic/tokyo/shibuya/tokyo-family-clinic--f1')
+        expect(urls.filter(url => unlocalizedPath(url.loc) === '/tokyo'))
+            .to.have.length(DIRECTORY_PRERENDER_LOCALE_CODES.length)
         expect(urls.find(url => url.loc === '/ja-JP/tokyo')?.alternatives?.map(alt => alt.hreflang))
-            .to.include('x-default')
+            .to.deep.equal(['en-US', 'ja-JP', 'x-default'])
     })
 
     it('omits entity URLs when the directory API fails', async () => {

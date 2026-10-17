@@ -3,11 +3,15 @@
     <div
         v-if="isFacilitySectionInitialized"
         class="mod-sheet"
+        :data-mod-mode="isEditing ? 'edit' : 'preview'"
     >
-        <ModFormKind
-            kind="facility"
-            :label="t('modFacilitySection.facilityHeading')"
-        />
+        <div class="flex items-center justify-between gap-3">
+            <ModFormKind
+                kind="facility"
+                :label="t('modFacilitySection.facilityHeading')"
+            />
+            <ModFormModeToggle v-if="ownsFormMode" />
+        </div>
         <ModAccordion
             tone="facility"
             class="mod-facility-section"
@@ -83,11 +87,9 @@
                 :invalid-input-error-message="t('modFacilitySection.inputErrorMessageFacilityPostalCode')"
             />
             <p
-                v-if="!checkPrefectureNameMatch({
-                    prefectureEn: facilityStore.facilitySectionFields.prefectureEn,
-                    prefectureJa: facilityStore.facilitySectionFields.prefectureJa,
-                })"
-                class="mb-2 font-sans text-xs text-error"
+                class="field-error"
+                :class="prefectureNamesMatch ? 'invisible' : ''"
+                :role="prefectureNamesMatch ? undefined : 'alert'"
             >
                 {{ t('modFacilitySection.inputErrorMessagePrefectureMismatch') }}
             </p>
@@ -105,6 +107,7 @@
                         data-testid="mod-facility-section-prefectureEn"
                         name="prefecture-japan-en"
                         class="field"
+                        :disabled="!isEditing"
                         @change="onEditPrefectureEn"
                     >
                         <option
@@ -128,6 +131,7 @@
                         data-testid="mod-facility-section-prefectureJa"
                         name="prefecture-japan-ja"
                         class="field"
+                        :disabled="!isEditing"
                         @change="onEditPrefectureJa"
                     >
                         <option
@@ -233,7 +237,18 @@
                     :required="true"
                     :input-validation-check="validateGoogleMapsUrlInput"
                     :invalid-input-error-message="t('modFacilitySection.inputErrorMessageFacilityGoogleMapsUrl')"
-                    :autofill="facilityStore.facilitySectionFields.googlemapsURL"
+                />
+                <ModMapsLinkTools
+                    :url="facilityStore.facilitySectionFields.googlemapsURL"
+                    :current="mapsFillCurrent"
+                    @apply="applyMapsFill"
+                />
+                <ExistingFacilityNotice
+                    v-if="matchedFacility"
+                    class="mod-span-2"
+                    :facility="matchedFacility"
+                    test-id="mod-facility-existing-place"
+                    possible
                 />
                 <ModInputField
                     v-model="facilityStore.facilitySectionFields.mapLatitude"
@@ -334,6 +349,9 @@ import { stableStringify } from '~/utils/stableStringify'
 import { matchesHealthcareProfessionalSearch } from '~/utils/moderationSearchUtils'
 import { formatFirstLocalizedFullName } from '~/utils/nameUtils'
 import { useModerationSubmissionUnsavedStore } from '~/stores/moderationSubmissionUnsavedStore'
+import { provideModerationFormEditing, useModerationFormEditing } from '~/composables/useModerationFormMode'
+import { type FacilityMapsFillTarget } from '~/utils/mapsAutofill'
+import { useExistingFacilityMatch } from '~/composables/useExistingFacilityMatch'
 
 const toast = useAppToast()
 const route = useRoute()
@@ -344,6 +362,39 @@ const facilityStore = useFacilitiesStore()
 const { facilitySectionFields } = storeToRefs(facilityStore)
 const healthcareProfessionalsStore = useHealthcareProfessionalsStore()
 const isFacilitySectionInitialized: Ref<boolean> = ref(false)
+const ownsFormMode = moderationScreenStore.editFacilityScreenIsActive()
+  && !moderationScreenStore.editSubmissionScreenIsActive()
+const ownedEditing = ownsFormMode ? provideModerationFormEditing(false) : null
+const parentEditing = useModerationFormEditing()
+const isEditing = computed(() => ownedEditing?.value ?? parentEditing.value)
+const prefectureNamesMatch = computed(() => checkPrefectureNameMatch({
+    prefectureEn: facilityStore.facilitySectionFields.prefectureEn,
+    prefectureJa: facilityStore.facilitySectionFields.prefectureJa
+}))
+const facilityMatchUrl = computed(() =>
+    moderationScreenStore.editSubmissionScreenIsActive()
+        ? ''
+        : facilitySectionFields.value.googlemapsURL
+)
+const { match: matchedFacility } = useExistingFacilityMatch(
+    facilityMatchUrl,
+    () => facilityStore.selectedFacilityId
+)
+const mapsFillCurrent = computed<FacilityMapsFillTarget>(() => ({
+    nameEn: facilitySectionFields.value.nameEn,
+    nameJa: facilitySectionFields.value.nameJa,
+    postalCode: facilitySectionFields.value.postalCode,
+    prefectureEn: facilitySectionFields.value.prefectureEn,
+    prefectureJa: facilitySectionFields.value.prefectureJa,
+    addressLine1En: facilitySectionFields.value.addressLine1En,
+    addressLine1Ja: facilitySectionFields.value.addressLine1Ja,
+    mapLatitude: facilitySectionFields.value.mapLatitude,
+    mapLongitude: facilitySectionFields.value.mapLongitude
+}))
+
+function applyMapsFill(patch: Partial<FacilityMapsFillTarget>) {
+    Object.assign(facilitySectionFields.value, patch)
+}
 
 const facilityFormState = computed(() =>
     JSON.parse(stableStringify(facilitySectionFields.value)))

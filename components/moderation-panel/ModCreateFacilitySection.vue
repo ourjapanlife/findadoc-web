@@ -83,8 +83,9 @@
                 :invalid-input-error-message="t('modFacilitySection.inputErrorMessageFacilityPostalCode')"
             />
             <p
-                v-if="isPrefectureNameMismatch"
-                class="mb-2 font-sans text-xs text-error"
+                class="field-error"
+                :class="isPrefectureNameMismatch ? '' : 'invisible'"
+                :role="isPrefectureNameMismatch ? 'alert' : undefined"
             >
                 {{ t('modFacilitySection.inputErrorMessagePrefectureMismatch') }}
             </p>
@@ -222,7 +223,18 @@
                     :required="true"
                     :input-validation-check="validateGoogleMapsUrlInput"
                     :invalid-input-error-message="t('modFacilitySection.inputErrorMessageFacilityGoogleMapsUrl')"
-                    :autofill="facilityStore.facilitySectionFields.googlemapsURL"
+                />
+                <ModMapsLinkTools
+                    :url="facilityStore.createFacilityFields.contact.googleMapsUrl"
+                    :current="mapsFillCurrent"
+                    @apply="applyMapsFill"
+                />
+                <ExistingFacilityNotice
+                    v-if="matchedFacility"
+                    class="mod-span-2"
+                    :facility="matchedFacility"
+                    test-id="mod-facility-existing-place"
+                    possible
                 />
                 <ModInputField
                     v-model="facilityStore.createFacilityFields.mapLatitude"
@@ -304,6 +316,8 @@ import { listPrefectureJapanEn, listPrefectureJapanJa, pairedPrefectureEn, paire
 import { checkPrefectureNameMatch } from '~/utils/facilitiesUtils'
 import { matchesHealthcareProfessionalSearch } from '~/utils/moderationSearchUtils'
 import { formatFirstLocalizedFullName } from '~/utils/nameUtils'
+import { type FacilityMapsFillTarget } from '~/utils/mapsAutofill'
+import { useExistingFacilityMatch } from '~/composables/useExistingFacilityMatch'
 
 const { t } = useI18n()
 
@@ -344,6 +358,36 @@ const isPrefectureNameMismatch = computed(() => !checkPrefectureNameMatch({
     prefectureEn: facilityStore.createFacilityFields.contact.address.prefectureEn,
     prefectureJa: facilityStore.createFacilityFields.contact.address.prefectureJa
 }))
+const { match: matchedFacility } = useExistingFacilityMatch(
+    () => facilityStore.createFacilityFields.contact.googleMapsUrl
+)
+const mapsFillCurrent = computed<FacilityMapsFillTarget>(() => {
+    const fields = facilityStore.createFacilityFields
+    return {
+        nameEn: fields.nameEn,
+        nameJa: fields.nameJa,
+        postalCode: fields.contact.address.postalCode,
+        prefectureEn: fields.contact.address.prefectureEn,
+        prefectureJa: fields.contact.address.prefectureJa,
+        addressLine1En: fields.contact.address.addressLine1En,
+        addressLine1Ja: fields.contact.address.addressLine1Ja,
+        mapLatitude: fields.mapLatitude,
+        mapLongitude: fields.mapLongitude
+    }
+})
+
+function applyMapsFill(patch: Partial<FacilityMapsFillTarget>) {
+    const fields = facilityStore.createFacilityFields
+    if (patch.nameEn) fields.nameEn = patch.nameEn
+    if (patch.nameJa) fields.nameJa = patch.nameJa
+    if (patch.postalCode) fields.contact.address.postalCode = patch.postalCode
+    if (patch.prefectureEn) fields.contact.address.prefectureEn = patch.prefectureEn
+    if (patch.prefectureJa) fields.contact.address.prefectureJa = patch.prefectureJa
+    if (patch.addressLine1En) fields.contact.address.addressLine1En = patch.addressLine1En
+    if (patch.addressLine1Ja) fields.contact.address.addressLine1Ja = patch.addressLine1Ja
+    if (patch.mapLatitude) fields.mapLatitude = patch.mapLatitude
+    if (patch.mapLongitude) fields.mapLongitude = patch.mapLongitude
+}
 
 const onCreatePrefectureEn = () => {
     const address = facilityStore.createFacilityFields.contact.address

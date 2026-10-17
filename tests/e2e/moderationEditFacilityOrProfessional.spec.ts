@@ -1,6 +1,10 @@
 import enUS from '../../i18n/locales/en.json' with { type: 'json' }
-import { test, expect } from '@playwright/test'
+import { test, expect, type Page } from '@playwright/test'
 import { moderationSuccessToastPattern } from './fixtures'
+
+async function switchModerationFormToEdit(page: Page) {
+    await page.getByTestId('mod-form-mode-toggle').click()
+}
 
 test.describe('Moderation facility and healthcare professional happy paths', () => {
     test.describe.configure({ mode: 'serial', timeout: 120_000 })
@@ -22,6 +26,9 @@ test.describe('Moderation facility and healthcare professional happy paths', () 
         await expect(page.getByTestId('access-page-link-moderation-facilities')).toBeVisible()
         const nameEnInput = page.getByTestId('mod-facility-section-nameEn').locator('input')
         await expect(nameEnInput).toBeVisible()
+        await expect(nameEnInput).not.toBeEditable()
+        await switchModerationFormToEdit(page)
+        await expect(nameEnInput).toBeEditable()
         await nameEnInput.fill(`Playwright Facility ${Date.now()}`)
 
         // 1. Submit the form updates
@@ -54,6 +61,8 @@ test.describe('Moderation facility and healthcare professional happy paths', () 
         await expect(page.getByTestId('access-page-link-moderation-facilities')).toBeVisible()
         const nameEnInput = page.getByTestId('mod-facility-section-nameEn').locator('input')
         await expect(nameEnInput).toBeVisible()
+        await switchModerationFormToEdit(page)
+        await expect(nameEnInput).toBeEditable()
         await nameEnInput.fill(`Playwright Facility exit ${Date.now()}`)
 
         // 1. Trigger the update and exit action
@@ -76,6 +85,9 @@ test.describe('Moderation facility and healthcare professional happy paths', () 
         await expect(page.getByTestId('access-page-link-moderation-healthcare-professionals')).toBeVisible()
         const noteInput = page.getByPlaceholder(enUS.modHealthcareProfessionalSection.placeholderAdditionalNotesForPatients)
         await expect(noteInput).toBeVisible()
+        await expect(noteInput).not.toBeEditable()
+        await switchModerationFormToEdit(page)
+        await expect(noteInput).toBeEditable()
         await noteInput.fill(`Playwright HP note ${Date.now()}`)
 
         const hpUpdate = page.getByTestId('mod-edit-facility-hp-topbar-update')
@@ -109,6 +121,8 @@ test.describe('Moderation facility and healthcare professional happy paths', () 
         await expect(page.getByTestId('access-page-link-moderation-healthcare-professionals')).toBeVisible()
         const noteInput = page.getByPlaceholder(enUS.modHealthcareProfessionalSection.placeholderAdditionalNotesForPatients)
         await expect(noteInput).toBeVisible()
+        await switchModerationFormToEdit(page)
+        await expect(noteInput).toBeEditable()
         await noteInput.fill(`Playwright HP note exit ${Date.now()}`)
 
         // 1. Trigger the update and exit action

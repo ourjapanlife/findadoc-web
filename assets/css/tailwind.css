@@ -364,7 +364,30 @@
   }
 
   .field-error {
-    @apply mt-1.5 text-sm font-medium text-error;
+    @apply mt-1.5 min-h-5 text-sm font-medium text-error;
+  }
+
+  /*
+   * Preview keeps the same rows as edit mode. Inputs stay in place and cannot be typed in,
+   * and controls that only exist to change data are hidden.
+   */
+  [data-mod-mode='preview'] .field,
+  [data-mod-mode='preview'] textarea.field {
+    pointer-events: none;
+    height: auto;
+    min-height: 1.75rem;
+    border-color: transparent;
+    background: transparent;
+    padding-left: 0;
+  }
+
+  [data-mod-mode='preview'] select.field {
+    appearance: none;
+    opacity: 1;
+  }
+
+  [data-mod-mode='preview'] .mod-edit-only {
+    display: none;
   }
 
   /* Moderation sheets. One grid, two kinds: facility uses primary, healthcare uses accent. */

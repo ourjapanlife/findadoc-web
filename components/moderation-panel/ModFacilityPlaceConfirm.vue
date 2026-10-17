@@ -1,7 +1,7 @@
 <template>
     <div
         v-if="facilityId"
-        class="mt-4 space-y-3"
+        class="mod-edit-only mt-4 space-y-3"
         data-testid="mod-facility-place-confirm"
     >
         <p class="text-sm font-medium text-primary-text">

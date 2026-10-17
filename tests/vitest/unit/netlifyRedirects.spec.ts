@@ -1,5 +1,6 @@
 /// <reference types="vitest/globals" />
 import { expect } from 'chai'
+import { clientRenderedDirectoryLocaleCodes, DIRECTORY_PRERENDER_LOCALE_CODES } from '@/utils/localePath'
 import {
     readRedirects,
     readServeJson,
@@ -94,9 +95,33 @@ describe('SPA fallbacks', () => {
     })
 
     /*
-     * Clinic, doctor, and geography hub pages are prerendered. An SPA rewrite
-     * would turn unknown IDs or locations into 200 HTML. Missing files must hit
-     * the 404 catch-all.
+     * English and Japanese directory HTML is generated. Other locales would
+     * 404 on refresh, so Netlify rewrites only the missing paths under those
+     * prefixes. `serve` must not get the same splat: a matching rewrite
+     * replaces /zh-CN/about.html instead of falling through to it.
+     */
+    it('rewrites non-generated locale directory URLs without shadowing Japanese files', () => {
+        const redirects = readRedirects()
+        const notFound = redirectRuleIndex(redirects, /^\/\*\s+\/404\.html\s+404/m)
+        const serveSources = (readServeJson().rewrites ?? []).map(rule => rule.source)
+
+        for (const code of clientRenderedDirectoryLocaleCodes()) {
+            const rule = new RegExp(`^/${code}/\\*\\s+/200\\.html\\s+200`, 'm')
+            const index = redirectRuleIndex(redirects, rule)
+            expect(index, `${code} directory rewrite`).to.be.greaterThan(-1)
+            expect(index).to.be.lessThan(notFound)
+            expect(serveSources.some(source => source.startsWith(`/${code}`)), `${code} serve splat`).to.equal(false)
+        }
+
+        for (const code of DIRECTORY_PRERENDER_LOCALE_CODES) {
+            expect(redirects).to.not.match(new RegExp(`^/${code}/\\*\\s+/200\\.html\\s+200`, 'm'))
+        }
+    })
+
+    /*
+     * Unprefixed clinic, doctor, and geography URLs are prerendered. An SPA
+     * rewrite would turn unknown IDs or locations into 200 HTML. Missing files
+     * must hit the 404 catch-all. Japanese uses the same rule (no /ja-JP/* splat).
      */
     it('does not give /clinic or /doctor an SPA rewrite', () => {
         expect(readRedirects()).to.not.match(/^\/clinic/m)

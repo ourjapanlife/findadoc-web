@@ -10,9 +10,10 @@
             :id="id"
             :value="cityId"
             :required="required"
-            :disabled="!prefectureEn || loading"
+            :disabled="!prefectureEn || loading || !isEditing"
             :data-testid="testId"
-            class="field disabled:cursor-not-allowed disabled:opacity-60"
+            class="field"
+            :class="isEditing ? 'disabled:cursor-not-allowed disabled:opacity-60' : ''"
             @change="onChange"
         >
             <option value="">
@@ -38,6 +39,7 @@
 <script lang="ts" setup>
 import { ref, watch } from 'vue'
 import { fetchCities, type CityOption } from '~/utils/cityOptions'
+import { useModerationFormEditing } from '~/composables/useModerationFormMode'
 
 const props = defineProps<{
     id: string
@@ -53,6 +55,7 @@ const emit = defineEmits<{
 }>()
 
 const { t } = useI18n()
+const isEditing = useModerationFormEditing()
 const cities = ref<CityOption[]>([])
 const loading = ref(false)
 const loadError = ref(false)
