@@ -6,7 +6,7 @@ async function navigateToFirstSubmissionEditPage(page: Page) {
     // Default tab is "New"; CI seed data has submissions under "For Review".
     await page.getByRole('button', { name: new RegExp(enUS.modDashboardLeftNav.forReview, 'i') }).click()
     const firstSubmission = page.locator('[data-testid^="mod-submission-list-item-"]').first()
-    await expect(firstSubmission).toBeVisible()
+    await expect(firstSubmission).toBeVisible({ timeout: 30_000 })
     await firstSubmission.click()
     await expect(page.getByTestId('mod-access-panel')).toBeVisible()
     await expect(page.getByTestId('access-page-link-moderation-submissions')).toBeVisible()

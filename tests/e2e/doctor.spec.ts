@@ -3,6 +3,7 @@ import { formatPageTitle } from '../../utils/site'
 import type { HealthcareProfessional } from '../../typedefs/gqlTypes'
 import { test, expect } from '@playwright/test'
 import { jsonLdBlocks } from './jsonLd'
+import { assertLocalApiOk, requireLocalRows, skipIfLocalApiIsDown } from './localApi'
 
 type SeededProfessional = Pick<HealthcareProfessional, 'id' | 'names'>
 
@@ -33,15 +34,20 @@ test.describe('Professional pages', () => {
             })
             const json = await response.json() as {
                 data?: { healthcareProfessionals?: SeededProfessional[] }
+                errors?: unknown[]
             }
-            professional = json.data?.healthcareProfessionals?.[0]
-        } catch {
-            test.skip(true, 'local API is not running')
+            assertLocalApiOk(json)
+            professional = requireLocalRows(
+                json.data?.healthcareProfessionals,
+                'local API returned no professionals'
+            )[0]
+        } catch (error) {
+            skipIfLocalApiIsDown(error)
             return
         }
 
+        expect(professional?.id).toBeTruthy()
         if (!professional?.id) {
-            test.skip(true, 'local API returned no professionals')
             return
         }
 
