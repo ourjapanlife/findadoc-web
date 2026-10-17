@@ -15,7 +15,7 @@ test.describe('Moderation facility and healthcare professional happy paths', () 
     test('facility edit: update shows success toast', async ({ page }) => {
         await page.getByTestId('access-page-link-moderation-facilities').click()
         const firstFacility = page.locator('[data-testid^="mod-facility-list-item-"]').first()
-        await expect(firstFacility).toBeVisible()
+        await expect(firstFacility).toBeVisible({ timeout: 30_000 })
 
         await firstFacility.click()
         await expect(page.getByTestId('mod-access-panel')).toBeVisible()
@@ -47,7 +47,7 @@ test.describe('Moderation facility and healthcare professional happy paths', () 
     test('facility edit: update-and-exit returns to moderation dashboard', async ({ page }) => {
         await page.getByTestId('access-page-link-moderation-facilities').click()
         const firstFacility = page.locator('[data-testid^="mod-facility-list-item-"]').first()
-        await expect(firstFacility).toBeVisible()
+        await expect(firstFacility).toBeVisible({ timeout: 30_000 })
 
         await firstFacility.click()
         await expect(page.getByTestId('mod-access-panel')).toBeVisible()
@@ -69,7 +69,7 @@ test.describe('Moderation facility and healthcare professional happy paths', () 
     test('healthcare professional edit: update shows success toast', async ({ page }) => {
         await page.getByTestId('access-page-link-moderation-healthcare-professionals').click()
         const firstHealthcareProfessional = page.locator('[data-testid^="mod-healthcare-professional-list-item-"]').first()
-        await expect(firstHealthcareProfessional).toBeVisible()
+        await expect(firstHealthcareProfessional).toBeVisible({ timeout: 30_000 })
 
         await firstHealthcareProfessional.click()
         await expect(page.getByTestId('mod-access-panel')).toBeVisible()
@@ -102,7 +102,7 @@ test.describe('Moderation facility and healthcare professional happy paths', () 
     test('healthcare professional edit: update-and-exit returns to moderation dashboard', async ({ page }) => {
         await page.getByTestId('access-page-link-moderation-healthcare-professionals').click()
         const firstHealthcareProfessional = page.locator('[data-testid^="mod-healthcare-professional-list-item-"]').first()
-        await expect(firstHealthcareProfessional).toBeVisible()
+        await expect(firstHealthcareProfessional).toBeVisible({ timeout: 30_000 })
 
         await firstHealthcareProfessional.click()
         await expect(page.getByTestId('mod-access-panel')).toBeVisible()

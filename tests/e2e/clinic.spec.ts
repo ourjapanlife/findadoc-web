@@ -3,6 +3,7 @@ import { canonicalUrl } from '../../utils/seo'
 import { formatPageTitle } from '../../utils/site'
 import { test, expect } from '@playwright/test'
 import { jsonLdBlocks } from './jsonLd'
+import { assertLocalApiOk, requireLocalRows, skipIfLocalApiIsDown } from './localApi'
 
 const UNKNOWN_CLINIC_PATH
     = '/clinic/tokyo/shibuya/missing--00000000-0000-4000-8000-000000000001'
@@ -35,15 +36,18 @@ test.describe('Facility pages', () => {
             })
             const json = await response.json() as {
                 data?: { facilities?: typeof facility[] }
+                errors?: unknown[]
             }
-            facility = json.data?.facilities?.[0]
-        } catch {
-            test.skip(true, 'local API is not running')
+            assertLocalApiOk(json)
+            facility = requireLocalRows(json.data?.facilities, 'local API returned no facilities')[0]
+        } catch (error) {
+            skipIfLocalApiIsDown(error)
             return
         }
 
+        expect(facility?.id).toBeTruthy()
+        expect(facility?.nameEn).toBeTruthy()
         if (!facility?.id || !facility.nameEn) {
-            test.skip(true, 'local API returned no facilities')
             return
         }
 

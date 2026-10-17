@@ -55,7 +55,19 @@ jobs:
         run: |
           yarn install
           cp .env.dev .env 2>/dev/null || true
-          npx supabase start
+          # public.ecr.aws rate-limits the Postgres image. Retry the pull instead of
+          # failing the job before any test runs.
+          for attempt in 1 2 3 4 5; do
+            if npx supabase start; then
+              break
+            fi
+            echo "supabase start failed (attempt ${attempt})"
+            if [ "$attempt" -eq 5 ]; then
+              exit 1
+            fi
+            npx supabase stop --no-backup || true
+            sleep $((attempt * 20))
+          done
           npx supabase db reset
           yarn generate
           yarn dev:seeddb

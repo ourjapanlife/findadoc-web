@@ -7,6 +7,7 @@ import { prefectureHubPath } from '../../utils/hubPath'
 import { test, expect } from '@playwright/test'
 import { Locale, Specialty } from '../../typedefs/gqlTypes'
 import { jsonLdBlocks } from './jsonLd'
+import { assertLocalApiOk, requireLocalRows, skipIfLocalApiIsDown } from './localApi'
 
 test.describe('Specialty and language facet pages', () => {
     test('an unknown specialty combination is a real HTTP 404', async ({ request }) => {
@@ -16,11 +17,9 @@ test.describe('Specialty and language facet pages', () => {
     })
 
     /*
-     * Facet HTML is only emitted for combinations with INDEXABLE_FACET_MIN_RESULTS
-     * professionals. The CI seed is five random HPs, so most runs have no facet
-     * pages at all (`0 facet pages` in the generate log). Walk the live API the
-     * same way generate does, then only assert against a path that was actually
-     * prerendered — otherwise skip rather than treating a seed gap as a regression.
+     * Facet HTML is emitted for combinations with INDEXABLE_FACET_MIN_RESULTS
+     * professionals. The CI seed pins three Tokyo dentists so generate always
+     * writes that page. Walk the live API the same way generate does.
      */
     test('renders a seeded specialty facet when generate produced one', async ({ page, request }) => {
         let candidates: Array<{ prefectureEn: string, prefecturePath: string, facetPath: string }> = []
@@ -50,7 +49,11 @@ test.describe('Specialty and language facet pages', () => {
                     }>
                     facilities?: Array<{ id: string, contact?: { address?: { prefectureEn?: string } } }>
                 }
+                errors?: unknown[]
             }
+            assertLocalApiOk(json)
+            requireLocalRows(json.data?.healthcareProfessionals, 'local API returned no professionals')
+            requireLocalRows(json.data?.facilities, 'local API returned no facilities')
             const facilityPrefecture = new Map(
                 (json.data?.facilities ?? []).map(facility => [
                     facility.id,
@@ -90,8 +93,8 @@ test.describe('Specialty and language facet pages', () => {
                         ? [{ prefectureEn: prefectureEn!, prefecturePath, facetPath }]
                         : []
                 })
-        } catch {
-            test.skip(true, 'local API is not running')
+        } catch (error) {
+            skipIfLocalApiIsDown(error)
             return
         }
 
@@ -104,11 +107,11 @@ test.describe('Specialty and language facet pages', () => {
             }
         }
 
+        expect(
+            chosen,
+            `no prerendered specialty facet (API had ${candidates.length} indexable combination(s))`
+        ).toBeTruthy()
         if (!chosen) {
-            test.skip(
-                true,
-                `no prerendered specialty facet (API had ${candidates.length} indexable combination(s); CI seed often has none)`
-            )
             return
         }
 
