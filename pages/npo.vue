@@ -142,7 +142,7 @@ const documents = computed(() => [
         key: 'balance-sheet',
         label: t('npoPage.balanceSheet'),
         note: t('npoPage.balanceSheetNote'),
-        url: 'https://docs.google.com/spreadsheets/d/1CafQoHn1NNNoRy35QSt_nUZcgKL8QN2M'
+        url: 'https://docs.google.com/spreadsheets/d/1pt-Jqt9FrMtaFnJy-ND00Q8xXhsgMQ3a/edit?usp=sharing&ouid=117824222813147532023&rtpof=true&sd=true'
     }
 ])
 </script>
