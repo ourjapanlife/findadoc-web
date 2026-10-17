@@ -1,6 +1,6 @@
 <template>
     <div
-        class="relative flex w-full gap-1"
+        class="mod-edit-only relative flex w-full gap-1"
         :class="[
             isNearPageBottom ? 'flex-col-reverse' : 'flex-col',
         ]"

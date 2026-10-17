@@ -145,6 +145,7 @@
     "previewOpenMap": "Apri in Google Maps",
     "previewLookingUp": "Lettura di questo link di Maps",
     "existingPlace": "Questa clinica è già nel nostro database:",
+    "existingPlacePossible": "Questo link potrebbe corrispondere a una clinica già nel database:",
     "existingPlacePage": "Pagina della clinica",
     "existingPlaceContact": "Contattaci se pensi che sia un errore.",
     "spokenLanguageValidation": "Scegli almeno una lingua oltre al giapponese",
@@ -316,6 +317,12 @@
     "existingHPHeading": "Professionisti sanitari attuali nella struttura",
     "facilityHeading": "Informazioni sulla struttura",
     "googleMapsInformation": "Informazioni Google Maps",
+    "openMaps": "Apri in Google Maps",
+    "fillFromMaps": "Compila i campi vuoti da questo link",
+    "fillFromMapsHint": "Compila nome, indirizzo e pin vuoti dal link di Maps. I campi che hanno già un valore restano invariati.",
+    "fillFromMapsDone": "Compilati {count} campi vuoti dal link di Maps.",
+    "fillFromMapsNone": "Non restavano campi vuoti da compilare da questo link.",
+    "fillFromMapsFailed": "Impossibile leggere questo link. Aprilo in Maps e copia i dettagli.",
     "placeMatchHeading": "Google place",
     "placeMatchFind": "Find matching places",
     "placeMatchSave": "Save this place id",
@@ -399,6 +406,7 @@
     "rejectSubmissionConfirmationMessage": "Are you sure you want to reject this submission?",
     "rejectSubmissionConfirmationButton": "Yes, reject the submission",
     "searchExistingFacilities": "Search for existing facility",
+    "useExistingFacility": "Usa questa clinica",
     "searchExistingHealthcareProfessionals": "Search for existing healthcare professionals",
     "labelModNoteInput": "Moderator Notes",
     "placeholderTextNoteInput": "e.g. waiting for call back from clinic",
@@ -462,6 +470,12 @@
   },
   "noteInputField": {
     "optional": "(optional)"
+  },
+  "modForm": {
+    "edit": "Modifica",
+    "preview": "Anteprima",
+    "previewHint": "Anteprima. Passa alla modifica prima di cambiare qualcosa.",
+    "editHint": "Modifica in corso. Torna all’anteprima se devi solo leggere."
   },
   "modInputField": {
     "optional": "Optional"

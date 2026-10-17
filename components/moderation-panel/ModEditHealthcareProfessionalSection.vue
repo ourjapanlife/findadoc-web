@@ -3,11 +3,15 @@
     <div
         v-if="isHealthcareProfessionalInitialized"
         class="mod-sheet"
+        :data-mod-mode="isEditing ? 'edit' : 'preview'"
     >
-        <ModFormKind
-            kind="healthcare"
-            :label="t('modDashboardLeftNav.healthcareProfessionals')"
-        />
+        <div class="flex items-center justify-between gap-3">
+            <ModFormKind
+                kind="healthcare"
+                :label="t('modDashboardLeftNav.healthcareProfessionals')"
+            />
+            <ModFormModeToggle v-if="ownsFormMode" />
+        </div>
         <ModAccordion
             :id="ModHealthcareProfessionalsLeftNavbarSections.HealthcareProfessionalName"
             tone="healthcare"
@@ -26,7 +30,8 @@
                     <div
                         v-show="addingLocaleName || editingLocaleName"
                         :class="[
-                            'name-locale-input-fields mod-form-grid rounded-lg border border-accent-bg bg-secondary-bg p-4',
+                            'mod-edit-only name-locale-input-fields mod-form-grid rounded-lg',
+                            'border border-accent-bg bg-secondary-bg p-4',
                             editingLocaleName ? 'rounded-b-none border-b-0' : '',
                         ]"
                     >
@@ -142,7 +147,7 @@
                 <button
                     type="button"
                     data-testid="mod-healthcare-add-name-button"
-                    class="btn btn-primary btn-sm"
+                    class="btn btn-primary btn-sm mod-edit-only"
                     @click="handleOpenAddNewNameWithReset"
                 >
                     {{ t('modHealthcareProfessionalSection.addHealthCareProfessionalLocaleName') }}
@@ -255,6 +260,7 @@ import { validateNameLocaleMatchesLanguage } from '~/utils/formValidations'
 import { stableStringify } from '~/utils/stableStringify'
 import { filterByCaseInsensitiveIncludes, matchesFacilitySearch } from '~/utils/moderationSearchUtils'
 import { useModerationSubmissionUnsavedStore } from '~/stores/moderationSubmissionUnsavedStore'
+import { provideModerationFormEditing, useModerationFormEditing } from '~/composables/useModerationFormMode'
 // Keeps track of if the search bar inputs have been autofilled with existing facilities
 
 const toast = useAppToast()
@@ -264,6 +270,11 @@ const { t } = useI18n()
 const loadingStore = useLoadingStore()
 
 const moderationScreenStore = useModerationScreenStore()
+const ownsFormMode = moderationScreenStore.editHealthcareProfessionalScreenIsActive()
+  && !moderationScreenStore.editSubmissionScreenIsActive()
+const ownedEditing = ownsFormMode ? provideModerationFormEditing(false) : null
+const parentEditing = useModerationFormEditing()
+const isEditing = computed(() => ownedEditing?.value ?? parentEditing.value)
 const localesStore = useLocaleStore()
 const hpStore = useHealthcareProfessionalsStore()
 const facilitiesStore = useFacilitiesStore()
@@ -379,6 +390,7 @@ const autofillNameLocaleInputWithChosenHealthcareProfessional = (localizedNameIn
 
 //This will set the name that needs to be autofilled and move it to the zero index
 const setChosenLocaleNameInput = (index: number) => {
+    if (!isEditing.value) return
     chosenLocaleIndex.value = index
 
     //This will keep track of the healthcare professional to not lose it but we can swap it later with the chosen one

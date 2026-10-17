@@ -1,4 +1,13 @@
-import { DEFAULT_LOCALE_CODE, LOCALE_CODES, localizedPath, unlocalizedPath } from './localePath'
+import {
+    DEFAULT_LOCALE_CODE,
+    DIRECTORY_PRERENDER_LOCALE_CODES,
+    isDirectoryPrerenderLocale,
+    LOCALE_CODES,
+    localeCodeFromPath,
+    localizedPath,
+    unlocalizedPath
+} from './localePath'
+import { isEntityRoute } from './pageTitles'
 import { SITE_ORIGIN, SITE_SITEMAP_URL } from './site'
 
 /**
@@ -46,11 +55,20 @@ export type HreflangAlternate = {
 }
 
 /**
- * One alternate per site locale, plus `x-default` on the unprefixed English URL.
+ * Marketing pages exist in every locale. Directory pages are generated for
+ * English and Japanese only, so hreflang must not advertise the rest — those
+ * URLs are not static files.
+ */
+export function indexableLocaleCodes(path: string): readonly string[] {
+    return isEntityRoute(path) ? DIRECTORY_PRERENDER_LOCALE_CODES : LOCALE_CODES
+}
+
+/**
+ * One alternate per indexable locale, plus `x-default` on the unprefixed English URL.
  * Href is absolute so it matches `canonicalUrl` for that locale.
  */
 export function hreflangAlternates(path: string): HreflangAlternate[] {
-    const alternates: HreflangAlternate[] = LOCALE_CODES.map(code => ({
+    const alternates: HreflangAlternate[] = indexableLocaleCodes(path).map(code => ({
         hreflang: code,
         href: canonicalUrl(localizedPath(path, code))
     }))
@@ -153,6 +171,12 @@ export function isNoindexRoute(path: string, query?: Record<string, unknown>): b
     }
 
     if (normalised === '/404') {
+        return true
+    }
+
+    // A directory URL we did not generate. The browser can still render it;
+    // crawlers should stay on the English and Japanese files.
+    if (isEntityRoute(path) && !isDirectoryPrerenderLocale(localeCodeFromPath(path))) {
         return true
     }
 

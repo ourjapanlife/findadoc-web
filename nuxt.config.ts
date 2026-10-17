@@ -211,7 +211,10 @@ export default defineNuxtConfig({
 
     nitro: {
         prerender: {
-            crawlLinks: true,
+            // Explicit route list only. Crawling localized homepages would queue
+            // every clinic and hub. Directory HTML is limited to English and
+            // Japanese in entityDirectoryGenerate — Netlify's build limit is 18 minutes.
+            crawlLinks: false,
             // Clinic, doctor, hub, and facet HTML is filled from the generate-time
             // directory cache, not live facility(id)/healthcareProfessional(id) calls.
             concurrency: 8,

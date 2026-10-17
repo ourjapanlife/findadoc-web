@@ -141,6 +141,7 @@
     "previewOpenMap": "Buksan sa Google Maps",
     "previewLookingUp": "Binabasa ang link na ito sa Maps",
     "existingPlace": "Nasa database na namin ang klinikang ito:",
+    "existingPlacePossible": "Maaaring tumugma na ang link na ito sa isang klinikang nasa database:",
     "existingPlacePage": "Pahina ng klinika",
     "existingPlaceContact": "Makipag-ugnayan sa amin kung sa palagay mo ay mali ito.",
     "subheading": "Kung nais magdagdag ng doktor sa database, Kumpletuhin ang form sa ibaba at ito ay susuriin ng aming mga tagapamagitan.",
@@ -260,6 +261,12 @@
     "contactInformation": "Impormasyon sa pakikipag-ugnayan",
     "facilityHeading": "Impormasyon ng Pasilidad",
     "googleMapsInformation": "Impormasyon sa Google maps",
+    "openMaps": "Buksan sa Google Maps",
+    "fillFromMaps": "Punan ang walang laman na field mula sa link na ito",
+    "fillFromMapsHint": "Pinupunan ang walang laman na pangalan, address, at pin mula sa Maps link. Hindi babaguhin ang field na may laman na.",
+    "fillFromMapsDone": "Napunan ang {count} walang laman na field mula sa Maps link.",
+    "fillFromMapsNone": "Walang natitirang walang laman na field na mapupunan mula sa link na ito.",
+    "fillFromMapsFailed": "Hindi mabasa ang link na ito. Buksan ito sa Maps at kopyahin ang detalye.",
     "placeMatchHeading": "Google place",
     "placeMatchFind": "Find matching places",
     "placeMatchSave": "Save this place id",
@@ -345,6 +352,7 @@
     "rejectSubmissionConfirmationMessage": "Are you sure you want to reject this submission?",
     "rejectSubmissionConfirmationButton": "Yes, reject the submission",
     "searchExistingFacilities": "Search for existing Facility",
+    "useExistingFacility": "Gamitin ang klinikang ito",
     "searchExistingHealthcareProfessionals": "Search for existing Healthcare Professionals",
     "labelModNoteInput": "Moderator Notes",
     "placeholderTextNoteInput": "e.g. waiting for call back from clinic",
@@ -462,6 +470,12 @@
   },
   "noteInputField": {
     "optional": "(optional)"
+  },
+  "modForm": {
+    "edit": "I-edit",
+    "preview": "Preview",
+    "previewHint": "Preview. Lumipat sa edit bago baguhin ang anuman.",
+    "editHint": "Nag-e-edit. Bumalik sa preview kapag babasahin lang."
   },
   "modInputField": {
     "optional": "Opsyonal"

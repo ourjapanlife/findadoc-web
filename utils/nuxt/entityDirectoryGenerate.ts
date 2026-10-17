@@ -2,7 +2,7 @@ import type { Nuxt } from '@nuxt/schema'
 import type { NitroConfig } from 'nitropack'
 import { buildClinicPrerenderDirectory, isNuxtGenerateCommand } from '../clinicPrerender'
 import { prefectureHubPaths } from '../hubIndex'
-import { withLocaleVariants } from '../localePath'
+import { DIRECTORY_PRERENDER_LOCALE_CODES, withDirectoryLocaleVariants } from '../localePath'
 
 type EntityDirectoryBuild = Awaited<ReturnType<typeof buildClinicPrerenderDirectory>>
 
@@ -148,7 +148,6 @@ export async function applyEntityDirectoryToNitro(nitroConfig: NitroConfig) {
         return
     }
 
-    console.warn(`[clinic prerender] ${built.paths.length} clinic pages, ${built.professionalPaths.length} doctor pages, ${built.hubPaths.length} hub pages, ${built.facetPaths.length} facet pages from directory payload, each locale`)
     nitroConfig.runtimeConfig ??= {}
     nitroConfig.runtimeConfig.clinicPrerenderDirectory = built.directory
     nitroConfig.runtimeConfig.doctorPrerenderDirectory = built.professionalDirectory
@@ -164,14 +163,16 @@ export async function applyEntityDirectoryToNitro(nitroConfig: NitroConfig) {
     }
     nitroConfig.prerender ??= {}
     const existing = nitroConfig.prerender.routes
-    // Directory payload is already in memory, so a locale prefix is another render
-    // of the same record, not another API call. Slugs stay romanised (#1796).
-    const entityPaths = withLocaleVariants([
+    // Slugs stay romanised (#1796). Only DIRECTORY_PRERENDER_LOCALE_CODES are
+    // written to disk — every locale multiplied ~1,100 pages past Netlify's
+    // build limit. The directory payload is already in memory either way.
+    const entityPaths = withDirectoryLocaleVariants([
         ...built.paths,
         ...built.professionalPaths,
         ...built.hubPaths,
         ...built.facetPaths
     ])
+    console.warn(`[clinic prerender] ${built.paths.length} clinic pages, ${built.professionalPaths.length} doctor pages, ${built.hubPaths.length} hub pages, ${built.facetPaths.length} facet pages for ${DIRECTORY_PRERENDER_LOCALE_CODES.join(', ')} (${entityPaths.length} routes)`)
     nitroConfig.prerender.routes = Array.isArray(existing)
         ? [...existing, ...entityPaths]
         : entityPaths

@@ -140,6 +140,7 @@
     "previewOpenMap": "Открыть в Google Картах",
     "previewLookingUp": "Читаем эту ссылку Maps",
     "existingPlace": "Эта клиника уже есть в нашей базе:",
+    "existingPlacePossible": "Эта ссылка может совпадать с клиникой, которая уже есть в базе:",
     "existingPlacePage": "Страница клиники",
     "existingPlaceContact": "Напишите нам, если считаете, что это ошибка.",
     "subheading": " Хотите добавить врача в базу данных? Заполните форму ниже, и она будет рассмотрена нашими модераторами.",
@@ -283,6 +284,7 @@
     "rejectSubmissionConfirmationMessage": "Are you sure you want to reject this submission?",
     "rejectSubmissionConfirmationButton": "Yes, reject the submission",
     "searchExistingFacilities": "Search for existing Facility",
+    "useExistingFacility": "Использовать эту клинику",
     "searchExistingHealthcareProfessionals": "Search for existing Healthcare Professionals",
     "labelModNoteInput": "Moderator Notes",
     "placeholderTextNoteInput": "e.g. waiting for call back from clinic",
@@ -315,6 +317,12 @@
     "contactInformation": "Contact Information",
     "facilityHeading": "Facility Information",
     "googleMapsInformation": "Google Maps Information",
+    "openMaps": "Открыть в Google Maps",
+    "fillFromMaps": "Заполнить пустые поля по этой ссылке",
+    "fillFromMapsHint": "Заполняет пустые название, адрес и метку из ссылки Maps. Поля, в которых уже есть значение, не меняются.",
+    "fillFromMapsDone": "Из ссылки Maps заполнено пустых полей: {count}.",
+    "fillFromMapsNone": "Не осталось пустых полей, которые можно заполнить по этой ссылке.",
+    "fillFromMapsFailed": "Не удалось прочитать ссылку. Откройте её в Maps и скопируйте данные.",
     "placeMatchHeading": "Google place",
     "placeMatchFind": "Find matching places",
     "placeMatchSave": "Save this place id",
@@ -462,6 +470,12 @@
   },
   "noteInputField": {
     "optional": "(optional)"
+  },
+  "modForm": {
+    "edit": "Изменить",
+    "preview": "Просмотр",
+    "previewHint": "Просмотр. Переключитесь на изменение, прежде чем что-либо менять.",
+    "editHint": "Изменение. Вернитесь к просмотру, если нужно только читать."
   },
   "modInputField": {
     "optional": "Optional"

@@ -39,86 +39,94 @@
             </div>
         </Modal>
     </div>
-    <div class="grid items-start gap-6 landscape:grid-cols-2">
-        <section class="mod-sheet">
-            <div
-                v-if="!currentExistingHealthcareProfessionals.length"
-                class="mod-picker"
-            >
-                <label
-                    for="mod-edit-submission-form-facilities"
-                    class="field-label"
+    <div :data-mod-mode="isEditing ? 'edit' : 'preview'">
+        <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
+            <p class="text-sm text-primary-text-muted">
+                {{ isEditing ? t('modForm.editHint') : t('modForm.previewHint') }}
+            </p>
+            <ModFormModeToggle />
+        </div>
+        <div class="grid items-start gap-6 landscape:grid-cols-2">
+            <section class="mod-sheet">
+                <div
+                    v-if="!currentExistingHealthcareProfessionals.length"
+                    class="mod-picker"
                 >
-                    {{ t('modSubmissionForm.searchExistingFacilities') }}
-                </label>
-                <p
-                    v-if="matchedFacility && !currentFacilityRelations.length"
-                    data-testid="mod-existing-place"
-                    class="rounded-md bg-secondary-bg p-3 text-sm text-primary-text"
-                    role="status"
-                >
-                    {{ t('submitPage.existingPlace') }}
-                    <button
-                        type="button"
-                        class="text-primary"
-                        @click="useMatchedFacility"
+                    <label
+                        for="mod-edit-submission-form-facilities"
+                        class="field-label mod-edit-only"
                     >
-                        {{ matchedFacilityLabel }}
-                    </button>
-                </p>
-                <ModSearchBar
-                    v-model="selectedFacilityRelationsModel"
-                    :place-holder-text="t('modHealthcareProfessionalSection.placeholderTextFacilitySearchBar')"
-                    :no-match-text="t('modHealthcareProfessionalSection.noFacilitiesWereFound')"
-                    :fields-to-display-callback="facilitiesFieldsToDisplayCallback"
-                    :default-suggestions="facilitiesStore.facilityData"
-                    @search-input-change="handleFacilitySearchInputChange"
-                />
-                <ModTokenList :labels="linkedFacilityLabels" />
-            </div>
-            <div
-                v-show="!currentFacilityRelations.length"
-                class="mod-edit-facility-section"
-            >
-                <ModEditFacilitySection />
-            </div>
-        </section>
-        <section class="mod-sheet">
-            <div
-                v-if="!currentFacilityRelations.length"
-                class="mod-picker"
-            >
-                <label
-                    for="mod-edit-submission-form-healthcare-professionals"
-                    class="field-label"
+                        {{ t('modSubmissionForm.searchExistingFacilities') }}
+                    </label>
+                    <ExistingFacilityNotice
+                        v-if="matchedFacility && !currentFacilityRelations.length"
+                        :facility="matchedFacility"
+                        test-id="mod-existing-place"
+                        possible
+                    >
+                        <button
+                            type="button"
+                            class="btn btn-secondary btn-sm w-fit"
+                            data-testid="mod-use-existing-facility"
+                            @click="useMatchedFacility"
+                        >
+                            {{ t('modSubmissionForm.useExistingFacility') }}
+                        </button>
+                    </ExistingFacilityNotice>
+                    <ModSearchBar
+                        v-model="selectedFacilityRelationsModel"
+                        :place-holder-text="t('modHealthcareProfessionalSection.placeholderTextFacilitySearchBar')"
+                        :no-match-text="t('modHealthcareProfessionalSection.noFacilitiesWereFound')"
+                        :fields-to-display-callback="facilitiesFieldsToDisplayCallback"
+                        :default-suggestions="facilitiesStore.facilityData"
+                        @search-input-change="handleFacilitySearchInputChange"
+                    />
+                    <ModTokenList :labels="linkedFacilityLabels" />
+                </div>
+                <div
+                    v-show="!currentFacilityRelations.length"
+                    class="mod-edit-facility-section"
                 >
-                    {{ t('modSubmissionForm.searchExistingHealthcareProfessionals') }}
-                </label>
-                <ModSearchBar
-                    v-model="selectedHealthcareProfessionalsModel"
-                    data-testid="mod-facility-section-doctor-search"
-                    :place-holder-text="t('modFacilitySection.placeholderTextHealthcareProfessionalSearchbar')"
-                    :no-match-text="t('modFacilitySection.noHealthcareProfessionalFound')"
-                    :fields-to-display-callback="healthcareProfessionalsToDisplayCallback"
-                    :default-suggestions="healthcareProfessionalsStore.healthcareProfessionalsData"
-                    @search-input-change="handleHealthcareProfessionalsInputChange"
+                    <ModEditFacilitySection />
+                </div>
+            </section>
+            <section class="mod-sheet">
+                <div
+                    v-if="!currentFacilityRelations.length"
+                    class="mod-picker"
+                >
+                    <label
+                        for="mod-edit-submission-form-healthcare-professionals"
+                        class="field-label mod-edit-only"
+                    >
+                        {{ t('modSubmissionForm.searchExistingHealthcareProfessionals') }}
+                    </label>
+                    <ModSearchBar
+                        v-model="selectedHealthcareProfessionalsModel"
+                        data-testid="mod-facility-section-doctor-search"
+                        :place-holder-text="t('modFacilitySection.placeholderTextHealthcareProfessionalSearchbar')"
+                        :no-match-text="t('modFacilitySection.noHealthcareProfessionalFound')"
+                        :fields-to-display-callback="healthcareProfessionalsToDisplayCallback"
+                        :default-suggestions="healthcareProfessionalsStore.healthcareProfessionalsData"
+                        @search-input-change="handleHealthcareProfessionalsInputChange"
+                    />
+                    <ModTokenList :labels="linkedHealthcareProfessionalLabels" />
+                </div>
+                <div
+                    v-show="!currentExistingHealthcareProfessionals.length"
+                    class="mod-edit-healthcare-professional-section"
+                >
+                    <ModEditHealthcareProfessionalSection />
+                </div>
+                <NoteInputField
+                    v-model="currentSubmissionNotes"
+                    data-testid="submission-form-notes"
+                    :label="t('modSubmissionForm.labelModNoteInput')"
+                    :placeholder="t('modSubmissionForm.placeholderTextNoteInput')"
+                    :required="false"
                 />
-                <ModTokenList :labels="linkedHealthcareProfessionalLabels" />
-            </div>
-            <div
-                v-show="!currentExistingHealthcareProfessionals.length"
-                class="mod-edit-healthcare-professional-section"
-            >
-                <ModEditHealthcareProfessionalSection />
-            </div>
-            <NoteInputField
-                v-model="currentSubmissionNotes"
-                data-testid="submission-form-notes"
-                :label="t('modSubmissionForm.labelModNoteInput')"
-                :placeholder="t('modSubmissionForm.placeholderTextNoteInput')"
-                :required="false"
-            />
-        </section>
+            </section>
+        </div>
     </div>
 </template>
 
@@ -140,10 +148,10 @@ import { guardWithErrorToastAndEffect } from '~/composables/useModerationGuardFe
 import { handleModerationResponseErrors } from '~/composables/useModerationResponseHandling'
 import { ModerationSubmissionActionType, useModerationSubmissionActions } from '~/composables/useModerationSubmissionActions'
 import { mapIdsToEntities, matchesFacilitySearch, matchesHealthcareProfessionalSearch } from '~/utils/moderationSearchUtils'
-import { fetchFacilityMatchingMapsUrl, type ExistingFacilityMatch } from '~/utils/existingFacility'
-import { validateGoogleMapsUrlInput } from '~/utils/formValidations'
+import { useExistingFacilityMatch } from '~/composables/useExistingFacilityMatch'
 import { formatFirstLocalizedFullName, hasEnglishLocalizedName } from '~/utils/nameUtils'
 import { leaveToModerationDashboard } from '~/utils/moderationUtils'
+import { provideModerationFormEditing } from '~/composables/useModerationFormMode'
 import {
     hasRequiredHealthcareProfessionalSelections,
     validateModerationFacilityFields
@@ -164,6 +172,8 @@ const { facilitySectionFields } = storeToRefs(facilitiesStore)
 const { healthcareProfessionalSectionFields } = storeToRefs(healthcareProfessionalsStore)
 
 const currentSubmissionNotes = ref('')
+const editing = provideModerationFormEditing(false)
+const isEditing = computed(() => editing.value)
 
 // Single reactive snapshot for useUnsavedChanges (plugin shows confirmation on browser back / router leave).
 const formState = computed(() => ({
@@ -220,39 +230,9 @@ const selectedHealthcareProfessionalsModel = computed({
     }
 })
 
-const matchedFacility = ref<ExistingFacilityMatch | null>(null)
-let matchedFacilityRequest = 0
-let matchedFacilityTimer: ReturnType<typeof setTimeout> | undefined
-const matchedFacilityLabel = computed(() => {
-    const facility = matchedFacility.value
-    if (!facility) return ''
-    return [facility.nameEn, facility.nameJa].filter(Boolean).join(' · ')
-})
-
-watch(() => facilitiesStore.facilitySectionFields.googlemapsURL, url => {
-    if (matchedFacilityTimer) clearTimeout(matchedFacilityTimer)
-    const trimmed = url.trim()
-    if (!validateGoogleMapsUrlInput(trimmed)) {
-        matchedFacility.value = null
-        return
-    }
-    const request = ++matchedFacilityRequest
-    matchedFacilityTimer = setTimeout(() => {
-        void lookupMatchedFacility(trimmed, request)
-    }, 800)
-})
-
-async function lookupMatchedFacility(url: string, request: number) {
-    try {
-        const match = await fetchFacilityMatchingMapsUrl(url)
-        if (request !== matchedFacilityRequest) return
-        matchedFacility.value = match
-    } catch (error) {
-        if (request !== matchedFacilityRequest) return
-        console.error('Checking for an existing clinic failed', error)
-        matchedFacility.value = null
-    }
-}
+const { match: matchedFacility } = useExistingFacilityMatch(
+    () => facilitiesStore.facilitySectionFields.googlemapsURL
+)
 
 function useMatchedFacility() {
     const match = matchedFacility.value
@@ -685,7 +665,6 @@ watch(
 )
 
 onUnmounted(() => {
-    if (matchedFacilityTimer) clearTimeout(matchedFacilityTimer)
     moderationSubmissionUnsavedStore.registerEditFormTryLeave(null)
     moderationSubmissionUnsavedStore.setEditSubmissionFormDirty(false)
 })

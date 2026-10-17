@@ -141,6 +141,7 @@
     "previewOpenMap": "在 Google 地图中打开",
     "previewLookingUp": "正在读取这个地图链接",
     "existingPlace": "这家医疗机构已在我们的数据库中：",
+    "existingPlacePossible": "此链接可能与数据库中已有的医疗机构相符：",
     "existingPlacePage": "诊所页面",
     "existingPlaceContact": "如果您认为这不对，请联系我们。",
     "spokenLanguageValidation": "请至少再选择一种日语以外的语言",
@@ -290,6 +291,7 @@
     "rejectSubmissionConfirmationMessage": "Are you sure you want to reject this submission?",
     "rejectSubmissionConfirmationButton": "Yes, reject the submission",
     "searchExistingFacilities": "Search for existing Facility",
+    "useExistingFacility": "使用此医疗机构",
     "searchExistingHealthcareProfessionals": "Search for existing Healthcare Professionals",
     "labelModNoteInput": "Moderator Notes",
     "placeholderTextNoteInput": "e.g. waiting for call back from clinic",
@@ -315,6 +317,12 @@
     "contactInformation": "Contact Information",
     "facilityHeading": "Facility Information",
     "googleMapsInformation": "Google Maps Information",
+    "openMaps": "在 Google 地图中打开",
+    "fillFromMaps": "用此链接填写空白项",
+    "fillFromMapsHint": "根据地图链接填写空白的名称、地址和地图钉。已有内容的字段保持不变。",
+    "fillFromMapsDone": "已根据地图链接填写 {count} 个空白项。",
+    "fillFromMapsNone": "没有可以用此链接填写的空白项。",
+    "fillFromMapsFailed": "无法读取此链接。请在地图中打开并复制详细信息。",
     "placeMatchHeading": "Google place",
     "placeMatchFind": "Find matching places",
     "placeMatchSave": "Save this place id",
@@ -462,6 +470,12 @@
   },
   "noteInputField": {
     "optional": "(optional)"
+  },
+  "modForm": {
+    "edit": "编辑",
+    "preview": "预览",
+    "previewHint": "当前为预览。修改前请切换到编辑。",
+    "editHint": "当前为编辑。只需查看时请切换回预览。"
   },
   "modInputField": {
     "optional": "Optional"

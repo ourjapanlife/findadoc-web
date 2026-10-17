@@ -188,6 +188,7 @@
     "previewOpenMap": "Google 지도에서 열기",
     "previewLookingUp": "이 지도 링크를 읽는 중",
     "existingPlace": "이 의료기관은 이미 등록되어 있습니다:",
+    "existingPlacePossible": "이 링크가 이미 등록된 의료기관과 일치할 수 있습니다:",
     "existingPlacePage": "의료기관 페이지",
     "existingPlaceContact": "잘못되었다고 생각되면 연락해 주세요.",
     "spokenLanguageValidation": "일본어 외에 언어를 하나 이상 선택해 주세요",
@@ -407,6 +408,12 @@
     "existingHPHeading": "이 기관의 현재 의료인",
     "facilityHeading": "의료기관 정보",
     "googleMapsInformation": "Google 지도 정보",
+    "openMaps": "Google 지도에서 열기",
+    "fillFromMaps": "이 링크로 빈 항목 채우기",
+    "fillFromMapsHint": "지도 링크에서 비어 있는 이름, 주소, 위치 핀을 채웁니다. 이미 값이 있는 항목은 그대로 둡니다.",
+    "fillFromMapsDone": "지도 링크에서 비어 있던 항목 {count}개를 채웠습니다.",
+    "fillFromMapsNone": "이 링크로 채울 빈 항목이 없습니다.",
+    "fillFromMapsFailed": "이 링크를 읽지 못했습니다. 지도에서 열어 내용을 복사해 주세요.",
     "placeMatchHeading": "Google place",
     "placeMatchFind": "Find matching places",
     "placeMatchSave": "Save this place id",
@@ -488,6 +495,7 @@
     "placeholderTextHealthcareProfessionalSearchbar": "이름 또는 ID로 검색하여 의사 추가",
     "placeholderTextNoteInput": "예: 병원 회신 대기 중",
     "searchExistingFacilities": "기존 의료기관 검색",
+    "useExistingFacility": "이 의료기관 사용",
     "searchExistingHealthcareProfessionals": "기존 의료인 검색",
     "submissionConfirmationAcceptanceButton": "예, 제출합니다",
     "submissionConfirmationMessage": "이 양식을 제출하시겠습니까?",
@@ -505,6 +513,12 @@
   },
   "noteInputField": {
     "optional": "(선택)"
+  },
+  "modForm": {
+    "edit": "편집",
+    "preview": "미리보기",
+    "previewHint": "미리보기입니다. 내용을 바꾸기 전에 편집으로 전환하세요.",
+    "editHint": "편집 중입니다. 읽기만 할 때는 미리보기로 돌아가세요."
   },
   "modInputField": {
     "optional": "선택"

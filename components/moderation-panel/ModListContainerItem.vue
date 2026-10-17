@@ -98,7 +98,7 @@
 
                 <div class="flex items-center gap-3 my-4">
                     <div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center">
-                        <SVGHospitalFacilityIcon class="w-10 h-10 text-primary-inverted rounded-full" />
+                        <SVGHospitalFacilityIcon class="h-6 w-6 text-primary-inverted" />
                     </div>
                     <div class="flex-1">
                         <span class="block text-lg font-bold">

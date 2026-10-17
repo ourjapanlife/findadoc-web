@@ -9,28 +9,34 @@
                 ({{ t('modInputField.optional') }})
             </span>
         </label>
-        <p
-            v-if="!isTheInputValueValid"
-            class="text-error text-xs font-sans"
-        >
-            {{ invalidInputErrorMessage }}
-        </p>
         <input
             v-model="model"
             :type="type"
             :placeholder="placeholder"
             :required="required"
+            :readonly="!isEditing"
+            :tabindex="isEditing ? undefined : -1"
             class="mod-input-field field"
             @blur="initialValidationCheck"
         >
+        <p
+            v-if="invalidInputErrorMessage"
+            class="field-error min-h-5"
+            :class="isTheInputValueValid ? 'invisible' : ''"
+            :role="isTheInputValueValid ? undefined : 'alert'"
+        >
+            {{ invalidInputErrorMessage }}
+        </p>
     </div>
 </template>
 
 <script setup lang="ts">
 import { ref, type Ref, watch, nextTick } from 'vue'
 import { useI18n } from '#imports'
+import { useModerationFormEditing } from '~/composables/useModerationFormMode'
 
 const { t } = useI18n()
+const isEditing = useModerationFormEditing()
 
 const isTheInputValueValid: Ref<boolean> = ref(true)
 const validationCheckedPreviously: Ref<boolean> = ref(false)

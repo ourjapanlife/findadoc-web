@@ -5,8 +5,10 @@
   NETLIFY_USE_YARN="true"
   YARN_VERSION="4.12.0"
   NODE_VERSION="24.21.0"
-  # nuxi generate prerenders ~1,100 directory pages. V8's default heap is ~2 GB and
-  # that OOMs on Netlify once clinic/doctor/hub/facet HTML is in the same run.
+  # nuxi generate used to prerender ~1,100 directory pages. V8's default heap is
+  # ~2 GB and that OOMs on Netlify once clinic/doctor/hub/facet HTML is in the
+  # same run. Those pages are generated for English and Japanese only — all 11
+  # locales exceeded the 18 minute build limit.
   NODE_OPTIONS="--max-old-space-size=4096"
 
 # SPA fallbacks for non-prerendered routes live in public/_redirects so they

@@ -14,14 +14,18 @@
             v-model="model"
             class="field field-textarea"
             :placeholder="placeholder"
+            :readonly="!isEditing"
+            :tabindex="isEditing ? undefined : -1"
         />
     </div>
 </template>
 
 <script setup lang="ts">
 import { useI18n } from '#imports'
+import { useModerationFormEditing } from '~/composables/useModerationFormMode'
 
 const { t } = useI18n()
+const isEditing = useModerationFormEditing()
 const model = defineModel<string>()
 
 defineProps<{

@@ -188,6 +188,7 @@
     "previewOpenMap": "Open in Google Maps",
     "previewLookingUp": "Reading this Maps link",
     "existingPlace": "This clinic is already in our database:",
+    "existingPlacePossible": "This link may already match a clinic in the database:",
     "existingPlacePage": "Clinic page",
     "existingPlaceContact": "Contact us if you think this is wrong.",
     "spokenLanguageValidation": "Choose at least one language besides Japanese",
@@ -407,6 +408,12 @@
     "existingHPHeading": "Current Healthcare Professionals at Facility",
     "facilityHeading": "Facility Information",
     "googleMapsInformation": "Google Maps Information",
+    "openMaps": "Open in Google Maps",
+    "fillFromMaps": "Fill empty fields from this link",
+    "fillFromMapsHint": "Fills empty name, address, and pin fields from the Maps link. Fields that already have a value stay as they are.",
+    "fillFromMapsDone": "Filled {count} empty fields from the Maps link.",
+    "fillFromMapsNone": "No empty fields were left to fill from this link.",
+    "fillFromMapsFailed": "This link could not be read. Open it in Maps and copy the details.",
     "placeMatchHeading": "Google place",
     "placeMatchFind": "Find matching places",
     "placeMatchSave": "Save this place id",
@@ -488,6 +495,7 @@
     "placeholderTextHealthcareProfessionalSearchbar": "Search by name or ID to add a doctor",
     "placeholderTextNoteInput": "e.g. waiting for call back from clinic",
     "searchExistingFacilities": "Search for existing Facility",
+    "useExistingFacility": "Use this clinic",
     "searchExistingHealthcareProfessionals": "Search for existing Healthcare Professionals",
     "submissionConfirmationAcceptanceButton": "Yes, submit",
     "submissionConfirmationMessage": "Are you sure you want to submit this form?",
@@ -505,6 +513,12 @@
   },
   "noteInputField": {
     "optional": "(optional)"
+  },
+  "modForm": {
+    "edit": "Edit",
+    "preview": "Preview",
+    "previewHint": "Preview. Switch to edit before changing anything.",
+    "editHint": "Editing. Switch back to preview when you only need to read."
   },
   "modInputField": {
     "optional": "Optional"

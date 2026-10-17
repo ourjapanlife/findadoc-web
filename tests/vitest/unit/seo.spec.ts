@@ -48,6 +48,17 @@ describe('hreflangAlternates', () => {
         expect(byLang['x-default']).to.equal(`${SITE_ORIGIN}/about`)
         expect(alternates).to.have.length(12)
     })
+
+    it('lists only the generated directory locales', () => {
+        const alternates = hreflangAlternates('/zh-CN/clinic/tokyo/shibuya/clinic--abc')
+        const byLang = Object.fromEntries(alternates.map(alternate => [alternate.hreflang, alternate.href]))
+
+        expect(byLang['en-US']).to.equal(`${SITE_ORIGIN}/clinic/tokyo/shibuya/clinic--abc`)
+        expect(byLang['ja-JP']).to.equal(`${SITE_ORIGIN}/ja-JP/clinic/tokyo/shibuya/clinic--abc`)
+        expect(byLang).to.not.have.property('zh-CN')
+        expect(byLang['x-default']).to.equal(`${SITE_ORIGIN}/clinic/tokyo/shibuya/clinic--abc`)
+        expect(alternates).to.have.length(3)
+    })
 })
 
 describe('openGraphLocale', () => {
@@ -77,6 +88,12 @@ describe('isNoindexRoute', () => {
         expect(isNoindexRoute('/ja-JP/my-page/edit-facility/1')).to.equal(true)
         expect(isNoindexRoute('/ja-JP/about')).to.equal(false)
         expect(isNoindexRoute('/ja-JP/search?specialty=dentistry')).to.equal(true)
+        expect(isNoindexRoute('/clinic/tokyo/shibuya/clinic--abc')).to.equal(false)
+        expect(isNoindexRoute('/ja-JP/clinic/tokyo/shibuya/clinic--abc')).to.equal(false)
+        expect(isNoindexRoute('/ja-JP/tokyo')).to.equal(false)
+        expect(isNoindexRoute('/zh-CN/clinic/tokyo/shibuya/clinic--abc')).to.equal(true)
+        expect(isNoindexRoute('/zh-CN/tokyo')).to.equal(true)
+        expect(isNoindexRoute('/zh-CN/about')).to.equal(false)
     })
 })
 
@@ -119,6 +136,7 @@ describe('prerender HTML layout', () => {
 
         expect(prerender).to.match(/autoSubfolderIndex:\s*false\b/)
         expect(prerender).not.to.match(/autoSubfolderIndex:\s*true\b/)
+        expect(prerender).to.match(/crawlLinks:\s*false\b/)
         expect(canonicalUrl('/about/')).to.equal(`${SITE_ORIGIN}/about`)
         expect(canonicalUrl('/tokyo/')).to.equal(`${SITE_ORIGIN}/tokyo`)
     })

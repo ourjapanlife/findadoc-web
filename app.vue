@@ -17,9 +17,8 @@
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { initializeGqlClient } from './utils/graphql.js'
-import { LOCALE_CODES } from '~/utils/localePath'
 import { isEntityRoute, pageDescriptionKeyForPath, pageMetaI18nKey, pageTitleKeyForPath } from '~/utils/pageTitles'
-import { canonicalUrl, hreflangLinkTags, isNoindexRoute, openGraphLocale } from '~/utils/seo'
+import { canonicalUrl, hreflangLinkTags, indexableLocaleCodes, isNoindexRoute, openGraphLocale } from '~/utils/seo'
 import { jsonLdScript, organizationJsonLd } from '~/utils/structuredData'
 import { formatPageTitle } from '~/utils/site'
 import { useHead, useRoute } from '#imports'
@@ -42,6 +41,7 @@ useHead(() => {
     // Unhead's meta and link inputs are discriminated unions. A shared
     // `{ name?: string, property?: string }` element is not assignable to any
     // member, so each tag keeps its own literal shape.
+    const noindex = isNoindexRoute(route.path, route.query)
     const meta: Array<
       | { property: 'og:url' | 'og:locale' | 'og:locale:alternate' | 'og:description', content: string, key: string }
       | { name: 'robots' | 'description' | 'twitter:description', content: string, key: string }
@@ -50,7 +50,7 @@ useHead(() => {
         { property: 'og:locale', content: openGraphLocale(String(locale.value)), key: 'og:locale' }
     ]
 
-    for (const code of LOCALE_CODES) {
+    for (const code of indexableLocaleCodes(route.path)) {
         if (code === locale.value) {
             continue
         }
@@ -61,7 +61,7 @@ useHead(() => {
         })
     }
 
-    if (isNoindexRoute(route.path, route.query)) {
+    if (noindex) {
         meta.push({ name: 'robots', content: 'noindex', key: 'robots' })
     }
 
@@ -88,7 +88,10 @@ useHead(() => {
         titleTemplate: (title?: string) => formatPageTitle(title),
         link: [
             { rel: 'canonical' as const, href: canonical.value, key: 'canonical' },
-            ...hreflangLinkTags(route.path)
+            // noindex directory URLs are not in the hreflang cluster. A one-way
+            // alternate from /zh-CN/clinic/… to /clinic/… would point at a page
+            // that does not link back.
+            ...(noindex ? [] : hreflangLinkTags(route.path))
         ],
         meta,
         script: [jsonLdScript('ld-organization', organizationJsonLd())]

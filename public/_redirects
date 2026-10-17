@@ -4,7 +4,10 @@
 # netlify.toml — so a toml `/* → /index.html 200` catch-all never wins.
 # Specific 200 rewrites here run first; keep the 404 catch-all last.
 # CI `nuxi start` uses `serve`, which ignores this file — keep public/serve.json
-# in sync for the same fallbacks (see #1785).
+# in sync for the same fallbacks (see #1785). The per-locale directory splats
+# below are the exception: `serve` applies a matching rewrite instead of the
+# clean URL, so `/zh-CN/about` would become the SPA shell. Netlify serves an
+# existing file first (no `!` force), so marketing HTML still wins here.
 # Add new dynamic prefixes here rather than a blanket 200 rewrite.
 #
 # Umami. The page loads /stats.js and posts to /api/send on this origin.
@@ -27,6 +30,19 @@
 /:locale/login/*    /200.html   200
 /:locale/my-page    /200.html   200
 /:locale/my-page/*  /200.html   200
+
+# Directory HTML is generated for en-US and ja-JP only. These locales still
+# have static marketing pages; this rewrite covers the directory URLs generate
+# skipped. Do not add /ja-JP/* — unknown Japanese clinics must stay a hard 404.
+/zh-CN/*            /200.html   200
+/vi-VN/*            /200.html   200
+/ko-KR/*            /200.html   200
+/tl-PH/*            /200.html   200
+/pt-BR/*            /200.html   200
+/fr-FR/*            /200.html   200
+/ru-RU/*            /200.html   200
+/de-DE/*            /200.html   200
+/it-IT/*            /200.html   200
 
 # Unknown paths stay a real 404 (not a soft 200 SPA shell).
 /*              /404.html   404

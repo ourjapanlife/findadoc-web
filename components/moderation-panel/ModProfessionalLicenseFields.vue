@@ -10,7 +10,7 @@
             id="primary-license"
             data-testid="mod-healthcare-professional-primary-license"
             class="field"
-            :disabled="keepBoth"
+            :disabled="keepBoth || !isEditing"
             :value="primaryLicense"
             @change="onPrimaryChange"
         >
@@ -34,7 +34,7 @@
         </p>
         <label
             v-if="recommendation"
-            class="mt-2 flex items-center gap-2 text-sm text-primary-text"
+            class="mod-edit-only mt-2 flex items-center gap-2 text-sm text-primary-text"
         >
             <input
                 data-testid="mod-keep-both-licenses"
@@ -86,6 +86,7 @@ import {
     type LicenseRecommendation
 } from '~/utils/professionalLicense'
 import { useI18n } from '#imports'
+import { useModerationFormEditing } from '~/composables/useModerationFormMode'
 
 const props = defineProps<{
     degrees?: Degree[] | null
@@ -98,6 +99,7 @@ const emit = defineEmits<{
 }>()
 
 const { t } = useI18n()
+const isEditing = useModerationFormEditing()
 
 const primaryLicense = ref<Degree | ''>('')
 const additionalCredentials = ref<Degree[]>([])

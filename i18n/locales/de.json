@@ -141,6 +141,7 @@
     "previewOpenMap": "In Google Maps öffnen",
     "previewLookingUp": "Dieser Maps-Link wird gelesen",
     "existingPlace": "Diese Klinik ist bereits in unserer Datenbank:",
+    "existingPlacePossible": "Dieser Link könnte bereits einer Klinik in der Datenbank entsprechen:",
     "existingPlacePage": "Klinikseite",
     "existingPlaceContact": "Kontaktieren Sie uns, wenn das nicht stimmt.",
     "spokenLanguageValidation": "Wählen Sie mindestens eine Sprache neben Japanisch",
@@ -338,6 +339,7 @@
     "rejectSubmissionConfirmationMessage": "Are you sure you want to reject this submission?",
     "rejectSubmissionConfirmationButton": "Yes, reject the submission",
     "searchExistingFacilities": "Search for existing Facility",
+    "useExistingFacility": "Diese Klinik verwenden",
     "searchExistingHealthcareProfessionals": "Search for existing Healthcare Professionals",
     "labelModNoteInput": "Moderator Notes",
     "placeholderTextNoteInput": "e.g. waiting for call back from clinic",
@@ -363,6 +365,12 @@
     "contactInformation": "Contact Information",
     "facilityHeading": "Facility Information",
     "googleMapsInformation": "Google Maps information",
+    "openMaps": "In Google Maps öffnen",
+    "fillFromMaps": "Leere Felder aus diesem Link füllen",
+    "fillFromMapsHint": "Füllt leere Namens-, Adress- und Pin-Felder aus dem Maps-Link. Felder mit einem Wert bleiben unverändert.",
+    "fillFromMapsDone": "{count} leere Felder wurden aus dem Maps-Link gefüllt.",
+    "fillFromMapsNone": "Es waren keine leeren Felder mehr aus diesem Link zu füllen.",
+    "fillFromMapsFailed": "Dieser Link konnte nicht gelesen werden. Öffnen Sie ihn in Maps und kopieren Sie die Angaben.",
     "placeMatchHeading": "Google place",
     "placeMatchFind": "Find matching places",
     "placeMatchSave": "Save this place id",
@@ -462,6 +470,12 @@
   },
   "noteInputField": {
     "optional": "(optional)"
+  },
+  "modForm": {
+    "edit": "Bearbeiten",
+    "preview": "Vorschau",
+    "previewHint": "Vorschau. Wechseln Sie zum Bearbeiten, bevor Sie etwas ändern.",
+    "editHint": "Bearbeitung. Wechseln Sie zurück zur Vorschau, wenn Sie nur lesen."
   },
   "modInputField": {
     "optional": "Optional"

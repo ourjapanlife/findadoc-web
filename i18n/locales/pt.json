@@ -141,6 +141,7 @@
     "previewOpenMap": "Abrir no Google Maps",
     "previewLookingUp": "Lendo este link do Maps",
     "existingPlace": "Esta clínica já está na nossa base:",
+    "existingPlacePossible": "Este link pode corresponder a uma clínica que já está na base:",
     "existingPlacePage": "Página da clínica",
     "existingPlaceContact": "Fale conosco se achar que isto está errado.",
     "spokenLanguageValidation": "Escolha pelo menos um idioma além do japonês",
@@ -283,6 +284,7 @@
     "rejectSubmissionConfirmationMessage": "Are you sure you want to reject this submission?",
     "rejectSubmissionConfirmationButton": "Yes, reject the submission",
     "searchExistingFacilities": "Search for existing Facility",
+    "useExistingFacility": "Usar esta clínica",
     "searchExistingHealthcareProfessionals": "Search for existing Healthcare Professionals",
     "labelModNoteInput": "Moderator Notes",
     "placeholderTextNoteInput": "e.g. waiting for call back from clinic",
@@ -315,6 +317,12 @@
     "contactInformation": "Contact Information",
     "facilityHeading": "Facility Information",
     "googleMapsInformation": "Google Maps Information",
+    "openMaps": "Abrir no Google Maps",
+    "fillFromMaps": "Preencher campos vazios a partir deste link",
+    "fillFromMapsHint": "Preenche nome, endereço e pino vazios a partir do link do Maps. Campos que já têm valor permanecem como estão.",
+    "fillFromMapsDone": "{count} campos vazios foram preenchidos a partir do link do Maps.",
+    "fillFromMapsNone": "Não restavam campos vazios para preencher a partir deste link.",
+    "fillFromMapsFailed": "Não foi possível ler este link. Abra-o no Maps e copie os dados.",
     "placeMatchHeading": "Google place",
     "placeMatchFind": "Find matching places",
     "placeMatchSave": "Save this place id",
@@ -462,6 +470,12 @@
   },
   "noteInputField": {
     "optional": "(optional)"
+  },
+  "modForm": {
+    "edit": "Editar",
+    "preview": "Pré-visualizar",
+    "previewHint": "Pré-visualização. Mude para editar antes de alterar algo.",
+    "editHint": "Editando. Volte à pré-visualização quando só precisar ler."
   },
   "modInputField": {
     "optional": "Optional"
