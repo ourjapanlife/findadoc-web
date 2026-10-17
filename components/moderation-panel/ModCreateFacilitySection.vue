@@ -316,7 +316,7 @@ import { listPrefectureJapanEn, listPrefectureJapanJa, pairedPrefectureEn, paire
 import { checkPrefectureNameMatch } from '~/utils/facilitiesUtils'
 import { matchesHealthcareProfessionalSearch } from '~/utils/moderationSearchUtils'
 import { formatFirstLocalizedFullName } from '~/utils/nameUtils'
-import { type FacilityMapsFillTarget } from '~/utils/mapsAutofill'
+import type { FacilityMapsFillTarget } from '~/utils/mapsAutofill'
 import { useExistingFacilityMatch } from '~/composables/useExistingFacilityMatch'
 
 const { t } = useI18n()

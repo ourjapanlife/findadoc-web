@@ -350,7 +350,7 @@ import { matchesHealthcareProfessionalSearch } from '~/utils/moderationSearchUti
 import { formatFirstLocalizedFullName } from '~/utils/nameUtils'
 import { useModerationSubmissionUnsavedStore } from '~/stores/moderationSubmissionUnsavedStore'
 import { provideModerationFormEditing, useModerationFormEditing } from '~/composables/useModerationFormMode'
-import { type FacilityMapsFillTarget } from '~/utils/mapsAutofill'
+import type { FacilityMapsFillTarget } from '~/utils/mapsAutofill'
 import { useExistingFacilityMatch } from '~/composables/useExistingFacilityMatch'
 
 const toast = useAppToast()
@@ -374,8 +374,7 @@ const prefectureNamesMatch = computed(() => checkPrefectureNameMatch({
 const facilityMatchUrl = computed(() =>
     moderationScreenStore.editSubmissionScreenIsActive()
         ? ''
-        : facilitySectionFields.value.googlemapsURL
-)
+        : facilitySectionFields.value.googlemapsURL)
 const { match: matchedFacility } = useExistingFacilityMatch(
     facilityMatchUrl,
     () => facilityStore.selectedFacilityId

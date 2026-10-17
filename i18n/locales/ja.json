@@ -141,6 +141,7 @@
     "previewOpenMap": "Google マップで開く",
     "previewLookingUp": "このマップのリンクを読み取っています",
     "existingPlace": "この医療機関はすでに登録されています:",
+    "existingPlacePossible": "このリンクは、すでに登録されている医療機関と一致する可能性があります:",
     "existingPlacePage": "掲載ページ",
     "existingPlaceContact": "誤りだと思う場合はご連絡ください。",
     "spokenLanguageValidation": "日本語以外の言語を1つ以上選んでください",
@@ -290,6 +291,7 @@
     "rejectSubmissionConfirmationMessage": "Are you sure you want to reject this submission?",
     "rejectSubmissionConfirmationButton": "Yes, reject the submission",
     "searchExistingFacilities": "Search for existing Facility",
+    "useExistingFacility": "この医療機関を使う",
     "searchExistingHealthcareProfessionals": "Search for existing Healthcare Professionals",
     "labelModNoteInput": "Moderator Notes",
     "placeholderTextNoteInput": "e.g. waiting for call back from clinic",
@@ -315,6 +317,12 @@
     "contactInformation": "Contact Information",
     "facilityHeading": "Facility Information",
     "googleMapsInformation": "Google Maps Information",
+    "openMaps": "Google マップで開く",
+    "fillFromMaps": "このリンクから空の項目を入力",
+    "fillFromMapsHint": "地図リンクから、空の名前・住所・ピンを入力します。すでに値がある項目はそのままです。",
+    "fillFromMapsDone": "地図リンクから空の項目を{count}件入力しました。",
+    "fillFromMapsNone": "このリンクから入力できる空の項目はありませんでした。",
+    "fillFromMapsFailed": "このリンクを読み取れませんでした。地図で開いて内容をコピーしてください。",
     "placeMatchHeading": "Google の場所",
     "placeMatchFind": "一致する場所を探す",
     "placeMatchSave": "この場所 ID を保存",
@@ -462,6 +470,12 @@
   },
   "noteInputField": {
     "optional": "(optional)"
+  },
+  "modForm": {
+    "edit": "編集",
+    "preview": "プレビュー",
+    "previewHint": "プレビュー中です。変更する前に編集に切り替えてください。",
+    "editHint": "編集中です。読むだけのときはプレビューに戻してください。"
   },
   "modInputField": {
     "optional": "Optional"

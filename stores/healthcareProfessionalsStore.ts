@@ -214,6 +214,14 @@ export const useHealthcareProfessionalsStore = defineStore(
             }
         }
 
+        function storeUpdatedHealthcareProfessional(updated: HealthcareProfessional) {
+            const index = healthcareProfessionalsData.value.findIndex(hp => hp.id === updated.id)
+            if (index !== -1) healthcareProfessionalsData.value[index] = updated
+            selectedHealthcareProfessionalData.value = updated
+            updateHealthcareProfessionalSectionFields(updated)
+            removedHealthcareProfessionalNames.value = []
+        }
+
         async function updateHealthcareProfessional(): Promise<ServerResponse<HealthcareProfessional>> {
             const currentProfessionalData = healthcareProfessionalList.value.find(
                 hp => hp.id === selectedHealthcareProfessionalId.value
@@ -284,11 +292,7 @@ export const useHealthcareProfessionalsStore = defineStore(
             const responseData = serverResponse.data?.updateHealthcareProfessional
 
             if (!serverResponse.errors?.length && responseData) {
-                const index = healthcareProfessionalsData.value.findIndex(hp => hp.id === responseData.id)
-                if (index !== -1) healthcareProfessionalsData.value[index] = responseData
-                selectedHealthcareProfessionalData.value = responseData
-                updateHealthcareProfessionalSectionFields(responseData)
-                removedHealthcareProfessionalNames.value = []
+                storeUpdatedHealthcareProfessional(responseData)
                 await loadHealthcareProfessionalList()
             }
             if (!serverResponse.errors?.length) {

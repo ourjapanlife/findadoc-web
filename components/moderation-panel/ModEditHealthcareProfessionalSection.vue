@@ -30,7 +30,8 @@
                     <div
                         v-show="addingLocaleName || editingLocaleName"
                         :class="[
-                            'mod-edit-only name-locale-input-fields mod-form-grid rounded-lg border border-accent-bg bg-secondary-bg p-4',
+                            'mod-edit-only name-locale-input-fields mod-form-grid rounded-lg',
+                            'border border-accent-bg bg-secondary-bg p-4',
                             editingLocaleName ? 'rounded-b-none border-b-0' : '',
                         ]"
                     >

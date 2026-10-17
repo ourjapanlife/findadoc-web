@@ -15,7 +15,7 @@ export function useExistingFacilityMatch(
     let request = 0
     let timer: ReturnType<typeof setTimeout> | undefined
 
-    watch(() => toValue(url).trim(), (trimmed) => {
+    watch(() => toValue(url).trim(), trimmed => {
         if (timer) clearTimeout(timer)
         if (!validateGoogleMapsUrlInput(trimmed)) {
             request += 1

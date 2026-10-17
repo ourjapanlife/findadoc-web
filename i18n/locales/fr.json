@@ -140,6 +140,7 @@
     "previewOpenMap": "Ouvrir dans Google Maps",
     "previewLookingUp": "Lecture de ce lien Maps",
     "existingPlace": "Cette clinique est déjà dans notre base :",
+    "existingPlacePossible": "Ce lien correspond peut-être déjà à une clinique de la base :",
     "existingPlacePage": "Page de la clinique",
     "existingPlaceContact": "Contactez-nous si vous pensez que c'est une erreur.",
     "spokenLanguageValidation": "Choisissez au moins une langue en plus du japonais",
@@ -233,6 +234,7 @@
     "rejectSubmissionConfirmationMessage": "Are you sure you want to reject this submission?",
     "rejectSubmissionConfirmationButton": "Yes, reject the submission",
     "searchExistingFacilities": "Search for existing Facility",
+    "useExistingFacility": "Utiliser cette clinique",
     "searchExistingHealthcareProfessionals": "Search for existing Healthcare Professionals",
     "labelModNoteInput": "Moderator Notes",
     "placeholderTextNoteInput": "e.g. waiting for call back from clinic",
@@ -313,6 +315,12 @@
     "contactInformation": "Contact Information",
     "facilityHeading": "Facility Information",
     "googleMapsInformation": "Google Maps Information",
+    "openMaps": "Ouvrir dans Google Maps",
+    "fillFromMaps": "Remplir les champs vides à partir de ce lien",
+    "fillFromMapsHint": "Remplit le nom, l’adresse et le repère vides à partir du lien Maps. Les champs déjà remplis restent inchangés.",
+    "fillFromMapsDone": "{count} champs vides ont été remplis à partir du lien Maps.",
+    "fillFromMapsNone": "Aucun champ vide ne restait à remplir à partir de ce lien.",
+    "fillFromMapsFailed": "Ce lien n’a pas pu être lu. Ouvrez-le dans Maps et copiez les informations.",
     "placeMatchHeading": "Google place",
     "placeMatchFind": "Find matching places",
     "placeMatchSave": "Save this place id",
@@ -462,6 +470,12 @@
   },
   "noteInputField": {
     "optional": "(optional)"
+  },
+  "modForm": {
+    "edit": "Modifier",
+    "preview": "Aperçu",
+    "previewHint": "Aperçu. Passez en modification avant de changer quoi que ce soit.",
+    "editHint": "Modification. Revenez à l’aperçu si vous ne faites que lire."
   },
   "modInputField": {
     "optional": "Optional"
