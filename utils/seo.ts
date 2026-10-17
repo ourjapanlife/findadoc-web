@@ -50,7 +50,7 @@ export type HreflangAlternate = {
  * Href is absolute so it matches `canonicalUrl` for that locale.
  */
 export function hreflangAlternates(path: string): HreflangAlternate[] {
-    const alternates = LOCALE_CODES.map(code => ({
+    const alternates: HreflangAlternate[] = LOCALE_CODES.map(code => ({
         hreflang: code,
         href: canonicalUrl(localizedPath(path, code))
     }))
