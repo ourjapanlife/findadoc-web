@@ -126,6 +126,8 @@ export type CreateFacilityInput = {
   paymentOptions?: InputMaybe<Array<PaymentOptionsInput>>;
   /** Where this facility record came from. */
   source?: InputMaybe<FacilitySource>;
+  /** Published languages this facility advertises. Does not create a professional. */
+  supportedLanguages?: InputMaybe<Array<Locale>>;
   /** CONFIRMED requires cityId. Omit this to leave an unresolved facility as UNVERIFIED_LOCATION. */
   verificationStatus?: InputMaybe<FacilityVerificationStatus>;
 };
@@ -265,6 +267,11 @@ export type Facility = {
   paymentOptions?: Maybe<Array<PaymentOption>>;
   /** Where the facility record came from. Null on rows that have not been classified. */
   source?: Maybe<FacilitySource>;
+  /**
+   * Languages this facility advertises without a named professional.
+   * Only values from the published language list. Storing these does not create a healthcare professional.
+   */
+  supportedLanguages: Array<Locale>;
   /** ISO 8601 timestamp of the last update to this facility. */
   updatedDate: Scalars['String']['output'];
   /** Whether the location is confirmed. Unresolved rows are UNVERIFIED_LOCATION. */
@@ -306,6 +313,10 @@ export type FacilitySearchFilters = {
    * or the Japanese name (e.g. "沖縄県"). Unknown prefectures are rejected.
    */
   prefecture?: InputMaybe<Scalars['String']['input']>;
+  /**
+   * One text query matched against the English name, Japanese name, or id.
+   * Applied before pagination. Blank leaves the list unfiltered.
+   */
   query?: InputMaybe<Scalars['String']['input']>;
   /**
    * Only return facilities with at least one healthcare professional who practices all of these specialties.
@@ -313,8 +324,9 @@ export type FacilitySearchFilters = {
    */
   specialties?: InputMaybe<Array<Specialty>>;
   /**
-   * Only return facilities with at least one healthcare professional who speaks all of these languages.
-   * Combined with specialties, the same professional must match both.
+   * Only return facilities that advertise every one of these languages.
+   * A facility matches when supportedLanguages includes them all, or when one professional speaks them all.
+   * Combined with specialties, the same professional must match both. Facility-level languages do not.
    */
   spokenLanguages?: InputMaybe<Array<Locale>>;
   /** Filter by last updated date (ISO 8601). */
@@ -358,6 +370,7 @@ export type HealthcareProfessional = {
   __typename?: 'HealthcareProfessional';
   /** Insurance types accepted by this professional. */
   acceptedInsurance: Array<Insurance>;
+  /** Credentials other than the clinical license, such as PhD or MPH. */
   additionalCredentials: Array<Degree>;
   /** Free-text notes or instructions for patients. */
   additionalInfoForPatients?: Maybe<Scalars['String']['output']>;
@@ -369,10 +382,13 @@ export type HealthcareProfessional = {
   facilityIds: Array<Scalars['ID']['output']>;
   /** Unique identifier for the healthcare professional. */
   id: Scalars['ID']['output'];
+  /** Suggestion for a dual license. A moderator decides whether to apply it. */
   licenseRecommendation?: Maybe<Scalars['String']['output']>;
+  /** NEEDS_REVIEW is the moderator queue. CONFIRMED keeps a dual license. */
   licenseReview?: Maybe<LicenseReviewStatus>;
   /** Localized names of the healthcare professional (e.g. English and Japanese). */
   names: Array<LocalizedName>;
+  /** One clinical license. Empty while a dual license is unresolved or confirmed as dual. */
   primaryLicense?: Maybe<Degree>;
   /** Medical specialties practiced. */
   specialties: Array<Specialty>;
@@ -394,6 +410,7 @@ export type HealthcareProfessionalSearchFilters = {
   facilityIds?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** Filter by specific healthcare professional IDs. */
   ids?: InputMaybe<Array<Scalars['ID']['input']>>;
+  /** Only professionals in this license queue. NEEDS_REVIEW is the dual-license queue. */
   licenseReview?: InputMaybe<LicenseReviewStatus>;
   /** Maximum number of results to return. */
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -403,6 +420,10 @@ export type HealthcareProfessionalSearchFilters = {
   offset?: InputMaybe<Scalars['Int']['input']>;
   /** Ordering rules for the results. */
   orderBy?: InputMaybe<Array<OrderBy>>;
+  /**
+   * One text query matched against any localized given name, middle name, family name, or id.
+   * Applied before pagination. Blank leaves the list unfiltered.
+   */
   query?: InputMaybe<Scalars['String']['input']>;
   /** Filter by specialties. */
   specialties?: InputMaybe<Array<Specialty>>;
@@ -447,8 +468,11 @@ export enum Insurance {
   Uninsured = 'UNINSURED'
 }
 
+/** Moderator queue for a professional license. CONFIRMED keeps a dual license. */
 export enum LicenseReviewStatus {
+  /** A moderator confirmed that more than one clinical license should stay. */
   Confirmed = 'CONFIRMED',
+  /** A moderator still needs to choose the primary license. */
   NeedsReview = 'NEEDS_REVIEW'
 }
 
@@ -876,6 +900,8 @@ export type Query = {
   mapsPlacePreview?: Maybe<MapsPlacePreview>;
   /** Prefectures this server owns. One row per prefecture in the frozen key list. */
   prefectures: Array<Prefecture>;
+  /** Languages a search facet may offer. This is the published allowlist, not every Locale value. */
+  publishedLanguages: Array<Locale>;
   /** Look up a single reservation by its unique ID. Returns null if not found. */
   reservation?: Maybe<Reservation>;
   /** Look up a single submission by its unique ID. Returns null if not found. */
@@ -1231,6 +1257,8 @@ export type UpdateFacilityInput = {
   paymentOptions?: InputMaybe<Array<PaymentOptionsInput>>;
   /** Where this facility record came from. */
   source?: InputMaybe<FacilitySource>;
+  /** Replacement published language list. An empty list clears it. Does not create a professional. */
+  supportedLanguages?: InputMaybe<Array<Locale>>;
   /** CONFIRMED requires a cityId on the facility. */
   verificationStatus?: InputMaybe<FacilityVerificationStatus>;
 };
@@ -1245,6 +1273,7 @@ export type UpdateHealthcareProfessionalInput = {
   degrees?: InputMaybe<Array<Degree>>;
   /** Facility relationships to add, update, or remove. */
   facilityIds?: InputMaybe<Array<Relationship>>;
+  /** CONFIRMED keeps a dual license. Omit this to classify the degrees you send. */
   licenseReview?: InputMaybe<LicenseReviewStatus>;
   /** Updated localized names. */
   names?: InputMaybe<Array<LocalizedNameInput>>;
@@ -1551,6 +1580,7 @@ export type FacilityResolvers<ContextType = any, ParentType extends ResolversPar
   nameJa?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   paymentOptions?: Resolver<Maybe<Array<ResolversTypes['PaymentOption']>>, ParentType, ContextType>;
   source?: Resolver<Maybe<ResolversTypes['FacilitySource']>, ParentType, ContextType>;
+  supportedLanguages?: Resolver<Array<ResolversTypes['Locale']>, ParentType, ContextType>;
   updatedDate?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   verificationStatus?: Resolver<ResolversTypes['FacilityVerificationStatus'], ParentType, ContextType>;
 };
@@ -1672,6 +1702,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   healthcareProfessionalsTotalCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType, RequireFields<QueryHealthcareProfessionalsTotalCountArgs, 'filters'>>;
   mapsPlacePreview?: Resolver<Maybe<ResolversTypes['MapsPlacePreview']>, ParentType, ContextType, RequireFields<QueryMapsPlacePreviewArgs, 'url'>>;
   prefectures?: Resolver<Array<ResolversTypes['Prefecture']>, ParentType, ContextType>;
+  publishedLanguages?: Resolver<Array<ResolversTypes['Locale']>, ParentType, ContextType>;
   reservation?: Resolver<Maybe<ResolversTypes['Reservation']>, ParentType, ContextType, RequireFields<QueryReservationArgs, 'id'>>;
   submission?: Resolver<Maybe<ResolversTypes['Submission']>, ParentType, ContextType, RequireFields<QuerySubmissionArgs, 'id'>>;
   submissions?: Resolver<Array<ResolversTypes['Submission']>, ParentType, ContextType, RequireFields<QuerySubmissionsArgs, 'filters'>>;
